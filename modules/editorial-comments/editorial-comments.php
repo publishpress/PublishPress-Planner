@@ -61,6 +61,9 @@ class EF_Editorial_Comments extends EF_Module
 		// Add Editorial Comments to the calendar if the calendar is activated
 		if ( $this->module_enabled( 'calendar' ) ) {
 			add_filter( 'ef_calendar_item_information_fields', array( &$this, 'filter_calendar_item_fields' ), null, 2 );
+			add_action( 'ef_calendar_item_additional_html', array( &$this, 'show_comments_on_calendar' ), 2 );
+			add_action( 'ef_calendar_enqueue_scripts', array( &$this, 'add_calendar_admin_scripts' ) );
+			add_action( 'ef_calendar_enqueue_styles', array( &$this, 'add_calendar_admin_styles' ) );
 		}
 	}
 
@@ -424,18 +427,18 @@ class EF_Editorial_Comments extends EF_Module
 	 * @uses apply_filters( 'ef_calendar_item_information_fields' )
 	 *
 	 * @param array $calendar_fields Additional data fields to include on the calendar
-	 * @param int $post_id Unique ID for the post data we're building
+	 * @param int $post_ID Unique ID for the post data we're building
 	 * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
 	 */
-	function filter_calendar_item_fields( $calendar_fields, $post_id ) {
+	function filter_calendar_item_fields( $calendar_fields, $post_ID ) {
 		// Make sure we respect which post type we're on
-		if ( !in_array( get_post_type( $post_id ), $this->get_post_types_for_module( $this->module ) ) )
+		if ( !in_array( get_post_type( $post_ID ), $this->get_post_types_for_module( $this->module ) ) )
 			return $calendar_fields;
 
 		// Name/value for the field to add
 		$comment_count_data = array(
 			'label' => $this->module->title,
-			'value' => $this->get_editorial_comment_count( $post_id ),
+			'value' => $this->get_editorial_comment_count( $post_ID ),
 		);
 
 		$calendar_fields[$this->module->slug] = $comment_count_data;
@@ -443,6 +446,25 @@ class EF_Editorial_Comments extends EF_Module
 		return $calendar_fields;
 	}
 
+	function show_comments_on_calendar( $post_ID ) {
+		global $post;
+
+		if ( $this->get_editorial_comment_count( $post_ID ) ) {
+			$post = get_post( $post_ID );
+			?>
+			<tr><td></td><td><img class="ed-comments-expand" align="right" src="<?php echo esc_url( $this->module->module_url . '/lib/editorial_comments_s128.png' ); ?>" width="32"></td></tr>
+			<tr><td colspan="2"><?php $this->editorial_comments_meta_box(); ?></td></tr>
+			<?php
+		}
+	}
+
+	function add_calendar_admin_scripts() {
+		wp_enqueue_script( 'edit-flow-editorial-comments-on-calendar-js', $this->module->module_url . 'lib/editorial-comments-on-calendar.js', 'edit-flow-calendar-js', EDIT_FLOW_VERSION, true );
+	}
+
+	function add_calendar_admin_styles() {
+		wp_enqueue_style( 'edit-flow-editorial-comments-on-calendar-css', $this->module->module_url . 'lib/editorial-comments-on-calendar.css', 'edit-flow-calendar-css', EDIT_FLOW_VERSION );
+	}
 }
 
 }

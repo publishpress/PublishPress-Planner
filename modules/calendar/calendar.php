@@ -146,8 +146,10 @@ class EF_Calendar extends EF_Module {
 	function add_admin_styles() {
 		global $pagenow;
 		// Only load calendar styles on the calendar page
-		if ( $pagenow == 'index.php' && isset( $_GET['page'] ) && $_GET['page'] == 'calendar' )
+		if ( $pagenow == 'index.php' && isset( $_GET['page'] ) && $_GET['page'] == 'calendar' ) {
 			wp_enqueue_style( 'edit-flow-calendar-css', EDIT_FLOW_URL . 'modules/calendar/lib/calendar.css', false, EDIT_FLOW_VERSION );
+			do_action( 'ef_calendar_enqueue_styles' );
+		}
 	}
 	
 	/**
@@ -170,6 +172,7 @@ class EF_Calendar extends EF_Module {
 				wp_enqueue_script( $js_library );
 			}
 			wp_enqueue_script( 'edit-flow-calendar-js', EDIT_FLOW_URL . 'modules/calendar/lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
+			do_action( 'ef_calendar_enqueue_scripts' );
 		}
 		
 	}
