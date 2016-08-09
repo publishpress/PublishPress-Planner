@@ -10,16 +10,17 @@ env:
 # Test WP master, current and previous stable releases on minimum PHP 5.2 (w/o multisite enabled)
 # Test WP current on PHP 5.3, 5.4 (w/o multisite enabled)
 # Test WP master on PHP hhvm, 7.0 and nightly (w/o multisite enabled)
+# Run PHPCS on master and stable with PHP 5.6
 
 matrix:
   include:
     # current stable release w/ multisite
     - php: "5.6"
-      env: WP_VERSION=master WP_MULTISITE=1
+      env: WP_VERSION=master WP_MULTISITE=1 SNIFF=1
     - php: "5.6"
-      env: WP_VERSION=4.6 WP_MULTISITE=0
+      env: WP_VERSION=4.6 WP_MULTISITE=0 SNIFF=1
     - php: "5.6"
-      env: WP_VERSION=4.6 WP_MULTISITE=1
+      env: WP_VERSION=4.6 WP_MULTISITE=1 SNIFF=1
     - php: "5.6"
       env: WP_VERSION=4.5 WP_MULTISITE=0
     - php: "5.5"
