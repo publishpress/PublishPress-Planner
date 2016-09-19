@@ -7,3 +7,7 @@
 #ui-datepicker-div {
 	margin-top: 30px;
 }
+
+.ef-hidden {
+	display: none !important;
+}

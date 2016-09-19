@@ -198,6 +198,8 @@ class EF_Calendar extends EF_Module {
 				'jquery-ui-sortable',
 				'jquery-ui-draggable',
 				'jquery-ui-droppable',
+				'underscore',
+				'backbone'
 			);
 			foreach( $js_libraries as $js_library ) {
 				wp_enqueue_script( $js_library );
@@ -574,236 +576,16 @@ class EF_Calendar extends EF_Module {
 	 * Build all of the HTML for the calendar view
 	 */
 	function view_calendar() {
-
-		$this->dropdown_taxonomies = array();
-		
-		$supported_post_types = $this->get_post_types_for_module( $this->module );
-		
-		// Get the user's screen options for displaying the data
-		$screen_options = $this->get_screen_options();
-		// Total number of weeks to display on the calendar. Run it through a filter in case we want to override the
-		// user's standard
-		$this->total_weeks = apply_filters( 'ef_calendar_total_weeks', $screen_options['num_weeks'], 'dashboard' );
-		
-		$dotw = array(
-			'Sat',
-			'Sun',
-		);
-		$dotw = apply_filters( 'ef_calendar_weekend_days', $dotw );
-		
-		// Get filters either from $_GET or from user settings
-		$filters = $this->get_filters();
-		// For generating the WP Query objects later on
-		$post_query_args = array(
-			'post_status' => $filters['post_status'],
-			'post_type'   => $filters['cpt'],
-			'cat'         => $filters['cat'],
-			'author'      => $filters['author']
-		);
-		$this->start_date = $filters['start_date'];
-		
-		// We use this later to label posts if they need labeling
-		if ( count( $supported_post_types ) > 1 ) {
-			$all_post_types = get_post_types( null, 'objects' );
-		}
-		$dates = array();
-		$heading_date = $filters['start_date'];
-		for ( $i=0; $i<7; $i++ ) {
-			$dates[$i] = $heading_date;
-			$heading_date = date( 'Y-m-d', strtotime( "+1 day", strtotime( $heading_date ) ) );
-		}
-		
-		// we sort by post statuses....... eventually
-		$post_statuses = $this->get_post_statuses();
 		?>
-		<div class="wrap">
-			<div id="ef-calendar-title"><!-- Calendar Title -->
-				<?php echo '<img src="' . esc_url( $this->module->img_url ) . '" class="module-icon icon32" />'; ?>
-				<h2><?php _e( 'Calendar', 'edit-flow' ); ?>&nbsp;<span class="time-range"><?php $this->calendar_time_range(); ?></span></h2>
-			</div><!-- /Calendar Title -->
-
-			<?php
-				// Handle posts that have been trashed or untrashed
-				if ( isset( $_GET['trashed'] ) || isset( $_GET['untrashed'] ) ) {
-
-					echo '<div id="trashed-message" class="updated"><p>';
-					if ( isset( $_GET['trashed'] ) && (int) $_GET['trashed'] ) {
-						printf( _n( 'Post moved to the trash.', '%d posts moved to the trash.', $_GET['trashed'] ), number_format_i18n( $_GET['trashed'] ) );
-						$ids = isset($_GET['ids']) ? $_GET['ids'] : 0;
-						$pid = explode( ',', $ids );
-						$post_type = get_post_type( $pid[0] );
-						echo ' <a href="' . esc_url( wp_nonce_url( "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids", "bulk-posts" ) ) . '">' . __( 'Undo', 'edit-flow' ) . '</a><br />';
-						unset( $_GET['trashed'] );
-					}
-					if ( isset($_GET['untrashed'] ) && (int) $_GET['untrashed'] ) {
-						printf( _n( 'Post restored from the Trash.', '%d posts restored from the Trash.', $_GET['untrashed'] ), number_format_i18n( $_GET['untrashed'] ) );
-						unset( $_GET['undeleted'] );
-					}
-					echo '</p></div>';
-				}
-			?>
-
-			<div id="ef-calendar-wrap"><!-- Calendar Wrapper -->
-					
-			<?php $this->print_top_navigation( $filters, $dates ); ?>
-
-			<?php
-				$table_classes = array();
-				// CSS don't like our classes to start with numbers
-				if ( $this->total_weeks == 1 )
-					$table_classes[] = 'one-week-showing';
-				elseif ( $this->total_weeks == 2 )
-					$table_classes[] = 'two-weeks-showing';
-				elseif ( $this->total_weeks == 3 )
-					$table_classes[] = 'three-weeks-showing';
-					
-				$table_classes = apply_filters( 'ef_calendar_table_classes', $table_classes );
-			?>
-			<table id="ef-calendar-view" class="<?php echo esc_attr( implode( ' ', $table_classes ) ); ?>">
+			<table id="ef-calendar"></table>
+			<script type="text/template" id="ef-calendar-header">
 				<thead>
-				<tr class="calendar-heading">
-					<?php echo $this->get_time_period_header( $dates ); ?>
-				</tr>
-				</thead>
-				<tbody>
-				
-				<?php
-				$current_month = date( 'F', strtotime( $filters['start_date'] ) );
-				for( $current_week = 1; $current_week <= $this->total_weeks; $current_week++ ):
-					// We need to set the object variable for our posts_where filter
-					$this->current_week = $current_week;
-					$week_posts = $this->get_calendar_posts_for_week( $post_query_args );
-					$date_format = 'Y-m-d';
-					$week_single_date = $this->get_beginning_of_week( $filters['start_date'], $date_format, $current_week );
-					$week_dates = array();
-					$split_month = false;
-					for ( $i = 0 ; $i < 7; $i++ ) {
-						$week_dates[$i] = $week_single_date;
-						$single_date_month = date( 'F', strtotime( $week_single_date ) );
-						if ( $single_date_month != $current_month ) {
-							$split_month = $single_date_month;
-							$current_month = $single_date_month;
-						}
-						$week_single_date = date( 'Y-m-d', strtotime( "+1 day", strtotime( $week_single_date ) ) );
-					}			
-				?>
-				<?php if ( $split_month ): ?>
-				<tr class="month-marker">
-					<?php foreach( $week_dates as $key => $week_single_date ) {
-						if ( date( 'F', strtotime( $week_single_date ) ) != $split_month && date( 'F', strtotime( "+1 day", strtotime( $week_single_date ) ) ) == $split_month ) {
-							$previous_month = date( 'F', strtotime( $week_single_date ) );
-							echo '<td class="month-marker-previous">' . esc_html( $previous_month ) . '</td>';
-						} else if ( date( 'F', strtotime( $week_single_date ) ) == $split_month && date( 'F', strtotime( "-1 day", strtotime( $week_single_date ) ) ) != $split_month ) {
-							echo '<td class="month-marker-current">' . esc_html( $split_month ) . '</td>';
-						} else {
-							echo '<td class="month-marker-empty"></td>';
-						}
-					} ?>
-				</tr>
-				<?php endif; ?>
-
-				<tr class="week-unit">
-				<?php foreach( $week_dates as $day_num => $week_single_date ): ?>
-				<?php
-					// Somewhat ghetto way of sorting all of the day's posts by post status order
-					if ( !empty( $week_posts[$week_single_date] ) ) {
-						$week_posts_by_status = array();
-						foreach( $post_statuses as $post_status ) {
-							$week_posts_by_status[$post_status->slug] = array();
-						}
-						// These statuses aren't handled by custom statuses or post statuses
-						$week_posts_by_status['private'] = array();
-						$week_posts_by_status['publish'] = array();
-						$week_posts_by_status['future'] = array();
-						foreach( $week_posts[$week_single_date] as $num => $post ) {
-							$week_posts_by_status[$post->post_status][$num] = $post;
-						}
-						unset( $week_posts[$week_single_date] );
-						foreach( $week_posts_by_status as $status ) {
-							foreach( $status as $num => $post ) {
-								$week_posts[$week_single_date][] = $post; 
-							}
-						}
-					}
-				
-					$td_classes = array(
-						'day-unit',
-					);
-					$day_name = date( 'D', strtotime( $week_single_date ) );
-					
-					if ( in_array( $day_name, $dotw ) )
-						$td_classes[] = 'weekend-day';
-					
-					if ( $week_single_date == date( 'Y-m-d', current_time( 'timestamp' ) ) )
-						$td_classes[] = 'today';
-						
-					// Last day of the week
-					if ( $day_num == 6 )
-						$td_classes[] = 'last-day';
-						
-					$td_classes = apply_filters( 'ef_calendar_table_td_classes', $td_classes, $week_single_date );
-				?>
-				<td class="<?php echo esc_attr( implode( ' ', $td_classes ) ); ?>" id="<?php echo esc_attr( $week_single_date ); ?>">
-					<button class='schedule-new-post-button'>+</button>
-					<?php if ( $week_single_date == date( 'Y-m-d', current_time( 'timestamp' ) ) ): ?>
-						<div class="day-unit-today"><?php _e( 'Today', 'edit-flow' ); ?></div>
-					<?php endif; ?>
-					<div class="day-unit-label"><?php echo esc_html( date( 'j', strtotime( $week_single_date ) ) ); ?></div>
-					<ul class="post-list">
-						<?php
-						$this->hidden = 0;
-						if ( !empty( $week_posts[$week_single_date] ) ) {
-
-							$week_posts[$week_single_date] = apply_filters( 'ef_calendar_posts_for_week', $week_posts[$week_single_date] );
-
-							foreach ( $week_posts[$week_single_date] as $num => $post ){ 
-								echo $this->generate_post_li_html( $post, $week_single_date, $num ); 
-							} 
-
-						 } 
-						 ?>
-					</ul>
-					<?php if ( $this->hidden ): ?>
-						<a class="show-more" href="#"><?php printf( __( 'Show %d more', 'edit-flow' ), $this->hidden ); ?></a>
-					<?php endif; ?>
-
-					<?php if( current_user_can( $this->create_post_cap ) ) :
-						$date_formatted = date( 'D, M jS, Y', strtotime( $week_single_date ) );
-					?>
-
-						<form method="POST" class="post-insert-dialog">
-							<?php /* translators: %1$s = post type name, %2$s = date */ ?>
-							<h1><?php echo sprintf( __( 'Schedule a %1$s for %2$s', 'edit-flow' ), $this->get_quick_create_post_type_name(), $date_formatted ); ?></h1>	
-							<?php /* translators: %s = post type name */ ?>
-							<input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( sprintf( _x( '%s Title', 'post type name', 'edit-flow' ), $this->get_quick_create_post_type_name() ) ); ?>">
-							<input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>">
-							<div class="post-insert-dialog-controls">		
-								<input type="submit" class="button left" value="<?php echo esc_html( sprintf( _x( 'Create %s', 'post type name', 'edit-flow' ), $this->get_quick_create_post_type_name() ) ); ?>">
-								<a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html( sprintf( _x( 'Edit %s', 'post type name', 'edit-flow' ), $this->get_quick_create_post_type_name() ) ); ?>&nbsp;&raquo;</a>
-							</div>	
-							<div class="spinner">&nbsp;</div>
-						</form>
-					<?php endif; ?>
-
-					</td>
-					<?php endforeach; ?>
+					<tr>
+						<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
 					</tr>
-					
-					<?php endfor; ?>
-					
-					</tbody>		
-					</table><!-- /Week Wrapper -->
-					<?php
-					// Nonce field for AJAX actions
-					wp_nonce_field( 'ef-calendar-modify', 'ef-calendar-modify' ); ?>
-					
-					<div class="clear"></div>
-				</div><!-- /Calendar Wrapper -->
-
-			  </div>
-
-		<?php 
-		
+				</thead>
+			</script>
+		<?php
 	}
 
 	/**
@@ -847,7 +629,7 @@ class EF_Calendar extends EF_Module {
 		$max_visible_posts = apply_filters( 'ef_calendar_max_visible_posts_per_date', $this->max_visible_posts_per_date);
 
 		if ( $num >= $max_visible_posts && $this->total_weeks > 2 ) {
-			$post_classes[] = 'hidden';
+			$post_classes[] = 'ef-hidden';
 			$this->hidden++;
 		}
 		$post_classes = apply_filters( 'ef_calendar_table_td_li_classes', $post_classes, $post_date, $post->ID );
@@ -904,7 +686,7 @@ class EF_Calendar extends EF_Module {
 							<?php if( isset( $values['editable'] ) && $this->current_user_can_modify_post( $post ) ) : ?>
 								<td class="value<?php if( $values['editable'] ) { ?> editable-value<?php } ?>"><?php echo esc_html( $values['value'] ); ?></td>
 								<?php if( $values['editable'] ): ?>
-									<td class="editable-html hidden" data-type="<?php echo $values['type']; ?>" data-metadataterm="<?php echo str_replace( 'editorial-metadata-', '', str_replace( 'tax_', '', $field ) ); ?>"><?php echo $this->get_editable_html( $values['type'], $values['value'] ); ?></td>
+									<td class="editable-html ef-hidden" data-type="<?php echo $values['type']; ?>" data-metadataterm="<?php echo str_replace( 'editorial-metadata-', '', str_replace( 'tax_', '', $field ) ); ?>"><?php echo $this->get_editable_html( $values['type'], $values['value'] ); ?></td>
 								<?php endif; ?>
 							<?php else: ?>
 								<td class="value"><?php echo esc_html( $values['value'] ); ?></td>
@@ -933,7 +715,7 @@ class EF_Calendar extends EF_Module {
 						$item_actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'edit-flow' ), $post->post_title ) ) . '" rel="permalink">' . __( 'View', 'edit-flow' ) . '</a>';
 					}
 					//Save metadata
-					$item_actions['save hidden'] = '<a href="#savemetadata" id="save-editorial-metadata" class="post-'. $post->ID .'" title="'. esc_attr( sprintf( __( 'Save &#8220;%s&#8221;', 'edit-flow' ), $post->post_title ) ) . '" >' . __( 'Save', 'edit-flow') . '</a>';
+					$item_actions['save hidden'] = '<a href="javascript:void(0);" class="save-editorial-metadata post-'. $post->ID .'" title="'. esc_attr( sprintf( __( 'Save &#8220;%s&#8221;', 'edit-flow' ), $post->post_title ) ) . '" >' . __( 'Save', 'edit-flow') . '</a>';
 				}
 				// Allow other plugins to add actions
 				$item_actions = apply_filters( 'ef_calendar_item_actions', $item_actions, $post->ID );

@@ -1,17 +1,61 @@
 jQuery(document).ready(function ($) {
-	
-	$('a.show-more').click(function(){
-		var parent = $(this).closest('td.day-unit');
-		$('ul li', parent).removeClass('hidden');
-		$(this).hide();
-		return false;
+	var postCalendar = {
+		header: {
+			daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+		},
+		days: {
+			20160901: {
+				day: '01',
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			}
+		}
+	};
+
+	var CalendarHeaderView = Backbone.View.extend({
+		tag: 'thead',
+
+		template: _.template($('#ef-calendar-header').html()),
+
+		render: function() {
+			this.$el.html(this.template(this.model));
+			return this;
+		}
 	});
 
+	var CalendarView = Backbone.View.extend({
+		el: $('#ef-calendar'),
+
+		initialize: function() {
+			this.header = new CalendarHeaderView({model: postCalendar.header});
+			this.render();
+		},
+
+		render: function() {
+			this.$el.append(this.header.render().el);
+		}
+	});
+
+	var Calendar = new CalendarView();
+
+
+	var $calendarWrapper = $('#ef-calendar-wrap');
+
+	// $calendarWrapper.on('click', 'a.show-more', function(){
+	// 	var parent = $(this).closest('td.day-unit');
+	// 	$('ul li', parent).removeClass('hidden');
+	// 	$(this).hide();
+	// 	return false;
+	// });
+	
 	/**
 	 * Listen for click event and subsitute correct type of replacement
 	 * html given the input type
 	 */
-	$('.day-unit').on('click', '.editable-value', function( event ) {	
+	$calendarWrapper.on('click', '.editable-value', function( event ) {	
 		//Reset anything that was currently being edited.
 		reset_editorial_metadata();
 		var  t = this,
@@ -35,20 +79,23 @@ jQuery(document).ready(function ($) {
 	});
 
 	//Save the editorial metadata we've changed
-	$('.day-unit').on('click', 'a#save-editorial-metadata', function() {
+	$calendarWrapper.on('click', '.save-editorial-metadata', function() {
 		var post_id = $(this).attr('class').replace('post-', '');
 		save_editorial_metadata(post_id);
 		return false;
 	});
 
 
-	function reset_editorial_metadata() {
-		$('.editing').removeClass('editing')
-			.addClass('hidden')
-			.prev()
-			.removeClass('hidden');
+	function reset_editorial_metadata() {	
+		var $editing = $calendarWrapper.find('.editing'),
+			$save 	 = $('.item-actions .save');
 
-		$('.item-actions .save').addClass('hidden');
+		$editing.removeClass('editing')
+				.addClass('hidden')
+				.prev()
+				.removeClass('hidden');
+
+		$save.addClass('hidden');
 	}
 
 	/**
@@ -64,9 +111,10 @@ jQuery(document).ready(function ($) {
 			metadata_value: $('.editing').children().first().val(),
 			metadata_term: $('.editing').attr('data-metadataterm'),
 			post_id: post_id
-		};
+		},
+			$editing = $('.editing');
 
-		$('.editing').addClass('hidden')
+		$editing.addClass('hidden')
 			.after($('<div class="spinner spinner-calendar"></div>').show());
 
 		// Send the request
@@ -75,17 +123,17 @@ jQuery(document).ready(function ($) {
 			url : (ajaxurl) ? ajaxurl : wpListL10n.url,
 			data : metadata_info,
 			success : function(x) { 
-				var val = $('.editing').children().first();
+				var val = $editing.children().first();
 				if( val.is('select') ) {
 					val = val.find('option:selected').text();
 				} else {
 					val = val.val();
 				}
 
-				$('.editing').next()
+				$editing.next()
 					.remove();
 
-				$('.editing').addClass('hidden')
+				$editing.addClass('hidden')
 					.removeClass('editing')
 					.prev()
 					.removeClass('hidden')
@@ -94,7 +142,7 @@ jQuery(document).ready(function ($) {
 					reset_editorial_metadata();
 			},
 			error : function(r) { 
-				$('.editing').next('.spinner').replaceWith('<span class="edit-flow-error-message">Error saving metadata.</span>'); 
+				$calendarWrapper.find('.editing').next('.spinner').replaceWith('<span class="edit-flow-error-message">Error saving metadata.</span>'); 
 			}
 		});
 		
@@ -102,7 +150,7 @@ jQuery(document).ready(function ($) {
 	
 	// Hide a message. Used by setTimeout()
 	function edit_flow_calendar_hide_message() {
-		$('.edit-flow-message').fadeOut(function(){ $(this).remove(); });
+		$calendarWrapper.find('.edit-flow-message').fadeOut(function(){ $(this).remove(); });
 	}
 	
 	// Close out all of the overlays with your escape key,
@@ -176,17 +224,20 @@ jQuery(document).ready(function ($) {
 
 	function edit_flow_calendar_close_overlays() {
 		reset_editorial_metadata();
-		$('.day-item.active').removeClass('active')
-			.find('.item-overlay').removeClass('item-overlay')
-			.addClass('item-static');
+		
+		$calendarWrapper.find('.day-item.active')
+						.removeClass('active')
+						.find('.item-overlay')
+						.removeClass('item-overlay')
+						.addClass('item-static');
 
-		$('.post-insert-overlay').remove();
+		$calendarWrapper.find('.post-insert-overlay').remove();
 	}
 	
 	/**
 	 * Instantiates drag and drop sorting for posts on the calendar
 	 */
-	$('td.day-unit ul').sortable({
+	$calendarWrapper.find('td.day-unit ul').sortable({
 		items: 'li.day-item.sortable',
 		connectWith: 'td.day-unit ul',
 		placeholder: 'ui-state-highlight',
@@ -248,7 +299,7 @@ jQuery(document).ready(function ($) {
 		 */
 		init : function(){
 
-			var $day_units = $('td.day-unit');
+			var $day_units = $calendarWrapper.find('td.day-unit');
 
 			// Bind the form display to the '+' button
 			// or to a double click on the calendar square
