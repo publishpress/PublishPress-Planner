@@ -45,7 +45,11 @@
 }
 
 .ef-calendar > tbody > tr > td.weekend .day-of-month {
-	color: #ccc;
+	color: #999;
+}
+
+.ef-calendar > tbody > tr > td.weekday .day-of-month {
+	color: #666;
 }
 
 /* EF Calendar Utility */
