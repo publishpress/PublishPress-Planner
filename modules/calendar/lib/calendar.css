@@ -2,69 +2,86 @@
 	margin-right: 20px;
 }
 
-
 .ef-calendar {
+	display: table;
 	margin: 3em 20px 0 0;
 	table-layout: fixed;
+	border-collapse: collapse;
+	background: #fff;
+	border: 1px solid #e5e5e5;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    border-spacing: 0;
+    width: 100%;
+    clear: both;
 }
 
-/* EF Calendar Header */
+.ef-calendar * {
+	word-wrap: break-word;
+}
 
-.ef-calendar > thead {
+.ef-calendar > .ef-calendar-header {
+	display: table-header-group;
 	background-color: #f9f9f9;
 }
 
-.ef-calendar > thead > tr > th {
+.ef-calendar > .ef-calendar-body {
+	display: table-row-group;
+}
+
+.ef-calendar > .ef-calendar-header > .ef-calendar-header-row,
+.ef-calendar > .ef-calendar-body > .ef-calendar-week {
+	display: table-row;
+}
+
+.ef-calendar > .ef-calendar-header > .ef-calendar-header-row > .ef-calendar-day-of-week,
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day {
+	color: #32373c;
+	display: table-cell;
+	border-right: 1px solid #e1e1e1;
+}
+
+.ef-calendar > .ef-calendar-header > .ef-calendar-header-row > .ef-calendar-day-of-week {
 	font-size: 1.3em;
 	padding: 1em 0.3em;
 	text-align: center;
-}
-
-/* EF Calendar Days */
-
-.ef-calendar {
-	border-collapse: collapse;
-}
-
-.ef-calendar > tbody > tr {
-	border-top: 1px solid #e1e1e1;
-}
-
-.ef-calendar > tbody > tr > td {
-	border-right: 1px solid #e1e1e1;
-	height: 100px;
-	padding-top: 4px;
-}
-
-.ef-calendar > tbody > tr > td:last-child {
-	border-right: none;
-}
-
-.ef-calendar > tbody > tr > td.weekend {
+	line-height: 1.4em;
+	border-bottom: 1px solid #e1e1e1;
 	background-color: white;
 }
 
-.ef-calendar > tbody > tr > td.weekday {
+.ef-calendar > .ef-calendar-body > .ef-calendar-week {
+	border-top: 1px solid #e1e1e1;
+}
+
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day { 
+	height: 100px;
+	padding-top: 4px;
+	padding: 4px 10px 8px 10px;
+	font-size: 13px;
+    line-height: 1.5em;
+}
+
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day:last-child {
+	border-right: none;
+}
+
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekend {
+	background-color: white;
+}
+
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekday {
 	background-color: #f9f9f9;
 }
 
-.ef-calendar > tbody > tr > td .day-of-month {
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-day-of-month {
 	text-align: left;
 }
 
-.ef-calendar > tbody > tr > td.weekend .day-of-month {
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekend .ef-calendar-day-of-month {
 	color: #999;
 }
 
-.ef-calendar > tbody > tr > td.weekday .day-of-month {
+.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.weekday .ef-calendar-day-of-month {
 	color: #666;
-}
-
-/* EF Calendar Utility */
-
-.ef-calendar .widefat {
-	border-spacing: 0;
-	clear: both;
-	margin: 0;
-	width: 100%;
 }

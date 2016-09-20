@@ -584,20 +584,26 @@ class EF_Calendar extends EF_Module {
 	function view_calendar() {
 		?>
 			<div class="ef-calendar-wrap">
-				<table class="ef-calendar widefat"></table>
+				<div class="ef-calendar"></div>
 			</div>
 			<script type="text/template" id="ef-calendar-header-template">
-				<tr>
-					<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
-				</tr>
+				<div class="ef-calendar-header-row">
+					<% _.each(daysOfWeek, function(dayOfWeek) { %>  <div class="ef-calendar-day-of-week"><%- dayOfWeek.shortName %></div> <% }); %>
+				</div>
 			</script>
 			<script type="text/template" id="ef-calendar-day-template">
-				<p class="day-of-month">
+				<div class="ef-calendar-day-of-month">
 					<%- dayOfMonth %>
 					<% if (firstOfTheMonth) { %>
-						<span class="month-of-year"><%- monthOfYear %></span>
+						<span class="ef-calendar-month-of-year"><%- monthOfYear %></span>
 					<% } %>		
-				</p>
+
+					<% _.each(posts, function(post) { %>
+						<div class="ef-calendar-post">
+							<%- post.title %>
+						</div>
+					<% }); %>
+				</div>
 			</script>
 		<?php
 	}

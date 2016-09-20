@@ -1,180 +1,221 @@
 jQuery(document).ready(function ($) {
 	var postCalendar = {
-		weekendDays: ['Saturday', 'Sunday'],
-		header: {
-			daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-		},
+		weekendDays: [
+			{
+				id: 'Saturday',
+				shortName: 'Sat'
+			},
+			{
+				id: 'Sunday',
+				shortName: 'Sun'
+			}
+		],
+		daysOfWeek: [
+			{
+				id: 'Monday',
+				shortName: 'Mon'
+			},
+			{
+				id: 'Tuesday',
+				shortName: 'Tue'
+			},
+			{
+				id: 'Wednesday',
+				shortName: 'Wed'
+			},
+			{
+				id: 'Thursday',
+				shortName: 'Thu'
+			},
+			{
+				id: 'Friday',
+				shortName: 'Fri'
+			},
+			{
+				id: 'Saturday',
+				shortName: 'Sat'
+			},
+			{
+				id: 'Sunday',
+				shortName: 'Sun'
+			},
+		],
 		days: [
 			{
 				date: {
 					iso: '2016-09-01T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1235',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-02T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1236',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-03T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1237',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-04T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1238',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-05T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1239',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-06T01:45:43.514Z',
 					isWeekend: true,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1240',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-07T01:45:43.514Z',
 					isWeekend: true,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1241',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-08T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1242',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-09T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1243',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-10T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1244',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-11T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1245',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-12T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1246',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-13T01:45:43.514Z',
 					isWeekend: true,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1247',
+						title: 'This is my test post'
 					}
-				}
+				]
 			},
 			{
 				date: {
 					iso: '2016-09-14T01:45:43.514Z',
 					isWeekend: true,
 				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
+				posts: [
+					{
+						id: '1248',
+						title: 'This is my test post'
 					}
-				}
-			},
-			{
-				date: {
-					iso: '2016-09-15T01:45:43.514Z',
-					isWeekend: false,
-				},
-				posts: {
-					1234: {
-						'title': 'This is my test post'
-					}
-				}
+				]
 			}
 		]
 	};
 
 	var CalendarHeaderView = Backbone.View.extend({
-		tagName: 'thead',
+		tagName: 'div',
+
+		className: 'ef-calendar-header',
 
 		template: _.template($('#ef-calendar-header-template').html()),
 
@@ -185,14 +226,16 @@ jQuery(document).ready(function ($) {
 	});
 
 	var CalendarDayView = Backbone.View.extend({
-		tagName: 'td',
+		tagName: 'div',
+
+		className: 'ef-calendar-day',
 
 		template: _.template($('#ef-calendar-day-template').html()),
 
 		initialize: function() {
 			this.date = moment(this.model.date.iso); 
 
-			var weekendOrWeekdayClass = this.model.date.isWeekend ? 'weekend' : 'weekday';
+			var weekendOrWeekdayClass = this.model.date.isWeekend ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
 			this.$el.addClass(weekendOrWeekdayClass);
 		},
 
@@ -200,7 +243,8 @@ jQuery(document).ready(function ($) {
 			this.$el.html(this.template({
 				dayOfMonth: this.date.format('D'),
 				monthOfYear: this.date.format('MMM'),
-				firstOfTheMonth: this.date.date() === 1
+				firstOfTheMonth: this.date.date() === 1,
+				posts: this.model.posts
 			}));
 
 			return this;
@@ -208,7 +252,9 @@ jQuery(document).ready(function ($) {
 	});
 
 	var CalendarWeekView = Backbone.View.extend({
-		tagName: 'tr',
+		tagName: 'div',
+
+		className: 'ef-calendar-week',
 
 		render: function() {
 			this.$el.append(this.model.map(function(day) {
@@ -217,31 +263,52 @@ jQuery(document).ready(function ($) {
 
 			return this;
 		}
-	})
+	});
 
-	var CalendarView = Backbone.View.extend({
-		el: $('.ef-calendar'),
+	var CalendarBodyView = Backbone.View.extend({
+		tagName: 'div',
+
+		className: 'ef-calendar-body',
 
 		initialize: function() {
-			var daysInAWeek = 7,
-				totalWeeks = Math.ceil(postCalendar.days.length/daysInAWeek);
-
-			this.header = (new CalendarHeaderView({model: postCalendar.header})).render().el;
-
-			var totalWeeksIndex = totalWeeks * 7;
+			var daysInAWeek = this.model.daysOfWeek.length,
+				totalWeeks = Math.ceil(this.model.days.length / daysInAWeek),
+				totalDays = totalWeeks * daysInAWeek;
 			
 			this.body = [];
 			var calendarWeekView = null;
-			for (var i = 0; i < totalWeeksIndex; i += daysInAWeek) {
-				calendarWeekView = new CalendarWeekView({model: postCalendar.days.slice(i, i + daysInAWeek)})
+			for (var i = 0; i < totalDays; i += daysInAWeek) {
+				calendarWeekView = new CalendarWeekView({model: this.model.days.slice(i, i + daysInAWeek)})
 
 				this.body.push(calendarWeekView.render().el);
 			}
 		},
 
 		render: function() {
+			this.$el.append(this.body);
+			return this;
+		}
+	})
+
+	var CalendarView = Backbone.View.extend({
+		el: $('.ef-calendar'),
+
+		initialize: function() {
+			var headerModel = {
+				daysOfWeek: postCalendar.daysOfWeek,
+				weekendDays: postCalendar.weekendDays
+			}
+
+			this.header = (new CalendarHeaderView({model: headerModel})).render().el;
+			this.body = (new CalendarBodyView({
+				model: _.extend({}, headerModel, {days: postCalendar.days})
+			}).render().el);
+		},
+
+		render: function() {
 			this.$el.append(this.header);
 			this.$el.append(this.body);
+			return this;
 		}
 	});
 
