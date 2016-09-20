@@ -3,16 +3,78 @@ jQuery(document).ready(function ($) {
 		header: {
 			daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 		},
-		days: {
-			20160901: {
-				day: '01',
+		days: [
+			{
+				date: {
+					iso: '2016-09-01T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-02T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-03T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-04T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-05T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-06T01:45:43.514Z'
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-07T01:45:43.514Z'
+				},
 				posts: {
 					1234: {
 						'title': 'This is my test post'
 					}
 				}
 			}
-		}
+		]
 	};
 
 	var CalendarHeaderView = Backbone.View.extend({
@@ -29,19 +91,45 @@ jQuery(document).ready(function ($) {
 	var CalendarDayView = Backbone.View.extend({
 		tagName: 'td',
 
-		template: _.template($('#ef-calendar-day-template').html())
+		template: _.template($('#ef-calendar-day-template').html()),
+
+		initialize: function() {
+			this.date = moment(this.model.date.iso); 
+		},
+
+		render: function() {
+			this.$el.html(this.template({
+				dayOfMonth: this.date.format('DD')
+			}));
+
+			return this;
+		}
 	});
+
+	var CalendarWeekView = Backbone.View.extend({
+		tagName: 'tr',
+
+		render: function() {
+			this.$el.append(this.model.map(function(day) {
+				return (new CalendarDayView({model: day})).render().el;
+			}));
+
+			return this;
+		}
+	})
 
 	var CalendarView = Backbone.View.extend({
 		el: $('.ef-calendar'),
 
 		initialize: function() {
 			this.header = new CalendarHeaderView({model: postCalendar.header});
+			this.body = new CalendarWeekView({model: postCalendar.days})
 			this.render();
 		},
 
 		render: function() {
-			this.$el.html(this.header.render().el);
+			this.$el.append(this.header.render().el);
+			this.$el.append(this.body.render().el);
 		}
 	});
 

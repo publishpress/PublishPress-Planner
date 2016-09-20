@@ -204,8 +204,14 @@ class EF_Calendar extends EF_Module {
 			foreach( $js_libraries as $js_library ) {
 				wp_enqueue_script( $js_library );
 			}
+
+			wp_enqueue_script( 'edit-flow-moment-js', EDIT_FLOW_URL . 'common/js/moment.min.js', $js_libraries, EDIT_FLOW_VERSION, true );
+
+			$js_libraries[] = 'edit-flow-moment-js';
+
 			wp_enqueue_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
-			
+
+
 			$ef_cal_js_params = array( 'can_add_posts' => current_user_can( $this->create_post_cap ) ? 'true' : 'false' );
 			wp_localize_script( 'edit-flow-calendar-js', 'ef_calendar_params', $ef_cal_js_params );
 		}
@@ -584,6 +590,9 @@ class EF_Calendar extends EF_Module {
 				<tr>
 					<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
 				</tr>
+			</script>
+			<script type="text/template" id="ef-calendar-day-template">
+				<p class="day-of-month"><%- dayOfMonth %></p>
 			</script>
 		<?php
 	}

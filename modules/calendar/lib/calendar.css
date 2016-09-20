@@ -20,11 +20,28 @@
 	text-align: center;
 }
 
+/* EF Calendar Days */
+
+.ef-calendar > tbody > tr > td {
+}
+
+.ef-calendar > tbody > tr > td.weekend {
+	background-color: #f9f9f9
+}
+
+.ef-calendar > tbody > tr > td.weekday {
+	background-color: white;
+}
+
+.ef-calendar > tbody > tr > td .day-of-month {
+	text-align: right;
+}
+
+/* EF Calendar Utility */
+
 .ef-calendar .widefat {
 	border-spacing: 0;
 	width: 100%;
 	clear: both;
 	margin: 0;
 }
-
-/* EF Calendar Days */
