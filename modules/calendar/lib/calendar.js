@@ -16,9 +16,9 @@ jQuery(document).ready(function ($) {
 	};
 
 	var CalendarHeaderView = Backbone.View.extend({
-		tag: 'thead',
+		tagName: 'thead',
 
-		template: _.template($('#ef-calendar-header').html()),
+		template: _.template($('#ef-calendar-header-template').html()),
 
 		render: function() {
 			this.$el.html(this.template(this.model));
@@ -26,8 +26,14 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	var CalendarDayView = Backbone.View.extend({
+		tagName: 'td',
+
+		template: _.template($('#ef-calendar-day-template').html())
+	});
+
 	var CalendarView = Backbone.View.extend({
-		el: $('#ef-calendar'),
+		el: $('.ef-calendar'),
 
 		initialize: function() {
 			this.header = new CalendarHeaderView({model: postCalendar.header});
@@ -35,7 +41,7 @@ jQuery(document).ready(function ($) {
 		},
 
 		render: function() {
-			this.$el.append(this.header.render().el);
+			this.$el.html(this.header.render().el);
 		}
 	});
 

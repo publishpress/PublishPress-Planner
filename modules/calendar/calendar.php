@@ -577,13 +577,13 @@ class EF_Calendar extends EF_Module {
 	 */
 	function view_calendar() {
 		?>
-			<table id="ef-calendar"></table>
-			<script type="text/template" id="ef-calendar-header">
-				<thead>
-					<tr>
-						<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
-					</tr>
-				</thead>
+			<div class="ef-calendar-wrap">
+				<table class="ef-calendar widefat"></table>
+			</div>
+			<script type="text/template" id="ef-calendar-header-template">
+				<tr>
+					<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
+				</tr>
 			</script>
 		<?php
 	}

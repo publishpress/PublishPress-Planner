@@ -1,0 +1,30 @@
+.ef-calendar-wrap {
+	margin-right: 20px;
+}
+
+
+.ef-calendar {
+	table-layout: fixed;
+	margin: 3em 20px 0 0;
+}
+
+/* EF Calendar Header */
+
+.ef-calendar > thead {
+	background-color: #f9f9f9;
+}
+
+.ef-calendar > thead > tr > th {
+	font-size: 1.3em;
+	padding: 1em 0.3em;
+	text-align: center;
+}
+
+.ef-calendar .widefat {
+	border-spacing: 0;
+	width: 100%;
+	clear: both;
+	margin: 0;
+}
+
+/* EF Calendar Days */
