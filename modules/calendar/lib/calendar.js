@@ -1,12 +1,14 @@
 jQuery(document).ready(function ($) {
 	var postCalendar = {
+		weekendDays: ['Saturday', 'Sunday'],
 		header: {
 			daysOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 		},
 		days: [
 			{
 				date: {
-					iso: '2016-09-01T01:45:43.514Z'
+					iso: '2016-09-01T01:45:43.514Z',
+					isWeekend: false,
 				},
 				posts: {
 					1234: {
@@ -16,7 +18,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-02T01:45:43.514Z'
+					iso: '2016-09-02T01:45:43.514Z',
+					isWeekend: false,
 				},
 				posts: {
 					1234: {
@@ -26,7 +29,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-03T01:45:43.514Z'
+					iso: '2016-09-03T01:45:43.514Z',
+					isWeekend: false,
 				},
 				posts: {
 					1234: {
@@ -36,7 +40,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-04T01:45:43.514Z'
+					iso: '2016-09-04T01:45:43.514Z',
+					isWeekend: false,
 				},
 				posts: {
 					1234: {
@@ -46,7 +51,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-05T01:45:43.514Z'
+					iso: '2016-09-05T01:45:43.514Z',
+					isWeekend: false,
 				},
 				posts: {
 					1234: {
@@ -56,7 +62,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-06T01:45:43.514Z'
+					iso: '2016-09-06T01:45:43.514Z',
+					isWeekend: true,
 				},
 				posts: {
 					1234: {
@@ -66,7 +73,8 @@ jQuery(document).ready(function ($) {
 			},
 			{
 				date: {
-					iso: '2016-09-07T01:45:43.514Z'
+					iso: '2016-09-07T01:45:43.514Z',
+					isWeekend: true,
 				},
 				posts: {
 					1234: {
@@ -95,6 +103,9 @@ jQuery(document).ready(function ($) {
 
 		initialize: function() {
 			this.date = moment(this.model.date.iso); 
+
+			var weekendOrWeekdayClass = this.model.date.isWeekend ? 'weekend' : 'weekday';
+			this.$el.addClass(weekendOrWeekdayClass);
 		},
 
 		render: function() {

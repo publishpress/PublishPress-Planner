@@ -23,6 +23,7 @@
 /* EF Calendar Days */
 
 .ef-calendar > tbody > tr > td {
+	border-right: 1px solid #e1e1e1;
 }
 
 .ef-calendar > tbody > tr > td.weekend {
