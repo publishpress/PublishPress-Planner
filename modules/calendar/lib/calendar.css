@@ -22,6 +22,14 @@
 
 /* EF Calendar Days */
 
+.ef-calendar {
+	border-collapse: collapse;
+}
+
+.ef-calendar > tbody > tr {
+	border-top: 1px solid #e1e1e1;
+}
+
 .ef-calendar > tbody > tr > td {
 	border-right: 1px solid #e1e1e1;
 	height: 100px;
@@ -41,7 +49,7 @@
 }
 
 .ef-calendar > tbody > tr > td .day-of-month {
-	text-align: right;
+	text-align: left;
 }
 
 .ef-calendar > tbody > tr > td.weekend .day-of-month {

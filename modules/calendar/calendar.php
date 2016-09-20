@@ -592,7 +592,12 @@ class EF_Calendar extends EF_Module {
 				</tr>
 			</script>
 			<script type="text/template" id="ef-calendar-day-template">
-				<p class="day-of-month"><%- dayOfMonth %></p>
+				<p class="day-of-month">
+					<%- dayOfMonth %>
+					<% if (firstOfTheMonth) { %>
+						<span class="month-of-year"><%- monthOfYear %></span>
+					<% } %>		
+				</p>
 			</script>
 		<?php
 	}

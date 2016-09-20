@@ -81,6 +81,94 @@ jQuery(document).ready(function ($) {
 						'title': 'This is my test post'
 					}
 				}
+			},
+			{
+				date: {
+					iso: '2016-09-08T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-09T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-10T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-11T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-12T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-13T01:45:43.514Z',
+					isWeekend: true,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-14T01:45:43.514Z',
+					isWeekend: true,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
+			},
+			{
+				date: {
+					iso: '2016-09-15T01:45:43.514Z',
+					isWeekend: false,
+				},
+				posts: {
+					1234: {
+						'title': 'This is my test post'
+					}
+				}
 			}
 		]
 	};
@@ -110,7 +198,9 @@ jQuery(document).ready(function ($) {
 
 		render: function() {
 			this.$el.html(this.template({
-				dayOfMonth: this.date.format('DD')
+				dayOfMonth: this.date.format('D'),
+				monthOfYear: this.date.format('MMM'),
+				firstOfTheMonth: this.date.date() === 1
 			}));
 
 			return this;
@@ -133,18 +223,30 @@ jQuery(document).ready(function ($) {
 		el: $('.ef-calendar'),
 
 		initialize: function() {
-			this.header = new CalendarHeaderView({model: postCalendar.header});
-			this.body = new CalendarWeekView({model: postCalendar.days})
-			this.render();
+			var daysInAWeek = 7,
+				totalWeeks = Math.ceil(postCalendar.days.length/daysInAWeek);
+
+			this.header = (new CalendarHeaderView({model: postCalendar.header})).render().el;
+
+			var totalWeeksIndex = totalWeeks * 7;
+			
+			this.body = [];
+			var calendarWeekView = null;
+			for (var i = 0; i < totalWeeksIndex; i += daysInAWeek) {
+				calendarWeekView = new CalendarWeekView({model: postCalendar.days.slice(i, i + daysInAWeek)})
+
+				this.body.push(calendarWeekView.render().el);
+			}
 		},
 
 		render: function() {
-			this.$el.append(this.header.render().el);
-			this.$el.append(this.body.render().el);
+			this.$el.append(this.header);
+			this.$el.append(this.body);
 		}
 	});
 
 	var Calendar = new CalendarView();
+	Calendar.render();
 
 
 	var $calendarWrapper = $('#ef-calendar-wrap');
