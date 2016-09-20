@@ -4,8 +4,8 @@
 
 
 .ef-calendar {
-	table-layout: fixed;
 	margin: 3em 20px 0 0;
+	table-layout: fixed;
 }
 
 /* EF Calendar Header */
@@ -24,25 +24,35 @@
 
 .ef-calendar > tbody > tr > td {
 	border-right: 1px solid #e1e1e1;
+	height: 100px;
+	padding-top: 4px;
+}
+
+.ef-calendar > tbody > tr > td:last-child {
+	border-right: none;
 }
 
 .ef-calendar > tbody > tr > td.weekend {
-	background-color: #f9f9f9
+	background-color: white;
 }
 
 .ef-calendar > tbody > tr > td.weekday {
-	background-color: white;
+	background-color: #f9f9f9;
 }
 
 .ef-calendar > tbody > tr > td .day-of-month {
 	text-align: right;
 }
 
+.ef-calendar > tbody > tr > td.weekend .day-of-month {
+	color: #ccc;
+}
+
 /* EF Calendar Utility */
 
 .ef-calendar .widefat {
 	border-spacing: 0;
-	width: 100%;
 	clear: both;
 	margin: 0;
+	width: 100%;
 }
