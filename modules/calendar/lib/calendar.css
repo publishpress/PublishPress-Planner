@@ -20,28 +20,32 @@
 	word-wrap: break-word;
 }
 
-.ef-calendar > .ef-calendar-header {
+.ef-calendar-header {
 	display: table-header-group;
 	background-color: #f9f9f9;
 }
 
-.ef-calendar > .ef-calendar-body {
+.ef-calendar-body {
 	display: table-row-group;
 }
 
-.ef-calendar > .ef-calendar-header > .ef-calendar-header-row,
-.ef-calendar > .ef-calendar-body > .ef-calendar-week {
+.ef-calendar-header-row,
+.ef-calendar-week {
 	display: table-row;
 }
 
-.ef-calendar > .ef-calendar-header > .ef-calendar-header-row > .ef-calendar-day-of-week,
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day {
+.ef-calendar-week {
+	border-top: 1px solid #e1e1e1;
+}
+
+.ef-calendar-day-of-week,
+.ef-calendar-day {
 	color: #32373c;
 	display: table-cell;
 	border-right: 1px solid #e1e1e1;
 }
 
-.ef-calendar > .ef-calendar-header > .ef-calendar-header-row > .ef-calendar-day-of-week {
+.ef-calendar-day-of-week {
 	font-size: 1.3em;
 	padding: 1em 0.3em;
 	text-align: center;
@@ -50,38 +54,72 @@
 	background-color: white;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week {
-	border-top: 1px solid #e1e1e1;
-}
-
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day { 
+.ef-calendar-day { 
 	height: 100px;
-	padding-top: 4px;
-	padding: 4px 10px 8px 10px;
+	padding: 4px 10px 4px 10px;
 	font-size: 13px;
     line-height: 1.5em;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day:last-child {
+.ef-calendar-day:last-child {
 	border-right: none;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekend {
+.ef-calendar-day.ef-calendar-weekend {
 	background-color: white;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekday {
+.ef-calendar-day.ef-calendar-weekday {
 	background-color: #f9f9f9;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-day-of-month {
-	text-align: left;
+.ef-calendar-day-of-month {
+	margin-bottom: 4px;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.ef-calendar-weekend .ef-calendar-day-of-month {
+.ef-calendar-weekend .ef-calendar-day-of-month {
 	color: #999;
 }
 
-.ef-calendar > .ef-calendar-body > .ef-calendar-week > .ef-calendar-day.weekday .ef-calendar-day-of-month {
+.ef-calendar-weekday .ef-calendar-day-of-month {
 	color: #666;
+}
+
+.ef-calendar-post {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.ef-calendar-post-status {
+	background-color: #e1e1e1;
+	padding: 0.2em;
+	color: #666;
+}
+
+.ef-calendar-post-title {
+	padding: 0.4em;
+	line-height: 1.2em;
+}
+
+.ef-calendar-post a {
+	text-decoration: none;
+}
+
+/* Mobile Calendar */
+
+@media screen and (max-width: 782px) {
+	.ef-calendar-body, 
+	.ef-calendar-header,
+	.ef-calendar,
+	.ef-calendar-header-row,
+	.ef-calendar-week,
+	.ef-calendar-day-of-week,
+	.ef-calendar-day {
+		display: block;
+	}
 }

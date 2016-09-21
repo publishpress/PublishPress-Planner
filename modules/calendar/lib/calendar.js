@@ -49,7 +49,17 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1235',
-						title: 'This is my test post'
+						status: {
+							name: 'Pitch'
+						},
+						title: 'This is my test post with a super long title, what happens when the title is real real long?'
+					},
+					{
+						id: '1250',
+						status: {
+							name: 'Published'
+						},
+						title: 'Short title'
 					}
 				]
 			},
@@ -61,6 +71,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1236',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -73,6 +86,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1237',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -85,6 +101,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1238',
+						status: {
+							name: 'Pending Review'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -97,6 +116,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1239',
+						status: {
+							name: 'Publish'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -109,6 +131,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1240',
+						status: {
+							name: 'Draft'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -121,6 +146,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1241',
+						status: {
+							name: 'Hi Twenty Characters'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -133,6 +161,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1242',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -145,6 +176,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1243',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -157,6 +191,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1244',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -169,6 +206,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1245',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -181,6 +221,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1246',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -193,6 +236,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1247',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
@@ -205,6 +251,9 @@ jQuery(document).ready(function ($) {
 				posts: [
 					{
 						id: '1248',
+						status: {
+							name: 'Pitch'
+						},
 						title: 'This is my test post'
 					}
 				]
