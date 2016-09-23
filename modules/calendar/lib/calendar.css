@@ -38,15 +38,22 @@
 	border-top: 1px solid #e1e1e1;
 }
 
-.ef-calendar-day-of-week,
+.ef-calendar-header-column,
 .ef-calendar-day {
-	color: #32373c;
 	display: table-cell;
 	border-right: 1px solid #e1e1e1;
 }
 
+.ef-calendar-day-of-week,
+.ef-calendar-day {
+	color: #32373c;
+}
+
 .ef-calendar-day-of-week {
 	font-size: 1.3em;
+}
+
+.ef-calendar-header-column {
 	padding: 1em 0.3em;
 	text-align: center;
 	line-height: 1.4em;
@@ -59,6 +66,7 @@
 	padding: 4px 10px 4px 10px;
 	font-size: 13px;
     line-height: 1.5em;
+    vertical-align: top
 }
 
 .ef-calendar-day:last-child {
@@ -73,15 +81,26 @@
 	background-color: #f9f9f9;
 }
 
-.ef-calendar-day-of-month {
+.ef-calendar-day-and-month {
 	margin-bottom: 4px;
 }
 
-.ef-calendar-weekend .ef-calendar-day-of-month {
+.ef-calendar-day-of-month .ef-calendar-day-of-week {
+	display: none;
+}
+
+.ef-calendar-day-of-month,
+.ef-calendar-month-of-year {
+	display: inline-block;
+}
+
+.ef-calendar-weekend .ef-calendar-day-of-month,
+.ef-calendar-weekend .ef-calendar-month-of-year {
 	color: #999;
 }
 
-.ef-calendar-weekday .ef-calendar-day-of-month {
+.ef-calendar-weekday .ef-calendar-day-of-month,
+.ef-calendar-weekday .ef-calendar-month-of-year {
 	color: #666;
 }
 
@@ -102,6 +121,8 @@
 }
 
 .ef-calendar-post-title {
+	font-size: 12px;
+  	font-weight: 600;
 	padding: 0.4em;
 	line-height: 1.2em;
 }
@@ -118,8 +139,63 @@
 	.ef-calendar,
 	.ef-calendar-header-row,
 	.ef-calendar-week,
-	.ef-calendar-day-of-week,
+	.ef-calendar-header-column,
 	.ef-calendar-day {
 		display: block;
 	}
+
+	.ef-calendar {
+		margin-top: 1em;
+		background: transparent;
+		border: none;
+		box-shadow: none;
+	}
+
+	.ef-calendar-wrap {
+		margin-right: 0;
+		padding-right: 10px;
+	}
+
+	.ef-calendar-day {
+		height: auto;
+		margin: 1em 0;
+		box-shadow: 0 1px 1px rgba(0,0,0,.04);
+		border: 1px solid #e5e5e5;
+		padding: 10px;
+	}
+
+	.ef-calendar-day:last-child {
+		border-right: 1px solid #e5e5e5;
+	}
+
+	.ef-calendar-header {
+		display: none;
+	}
+
+	.ef-calendar-week {
+		border-top: none;
+	}
+	
+	.ef-calendar-day-and-month {
+		content:" ";
+    	display: block;
+    	clear: both;
+	}
+
+	.ef-calendar-day-of-month {
+		font-size: 1.3em;
+		margin-bottom: 4px;
+	}
+
+	.ef-calendar-day-of-month .ef-calendar-day-of-week {
+		display: block;
+		font-size: 0.7em;
+	}
+
+	.ef-calendar-month-of-year {
+		float: right;
+		font-size: 1.6em;
+    	font-weight: bold;
+	}
+
 }

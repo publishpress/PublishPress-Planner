@@ -68,15 +68,7 @@ jQuery(document).ready(function ($) {
 					iso: '2016-09-02T01:45:43.514Z',
 					isWeekend: false,
 				},
-				posts: [
-					{
-						id: '1236',
-						status: {
-							name: 'Pitch'
-						},
-						title: 'This is my test post'
-					}
-				]
+				posts: []
 			},
 			{
 				date: {
@@ -84,13 +76,7 @@ jQuery(document).ready(function ($) {
 					isWeekend: false,
 				},
 				posts: [
-					{
-						id: '1237',
-						status: {
-							name: 'Pitch'
-						},
-						title: 'This is my test post'
-					}
+
 				]
 			},
 			{
@@ -291,7 +277,8 @@ jQuery(document).ready(function ($) {
 		render: function() {
 			this.$el.html(this.template({
 				dayOfMonth: this.date.format('D'),
-				monthOfYear: this.date.format('MMM'),
+				dayOfWeek: this.date.format('ddd'),
+				monthOfYear: this.date.format('MMMM'),
 				firstOfTheMonth: this.date.date() === 1,
 				posts: this.model.posts
 			}));
