@@ -30,6 +30,14 @@ jQuery(document).ready(function ($) {
 		tagName: 'td',
 
 		template: _.template($('#ef-calendar-day-template').html())
+
+		initialize: function() {
+
+		},
+
+		render: function() {
+			
+		}
 	});
 
 	var CalendarView = Backbone.View.extend({
