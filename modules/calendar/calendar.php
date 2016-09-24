@@ -209,7 +209,11 @@ class EF_Calendar extends EF_Module {
 
 			$js_libraries[] = 'edit-flow-moment-js';
 
-			wp_enqueue_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
+			wp_register_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
+			
+			wp_localize_script( 'edit-flow-calendar-js', 'POST_CALENDAR', $this->generate_calendar_data() );
+			
+			wp_enqueue_script( 'edit-flow-calendar-js' );
 
 
 			$ef_cal_js_params = array( 'can_add_posts' => current_user_can( $this->create_post_cap ) ? 'true' : 'false' );
@@ -576,6 +580,58 @@ class EF_Calendar extends EF_Module {
 		$this->update_user_meta( $current_user->ID, self::usermeta_key_prefix . 'filters', $filters );
 		
 		return $filters;
+	}
+
+	function generate_calendar_data() {
+		$first_day_of_calendar = $this->get_beginning_of_week( date( 'c', current_time( 'timestamp' ) ) );
+		$last_day_of_calendar = date( 'c', strtotime( '+30 days', strtotime( $first_day_of_calendar ) ) );
+		$supported_post_types = $this->get_post_types_for_module( $this->module );
+
+		$filters = $this->get_filters();
+		
+		$post_query_args = array(
+			'post_status' => $filters['post_status'],
+			'post_type'   => $filters['cpt'],
+			'cat'         => $filters['cat'],
+			'author'      => $filters['author'],
+			'date_query' => array(
+				'after' => $first_day_of_calendar,
+				'before' => $last_day_of_calendar,
+				'inclusive' => true
+			)
+		);
+
+		$posts_for_calendar = get_posts( $post_query_args );
+
+		var_dump( $this->array_fill_iso_date( $first_day_of_calendar, $last_day_of_calendar ) );
+
+		return array();
+	}
+
+	/**
+	 * Fill an array with ISO 8601 dates starting with from_date
+	 * and ending with to_date with a maximum fill of $max
+	 * @param  string  $from_date Date to start from
+	 * @param  string  $to_date   Date to end
+	 * @param  integer $max       Maximum number of dates to fill
+	 * @return array              Array of ISO 8601 formatted dates
+	 */
+	function array_fill_iso_date( $from_date, $to_date, $max = 30 ) {
+		$i = 1;
+
+		$fill = [ date( 'c', strtotime( $from_date ) ) ];
+
+		$current_date = $from_date;
+		while ( $from_date !== $to_date && $i < $max ) {
+			$current_date = date( 'c', strtotime( '+1 day', strtotime( $current_date ) ) );
+			
+			array_push( $fill, $current_date );
+			$i += 1;
+		}
+
+		array_push( $fill, date( 'c', strtotime( $to_date ) ) );
+
+		return $fill;
 	}
 	
 	/**

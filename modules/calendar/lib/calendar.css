@@ -105,7 +105,7 @@
 }
 
 .ef-calendar-post {
-  background: #fff;
+  background: #f9f9f9;
   border-radius: 2px;
   display: inline-block;
   position: relative;
@@ -114,16 +114,23 @@
   width: 100%;
 }
 
+.ef-calendar-weekday .ef-calendar-post {
+	background-color: white;
+}
+
+.ef-calendar-weekend .ef-calendar-post {
+	background-color: #f9f9f9;
+}
+
 .ef-calendar-post-status {
 	background-color: #f1f1f1;
+	border-bottom: 1px solid #e1e1e1;
 	padding: 0.2em;
 }
 
 .ef-calendar-post-title {
-	font-size: 12px;
   	font-weight: 600;
 	padding: 0.4em;
-	line-height: 1.2em;
 }
 
 .ef-calendar-post a {
