@@ -204,8 +204,18 @@ class EF_Calendar extends EF_Module {
 			foreach( $js_libraries as $js_library ) {
 				wp_enqueue_script( $js_library );
 			}
-			wp_enqueue_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
+
+			wp_enqueue_script( 'edit-flow-moment-js', EDIT_FLOW_URL . 'common/js/moment.min.js', $js_libraries, EDIT_FLOW_VERSION, true );
+
+			$js_libraries[] = 'edit-flow-moment-js';
+
+			wp_register_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
 			
+			wp_localize_script( 'edit-flow-calendar-js', 'POST_CALENDAR', $this->generate_calendar_data() );
+			
+			wp_enqueue_script( 'edit-flow-calendar-js' );
+
+
 			$ef_cal_js_params = array( 'can_add_posts' => current_user_can( $this->create_post_cap ) ? 'true' : 'false' );
 			wp_localize_script( 'edit-flow-calendar-js', 'ef_calendar_params', $ef_cal_js_params );
 		}
@@ -571,6 +581,138 @@ class EF_Calendar extends EF_Module {
 		
 		return $filters;
 	}
+
+	function is_same_day( $datetime_one, $datetime_two ) {
+		return $datetime_one->format( 'Ymd' ) === $datetime_two->format( 'Ymd' );
+	}
+
+	function is_weekend( $datetime ) {
+		return $datetime->format( 'N' ) >= 6;
+	}
+
+	function get_days_of_week() {
+		$localized_days_of_week = array_map( function( $day_num ) {
+			global $wp_locale;
+
+			$id = $wp_locale->get_weekday( $day_num );
+			return array(
+				'id' => $id,
+				'short_name' => $wp_locale->get_weekday_abbrev( $id ),
+				'index' => $day_num,
+				'is_weekend' => $day_num === 0 || $day_num === 6
+			);
+		}, range(0, 6) );
+
+		$start_of_week = (int) get_option( 'start_of_week' );
+		usort( $localized_days_of_week, function( $a, $b ) use ( $start_of_week ) {
+			if ( $a['index'] === $start_of_week ) {
+				return -1;
+			} else {
+				return 1;
+			}
+		} );
+
+		return $localized_days_of_week;
+	}
+
+	function get_month( $datetime ) {
+		global $wp_locale;
+
+		$month = $datetime->format( 'm' );
+		
+		$id =  $wp_locale->get_month( $month );
+		return array (
+			'id' => $id,
+			'short_name' => $wp_locale->get_month_abbrev( $id )
+		);
+	}
+
+	function generate_calendar_data() {
+		$first_day_of_calendar = new DateTime( $this->get_beginning_of_week( date( 'c', current_time( 'timestamp' ) ) ) );
+		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P34D' ) );
+		$supported_post_types = $this->get_post_types_for_module( $this->module );
+
+		$filters = $this->get_filters();
+		
+		$post_query_args = array(
+			'posts_per_page' => -1,
+			'post_status' => 'any',
+			'post_type'   => $filters['cpt'],
+			'cat'         => $filters['cat'],
+			'author'      => $filters['author'],
+			'date_query' => array(
+				'after' => $first_day_of_calendar->format( 'c' ),
+				'before' => $last_day_of_calendar->format( 'c' ),
+				'inclusive' => true
+			)
+		);
+
+		$posts_for_calendar = get_posts( $post_query_args );
+		$calendar_dates_by_day = $this->array_fill_date_time( $first_day_of_calendar, $last_day_of_calendar );
+		
+		$calendar_dates_with_posts = array_map( function( $day ) {
+			return array (
+				'day' => $day,
+				'posts' => []
+			);
+		}, $calendar_dates_by_day );
+
+		foreach( $calendar_dates_with_posts as $index => $day_with_posts ) {
+			foreach( $posts_for_calendar as $post ) {
+				if ( $this->is_same_day( $day_with_posts['day'], new DateTime( $post->post_date ) ) ) {
+					$status_name = $this->get_post_status_friendly_name( $post->post_status );
+					
+					$post->status = array(
+						'id' => $post->post_status,
+						'name' => $status_name
+					);
+
+					array_push( $day_with_posts['posts'], $post );
+
+					$calendar_dates_with_posts[$index] = $day_with_posts;
+				}
+			}
+		}
+
+		$weekdays = $this->get_days_of_week();
+		$formatted_calendar_data = array (
+			'weekdays' => $weekdays,
+			'days' => array_map( function( $day_and_posts ) {
+				return array (
+					'date' => array (
+						'iso' => $day_and_posts['day']->format( 'c' ),
+						'is_weekend' => $this->is_weekend( $day_and_posts['day'] ),
+						'month' => $this->get_month( $day_and_posts['day'] )
+					),
+					'posts' => $day_and_posts['posts']
+				);
+			}, $calendar_dates_with_posts ) );
+
+		return $formatted_calendar_data;
+	}
+
+	/**
+	 * Fill an array with DateTime starting with from_date
+	 * and ending with to_date with a maximum fill of $max
+	 * @param  DateTime  $from_date DateTime to start from
+	 * @param  DateTime  $to_date   DateTime to end
+	 * @return array              	Array of DateTime formatted dates
+	 */
+	function array_fill_date_time( $from_date, $to_date) {
+		$fill = [ $from_date ];
+		$diff = $to_date->diff( $from_date )->days;
+		$current_date = $from_date;
+
+		for ( $i = 1; $i < $diff; $i++ ) {
+			$current_date = ( new DateTime( $current_date->format( 'c' ) ) )->add( new DateInterval( 'P1D' ) );
+
+			array_push( $fill, $current_date );
+		}
+
+		array_push( $fill, $to_date );
+
+		return $fill;
+	}
 	
 	/**
 	 * Build all of the HTML for the calendar view
@@ -578,12 +720,42 @@ class EF_Calendar extends EF_Module {
 	function view_calendar() {
 		?>
 			<div class="ef-calendar-wrap">
-				<table class="ef-calendar widefat"></table>
+				<div class="ef-calendar"></div>
 			</div>
+
+
 			<script type="text/template" id="ef-calendar-header-template">
-				<tr>
-					<% _.each(daysOfWeek, function(dayOfWeek) { %>  <th><%- dayOfWeek %></th> <% }); %>
-				</tr>
+				<div class="ef-calendar-header-row">
+					<% _.each(weekdays, function(weekday) { %>  
+						<div class="ef-calendar-header-column">
+							<div class="ef-calendar-day-of-week"><%- weekday.short_name %></div> 
+						</div>
+					<% }); %>
+				</div>
+			</script>
+
+
+			<script type="text/template" id="ef-calendar-day-template">
+				<div class="ef-calendar-day-and-month">
+					<div class="ef-calendar-day-of-month">
+						<span class="ef-calendar-day-of-week"><%- day_of_week %></span><span class="ef-calendary-day-of-month"><%- day_of_month %></span>
+					</div>
+					<% if (first_of_month) { %>
+						<div class="ef-calendar-month-of-year"><%- month_of_year %></div>
+					<% } %>	
+				</div>
+				<div class="ef-calendar-posts">
+					<% _.each(posts, function(post) { %>
+						<div class="ef-calendar-post">
+							<div class="ef-calendar-post-status">
+								<%- post.status.name %>
+							</div>
+							<div class="ef-calendar-post-title">
+								<a href="post.editURL"><%- post.post_title %></a>
+							</div>
+						</div>
+					<% }); %>
+				</div>
 			</script>
 		<?php
 	}
