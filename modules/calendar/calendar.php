@@ -596,14 +596,15 @@ class EF_Calendar extends EF_Module {
 
 			$id = $wp_locale->get_weekday( $day_num );
 			return array(
-				'id' => $id,
+				'id' => $id, //localized weekday
 				'short_name' => $wp_locale->get_weekday_abbrev( $id ),
 				'index' => $day_num,
-				'is_weekend' => $day_num === 0 || $day_num === 6
+				'is_weekend' => $day_num === 0 || $day_num === 6 // In WP 0 and 6 are Sunday and Saturday, respectively
 			);
 		}, range(0, 6) );
 
 		$start_of_week = (int) get_option( 'start_of_week' );
+		// Sort the days of the week so the start_of_week is always first
 		usort( $localized_days_of_week, function( $a, $b ) use ( $start_of_week ) {
 			if ( $a['index'] === $start_of_week ) {
 				return -1;
@@ -628,7 +629,10 @@ class EF_Calendar extends EF_Module {
 	}
 
 	function generate_calendar_data() {
+		//Given the current time, get the first day of the week and the last day of the calendar
 		$first_day_of_calendar = new DateTime( $this->get_beginning_of_week( date( 'c', current_time( 'timestamp' ) ) ) );
+
+		// P34D gives 35 days which is divisible by 7 (makes for 5 weeks on the calendar)
 		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P34D' ) );
 		$supported_post_types = $this->get_post_types_for_module( $this->module );
 
@@ -643,7 +647,7 @@ class EF_Calendar extends EF_Module {
 			'date_query' => array(
 				'after' => $first_day_of_calendar->format( 'c' ),
 				'before' => $last_day_of_calendar->format( 'c' ),
-				'inclusive' => true
+				'inclusive' => true //All posts from the first and last day regardless of time
 			)
 		);
 
@@ -657,6 +661,7 @@ class EF_Calendar extends EF_Module {
 			);
 		}, $calendar_dates_by_day );
 
+		// Loop through all the calendar dates and add posts to the 'posts' array
 		foreach( $calendar_dates_with_posts as $index => $day_with_posts ) {
 			foreach( $posts_for_calendar as $post ) {
 				if ( $this->is_same_day( $day_with_posts['day'], new DateTime( $post->post_date ) ) ) {
@@ -667,6 +672,7 @@ class EF_Calendar extends EF_Module {
 						'name' => $status_name
 					);
 
+					// Todo: escape this data
 					array_push( $day_with_posts['posts'], $post );
 
 					$calendar_dates_with_posts[$index] = $day_with_posts;
