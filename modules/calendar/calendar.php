@@ -211,7 +211,7 @@ class EF_Calendar extends EF_Module {
 
 			wp_register_script( 'edit-flow-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, EDIT_FLOW_VERSION, true );
 			
-			wp_localize_script( 'edit-flow-calendar-js', 'POST_CALENDAR', $this->generate_calendar_data() );
+			wp_localize_script( 'edit-flow-calendar-js', 'POST_CALENDAR', $this->generate_calendar_data_for_num_weeks( 5 ) );
 			
 			wp_enqueue_script( 'edit-flow-calendar-js' );
 
@@ -603,16 +603,6 @@ class EF_Calendar extends EF_Module {
 			);
 		}, range(0, 6) );
 
-		$start_of_week = (int) get_option( 'start_of_week' );
-		// Sort the days of the week so the start_of_week is always first
-		usort( $localized_days_of_week, function( $a, $b ) use ( $start_of_week ) {
-			if ( $a['index'] === $start_of_week ) {
-				return -1;
-			} else {
-				return 1;
-			}
-		} );
-
 		return $localized_days_of_week;
 	}
 
@@ -628,12 +618,13 @@ class EF_Calendar extends EF_Module {
 		);
 	}
 
-	function generate_calendar_data() {
+
+	function generate_calendar_data_for_num_weeks( $num_weeks ) {
 		//Given the current time, get the first day of the week and the last day of the calendar
 		$first_day_of_calendar = new DateTime( $this->get_beginning_of_week( date( 'c', current_time( 'timestamp' ) ) ) );
 
-		// P34D gives 35 days which is divisible by 7 (makes for 5 weeks on the calendar)
-		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P34D' ) );
+		$num_weeks = ( $num_weeks * 7 ) - 1;
+		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P' . $num_weeks . 'D' ) );
 		$supported_post_types = $this->get_post_types_for_module( $this->module );
 
 		$filters = $this->get_filters();
@@ -680,15 +671,25 @@ class EF_Calendar extends EF_Module {
 			}
 		}
 
+		//Returns WP ordered week (Sunday at 0 index)
 		$weekdays = $this->get_days_of_week();
+		$sunday = array_shift( $weekdays );
+		array_push( $weekdays, $sunday ); //Shift around Sunday so it's always after Saturday
+		
+		$start_of_week_index = (int) get_option( 'start_of_week' );
+		$ordered_weekdays = array_merge( array_slice( $weekdays, $start_of_week_index - 1 ), array_slice( $weekdays, 0, $start_of_week_index - 1 ) );
+
 		$formatted_calendar_data = array (
-			'weekdays' => $weekdays,
-			'days' => array_map( function( $day_and_posts ) {
+			'weekdays' => $ordered_weekdays,
+			'days' => array_map( function( $day_and_posts ) use ( $first_day_of_calendar ) {
 				return array (
 					'date' => array (
 						'iso' => $day_and_posts['day']->format( 'c' ),
 						'is_weekend' => $this->is_weekend( $day_and_posts['day'] ),
-						'month' => $this->get_month( $day_and_posts['day'] )
+						'month' => $this->get_month( $day_and_posts['day'] ),
+						'day_of_month' => $day_and_posts['day']->format( 'j' ),
+						'month_of_year' => $day_and_posts['day']->format( 'M' ),
+						'show_month' => (int) $day_and_posts['day']->format( 'j' ) === 1 || $this->is_same_day( $day_and_posts['day'], $first_day_of_calendar )
 					),
 					'posts' => $day_and_posts['posts']
 				);
@@ -744,10 +745,10 @@ class EF_Calendar extends EF_Module {
 			<script type="text/template" id="ef-calendar-day-template">
 				<div class="ef-calendar-day-and-month">
 					<div class="ef-calendar-day-of-month">
-						<span class="ef-calendar-day-of-week"><%- day_of_week %></span><span class="ef-calendary-day-of-month"><%- day_of_month %></span>
+						<span class="ef-calendar-day-of-week"><%- date.day_of_week %></span><span class="ef-calendary-day-of-month"><%- date.day_of_month %></span>
 					</div>
-					<% if (first_of_month) { %>
-						<div class="ef-calendar-month-of-year"><%- month_of_year %></div>
+					<% if (date.show_month) { %>
+						<div class="ef-calendar-month-of-year"><%- date.month_of_year %></div>
 					<% } %>	
 				</div>
 				<div class="ef-calendar-posts">
