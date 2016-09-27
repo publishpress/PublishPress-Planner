@@ -627,8 +627,8 @@ class EF_Calendar extends EF_Module {
 		//Given the current time, get the first day of the week and the last day of the calendar
 		$first_day_of_calendar = new DateTime( $this->get_beginning_of_week( date( 'c', current_time( 'timestamp' ) ) ) );
 
-		// P34D gives 35 days which is divisible by 7 (makes for 5 weeks on the calendar)
-		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P34D' ) );
+		// Adding 20 more days to give an even 21 by default
+		$last_day_of_calendar = ( new DateTime( $first_day_of_calendar->format( 'c ' ) ) )->add( new DateInterval( 'P20D' ) );
 		$supported_post_types = $this->get_post_types_for_module( $this->module );
 
 		$filters = $this->get_filters();
@@ -744,7 +744,7 @@ class EF_Calendar extends EF_Module {
 					<% _.each(weekdays, function(weekday) { %>  
 						<div class="ef-calendar-header-column">
 							<% if (weekday.is_today) { %>
-								<div class="ef-calendar-day-of-week ef-day-of-week-today"><%- weekday.short_name %></div> 
+								<div class="ef-calendar-day-of-week ef-calendar-day-of-week-today"><%- weekday.short_name %></div> 
 							<% } else { %>
 								<div class="ef-calendar-day-of-week"><%- weekday.short_name %></div> 
 							<% } %>
@@ -756,7 +756,7 @@ class EF_Calendar extends EF_Module {
 
 			<script type="text/template" id="ef-calendar-day-template">
 				<div class="ef-calendar-day-and-month">
-					<div class="ef-calendar-day-of-month">
+					<div class="ef-calendar-day-of-month <%if (is_today) { %>ef-calendar-day-of-month-today<% } %>">
 						<span class="ef-calendar-day-of-week"><%- day_of_week %></span><span class="ef-calendary-day-of-month"><%- day_of_month %></span>
 					</div>
 					<% if (first_of_month) { %>
@@ -776,7 +776,7 @@ class EF_Calendar extends EF_Module {
 					<% }); %>
 				</div>
 				<% if (is_today) { %>
-					<div class="ef-calendar-today">Today</div>
+					<div class="ef-calendar-today-text">Today</div>
 				<% } %>
 			</script>
 		<?php
