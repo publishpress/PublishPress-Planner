@@ -188,6 +188,11 @@ class EF_Calendar extends EF_Module {
 	 * @uses wp_enqueue_script()
 	 */
 	function enqueue_admin_scripts() {
+		$current_screen = get_current_screen();
+
+		if ( $current_screen->id !== 'dashboard_page_calendar' ) {
+			return;
+		}
 
 		$this->enqueue_datepicker_resources();
 		
