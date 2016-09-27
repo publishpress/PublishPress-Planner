@@ -33,6 +33,7 @@ jQuery(document).ready(function ($) {
 				day_of_week: this.date.format('ddd'),
 				month_of_year: this.date.format('MMMM'),
 				first_of_month: this.date.date() === 1,
+				is_today: this.model.date.is_today,
 				posts: this.model.posts
 			}));
 

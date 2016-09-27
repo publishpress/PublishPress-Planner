@@ -53,6 +53,10 @@
 	font-size: 1.3em;
 }
 
+.ef-calendar-day-of-week.ef-day-of-week-today {
+	font-weight: bold;
+}
+
 .ef-calendar-header-column {
 	padding: 1em 0.3em;
 	text-align: center;
@@ -63,7 +67,6 @@
 
 .ef-calendar-day { 
 	height: 100px;
-	padding: 4px 10px 4px 10px;
 	font-size: 13px;
     line-height: 1.5em;
     vertical-align: top
@@ -77,12 +80,20 @@
 	background-color: white;
 }
 
+.ef-calendar-day .ef-calendar-today {
+	text-align: center;
+    padding-bottom: 4px;
+    color: #666;
+    font-size: 13px;
+}
+
 .ef-calendar-day.ef-calendar-weekday {
 	background-color: #f9f9f9;
 }
 
 .ef-calendar-day-and-month {
 	margin-bottom: 4px;
+	padding: 4px 10px;
 }
 
 .ef-calendar-day-of-month .ef-calendar-day-of-week {
@@ -102,6 +113,10 @@
 .ef-calendar-weekday .ef-calendar-day-of-month,
 .ef-calendar-weekday .ef-calendar-month-of-year {
 	color: #666;
+}
+
+.ef-calendar-posts {
+	padding: 0px 10px 4px 10px;
 }
 
 .ef-calendar-post {

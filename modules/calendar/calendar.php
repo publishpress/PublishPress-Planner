@@ -596,29 +596,19 @@ class EF_Calendar extends EF_Module {
 	}
 
 	function get_days_of_week() {
-		$localized_days_of_week = array_map( function( $day_num ) {
+		return array_map( function( $day_num ) {
 			global $wp_locale;
 
 			$id = $wp_locale->get_weekday( $day_num );
+
 			return array(
 				'id' => $id, //localized weekday
 				'short_name' => $wp_locale->get_weekday_abbrev( $id ),
 				'index' => $day_num,
-				'is_weekend' => $day_num === 0 || $day_num === 6 // In WP 0 and 6 are Sunday and Saturday, respectively
+				'is_weekend' => $day_num === 0 || $day_num === 6, // In WP 0 and 6 are Sunday and Saturday, respectively
+				'is_today' => date_i18n( 'l', current_time( 'timestamp' ) ) === $id
 			);
 		}, range(0, 6) );
-
-		$start_of_week = (int) get_option( 'start_of_week' );
-		// Sort the days of the week so the start_of_week is always first
-		usort( $localized_days_of_week, function( $a, $b ) use ( $start_of_week ) {
-			if ( $a['index'] === $start_of_week ) {
-				return -1;
-			} else {
-				return 1;
-			}
-		} );
-
-		return $localized_days_of_week;
 	}
 
 	function get_month( $datetime ) {
@@ -686,13 +676,27 @@ class EF_Calendar extends EF_Module {
 		}
 
 		$weekdays = $this->get_days_of_week();
+
+		//Move Sunday to the back
+		$sunday = array_shift( $weekdays );
+		$weekdays[] = $sunday;
+		$start_of_week = (int) get_option( 'start_of_week' );
+		$start_of_week_index = $start_of_week === 0 ? 6 : $start_of_week - 1; //If Sunday, index is at back
+
+		//Flip around calendar headings based on start of week
+		$sorted_weekdays = array_merge( 
+								array_slice( $weekdays, $start_of_week_index, count( $weekdays ) ), 
+								array_slice( $weekdays, 0, $start_of_week_index ) );
+
+		$todays_date = ( (new DateTime())->setTimestamp( current_time( 'timestamp' ) ) )->format( 'Y-m-d' );
 		$formatted_calendar_data = array (
-			'weekdays' => $weekdays,
-			'days' => array_map( function( $day_and_posts ) {
+			'weekdays' => $sorted_weekdays,
+			'days' => array_map( function( $day_and_posts ) use ( $todays_date ) {
 				return array (
 					'date' => array (
 						'iso' => $day_and_posts['day']->format( 'c' ),
 						'is_weekend' => $this->is_weekend( $day_and_posts['day'] ),
+						'is_today' => $todays_date === $day_and_posts['day']->format( 'Y-m-d' ),
 						'month' => $this->get_month( $day_and_posts['day'] )
 					),
 					'posts' => $day_and_posts['posts']
@@ -739,7 +743,11 @@ class EF_Calendar extends EF_Module {
 				<div class="ef-calendar-header-row">
 					<% _.each(weekdays, function(weekday) { %>  
 						<div class="ef-calendar-header-column">
-							<div class="ef-calendar-day-of-week"><%- weekday.short_name %></div> 
+							<% if (weekday.is_today) { %>
+								<div class="ef-calendar-day-of-week ef-day-of-week-today"><%- weekday.short_name %></div> 
+							<% } else { %>
+								<div class="ef-calendar-day-of-week"><%- weekday.short_name %></div> 
+							<% } %>
 						</div>
 					<% }); %>
 				</div>
@@ -767,6 +775,9 @@ class EF_Calendar extends EF_Module {
 						</div>
 					<% }); %>
 				</div>
+				<% if (is_today) { %>
+					<div class="ef-calendar-today">Today</div>
+				<% } %>
 			</script>
 		<?php
 	}
