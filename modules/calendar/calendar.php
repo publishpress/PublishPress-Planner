@@ -768,7 +768,6 @@ class EF_Calendar extends EF_Module {
 						<div class="ef-calendar-month-of-year"><%- month_of_year %></div>
 					<% } %>	
 				</div>
-				<div class="ef-calendar-posts"></div>
 			</script>
 
 			<script type="text/template" id="ef-calendar-day-post-template">

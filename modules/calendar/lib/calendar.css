@@ -131,6 +131,7 @@
 
 .ef-calendar-posts {
 	padding: 0px 10px 4px 10px;
+	min-height: 70px;
 }
 
 .ef-calendar-post {
