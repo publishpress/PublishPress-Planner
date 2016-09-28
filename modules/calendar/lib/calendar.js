@@ -8,7 +8,9 @@ jQuery(document).ready(function ($) {
 		template: _.template($('#ef-calendar-header-template').html()),
 
 		render: function() {
-			this.$el.html(this.template(this.model));
+			this.$el.empty();
+
+			this.$el.append(this.template({weekdays: this.model.get('weekdays').toJSON()}));
 			return this;
 		}
 	});
@@ -25,20 +27,23 @@ jQuery(document).ready(function ($) {
 		},
 
 		receive: function(e, ui) {
+			$(ui.sender).sortable('cancel');
 			this.props.onPostDropped(parseInt(ui.item.attr('data-post-id'), 10), 
 									 e.target.getAttribute('data-date-iso'), 
 									 ui.sender.attr('data-date-iso'));
 		},
 
 		render: function() {
-			var weekendOrWeekdayClass = this.model.date.is_weekend ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
+			this.$el.empty();
 
-			if (this.model.date.is_today) {
+			var weekendOrWeekdayClass = this.model.get('date').is_weekend ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
+
+			if (this.model.get('date').is_today) {
 				weekendOrWeekdayClass += ' ' + 'ef-calendar-today';
 			}
 
 			this.$el.addClass(weekendOrWeekdayClass);
-			this.$el.attr('data-date-iso', this.model.date.iso); //How we'll identify this day when using drag/drop
+			this.$el.attr('data-date-iso', this.model.get('date').iso); //How we'll identify this day when using drag/drop
 
 			this.$el.sortable({
 				items: '.ef-calendar-post',
@@ -46,18 +51,10 @@ jQuery(document).ready(function ($) {
 				receive: this.receive.bind(this)
 			});
 
-			this.$el.html(this.template({
-				day_of_month: this.model.date.day_of_month,
-				day_of_week: this.model.date.day_of_week,
-				month_of_year: this.model.date.month_of_year,
-				is_first_of_month: this.model.date.is_first_of_month,
-				is_today: this.model.date.is_today,
-			}));
+			this.$el.html(this.template(this.model.get('date')));
 
 			this.$el.append(new CalendarDayPostsView({
-				model: {
-					posts: this.model.posts
-				}
+				collection: this.model.get('posts')
 			}).render().el);
 
 			return this;
@@ -69,8 +66,14 @@ jQuery(document).ready(function ($) {
 
 		className: 'ef-calendar-posts',
 
+		initialize: function() {
+			this.collection.on('render', this.render.bind(this));
+		},
+
 		render: function() {
-			this.$el.append(this.model.posts.map(function(post) {
+			this.$el.empty();
+
+			this.$el.append(this.collection.map(function(post) {
 				return (new CalendarDayPostView({model: post})).render().el;
 			}));
 
@@ -86,8 +89,10 @@ jQuery(document).ready(function ($) {
 		template: _.template($('#ef-calendar-day-post-template').html()),
 
 		render: function() {	
-			this.$el.html(this.template(this.model));
-			this.$el.attr('data-post-id', this.model.ID);
+			this.$el.empty();
+
+			this.$el.append(this.template(this.model.toJSON()));
+			this.$el.attr('data-post-id', this.model.get('ID'));
 
 			return this;
 		}
@@ -103,7 +108,9 @@ jQuery(document).ready(function ($) {
 		},
 
 		render: function() {
-			this.$el.append(this.model.map(function(day) {
+			this.$el.empty();
+
+			this.$el.append(this.collection.map(function(day) {
 				return (new CalendarDayView({
 					model: day,
 					props: {
@@ -126,15 +133,17 @@ jQuery(document).ready(function ($) {
 		},
 
 		render: function() {
-			var daysInAWeek = this.model.weekdays.length,
-				totalWeeks = Math.ceil(this.model.days.length / daysInAWeek),
+			this.$el.empty();
+
+			var daysInAWeek = this.model.get('weekdays').length,
+				totalWeeks = Math.ceil(this.model.get('days').length / daysInAWeek),
 				totalDays = totalWeeks * daysInAWeek;
 			
 			this.body = [];
 			var calendarWeekView = null;
 			for (var i = 0; i < totalDays; i += daysInAWeek) {
 				calendarWeekView = new CalendarWeekView({
-					model: this.model.days.slice(i, i + daysInAWeek),
+					collection: this.model.get('days').slice(i, i + daysInAWeek),
 					props: {
 						onPostDropped: this.props.onPostDropped
 					}
@@ -154,48 +163,45 @@ jQuery(document).ready(function ($) {
 		onPostDropped: function(postID, to, from) {
 			var fromIndex = null, toIndex = null, postID
 
-			for(var i = 0; i < this.model.days.length; i++) {
+			for(var i = 0; i < this.model.get('days').length; i++) {
 				//Early return
 				if (fromIndex !== null && toIndex !== null) {
 					break;
 				}
 
-				if (this.model.days[i].date.iso === from) {
+				if (this.model.get('days').at(i).get('date').iso === from) {
 					fromIndex = i;
 				}
 
-				if (this.model.days[i].date.iso === to) {
+				if (this.model.get('days').at(i).get('date').iso === to) {
 					toIndex = i;
 				}
 			}
 
 			//Todo: what happens when this is undefined?
-			var post = this.model.days[fromIndex].posts.find(function(post) {
-				return post.ID === postID;
-			}),
-			fromPosts = this.model.days[fromIndex].posts.filter(function(post) {
-				return post.ID !== postID; 
+			var post = this.model.get('days').at(fromIndex).get('posts').get(postID),
+			fromPosts = this.model.get('days').at(fromIndex).get('posts').filter(function(post) {
+				return post.id !== postID; 
 			});
-			toPosts = this.model.days[toIndex].posts.filter(function(post) {
-				return post.ID !== postID; 
+			toPosts = this.model.get('days').at(toIndex).get('posts').filter(function(post) {
+				return post.id !== postID; 
 			});
 
 			toPosts.push(post);
 
-			this.model.days[fromIndex].posts = fromPosts;
-			this.model.days[toIndex].posts = toPosts;
-			this.render();
+			this.model.get('days').at(fromIndex).get('posts').reset(fromPosts)
+			this.model.get('days').at(toIndex).get('posts').reset(toPosts);
+			
+			this.model.get('days').at(fromIndex).get('posts').trigger('render');
+			this.model.get('days').at(toIndex).get('posts').trigger('render');
 		},
 
 		render: function() {
-			var headerModel = {
-				weekdays: this.model.weekdays
-			};
-
 			this.$el.empty();
-			this.$el.append((new CalendarHeaderView({model: headerModel})).render().el);
+
+			this.$el.append((new CalendarHeaderView({model: this.model})).render().el);
 			this.$el.append((new CalendarBodyView({
-				model: _.extend({}, headerModel, {days: this.model.days}),
+				model: this.model,
 				props: {
 					onPostDropped: this.onPostDropped.bind(this)
 				}
@@ -204,7 +210,29 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	var Calendar = new CalendarView({model: POST_CALENDAR});
+	var PostModel = Backbone.Model.extend({
+		idAttribute: 'ID'
+	});
+
+	var PostsCollection = Backbone.Collection.extend({
+  		model: PostModel
+	});
+
+	var calendarData = {
+		weekdays: new Backbone.Collection(POST_CALENDAR.weekdays.map(function(weekday) {
+			return new Backbone.Model(weekday);
+		})),
+		days: new Backbone.Collection(POST_CALENDAR.days.map(function(day) {
+			return new Backbone.Model({
+				date: day.date,
+				posts: new PostsCollection(day.posts.map(function(post) {
+					return new PostModel(post);
+				}))
+			});
+		}))
+	}
+
+	var Calendar = new CalendarView({model: new Backbone.Model(calendarData)});
 	Calendar.render();
 
 	var $calendarWrapper = $('#ef-calendar-wrap');
