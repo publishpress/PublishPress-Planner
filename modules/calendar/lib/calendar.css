@@ -80,10 +80,6 @@
 	background-color: white;
 }
 
-.ef-calendar-day.ef-calendar-today {
-	box-shadow: inset 0px -2px 0px #0073aa
-}
-
 .ef-calendar-day .ef-calendar-today-text {
 	text-align: center;
     padding-bottom: 4px;
@@ -91,11 +87,11 @@
     font-size: 13px;
 }
 
-.ef-calendar-day.ef-calendar-weekday {
-	background-color: #f9f9f9;
+.ef-calendar-today.ef-calendar-day {
+	box-shadow: inset 0px -2px 0px #0073aa
 }
 
-.ef-calendar-day.ef-calendar-today .ef-calendar-day-and-month {
+.ef-calendar-today.ef-calendar-day .ef-calendar-day-and-month {
 	font-weight: bold;
 	color: #32373c;
 }
@@ -105,21 +101,32 @@
 	padding: 4px 10px;
 }
 
+.ef-calendar-day-and-month * {
+	display: inline-block;
+}
+
 .ef-calendar-day-of-month .ef-calendar-day-of-week {
 	display: none;
 }
 
-.ef-calendar-day-of-month,
-.ef-calendar-month-of-year {
-	display: inline-block;
+.ef-calendar-weekday {
+	background-color: #f9f9f9;
 }
 
-.ef-calendar-weekend .ef-calendar-day-and-month {
-	color: #999;
+.ef-calendar-weekday .ef-calendar-post {
+	background-color: white;
 }
 
 .ef-calendar-weekday .ef-calendar-day-and-month {
 	color: #666;
+}
+
+.ef-calendar-weekend .ef-calendar-post {
+	background-color: #f9f9f9;
+}
+
+.ef-calendar-weekend .ef-calendar-day-and-month {
+	color: #999;
 }
 
 .ef-calendar-posts {
@@ -134,14 +141,6 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin-bottom: 8px;
   width: 100%;
-}
-
-.ef-calendar-weekday .ef-calendar-post {
-	background-color: white;
-}
-
-.ef-calendar-weekend .ef-calendar-post {
-	background-color: #f9f9f9;
 }
 
 .ef-calendar-post-status {
