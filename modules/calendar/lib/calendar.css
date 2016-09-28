@@ -80,6 +80,10 @@
 	background-color: white;
 }
 
+.ef-calendar-day.ef-calendar-today {
+	box-shadow: inset 0px -2px 0px #0073aa
+}
+
 .ef-calendar-day .ef-calendar-today-text {
 	text-align: center;
     padding-bottom: 4px;
@@ -89,6 +93,11 @@
 
 .ef-calendar-day.ef-calendar-weekday {
 	background-color: #f9f9f9;
+}
+
+.ef-calendar-day.ef-calendar-today .ef-calendar-day-and-month {
+	font-weight: bold;
+	color: #32373c;
 }
 
 .ef-calendar-day-and-month {
@@ -105,13 +114,11 @@
 	display: inline-block;
 }
 
-.ef-calendar-weekend .ef-calendar-day-of-month,
-.ef-calendar-weekend .ef-calendar-month-of-year {
+.ef-calendar-weekend .ef-calendar-day-and-month {
 	color: #999;
 }
 
-.ef-calendar-weekday .ef-calendar-day-of-month,
-.ef-calendar-weekday .ef-calendar-month-of-year {
+.ef-calendar-weekday .ef-calendar-day-and-month {
 	color: #666;
 }
 
@@ -205,11 +212,7 @@
 
 	.ef-calendar-day-of-month {
 		font-size: 1.3em;
-		margin-bottom: 4px;
-	}
-
-	.ef-calendar-day-of-month.ef-calendar-day-of-month-today {
-		font-weight: bold;
+		margin: 4px 0;
 	}
 
 	.ef-calendar-day-of-month .ef-calendar-day-of-week {

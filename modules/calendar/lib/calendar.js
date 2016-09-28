@@ -21,18 +21,21 @@ jQuery(document).ready(function ($) {
 		template: _.template($('#ef-calendar-day-template').html()),
 
 		initialize: function() {
-			this.date = moment(this.model.date.iso); 
-
 			var weekendOrWeekdayClass = this.model.date.is_weekend ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
+
+			if (this.model.date.is_today) {
+				weekendOrWeekdayClass += ' ' + 'ef-calendar-today';
+			}
+
 			this.$el.addClass(weekendOrWeekdayClass);
 		},
 
 		render: function() {
 			this.$el.html(this.template({
-				day_of_month: this.date.format('D'),
-				day_of_week: this.date.format('ddd'),
-				month_of_year: this.date.format('MMMM'),
-				first_of_month: this.date.date() === 1,
+				day_of_month: this.model.date.day_of_month,
+				day_of_week: this.model.date.day_of_week,
+				month_of_year: this.model.date.month_of_year,
+				is_first_of_month: this.model.date.is_first_of_month,
 				is_today: this.model.date.is_today,
 				posts: this.model.posts
 			}));

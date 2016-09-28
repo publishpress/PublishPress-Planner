@@ -664,8 +664,10 @@ class EF_Calendar extends EF_Module {
 					
 					$post->status = array(
 						'id' => $post->post_status,
-						'name' => $status_name
+						'name' => $status_name,
 					);
+
+					$post->editURL = get_edit_post_link( $post->ID );
 
 					// Todo: escape this data
 					array_push( $day_with_posts['posts'], $post );
@@ -694,7 +696,11 @@ class EF_Calendar extends EF_Module {
 			'days' => array_map( function( $day_and_posts ) use ( $todays_date ) {
 				return array (
 					'date' => array (
+						'day_of_month' =>  $day_and_posts['day']->format( 'j' ),
+						'day_of_week' => $day_and_posts['day']->format( 'l' ),
+						'month_of_year' => $day_and_posts['day']->format( 'F' ),
 						'iso' => $day_and_posts['day']->format( 'c' ),
+						'is_first_of_month' => (int) $day_and_posts['day']->format( 'j' ) === 1,
 						'is_weekend' => $this->is_weekend( $day_and_posts['day'] ),
 						'is_today' => $todays_date === $day_and_posts['day']->format( 'Y-m-d' ),
 						'month' => $this->get_month( $day_and_posts['day'] )
@@ -757,9 +763,9 @@ class EF_Calendar extends EF_Module {
 			<script type="text/template" id="ef-calendar-day-template">
 				<div class="ef-calendar-day-and-month">
 					<div class="ef-calendar-day-of-month <%if (is_today) { %>ef-calendar-day-of-month-today<% } %>">
-						<span class="ef-calendar-day-of-week"><%- day_of_week %></span><span class="ef-calendary-day-of-month"><%- day_of_month %></span>
+						<span class="ef-calendar-day-of-week"><%- day_of_week %></span><span class="ef-calendar-day-of-month"><%- day_of_month %></span>
 					</div>
-					<% if (first_of_month) { %>
+					<% if (is_first_of_month) { %>
 						<div class="ef-calendar-month-of-year"><%- month_of_year %></div>
 					<% } %>	
 				</div>
@@ -770,14 +776,11 @@ class EF_Calendar extends EF_Module {
 								<%- post.status.name %>
 							</div>
 							<div class="ef-calendar-post-title">
-								<a href="post.editURL"><%- post.post_title %></a>
+								<a href="<%= post.editURL %>"><%- post.post_title %></a>
 							</div>
 						</div>
 					<% }); %>
 				</div>
-				<% if (is_today) { %>
-					<div class="ef-calendar-today-text">Today</div>
-				<% } %>
 			</script>
 		<?php
 	}
