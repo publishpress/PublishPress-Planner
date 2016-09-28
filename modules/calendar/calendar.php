@@ -771,13 +771,11 @@ class EF_Calendar extends EF_Module {
 			</script>
 
 			<script type="text/template" id="ef-calendar-day-post-template">
-				<div class="ef-calendar-post">
-					<div class="ef-calendar-post-status">
-						<%- status.name %>
-					</div>
-					<div class="ef-calendar-post-title">
-						<a href="<%= editURL %>"><%- post_title %></a>
-					</div>
+				<div class="ef-calendar-post-status">
+					<%- status.name %>
+				</div>
+				<div class="ef-calendar-post-title">
+					<a href="<%= editURL %>"><%- post_title %></a>
 				</div>
 			</script>
 		<?php
