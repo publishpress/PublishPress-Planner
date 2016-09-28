@@ -759,7 +759,6 @@ class EF_Calendar extends EF_Module {
 				</div>
 			</script>
 
-
 			<script type="text/template" id="ef-calendar-day-template">
 				<div class="ef-calendar-day-and-month">
 					<div class="ef-calendar-day-of-month <%if (is_today) { %>ef-calendar-day-of-month-today<% } %>">
@@ -769,17 +768,17 @@ class EF_Calendar extends EF_Module {
 						<div class="ef-calendar-month-of-year"><%- month_of_year %></div>
 					<% } %>	
 				</div>
-				<div class="ef-calendar-posts">
-					<% _.each(posts, function(post) { %>
-						<div class="ef-calendar-post">
-							<div class="ef-calendar-post-status">
-								<%- post.status.name %>
-							</div>
-							<div class="ef-calendar-post-title">
-								<a href="<%= post.editURL %>"><%- post.post_title %></a>
-							</div>
-						</div>
-					<% }); %>
+				<div class="ef-calendar-posts"></div>
+			</script>
+
+			<script type="text/template" id="ef-calendar-day-post-template">
+				<div class="ef-calendar-post">
+					<div class="ef-calendar-post-status">
+						<%- status.name %>
+					</div>
+					<div class="ef-calendar-post-title">
+						<a href="<%= editURL %>"><%- post_title %></a>
+					</div>
 				</div>
 			</script>
 		<?php

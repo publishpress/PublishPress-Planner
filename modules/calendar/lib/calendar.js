@@ -37,8 +37,45 @@ jQuery(document).ready(function ($) {
 				month_of_year: this.model.date.month_of_year,
 				is_first_of_month: this.model.date.is_first_of_month,
 				is_today: this.model.date.is_today,
-				posts: this.model.posts
 			}));
+
+			this.$el.append(new CalendarDayPostsView({
+				model: {
+					posts: this.model.posts
+				}
+			}).render().el);
+
+			return this;
+		}
+	});
+
+	var CalendarDayPostsView = Backbone.View.extend({
+		tagName: 'div',
+
+		className: 'ef-calendar-posts',
+
+		initialize: function() {
+			this.$el.sortable({
+				connectWith: '.ef-calendar-posts'
+			})
+		},
+
+		render: function() {
+			this.$el.append(this.model.posts.map(function(post) {
+				return (new CalendarDayPostView({model: post})).render().el;
+			}));
+
+			return this;
+		}
+	})
+
+	var CalendarDayPostView = Backbone.View.extend({
+		tagName: 'div',
+
+		template: _.template($('#ef-calendar-day-post-template').html()),
+
+		render: function() {	
+			this.$el.html(this.template(this.model));
 
 			return this;
 		}
@@ -63,7 +100,7 @@ jQuery(document).ready(function ($) {
 
 		className: 'ef-calendar-body',
 
-		initialize: function() {
+		render: function() {
 			var daysInAWeek = this.model.weekdays.length,
 				totalWeeks = Math.ceil(this.model.days.length / daysInAWeek),
 				totalDays = totalWeeks * daysInAWeek;
@@ -75,9 +112,7 @@ jQuery(document).ready(function ($) {
 
 				this.body.push(calendarWeekView.render().el);
 			}
-		},
 
-		render: function() {
 			this.$el.append(this.body);
 			return this;
 		}
@@ -86,20 +121,15 @@ jQuery(document).ready(function ($) {
 	var CalendarView = Backbone.View.extend({
 		el: $('.ef-calendar'),
 
-		initialize: function() {
+		render: function() {
 			var headerModel = {
 				weekdays: this.model.weekdays
-			}
+			};
 
-			this.header = (new CalendarHeaderView({model: headerModel})).render().el;
-			this.body = (new CalendarBodyView({
+			this.$el.append( (new CalendarHeaderView({model: headerModel})).render().el);
+			this.$el.append((new CalendarBodyView({
 				model: _.extend({}, headerModel, {days: this.model.days})
-			}).render().el);
-		},
-
-		render: function() {
-			this.$el.append(this.header);
-			this.$el.append(this.body);
+			}).render().el));
 			return this;
 		}
 	});
