@@ -232,16 +232,22 @@ jQuery(document).ready(function ($) {
 		idAttribute: 'iso'
 	});
 
+	var DaysCollection = Backbone.Collection.extend({
+		model: DayModel
+	});
+
 	var calendarData = new Backbone.Model({
 		weekdays: new Backbone.Collection(POST_CALENDAR.weekdays.map(function(weekday) {
 			return new Backbone.Model(weekday);
 		})),
-		days: new Backbone.Collection(POST_CALENDAR.days.map(function(day) {
-			return new DayModel(Object.assign({}, day.date, {
+		days: new DaysCollection(POST_CALENDAR.days.map(function(day) {
+			var d = new DayModel(_.extend({}, day.date, {
 				posts: new PostsCollection(day.posts.map(function(post) {
 					return new PostModel(post);
 				}))
 			}));
+
+			return d;
 		}))
 	})
 
