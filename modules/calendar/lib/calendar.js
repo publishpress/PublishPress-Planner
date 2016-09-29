@@ -27,12 +27,15 @@ jQuery(document).ready(function ($) {
 		},
 
 		start: function(e, ui) {
-			this.props.onPostDragStart(e.target.getAttribute('data-date-iso'),
-									   parseInt(ui.item.attr('data-post-id'), 10));
+			this.props.onPostDragStart(this.model.id,
+									   this.model.get('posts').get(parseInt(ui.item.attr('data-post-id'), 10)));
 		},
 
-		stop: function(e, ui) {
-			this.props.onPostDragStop(e.target.getAttribute('data-date-iso'));
+		//Will trigger on the view where the post is dropped
+		receive: function(e, ui) {
+			console.log(e);
+			$(ui.sender).sortable('cancel');
+			this.props.onPostDragStop(this.model.id);
 		},
 
 		render: function() {
@@ -51,7 +54,7 @@ jQuery(document).ready(function ($) {
 				items: '.ef-calendar-post',
 				connectWith: '.ef-calendar-day',
 				start: this.start.bind(this),
-				stop: this.stop.bind(this)
+				receive: this.receive.bind(this)
 			});
 
 			this.$el.html(this.template(this.model.toJSON()));
@@ -165,44 +168,38 @@ jQuery(document).ready(function ($) {
 	var CalendarView = Backbone.View.extend({
 		el: $('.ef-calendar'),
 
-		onPostDragStart: function(fromId, postId) {
+		onPostDragStart: function(fromDayId, post) {
 			this.model.set('dragDrop', new Backbone.Model({
-				fromId: fromId,
-				postId: postId,
+				fromDayId: fromDayId,
+				post: post,
 				isDragging: true
 			}));
 		},
 
-		onPostDragStop: function(toId) {
-			var fromId = this.model.get('dragDrop').get('fromId'),
-				postId = this.model.get('dragDrop').get('postId')
-				isDragging = this.model.get('dragDrop').get('isDragging');
+		onPostDragStop: function(toDayId) {
+			var fromDayId = this.model.get('dragDrop').get('fromDayId'),
+				post = this.model.get('dragDrop').get('post');
 
-			//Shouldn't happen
-			if (!isDragging) {
-				return; 
-			}
+			// Todo: add function to model to reference this more easily
+			this.model.get('days')
+					  	.get(fromDayId)
+					  	.get('posts')
+					  	.remove(post);
 
-			//Also shouldn't happen
-			if (!fromId || !postId) {
-				this.model.set('dragDrop', new Backbone.Model({isDragging: false}));
-				return;
-			}
+			this.model.get('days')
+						.get(toDayId)
+						.get('posts')
+						.add(post);
 
-			var from = this.model.get('days').get(fromId),
-				to = this.model.get('days').get(toId),
-				post = from.get('posts').get(postId),
-				fromPosts = from.get('posts').filter(function(fromPost) {
-					return fromPost.id !== post.id;
-				}),
-				toPosts = to.get('posts').filter(function(toPost) {
-					return toPost.id !== post.id;
-				});
-
-				toPosts.push(post);
-
-				from.get('posts').reset(fromPosts).trigger('render');
-				to.get('posts').reset(toPosts).trigger('render');
+			this.model.get('days')
+						.get(fromDayId)
+						.get('posts')
+						.trigger('render');
+			
+			this.model.get('days')
+						.get(toDayId)
+						.get('posts')
+						.trigger('render');
 		},
 
 		render: function() {
