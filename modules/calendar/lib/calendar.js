@@ -26,32 +26,35 @@ jQuery(document).ready(function ($) {
 			this.props = options.props;
 		},
 
-		receive: function(e, ui) {
-			$(ui.sender).sortable('cancel');
-			this.props.onPostDropped(parseInt(ui.item.attr('data-post-id'), 10), 
-									 e.target.getAttribute('data-date-iso'), 
-									 ui.sender.attr('data-date-iso'));
+		start: function(e, ui) {
+			this.props.onPostDragStart(e.target.getAttribute('data-date-iso'),
+									   parseInt(ui.item.attr('data-post-id'), 10));
+		},
+
+		stop: function(e, ui) {
+			this.props.onPostDragStop(e.target.getAttribute('data-date-iso'));
 		},
 
 		render: function() {
 			this.$el.empty();
 
-			var weekendOrWeekdayClass = this.model.get('date').is_weekend ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
+			var weekendOrWeekdayClass = this.model.get('is_weekend') ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
 
-			if (this.model.get('date').is_today) {
+			if (this.model.get('is_today')) {
 				weekendOrWeekdayClass += ' ' + 'ef-calendar-today';
 			}
 
 			this.$el.addClass(weekendOrWeekdayClass);
-			this.$el.attr('data-date-iso', this.model.get('date').iso); //How we'll identify this day when using drag/drop
+			this.$el.attr('data-date-iso', this.model.id); //How we'll identify this day when using drag/drop
 
 			this.$el.sortable({
 				items: '.ef-calendar-post',
 				connectWith: '.ef-calendar-day',
-				receive: this.receive.bind(this)
+				start: this.start.bind(this),
+				stop: this.stop.bind(this)
 			});
 
-			this.$el.html(this.template(this.model.get('date')));
+			this.$el.html(this.template(this.model.toJSON()));
 
 			this.$el.append(new CalendarDayPostsView({
 				collection: this.model.get('posts')
@@ -114,7 +117,8 @@ jQuery(document).ready(function ($) {
 				return (new CalendarDayView({
 					model: day,
 					props: {
-						onPostDropped: this.props.onPostDropped
+						onPostDragStart: this.props.onPostDragStart,
+						onPostDragStop: this.props.onPostDragStop
 					}
 				})).render().el;
 			}, this));
@@ -145,7 +149,8 @@ jQuery(document).ready(function ($) {
 				calendarWeekView = new CalendarWeekView({
 					collection: this.model.get('days').slice(i, i + daysInAWeek),
 					props: {
-						onPostDropped: this.props.onPostDropped
+						onPostDragStart: this.props.onPostDragStart,
+						onPostDragStop: this.props.onPostDragStop
 					}
 				})
 
@@ -160,40 +165,44 @@ jQuery(document).ready(function ($) {
 	var CalendarView = Backbone.View.extend({
 		el: $('.ef-calendar'),
 
-		onPostDropped: function(postID, to, from) {
-			var fromIndex = null, toIndex = null, postID
+		onPostDragStart: function(fromId, postId) {
+			this.model.set('dragDrop', new Backbone.Model({
+				fromId: fromId,
+				postId: postId,
+				isDragging: true
+			}));
+		},
 
-			for(var i = 0; i < this.model.get('days').length; i++) {
-				//Early return
-				if (fromIndex !== null && toIndex !== null) {
-					break;
-				}
+		onPostDragStop: function(toId) {
+			var fromId = this.model.get('dragDrop').get('fromId'),
+				postId = this.model.get('dragDrop').get('postId')
+				isDragging = this.model.get('dragDrop').get('isDragging');
 
-				if (this.model.get('days').at(i).get('date').iso === from) {
-					fromIndex = i;
-				}
-
-				if (this.model.get('days').at(i).get('date').iso === to) {
-					toIndex = i;
-				}
+			//Shouldn't happen
+			if (!isDragging) {
+				return; 
 			}
 
-			//Todo: what happens when this is undefined?
-			var post = this.model.get('days').at(fromIndex).get('posts').get(postID),
-			fromPosts = this.model.get('days').at(fromIndex).get('posts').filter(function(post) {
-				return post.id !== postID; 
-			});
-			toPosts = this.model.get('days').at(toIndex).get('posts').filter(function(post) {
-				return post.id !== postID; 
-			});
+			//Also shouldn't happen
+			if (!fromId || !postId) {
+				this.model.set('dragDrop', new Backbone.Model({isDragging: false}));
+				return;
+			}
 
-			toPosts.push(post);
+			var from = this.model.get('days').get(fromId),
+				to = this.model.get('days').get(toId),
+				post = from.get('posts').get(postId),
+				fromPosts = from.get('posts').filter(function(fromPost) {
+					return fromPost.id !== post.id;
+				}),
+				toPosts = to.get('posts').filter(function(toPost) {
+					return toPost.id !== post.id;
+				});
 
-			this.model.get('days').at(fromIndex).get('posts').reset(fromPosts)
-			this.model.get('days').at(toIndex).get('posts').reset(toPosts);
-			
-			this.model.get('days').at(fromIndex).get('posts').trigger('render');
-			this.model.get('days').at(toIndex).get('posts').trigger('render');
+				toPosts.push(post);
+
+				from.get('posts').reset(fromPosts).trigger('render');
+				to.get('posts').reset(toPosts).trigger('render');
 		},
 
 		render: function() {
@@ -203,7 +212,8 @@ jQuery(document).ready(function ($) {
 			this.$el.append((new CalendarBodyView({
 				model: this.model,
 				props: {
-					onPostDropped: this.onPostDropped.bind(this)
+					onPostDragStart: this.onPostDragStart.bind(this),
+					onPostDragStop: this.onPostDragStop.bind(this)
 				}
 			}).render().el));
 			return this;
@@ -218,17 +228,20 @@ jQuery(document).ready(function ($) {
   		model: PostModel
 	});
 
+	var DayModel = Backbone.Model.extend({
+		idAttribute: 'iso'
+	});
+
 	var calendarData = new Backbone.Model({
 		weekdays: new Backbone.Collection(POST_CALENDAR.weekdays.map(function(weekday) {
 			return new Backbone.Model(weekday);
 		})),
 		days: new Backbone.Collection(POST_CALENDAR.days.map(function(day) {
-			return new Backbone.Model({
-				date: day.date,
+			return new DayModel(Object.assign({}, day.date, {
 				posts: new PostsCollection(day.posts.map(function(post) {
 					return new PostModel(post);
 				}))
-			});
+			}));
 		}))
 	})
 
