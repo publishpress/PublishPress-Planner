@@ -218,7 +218,7 @@ jQuery(document).ready(function ($) {
   		model: PostModel
 	});
 
-	var calendarData = {
+	var calendarData = new Backbone.Model({
 		weekdays: new Backbone.Collection(POST_CALENDAR.weekdays.map(function(weekday) {
 			return new Backbone.Model(weekday);
 		})),
@@ -230,9 +230,9 @@ jQuery(document).ready(function ($) {
 				}))
 			});
 		}))
-	}
+	})
 
-	var Calendar = new CalendarView({model: new Backbone.Model(calendarData)});
+	var Calendar = new CalendarView({model: calendarData});
 	Calendar.render();
 
 	var $calendarWrapper = $('#ef-calendar-wrap');
