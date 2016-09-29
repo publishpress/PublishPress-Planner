@@ -69,7 +69,7 @@
 	height: 100px;
 	font-size: 13px;
     line-height: 1.5em;
-    vertical-align: top
+    vertical-align: top;
 }
 
 .ef-calendar-day:last-child {
@@ -156,6 +156,10 @@
 
 .ef-calendar-post a {
 	text-decoration: none;
+}
+
+.ef-calendar-post-placeholder-container {
+	background: rgba( 0, 86, 132, 0.1 );
 }
 
 /* Mobile Calendar */
