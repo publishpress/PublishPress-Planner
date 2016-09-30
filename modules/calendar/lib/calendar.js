@@ -1,72 +1,5 @@
 jQuery(document).ready(function ($) {
 
-	var CalendarHeaderView = Backbone.View.extend({
-		tagName: 'div',
-
-		className: 'ef-calendar-header',
-
-		template: _.template($('#ef-calendar-header-template').html()),
-
-		render: function() {
-			this.$el.empty();
-
-			this.$el.append(this.template({weekdays: this.model.get('weekdays').toJSON()}));
-			return this;
-		}
-	});
-
-	var CalendarDayView = Backbone.View.extend({
-		tagName: 'div',
-
-		className: 'ef-calendar-day',
-
-		template: _.template($('#ef-calendar-day-template').html()),
-
-		initialize: function(options) {
-			this.props = options.props;
-		},
-
-		start: function(e, ui) {
-			this.props.onPostDragStart(this.model.id,
-									   this.model.get('posts').get(parseInt(ui.item.attr('data-post-id'), 10)));
-		},
-
-		//Will trigger on the view where the post is dropped
-		receive: function(e, ui) {
-			console.log(e);
-			$(ui.sender).sortable('cancel');
-			this.props.onPostDragStop(this.model.id);
-		},
-
-		render: function() {
-			this.$el.empty();
-
-			var weekendOrWeekdayClass = this.model.get('is_weekend') ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
-
-			if (this.model.get('is_today')) {
-				weekendOrWeekdayClass += ' ' + 'ef-calendar-today';
-			}
-
-			this.$el.addClass(weekendOrWeekdayClass);
-			this.$el.attr('data-date-iso', this.model.id); //How we'll identify this day when using drag/drop
-
-			this.$el.sortable({
-				items: '.ef-calendar-post',
-				connectWith: '.ef-calendar-day',
-				start: this.start.bind(this),
-				receive: this.receive.bind(this)
-			});
-
-			this.$el.html(this.template(this.model.toJSON()));
-
-			this.$el.append(new CalendarDayPostsView({
-				collection: this.model.get('posts')
-			}).render().el);
-
-			return this;
-		}
-	});
-
 	var CalendarDayPostsView = Backbone.View.extend({
 		tagName: 'div',
 
@@ -104,6 +37,58 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
+	var CalendarDayView = Backbone.View.extend({
+		tagName: 'div',
+
+		className: 'ef-calendar-day',
+
+		template: _.template($('#ef-calendar-day-template').html()),
+
+		initialize: function(options) {
+			this.props = options.props;
+		},
+
+		start: function(e, ui) {
+			this.props.onPostDragStart(this.model.id,
+									   this.model.get('posts').get(parseInt(ui.item.attr('data-post-id'), 10)));
+		},
+
+		//Will trigger on the view where the post is dropped
+		receive: function(e, ui) {
+			//Cancel the sortable action, then render everything correctly
+			$(ui.sender).sortable('cancel');
+			this.props.onPostDragStop(this.model.id);
+		},
+
+		render: function() {
+			this.$el.empty();
+
+			var weekendOrWeekdayClass = this.model.get('is_weekend') ? 'ef-calendar-weekend' : 'ef-calendar-weekday';
+
+			if (this.model.get('is_today')) {
+				weekendOrWeekdayClass += ' ' + 'ef-calendar-today';
+			}
+
+			this.$el.addClass(weekendOrWeekdayClass);
+			this.$el.attr('data-date-iso', this.model.id); //How we'll identify this day when using drag/drop
+
+			this.$el.sortable({
+				items: '.ef-calendar-post',
+				connectWith: '.ef-calendar-day',
+				start: this.start.bind(this),
+				receive: this.receive.bind(this)
+			});
+
+			this.$el.html(this.template(this.model.toJSON()));
+
+			this.$el.append(new CalendarDayPostsView({
+				collection: this.model.get('posts')
+			}).render().el);
+
+			return this;
+		}
+	});
+
 	var CalendarWeekView = Backbone.View.extend({
 		tagName: 'div',
 
@@ -126,6 +111,21 @@ jQuery(document).ready(function ($) {
 				})).render().el;
 			}, this));
 
+			return this;
+		}
+	});
+
+	var CalendarHeaderView = Backbone.View.extend({
+		tagName: 'div',
+
+		className: 'ef-calendar-header',
+
+		template: _.template($('#ef-calendar-header-template').html()),
+
+		render: function() {
+			this.$el.empty();
+
+			this.$el.append(this.template({weekdays: this.model.get('weekdays').toJSON()}));
 			return this;
 		}
 	});
@@ -163,7 +163,7 @@ jQuery(document).ready(function ($) {
 			this.$el.append(this.body);
 			return this;
 		}
-	})
+	});
 
 	var CalendarView = Backbone.View.extend({
 		el: $('.ef-calendar'),
@@ -180,26 +180,11 @@ jQuery(document).ready(function ($) {
 			var fromDayId = this.model.get('dragDrop').get('fromDayId'),
 				post = this.model.get('dragDrop').get('post');
 
-			// Todo: add function to model to reference this more easily
-			this.model.get('days')
-					  	.get(fromDayId)
-					  	.get('posts')
-					  	.remove(post);
+			this.model.removePostFromDay(fromDayId, post);
+			this.model.addPostToDay(toDayId, post);
 
-			this.model.get('days')
-						.get(toDayId)
-						.get('posts')
-						.add(post);
-
-			this.model.get('days')
-						.get(fromDayId)
-						.get('posts')
-						.trigger('render');
-			
-			this.model.get('days')
-						.get(toDayId)
-						.get('posts')
-						.trigger('render');
+			this.model.triggerRenderOnPostsForDay(fromDayId);
+			this.model.triggerRenderOnPostsForDay(toDayId);
 		},
 
 		render: function() {
@@ -226,14 +211,37 @@ jQuery(document).ready(function ($) {
 	});
 
 	var DayModel = Backbone.Model.extend({
-		idAttribute: 'iso'
+		idAttribute: 'iso',
 	});
 
 	var DaysCollection = Backbone.Collection.extend({
 		model: DayModel
 	});
 
-	var calendarData = new Backbone.Model({
+	var CalendarDataModel = Backbone.Model.extend({
+		addPostToDay: function(day, post) {
+			this.get('days')
+				.get(day)
+				.get('posts')
+				.add(post);
+		},
+
+		removePostFromDay: function(day, post) {
+			this.get('days')
+				.get(day)
+				.get('posts')
+				.remove(post);
+		},
+
+		triggerRenderOnPostsForDay: function(day) {
+			this.get('days')
+				.get(day)
+				.get('posts')
+				.trigger('render');
+		}
+	})
+
+	var calendarData = new CalendarDataModel({
 		weekdays: new Backbone.Collection(POST_CALENDAR.weekdays.map(function(weekday) {
 			return new Backbone.Model(weekday);
 		})),
