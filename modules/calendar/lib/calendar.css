@@ -53,6 +53,10 @@
 	font-size: 1.3em;
 }
 
+.ef-calendar-day-of-week.ef-calendar-day-of-week-today {
+	font-weight: bold;
+}
+
 .ef-calendar-header-column {
 	padding: 1em 0.3em;
 	text-align: center;
@@ -63,10 +67,9 @@
 
 .ef-calendar-day { 
 	height: 100px;
-	padding: 4px 10px 4px 10px;
 	font-size: 13px;
     line-height: 1.5em;
-    vertical-align: top
+    vertical-align: top;
 }
 
 .ef-calendar-day:last-child {
@@ -77,31 +80,57 @@
 	background-color: white;
 }
 
-.ef-calendar-day.ef-calendar-weekday {
-	background-color: #f9f9f9;
+.ef-calendar-day .ef-calendar-today-text {
+	text-align: center;
+    padding-bottom: 4px;
+    color: #666;
+    font-size: 13px;
+}
+
+.ef-calendar-today.ef-calendar-day {
+	box-shadow: inset 0px -2px 0px #0073aa
+}
+
+.ef-calendar-today.ef-calendar-day .ef-calendar-day-and-month {
+	font-weight: bold;
+	color: #32373c;
 }
 
 .ef-calendar-day-and-month {
 	margin-bottom: 4px;
+	padding: 4px 10px;
+}
+
+.ef-calendar-day-and-month * {
+	display: inline-block;
 }
 
 .ef-calendar-day-of-month .ef-calendar-day-of-week {
 	display: none;
 }
 
-.ef-calendar-day-of-month,
-.ef-calendar-month-of-year {
-	display: inline-block;
+.ef-calendar-weekday {
+	background-color: #f9f9f9;
 }
 
-.ef-calendar-weekend .ef-calendar-day-of-month,
-.ef-calendar-weekend .ef-calendar-month-of-year {
+.ef-calendar-weekday .ef-calendar-post {
+	background-color: white;
+}
+
+.ef-calendar-weekday .ef-calendar-day-and-month {
+	color: #666;
+}
+
+.ef-calendar-weekend .ef-calendar-post {
+	background-color: #f9f9f9;
+}
+
+.ef-calendar-weekend .ef-calendar-day-and-month {
 	color: #999;
 }
 
-.ef-calendar-weekday .ef-calendar-day-of-month,
-.ef-calendar-weekday .ef-calendar-month-of-year {
-	color: #666;
+.ef-calendar-posts {
+	padding: 0px 10px 4px 10px;
 }
 
 .ef-calendar-post {
@@ -112,14 +141,6 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   margin-bottom: 8px;
   width: 100%;
-}
-
-.ef-calendar-weekday .ef-calendar-post {
-	background-color: white;
-}
-
-.ef-calendar-weekend .ef-calendar-post {
-	background-color: #f9f9f9;
 }
 
 .ef-calendar-post-status {
@@ -135,6 +156,10 @@
 
 .ef-calendar-post a {
 	text-decoration: none;
+}
+
+.ef-calendar-post-placeholder-container {
+	background: rgba( 0, 86, 132, 0.1 );
 }
 
 /* Mobile Calendar */
@@ -190,7 +215,7 @@
 
 	.ef-calendar-day-of-month {
 		font-size: 1.3em;
-		margin-bottom: 4px;
+		margin: 4px 0;
 	}
 
 	.ef-calendar-day-of-month .ef-calendar-day-of-week {
