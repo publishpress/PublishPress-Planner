@@ -2,3 +2,5 @@
 edit-flow.php
 wpcom-helper.php
 .DS_Store
+.idea
+*.iml

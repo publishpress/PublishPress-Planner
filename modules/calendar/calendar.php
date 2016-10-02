@@ -741,6 +741,7 @@ class EF_Calendar extends EF_Module {
 	function view_calendar() {
 		?>
 			<div class="ef-calendar-wrap">
+				<h2><?php _e( 'Calendar', 'edit-flow' ); ?>&nbsp;<span class="time-range"><?php $this->calendar_time_range(); ?></span></h2>
 				<div class="ef-calendar"></div>
 			</div>
 
