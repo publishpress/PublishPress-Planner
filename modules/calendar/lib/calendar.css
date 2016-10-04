@@ -1,10 +1,23 @@
 .ef-calendar-wrap {
 	margin-right: 20px;
+    margin-top: 1em;
+}
+
+.ef-calendar-wrap h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0;
+    padding: 9px 15px 4px 0;
+    line-height: 29px;
+}
+
+.ef-calendar-wrap h1 .time-range {
+    color: #999;
 }
 
 .ef-calendar {
 	display: table;
-	margin: 3em 20px 0 0;
+	margin: 1em 20px 0 0;
 	table-layout: fixed;
 	border-collapse: collapse;
 	background: #fff;
