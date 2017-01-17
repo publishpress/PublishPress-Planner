@@ -5,10 +5,10 @@
     "type"       : "wordpress-plugin",
     "license"    : "GPL-2.0+",
     "support"    : {
-			"issues": "https://github.com/Automattic/edit-flow/issues",
-			"forum": "https://wordpress.org/support/plugin/edit-flow",
-			"source": "https://github.com/Automattic/edit-flow"
-	},
+            "issues": "https://github.com/Automattic/edit-flow/issues",
+            "forum": "https://wordpress.org/support/plugin/edit-flow",
+            "source": "https://github.com/Automattic/edit-flow"
+    },
     "require"    : {
         "composer/installers": "~1.0"
     }

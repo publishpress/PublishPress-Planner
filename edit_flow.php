@@ -93,7 +93,7 @@ class edit_flow {
 
 		// Edit Flow base module
 		require_once( EDIT_FLOW_ROOT . '/common/php/class-module.php' );
-		
+
 		// Scan the modules directory and include any modules that exist there
 		$module_dirs = scandir( EDIT_FLOW_ROOT . '/modules/' );
 		$class_names = array();
@@ -116,10 +116,10 @@ class edit_flow {
 		// Instantiate EF_Module as $helpers for back compat and so we can
 		// use it in this class
 		$this->helpers = new EF_Module();
-		
+
 		// Other utils
 		require_once( EDIT_FLOW_ROOT . '/common/php/util.php' );
-		
+
 		// Instantiate all of our classes onto the Edit Flow object
 		// but make sure they exist too
 		foreach( $class_names as $slug => $class_name ) {
@@ -127,11 +127,11 @@ class edit_flow {
 				$this->$slug = new $class_name();
 			}
 		}
-		
+
 		// Supplementary plugins can hook into this, include their own modules
 		// and add them to the $edit_flow object
 		do_action( 'ef_modules_loaded' );
-		
+
 	}
 
 	/**
@@ -159,24 +159,24 @@ class edit_flow {
 		load_plugin_textdomain( 'edit-flow', null, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 		$this->load_modules();
-		
+
 		// Load all of the module options
 		$this->load_module_options();
-		
+
 		// Load all of the modules that are enabled.
 		// Modules won't have an options value if they aren't enabled
 		foreach ( $this->modules as $mod_name => $mod_data )
 			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' )
 				$this->$mod_name->init();
-		
+
 		do_action( 'ef_init' );
 	}
 
 	/**
-	 * Initialize the plugin for the admin 
+	 * Initialize the plugin for the admin
 	 */
 	function action_admin_init() {
-	    	    
+
 		// Upgrade if need be but don't run the upgrade if the plugin has never been used
 		$previous_version = get_option( $this->options_group . 'version' );
 		if ( $previous_version && version_compare( $previous_version, EDIT_FLOW_VERSION, '<' ) ) {
@@ -188,7 +188,7 @@ class edit_flow {
 		} else if ( !$previous_version ) {
 			update_option( $this->options_group . 'version', EDIT_FLOW_VERSION );
 		}
-			
+
 		// For each module that's been loaded, auto-load data if it's never been run before
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 			// If the module has never been loaded before, run the install method if there is one
@@ -200,18 +200,18 @@ class edit_flow {
 		}
 
 		$this->register_scripts_and_styles();
-		
+
 	}
-	
+
 	/**
 	 * Register a new module with Edit Flow
 	 */
 	public function register_module( $name, $args = array() ) {
-		
+
 		// A title and name is required for every module
 		if ( !isset( $args['title'], $name ) )
 			return false;
-		
+
 		$defaults = array(
 			'title' => '',
 			'short_description' => '',
@@ -246,12 +246,12 @@ class edit_flow {
 		// auto-load it
 		if ( !empty( $args['settings_help_tab'] ) )
 			add_action( 'load-edit-flow_page_' . $args['settings_slug'], array( &$this->$name, 'action_settings_help_menu' ) );
-		
+
 		$this->modules->$name = (object) $args;
 		do_action( 'ef_module_registered', $name );
 		return $this->modules->$name;
 	}
-	
+
 	/**
 	 * Load all of the module options from the database
 	 * If a given option isn't yet set, then set it to the module's default (upgrades, etc.)
@@ -280,19 +280,19 @@ class edit_flow {
 		foreach ( $this->modules as $mod_name => $mod_data ) {
 
 			if ( isset( $this->modules->$mod_name->options->post_types ) )
-				$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );	
-			
+				$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );
+
 			$this->$mod_name->module = $this->modules->$mod_name;
 		}
 	}
-	
+
 	/**
 	 * Get a module by one of its descriptive values
 	 */
 	function get_module_by( $key, $value ) {
 		$module = false;
 		foreach ( $this->modules as $mod_name => $mod_data ) {
-			
+
 			if ( $key == 'name' && $value == $mod_name ) {
 				$module =  $this->modules->$mod_name;
 			} else {
@@ -304,7 +304,7 @@ class edit_flow {
 		}
 		return $module;
 	}
-	
+
 	/**
 	 * Update the $edit_flow object with new value and save to the database
 	 */
@@ -313,7 +313,7 @@ class edit_flow {
 		$this->$mod_name->module = $this->modules->$mod_name;
 		return update_option( $this->options_group . $mod_name . '_options', $this->modules->$mod_name->options );
 	}
-	
+
 	function update_all_module_options( $mod_name, $new_options ) {
 		if ( is_array( $new_options ) )
 			$new_options = (object)$new_options;
@@ -324,7 +324,7 @@ class edit_flow {
 
 	/**
 	 * Registers commonly used scripts + styles for easy enqueueing
-	 */	
+	 */
 	function register_scripts_and_styles() {
 		wp_enqueue_style( 'ef-admin-css', EDIT_FLOW_URL . 'common/css/edit-flow-admin.css', false, EDIT_FLOW_VERSION, 'all' );
 
@@ -337,7 +337,7 @@ class edit_flow {
 		// Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
 		global $wp_scripts;
 		if ( !isset( $wp_scripts->registered['jquery-ui-datepicker'] ) )
-			wp_register_script( 'jquery-ui-datepicker', EDIT_FLOW_URL . 'common/js/jquery.ui.datepicker.min.js', array( 'jquery', 'jquery-ui-core'), '1.8.16', true );		
+			wp_register_script( 'jquery-ui-datepicker', EDIT_FLOW_URL . 'common/js/jquery.ui.datepicker.min.js', array( 'jquery', 'jquery-ui-core'), '1.8.16', true );
 	}
 
 }

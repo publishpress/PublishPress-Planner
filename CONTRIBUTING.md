@@ -11,7 +11,7 @@ Find a bug in Edit Flow? Let us know about it by creating a [new issue](https://
 
 **1. Is it really a bug?**
 
-Before filing a bug report, make sure you're running the latest versions of Edit Flow and WordPress. 
+Before filing a bug report, make sure you're running the latest versions of Edit Flow and WordPress.
 
 Turn off all other plugins and switch to the default WordPress theme. If you still encounter the issue then you might have found a bug.
 
@@ -27,7 +27,7 @@ Not mentioned in either of those places? Doesn't appear to be caused by a confli
 
 **3. It's all in the details**
 
-The more specific you can be, the easier it will be for someone to tackle the bug. 
+The more specific you can be, the easier it will be for someone to tackle the bug.
 
 When creating a new issue a concise summary and clear description are key. If it's been mentioned by someone else, like on the [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow), include a link.
 
@@ -51,7 +51,7 @@ Creating and submitting Patches
 
 ###### Creating the patch
 
-If you’re fixing a bug, start by forking [Edit Flow's repository](https://github.com/Automattic/Edit-Flow/i) and clone that new fork of Edit Flow to your computer. 
+If you’re fixing a bug, start by forking [Edit Flow's repository](https://github.com/Automattic/Edit-Flow/i) and clone that new fork of Edit Flow to your computer.
 
 When writing your patch, make sure your code conforms to the [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/#language-specific-standards). This guide will be used when reviewing your patch.
 
@@ -72,7 +72,7 @@ Extending Edit Flow
 
 Not sure you're ready to write a patch? Why not try extending Edit Flow? Take a look [here](http://editflow.org/extend/) for some ideas on how to extend current Edit Flow functionality.
 
-The [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow) often have requests to add functionality to Edit Flow. Try and see if you can create this functionality by extending Edit Flow without modifying Edit Flow core. 
+The [Edit Flow Support Forums](https://wordpress.org/support/plugin/edit-flow) often have requests to add functionality to Edit Flow. Try and see if you can create this functionality by extending Edit Flow without modifying Edit Flow core.
 
 It's a great way to add functionality to existing Edit Flow installations without having to go through the process of patching Edit Flow core.
 
