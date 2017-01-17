@@ -1,3 +1,7 @@
 .svn
 wpcom-helper.php
 .DS_Store
+package
+!package/.gitkeep
+vendor
+composer.lock
