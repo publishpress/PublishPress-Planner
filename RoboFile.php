@@ -1,4 +1,8 @@
 <?php
+
+use Robo\Exception\TaskExitException;
+
+
 /**
  * This is project's console commands configuration for Robo task runner.
  *
@@ -10,14 +14,14 @@ class RoboFile extends \Robo\Tasks
 
     const PACKAGE_PATH = 'package';
 
-    const PUGLIN_NAME = 'publishpress';
+    const PLUGIN_NAME = 'publishpress';
 
     /**
      * Get the current version of the plugin
      */
     protected function getVersion()
     {
-        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PUGLIN_NAME . '.php');
+        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PLUGIN_NAME . '.php');
 
         preg_match('/Version:\s*([0-9\.a-z]*)/i', $file, $matches);
 
@@ -31,7 +35,7 @@ class RoboFile extends \Robo\Tasks
     {
         $version = $this->getVersion();
 
-        $this->taskChangelog()
+        return $this->taskChangelog()
             ->version($version)
             ->askForChanges()
             ->run();
@@ -39,12 +43,17 @@ class RoboFile extends \Robo\Tasks
 
     /**
      * Build the ZIP package
+     *
+     * @param string $destination Destination for the package. The ZIP file will be moved to that path.
      */
-    public function build()
+    public function build($destination = null)
     {
         $this->say('Building the package');
 
-        $pack = $this->taskPack(self::PACKAGE_PATH . '/'. self::PUGLIN_NAME . '.zip');
+        // Build the package
+        $filename = self::PLUGIN_NAME . '.zip';
+        $packPath = self::PACKAGE_PATH . '/'. $filename;
+        $pack     = $this->taskPack($packPath);
 
         $srcContent = scandir(self::SOURCE_PATH);
         foreach ($srcContent as $content) {
@@ -59,8 +68,20 @@ class RoboFile extends \Robo\Tasks
             }
         }
 
-        $pack->run();
+        $return = $pack->run();
 
-        $this->say('Package built!');
+        // Should we move to any specific destination?
+        if (!is_null($destination)) {
+            if (!realpath($destination)) {
+                throw new RuntimeException('Invalid destination path');
+            }
+
+            rename(self::PACKAGE_PATH . '/' . $filename, realpath($destination) . '/' . $filename);
+        }
+
+        // if ($return->)
+        $this->say("Package built");
+
+        return $return;
     }
 }
