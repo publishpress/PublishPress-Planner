@@ -10,7 +10,7 @@ Redefining your editorial workflow.
 
 ## Description
 
-[![Build Status](https://travis-ci.org/Automattic/Edit-Flow.svg?branch=master)](https://travis-ci.org/Automattic/Edit-Flow)
+[![Build Status](https://travis-ci.org/OSTraining/Edit-Flow.svg?branch=master)](https://travis-ci.org/OSTraining/Edit-Flow)
 
 Edit Flow empowers you to collaborate with your editorial team inside WordPress. We've made it modular so you can customize it to your needs:
 
