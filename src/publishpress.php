@@ -148,7 +148,7 @@ class publishpress {
 
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
 
-		do_action_rpp_array( 'publishpress_after_setup_actions', array( &$this ) );
+		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
 	}
 
 	/**
