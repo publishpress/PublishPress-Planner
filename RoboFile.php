@@ -116,7 +116,7 @@ class RoboFile extends \Robo\Tasks
     /**
      * Compile all .po language files
      */
-    public function lang()
+    public function langCompile()
     {
         $return = null;
         $files  = $this->getPoFiles();
@@ -133,7 +133,7 @@ class RoboFile extends \Robo\Tasks
     /**
      * Watch language files and compile the changed ones to .mo files.
      */
-    public function wlang()
+    public function langWatch()
     {
         $return = null;
         $task   = $this->taskWatch();
