@@ -86,22 +86,45 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
+     * Return a list of .po files from the languages dir
+     *
+     * @return string
+     */
+    protected function getPoFiles()
+    {
+        $languageDir = 'src/languages';
+
+        return glob($languageDir . '/*.po');
+    }
+
+    /**
+     * Compile language .mo files from .po files.
+     *
+     * @param string $poFile
+     * @return Result
+     */
+    protected function compileMOFromPO($poFile)
+    {
+        $moFile = str_replace('.po', '.mo', $poFile);
+
+        return $this->taskExec('msgfmt')
+                ->arg('-o' . $moFile)
+                ->arg($poFile)
+                ->run();
+    }
+
+    /**
      * Watch language files and convert the change ones to .mo files.
      */
     public function lang()
     {
-        $languageDir = 'src/languages';
-
         $return = null;
-        foreach (glob($languageDir . '/*.po') as $file) {
-            $moFile = str_replace('.po', '.mo', $file);
+        $files  = $this->getPoFiles();
 
-            $return = $this->taskExec('msgfmt')
-                ->arg('-o' . $moFile)
-                ->arg($file)
-                ->run();
+        foreach ($files as $file) {
+            $return = $this->compileMOFromPO($file);
 
-            $this->say($moFile . ' created');
+            $this->say('Language file compiled');
         }
 
         return $return;
@@ -112,21 +135,16 @@ class RoboFile extends \Robo\Tasks
      */
     public function wlang()
     {
-        $languageDir = 'src/languages';
+        $return = null;
+        $task   = $this->taskWatch();
+        $files  = $this->getPoFiles();
 
-        $task = $this->taskWatch();
-
-        foreach (glob($languageDir . '/*.po') as $file) {
+        foreach ($files as $file) {
             $task->monitor($file, function() use ($file) {
-                    $moFile = str_replace('.po', '.mo', $file);
+                $return = $this->compileMOFromPO($file);
 
-                    $this->taskExec('msgfmt')
-                        ->arg('-o' . $moFile)
-                        ->arg($file)
-                        ->run();
-
-                    $this->say($moFile . ' created');
-                });
+                $this->say('Language file compiled');
+            });
         }
 
         $task->run();
