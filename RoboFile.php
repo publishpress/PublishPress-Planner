@@ -84,4 +84,53 @@ class RoboFile extends \Robo\Tasks
 
         return $return;
     }
+
+    /**
+     * Watch language files and convert the change ones to .mo files.
+     */
+    public function lang()
+    {
+        $languageDir = 'src/languages';
+
+        $return = null;
+        foreach (glob($languageDir . '/*.po') as $file) {
+            $moFile = str_replace('.po', '.mo', $file);
+
+            $return = $this->taskExec('msgfmt')
+                ->arg('-o' . $moFile)
+                ->arg($file)
+                ->run();
+
+            $this->say($moFile . ' created');
+        }
+
+        return $return;
+    }
+
+    /**
+     * Watch language files and convert the change ones to .mo files.
+     */
+    public function wlang()
+    {
+        $languageDir = 'src/languages';
+
+        $task = $this->taskWatch();
+
+        foreach (glob($languageDir . '/*.po') as $file) {
+            $task->monitor($file, function() use ($file) {
+                    $moFile = str_replace('.po', '.mo', $file);
+
+                    $this->taskExec('msgfmt')
+                        ->arg('-o' . $moFile)
+                        ->arg($file)
+                        ->run();
+
+                    $this->say($moFile . ' created');
+                });
+        }
+
+        $task->run();
+
+        return $return;
+    }
 }
