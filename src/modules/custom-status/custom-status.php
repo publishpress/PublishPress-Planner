@@ -20,12 +20,12 @@ class PP_Custom_Status extends PP_Module {
 	const taxonomy_key = 'post_status';
 
 	/**
-	 * Register the module with Edit Flow but don't do anything else
+	 * Register the module with PublishPress but don't do anything else
 	 */
 	function __construct() {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$args = array(
 			'title' => __( 'Custom Statuses', 'publishpress' ),
 			'short_description' => __( 'Create custom post statuses to define the stages of your workflow.', 'publishpress' ),
@@ -57,9 +57,9 @@ class PP_Custom_Status extends PP_Module {
 			'settings_help_tab' => array(
 				'id' => 'ef-custom-status-overview',
 				'title' => __('Overview', 'publishpress'),
-				'content' => __('<p>Edit Flow’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of Edit Flow and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>', 'publishpress'),
+				'content' => __('<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		$this->module = PublishPress()->register_module( 'custom_status', $args );
 
@@ -1235,7 +1235,7 @@ class PP_Custom_Status extends PP_Module {
 					</div>
 					<?php wp_nonce_field( 'custom-status-add-nonce' ); ?>
 					<?php echo '<input id="action" name="action" type="hidden" value="add-new" />'; ?>
-					<p class="submit"><?php submit_button( __( 'Add New Status', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+					<p class="submit"><?php submit_button( __( 'Add New Status', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 					</form>
 				<?php endif; ?>
 				</div>
@@ -1316,7 +1316,7 @@ class PP_Custom_Status extends PP_Module {
 	 */
 	function fix_custom_status_timestamp( $data, $postarr ) {
 		global $publishpress;
-		// Don't run this if Edit Flow isn't active, or we're on some other page
+		// Don't run this if PublishPress isn't active, or we're on some other page
 		if ( $this->disable_custom_statuses_for_post_type()
 		|| !isset( $publishpress ) ) {
 			return $data;

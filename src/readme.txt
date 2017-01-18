@@ -1,4 +1,4 @@
-=== Edit Flow ===
+=== PublishPress ===
 Contributors: batmoo, danielbachhuber, sbressler, automattic
 Donate link: https://pressshack.com/contribute/
 Tags: edit flow, workflow, editorial, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, story budget
@@ -12,7 +12,7 @@ Redefining your editorial workflow.
 
 [![Build Status](https://travis-ci.org/Automattic/Edit-Flow.svg?branch=master)](https://travis-ci.org/Automattic/Edit-Flow)
 
-Edit Flow empowers you to collaborate with your editorial team inside WordPress. We've made it modular so you can customize it to your needs:
+PublishPress empowers you to collaborate with your editorial team inside WordPress. We've made it modular so you can customize it to your needs:
 
 * [Calendar](https://pressshack.com/features/calendar/) - A convenient month-by-month look at your content.
 * [Custom Statuses](https://pressshack.com/features/custom-statuses/) - Define the key stages to your workflow.
@@ -28,7 +28,7 @@ We'd love to hear from you! For support questions, feedback and ideas, please us
 
 == Installation ==
 
-The easiest way to install this plugin is to go to Add New in the Plugins section of your blog admin and search for "Edit Flow." On the far right side of the search results, click "Install."
+The easiest way to install this plugin is to go to Add New in the Plugins section of your blog admin and search for "PublishPress." On the far right side of the search results, click "Install."
 
 If the automatic process above fails, follow these simple steps to do a manual install:
 
@@ -38,11 +38,11 @@ If the automatic process above fails, follow these simple steps to do a manual i
 
 == Frequently Asked Questions ==
 
-= Does Edit Flow work with multisite? =
+= Does PublishPress work with multisite? =
 
-Yep, in the sense that you can activate Edit Flow on each subsite. Edit Flow doesn't yet offer the ability to manage content across a network of sites.
+Yep, in the sense that you can activate PublishPress on each subsite. PublishPress doesn't yet offer the ability to manage content across a network of sites.
 
-= Edit Flow doesn't do X, Y, and Z. That makes me sad. =
+= PublishPress doesn't do X, Y, and Z. That makes me sad. =
 
 For support questions, feedback and ideas, please use the [WordPress.org forums](http://wordpress.org/tags/publishpress?forum_id=10), which we look at often. For everything else, say [hello@editflow.org](mailto:hello@editflow.org).
 
@@ -144,14 +144,14 @@ New features, including story budget and editorial metadata, a completely rewrit
 * Bug fix: PHP compatability issue. Props [ziz](https://github.com/ziz).
 * Bug fix: Correct calendar encoding. Props [willvanwazer](https://github.com/willvanwazer)
 * Bug fix: Check for $screen in filter_manage_posts_column. Props [styledev](https://github.com/styledev).
-* Bug fix: Correct Edit Flow icon size. Props [Fstop](https://github.com/FStop).
+* Bug fix: Correct PublishPress icon size. Props [Fstop](https://github.com/FStop).
 * Improvement: Add editorial metadata to the Posts screen. Props [drrobotnik](https://github.com/drrobotnik)
 * Improvement: Visual support for MP6. Props [keoshi](https://github.com/keoshi).
 * Bug fix: Catch WP_Error returning with get_terms(). Props [paulgibbs](https://github.com/paulgibbs)
 * Improvement: Better unit testing with PHPUnit thanks to [willvanwazer](https://github.com/willvanwazer) and [mbijon](https://github.com/mbijon)
 * Bug fix: Correctly close out list item in editorial comments. Props [jkovis](https://github.com/jkovis)
 
-The following folks did some tremendous work helping with the release of Edit Flow v0.8: [azizur](https://github.com/azizur), [bbrooks](https://github.com/bbrooks), [danielbachhuber](https://github.com/danielbachhuber), [drrobotnik](https://github.com/drrobotnik), [Fstop](https://github.com/FStop), [jkovis](https://github.com/jkovis), [kardotim](https://github.com/kardotim), [keoshi](https://github.com/keoshi) [mattoperry](https://github.com/mattoperry), [mbijon] (https://github.com/mbijon), [naokomc](https://github.com/naokom, [natebot](https://github.com/natebot), [nickdaugherty](https://github.com/nickdaugherty), [paulgibbs](https://github.com/paulgibbs), [rgalindo05](https://github.com/rgalindo05), [te-st.ru](https://github.com/Teplitsa), [willvanwazer](https://github.com/willvanwazer), [ziz](https://github.com/ziz).
+The following folks did some tremendous work helping with the release of PublishPress v0.8: [azizur](https://github.com/azizur), [bbrooks](https://github.com/bbrooks), [danielbachhuber](https://github.com/danielbachhuber), [drrobotnik](https://github.com/drrobotnik), [Fstop](https://github.com/FStop), [jkovis](https://github.com/jkovis), [kardotim](https://github.com/kardotim), [keoshi](https://github.com/keoshi) [mattoperry](https://github.com/mattoperry), [mbijon] (https://github.com/mbijon), [naokomc](https://github.com/naokom, [natebot](https://github.com/natebot), [nickdaugherty](https://github.com/nickdaugherty), [paulgibbs](https://github.com/paulgibbs), [rgalindo05](https://github.com/rgalindo05), [te-st.ru](https://github.com/Teplitsa), [willvanwazer](https://github.com/willvanwazer), [ziz](https://github.com/ziz).
 
 = 0.7.6 (Jan. 30, 2013) =
 * Bug fix for 3.4.2 compatibility.
@@ -174,7 +174,7 @@ The following folks did some tremendous work helping with the release of Edit Fl
 * Modify email notifications with two filters
 * Bug fix: Proper support for unicode characters in custom status and editorial metadata descriptions
 * Bug fix: Show the proper last modified value on the story budget when the server's timezone is not set to GMT. Props [danls](https://github.com/danls)
-* Bug fix: Make the jQuery UI theme for Edit Flow more specific so it doesn't conflict with core modals
+* Bug fix: Make the jQuery UI theme for PublishPress more specific so it doesn't conflict with core modals
 * Bug fix: Use the proper singlular label for a post type when generating notification text
 * Bug fix: Post slug now updates when the post has a custom status.
 * Bug fix: When determining whether a user can change a post's status, check the 'edit_posts' cap for the post type.
@@ -229,7 +229,7 @@ The following folks did some tremendous work helping with the release of Edit Fl
 
 = 0.6.3 (Mar. 21, 2011) =
 * Restored email notifications to old delivery method instead of queueing with WP cron because of reliability issues.
-* Better approach to including files so Edit Flow works properly on Windows systems.
+* Better approach to including files so PublishPress works properly on Windows systems.
 * Option to see all unpublished content on story budget and editorial calendar with a filter to include scheduled posts as unpublished content.
 
 = 0.6.2 (Jan. 26, 2011) =
@@ -251,7 +251,7 @@ The following folks did some tremendous work helping with the release of Edit Fl
 * Bug fix: Notifications for scheduled posts did not include links (Thanks [erikajurney](http://wordpress.org/support/profile/erikajurney))
 
 = 0.6 (Nov. 9, 2010) =
-* New feature: Editorial Metadata. Previously, Edit Flow had 'due date', 'location' and 'description', as available editorial metadata. We've expanded this functionality to be completely customizable; admins can add any number of editorial metadata with the following types: checkbox, date, location, paragraph, text, or user dropdown.
+* New feature: Editorial Metadata. Previously, PublishPress had 'due date', 'location' and 'description', as available editorial metadata. We've expanded this functionality to be completely customizable; admins can add any number of editorial metadata with the following types: checkbox, date, location, paragraph, text, or user dropdown.
 * New feature: Story Budget. View all of your upcoming posts in a more traditional story budget view. Posts are grouped by category, and view can be filtered by post status, category, user, or limited to a date range. Hit the print button to take it on the go.
 * Completely rewritten calendar view now saves filter state on a user by user basis. Also, highlights current day, and displays status and time for each post.
 * Temporarily disabled QuickPitch widget until we rewrite it to support editorial metadata.
@@ -273,7 +273,7 @@ The following folks did some tremendous work helping with the release of Edit Fl
 
 = 0.4 =
 * Users that edit a post automatically get subscribed to that post (only if they have the manage subscriptions capability)
-* Edit Flow automatically hides editorial comments if the plugin is disabled
+* PublishPress automatically hides editorial comments if the plugin is disabled
 * Moved default custom status additions to upgrade function so they don't get added every time you activate
 * Bug fix: remove editorial comments from comments feed
 
@@ -288,7 +288,7 @@ The following folks did some tremendous work helping with the release of Edit Fl
 * Small bug fixes
 
 = 0.3 =
-* *Note:* Edit Flow now requires 2.9+
+* *Note:* PublishPress now requires 2.9+
 * Notification emails on status change now have specific subject lines messages based on action taken
 * Action links in comment notifications now take the user to the comment form; i.e. clicking reply link in the email will focus on the comment text box and reply to the message
 * Usergroups!

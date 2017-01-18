@@ -7,15 +7,15 @@ class PP_Settings extends PP_Module {
 	var $module;
 
 	/**
-	 * Register the module with Edit Flow but don't do anything else
+	 * Register the module with PublishPress but don't do anything else
 	 */
 	function __construct() {
 
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
-			'title' => __( 'Edit Flow', 'publishpress' ),
-			'short_description' => __( 'Edit Flow redefines your WordPress publishing workflow.', 'publishpress' ),
+			'title' => __( 'PublishPress', 'publishpress' ),
+			'short_description' => __( 'PublishPress redefines your WordPress publishing workflow.', 'publishpress' ),
 			'extended_description' => __( 'Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress' ),
 			'module_url' => $this->module_url,
 			'img_url' => $this->module_url . 'lib/eflogo_s128.png',
@@ -52,7 +52,7 @@ class PP_Settings extends PP_Module {
 	function action_admin_menu() {
 		global $publishpress;
 
-		// Select Edit Flow icon
+		// Select PublishPress icon
 		if ( defined( 'MP6' ) ) :
 			$pp_logo = 'lib/eflogo_s32b.png';
 		else :
@@ -128,20 +128,20 @@ class PP_Settings extends PP_Module {
 	}
 
 	/**
-	 * Handles all settings and configuration page requests. Required element for Edit Flow
+	 * Handles all settings and configuration page requests. Required element for PublishPress
 	 */
 	function settings_page_controller() {
 		global $publishpress;
 
 		$requested_module = $publishpress->get_module_by( 'settings_slug', $_GET['page'] );
 		if ( !$requested_module )
-			wp_die( __( 'Not a registered Edit Flow module', 'publishpress' ) );
+			wp_die( __( 'Not a registered PublishPress module', 'publishpress' ) );
 		$configure_callback = $requested_module->configure_page_cb;
 		$requested_module_name = $requested_module->name;
 
 		// Don't show the settings page for the module if the module isn't activated
 		if ( !$this->module_enabled( $requested_module_name ) ) {
-			echo '<div class="message error"><p>' . sprintf( __( 'Module not enabled. Please enable it from the <a href="%1$s">Edit Flow settings page</a>.', 'publishpress' ), PUBLISHPRESS_SETTINGS_PAGE ) . '</p></div>';
+			echo '<div class="message error"><p>' . sprintf( __( 'Module not enabled. Please enable it from the <a href="%1$s">PublishPress settings page</a>.', 'publishpress' ), PUBLISHPRESS_SETTINGS_PAGE ) . '</p></div>';
 			return;
 		}
 
@@ -188,10 +188,10 @@ class PP_Settings extends PP_Module {
 		<div class="wrap publishpress-admin">
 			<?php if ( $current_module->name != 'settings' ): ?>
 			<?php echo $page_icon; ?>
-			<h2><a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e('Edit Flow', 'publishpress') ?></a>:&nbsp;<?php echo $current_module->title; ?><?php if ( isset( $display_text ) ) { echo $display_text; } ?></h2>
+			<h2><a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e('PublishPress', 'publishpress') ?></a>:&nbsp;<?php echo $current_module->title; ?><?php if ( isset( $display_text ) ) { echo $display_text; } ?></h2>
 			<?php else: ?>
 			<?php echo $page_icon; ?>
-			<h2><?php _e('Edit Flow', 'publishpress') ?><?php if ( isset( $display_text ) ) { echo $display_text; } ?></h2>
+			<h2><?php _e('PublishPress', 'publishpress') ?><?php if ( isset( $display_text ) ) { echo $display_text; } ?></h2>
 			<?php endif; ?>
 
 			<div class="explanation">
@@ -206,7 +206,7 @@ class PP_Settings extends PP_Module {
 	}
 
 	/**
-	 * Adds Settings page for Edit Flow.
+	 * Adds Settings page for PublishPress.
 	 */
 	function print_default_settings() {
 
@@ -221,8 +221,8 @@ class PP_Settings extends PP_Module {
 		?>
 		<?php if ( $current_module->slug == 'settings' ): ?>
 		<div class="credits">
-		<p><?php echo __( '<a href="https://pressshack.com/">Edit Flow</a> is produced by <a href="http://danielbachhuber.com/">Daniel Bachhuber</a>, <a href="http://digitalize.ca/">Mo Jangda</a>, and <a href="http://www.scottbressler.com/blog/">Scott Bressler</a>, with special help from <a href="http://andrewspittle.net">Andrew Spittle</a> and <a href="http://andrewwitherspoon.com/">Andrew Witherspoon</a>.', 'publishpress' ); ?>
-		<br /><?php echo sprintf( __( 'You\'re using Edit Flow version %s.', 'publishpress' ), PUBLISHPRESS_VERSION ); ?>
+		<p><?php echo __( '<a href="https://pressshack.com/">PublishPress</a> is produced by <a href="http://danielbachhuber.com/">Daniel Bachhuber</a>, <a href="http://digitalize.ca/">Mo Jangda</a>, and <a href="http://www.scottbressler.com/blog/">Scott Bressler</a>, with special help from <a href="http://andrewspittle.net">Andrew Spittle</a> and <a href="http://andrewwitherspoon.com/">Andrew Witherspoon</a>.', 'publishpress' ); ?>
+		<br /><?php echo sprintf( __( 'You\'re using PublishPress version %s.', 'publishpress' ), PUBLISHPRESS_VERSION ); ?>
 		<br /><?php echo __( 'Icons courtesy of the <a href="http://thenounproject.com/">Noun Project</a>.', 'publishpress' ); ?>
 		<br /><?php echo __( '<a href="http://wordpress.org/tags/publishpress?forum_id=10">Please give us your feedback, ideas, bug reports and comments</a> in the WordPress.org forums.', 'publishpress' ); ?>
 		</div>
@@ -235,7 +235,7 @@ class PP_Settings extends PP_Module {
 		global $publishpress;
 
 		if ( !count( $publishpress->modules ) ) {
-			echo '<div class="message error">' . __( 'There are no Edit Flow modules registered', 'publishpress' ) . '</div>';
+			echo '<div class="message error">' . __( 'There are no PublishPress modules registered', 'publishpress' ) . '</div>';
 		} else {
 
 			foreach ( $publishpress->modules as $mod_name => $mod_data ) {
@@ -304,7 +304,7 @@ class PP_Settings extends PP_Module {
 	/**
 	 * Generate an option field to turn post type support on/off for a given module
 	 *
-	 * @param object $module Edit Flow module we're generating the option field for
+	 * @param object $module PublishPress module we're generating the option field for
 	 * @param {missing}
 	 *
 	 * @since 0.7

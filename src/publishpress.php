@@ -84,7 +84,7 @@ class publishpress {
 	}
 
 	/**
-	 * Include the common resources to Edit Flow and dynamically load the modules
+	 * Include the common resources to PublishPress and dynamically load the modules
 	 */
 	private function load_modules() {
 
@@ -92,7 +92,7 @@ class publishpress {
 		if ( !class_exists( 'WP_List_Table' ) )
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 
-		// Edit Flow base module
+		// PublishPress base module
 		require_once( PUBLISHPRESS_ROOT . '/common/php/class-module.php' );
 
 		// Scan the modules directory and include any modules that exist there
@@ -121,7 +121,7 @@ class publishpress {
 		// Other utils
 		require_once( PUBLISHPRESS_ROOT . '/common/php/util.php' );
 
-		// Instantiate all of our classes onto the Edit Flow object
+		// Instantiate all of our classes onto the PublishPress object
 		// but make sure they exist too
 		foreach( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
@@ -152,7 +152,7 @@ class publishpress {
 	}
 
 	/**
-	 * Inititalizes the Edit Flows!
+	 * Inititalizes the PublishPresss!
 	 * Loads options for each registered module and then initializes it if it's active
 	 */
 	function action_init() {
@@ -205,7 +205,7 @@ class publishpress {
 	}
 
 	/**
-	 * Register a new module with Edit Flow
+	 * Register a new module with PublishPress
 	 */
 	public function register_module( $name, $args = array() ) {
 

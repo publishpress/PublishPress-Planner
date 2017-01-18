@@ -16,7 +16,7 @@ class PP_Editorial_Comments extends PP_Module
 	function __construct() {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$args = array(
 			'title' => __( 'Editorial Comments', 'publishpress' ),
 			'short_description' => __( 'Share internal notes with your team.', 'publishpress' ),
@@ -39,7 +39,7 @@ class PP_Editorial_Comments extends PP_Module
 				'title' => __('Overview', 'publishpress'),
 				'content' => __('<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		$this->module = PublishPress()->register_module( 'editorial_comments', $args );
 	}
@@ -409,14 +409,14 @@ class PP_Editorial_Comments extends PP_Module
 			<?php
 				echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr( $this->module->name ) . '" />';
 			?>
-			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 
 		</form>
 		<?php
 	}
 
 	/**
-	 * If the Edit Flow Calendar is enabled, add the editorial comment count to the post overlay.
+	 * If the PublishPress Calendar is enabled, add the editorial comment count to the post overlay.
 	 *
 	 * @since 0.7
 	 * @uses apply_filters( 'pp_calendar_item_information_fields' )

@@ -29,11 +29,11 @@ class PP_Calendar extends PP_Module {
 	function __construct() {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$args = array(
 			'title' => __( 'Calendar', 'publishpress' ),
 			'short_description' => sprintf( __( 'View upcoming content in a <a href="%s">customizable calendar</a>.', 'publishpress' ), admin_url( 'index.php?page=calendar' ) ),
-			'extended_description' => __( 'Edit Flow’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date.', 'publishpress' ),
+			'extended_description' => __( 'PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date.', 'publishpress' ),
 			'module_url' => $this->module_url,
 			'img_url' => $this->module_url . 'lib/calendar_s128.png',
 			'slug' => 'calendar',
@@ -61,7 +61,7 @@ class PP_Calendar extends PP_Module {
 				'title' => __('Overview', 'publishpress'),
 				'content' => __('<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/calendar/">Calendar Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/calendar/">Calendar Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		$this->module = PublishPress()->register_module( 'calendar', $args );
 
@@ -423,7 +423,7 @@ class PP_Calendar extends PP_Module {
 		$header = array(
 				'BEGIN'             => 'VCALENDAR',
 				'VERSION'           => '2.0',
-				'PRODID'            => '-//Edit Flow//Edit Flow ' . PUBLISHPRESS_VERSION . '//EN',
+				'PRODID'            => '-//PublishPress//PublishPress ' . PUBLISHPRESS_VERSION . '//EN',
 			);
 
 		$footer = array(
@@ -1479,7 +1479,7 @@ class PP_Calendar extends PP_Module {
 			<?php
 				echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr( $this->module->name ) . '" />';
 			?>
-			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo esc_url( PUBLISHPRESS_SETTINGS_PAGE ); ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo esc_url( PUBLISHPRESS_SETTINGS_PAGE ); ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 		</form>
 		<?php
 	}

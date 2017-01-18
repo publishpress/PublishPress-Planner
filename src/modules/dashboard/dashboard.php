@@ -1,7 +1,7 @@
 <?php
 /**
  * class PP_Dashboard
- * All of the code for the dashboard widgets from Edit Flow
+ * All of the code for the dashboard widgets from PublishPress
  *
  * Dashboard widgets currently:
  * - Post Status Widget - Shows numbers for all (custom|post) statuses
@@ -18,11 +18,11 @@ class PP_Dashboard extends PP_Module {
 	public $widgets;
 
 	/**
-	 * Load the PP_Dashboard class as an Edit Flow module
+	 * Load the PP_Dashboard class as an PublishPress module
 	 */
 	function __construct() {
 
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title' => __( 'Dashboard Widgets', 'publishpress' ),
@@ -105,7 +105,7 @@ class PP_Dashboard extends PP_Module {
 	}
 
 	/**
-	 * Add Edit Flow dashboard widgets to the WordPress admin dashboard
+	 * Add PublishPress dashboard widgets to the WordPress admin dashboard
 	 */
 	function add_dashboard_widgets() {
 
@@ -323,7 +323,7 @@ class PP_Dashboard extends PP_Module {
 			<?php
 				echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr( $this->module->name ) . '" />';
 			?>
-			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 		</form>
 		<?php
 	}

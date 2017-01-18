@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: Edit Flow\n"
+"Project-Id-Version: PublishPress\n"
 "POT-Creation-Date: 2016-04-22 07:37+0800\n"
 "PO-Revision-Date: 2016-04-22 07:37+0800\n"
 "Last-Translator: \n"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:36
 msgid ""
-"Edit Flow’s calendar lets you see your posts over a customizable date range. "
+"PublishPress’s calendar lets you see your posts over a customizable date range. "
 "Filter by status or click on the post title to see its details. Drag and "
 "drop posts between days to change their publication date."
 msgstr ""
@@ -156,8 +156,8 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"http://"
-"wordpress.org/tags/publishpress?forum_id=10\">Edit Flow Forum</a></p><p><a href="
-"\"https://github.com/danielbachhuber/Edit-Flow\">Edit Flow on Github</a></p>"
+"wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href="
+"\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/calendar/calendar.php:223
@@ -386,7 +386,7 @@ msgstr ""
 #: modules/editorial-metadata/editorial-metadata.php:1548
 #: modules/notifications/notifications.php:1123
 #: modules/user-groups/user-groups.php:626
-msgid "Back to Edit Flow"
+msgid "Back to PublishPress"
 msgstr ""
 
 #: modules/calendar/calendar.php:1509
@@ -478,13 +478,13 @@ msgstr ""
 
 #: modules/custom-status/custom-status.php:60
 msgid ""
-"<p>Edit Flow’s custom statuses allow you to define the most important stages "
+"<p>PublishPress’s custom statuses allow you to define the most important stages "
 "of your editorial workflow. Out of the box, WordPress only offers “Draft” "
 "and “Pending Review” as post states. With custom statuses, you can create "
 "your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and "
 "keep or delete the originals. You can also drag and drop statuses to set the "
 "best order for your workflow.</p><p>Custom statuses are fully integrated "
-"into the rest of Edit Flow and the WordPress admin. On the calendar and "
+"into the rest of PublishPress and the WordPress admin. On the calendar and "
 "story budget, you can filter your view to see only posts of a specific post "
 "state. Furthermore, email notifications can be sent to a specific group of "
 "users when a post changes state.</p>"
@@ -494,8 +494,8 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a "
-"href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Edit Flow Forum</"
-"a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">Edit Flow "
+"href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</"
+"a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress "
 "on Github</a></p>"
 msgstr ""
 
@@ -899,9 +899,9 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/editorial-comments/\">Editorial Comments Documentation</a></"
-"p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Edit Flow "
+"p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress "
 "Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow"
-"\">Edit Flow on Github</a></p>"
+"\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:175
@@ -1014,9 +1014,9 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/editorial-metadata/\">Editorial Metadata Documentation</a></"
-"p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Edit Flow "
+"p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress "
 "Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow"
-"\">Edit Flow on Github</a></p>"
+"\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:132
@@ -1364,8 +1364,8 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/notifications/\">Notifications Documentation</a></p><p><a href="
-"\"http://wordpress.org/tags/publishpress?forum_id=10\">Edit Flow Forum</a></"
-"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">Edit Flow on "
+"\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></"
+"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on "
 "Github</a></p>"
 msgstr ""
 
@@ -1575,11 +1575,11 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #: modules/settings/settings.php:17 modules/settings/settings.php:191
 #: modules/settings/settings.php:194
-msgid "Edit Flow"
+msgid "PublishPress"
 msgstr ""
 
 #: modules/settings/settings.php:18
-msgid "Edit Flow redefines your WordPress publishing workflow."
+msgid "PublishPress redefines your WordPress publishing workflow."
 msgstr ""
 
 #: modules/settings/settings.php:19
@@ -1590,19 +1590,19 @@ msgid ""
 msgstr ""
 
 #: modules/settings/settings.php:138
-msgid "Not a registered Edit Flow module"
+msgid "Not a registered PublishPress module"
 msgstr ""
 
 #: modules/settings/settings.php:144
 #, php-format
 msgid ""
-"Module not enabled. Please enable it from the <a href=\"%1$s\">Edit Flow "
+"Module not enabled. Please enable it from the <a href=\"%1$s\">PublishPress "
 "settings page</a>."
 msgstr ""
 
 #: modules/settings/settings.php:224
 msgid ""
-"<a href=\"https://pressshack.com/\">Edit Flow</a> is produced by <a href="
+"<a href=\"https://pressshack.com/\">PublishPress</a> is produced by <a href="
 "\"http://danielbachhuber.com/\">Daniel Bachhuber</a>, <a href=\"http://"
 "digitalize.ca/\">Mo Jangda</a>, and <a href=\"http://www.scottbressler.com/"
 "blog/\">Scott Bressler</a>, with special help from <a href=\"http://"
@@ -1612,7 +1612,7 @@ msgstr ""
 
 #: modules/settings/settings.php:225
 #, php-format
-msgid "You're using Edit Flow version %s."
+msgid "You're using PublishPress version %s."
 msgstr ""
 
 #: modules/settings/settings.php:226
@@ -1629,7 +1629,7 @@ msgid ""
 msgstr ""
 
 #: modules/settings/settings.php:238
-msgid "There are no Edit Flow modules registered"
+msgid "There are no PublishPress modules registered"
 msgstr ""
 
 #: modules/settings/settings.php:272
@@ -1784,8 +1784,8 @@ msgstr ""
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
 "com/features/user-groups/\">User Groups Documentation</a></p><p><a href="
-"\"http://wordpress.org/tags/publishpress?forum_id=10\">Edit Flow Forum</a></"
-"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">Edit Flow on "
+"\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></"
+"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on "
 "Github</a></p>"
 msgstr ""
 

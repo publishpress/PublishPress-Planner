@@ -28,12 +28,12 @@ class PP_Story_Budget extends PP_Module {
 	const default_num_columns = 1;
 
 	/**
-	 * Register the module with Edit Flow but don't do anything else
+	 * Register the module with PublishPress but don't do anything else
 	 */
 	function __construct() {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$args = array(
 			'title' => __( 'Story Budget', 'publishpress' ),
 			'short_description' => sprintf( __( 'View the status of all your content <a href="%s">at a glance</a>.', 'publishpress' ), admin_url( 'index.php?page=story-budget' ) ),
@@ -73,7 +73,7 @@ class PP_Story_Budget extends PP_Module {
 			add_screen_options_panel( self::usermeta_key_prefix . 'screen_columns', __( 'Screen Layout', 'publishpress' ), array( $this, 'print_column_prefs' ), self::screen_id, array( $this, 'save_column_prefs' ), true );
 
 		// Register the columns of data appearing on every term. This is hooked into admin_init
-		// so other Edit Flow modules can register their filters if needed
+		// so other PublishPress modules can register their filters if needed
 		add_action( 'admin_init', array( $this, 'register_term_columns' ) );
 
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );

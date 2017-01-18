@@ -26,7 +26,7 @@ class PP_User_Groups extends PP_Module {
 	var $manage_usergroups_cap = 'edit_usergroups';
 
 	/**
-	 * Register the module with Edit Flow but don't do anything else
+	 * Register the module with PublishPress but don't do anything else
 	 *
 	 * @since 0.7
 	 */
@@ -34,7 +34,7 @@ class PP_User_Groups extends PP_Module {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
 
-		// Register the User Groups module with Edit Flow
+		// Register the User Groups module with PublishPress
 		$args = array(
 			'title' => __( 'User Groups', 'publishpress' ),
 			'short_description' => __( 'Organize your users into groups to mimic your organizational structure.', 'publishpress' ),
@@ -63,7 +63,7 @@ class PP_User_Groups extends PP_Module {
 				'title' => __('Overview', 'publishpress'),
 				'content' => __('<p>For those with many people involved in the publishing process, user groups helps you keep them organized.</p><p>Currently, user groups are primarily used for subscribing a set of users to a post for notifications.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/user-groups/">User Groups Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/user-groups/">User Groups Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		$this->module = PublishPress()->register_module( 'user_groups', $args );
 
@@ -623,7 +623,7 @@ class PP_User_Groups extends PP_Module {
 					</div>
 					<?php wp_nonce_field( 'add-usergroup' ); ?>
 					<?php echo '<input id="form-action" name="form-action" type="hidden" value="add-usergroup" />'; ?>
-					<p class="submit"><?php submit_button( __( 'Add New User Group', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+					<p class="submit"><?php submit_button( __( 'Add New User Group', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 					</form>
 				<?php endif; ?>
 			</div></div></div>

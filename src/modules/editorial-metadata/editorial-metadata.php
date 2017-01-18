@@ -6,7 +6,7 @@
  * @author sbressler, danielbachhuber
  *
  * Ways to test and play with this class:
- * 1) Create a new term by selecting Editorial Metadata from the Edit Flow settings
+ * 1) Create a new term by selecting Editorial Metadata from the PublishPress settings
  * 2) Edit an existing term (slug, description, etc.)
  * 3) Create a post and assign metadata to it
  * 4) Look at the list of terms again - the count should go up!
@@ -38,7 +38,7 @@ class PP_Editorial_Metadata extends PP_Module {
 	function __construct() {
 
 		$this->module_url = $this->get_module_url( __FILE__ );
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$args = array(
 			'title' => __( 'Editorial Metadata', 'publishpress' ),
 			'short_description' => __( 'Track details about your posts in progress.', 'publishpress' ),
@@ -67,7 +67,7 @@ class PP_Editorial_Metadata extends PP_Module {
 				'title' => __('Overview', 'publishpress'),
 				'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		PublishPress()->register_module( $this->module_name, $args );
 	}
@@ -724,7 +724,7 @@ class PP_Editorial_Metadata extends PP_Module {
 	}
 
 	/**
-	 * If the Edit Flow Calendar is enabled, add viewable Editorial Metadata terms
+	 * If the PublishPress Calendar is enabled, add viewable Editorial Metadata terms
 	 *
 	 * @since 0.7
 	 * @uses apply_filters( 'pp_calendar_item_information_fields' )
@@ -760,7 +760,7 @@ class PP_Editorial_Metadata extends PP_Module {
 	}
 
 	/**
-	 * If the Edit Flow Story Budget is enabled, register our viewable terms as columns
+	 * If the PublishPress Story Budget is enabled, register our viewable terms as columns
 	 *
 	 * @since 0.7
 	 * @uses apply_filters( 'pp_story_budget_term_columns' )
@@ -783,7 +783,7 @@ class PP_Editorial_Metadata extends PP_Module {
 	}
 
 	/**
-	 * If the Edit Flow Story Budget is enabled,
+	 * If the PublishPress Story Budget is enabled,
 	 *
 	 * @since 0.7
 	 * @uses apply_filters( 'pp_story_budget_term_column_value' )
@@ -1545,7 +1545,7 @@ class PP_Editorial_Metadata extends PP_Module {
 			</div>
 			<?php wp_nonce_field( 'editorial-metadata-add-nonce' );?>
 			<input type="hidden" id="form-action" name="form-action" value="add-term" />
-			<p class="submit"><?php submit_button( __( 'Add New Metadata Term', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+			<p class="submit"><?php submit_button( __( 'Add New Metadata Term', 'publishpress' ), 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 			</form>
 		<?php endif; ?>
 			</div>

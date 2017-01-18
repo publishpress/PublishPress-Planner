@@ -1,7 +1,7 @@
 <?php
 /**
  * class PP_Notifications
- * Email notifications for Edit Flow and more
+ * Email notifications for PublishPress and more
  */
 
 if( ! defined( 'PP_NOTIFICATION_USE_CRON' ) )
@@ -21,11 +21,11 @@ class PP_Notifications extends PP_Module {
 	var $edit_post_subscriptions_cap = 'edit_post_subscriptions';
 
 	/**
-	 * Register the module with Edit Flow but don't do anything else
+	 * Register the module with PublishPress but don't do anything else
 	 */
 	function __construct () {
 
-		// Register the module with Edit Flow
+		// Register the module with PublishPress
 		$this->module_url = $this->get_module_url( __FILE__ );
 		$args = array(
 			'title' => __( 'Notifications', 'publishpress' ),
@@ -50,7 +50,7 @@ class PP_Notifications extends PP_Module {
 				'title' => __('Overview', 'publishpress'),
 				'content' => __('<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, email notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress'),
 				),
-			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/notifications/">Notifications Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">Edit Flow Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">Edit Flow on Github</a></p>', 'publishpress' ),
+			'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/notifications/">Notifications Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress' ),
 		);
 		$this->module = PublishPress()->register_module( 'notifications', $args );
 
@@ -1122,7 +1122,7 @@ jQuery(document).ready(function($) {
 			<?php
 				echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr( $this->module->name ) . '" />';
 			?>
-			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to Edit Flow', 'publishpress' ); ?></a></p>
+			<p class="submit"><?php submit_button( null, 'primary', 'submit', false ); ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>"><?php _e( 'Back to PublishPress', 'publishpress' ); ?></a></p>
 		</form>
 		<?php
 	}

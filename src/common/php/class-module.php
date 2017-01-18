@@ -2,7 +2,7 @@
 /**
  * class PP_Module
  *
- * @desc Base class any Edit Flow module should extend
+ * @desc Base class any PublishPress module should extend
  */
 
 if ( !class_exists( 'PP_Module' ) ) {
@@ -333,7 +333,7 @@ class PP_Module {
 	}
 
 	/**
-	 * Whether or not the current page is a user-facing Edit Flow View
+	 * Whether or not the current page is a user-facing PublishPress View
 	 * @todo Think of a creative way to make this work
 	 *
 	 * @since 0.7
@@ -348,9 +348,9 @@ class PP_Module {
 	}
 
 	/**
-	 * Whether or not the current page is an Edit Flow settings view (either main or module)
+	 * Whether or not the current page is an PublishPress settings view (either main or module)
 	 * Determination is based on $pagenow, $_GET['page'], and the module's $settings_slug
-	 * If there's no module name specified, it will return true against all Edit Flow settings views
+	 * If there's no module name specified, it will return true against all PublishPress settings views
 	 *
 	 * @since 0.7
 	 *

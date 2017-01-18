@@ -5,9 +5,9 @@ function publishpress_hide_message() {
 
 jQuery(document).ready(function(){
 
-	// Restore the Edit Flow submenu if there are no modules enabled
+	// Restore the PublishPress submenu if there are no modules enabled
 	// We need it down below for dynamically rebuilding the link list when on the settings page
-	var pp_settings_submenu_html = '<div class="wp-submenu"><div class="wp-submenu-wrap"><div class="wp-submenu-head">Edit Flow</div><ul><li class="wp-first-item current"><a tabindex="1" class="wp-first-item current" href="admin.php?page=ef-settings">Edit Flow</a></li></ul></div></div>';
+	var pp_settings_submenu_html = '<div class="wp-submenu"><div class="wp-submenu-wrap"><div class="wp-submenu-head">PublishPress</div><ul><li class="wp-first-item current"><a tabindex="1" class="wp-first-item current" href="admin.php?page=ef-settings">PublishPress</a></li></ul></div></div>';
 	if ( jQuery( 'li#toplevel_page_ef-settings .wp-submenu' ).length == 0 ) {
 		jQuery( 'li#toplevel_page_ef-settings' ).addClass('wp-has-submenu wp-has-current-submenu wp-menu-open');
 		jQuery( 'li#toplevel_page_ef-settings' ).append( pp_settings_submenu_html );
