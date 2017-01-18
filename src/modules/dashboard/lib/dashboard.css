@@ -15,96 +15,96 @@
 /* QuickPitch */
 
 .quick-pitch-notice {
-	background-color: #ffffe0;
-	padding: 5px 10px;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 1px solid #e6db55;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+    background-color: #ffffe0;
+    padding: 5px 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #e6db55;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 #quick-pitch-notification h3 {
-	background: none;
-	text-shadow: none;
-	font: italic normal normal 16px/20px Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
-	padding-bottom: 0;
+    background: none;
+    text-shadow: none;
+    font: italic normal normal 16px/20px Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
+    padding-bottom: 0;
 }
 
 #quick-pitch-notification p {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 
 #quick_pitch_widget h4 {
-	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif !important;
-	float: left;
-	width: 5.5em;
-	clear: both;
-	font-weight: normal;
-	text-align: right;
-	padding-top: 3px !important;
-	font-size: 12px !important;
-	line-height: 1.2em;
+    font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif !important;
+    float: left;
+    width: 5.5em;
+    clear: both;
+    font-weight: normal;
+    text-align: right;
+    padding-top: 3px !important;
+    font-size: 12px !important;
+    line-height: 1.2em;
 }
 
 #quick_pitch_widget h4 label {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 #pp_author_div {
-	padding-bottom: 9px;
-	padding-right: 3px;
+    padding-bottom: 9px;
+    padding-right: 3px;
 }
 
 #quick_pitch_widget .input-text-wrap,
 #quick_pitch_widget .textarea-wrap {
-	margin: 0 0 1em 5em;
+    margin: 0 0 1em 5em;
 }
 
 #pp_description_div {
-	width: 200px;
+    width: 200px;
 }
 
 .pp_location_div input {
-	padding: 2px !important;
+    padding: 2px !important;
 }
 
 .ef-submit {
-	height: 20px;
-	text-align: right;
+    height: 20px;
+    text-align: right;
 }
 
 /* Posts I'm Following */
 
 .ef-myposts li {
-	list-style-type: none;
-	padding-bottom: 5px;
+    list-style-type: none;
+    padding-bottom: 5px;
 }
 
 .ef-myposts li a {
-	font-weight: normal;
+    font-weight: normal;
 }
 
 .ef-myposts li .ef-myposts-timestamp {
-	color: #999;
-	font-style: italic;
-	font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-	font-size: 10px;
+    color: #999;
+    font-style: italic;
+    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+    font-size: 10px;
 }
 
 /** Dashboard Notepad **/
 #dashboard-notepad #dashboard-notepad-submit-buttons {
-	float: right;
+    float: right;
 }
 
 #dashboard-notepad #dashboard-notepad-last-updated {
-	font-size: 12px;
-	line-height: 18px;
-	color: #999;
+    font-size: 12px;
+    line-height: 18px;
+    color: #999;
 }
 
 #dashboard-notepad .submit #dashboard-notepad-last-updated {
-	float: left;
+    float: left;
 }
