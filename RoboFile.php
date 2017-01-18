@@ -86,7 +86,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Return a list of .po files from the languages dir
+     * Return a list of PO files from the languages dir
      *
      * @return string
      */
@@ -98,7 +98,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Compile language .mo files from .po files.
+     * Compile language MO files from PO files.
      *
      * @param string $poFile
      * @return Result
@@ -114,7 +114,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Compile all .po language files
+     * Compile all PO language files
      */
     public function langCompile()
     {
@@ -131,7 +131,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Watch language files and compile the changed ones to .mo files.
+     * Watch language files and compile the changed ones to MO files.
      */
     public function langWatch()
     {
