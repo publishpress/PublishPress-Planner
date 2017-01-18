@@ -114,7 +114,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Watch language files and convert the change ones to .mo files.
+     * Compile all .po language files
      */
     public function lang()
     {
@@ -131,7 +131,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Watch language files and convert the change ones to .mo files.
+     * Watch language files and compile the changed ones to .mo files.
      */
     public function wlang()
     {
