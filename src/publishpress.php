@@ -148,12 +148,12 @@ class publishpress
      */
     private function setup_actions()
     {
-        add_action('init', array( $this, 'action_init' ));
-        add_action('init', array( $this, 'action_init_after' ), 1000);
+        add_action('init', array($this, 'action_init'));
+        add_action('init', array($this, 'action_init_after'), 1000);
 
-        add_action('admin_init', array( $this, 'action_admin_init' ));
+        add_action('admin_init', array($this, 'action_admin_init'));
 
-        do_action_ref_array('publishpress_after_setup_actions', array( &$this ));
+        do_action_ref_array('publishpress_after_setup_actions', array(&$this));
     }
 
     /**
@@ -263,7 +263,7 @@ class publishpress
         // If there's a Help Screen registered for the module, make sure we
         // auto-load it
         if (!empty($args['settings_help_tab'])) {
-            add_action('load-publishpress_page_' . $args['settings_slug'], array( &$this->$name, 'action_settings_help_menu' ));
+            add_action('load-publishpress_page_' . $args['settings_slug'], array(&$this->$name, 'action_settings_help_menu'));
         }
 
         $this->modules->$name = (object) $args;
@@ -359,16 +359,16 @@ class publishpress
     {
         wp_enqueue_style('ef-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'all');
 
-        wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true);
+        wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all');
 
-        wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true);
+        wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array('jquery'), PUBLISHPRESS_VERSION, true);
 
         // @compat 3.3
         // Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
         global $wp_scripts;
         if (!isset($wp_scripts->registered['jquery-ui-datepicker'])) {
-            wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array( 'jquery', 'jquery-ui-core'), '1.8.16', true);
+            wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core'), '1.8.16', true);
         }
     }
 }

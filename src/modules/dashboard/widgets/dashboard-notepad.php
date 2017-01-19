@@ -24,7 +24,7 @@ class PP_Dashboard_Notepad_Widget
 
         $this->edit_cap = apply_filters('pp_dashboard_notepad_edit_cap', $this->edit_cap);
 
-        add_action('admin_init', array( $this, 'handle_notepad_update' ));
+        add_action('admin_init', array($this, 'handle_notepad_update'));
     }
 
     /**

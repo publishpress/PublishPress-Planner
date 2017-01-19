@@ -32,19 +32,19 @@ inlineEditUsergroup = {
         var t = this, editRow;
         t.revert();
 
-        if ( typeof(id) == 'object' )
+        if (typeof(id) == 'object')
             id = t.getId(id);
 
         editRow = $('#inline-edit').clone(true), rowData = $('#inline_'+id);
         $('td', editRow).attr('colspan', $('.widefat:first thead th:visible').length);
 
-        if ( $(t.what+id).hasClass('alternate') )
+        if ($(t.what+id).hasClass('alternate'))
             $(editRow).addClass('alternate');
 
         $(t.what+id).hide().after(editRow);
 
-        $(':input[name="name"]', editRow).val( $('.name', rowData).text() );
-        $(':input[name="description"]', editRow).val( $('.description', rowData).text() );
+        $(':input[name="name"]', editRow).val($('.name', rowData).text());
+        $(':input[name="description"]', editRow).val($('.description', rowData).text());
 
         $(editRow).attr('id', 'edit-'+id).addClass('inline-editor').show();
         $('.ptitle', editRow).eq(0).focus();
@@ -55,7 +55,7 @@ inlineEditUsergroup = {
     save : function(id) {
         var params, fields, tax = $('input[name="taxonomy"]').val() || '';
 
-        if( typeof(id) == 'object' )
+        if(typeof(id) == 'object')
             id = this.getId(id);
 
         $('table.widefat .inline-edit-save .waiting').show();
@@ -76,7 +76,7 @@ inlineEditUsergroup = {
                 $('table.widefat .inline-edit-save .waiting').hide();
 
                 if (r) {
-                    if ( -1 != r.indexOf('<tr') ) {
+                    if (-1 != r.indexOf('<tr')) {
                         $(inlineEditUsergroup.what+id).remove();
                         new_id = $(r).attr('id');
 
@@ -95,10 +95,10 @@ inlineEditUsergroup = {
     revert : function() {
         var id = $('table.widefat tr.inline-editor').attr('id');
 
-        if ( id ) {
+        if (id) {
             $('table.widefat .inline-edit-save .waiting').hide();
             $('#'+id).remove();
-            id = id.substr( id.lastIndexOf('-') + 1 );
+            id = id.substr(id.lastIndexOf('-') + 1);
             $(this.what+id).show();
         }
 

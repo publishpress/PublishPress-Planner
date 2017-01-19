@@ -59,10 +59,10 @@ if (!class_exists('PP_Dashboard')) {
         }
 
         // Add the widgets to the dashboard
-        add_action('wp_dashboard_setup', array( $this, 'add_dashboard_widgets'));
+        add_action('wp_dashboard_setup', array($this, 'add_dashboard_widgets'));
 
         // Register our settings
-        add_action('admin_init', array( $this, 'register_settings' ));
+        add_action('admin_init', array($this, 'register_settings'));
     }
 
     /**
@@ -123,17 +123,17 @@ if (!class_exists('PP_Dashboard')) {
 
         // Set up Post Status widget but, first, check to see if it's enabled
         if ($this->module->options->post_status_widget == 'on') {
-            wp_add_dashboard_widget('post_status_widget', __('Unpublished Content', 'publishpress'), array( $this, 'post_status_widget' ));
+            wp_add_dashboard_widget('post_status_widget', __('Unpublished Content', 'publishpress'), array($this, 'post_status_widget'));
         }
 
         // Set up the Notepad widget if it's enabled
         if ('on' == $this->module->options->notepad_widget) {
-            wp_add_dashboard_widget('notepad_widget', __('Notepad', 'publishpress'), array( $this->widgets->notepad_widget, 'notepad_widget' ));
+            wp_add_dashboard_widget('notepad_widget', __('Notepad', 'publishpress'), array($this->widgets->notepad_widget, 'notepad_widget'));
         }
 
         // Add the MyPosts widget, if enabled
         if ($this->module->options->my_posts_widget == 'on' && $this->module_enabled('notifications')) {
-            wp_add_dashboard_widget('myposts_widget', __('Posts I\'m Following', 'publishpress'), array( $this, 'myposts_widget' ));
+            wp_add_dashboard_widget('myposts_widget', __('Posts I\'m Following', 'publishpress'), array($this, 'myposts_widget'));
         }
     }
 
@@ -246,9 +246,9 @@ if (!class_exists('PP_Dashboard')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_status_widget', __('Post Status Widget', 'publishpress'), array( $this, 'settings_post_status_widget_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('my_posts_widget', __('Posts I\'m Following', 'publishpress'), array( $this, 'settings_my_posts_widget_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('notepad_widget', __('Notepad', 'publishpress'), array( $this, 'settings_notepad_widget_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_status_widget', __('Post Status Widget', 'publishpress'), array($this, 'settings_post_status_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('my_posts_widget', __('Posts I\'m Following', 'publishpress'), array($this, 'settings_my_posts_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('notepad_widget', __('Notepad', 'publishpress'), array($this, 'settings_notepad_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**

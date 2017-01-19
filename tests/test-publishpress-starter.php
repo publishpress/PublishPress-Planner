@@ -11,7 +11,7 @@ class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase {
 	 */
 	function test_publishpress_exists() {
 
-		$this->assertTrue( class_exists( 'publishpress' ) );
+		$this->assertTrue(class_exists('publishpress'));
 
 	}
 
@@ -21,17 +21,17 @@ class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase {
 	function test_wp_version() {
 
 		$minimum_version = '3.4.0';
-		$running_version = get_bloginfo( 'version' );
+		$running_version = get_bloginfo('version');
 
 		//trunk is always "master" in github terms, but WordPress has a specific way of describing it
 		//grab the exact version number to verify that we're on trunk
-		if ( $running_version == 'master' || $running_version == 'trunk' ) {
-			$file = file_get_contents( 'https://raw.github.com/WordPress/WordPress/master/wp-includes/version.php' );
-			preg_match( '#\$wp_version = \'([^\']+)\';#', $file, $matches );
+		if ($running_version == 'master' || $running_version == 'trunk') {
+			$file = file_get_contents('https://raw.github.com/WordPress/WordPress/master/wp-includes/version.php');
+			preg_match('#\$wp_version = \'([^\']+)\';#', $file, $matches);
 			$running_version = $matches[1];
 		}
 
-		$this->assertTrue( version_compare( $running_version, $minimum_version, '>=' ) );
+		$this->assertTrue(version_compare($running_version, $minimum_version, '>='));
 
 	}
 
@@ -42,10 +42,10 @@ class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase {
 
 		$PublishPress = PublishPress();
 
-		$module_real = strtolower( 'calendar' );
-		$module_args = array ( 'title' => $module_real );
-		$module_return = $PublishPress->register_module( $module_real, $module_args );
-		$this->assertTrue( $module_real == $module_return->name );
+		$module_real = strtolower('calendar');
+		$module_args = array ('title' => $module_real);
+		$module_return = $PublishPress->register_module($module_real, $module_args);
+		$this->assertTrue($module_real == $module_return->name);
 
 	}
 

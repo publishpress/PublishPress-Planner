@@ -1881,10 +1881,10 @@ msgstr "Seiten"
 #: wordpress\publishpress\0.7.1/modules/settings/settings.php:333
 #, php-format
 msgid ""
-"Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded "
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded "
 "file."
 msgstr ""
-"Deaktiviert, weil add_post_type_support( '%1$s', '%2$s' ) ist in einer geladenen "
+"Deaktiviert, weil add_post_type_support('%1$s', '%2$s') ist in einer geladenen "
 "Datei enthalten."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin

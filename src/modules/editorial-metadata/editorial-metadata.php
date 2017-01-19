@@ -82,43 +82,43 @@ if (!class_exists('PP_Editorial_Metadata')) {
             $this->register_taxonomy();
 
             // Anything that needs to happen in the admin
-            add_action('admin_init', array( $this, 'action_admin_init' ));
+            add_action('admin_init', array($this, 'action_admin_init'));
 
             // Register our settings
-            add_action('admin_init', array( $this, 'register_settings' ));
+            add_action('admin_init', array($this, 'register_settings'));
 
             // Actions relevant to the configuration view (adding, editing, or sorting existing Editorial Metadata)
-            add_action('admin_init', array( $this, 'handle_add_editorial_metadata' ));
-            add_action('admin_init', array( $this, 'handle_edit_editorial_metadata' ));
-            add_action('admin_init', array( $this, 'handle_change_editorial_metadata_visibility' ));
-            add_action('admin_init', array( $this, 'handle_delete_editorial_metadata' ));
-            add_action('wp_ajax_inline_save_term', array( $this, 'handle_ajax_inline_save_term' ));
-            add_action('wp_ajax_update_term_positions', array( $this, 'handle_ajax_update_term_positions' ));
+            add_action('admin_init', array($this, 'handle_add_editorial_metadata'));
+            add_action('admin_init', array($this, 'handle_edit_editorial_metadata'));
+            add_action('admin_init', array($this, 'handle_change_editorial_metadata_visibility'));
+            add_action('admin_init', array($this, 'handle_delete_editorial_metadata'));
+            add_action('wp_ajax_inline_save_term', array($this, 'handle_ajax_inline_save_term'));
+            add_action('wp_ajax_update_term_positions', array($this, 'handle_ajax_update_term_positions'));
 
-            add_action('add_meta_boxes', array( $this, 'handle_post_metaboxes' ));
-            add_action('save_post', array( $this, 'save_meta_box' ), 10, 2);
+            add_action('add_meta_boxes', array($this, 'handle_post_metaboxes'));
+            add_action('save_post', array($this, 'save_meta_box'), 10, 2);
 
             // Add Editorial Metadata columns to the Manage Posts view
             $supported_post_types = $this->get_post_types_for_module($this->module);
             foreach ($supported_post_types as $post_type) {
-                add_filter("manage_{$post_type}_posts_columns", array( $this, 'filter_manage_posts_columns' ));
-                add_action("manage_{$post_type}_posts_custom_column", array( $this, 'action_manage_posts_custom_column' ), 10, 2);
+                add_filter("manage_{$post_type}_posts_columns", array($this, 'filter_manage_posts_columns'));
+                add_action("manage_{$post_type}_posts_custom_column", array($this, 'action_manage_posts_custom_column'), 10, 2);
             }
 
             // Add Editorial Metadata to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
-                add_filter('pp_calendar_item_information_fields', array( $this, 'filter_calendar_item_fields' ), 10, 2);
+                add_filter('pp_calendar_item_information_fields', array($this, 'filter_calendar_item_fields'), 10, 2);
             }
 
             // Add Editorial Metadata columns to the Story Budget if it exists
             if ($this->module_enabled('story_budget')) {
-                add_filter('pp_story_budget_term_columns', array( $this, 'filter_story_budget_term_columns' ));
+                add_filter('pp_story_budget_term_columns', array($this, 'filter_story_budget_term_columns'));
                 // Register an action to handle this data later
-                add_filter('pp_story_budget_term_column_value', array( $this, 'filter_story_budget_term_column_values' ), 10, 3);
+                add_filter('pp_story_budget_term_column_value', array($this, 'filter_story_budget_term_column_values'), 10, 3);
             }
 
             // Load necessary scripts and stylesheets
-            add_action('admin_enqueue_scripts', array( $this, 'add_admin_scripts' ));
+            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
         }
 
         /**
@@ -193,7 +193,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
 
             // Parse the query when we're ordering by an editorial metadata term
-            add_action('parse_query', array( $this, 'action_parse_query' ));
+            add_action('parse_query', array($this, 'action_parse_query'));
         }
 
         /**
@@ -314,7 +314,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             // Load Javascript specific to the editorial metadata configuration view
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
-                wp_enqueue_script('publishpress-editorial-metadata-configure', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js', array( 'jquery', 'jquery-ui-sortable', 'publishpress-settings-js' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-editorial-metadata-configure', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
             }
         }
 
@@ -340,10 +340,10 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         'update_item' => __('Update Editorial Metadata', 'publishpress'),
                         'add_new_item' => __('Add New Editorial Metadata', 'publishpress'),
                         'new_item_name' => __('New Editorial Metadata', 'publishpress'),
-                    ),
+                   ),
                     'rewrite' => false,
-                )
-            );
+               )
+           );
         }
 
         /*****************************************************
@@ -364,7 +364,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
             foreach ($supported_post_types as $post_type) {
-                add_meta_box(self::metadata_taxonomy, $title, array( $this, 'display_meta_box' ), $post_type, 'side');
+                add_meta_box(self::metadata_taxonomy, $title, array($this, 'display_meta_box'), $post_type, 'side');
             }
         }
 
@@ -507,7 +507,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                 // Get the current editorial metadata
                 // TODO: do we care about the current_metadata at all?
-                //$current_metadata = get_post_meta( $id, $key, true );
+                //$current_metadata = get_post_meta($id, $key, true);
 
                 $new_metadata = isset($_POST[$key]) ? $_POST[$key] : '';
 
@@ -587,8 +587,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
             // Try to fetch from internal object cache
             $arg_hash = md5(serialize($filter_args));
-            if (isset($this->editorial_metadata_terms_cache[ $arg_hash ])) {
-                return $this->editorial_metadata_terms_cache[ $arg_hash ];
+            if (isset($this->editorial_metadata_terms_cache[$arg_hash])) {
+                return $this->editorial_metadata_terms_cache[$arg_hash];
             }
 
             $args = array(
@@ -640,7 +640,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             $ordered_terms = wp_filter_object_list($ordered_terms, $filter_args);
 
             // Set the internal object cache
-            $this->editorial_metadata_terms_cache[ $arg_hash ] = $ordered_terms;
+            $this->editorial_metadata_terms_cache[$arg_hash] = $ordered_terms;
 
             return $ordered_terms;
         }
@@ -653,7 +653,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function get_editorial_metadata_term_by($field, $value)
         {
-            if (! in_array($field, array( 'id', 'slug', 'name' ))) {
+            if (! in_array($field, array('id', 'slug', 'name'))) {
                 return false;
             }
 
@@ -662,7 +662,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             $terms = $this->get_editorial_metadata_terms();
-            $term  = wp_filter_object_list($terms, array( $field => $value ));
+            $term  = wp_filter_object_list($terms, array($field => $value));
 
             if (! empty($term)) {
                 return array_shift($term);
@@ -676,7 +676,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * Only adds columns for the currently active post types - logic controlled in $this->init()
          *
          * @since 0.7
-         * @uses apply_filters( 'manage_posts_columns' ) in wp-admin/includes/class-wp-posts-list-table.php
+         * @uses apply_filters('manage_posts_columns') in wp-admin/includes/class-wp-posts-list-table.php
          *
          * @param array $posts_columns Existing post columns prepared by WP_List_Table
          * @param array $posts_columns Previous post columns with the new values
@@ -685,8 +685,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
             $screen = get_current_screen();
             if ($screen) {
-                add_filter("manage_{$screen->id}_sortable_columns", array( $this, 'filter_manage_posts_sortable_columns' ));
-                $terms = $this->get_editorial_metadata_terms(array( 'viewable' => true ));
+                add_filter("manage_{$screen->id}_sortable_columns", array($this, 'filter_manage_posts_sortable_columns'));
+                $terms = $this->get_editorial_metadata_terms(array('viewable' => true));
                 foreach ($terms as $term) {
                     // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
                     $key                 = $this->module->slug . '-' . $term->slug;
@@ -706,7 +706,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function filter_manage_posts_sortable_columns($sortable_columns)
         {
-            $terms = $this->get_editorial_metadata_terms(array( 'viewable' => true, 'type' => 'date' ));
+            $terms = $this->get_editorial_metadata_terms(array('viewable' => true, 'type' => 'date'));
             foreach ($terms as $term) {
                 // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
                 $key                    = $this->module->slug . '-' . $term->slug;
@@ -736,7 +736,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * Logic for the post types this is called on is controlled in $this->init()
          *
          * @since 0.7
-         * @uses do_action( 'manage_posts_custom_column' ) in wp-admin/includes/class-wp-posts-list-table.php
+         * @uses do_action('manage_posts_custom_column') in wp-admin/includes/class-wp-posts-list-table.php
          *
          * @param string $column_name Unique string for the column
          * @param int $post_id ID for the post of the row
@@ -760,7 +760,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * If the PublishPress Calendar is enabled, add viewable Editorial Metadata terms
          *
          * @since 0.7
-         * @uses apply_filters( 'pp_calendar_item_information_fields' )
+         * @uses apply_filters('pp_calendar_item_information_fields')
          *
          * @param array $calendar_fields Additional data fields to include on the calendar
          * @param int $post_id Unique ID for the post data we're building
@@ -775,7 +775,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 return $calendar_fields;
             }
 
-            $terms = $this->get_editorial_metadata_terms(array( 'viewable' => true ));
+            $terms = $this->get_editorial_metadata_terms(array('viewable' => true));
 
             foreach ($terms as $term) {
                 $key = $this->module->slug . '-' . $term->slug;
@@ -797,14 +797,14 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * If the PublishPress Story Budget is enabled, register our viewable terms as columns
          *
          * @since 0.7
-         * @uses apply_filters( 'pp_story_budget_term_columns' )
+         * @uses apply_filters('pp_story_budget_term_columns')
          *
          * @param array $term_columns The existing columns on the story budget
          * @return array $term_columns Term columns with viewable Editorial Metadata terms
          */
         public function filter_story_budget_term_columns($term_columns)
         {
-            $terms = $this->get_editorial_metadata_terms(array( 'viewable' => true ));
+            $terms = $this->get_editorial_metadata_terms(array('viewable' => true));
             foreach ($terms as $term) {
                 // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
                 $key = $this->module->slug . '-' . $term->slug;
@@ -819,7 +819,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * If the PublishPress Story Budget is enabled,
          *
          * @since 0.7
-         * @uses apply_filters( 'pp_story_budget_term_column_value' )
+         * @uses apply_filters('pp_story_budget_term_column_value')
          *
          * @param object $post The post we're displaying
          * @param string $column_name Name of the column, as registered with PP_Story_Budget::register_term_columns
@@ -1100,7 +1100,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
             // Metadata type needs to pass our whitelist check
             $metadata_types = $this->get_supported_metadata_types();
-            if (empty($_POST['metadata_type']) || !isset($metadata_types[$_POST['metadata_type'] ])) {
+            if (empty($_POST['metadata_type']) || !isset($metadata_types[$_POST['metadata_type']])) {
                 $_REQUEST['form-errors']['type'] = __('Please select a valid metadata type.', 'publishpress');
             }
             // Metadata viewable needs to be a valid Yes or No
@@ -1128,7 +1128,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error adding term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array( 'page' => $this->module->settings_slug, 'message' => 'term-added' ), get_admin_url(null, 'admin.php'));
+            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-added'), get_admin_url(null, 'admin.php'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1219,7 +1219,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array( 'page' => $this->module->settings_slug, 'message' => 'term-updated' ), get_admin_url(null, 'admin.php'));
+            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-updated'), get_admin_url(null, 'admin.php'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1234,7 +1234,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
             // Check that the current GET request is our GET request
             if (!isset($_GET['page'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || $_GET['page'] != $this->module->settings_slug || !in_array($_GET['action'], array( 'make-viewable', 'make-hidden' ))) {
+                || $_GET['page'] != $this->module->settings_slug || !in_array($_GET['action'], array('make-viewable', 'make-hidden'))) {
                 return;
             }
 
@@ -1261,7 +1261,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(array( 'message' => 'term-visibility-changed' ));
+            $redirect_url = $this->get_link(array('message' => 'term-visibility-changed'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1407,7 +1407,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error deleting term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array( 'page' => $this->module->settings_slug, 'message' => 'term-deleted' ), get_admin_url(null, 'admin.php'));
+            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-deleted'), get_admin_url(null, 'admin.php'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1422,7 +1422,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_types', __('Add to these post types:', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Add to these post types:', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**
@@ -1504,7 +1504,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
             $metadata_types = $this->get_supported_metadata_types();
             $type           = $term->type;
-            $edit_term_link = $this->get_link(array( 'action' => 'edit-term', 'term-id' => $term->term_id ));
+            $edit_term_link = $this->get_link(array('action' => 'edit-term', 'term-id' => $term->term_id));
 
             $name        = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $term->name;
             $description = (isset($_POST['description'])) ? stripslashes($_POST['description']) : $term->description;
@@ -1606,13 +1606,13 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     <div class="col-wrap">
                     <div class="form-wrap">
                     <h3 class="nav-tab-wrapper">
-                        <a href="<?php echo esc_url(add_query_arg(array( 'page' => $this->module->settings_slug ), get_admin_url(null, 'admin.php')));
+                        <a href="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug), get_admin_url(null, 'admin.php')));
                 ?>" class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
             echo ' nav-tab-active';
         }
                 ?>"><?php _e('Add New', 'publishpress');
                 ?></a>
-                        <a href="<?php echo esc_url(add_query_arg(array( 'page' => $this->module->settings_slug, 'action' => 'change-options' ), get_admin_url(null, 'admin.php')));
+                        <a href="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug, 'action' => 'change-options'), get_admin_url(null, 'admin.php')));
                 ?>" class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
             echo ' nav-tab-active';
         }
@@ -1622,7 +1622,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                 <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
                 <?php /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
-                <form class="basic-settings" action="<?php echo esc_url(add_query_arg(array( 'page' => $this->module->settings_slug, 'action' => 'change-options' ), get_admin_url(null, 'admin.php')));
+                <form class="basic-settings" action="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug, 'action' => 'change-options'), get_admin_url(null, 'admin.php')));
                 ?>" method="post">
                     <?php settings_fields($this->module->options_group_name);
                 ?>
@@ -1635,7 +1635,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 </form>
                 <?php else: ?>
                 <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
-                    <form class="add:the-list:" action="<?php echo esc_url(add_query_arg(array( 'page' => $this->module->settings_slug ), get_admin_url(null, 'admin.php')));
+                    <form class="add:the-list:" action="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug), get_admin_url(null, 'admin.php')));
                 ?>" method="post" id="addmetadata" name="addmetadata">
                     <div class="form-field form-required">
                         <label for="metadata_name"><?php _e('Name', 'publishpress');
@@ -1756,7 +1756,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         );
         $sortable = array();
 
-        $this->_column_headers = array( $columns, $hidden, $sortable );
+        $this->_column_headers = array($columns, $hidden, $sortable);
 
         parent::__construct(array(
             'plural' => 'editorial metadata',
@@ -1865,8 +1865,8 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
     public function column_name($item)
     {
         global $publishpress;
-        $item_edit_link   = esc_url($publishpress->editorial_metadata->get_link(array( 'action' => 'edit-term', 'term-id' => $item->term_id )));
-        $item_delete_link = esc_url($publishpress->editorial_metadata->get_link(array( 'action' => 'delete-term', 'term-id' => $item->term_id )));
+        $item_edit_link   = esc_url($publishpress->editorial_metadata->get_link(array('action' => 'edit-term', 'term-id' => $item->term_id)));
+        $item_delete_link = esc_url($publishpress->editorial_metadata->get_link(array('action' => 'delete-term', 'term-id' => $item->term_id)));
 
         $out = '<strong><a class="row-title" href="' . $item_edit_link . '">' . esc_html($item->name) . '</a></strong>';
 
@@ -1874,9 +1874,9 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         $actions['edit']                 = "<a href='$item_edit_link'>" . __('Edit', 'publishpress') . "</a>";
         $actions['inline hide-if-no-js'] = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
         if ($item->viewable) {
-            $actions['change-visibility make-hidden'] = '<a title="' . esc_attr(__('Hidden metadata can only be viewed on the edit post view.', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array( 'action' => 'make-hidden', 'term-id' => $item->term_id ))) . '">' . __('Make Hidden', 'publishpress') . '</a>';
+            $actions['change-visibility make-hidden'] = '<a title="' . esc_attr(__('Hidden metadata can only be viewed on the edit post view.', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-hidden', 'term-id' => $item->term_id))) . '">' . __('Make Hidden', 'publishpress') . '</a>';
         } else {
-            $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(__('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array( 'action' => 'make-viewable', 'term-id' => $item->term_id ))) . '">' . __('Make Viewable', 'publishpress') . '</a>';
+            $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(__('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-viewable', 'term-id' => $item->term_id))) . '">' . __('Make Viewable', 'publishpress') . '</a>';
         }
         $actions['delete delete-status'] = "<a href='$item_delete_link'>" . __('Delete', 'publishpress') . "</a>";
 

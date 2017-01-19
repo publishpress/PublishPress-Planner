@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
     $("input[name=pp_story_budget_screen_columns]").click(function() {
         var numColumns = $(this).val();
 
-        jQuery(".postbox-container").css('width', (100 / numColumns) + '%' );
+        jQuery(".postbox-container").css('width', (100 / numColumns) + '%');
     });
 
     jQuery('h2 a.change-date').click(function(){

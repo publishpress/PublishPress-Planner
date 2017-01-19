@@ -3,9 +3,9 @@ jQuery(document).ready(function() {
     jQuery('label[for=post_status]').show();
     jQuery('#post-status-display').show();
 
-    if ( jQuery('select[name="_status"]').length == 0 ) { // not on quick edit
+    if (jQuery('select[name="_status"]').length == 0) { // not on quick edit
 
-        if ( current_user_can_publish_posts || ( current_status == 'publish' && current_user_can_edit_published_posts ) ) {
+        if (current_user_can_publish_posts || (current_status == 'publish' && current_user_can_edit_published_posts)) {
             // show publish button if allowed to publish
             jQuery('#publish').show();
         } else {
@@ -44,7 +44,7 @@ jQuery(document).ready(function() {
     // 1. Add custom statuses to post.php Status dropdown
     // Or 2. Add custom statuses to quick-edit status dropdowns on edit.php
     // Or 3. Hide two inputs with the default workflow status to override 'Draft' as the default contributor status
-    if ( jQuery('select[name="post_status"]').length > 0 ) {
+    if (jQuery('select[name="post_status"]').length > 0) {
 
         // Set the Save button to generic text by default
         pp_update_save_button('Save');
@@ -58,13 +58,13 @@ jQuery(document).ready(function() {
         pp_append_to_dropdown('select[name="post_status"]');
 
         // Make status dropdown visible on load if enabled
-        if ( status_dropdown_visible ) {
+        if (status_dropdown_visible) {
             jQuery('#post-status-select').show();
             jQuery('.edit-post-status').hide();
         }
 
         // Hide status dropdown if not allowed to edit
-        if ( !pp_can_change_status(current_status) ) {
+        if (!pp_can_change_status(current_status)) {
             jQuery('#post-status-select').hide();
             jQuery('.edit-post-status').hide();
 
@@ -77,16 +77,16 @@ jQuery(document).ready(function() {
         // If custom status set for post, then set is as #post-status-display
         jQuery('#post-status-display').text(pp_get_status_name(current_status));
 
-    } else if ( jQuery('select[name="_status"]').length > 0 ) {
+    } else if (jQuery('select[name="_status"]').length > 0) {
         pp_append_to_dropdown('select[name="_status"]');
         // Refresh the custom status dropdowns everytime Quick Edit is loaded
-        jQuery('#the-list a.editinline').bind( 'click', function() {
+        jQuery('#the-list a.editinline').bind('click', function() {
             pp_append_to_dropdown('#the-list select[name="_status"]');
-        } );
+        });
         // Clean up the bulk edit selector because it's non-standard
-        jQuery( '#bulk-edit' ).find( 'select[name="_status"]' ).prepend( '<option value="">' + pp_text_no_change + '</option>' );
-        jQuery( '#bulk-edit' ).find( 'select[name="_status"] option' ).removeAttr('selected');
-        jQuery( '#bulk-edit' ).find( 'select[name="_status"] option[value="future"]').remove();
+        jQuery('#bulk-edit').find('select[name="_status"]').prepend('<option value="">' + pp_text_no_change + '</option>');
+        jQuery('#bulk-edit').find('select[name="_status"] option').removeAttr('selected');
+        jQuery('#bulk-edit').find('select[name="_status"] option[value="future"]').remove();
     } else {
 
         // Set the Save button to generic text by default
@@ -102,13 +102,13 @@ jQuery(document).ready(function() {
     }
 
     // Add custom statuses to Status dropdown
-    function pp_append_to_dropdown( id ) {
+    function pp_append_to_dropdown(id) {
 
         // Empty dropdown except for 'future' because we need to persist that
         jQuery(id + ' option').not('[value="future"]').remove();
 
         // Add "Published" status to quick-edit for users that can publish
-        if ( id=='select[name="_status"]' && current_user_can_publish_posts ) {
+        if (id=='select[name="_status"]' && current_user_can_publish_posts) {
             jQuery(id).append(jQuery('<option></option')
                 .attr('value','publish')
                 .text('Published')
@@ -116,11 +116,11 @@ jQuery(document).ready(function() {
         }
 
         // Add remaining statuses to dropdown. 'private' is always handled by a checkbox, and 'future' already exists if we need it
-        jQuery.each( custom_statuses, function() {
-            if ( this.slug == 'private' || this.slug == 'future' )
+        jQuery.each(custom_statuses, function() {
+            if (this.slug == 'private' || this.slug == 'future')
                 return;
 
-            if ( current_status != 'publish' && this.slug == 'publish' )
+            if (current_status != 'publish' && this.slug == 'publish')
                 return;
 
             var $option = jQuery('<option></option>')
@@ -129,9 +129,9 @@ jQuery(document).ready(function() {
                             .attr('title', (this.description) ? this.description : '')
                             ;
 
-            if( current_status == this.slug ) $option.attr('selected','selected');
+            if(current_status == this.slug) $option.attr('selected','selected');
 
-            $option.appendTo( jQuery(id) );
+            $option.appendTo(jQuery(id));
         });
     }
 
@@ -156,7 +156,7 @@ jQuery(document).ready(function() {
     }
 
     // Update "Save" button text
-    function pp_update_save_button( text ) {
+    function pp_update_save_button(text) {
         if(!text) text = 'Save as ' + jQuery('select[name="post_status"] :selected').text();
         jQuery(':input#save-post').attr('value', text);
     }
@@ -177,7 +177,7 @@ jQuery(document).ready(function() {
 
     // If we're on the Manage Posts screen, remove the trailing dashes left behind once we hide the post-state span (the status).
     // We do this since we already add a custom column for post status on the screen since custom statuses are a core part of EF.
-    if ( jQuery('.post-state').length > 0 ) {
+    if (jQuery('.post-state').length > 0) {
         pp_remove_post_title_trailing_dashes();
     }
 

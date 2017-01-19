@@ -33,19 +33,19 @@ inlineEditMetadataTerm = {
         var t = this, editRow;
         t.revert();
 
-        if ( typeof(id) == 'object' )
+        if (typeof(id) == 'object')
             id = t.getId(id);
 
         editRow = $('#inline-edit').clone(true), rowData = $('#inline_'+id);
         $('td', editRow).attr('colspan', $('.widefat:first thead th:visible').length);
 
-        if ( $(t.what+id).hasClass('alternate') )
+        if ($(t.what+id).hasClass('alternate'))
             $(editRow).addClass('alternate');
 
         $(t.what+id).hide().after(editRow);
 
-        $(':input[name="name"]', editRow).val( $('.name', rowData).text() );
-        $(':input[name="description"]', editRow).val( $('.description', rowData).text() );
+        $(':input[name="name"]', editRow).val($('.name', rowData).text());
+        $(':input[name="description"]', editRow).val($('.description', rowData).text());
 
         $(editRow).attr('id', 'edit-'+id).addClass('inline-editor').show();
         $('.ptitle', editRow).eq(0).focus();
@@ -56,7 +56,7 @@ inlineEditMetadataTerm = {
     save : function(id) {
         var params, fields, tax = $('input[name="taxonomy"]').val() || '';
 
-        if( typeof(id) == 'object' )
+        if(typeof(id) == 'object')
             id = this.getId(id);
 
         $('table.widefat .inline-edit-save .waiting').show();
@@ -77,7 +77,7 @@ inlineEditMetadataTerm = {
                 $('table.widefat .inline-edit-save .waiting').hide();
 
                 if (r) {
-                    if ( -1 != r.indexOf('<tr') ) {
+                    if (-1 != r.indexOf('<tr')) {
                         $(inlineEditMetadataTerm.what+id).remove();
                         new_id = $(r).attr('id');
 
@@ -96,10 +96,10 @@ inlineEditMetadataTerm = {
     revert : function() {
         var id = $('table.widefat tr.inline-editor').attr('id');
 
-        if ( id ) {
+        if (id) {
             $('table.widefat .inline-edit-save .waiting').hide();
             $('#'+id).remove();
-            id = id.substr( id.lastIndexOf('-') + 1 );
+            id = id.substr(id.lastIndexOf('-') + 1);
             $(this.what+id).show();
         }
 
@@ -118,14 +118,14 @@ $(document).ready(function(){inlineEditMetadataTerm.init();});
 jQuery(document).ready(function(){
 
     jQuery('.delete-status a').click(function(){
-        if ( !confirm( pp_confirm_delete_term_string ) )
+        if (!confirm(pp_confirm_delete_term_string))
             return false;
     });
 
     /**
      * Instantiate the drag and drop sorting functionality
      */
-    jQuery( "#the-list" ).sortable({
+    jQuery("#the-list").sortable({
         items: 'tr.term-static',
         update: function(event, ui) {
             var affected_item = ui.item;
@@ -135,9 +135,9 @@ jQuery(document).ready(function(){
             jQuery('#the-list tr.term-static').each(function(index, value){
                 var term_id = jQuery(this).attr('id').replace('term-','');
                 terms[index] = term_id;
-                jQuery( 'td.position', this ).html( index + 1 );
+                jQuery('td.position', this).html(index + 1);
                 // Update the WP core design for alternating rows
-                if ( index%2 == 0 )
+                if (index%2 == 0)
                     jQuery(this).addClass('alternate');
             });
             // Prepare the POST
@@ -147,20 +147,20 @@ jQuery(document).ready(function(){
                 editorial_metadata_sortable_nonce: jQuery('#editorial-metadata-sortable').val(),
             };
             // Inform WordPress of our updated positions
-            jQuery.post( ajaxurl, params, function( retval ){
+            jQuery.post(ajaxurl, params, function(retval){
                 jQuery('.publishpress-admin .publishpress-message').remove();
                 // If there's a success message, print it. Otherwise we assume we received an error message
-                if ( retval.status == 'success' ) {
+                if (retval.status == 'success') {
                     var message = '<span class="publishpress-updated-message publishpress-message">' + retval.message + '</span>';
                 } else {
                     var message = '<span class="publishpress-error-message publishpress-message">' + retval.message + '</span>';
                 }
-                jQuery('.publishpress-admin h2').append( message );
+                jQuery('.publishpress-admin h2').append(message);
                 // Set a timeout to eventually remove it
-                setTimeout( publishpress_hide_message, 8000 );
+                setTimeout(publishpress_hide_message, 8000);
             });
         },
     });
-    jQuery( "#the-list tr.term-static" ).disableSelection();
+    jQuery("#the-list tr.term-static").disableSelection();
 
 });

@@ -1476,7 +1476,7 @@ msgid "Pages"
 msgstr "Páginas"
 
 #: modules/settings/settings.php:337
-msgid "Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded file."
+msgid "Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded file."
 msgstr "Desabilitado, pois add_post_type_support('%1$s', '%2$s') está incluído em um arquivo carregado."
 
 #: modules/story-budget/story-budget.php:40

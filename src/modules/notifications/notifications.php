@@ -70,38 +70,38 @@ if (!class_exists('PP_Notifications')) {
             $this->edit_post_subscriptions_cap = apply_filters('pp_edit_post_subscriptions_cap', $this->edit_post_subscriptions_cap);
 
             // Set up metabox and related actions
-            add_action('add_meta_boxes', array( $this, 'add_post_meta_box' ));
+            add_action('add_meta_boxes', array($this, 'add_post_meta_box'));
 
             // Saving post actions
             // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure usergroup data
             // is properly saved before sending notifs
-            add_action('transition_post_status', array( $this, 'save_post_subscriptions' ), 0, 3);
-            add_action('transition_post_status', array( $this, 'notification_status_change' ), 10, 3);
-            add_action('pp_post_insert_editorial_comment', array( $this, 'notification_comment'));
+            add_action('transition_post_status', array($this, 'save_post_subscriptions'), 0, 3);
+            add_action('transition_post_status', array($this, 'notification_status_change'), 10, 3);
+            add_action('pp_post_insert_editorial_comment', array($this, 'notification_comment'));
             add_action('delete_user',  array($this, 'delete_user_action'));
-            add_action('pp_send_scheduled_email', array( $this, 'send_single_email' ), 10, 4);
+            add_action('pp_send_scheduled_email', array($this, 'send_single_email'), 10, 4);
 
-            add_action('admin_init', array( $this, 'register_settings' ));
+            add_action('admin_init', array($this, 'register_settings'));
 
             // Javascript and CSS if we need it
-            add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ));
-            add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
 
             // Add a "Follow" link to posts
             if (apply_filters('pp_notifications_show_follow_link', true)) {
                 // A little extra JS for the follow button
-                add_action('admin_head', array( $this, 'action_admin_head_follow_js' ));
+                add_action('admin_head', array($this, 'action_admin_head_follow_js'));
                 // Manage Posts
-                add_filter('post_row_actions', array( $this, 'filter_post_row_actions' ), 10, 2);
-                add_filter('page_row_actions', array( $this, 'filter_post_row_actions' ), 10, 2);
+                add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
+                add_filter('page_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
                 // Calendar and Story Budget
-                add_filter('pp_calendar_item_actions', array( $this, 'filter_post_row_actions' ), 10, 2);
-                add_filter('pp_story_budget_item_actions', array( $this, 'filter_post_row_actions' ), 10, 2);
+                add_filter('pp_calendar_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
+                add_filter('pp_story_budget_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
             }
 
             //Ajax for saving notifiction updates
-            add_action('wp_ajax_save_notifications', array( $this, 'ajax_save_post_subscriptions' ));
-            add_action('wp_ajax_pp_notifications_user_post_subscription', array( $this, 'handle_user_post_subscription' ));
+            add_action('wp_ajax_save_notifications', array($this, 'ajax_save_post_subscriptions'));
+            add_action('wp_ajax_pp_notifications_user_post_subscription', array($this, 'handle_user_post_subscription'));
         }
 
         /**
@@ -194,7 +194,7 @@ if (!class_exists('PP_Notifications')) {
             if ($this->is_whitelisted_functional_view()) {
                 wp_enqueue_script('jquery-listfilterizer');
                 wp_enqueue_script('jquery-quicksearch');
-                wp_enqueue_script('publishpress-notifications-js', $this->module_url . 'lib/notifications.js', array( 'jquery', 'jquery-listfilterizer', 'jquery-quicksearch' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-notifications-js', $this->module_url . 'lib/notifications.js', array('jquery', 'jquery-listfilterizer', 'jquery-quicksearch'), PUBLISHPRESS_VERSION, true);
             }
         }
 
@@ -226,7 +226,7 @@ if (!class_exists('PP_Notifications')) {
         /**
          * Action to Follow / Unfollow posts on the manage posts screen
          */
-        $('.wp-list-table, #ef-calendar-view, #ef-story-budget-wrap').on( 'click', '.pp_follow_link a', function(e){
+        $('.wp-list-table, #ef-calendar-view, #ef-story-budget-wrap').on('click', '.pp_follow_link a', function(e){
 
             e.preventDefault();
 
@@ -234,12 +234,12 @@ if (!class_exists('PP_Notifications')) {
 
             $.ajax({
                 type : 'GET',
-                url : link.attr( 'href' ),
-                success : function( data ) {
-                    if ( 'success' == data.status ) {
-                        link.attr( 'href', data.message.link );
-                        link.attr( 'title', data.message.title );
-                        link.text( data.message.text );
+                url : link.attr('href'),
+                success : function(data) {
+                    if ('success' == data.status) {
+                        link.attr('href', data.message.link);
+                        link.attr('title', data.message.title);
+                        link.text(data.message.text);
                     }
                     // @todo expose the error somehow
                 }
@@ -321,7 +321,7 @@ if (!class_exists('PP_Notifications')) {
 
             $usergroup_post_types = $this->get_post_types_for_module($this->module);
             foreach ($usergroup_post_types as $post_type) {
-                add_meta_box('publishpress-notifications', __('Notifications', 'publishpress'), array( $this, 'notifications_meta_box'), $post_type, 'advanced');
+                add_meta_box('publishpress-notifications', __('Notifications', 'publishpress'), array($this, 'notifications_meta_box'), $post_type, 'advanced');
             }
         }
 
@@ -514,7 +514,7 @@ if (!class_exists('PP_Notifications')) {
             }
 
             // No need to notify if it's a revision, auto-draft, or if post status wasn't changed
-            $ignored_statuses = apply_filters('pp_notification_ignored_statuses', array( $old_status, 'inherit', 'auto-draft' ), $post->post_type);
+            $ignored_statuses = apply_filters('pp_notification_ignored_statuses', array($old_status, 'inherit', 'auto-draft'), $post->post_type);
 
             if (!in_array($new_status, $ignored_statuses)) {
 
@@ -602,7 +602,7 @@ if (!class_exists('PP_Notifications')) {
 
                 $edit_link = htmlspecialchars_decode(get_edit_post_link($post_id));
                 if ($new_status != 'publish') {
-                    $view_link = add_query_arg(array( 'preview' => 'true' ), wp_get_shortlink($post_id));
+                    $view_link = add_query_arg(array('preview' => 'true'), wp_get_shortlink($post_id));
                 } else {
                     $view_link = htmlspecialchars_decode(get_permalink($post_id));
                 }
@@ -643,7 +643,7 @@ if (!class_exists('PP_Notifications')) {
             $post_title = pp_draft_or_post_title($post_id);
 
             // Check if this a reply
-            //$parent_ID = isset( $comment->comment_parent_ID ) ? $comment->comment_parent_ID : 0;
+            //$parent_ID = isset($comment->comment_parent_ID) ? $comment->comment_parent_ID : 0;
             //if($parent_ID) $parent = get_comment($parent_ID);
 
             // Set user to follow post, but make it filterable
@@ -748,7 +748,7 @@ if (!class_exists('PP_Notifications')) {
             $send_time = time();
 
             foreach ($recipients as $recipient) {
-                wp_schedule_single_event($send_time, 'pp_send_scheduled_email', array( $recipient, $subject, $message, $message_headers ));
+                wp_schedule_single_event($send_time, 'pp_send_scheduled_email', array($recipient, $subject, $message, $message_headers));
                 $send_time += $time_offset;
             }
         }
@@ -852,7 +852,7 @@ if (!class_exists('PP_Notifications')) {
             }
 
             if (! is_array($users)) {
-                $users = array( $users );
+                $users = array($users);
             }
 
             $user_terms = array();
@@ -901,7 +901,7 @@ if (!class_exists('PP_Notifications')) {
              }
 
              if (! is_array($users)) {
-                 $users = array( $users );
+                 $users = array($users);
              }
 
              $terms = get_the_terms($post->ID, $this->following_users_taxonomy);
@@ -992,7 +992,7 @@ if (!class_exists('PP_Notifications')) {
         public function add_term_if_not_exists($term, $taxonomy)
         {
             if (!term_exists($term, $taxonomy)) {
-                $args = array( 'slug' => sanitize_title($term) );
+                $args = array('slug' => sanitize_title($term));
                 return wp_insert_term($term, $taxonomy, $args);
             }
             return true;
@@ -1035,7 +1035,7 @@ if (!class_exists('PP_Notifications')) {
                 }
                 $new_user = get_user_by($search, $user);
                 if (! $new_user || ! is_user_member_of_blog($new_user->ID)) {
-                    unset($users[ $key ]);
+                    unset($users[$key]);
                     continue;
                 }
                 switch ($return) {
@@ -1073,7 +1073,7 @@ if (!class_exists('PP_Notifications')) {
                 $fields = $return;
             }
 
-            $usergroups = wp_get_object_terms($post_id, $this->following_usergroups_taxonomy, array( 'fields' => $fields ));
+            $usergroups = wp_get_object_terms($post_id, $this->following_usergroups_taxonomy, array('fields' => $fields));
 
             if ($return == 'slugs') {
                 $slugs = array();
@@ -1129,8 +1129,8 @@ if (!class_exists('PP_Notifications')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_types', __('Post types for notifications:', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('always_notify_admin', __('Always notify blog admin', 'publishpress'), array( $this, 'settings_always_notify_admin_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Post types for notifications:', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('always_notify_admin', __('Always notify blog admin', 'publishpress'), array($this, 'settings_always_notify_admin_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**

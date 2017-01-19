@@ -36,14 +36,14 @@ if (!class_exists('PP_Settings')) {
          */
         public function init()
         {
-            add_action('admin_init', array( $this, 'helper_settings_validate_and_save' ), 100);
+            add_action('admin_init', array($this, 'helper_settings_validate_and_save'), 100);
 
-            add_action('admin_print_styles', array( $this, 'action_admin_print_styles' ));
-            add_action('admin_print_scripts', array( $this, 'action_admin_print_scripts' ));
-            add_action('admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ));
-            add_action('admin_menu', array( $this, 'action_admin_menu' ));
+            add_action('admin_print_styles', array($this, 'action_admin_print_styles'));
+            add_action('admin_print_scripts', array($this, 'action_admin_print_scripts'));
+            add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
+            add_action('admin_menu', array($this, 'action_admin_menu'));
 
-            add_action('wp_ajax_change_publishpress_module_state', array( $this, 'ajax_change_publishpress_module_state' ));
+            add_action('wp_ajax_change_publishpress_module_state', array($this, 'ajax_change_publishpress_module_state'));
         }
 
         /**
@@ -59,12 +59,12 @@ if (!class_exists('PP_Settings')) {
                 $pp_logo = 'lib/eflogo_s32.png';
             endif;
 
-            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array( $this, 'settings_page_controller' ), $this->module->module_url . $pp_logo) ;
+            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), $this->module->module_url . $pp_logo) ;
 
             foreach ($publishpress->modules as $mod_name => $mod_data) {
                 if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on'
                     && $mod_data->configure_page_cb && $mod_name != $this->module->name) {
-                    add_submenu_page($this->module->settings_slug, $mod_data->title, $mod_data->title, 'manage_options', $mod_data->settings_slug, array( $this, 'settings_page_controller' )) ;
+                    add_submenu_page($this->module->settings_slug, $mod_data->title, $mod_data->title, 'manage_options', $mod_data->settings_slug, array($this, 'settings_page_controller')) ;
                 }
             }
         }
@@ -72,7 +72,7 @@ if (!class_exists('PP_Settings')) {
         public function action_admin_enqueue_scripts()
         {
             if ($this->is_whitelisted_settings_view()) {
-                wp_enqueue_script('publishpress-settings-js', $this->module_url . 'lib/settings.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-settings-js', $this->module_url . 'lib/settings.js', array('jquery'), PUBLISHPRESS_VERSION, true);
             }
         }
 
@@ -387,7 +387,7 @@ if (!class_exists('PP_Settings')) {
                 echo ' type="checkbox" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
                 // Leave a note to the admin as a reminder that add_post_type_support has been used somewhere in their code
                 if (post_type_supports($post_type, $module->post_type_support)) {
-                    echo '&nbsp&nbsp;&nbsp;<span class="description">' . sprintf(__('Disabled because add_post_type_support( \'%1$s\', \'%2$s\' ) is included in a loaded file.', 'publishpress'), $post_type, $module->post_type_support) . '</span>';
+                    echo '&nbsp&nbsp;&nbsp;<span class="description">' . sprintf(__('Disabled because add_post_type_support(\'%1$s\', \'%2$s\') is included in a loaded file.', 'publishpress'), $post_type, $module->post_type_support) . '</span>';
                 }
                 echo '<br />';
             }
@@ -429,7 +429,7 @@ if (!class_exists('PP_Settings')) {
             $publishpress->update_all_module_options($publishpress->$module_name->module->name, $new_options);
 
             // Redirect back to the settings page that was submitted without any previous messages
-            $goback = add_query_arg('message', 'settings-updated',  remove_query_arg(array( 'message'), wp_get_referer()));
+            $goback = add_query_arg('message', 'settings-updated',  remove_query_arg(array('message'), wp_get_referer()));
             wp_safe_redirect($goback);
             exit;
         }

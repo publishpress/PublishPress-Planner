@@ -228,7 +228,7 @@ if (!class_exists('PP_Module')) {
 
         // Custom statuses only handles workflow statuses
         if ($this->module_enabled('custom_status')
-            && !in_array($status, array( 'publish', 'future', 'private', 'trash' ))) {
+            && !in_array($status, array('publish', 'future', 'private', 'trash'))) {
             $status_object = $publishpress->custom_status->get_custom_status_by('slug', $status);
             if ($status_object && !is_wp_error($status_object)) {
                 $status_friendly_name = $status_object->name;
@@ -254,11 +254,11 @@ if (!class_exists('PP_Module')) {
         wp_enqueue_script('jquery-ui-datepicker');
 
         //Timepicker needs to come after jquery-ui-datepicker and jquery
-        wp_enqueue_script('publishpress-timepicker', PUBLISHPRESS_URL . 'common/js/jquery-ui-timepicker-addon.js', array( 'jquery', 'jquery-ui-datepicker' ), PUBLISHPRESS_VERSION, true);
-        wp_enqueue_script('publishpress-date_picker', PUBLISHPRESS_URL . 'common/js/pp_date.js', array( 'jquery', 'jquery-ui-datepicker', 'publishpress-timepicker' ), PUBLISHPRESS_VERSION, true);
+        wp_enqueue_script('publishpress-timepicker', PUBLISHPRESS_URL . 'common/js/jquery-ui-timepicker-addon.js', array('jquery', 'jquery-ui-datepicker'), PUBLISHPRESS_VERSION, true);
+        wp_enqueue_script('publishpress-date_picker', PUBLISHPRESS_URL . 'common/js/pp_date.js', array('jquery', 'jquery-ui-datepicker', 'publishpress-timepicker'), PUBLISHPRESS_VERSION, true);
 
         // Now styles
-        wp_enqueue_style('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css', array( 'wp-jquery-ui-dialog' ), PUBLISHPRESS_VERSION, 'screen');
+        wp_enqueue_style('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css', array('wp-jquery-ui-dialog'), PUBLISHPRESS_VERSION, 'screen');
         wp_enqueue_style('jquery-ui-theme', PUBLISHPRESS_URL . 'common/css/jquery.ui.theme.css', false, PUBLISHPRESS_VERSION, 'screen');
     }
 
@@ -349,7 +349,7 @@ if (!class_exists('PP_Module')) {
     public function print_ajax_response($status, $message = '')
     {
         header('Content-type: application/json;');
-        echo json_encode(array( 'status' => $status, 'message' => $message ));
+        echo json_encode(array('status' => $status, 'message' => $message));
 
         exit;
     }
@@ -428,11 +428,11 @@ if (!class_exists('PP_Module')) {
         }
 
         if (!is_array($object_id)) {
-            $object_id = array( $object_id );
+            $object_id = array($object_id);
         }
 
         if (!is_array($terms)) {
-            $terms = array( $terms );
+            $terms = array($terms);
         }
 
         $delete_objects = array_map('intval', $object_id);
@@ -695,7 +695,7 @@ if (!class_exists('PP_Module')) {
             }
 
             $new_description = $this->get_encoded_description($description_args);
-            wp_update_term($term->term_id, $taxonomy, array( 'description' => $new_description ));
+            wp_update_term($term->term_id, $taxonomy, array('description' => $new_description));
         }
     }
     }

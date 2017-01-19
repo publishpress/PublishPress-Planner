@@ -1785,8 +1785,8 @@ msgstr "Pagine"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/settings/settings.php:333
 #, php-format
-msgid "Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded file."
-msgstr "Disabilitato perchè l'integrazione tra '%1$s' e '%2$s' )è assicurata dal plugin caricato."
+msgid "Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded file."
+msgstr "Disabilitato perchè l'integrazione tra '%1$s' e '%2$s')è assicurata dal plugin caricato."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:40

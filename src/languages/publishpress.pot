@@ -1610,7 +1610,7 @@ msgstr ""
 #: modules/settings/settings.php:336
 #, php-format
 msgid ""
-"Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded "
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded "
 "file."
 msgstr ""
 

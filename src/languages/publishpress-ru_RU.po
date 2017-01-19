@@ -1749,11 +1749,11 @@ msgstr "Страницы"
 #: modules/settings/settings.php:336
 #, php-format
 msgid ""
-"Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded "
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded "
 "file."
 msgstr ""
-"Отключено, потому что в загруженном файле указано add_post_type_support( '%1$s', "
-"'%2$s' )."
+"Отключено, потому что в загруженном файле указано add_post_type_support('%1$s', "
+"'%2$s')."
 
 #: modules/story-budget/story-budget.php:38 modules/story-budget/story-budget.php:134
 #: modules/story-budget/story-budget.php:282

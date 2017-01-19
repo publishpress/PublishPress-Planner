@@ -36,7 +36,7 @@ editorialCommentReply = {
         jQuery('#ef-comment_respond').show();
 
         // Move reply form back after the main "Respond" form
-        jQuery('#ef-post_comment').after( jQuery('#ef-replyrow') );
+        jQuery('#ef-post_comment').after(jQuery('#ef-replyrow'));
 
         // Empty out all the form values
         jQuery('#ef-replycontent').val('');
@@ -118,14 +118,14 @@ editorialCommentReply = {
         var response, comment, supplemental, id, bg;
 
         // Didn't pass validation, so let's throw an error
-        if ( typeof(xml) == 'string' ) {
+        if (typeof(xml) == 'string') {
             this.error({'responseText': xml});
             return false;
         }
 
         // Parse the response
         response = wpAjax.parseAjaxResponse(xml);
-        if ( response.errors ) {
+        if (response.errors) {
             // Uh oh, errors found
             this.error({'responseText': wpAjax.broken});
             return false;
@@ -164,8 +164,8 @@ editorialCommentReply = {
 
         // Show the new comment
         jQuery(id)
-            .animate( { 'backgroundColor':'#CCEEBB' }, 600 )
-            .animate( { 'backgroundColor':'#fff' }, 600 );
+            .animate({ 'backgroundColor':'#CCEEBB' }, 600)
+            .animate({ 'backgroundColor':'#fff' }, 600);
 
     },
 
@@ -173,11 +173,11 @@ editorialCommentReply = {
         // Oh noes! We haz an error!
         jQuery('#ef-comment_loading').hide();
 
-        if ( r.responseText ) {
-            er = r.responseText.replace( /<.[^<>]*?>/g, '' );
+        if (r.responseText) {
+            er = r.responseText.replace(/<.[^<>]*?>/g, '');
         }
 
-        if ( er ) {
+        if (er) {
             jQuery('#ef-replysubmit .error').html(er).show();
         }
 

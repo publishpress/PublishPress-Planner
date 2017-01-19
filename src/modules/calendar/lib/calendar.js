@@ -11,17 +11,17 @@ jQuery(document).ready(function ($) {
      * Listen for click event and subsitute correct type of replacement
      * html given the input type
      */
-    $('.day-unit').on('click', '.editable-value', function( event ) {
+    $('.day-unit').on('click', '.editable-value', function(event) {
         //Reset anything that was currently being edited.
         reset_editorial_metadata();
         var  t = this,
         $editable_el = $(this).addClass('hidden').next('.editable-html');
 
-        if( $editable_el.children().first().is( 'select' ) ) {
+        if($editable_el.children().first().is('select')) {
             $editable_el.find('option')
-                .each( function() {
-                    if( $(this).text() == $(t).text() ) {
-                        $(this).attr('selected', 'selected' );
+                .each(function() {
+                    if($(this).text() == $(t).text()) {
+                        $(this).attr('selected', 'selected');
                     }
                 });
         }
@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
             data : metadata_info,
             success : function(x) {
                 var val = $('.editing').children().first();
-                if( val.is('select') ) {
+                if(val.is('select')) {
                     val = val.find('option:selected').text();
                 } else {
                     val = val.val();
@@ -121,11 +121,11 @@ jQuery(document).ready(function ($) {
         //First let's see if we directly clicked on a .day-item
         var target = $(event.target);
         //Case where we've clicked on the list item directly
-        if( target.hasClass('day-item') ) {
-            if( target.hasClass('active') ) {
+        if(target.hasClass('day-item')) {
+            if(target.hasClass('active')) {
                 return;
             }
-            else if( target.hasClass( 'post-insert-overlay' ) ) {
+            else if(target.hasClass('post-insert-overlay')) {
                 return;
             }
             else {
@@ -142,12 +142,12 @@ jQuery(document).ready(function ($) {
 
         //Case where we've clicked in the list item
         target = target.closest('.day-item');
-        if( target.length ) {
-            if( target.hasClass('day-item') ) {
-                if( target.hasClass('active') ) {
+        if(target.length) {
+            if(target.hasClass('day-item')) {
+                if(target.hasClass('active')) {
                     return;
                 }
-                else if( target.hasClass( 'post-insert-overlay' ) ) {
+                else if(target.hasClass('post-insert-overlay')) {
                     return;
                 }
                 else {
@@ -164,11 +164,11 @@ jQuery(document).ready(function ($) {
         }
 
         target = $(event.target).closest('#ui-datepicker-div');
-        if( target.length )
+        if(target.length)
             return;
 
         target = $(event.target).closest('.post-insert-dialog');
-        if( target.length )
+        if(target.length)
             return;
 
         publishpress_calendar_close_overlays();
@@ -204,7 +204,7 @@ jQuery(document).ready(function ($) {
             $(this).css('cursor','auto');
             $('td.day-unit').removeClass('ui-wrapper-highlight');
             // Only do a POST request if we moved the post off today
-            if ( $(this).closest('.day-unit').attr('id') != $(ui.item).closest('.day-unit').attr('id') ) {
+            if ($(this).closest('.day-unit').attr('id') != $(ui.item).closest('.day-unit').attr('id')) {
                 var post_id = $(ui.item).attr('id').split('-');
                 post_id = post_id[post_id.length - 1];
                 var prev_date = $(this).closest('.day-unit').attr('id');
@@ -224,14 +224,14 @@ jQuery(document).ready(function ($) {
                     function(response) {
                         $('li.ajax-actions .waiting').hide();
                         var html = '';
-                        if ( response.status == 'success' ) {
+                        if (response.status == 'success') {
                             html = '<div class="publishpress-message publishpress-updated-message">' + response.message + '</div>';
-                            //setTimeout( publishpress_calendar_hide_message, 5000 );
-                        } else if ( response.status == 'error' ) {
+                            //setTimeout(publishpress_calendar_hide_message, 5000);
+                        } else if (response.status == 'error') {
                             html = '<div class="publishpress-message publishpress-error-message">' + response.message + '</div>';
                         }
                         $('li.ajax-actions').prepend(html);
-                        setTimeout( publishpress_calendar_hide_message, 10000 );
+                        setTimeout(publishpress_calendar_hide_message, 10000);
                     }
                 );
             }
@@ -252,12 +252,12 @@ jQuery(document).ready(function ($) {
 
             // Bind the form display to the '+' button
             // or to a double click on the calendar square
-            $day_units.find('.schedule-new-post-button').on('click.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue );
-            $day_units.on('dblclick.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue );
+            $day_units.find('.schedule-new-post-button').on('click.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue);
+            $day_units.on('dblclick.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue);
             $day_units.hover(
                 function(){ $(this).find('.schedule-new-post-button').stop().delay(500).fadeIn(100);},
                 function(){ $(this).find('.schedule-new-post-button').stop().hide();}
-            );
+           );
         }, // init
 
         /**
@@ -275,9 +275,9 @@ jQuery(document).ready(function ($) {
             $this = $(this);
 
             // Get the current calendar square
-            if( $this.is('td.day-unit') )
+            if($this.is('td.day-unit'))
                 EFQuickPublish.$current_date_square = $this;
-            else if( $this.is('.schedule-new-post-button') )
+            else if($this.is('.schedule-new-post-button'))
                 EFQuickPublish.$current_date_square = $this.parent();
 
             //Get our form content
@@ -291,16 +291,16 @@ jQuery(document).ready(function ($) {
             EFQuickPublish.$post_title_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-title').focus();
 
             // Setup the ajax mechanism for form submit
-            EFQuickPublish.$new_post_form.on( 'submit', function(e){
+            EFQuickPublish.$new_post_form.on('submit', function(e){
                 e.preventDefault();
                 EFQuickPublish.ajax_pp_create_post(false);
             });
 
             // Setup direct link to new draft
-            $edit_post_link.on( 'click', function(e){
+            $edit_post_link.on('click', function(e){
                 e.preventDefault();
                 EFQuickPublish.ajax_pp_create_post(true);
-            } );
+            });
 
             return false; // prevent bubbling up
 
@@ -310,7 +310,7 @@ jQuery(document).ready(function ($) {
          * Sends an ajax request to create a new post
          * @param  bool redirect_to_draft Whether or not we should be redirected to the post's edit screen on success
          */
-        ajax_pp_create_post : function( redirect_to_draft ){
+        ajax_pp_create_post : function(redirect_to_draft){
 
             // Get some of the form elements for later use
             var $submit_controls = EFQuickPublish.$new_post_form.find('.post-insert-dialog-controls');
@@ -321,7 +321,7 @@ jQuery(document).ready(function ($) {
             $spinner.show();
 
             // Delay submit to prevent spinner flashing
-            setTimeout( function(){
+            setTimeout(function(){
 
                 jQuery.ajax({
 
@@ -334,29 +334,29 @@ jQuery(document).ready(function ($) {
                         pp_insert_title: EFQuickPublish.$post_title_input.val(),
                         nonce: $(document).find('#ef-calendar-modify').val()
                     },
-                    success: function( response, textStatus, XMLHttpRequest ) {
+                    success: function(response, textStatus, XMLHttpRequest) {
 
-                        if( response.status == 'success' ){
+                        if(response.status == 'success'){
 
                             //The response message on success is the html for the a post list item
                             var $new_post = $(response.message);
 
-                            if( redirect_to_draft ) {
+                            if(redirect_to_draft) {
                                 //If user clicked on the 'edit post' link, let's send them to the new post
                                 var edit_url =  $new_post.find('.item-actions .edit a').attr('href');
                                 window.location = edit_url;
                             } else {
                                 // Otherwise, inject the new post and bind the appropriate click event
-                                $new_post.appendTo( EFQuickPublish.$current_date_square.find('ul.post-list') );
+                                $new_post.appendTo(EFQuickPublish.$current_date_square.find('ul.post-list'));
                                 publishpress_calendar_close_overlays();
                             }
 
                         } else {
-                            EFQuickPublish.display_errors( EFQuickPublish.$new_post_form, response.message );
+                            EFQuickPublish.display_errors(EFQuickPublish.$new_post_form, response.message);
                         }
                     },
-                    error: function( XMLHttpRequest, textStatus, errorThrown ) {
-                        EFQuickPublish.display_errors( EFQuickPublish.$new_post_form, errorThrown );
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        EFQuickPublish.display_errors(EFQuickPublish.$new_post_form, errorThrown);
                     }
 
                 }); // .ajax
@@ -372,7 +372,7 @@ jQuery(document).ready(function ($) {
          * @param  jQueryObj $form The form to display the errors in
          * @param  str error_msg Error message
          */
-        display_errors : function( $form, error_msg ){
+        display_errors : function($form, error_msg){
 
             $form.find('.error').remove(); // clear out old errors
             $form.find('.spinner').hide(); // stop the loading animation
@@ -384,7 +384,7 @@ jQuery(document).ready(function ($) {
 
     };
 
-    if( pp_calendar_params.can_add_posts === 'true' )
+    if(pp_calendar_params.can_add_posts === 'true')
         EFQuickPublish.init();
 
 });

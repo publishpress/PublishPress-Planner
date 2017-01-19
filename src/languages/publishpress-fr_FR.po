@@ -1590,10 +1590,10 @@ msgstr "Pages"
 
 #: modules/settings/settings.php:327
 msgid ""
-"Disabled because add_post_type_support( '%1$s', '%2$s' ) is included in a loaded "
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded "
 "file."
 msgstr ""
-"Désactivé car add_post_type_support( &#8217;%1$s&#8217;, &#8217;%2$s&#8217; ) est "
+"Désactivé car add_post_type_support(&#8217;%1$s&#8217;, &#8217;%2$s&#8217;) est "
 "inclus dans un fichier chargé."
 
 #: modules/story-budget/story-budget.php:40 modules/story-budget/story-budget.php:136

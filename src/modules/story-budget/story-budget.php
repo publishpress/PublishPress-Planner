@@ -67,21 +67,21 @@ class PP_Story_Budget extends PP_Module
         // Filter to allow users to pick a taxonomy other than 'category' for sorting their posts
         $this->taxonomy_used = apply_filters('pp_story_budget_taxonomy_used', $this->taxonomy_used);
 
-        add_action('admin_init', array( $this, 'handle_form_date_range_change' ));
+        add_action('admin_init', array($this, 'handle_form_date_range_change'));
 
         include_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
         if (function_exists('add_screen_options_panel')) {
-            add_screen_options_panel(self::usermeta_key_prefix . 'screen_columns', __('Screen Layout', 'publishpress'), array( $this, 'print_column_prefs' ), self::screen_id, array( $this, 'save_column_prefs' ), true);
+            add_screen_options_panel(self::usermeta_key_prefix . 'screen_columns', __('Screen Layout', 'publishpress'), array($this, 'print_column_prefs'), self::screen_id, array($this, 'save_column_prefs'), true);
         }
 
         // Register the columns of data appearing on every term. This is hooked into admin_init
         // so other PublishPress modules can register their filters if needed
-        add_action('admin_init', array( $this, 'register_term_columns' ));
+        add_action('admin_init', array($this, 'register_term_columns'));
 
-        add_action('admin_menu', array( $this, 'action_admin_menu' ));
+        add_action('admin_menu', array($this, 'action_admin_menu'));
         // Load necessary scripts and stylesheets
-        add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ));
-        add_action('admin_enqueue_scripts', array( $this, 'action_enqueue_admin_styles' ));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'action_enqueue_admin_styles'));
     }
 
     /**
@@ -92,11 +92,11 @@ class PP_Story_Budget extends PP_Module
     public function install()
     {
         $story_budget_roles = array(
-            'administrator' => array( 'pp_view_story_budget' ),
-            'editor'        => array( 'pp_view_story_budget' ),
-            'author'        => array( 'pp_view_story_budget' ),
-            'contributor'   => array( 'pp_view_story_budget' )
-        );
+            'administrator' => array('pp_view_story_budget'),
+            'editor'        => array('pp_view_story_budget'),
+            'author'        => array('pp_view_story_budget'),
+            'contributor'   => array('pp_view_story_budget')
+       );
 
         foreach ($story_budget_roles as $role => $caps) {
             $this->add_caps_to_role($role, $caps);
@@ -135,7 +135,7 @@ class PP_Story_Budget extends PP_Module
      */
     public function action_admin_menu()
     {
-        add_submenu_page('index.php', __('Story Budget', 'publishpress'), __('Story Budget', 'publishpress'), apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget'), $this->module->slug, array( $this, 'story_budget'));
+        add_submenu_page('index.php', __('Story Budget', 'publishpress'), __('Story Budget', 'publishpress'), apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget'), $this->module->slug, array($this, 'story_budget'));
     }
 
     /**
@@ -155,7 +155,7 @@ class PP_Story_Budget extends PP_Module
         echo '<script type="text/javascript"> var pp_story_budget_number_of_columns="' . esc_js($this->num_columns) . '";</script>';
 
         $this->enqueue_datepicker_resources();
-        wp_enqueue_script('publishpress-story_budget', $this->module_url . 'lib/story-budget.js', array( 'publishpress-date_picker' ), PUBLISHPRESS_VERSION, true);
+        wp_enqueue_script('publishpress-story_budget', $this->module_url . 'lib/story-budget.js', array('publishpress-date_picker'), PUBLISHPRESS_VERSION, true);
     }
 
     /**
@@ -233,7 +233,7 @@ class PP_Story_Budget extends PP_Module
             // If usermeta didn't have a value already, use a default value and insert into DB
             if (empty($this->num_columns)) {
                 $this->num_columns = self::default_num_columns;
-                $this->save_column_prefs(array( self::usermeta_key_prefix . 'screen_columns' => $this->num_columns ));
+                $this->save_column_prefs(array(self::usermeta_key_prefix . 'screen_columns' => $this->num_columns));
             }
         }
         return $this->num_columns;
@@ -257,7 +257,7 @@ class PP_Story_Budget extends PP_Module
     public function save_column_prefs($posted_fields)
     {
         $key               = self::usermeta_key_prefix . 'screen_columns';
-        $this->num_columns = (int) $posted_fields[ $key ];
+        $this->num_columns = (int) $posted_fields[$key];
 
         $current_user = wp_get_current_user();
         $this->update_user_meta($current_user->ID, $key, $this->num_columns);
@@ -413,9 +413,9 @@ class PP_Story_Budget extends PP_Module
         // Filter for an end user to implement any of their own query args
          $args = apply_filters('pp_story_budget_posts_query_args', $args);
 
-        add_filter('posts_where', array( $this, 'posts_where_range' ));
+        add_filter('posts_where', array($this, 'posts_where_range'));
         $term_posts_query_results = new WP_Query($args);
-        remove_filter('posts_where', array( $this, 'posts_where_range' ));
+        remove_filter('posts_where', array($this, 'posts_where_range'));
 
         $term_posts = array();
         while ($term_posts_query_results->have_posts()) {
@@ -601,7 +601,7 @@ class PP_Story_Budget extends PP_Module
         }
 
         // Display a View or a Preview link depending on whether the post has been published or not
-        if (in_array($post->post_status, array( 'publish' ))) {
+        if (in_array($post->post_status, array('publish'))) {
             $item_actions['view'] = '<a href="' . get_permalink($post->ID) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;', 'publishpress'), $post_title)) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
         } elseif ($can_edit_post) {
             $item_actions['previewpost'] = '<a href="' . esc_url(apply_filters('preview_post_link', add_query_arg('preview', 'true', get_permalink($post->ID)), $post)) . '" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;', 'publishpress'), $post_title)) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';

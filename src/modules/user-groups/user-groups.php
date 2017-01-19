@@ -86,22 +86,22 @@ if (!class_exists('PP_User_Groups')) {
             $this->manage_usergroups_cap = apply_filters('pp_manage_usergroups_cap', $this->manage_usergroups_cap);
 
             // Register our settings
-            add_action('admin_init', array( $this, 'register_settings' ));
+            add_action('admin_init', array($this, 'register_settings'));
 
             // Handle any adding, editing or saving
-            add_action('admin_init', array( $this, 'handle_add_usergroup' ));
-            add_action('admin_init', array( $this, 'handle_edit_usergroup' ));
-            add_action('admin_init', array( $this, 'handle_delete_usergroup' ));
-            add_action('wp_ajax_inline_save_usergroup', array( $this, 'handle_ajax_inline_save_usergroup' ));
+            add_action('admin_init', array($this, 'handle_add_usergroup'));
+            add_action('admin_init', array($this, 'handle_edit_usergroup'));
+            add_action('admin_init', array($this, 'handle_delete_usergroup'));
+            add_action('wp_ajax_inline_save_usergroup', array($this, 'handle_ajax_inline_save_usergroup'));
 
             // Usergroups can be managed from the User profile view
-            add_action('show_user_profile', array( $this, 'user_profile_page' ));
-            add_action('edit_user_profile', array( $this, 'user_profile_page' ));
-            add_action('user_profile_update_errors', array( $this, 'user_profile_update' ), 10, 3);
+            add_action('show_user_profile', array($this, 'user_profile_page'));
+            add_action('edit_user_profile', array($this, 'user_profile_page'));
+            add_action('user_profile_update_errors', array($this, 'user_profile_update'), 10, 3);
 
             // Javascript and CSS if we need it
-            add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ));
-            add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
         }
 
         /**
@@ -158,7 +158,7 @@ if (!class_exists('PP_User_Groups')) {
                 global $wpdb;
 
                 // Set all of the user group terms to our new taxonomy
-                $wpdb->update($wpdb->term_taxonomy, array( 'taxonomy' => self::taxonomy_key ), array( 'taxonomy' => 'following_usergroups' ));
+                $wpdb->update($wpdb->term_taxonomy, array('taxonomy' => self::taxonomy_key), array('taxonomy' => 'following_usergroups'));
 
                 // Get all of the users who are a part of user groups and assign them to their new user group values
                 $query           = "SELECT * FROM $wpdb->usermeta WHERE meta_key='wp_pp_usergroups';";
@@ -180,7 +180,7 @@ if (!class_exists('PP_User_Groups')) {
                 $all_usergroups = $this->get_usergroups();
                 foreach ($all_usergroups as $usergroup) {
                     $new_slug = str_replace('pp_', self::term_prefix, $usergroup->slug);
-                    $this->update_usergroup($usergroup->term_id, array( 'slug' => $new_slug ));
+                    $this->update_usergroup($usergroup->term_id, array('slug' => $new_slug));
                 }
 
                 // Delete all of the previous usermeta values
@@ -215,7 +215,7 @@ if (!class_exists('PP_User_Groups')) {
             $args = array(
                 'public' => false,
                 'rewrite' => false,
-            );
+           );
             register_taxonomy(self::taxonomy_key, $supported_post_types, $args);
         }
 
@@ -231,11 +231,11 @@ if (!class_exists('PP_User_Groups')) {
             if ($this->is_whitelisted_functional_view() || $this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-listfilterizer');
                 wp_enqueue_script('jquery-quicksearch');
-                wp_enqueue_script('publishpress-user-groups-js', $this->module_url . 'lib/user-groups.js', array( 'jquery', 'jquery-listfilterizer', 'jquery-quicksearch' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-user-groups-js', $this->module_url . 'lib/user-groups.js', array('jquery', 'jquery-listfilterizer', 'jquery-quicksearch'), PUBLISHPRESS_VERSION, true);
             }
 
             if ($this->is_whitelisted_settings_view($this->module->name)) {
-                wp_enqueue_script('publishpress-user-groups-configure-js', $this->module_url . 'lib/user-groups-configure.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-user-groups-configure-js', $this->module_url . 'lib/user-groups-configure.js', array('jquery'), PUBLISHPRESS_VERSION, true);
             }
         }
 
@@ -442,7 +442,7 @@ if (!class_exists('PP_User_Groups')) {
                 wp_die(__('Error deleting user group.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(array( 'message' => 'usergroup-deleted' ));
+            $redirect_url = $this->get_link(array('message' => 'usergroup-deleted'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -524,7 +524,7 @@ if (!class_exists('PP_User_Groups')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_types', __('Add to these post types:', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Add to these post types:', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**
@@ -580,7 +580,7 @@ if (!class_exists('PP_User_Groups')) {
             $name        = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $usergroup->name;
             $description = (isset($_POST['description'])) ? stripslashes($_POST['description']) : $usergroup->description;
             ?>
-            <form method="post" action="<?php echo esc_url($this->get_link(array( 'action' => 'edit-usergroup', 'usergroup-id' => $usergroup_id )));
+            <form method="post" action="<?php echo esc_url($this->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup_id)));
             ?>">
             <div id="col-right"><div class="col-wrap"><div id="ef-usergroup-users" class="form-wrap">
                 <h4><?php _e('Users', 'publishpress');
@@ -649,7 +649,7 @@ if (!class_exists('PP_User_Groups')) {
     }
             ?>"><?php _e('Add New', 'publishpress');
             ?></a>
-                        <a href="<?php echo esc_url($this->get_link(array( 'action' => 'change-options' )));
+                        <a href="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
             ?>" class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
         echo ' nav-tab-active';
     }
@@ -657,7 +657,7 @@ if (!class_exists('PP_User_Groups')) {
             ?></a>
                     </h3>
                     <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
-                    <form class="basic-settings" action="<?php echo esc_url($this->get_link(array( 'action' => 'change-options' )));
+                    <form class="basic-settings" action="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
             ?>" method="post">
                         <?php settings_fields($this->module->options_group_name);
             ?>
@@ -728,7 +728,7 @@ if (!class_exists('PP_User_Groups')) {
             // Assemble all necessary data
             $usergroups           = $this->get_usergroups();
             $selected_usergroups  = $this->get_usergroups_for_user($user_id);
-            $usergroups_form_args = array( 'input_id' => 'pp_usergroups' );
+            $usergroups_form_args = array('input_id' => 'pp_usergroups');
             ?>
             <table id="ef-user-usergroups" class="form-table"><tbody><tr>
                 <th>
@@ -770,7 +770,7 @@ if (!class_exists('PP_User_Groups')) {
         public function user_profile_update($errors, $update, $user)
         {
             if (!$update) {
-                return array( &$errors, $update, &$user );
+                return array(&$errors, $update, &$user);
             }
 
             //Don't allow update of user groups from network
@@ -792,7 +792,7 @@ if (!class_exists('PP_User_Groups')) {
                 }
             }
 
-            return array( &$errors, $update, &$user );
+            return array(&$errors, $update, &$user);
         }
 
         /**
@@ -1222,7 +1222,7 @@ if (!class_exists('PP_Usergroups_List_Table')) {
             $hidden   = array();
             $sortable = array();
 
-            $this->_column_headers = array( $columns, $hidden, $sortable );
+            $this->_column_headers = array($columns, $hidden, $sortable);
 
             $this->items = $publishpress->user_groups->get_usergroups();
 
@@ -1278,12 +1278,12 @@ if (!class_exists('PP_Usergroups_List_Table')) {
             global $publishpress;
 
             // @todo direct edit link
-            $output = '<strong><a href="' . esc_url($publishpress->user_groups->get_link(array( 'action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id ))) . '">' . esc_html($usergroup->name) . '</a></strong>';
+            $output = '<strong><a href="' . esc_url($publishpress->user_groups->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id))) . '">' . esc_html($usergroup->name) . '</a></strong>';
 
             $actions                            = array();
-            $actions['edit edit-usergroup']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array( 'action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id )));
+            $actions['edit edit-usergroup']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id)));
             $actions['inline hide-if-no-js']    = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
-            $actions['delete delete-usergroup'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array( 'action' => 'delete-usergroup', 'usergroup-id' => $usergroup->term_id )));
+            $actions['delete delete-usergroup'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array('action' => 'delete-usergroup', 'usergroup-id' => $usergroup->term_id)));
 
             $output .= $this->row_actions($actions, false);
             $output .= '<div class="hidden" id="inline_' . $usergroup->term_id . '">';
@@ -1313,7 +1313,7 @@ if (!class_exists('PP_Usergroups_List_Table')) {
         public function column_users($usergroup)
         {
             global $publishpress;
-            return '<a href="' . esc_url($publishpress->user_groups->get_link(array( 'action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id ))) . '">' . count($usergroup->user_ids) . '</a>';
+            return '<a href="' . esc_url($publishpress->user_groups->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id))) . '">' . count($usergroup->user_ids) . '</a>';
         }
 
         /**

@@ -75,42 +75,42 @@ if (!class_exists('PP_Custom_Status')) {
             $this->register_custom_statuses();
 
             // Register our settings
-            add_action('admin_init', array( $this, 'register_settings' ));
+            add_action('admin_init', array($this, 'register_settings'));
 
             // Load CSS and JS resources that we probably need
-            add_action('admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ));
-            add_action('admin_notices', array( $this, 'no_js_notice' ));
-            add_action('admin_print_scripts', array( $this, 'post_admin_header' ));
+            add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
+            add_action('admin_notices', array($this, 'no_js_notice'));
+            add_action('admin_print_scripts', array($this, 'post_admin_header'));
 
             // Methods for handling the actions of creating, making default, and deleting post stati
-            add_action('admin_init', array( $this, 'handle_add_custom_status' ));
-            add_action('admin_init', array( $this, 'handle_edit_custom_status' ));
-            add_action('admin_init', array( $this, 'handle_make_default_custom_status' ));
-            add_action('admin_init', array( $this, 'handle_delete_custom_status' ));
-            add_action('wp_ajax_update_status_positions', array( $this, 'handle_ajax_update_status_positions' ));
-            add_action('wp_ajax_inline_save_status', array( $this, 'ajax_inline_save_status' ));
+            add_action('admin_init', array($this, 'handle_add_custom_status'));
+            add_action('admin_init', array($this, 'handle_edit_custom_status'));
+            add_action('admin_init', array($this, 'handle_make_default_custom_status'));
+            add_action('admin_init', array($this, 'handle_delete_custom_status'));
+            add_action('wp_ajax_update_status_positions', array($this, 'handle_ajax_update_status_positions'));
+            add_action('wp_ajax_inline_save_status', array($this, 'ajax_inline_save_status'));
 
             // Hook to add the status column to Manage Posts
 
-            add_filter('manage_posts_columns', array( $this, '_filter_manage_posts_columns'));
-            add_action('manage_posts_custom_column', array( $this, '_filter_manage_posts_custom_column'));
+            add_filter('manage_posts_columns', array($this, '_filter_manage_posts_columns'));
+            add_action('manage_posts_custom_column', array($this, '_filter_manage_posts_custom_column'));
 
             // We need these for pages (http://core.trac.wordpress.org/browser/tags/3.3.1/wp-admin/includes/class-wp-posts-list-table.php#L283)
-            add_filter('manage_pages_columns', array( $this, '_filter_manage_posts_columns' ));
-            add_action('manage_pages_custom_column', array( $this, '_filter_manage_posts_custom_column' ));
+            add_filter('manage_pages_columns', array($this, '_filter_manage_posts_columns'));
+            add_action('manage_pages_custom_column', array($this, '_filter_manage_posts_custom_column'));
 
             // These seven-ish methods are hacks for fixing bugs in WordPress core
-            add_action('admin_init', array( $this, 'check_timestamp_on_publish' ));
-            add_filter('wp_insert_post_data', array( $this, 'fix_custom_status_timestamp' ), 10, 2);
-            add_action('wp_insert_post', array( $this, 'fix_post_name' ), 10, 2);
-            add_filter('preview_post_link', array( $this, 'fix_preview_link_part_one' ));
-            add_filter('post_link', array( $this, 'fix_preview_link_part_two' ), 10, 3);
-            add_filter('page_link', array( $this, 'fix_preview_link_part_two' ), 10, 3);
-            add_filter('post_type_link', array( $this, 'fix_preview_link_part_two' ), 10, 3);
-            add_filter('get_sample_permalink', array( $this, 'fix_get_sample_permalink' ), 10, 5);
-            add_filter('get_sample_permalink_html', array( $this, 'fix_get_sample_permalink_html' ), 10, 5);
-            add_filter('post_row_actions', array( $this, 'fix_post_row_actions' ), 10, 2);
-            add_filter('page_row_actions', array( $this, 'fix_post_row_actions' ), 10, 2);
+            add_action('admin_init', array($this, 'check_timestamp_on_publish'));
+            add_filter('wp_insert_post_data', array($this, 'fix_custom_status_timestamp'), 10, 2);
+            add_action('wp_insert_post', array($this, 'fix_post_name'), 10, 2);
+            add_filter('preview_post_link', array($this, 'fix_preview_link_part_one'));
+            add_filter('post_link', array($this, 'fix_preview_link_part_two'), 10, 3);
+            add_filter('page_link', array($this, 'fix_preview_link_part_two'), 10, 3);
+            add_filter('post_type_link', array($this, 'fix_preview_link_part_two'), 10, 3);
+            add_filter('get_sample_permalink', array($this, 'fix_get_sample_permalink'), 10, 5);
+            add_filter('get_sample_permalink_html', array($this, 'fix_get_sample_permalink_html'), 10, 5);
+            add_filter('post_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
+            add_filter('page_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
         }
 
         /**
@@ -220,7 +220,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             // Register new taxonomy so that we can store all our fancy new custom statuses (or is it stati?)
             if (!taxonomy_exists(self::taxonomy_key)) {
-                $args = array(    'hierarchical' => false,
+                $args = array(   'hierarchical' => false,
                                 'update_count_callback' => '_update_post_term_count',
                                 'label' => false,
                                 'query_var' => false,
@@ -233,8 +233,8 @@ if (!class_exists('PP_Custom_Status')) {
             if (function_exists('register_post_status')) {
                 // Users can delete draft and pending statuses if they want, so let's get rid of them
                 // They'll get re-added if the user hasn't "deleted" them
-                unset($wp_post_statuses[ 'draft' ]);
-                unset($wp_post_statuses[ 'pending' ]);
+                unset($wp_post_statuses['draft']);
+                unset($wp_post_statuses['pending']);
 
                 $custom_statuses = $this->get_custom_statuses();
 
@@ -264,7 +264,7 @@ if (!class_exists('PP_Custom_Status')) {
             global $pagenow;
 
             // Only allow deregistering on 'edit.php' and 'post.php'
-            if (! in_array($pagenow, array( 'edit.php', 'post.php', 'post-new.php' ))) {
+            if (! in_array($pagenow, array('edit.php', 'post.php', 'post-new.php'))) {
                 return false;
             }
 
@@ -296,12 +296,12 @@ if (!class_exists('PP_Custom_Status')) {
             // Load Javascript we need to use on the configuration views (jQuery Sortable and Quick Edit)
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
-                wp_enqueue_script('publishpress-custom-status-configure', $this->module_url . 'lib/custom-status-configure.js', array( 'jquery', 'jquery-ui-sortable', 'publishpress-settings-js' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-custom-status-configure', $this->module_url . 'lib/custom-status-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
             }
 
             // Custom javascript to modify the post status dropdown where it shows up
             if ($this->is_whitelisted_page()) {
-                wp_enqueue_script('publishpress-custom_status', $this->module_url . 'lib/custom-status.js', array( 'jquery', 'post' ), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-custom_status', $this->module_url . 'lib/custom-status.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
                 wp_enqueue_style('publishpress-custom_status', $this->module_url . 'lib/custom-status.css', false, PUBLISHPRESS_VERSION, 'all');
             }
         }
@@ -351,7 +351,7 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             // Only add the script to Edit Post and Edit Page pages -- don't want to bog down the rest of the admin with unnecessary javascript
-            return in_array($pagenow, array( 'post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php' ));
+            return in_array($pagenow, array('post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php'));
         }
 
         /**
@@ -473,7 +473,7 @@ if (!class_exists('PP_Custom_Status')) {
             $slug = (! empty($args['slug'])) ? $args['slug'] : sanitize_title($term);
             unset($args['slug']);
             $encoded_description = $this->get_encoded_description($args);
-            $response            = wp_insert_term($term, self::taxonomy_key, array( 'slug' => $slug, 'description' => $encoded_description ));
+            $response            = wp_insert_term($term, self::taxonomy_key, array('slug' => $slug, 'description' => $encoded_description));
 
             // Reset our internal object cache
             $this->custom_statuses_cache = array();
@@ -587,12 +587,12 @@ if (!class_exists('PP_Custom_Status')) {
 
             // Internal object cache for repeat requests
             $arg_hash = md5(serialize($args));
-            if (! empty($this->custom_statuses_cache[ $arg_hash ])) {
-                return $this->custom_statuses_cache[ $arg_hash ];
+            if (! empty($this->custom_statuses_cache[$arg_hash])) {
+                return $this->custom_statuses_cache[$arg_hash];
             }
 
             // Handle if the requested taxonomy doesn't exist
-            $args     = array_merge(array( 'hide_empty' => false ), $args);
+            $args     = array_merge(array('hide_empty' => false), $args);
             $statuses = get_terms(self::taxonomy_key, $args);
 
             if (is_wp_error($statuses) || empty($statuses)) {
@@ -629,7 +629,7 @@ if (!class_exists('PP_Custom_Status')) {
                 $ordered_statuses[] = $unpositioned_status;
             }
 
-            $this->custom_statuses_cache[ $arg_hash ] = $ordered_statuses;
+            $this->custom_statuses_cache[$arg_hash] = $ordered_statuses;
 
             return $ordered_statuses;
         }
@@ -642,7 +642,7 @@ if (!class_exists('PP_Custom_Status')) {
          */
         public function get_custom_status_by($field, $value)
         {
-            if (! in_array($field, array( 'id', 'slug', 'name' ))) {
+            if (! in_array($field, array('id', 'slug', 'name'))) {
                 return false;
             }
 
@@ -651,7 +651,7 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             $custom_statuses = $this->get_custom_statuses();
-            $custom_status   = wp_filter_object_list($custom_statuses, array( $field => $value ));
+            $custom_status   = wp_filter_object_list($custom_statuses, array($field => $value));
 
             if (! empty($custom_status)) {
                 return array_shift($custom_status);
@@ -690,7 +690,7 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             // Make the database call
-            $result = $wpdb->update($wpdb->posts, array( 'post_status' => $new_status ), array( 'post_status' => $old_status ), array( '%s' ));
+            $result = $wpdb->update($wpdb->posts, array('post_status' => $new_status), array('post_status' => $old_status), array('%s'));
         }
 
         /**
@@ -830,7 +830,7 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_die(__('Could not add status: ', 'publishpress') . $return->get_error_message());
             }
             // Redirect if successful
-            $redirect_url = $this->get_link(array( 'message' => 'status-added' ));
+            $redirect_url = $this->get_link(array('message' => 'status-added'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -914,7 +914,7 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_die(__('Error updating post status.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(array( 'message' => 'status-updated' ));
+            $redirect_url = $this->get_link(array('message' => 'status-updated'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -949,7 +949,7 @@ if (!class_exists('PP_Custom_Status')) {
             if (is_object($term)) {
                 $publishpress->update_module_option($this->module->name, 'default_status', $term->slug);
                 // @todo How do we want to handle users who click the link from "Add New Status"
-                $redirect_url = $this->get_link(array( 'message' => 'default-status-changed' ));
+                $redirect_url = $this->get_link(array('message' => 'default-status-changed'));
                 wp_redirect($redirect_url);
                 exit;
             } else {
@@ -998,7 +998,7 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_die(__('Could not delete the status: ', 'publishpress') . $return->get_error_message());
             }
 
-            $redirect_url = $this->get_link(array( 'message' => 'status-deleted' ));
+            $redirect_url = $this->get_link(array('message' => 'status-deleted'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1150,8 +1150,8 @@ if (!class_exists('PP_Custom_Status')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_types', __('Use on these post types:', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('always_show_dropdown', __('Always show dropdown:', 'publishpress'), array( $this, 'settings_always_show_dropdown_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Use on these post types:', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('always_show_dropdown', __('Always show dropdown:', 'publishpress'), array($this, 'settings_always_show_dropdown_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**
@@ -1226,7 +1226,7 @@ if (!class_exists('PP_Custom_Status')) {
                 echo '<div class="error"><p>' . $this->module->messages['status-missing'] . '</p></div>';
                 return;
             }
-            $edit_status_link = $this->get_link(array( 'action' => 'edit-status', 'term-id' => $term_id ));
+            $edit_status_link = $this->get_link(array('action' => 'edit-status', 'term-id' => $term_id));
 
             $name        = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $status->name;
             $description = (isset($_POST['description'])) ? strip_tags(stripslashes($_POST['description'])) : $status->description;
@@ -1310,7 +1310,7 @@ if (!class_exists('PP_Custom_Status')) {
     }
             ?>"><?php _e('Add New', 'publishpress');
             ?></a>
-                        <a href="<?php echo esc_url($this->get_link(array( 'action' => 'change-options' )));
+                        <a href="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
             ?>" class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
         echo ' nav-tab-active';
     }
@@ -1318,7 +1318,7 @@ if (!class_exists('PP_Custom_Status')) {
             ?></a>
                     </h3>
                     <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
-                    <form class="basic-settings" action="<?php echo esc_url($this->get_link(array( 'action' => 'change-options' )));
+                    <form class="basic-settings" action="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
             ?>" method="post">
                         <?php settings_fields($this->module->options_group_name);
             ?>
@@ -1397,7 +1397,7 @@ if (!class_exists('PP_Custom_Status')) {
                 if ($_REQUEST['_status'] == 'publish') {
                     $post_ids = array_map('intval', (array) $_REQUEST['post']);
                     foreach ($post_ids as $post_id) {
-                        $wpdb->update($wpdb->posts, array( 'post_status' => 'pending' ), array( 'ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00' ));
+                        $wpdb->update($wpdb->posts, array('post_status' => 'pending'), array('ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00'));
                         clean_post_cache($post_id);
                     }
                 }
@@ -1408,7 +1408,7 @@ if (!class_exists('PP_Custom_Status')) {
                 // Set the post_status as 'pending' only when there's no timestamp set for $post_date_gmt
                 if (isset($_POST['post_ID'])) {
                     $post_id = (int) $_POST['post_ID'];
-                    $ret     = $wpdb->update($wpdb->posts, array( 'post_status' => 'pending' ), array( 'ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00' ));
+                    $ret     = $wpdb->update($wpdb->posts, array('post_status' => 'pending'), array('ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00'));
                     clean_post_cache($post_id);
                     foreach (array('aa', 'mm', 'jj', 'hh', 'mn') as $timeunit) {
                         if (!empty($_POST['hidden_' . $timeunit]) && $_POST['hidden_' . $timeunit] != $_POST[$timeunit]) {
@@ -1417,8 +1417,8 @@ if (!class_exists('PP_Custom_Status')) {
                         }
                     }
                     if ($ret && empty($edit_date)) {
-                        add_filter('pre_post_date', array( $this, 'helper_timestamp_hack' ));
-                        add_filter('pre_post_date_gmt', array( $this, 'helper_timestamp_hack' ));
+                        add_filter('pre_post_date', array($this, 'helper_timestamp_hack'));
+                        add_filter('pre_post_date_gmt', array($this, 'helper_timestamp_hack'));
                     }
                 }
             }
@@ -1500,7 +1500,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             global $wpdb;
 
-            $wpdb->update($wpdb->posts, array( 'post_name' => '' ), array( 'ID' => $post_id ));
+            $wpdb->update($wpdb->posts, array('post_name' => ''), array('ID' => $post_id));
             clean_post_cache($post_id);
         }
 
@@ -1642,7 +1642,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             unset($post->post_name);
 
-            return array( $permalink, $post_name );
+            return array($permalink, $post_name);
         }
 
         /**
@@ -1681,7 +1681,7 @@ if (!class_exists('PP_Custom_Status')) {
                         $view_link = get_permalink($post);
                     } else {
                         // Allow non-published (private, future) to be viewed at a pretty permalink.
-                        $view_link = str_replace(array( '%pagename%', '%postname%' ), $post->post_name, $permalink);
+                        $view_link = str_replace(array('%pagename%', '%postname%'), $post->post_name, $permalink);
                     }
                 }
             }
@@ -1717,7 +1717,7 @@ if (!class_exists('PP_Custom_Status')) {
                 }
 
                 $post_name_html = '<span id="editable-post-name">' . $post_name_abridged . '</span>';
-                $display_link   = str_replace(array( '%pagename%', '%postname%' ), $post_name_html, urldecode($permalink));
+                $display_link   = str_replace(array('%pagename%', '%postname%'), $post_name_html, urldecode($permalink));
 
                 $return = '<strong>' . __('Permalink:') . "</strong>\n";
                 $return .= '<span id="sample-permalink"><a href="' . esc_url($view_link) . '"' . $preview_target . '>' . $display_link . "</a></span>\n";
@@ -1922,7 +1922,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                 } else {
                     $post_count = 0;
                 }
-                //wp_cache_set( "pp_custom_status_count_$column_name", $post_count );
+                //wp_cache_set("pp_custom_status_count_$column_name", $post_count);
             }
             $output = sprintf('<a title="See all %1$ss saved as \'%2$s\'" href="%3$s">%4$s</a>', $column_name, $item->name, $publishpress->helpers->filter_posts_link($item->slug, $column_name), $post_count);
             return $output;
@@ -1954,7 +1954,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     {
         global $publishpress;
 
-        $item_edit_link = esc_url($publishpress->custom_status->get_link(array( 'action' => 'edit-status', 'term-id' => $item->term_id )));
+        $item_edit_link = esc_url($publishpress->custom_status->get_link(array('action' => 'edit-status', 'term-id' => $item->term_id)));
 
         $output = '<strong><a href="' . $item_edit_link . '">' . esc_html($item->name) . '</a>';
         if ($item->slug == $this->default_status) {
@@ -1971,11 +1971,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
         $actions['edit']                 = "<a href='$item_edit_link'>" . __('Edit', 'publishpress') . "</a>";
         $actions['inline hide-if-no-js'] = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
         if ($item->slug != $this->default_status) {
-            $actions['make_default'] = sprintf('<a href="%1$s">' . __('Make&nbsp;Default', 'publishpress') . '</a>', $publishpress->custom_status->get_link(array( 'action' => 'make-default', 'term-id' => $item->term_id )));
+            $actions['make_default'] = sprintf('<a href="%1$s">' . __('Make&nbsp;Default', 'publishpress') . '</a>', $publishpress->custom_status->get_link(array('action' => 'make-default', 'term-id' => $item->term_id)));
         }
 
         if ($item->slug != $this->default_status) {
-            $actions['delete delete-status'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->custom_status->get_link(array( 'action' => 'delete-status', 'term-id' => $item->term_id )));
+            $actions['delete delete-status'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->custom_status->get_link(array('action' => 'delete-status', 'term-id' => $item->term_id)));
         }
 
         $output .= $this->row_actions($actions, false);

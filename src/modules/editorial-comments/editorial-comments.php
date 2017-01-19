@@ -49,15 +49,15 @@ if (!class_exists('PP_Editorial_Comments')) {
          */
         public function init()
         {
-            add_action('add_meta_boxes', array( $this, 'add_post_meta_box' ));
-            add_action('admin_init', array( $this, 'register_settings' ));
-            add_action('admin_enqueue_scripts', array( $this, 'add_admin_scripts' ));
-            add_action('wp_ajax_publishpress_ajax_insert_comment', array( $this, 'ajax_insert_comment' ));
+            add_action('add_meta_boxes', array($this, 'add_post_meta_box'));
+            add_action('admin_init', array($this, 'register_settings'));
+            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
+            add_action('wp_ajax_publishpress_ajax_insert_comment', array($this, 'ajax_insert_comment'));
 
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
                 // Still in progress. See: https://www.pivotaltracker.com/story/show/5930884 and https://www.pivotaltracker.com/story/show/5930895
-                //add_filter( 'pp_calendar_item_information_fields', array( $this, 'filter_calendar_item_fields' ), null, 2 );
+                //add_filter('pp_calendar_item_information_fields', array($this, 'filter_calendar_item_fields'), null, 2);
             }
         }
 
@@ -90,11 +90,11 @@ if (!class_exists('PP_Editorial_Comments')) {
                 return;
             }
 
-            if (!in_array($pagenow, array( 'post.php', 'page.php', 'post-new.php', 'page-new.php' ))) {
+            if (!in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'page-new.php'))) {
                 return;
             }
 
-            wp_enqueue_script('publishpress-post_comment', $this->module_url . 'lib/editorial-comments.js', array( 'jquery', 'post' ), PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script('publishpress-post_comment', $this->module_url . 'lib/editorial-comments.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_style('publishpress-editorial-comments-css', $this->module_url . 'lib/editorial-comments.css', false, PUBLISHPRESS_VERSION, 'all');
 
             $thread_comments = (int) get_option('thread_comments');
@@ -145,7 +145,7 @@ if (!class_exists('PP_Editorial_Comments')) {
 
             <?php
             // Show comments only if not a new post
-            if (! in_array($post->post_status, array( 'new', 'auto-draft' ))) :
+            if (! in_array($post->post_status, array('new', 'auto-draft'))) :
 
                 // Unused since switched to wp_list_comments
                 $editorial_comments = pp_get_comments_plus(
@@ -250,7 +250,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             // Deleting editorial comments is not enabled for now for the sake of transparency. However, we could consider
             // EF comment edits (with history, if possible). P2 already allows for edits without history, so even that might work.
             // Pivotal ticket: https://www.pivotaltracker.com/story/show/18483757
-            //$delete_url = esc_url( wp_nonce_url( "comment.php?action=deletecomment&p=$comment->comment_post_ID&c=$comment->comment_ID", "delete-comment_$comment->comment_ID" ) );
+            //$delete_url = esc_url(wp_nonce_url("comment.php?action=deletecomment&p=$comment->comment_post_ID&c=$comment->comment_ID", "delete-comment_$comment->comment_ID"));
 
             $actions = array();
 
@@ -275,7 +275,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             ?>
 
             <li id="comment-<?php echo esc_attr($comment->comment_ID);
-            ?>" <?php comment_class(array( 'comment-item', wp_get_comment_status($comment->comment_ID) ));
+            ?>" <?php comment_class(array('comment-item', wp_get_comment_status($comment->comment_ID)));
             ?>>
 
                 <?php echo get_avatar($comment->comment_author_email, 50);
@@ -344,7 +344,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     'comment_author'       => esc_sql($current_user->display_name),
                     'comment_author_email' => esc_sql($current_user->user_email),
                     'comment_author_url'   => esc_sql($current_user->user_url),
-                    'comment_content'      => wp_kses($comment_content, array('a' => array('href' => array(), 'title' => array()), 'b' => array(), 'i' => array(), 'strong' => array(), 'em' => array(), 'u' => array(), 'del' => array(), 'blockquote' => array(), 'sub' => array(), 'sup' => array() )),
+                    'comment_content'      => wp_kses($comment_content, array('a' => array('href' => array(), 'title' => array()), 'b' => array(), 'i' => array(), 'strong' => array(), 'em' => array(), 'u' => array(), 'del' => array(), 'blockquote' => array(), 'sub' => array(), 'sup' => array())),
                     'comment_type'         => self::comment_type,
                     'comment_parent'       => (int) $parent,
                     'user_id'              => (int) $user_ID,
@@ -397,7 +397,7 @@ if (!class_exists('PP_Editorial_Comments')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('post_types', __('Enable for these post types:', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Enable for these post types:', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**
@@ -460,7 +460,7 @@ if (!class_exists('PP_Editorial_Comments')) {
          * If the PublishPress Calendar is enabled, add the editorial comment count to the post overlay.
          *
          * @since 0.7
-         * @uses apply_filters( 'pp_calendar_item_information_fields' )
+         * @uses apply_filters('pp_calendar_item_information_fields')
          *
          * @param array $calendar_fields Additional data fields to include on the calendar
          * @param int $post_id Unique ID for the post data we're building
@@ -539,7 +539,7 @@ function pp_get_comments_plus($args = '')
     } elseif (! empty($status)) {
         $approved = $wpdb->prepare("comment_approved = %s", $status);
     } else {
-        $approved = "( comment_approved = '0' OR comment_approved = '1' )";
+        $approved = "(comment_approved = '0' OR comment_approved = '1')";
     }
 
     $order = ('ASC' == $order) ? 'ASC' : 'DESC';

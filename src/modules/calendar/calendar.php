@@ -75,8 +75,8 @@ if (!class_exists('PP_Calendar')) {
         {
 
             // .ics calendar subscriptions
-            add_action('wp_ajax_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ));
-            add_action('wp_ajax_nopriv_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ));
+            add_action('wp_ajax_pp_calendar_ics_subscription', array($this, 'handle_ics_subscription'));
+            add_action('wp_ajax_nopriv_pp_calendar_ics_subscription', array($this, 'handle_ics_subscription'));
 
             // Check whether the user should have the ability to view the calendar
             $view_calendar_cap = 'pp_view_calendar';
@@ -89,32 +89,32 @@ if (!class_exists('PP_Calendar')) {
             $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
             require_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
-            add_screen_options_panel(self::usermeta_key_prefix . 'screen_options', __('Calendar Options', 'publishpress'), array( $this, 'generate_screen_options' ), self::screen_id, false, true);
-            add_action('admin_init', array( $this, 'handle_save_screen_options' ));
+            add_screen_options_panel(self::usermeta_key_prefix . 'screen_options', __('Calendar Options', 'publishpress'), array($this, 'generate_screen_options'), self::screen_id, false, true);
+            add_action('admin_init', array($this, 'handle_save_screen_options'));
 
-            add_action('admin_init', array( $this, 'register_settings' ));
-            add_action('admin_menu', array( $this, 'action_admin_menu' ));
-            add_action('admin_print_styles', array( $this, 'add_admin_styles' ));
-            add_action('admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ));
+            add_action('admin_init', array($this, 'register_settings'));
+            add_action('admin_menu', array($this, 'action_admin_menu'));
+            add_action('admin_print_styles', array($this, 'add_admin_styles'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 
             // Ajax manipulation for the calendar
-            add_action('wp_ajax_pp_calendar_drag_and_drop', array( $this, 'handle_ajax_drag_and_drop' ));
+            add_action('wp_ajax_pp_calendar_drag_and_drop', array($this, 'handle_ajax_drag_and_drop'));
 
             // Ajax insert post placeholder for a specific date
-            add_action('wp_ajax_pp_insert_post', array( $this, 'handle_ajax_insert_post' ));
+            add_action('wp_ajax_pp_insert_post', array($this, 'handle_ajax_insert_post'));
 
             //Update metadata
-            add_action('wp_ajax_pp_calendar_update_metadata', array( $this, 'handle_ajax_update_metadata' ));
+            add_action('wp_ajax_pp_calendar_update_metadata', array($this, 'handle_ajax_update_metadata'));
 
             // Clear li cache for a post when post cache is cleared
-            add_action('clean_post_cache', array( $this, 'action_clean_li_html_cache' ));
+            add_action('clean_post_cache', array($this, 'action_clean_li_html_cache'));
 
             // Action to regenerate the calendar feed sekret
-            add_action('admin_init', array( $this, 'handle_regenerate_calendar_feed_secret' ));
+            add_action('admin_init', array($this, 'handle_regenerate_calendar_feed_secret'));
 
             // Hacks to fix deficiencies in core
-            add_action('pre_post_update', array( $this, 'fix_post_date_on_update_part_one' ), 10, 2);
-            add_action('post_updated', array( $this, 'fix_post_date_on_update_part_two' ), 10, 3);
+            add_action('pre_post_update', array($this, 'fix_post_date_on_update_part_one'), 10, 2);
+            add_action('post_updated', array($this, 'fix_post_date_on_update_part_two'), 10, 3);
         }
 
         /**
@@ -171,7 +171,7 @@ if (!class_exists('PP_Calendar')) {
          */
         public function action_admin_menu()
         {
-            add_submenu_page('index.php', __('Calendar', 'publishpress'), __('Calendar', 'publishpress'), apply_filters('pp_view_calendar_cap', 'pp_view_calendar'), $this->module->slug, array( $this, 'view_calendar' ));
+            add_submenu_page('index.php', __('Calendar', 'publishpress'), __('Calendar', 'publishpress'), apply_filters('pp_view_calendar_cap', 'pp_view_calendar'), $this->module->slug, array($this, 'view_calendar'));
         }
 
         /**
@@ -211,7 +211,7 @@ if (!class_exists('PP_Calendar')) {
                 }
                 wp_enqueue_script('publishpress-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, PUBLISHPRESS_VERSION, true);
 
-                $pp_cal_js_params = array( 'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false' );
+                $pp_cal_js_params = array('can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false');
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
             }
         }
@@ -346,7 +346,7 @@ if (!class_exists('PP_Calendar')) {
             // We have to do SQL unfortunately because of core bugginess
             // Note to those reading this: bug Nacin to allow us to finish the custom status API
             // See http://core.trac.wordpress.org/ticket/18362
-            $response = $wpdb->update($wpdb->posts, $new_values, array( 'ID' => $post->ID ));
+            $response = $wpdb->update($wpdb->posts, $new_values, array('ID' => $post->ID));
             clean_post_cache($post->ID);
             if (!$response) {
                 $this->print_ajax_response('error', $this->module->messages['update-error']);
@@ -453,7 +453,7 @@ if (!class_exists('PP_Calendar')) {
 
             // Render the .ics template and set the content type
             header('Content-type: text/calendar');
-            foreach (array( $header, $formatted_posts, $footer ) as $section) {
+            foreach (array($header, $formatted_posts, $footer) as $section) {
                 foreach ($section as $key => $value) {
                     if (is_string($value)) {
                         echo $this->do_ics_line_folding($key . ':' . $value);
@@ -1055,13 +1055,13 @@ if (!class_exists('PP_Calendar')) {
                     return $output;
                 break;
                 case 'user':
-                    return wp_dropdown_users(array( 'echo' => false ));
+                    return wp_dropdown_users(array('echo' => false));
                 break;
                 case 'taxonomy':
                     return '<input type="text" class="metadata-edit-' . $type . '" value="' . $value . '" />';
                 break;
                 case 'taxonomy hierarchical':
-                    return wp_dropdown_categories(array( 'echo' => 0, 'hide_empty' => 0 ));
+                    return wp_dropdown_categories(array('echo' => 0, 'hide_empty' => 0));
                 break;
             }
         }
@@ -1212,7 +1212,7 @@ if (!class_exists('PP_Calendar')) {
                     </form>
                 </li>
 
-                <?php /** Previous and next navigation items (translatable so they can be increased if needed )**/ ?>
+                <?php /** Previous and next navigation items (translatable so they can be increased if needed)**/ ?>
                 <li class="date-change next-week">
                     <a title="<?php printf(__('Forward 1 week', 'publishpress'));
             ?>" href="<?php echo esc_url($this->get_pagination_link('next', $filters, 1));
@@ -1323,9 +1323,9 @@ if (!class_exists('PP_Calendar')) {
 
             // Filter for an end user to implement any of their own query args
             $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
-            add_filter('posts_where', array( $this, 'posts_where_week_range' ));
+            add_filter('posts_where', array($this, 'posts_where_week_range'));
             $post_results = new WP_Query($args);
-            remove_filter('posts_where', array( $this, 'posts_where_week_range' ));
+            remove_filter('posts_where', array($this, 'posts_where_week_range'));
 
             $posts = array();
             while ($post_results->have_posts()) {
@@ -1491,10 +1491,10 @@ if (!class_exists('PP_Calendar')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('number_of_weeks', __('Number of weeks to show', 'publishpress'), array( $this, 'settings_number_weeks_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('post_types', __('Post types to show', 'publishpress'), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('quick_create_post_type', __('Post type to create directly from calendar', 'publishpress'), array( $this, 'settings_quick_create_post_type_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('ics_subscription', __('Subscription in iCal or Google Calendar', 'publishpress'), array( $this, 'settings_ics_subscription_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('number_of_weeks', __('Number of weeks to show', 'publishpress'), array($this, 'settings_number_weeks_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('post_types', __('Post types to show', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('quick_create_post_type', __('Post type to create directly from calendar', 'publishpress'), array($this, 'settings_quick_create_post_type_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('ics_subscription', __('Subscription in iCal or Google Calendar', 'publishpress'), array($this, 'settings_ics_subscription_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
         /**
@@ -1714,7 +1714,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Check that we got a proper post
-            $post_id = ( int )$_POST['post_id'];
+            $post_id = (int)$_POST['post_id'];
             $post    = get_post($post_id);
 
             if (! $post) {
@@ -1935,13 +1935,13 @@ if (!class_exists('PP_Calendar')) {
 
             // `post_date` is only nooped for these three statuses,
             // but don't try to persist if `post_date_gmt` is set
-            if (! in_array($post->post_status, array( 'draft', 'pending', 'auto-draft' ))
+            if (! in_array($post->post_status, array('draft', 'pending', 'auto-draft'))
                 || '0000-00-00 00:00:00' !== $post->post_date_gmt
                 || '0000-00-00 00:00:00' !== $data['post_date_gmt']) {
                 return;
             }
 
-            $this->post_date_cache[ $post_ID ] = $post->post_date;
+            $this->post_date_cache[$post_ID] = $post->post_date;
         }
 
         /**
@@ -1960,13 +1960,13 @@ if (!class_exists('PP_Calendar')) {
         {
             global $wpdb;
 
-            if (empty($this->post_date_cache[ $post_ID ])) {
+            if (empty($this->post_date_cache[$post_ID])) {
                 return;
             }
 
-            $post_date = $this->post_date_cache[ $post_ID ];
-            unset($this->post_date_cache[ $post_ID ]);
-            $wpdb->update($wpdb->posts, array( 'post_date' => $post_date ), array( 'ID' => $post_ID ));
+            $post_date = $this->post_date_cache[$post_ID];
+            unset($this->post_date_cache[$post_ID]);
+            $wpdb->update($wpdb->posts, array('post_date' => $post_date), array('ID' => $post_ID));
             clean_post_cache($post_ID);
         }
     } // PP_Calendar
