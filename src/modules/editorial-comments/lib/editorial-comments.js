@@ -16,16 +16,16 @@ jQuery(document).ready(function () {
 editorialCommentReply = {
 
     init : function() {
-        var row = jQuery('#ef-replyrow');
+        var row = jQuery('#pp-replyrow');
 
         // Bind click events to cancel and submit buttons
-        jQuery('a.ef-replycancel', row).click(function() { return editorialCommentReply.revert(); });
-        jQuery('a.ef-replysave', row).click(function() { return editorialCommentReply.send(); });
+        jQuery('a.pp-replycancel', row).click(function() { return editorialCommentReply.revert(); });
+        jQuery('a.pp-replysave', row).click(function() { return editorialCommentReply.send(); });
     },
 
     revert : function() {
         // Fade out slowly, slowly, slowly...
-        jQuery('#ef-replyrow').fadeOut('fast', function(){
+        jQuery('#pp-replyrow').fadeOut('fast', function(){
             editorialCommentReply.close();
         });
         return false;
@@ -33,18 +33,18 @@ editorialCommentReply = {
 
     close : function() {
 
-        jQuery('#ef-comment_respond').show();
+        jQuery('#pp-comment_respond').show();
 
         // Move reply form back after the main "Respond" form
-        jQuery('#ef-post_comment').after(jQuery('#ef-replyrow'));
+        jQuery('#pp-post_comment').after(jQuery('#pp-replyrow'));
 
         // Empty out all the form values
-        jQuery('#ef-replycontent').val('');
-        jQuery('#ef-comment_parent').val('');
+        jQuery('#pp-replycontent').val('');
+        jQuery('#pp-comment_parent').val('');
 
         // Hide error and waiting
-        jQuery('#ef-replysubmit .error').html('').hide();
-        jQuery('#ef-comment_loading').hide();
+        jQuery('#pp-replysubmit .error').html('').hide();
+        jQuery('#pp-comment_loading').hide();
     },
 
     /**
@@ -58,21 +58,21 @@ editorialCommentReply = {
 
         // Check if reply or new comment
         if(id) {
-            jQuery('input#ef-comment_parent').val(id);
+            jQuery('input#pp-comment_parent').val(id);
             parent = '#comment-'+id;
         } else {
-            parent = '#ef-comments_wrapper';
+            parent = '#pp-comments_wrapper';
         }
 
-        jQuery('#ef-comment_respond').hide();
+        jQuery('#pp-comment_respond').hide();
 
         // Show reply textbox
-        jQuery('#ef-replyrow')
+        jQuery('#pp-replyrow')
             .show()
             .appendTo(jQuery(parent))
             ;
 
-        jQuery('#ef-replycontent').focus();
+        jQuery('#pp-replycontent').focus();
 
         return false;
     },
@@ -83,24 +83,24 @@ editorialCommentReply = {
      */
     send : function(reply) {
         var post = {};
-        var containter_id = '#ef-replyrow';
+        var containter_id = '#pp-replyrow';
 
-        jQuery('#ef-replysubmit .error').html('').hide();
+        jQuery('#pp-replysubmit .error').html('').hide();
 
         // Validation: check to see if comment entered
-        post.content = jQuery.trim(jQuery('#ef-replycontent').val());
+        post.content = jQuery.trim(jQuery('#pp-replycontent').val());
         if(!post.content) {
-            jQuery('#ef-replyrow .error').text('Please enter a comment').show();
+            jQuery('#pp-replyrow .error').text('Please enter a comment').show();
             return;
         }
 
-        jQuery('#ef-comment_loading').show();
+        jQuery('#pp-comment_loading').show();
 
         // Prepare data
         post.action = 'publishpress_ajax_insert_comment';
-        post.parent = (jQuery("#ef-comment_parent").val()=='') ? 0 : jQuery("#ef-comment_parent").val();
+        post.parent = (jQuery("#pp-comment_parent").val()=='') ? 0 : jQuery("#pp-comment_parent").val();
         post._nonce = jQuery("#pp_comment_nonce").val();
-        post.post_id = jQuery("#ef-post_id").val();
+        post.post_id = jQuery("#pp-post_id").val();
 
         // Send the request
         jQuery.ajax({
@@ -139,21 +139,21 @@ editorialCommentReply = {
 
         if(response.action.indexOf('reply') == -1 || !pp_thread_comments) {
             // Not a reply, so add it to the bottom
-            jQuery('#ef-comments').append(comment);
+            jQuery('#pp-comments').append(comment);
         } else {
 
             // This is a reply, so add it after the comment replied to
 
-            if(jQuery('#ef-replyrow').parent().next().is('ul')) {
+            if(jQuery('#pp-replyrow').parent().next().is('ul')) {
                 // Already been replied to, so just add to the list
-                jQuery('#ef-replyrow').parent().next().append(comment);
+                jQuery('#pp-replyrow').parent().next().append(comment);
             } else {
                 // This is a first reply, so create an unordered list to house the comment
                 var newUL = jQuery('<ul></ul>')
                     .addClass('children')
                     .append(comment)
                     ;
-                jQuery('#ef-replyrow').parent().after(newUL)
+                jQuery('#pp-replyrow').parent().after(newUL)
             }
         }
 
@@ -171,14 +171,14 @@ editorialCommentReply = {
 
     error : function(r) {
         // Oh noes! We haz an error!
-        jQuery('#ef-comment_loading').hide();
+        jQuery('#pp-comment_loading').hide();
 
         if (r.responseText) {
             er = r.responseText.replace(/<.[^<>]*?>/g, '');
         }
 
         if (er) {
-            jQuery('#ef-replysubmit .error').html(er).show();
+            jQuery('#pp-replysubmit .error').html(er).show();
         }
 
     }

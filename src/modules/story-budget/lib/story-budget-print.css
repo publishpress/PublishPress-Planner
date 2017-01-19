@@ -1,7 +1,7 @@
 /* Print styles for PublishPress's Story Budget view */
 
 /* Hide the styles that we don't need */
-#ef-story-budget-tablenav,
+#pp-story-budget-tablenav,
 #adminmenu,
 #wpadminbar,
 #adminmenuback,
@@ -9,14 +9,14 @@
 #wphead,
 #footer,
 #screen-meta,
-#ef-story-budget-wrap .change-date-buttons,
-#ef-story-budget-wrap .time-range input,
-#ef-story-budget-wrap .module-icon,
+#pp-story-budget-wrap .change-date-buttons,
+#pp-story-budget-wrap .time-range input,
+#pp-story-budget-wrap .module-icon,
 .row-actions {
     display: none;
 }
 
-#ef-story-budget-wrap .time-range form {
+#pp-story-budget-wrap .time-range form {
     display: inline;
 }
 

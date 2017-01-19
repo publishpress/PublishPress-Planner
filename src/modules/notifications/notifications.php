@@ -48,7 +48,7 @@ if (!class_exists('PP_Notifications')) {
                 'post_type_support' => 'pp_notification',
                 'autoload'          => false,
                 'settings_help_tab' => array(
-                    'id'      => 'ef-notifications-overview',
+                    'id'      => 'pp-notifications-overview',
                     'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, email notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress'),
                 ),
@@ -226,7 +226,7 @@ if (!class_exists('PP_Notifications')) {
         /**
          * Action to Follow / Unfollow posts on the manage posts screen
          */
-        $('.wp-list-table, #ef-calendar-view, #ef-story-budget-wrap').on('click', '.pp_follow_link a', function(e){
+        $('.wp-list-table, #pp-calendar-view, #pp-story-budget-wrap').on('click', '.pp_follow_link a', function(e){
 
             e.preventDefault();
 
@@ -335,25 +335,25 @@ if (!class_exists('PP_Notifications')) {
             global $post, $post_ID, $publishpress;
 
             ?>
-            <div id="ef-post_following_box">
+            <div id="pp-post_following_box">
                 <a name="subscriptions"></a>
 
                 <p><?php _e('Select the users and user groups that should receive notifications when the status of this post is updated or when an editorial comment is added.', 'publishpress');
             ?></p>
-                <div id="ef-post_following_users_box">
+                <div id="pp-post_following_users_box">
                     <h4><?php _e('Users', 'publishpress');
             ?></h4>
                     <?php
                     $followers = $this->get_following_users($post->ID, 'id');
             $select_form_args  = array(
-                        'list_class' => 'ef-post_following_list',
+                        'list_class' => 'pp-post_following_list',
                     );
             $this->users_select_form($followers, $select_form_args);
             ?>
                 </div>
 
                 <?php if ($this->module_enabled('user_groups') && in_array($this->get_current_post_type(), $this->get_post_types_for_module($publishpress->user_groups->module))): ?>
-                <div id="ef-post_following_usergroups_box">
+                <div id="pp-post_following_usergroups_box">
                     <h4><?php _e('User Groups', 'publishpress') ?></h4>
                     <?php
                     $following_usergroups = $this->get_following_usergroups($post->ID, 'ids');
@@ -363,7 +363,7 @@ if (!class_exists('PP_Notifications')) {
                 <?php endif;
             ?>
                 <div class="clear"></div>
-                <input type="hidden" name="ef-save_followers" value="1" /> <?php // Extra protection against autosaves ?>
+                <input type="hidden" name="pp-save_followers" value="1" /> <?php // Extra protection against autosaves ?>
                 <?php wp_nonce_field('save_user_usergroups', 'pp_notifications_nonce', false);
             ?>
             </div>
@@ -388,7 +388,7 @@ if (!class_exists('PP_Notifications')) {
             $post               = get_post($post_id);
             $user_usergroup_ids = array_map('intval', $_POST['user_group_ids']);
             if ((!wp_is_post_revision($post_id) && !wp_is_post_autosave($post_id))  && current_user_can($this->edit_post_subscriptions_cap)) {
-                if ($_POST['pp_notifications_name'] === 'ef-selected-users[]') {
+                if ($_POST['pp_notifications_name'] === 'pp-selected-users[]') {
                     $this->save_post_following_users($post, $user_usergroup_ids);
                 } elseif ($_POST['pp_notifications_name'] == 'following_usergroups[]') {
                     if ($this->module_enabled('user_groups') && in_array(get_post_type($post_id), $this->get_post_types_for_module($publishpress->user_groups->module))) {
@@ -443,8 +443,8 @@ if (!class_exists('PP_Notifications')) {
         {
             global $publishpress;
             // only if has edit_post_subscriptions cap
-            if ((!wp_is_post_revision($post) && !wp_is_post_autosave($post)) && isset($_POST['ef-save_followers']) && current_user_can($this->edit_post_subscriptions_cap)) {
-                $users      = isset($_POST['ef-selected-users']) ? $_POST['ef-selected-users'] : array();
+            if ((!wp_is_post_revision($post) && !wp_is_post_autosave($post)) && isset($_POST['pp-save_followers']) && current_user_can($this->edit_post_subscriptions_cap)) {
+                $users      = isset($_POST['pp-selected-users']) ? $_POST['pp-selected-users'] : array();
                 $usergroups = isset($_POST['following_usergroups']) ? $_POST['following_usergroups'] : array();
                 $this->save_post_following_users($post, $users);
                 if ($this->module_enabled('user_groups') && in_array($this->get_current_post_type(), $this->get_post_types_for_module($publishpress->user_groups->module))) {

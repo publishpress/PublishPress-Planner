@@ -57,7 +57,7 @@ if (!class_exists('PP_Calendar')) {
                 'configure_page_cb' => 'print_configure_view',
                 'configure_link_text' => __('Calendar Options', 'publishpress'),
                 'settings_help_tab' => array(
-                    'id' => 'ef-calendar-overview',
+                    'id' => 'pp-calendar-overview',
                     'title' => __('Overview', 'publishpress'),
                     'content' => __('<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>', 'publishpress'),
                     ),
@@ -299,7 +299,7 @@ if (!class_exists('PP_Calendar')) {
             global $wpdb;
 
             // Nonce check!
-            if (!wp_verify_nonce($_POST['nonce'], 'ef-calendar-modify')) {
+            if (!wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
@@ -526,7 +526,7 @@ if (!class_exists('PP_Calendar')) {
                 wp_die($this->module->messages['invalid-permissions']);
             }
 
-            if (! isset($_GET['_wpnonce']) || ! wp_verify_nonce($_GET['_wpnonce'], 'ef-regenerate-ics-key')) {
+            if (! isset($_GET['_wpnonce']) || ! wp_verify_nonce($_GET['_wpnonce'], 'pp-regenerate-ics-key')) {
                 wp_die($this->module->messages['nonce-failed']);
             }
 
@@ -643,7 +643,7 @@ if (!class_exists('PP_Calendar')) {
             $post_statuses = $this->get_post_statuses();
             ?>
             <div class="wrap">
-                <div id="ef-calendar-title"><!-- Calendar Title -->
+                <div id="pp-calendar-title"><!-- Calendar Title -->
                     <?php echo '<img src="' . esc_url($this->module->img_url) . '" class="module-icon icon32" />';
             ?>
                     <h2><?php _e('Calendar', 'publishpress');
@@ -671,7 +671,7 @@ if (!class_exists('PP_Calendar')) {
                     }
             ?>
 
-                <div id="ef-calendar-wrap"><!-- Calendar Wrapper -->
+                <div id="pp-calendar-wrap"><!-- Calendar Wrapper -->
 
                 <?php $this->print_top_navigation($filters, $dates);
             ?>
@@ -689,7 +689,7 @@ if (!class_exists('PP_Calendar')) {
 
             $table_classes = apply_filters('pp_calendar_table_classes', $table_classes);
             ?>
-                <table id="ef-calendar-view" class="<?php echo esc_attr(implode(' ', $table_classes));
+                <table id="pp-calendar-view" class="<?php echo esc_attr(implode(' ', $table_classes));
             ?>">
                     <thead>
                     <tr class="calendar-heading">
@@ -845,7 +845,7 @@ if (!class_exists('PP_Calendar')) {
                         </table><!-- /Week Wrapper -->
                         <?php
                         // Nonce field for AJAX actions
-                        wp_nonce_field('ef-calendar-modify', 'ef-calendar-modify');
+                        wp_nonce_field('pp-calendar-modify', 'pp-calendar-modify');
             ?>
 
                         <div class="clear"></div>
@@ -1180,7 +1180,7 @@ if (!class_exists('PP_Calendar')) {
         public function print_top_navigation($filters, $dates)
         {
             ?>
-            <ul class="ef-calendar-navigation">
+            <ul class="pp-calendar-navigation">
                 <li id="calendar-filter">
                     <form method="GET">
                         <input type="hidden" name="page" value="calendar" />
@@ -1556,7 +1556,7 @@ if (!class_exists('PP_Calendar')) {
 
 
             $regenerate_url = add_query_arg('action', 'pp_calendar_regenerate_calendar_feed_secret', admin_url('index.php'));
-            $regenerate_url = wp_nonce_url($regenerate_url, 'ef-regenerate-ics-key');
+            $regenerate_url = wp_nonce_url($regenerate_url, 'pp-regenerate-ics-key');
             echo '&nbsp;&nbsp;&nbsp;<a href="' . esc_url($regenerate_url) . '">' . __('Regenerate calendar feed secret', 'publishpress') . '</a>';
 
             // If our secret key doesn't exist, create a new one
@@ -1623,7 +1623,7 @@ if (!class_exists('PP_Calendar')) {
         {
 
             // Nonce check!
-            if (!wp_verify_nonce($_POST['nonce'], 'ef-calendar-modify')) {
+            if (!wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
@@ -1709,7 +1709,7 @@ if (!class_exists('PP_Calendar')) {
         {
             global $wpdb;
 
-            if (! wp_verify_nonce($_POST['nonce'], 'ef-calendar-modify')) {
+            if (! wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 

@@ -63,7 +63,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 ),
                 'configure_page_cb' => 'print_configure_view',
                 'settings_help_tab' => array(
-                    'id'      => 'ef-editorial-metadata-overview',
+                    'id'      => 'pp-editorial-metadata-overview',
                     'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
                 ),
@@ -358,7 +358,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             $title = __('Editorial Metadata', 'publishpress');
             if (current_user_can('manage_options')) {
                 // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
-                $url = add_query_arg('page', 'ef-editorial-metadata-settings', get_admin_url(null, 'admin.php'));
+                $url = add_query_arg('page', 'pp-editorial-metadata-settings', get_admin_url(null, 'admin.php'));
                 $title .= ' <span class="postbox-title-action"><a href="' . esc_url($url) . '" class="edit-box open-box">' . __('Configure') . '</a></span>';
             }
 

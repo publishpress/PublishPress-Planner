@@ -7,11 +7,11 @@ jQuery(document).ready(function(){
 
     // Restore the PublishPress submenu if there are no modules enabled
     // We need it down below for dynamically rebuilding the link list when on the settings page
-    var pp_settings_submenu_html = '<div class="wp-submenu"><div class="wp-submenu-wrap"><div class="wp-submenu-head">PublishPress</div><ul><li class="wp-first-item current"><a tabindex="1" class="wp-first-item current" href="admin.php?page=ef-settings">PublishPress</a></li></ul></div></div>';
-    if (jQuery('li#toplevel_page_ef-settings .wp-submenu').length == 0) {
-        jQuery('li#toplevel_page_ef-settings').addClass('wp-has-submenu wp-has-current-submenu wp-menu-open');
-        jQuery('li#toplevel_page_ef-settings').append(pp_settings_submenu_html);
-        jQuery('li#toplevel_page_ef-settings .wp-submenu').show();
+    var pp_settings_submenu_html = '<div class="wp-submenu"><div class="wp-submenu-wrap"><div class="wp-submenu-head">PublishPress</div><ul><li class="wp-first-item current"><a tabindex="1" class="wp-first-item current" href="admin.php?page=pp-settings">PublishPress</a></li></ul></div></div>';
+    if (jQuery('li#toplevel_page_pp-settings .wp-submenu').length == 0) {
+        jQuery('li#toplevel_page_pp-settings').addClass('wp-has-submenu wp-has-current-submenu wp-menu-open');
+        jQuery('li#toplevel_page_pp-settings').append(pp_settings_submenu_html);
+        jQuery('li#toplevel_page_pp-settings .wp-submenu').show();
     }
 
     // Set auto-removal to 8 seconds
@@ -70,13 +70,13 @@ jQuery(document).ready(function(){
                         var configure_url = jQuery('#' + slug + ' a.configure-publishpress-module').attr('href').replace(pp_admin_url, '');
                         var top_level_menu = jQuery('#' + adminpage);
                         var html_title = jQuery('#' + slug + ' h4').html();
-                        var html_insert = '<li><a class="ef-settings-fade-in" style="display:none;" href="' + configure_url + '" tabindex="1">' + html_title + '</a>';
+                        var html_insert = '<li><a class="pp-settings-fade-in" style="display:none;" href="' + configure_url + '" tabindex="1">' + html_title + '</a>';
                         jQuery('.wp-submenu-wrap ul li', top_level_menu).each(function(key,item) {
                             if (key == link_order)
                                 jQuery(this).after(html_insert);
                         });
-                        // Trick way to do a fade in: add a class of 'ef-settings-fade-in' and run it after the action
-                        jQuery('.ef-settings-fade-in').fadeIn().removeClass('ef-settings-fade-in');
+                        // Trick way to do a fade in: add a class of 'pp-settings-fade-in' and run it after the action
+                        jQuery('.pp-settings-fade-in').fadeIn().removeClass('pp-settings-fade-in');
                     }
                 }
             }

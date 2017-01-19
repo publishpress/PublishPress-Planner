@@ -553,8 +553,8 @@ if (!class_exists('PP_Module')) {
 
         // Set up arguments
         $defaults = array(
-            'list_class' => 'ef-users-select-form',
-            'input_id'   => 'ef-selected-users'
+            'list_class' => 'pp-users-select-form',
+            'input_id'   => 'pp-selected-users'
         );
         $parsed_args = wp_parse_args($args, $defaults);
         extract($parsed_args, EXTR_SKIP);
@@ -586,9 +586,9 @@ if (!class_exists('PP_Module')) {
                             <input type="checkbox" id="<?php echo esc_attr($input_id . '-' . $user->ID) ?>" name="<?php echo esc_attr($input_id) ?>[]" value="<?php echo esc_attr($user->ID);
         ?>" <?php echo $checked;
         ?> />
-                            <span class="ef-user_displayname"><?php echo esc_html($user->display_name);
+                            <span class="pp-user_displayname"><?php echo esc_html($user->display_name);
         ?></span>
-                            <span class="ef-user_useremail"><?php echo esc_html($user->user_email);
+                            <span class="pp-user_useremail"><?php echo esc_html($user->user_email);
         ?></span>
                         </label>
                     </li>

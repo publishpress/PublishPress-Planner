@@ -1,9 +1,9 @@
 jQuery(document).ready(function () {
-    jQuery('ul#ef-post_following_users li').quicksearch({
+    jQuery('ul#pp-post_following_users li').quicksearch({
         position: 'before',
-        attached: 'ul#ef-post_following_users',
+        attached: 'ul#pp-post_following_users',
         loaderText: '',
         delay: 100
     })
-    jQuery('#ef-usergroup-users ul').listFilterizer();
+    jQuery('#pp-usergroup-users ul').listFilterizer();
 });

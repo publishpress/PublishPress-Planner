@@ -34,7 +34,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                 'configure_link_text' => __('Choose Post Types', 'publishpress'),
                 'autoload'            => false,
                 'settings_help_tab'   => array(
-                    'id'      => 'ef-editorial-comments-overview',
+                    'id'      => 'pp-editorial-comments-overview',
                     'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>', 'publishpress'),
                 ),
@@ -140,7 +140,7 @@ if (!class_exists('PP_Editorial_Comments')) {
         {
             global $post, $post_ID;
             ?>
-        <div id="ef-comments_wrapper">
+        <div id="pp-comments_wrapper">
             <a name="editorialcomments"></a>
 
             <?php
@@ -159,7 +159,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                             );
             ?>
 
-                <ul id="ef-comments">
+                <ul id="pp-comments">
                     <?php
                         // We use this so we can take advantage of threading and such
 
@@ -200,29 +200,29 @@ if (!class_exists('PP_Editorial_Comments')) {
             global $post;
 
             ?>
-            <a href="#" id="ef-comment_respond" onclick="editorialCommentReply.open();return false;" class="button-primary alignright hide-if-no-js" title=" <?php _e('Respond to this post', 'publishpress');
+            <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;" class="button-primary alignright hide-if-no-js" title=" <?php _e('Respond to this post', 'publishpress');
             ?>"><span><?php _e('Respond to this post', 'publishpress');
             ?></span></a>
 
             <!-- Reply form, hidden until reply clicked by user -->
-            <div id="ef-replyrow" style="display: none;">
-                <div id="ef-replycontainer">
-                    <textarea id="ef-replycontent" name="replycontent" cols="40" rows="5"></textarea>
+            <div id="pp-replyrow" style="display: none;">
+                <div id="pp-replycontainer">
+                    <textarea id="pp-replycontent" name="replycontent" cols="40" rows="5"></textarea>
                 </div>
 
-                <p id="ef-replysubmit">
-                    <a class="ef-replysave button-primary alignright" href="#comments-form">
-                        <span id="ef-replybtn"><?php _e('Submit Response', 'publishpress') ?></span>
+                <p id="pp-replysubmit">
+                    <a class="pp-replysave button-primary alignright" href="#comments-form">
+                        <span id="pp-replybtn"><?php _e('Submit Response', 'publishpress') ?></span>
                     </a>
-                    <a class="ef-replycancel button-secondary alignright" href="#comments-form"><?php _e('Cancel', 'publishpress');
+                    <a class="pp-replycancel button-secondary alignright" href="#comments-form"><?php _e('Cancel', 'publishpress');
             ?></a>
-                    <img alt="Sending comment..." src="<?php echo admin_url('/images/wpspin_light.gif') ?>" class="alignright" style="display: none;" id="ef-comment_loading" />
+                    <img alt="Sending comment..." src="<?php echo admin_url('/images/wpspin_light.gif') ?>" class="alignright" style="display: none;" id="pp-comment_loading" />
                     <br class="clear" style="margin-bottom:35px;" />
                     <span style="display: none;" class="error"></span>
                 </p>
 
-                <input type="hidden" value="" id="ef-comment_parent" name="ef-comment_parent" />
-                <input type="hidden" name="ef-post_id" id="ef-post_id" value="<?php echo esc_attr($post->ID);
+                <input type="hidden" value="" id="pp-comment_parent" name="pp-comment_parent" />
+                <input type="hidden" name="pp-post_id" id="pp-post_id" value="<?php echo esc_attr($post->ID);
             ?>" />
 
                 <?php wp_nonce_field('comment', 'pp_comment_nonce', false);

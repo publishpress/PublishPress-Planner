@@ -1,61 +1,61 @@
-#ef-calendar-title h2 span {
+#pp-calendar-title h2 span {
     color: #999999;
 }
 
-#ef-calendar-wrap {
+#pp-calendar-wrap {
     min-width:900px;
     width: 100%;
     position: relative;
 }
 
-table#ef-calendar-view {
+table#pp-calendar-view {
     border: 1px solid #e1e1e1;
     border-collapse: collapse;
     width: 100%;
 }
 
-#ef-calendar-view .day-unit {
+#pp-calendar-view .day-unit {
     border-right: 1px solid #e1e1e1;
     vertical-align: top;
     height: 100px;
 }
 
-#ef-calendar-view.one-week-showing .day-unit {
+#pp-calendar-view.one-week-showing .day-unit {
     height: 500px;
 }
 
-#ef-calendar-view.two-weeks-showing .day-unit {
+#pp-calendar-view.two-weeks-showing .day-unit {
     height: 250px;
 }
 
-#ef-calendar-view.three-weeks-showing .day-unit {
+#pp-calendar-view.three-weeks-showing .day-unit {
     height: 150px;
 }
 
-table#ef-calendar-view .day-unit.weekend-day {
+table#pp-calendar-view .day-unit.weekend-day {
     background-color: #F9F9F9;
 }
 
-#ef-calendar-view .day-unit .day-unit-label {
+#pp-calendar-view .day-unit .day-unit-label {
     float: right;
     display: inline-block;
     color: #666666;
     padding-right: 3px;
 }
 
-#ef-calendar-view .day-unit .day-unit-today {
+#pp-calendar-view .day-unit .day-unit-today {
     float: left;
     display: inline-block;
     color: #666666;
     padding-left: 3px;
 }
 
-#ef-calendar-view .day-unit.weekend-day .day-unit-label,
-#ef-calendar-view .day-unit.weekend-day .month-label {
+#pp-calendar-view .day-unit.weekend-day .day-unit-label,
+#pp-calendar-view .day-unit.weekend-day .month-label {
     color: #999999;
 }
 
-#ef-calendar-view .calendar-heading {
+#pp-calendar-view .calendar-heading {
     height: 28px;
     background: #DFDFDF url('menu-bits.gif') repeat-x scroll left top;
     -webkit-border-top-left-radius: 6px;    /*** Adds the rounded effect to fit with WP styles ***/
@@ -67,7 +67,7 @@ table#ef-calendar-view .day-unit.weekend-day {
     margin-top:5px;
 }
 
-#ef-calendar-view tr th.column-heading {
+#pp-calendar-view tr th.column-heading {
     width: 12%;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
     color: #333333;
@@ -75,49 +75,49 @@ table#ef-calendar-view .day-unit.weekend-day {
     font-size: 11px;
 }
 
-#ef-calendar-view .day-heading span {
+#pp-calendar-view .day-heading span {
     font-weight: normal;
 }
 
-#ef-calendar-view .month-marker {
+#pp-calendar-view .month-marker {
     color: #666666;
     border-bottom: 1px solid #E1E1E1;
     font-size: 11px;
     line-height: 15px;
 }
 
-#ef-calendar-view .month-marker td {
+#pp-calendar-view .month-marker td {
     padding-top: 0;
     padding-bottom: 0;
 }
 
-#ef-calendar-view .month-marker-previous {
+#pp-calendar-view .month-marker-previous {
     text-align: right;
     padding-right: 8px;
     border-right: 1px solid #E1E1E1;
 }
 
-#ef-calendar-view .month-marker-current {
+#pp-calendar-view .month-marker-current {
     padding-left: 8px;
 }
 
-table#ef-calendar-view .week-unit {
+table#pp-calendar-view .week-unit {
     border-bottom: 1px solid #E1E1E1;
 }
 
-table#ef-calendar-view .day-unit.today {
+table#pp-calendar-view .day-unit.today {
     border-top: 1px solid #000;
 }
 
-table#ef-calendar-view .day-item {
+table#pp-calendar-view .day-item {
     position: relative;
 }
 
-table#ef-calendar-view .day-unit{
+table#pp-calendar-view .day-unit{
     position: relative;
 }
 
-table#ef-calendar-view .day-unit .schedule-new-post-button{
+table#pp-calendar-view .day-unit .schedule-new-post-button{
 
     background: none;
     border: 1px solid rgb(180,180,180);
@@ -128,38 +128,38 @@ table#ef-calendar-view .day-unit .schedule-new-post-button{
     font-size: 10px;
 }
 
-table#ef-calendar-view .day-unit .schedule-new-post-button:hover{
+table#pp-calendar-view .day-unit .schedule-new-post-button:hover{
 
     background-color: rgb(220,220,220);
 
 }
 
-table#ef-calendar-view .day-unit .ui-state-highlight {
+table#pp-calendar-view .day-unit .ui-state-highlight {
     min-height: 20px;
 }
 
-table#ef-calendar-view .day-unit.ui-wrapper-highlight {
+table#pp-calendar-view .day-unit.ui-wrapper-highlight {
     /* background-color: #fcffb5; */
     background-color: #FFFFE0;
 }
 
-table#ef-calendar-view .day-unit.ui-wrapper-highlight ul li {
+table#pp-calendar-view .day-unit.ui-wrapper-highlight ul li {
     border-color: #FFFFE0;
 }
 
-table#ef-calendar-view .day-unit.weekend-day.ui-wrapper-highlight {
+table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight {
     background-color: #FFFFE0;
 }
 
-table#ef-calendar-view .day-unit.weekend-day ul li.is-published:hover {
+table#pp-calendar-view .day-unit.weekend-day ul li.is-published:hover {
     border-color: #FBFBFB;
 }
 
-table#ef-calendar-view .day-unit.weekend-day.ui-wrapper-highlight ul li.sortable {
+table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight ul li.sortable {
 
 }
 
-table#ef-calendar-view .day-unit .post-insert-dialog{
+table#pp-calendar-view .day-unit .post-insert-dialog{
     background-color: #FFF;
     border: 1px solid #CCC;
     -moz-box-shadow:5px 5px 5px #888;
@@ -174,33 +174,33 @@ table#ef-calendar-view .day-unit .post-insert-dialog{
     display: none;
 }
 
-table#ef-calendar-view .day-unit .post-insert-dialog.item-overlay{
+table#pp-calendar-view .day-unit .post-insert-dialog.item-overlay{
     display: block;
 }
 
-table#ef-calendar-view .day-unit .post-insert-dialog h1{
+table#pp-calendar-view .day-unit .post-insert-dialog h1{
     font-size: 13px;
     font-weight: normal;
     font-style: italic;
     margin-bottom: 2px;
 }
 
-table#ef-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title{
+table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title{
     margin-bottom: 10px;
 }
 
-table#ef-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
+table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
     margin-bottom: 10px;
 }
 
-table#ef-calendar-view .day-unit ul {
+table#pp-calendar-view .day-unit ul {
     margin-top: 22px;
     margin-bottom: 0;
     padding: 0;
     min-height: 70px;
 }
 
-table#ef-calendar-view .day-unit ul li {
+table#pp-calendar-view .day-unit ul li {
     list-style-type: none;
     margin: 0;
     word-wrap: break-word;
@@ -209,19 +209,19 @@ table#ef-calendar-view .day-unit ul li {
     margin-bottom: 5px;
 }
 
-table#ef-calendar-view .day-unit.weekend-day ul li {
+table#pp-calendar-view .day-unit.weekend-day ul li {
     border-color: #FBFBFB;
 }
 
-table#ef-calendar-view .day-unit ul li:hover {
+table#pp-calendar-view .day-unit ul li:hover {
     border-color: #DDD;
 }
 
-table#ef-calendar-view .day-unit ul li:hover {
+table#pp-calendar-view .day-unit ul li:hover {
     border-color: #DDD;
 }
 
-table#ef-calendar-view .day-unit ul li .item-status {
+table#pp-calendar-view .day-unit ul li .item-status {
     font-size: 11px;
     line-height: 13px;
     color: #999999;
@@ -233,12 +233,12 @@ table#ef-calendar-view .day-unit ul li .item-status {
     padding-top: 2px;
 }
 
-table#ef-calendar-view .day-unit ul li .inner {
+table#pp-calendar-view .day-unit ul li .inner {
     margin-right: 57px;
     padding-left: 3px;
 }
 
-table#ef-calendar-view .day-unit ul li .item-headline {
+table#pp-calendar-view .day-unit ul li .item-headline {
     font-size: 12px;
     line-height: 15px;
     margin-top:0;
@@ -246,45 +246,45 @@ table#ef-calendar-view .day-unit ul li .item-headline {
     color: #21759B;
 }
 
-table#ef-calendar-view .day-unit ul li.is-published:hover {
+table#pp-calendar-view .day-unit ul li.is-published:hover {
     border-color: #FFF;
     cursor: pointer;
 }
 
-table#ef-calendar-view .day-unit ul li.sortable:hover {
+table#pp-calendar-view .day-unit ul li.sortable:hover {
     border-color: #21759B;
     background-color: #F7F7F7;
     cursor: pointer;
 }
 
-table#ef-calendar-view .day-unit ul li .item-headline:hover {
+table#pp-calendar-view .day-unit ul li .item-headline:hover {
     cursor: pointer;
 }
 
-table#ef-calendar-view .day-unit ul li.sortable.ui-sortable-helper {
+table#pp-calendar-view .day-unit ul li.sortable.ui-sortable-helper {
     cursor: move;
     border-color: #21759B;
     background-color: #F7F7F7;
 }
 
-table#ef-calendar-view .day-unit ul li .item-static .item-inner {
+table#pp-calendar-view .day-unit ul li .item-static .item-inner {
     display: none;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information {
+table#pp-calendar-view .day-unit ul li .item-information {
     margin-top: 5px;
     border-top: 1px solid #CCC;
     padding-top: 3px;
     width: 100%;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field {
+table#pp-calendar-view .day-unit ul li .item-information .item-field {
     margin-top: 5px;
     margin-bottom: 5px;
     clear:left;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field .label {
+table#pp-calendar-view .day-unit ul li .item-information .item-field .label {
     vertical-align: top;
     max-width: 70px;
     text-align: right;
@@ -293,35 +293,35 @@ table#ef-calendar-view .day-unit ul li .item-information .item-field .label {
     padding-right: 5px;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field .value {
+table#pp-calendar-view .day-unit ul li .item-information .item-field .value {
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field .editable-value {
+table#pp-calendar-view .day-unit ul li .item-information .item-field .editable-value {
     cursor: pointer;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field .editable-value:hover {
+table#pp-calendar-view .day-unit ul li .item-information .item-field .editable-value:hover {
     text-decoration: underline;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field .spinner-calendar {
+table#pp-calendar-view .day-unit ul li .item-information .item-field .spinner-calendar {
     margin: 0px;
     float: none;
 }
 
-table#ef-calendar-view .day-unit ul li .item-information .item-field em.none {
+table#pp-calendar-view .day-unit ul li .item-information .item-field em.none {
     color: #999999;
 }
 
-table#ef-calendar-view .day-unit ul li.is-published .item-headline {
+table#pp-calendar-view .day-unit ul li.is-published .item-headline {
     color: #777;
 }
 
-table#ef-calendar-view .day-unit ul li.item-overlay-active {
+table#pp-calendar-view .day-unit ul li.item-overlay-active {
     position:relative;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay {
+table#pp-calendar-view .day-unit ul li .item-overlay {
     min-width: 250px;
     max-width: 350px;
     background-color: #FFF;
@@ -336,22 +336,22 @@ table#ef-calendar-view .day-unit ul li .item-overlay {
     box-shadow:5px 5px 5px #888;
 }
 
-table#ef-calendar-view .day-unit.last-day ul li .item-overlay {
+table#pp-calendar-view .day-unit.last-day ul li .item-overlay {
     right: -5px;
     left: auto;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay .item-inner {
+table#pp-calendar-view .day-unit ul li .item-overlay .item-inner {
     display: block;
     min-width: 170px;
     max-width: 270px;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay .item-inner {
+table#pp-calendar-view .day-unit ul li .item-overlay .item-inner {
     cursor: default;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay .item-actions {
+table#pp-calendar-view .day-unit ul li .item-overlay .item-actions {
     padding-left: 3px;
     padding-right: 3px;
     border-top: 1px solid #CCC;
@@ -359,15 +359,15 @@ table#ef-calendar-view .day-unit ul li .item-overlay .item-actions {
     margin-top: 4px;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay .item-actions a {
+table#pp-calendar-view .day-unit ul li .item-overlay .item-actions a {
     text-decoration: none;
 }
 
-table#ef-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a {
+table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a {
     color: #BC0B0B;
 }
 
-#ef-calendar-view .day-unit .show-more {
+#pp-calendar-view .day-unit .show-more {
     margin-right: 5px;
     margin-bottom: 5px;
     display: block;
@@ -378,7 +378,7 @@ table#ef-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 
 /*** Week Navigation Links ***/
 
-.ef-calendar-navigation {
+.pp-calendar-navigation {
     padding:0;
     display:block;
     height:20px;
@@ -386,17 +386,17 @@ table#ef-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     margin-bottom:15px;
 }
 
-.ef-calendar-navigation select {
+.pp-calendar-navigation select {
     max-width: 300px;
 }
 
-.ef-calendar-navigation li #post-query-submit.button-primary,
-.ef-calendar-navigation li .button-secondary {
+.pp-calendar-navigation li #post-query-submit.button-primary,
+.pp-calendar-navigation li .button-secondary {
     margin-left: 8px;
     margin-right: 0;
 }
 
-.ef-calendar-navigation li.date-change a {
+.pp-calendar-navigation li.date-change a {
     text-decoration:none;
     -moz-border-radius:5px 5px 5px 5px;
     -webkit-border-radius:5px 5px 5px 5px;
@@ -410,50 +410,50 @@ table#ef-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     background: url("menu-bits.gif") repeat-x scroll left -379px #EEEEEE;
 }
 
-.ef-calendar-navigation li.today a {
+.pp-calendar-navigation li.today a {
     font-weight: normal;
 }
 
-.ef-calendar-navigation a:hover {
+.pp-calendar-navigation a:hover {
     text-decoration:none;
     border-color: #D54321;
     color: #D54E21;
 }
 
-.ef-calendar-navigation li {
+.pp-calendar-navigation li {
     list-style-type:none;
     margin-bottom: 0;
     display: inline-block;
 }
 
-.ef-calendar-navigation li#calendar-filter {
+.pp-calendar-navigation li#calendar-filter {
     margin-top: 2px;
 }
 
-.ef-calendar-navigation li.performing-ajax {
+.pp-calendar-navigation li.performing-ajax {
     position: relative;
     display:none;
 }
 
-.ef-calendar-navigation li.performing-ajax img {
+.pp-calendar-navigation li.performing-ajax img {
     position: absolute;
     top: -12px;
     margin-left: 5px;
 }
 
-.ef-calendar-navigation li.ajax-actions,
-.ef-calendar-navigation li.date-change {
+.pp-calendar-navigation li.ajax-actions,
+.pp-calendar-navigation li.date-change {
     float:right;
 }
 
-.ef-calendar-navigation li.ajax-actions img.waiting {
+.pp-calendar-navigation li.ajax-actions img.waiting {
     padding-top: 8px;
     vertical-align:middle;
 }
 
-.ef-calendar-navigation li.ajax-actions,
-.ef-calendar-navigation li.previous-week,
-.ef-calendar-navigation li.today {
+.pp-calendar-navigation li.ajax-actions,
+.pp-calendar-navigation li.previous-week,
+.pp-calendar-navigation li.today {
     margin-right: 15px;
 }
 

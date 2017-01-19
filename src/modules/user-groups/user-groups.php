@@ -21,7 +21,7 @@ if (!class_exists('PP_User_Groups')) {
          * - term_prefix - Used for custom taxonomy terms
          */
         const taxonomy_key = 'pp_usergroup';
-        const term_prefix  = 'ef-usergroup-';
+        const term_prefix  = 'pp-usergroup-';
 
         public $manage_usergroups_cap = 'edit_usergroups';
 
@@ -59,7 +59,7 @@ if (!class_exists('PP_User_Groups')) {
                 'configure_link_text' => __('Manage User Groups', 'publishpress'),
                 'autoload' => false,
                 'settings_help_tab' => array(
-                    'id' => 'ef-user-groups-overview',
+                    'id' => 'pp-user-groups-overview',
                     'title' => __('Overview', 'publishpress'),
                     'content' => __('<p>For those with many people involved in the publishing process, user groups helps you keep them organized.</p><p>Currently, user groups are primarily used for subscribing a set of users to a post for notifications.</p>', 'publishpress'),
                     ),
@@ -582,12 +582,12 @@ if (!class_exists('PP_User_Groups')) {
             ?>
             <form method="post" action="<?php echo esc_url($this->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup_id)));
             ?>">
-            <div id="col-right"><div class="col-wrap"><div id="ef-usergroup-users" class="form-wrap">
+            <div id="col-right"><div class="col-wrap"><div id="pp-usergroup-users" class="form-wrap">
                 <h4><?php _e('Users', 'publishpress');
             ?></h4>
                 <?php
                     $select_form_args = array(
-                        'list_class' => 'ef-post_following_list',
+                        'list_class' => 'pp-post_following_list',
                         'input_id' => 'usergroup_users'
                     );
             ?>
@@ -730,7 +730,7 @@ if (!class_exists('PP_User_Groups')) {
             $selected_usergroups  = $this->get_usergroups_for_user($user_id);
             $usergroups_form_args = array('input_id' => 'pp_usergroups');
             ?>
-            <table id="ef-user-usergroups" class="form-table"><tbody><tr>
+            <table id="pp-user-usergroups" class="form-table"><tbody><tr>
                 <th>
                     <h3><?php _e('Usergroups', 'publishpress') ?></h3>
                     <?php if ($user_id === wp_get_current_user()->ID) : ?>
@@ -745,7 +745,7 @@ if (!class_exists('PP_User_Groups')) {
             ?>
                     <script type="text/javascript">
                     jQuery(document).ready(function(){
-                        jQuery('#ef-user-usergroups ul').listFilterizer();
+                        jQuery('#pp-user-usergroups ul').listFilterizer();
                     });
                     </script>
                 </td>
@@ -838,8 +838,8 @@ if (!class_exists('PP_User_Groups')) {
             // e.g. showing members assigned to group (John Smith, Jane Doe, and 9 others)
             // before <tag>, after <tag>, class, id names?
             $defaults = array(
-                'list_class' => 'ef-post_following_list',
-                'list_id' => 'ef-following_usergroups',
+                'list_class' => 'pp-post_following_list',
+                'list_id' => 'pp-following_usergroups',
                 'input_id' => 'following_usergroups'
             );
 
@@ -864,9 +864,9 @@ if (!class_exists('PP_User_Groups')) {
                         <label for="<?php echo $input_id . esc_attr($usergroup->term_id);
                     ?>" title="<?php echo esc_attr($usergroup->description) ?>">
                             <input type="checkbox" id="<?php echo $input_id . esc_attr($usergroup->term_id) ?>" name="<?php echo $input_id ?>[]" value="<?php echo esc_attr($usergroup->term_id) ?>"<?php echo $checked ?> />
-                            <span class="ef-usergroup_name"><?php echo esc_html($usergroup->name);
+                            <span class="pp-usergroup_name"><?php echo esc_html($usergroup->name);
                     ?></span>
-                            <span class="ef-usergroup_description" title="<?php echo esc_attr($usergroup->description) ?>">
+                            <span class="pp-usergroup_description" title="<?php echo esc_attr($usergroup->description) ?>">
                                 <?php echo (strlen($usergroup->description) >= 50) ? substr_replace(esc_html($usergroup->description), '...', 50) : esc_html($usergroup->description);
                     ?>
                             </span>

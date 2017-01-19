@@ -156,7 +156,7 @@ if (!class_exists('PP_Dashboard')) {
         $statuses = apply_filters('pp_dashboard_post_status_widget_statuses', $statuses);
         // If custom statuses are enabled, we'll output a link to edit the terms just below the post counts
         if ($this->module_enabled('custom_status')) {
-            $edit_custom_status_url = add_query_arg('page', 'ef-custom-status-settings', get_admin_url(null, 'admin.php'));
+            $edit_custom_status_url = add_query_arg('page', 'pp-custom-status-settings', get_admin_url(null, 'admin.php'));
         }
 
         ?>
@@ -213,7 +213,7 @@ if (!class_exists('PP_Dashboard')) {
             $myposts = $publishpress->notifications->get_user_following_posts();
 
             ?>
-            <div class="ef-myposts">
+            <div class="pp-myposts">
                 <?php if (!empty($myposts)) : ?>
 
                     <?php foreach ($myposts as $post) : ?>
@@ -224,7 +224,7 @@ if (!class_exists('PP_Dashboard')) {
                         <li>
                             <h4><a href="<?php echo $url ?>" title="<?php _e('Edit this post', 'publishpress') ?>"><?php echo $title;
             ?></a></h4>
-                            <span class="ef-myposts-timestamp"><?php _e('This post was last updated on', 'publishpress') ?> <?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
+                            <span class="pp-myposts-timestamp"><?php _e('This post was last updated on', 'publishpress') ?> <?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
                         </li>
                     <?php endforeach;
             ?>

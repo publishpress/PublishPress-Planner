@@ -1,12 +1,12 @@
 jQuery(document).ready(function($) {
-    $('#ef-post_following_users_box ul').listFilterizer();
+    $('#pp-post_following_users_box ul').listFilterizer();
 
     var params = {
         action: 'save_notifications',
         post_id: $('#post_ID').val(),
     };
 
-    $(document).on('click','.ef-post_following_list li input:checkbox, .ef-following_usergroups li input:checkbox', function() {
+    $(document).on('click','.pp-post_following_list li input:checkbox, .pp-following_usergroups li input:checkbox', function() {
         var user_group_ids = [];
         var parent_this = $(this);
         params.pp_notifications_name = $(this).attr('name');
@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
                     .animate({ 'backgroundColor':backgroundColor }, 200);
             },
             error : function(r) {
-                $('#ef-post_following_users_box').prev().append(' <p class="error">There was an error. Please reload the page.</p>');
+                $('#pp-post_following_users_box').prev().append(' <p class="error">There was an error. Please reload the page.</p>');
             }
         });
     });

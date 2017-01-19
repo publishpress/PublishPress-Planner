@@ -33,7 +33,7 @@ define('PUBLISHPRESS_VERSION', '1.0.0a1');
 define('PUBLISHPRESS_ROOT', dirname(__FILE__));
 define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
-define('PUBLISHPRESS_SETTINGS_PAGE', add_query_arg('page', 'ef-settings', get_admin_url(null, 'admin.php')));
+define('PUBLISHPRESS_SETTINGS_PAGE', add_query_arg('page', 'pp-settings', get_admin_url(null, 'admin.php')));
 
 // Core class
 class publishpress
@@ -253,7 +253,7 @@ class publishpress
         $args['options_group_name'] = $this->options_group . $name . '_options';
 
         if (!isset($args['settings_slug'])) {
-            $args['settings_slug'] = 'ef-' . $args['slug'] . '-settings';
+            $args['settings_slug'] = 'pp-' . $args['slug'] . '-settings';
         }
 
         if (empty($args['post_type_support'])) {
@@ -357,7 +357,7 @@ class publishpress
      */
     public function register_scripts_and_styles()
     {
-        wp_enqueue_style('ef-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'all');
+        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'all');
 
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all');

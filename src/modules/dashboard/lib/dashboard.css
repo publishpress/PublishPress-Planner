@@ -71,23 +71,23 @@
     padding: 2px !important;
 }
 
-.ef-submit {
+.pp-submit {
     height: 20px;
     text-align: right;
 }
 
 /* Posts I'm Following */
 
-.ef-myposts li {
+.pp-myposts li {
     list-style-type: none;
     padding-bottom: 5px;
 }
 
-.ef-myposts li a {
+.pp-myposts li a {
     font-weight: normal;
 }
 
-.ef-myposts li .ef-myposts-timestamp {
+.pp-myposts li .pp-myposts-timestamp {
     color: #999;
     font-style: italic;
     font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;

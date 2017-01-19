@@ -21,7 +21,7 @@ if (!class_exists('PP_Settings')) {
                 'module_url'           => $this->module_url,
                 'img_url'              => $this->module_url . 'lib/eflogo_s128.png',
                 'slug'                 => 'settings',
-                'settings_slug'        => 'ef-settings',
+                'settings_slug'        => 'pp-settings',
                 'default_options'      => array(
                     'enabled' => 'on',
                 ),

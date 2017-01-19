@@ -59,7 +59,7 @@ jQuery(document).ready(function ($) {
     function save_editorial_metadata(post_id) {
         var metadata_info = {
             action: 'pp_calendar_update_metadata',
-            nonce: $("#ef-calendar-modify").val(),
+            nonce: $("#pp-calendar-modify").val(),
             metadata_type: $('.editing').attr('data-type'),
             metadata_value: $('.editing').children().first().val(),
             metadata_term: $('.editing').attr('data-metadataterm'),
@@ -193,7 +193,7 @@ jQuery(document).ready(function ($) {
         start: function(event, ui) {
             $(this).disableSelection();
             publishpress_calendar_close_overlays();
-            $('td.day-unit ul li').unbind('click.ef-calendar-show-overlay');
+            $('td.day-unit ul li').unbind('click.pp-calendar-show-overlay');
             $(this).css('cursor','move');
         },
         sort: function(event, ui) {
@@ -209,7 +209,7 @@ jQuery(document).ready(function ($) {
                 post_id = post_id[post_id.length - 1];
                 var prev_date = $(this).closest('.day-unit').attr('id');
                 var next_date = $(ui.item).closest('.day-unit').attr('id');
-                var nonce = $(document).find('#ef-calendar-modify').val();
+                var nonce = $(document).find('#pp-calendar-modify').val();
                 $('.publishpress-message').remove();
                 $('li.ajax-actions .waiting').show();
                 // make ajax request
@@ -332,7 +332,7 @@ jQuery(document).ready(function ($) {
                         action: 'pp_insert_post',
                         pp_insert_date: EFQuickPublish.$new_post_form.find('input.post-insert-dialog-post-date').val(),
                         pp_insert_title: EFQuickPublish.$post_title_input.val(),
-                        nonce: $(document).find('#ef-calendar-modify').val()
+                        nonce: $(document).find('#pp-calendar-modify').val()
                     },
                     success: function(response, textStatus, XMLHttpRequest) {
 

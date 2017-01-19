@@ -200,7 +200,7 @@ class PP_Story_Budget extends PP_Module
      */
     public function handle_form_date_range_change()
     {
-        if (!isset($_POST['ef-story-budget-range-submit'], $_POST['ef-story-budget-number-days'], $_POST['ef-story-budget-start-date'])) {
+        if (!isset($_POST['pp-story-budget-range-submit'], $_POST['pp-story-budget-number-days'], $_POST['pp-story-budget-start-date'])) {
             return;
         }
 
@@ -210,8 +210,8 @@ class PP_Story_Budget extends PP_Module
 
         $current_user                = wp_get_current_user();
         $user_filters                = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', true);
-        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['ef-story-budget-start-date']));
-        $user_filters['number_days'] = (int)$_POST['ef-story-budget-number-days'];
+        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['pp-story-budget-start-date']));
+        $user_filters['number_days'] = (int)$_POST['pp-story-budget-number-days'];
 
         if ($user_filters['number_days'] <= 1) {
             $user_filters['number_days'] = 1;
@@ -290,8 +290,8 @@ class PP_Story_Budget extends PP_Module
         $this->terms = apply_filters('pp_story_budget_filter_terms', $terms); // allow for reordering or any other filtering of terms
 
         ?>
-        <div class="wrap" id="ef-story-budget-wrap">
-            <div id="ef-story-budget-title">
+        <div class="wrap" id="pp-story-budget-wrap">
+            <div id="pp-story-budget-title">
                 <?php echo '<img src="' . esc_url($this->module->img_url) . '" class="module-icon icon32" />';
         ?>
                 <h2><?php _e('Story Budget', 'publishpress');
@@ -337,21 +337,21 @@ class PP_Story_Budget extends PP_Module
     {
         $output = '<form method="POST" action="' . menu_page_url($this->module->slug, false) . '">';
 
-        $start_date_value = '<input type="text" id="ef-story-budget-start-date" name="ef-story-budget-start-date"'
+        $start_date_value = '<input type="text" id="pp-story-budget-start-date" name="pp-story-budget-start-date"'
             . ' size="10" class="date-pick" value="'
             . esc_attr(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date']))) . '" /><span class="form-value">';
 
         $start_date_value .= esc_html(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date'])));
         $start_date_value .= '</span>';
 
-        $number_days_value = '<input type="text" id="ef-story-budget-number-days" name="ef-story-budget-number-days"'
+        $number_days_value = '<input type="text" id="pp-story-budget-number-days" name="pp-story-budget-number-days"'
             . ' size="3" maxlength="3" value="'
             . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html($this->user_filters['number_days'])
             . '</span>';
 
         $output .= sprintf(_x('starting %1$s showing %2$s %3$s', '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'', 'publishpress'), $start_date_value, $number_days_value, _n('day', 'days', $this->user_filters['number_days'], 'publishpress'));
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
-        $output .= '<input id="ef-story-budget-range-submit" name="ef-story-budget-range-submit" type="submit"';
+        $output .= '<input id="pp-story-budget-range-submit" name="pp-story-budget-range-submit" type="submit"';
         $output .= ' class="button-primary" value="' . __('Change', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
@@ -656,7 +656,7 @@ class PP_Story_Budget extends PP_Module
     public function table_navigation()
     {
         ?>
-    <div class="tablenav" id="ef-story-budget-tablenav">
+    <div class="tablenav" id="pp-story-budget-tablenav">
         <div class="alignleft actions">
             <form method="GET" style="float: left;">
                 <input type="hidden" name="page" value="story-budget"/>
