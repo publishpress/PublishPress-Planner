@@ -253,22 +253,6 @@ if (!class_exists('PP_Settings')) {
 
         public function print_default_footer($current_module)
         {
-            ?>
-            <?php if ($current_module->slug == 'settings'): ?>
-            <div class="credits">
-            <p><?php echo __('<a href="https://pressshack.com/">PublishPress</a> is produced by <a href="http://danielbachhuber.com/">Daniel Bachhuber</a>, <a href="http://digitalize.ca/">Mo Jangda</a>, and <a href="http://www.scottbressler.com/blog/">Scott Bressler</a>, with special help from <a href="http://andrewspittle.net">Andrew Spittle</a> and <a href="http://andrewwitherspoon.com/">Andrew Witherspoon</a>.', 'publishpress');
-                ?>
-            <br /><?php echo sprintf(__('You\'re using PublishPress version %s.', 'publishpress'), PUBLISHPRESS_VERSION);
-                ?>
-            <br /><?php echo __('Icons courtesy of the <a href="http://thenounproject.com/">Noun Project</a>.', 'publishpress');
-                ?>
-            <br /><?php echo __('<a href="http://wordpress.org/tags/publishpress?forum_id=10">Please give us your feedback, ideas, bug reports and comments</a> in the WordPress.org forums.', 'publishpress');
-                ?>
-            </div>
-            </div>
-            <?php endif;
-                ?>
-            <?php
 
         }
 
