@@ -15,18 +15,18 @@ if (!class_exists('PP_Settings')) {
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = array(
-                'title' => __('PublishPress', 'publishpress'),
-                'short_description' => __('PublishPress redefines your WordPress publishing workflow.', 'publishpress'),
+                'title'                => __('PublishPress', 'publishpress'),
+                'short_description'    => __('PublishPress redefines your WordPress publishing workflow.', 'publishpress'),
                 'extended_description' => __('Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress'),
-                'module_url' => $this->module_url,
-                'img_url' => $this->module_url . 'lib/eflogo_s128.png',
-                'slug' => 'settings',
-                'settings_slug' => 'ef-settings',
-                'default_options' => array(
+                'module_url'           => $this->module_url,
+                'img_url'              => $this->module_url . 'lib/eflogo_s128.png',
+                'slug'                 => 'settings',
+                'settings_slug'        => 'ef-settings',
+                'default_options'      => array(
                     'enabled' => 'on',
                 ),
                 'configure_page_cb' => 'print_default_settings',
-                'autoload' => true,
+                'autoload'          => true,
             );
             $this->module = PublishPress()->register_module('settings', $args);
         }
@@ -54,10 +54,7 @@ if (!class_exists('PP_Settings')) {
             global $publishpress;
 
             // Select PublishPress icon
-            if (defined('MP6')) :
-                $pp_logo = 'lib/eflogo_s32b.png'; else :
-                $pp_logo = 'lib/eflogo_s32.png';
-            endif;
+            $pp_logo = defined('MP6') ? 'lib/eflogo_s32b.png' : 'lib/eflogo_s32.png';
 
             add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), $this->module->module_url . $pp_logo) ;
 
@@ -166,7 +163,6 @@ if (!class_exists('PP_Settings')) {
          */
         public function print_default_header($current_module)
         {
-
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
                 $message = $_GET['message'];
