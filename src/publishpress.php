@@ -101,7 +101,21 @@ class publishpress
         require_once(PUBLISHPRESS_ROOT . '/common/php/class-module.php');
 
         // Scan the modules directory and include any modules that exist there
-        $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
+        // $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
+        $module_dirs = array(
+            'calendar',
+            'editorial-metadata',
+            'notifications',
+            'story-budget',
+            'custom-status',
+            'user-groups',
+
+            // @TODO: Move for settings, and remove after cleanup
+            'dashboard',
+            'editorial-comments',
+            'settings',
+        );
+
         $class_names = array();
         foreach ($module_dirs as $module_dir) {
             if (file_exists(PUBLISHPRESS_ROOT . "/modules/{$module_dir}/$module_dir.php")) {
