@@ -31,36 +31,36 @@ if (!class_exists('PP_Calendar')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title' => __('Calendar', 'publishpress'),
-                'short_description' => sprintf(__('View upcoming content in a <a href="%s">customizable calendar</a>.', 'publishpress'), admin_url('index.php?page=calendar')),
+                'title'                => __('Calendar', 'publishpress'),
+                'short_description'    => sprintf(__('View upcoming content in a <a href="%s">customizable calendar</a>.', 'publishpress'), admin_url('index.php?page=calendar')),
                 'extended_description' => __('PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date.', 'publishpress'),
-                'module_url' => $this->module_url,
-                'img_url' => $this->module_url . 'lib/calendar_s128.png',
-                'slug' => 'calendar',
-                'post_type_support' => 'pp_calendar',
-                'default_options' => array(
-                    'enabled' => 'on',
+                'module_url'           => $this->module_url,
+                'icon_class'           => 'dashicons dashicons-calendar-alt',
+                'slug'                 => 'calendar',
+                'post_type_support'    => 'pp_calendar',
+                'default_options'      => array(
+                    'enabled'    => 'on',
                     'post_types' => array(
                         'post' => 'on',
                         'page' => 'off',
                     ),
                     'quick_create_post_type' => 'post',
-                    'ics_subscription' => 'off',
-                    'ics_secret_key' => '',
+                    'ics_subscription'       => 'off',
+                    'ics_secret_key'         => '',
                 ),
                 'messages' => array(
-                    'post-date-updated' => __("Post date updated.", 'publishpress'),
-                    'update-error' => __('There was an error updating the post. Please try again.', 'publishpress'),
+                    'post-date-updated'   => __("Post date updated.", 'publishpress'),
+                    'update-error'        => __('There was an error updating the post. Please try again.', 'publishpress'),
                     'published-post-ajax' => __("Updating the post date dynamically doesn't work for published content. Please <a href='%s'>edit the post</a>.", 'publishpress'),
-                    'key-regenerated' => __('iCal secret key regenerated. Please inform all users they will need to resubscribe.', 'publishpress'),
+                    'key-regenerated'     => __('iCal secret key regenerated. Please inform all users they will need to resubscribe.', 'publishpress'),
                 ),
-                'configure_page_cb' => 'print_configure_view',
+                'configure_page_cb'   => 'print_configure_view',
                 'configure_link_text' => __('Calendar Options', 'publishpress'),
-                'settings_help_tab' => array(
-                    'id' => 'pp-calendar-overview',
-                    'title' => __('Overview', 'publishpress'),
+                'settings_help_tab'   => array(
+                    'id'      => 'pp-calendar-overview',
+                    'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>', 'publishpress'),
-                    ),
+                ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/calendar/">Calendar Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
             );
             $this->module = PublishPress()->register_module('calendar', $args);
