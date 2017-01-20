@@ -21,7 +21,8 @@
 }
 
 .publishpress-modules {
-    min-width: 740px;
+    min-width: 340px;
+    max-width: 1100px;
     width: 100%;
     overflow: hidden;
     margin-top: 20px;
@@ -33,8 +34,8 @@
     position: relative;
     float: left;
     border: 1px solid #e1e1e1;
-    padding: 10px;
-    background-color: #f1f1f1;
+    padding: 14px;
+    background-color: #fff;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -84,9 +85,7 @@
 .publishpress-modules .publishpress-module .button-primary.configure-publishpress-module {
     color: #f1f1f1;
     border: solid 1px #666;
-    background: #DDD;
-    background: -webkit-gradient(linear, left top, left bottom, from(#BBB), to(#888));
-    background: -moz-linear-gradient(top,  #BBB,  #888);
+    background: #655997;
     box-shadow: none;
     filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#BBB', endColorstr='#888');
     text-shadow: none;
@@ -94,7 +93,8 @@
 
 .publishpress-modules .publishpress-module .button-primary.configure-publishpress-module:hover {
     color: #FFF;
-    border-color: #444;
+    border-color: #7569A7;
+    background: #7569A7;
 }
 
 .publishpress-admin a.cancel-settings-link {
@@ -221,6 +221,20 @@ h3.nav-tab-wrapper {
 .publishpress-error-message {
     background-color: #FFEBE8;
     border: 1px solid #CC0000;
+}
+
+.enable-disable-publishpress-module {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    padding-left: 5px !important;
+    color: gray !important;
+    text-shadow: none !important;
+}
+
+.enable-disable-publishpress-module.button-remove {
+    color: black !important;
 }
 
 /* Admin Menu Icon */
