@@ -1,35 +1,20 @@
 <?php
 /*
 Plugin Name: PublishPress
-Plugin URI: https://pressshack.com/publishpress
-Description: Remixing the WordPress admin for better editorial workflow options.
-Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, PressShack and others
-Version: 1.0.0a1
-Author URI: https://pressshack.com/
-
-Copyright 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
-Copyright 2017 PressShack.com.
-
-GNU General Public License, Free Software Foundation <http://creativecommons.org/licenses/GPL/2.0/>
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
+Plugin URI: https://pressshack.com/publishpress/
+Description: Empowering your publishing workflow.
+Author: PressShack
+Author URI: https://pressshack.com
+Version: 1.0.0
 */
+/**
+ * @package PublishPress
+ * @category Core
+ * @author PressShack
+ */
 
 // Define contants
-define('PUBLISHPRESS_VERSION', '1.0.0a1');
+define('PUBLISHPRESS_VERSION', '1.0.0');
 define('PUBLISHPRESS_ROOT', dirname(__FILE__));
 define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
@@ -54,12 +39,6 @@ class publishpress
      * Insures that only one instance of PublishPress exists in memory at any one
      * time. Also prevents needing to define globals all over the place.
      *
-     * @since PublishPress 0.7.4
-     * @staticvar array $instance
-     * @uses PublishPress::setup_globals() Setup the globals needed
-     * @uses PublishPress::includes() Include the required files
-     * @uses PublishPress::setup_actions() Setup the hooks and actions
-     * @see PublishPress()
      * @return The one true PublishPress
      */
     public static function instance()

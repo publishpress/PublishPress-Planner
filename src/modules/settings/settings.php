@@ -19,7 +19,7 @@ if (!class_exists('PP_Settings')) {
                 'short_description'    => __('PublishPress redefines your WordPress publishing workflow.', 'publishpress'),
                 'extended_description' => __('Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/eflogo_s128.png',
+                'img_url'              => $this->module_url . 'lib/logo-128.png',
                 'slug'                 => 'settings',
                 'settings_slug'        => 'pp-settings',
                 'default_options'      => array(
@@ -54,7 +54,7 @@ if (!class_exists('PP_Settings')) {
             global $publishpress;
 
             // Select PublishPress icon
-            $pp_logo = defined('MP6') ? 'lib/eflogo_s32b.png' : 'lib/eflogo_s32.png';
+            $pp_logo = 'lib/menu-icon.png';
 
             add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), $this->module->module_url . $pp_logo) ;
 

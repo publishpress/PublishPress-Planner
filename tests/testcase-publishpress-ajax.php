@@ -1,6 +1,6 @@
 <?php
 /**
- * Edit Flow Ajax test cases
+ * PublishPress Ajax test cases
  */
 
 abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
