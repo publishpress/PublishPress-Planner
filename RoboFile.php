@@ -136,7 +136,7 @@ class RoboFile extends \Robo\Tasks
         $return = $this->taskWatch()
             ->monitor('src', function() use ($wordPressPath) {
                 $this->packInstall($wordPressPath);
-                $this->_exec('say "synced!"');
+                $this->_exec('say "pack installed!"');
             })
             ->run();
 
