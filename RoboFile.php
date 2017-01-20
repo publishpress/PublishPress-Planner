@@ -122,6 +122,7 @@ class RoboFile extends \Robo\Tasks
         $this->_exec('mv ' . $packPath . ' ' . $dest);
 
         $this->say('Package installed');
+        $this->_exec('say "pack installed!"');
 
         return;
     }
@@ -136,7 +137,6 @@ class RoboFile extends \Robo\Tasks
         $return = $this->taskWatch()
             ->monitor('src', function() use ($wordPressPath) {
                 $this->packInstall($wordPressPath);
-                $this->_exec('say "pack installed!"');
             })
             ->run();
 
