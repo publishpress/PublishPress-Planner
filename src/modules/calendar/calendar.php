@@ -644,8 +644,7 @@ if (!class_exists('PP_Calendar')) {
             ?>
             <div class="wrap">
                 <div id="pp-calendar-title"><!-- Calendar Title -->
-                    <?php echo '<img src="' . esc_url($this->module->img_url) . '" class="module-icon icon32" />';
-            ?>
+                    <?php echo '<span class="' . esc_url($this->module->icon_class) . '"></span>'; ?>
                     <h2><?php _e('Calendar', 'publishpress');
             ?>&nbsp;<span class="time-range"><?php $this->calendar_time_range();
             ?></span></h2>

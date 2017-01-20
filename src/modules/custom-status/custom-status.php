@@ -31,7 +31,7 @@ if (!class_exists('PP_Custom_Status')) {
                 'short_description'    => __('Create custom post statuses to define the stages of your workflow.', 'publishpress'),
                 'extended_description' => __('Create your own post statuses to add structure your publishing workflow. You can change existing or add new ones anytime, and drag and drop to change their order.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/custom_status_s128.png',
+                'icon_class'           => 'dashicons dashicons-tag',
                 'slug'                 => 'custom-status',
                 'default_options'      => array(
                     'enabled'              => 'on',

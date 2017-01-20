@@ -40,7 +40,7 @@ if (!class_exists('PP_User_Groups')) {
                 'short_description'    => __('Organize your users into groups to mimic your organizational structure.', 'publishpress'),
                 'extended_description' => __('Configure user groups to organize all of the users on your site. Each user can be in many user groups and you can change them at any time.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/usergroups_s128.png',
+                'icon_class'           => 'dashicons dashicons-groups',
                 'slug'                 => 'user-groups',
                 'default_options'      => array(
                     'enabled'    => 'on',

@@ -40,7 +40,7 @@ class PP_Story_Budget extends PP_Module
             'short_description'    => sprintf(__('View the status of all your content <a href="%s">at a glance</a>.', 'publishpress'), admin_url('index.php?page=story-budget')),
             'extended_description' => __('Use the story budget to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
             'module_url'           => $this->module_url,
-            'img_url'              => $this->module_url . 'lib/story_budget_s128.png',
+            'icon_class'           => 'dashicons dashicons-list-view',
             'slug'                 => 'story-budget',
             'default_options'      => array(
                 'enabled' => 'on',
@@ -292,8 +292,7 @@ class PP_Story_Budget extends PP_Module
         ?>
         <div class="wrap" id="pp-story-budget-wrap">
             <div id="pp-story-budget-title">
-                <?php echo '<img src="' . esc_url($this->module->img_url) . '" class="module-icon icon32" />';
-        ?>
+                <span class="<?php echo esc_url($this->module->img_url); ?> module-icon" />
                 <h2><?php _e('Story Budget', 'publishpress');
         ?>&nbsp;<span class="time-range"><?php $this->story_budget_time_range();
         ?></span></h2>

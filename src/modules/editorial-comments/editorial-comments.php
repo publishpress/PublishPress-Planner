@@ -21,7 +21,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                 'short_description'    => __('Share internal notes with your team.', 'publishpress'),
                 'extended_description' => __('Use editorial comments to hold a private discussion about a post. Communicate directly with your writers or editors about what works and what needs to be improved for each piece.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/editorial_comments_s128.png',
+                'icon_class'           => 'dashicons dashicons-admin-comments',
                 'slug'                 => 'editorial-comments',
                 'default_options'      => array(
                     'enabled'    => 'on',

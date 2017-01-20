@@ -19,7 +19,7 @@ if (!class_exists('PP_Settings')) {
                 'short_description'    => __('PublishPress redefines your WordPress publishing workflow.', 'publishpress'),
                 'extended_description' => __('Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/logo-128.png',
+                'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'settings',
                 'settings_slug'        => 'pp-settings',
                 'default_options'      => array(
@@ -191,11 +191,7 @@ if (!class_exists('PP_Settings')) {
                 $display_text = '<span class="publishpress-error-message publishpress-message">' . esc_html($current_module->messages[$error]) . '</span>';
             }
 
-            if ($current_module->img_url) {
-                $page_icon = '<img src="' . esc_url($current_module->img_url) . '" class="module-icon icon32" />';
-            } else {
-                $page_icon = '<div class="icon32" id="icon-options-general"><br/></div>';
-            }
+            $page_icon = '<span class="' . $current_module->icon_class . '"></span>';
             ?>
             <div class="wrap publishpress-admin">
                 <?php if ($current_module->name != 'settings'): ?>
@@ -276,8 +272,8 @@ if (!class_exists('PP_Settings')) {
                         $classes[] = 'has-configure-link';
                     }
                     echo '<div class="' . implode(' ', $classes) . '" id="' . $mod_data->slug . '">';
-                    if ($mod_data->img_url) {
-                        echo '<img src="' . esc_url($mod_data->img_url) . '" height="24px" width="24px" class="float-right module-icon" />';
+                    if (isset($mod_data->icon_class)) {
+                        echo '<span class="' . esc_url($mod_data->icon_class) . ' float-right module-icon"></span>';
                     }
                     echo '<form method="get" action="' . get_admin_url(null, 'options.php') . '">';
                     echo '<h4>' . esc_html($mod_data->title) . '</h4>';

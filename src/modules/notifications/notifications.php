@@ -34,7 +34,7 @@ if (!class_exists('PP_Notifications')) {
                 'short_description'    => __('Update your team of important changes to your content.', 'publishpress'),
                 'extended_description' => __('With email notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out an email notification to users subscribed to a post. User groups can be used to manage who receives notifications on what.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/notifications_s128.png',
+                'icon_class'           => 'dashicons dashicons-email',
                 'slug'                 => 'notifications',
                 'default_options'      => array(
                     'enabled'    => 'on',

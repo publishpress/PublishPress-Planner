@@ -44,7 +44,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 'short_description'    => __('Track details about your posts in progress.', 'publishpress'),
                 'extended_description' => __('Log details on every assignment using configurable editorial metadata. It’s completely customizable; create fields for everything from due date to location to contact information to role assignments.', 'publishpress'),
                 'module_url'           => $this->module_url,
-                'img_url'              => $this->module_url . 'lib/editorial_metadata_s128.png',
+                'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'editorial-metadata',
                 'default_options'      => array(
                     'enabled'    => 'on',

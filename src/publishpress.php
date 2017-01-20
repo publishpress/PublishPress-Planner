@@ -221,7 +221,7 @@ class publishpress
             'title'                => '',
             'short_description'    => '',
             'extended_description' => '',
-            'img_url'              => false,
+            'icon_class'           => 'dashicons dashicons-admin-generic',
             'slug'                 => '',
             'post_type_support'    => '',
             'default_options'      => array(),

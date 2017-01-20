@@ -30,7 +30,7 @@ if (!class_exists('PP_Dashboard')) {
             'short_description'    => __('Track your content from the WordPress dashboard.', 'publishpress'),
             'extended_description' => __('Enable dashboard widgets to quickly get an overview of what state your content is in.', 'publishpress'),
             'module_url'           => $this->module_url,
-            'img_url'              => $this->module_url . 'lib/dashboard_s128.png',
+            'icon_class'           => 'dashicons dashicons-layout',
             'slug'                 => 'dashboard',
             'post_type_support'    => 'pp_dashboard',
             'default_options'      => array(
