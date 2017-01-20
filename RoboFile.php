@@ -46,7 +46,7 @@ class RoboFile extends \Robo\Tasks
      *
      * @param string $destination Destination for the package. The ZIP file will be moved to that path.
      */
-    public function build($destination = null)
+    public function packBuild($destination = null)
     {
         $this->say('Building the package');
 
@@ -81,6 +81,64 @@ class RoboFile extends \Robo\Tasks
 
         // if ($return->)
         $this->say("Package built");
+
+        return $return;
+    }
+
+    /**
+     * Copy the folder to the wordpress given location
+     *
+     * @param string $wordPressPath Path for the WordPress installation
+     */
+    public function packInstall($wordPressPath)
+    {
+        $this->say('Building the package');
+
+        // Build the package
+        $packPath = realpath(self::PACKAGE_PATH) . '/'. self::PLUGIN_NAME;
+
+        if (is_dir($packPath)) {
+            $this->_exec('rm -rf ' . $packPath);
+        }
+
+        $this->packBuild();
+
+        // Unzip it
+        $this->_exec('unzip ' . $packPath . '.zip -d ' . $packPath);
+
+        // Installing the package
+        $this->say('Installing the package');
+
+        if (!realpath($wordPressPath)) {
+            throw new RuntimeException('Invalid WordPress path');
+        }
+
+        $dest = realpath($wordPressPath) . '/wp-content/plugins/' . self::PLUGIN_NAME;
+        // Remove existent plugin directory
+        if (is_dir($dest)) {
+            $this->_exec('rm -rf ' . $dest);
+        }
+
+        $this->_exec('mv ' . $packPath . ' ' . $dest);
+
+        $this->say('Package installed');
+
+        return;
+    }
+
+    /**
+     * Watch for changes and copy the folder to the wordpress given location
+     *
+     * @param string $wordPressPath Path for the WordPress installation
+     */
+    public function packWatchInstall($wordPressPath)
+    {
+        $return = $this->taskWatch()
+            ->monitor('src', function() use ($wordPressPath) {
+                $this->packInstall($wordPressPath);
+                $this->_exec('say "synced!"');
+            })
+            ->run();
 
         return $return;
     }
