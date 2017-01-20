@@ -36,31 +36,31 @@ if (!class_exists('PP_User_Groups')) {
 
             // Register the User Groups module with PublishPress
             $args = array(
-                'title' => __('User Groups', 'publishpress'),
-                'short_description' => __('Organize your users into groups to mimic your organizational structure.', 'publishpress'),
+                'title'                => __('User Groups', 'publishpress'),
+                'short_description'    => __('Organize your users into groups to mimic your organizational structure.', 'publishpress'),
                 'extended_description' => __('Configure user groups to organize all of the users on your site. Each user can be in many user groups and you can change them at any time.', 'publishpress'),
-                'module_url' => $this->module_url,
-                'img_url' => $this->module_url . 'lib/usergroups_s128.png',
-                'slug' => 'user-groups',
-                'default_options' => array(
-                    'enabled' => 'on',
+                'module_url'           => $this->module_url,
+                'img_url'              => $this->module_url . 'lib/usergroups_s128.png',
+                'slug'                 => 'user-groups',
+                'default_options'      => array(
+                    'enabled'    => 'on',
                     'post_types' => array(
                         'post' => 'on',
                         'page' => 'off',
                     ),
                 ),
                 'messages' => array(
-                    'usergroup-added' => __("User group created. Feel free to add users to the usergroup.", 'publishpress'),
+                    'usergroup-added'   => __("User group created. Feel free to add users to the usergroup.", 'publishpress'),
                     'usergroup-updated' => __("User group updated.", 'publishpress'),
                     'usergroup-missing' => __("User group doesn't exist.", 'publishpress'),
                     'usergroup-deleted' => __("User group deleted.", 'publishpress'),
                 ),
-                'configure_page_cb' => 'print_configure_view',
+                'configure_page_cb'   => 'print_configure_view',
                 'configure_link_text' => __('Manage User Groups', 'publishpress'),
-                'autoload' => false,
-                'settings_help_tab' => array(
-                    'id' => 'pp-user-groups-overview',
-                    'title' => __('Overview', 'publishpress'),
+                'autoload'            => false,
+                'settings_help_tab'   => array(
+                    'id'      => 'pp-user-groups-overview',
+                    'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>For those with many people involved in the publishing process, user groups helps you keep them organized.</p><p>Currently, user groups are primarily used for subscribing a set of users to a post for notifications.</p>', 'publishpress'),
                     ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/user-groups/">User Groups Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
