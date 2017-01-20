@@ -21,6 +21,8 @@ permission notices:
 
   Edit Flow is Copyright 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
   http://editflow.org/
+  Edit Flow was produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler,
+  with special help from Andrew Spittle and Andrew Witherspoon
 
   Edit Flow is released under the GPL
 
