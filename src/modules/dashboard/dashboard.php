@@ -26,20 +26,20 @@ if (!class_exists('PP_Dashboard')) {
         // Register the module with PublishPress
         $this->module_url = $this->get_module_url(__FILE__);
         $args             = array(
-            'title' => __('Dashboard Widgets', 'publishpress'),
-            'short_description' => __('Track your content from the WordPress dashboard.', 'publishpress'),
+            'title'                => __('Dashboard Widgets', 'publishpress'),
+            'short_description'    => __('Track your content from the WordPress dashboard.', 'publishpress'),
             'extended_description' => __('Enable dashboard widgets to quickly get an overview of what state your content is in.', 'publishpress'),
-            'module_url' => $this->module_url,
-            'img_url' => $this->module_url . 'lib/dashboard_s128.png',
-            'slug' => 'dashboard',
-            'post_type_support' => 'pp_dashboard',
-            'default_options' => array(
-                'enabled' => 'on',
+            'module_url'           => $this->module_url,
+            'img_url'              => $this->module_url . 'lib/dashboard_s128.png',
+            'slug'                 => 'dashboard',
+            'post_type_support'    => 'pp_dashboard',
+            'default_options'      => array(
+                'enabled'            => 'on',
                 'post_status_widget' => 'on',
-                'my_posts_widget' => 'on',
-                'notepad_widget' => 'on',
+                'my_posts_widget'    => 'on',
+                'notepad_widget'     => 'on',
             ),
-            'configure_page_cb' => 'print_configure_view',
+            'configure_page_cb'   => 'print_configure_view',
             'configure_link_text' => __('Widget Options', 'publishpress'),
         );
         $this->module = PublishPress()->register_module('dashboard', $args);
