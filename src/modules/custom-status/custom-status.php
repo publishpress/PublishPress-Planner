@@ -27,38 +27,38 @@ if (!class_exists('PP_Custom_Status')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title' => __('Custom Statuses', 'publishpress'),
-                'short_description' => __('Create custom post statuses to define the stages of your workflow.', 'publishpress'),
+                'title'                => __('Custom Statuses', 'publishpress'),
+                'short_description'    => __('Create custom post statuses to define the stages of your workflow.', 'publishpress'),
                 'extended_description' => __('Create your own post statuses to add structure your publishing workflow. You can change existing or add new ones anytime, and drag and drop to change their order.', 'publishpress'),
-                'module_url' => $this->module_url,
-                'img_url' => $this->module_url . 'lib/custom_status_s128.png',
-                'slug' => 'custom-status',
-                'default_options' => array(
-                    'enabled' => 'on',
-                    'default_status' => 'pitch',
+                'module_url'           => $this->module_url,
+                'img_url'              => $this->module_url . 'lib/custom_status_s128.png',
+                'slug'                 => 'custom-status',
+                'default_options'      => array(
+                    'enabled'              => 'on',
+                    'default_status'       => 'pitch',
                     'always_show_dropdown' => 'off',
-                    'post_types' => array(
+                    'post_types'           => array(
                         'post' => 'on',
                         'page' => 'on',
                     ),
                 ),
-                'post_type_support' => 'pp_custom_statuses', // This has been plural in all of our docs
-                'configure_page_cb' => 'print_configure_view',
+                'post_type_support'   => 'pp_custom_statuses', // This has been plural in all of our docs
+                'configure_page_cb'   => 'print_configure_view',
                 'configure_link_text' => __('Edit Statuses', 'publishpress'),
-                'messages' => array(
-                    'status-added' => __('Post status created.', 'publishpress'),
-                    'status-missing' => __("Post status doesn't exist.", 'publishpress'),
-                    'default-status-changed' => __('Default post status has been changed.', 'publishpress'),
-                    'term-updated' => __("Post status updated.", 'publishpress'),
-                    'status-deleted' => __('Post status deleted.', 'publishpress'),
+                'messages'            => array(
+                    'status-added'            => __('Post status created.', 'publishpress'),
+                    'status-missing'          => __("Post status doesn't exist.", 'publishpress'),
+                    'default-status-changed'  => __('Default post status has been changed.', 'publishpress'),
+                    'term-updated'            => __("Post status updated.", 'publishpress'),
+                    'status-deleted'          => __('Post status deleted.', 'publishpress'),
                     'status-position-updated' => __("Status order updated.", 'publishpress'),
                 ),
-                'autoload' => false,
+                'autoload'          => false,
                 'settings_help_tab' => array(
-                    'id' => 'pp-custom-status-overview',
-                    'title' => __('Overview', 'publishpress'),
+                    'id'      => 'pp-custom-status-overview',
+                    'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>', 'publishpress'),
-                    ),
+                ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
             );
             $this->module = PublishPress()->register_module('custom_status', $args);
