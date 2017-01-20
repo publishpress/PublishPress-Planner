@@ -273,7 +273,7 @@ if (!class_exists('PP_Settings')) {
                     }
                     echo '<div class="' . implode(' ', $classes) . '" id="' . $mod_data->slug . '">';
                     if (isset($mod_data->icon_class)) {
-                        echo '<span class="' . esc_url($mod_data->icon_class) . ' float-right module-icon"></span>';
+                        echo '<span class="' . esc_html($mod_data->icon_class) . ' float-right module-icon"></span>';
                     }
                     echo '<form method="get" action="' . get_admin_url(null, 'options.php') . '">';
                     echo '<h4>' . esc_html($mod_data->title) . '</h4>';

@@ -161,6 +161,12 @@
     float: right;
 }
 
+.publishpress-modules .module-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+}
+
 .credits {
     color: #666666;
     font-size: 11px;
