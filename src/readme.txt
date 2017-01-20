@@ -11,7 +11,7 @@ Empowering your publishing workflow.
 
 == Description ==
 
-Get the power to collaborate with your editorial team without leave WordPress.
+Get the power to collaborate with your editorial team without leaving WordPress.
 
 Current features:
 
