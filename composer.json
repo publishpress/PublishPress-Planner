@@ -1,15 +1,14 @@
 {
-    "name"       : "automattic/edit-flow",
-    "description": "WordPress plugin to accelerate your editorial workflow.",
-    "homepage"   : "http://editflow.org/",
+    "name"       : "pressshack/publishpress",
+    "description": "WordPress plugin to accelerate your publishing workflow.",
+    "homepage"   : "http://pressshack.com/",
     "type"       : "wordpress-plugin",
     "license"    : "GPL-2.0+",
-    "support"    : {
-            "issues": "https://github.com/Automattic/edit-flow/issues",
-            "forum": "https://wordpress.org/support/plugin/edit-flow",
-            "source": "https://github.com/Automattic/edit-flow"
-    },
     "require"    : {
-        "composer/installers": "~1.0"
+        "composer/installers": "~1.0",
+        "gettext/gettext": "^4.2"
+    },
+    "require-dev": {
+        "consolidation/robo": "^1.0"
     }
 }
