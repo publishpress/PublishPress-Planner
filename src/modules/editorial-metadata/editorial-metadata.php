@@ -1,24 +1,53 @@
 <?php
 /**
- * class PP_Editorial_Metadata
- * This class gives publishers arbitrary structured content details to go along with every post
+ * @package PublishPress
+ * @author PressShack
  *
- * @author sbressler, danielbachhuber
+ * Copyright (c) 2017 PressShack
  *
- * Ways to test and play with this class:
- * 1) Create a new term by selecting Editorial Metadata from the PublishPress settings
- * 2) Edit an existing term (slug, description, etc.)
- * 3) Create a post and assign metadata to it
- * 4) Look at the list of terms again - the count should go up!
- * 5) Play with adding more metadata to a post
- * 6) Clear the metadata for a single term in a post and watch the count go down!
- * 6) Delete a term and note the metadata disappears from posts
- * 7) Re-add the term (same slug) and the metadata returns!
+ * ------------------------------------------------------------------------------
+ * Based on Edit Flow
+ * Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, and
+ * others
+ * Copyright (c) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
+ * ------------------------------------------------------------------------------
  *
- * Improvements to make:
- * @todo Abstract the permissions check for management to class level
+ * This file is part of PublishPress
+ *
+ * PublishPress is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PublishPress is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 if (!class_exists('PP_Editorial_Metadata')) {
+    /**
+     * class PP_Editorial_Metadata
+     * This class gives publishers arbitrary structured content details to go along with every post
+     *
+     * @author sbressler, danielbachhuber
+     *
+     * Ways to test and play with this class:
+     * 1) Create a new term by selecting Editorial Metadata from the PublishPress settings
+     * 2) Edit an existing term (slug, description, etc.)
+     * 3) Create a post and assign metadata to it
+     * 4) Look at the list of terms again - the count should go up!
+     * 5) Play with adding more metadata to a post
+     * 6) Clear the metadata for a single term in a post and watch the count go down!
+     * 6) Delete a term and note the metadata disappears from posts
+     * 7) Re-add the term (same slug) and the metadata returns!
+     *
+     * Improvements to make:
+     * @todo Abstract the permissions check for management to class level
+     */
     class PP_Editorial_Metadata extends PP_Module
     {
 
