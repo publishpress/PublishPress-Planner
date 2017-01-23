@@ -9,6 +9,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Empowering your publishing workflow.
 
+PublishPress is based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
+
 == Description ==
 
 Get the power to collaborate with your editorial team without leaving WordPress.

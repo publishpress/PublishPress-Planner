@@ -13,3 +13,5 @@ Empowering your publishing workflow.
 ## Description
 
 Get the power to collaborate with your editorial team without leaving WordPress.
+
+PublishPress is based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
