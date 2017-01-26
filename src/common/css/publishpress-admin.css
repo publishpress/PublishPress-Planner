@@ -27,14 +27,11 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* Admin menu icon size */
-#adminmenu #toplevel_page_pp-settings .wp-menu-image img {
-    display: none !important;
-}
-
 #ui-datepicker-div {
     margin-top: 30px;
 }
+
+/* Admin icon */
 
 #toplevel_page_pp-settings .dashicons-before::before,
 #toplevel_page_pp-settings .wp-has-current-submenu .dashicons-before::before {

@@ -81,10 +81,7 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            // Select PublishPress icon
-            $pp_logo = 'lib/menu-icon.png';
-
-            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), $this->module->module_url . $pp_logo) ;
+            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller')) ;
 
             foreach ($publishpress->modules as $mod_name => $mod_data) {
                 if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on'
