@@ -28,11 +28,32 @@
  */
 
 /* Admin menu icon size */
-#adminmenu .toplevel_page_pp-settings .wp-menu-image img {
-    width: 16px;
-    height: 16px;
+#adminmenu #toplevel_page_pp-settings .wp-menu-image img {
+    display: none !important;
 }
 
 #ui-datepicker-div {
     margin-top: 30px;
+}
+
+#toplevel_page_pp-settings .dashicons-before::before,
+#toplevel_page_pp-settings .wp-has-current-submenu .dashicons-before::before {
+    background-image: url(../../modules/settings/lib/menu-icon.png);
+    background-repeat: no-repeat;
+    background-position: 0 8px;
+    background-size: 19px auto;
+    content: " ";
+    transition: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: none;
+}
+
+#toplevel_page_pp-settings:active .wp-not-current-submenu .dashicons-before::before,
+#toplevel_page_pp-settings:hover .wp-not-current-submenu .dashicons-before::before {
+    background-position: 0 -26px;
+}
+
+#toplevel_page_pp-settings .wp-has-current-submenu .dashicons-before::before {
+    background-position: 0 -60px;
 }
