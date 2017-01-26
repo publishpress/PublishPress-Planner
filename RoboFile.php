@@ -14,14 +14,14 @@ class RoboFile extends \Robo\Tasks
 
     const PACKAGE_PATH = 'package';
 
-    const PLUGIN_NAME = 'publishpress';
+    const PLUGIN_SLUG = 'publishpress';
 
     /**
      * Get the current version of the plugin
      */
     protected function getVersion()
     {
-        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PLUGIN_NAME . '.php');
+        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PLUGIN_SLUG . '.php');
 
         preg_match('/Version:\s*([0-9\.a-z]*)/i', $file, $matches);
 
@@ -51,7 +51,7 @@ class RoboFile extends \Robo\Tasks
         $this->say('Building the package');
 
         // Build the package
-        $filename = self::PLUGIN_NAME . '.zip';
+        $filename = self::PLUGIN_SLUG . '.zip';
         $packPath = self::PACKAGE_PATH . '/'. $filename;
         $pack     = $this->taskPack($packPath);
 
@@ -95,7 +95,7 @@ class RoboFile extends \Robo\Tasks
         $this->say('Building the package');
 
         // Build the package
-        $packPath = realpath(self::PACKAGE_PATH) . '/'. self::PLUGIN_NAME;
+        $packPath = realpath(self::PACKAGE_PATH) . '/'. self::PLUGIN_SLUG;
 
         if (is_dir($packPath)) {
             $this->_exec('rm -rf ' . $packPath);
@@ -113,7 +113,7 @@ class RoboFile extends \Robo\Tasks
             throw new RuntimeException('Invalid WordPress path');
         }
 
-        $dest = realpath($wordPressPath) . '/wp-content/plugins/' . self::PLUGIN_NAME;
+        $dest = realpath($wordPressPath) . '/wp-content/plugins/' . self::PLUGIN_SLUG;
         // Remove existent plugin directory
         if (is_dir($dest)) {
             $this->_exec('rm -rf ' . $dest);
