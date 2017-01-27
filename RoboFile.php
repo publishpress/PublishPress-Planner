@@ -76,11 +76,14 @@ class RoboFile extends \Robo\Tasks
                 throw new RuntimeException('Invalid destination path');
             }
 
-            rename(self::PACKAGE_PATH . '/' . $filename, realpath($destination) . '/' . $filename);
+            $destFile = realpath($destination) . '/' . $filename;
+
+            $this->say('Moving the new package to ' . $destFile);
+
+            rename(self::PACKAGE_PATH . '/' . $filename, $destFile);
         }
 
-        // if ($return->)
-        $this->say("Package built");
+        $this->say("Package built successfully");
 
         return $return;
     }
