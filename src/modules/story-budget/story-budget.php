@@ -76,6 +76,7 @@ class PP_Story_Budget extends PP_Module
             ),
             'configure_page_cb' => false,
             'autoload'          => false,
+            'add_menu' => true,
         );
         $this->module = PublishPress()->register_module('story_budget', $args);
     }

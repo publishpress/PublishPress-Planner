@@ -97,6 +97,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
+                'add_menu'              => true,
             );
             PublishPress()->register_module($this->module_name, $args);
         }

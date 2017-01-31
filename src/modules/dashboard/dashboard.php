@@ -69,6 +69,7 @@ if (!class_exists('PP_Dashboard')) {
             ),
             'configure_page_cb'   => 'print_configure_view',
             'configure_link_text' => __('Widget Options', 'publishpress'),
+            'options_page'        => true,
         );
         $this->module = PublishPress()->register_module('dashboard', $args);
     }
@@ -387,13 +388,10 @@ if (!class_exists('PP_Dashboard')) {
                     echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />';
             ?>
                 <p class="submit"><?php submit_button(null, 'primary', 'submit', false);
-            ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;
-            ?>"><?php _e('Back to PublishPress', 'publishpress');
-            ?></a></p>
+            ?></p>
             </form>
             <?php
 
         }
     }
 } // END - !class_exists('PP_Dashboard')
-

@@ -81,6 +81,7 @@ if (!class_exists('PP_Notifications')) {
                     'content' => __('<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, email notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/notifications/">Notifications Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
+                'add_menu' => true,
             );
             $this->module = PublishPress()->register_module('notifications', $args);
         }

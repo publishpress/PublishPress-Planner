@@ -93,7 +93,6 @@ class publishpress
      */
     private function load_modules()
     {
-
         // We use the WP_List_Table API for some of the table gen
         if (!class_exists('WP_List_Table')) {
             require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
