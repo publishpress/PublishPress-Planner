@@ -168,10 +168,7 @@ class RoboFile extends \Robo\Tasks
     {
         $moFile = str_replace('.po', '.mo', $poFile);
 
-        return $this->taskExec('msgfmt')
-                ->arg('-o' . $moFile)
-                ->arg($poFile)
-                ->run();
+        return $this->_exec('msgfmt --output-file=' . $moFile . ' ' . $poFile);
     }
 
     /**
