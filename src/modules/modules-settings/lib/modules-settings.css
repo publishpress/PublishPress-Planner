@@ -1,0 +1,54 @@
+#modules-wrapper {
+    padding-top: 20px;
+}
+
+#modules-wrapper .module-box {
+    padding: 10px;
+    line-height: 26px;
+    background: #fff;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    max-width: 265px;
+    border: 1px solid #e1e1e1;
+    position: relative;
+    float: left;
+    height: 80px;
+    min-width: 265px;
+}
+
+#modules-wrapper .module-box h4 {
+    max-width: 150px;
+    margin: 0;
+    position: absolute;
+    left: 35px;
+    top: 7px;
+}
+#modules-wrapper .module-box .enable-disable-publishpress-module {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    box-shadow: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BBB', endColorstr='#888');
+    text-shadow: none;
+    color: #f1f1f1;
+    border: solid 1px #bbb;
+    background: #b5b9bD;
+}
+
+#modules-wrapper .module-box.module-enabled .enable-disable-publishpress-module {
+    color: #f1f1f1;
+    border: solid 1px #666;
+    background: #655997;
+}
+
+#modules-wrapper .module-box .enable-disable-publishpress-module:hover {
+    color: #f1f1f1;
+    border: solid 1px #bbb;
+    background: #c5c9cD;
+}
+
+#modules-wrapper .module-box.module-enabled .enable-disable-publishpress-module:hover {
+    color: #fff;
+    border-color: #7569a7;
+    background: #7569a7;
+}

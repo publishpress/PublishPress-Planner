@@ -318,7 +318,7 @@ if (!class_exists('PP_Settings')) {
                         echo '<p>' . strip_tags($mod_data->short_description) . '</p>';
                     }
                     echo '<p class="publishpress-module-actions">';
-                    if ($mod_data->configure_page_cb) {
+                    if ($mod_data->configure_page_cb && (!isset($mod_data->show_configure_btn) || $mod_data->show_configure_btn === true)) {
                         $configure_url = add_query_arg('page', $mod_data->settings_slug, get_admin_url(null, 'admin.php'));
                         echo '<a href="' . $configure_url . '" class="configure-publishpress-module button button-primary';
                         if ($mod_data->options->enabled == 'off') {
@@ -326,16 +326,6 @@ if (!class_exists('PP_Settings')) {
                         }
                         echo '">' . $mod_data->configure_link_text . '</a>';
                     }
-                    echo '<input type="submit" class="button-primary button enable-disable-publishpress-module"';
-                    if ($mod_data->options->enabled == 'on') {
-                        echo ' style="display:none;"';
-                    }
-                    echo ' value="' . __('Enable', 'publishpress') . '" />';
-                    echo '<input type="submit" class="button-secondary button-remove button enable-disable-publishpress-module"';
-                    if ($mod_data->options->enabled == 'off') {
-                        echo ' style="display:none;"';
-                    }
-                    echo ' value="' . __('Disable', 'publishpress') . '" />';
                     echo '</p>';
                     wp_nonce_field('change-publishpress-module-nonce', 'change-module-nonce', false);
                     echo '</form>';
@@ -447,7 +437,7 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : 'pp-calendar-settings';
+            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : 'pp-modules-settings-settings';
             $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             if (empty($requested_module)) {
                 $requested_module = 'pp-calendar-settings';
@@ -496,7 +486,7 @@ if (!class_exists('PP_Settings')) {
                 <h2 class="nav-tab-wrapper">
                     <?php
                     foreach ($publishpress->modules as $mod_name => $mod_data) {
-                        if (!isset($mod_data->options_page) || $mod_data->options_page === false) {
+                        if (!isset($mod_data->options_page) || $mod_data->options_page === false || $mod_data->options->enabled !== 'on') {
                             continue;
                         }
                         ?>

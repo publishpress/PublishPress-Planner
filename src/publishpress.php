@@ -104,6 +104,7 @@ class publishpress
         // Scan the modules directory and include any modules that exist there
         // $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
         $module_dirs = array(
+            'modules-settings',
             'calendar',
             'editorial-metadata',
             'notifications',
