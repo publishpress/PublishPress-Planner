@@ -90,7 +90,6 @@ if (!class_exists('PP_Calendar')) {
                     'content' => __('<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/calendar/">Calendar Documentation</a></p><p><a href="http://wordpress.org/tags/publishpress?forum_id=10">PublishPress Forum</a></p><p><a href="https://github.com/danielbachhuber/Edit-Flow">PublishPress on Github</a></p>', 'publishpress'),
-                'add_menu'              => true,
                 'options_page'          => true,
             );
             $this->module = PublishPress()->register_module('calendar', $args);
