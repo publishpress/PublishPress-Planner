@@ -44,7 +44,7 @@ if (!class_exists('PP_Modules_Settings')) {
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('Modules', 'publishpress'),
-                'short_description'    => __('PublishPress redefines your WordPress publishing workflow.', 'publishpress'),
+                'short_description'    => __('PublishPress is the essential plugin for any WordPress site with multiple writers', 'publishpress'),
                 'extended_description' => __('Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress'),
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-comments',

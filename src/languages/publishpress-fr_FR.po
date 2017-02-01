@@ -1541,7 +1541,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: modules/settings/settings.php:19
-msgid "PublishPress redefines your WordPress publishing workflow."
+msgid "PublishPress is the essential plugin for any WordPress site with multiple writers."
 msgstr "PublishPress redéfini votre processus de publication WordPress."
 
 #: modules/settings/settings.php:20
