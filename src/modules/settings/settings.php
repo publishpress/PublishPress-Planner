@@ -233,16 +233,18 @@ if (!class_exists('PP_Settings')) {
                 <?php if ($current_module->name != 'settings'): ?>
                     <?php echo $page_icon; ?>
                     <h2>
-                        <a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;?>">
+                        <a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>">
                             <?php _e('PublishPress', 'publishpress') ?>
-                        </a>:&nbsp;<?php echo $current_module->title; ?>
+                        </a>:&nbsp;
+                        <?php echo $current_module->title; ?>
                         <?php if (isset($display_text)) {
                             echo $display_text;
-                        } ?>
+                        }?>
                     </h2>
                 <?php else: ?>
                     <?php echo $page_icon; ?>
-                    <h2><?php _e('PublishPress', 'publishpress') ?>
+                    <h2>
+                        <?php _e('PublishPress', 'publishpress') ?>
                         <?php if (isset($display_text)) {
                             echo $display_text;
                         } ?>
@@ -251,10 +253,11 @@ if (!class_exists('PP_Settings')) {
 
                 <div class="explanation">
                     <?php if ($current_module->short_description): ?>
-                    <h3><?php echo $current_module->short_description; ?></h3>
+                        <h3><?php echo $current_module->short_description; ?></h3>
                     <?php endif; ?>
+
                     <?php if ($current_module->extended_description): ?>
-                    <p><?php echo $current_module->extended_description; ?></p>
+                        <p><?php echo $current_module->extended_description; ?></p>
                     <?php endif; ?>
                 </div>
             <?php
@@ -271,7 +274,6 @@ if (!class_exists('PP_Settings')) {
             ?>
             </div>
             <?php
-
         }
 
         public function print_default_footer($current_module)
@@ -354,12 +356,10 @@ if (!class_exists('PP_Settings')) {
         {
             if (isset($_REQUEST['form-errors'][$field])): ?>
                 <div class="form-error">
-                    <p><?php echo esc_html($_REQUEST['form-errors'][$field]);
-            ?></p>
+                    <p><?php echo esc_html($_REQUEST['form-errors'][$field]); ?></p>
                 </div>
             <?php else: ?>
-                <p class="description"><?php echo esc_html($description);
-            ?></p>
+                <p class="description"><?php echo esc_html($description); ?></p>
             <?php endif;
         }
 
