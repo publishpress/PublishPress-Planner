@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+**1.0.3**
+Update language .mo files
+
 **1.0.2**
 Update plugin's description
 
