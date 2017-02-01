@@ -1,5 +1,17 @@
 ## Upgrade Notice
 
+== Changelog ==
+
+**1.0.2**
+Update plugin's description
+
+**1.0.1**
+Update plugin's description
+Update language strings
+
+**1.0.0**
+Initial release.
+
 **0.8.2**
 Minor enhancements and bug fixes, translation updates.
 
