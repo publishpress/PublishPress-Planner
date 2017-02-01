@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Empowering your publishing workflow.
+PublishPress is the essential plugin for any WordPress site with multiple writers.
 
 ## Description
 

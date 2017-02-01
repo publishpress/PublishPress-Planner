@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PublishPress
  * Plugin URI: https://pressshack.com/publishpress/
- * Description: Empowering your publishing workflow.
+ * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
  * Version: 1.0.0
