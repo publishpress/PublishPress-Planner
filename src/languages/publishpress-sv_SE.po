@@ -1679,17 +1679,6 @@ msgstr "PublishPress"
 msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr "PublishPress omdefinierar arbetsflödet med WordPress."
 
-#: ../modules/settings/settings.php:19
-msgid ""
-"Enable any of the features below to take control of your workflow. Custom "
-"statuses, email notifications, editorial comments, and more help you and your team "
-"save time so everyone can focus on what matters most: the content."
-msgstr ""
-"Aktivera någon av funktionerna nedan för att ta kontroll över ditt arbetsflöde. "
-"Anpassad status, epostmeddelanden, redaktionella kommentarer och mycket mer "
-"hjälper dig och ditt team spara tid så alla kan fokusera på det som betyder mest: "
-"innehållet."
-
 #: ../modules/settings/settings.php:138
 msgid "Not a registered PublishPress module"
 msgstr "Ej en registrerad Editflow-modul"

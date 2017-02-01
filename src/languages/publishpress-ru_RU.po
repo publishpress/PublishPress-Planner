@@ -1667,17 +1667,6 @@ msgstr ""
 "Плагин PublishPress позволяет по-новому организовать редакционно-издательскую "
 "работу в WordPress."
 
-#: modules/settings/settings.php:19
-msgid ""
-"Enable any of the features below to take control of your workflow. Custom "
-"statuses, email notifications, editorial comments, and more help you and your team "
-"save time so everyone can focus on what matters most: the content."
-msgstr ""
-"Для организации редакционного процесса подключайте любые функции из предложенных "
-"ниже. Настраиваемые статусы, уведомления по электронной почте, редакционные "
-"комментарии и другие возможности позволят вам и вашей команде сэкономить время и "
-"сосредоточиться на самом главном: на материалах (контенте)."
-
 #: modules/settings/settings.php:138
 msgid "Not a registered PublishPress module"
 msgstr "Это не зарегистрированный модуль PublishPress"

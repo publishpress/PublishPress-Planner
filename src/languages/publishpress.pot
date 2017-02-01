@@ -1542,13 +1542,6 @@ msgstr ""
 msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr ""
 
-#: modules/settings/settings.php:20
-msgid ""
-"Enable any of the features below to take control of your workflow. Custom "
-"statuses, email notifications, editorial comments, and more help you and your team "
-"save time so everyone can focus on what matters most: the content."
-msgstr ""
-
 #: modules/settings/settings.php:107 modules/settings/settings.php:397
 #: publishpress.php:266
 msgid "Cheatin&#8217; uh?"

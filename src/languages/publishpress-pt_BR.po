@@ -1443,10 +1443,6 @@ msgstr "PublishPress"
 msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr "PublishPress é o plugin essencial para qualquer site WordPress com multiplos escritores."
 
-#: modules/settings/settings.php:20
-msgid "Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content."
-msgstr "Habilite qualquer uma das características abaixo para ter o controle do seu fluxo de trabalho. Status customizados, notificações por email, comentários editoriais e mais, ajudarão você e sua equipe a poupar tempo, assim todos podem focar no que mais importa: o conteúdo."
-
 #: modules/settings/settings.php:139
 msgid "Not a registered PublishPress module"
 msgstr "Não é um módulo registrado do PublishPress"

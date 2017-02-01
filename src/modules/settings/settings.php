@@ -45,7 +45,7 @@ if (!class_exists('PP_Settings')) {
             $args             = array(
                 'title'                => __('PublishPress', 'publishpress'),
                 'short_description'    => __('PublishPress is the essential plugin for any site with multiple writers.', 'publishpress'),
-                'extended_description' => __('Enable any of the features below to take control of your workflow. Custom statuses, email notifications, editorial comments, and more help you and your team save time so everyone can focus on what matters most: the content.', 'publishpress'),
+                'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'settings',

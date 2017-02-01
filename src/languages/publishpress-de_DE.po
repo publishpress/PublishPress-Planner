@@ -1826,18 +1826,6 @@ msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr "PublishPress definiert deinen WordPress Veröffentlichungsworkflow neu."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
-#: wordpress\publishpress\0.7.1/modules/settings/settings.php:20
-msgid ""
-"Enable any of the features below to take control of your workflow. Custom "
-"statuses, email notifications, editorial comments, and more help you and your team "
-"save time so everyone can focus on what matters most: the content."
-msgstr ""
-"Aktiviere die untenstehenden Funktionen, um deinen Workflow zu steuern. "
-"Benutzerdefinierte Status, E-Mail Benachrichtigungen, redaktionelle Kommentare und "
-"mehr helfen deinem Team Zeit zu sparen. Jeder kann sich auf das Wichtigste "
-"konzentrieren: den Inhalt."
-
-#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/settings/settings.php:132
 msgid "Not a registered PublishPress module"
 msgstr "Kein registriertes PublishPress Modul"
