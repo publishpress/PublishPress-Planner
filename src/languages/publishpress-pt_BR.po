@@ -1440,7 +1440,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: modules/settings/settings.php:19
-msgid "PublishPress is the essential plugin for any WordPress site with multiple writers."
+msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr "PublishPress é o plugin essencial para qualquer site WordPress com multiplos escritores."
 
 #: modules/settings/settings.php:20

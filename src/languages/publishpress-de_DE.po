@@ -1822,7 +1822,7 @@ msgstr "PublishPress"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/settings/settings.php:19
-msgid "PublishPress is the essential plugin for any WordPress site with multiple writers."
+msgid "PublishPress is the essential plugin for any site with multiple writers."
 msgstr "PublishPress definiert deinen WordPress Veröffentlichungsworkflow neu."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin

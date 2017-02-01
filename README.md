@@ -8,7 +8,7 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is the essential plugin for any WordPress site with multiple writers.
+PublishPress is the essential plugin for any site with multiple writers: Content Calendar, Email Notifications, Custom Publishing Statuses and more.
 
 ## Description
 
