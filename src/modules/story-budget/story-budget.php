@@ -76,7 +76,8 @@ class PP_Story_Budget extends PP_Module
             ),
             'configure_page_cb' => false,
             'autoload'          => false,
-            'add_menu' => true,
+            'add_menu'          => true,
+            'page_link'         => admin_url('index.php?page=story-budget'),
         );
         $this->module = PublishPress()->register_module('story_budget', $args);
     }

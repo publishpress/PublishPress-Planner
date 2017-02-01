@@ -326,6 +326,13 @@ if (!class_exists('PP_Settings')) {
                         }
                         echo '">' . $mod_data->configure_link_text . '</a>';
                     }
+                    if ($mod_data->page_link) {
+                        echo '<a href="' . $mod_data->page_link . '" class="configure-publishpress-module button button-primary';
+                        if ($mod_data->options->enabled == 'off') {
+                            echo ' hidden" style="display:none;';
+                        }
+                        echo '">' . __('Open', 'publishpress') . '</a>';
+                    }
                     echo '</p>';
                     wp_nonce_field('change-publishpress-module-nonce', 'change-module-nonce', false);
                     echo '</form>';

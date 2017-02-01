@@ -74,7 +74,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:35
 #, php-format
-msgid "View upcoming content in a <a href=\"%s\">customizable calendar</a>."
+msgid "View upcoming content in View upcoming content in a customizable calendar."
 msgstr ""
 
 #: modules/calendar/calendar.php:36

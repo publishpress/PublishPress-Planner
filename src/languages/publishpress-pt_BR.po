@@ -96,8 +96,8 @@ msgid "Calendar"
 msgstr "Calendário"
 
 #: modules/calendar/calendar.php:33
-msgid "View upcoming content in a <a href=\"%s\">customizable calendar</a>."
-msgstr "Ver os próximos conteúdos em um <a href=\"%s\"> calendário personalizável </a>."
+msgid "View upcoming content in a customizable calendar."
+msgstr "Ver os próximos conteúdos em um calendário personalizável."
 
 #: modules/calendar/calendar.php:34
 msgid "PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date date."

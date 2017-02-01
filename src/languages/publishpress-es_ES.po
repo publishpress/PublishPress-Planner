@@ -95,9 +95,9 @@ msgid "Calendar"
 msgstr "Calendario"
 
 #: modules/calendar/calendar.php:33
-msgid "View upcoming content in a <a href=\"%s\">customizable calendar</a>."
+msgid "View upcoming content in a customizable calendar."
 msgstr ""
-"Vea los próximos contenidos en un <a href=\"%s\"> calendario personalizable </a>."
+"Vea los próximos contenidos en un calendario personalizable."
 
 #: modules/calendar/calendar.php:34
 msgid ""

@@ -100,9 +100,9 @@ msgstr "Inläggskalender"
 
 #: ../modules/calendar/calendar.php:35
 #, php-format
-msgid "View upcoming content in a <a href=\"%s\">customizable calendar</a>."
+msgid "View upcoming content in a customizable calendar."
 msgstr ""
-"Visa kommande innehåll i en <a href=\"%s\">anpassningsbar inläggskalender</a>."
+"Visa kommande innehåll i en anpassningsbar inläggskalender."
 
 #: ../modules/calendar/calendar.php:36
 msgid ""
