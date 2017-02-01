@@ -38,6 +38,11 @@ TARGET=$1
 
 cd $PUBLISHPRESS_GIT_DIR
 
+# Try to load local settings
+if [ -f local.sh ]; then
+	source local.sh
+fi
+
 # Make sure we don't have uncommitted changes.
 if [[ -n $( git status -s --porcelain ) ]]; then
 	echo "Uncommitted changes found."

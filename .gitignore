@@ -5,3 +5,4 @@ package
 !package/.gitkeep
 vendor
 composer.lock
+/local.sh
