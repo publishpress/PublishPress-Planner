@@ -32,7 +32,6 @@
 }
 
 /* Admin icon */
-
 #toplevel_page_pp-settings .dashicons-before::before,
 #toplevel_page_pp-settings .wp-has-current-submenu .dashicons-before::before {
     background-image: url(../../modules/settings/lib/menu-icon.png);

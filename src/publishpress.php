@@ -46,7 +46,6 @@ define('PUBLISHPRESS_SETTINGS_PAGE', add_query_arg('page', 'pp-settings', get_ad
 // Core class
 class publishpress
 {
-
     // Unique identified added as a prefix to all options
     public $options_group      = 'publishpress_';
     public $options_group_name = 'publishpress_options';
@@ -116,6 +115,7 @@ class publishpress
             'dashboard',
             'editorial-comments',
             'settings',
+            'efmigration',
         );
 
         $class_names = array();
