@@ -30,13 +30,15 @@
 
 require_once(ABSPATH . 'wp-admin/includes/ajax-actions.php');
 
-class WP_Test_PublishPress_Custom_Status_Ajax extends WP_PublishPress_Ajax_UnitTestCase {
+class WP_Test_PublishPress_Custom_Status_Ajax extends WP_PublishPress_Ajax_UnitTestCase
+{
 
     /**
      * A post with 'future' status should not have post_date_gmt
      * altered when an autosave occurs
      */
-    function test_autosave_post() {
+    public function test_autosave_post()
+    {
         $admin_user_id = $this->factory->user->create(array('role' => 'administrator'));
         // The original post_author
         wp_set_current_user($admin_user_id);
@@ -51,7 +53,7 @@ class WP_Test_PublishPress_Custom_Status_Ajax extends WP_PublishPress_Ajax_UnitT
             'post_title' => rand_str(),
             'post_date'  => $future_date,
             'post_date_gmt' => $future_date
-        ) );
+        ));
 
         // Set up the $_POST request
         $md5 = md5(uniqid());

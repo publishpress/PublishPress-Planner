@@ -32,7 +32,8 @@
  * PublishPress Ajax test cases
  */
 
-abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
+abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
+{
 
     /**
      * Last AJAX response.  This is set via echo -or- wp_die.
@@ -42,7 +43,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
     /**
      * Taken from testcase-ajax.php setUpBeforeClass function
      */
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass()
+    {
         if (! defined('DOING_AJAX')) {
             define('DOING_AJAX', true);
         }
@@ -60,7 +62,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
     /**
      * Taken from testcase-ajax.php setUp function
      */
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         add_filter('wp_die_ajax_handler', array($this, 'getDieHandler'), 1, 1);
@@ -78,7 +81,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
     /**
      * Taken from testcase-ajax.php tearDown function
      */
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
         $_POST = array();
         $_GET = array();
@@ -97,7 +101,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
      * it in $this->_last_response.
      * @param string $action
      */
-    protected function _handleAjax($action) {
+    protected function _handleAjax($action)
+    {
         // Start output buffering
         ini_set('implicit_flush', false);
         ob_start();
@@ -112,15 +117,17 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
 
         // Save the output
         $buffer = ob_get_clean();
-        if (!empty($buffer))
+        if (!empty($buffer)) {
             $this->_last_response = $buffer;
+        }
     }
 
     /**
      * Return our callback handler
      * @return callback
      */
-    public function getDieHandler() {
+    public function getDieHandler()
+    {
         return array($this, 'dieHandler');
     }
 
@@ -139,7 +146,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase {
      * </code>
      * @param string $message
      */
-    public function dieHandler($message) {
+    public function dieHandler($message)
+    {
         $this->_last_response .= ob_get_clean();
 
         if ('' === $this->_last_response) {

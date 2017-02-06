@@ -28,12 +28,14 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
+class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
+{
 
     protected static $admin_user_id;
     protected static $PP_Custom_Status;
 
-    public static function wpSetUpBeforeClass($factory) {
+    public static function wpSetUpBeforeClass($factory)
+    {
         self::$admin_user_id = $factory->user->create(array('role' => 'administrator'));
 
         self::$PP_Custom_Status = new PP_Custom_Status();
@@ -41,19 +43,22 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         self::$PP_Custom_Status->init();
     }
 
-    public static function wpTearDownAfterClass() {
+    public static function wpTearDownAfterClass()
+    {
         self::delete_user(self::$admin_user_id);
         self::$PP_Custom_Status = null;
     }
 
-    function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         global $pagenow;
         $pagenow = 'post.php';
     }
 
-    function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
 
         global $pagenow;
@@ -63,7 +68,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * Test that a published post post_date_gmt is not altered
      */
-    function test_insert_post_publish_respect_post_date_gmt() {
+    public function test_insert_post_publish_respect_post_date_gmt()
+    {
         $post = array(
             'post_author' => self::$admin_user_id,
             'post_status' => 'publish',
@@ -85,7 +91,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * Test that when post is published, post_date_gmt is set to post_date
      */
-    function test_insert_post_publish_post_date_set() {
+    public function test_insert_post_publish_post_date_set()
+    {
         $past_date = strftime("%Y-%m-%d %H:%M:%S", strtotime('-1 second'));
 
         $post = array(
@@ -111,7 +118,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * Test that post_date_gmt is unset when using 'draft' status
      */
-    function test_insert_post_draft_post_date_gmt_empty() {
+    public function test_insert_post_draft_post_date_gmt_empty()
+    {
         $post = array(
             'post_author' => self::$admin_user_id,
             'post_status' => 'draft',
@@ -134,7 +142,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * Test that post_date_gmt is unset when using 'pending' status
      */
-    function test_insert_post_pending_post_date_gmt_unset() {
+    public function test_insert_post_pending_post_date_gmt_unset()
+    {
         $post = array(
             'post_author' => self::$admin_user_id,
             'post_status' => 'pending',
@@ -156,7 +165,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * Test that post_date_gmt is unset when using 'pitch' status
      */
-    function test_insert_post_pitch_post_date_gmt_unset() {
+    public function test_insert_post_pitch_post_date_gmt_unset()
+    {
         $post = array(
             'post_author' => self::$admin_user_id,
             'post_status' => 'pitch',
@@ -180,7 +190,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
      * When a post_date is in the future check that post_date_gmt
      * is not set when the status is not 'future'
      */
-    function test_insert_scheduled_post_gmt_set() {
+    public function test_insert_scheduled_post_gmt_set()
+    {
         $future_date = strftime("%Y-%m-%d %H:%M:%S", strtotime('+1 day'));
 
         $post = array(
@@ -208,8 +219,9 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
     /**
      * A post with 'future' status should correctly set post_date_gmt from post_date
      */
-    function test_insert_draft_to_future_post_date_gmt_set() {
-        $future_date = strftime("%Y-%m-%d %H:%M:%S" , strtotime('+1 day'));
+    public function test_insert_draft_to_future_post_date_gmt_set()
+    {
+        $future_date = strftime("%Y-%m-%d %H:%M:%S", strtotime('+1 day'));
 
         $post = array(
             'post_author' => self::$admin_user_id,
@@ -232,7 +244,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $this->assertEquals($post['post_date'], $out->post_date);
     }
 
-    function test_fix_sample_permalink_html_on_pitch_when_pretty_permalinks_are_disabled() {
+    public function test_fix_sample_permalink_html_on_pitch_when_pretty_permalinks_are_disabled()
+    {
         global $pagenow;
         wp_set_current_user(self::$admin_user_id);
 
@@ -251,10 +264,10 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $preview_link = add_query_arg('preview', 'true', $preview_link);
 
         $this->assertContains('href="' . esc_url($preview_link) . '"', $found, $message);
-
     }
 
-    function test_fix_sample_permalink_html_on_pitch_when_pretty_permalinks_are_enabled() {
+    public function test_fix_sample_permalink_html_on_pitch_when_pretty_permalinks_are_enabled()
+    {
         global $pagenow;
 
         $this->set_permalink_structure('/%postname%/');
@@ -263,7 +276,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
             'post_status' => 'pending',
             'post_name' => 'baz-صورة',
             'post_author' => self::$admin_user_id
-        ) );
+        ));
 
         wp_set_current_user(self::$admin_user_id);
 
@@ -279,7 +292,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $this->assertContains('href="' . esc_url($preview_link) . '"', $found, $message);
     }
 
-    function test_fix_sample_permalink_html_on_publish_when_pretty_permalinks_are_enabled() {
+    public function test_fix_sample_permalink_html_on_publish_when_pretty_permalinks_are_enabled()
+    {
         $this->set_permalink_structure('/%postname%/');
 
         // Published posts should use published permalink
@@ -287,7 +301,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
             'post_status' => 'publish',
             'post_name' => 'foo-صورة',
             'post_author' => self::$admin_user_id
-        ) );
+        ));
 
         wp_set_current_user(self::$admin_user_id);
 
@@ -299,7 +313,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $this->assertContains('>new_slug-صورة<', $found, $message);
     }
 
-    public function test_fix_get_sample_permalink_should_respect_pitch_pages() {
+    public function test_fix_get_sample_permalink_should_respect_pitch_pages()
+    {
         $this->set_permalink_structure('/%postname%/');
 
         $page = self::factory()->post->create(array(
@@ -314,7 +329,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $this->assertSame('pitch-page', $actual[1]);
     }
 
-    public function test_fix_get_sample_permalink_should_respect_hierarchy_of_pitch_pages() {
+    public function test_fix_get_sample_permalink_should_respect_hierarchy_of_pitch_pages()
+    {
         $this->set_permalink_structure('/%postname%/');
 
         $parent = self::factory()->post->create(array(
@@ -323,7 +339,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
             'post_status' => 'publish',
             'post_author' => self::$admin_user_id,
             'post_name' => 'parent-page'
-        ) );
+        ));
 
         $child = self::factory()->post->create(array(
             'post_type'   => 'page',
@@ -331,7 +347,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
             'post_parent' => $parent,
             'post_status' => 'pitch',
             'post_author' => self::$admin_user_id,
-        ) );
+        ));
 
 
         $actual = get_sample_permalink($child);
@@ -339,7 +355,8 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase {
         $this->assertSame('child-page', $actual[1]);
     }
 
-    public function test_fix_get_sample_permalink_should_respect_hierarchy_of_publish_pages() {
+    public function test_fix_get_sample_permalink_should_respect_hierarchy_of_publish_pages()
+    {
         $this->set_permalink_structure('/%postname%/');
 
         $parent = self::factory()->post->create(array(

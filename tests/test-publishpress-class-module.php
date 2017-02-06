@@ -28,16 +28,19 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
+class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
+{
 
     protected static $admin_user_id;
     protected static $PublishPressModule;
 
-    public static function wpSetUpBeforeClass($factory) {
+    public static function wpSetUpBeforeClass($factory)
+    {
         self::$admin_user_id = $factory->user->create(array('role' => 'administrator'));
     }
 
-    function _flush_roles() {
+    public function _flush_roles()
+    {
         // we want to make sure we're testing against the db, not just in-memory data
         // this will flush everything and reload it from the db
         unset($GLOBALS['wp_user_roles']);
@@ -47,7 +50,8 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         }
     }
 
-    function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         self::$PublishPressModule = new PP_Module();
@@ -55,16 +59,18 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         $this->_flush_roles();
     }
 
-    function tearDown() {
+    public function tearDown()
+    {
         self::$PublishPressModule = null;
     }
 
-    function test_add_caps_to_role() {
+    public function test_add_caps_to_role()
+    {
         $usergroup_roles = array(
             'administrator' => array('edit_usergroups'),
         );
 
-        foreach($usergroup_roles as $role => $caps) {
+        foreach ($usergroup_roles as $role => $caps) {
             self::$PublishPressModule->add_caps_to_role($role, $caps);
         }
 
@@ -78,16 +84,18 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         $this->assertTrue($user->has_cap('edit_usergroups'), 'User did not have role edit_usergroups');
     }
 
-    function test_current_post_type_post_type_set() {
+    public function test_current_post_type_post_type_set()
+    {
         $_REQUEST['post_type'] = 'not-real';
 
         $this->assertEquals('not-real', self::$PublishPressModule->get_current_post_type());
     }
 
-    function test_current_post_type_post_screen() {
+    public function test_current_post_type_post_screen()
+    {
         set_current_screen('post.php');
 
-        $post_id = $this->factory->post->create(array (
+        $post_id = $this->factory->post->create(array(
             'post_author' => self::$admin_user_id
         ));
 
@@ -99,7 +107,8 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         set_current_screen('front');
     }
 
-    function test_current_post_type_edit_screen() {
+    public function test_current_post_type_edit_screen()
+    {
         set_current_screen('edit.php');
 
         $this->assertEquals('post', self::$PublishPressModule->get_current_post_type());
@@ -107,7 +116,8 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         set_current_screen('front');
     }
 
-    function test_current_post_type_custom_post_type() {
+    public function test_current_post_type_custom_post_type()
+    {
         register_post_type('content');
         set_current_screen('content');
 
@@ -117,7 +127,8 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase {
         set_current_screen('front');
     }
 
-    public static function wpTearDownAfterClass() {
+    public static function wpTearDownAfterClass()
+    {
         self::delete_user(self::$admin_user_id);
     }
 }

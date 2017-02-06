@@ -28,9 +28,11 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class WP_Test_PublishPress_Dashboard_Note extends WP_UnitTestCase {
+class WP_Test_PublishPress_Dashboard_Note extends WP_UnitTestCase
+{
 
-    function test_register_dashboard_note_post_type() {
+    public function test_register_dashboard_note_post_type()
+    {
         //As part of the Edit Flow initialziation process
         //PP_Dashboard_Notepad_Widget should have already
         //created the dashboard-note post type
@@ -50,5 +52,4 @@ class WP_Test_PublishPress_Dashboard_Note extends WP_UnitTestCase {
         $pobj = get_post_type_object('dashboard-note');
         $this->assertEquals('dashboard-note', $pobj->name);
     }
-
 }

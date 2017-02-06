@@ -33,22 +33,22 @@
  * @package wordpress-plugins-tests
  * @author mbijon
  */
-class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase {
+class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase
+{
 
     /**
      * Run a simple test to ensure that the tests are running
      */
-    function test_publishpress_exists() {
-
+    public function test_publishpress_exists()
+    {
         $this->assertTrue(class_exists('publishpress'));
-
     }
 
     /**
      * Verify a minimum version of WordPress is installed
      */
-    function test_wp_version() {
-
+    public function test_wp_version()
+    {
         $minimum_version = '3.4.0';
         $running_version = get_bloginfo('version');
 
@@ -61,21 +61,18 @@ class WP_Test_PublishPress_Starter_Tests extends WP_UnitTestCase {
         }
 
         $this->assertTrue(version_compare($running_version, $minimum_version, '>='));
-
     }
 
     /**
      * Test modules loading
      */
-    function test_publishpress_register_module() {
-
+    public function test_publishpress_register_module()
+    {
         $PublishPress = PublishPress();
 
         $module_real = strtolower('calendar');
-        $module_args = array ('title' => $module_real);
+        $module_args = array('title' => $module_real);
         $module_return = $PublishPress->register_module($module_real, $module_args);
         $this->assertTrue($module_real == $module_return->name);
-
     }
-
 }
