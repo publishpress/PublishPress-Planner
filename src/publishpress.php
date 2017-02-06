@@ -210,10 +210,9 @@ class publishpress
                     $this->$mod_name->upgrade($previous_version);
                 }
             }
-            update_option($this->options_group . 'version', PUBLISHPRESS_VERSION);
-        } elseif (!$previous_version) {
-            update_option($this->options_group . 'version', PUBLISHPRESS_VERSION);
         }
+
+        update_option($this->options_group . 'version', PUBLISHPRESS_VERSION);
 
         // For each module that's been loaded, auto-load data if it's never been run before
         foreach ($this->modules as $mod_name => $mod_data) {
