@@ -17,10 +17,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var StepRow = function (_React$Component) {
         _inherits(StepRow, _React$Component);
 
-        function StepRow(props) {
+        function StepRow() {
             _classCallCheck(this, StepRow);
 
-            return _possibleConstructorReturn(this, (StepRow.__proto__ || Object.getPrototypeOf(StepRow)).call(this, props));
+            return _possibleConstructorReturn(this, (StepRow.__proto__ || Object.getPrototypeOf(StepRow)).apply(this, arguments));
         }
 
         _createClass(StepRow, [{
@@ -70,10 +70,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var StepList = function (_React$Component3) {
         _inherits(StepList, _React$Component3);
 
-        function StepList(props) {
+        function StepList() {
             _classCallCheck(this, StepList);
 
-            return _possibleConstructorReturn(this, (StepList.__proto__ || Object.getPrototypeOf(StepList)).call(this, props));
+            return _possibleConstructorReturn(this, (StepList.__proto__ || Object.getPrototypeOf(StepList)).apply(this, arguments));
         }
 
         _createClass(StepList, [{
@@ -155,17 +155,31 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         function StepListContainer() {
             _classCallCheck(this, StepListContainer);
 
-            var _this4 = _possibleConstructorReturn(this, (StepListContainer.__proto__ || Object.getPrototypeOf(StepListContainer)).call(this));
+            return _possibleConstructorReturn(this, (StepListContainer.__proto__ || Object.getPrototypeOf(StepListContainer)).apply(this, arguments));
+        }
 
-            _this4.state = {
+        _createClass(StepListContainer, [{
+            key: 'render',
+            value: function render() {
+                return React.createElement(StepList, { steps: this.props.steps, finished: this.props.finished, errors: this.props.errors });
+            }
+        }]);
+
+        return StepListContainer;
+    }(React.Component);
+
+    var MigrationForm = function (_React$Component5) {
+        _inherits(MigrationForm, _React$Component5);
+
+        function MigrationForm() {
+            _classCallCheck(this, MigrationForm);
+
+            var _this5 = _possibleConstructorReturn(this, (MigrationForm.__proto__ || Object.getPrototypeOf(MigrationForm)).call(this));
+
+            _this5.state = {
                 steps: [{
                     key: 'options',
                     label: objectL10n.options,
-                    status: STEP_STATUS_IDLE,
-                    error: null
-                }, {
-                    key: 'taxonomy',
-                    label: objectL10n.taxonomy,
                     status: STEP_STATUS_IDLE,
                     error: null
                 }, {
@@ -178,67 +192,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 finished: false,
                 errors: []
             };
-            return _this4;
+
+            _this5.eventStartMigration = _this5.eventStartMigration.bind(_this5);
+            return _this5;
         }
 
-        _createClass(StepListContainer, [{
-            key: 'componentDidMount',
-            value: function componentDidMount() {
-                var _this5 = this;
-
-                setTimeout(function () {
-                    _this5.executeNextStep();
-                }, 700);
-            }
-        }, {
+        _createClass(MigrationForm, [{
             key: 'executeNextStep',
             value: function executeNextStep() {
                 var _this6 = this;
 
                 // Go to the next step index.
-                this.setState({ currentStepIndex: this.state.currentStepIndex + 1 });
+                this.setState({ currentStepIndex: this.state.currentStepIndex + 1 }, function () {
+                    // Check if we finished the step list to finish the process.
+                    if (_this6.state.currentStepIndex >= _this6.state.steps.length) {
+                        _this6.setState({ finished: true });
 
-                // Check if we finished the step list to finish the process.
-                if (this.state.currentStepIndex >= this.state.steps.length) {
-                    this.setState({ finished: true });
-
-                    return;
-                }
-
-                // We have a step. Lets execute it.
-                var currentStep = this.state.steps[this.state.currentStepIndex];
-
-                // Set status of step in progress
-                currentStep.status = STEP_STATUS_RUNNING;
-                this.updateStep(currentStep);
-
-                // Call the method to migrate and wait for the response
-                var data = {
-                    'action': 'pp_migrate_ef_data',
-                    'step': currentStep.key
-                };
-                $.post(ajaxurl, data, function (response) {
-                    var step = _this6.state.steps[_this6.state.currentStepIndex];
-
-                    if (typeof response.error === 'string') {
-                        // Error
-                        step.status = STEP_STATUS_ERROR;
-                        _this6.appendError('[' + step.key + '] ' + response.error);
-                    } else {
-                        // Success
-                        step.status = STEP_STATUS_SUCCESS;
+                        return;
                     }
 
-                    _this6.updateStep(step);
-                    _this6.executeNextStep();
-                }, 'json').error(function (response) {
-                    var step = _this6.state.steps[_this6.state.currentStepIndex];
+                    // We have a step. Lets execute it.
+                    var currentStep = _this6.state.steps[_this6.state.currentStepIndex];
 
-                    step.status = STEP_STATUS_ERROR;
-                    _this6.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+                    // Set status of step in progress
+                    currentStep.status = STEP_STATUS_RUNNING;
+                    _this6.updateStep(currentStep);
 
-                    _this6.updateStep(step);
-                    _this6.executeNextStep();
+                    // Call the method to migrate and wait for the response
+                    var data = {
+                        'action': 'pp_migrate_ef_data',
+                        'step': currentStep.key
+                    };
+                    $.post(ajaxurl, data, function (response) {
+                        var step = _this6.state.steps[_this6.state.currentStepIndex];
+
+                        if (typeof response.error === 'string') {
+                            // Error
+                            step.status = STEP_STATUS_ERROR;
+                            _this6.appendError('[' + step.key + '] ' + response.error);
+                        } else {
+                            // Success
+                            step.status = STEP_STATUS_SUCCESS;
+                        }
+
+                        _this6.updateStep(step);
+                        _this6.executeNextStep();
+                    }, 'json').error(function (response) {
+                        var step = _this6.state.steps[_this6.state.currentStepIndex];
+
+                        step.status = STEP_STATUS_ERROR;
+                        _this6.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+
+                        _this6.updateStep(step);
+                        _this6.executeNextStep();
+                    });
                 });
             }
         }, {
@@ -261,14 +268,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ errors: errors });
             }
         }, {
+            key: 'eventStartMigration',
+            value: function eventStartMigration() {
+                this.executeNextStep();
+            }
+        }, {
             key: 'render',
             value: function render() {
-                return React.createElement(StepList, { steps: this.state.steps, finished: this.state.finished, errors: this.state.errors });
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'div',
+                        { className: 'updated' },
+                        React.createElement(
+                            'p',
+                            null,
+                            objectL10n.migration_warning
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        null,
+                        this.state.currentStepIndex === -1 && React.createElement(
+                            'button',
+                            { onClick: this.eventStartMigration, className: 'button button-primary' },
+                            objectL10n.start_migration
+                        ) || React.createElement(StepListContainer, { steps: this.state.steps, finished: this.state.finished, errors: this.state.errors })
+                    )
+                );
             }
         }]);
 
-        return StepListContainer;
+        return MigrationForm;
     }(React.Component);
 
-    ReactDOM.render(React.createElement(StepListContainer, null), document.getElementById('pp-content'));
+    ReactDOM.render(React.createElement(MigrationForm, null), document.getElementById('pp-content'));
 })(jQuery, React, ReactDOM);
