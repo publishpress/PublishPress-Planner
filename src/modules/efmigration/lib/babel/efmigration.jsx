@@ -24,7 +24,9 @@
     class ErrorRow extends React.Component {
         render() {
             return (
-                <li>{this.props.msg}</li>
+                <div className="error">
+                    <p>{this.props.msg}</p>
+                </div>
             )
         }
     }
@@ -71,9 +73,9 @@
                     &&
                         <div className="pp-errors">
                             <h2>{objectL10n.error}</h2>
-                            <ul>
+                            <div>
                                 {errorRows}
-                            </ul>
+                            </div>
                             <p>{objectL10n.error_msg_intro} <a href="mailto:help@pressshack.com">{objectL10n.error_msg_contact}</a></p>
                         </div>
                     }
@@ -101,8 +103,8 @@
                         error: null
                     },
                     {
-                        key: 'user-meta',
-                        label: objectL10n.user_meta,
+                        key: 'usermeta',
+                        label: objectL10n.usermeta,
                         status: STEP_STATUS_IDLE,
                         error: null
                     },
@@ -159,7 +161,16 @@
 
                 this.updateStep(step);
                 this.executeNextStep();
-            }, 'json');
+            }, 'json')
+            .error((response) => {
+                var step = this.state.steps[this.state.currentStepIndex];
+
+                step.status = STEP_STATUS_ERROR;
+                this.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+
+                this.updateStep(step);
+                this.executeNextStep();
+            });
         }
 
         updateStep(newStep) {
