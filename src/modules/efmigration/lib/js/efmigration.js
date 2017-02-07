@@ -53,9 +53,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'render',
             value: function render() {
                 return React.createElement(
-                    'li',
-                    null,
-                    this.props.msg
+                    'div',
+                    { className: 'error' },
+                    React.createElement(
+                        'p',
+                        null,
+                        this.props.msg
+                    )
                 );
             }
         }]);
@@ -122,7 +126,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             objectL10n.error
                         ),
                         React.createElement(
-                            'ul',
+                            'div',
                             null,
                             errorRows
                         ),
@@ -227,7 +231,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                     _this6.updateStep(step);
                     _this6.executeNextStep();
-                }, 'json');
+                }, 'json').error(function (response) {
+                    var step = _this6.state.steps[_this6.state.currentStepIndex];
+
+                    step.status = STEP_STATUS_ERROR;
+                    _this6.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+
+                    _this6.updateStep(step);
+                    _this6.executeNextStep();
+                });
             }
         }, {
             key: 'updateStep',
