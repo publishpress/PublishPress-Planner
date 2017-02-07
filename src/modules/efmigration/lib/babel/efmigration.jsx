@@ -114,7 +114,14 @@
             this.setState({currentStepIndex: this.state.currentStepIndex + 1}, () => {
                 // Check if we finished the step list to finish the process.
                 if (this.state.currentStepIndex >= this.state.steps.length) {
-                    this.setState({finished: true});
+
+                    const data = {
+                        'action': 'pp_finish_migration'
+                    };
+
+                    $.post(ajaxurl, data, (response) => {
+                        this.setState({finished: true});
+                    });
 
                     return;
                 }

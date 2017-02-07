@@ -206,7 +206,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 this.setState({ currentStepIndex: this.state.currentStepIndex + 1 }, function () {
                     // Check if we finished the step list to finish the process.
                     if (_this6.state.currentStepIndex >= _this6.state.steps.length) {
-                        _this6.setState({ finished: true });
+
+                        var _data = {
+                            'action': 'pp_finish_migration'
+                        };
+
+                        $.post(ajaxurl, _data, function (response) {
+                            _this6.setState({ finished: true });
+                        });
 
                         return;
                     }

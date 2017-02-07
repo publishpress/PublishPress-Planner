@@ -81,6 +81,7 @@ if (!class_exists('PP_Efmigration')) {
             add_action('admin_notices', array($this, 'action_admin_notice'));
             add_action('admin_init', array($this, 'action_editflow_migrate'));
             add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
+            add_action('wp_ajax_pp_finish_migration', array($this, 'migrate_date_finish'));
 
             if (isset($_GET['page']) && $_GET['page'] === 'pp-efmigration') {
                 add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -230,10 +231,7 @@ if (!class_exists('PP_Efmigration')) {
                     if (isset($_GET[self::EDITFLOW_MIGRATION_URL_FLAG])) {
                         $migrate = (bool)$_GET[self::EDITFLOW_MIGRATION_URL_FLAG];
                         if (!$migrate) {
-                            add_site_option(self::DISSMISS_MIGRATION_OPTION, 1);
-                        } else {
-                            // Migrate Options
-                            // add_site_option(self::DISSMISS_MIGRATION_OPTION, 1);
+                            update_site_option(self::DISSMISS_MIGRATION_OPTION, 1, true);
                         }
                     }
                 }
@@ -272,7 +270,7 @@ if (!class_exists('PP_Efmigration')) {
          */
         protected function migrate_data_options()
         {
-            if (!get_option('publishpress_efmigration_migrated_options', false)) {
+            if (!get_site_option('publishpress_efmigration_migrated_options', false)) {
                 $optionsToMigrate = array(
                     'calendar_options',
                     'custom_status_options',
@@ -292,7 +290,7 @@ if (!class_exists('PP_Efmigration')) {
                     update_option('publishpress_' . $option, $efOption, true);
                 }
 
-                update_option('publishpress_efmigration_migrated_options', 1, true);
+                update_site_option('publishpress_efmigration_migrated_options', 1, true);
             }
         }
 
@@ -300,7 +298,7 @@ if (!class_exists('PP_Efmigration')) {
         {
             global $wpdb;
 
-            if (!get_option('publishpress_efmigration_migrated_usermeta', false)) {
+            if (!get_site_option('publishpress_efmigration_migrated_usermeta', false)) {
                 // Remove PublishPress data
                 $data = $wpdb->get_results(
                     "
@@ -317,8 +315,15 @@ if (!class_exists('PP_Efmigration')) {
                     }
                 }
 
-                update_option('publishpress_efmigration_migrated_usermeta', 1, true);
+                update_site_option('publishpress_efmigration_migrated_usermeta', 1, true);
             }
+        }
+
+        public function migrate_date_finish()
+        {
+            update_site_option(self::DISSMISS_MIGRATION_OPTION, 1, true);
+
+            wp_die();
         }
     }
 }
