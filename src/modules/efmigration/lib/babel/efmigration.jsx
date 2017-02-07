@@ -5,10 +5,6 @@
     const STEP_STATUS_ERROR = 'error';
 
     class StepRow extends React.Component {
-        constructor(props) {
-            super(props);
-        }
-
         render() {
             const id = 'pp-step-' + this.props.name;
             const className = 'pp-status-' + this.props.status;
@@ -32,10 +28,6 @@
     }
 
     class StepList extends React.Component {
-        constructor(props) {
-            super(props);
-        }
-
         render() {
             const finished   = this.props.finished;
             const steps      = this.props.steps;
@@ -85,6 +77,12 @@
     }
 
     class StepListContainer extends React.Component {
+        render() {
+            return <StepList steps={this.props.steps} finished={this.props.finished} errors={this.props.errors} />;
+        }
+    }
+
+    class MigrationForm extends React.Component {
         constructor() {
             super();
 
@@ -107,63 +105,56 @@
                 finished: false,
                 errors: [],
             };
-        }
 
-        componentDidMount() {
-            setTimeout(
-                () => {
-                    this.executeNextStep();
-                },
-                700
-            );
+            this.eventStartMigration = this.eventStartMigration.bind(this);
         }
 
         executeNextStep() {
             // Go to the next step index.
-            this.setState({currentStepIndex: this.state.currentStepIndex + 1});
+            this.setState({currentStepIndex: this.state.currentStepIndex + 1}, () => {
+                // Check if we finished the step list to finish the process.
+                if (this.state.currentStepIndex >= this.state.steps.length) {
+                    this.setState({finished: true});
 
-            // Check if we finished the step list to finish the process.
-            if (this.state.currentStepIndex >= this.state.steps.length) {
-                this.setState({finished: true});
-
-                return;
-            }
-
-            // We have a step. Lets execute it.
-            var currentStep = this.state.steps[this.state.currentStepIndex];
-
-            // Set status of step in progress
-            currentStep.status = STEP_STATUS_RUNNING;
-            this.updateStep(currentStep);
-
-            // Call the method to migrate and wait for the response
-            const data = {
-                'action': 'pp_migrate_ef_data',
-                'step': currentStep.key
-            };
-            $.post(ajaxurl, data, (response) => {
-                var step = this.state.steps[this.state.currentStepIndex];
-
-                if (typeof response.error === 'string') {
-                    // Error
-                    step.status = STEP_STATUS_ERROR;
-                    this.appendError('[' + step.key + '] ' + response.error);
-                } else {
-                    // Success
-                    step.status = STEP_STATUS_SUCCESS;
+                    return;
                 }
 
-                this.updateStep(step);
-                this.executeNextStep();
-            }, 'json')
-            .error((response) => {
-                var step = this.state.steps[this.state.currentStepIndex];
+                // We have a step. Lets execute it.
+                var currentStep = this.state.steps[this.state.currentStepIndex];
 
-                step.status = STEP_STATUS_ERROR;
-                this.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+                // Set status of step in progress
+                currentStep.status = STEP_STATUS_RUNNING;
+                this.updateStep(currentStep);
 
-                this.updateStep(step);
-                this.executeNextStep();
+                // Call the method to migrate and wait for the response
+                const data = {
+                    'action': 'pp_migrate_ef_data',
+                    'step': currentStep.key
+                };
+                $.post(ajaxurl, data, (response) => {
+                    var step = this.state.steps[this.state.currentStepIndex];
+
+                    if (typeof response.error === 'string') {
+                        // Error
+                        step.status = STEP_STATUS_ERROR;
+                        this.appendError('[' + step.key + '] ' + response.error);
+                    } else {
+                        // Success
+                        step.status = STEP_STATUS_SUCCESS;
+                    }
+
+                    this.updateStep(step);
+                    this.executeNextStep();
+                }, 'json')
+                .error((response) => {
+                    var step = this.state.steps[this.state.currentStepIndex];
+
+                    step.status = STEP_STATUS_ERROR;
+                    this.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+
+                    this.updateStep(step);
+                    this.executeNextStep();
+                });
             });
         }
 
@@ -184,10 +175,25 @@
             this.setState({errors: errors});
         }
 
+        eventStartMigration() {
+            this.executeNextStep();
+        }
+
         render() {
-            return <StepList steps={this.state.steps} finished={this.state.finished} errors={this.state.errors} />;
+            return (
+                <div>
+                    <div className="update">{objectL10n.migration_warning}</div>
+
+                    {this.state.currentStepIndex === -1
+                    &&
+                        <button onClick={this.eventStartMigration}>{objectL10n.start_migration}</button>
+                    ||
+                        <StepListContainer steps={this.state.steps} finished={this.state.finished} errors={this.state.errors} />
+                    }
+                </div>
+            );
         }
     }
 
-    ReactDOM.render(<StepListContainer />, document.getElementById('pp-content'));
+    ReactDOM.render(<MigrationForm />, document.getElementById('pp-content'));
 })(jQuery, React, ReactDOM);

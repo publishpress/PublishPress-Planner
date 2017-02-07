@@ -122,6 +122,8 @@ if (!class_exists('PP_Efmigration')) {
             wp_enqueue_script('pp-efmigration', $this->module_url . 'lib/js/efmigration.js', array('pp-reactjs', 'pp-reactjs-dom'), PUBLISHPRESS_VERSION, true);
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
+                'migration_warning' => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', 'publishpress'),
+                'start_migration'   => esc_html__('Start the migration', 'publishpress'),
                 'options'           => esc_html__('Options', 'publishpress'),
                 'usermeta'          => esc_html__('User Meta-data', 'publishpress'),
                 'success_msg'       => esc_html__('Finished', 'publishpress'),
