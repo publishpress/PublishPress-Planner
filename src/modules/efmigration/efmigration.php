@@ -117,10 +117,7 @@ if (!class_exists('PP_Efmigration')) {
          */
         public function enqueue_admin_scripts()
         {
-            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react-with-addons.min.js', array(), PUBLISHPRESS_VERSION, true);
-            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react-with-addons.js', array(), PUBLISHPRESS_VERSION, true);
-            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.min.js', array(), PUBLISHPRESS_VERSION, true);
-            wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.js', array(), PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.min.js', array(), PUBLISHPRESS_VERSION, true);
             wp_enqueue_script('pp-reactjs-dom', $this->module_url . 'lib/js/react-dom.min.js', array('pp-reactjs'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_script('pp-efmigration', $this->module_url . 'lib/js/efmigration.js', array('pp-reactjs', 'pp-reactjs-dom'), PUBLISHPRESS_VERSION, true);
 
