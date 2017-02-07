@@ -182,14 +182,18 @@
         render() {
             return (
                 <div>
-                    <div className="update">{objectL10n.migration_warning}</div>
+                    <div className="updated">
+                        <p>{objectL10n.migration_warning}</p>
+                    </div>
 
-                    {this.state.currentStepIndex === -1
-                    &&
-                        <button onClick={this.eventStartMigration}>{objectL10n.start_migration}</button>
-                    ||
-                        <StepListContainer steps={this.state.steps} finished={this.state.finished} errors={this.state.errors} />
-                    }
+                    <div>
+                        {this.state.currentStepIndex === -1
+                        &&
+                            <button onClick={this.eventStartMigration} className="button button-primary">{objectL10n.start_migration}</button>
+                        ||
+                            <StepListContainer steps={this.state.steps} finished={this.state.finished} errors={this.state.errors} />
+                        }
+                    </div>
                 </div>
             );
         }
