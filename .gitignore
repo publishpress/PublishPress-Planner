@@ -6,3 +6,4 @@ package
 vendor
 composer.lock
 /local.sh
+node_modules
