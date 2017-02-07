@@ -271,26 +271,29 @@ if (!class_exists('PP_Efmigration')) {
          */
         protected function migrate_data_options()
         {
-            $optionsToMigrate = array(
-                'calendar_options',
-                'custom_status_options',
-                'dashboard_options',
-                'editorial_comments_options',
-                'editorial_metadata_options',
-                'notifications_options',
-                'settings_options',
-                'story_budget_options',
-                'user_groups_options'
-            );
+            if (!get_option('publishpress_efmigration_migrated_options', false)) {
+                $optionsToMigrate = array(
+                    'calendar_options',
+                    'custom_status_options',
+                    'dashboard_options',
+                    'editorial_comments_options',
+                    'editorial_metadata_options',
+                    'notifications_options',
+                    'settings_options',
+                    'story_budget_options',
+                    'user_groups_options'
+                );
 
-            foreach ($optionsToMigrate as $option) {
-                $efOption = get_option('edit_flow_' . $option);
+                foreach ($optionsToMigrate as $option) {
+                    $efOption = get_option('edit_flow_' . $option);
 
-                // Update the current publishpress settings
-                update_option('publishpress_' . $option, $efOption, true);
+                    // Update the current publishpress settings
+                    update_option('publishpress_' . $option, $efOption, true);
+                }
+
+                update_option('publishpress_efmigration_migrated_options', 1, true);
             }
 
-            update_option('publishpress_efmigration_migrated_options', 1, true);
         }
     }
 }
