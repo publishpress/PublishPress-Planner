@@ -81,8 +81,10 @@ if (!class_exists('PP_Efmigration')) {
             add_action('admin_notices', array($this, 'action_admin_notice'));
             add_action('admin_init', array($this, 'action_editflow_migrate'));
 
-            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-            add_action( 'admin_print_styles', array( $this, 'enqueue_admin_styles' ) );
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+            add_action('admin_print_styles', array($this, 'enqueue_admin_styles'));
+
+            add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
         }
 
         /**
@@ -114,15 +116,22 @@ if (!class_exists('PP_Efmigration')) {
          */
         public function enqueue_admin_scripts()
         {
-            wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.min.js', array(), PUBLISHPRESS_VERSION, true);
+            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react-with-addons.min.js', array(), PUBLISHPRESS_VERSION, true);
+            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react-with-addons.js', array(), PUBLISHPRESS_VERSION, true);
+            // wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.min.js', array(), PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script('pp-reactjs', $this->module_url . 'lib/js/react.js', array(), PUBLISHPRESS_VERSION, true);
             wp_enqueue_script('pp-reactjs-dom', $this->module_url . 'lib/js/react-dom.min.js', array('pp-reactjs'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_script('pp-efmigration', $this->module_url . 'lib/js/efmigration.js', array('pp-reactjs', 'pp-reactjs-dom'), PUBLISHPRESS_VERSION, true);
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
-                'options'     => esc_html__('Options', 'publishpress'),
-                'taxonomy'    => esc_html__('Taxonomy', 'publishpress'),
-                'user_meta'   => esc_html__('User Meta-data', 'publishpress'),
-                'success_msg' => esc_html__('Finished', 'publishpress')
+                'options'           => esc_html__('Options', 'publishpress'),
+                'taxonomy'          => esc_html__('Taxonomy', 'publishpress'),
+                'user_meta'         => esc_html__('User Meta-data', 'publishpress'),
+                'success_msg'       => esc_html__('Finished', 'publishpress'),
+                'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', 'publishpress'),
+                'error'             => esc_html__('Error', 'publishpress'),
+                'error_msg_intro'   => esc_html__('If needed, feel free to', 'publishpress'),
+                'error_msg_contact' => esc_html__('contact the support team', 'publishpress'),
             ));
         }
 
@@ -151,7 +160,6 @@ if (!class_exists('PP_Efmigration')) {
                     <?php _e('PublishPress', 'publishpress'); ?>:&nbsp;
                     <?php _e('Edit Flow Data Migration'); ?>
                 </h2>
-                <p>Please, wait while we migrate your legacy data...</p>
                 <div id="pp-content"></div>
             </div>
             <?php
@@ -231,6 +239,23 @@ if (!class_exists('PP_Efmigration')) {
                     }
                 }
             }
+        }
+
+        public function migrate_data()
+        {
+            $allowedSteps = array('options', 'taxonomy', 'user-meta');
+            $result       = (object)array(
+                'error' => false,
+            );
+
+            // Get and validate the step
+            $step = $_POST['step'];
+            if (!in_array($step, $allowedSteps)) {
+                $result->error = __('Unknown step', 'publishpress');
+            }
+
+            echo json_encode($result);
+            wp_die();
         }
     }
 }
