@@ -240,7 +240,7 @@ if (!class_exists('PP_Efmigration')) {
 
         public function migrate_data()
         {
-            $allowedSteps = array('options', 'user-meta');
+            $allowedSteps = array('options', 'usermeta');
             $result       = (object)array(
                 'error' => false,
                 'output' => ''
@@ -291,6 +291,31 @@ if (!class_exists('PP_Efmigration')) {
                 }
 
                 update_option('publishpress_efmigration_migrated_options', 1, true);
+            }
+        }
+
+        protected function migrate_data_usermeta()
+        {
+            global $wpdb;
+
+            if (!get_option('publishpress_efmigration_migrated_usermeta', false)) {
+                // Remove PublishPress data
+                $data = $wpdb->get_results(
+                    "
+                    SELECT user_id, meta_key, meta_value
+                    FROM {$wpdb->usermeta}
+                    WHERE meta_key LIKE \"ef_%\"
+                    "
+                );
+
+                if (!empty($data)) {
+                    foreach ($data as $meta) {
+                        $key = preg_replace('/^ef_/', 'pp_', $meta->meta_key);
+                        update_user_meta($meta->user_id, $key, $meta->meta_value);
+                    }
+                }
+
+                update_option('publishpress_efmigration_migrated_usermeta', 1, true);
             }
         }
     }
