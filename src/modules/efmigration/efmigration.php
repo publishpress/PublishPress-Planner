@@ -80,11 +80,12 @@ if (!class_exists('PP_Efmigration')) {
             add_action('admin_menu', array($this, 'action_register_page'));
             add_action('admin_notices', array($this, 'action_admin_notice'));
             add_action('admin_init', array($this, 'action_editflow_migrate'));
-
-            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-            add_action('admin_print_styles', array($this, 'enqueue_admin_styles'));
-
             add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
+
+            if (isset($_GET['page']) && $_GET['page'] === 'pp-efmigration') {
+                add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+                add_action('admin_print_styles', array($this, 'enqueue_admin_styles'));
+            }
         }
 
         /**
