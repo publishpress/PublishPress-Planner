@@ -123,7 +123,6 @@ if (!class_exists('PP_Efmigration')) {
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
                 'options'           => esc_html__('Options', 'publishpress'),
-                'taxonomy'          => esc_html__('Taxonomy', 'publishpress'),
                 'usermeta'          => esc_html__('User Meta-data', 'publishpress'),
                 'success_msg'       => esc_html__('Finished', 'publishpress'),
                 'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', 'publishpress'),
@@ -241,7 +240,7 @@ if (!class_exists('PP_Efmigration')) {
 
         public function migrate_data()
         {
-            $allowedSteps = array('options', 'taxonomy', 'user-meta');
+            $allowedSteps = array('options', 'user-meta');
             $result       = (object)array(
                 'error' => false,
                 'output' => ''
@@ -293,7 +292,6 @@ if (!class_exists('PP_Efmigration')) {
 
                 update_option('publishpress_efmigration_migrated_options', 1, true);
             }
-
         }
     }
 }

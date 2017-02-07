@@ -97,12 +97,6 @@
                         error: null
                     },
                     {
-                        key: 'taxonomy',
-                        label: objectL10n.taxonomy,
-                        status: STEP_STATUS_IDLE,
-                        error: null
-                    },
-                    {
                         key: 'usermeta',
                         label: objectL10n.usermeta,
                         status: STEP_STATUS_IDLE,
