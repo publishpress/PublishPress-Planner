@@ -124,7 +124,7 @@ if (!class_exists('PP_Efmigration')) {
             wp_localize_script('pp-efmigration', 'objectL10n', array(
                 'options'           => esc_html__('Options', 'publishpress'),
                 'taxonomy'          => esc_html__('Taxonomy', 'publishpress'),
-                'user_meta'         => esc_html__('User Meta-data', 'publishpress'),
+                'usermeta'          => esc_html__('User Meta-data', 'publishpress'),
                 'success_msg'       => esc_html__('Finished', 'publishpress'),
                 'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', 'publishpress'),
                 'error'             => esc_html__('Error', 'publishpress'),

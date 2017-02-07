@@ -165,8 +165,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     status: STEP_STATUS_IDLE,
                     error: null
                 }, {
-                    key: 'user-meta',
-                    label: objectL10n.user_meta,
+                    key: 'usermeta',
+                    label: objectL10n.usermeta,
                     status: STEP_STATUS_IDLE,
                     error: null
                 }],
