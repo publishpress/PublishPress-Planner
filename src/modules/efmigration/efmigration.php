@@ -35,9 +35,13 @@
 if (!class_exists('PP_Efmigration')) {
     class PP_Efmigration extends PP_Module
     {
-        const DISSMISS_MIGRATION_OPTION = 'publishpress_dismiss_migration';
-        const EDITFLOW_MIGRATION_URL_FLAG = 'publishpress_import_editflow';
-        const PAGE_SLUG = 'pp-efmigration';
+        const OPTION_PREFIX               = 'publishpress_';
+        const OPTION_DISMISS_MIGRATION    = self::OPTION_PREFIX . 'dismiss_migration';
+        const OPTION_MIGRATED_OPTIONS     = self::OPTION_PREFIX . 'efmigration_migrated_options';
+        const OPTION_MIGRATED_USERMETA    = self::OPTION_PREFIX . 'efmigration_migrated_usermeta';
+        const EDITFLOW_MIGRATION_URL_FLAG = self::OPTION_PREFIX . '_import_editflow';
+        const PAGE_SLUG                   = 'pp-efmigration';
+        const PLUGIN_NAMESPACE            = self::PLUGIN_NAMESPACE;
 
         public $module;
 
@@ -52,12 +56,12 @@ if (!class_exists('PP_Efmigration')) {
 
             // Register the User Groups module with PublishPress
             $args = array(
-                'title'             => __('Edit Flow Migration', 'publishpress'),
-                'short_description' => __('Migrate data from Edit Flow into PublishPress', 'publishpress'),
+                'title'             => __('Edit Flow Migration', self::PLUGIN_NAMESPACE),
+                'short_description' => __('Migrate data from Edit Flow into PublishPress', self::PLUGIN_NAMESPACE),
                 'module_url'        => $this->module_url,
                 'icon_class'        => 'dashicons dashicons-groups',
                 'slug'              => 'efmigration',
-                'settings_slug'     => 'pp-efmigration',
+                'settings_slug'     => self::PAGE_SLUG,
                 'default_options'   => array(
                     'enabled'    => 'on'
                 ),
@@ -83,7 +87,7 @@ if (!class_exists('PP_Efmigration')) {
             add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
             add_action('wp_ajax_pp_finish_migration', array($this, 'migrate_data_finish'));
 
-            if (isset($_GET['page']) && $_GET['page'] === 'pp-efmigration') {
+            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) {
                 add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
                 add_action('admin_print_styles', array($this, 'enqueue_admin_styles'));
             }
@@ -123,15 +127,15 @@ if (!class_exists('PP_Efmigration')) {
             wp_enqueue_script('pp-efmigration', $this->module_url . 'lib/js/efmigration.js', array('pp-reactjs', 'pp-reactjs-dom'), PUBLISHPRESS_VERSION, true);
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
-                'migration_warning' => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', 'publishpress'),
-                'start_migration'   => esc_html__('Start the migration', 'publishpress'),
-                'options'           => esc_html__('Options', 'publishpress'),
-                'usermeta'          => esc_html__('User Meta-data', 'publishpress'),
-                'success_msg'       => esc_html__('Finished', 'publishpress'),
-                'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', 'publishpress'),
-                'error'             => esc_html__('Error', 'publishpress'),
-                'error_msg_intro'   => esc_html__('If needed, feel free to', 'publishpress'),
-                'error_msg_contact' => esc_html__('contact the support team', 'publishpress'),
+                'migration_warning' => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', self::PLUGIN_NAMESPACE),
+                'start_migration'   => esc_html__('Start the migration', self::PLUGIN_NAMESPACE),
+                'options'           => esc_html__('Options', self::PLUGIN_NAMESPACE),
+                'usermeta'          => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
+                'success_msg'       => esc_html__('Finished', self::PLUGIN_NAMESPACE),
+                'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', self::PLUGIN_NAMESPACE),
+                'error'             => esc_html__('Error', self::PLUGIN_NAMESPACE),
+                'error_msg_intro'   => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
+                'error_msg_contact' => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
             ));
         }
 
@@ -157,7 +161,7 @@ if (!class_exists('PP_Efmigration')) {
             ?>
             <div class="wrap publishpress-admin">
                 <h2>
-                    <?php _e('PublishPress', 'publishpress'); ?>:&nbsp;
+                    <?php _e('PublishPress', self::PLUGIN_NAMESPACE); ?>:&nbsp;
                     <?php _e('Edit Flow Data Migration'); ?>
                 </h2>
                 <div id="pp-content"></div>
@@ -199,7 +203,7 @@ if (!class_exists('PP_Efmigration')) {
         {
             // Check if EditFlow is installed
             if ($this->checkEditFlowIsInstalled()) {
-                $dismissMigration = (bool)get_site_option(self::DISSMISS_MIGRATION_OPTION, 0);
+                $dismissMigration = (bool)get_site_option(self::OPTION_DISMISS_MIGRATION, 0);
                 if (!$dismissMigration && (!isset($_GET['page']) || self::PAGE_SLUG !== $_GET['page'])) {
                     echo '<div class="updated"><p>';
                     printf(
@@ -225,13 +229,13 @@ if (!class_exists('PP_Efmigration')) {
         public function action_editflow_migrate()
         {
             if ($this->checkEditFlowIsInstalled()) {
-                $dismissMigration = (bool)get_site_option(self::DISSMISS_MIGRATION_OPTION, 0);
+                $dismissMigration = (bool)get_site_option(self::OPTION_DISMISS_MIGRATION, 0);
                 if (!$dismissMigration) {
                     // If user clicks to ignore the notice, and register in the options
                     if (isset($_GET[self::EDITFLOW_MIGRATION_URL_FLAG])) {
                         $migrate = (bool)$_GET[self::EDITFLOW_MIGRATION_URL_FLAG];
                         if (!$migrate) {
-                            update_site_option(self::DISSMISS_MIGRATION_OPTION, 1, true);
+                            update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
                         }
                     }
                 }
@@ -249,13 +253,13 @@ if (!class_exists('PP_Efmigration')) {
             // Get and validate the step
             $step = $_POST['step'];
             if (!in_array($step, $allowedSteps)) {
-                $result->error = __('Unknown step', 'publishpress');
+                $result->error = __('Unknown step', self::PLUGIN_NAMESPACE);
             }
 
             $methodName = 'migrate_data_' . $step;
 
             if (!method_exists($this, $methodName)) {
-                $result->error = __('Undefined migration method', 'publishpress');
+                $result->error = __('Undefined migration method', self::PLUGIN_NAMESPACE);
             } else {
                 $this->$methodName();
             }
@@ -270,7 +274,7 @@ if (!class_exists('PP_Efmigration')) {
          */
         protected function migrate_data_options()
         {
-            if (!get_site_option('publishpress_efmigration_migrated_options', false)) {
+            if (!get_site_option(self::OPTION_MIGRATED_OPTIONS, false)) {
                 $optionsToMigrate = array(
                     'calendar_options',
                     'custom_status_options',
@@ -287,10 +291,10 @@ if (!class_exists('PP_Efmigration')) {
                     $efOption = get_option('edit_flow_' . $option);
 
                     // Update the current publishpress settings
-                    update_option('publishpress_' . $option, $efOption, true);
+                    update_option(self::OPTION_PREFIX . $option, $efOption, true);
                 }
 
-                update_site_option('publishpress_efmigration_migrated_options', 1, true);
+                update_site_option(self::OPTION_MIGRATED_OPTIONS, 1, true);
             }
         }
 
@@ -298,7 +302,7 @@ if (!class_exists('PP_Efmigration')) {
         {
             global $wpdb;
 
-            if (!get_site_option('publishpress_efmigration_migrated_usermeta', false)) {
+            if (!get_site_option(self::OPTION_MIGRATED_USERMETA, false)) {
                 // Remove PublishPress data
                 $data = $wpdb->get_results(
                     "
@@ -315,13 +319,13 @@ if (!class_exists('PP_Efmigration')) {
                     }
                 }
 
-                update_site_option('publishpress_efmigration_migrated_usermeta', 1, true);
+                update_site_option(self::OPTION_MIGRATED_USERMETA, 1, true);
             }
         }
 
         public function migrate_data_finish()
         {
-            update_site_option(self::DISSMISS_MIGRATION_OPTION, 1, true);
+            update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
 
             wp_die();
         }
