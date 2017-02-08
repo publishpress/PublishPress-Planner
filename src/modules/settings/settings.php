@@ -31,7 +31,6 @@
 if (!class_exists('PP_Settings')) {
     class PP_Settings extends PP_Module
     {
-
         public $module;
 
         /**
@@ -39,6 +38,9 @@ if (!class_exists('PP_Settings')) {
          */
         public function __construct()
         {
+            $this->twigPath = __DIR__ . '/twig';
+
+            parent::__construct();
 
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
@@ -295,48 +297,28 @@ if (!class_exists('PP_Settings')) {
                         continue;
                     }
 
-                    $classes = array(
-                        'publishpress-module',
-                    );
-                    if ($mod_data->options->enabled == 'on') {
-                        $classes[] = 'module-enabled';
-                    } elseif ($mod_data->options->enabled == 'off') {
-                        $classes[] = 'module-disabled';
-                    }
-                    if ($mod_data->configure_page_cb) {
-                        $classes[] = 'has-configure-link';
-                    }
-                    echo '<div class="' . implode(' ', $classes) . '" id="' . $mod_data->slug . '">';
-                    if (isset($mod_data->icon_class)) {
-                        echo '<span class="' . esc_html($mod_data->icon_class) . ' float-right module-icon"></span>';
-                    }
-                    echo '<form method="get" action="' . get_admin_url(null, 'options.php') . '">';
-                    echo '<h4>' . esc_html($mod_data->title) . '</h4>';
-                    if ('on' == $mod_data->options->enabled) {
-                        echo '<p>' . wp_kses($mod_data->short_description, 'a') . '</p>';
-                    } else {
-                        echo '<p>' . strip_tags($mod_data->short_description) . '</p>';
-                    }
-                    echo '<p class="publishpress-module-actions">';
-                    if ($mod_data->configure_page_cb && (!isset($mod_data->show_configure_btn) || $mod_data->show_configure_btn === true)) {
-                        $configure_url = add_query_arg('page', $mod_data->settings_slug, get_admin_url(null, 'admin.php'));
-                        echo '<a href="' . $configure_url . '" class="configure-publishpress-module button button-primary';
-                        if ($mod_data->options->enabled == 'off') {
-                            echo ' hidden" style="display:none;';
+                    if ($mod_data->options->enabled !== 'off') {
+                        $url = '';
+
+                        if ($mod_data->configure_page_cb && (!isset($mod_data->show_configure_btn) || $mod_data->show_configure_btn === true)) {
+                            $url = add_query_arg('page', $mod_data->settings_slug, get_admin_url(null, 'admin.php'));
+                        } elseif ($mod_data->page_link)  {
+                            $url = $mod_data->page_link;
                         }
-                        echo '">' . $mod_data->configure_link_text . '</a>';
+
+                        echo $this->twig->render(
+                            'module.twig',
+                            array(
+                                'has_config_link' => isset($mod_data->configure_page_cb) && !empty($mod_data->configure_page_cb),
+                                'slug'            => $mod_data->slug,
+                                'icon_class'      => isset($mod_data->icon_class) ? $mod_data->icon_class : false,
+                                'form_action'     => get_admin_url(null, 'options.php'),
+                                'title'           => $mod_data->title,
+                                'description'     => wp_kses($mod_data->short_description, 'a'),
+                                'url'             => $url,
+                            )
+                        );
                     }
-                    if ($mod_data->page_link) {
-                        echo '<a href="' . $mod_data->page_link . '" class="configure-publishpress-module button button-primary';
-                        if ($mod_data->options->enabled == 'off') {
-                            echo ' hidden" style="display:none;';
-                        }
-                        echo '">' . __('Open', 'publishpress') . '</a>';
-                    }
-                    echo '</p>';
-                    wp_nonce_field('change-publishpress-module-nonce', 'change-module-nonce', false);
-                    echo '</form>';
-                    echo '</div>';
                 }
             }
         }

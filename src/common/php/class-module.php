@@ -34,6 +34,7 @@ if (!class_exists('PP_Module')) {
      */
     class PP_Module
     {
+        protected $twig;
 
         public $published_statuses = array(
                                 'publish',
@@ -41,8 +42,14 @@ if (!class_exists('PP_Module')) {
                                 'private',
                             );
 
+        protected $twigPath;
+
         public function __construct()
         {
+            if (!empty($this->twigPath)) {
+                $loader = new Twig_Loader_Filesystem($this->twigPath);
+                $this->twig = new Twig_Environment($loader);
+            }
         }
 
     /**

@@ -4,11 +4,15 @@
     "homepage"   : "http://pressshack.com/",
     "type"       : "wordpress-plugin",
     "license"    : "GPL-2.0+",
+    "config"     : {
+        "vendor-dir": "src/vendor"
+    },
     "require"    : {
-        "composer/installers": "~1.0",
-        "gettext/gettext": "^4.2"
+        "twig/twig": "~2.0"
     },
     "require-dev": {
-        "consolidation/robo": "^1.0"
+        "consolidation/robo": "^1.0",
+        "composer/installers": "~1.0",
+        "gettext/gettext": "^4.2"
     }
 }

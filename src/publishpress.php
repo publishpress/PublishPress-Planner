@@ -43,6 +43,8 @@ define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
 define('PUBLISHPRESS_SETTINGS_PAGE', add_query_arg('page', 'pp-settings', get_admin_url(null, 'admin.php')));
 
+require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
+
 // Core class
 class publishpress
 {
