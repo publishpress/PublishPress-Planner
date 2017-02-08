@@ -81,7 +81,7 @@ if (!class_exists('PP_Efmigration')) {
             add_action('admin_notices', array($this, 'action_admin_notice'));
             add_action('admin_init', array($this, 'action_editflow_migrate'));
             add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
-            add_action('wp_ajax_pp_finish_migration', array($this, 'migrate_date_finish'));
+            add_action('wp_ajax_pp_finish_migration', array($this, 'migrate_data_finish'));
 
             if (isset($_GET['page']) && $_GET['page'] === 'pp-efmigration') {
                 add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -319,7 +319,7 @@ if (!class_exists('PP_Efmigration')) {
             }
         }
 
-        public function migrate_date_finish()
+        public function migrate_data_finish()
         {
             update_site_option(self::DISSMISS_MIGRATION_OPTION, 1, true);
 
