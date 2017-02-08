@@ -8,6 +8,7 @@
         "vendor-dir": "src/vendor"
     },
     "require"    : {
+        "php": ">= 5.3",
         "twig/twig": "~1.0"
     },
     "require-dev": {
