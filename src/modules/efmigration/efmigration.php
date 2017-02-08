@@ -82,6 +82,10 @@ if (!class_exists('PP_Efmigration')) {
          */
         public function init()
         {
+            if (!current_user_can('manage_options')) {
+                return;
+            }
+
             add_action('admin_menu', array($this, 'action_register_page'));
             add_action('admin_notices', array($this, 'action_admin_notice'));
             add_action('admin_init', array($this, 'action_editflow_migrate'));
@@ -160,6 +164,12 @@ if (!class_exists('PP_Efmigration')) {
          */
         public function print_view()
         {
+            if (!current_user_can('manage_options')) {
+                _e('Access Denied', self::PLUGIN_NAMESPACE);
+
+                return;
+            }
+
             ?>
             <div class="wrap publishpress-admin">
                 <h2>
@@ -209,7 +219,7 @@ if (!class_exists('PP_Efmigration')) {
                 if (!$dismissMigration && (!isset($_GET['page']) || self::PAGE_SLUG !== $_GET['page'])) {
                     echo '<div class="updated"><p>';
                     printf(
-                        __('We have found Edit Flow and its data! Would you like to import the data into PublishPress? | <a href="%1$s">Yes, import the data</a> | <a href="%2$s">Dismiss</a>'),
+                        __('We have found Edit Flow and its data! Would you like to import the data into PublishPress? <a href="%1$s">Yes, import the data</a> | <a href="%2$s">Dismiss</a>'),
                         add_query_arg(
                             array(
                                 'page'                            => self::PAGE_SLUG,
@@ -235,6 +245,10 @@ if (!class_exists('PP_Efmigration')) {
                 if (!$dismissMigration) {
                     // If user clicks to ignore the notice, and register in the options
                     if (isset($_GET[self::EDITFLOW_MIGRATION_URL_FLAG])) {
+                        if (!current_user_can('manage_options')) {
+                            $this->accessDenied();
+                        }
+
                         $migrate = (bool)$_GET[self::EDITFLOW_MIGRATION_URL_FLAG];
                         if (!$migrate) {
                             update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
@@ -247,6 +261,10 @@ if (!class_exists('PP_Efmigration')) {
         public function migrate_data()
         {
             check_ajax_referer(self::NONCE_KEY);
+
+            if (!current_user_can('manage_options')) {
+                $this->accessDenied();
+            }
 
             $allowedSteps = array('options', 'usermeta');
             $result       = (object)array(
@@ -331,7 +349,22 @@ if (!class_exists('PP_Efmigration')) {
         {
             check_ajax_referer(self::NONCE_KEY);
 
+            if (!current_user_can('manage_options')) {
+                $this->accessDenied();
+            }
+
             update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
+
+            wp_die();
+        }
+
+        protected function accessDenied()
+        {
+            if (!headers_sent()) {
+                header('HTTP/1.1 403 ' . __('Access Denied', self::PLUGIN_NAMESPACE));
+            } else {
+                _e('Access Denied', self::PLUGIN_NAMESPACE);
+            }
 
             wp_die();
         }
