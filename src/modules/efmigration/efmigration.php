@@ -36,12 +36,13 @@ if (!class_exists('PP_Efmigration')) {
     class PP_Efmigration extends PP_Module
     {
         const OPTION_PREFIX               = 'publishpress_';
-        const OPTION_DISMISS_MIGRATION    = self::OPTION_PREFIX . 'dismiss_migration';
-        const OPTION_MIGRATED_OPTIONS     = self::OPTION_PREFIX . 'efmigration_migrated_options';
-        const OPTION_MIGRATED_USERMETA    = self::OPTION_PREFIX . 'efmigration_migrated_usermeta';
-        const EDITFLOW_MIGRATION_URL_FLAG = self::OPTION_PREFIX . '_import_editflow';
+        const OPTION_DISMISS_MIGRATION    = 'publishpress_dismiss_migration';
+        const OPTION_MIGRATED_OPTIONS     = 'publishpress_efmigration_migrated_options';
+        const OPTION_MIGRATED_USERMETA    = 'publishpress_efmigration_migrated_usermeta';
+        const EDITFLOW_MIGRATION_URL_FLAG = 'publishpress_import_editflow';
         const PAGE_SLUG                   = 'pp-efmigration';
-        const PLUGIN_NAMESPACE            = self::PLUGIN_NAMESPACE;
+        const NONCE_KEY                   = 'pp-efmigration';
+        const PLUGIN_NAMESPACE            = 'publishpress';
 
         public $module;
 
