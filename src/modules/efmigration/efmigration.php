@@ -131,17 +131,26 @@ if (!class_exists('PP_Efmigration')) {
             wp_enqueue_script('pp-reactjs-dom', $this->module_url . 'lib/js/react-dom.min.js', array('pp-reactjs'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_script('pp-efmigration', $this->module_url . 'lib/js/efmigration.js', array('pp-reactjs', 'pp-reactjs-dom'), PUBLISHPRESS_VERSION, true);
 
+            $publishPressUrl = add_query_arg(
+                array(
+                    'page' => 'pp-settings'
+                ),
+                admin_url('/admin.php')
+            );
+
             wp_localize_script('pp-efmigration', 'objectL10n', array(
-                'migration_warning' => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', self::PLUGIN_NAMESPACE),
-                'start_migration'   => esc_html__('Start the migration', self::PLUGIN_NAMESPACE),
-                'options'           => esc_html__('Options', self::PLUGIN_NAMESPACE),
-                'usermeta'          => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
-                'success_msg'       => esc_html__('Finished', self::PLUGIN_NAMESPACE),
-                'header_msg'        => esc_html__('Please, wait while we migrate your legacy data...', self::PLUGIN_NAMESPACE),
-                'error'             => esc_html__('Error', self::PLUGIN_NAMESPACE),
-                'error_msg_intro'   => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
-                'error_msg_contact' => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
-                'wpnonce'           => wp_create_nonce(self::NONCE_KEY),
+                'migration_warning'          => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', self::PLUGIN_NAMESPACE),
+                'start_migration'            => esc_html__('Start the migration', self::PLUGIN_NAMESPACE),
+                'options'                    => esc_html__('Options', self::PLUGIN_NAMESPACE),
+                'usermeta'                   => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
+                'success_msg'                => esc_html__('Finished', self::PLUGIN_NAMESPACE),
+                'header_msg'                 => esc_html__('Please, wait while we migrate your legacy data...', self::PLUGIN_NAMESPACE),
+                'error'                      => esc_html__('Error', self::PLUGIN_NAMESPACE),
+                'error_msg_intro'            => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
+                'error_msg_contact'          => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
+                'back_to_publishpress_label' => esc_html__('Back to PublishPress', self::PLUGIN_NAMESPACE),
+                'back_to_publishpress_url'   => $publishPressUrl,
+                'wpnonce'                    => wp_create_nonce(self::NONCE_KEY),
             ));
         }
 

@@ -58,7 +58,11 @@
                     &&
                         <p>{objectL10n.header_msg}</p>
                     ||
-                        <p>{objectL10n.success_msg}</p>
+                        <div>
+                            <p>{objectL10n.success_msg}</p>
+
+                            <a href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
+                        </div>
                     }
 
                     {hasErrors

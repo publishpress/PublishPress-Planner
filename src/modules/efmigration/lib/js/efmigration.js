@@ -113,9 +113,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         objectL10n.header_msg
                     ) || React.createElement(
-                        'p',
+                        'div',
                         null,
-                        objectL10n.success_msg
+                        React.createElement(
+                            'p',
+                            null,
+                            objectL10n.success_msg
+                        ),
+                        React.createElement(
+                            'a',
+                            { href: objectL10n.back_to_publishpress_url },
+                            objectL10n.back_to_publishpress_label
+                        )
                     ),
                     hasErrors && React.createElement(
                         'div',
