@@ -60,10 +60,12 @@ class RoboFile extends \Robo\Tasks
             if (! in_array($content, array('.', '..'))) {
                 $path = self::SOURCE_PATH . '/' . $content;
 
-                if (is_file($path)) {
-                    $pack->addFile($content, $path);
-                } else {
-                    $pack->addDir($content, $path);
+                if ($content !== 'node_modules') {
+                    if (is_file($path)) {
+                        $pack->addFile($content, $path);
+                    } else {
+                        $pack->addDir($content, $path);
+                    }
                 }
             }
         }
