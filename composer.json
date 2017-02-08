@@ -8,7 +8,7 @@
         "vendor-dir": "src/vendor"
     },
     "require"    : {
-        "twig/twig": "~2.0"
+        "twig/twig": "~1.0"
     },
     "require-dev": {
         "consolidation/robo": "^1.0",
