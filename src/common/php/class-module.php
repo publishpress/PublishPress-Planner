@@ -483,9 +483,8 @@ if (!class_exists('PP_Module')) {
     }
 
     /**
-     * This is a hack, Hack, HACK!!!
      * Encode all of the given arguments as a serialized array, and then base64_encode
-     * Used to store extra data in a term's description field
+     * Used to store extra data in a term's description field.
      *
      * @since 0.7
      *
