@@ -137,6 +137,7 @@ if (!class_exists('PP_Efmigration')) {
                 'error'             => esc_html__('Error', self::PLUGIN_NAMESPACE),
                 'error_msg_intro'   => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
                 'error_msg_contact' => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
+                'wpnonce'           => wp_create_nonce(self::NONCE_KEY),
             ));
         }
 
@@ -245,6 +246,8 @@ if (!class_exists('PP_Efmigration')) {
 
         public function migrate_data()
         {
+            check_ajax_referer(self::NONCE_KEY);
+
             $allowedSteps = array('options', 'usermeta');
             $result       = (object)array(
                 'error' => false,
@@ -326,6 +329,8 @@ if (!class_exists('PP_Efmigration')) {
 
         public function migrate_data_finish()
         {
+            check_ajax_referer(self::NONCE_KEY);
+
             update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
 
             wp_die();

@@ -208,7 +208,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     if (_this6.state.currentStepIndex >= _this6.state.steps.length) {
 
                         var _data = {
-                            'action': 'pp_finish_migration'
+                            'action': 'pp_finish_migration',
+                            '_wpnonce': objectL10n.wpnonce
                         };
 
                         $.post(ajaxurl, _data, function (response) {
@@ -228,7 +229,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     // Call the method to migrate and wait for the response
                     var data = {
                         'action': 'pp_migrate_ef_data',
-                        'step': currentStep.key
+                        'step': currentStep.key,
+                        '_wpnonce': objectL10n.wpnonce
                     };
                     $.post(ajaxurl, data, function (response) {
                         var step = _this6.state.steps[_this6.state.currentStepIndex];

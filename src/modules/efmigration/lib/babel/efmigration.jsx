@@ -116,7 +116,8 @@
                 if (this.state.currentStepIndex >= this.state.steps.length) {
 
                     const data = {
-                        'action': 'pp_finish_migration'
+                        'action': 'pp_finish_migration',
+                        '_wpnonce': objectL10n.wpnonce
                     };
 
                     $.post(ajaxurl, data, (response) => {
@@ -136,7 +137,8 @@
                 // Call the method to migrate and wait for the response
                 const data = {
                     'action': 'pp_migrate_ef_data',
-                    'step': currentStep.key
+                    'step': currentStep.key,
+                    '_wpnonce': objectL10n.wpnonce
                 };
                 $.post(ajaxurl, data, (response) => {
                     var step = this.state.steps[this.state.currentStepIndex];
