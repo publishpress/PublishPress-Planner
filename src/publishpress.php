@@ -180,6 +180,8 @@ class publishpress
      */
     public function action_init()
     {
+        $this->deactivate_editflow();
+
         load_plugin_textdomain('publishpress', null, dirname(plugin_basename(__FILE__)) . '/languages/');
 
         $this->load_modules();
@@ -387,6 +389,39 @@ class publishpress
         if (!isset($wp_scripts->registered['jquery-ui-datepicker'])) {
             wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core'), '1.8.16', true);
         }
+    }
+
+    public function deactivate_editflow()
+    {
+        try {
+            if (!function_exists('get_plugins')) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            $all_plugins = get_plugins();
+
+            // Check if Edit Flow is installed. The folder changes sometimes.
+            foreach ($all_plugins as $pluginFile => $data) {
+                if (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain'])  {
+                    // Is it activated?
+                    if (is_plugin_active($pluginFile)) {
+                        deactivate_plugins($pluginFile);
+                        add_action('admin_notices', array($this, 'notice_editflow_deactivated'));
+                    }
+                }
+            }
+        } catch(Exception $e) {
+
+        }
+    }
+
+    public function notice_editflow_deactivated()
+    {
+        ?>
+        <div class="updated notice">
+            <p><?php _e('Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.', 'publishpress'); ?></p>
+        </div>
+        <?php
     }
 }
 
