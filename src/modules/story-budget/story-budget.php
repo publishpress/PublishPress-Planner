@@ -66,7 +66,7 @@ class PP_Story_Budget extends PP_Module
         // Register the module with PublishPress
         $args = array(
             'title'                => __('Story Budget', 'publishpress'),
-            'short_description'    => sprintf(__('View the status of all your content <a href="%s">at a glance</a>.', 'publishpress'), admin_url('index.php?page=story-budget')),
+            'short_description'    => __('Click here for a single screen that shows the publication status of all your content.', 'publishpress'),
             'extended_description' => __('Use the story budget to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
             'module_url'           => $this->module_url,
             'icon_class'           => 'dashicons dashicons-list-view',

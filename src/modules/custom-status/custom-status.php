@@ -57,7 +57,7 @@ if (!class_exists('PP_Custom_Status')) {
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('Custom Statuses', 'publishpress'),
-                'short_description'    => __('Create custom post statuses to define the stages of your workflow.', 'publishpress'),
+                'short_description'    => __('Create custom post statuses to define the stages of your publishing workflow.', 'publishpress'),
                 'extended_description' => __('Create your own post statuses to add structure your publishing workflow. You can change existing or add new ones anytime, and drag and drop to change their order.', 'publishpress'),
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-tag',

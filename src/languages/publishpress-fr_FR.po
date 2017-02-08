@@ -85,7 +85,7 @@ msgid "Calendar"
 msgstr "Calendrier"
 
 #: modules/calendar/calendar.php:31
-msgid "View upcoming content in a customizable calendar."
+msgid "Click here to see a calendar of when all your content is published."
 msgstr "Voir le contenu à venir dans un calendrier personnalisable."
 
 #: modules/calendar/calendar.php:32
@@ -329,7 +329,7 @@ msgid "Custom Statuses"
 msgstr "Statuts Personnalisés"
 
 #: modules/custom-status/custom-status.php:30
-msgid "Create custom post statuses to define the stages of your workflow."
+msgid "Create custom post statuses to define the stages of your publishing workflow."
 msgstr ""
 "Créer des statuts d&#8217;articles personnalisés pour mieux définir les étapes de "
 "votre workflow."
@@ -908,7 +908,7 @@ msgid "Editorial Metadata"
 msgstr "Métadonnées de Rédaction"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
-msgid "Track details about your posts in progress."
+msgid "Click here to customize the extra data that’s tracked for your content."
 msgstr "Détailler tout ce qui importe pour vos articles en progression."
 
 #: modules/editorial-metadata/editorial-metadata.php:44
@@ -1308,7 +1308,7 @@ msgid "Notifications"
 msgstr "Notifications"
 
 #: modules/notifications/notifications.php:35
-msgid "Update your team of important changes to your content."
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Tenir au courant votre équipe des changements importants sur votre contenu."
 
 #: modules/notifications/notifications.php:36
@@ -1590,7 +1590,7 @@ msgid "Story Budget"
 msgstr "Boite à Idées"
 
 #: modules/story-budget/story-budget.php:41
-msgid "View the status of all your content at a glance."
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr "Voir le statut de tout votre contenu en un coup d&#8217;œil."
 
 #: modules/story-budget/story-budget.php:42
@@ -1666,7 +1666,7 @@ msgid "Print"
 msgstr "Imprimer"
 
 #: modules/user-groups/user-groups.php:41
-msgid "Organize your users into groups to mimic your organizational structure."
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr "Organise vos utilisateurs en groupes pour correspondre à votre structure."
 
 #: modules/user-groups/user-groups.php:42

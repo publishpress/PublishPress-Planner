@@ -74,7 +74,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:35
 #, php-format
-msgid "View upcoming content in View upcoming content in a customizable calendar."
+msgid "View upcoming content in Click here to see a calendar of when all your content is published."
 msgstr ""
 
 #: modules/calendar/calendar.php:36
@@ -400,7 +400,7 @@ msgid "Custom Statuses"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:31
-msgid "Create custom post statuses to define the stages of your workflow."
+msgid "Create custom post statuses to define the stages of your publishing workflow."
 msgstr ""
 
 #: modules/custom-status/custom-status.php:32
@@ -929,7 +929,7 @@ msgid "Editorial Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:44
-msgid "Track details about your posts in progress."
+msgid "Click here to customize the extra data that’s tracked for your content."
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:45
@@ -1305,7 +1305,7 @@ msgid "Notifications"
 msgstr ""
 
 #: modules/notifications/notifications.php:34
-msgid "Update your team of important changes to your content."
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr ""
 
 #: modules/notifications/notifications.php:35
@@ -1592,7 +1592,7 @@ msgstr ""
 
 #: modules/story-budget/story-budget.php:40
 #, php-format
-msgid "View the status of all your content <a href=\"%s\">at a glance</a>."
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr ""
 
 #: modules/story-budget/story-budget.php:41
@@ -1669,7 +1669,7 @@ msgid "Print"
 msgstr ""
 
 #: modules/user-groups/user-groups.php:40
-msgid "Organize your users into groups to mimic your organizational structure."
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr ""
 
 #: modules/user-groups/user-groups.php:41

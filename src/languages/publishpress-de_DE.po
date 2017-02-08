@@ -114,7 +114,7 @@ msgstr "Kalender"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:31
-msgid "View upcoming content in a customizable calendar."
+msgid "Click here to see a calendar of when all your content is published."
 msgstr "Zeige eingeplante Beiträge in einem anpassparen Kalender."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -406,7 +406,7 @@ msgstr "Benutzerdefinierte Status"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:30
-msgid "Create custom post statuses to define the stages of your workflow."
+msgid "Create custom post statuses to define the stages of your publishing workflow."
 msgstr "Erstelle benutzerdefinierte Status um Etappen deines Workflows zu definieren"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -1097,7 +1097,7 @@ msgstr "Redaktionelle Metadaten"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:43
-msgid "Track details about your posts in progress."
+msgid "Click here to customize the extra data that’s tracked for your content."
 msgstr "Ergänze Metadaten zu deinem Freigabeprozess."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -1550,7 +1550,7 @@ msgstr "Benachrichtigungen"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:33
-msgid "Update your team of important changes to your content."
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Informiere dein Team über wichtige Änderungen an deinen Beiträgen."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -1884,7 +1884,7 @@ msgstr "Beitrags Vorrat"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:41
-msgid "View the status of all your content at a glance."
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr "Betrachte alle Status deiner Beiträge auf einen Blick."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -1960,7 +1960,7 @@ msgstr "Drucken"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:39
-msgid "Organize your users into groups to mimic your organizational structure."
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr ""
 "Organisiere die Benutzer in Gruppen, um deine Organisationsstruktur abzubilden."
 

@@ -112,7 +112,7 @@ msgstr "Calendario"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/calendar/calendar.php:31
-msgid "View upcoming content in a customizable calendar."
+msgid "Click here to see a calendar of when all your content is published."
 msgstr "Visualizza i prossimi contenuti in un calendario personalizzabile."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -375,7 +375,7 @@ msgstr "Fasi di lavorazione"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:30
-msgid "Create custom post statuses to define the stages of your workflow."
+msgid "Create custom post statuses to define the stages of your publishing workflow."
 msgstr "Crea delle fasi di lavorazione per gli articoli, in modo da definire i vari stadi della lavorazione."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1006,7 +1006,7 @@ msgstr "Informazioni editoriali"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:43
-msgid "Track details about your posts in progress."
+msgid "Click here to customize the extra data that’s tracked for your content."
 msgstr "Controlla i dettagli degli articoli in lavorazione."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1493,7 +1493,7 @@ msgstr "Notifiche"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:33
-msgid "Update your team of important changes to your content."
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Aggiorna il tuo team su modifiche importanti ai contenuti."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1792,7 +1792,7 @@ msgstr "Prospetto editoriale"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:41
-msgid "View the status of all your content at a glance."
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr "Visualizza lo stato di lavorazione di tutti i tuoi contenuti in un'unica schermata."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1875,7 +1875,7 @@ msgstr "Stampa"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:39
-msgid "Organize your users into groups to mimic your organizational structure."
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr "Organizza gli utenti in gruppi rappresentativi della tua struttura editoriale."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni

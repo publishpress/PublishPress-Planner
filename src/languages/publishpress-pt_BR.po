@@ -96,8 +96,8 @@ msgid "Calendar"
 msgstr "Calendário"
 
 #: modules/calendar/calendar.php:33
-msgid "View upcoming content in a customizable calendar."
-msgstr "Ver os próximos conteúdos em um calendário personalizável."
+msgid "Click here to see a calendar of when all your content is published."
+msgstr "Clique aqui para ver um calendário de quando todo seu conteúdo será publicado."
 
 #: modules/calendar/calendar.php:34
 msgid "PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date date."
@@ -406,7 +406,7 @@ msgid "Custom Statuses"
 msgstr "Status personalizados"
 
 #: modules/custom-status/custom-status.php:30
-msgid "Create custom post statuses to define the stages of your workflow."
+msgid "Create custom post statuses to define the stages of your publishing workflow."
 msgstr "Criar status de posts personalizados para definir os estágios do seu fluxo de trabalho."
 
 #: modules/custom-status/custom-status.php:31
@@ -877,7 +877,7 @@ msgid "Editorial Metadata"
 msgstr "Metadados Editoriais"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
-msgid "Track details about your posts in progress."
+msgid "Click here to customize the extra data that’s tracked for your content."
 msgstr "Rastrear detalhes sobre seus posts em progresso"
 
 #: modules/editorial-metadata/editorial-metadata.php:44
@@ -1222,7 +1222,7 @@ msgid "Notifications"
 msgstr "Notificações"
 
 #: modules/notifications/notifications.php:33
-msgid "Update your team of important changes to your content."
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Atualize sua equipe sobre alterações importantes no seu conteúdo."
 
 #: modules/notifications/notifications.php:34
@@ -1482,7 +1482,7 @@ msgid "Story Budget"
 msgstr "Histórico de orçamento"
 
 #: modules/story-budget/story-budget.php:41
-msgid "View the status of all your content <a href=\"%s\">at a glance</a>."
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr "Ver os status de todo seu conteúdo <a href=\"%s\"> de uma vez </a>."
 
 #: modules/story-budget/story-budget.php:42
@@ -1553,7 +1553,7 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: modules/user-groups/user-groups.php:41
-msgid "Organize your users into groups to mimic your organizational structure."
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr "Organize seus usuários em grupos para mimetizar sua estrutura organizacional."
 
 #: modules/user-groups/user-groups.php:42
