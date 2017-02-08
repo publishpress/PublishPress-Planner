@@ -169,8 +169,8 @@ if (!class_exists('PP_Efmigration')) {
         {
             add_submenu_page(
                 null,
-                'Test1',
-                'Test2',
+                'PublishPress',
+                'PublishPress',
                 'manage_options',
                 self::PAGE_SLUG,
                 array($this, 'print_view')
