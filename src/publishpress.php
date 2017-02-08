@@ -237,7 +237,6 @@ class publishpress
      */
     public function register_module($name, $args = array())
     {
-
         // A title and name is required for every module
         if (!isset($args['title'], $name)) {
             return false;
