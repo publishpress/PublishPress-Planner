@@ -32,7 +32,9 @@
             const finished   = this.props.finished;
             const steps      = this.props.steps;
             const errors     = this.props.errors;
+            const started    = this.props.started;
             const hasErrors  = errors.length > 0;
+            const inProgress = started && !finished;
 
             var stepRows = steps.map((step) =>
                 <StepRow
@@ -49,20 +51,15 @@
             return (
                 <div>
                     <div className="pp-progressbar-container">
-                        <ol className="pp-progressbar">
+                        <p>{objectL10n.what_will_migrate}:</p>
+                        <ul className="pp-progressbar">
                             {stepRows}
-                        </ol>
+                        </ul>
                     </div>
 
-                    {!finished
+                    {inProgress
                     &&
                         <p>{objectL10n.header_msg}</p>
-                    ||
-                        <div>
-                            <p>{objectL10n.success_msg}</p>
-
-                            <a href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
-                        </div>
                     }
 
                     {hasErrors
@@ -75,6 +72,15 @@
                             <p>{objectL10n.error_msg_intro} <a href="mailto:help@pressshack.com">{objectL10n.error_msg_contact}</a></p>
                         </div>
                     }
+
+                    {finished
+                    &&
+                        <div>
+                            <p>{objectL10n.success_msg}</p>
+
+                            <a href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
+                        </div>
+                    }
                 </div>
             );
         }
@@ -82,7 +88,7 @@
 
     class StepListContainer extends React.Component {
         render() {
-            return <StepList steps={this.props.steps} finished={this.props.finished} errors={this.props.errors} />;
+            return <StepList steps={this.props.steps} started={this.props.started} finished={this.props.finished} errors={this.props.errors} />;
         }
     }
 
@@ -193,6 +199,8 @@
         }
 
         render() {
+            const started = this.state.currentStepIndex > -1;
+
             return (
                 <div>
                     <div className="updated">
@@ -200,11 +208,11 @@
                     </div>
 
                     <div>
-                        {this.state.currentStepIndex === -1
+                        <StepListContainer steps={this.state.steps} started={started} finished={this.state.finished} errors={this.state.errors} />
+
+                        {!started
                         &&
                             <button onClick={this.eventStartMigration} className="button button-primary">{objectL10n.start_migration}</button>
-                        ||
-                            <StepListContainer steps={this.state.steps} finished={this.state.finished} errors={this.state.errors} />
                         }
                     </div>
                 </div>

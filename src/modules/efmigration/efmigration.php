@@ -149,6 +149,7 @@ if (!class_exists('PP_Efmigration')) {
                 'error_msg_intro'            => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
                 'error_msg_contact'          => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
                 'back_to_publishpress_label' => esc_html__('Back to PublishPress', self::PLUGIN_NAMESPACE),
+                'what_will_migrate'          => esc_html__('What will be migrated', self::PLUGIN_NAMESPACE),
                 'back_to_publishpress_url'   => $publishPressUrl,
                 'wpnonce'                    => wp_create_nonce(self::NONCE_KEY),
             ));

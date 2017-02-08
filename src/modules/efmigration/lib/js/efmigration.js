@@ -82,7 +82,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var finished = this.props.finished;
                 var steps = this.props.steps;
                 var errors = this.props.errors;
+                var started = this.props.started;
                 var hasErrors = errors.length > 0;
+                var inProgress = started && !finished;
 
                 var stepRows = steps.map(function (step) {
                     return React.createElement(StepRow, {
@@ -103,28 +105,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         'div',
                         { className: 'pp-progressbar-container' },
                         React.createElement(
-                            'ol',
+                            'p',
+                            null,
+                            objectL10n.what_will_migrate,
+                            ':'
+                        ),
+                        React.createElement(
+                            'ul',
                             { className: 'pp-progressbar' },
                             stepRows
                         )
                     ),
-                    !finished && React.createElement(
+                    inProgress && React.createElement(
                         'p',
                         null,
                         objectL10n.header_msg
-                    ) || React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            'p',
-                            null,
-                            objectL10n.success_msg
-                        ),
-                        React.createElement(
-                            'a',
-                            { href: objectL10n.back_to_publishpress_url },
-                            objectL10n.back_to_publishpress_label
-                        )
                     ),
                     hasErrors && React.createElement(
                         'div',
@@ -150,6 +145,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                 objectL10n.error_msg_contact
                             )
                         )
+                    ),
+                    finished && React.createElement(
+                        'div',
+                        null,
+                        React.createElement(
+                            'p',
+                            null,
+                            objectL10n.success_msg
+                        ),
+                        React.createElement(
+                            'a',
+                            { href: objectL10n.back_to_publishpress_url },
+                            objectL10n.back_to_publishpress_label
+                        )
                     )
                 );
             }
@@ -170,7 +179,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(StepListContainer, [{
             key: 'render',
             value: function render() {
-                return React.createElement(StepList, { steps: this.props.steps, finished: this.props.finished, errors: this.props.errors });
+                return React.createElement(StepList, { steps: this.props.steps, started: this.props.started, finished: this.props.finished, errors: this.props.errors });
             }
         }]);
 
@@ -293,6 +302,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         }, {
             key: 'render',
             value: function render() {
+                var started = this.state.currentStepIndex > -1;
+
                 return React.createElement(
                     'div',
                     null,
@@ -308,11 +319,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         null,
-                        this.state.currentStepIndex === -1 && React.createElement(
+                        React.createElement(StepListContainer, { steps: this.state.steps, started: started, finished: this.state.finished, errors: this.state.errors }),
+                        !started && React.createElement(
                             'button',
                             { onClick: this.eventStartMigration, className: 'button button-primary' },
                             objectL10n.start_migration
-                        ) || React.createElement(StepListContainer, { steps: this.state.steps, finished: this.state.finished, errors: this.state.errors })
+                        )
                     )
                 );
             }

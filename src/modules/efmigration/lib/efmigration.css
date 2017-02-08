@@ -1,47 +1,57 @@
 .pp-progressbar {
-    margin-left: 45px;
+    margin-left: 0;
 }
 
 .pp-progressbar li {
     position: relative;
+    background: white;
+    left: 0px;
+    padding: 10px;
+    padding-left: 35px;
+    border-left: 4px solid #e0e0e0;
 }
 
 .pp-progressbar li:before {
     font-family: dashicons;
     text-decoration: inherit;
-    font-weight: 400;
+    font-weight: normal;
     font-style: normal;
     vertical-align: top;
     -webkit-transition: color .1s ease-in 0;
     transition: color .1s ease-in 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
     display: block;
     text-align: center;
-    font-size: 21px;
+    font-size: 20px;
     box-sizing: border-box;
     position: absolute;
-    left: -45px;
-    top: 0;
+    left: 2px;
+    top: 5px;
+}
+
+.pp-progressbar li.pp-status-running {
+    background: #fafafa;
 }
 
 .pp-progressbar li.pp-status-idle:before {
     padding-left: 5px;
     font-size: 20px;
-
+    content: "\f460";
+    color: #c9c9c9;
 }
 
 .pp-progressbar li.pp-status-running:before {
     content: "\f463";
-    color: #50a1c4;
+    color: #4e9abb;
 }
 
 .pp-progressbar li.pp-status-success:before {
     content: "\f147";
-    color: #25bd5d;
+    color: #1d783e;
 }
 
 .pp-progressbar li.pp-status-error:before {
@@ -49,7 +59,7 @@
 }
 
 .pp-progressbar li.pp-status-error {
-    color: #e65f5f;
+    color: #c94f4f;
     font-weight: bold;
 }
 
