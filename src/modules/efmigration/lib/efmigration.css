@@ -1,14 +1,17 @@
 .pp-progressbar {
     margin-left: 0;
+    border: 1px solid #e0e0e0
+
 }
 
 .pp-progressbar li {
     position: relative;
-    background: white;
+    background: #fff;
     left: 0px;
     padding: 10px;
     padding-left: 35px;
-    border-left: 4px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
 }
 
 .pp-progressbar li:before {
