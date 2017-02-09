@@ -6,11 +6,6 @@ php:
 env:
     - WP_VERSION=master WP_MULTISITE=0 #Current stable release
 
-# Test WP master, current and previous stable releases on most popular PHP 5.5, 5.6 (w/ multisite enabled for 5.6)
-# Test WP master, current and previous stable releases on minimum PHP 5.3 (w/o multisite enabled)
-# Test WP current on PHP 5.3, 5.4 (w/o multisite enabled)
-# Test WP master on PHP hhvm, 7.0 and nightly (w/o multisite enabled)
-
 matrix:
   include:
     #   php  5.6
@@ -18,6 +13,10 @@ matrix:
       env: WP_VERSION=master WP_MULTISITE=0
     - php: "5.6"
       env: WP_VERSION=master WP_MULTISITE=1
+    - php: "5.6"
+      env: WP_VERSION=4.7 WP_MULTISITE=0
+    - php: "5.6"
+      env: WP_VERSION=4.7 WP_MULTISITE=1
     - php: "5.6"
       env: WP_VERSION=4.6 WP_MULTISITE=0
     - php: "5.6"
