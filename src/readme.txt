@@ -1,7 +1,7 @@
 === PublishPress ===
 Contributors: PressShack
 Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, story budget
-Requires at least: 4.0
+Requires at least: 4.4
 Tested up to: 4.7
 Stable tag: 1.0.3
 License: GPLv2 or later

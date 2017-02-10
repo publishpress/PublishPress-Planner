@@ -1,5 +1,7 @@
 # PublishPress
 
+[![Build Status](https://travis-ci.org/OSTraining/PublishPress.svg?branch=development)](https://travis-ci.org/OSTraining/PublishPress)
+
 ## Description
 
 PublishPress is the essential plugin for any site with multiple writers: Content Calendar, Email Notifications, Custom Publishing Statuses and more.
