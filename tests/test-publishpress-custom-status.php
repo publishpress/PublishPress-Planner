@@ -65,6 +65,15 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
         $pagenow = 'index.php';
     }
 
+    protected function getFactory()
+    {
+        if (isset($this->factory) && is_object($this->factory)) {
+            return $this->factory;
+        } else {
+            return self::factory();
+        }
+    }
+
     /**
      * Test that a published post post_date_gmt is not altered
      */
@@ -249,7 +258,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
         global $pagenow;
         wp_set_current_user(self::$admin_user_id);
 
-        $p = self::factory()->post->create(array(
+        $p = $this->getFactory()->post->create(array(
             'post_status' => 'pitch',
             'post_author' => self::$admin_user_id
         ));
@@ -272,7 +281,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
 
         $this->set_permalink_structure('/%postname%/');
 
-        $p = self::factory()->post->create(array(
+        $p = $this->getFactory()->post->create(array(
             'post_status' => 'pending',
             'post_name' => 'baz-صورة',
             'post_author' => self::$admin_user_id
@@ -297,7 +306,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
         $this->set_permalink_structure('/%postname%/');
 
         // Published posts should use published permalink
-        $p = self::factory()->post->create(array(
+        $p = $this->getFactory()->post->create(array(
             'post_status' => 'publish',
             'post_name' => 'foo-صورة',
             'post_author' => self::$admin_user_id
@@ -317,7 +326,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
     {
         $this->set_permalink_structure('/%postname%/');
 
-        $page = self::factory()->post->create(array(
+        $page = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
             'post_title' => 'Pitch Page',
             'post_status' => 'pitch',
@@ -333,7 +342,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
     {
         $this->set_permalink_structure('/%postname%/');
 
-        $parent = self::factory()->post->create(array(
+        $parent = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
             'post_title' => 'Parent Page',
             'post_status' => 'publish',
@@ -341,7 +350,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
             'post_name' => 'parent-page'
         ));
 
-        $child = self::factory()->post->create(array(
+        $child = $this->getFactory()->post->create(array(
             'post_type'   => 'page',
             'post_title'  => 'Child Page',
             'post_parent' => $parent,
@@ -359,13 +368,13 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
     {
         $this->set_permalink_structure('/%postname%/');
 
-        $parent = self::factory()->post->create(array(
+        $parent = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
             'post_title' => 'Publish Parent Page',
             'post_author' => self::$admin_user_id
         ));
 
-        $child = self::factory()->post->create(array(
+        $child = $this->getFactory()->post->create(array(
             'post_type'   => 'page',
             'post_title'  => 'Child Page',
             'post_parent' => $parent,
