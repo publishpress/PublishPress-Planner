@@ -1,75 +1,70 @@
 language: php
 
-php:
-    - "7.0"
-
-env:
-    - WP_VERSION=master WP_MULTISITE=0 #Current stable release
-
 matrix:
   include:
-    - php: "7.1"
+    - php: '7.1'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "7.1"
+    - php: '7.1'
       env: WP_VERSION=4.7 WP_MULTISITE=1
-    - php: "7.0"
+    - php: '7.0'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "7.0"
+    - php: '7.0'
       env: WP_VERSION=4.7 WP_MULTISITE=1
-    - php: "5.6"
+    - php: '5.6'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "5.6"
+    - php: '5.6'
       env: WP_VERSION=4.7 WP_MULTISITE=1
-    - php: "5.5"
+    - php: '5.5'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "5.4"
+    - php: '5.4'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "5.3"
+    - php: '5.3'
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "hhvm"
+    - php: hhvm
       env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: "nightly"
+    - php: nightly
       env: WP_VERSION=4.7 WP_MULTISITE=0
-
-    - php: "5.6"
+    - php: '5.6'
       env: WP_VERSION=4.6 WP_MULTISITE=0
-    - php: "5.6"
+    - php: '5.6'
       env: WP_VERSION=4.6 WP_MULTISITE=1
-
-    - php: "5.5"
+    - php: '5.5'
       env: WP_VERSION=4.5 WP_MULTISITE=0
-    - php: "5.5"
+    - php: '5.5'
       env: WP_VERSION=4.5 WP_MULTISITE=1
-
-    - php: "5.5"
+    - php: '5.5'
       env: WP_VERSION=4.4 WP_MULTISITE=0
-    - php: "5.5"
+    - php: '5.5'
       env: WP_VERSION=4.4 WP_MULTISITE=1
+    - php: '7.1'
+      env: WP_VERSION=master WP_MULTISITE=0
+    - php: '7.0'
+      env: WP_VERSION=master WP_MULTISITE=0
+    - php: '5.6'
+      env: WP_VERSION=master WP_MULTISITE=0
 
-    - php: "7.1"
-      env: WP_VERSION=master WP_MULTISITE=0
-    - php: "7.0"
-      env: WP_VERSION=master WP_MULTISITE=0
-    - php: "5.6"
-      env: WP_VERSION=master WP_MULTISITE=0
   allow_failures:
-    - php: "hhvm"
-    - php: "nightly"
+    - php: hhvm
+    - php: nightly
 
 before_script:
-    - export PLUGIN_SLUG=$(basename $(pwd))
-    - git clone --depth=1 --branch $WP_VERSION git://develop.git.wordpress.org/ /tmp/wordpress
-    - cd ..
-    - mv $PLUGIN_SLUG "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
-    - cd /tmp/wordpress
-    - git checkout $WP_VERSION
-    - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
-    - cp wp-tests-config-sample.php wp-tests-config.php
-    - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
-    - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
-    - sed -i "s/yourpasswordhere//" wp-tests-config.php
-    - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+  - export PLUGIN_SLUG=$(basename $(pwd))
+  - git clone --depth=1 --branch $WP_VERSION git://develop.git.wordpress.org/ /tmp/wordpress
+  - cd ..
+  - mv $PLUGIN_SLUG "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+  - cd /tmp/wordpress
+  - git checkout $WP_VERSION
+  - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
+  - cp wp-tests-config-sample.php wp-tests-config.php
+  - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
+  - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
+  - sed -i "s/yourpasswordhere//" wp-tests-config.php
+  - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
 
 script: phpunit
 
 sudo: false
+
+notifications:
+  slack:
+    secure: Is16b7yl3I1k0Yul3xaBtCPhUoM7V9qOefNFN8RF8k7aDVsG4/nRaaOglgcW1GA4/AyfXK1DmiV/qFd5hQuSmyeujMeMnnNhD+8xoSy25LpkoC0WJ+16JzeH3DesSHCY5g2ujBBmdaisuAhg5T3uVkRaoAiXhcjLjIAJRFdMFy+pcwj2EhCKisShEsrymh5wsCbHsdm9ewzZUoa9Un9z1s5PgPlkwoWblD+NccE9hsLCUIj5szVealxg5yLFtEnAeCX9k1v0tWPfZpHZajr2tXN0FeBx/gsxFGC3Krx5dS9vI+ydPUJnEZgJwMGrCaNryLdhz8E4K4hv+878Xc5FgLl2kMaKQcmFFXcVCY7Ljuw2vVw68YOvickheQjKcuFUoqPjby9g3Q0rtW/lseev9A+u44my2o78af357cGolPHqCtrWgZwcsJDPUL00JfNkeikcn30jRAK4KUwFRdB3eDyZYhEajhALQK+Nn4Iw3mMJPSh6AMmg+vAQZWxw7E5hESfP4RUTzOlejHSMRoTQjwI9gNsxD5SGkjOfdhV0L3TasqpmRP1HmLxVXiXMB24eQ5nuxe++K7F18EYFkCK9eyI57EEbQe1VdjuoPQG6l+Btebff9EXhnMA8k/iQ6UCS8BfeK1d3oZjzo2O1J5AYvSw7LQPYJKI+Cfd9cGz+NG8=
