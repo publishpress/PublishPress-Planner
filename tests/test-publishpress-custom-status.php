@@ -74,6 +74,21 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
         }
     }
 
+    protected function setPermalinkStructure($structure)
+    {
+        global $wp_rewrite;
+
+        if (method_exists($this, 'set_permalink_structure')) {
+            return $this->set_permalink_structure($structure);
+        }
+
+        if (method_exists($wp_rewrite, 'set_permalink_structure')) {
+            return $wp_rewrite->set_permalink_structure($structure);
+        }
+
+        throw new \Exception("Method undefined: set_permalink_structure", 1);
+    }
+
     /**
      * Test that a published post post_date_gmt is not altered
      */
@@ -279,7 +294,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
     {
         global $pagenow;
 
-        $this->set_permalink_structure('/%postname%/');
+        $this->setPermalinkStructure('/%postname%/');
 
         $p = $this->getFactory()->post->create(array(
             'post_status' => 'pending',
@@ -303,7 +318,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
 
     public function test_fix_sample_permalink_html_on_publish_when_pretty_permalinks_are_enabled()
     {
-        $this->set_permalink_structure('/%postname%/');
+        $this->setPermalinkStructure('/%postname%/');
 
         // Published posts should use published permalink
         $p = $this->getFactory()->post->create(array(
@@ -324,7 +339,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
 
     public function test_fix_get_sample_permalink_should_respect_pitch_pages()
     {
-        $this->set_permalink_structure('/%postname%/');
+        $this->setPermalinkStructure('/%postname%/');
 
         $page = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
@@ -340,7 +355,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
 
     public function test_fix_get_sample_permalink_should_respect_hierarchy_of_pitch_pages()
     {
-        $this->set_permalink_structure('/%postname%/');
+        $this->setPermalinkStructure('/%postname%/');
 
         $parent = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
@@ -366,7 +381,7 @@ class WP_Test_PublishPress_Custom_Status extends WP_UnitTestCase
 
     public function test_fix_get_sample_permalink_should_respect_hierarchy_of_publish_pages()
     {
-        $this->set_permalink_structure('/%postname%/');
+        $this->setPermalinkStructure('/%postname%/');
 
         $parent = $this->getFactory()->post->create(array(
             'post_type'  => 'page',
