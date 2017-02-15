@@ -229,24 +229,31 @@ if (!class_exists('PP_Settings')) {
                 $display_text = '<span class="publishpress-error-message publishpress-message">' . esc_html($current_module->messages[$error]) . '</span>';
             }
 
-            $page_icon = '<span class="' . $current_module->icon_class . '"></span>';
+            $page_icon = '<span class="' . $current_module->icon_class . ' pp-page-icon"></span>';
             ?>
+            <div class="pp-header">
+                <img src="<?php echo PUBLISHPRESS_URL . '/modules/settings/lib/pressshack-logo-282x70.png'; ?>" />
+            </div>
             <div class="wrap publishpress-admin">
                 <?php if ($current_module->name != 'settings'): ?>
-                    <?php echo $page_icon; ?>
                     <h2>
-                        <a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>">
-                            <?php _e('PublishPress', 'publishpress') ?>
-                        </a>:&nbsp;
-                        <?php echo $current_module->title; ?>
+                        <?php echo $page_icon; ?>
+                        <div class="pp-page-title">
+                            <a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>">
+                                <?php _e('PublishPress', 'publishpress') ?>
+                            </a>:&nbsp;
+                            <?php echo $current_module->title; ?>
+                        </div>
                         <?php if (isset($display_text)) {
                             echo $display_text;
                         }?>
                     </h2>
                 <?php else: ?>
-                    <?php echo $page_icon; ?>
                     <h2>
-                        <?php _e('PublishPress', 'publishpress') ?>
+                        <?php echo $page_icon; ?>
+                        <div class="pp-page-title">
+                            <?php _e('PublishPress', 'publishpress') ?>
+                        </div>
                         <?php if (isset($display_text)) {
                             echo $display_text;
                         } ?>
@@ -460,18 +467,10 @@ if (!class_exists('PP_Settings')) {
                 $display_text = '<span class="publishpress-error-message publishpress-message">' . esc_html($requested_module->messages[$error]) . '</span>';
             }
 
-            ?>
-            <h1><?php echo __('PublishPress', 'publishpress') . ': ' . $requested_module->title; ?></h1>
-            <div class="wrap publishpress-admin">
-                <div class="explanation">
-                    <?php if ($requested_module->short_description): ?>
-                    <h3><?php echo $requested_module->short_description; ?></h3>
-                    <?php endif; ?>
-                    <?php if ($requested_module->extended_description): ?>
-                    <p><?php echo $requested_module->extended_description; ?></p>
-                    <?php endif; ?>
-                </div>
+            $this->print_default_header($requested_module);
 
+            ?>
+            <div class="wrap publishpress-admin">
                 <h2 class="nav-tab-wrapper">
                     <?php
                     foreach ($publishpress->modules as $mod_name => $mod_data) {
@@ -497,6 +496,7 @@ if (!class_exists('PP_Settings')) {
                 ?>
             </div>
             <?php
+            $this->print_default_footer($requested_module);
         }
     }
 }

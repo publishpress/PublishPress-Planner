@@ -43,11 +43,11 @@ if (!class_exists('PP_Modules_Settings')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title'                => __('Modules', 'publishpress'),
+                'title'                => __('Settings', 'publishpress'),
                 'short_description'    => __('PublishPress is the essential plugin for any site with multiple writers', 'publishpress'),
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-admin-comments',
+                'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'modules-settings',
                 'default_options'      => array(
                     'enabled'    => 'on',
@@ -113,7 +113,6 @@ if (!class_exists('PP_Modules_Settings')) {
         public function print_configure_view()
         {
             global $publishpress;
-
             ?>
             <form class="basic-settings" action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
                 <?php settings_fields($this->module->options_group_name); ?>
