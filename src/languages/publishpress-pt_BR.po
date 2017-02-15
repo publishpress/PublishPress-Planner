@@ -137,7 +137,7 @@ msgstr "<p>O calendário é uma visualização semana-a-semana ou mês-a-mês co
 
 #: modules/calendar/calendar.php:62
 msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações  </strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Documentação do Calendário</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
+msgstr "<p><strong> Para mais informações  </strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Documentação do Calendário</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/calendar/calendar.php:214
 msgid "Number of Weeks: "
@@ -914,7 +914,7 @@ msgstr "<p>Manter um registro dos detalhes importantes sobre seu conteúdo com m
 
 #: modules/editorial-metadata/editorial-metadata.php:69
 msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentação dos Metadados Editoriais</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
+msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentação dos Metadados Editoriais</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/editorial-metadata/editorial-metadata.php:131
 msgid "First Draft Date"
@@ -1235,7 +1235,7 @@ msgstr "<p>As notificações garantem que você se mantenha atualizado acerca do
 
 #: modules/notifications/notifications.php:54
 msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Para mais informações:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentação de Notificações </a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
+msgstr "<p><strong>Para mais informações:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentação de Notificações </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/notifications/notifications.php:288
 msgid "Click to unfollow updates to this post"
