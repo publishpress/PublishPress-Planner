@@ -12,7 +12,7 @@
     border: 1px solid #e1e1e1;
     position: relative;
     float: left;
-    height: 80px;
+    height: 100px;
     min-width: 265px;
 }
 
@@ -51,4 +51,8 @@
     color: #fff;
     border-color: #7569a7;
     background: #7569a7;
+}
+
+#modules-wrapper .dashicons {
+    color: #b0b0b0;
 }
