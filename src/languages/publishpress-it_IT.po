@@ -159,8 +159,8 @@ msgstr "<p>Il calendario permette una comoda visualizzazione settimanale o mensi
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/calendar/calendar.php:56
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><a href=\"https://pressshack.com/features/calendar/\">Documentazione Calendario</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><a href=\"https://pressshack.com/features/calendar/\">Documentazione Calendario</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/calendar/calendar.php:187
@@ -435,8 +435,8 @@ msgstr "<p>Gli stati di lavorazione di PublishPress permettono di definire i pas
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:62
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Documentazione Stati di Lavorazione</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Documentazione Stati di Lavorazione</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:120
@@ -920,8 +920,8 @@ msgstr "<p>I commenti editoriali ti possono aiutare ad abbattere il traffico ema
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:43
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Documentazione Commenti editoriali</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Documentazione Commenti editoriali</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
@@ -1060,8 +1060,8 @@ msgstr "<p>Tiene traccia di informazioni importanti sul contenuto tramite le inf
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:69
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentazione Informazioni editoriali</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentazione Informazioni editoriali</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
@@ -1511,8 +1511,8 @@ msgstr "<p>Le notifiche ti tengono aggiornato sui progressi dei contenuti. Gli u
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:54
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentazione notifiche</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentazione notifiche</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit flow\0.7.1/modules/notifications/notifications.php:223
@@ -1916,8 +1916,8 @@ msgstr "<p>I gruppi aiutano a tenere organizzati gli utenti, soprattutto nelle s
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:65
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">Documentazione sui Gruppi di utenti</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress su Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Per maggiori informazioni:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">Documentazione sui Gruppi di utenti</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress su Github</a></p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:123

@@ -136,8 +136,8 @@ msgid "<p>The calendar is a convenient week-by-week or month-by-month view into 
 msgstr "<p>O calendário é uma visualização semana-a-semana ou mês-a-mês conveniente para seu conteúdo. Veja rapidamente quais histórias estão encaminhadas para serem publicadas a tempo, e quais precisarão de um esforço extra.</p>"
 
 #: modules/calendar/calendar.php:62
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações  </strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Documentação do Calendário</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress no Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong> Para mais informações  </strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Documentação do Calendário</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/calendar/calendar.php:214
 msgid "Number of Weeks: "
@@ -446,8 +446,8 @@ msgid "<p>PublishPress’s custom statuses allow you to define the most importan
 msgstr "<p>Status personalizados do PublishPress permitem definir as etapas mais importantes do seu fluxo de trabalho editorial. Fora da caixa, WordPress só oferece \"Rascunho\" e \"Revisão Pendente\" como status de post. Com status personalizados, você pode criar seus próprios status, como \"Em andamento\", \"Em campo\" ou \"Esperando edição\" e conservar ou eliminar os originais. Também é possível arrastar e soltar os status para estabelecer a melhor ordem para seu fluxo de trabalho. <p></p> Os status personalizados estão plenamente integrados com o restante do PublishPress e a administração do WordPress. No calendário e no histórico de orçamento, é possível filtrar apenas os posts de um status específico. Além disso, as notificações de email poder ser enviadas a um grupo específico de usuários quando o post teve seu status alterado.</p>"
 
 #: modules/custom-status/custom-status.php:61
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Documentação do status personalizado</a> </p><p> <a href=\"http://wordpress.org/tags/publishpress ? forum_id = 10\"> Fórum PublishPress </a> </ p><p> <a href=\"https://github.com/danielbachhuber/Edit-Flow\"> Editar Flow no Github </a > </p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Documentação do status personalizado</a> </p><p> <a href=\"http://wordpress.org/tags/publishpress ? forum_id = 10\"> Fórum PublishPress </a> </ p><p> <a href=\"https://github.com/ostraining/PublishPress\"> Editar Flow no Github </a > </p>"
 
 #: modules/custom-status/custom-status.php:124
 msgid "Pitch"
@@ -820,8 +820,8 @@ msgid "<p>Editorial comments help you cut down on email overload and keep the co
 msgstr "<p>Comentários editoriais ajudam a reduzir a sobrecarga de email e manter a conversação acerca do que verdadeiramente importa: seu conteúdo. Comentar no admin, similar ao que se encontra ao final de um post do blog, permite aos escritores e editores deixar um feedback privado e discutir o que deve ser alterado antes da publicação. </p><p> Qualquer pessoa que tenha acceso a ver a história em progreso também terá a possibilidade de fazer comentários a respeito. Se você habilitou as notificações, os que seguirem o post receberão um email cada vez que um comentario é deixado.</p>"
 
 #: modules/editorial-comments/editorial-comments.php:43
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações</strong> </p><p> <a href=\"https://pressshack.com/features/editorial-comments/\"> Documentação dos Comentários Editoriais </a> </p> <a href = \"http://wordpress.org/tags/edit flujo? forum_id=10\"> Fórum PublishPress </a> </p> <p> <a href=\"https://github.com/danielbachhuber/Edit-Flow\"> PublishPress no Github </a> </p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong> Para mais informações</strong> </p><p> <a href=\"https://pressshack.com/features/editorial-comments/\"> Documentação dos Comentários Editoriais </a> </p> <a href = \"http://wordpress.org/tags/edit flujo? forum_id=10\"> Fórum PublishPress </a> </p> <p> <a href=\"https://github.com/ostraining/PublishPress\"> PublishPress no Github </a> </p>"
 
 #: modules/editorial-comments/editorial-comments.php:175
 msgid "You can add editorial comments to a post once you've saved it for the first time."
@@ -913,8 +913,8 @@ msgid "<p>Keep track of important details about your content with editorial meta
 msgstr "<p>Manter um registro dos detalhes importantes sobre seu conteúdo com metadados editoriais. Esta característica lhe permite criar tantos campos de datas, textos, números, etc. como queira, e logo utilizá-los para armazenar informações como dados de contato, número de palavras requerido, o local de uma entrevista.</p> <p>Uma vez configurados os campos, os metadados editoriais se integram tanto com o calendário e o histórico de pagamento. Faça com que um elemento dos metadados editoriais seja visível para o resto da sua equipe. Mantenha oculto para restringir esta informação entre o escritor e o seu editor </p>"
 
 #: modules/editorial-metadata/editorial-metadata.php:69
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentação dos Metadados Editoriais</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress no Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong> Para mais informações </strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Documentação dos Metadados Editoriais</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/editorial-metadata/editorial-metadata.php:131
 msgid "First Draft Date"
@@ -1234,8 +1234,8 @@ msgid "<p>Notifications ensure you keep up to date with progress your most impor
 msgstr "<p>As notificações garantem que você se mantenha atualizado acerca do progresso do seu conteúdo mais importante. Os usuários podem receber as notificações de um post sendo marcados um por um ou selecionando um grupo de usuários. </p> Quando ativadas, as notificações de email podem ser enviadas quando um post tem seu status alterado ou quando um editor ou escritor deixa um comentário editorial.</p>"
 
 #: modules/notifications/notifications.php:54
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong>Para mais informações:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentação de Notificações </a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress no Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong>Para mais informações:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Documentação de Notificações </a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">Fórum PublishPress </a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress no Github</a></p>"
 
 #: modules/notifications/notifications.php:288
 msgid "Click to unfollow updates to this post"
@@ -1586,8 +1586,8 @@ msgid "<p>For those with many people involved in the publishing process, user gr
 msgstr "<p>Para os que têm muitas pessoas envolvidas no processo de publicação, grupos de usuários ajudam a manter a organização.</p><p>Atualmente, grupos de usuários são usados primariamente para atribuir um grupo de usuários para receber notificações.</p>"
 
 #: modules/user-groups/user-groups.php:67
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
-msgstr "<p><strong> Para mais informações</strong> </p><p> <a href=\"https://pressshack.com/features/user-groups/\">Documentação dos Grupos de usuários</a></p><a href=\"http://wordpress.org / tags / publishpress? forum_id=10\"> Fórum PublishPress </a> </p> <a href=\"https://github.com/danielbachhuber/Edit-Flow\"> PublishPress no Github </a> </p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr "<p><strong> Para mais informações</strong> </p><p> <a href=\"https://pressshack.com/features/user-groups/\">Documentação dos Grupos de usuários</a></p><a href=\"http://wordpress.org / tags / publishpress? forum_id=10\"> Fórum PublishPress </a> </p> <a href=\"https://github.com/ostraining/PublishPress\"> PublishPress no Github </a> </p>"
 
 #: modules/user-groups/user-groups.php:127
 msgid "Copy Editors"

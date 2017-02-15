@@ -252,8 +252,8 @@ jQuery(document).ready(function ($) {
 
             // Bind the form display to the '+' button
             // or to a double click on the calendar square
-            $day_units.find('.schedule-new-post-button').on('click.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue);
-            $day_units.on('dblclick.editFlow.quickPublish', EFQuickPublish.open_quickpost_dialogue);
+            $day_units.find('.schedule-new-post-button').on('click.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
+            $day_units.on('dblclick.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
             $day_units.hover(
                 function(){ $(this).find('.schedule-new-post-button').stop().delay(500).fadeIn(100);},
                 function(){ $(this).find('.schedule-new-post-button').stop().hide();}
@@ -388,4 +388,3 @@ jQuery(document).ready(function ($) {
         EFQuickPublish.init();
 
 });
-

@@ -130,9 +130,8 @@ msgstr ""
 #: modules/calendar/calendar.php:56
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/calendar/\">Calendar Documentation</a></p><p><a href=\"http://wordpress."
-"org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href=\"https://"
-"github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
+"features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://"
+"github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/calendar/calendar.php:187
@@ -364,9 +363,8 @@ msgstr ""
 #: modules/custom-status/custom-status.php:61
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"http://"
-"wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href="
-"\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
+"features/custom-statuses/\">Custom Status Documentation</a></p><p><a href="
+"\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:124
@@ -753,9 +751,8 @@ msgstr ""
 #: modules/editorial-comments/editorial-comments.php:43
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href="
-"\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></"
-"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on "
+"features/editorial-comments/\">Editorial Comments Documentation</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
 
@@ -867,9 +864,8 @@ msgstr ""
 #: modules/editorial-metadata/editorial-metadata.php:69
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href="
-"\"http://wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></"
-"p><p><a href=\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on "
+"features/editorial-metadata/\">Editorial Metadata Documentation</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
 
@@ -1208,9 +1204,8 @@ msgstr ""
 #: modules/notifications/notifications.php:56
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/notifications/\">Notifications Documentation</a></p><p><a href=\"http://"
-"wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href="
-"\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
+"features/notifications/\">Notifications Documentation</a></p><p><a href="
+"\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/notifications/notifications.php:227
@@ -1554,9 +1549,8 @@ msgstr ""
 #: modules/user-groups/user-groups.php:67
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/user-groups/\">User Groups Documentation</a></p><p><a href=\"http://"
-"wordpress.org/tags/publishpress?forum_id=10\">PublishPress Forum</a></p><p><a href="
-"\"https://github.com/danielbachhuber/Edit-Flow\">PublishPress on Github</a></p>"
+"features/user-groups/\">User Groups Documentation</a></p><p><a href="
+"\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/user-groups/user-groups.php:127
