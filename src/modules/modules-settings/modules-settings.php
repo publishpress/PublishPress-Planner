@@ -54,7 +54,7 @@ if (!class_exists('PP_Modules_Settings')) {
                 ),
                 'configure_page_cb'   => 'print_configure_view',
                 'autoload'            => false,
-                'options_page'          => true,
+                'options_page'        => true,
             );
 
             $this->module = PublishPress()->register_module('modules_settings', $args);

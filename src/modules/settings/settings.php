@@ -95,11 +95,12 @@ if (!class_exists('PP_Settings')) {
                 }
             }
 
-            add_options_page(
+            add_submenu_page(
+                $this->module->settings_slug,
                 __('PublishPress Settings'),
-                'PublishPress',
+                __('Settings'),
                 'manage_options',
-                'pp-options',
+                'pp-modules-settings',
                 array($this, 'options_page_controller')
             );
         }
@@ -130,8 +131,7 @@ if (!class_exists('PP_Settings')) {
         {
             ?>
             <script type="text/javascript">
-                var pp_admin_url = '<?php echo get_admin_url();
-            ?>';
+                var pp_admin_url = '<?php echo get_admin_url(); ?>';
             </script>
             <?php
 
@@ -480,7 +480,7 @@ if (!class_exists('PP_Settings')) {
                         }
                         ?>
                         <a
-                            href="?page=pp-options&module=<?php echo $mod_data->settings_slug; ?>"
+                            href="?page=pp-modules-settings&module=<?php echo $mod_data->settings_slug; ?>"
                             class="nav-tab <?php echo ($module_settings_slug == $mod_data->settings_slug) ? 'nav-tab-active' : ''; ?> "
                             >
                             <?php echo $mod_data->title ?>
