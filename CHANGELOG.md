@@ -1,66 +1,27 @@
-## Upgrade Notice
+## Changelog
 
-== Changelog ==
+**1.0.4 (Feb. 15, 2017)**
+* Bug fix: Update language strings and some links
+* Improvement: Cleanup on the code
+* Improvement: Cleanup on the admin interface
+* Improvement: Add PressShack logo to the top of admin pages
+* Improvement: Set minimum WordPress version to 4.4
+* Improvement: Set minimum PHP version to 5.4
+* Improvement: Move the Settings menu item to the main PublishPress menu
+* Improvement: Minor improvement to the icons
 
 **1.0.3**
-Update language .mo files
+* Improvement: Update language .mo files
 
 **1.0.2**
-Update plugin's description
+* Improvement: Update plugin's description
 
 **1.0.1**
-Update plugin's description
-Update language strings
+* Improvement: Update plugin's description
+* Improvement: Update language strings
 
 **1.0.0**
-Initial release.
-
-**0.8.2**
-Minor enhancements and bug fixes, translation updates.
-
-**0.8.1**
-Added Composer support.
-
-**0.8**
-Final readme and versioning changes for v0.8
-
-**0.7.5**
-New localizations; myriad of bug fixes
-
-**0.7.4**
-Support for non-Latin characters in custom statuses and editorial metadata; various bug fixes
-
-**0.7.3**
-Support PHP 5.2.x by removing the anonymous functions we mistakenly added
-
-**0.7.2**
-Contributors and other users without the 'publish_posts' capability can access custom statuses.
-
-**0.7.1**
-Enhancements and bug fixes, including defaulting to the proper date in the calendar and an Italian localization.
-
-**0.7**
-Complete rewrite into a modular architecture. Lots of polish added. Important note: If upgrading from pre-v0.6, please upgrade to v0.6.5 first
-
-**0.6.5**
-Fixes an issue where the post timestamp would be set as soon as a custom status was used.
-
-**0.6.4**
-Number of minor fixes and improvements, including proper support for bulk editing custom statuses, a 'Clear' link for clearing date editorial metadata, and better respect for user roles and capabilities in Story Budget.
-
-**0.6.3**
-Restored email notifications to old delivery method instead of queueing with WP cron because of reliability issues. Added option to see unpublished content on story budget and editorial calendar.
-
-**0.6.2**
-Two bug fixes: post titles should properly appear in email notifications, and bulk editing no longer deletes editorial metadata.
-
-**0.6.1**
-Proper support for custom post types. We removed the option to enable/disable Custom Statuses for Pages from the Settings page. Custom Statuses are enabled by default for Pages. To remove support for statuses, please see readme.
-
-**0.6**
-New features, including story budget and editorial metadata, a completely rewritten calendar view, and many bug fixes, including one for editorial comments appearing in the admin.
-
-## Changelog
+* First stable release after fork
 
 **0.8.2 (Sept. 16, 2016)**
 * Improvement: Updated Spanish localization thanks to [moucho](https://github.com/moucho)

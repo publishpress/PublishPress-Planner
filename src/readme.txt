@@ -47,15 +47,25 @@ There're two ways to install PublishPress plugin:
 
 == Changelog ==
 
-** v1.0.3 **
+** 1.0.4 **
+* Update language strings and some links
+* Cleanup on the code
+* Cleanup on the admin interface
+* Add PressShack logo to the top of admin pages
+* Set minimum WordPress version to 4.4
+* Set minimum PHP version to 5.4
+* Move the Settings menu item to the main PublishPress menu
+* Minor improvement to the icons
+
+** 1.0.3 **
 * Update language .mo files
 
-** v1.0.2 **
+** 1.0.2 **
 * Update plugin's description
 
-** v1.0.1 **
+** 1.0.1 **
 * Update plugin's description
 * Update language strings
 
-** v1.0.0 **
-* Initial release.
+** 1.0.0 **
+* First stable release
