@@ -76,7 +76,7 @@ if (!class_exists('PP_Modules_Settings')) {
         {
             global $pagenow;
 
-            wp_enqueue_script('publishpress-post_comment', $this->module_url . 'lib/modules-settings.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script('publishpress-modules-settings', $this->module_url . 'lib/modules-settings.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false, PUBLISHPRESS_VERSION, 'all');
         }
 

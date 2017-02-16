@@ -123,7 +123,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                 return;
             }
 
-            wp_enqueue_script('publishpress-post_comment', $this->module_url . 'lib/editorial-comments.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script('publishpress-editorial-comments', $this->module_url . 'lib/editorial-comments.js', array('jquery', 'post'), PUBLISHPRESS_VERSION, true);
             wp_enqueue_style('publishpress-editorial-comments-css', $this->module_url . 'lib/editorial-comments.css', false, PUBLISHPRESS_VERSION, 'all');
 
             $thread_comments = (int) get_option('thread_comments');
@@ -133,7 +133,6 @@ if (!class_exists('PP_Editorial_Comments')) {
             ?>;
             </script>
             <?php
-
         }
 
         /**
