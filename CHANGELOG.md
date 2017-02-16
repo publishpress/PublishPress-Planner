@@ -9,6 +9,7 @@
 * Improvement: Set minimum PHP version to 5.4
 * Improvement: Move the Settings menu item to the main PublishPress menu
 * Improvement: Minor improvement to the icons
+* Bug fix: Fix bug on editorial comments box in the post form
 
 **1.0.3**
 * Improvement: Update language .mo files

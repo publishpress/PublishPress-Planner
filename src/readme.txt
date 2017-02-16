@@ -3,7 +3,7 @@ Contributors: PressShack
 Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, story budget
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,7 @@ There're two ways to install PublishPress plugin:
 * Set minimum PHP version to 5.4
 * Move the Settings menu item to the main PublishPress menu
 * Minor improvement to the icons
+* Fix bug on editorial comments box in the post form
 
 ** 1.0.3 **
 * Update language .mo files
