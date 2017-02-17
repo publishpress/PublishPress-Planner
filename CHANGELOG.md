@@ -1,5 +1,8 @@
 ## Changelog
 
+**1.0.5 (Feb. 16, 2017)**
+* Update version to trigger a new release fixing SVN issues on the last release
+
 **1.0.4 (Feb. 15, 2017)**
 * Bug fix: Update language strings and some links
 * Improvement: Cleanup on the code
