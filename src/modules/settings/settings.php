@@ -84,7 +84,7 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller')) ;
+            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), '', 25) ;
 
             foreach ($publishpress->modules as $mod_name => $mod_data) {
                 $add_menu = isset($mod_data->add_menu) && $mod_data->add_menu === true;
