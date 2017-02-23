@@ -760,7 +760,7 @@ msgid "Quick Edit"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:29
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:30

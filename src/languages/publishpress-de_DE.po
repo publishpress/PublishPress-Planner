@@ -878,8 +878,8 @@ msgstr "Schnellbearbeitung"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:27
-msgid "Dashboard Widgets"
-msgstr "Dashboard Widgets"
+msgid "Dashboard"
+msgstr "Dashboard"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:28

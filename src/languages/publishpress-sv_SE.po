@@ -828,7 +828,7 @@ msgid "Quick Edit"
 msgstr "Snabbredigera"
 
 #: ../modules/dashboard/dashboard.php:28
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr "Panel-widgets"
 
 #: ../modules/dashboard/dashboard.php:29

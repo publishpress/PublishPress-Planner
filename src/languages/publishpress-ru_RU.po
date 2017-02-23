@@ -822,7 +822,7 @@ msgid "Quick Edit"
 msgstr "Быстрая правка"
 
 #: modules/dashboard/dashboard.php:28
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr "Виджеты консоли"
 
 #: modules/dashboard/dashboard.php:29

@@ -821,7 +821,7 @@ msgstr "Modifica veloce"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:27
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr "Widget della bacheca"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni

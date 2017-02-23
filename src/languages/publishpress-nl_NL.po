@@ -664,7 +664,7 @@ msgid "Quick Edit"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:27
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:28

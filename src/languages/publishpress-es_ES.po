@@ -807,7 +807,7 @@ msgid "Quick Edit"
 msgstr "Edición Rápida"
 
 #: modules/dashboard/dashboard.php:29
-msgid "Dashboard Widgets"
+msgid "Dashboard"
 msgstr "Widgets del Escritorio"
 
 #: modules/dashboard/dashboard.php:30
