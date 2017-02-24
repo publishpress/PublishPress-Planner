@@ -86,24 +86,14 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            add_menu_page($this->module->title, $this->module->title, 'manage_options', $this->module->settings_slug, array($this, 'settings_page_controller'), '', 25) ;
-
-            foreach ($publishpress->modules as $mod_name => $mod_data) {
-                $add_menu = isset($mod_data->add_menu) && $mod_data->add_menu === true;
-
-                if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on'
-                    && $mod_data->configure_page_cb && $mod_name != $this->module->name && $add_menu) {
-                    add_submenu_page($this->module->settings_slug, $mod_data->title, $mod_data->title, 'manage_options', $mod_data->settings_slug, array($this, 'settings_page_controller')) ;
-                }
-            }
-
-            add_submenu_page(
-                $this->module->settings_slug,
-                __('PublishPress Settings'),
-                __('Settings'),
+            add_menu_page(
+                $this->module->title,
+                $this->module->title,
                 'manage_options',
                 PP_Modules_Settings::SETTINGS_SLUG,
-                array($this, 'options_page_controller')
+                array($this, 'options_page_controller'),
+                '',
+                25
             );
         }
 
@@ -171,31 +161,6 @@ if (!class_exists('PP_Settings')) {
             } else {
                 die('-1');
             }
-        }
-
-        /**
-         * Handles all settings and configuration page requests. Required element for PublishPress
-         */
-        public function settings_page_controller()
-        {
-            global $publishpress;
-
-            $requested_module = $publishpress->get_module_by('settings_slug', $_GET['page']);
-            if (!$requested_module) {
-                wp_die(__('Not a registered PublishPress module', 'publishpress'));
-            }
-            $configure_callback    = $requested_module->configure_page_cb;
-            $requested_module_name = $requested_module->name;
-
-            // Don't show the settings page for the module if the module isn't activated
-            if (!$this->module_enabled($requested_module_name)) {
-                echo '<div class="message error"><p>' . sprintf(__('Module not enabled. Please enable it from the <a href="%1$s">PublishPress settings page</a>.', 'publishpress'), PUBLISHPRESS_SETTINGS_PAGE) . '</p></div>';
-                return;
-            }
-
-            $this->print_default_header($requested_module);
-            $publishpress->$requested_module_name->$configure_callback();
-            $this->print_default_footer($requested_module);
         }
 
         /**
