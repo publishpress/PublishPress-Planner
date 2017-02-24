@@ -31,6 +31,8 @@
 if (!class_exists('PP_Settings')) {
     class PP_Settings extends PP_Module
     {
+        const SETTINGS_SLUG = 'pp-settings';
+
         public $module;
 
         /**
@@ -51,7 +53,7 @@ if (!class_exists('PP_Settings')) {
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'settings',
-                'settings_slug'        => 'pp-settings',
+                'settings_slug'        => self::SETTINGS_SLUG,
                 'default_options'      => array(
                     'enabled' => 'on',
                 ),
@@ -100,7 +102,7 @@ if (!class_exists('PP_Settings')) {
                 __('PublishPress Settings'),
                 __('Settings'),
                 'manage_options',
-                'pp-modules-settings',
+                PP_Modules_Settings::SETTINGS_SLUG,
                 array($this, 'options_page_controller')
             );
         }
@@ -433,7 +435,7 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : 'pp-modules-settings-settings';
+            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
             $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             if (empty($requested_module)) {
                 $requested_module = 'pp-calendar-settings';
@@ -479,7 +481,7 @@ if (!class_exists('PP_Settings')) {
                         }
                         ?>
                         <a
-                            href="?page=pp-modules-settings&module=<?php echo $mod_data->settings_slug; ?>"
+                            href="?page=<?php echo PP_Modules_Settings::SETTINGS_SLUG; ?>&module=<?php echo $mod_data->settings_slug; ?>"
                             class="nav-tab <?php echo ($module_settings_slug == $mod_data->settings_slug) ? 'nav-tab-active' : ''; ?> "
                             >
                             <?php echo $mod_data->title ?>

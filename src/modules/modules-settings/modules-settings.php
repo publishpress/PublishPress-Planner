@@ -37,6 +37,7 @@ if (!class_exists('PP_Modules_Settings')) {
      */
     class PP_Modules_Settings extends PP_Module
     {
+        const SETTINGS_SLUG = 'pp-modules-settings'; 
 
         public function __construct()
         {

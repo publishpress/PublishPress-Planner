@@ -54,8 +54,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * The name of the taxonomy we're going to register for editorial metadata.
          */
-        const metadata_taxonomy         = 'pp_editorial_meta';
+        const metadata_taxonomy     = 'pp_editorial_meta';
         const metadata_postmeta_key = "_pp_editorial_meta";
+        const SETTINGS_SLUG         = 'pp-editorial-metadata-settings';
 
         public $module_name = 'editorial_metadata';
 
@@ -97,7 +98,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
-                'add_menu'              => true,
+                'options_page'       => true,
             );
             PublishPress()->register_module($this->module_name, $args);
         }
@@ -386,9 +387,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         public function handle_post_metaboxes()
         {
             $title = __('Editorial Metadata', 'publishpress');
-            if (current_user_can('manage_options')) {
+            if (current_user_can('manage_options'))
+            {    
                 // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
-                $url = add_query_arg('page', 'pp-editorial-metadata-settings', get_admin_url(null, 'admin.php'));
+                $url = $this->get_link();
+
                 $title .= ' <span class="postbox-title-action"><a href="' . esc_url($url) . '" class="edit-box open-box">' . __('Configure') . '</a></span>';
             }
 
@@ -1056,8 +1059,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 $args['action'] = '';
             }
             if (!isset($args['page'])) {
-                $args['page'] = $this->module->settings_slug;
+                $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
+            if (!isset($args['module'])) {
+                $args['module'] = self::SETTINGS_SLUG;
+            }
+
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'make-viewable':
@@ -1076,8 +1083,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_add_editorial_metadata()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
-                || $_GET['page'] != $this->module->settings_slug || $_POST['form-action'] != 'add-term') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-term') {
                 return;
             }
 
@@ -1158,8 +1165,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error adding term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-added'), get_admin_url(null, 'admin.php'));
+            $redirect_url = $this->get_link(array('message' => 'term-added'));
             wp_redirect($redirect_url);
+
             exit;
         }
 
@@ -1168,8 +1176,15 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_edit_editorial_metadata()
         {
-            if (!isset($_POST['submit'], $_GET['page'], $_GET['action'], $_GET['term-id'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'edit-term') {
+            $referApproved = $_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] === self::SETTINGS_SLUG;
+
+            // echo '<pre>';
+            // print_r($_POST);
+            // var_dump(!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id']),
+            //     !$referApproved, $_GET['action'] != 'edit-term'); die;
+
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
+                || !$referApproved || $_GET['action'] != 'edit-term') {
                 return;
             }
 
@@ -1249,7 +1264,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-updated'), get_admin_url(null, 'admin.php'));
+            $redirect_url = $this->get_link(array('message' => 'term-updated'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1263,8 +1278,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
 
             // Check that the current GET request is our GET request
-            if (!isset($_GET['page'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || $_GET['page'] != $this->module->settings_slug || !in_array($_GET['action'], array('make-viewable', 'make-hidden'))) {
+            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || !in_array($_GET['action'], array('make-viewable', 'make-hidden'))) {
                 return;
             }
 
@@ -1415,8 +1430,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_delete_editorial_metadata()
         {
-            if (!isset($_GET['page'], $_GET['action'], $_GET['term-id'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'delete-term') {
+            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-term') {
                 return;
             }
 
@@ -1437,7 +1452,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error deleting term.', 'publishpress'));
             }
 
-            $redirect_url = add_query_arg(array('page' => $this->module->settings_slug, 'message' => 'term-deleted'), get_admin_url(null, 'admin.php'));
+            $redirect_url = $this->get_link(array('message' => 'term-deleted'));
             wp_redirect($redirect_url);
             exit;
         }
@@ -1624,7 +1639,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 <p class="submit">
                 <?php submit_button(__('Update Metadata Term', 'publishpress'), 'primary', 'submit', false);
                 ?>
-                <a class="cancel-settings-link" href="<?php echo esc_url(add_query_arg('page', $this->module->settings_slug, get_admin_url(null, 'admin.php')));
+                <a class="cancel-settings-link" href="<?php echo esc_url($this->get_link());
                 ?>"><?php _e('Cancel', 'publishpress');
                 ?></a>
                 </p>
@@ -1636,13 +1651,13 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     <div class="col-wrap">
                     <div class="form-wrap">
                     <h3 class="nav-tab-wrapper">
-                        <a href="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug), get_admin_url(null, 'admin.php')));
+                        <a href="<?php echo esc_url($this->get_link());
                 ?>" class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
             echo ' nav-tab-active';
         }
                 ?>"><?php _e('Add New', 'publishpress');
                 ?></a>
-                        <a href="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug, 'action' => 'change-options'), get_admin_url(null, 'admin.php')));
+                        <a href="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
                 ?>" class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
             echo ' nav-tab-active';
         }
@@ -1652,7 +1667,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                 <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
                 <?php /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
-                <form class="basic-settings" action="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug, 'action' => 'change-options'), get_admin_url(null, 'admin.php')));
+                <form class="basic-settings" action="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
                 ?>" method="post">
                     <?php settings_fields($this->module->options_group_name);
                 ?>
@@ -1665,7 +1680,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 </form>
                 <?php else: ?>
                 <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
-                    <form class="add:the-list:" action="<?php echo esc_url(add_query_arg(array('page' => $this->module->settings_slug), get_admin_url(null, 'admin.php')));
+                    <form class="add:the-list:" action="<?php echo esc_url($this->get_link());
                 ?>" method="post" id="addmetadata" name="addmetadata">
                     <div class="form-field form-required">
                         <label for="metadata_name"><?php _e('Name', 'publishpress');
