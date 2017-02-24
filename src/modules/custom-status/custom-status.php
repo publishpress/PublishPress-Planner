@@ -1053,7 +1053,7 @@ if (!class_exists('PP_Custom_Status')) {
             if (!isset($args['module'])) {
                 $args['module'] = self::SETTINGS_SLUG;
             }
-            
+
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'make-default':
@@ -1393,7 +1393,7 @@ if (!class_exists('PP_Custom_Status')) {
                         <?php echo '<input id="action" name="action" type="hidden" value="add-new" />';
             ?>
                         <p class="submit"><?php submit_button(__('Add New Status', 'publishpress'), 'primary', 'submit', false);
-            ?><a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;
+            ?>&nbsp;<a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;
             ?>"><?php _e('Back to PublishPress', 'publishpress');
             ?></a></p>
                         </form>
