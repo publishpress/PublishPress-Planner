@@ -139,7 +139,7 @@ if (!class_exists('PP_Efmigration')) {
             );
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
-                'migration_warning'          => esc_html__('Heads up! This action can overwrite some existent data in PublishPress.', self::PLUGIN_NAMESPACE),
+                'migration_warning'          => esc_html__('Heads up! Importing data from EditFlow will overwrite any current data in PublishPress.', self::PLUGIN_NAMESPACE),
                 'start_migration'            => esc_html__('Start', self::PLUGIN_NAMESPACE),
                 'options'                    => esc_html__('Plugin and Modules Options', self::PLUGIN_NAMESPACE),
                 'usermeta'                   => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
