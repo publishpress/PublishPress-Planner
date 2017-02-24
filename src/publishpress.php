@@ -36,12 +36,21 @@
  * @author PressShack
  */
 
+$settingsPage = add_query_arg(
+    array(
+        'page'   => 'pp-modules-settings',
+        'module' => 'pp-modules-settings-settings'
+    ),
+    get_admin_url(null, 'admin.php')
+);
+
 // Define contants
 define('PUBLISHPRESS_VERSION', '1.0.5');
 define('PUBLISHPRESS_ROOT', dirname(__FILE__));
 define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
-define('PUBLISHPRESS_SETTINGS_PAGE', add_query_arg('page', 'pp-settings', get_admin_url(null, 'admin.php')));
+define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
+
 
 require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
