@@ -40,6 +40,7 @@ if (!class_exists('PP_Custom_Status')) {
      */
     class PP_Custom_Status extends PP_Module
     {
+        const SETTINGS_SLUG = 'pp-custom-status-settings';
 
         public $module;
 
@@ -89,7 +90,7 @@ if (!class_exists('PP_Custom_Status')) {
                     'content' => __('<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
-                'add_menu' => true,
+                'options_page'       => true,
             );
             $this->module = PublishPress()->register_module('custom_status', $args);
         }
@@ -803,8 +804,8 @@ if (!class_exists('PP_Custom_Status')) {
         {
 
             // Check that the current POST request is our POST request
-            if (!isset($_POST['submit'], $_GET['page'], $_POST['action'])
-                || $_GET['page'] != $this->module->settings_slug || $_POST['action'] != 'add-new') {
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_POST['action'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['action'] != 'add-new') {
                 return;
             }
 
@@ -872,8 +873,8 @@ if (!class_exists('PP_Custom_Status')) {
          */
         public function handle_edit_custom_status()
         {
-            if (!isset($_POST['submit'], $_GET['page'], $_GET['action'], $_GET['term-id'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'edit-status') {
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'edit-status') {
                 return;
             }
 
@@ -959,8 +960,8 @@ if (!class_exists('PP_Custom_Status')) {
             global $publishpress;
 
             // Check that the current GET request is our GET request
-            if (!isset($_GET['page'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'make-default') {
+            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'make-default') {
                 return;
             }
 
@@ -996,8 +997,8 @@ if (!class_exists('PP_Custom_Status')) {
         {
 
             // Check that this GET request is our GET request
-            if (!isset($_GET['page'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'delete-status') {
+            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-status') {
                 return;
             }
 
@@ -1047,8 +1048,12 @@ if (!class_exists('PP_Custom_Status')) {
                 $args['action'] = '';
             }
             if (!isset($args['page'])) {
-                $args['page'] = $this->module->settings_slug;
+                $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
+            if (!isset($args['module'])) {
+                $args['module'] = self::SETTINGS_SLUG;
+            }
+            
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'make-default':

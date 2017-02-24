@@ -41,6 +41,7 @@
 if (!class_exists('PP_User_Groups')) {
     class PP_User_Groups extends PP_Module
     {
+        const SETTINGS_SLUG = 'pp-user-groups-settings';
 
         public $module;
 
@@ -93,7 +94,7 @@ if (!class_exists('PP_User_Groups')) {
                     'content' => __('<p>For those with many people involved in the publishing process, user groups helps you keep them organized.</p><p>Currently, user groups are primarily used for subscribing a set of users to a post for notifications.</p>', 'publishpress'),
                     ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/user-groups/">User Groups Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
-                'add_menu' => true,
+                'options_page'       => true,
             );
             $this->module = PublishPress()->register_module('user_groups', $args);
         }
@@ -297,8 +298,8 @@ if (!class_exists('PP_User_Groups')) {
          */
         public function handle_add_usergroup()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
-                || $_GET['page'] != $this->module->settings_slug || $_POST['form-action'] != 'add-usergroup') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-usergroup') {
                 return;
             }
 
@@ -372,8 +373,8 @@ if (!class_exists('PP_User_Groups')) {
          */
         public function handle_edit_usergroup()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
-                || $_GET['page'] != $this->module->settings_slug || $_POST['form-action'] != 'edit-usergroup') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'edit-usergroup') {
                 return;
             }
 
@@ -454,8 +455,8 @@ if (!class_exists('PP_User_Groups')) {
          */
         public function handle_delete_usergroup()
         {
-            if (!isset($_GET['page'], $_GET['action'], $_GET['usergroup-id'])
-                || $_GET['page'] != $this->module->settings_slug || $_GET['action'] != 'delete-usergroup') {
+            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['usergroup-id'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-usergroup') {
                 return;
             }
 
@@ -840,8 +841,12 @@ if (!class_exists('PP_User_Groups')) {
                 $args['action'] = '';
             }
             if (!isset($args['page'])) {
-                $args['page'] = $this->module->settings_slug;
+                $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
+            if (!isset($args['module'])) {
+                $args['module'] = self::SETTINGS_SLUG;
+            }
+            
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'delete-usergroup':
