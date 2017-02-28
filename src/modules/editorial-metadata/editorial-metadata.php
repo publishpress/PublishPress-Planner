@@ -1758,9 +1758,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 ?>
                     <input type="hidden" id="form-action" name="form-action" value="add-term" />
                     <p class="submit"><?php submit_button(__('Add New Metadata Term', 'publishpress'), 'primary', 'submit', false);
-                ?>&nbsp;<a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;
-                ?>"><?php _e('Back to PublishPress', 'publishpress');
-                ?></a></p>
+                ?>&nbsp;</p>
                     </form>
                 <?php endif;
                 ?>

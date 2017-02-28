@@ -728,9 +728,7 @@ if (!class_exists('PP_User_Groups')) {
                         <?php echo '<input id="form-action" name="form-action" type="hidden" value="add-usergroup" />';
             ?>
                         <p class="submit"><?php submit_button(__('Add New User Group', 'publishpress'), 'primary', 'submit', false);
-            ?>&nbsp;<a class="cancel-settings-link" href="<?php echo PUBLISHPRESS_SETTINGS_PAGE;
-            ?>"><?php _e('Back to PublishPress', 'publishpress');
-            ?></a></p>
+            ?>&nbsp;</p>
                         </form>
                     <?php endif;
             ?>
