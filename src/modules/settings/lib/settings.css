@@ -20,6 +20,16 @@
     clear: both;
 }
 
+#modules-wrapper {
+    overflow: hidden;
+}
+
+#modules-wrapper:after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
 .publishpress-modules {
     min-width: 340px;
     max-width: 770px;

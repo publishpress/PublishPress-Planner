@@ -48,7 +48,6 @@ if (!class_exists('PP_Settings')) {
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = array(
                 'title'                => __('PublishPress', 'publishpress'),
-                'short_description'    => __('PublishPress is the essential plugin for any site with multiple writers.', 'publishpress'),
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
@@ -61,6 +60,7 @@ if (!class_exists('PP_Settings')) {
                 'autoload'          => true,
                 'add_menu' => true,
             );
+
             $this->module = PublishPress()->register_module('settings', $args);
         }
 
@@ -198,33 +198,22 @@ if (!class_exists('PP_Settings')) {
 
             $page_icon = '<span class="' . $current_module->icon_class . ' pp-page-icon"></span>';
             ?>
-            <div class="pp-header">
-                <img src="<?php echo PUBLISHPRESS_URL . '/modules/settings/lib/pressshack-logo-282x70.png'; ?>" />
-            </div>
-            <div class="wrap publishpress-admin">
-                <?php if ($current_module->name != 'settings'): ?>
-                    <h2>
-                        <?php echo $page_icon; ?>
-                        <div class="pp-page-title">
-                            <a href="<?php echo PUBLISHPRESS_SETTINGS_PAGE; ?>">
-                                <?php _e('PublishPress', 'publishpress') ?>
-                            </a>:&nbsp;
-                            <?php echo $current_module->title; ?>
-                        </div>
-                        <?php if (isset($display_text)) {
-                            echo $display_text;
-                        }?>
-                    </h2>
-                <?php else: ?>
-                    <h2>
-                        <?php echo $page_icon; ?>
-                        <div class="pp-page-title">
-                            <?php _e('PublishPress', 'publishpress') ?>
-                        </div>
-                        <?php if (isset($display_text)) {
-                            echo $display_text;
-                        } ?>
-                    </h2>
+
+            <div class="publishpress-admin pressshack-admin-wrapper">
+                <header>
+                    <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress" class="presshack-logo">
+                        <img src="<?php echo PUBLISHPRESS_URL; ?>/modules/settings/lib/icon-128x128.png">
+                    </a>
+                    <h1>
+                        <?php _e('PublishPress', 'publishpress') ?>
+                        <?php if (!empty($current_module->title)) : ?>
+                            <?php echo ': ' . $current_module->title; ?>
+                        <?php endif; ?>
+                    </h1>
+                </header>
+
+                <?php if (isset($display_text)) : ?>
+                    <?php echo $display_text; ?>
                 <?php endif; ?>
 
                 <div class="explanation">
@@ -246,15 +235,23 @@ if (!class_exists('PP_Settings')) {
         {
             ?>
             <div class="publishpress-modules">
-                <?php $this->print_modules();
-            ?>
+                <?php $this->print_modules(); ?>
             </div>
             <?php
         }
 
         public function print_default_footer($current_module)
         {
-
+            echo $this->twig->render(
+                'footer-base.twig',
+                array(
+                    'current_module' => $current_module,
+                    'plugin_name'    => __('PublishPress', 'publishpress'),
+                    'plugin_slug'    => 'publishpress',
+                    'plugin_url'     => PUBLISHPRESS_URL,
+                    'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
+                )
+            );
         }
 
         public function print_modules()
@@ -436,33 +433,25 @@ if (!class_exists('PP_Settings')) {
 
             $this->print_default_header($requested_module);
 
-            ?>
-            <div class="wrap publishpress-admin">
-                <h2 class="nav-tab-wrapper">
-                    <?php
-                    foreach ($publishpress->modules as $mod_name => $mod_data) {
-                        if (!isset($mod_data->options_page) || $mod_data->options_page === false || $mod_data->options->enabled !== 'on') {
-                            continue;
-                        }
-                        ?>
-                        <a
-                            href="?page=<?php echo PP_Modules_Settings::SETTINGS_SLUG; ?>&module=<?php echo $mod_data->settings_slug; ?>"
-                            class="nav-tab <?php echo ($module_settings_slug == $mod_data->settings_slug) ? 'nav-tab-active' : ''; ?> "
-                            >
-                            <?php echo $mod_data->title ?>
-                        </a>
-                        <?php
-                    }
-                    ?>
-                </h2>
-                <?php
-                $configure_callback    = $requested_module->configure_page_cb;
-                $requested_module_name = $requested_module->name;
+            // Get module output
+            ob_start();
+            $configure_callback    = $requested_module->configure_page_cb;
+            $requested_module_name = $requested_module->name;
 
-                $publishpress->$requested_module_name->$configure_callback();
-                ?>
-            </div>
-            <?php
+            $publishpress->$requested_module_name->$configure_callback();
+            $module_output = ob_get_clean();
+
+            echo $this->twig->render(
+                'settings.twig',
+                array(
+                    'modules'       => (array)$publishpress->modules,
+                    'settings_slug' => $module_settings_slug,
+                    'slug'          => PP_Modules_Settings::SETTINGS_SLUG,
+                    'module_output' => $module_output,
+                    'text'          => $display_text
+                )
+            );
+
             $this->print_default_footer($requested_module);
         }
     }

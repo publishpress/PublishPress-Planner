@@ -1,0 +1,21 @@
+<div class="wrap publishpress-admin">
+
+    {% if text %}
+        <div>{{ text }}</div>
+    {% endif %}
+
+    <h2 class="nav-tab-wrapper">
+        {% for module in modules %}
+            {% if not module.options_page is empty and module.options.enabled == 'on' %}
+                <a
+                    href="?page={{ slug }}&module={{ module.settings_slug }}"
+                    class="nav-tab {% if settings_slug == module.settings_slug %}nav-tab-active{% endif %}">
+                    
+                    {{ module.title }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </h2>
+
+    <div class="pp-module-settings">{{ module_output|raw }}</div>
+</div>

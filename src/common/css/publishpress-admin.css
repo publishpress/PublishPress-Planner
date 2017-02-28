@@ -54,18 +54,6 @@
     background-position: 0 -60px;
 }
 
-.pp-header {
-    background-color: #fff;
-    box-shadow: 0 1px 0 rgba(200,215,225,0.5), 0 1px 2px #e9eff3;
-    margin-left: -20px;
-    padding: 10px 20px;
-}
-
-.pp-header img {
-    height: 35px;
-    display: inline-block;
-}
-
 .pp-page-icon {
     font-size: 30px;
     display: inline-block;
@@ -75,4 +63,14 @@
     display: inline-block;
     margin-left: 10px;
     margin-bottom: 15px;
+}
+
+.pp-module-settings {
+    overflow: hidden;
+}
+
+.pp-module-settings:after {
+    clear: both;
+    content: "";
+    display: block;
 }

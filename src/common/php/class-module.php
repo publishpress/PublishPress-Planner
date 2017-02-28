@@ -36,6 +36,8 @@ if (!class_exists('PP_Module')) {
     {
         protected $twig;
 
+        protected $debug = false;
+
         public $published_statuses = array(
                                 'publish',
                                 'future',
@@ -48,7 +50,11 @@ if (!class_exists('PP_Module')) {
         {
             if (!empty($this->twigPath)) {
                 $loader = new Twig_Loader_Filesystem($this->twigPath);
-                $this->twig = new Twig_Environment($loader);
+                $this->twig = new Twig_Environment($loader, array('debug' => $this->debug));
+
+                if ($this->debug) {
+                    $this->twig->addExtension(new Twig_Extension_Debug());
+                }
             }
         }
 
@@ -421,23 +427,18 @@ if (!class_exists('PP_Module')) {
             return false;
         }
 
+        $view_slugs          = array();
+        $view_slugs_prefix   = array();
+
         // Load all of the modules that have a settings slug/ callback for the settings page
         foreach ($publishpress->modules as $mod_name => $mod_data) {
-            if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on' && $mod_data->configure_page_cb) {
-                $settings_view_slugs[] = $mod_data->settings_slug;
-            }
+            if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on' && isset($mod_data->slug)) {
+                $view_slugs[]         = $mod_data->slug;
+                $$view_slugs_prefix[] = 'pp-' . $mod_data->slug;
+            }            
         }
-
-        // The current page better be in the array of registered settings view slugs
-        if (!in_array($_GET['page'], $settings_view_slugs)) {
-            return false;
-        }
-
-        if ($module_name && $publishpress->modules->$module_name->settings_slug != $_GET['page']) {
-            return false;
-        }
-
-        return true;
+        return in_array($_GET['page'], $view_slugs)
+            || in_array($_GET['page'], $$view_slugs_prefix);
     }
 
     /**
