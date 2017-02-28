@@ -35,3 +35,5 @@ node_modules
 /src/vendor/twig/twig/*
 !/src/vendor/twig/twig/lib
 !/src/vendor/twig/twig/LICENSE
+
+node_modules
