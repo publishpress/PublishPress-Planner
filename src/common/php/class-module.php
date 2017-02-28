@@ -434,11 +434,11 @@ if (!class_exists('PP_Module')) {
         foreach ($publishpress->modules as $mod_name => $mod_data) {
             if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on' && isset($mod_data->slug)) {
                 $view_slugs[]         = $mod_data->slug;
-                $$view_slugs_prefix[] = 'pp-' . $mod_data->slug;
+                $view_slugs_prefix[] = 'pp-' . $mod_data->slug;
             }            
         }
         return in_array($_GET['page'], $view_slugs)
-            || in_array($_GET['page'], $$view_slugs_prefix);
+            || in_array($_GET['page'], $view_slugs_prefix);
     }
 
     /**
