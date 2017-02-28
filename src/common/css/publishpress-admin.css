@@ -67,6 +67,7 @@
 
 .pp-module-settings {
     overflow: hidden;
+    padding-top: 20px;
 }
 
 .pp-module-settings:after {

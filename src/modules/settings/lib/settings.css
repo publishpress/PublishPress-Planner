@@ -216,17 +216,14 @@ h3.nav-tab-wrapper {
 .publishpress-message {
     position: relative;
     top: -5px;
-    margin-left: 25px;
-    font-weight:normal;
+    font-weight: normal;
     font-size: 12px;
     line-height: 20px;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 5px;
-    padding-bottom: 4px;
+    padding: 5px 25px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+    display: block;
 }
 
 .publishpress-updated-message {
