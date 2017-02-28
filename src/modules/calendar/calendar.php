@@ -563,7 +563,19 @@ if (!class_exists('PP_Calendar')) {
 
             PublishPress()->update_module_option($this->module->name, 'ics_secret_key', wp_generate_password());
 
-            wp_safe_redirect(add_query_arg('message', 'key-regenerated', menu_page_url($this->module->settings_slug, false)));
+            $args = array(
+                'page'   => PP_Modules_Settings::SETTINGS_SLUG,
+                'module' => $this->module->settings_slug
+            );
+
+            wp_safe_redirect(
+                add_query_arg(
+                    'message',
+                    'key-regenerated',
+                    add_query_arg($args, admin_url('admin.php'))
+                )
+            );
+
             exit;
         }
 
