@@ -211,4 +211,24 @@ class RoboFile extends \Robo\Tasks
 
         return $return;
     }
+
+    /**
+     * Watch src files and sync with wordpress
+     */
+    public function srcSync()
+    {
+        $return = $this->_exec('fswatch ./src sync.sh');
+
+        return $return;
+    }
+
+    /**
+     * Watch src files and sync with wordpress
+     */
+    public function reactCompile()
+    {
+        $return = $this->_exec('./node_modules/.bin/babel src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js');
+
+        return $return;
+    }
 }
