@@ -227,7 +227,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function reactCompile()
     {
-        $return = $this->_exec('./node_modules/.bin/babel src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js');
+        $return = $this->_exec('./node_modules/.bin/babel src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js --presets es2015 --presets react');
 
         return $return;
     }
