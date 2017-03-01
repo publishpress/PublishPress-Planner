@@ -217,7 +217,8 @@ class RoboFile extends \Robo\Tasks
      */
     public function srcSync()
     {
-        $return = $this->_exec('fswatch ./src sync.sh');
+        // $return = $this->_exec('fswatch ./src/ ./sync.sh');
+        $return = $this->_exec('sh ./sync.sh');
 
         return $return;
     }
