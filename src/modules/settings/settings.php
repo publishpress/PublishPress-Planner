@@ -179,7 +179,7 @@ if (!class_exists('PP_Settings')) {
                 $message = false;
             }
             if ($message && isset($current_module->messages[$message])) {
-                $display_text = '<span class="publishpress-updated-message publishpress-message">' . esc_html($current_module->messages[$message]) . '</span>';
+                $display_text = '<div class="is-dismissible notice notice-info"><p>' . esc_html($current_module->messages[$message]) . '</p></div>';
             }
 
             // If there's been an error, let's display it
@@ -193,13 +193,11 @@ if (!class_exists('PP_Settings')) {
                 $error = false;
             }
             if ($error && isset($current_module->messages[$error])) {
-                $display_text = '<span class="publishpress-error-message publishpress-message">' . esc_html($current_module->messages[$error]) . '</span>';
+                $display_text = '<div class="is-dismissible notice notice-error"><p>' . esc_html($current_module->messages[$error]) . '</p></div>';
             }
-
-            $page_icon = '<span class="' . $current_module->icon_class . ' pp-page-icon"></span>';
             ?>
 
-            <div class="publishpress-admin pressshack-admin-wrapper">
+            <div class="publishpress-admin pressshack-admin-wrapper wrap">
                 <header>
                     <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress" class="presshack-logo">
                         <img src="<?php echo PUBLISHPRESS_URL; ?>/modules/settings/lib/icon-128x128.png">
@@ -212,14 +210,16 @@ if (!class_exists('PP_Settings')) {
                     </h1>
                 </header>
 
-                <?php if (isset($display_text)) : ?>
-                    <?php echo $display_text; ?>
-                <?php endif; ?>
+                <?php // We keep the H2 tag to keep notices tied to the header ?>
+                <h2>
+                    <?php echo isset($display_text) ? $display_text : ''; ?>
+
+                    <?php if ($current_module->short_description): ?>
+                        <?php echo $current_module->short_description; ?>
+                    <?php endif; ?>
+                </h2>
 
                 <div class="explanation">
-                    <?php if ($current_module->short_description): ?>
-                        <h3><?php echo $current_module->short_description; ?></h3>
-                    <?php endif; ?>
 
                     <?php if ($current_module->extended_description): ?>
                         <p><?php echo $current_module->extended_description; ?></p>
@@ -414,7 +414,7 @@ if (!class_exists('PP_Settings')) {
                 $message = false;
             }
             if ($message && isset($requested_module->messages[$message])) {
-                $display_text = '<span class="publishpress-updated-message publishpress-message">' . esc_html($requested_module->messages[$message]) . '</span>';
+                $display_text = '<div class="is-dismissible notice notice-info"><p>' . esc_html($requested_module->messages[$message]) . '</p></div>';
             }
 
             // If there's been an error, let's display it
@@ -428,7 +428,7 @@ if (!class_exists('PP_Settings')) {
                 $error = false;
             }
             if ($error && isset($requested_module->messages[$error])) {
-                $display_text = '<span class="publishpress-error-message publishpress-message">' . esc_html($requested_module->messages[$error]) . '</span>';
+                $display_text = '<div class="is-dismissible notice notice-error"><p>' . esc_html($requested_module->messages[$error]) . '</p></div>';
             }
 
             $this->print_default_header($requested_module);

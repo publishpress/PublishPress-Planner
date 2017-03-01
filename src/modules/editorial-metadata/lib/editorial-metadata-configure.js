@@ -148,14 +148,14 @@ jQuery(document).ready(function(){
             };
             // Inform WordPress of our updated positions
             jQuery.post(ajaxurl, params, function(retval){
-                jQuery('.publishpress-admin .publishpress-message').remove();
+                jQuery('.notice').remove();
                 // If there's a success message, print it. Otherwise we assume we received an error message
                 if (retval.status == 'success') {
-                    var message = '<span class="publishpress-updated-message publishpress-message">' + retval.message + '</span>';
+                    var message = '<div class="is-dismissible notice notice-success"><p>' + retval.message + '</p></div>';
                 } else {
-                    var message = '<span class="publishpress-error-message publishpress-message">' + retval.message + '</span>';
+                    var message = '<div class="is-dismissible notice notice-error"><p>' + retval.message + '</p></div>';
                 }
-                jQuery('.publishpress-admin h2').append(message);
+                jQuery('.publishpress-admin header').after(message);
                 // Set a timeout to eventually remove it
                 setTimeout(publishpress_hide_message, 8000);
             });

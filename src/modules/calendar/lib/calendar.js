@@ -94,7 +94,7 @@ jQuery(document).ready(function ($) {
                     reset_editorial_metadata();
             },
             error : function(r) {
-                $('.editing').next('.spinner').replaceWith('<span class="publishpress-error-message">Error saving metadata.</span>');
+                $('.editing').next('.spinner').replaceWith('<div class="is-dismissible notice notice-error"><p>Error saving metadata.</p></div>');
             }
         });
 
@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
 
     // Hide a message. Used by setTimeout()
     function publishpress_calendar_hide_message() {
-        $('.publishpress-message').fadeOut(function(){ $(this).remove(); });
+        $('.notice').fadeOut(function(){ $(this).remove(); });
     }
 
     // Close out all of the overlays with your escape key,
@@ -210,7 +210,7 @@ jQuery(document).ready(function ($) {
                 var prev_date = $(this).closest('.day-unit').attr('id');
                 var next_date = $(ui.item).closest('.day-unit').attr('id');
                 var nonce = $(document).find('#pp-calendar-modify').val();
-                $('.publishpress-message').remove();
+                $('.notice').remove();
                 $('li.ajax-actions .waiting').show();
                 // make ajax request
                 var params = {
@@ -225,10 +225,10 @@ jQuery(document).ready(function ($) {
                         $('li.ajax-actions .waiting').hide();
                         var html = '';
                         if (response.status == 'success') {
-                            html = '<div class="publishpress-message publishpress-updated-message">' + response.message + '</div>';
+                            html = '<div class="is-dismissible notice notice-success"><p>' + response.message + '</p></div>';
                             //setTimeout(publishpress_calendar_hide_message, 5000);
                         } else if (response.status == 'error') {
-                            html = '<div class="publishpress-message publishpress-error-message">' + response.message + '</div>';
+                            html = '<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>';
                         }
                         $('li.ajax-actions').prepend(html);
                         setTimeout(publishpress_calendar_hide_message, 10000);
