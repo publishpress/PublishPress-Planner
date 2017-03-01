@@ -54,7 +54,7 @@
                         <div>
                             <p className="pp-success">{objectL10n.success_msg}</p>
 
-                            <a href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
+                            <a className="button" href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
                         </div>
                     }
                 </div>

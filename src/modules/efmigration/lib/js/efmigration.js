@@ -115,7 +115,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         ),
                         React.createElement(
                             'a',
-                            { href: objectL10n.back_to_publishpress_url },
+                            { className: 'button', href: objectL10n.back_to_publishpress_url },
                             objectL10n.back_to_publishpress_label
                         )
                     )
