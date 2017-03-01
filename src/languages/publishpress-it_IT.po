@@ -369,7 +369,7 @@ msgstr "Ritorna a PublishPress"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:29
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr "Fasi di lavorazione"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -890,8 +890,8 @@ msgstr "Il modulo di notifica deve essere abilitato perchè questo widget sia vi
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:22
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:119
-msgid "Editorial Comments"
-msgstr "Commenti editoriali"
+msgid "Comments"
+msgstr "Commenti"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
@@ -1000,8 +1000,8 @@ msgstr "Abilita per questi tipi di contenuti:"
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:42
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:324
-msgid "Editorial Metadata"
-msgstr "Informazioni editoriali"
+msgid "Metadata"
+msgstr "Informazioni"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit

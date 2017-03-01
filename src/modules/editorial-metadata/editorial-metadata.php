@@ -70,7 +70,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title'                => __('Editorial Metadata', 'publishpress'),
+                'title'                => __('Metadata', 'publishpress'),
                 'short_description'    => __('Click here to customize the extra data that’s tracked for your content.', 'publishpress'),
                 'extended_description' => __('Log details on every assignment using configurable editorial metadata. It’s completely customizable; create fields for everything from due date to location to contact information to role assignments.', 'publishpress'),
                 'module_url'           => $this->module_url,
@@ -362,8 +362,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 array(
                     'public' => false,
                     'labels' => array(
-                        'name' => _x('Editorial Metadata', 'taxonomy general name', 'publishpress'),
-                        'singular_name' => _x('Editorial Metadata', 'taxonomy singular name', 'publishpress'),
+                        'name' => _x('Metadata', 'taxonomy general name', 'publishpress'),
+                        'singular_name' => _x('Metadata', 'taxonomy singular name', 'publishpress'),
                         'search_items' => __('Search Editorial Metadata', 'publishpress'),
                         'popular_items' => __('Popular Editorial Metadata', 'publishpress'),
                         'all_items' => __('All Editorial Metadata', 'publishpress'),
@@ -386,7 +386,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_post_metaboxes()
         {
-            $title = __('Editorial Metadata', 'publishpress');
+            $title = __('Metadata', 'publishpress');
             if (current_user_can('manage_options'))
             {    
                 // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
@@ -1803,8 +1803,8 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         $this->_column_headers = array($columns, $hidden, $sortable);
 
         parent::__construct(array(
-            'plural' => 'editorial metadata',
-            'singular' => 'editorial metadata',
+            'plural' => 'metadata',
+            'singular' => 'metadata',
         ));
     }
 

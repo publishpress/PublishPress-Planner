@@ -441,7 +441,7 @@ msgid "View all types"
 msgstr "Показать все типы"
 
 #: modules/custom-status/custom-status.php:30
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr "Настраиваемые статусы"
 
 #: modules/custom-status/custom-status.php:31
@@ -890,7 +890,7 @@ msgstr "Обновить блокнот"
 
 #: modules/editorial-comments/editorial-comments.php:21
 #: modules/editorial-comments/editorial-comments.php:115
-msgid "Editorial Comments"
+msgid "Comments"
 msgstr "Редакционные комментарии "
 
 #: modules/editorial-comments/editorial-comments.php:22
@@ -1004,7 +1004,7 @@ msgstr "Включить для этих типов записей:"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
 #: modules/editorial-metadata/editorial-metadata.php:343
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Редакционные пометки"
 
 #: modules/editorial-metadata/editorial-metadata.php:44
@@ -1137,12 +1137,12 @@ msgstr "Пользователь"
 
 #: modules/editorial-metadata/editorial-metadata.php:320
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Редакционные пометки"
 
 #: modules/editorial-metadata/editorial-metadata.php:321
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Редакционная пометка"
 
 #: modules/editorial-metadata/editorial-metadata.php:322

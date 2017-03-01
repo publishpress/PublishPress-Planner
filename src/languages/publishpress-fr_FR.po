@@ -323,7 +323,7 @@ msgid "Back to PublishPress"
 msgstr "Retour à PublishPress"
 
 #: modules/custom-status/custom-status.php:29
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr "Statuts Personnalisés"
 
 #: modules/custom-status/custom-status.php:30
@@ -782,8 +782,8 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Editorial Comments"
-msgstr "Commentaires Éditoriaux"
+msgid "Comments"
+msgstr "Commentaires"
 
 #: modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."
@@ -900,8 +900,8 @@ msgstr "Activer pour ces types de documents :"
 
 #: modules/editorial-metadata/editorial-metadata.php:42
 #: modules/editorial-metadata/editorial-metadata.php:342
-msgid "Editorial Metadata"
-msgstr "Métadonnées de Rédaction"
+msgid "Metadata"
+msgstr "Métadonnées"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
 msgid "Click here to customize the extra data that’s tracked for your content."
@@ -1037,13 +1037,13 @@ msgstr "Utilisateur"
 
 #: modules/editorial-metadata/editorial-metadata.php:319
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
-msgstr "Métadonnées de Rédaction"
+msgid "Metadata"
+msgstr "Métadonnées"
 
 #: modules/editorial-metadata/editorial-metadata.php:320
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
-msgstr "Métadonnée de Rédaction"
+msgid "Metadata"
+msgstr "Métadonnée"
 
 #: modules/editorial-metadata/editorial-metadata.php:321
 msgid "Search Editorial Metadata"

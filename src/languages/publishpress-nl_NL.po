@@ -306,7 +306,7 @@ msgid "Back to PublishPress"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:29
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:30
@@ -719,7 +719,7 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Editorial Comments"
+msgid "Comments"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:23
@@ -812,7 +812,7 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:42
 #: modules/editorial-metadata/editorial-metadata.php:342
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:43
@@ -931,12 +931,12 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:319
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:320
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:321

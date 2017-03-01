@@ -832,7 +832,7 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:20
 #: modules/editorial-comments/editorial-comments.php:119
-msgid "Editorial Comments"
+msgid "Comments"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:21
@@ -923,7 +923,7 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:43
 #: modules/editorial-metadata/editorial-metadata.php:358
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:44
@@ -1042,12 +1042,12 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:334
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:335
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:336

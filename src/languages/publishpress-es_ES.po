@@ -426,7 +426,7 @@ msgid "View all types"
 msgstr "Ver todos los tipos"
 
 #: modules/custom-status/custom-status.php:29
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr "Estados Personalizados"
 
 #: modules/custom-status/custom-status.php:30
@@ -878,8 +878,8 @@ msgstr "Actualizar anotaciones"
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Editorial Comments"
-msgstr "Comentarios Editoriales"
+msgid "Comments"
+msgstr "Comentarios"
 
 #: modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."
@@ -997,8 +997,8 @@ msgstr "Habilitar para estos tipos de entrada:"
 
 #: modules/editorial-metadata/editorial-metadata.php:42
 #: modules/editorial-metadata/editorial-metadata.php:342
-msgid "Editorial Metadata"
-msgstr "Metadatos Editoriales"
+msgid "Metadata"
+msgstr "Metadatos"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
 msgid "Click here to customize the extra data that’s tracked for your content."
@@ -1060,12 +1060,12 @@ msgstr ""
 #: modules/editorial-metadata/editorial-metadata.php:69
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/editorial-metadata/\">Editorial Metadata Documentation</a></p>"
+"features/editorial-metadata/\">Metadata Documentation</a></p>"
 "<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
 "p><strong> Para más información </strong></p><p><a href=\"https://pressshack.com/"
-"features/editorial-metadata/\">Documentación de los Metadatos Editoriales</a></"
+"features/editorial-metadata/\">Documentación de los Metadatos</a></"
 "p><p><a href=\"http://wordpress.org / tags / publishpress? forum_id=10\"> Foro de "
 "PublishPress</a></p><p><a href=\"https://github.com/ostraining/PublishPress\"> "
 "PublishPress en Github</a></p>"
@@ -1132,13 +1132,13 @@ msgstr "Usuario"
 
 #: modules/editorial-metadata/editorial-metadata.php:319
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
-msgstr "Metadatos Editoriales"
+msgid "Metadata"
+msgstr "Metadatos"
 
 #: modules/editorial-metadata/editorial-metadata.php:320
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
-msgstr "Metadato Editorial"
+msgid "Metadata"
+msgstr "Metadato"
 
 #: modules/editorial-metadata/editorial-metadata.php:321
 msgid "Search Editorial Metadata"

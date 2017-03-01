@@ -57,7 +57,7 @@ if (!class_exists('PP_Custom_Status')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title'                => __('Custom Statuses', 'publishpress'),
+                'title'                => __('Statuses', 'publishpress'),
                 'short_description'    => __('Create custom post statuses to define the stages of your publishing workflow.', 'publishpress'),
                 'extended_description' => __('Create your own post statuses to add structure your publishing workflow. You can change existing or add new ones anytime, and drag and drop to change their order.', 'publishpress'),
                 'module_url'           => $this->module_url,
@@ -1855,8 +1855,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     public function __construct()
     {
         parent::__construct(array(
-            'plural' => 'custom statuses',
-            'singular' => 'custom status',
+            'plural' => 'statuses',
+            'singular' => 'status',
             'ajax' => true
         ));
     }

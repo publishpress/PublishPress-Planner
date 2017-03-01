@@ -898,7 +898,7 @@ msgstr "Uppdatera notis"
 
 #: ../modules/editorial-comments/editorial-comments.php:21
 #: ../modules/editorial-comments/editorial-comments.php:115
-msgid "Editorial Comments"
+msgid "Comments"
 msgstr "Redaktionell dialog"
 
 #: ../modules/editorial-comments/editorial-comments.php:22
@@ -1010,7 +1010,7 @@ msgstr "Aktivera för dessa posttyper:"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:43
 #: ../modules/editorial-metadata/editorial-metadata.php:343
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Redaktionell Metadata"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:44
@@ -1143,12 +1143,12 @@ msgstr "Användare"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:320
 msgctxt "taxonomy general name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Redaktionell Metadata"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:321
 msgctxt "taxonomy singular name"
-msgid "Editorial Metadata"
+msgid "Metadata"
 msgstr "Redaktionell Metadata"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:322

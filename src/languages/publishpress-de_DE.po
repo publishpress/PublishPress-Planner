@@ -399,7 +399,7 @@ msgstr "Zurück zu PublishPress"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:29
-msgid "Custom Statuses"
+msgid "Statuses"
 msgstr "Benutzerdefinierte Status"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
@@ -952,8 +952,8 @@ msgstr ""
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:22
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:119
-msgid "Editorial Comments"
-msgstr "Redaktionelle Kommentare"
+msgid "Comments"
+msgstr "Kommentare"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:23
@@ -1086,8 +1086,8 @@ msgstr "Aktivierung für folgende Inhaltstypen:"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:42
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:324
-msgid "Editorial Metadata"
-msgstr "Redaktionelle Metadaten"
+msgid "Metadata"
+msgstr "Metadaten"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:43
@@ -1148,7 +1148,7 @@ msgstr ""
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:69
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
-"features/editorial-metadata/\">Editorial Metadata Documentation</a></p>"
+"features/editorial-metadata/\">Metadata Documentation</a></p>"
 "<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
