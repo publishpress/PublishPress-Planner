@@ -168,6 +168,8 @@ if (!class_exists('PP_Settings')) {
          */
         public function print_default_header($current_module)
         {
+            $display_text = '';
+
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
                 $message = $_GET['message'];
@@ -178,8 +180,9 @@ if (!class_exists('PP_Settings')) {
             } else {
                 $message = false;
             }
+            
             if ($message && isset($current_module->messages[$message])) {
-                $display_text = '<div class="is-dismissible notice notice-info"><p>' . esc_html($current_module->messages[$message]) . '</p></div>';
+                $display_text .= '<div class="is-dismissible notice notice-info"><p>' . esc_html($current_module->messages[$message]) . '</p></div>';
             }
 
             // If there's been an error, let's display it
@@ -193,31 +196,32 @@ if (!class_exists('PP_Settings')) {
                 $error = false;
             }
             if ($error && isset($current_module->messages[$error])) {
-                $display_text = '<div class="is-dismissible notice notice-error"><p>' . esc_html($current_module->messages[$error]) . '</p></div>';
+                $display_text .= '<div class="is-dismissible notice notice-error"><p>' . esc_html($current_module->messages[$error]) . '</p></div>';
             }
             ?>
 
             <div class="publishpress-admin pressshack-admin-wrapper wrap">
                 <header>
-                    <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress" class="presshack-logo">
+                    <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress" class="pressshack-logo">
                         <img src="<?php echo PUBLISHPRESS_URL; ?>/modules/settings/lib/icon-128x128.png">
                     </a>
-                    <h1>
+                    <h1 class="pressshack-title">
                         <?php _e('PublishPress', 'publishpress') ?>
                         <?php if (!empty($current_module->title)) : ?>
                             <?php echo ': ' . $current_module->title; ?>
                         <?php endif; ?>
                     </h1>
+                    
+                    <?php echo !empty($display_text) ? $display_text : ''; ?>
+                    <?php // We keep the H2 tag to keep notices tied to the header ?>
+                    <h2>
+
+                        <?php if ($current_module->short_description): ?>
+                            <?php echo $current_module->short_description; ?>
+                        <?php endif; ?>
+                    </h2>
+
                 </header>
-
-                <?php // We keep the H2 tag to keep notices tied to the header ?>
-                <h2>
-                    <?php echo isset($display_text) ? $display_text : ''; ?>
-
-                    <?php if ($current_module->short_description): ?>
-                        <?php echo $current_module->short_description; ?>
-                    <?php endif; ?>
-                </h2>
 
                 <div class="explanation">
 

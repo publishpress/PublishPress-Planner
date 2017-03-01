@@ -1307,6 +1307,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             $redirect_url = $this->get_link(array('message' => 'term-visibility-changed'));
+        
             wp_redirect($redirect_url);
             exit;
         }

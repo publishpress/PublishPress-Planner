@@ -47,7 +47,8 @@
     color: #9D94C9;
 }
 
-.pressshack-admin-wrapper > header > * {
+.pressshack-admin-wrapper > header .pressshack-logo,
+.pressshack-admin-wrapper > header .pressshack-title {
     display: inline-block;
 }
 
@@ -57,7 +58,7 @@
     font-size: 2em;
 }
 
-.pressshack-admin-wrapper > header a.presshack-logo img {
+.pressshack-admin-wrapper > header a.pressshack-logo img {
     width: 35px;
 }
 
