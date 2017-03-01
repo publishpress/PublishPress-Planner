@@ -77,6 +77,7 @@ if (!class_exists('PP_Custom_Status')) {
                 'configure_link_text' => __('Edit Statuses', 'publishpress'),
                 'messages'            => array(
                     'status-added'            => __('Post status created.', 'publishpress'),
+                    'status-updated'          => __('Post status updated.', 'publishpress'),
                     'status-missing'          => __("Post status doesn't exist.", 'publishpress'),
                     'default-status-changed'  => __('Default post status has been changed.', 'publishpress'),
                     'term-updated'            => __("Post status updated.", 'publishpress'),
