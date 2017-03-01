@@ -139,17 +139,17 @@ if (!class_exists('PP_Efmigration')) {
             );
 
             wp_localize_script('pp-efmigration', 'objectL10n', array(
+                'intro_text'                 => esc_html__('This migration will import all of your data and settings from Edit Flow.', self::PLUGIN_NAMESPACE),
                 'migration_warning'          => esc_html__('Heads up! Importing data from EditFlow will overwrite any current data in PublishPress.', self::PLUGIN_NAMESPACE),
                 'start_migration'            => esc_html__('Start', self::PLUGIN_NAMESPACE),
                 'options'                    => esc_html__('Plugin and Modules Options', self::PLUGIN_NAMESPACE),
                 'usermeta'                   => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
-                'success_msg'                => esc_html__('Finished', self::PLUGIN_NAMESPACE),
+                'success_msg'                => esc_html__('Finished!', self::PLUGIN_NAMESPACE),
                 'header_msg'                 => esc_html__('Please, wait while we migrate your legacy data...', self::PLUGIN_NAMESPACE),
                 'error'                      => esc_html__('Error', self::PLUGIN_NAMESPACE),
                 'error_msg_intro'            => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
                 'error_msg_contact'          => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
                 'back_to_publishpress_label' => esc_html__('Back to PublishPress', self::PLUGIN_NAMESPACE),
-                'what_will_migrate'          => esc_html__('What will be migrated', self::PLUGIN_NAMESPACE),
                 'back_to_publishpress_url'   => $publishPressUrl,
                 'wpnonce'                    => wp_create_nonce(self::NONCE_KEY),
             ));
@@ -174,21 +174,23 @@ if (!class_exists('PP_Efmigration')) {
          */
         public function print_view()
         {
+            global $publishpress;
+
             if (!current_user_can('manage_options')) {
                 _e('Access Denied', self::PLUGIN_NAMESPACE);
 
                 return;
             }
 
+            $publishpress->settings->print_default_header($this->module);
+
             ?>
             <div class="wrap publishpress-admin">
-                <h2>
-                    <?php _e('PublishPress', self::PLUGIN_NAMESPACE); ?>:&nbsp;
-                    <?php _e('Edit Flow Data Migration'); ?>
-                </h2>
                 <div id="pp-content"></div>
             </div>
             <?php
+
+            $publishpress->settings->print_default_footer($this->module);
         }
 
         public function action_register_page()

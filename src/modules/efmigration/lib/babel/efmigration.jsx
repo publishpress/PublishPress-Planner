@@ -4,19 +4,6 @@
     const STEP_STATUS_SUCCESS = 'success';
     const STEP_STATUS_ERROR = 'error';
 
-    class StepRow extends React.Component {
-        render() {
-            const id = 'pp-step-' + this.props.name;
-            const className = 'pp-status-' + this.props.status;
-
-            return (
-                <li id={id} className={className}>
-                    {this.props.label}
-                </li>
-            )
-        }
-    }
-
     class ErrorRow extends React.Component {
         render() {
             return (
@@ -30,19 +17,10 @@
     class StepList extends React.Component {
         render() {
             const finished   = this.props.finished;
-            const steps      = this.props.steps;
             const errors     = this.props.errors;
             const started    = this.props.started;
             const hasErrors  = errors.length > 0;
             const inProgress = started && !finished;
-
-            var stepRows = steps.map((step) =>
-                <StepRow
-                    key={step.key}
-                    name={step.key}
-                    status={step.status}
-                    label={step.label} />
-            );
 
             var errorRows = errors.map((error) =>
                 <ErrorRow key={error.key} msg={error.msg} />
@@ -51,16 +29,14 @@
             return (
                 <div>
                     <div className="pp-progressbar-container">
-                        <p>{objectL10n.what_will_migrate}:</p>
-                        <ul className="pp-progressbar">
-                            {stepRows}
-                        </ul>
+                        {inProgress
+                        &&                        
+                            <div>
+                                <span className="dashicons dashicons-update pp-rotating"></span>
+                                <span className="pp-in-progress">{objectL10n.header_msg}</span>
+                            </div>
+                        }
                     </div>
-
-                    {inProgress
-                    &&
-                        <p>{objectL10n.header_msg}</p>
-                    }
 
                     {hasErrors
                     &&
@@ -76,7 +52,7 @@
                     {finished
                     &&
                         <div>
-                            <p>{objectL10n.success_msg}</p>
+                            <p className="pp-success">{objectL10n.success_msg}</p>
 
                             <a href={objectL10n.back_to_publishpress_url}>{objectL10n.back_to_publishpress_label}</a>
                         </div>
@@ -88,7 +64,7 @@
 
     class StepListContainer extends React.Component {
         render() {
-            return <StepList steps={this.props.steps} started={this.props.started} finished={this.props.finished} errors={this.props.errors} />;
+            return <StepList started={this.props.started} finished={this.props.finished} errors={this.props.errors} />;
         }
     }
 
@@ -203,12 +179,19 @@
 
             return (
                 <div>
-                    <div className="updated">
-                        <p>{objectL10n.migration_warning}</p>
+                    <div>
+                        <p>{objectL10n.intro_text}</p>
                     </div>
 
+                    {!started
+                        &&
+                        <h4 className="pp-warning">{objectL10n.migration_warning}</h4>
+                    }
+
                     <div>
-                        <StepListContainer steps={this.state.steps} started={started} finished={this.state.finished} errors={this.state.errors} />
+                        <StepListContainer started={started} finished={this.state.finished} errors={this.state.errors} />
+
+                        <br />
 
                         {!started
                         &&

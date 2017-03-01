@@ -14,34 +14,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var STEP_STATUS_SUCCESS = 'success';
     var STEP_STATUS_ERROR = 'error';
 
-    var StepRow = function (_React$Component) {
-        _inherits(StepRow, _React$Component);
-
-        function StepRow() {
-            _classCallCheck(this, StepRow);
-
-            return _possibleConstructorReturn(this, (StepRow.__proto__ || Object.getPrototypeOf(StepRow)).apply(this, arguments));
-        }
-
-        _createClass(StepRow, [{
-            key: 'render',
-            value: function render() {
-                var id = 'pp-step-' + this.props.name;
-                var className = 'pp-status-' + this.props.status;
-
-                return React.createElement(
-                    'li',
-                    { id: id, className: className },
-                    this.props.label
-                );
-            }
-        }]);
-
-        return StepRow;
-    }(React.Component);
-
-    var ErrorRow = function (_React$Component2) {
-        _inherits(ErrorRow, _React$Component2);
+    var ErrorRow = function (_React$Component) {
+        _inherits(ErrorRow, _React$Component);
 
         function ErrorRow() {
             _classCallCheck(this, ErrorRow);
@@ -67,8 +41,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return ErrorRow;
     }(React.Component);
 
-    var StepList = function (_React$Component3) {
-        _inherits(StepList, _React$Component3);
+    var StepList = function (_React$Component2) {
+        _inherits(StepList, _React$Component2);
 
         function StepList() {
             _classCallCheck(this, StepList);
@@ -80,19 +54,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             key: 'render',
             value: function render() {
                 var finished = this.props.finished;
-                var steps = this.props.steps;
                 var errors = this.props.errors;
                 var started = this.props.started;
                 var hasErrors = errors.length > 0;
                 var inProgress = started && !finished;
-
-                var stepRows = steps.map(function (step) {
-                    return React.createElement(StepRow, {
-                        key: step.key,
-                        name: step.key,
-                        status: step.status,
-                        label: step.label });
-                });
 
                 var errorRows = errors.map(function (error) {
                     return React.createElement(ErrorRow, { key: error.key, msg: error.msg });
@@ -104,22 +69,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     React.createElement(
                         'div',
                         { className: 'pp-progressbar-container' },
-                        React.createElement(
-                            'p',
+                        inProgress && React.createElement(
+                            'div',
                             null,
-                            objectL10n.what_will_migrate,
-                            ':'
-                        ),
-                        React.createElement(
-                            'ul',
-                            { className: 'pp-progressbar' },
-                            stepRows
+                            React.createElement('span', { className: 'dashicons dashicons-update pp-rotating' }),
+                            React.createElement(
+                                'span',
+                                { className: 'pp-in-progress' },
+                                objectL10n.header_msg
+                            )
                         )
-                    ),
-                    inProgress && React.createElement(
-                        'p',
-                        null,
-                        objectL10n.header_msg
                     ),
                     hasErrors && React.createElement(
                         'div',
@@ -151,7 +110,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         null,
                         React.createElement(
                             'p',
-                            null,
+                            { className: 'pp-success' },
                             objectL10n.success_msg
                         ),
                         React.createElement(
@@ -167,8 +126,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         return StepList;
     }(React.Component);
 
-    var StepListContainer = function (_React$Component4) {
-        _inherits(StepListContainer, _React$Component4);
+    var StepListContainer = function (_React$Component3) {
+        _inherits(StepListContainer, _React$Component3);
 
         function StepListContainer() {
             _classCallCheck(this, StepListContainer);
@@ -179,22 +138,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(StepListContainer, [{
             key: 'render',
             value: function render() {
-                return React.createElement(StepList, { steps: this.props.steps, started: this.props.started, finished: this.props.finished, errors: this.props.errors });
+                return React.createElement(StepList, { started: this.props.started, finished: this.props.finished, errors: this.props.errors });
             }
         }]);
 
         return StepListContainer;
     }(React.Component);
 
-    var MigrationForm = function (_React$Component5) {
-        _inherits(MigrationForm, _React$Component5);
+    var MigrationForm = function (_React$Component4) {
+        _inherits(MigrationForm, _React$Component4);
 
         function MigrationForm() {
             _classCallCheck(this, MigrationForm);
 
-            var _this5 = _possibleConstructorReturn(this, (MigrationForm.__proto__ || Object.getPrototypeOf(MigrationForm)).call(this));
+            var _this4 = _possibleConstructorReturn(this, (MigrationForm.__proto__ || Object.getPrototypeOf(MigrationForm)).call(this));
 
-            _this5.state = {
+            _this4.state = {
                 steps: [{
                     key: 'options',
                     label: objectL10n.options,
@@ -211,19 +170,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 errors: []
             };
 
-            _this5.eventStartMigration = _this5.eventStartMigration.bind(_this5);
-            return _this5;
+            _this4.eventStartMigration = _this4.eventStartMigration.bind(_this4);
+            return _this4;
         }
 
         _createClass(MigrationForm, [{
             key: 'executeNextStep',
             value: function executeNextStep() {
-                var _this6 = this;
+                var _this5 = this;
 
                 // Go to the next step index.
                 this.setState({ currentStepIndex: this.state.currentStepIndex + 1 }, function () {
                     // Check if we finished the step list to finish the process.
-                    if (_this6.state.currentStepIndex >= _this6.state.steps.length) {
+                    if (_this5.state.currentStepIndex >= _this5.state.steps.length) {
 
                         var _data = {
                             'action': 'pp_finish_migration',
@@ -231,18 +190,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
 
                         $.post(ajaxurl, _data, function (response) {
-                            _this6.setState({ finished: true });
+                            _this5.setState({ finished: true });
                         });
 
                         return;
                     }
 
                     // We have a step. Lets execute it.
-                    var currentStep = _this6.state.steps[_this6.state.currentStepIndex];
+                    var currentStep = _this5.state.steps[_this5.state.currentStepIndex];
 
                     // Set status of step in progress
                     currentStep.status = STEP_STATUS_RUNNING;
-                    _this6.updateStep(currentStep);
+                    _this5.updateStep(currentStep);
 
                     // Call the method to migrate and wait for the response
                     var data = {
@@ -251,27 +210,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         '_wpnonce': objectL10n.wpnonce
                     };
                     $.post(ajaxurl, data, function (response) {
-                        var step = _this6.state.steps[_this6.state.currentStepIndex];
+                        var step = _this5.state.steps[_this5.state.currentStepIndex];
 
                         if (typeof response.error === 'string') {
                             // Error
                             step.status = STEP_STATUS_ERROR;
-                            _this6.appendError('[' + step.key + '] ' + response.error);
+                            _this5.appendError('[' + step.key + '] ' + response.error);
                         } else {
                             // Success
                             step.status = STEP_STATUS_SUCCESS;
                         }
 
-                        _this6.updateStep(step);
-                        _this6.executeNextStep();
+                        _this5.updateStep(step);
+                        _this5.executeNextStep();
                     }, 'json').error(function (response) {
-                        var step = _this6.state.steps[_this6.state.currentStepIndex];
+                        var step = _this5.state.steps[_this5.state.currentStepIndex];
 
                         step.status = STEP_STATUS_ERROR;
-                        _this6.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
+                        _this5.appendError('[' + step.key + '] ' + response.status + ': ' + response.statusText);
 
-                        _this6.updateStep(step);
-                        _this6.executeNextStep();
+                        _this5.updateStep(step);
+                        _this5.executeNextStep();
                     });
                 });
             }
@@ -309,17 +268,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     null,
                     React.createElement(
                         'div',
-                        { className: 'updated' },
+                        null,
                         React.createElement(
                             'p',
                             null,
-                            objectL10n.migration_warning
+                            objectL10n.intro_text
                         )
+                    ),
+                    !started && React.createElement(
+                        'h4',
+                        { className: 'pp-warning' },
+                        objectL10n.migration_warning
                     ),
                     React.createElement(
                         'div',
                         null,
-                        React.createElement(StepListContainer, { steps: this.state.steps, started: started, finished: this.state.finished, errors: this.state.errors }),
+                        React.createElement(StepListContainer, { started: started, finished: this.state.finished, errors: this.state.errors }),
+                        React.createElement('br', null),
                         !started && React.createElement(
                             'button',
                             { onClick: this.eventStartMigration, className: 'button button-primary' },
