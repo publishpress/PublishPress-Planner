@@ -75,3 +75,7 @@
     content: "";
     display: block;
 }
+
+.pp-module-settings td > button {
+    border: none !important;
+}
