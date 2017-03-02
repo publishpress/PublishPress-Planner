@@ -213,12 +213,21 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Watch src files and sync with wordpress
+     * Sync WP files with src files
      */
-    public function srcSync()
+    public function syncWp()
     {
-        // $return = $this->_exec('fswatch ./src/ ./sync.sh');
-        $return = $this->_exec('sh ./sync.sh');
+        $return = $this->_exec('sh ./sync-wp.sh');
+
+        return $return;
+    }
+
+    /**
+     * Sync src files with WP files
+     */
+    public function syncSrc()
+    {
+        $return = $this->_exec('sh ./sync-src.sh');
 
         return $return;
     }
