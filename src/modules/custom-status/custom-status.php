@@ -329,6 +329,14 @@ if (!class_exists('PP_Custom_Status')) {
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
                 wp_enqueue_script('publishpress-custom-status-configure', $this->module_url . 'lib/custom-status-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
+
+                wp_localize_script(
+                    'publishpress-custom-status-configure',
+                    'objectL10n',
+                    array(
+                        'pp_confirm_delete_status_string' => __('Are you sure you want to delete the post status? All posts with this status will be assigned to the default status.', 'publishpress')
+                    )
+                );
             }
 
             // Custom javascript to modify the post status dropdown where it shows up
@@ -1322,9 +1330,6 @@ if (!class_exists('PP_Custom_Status')) {
             $wp_list_table = new PP_Custom_Status_List_Table();
             $wp_list_table->prepare_items();
             ?>
-            <script type="text/javascript">
-                var pp_confirm_delete_status_string = "<?php echo esc_js(__('Are you sure you want to delete the post status? All posts with this status will be assigned to the default status.', 'publishpress'));
-            ?>";
             </script>
                 <div id="col-right">
                     <div class="col-wrap">

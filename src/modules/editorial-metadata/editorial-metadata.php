@@ -346,6 +346,14 @@ if (!class_exists('PP_Editorial_Metadata')) {
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
                 wp_enqueue_script('publishpress-editorial-metadata-configure', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
+
+                 wp_localize_script(
+                    'publishpress-editorial-metadata-configure',
+                    'objectL10n',
+                    array(
+                        'pp_confirm_delete_term_string' => __('Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.', 'publishpress')
+                    )
+                );
             }
         }
 
@@ -1517,9 +1525,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
             $wp_list_table = new PP_Editorial_Metadata_List_Table();
             $wp_list_table->prepare_items();
             ?>
-            <script type="text/javascript">
-                var pp_confirm_delete_term_string = "<?php echo esc_js(__('Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.', 'publishpress'));
-            ?>";
             </script>
             <?php if (!isset($_GET['action']) || (isset($_GET['action']) && $_GET['action'] != 'edit-term')): ?>
             <div id="col-right">

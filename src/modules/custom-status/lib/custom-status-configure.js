@@ -118,7 +118,7 @@ $(document).ready(function(){inlineEditCustomStatus.init();});
 jQuery(document).ready(function(){
 
     jQuery('.delete-status a').click(function(){
-        if (!confirm(pp_confirm_delete_status_string))
+        if (!confirm(objectL10n.pp_confirm_delete_status_string))
             return false;
     });
 

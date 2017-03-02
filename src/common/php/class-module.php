@@ -427,18 +427,25 @@ if (!class_exists('PP_Module')) {
             return false;
         }
 
-        $view_slugs          = array();
-        $view_slugs_prefix   = array();
 
-        // Load all of the modules that have a settings slug/ callback for the settings page
-        foreach ($publishpress->modules as $mod_name => $mod_data) {
-            if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on' && isset($mod_data->slug)) {
-                $view_slugs[]         = $mod_data->slug;
-                $view_slugs_prefix[] = 'pp-' . $mod_data->slug;
-            }            
+        if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings') {
+            if (empty($module_name)) {
+                return true;
+            }
+
+            if (!isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings') {
+                if (in_array($module_name, array('editorial_comments', 'notifications', 'dashboard'))) {
+                    return true;
+                }
+            }
+
+            $slug = str_replace('_', '-', $module_name);
+            if (isset($_GET['module']) && $_GET['module'] === 'pp-' . $slug . '-settings') {
+                return true;
+            }
         }
-        return in_array($_GET['page'], $view_slugs)
-            || in_array($_GET['page'], $view_slugs_prefix);
+
+        return false;
     }
 
     /**
