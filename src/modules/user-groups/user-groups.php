@@ -1397,7 +1397,7 @@ if (!class_exists('PP_Usergroups_List_Table')) {
                 <?php $update_text = __('Update User Group', 'publishpress');
             ?>
                 <a accesskey="s" href="#inline-edit" title="<?php echo esc_attr($update_text);
-            ?>" class="save button-primary alignright"><?php echo $update_text;
+            ?>" class="button save button-primary alignright"><?php echo $update_text;
             ?></a>
                 <img class="waiting" style="display:none;" src="<?php echo esc_url(admin_url('images/wpspin_light.gif'));
             ?>" alt="" />

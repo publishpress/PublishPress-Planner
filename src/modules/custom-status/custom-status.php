@@ -1367,8 +1367,9 @@ if (!class_exists('PP_Custom_Status')) {
             ?>
                         <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />';
             ?>
-                        <?php submit_button();
-            ?>
+                        <?php submit_button(); ?>
+
+                        <?php wp_nonce_field('edit-publishpress-settings'); ?>
                     </form>
                     <?php else: ?>
                     <?php /** Custom form for adding a new Custom Status term **/ ?>
@@ -2088,7 +2089,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                 <?php $update_text = __('Update Status', 'publishpress');
             ?>
                 <a accesskey="s" href="#inline-edit" title="<?php echo esc_attr($update_text);
-            ?>" class="save button-primary alignright"><?php echo $update_text;
+            ?>" class="button save button-primary alignright"><?php echo $update_text;
             ?></a>
                 <img class="waiting" style="display:none;" src="<?php echo esc_url(admin_url('images/wpspin_light.gif'));
             ?>" alt="" />
