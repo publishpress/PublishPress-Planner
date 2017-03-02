@@ -365,9 +365,9 @@ if (!class_exists('PP_Settings')) {
         public function helper_settings_validate_and_save()
         {
             if (!isset($_POST['action'], $_POST['_wpnonce'], $_POST['option_page'], $_POST['_wp_http_referer'], $_POST['publishpress_module_name'], $_POST['submit']) || !is_admin()) {
+                
                 return false;
             }
-
             
             global $publishpress;
 

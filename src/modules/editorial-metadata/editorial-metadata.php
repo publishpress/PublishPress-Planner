@@ -1088,7 +1088,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 return;
             }
 
-            if (!wp_verify_nonce($_POST['_wpnonce'], 'editorial-metadata-add-nonce')) {
+            if (!wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
                 wp_die($this->module->messages['nonce-failed']);
             }
 
@@ -1492,7 +1492,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function settings_validate($new_options)
         {
-
             // Whitelist validation for the post type options
             if (!isset($new_options['post_types'])) {
                 $new_options['post_types'] = array();
@@ -1674,10 +1673,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 ?>
                     <?php do_settings_sections($this->module->options_group_name);
                 ?>
-                    <?php echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />';
+                    <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />';
                 ?>
-                    <?php submit_button();
-                ?>
+                    <?php wp_nonce_field('edit-publishpress-settings'); ?>
+
+                    <?php submit_button(); ?>
                 </form>
                 <?php else: ?>
                 <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
@@ -1755,14 +1755,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress'));
                 ?>
                     </div>
-                    <?php wp_nonce_field('editorial-metadata-add-nonce');
-                ?>
+                    <?php wp_nonce_field('edit-publishpress-settings'); ?>
+
                     <input type="hidden" id="form-action" name="form-action" value="add-term" />
-                    <p class="submit"><?php submit_button(__('Add New Metadata Term', 'publishpress'), 'primary', 'submit', false);
-                ?>&nbsp;</p>
+                    <p class="submit"><?php submit_button(__('Add New Metadata Term', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
                     </form>
-                <?php endif;
-                ?>
+                <?php endif; ?>
                     </div>
                     </div>
                 </div>

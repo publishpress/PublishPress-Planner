@@ -108,6 +108,7 @@ if (!class_exists('PP_Modules_Settings')) {
 
                 if ($mod_data->autoload
                     || $mod_data->slug === $this->module->slug
+                    || (isset($_GET['module']) && $mod_data->slug === $_GET['module'])
                     || !isset($mod_data->general_options)) {
 
                     continue;

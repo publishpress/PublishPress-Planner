@@ -694,7 +694,7 @@ if (!class_exists('PP_User_Groups')) {
             ?>
                         <?php do_settings_sections($this->module->options_group_name);
             ?>
-                        <?php echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />';
+                        <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />';
             ?>
                         <?php submit_button();
             ?>

@@ -1646,7 +1646,7 @@ if (!class_exists('PP_Calendar')) {
                 <?php do_settings_sections($this->module->options_group_name);
             ?>
                 <?php
-                    echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />';
+                    echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />';
             ?>
                 <p class="submit"><?php submit_button(null, 'primary', 'submit', false);
             ?></p>
