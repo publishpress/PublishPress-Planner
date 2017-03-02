@@ -103,7 +103,20 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function settings_validate($new_options)
         {
+            foreach ($publishpress->class_names as $slug => $class_name) {
+                $mod_data = $publishpress->$slug->module;
 
+                if ($mod_data->autoload
+                    || $mod_data->slug === $this->module->slug
+                    || !isset($mod_data->general_options)) {
+
+                    continue;
+                }
+
+                $publishpress->$slug->settings_validate($new_options);
+            }
+
+            return $new_options;
         }
 
         /**
@@ -118,12 +131,31 @@ if (!class_exists('PP_Modules_Settings')) {
             <form class="basic-settings" action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
                 <?php settings_fields($this->module->options_group_name); ?>
                 <?php do_settings_sections($this->module->options_group_name); ?>
-                <?php echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+
+                <?php
+                foreach ($publishpress->class_names as $slug => $class_name) {
+                    $mod_data = $publishpress->$slug->module;
+
+                    if ($mod_data->autoload
+                        || $mod_data->slug === $this->module->slug
+                        || !isset($mod_data->general_options)) {
+
+                        continue;
+                    }
+
+                    echo sprintf('<h3>%s</h3>', $mod_data->title);
+                    echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($mod_data->name) . '" />';
+
+                    $publishpress->$slug->print_configure_view();
+                }
+
+                submit_button(null, 'primary', 'submit', false);
+                ?>
 
                 <div id="modules-wrapper">
                 <?php
                 foreach ($publishpress->modules as $mod_name => $mod_data) {
-                    if ($mod_data->autoload || $mod_data->slug === 'modules-settings') {
+                    if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
                         continue;
                     }
                     ?>
@@ -161,7 +193,7 @@ if (!class_exists('PP_Modules_Settings')) {
                 ?>
                 </div>
                 <?php
-                wp_nonce_field('change-publishpress-module-nonce', 'change-module-nonce', false);
+                wp_nonce_field('edit-publishpress-settings');
                 ?>
             </form>
             <?php

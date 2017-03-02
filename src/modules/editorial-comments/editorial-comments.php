@@ -67,7 +67,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     'content' => __('<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
-                'options_page'          => true,
+                'general_options'    => true
             );
 
             $this->module = PublishPress()->register_module('editorial_comments', $args);
@@ -463,23 +463,8 @@ if (!class_exists('PP_Editorial_Comments')) {
          */
         public function print_configure_view()
         {
-            ?>
-
-            <form class="basic-settings" action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false));
-            ?>" method="post">
-                <?php settings_fields($this->module->options_group_name);
-            ?>
-                <?php do_settings_sections($this->module->options_group_name);
-            ?>
-                <?php
-                    echo '<input id="publishpress_module_name" name="publishpress_module_name" type="hidden" value="' . esc_attr($this->module->name) . '" />';
-            ?>
-                <p class="submit"><?php submit_button(null, 'primary', 'submit', false);
-            ?></p>
-
-            </form>
-            <?php
-
+            settings_fields($this->module->options_group_name);
+            do_settings_sections($this->module->options_group_name);
         }
 
         /**

@@ -161,6 +161,8 @@ class publishpress
             }
         }
 
+        $this->class_names = $class_names;
+
         // Supplementary plugins can hook into this, include their own modules
         // and add them to the $publishpress object
         do_action('pp_modules_loaded');

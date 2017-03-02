@@ -339,8 +339,8 @@ if (!class_exists('PP_Settings')) {
             }
 
             foreach ($all_post_types as $post_type => $title) {
-                echo '<label for="' . esc_attr($post_type) . '">';
-                echo '<input id="' . esc_attr($post_type) . '" name="'
+                echo '<label for="' . esc_attr($post_type) . '-' . $module->slug . '">';
+                echo '<input id="' . esc_attr($post_type) . '-' . $module->slug . '" name="'
                     . $module->options_group_name . '[post_types][' . esc_attr($post_type) . ']"';
                 if (isset($module->options->post_types[$post_type])) {
                     checked($module->options->post_types[$post_type], 'on');
@@ -368,32 +368,38 @@ if (!class_exists('PP_Settings')) {
                 return false;
             }
 
+            
             global $publishpress;
-            $module_name = sanitize_key($_POST['publishpress_module_name']);
 
-            if ($_POST['action'] != 'update'
-                || $_POST['option_page'] != $publishpress->$module_name->module->options_group_name) {
-                return false;
+            foreach ($_POST['publishpress_module_name'] as $moduleSlug) {
+                $module_name = sanitize_key($moduleSlug);
+
+
+                if ($_POST['action'] != 'update'
+                    || $_GET['page'] != 'pp-modules-settings') {
+                    return false;
+                }
+
+                if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
+                    wp_die(__('Cheatin&#8217; uh?'));
+                }
+
+                $new_options = (isset($_POST[$publishpress->$module_name->module->options_group_name])) ? $_POST[$publishpress->$module_name->module->options_group_name] : array();
+
+                // Only call the validation callback if it exists?
+                if (method_exists($publishpress->$module_name, 'settings_validate')) {
+                    $new_options = $publishpress->$module_name->settings_validate($new_options);
+                }
+
+                // Cast our object and save the data.
+                $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
+                $publishpress->update_all_module_options($publishpress->$module_name->module->name, $new_options);
             }
-
-            if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], $publishpress->$module_name->module->options_group_name . '-options')) {
-                wp_die(__('Cheatin&#8217; uh?'));
-            }
-
-            $new_options = (isset($_POST[$publishpress->$module_name->module->options_group_name])) ? $_POST[$publishpress->$module_name->module->options_group_name] : array();
-
-            // Only call the validation callback if it exists?
-            if (method_exists($publishpress->$module_name, 'settings_validate')) {
-                $new_options = $publishpress->$module_name->settings_validate($new_options);
-            }
-
-            // Cast our object and save the data.
-            $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
-            $publishpress->update_all_module_options($publishpress->$module_name->module->name, $new_options);
 
             // Redirect back to the settings page that was submitted without any previous messages
             $goback = add_query_arg('message', 'settings-updated',  remove_query_arg(array('message'), wp_get_referer()));
             wp_safe_redirect($goback);
+
             exit;
         }
 

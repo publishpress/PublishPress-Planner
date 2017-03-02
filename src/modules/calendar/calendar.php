@@ -1637,6 +1637,7 @@ if (!class_exists('PP_Calendar')) {
         public function print_configure_view()
         {
             global $publishpress;
+
             ?>
             <form class="basic-settings" action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false));
             ?>" method="post">
@@ -1649,9 +1650,10 @@ if (!class_exists('PP_Calendar')) {
             ?>
                 <p class="submit"><?php submit_button(null, 'primary', 'submit', false);
             ?></p>
+            <?php echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+            <?php wp_nonce_field('edit-publishpress-settings'); ?>
             </form>
             <?php
-
         }
 
         /**
