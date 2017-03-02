@@ -44,7 +44,7 @@ if (!class_exists('PP_Modules_Settings')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title'                => __('Settings', 'publishpress'),
+                'title'                => __('General', 'publishpress'),
                 'short_description'    => __('PublishPress is the essential plugin for any site with multiple writers', 'publishpress'),
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
