@@ -6,4 +6,9 @@ jQuery(document).ready(function () {
         delay: 100
     })
     jQuery('#pp-usergroup-users ul').listFilterizer();
+
+    jQuery('.delete-usergroup a').click(function(){
+        if (!confirm(objectL10n.pp_confirm_delete_usergroup_string))
+            return false;
+    });
 });

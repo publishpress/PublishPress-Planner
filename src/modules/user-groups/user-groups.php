@@ -263,6 +263,14 @@ if (!class_exists('PP_User_Groups')) {
                 wp_enqueue_script('jquery-listfilterizer');
                 wp_enqueue_script('jquery-quicksearch');
                 wp_enqueue_script('publishpress-user-groups-js', $this->module_url . 'lib/user-groups.js', array('jquery', 'jquery-listfilterizer', 'jquery-quicksearch'), PUBLISHPRESS_VERSION, true);
+
+                wp_localize_script(
+                    'publishpress-user-groups-js',
+                    'objectL10n',
+                    array(
+                        'pp_confirm_delete_usergroup_string' => __('Are you sure you want to delete the user group?', 'publishpress')
+                    )
+                );
             }
 
             if ($this->is_whitelisted_settings_view($this->module->name)) {
@@ -631,7 +639,7 @@ if (!class_exists('PP_User_Groups')) {
             ?>" />
                 <?php
                     wp_original_referer_field();
-            wp_nonce_field('edit-usergroup');
+                    wp_nonce_field('edit-publishpress-settings');
             ?>
                 <div class="form-field form-required">
                     <label for="name"><?php _e('Name', 'publishpress');
@@ -664,10 +672,6 @@ if (!class_exists('PP_User_Groups')) {
                 $wp_list_table = new PP_Usergroups_List_Table();
             $wp_list_table->prepare_items();
             ?>
-                <script type="text/javascript">
-                    var pp_confirm_delete_usergroup_string = "<?php _e('Are you sure you want to delete the user group?', 'publishpress');
-            ?>";
-                </script>
                 <div id="col-right"><div class="col-wrap">
                     <?php $wp_list_table->display();
             ?>
