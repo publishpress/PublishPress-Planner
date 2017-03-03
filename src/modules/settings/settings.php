@@ -376,12 +376,9 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Featured::SETTINGS_SLUG . '-settings';
             $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
-            if (empty($requested_module)) {
-                $requested_module = 'pp-calendar-settings';
-            }
-
+            
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
                 $message = $_GET['message'];
