@@ -378,7 +378,7 @@ if (!class_exists('PP_User_Groups')) {
                 return;
             }
 
-            if (!wp_verify_nonce($_POST['_wpnonce'], 'edit-usergroup')) {
+            if (!wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
                 wp_die($this->module->messages['nonce-failed']);
             }
 
@@ -694,10 +694,11 @@ if (!class_exists('PP_User_Groups')) {
             ?>
                         <?php do_settings_sections($this->module->options_group_name);
             ?>
-                        <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />';
-            ?>
-                        <?php submit_button();
-            ?>
+                        <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+
+                        <?php wp_nonce_field('edit-publishpress-settings'); ?>
+
+                        <?php submit_button(); ?>
                     </form>
                     <?php else: ?>
                     <?php /** Custom form for adding a new Usergroup **/ ?>
