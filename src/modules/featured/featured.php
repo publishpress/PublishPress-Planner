@@ -113,7 +113,7 @@ if (!class_exists('PP_Featured')) {
                         </div>
                         <div class="pp-block-item-description">
                             <h3><?php echo __('Overview', 'publishpress'); ?></h3>
-                            <p><?php echo __('Click here to see a list of all your content', 'publishpress'); ?></p>
+                            <p><?php echo __('Click here to see a list of all your content, organized by status, category or author.', 'publishpress'); ?></p>
                         </div>
                     </a>
                 <?php endif; ?>
