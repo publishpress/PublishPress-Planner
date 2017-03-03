@@ -79,3 +79,7 @@
 .pp-module-settings td > button {
     border: none !important;
 }
+
+.basic-settings h3:not(:first-of-type) {
+    margin-top: 35px;
+}

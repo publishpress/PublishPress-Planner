@@ -145,6 +145,8 @@ if (!class_exists('PP_Modules_Settings')) {
                     }
 
                     echo sprintf('<h3>%s</h3>', $mod_data->title);
+                    echo sprintf('<p>%s</p>', $mod_data->short_description);
+
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($mod_data->name) . '" />';
 
                     $publishpress->$slug->print_configure_view();
