@@ -103,21 +103,37 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function settings_validate($new_options)
         {
-            foreach ($publishpress->class_names as $slug => $class_name) {
-                $mod_data = $publishpress->$slug->module;
+            return $new_options;
+        }
 
+        /**
+         * Save the custom settings
+         *
+         * @param array $new_options New values that have been entered by the user
+         */
+        public function settings_save($new_options)
+        {
+            if (!isset($_POST['publishpress_options'])) {
+                return true;
+            }
+
+            global $publishpress;
+
+            $enabledFeatures = $_POST['publishpress_options']['features'];
+
+            // Run through all the modules updating their statuses
+            foreach ($publishpress->modules as $mod_data) {
                 if ($mod_data->autoload
-                    || $mod_data->slug === $this->module->slug
-                    || (isset($_GET['module']) && $mod_data->slug === $_GET['module'])
-                    || !isset($mod_data->general_options)) {
+                    || $mod_data->slug === $this->module->slug) {
 
                     continue;
                 }
 
-                $publishpress->$slug->settings_validate($new_options);
+                $status = array_key_exists($mod_data->slug, $enabledFeatures) ? 'on' : 'off';
+                $publishpress->update_module_option($mod_data->name, 'enabled', $status);
             }
 
-            return $new_options;
+            return true;
         }
 
         /**
@@ -139,7 +155,8 @@ if (!class_exists('PP_Modules_Settings')) {
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
-                        || !isset($mod_data->general_options)) {
+                        || !isset($mod_data->general_options)
+                        || $mod_data->options->enabled != 'on') {
 
                         continue;
                     }
@@ -152,51 +169,38 @@ if (!class_exists('PP_Modules_Settings')) {
                     $publishpress->$slug->print_configure_view();
                 }
 
-                submit_button(null, 'primary', 'submit', false);
                 ?>
 
                 <div id="modules-wrapper">
-                <?php
-                foreach ($publishpress->modules as $mod_name => $mod_data) {
-                    if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
-                        continue;
-                    }
-                    ?>
-                    <div id="<?php echo $mod_data->slug; ?>" class="module-box <?php echo ($mod_data->options->enabled == 'on') ? 'module-enabled' : 'module-disabled'; ?>">
-                        <div>
-                            <?php
-                            if (isset($mod_data->icon_class)) {
-                                echo '<span class="' . esc_html($mod_data->icon_class) . ' module-icon"></span>';
-                            }
-                            ?>
-                            <h4><?php echo $mod_data->title; ?></h4>
+                    <h3><?php echo __('Features', 'publishpress'); ?></h3>
+                    <p><?php echo __('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
-                            <span>
-                                <?php
-                                echo '<input type="submit" class="button-primary button enable-disable-publishpress-module"';
-                                echo ' data-slug="' . $mod_data->slug . '"';
-                                if ($mod_data->options->enabled == 'on') {
-                                    echo ' style="display:none;"';
-                                }
-                                echo ' value="' . __('Enable', 'publishpress') . '" />';
-                                echo '<input type="submit" class="button-secondary button-remove button enable-disable-publishpress-module"';
-                                echo ' data-slug="' . $mod_data->slug . '"';
-                                if ($mod_data->options->enabled == 'off') {
-                                    echo ' style="display:none;"';
-                                }
-                                echo ' value="' . __('Disable', 'publishpress') . '" />';
-                                ?>
-                            </span>
-                        </div>
+                    <table class="form-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row"><?php echo __('Enabled features', 'publishpress'); ?></th>
+                                <td>
+                                <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
+                                    
+                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) continue; ?>
 
-                        <p><?php echo strip_tags($mod_data->short_description); ?></p>
-                    </div>
-                    <?php
-                }
-                ?>
+                                        <label for="feature-<?php echo $mod_data->slug; ?>">
+                                            <input id="feature-<?php echo $mod_data->slug; ?>" name="publishpress_options[features][<?php echo $mod_data->slug; ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?> type="checkbox">
+                                            &nbsp;&nbsp;&nbsp;<?php echo $mod_data->title; ?>
+                                        </label>
+                                        <br>
+                                <?php endforeach; ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <?php echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
                 </div>
                 <?php
                 wp_nonce_field('edit-publishpress-settings');
+
+                submit_button(null, 'primary', 'submit', false);
                 ?>
             </form>
             <?php

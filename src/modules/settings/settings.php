@@ -75,8 +75,6 @@ if (!class_exists('PP_Settings')) {
             add_action('admin_print_scripts', array($this, 'action_admin_print_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
             add_action('admin_menu', array($this, 'action_admin_menu'));
-
-            add_action('wp_ajax_change_publishpress_module_state', array($this, 'ajax_change_publishpress_module_state'));
         }
 
         /**
@@ -127,40 +125,6 @@ if (!class_exists('PP_Settings')) {
             </script>
             <?php
 
-        }
-
-        public function ajax_change_publishpress_module_state()
-        {
-            global $publishpress;
-
-            if (!wp_verify_nonce($_POST['change_module_nonce'], 'change-publishpress-module-nonce') || !current_user_can('manage_options')) {
-                wp_die(__('Cheatin&#8217; uh?'));
-            }
-
-            if (!isset($_POST['module_action'], $_POST['slug'])) {
-                die('-1');
-            }
-
-            $module_action = sanitize_key($_POST['module_action']);
-            $slug          = sanitize_key($_POST['slug']);
-
-            $module = $publishpress->get_module_by('slug', $slug);
-
-            if (!$module) {
-                die('-1');
-            }
-
-            if ($module_action == 'enable') {
-                $return = $publishpress->update_module_option($module->name, 'enabled', 'on');
-            } elseif ($module_action == 'disable') {
-                $return = $publishpress->update_module_option($module->name, 'enabled', 'off');
-            }
-
-            if ($return) {
-                die('1');
-            } else {
-                die('-1');
-            }
         }
 
         /**
@@ -394,6 +358,11 @@ if (!class_exists('PP_Settings')) {
                 // Cast our object and save the data.
                 $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
                 $publishpress->update_all_module_options($publishpress->$module_name->module->name, $new_options);
+
+                // Check if the module has a custom save method   
+                if (method_exists($publishpress->$module_name, 'settings_save')) {
+                    $publishpress->$module_name->settings_save($new_options);
+                }
             }
 
             // Redirect back to the settings page that was submitted without any previous messages
