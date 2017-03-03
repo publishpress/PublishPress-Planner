@@ -811,7 +811,6 @@ if (!class_exists('PP_Custom_Status')) {
          */
         public function handle_add_custom_status()
         {
-
             // Check that the current POST request is our POST request
             if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_POST['action'])
                 || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['action'] != 'add-new') {
@@ -924,11 +923,17 @@ if (!class_exists('PP_Custom_Status')) {
             }
             // Check to make sure the status doesn't already exist as another term because otherwise we'd get a weird slug
             $term_exists = term_exists(sanitize_title($name), self::taxonomy_key);
+
+            if (is_array($term_exists)) {
+                $term_exists = (int)$term_exists['term_id'];
+            }
+
             if ($term_exists && $term_exists != $existing_status->term_id) {
                 $_REQUEST['form-errors']['name'] = __('Status name conflicts with existing term. Please choose another.', 'publishpress');
             }
             // Check to make sure the status doesn't already exist
             $search_status = $this->get_custom_status_by('slug', sanitize_title($name));
+
             if ($search_status && $search_status->term_id != $existing_status->term_id) {
                 $_REQUEST['form-errors']['name'] = __('Status name conflicts with existing status. Please choose another.', 'publishpress');
             }
@@ -1161,6 +1166,11 @@ if (!class_exists('PP_Custom_Status')) {
 
             // Check to make sure the status doesn't already exist as another term because otherwise we'd get a fatal error
             $term_exists = term_exists(sanitize_title($status_name), self::taxonomy_key);
+
+            if (is_array($term_exists)) {
+                $term_exists = (int)$term_exists['term_id'];
+            }
+
             if ($term_exists && $term_exists != $term_id) {
                 $change_error = new WP_Error('invalid', __('Status name conflicts with existing term. Please choose another.', 'publishpress'));
                 die($change_error->get_error_message());

@@ -1230,6 +1230,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             $term_exists = term_exists(sanitize_title($new_name));
+
             if ($term_exists && $term_exists != $existing_term->term_id) {
                 $_REQUEST['form-errors']['name'] = __('Metadata name conflicts with existing term. Please choose another.', 'publishpress');
             }
