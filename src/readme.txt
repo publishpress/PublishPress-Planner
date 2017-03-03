@@ -1,6 +1,6 @@
 === PublishPress ===
 Contributors: PressShack
-Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, story budget
+Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
 Requires at least: 4.4
 Tested up to: 4.7
 Stable tag: 1.0.5
@@ -22,7 +22,7 @@ Current features:
 * [Editorial Comments](https://pressshack.com/publishpress/docs/editorial-comments/) - Threaded commenting in the admin for private discussion between writers and editors.
 * [Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) - Keep track of the important details.
 * [Notifications](https://pressshack.com/publishpress/docs/notifications/) - Receive timely updates on the content you're following.
-* [Story Budget](https://pressshack.com/publishpress/docs/story-budget/) - View your upcoming content budget.
+* [Content Overview](https://pressshack.com/publishpress/docs/content-overview/) - View your content overview.
 * [User Groups](https://pressshack.com/publishpress/docs/user-groups/) - Keep your users organized by department or function.
 
 == Installation ==
