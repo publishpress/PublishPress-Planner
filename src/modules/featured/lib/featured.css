@@ -38,3 +38,15 @@
     width: 60px;
     height: 60px;
 }
+
+@media only screen and (max-width: 782px) {
+    .pp-block-item {
+        width: 100%;
+        min-width: 100px;
+    }
+    
+    .pp-block-items a.spaced {
+        margin-left: 0;
+        margin-top: 25px;
+    }
+}
