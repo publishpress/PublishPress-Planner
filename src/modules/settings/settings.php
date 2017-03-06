@@ -171,9 +171,6 @@ if (!class_exists('PP_Settings')) {
                     </a>
                     <h1 class="pressshack-title">
                         <?php _e('PublishPress', 'publishpress') ?>
-                        <?php if (!empty($current_module->title)) : ?>
-                            <?php echo ': ' . $current_module->title; ?>
-                        <?php endif; ?>
                     </h1>
                     
                     <?php echo !empty($display_text) ? $display_text : ''; ?>
