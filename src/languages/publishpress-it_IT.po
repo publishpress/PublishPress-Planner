@@ -112,7 +112,7 @@ msgstr "Calendario"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/calendar/calendar.php:31
-msgid "Click here to see a calendar of when all your content is published."
+msgid "The calendar lets you see your posts over a customizable date range."
 msgstr "Visualizza i prossimi contenuti in un calendario personalizzabile."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1006,7 +1006,7 @@ msgstr "Informazioni"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:43
-msgid "Click here to customize the extra data that’s tracked for your content."
+msgid "With Metadata you can customize the extra data that’s tracked for your content."
 msgstr "Controlla i dettagli degli articoli in lavorazione."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni

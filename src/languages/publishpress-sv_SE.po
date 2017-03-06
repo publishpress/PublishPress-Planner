@@ -100,7 +100,7 @@ msgstr "Inläggskalender"
 
 #: ../modules/calendar/calendar.php:35
 #, php-format
-msgid "Click here to see a calendar of when all your content is published."
+msgid "The calendar lets you see your posts over a customizable date range."
 msgstr ""
 "Visa kommande innehåll i en anpassningsbar inläggskalender."
 
@@ -1014,7 +1014,7 @@ msgid "Metadata"
 msgstr "Redaktionell Metadata"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:44
-msgid "Click here to customize the extra data that’s tracked for your content."
+msgid "With Metadata you can customize the extra data that’s tracked for your content."
 msgstr "Spåra detaljer om pågående inlägg"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:45

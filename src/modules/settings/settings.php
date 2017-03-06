@@ -186,13 +186,6 @@ if (!class_exists('PP_Settings')) {
                     </h2>
 
                 </header>
-
-                <div class="explanation">
-
-                    <?php if ($current_module->extended_description): ?>
-                        <p><?php echo $current_module->extended_description; ?></p>
-                    <?php endif; ?>
-                </div>
             <?php
         }
 

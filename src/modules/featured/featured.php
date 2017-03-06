@@ -98,7 +98,7 @@ if (!class_exists('PP_Featured')) {
                         </div>
                         <div class="pp-block-item-description">
                             <h3><?php echo __('Calendar', 'publishpress'); ?></h3>
-                            <p><?php echo __('Click here to see a calendar of when all your content is published.', 'publishpress'); ?></p>
+                            <p><?php echo __('The calendar lets you see your posts over a customizable date range.', 'publishpress'); ?></p>
                                     
                         </div>
                     </a>

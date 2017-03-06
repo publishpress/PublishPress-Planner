@@ -95,7 +95,7 @@ msgid "Calendar"
 msgstr "Calendario"
 
 #: modules/calendar/calendar.php:33
-msgid "Click here to see a calendar of when all your content is published."
+msgid "The calendar lets you see your posts over a customizable date range."
 msgstr ""
 "Vea los próximos contenidos en un calendario personalizable."
 
@@ -1001,7 +1001,7 @@ msgid "Metadata"
 msgstr "Metadatos"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
-msgid "Click here to customize the extra data that’s tracked for your content."
+msgid "With Metadata you can customize the extra data that’s tracked for your content."
 msgstr "Monitorice detalles acerca del progreso de sus entradas."
 
 #: modules/editorial-metadata/editorial-metadata.php:44

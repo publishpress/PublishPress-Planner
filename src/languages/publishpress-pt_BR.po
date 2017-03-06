@@ -96,8 +96,8 @@ msgid "Calendar"
 msgstr "Calendário"
 
 #: modules/calendar/calendar.php:33
-msgid "Click here to see a calendar of when all your content is published."
-msgstr "Clique aqui para ver um calendário de quando todo seu conteúdo será publicado."
+msgid "The calendar lets you see your posts over a customizable date range."
+msgstr "O calendário permite visualizar quando todo seu conteúdo será publicado."
 
 #: modules/calendar/calendar.php:34
 msgid "PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date date."
@@ -877,8 +877,8 @@ msgid "Metadata"
 msgstr "Metadados"
 
 #: modules/editorial-metadata/editorial-metadata.php:43
-msgid "Click here to customize the extra data that’s tracked for your content."
-msgstr "Rastrear detalhes sobre seus posts em progresso"
+msgid "With Metadata you can customize the extra data that’s tracked for your content."
+msgstr "Com Metadados você pode rastrear detalhes sobre seus posts em progresso."
 
 #: modules/editorial-metadata/editorial-metadata.php:44
 msgid "Log details on every assignment using configurable editorial metadata. It’s completely customizable; create fields for everything from due date to location to contact information to role assignments."
