@@ -1533,7 +1533,6 @@ if (!class_exists('PP_Calendar')) {
         public function register_settings()
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
-            add_settings_field('number_of_weeks', __('Number of weeks to show', 'publishpress'), array($this, 'settings_number_weeks_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
             add_settings_field('post_types', __('Post types to show', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
             add_settings_field('quick_create_post_type', __('Post type to create directly from calendar', 'publishpress'), array($this, 'settings_quick_create_post_type_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
             add_settings_field('ics_subscription', __('Subscription in iCal or Google Calendar', 'publishpress'), array($this, 'settings_ics_subscription_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
