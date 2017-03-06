@@ -1186,11 +1186,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
             $referApproved = $_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] === self::SETTINGS_SLUG;
 
-            // echo '<pre>';
-            // print_r($_POST);
-            // var_dump(!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id']),
-            //     !$referApproved, $_GET['action'] != 'edit-term'); die;
-
             if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
                 || !$referApproved || $_GET['action'] != 'edit-term') {
                 return;
