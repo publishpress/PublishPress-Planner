@@ -495,7 +495,7 @@ msgid ""
 "post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete "
 "the originals. You can also drag and drop statuses to set the best order for your "
 "workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress "
-"and the WordPress admin. On the calendar and story budget, you can filter your "
+"and the WordPress admin. On the calendar and content overview, you can filter your "
 "view to see only posts of a specific post state. Furthermore, email notifications "
 "can be sent to a specific group of users when a post changes state.</p>"
 msgstr ""
@@ -1051,7 +1051,7 @@ msgid ""
 "This feature allows you to create as many date, text, number, etc. fields as you "
 "like, and then use them to store information like contact details, required word "
 "count, or the location of an interview.</p><p>Once you’ve set your fields up, "
-"editorial metadata integrates with both the calendar and the story budget. Make an "
+"editorial metadata integrates with both the calendar and the content overview. Make an "
 "editorial metadata item visible to have it appear to the rest of your team. Keep "
 "it hidden to restrict the information between the writer and their editor.</p>"
 msgstr ""
@@ -1352,7 +1352,7 @@ msgstr "Заметная"
 #: modules/editorial-metadata/editorial-metadata.php:1703
 msgid ""
 "When viewable, metadata can be seen on views other than the edit post view (e.g. "
-"calendar, manage posts, story budget, etc.)"
+"calendar, manage posts, content overview, etc.)"
 msgstr ""
 "Заметная пометка видна не только в редакторе записи (а также, например, в "
 "календаре, списке записей, редакционном плане)"
@@ -1703,7 +1703,7 @@ msgstr ""
 
 #: modules/story-budget/story-budget.php:38 modules/story-budget/story-budget.php:134
 #: modules/story-budget/story-budget.php:282
-msgid "Story Budget"
+msgid "Content Overview"
 msgstr "Редакционный план"
 
 #: modules/story-budget/story-budget.php:39
@@ -1713,7 +1713,7 @@ msgstr "Просматривайте статус всех материалов 
 
 #: modules/story-budget/story-budget.php:40
 msgid ""
-"Use the story budget to see how content on your site is progressing. Filter by "
+"Use the content overview to see how content on your site is progressing. Filter by "
 "specific categories or date ranges to see details about each post in progress."
 msgstr ""
 "Используйте редакционный план для отслеживания хода наполнения сайта. Фильтруйте "

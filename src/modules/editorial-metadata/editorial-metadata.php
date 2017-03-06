@@ -95,7 +95,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 'settings_help_tab' => array(
                     'id'      => 'pp-editorial-metadata-overview',
                     'title'   => __('Overview', 'publishpress'),
-                    'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
+                    'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
                 'options_page'       => true,
@@ -141,7 +141,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 add_filter('pp_calendar_item_information_fields', array($this, 'filter_calendar_item_fields'), 10, 2);
             }
 
-            // Add Editorial Metadata columns to the Story Budget if it exists
+            // Add Editorial Metadata columns to the Content Overview if it exists
             if ($this->module_enabled('story_budget')) {
                 add_filter('pp_story_budget_term_columns', array($this, 'filter_story_budget_term_columns'));
                 // Register an action to handle this data later
@@ -835,12 +835,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * If the PublishPress Story Budget is enabled, register our viewable terms as columns
+         * If the PublishPress Content Overview is enabled, register our viewable terms as columns
          *
          * @since 0.7
          * @uses apply_filters('pp_story_budget_term_columns')
          *
-         * @param array $term_columns The existing columns on the story budget
+         * @param array $term_columns The existing columns on the content overview
          * @return array $term_columns Term columns with viewable Editorial Metadata terms
          */
         public function filter_story_budget_term_columns($term_columns)
@@ -857,7 +857,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * If the PublishPress Story Budget is enabled,
+         * If the PublishPress Content Overview is enabled,
          *
          * @since 0.7
          * @uses apply_filters('pp_story_budget_term_column_value')
@@ -1635,7 +1635,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                             <?php endforeach;
                 ?>
                             </select>
-                            <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress'));
+                            <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress'));
                 ?>
                         </td>
                     </tr>
@@ -1758,7 +1758,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         <?php endforeach;
                 ?>
                         </select>
-                        <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress'));
+                        <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress'));
                 ?>
                     </div>
                     <?php wp_nonce_field('edit-publishpress-settings'); ?>
@@ -1924,7 +1924,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         if ($item->viewable) {
             $actions['change-visibility make-hidden'] = '<a title="' . esc_attr(__('Hidden metadata can only be viewed on the edit post view.', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-hidden', 'term-id' => $item->term_id))) . '">' . __('Make Hidden', 'publishpress') . '</a>';
         } else {
-            $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(__('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-viewable', 'term-id' => $item->term_id))) . '">' . __('Make Viewable', 'publishpress') . '</a>';
+            $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(__('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-viewable', 'term-id' => $item->term_id))) . '">' . __('Make Viewable', 'publishpress') . '</a>';
         }
         $actions['delete delete-status'] = "<a href='$item_delete_link'>" . __('Delete', 'publishpress') . "</a>";
 

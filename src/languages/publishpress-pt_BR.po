@@ -442,7 +442,7 @@ msgid "Status order updated."
 msgstr "Status do post atualizado."
 
 #: modules/custom-status/custom-status.php:59
-msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
+msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and content overview, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
 msgstr "<p>Status personalizados do PublishPress permitem definir as etapas mais importantes do seu fluxo de trabalho editorial. Fora da caixa, WordPress só oferece \"Rascunho\" e \"Revisão Pendente\" como status de post. Com status personalizados, você pode criar seus próprios status, como \"Em andamento\", \"Em campo\" ou \"Esperando edição\" e conservar ou eliminar os originais. Também é possível arrastar e soltar os status para estabelecer a melhor ordem para seu fluxo de trabalho. <p></p> Os status personalizados estão plenamente integrados com o restante do PublishPress e a administração do WordPress. No calendário e no histórico de orçamento, é possível filtrar apenas os posts de um status específico. Além disso, as notificações de email poder ser enviadas a um grupo específico de usuários quando o post teve seu status alterado.</p>"
 
 #: modules/custom-status/custom-status.php:61
@@ -909,7 +909,7 @@ msgid "Term visibility changed."
 msgstr "Visibilidade do termo alterada."
 
 #: modules/editorial-metadata/editorial-metadata.php:67
-msgid "<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>"
+msgid "<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>"
 msgstr "<p>Manter um registro dos detalhes importantes sobre seu conteúdo com metadados editoriais. Esta característica lhe permite criar tantos campos de datas, textos, números, etc. como queira, e logo utilizá-los para armazenar informações como dados de contato, número de palavras requerido, o local de uma entrevista.</p> <p>Uma vez configurados os campos, os metadados editoriais se integram tanto com o calendário e o histórico de pagamento. Faça com que um elemento dos metadados editoriais seja visível para o resto da sua equipe. Mantenha oculto para restringir esta informação entre o escritor e o seu editor </p>"
 
 #: modules/editorial-metadata/editorial-metadata.php:69
@@ -1176,7 +1176,7 @@ msgstr "Visível"
 #: modules/editorial-metadata/editorial-metadata.php:1451
 #: modules/editorial-metadata/editorial-metadata.php:1526
 #: modules/editorial-metadata/editorial-metadata.php:1685
-msgid "When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)"
+msgid "When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)"
 msgstr "Quando visível, o metadado pode ser visto em outras visualizações além da edição do post (por exemplo: calendário, gerenciar posts, histórico de pagamento, etc)."
 
 #: modules/editorial-metadata/editorial-metadata.php:1457
@@ -1478,7 +1478,7 @@ msgstr "Desabilitado, pois add_post_type_support('%1$s', '%2$s') está incluído
 #: modules/story-budget/story-budget.php:40
 #: modules/story-budget/story-budget.php:136
 #: modules/story-budget/story-budget.php:284
-msgid "Story Budget"
+msgid "Content Overview"
 msgstr "Histórico de orçamento"
 
 #: modules/story-budget/story-budget.php:41
@@ -1486,7 +1486,7 @@ msgid "Click here for a single screen that shows the publication status of all y
 msgstr "Ver os status de todo seu conteúdo <a href=\"%s\"> de uma vez </a>."
 
 #: modules/story-budget/story-budget.php:42
-msgid "Use the story budget to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress."
+msgid "Use the content overview to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress."
 msgstr "Use o histórico de orçamento para ver como o conteúdo do seu site está progredindo. Filtre por categorias específicas ou intervalos de data para ver os detalhes do progresso de cada post."
 
 #: modules/story-budget/story-budget.php:75

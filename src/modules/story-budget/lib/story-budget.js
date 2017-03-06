@@ -1,4 +1,4 @@
-// Story Budget specific JS, assumes that pp_date.js has already been included
+// Content Overview specific JS, assumes that pp_date.js has already been included
 
 jQuery(document).ready(function($) {
     // Hide all post details when directed

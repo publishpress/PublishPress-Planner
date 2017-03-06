@@ -65,9 +65,9 @@ class PP_Story_Budget extends PP_Module
         $this->module_url = $this->get_module_url(__FILE__);
         // Register the module with PublishPress
         $args = array(
-            'title'                => __('Story Budget', 'publishpress'),
+            'title'                => __('Content Overview', 'publishpress'),
             'short_description'    => __('Click here for a single screen that shows the publication status of all your content.', 'publishpress'),
-            'extended_description' => __('Use the story budget to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
+            'extended_description' => __('Use the content overview to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
             'module_url'           => $this->module_url,
             'icon_class'           => 'dashicons dashicons-list-view',
             'slug'                 => 'story-budget',
@@ -116,7 +116,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Give users the appropriate permissions to view the story budget the first time the module is loaded
+     * Give users the appropriate permissions to view the content overview the first time the module is loaded
      *
      * @since 0.7
      */
@@ -145,7 +145,7 @@ class PP_Story_Budget extends PP_Module
 
         // Upgrade path to v0.7
         if (version_compare($previous_version, '0.7', '<')) {
-            // Migrate whether the story budget was enabled or not and clean up old option
+            // Migrate whether the content overview was enabled or not and clean up old option
             if ($enabled = get_option('publishpress_story_budget_enabled')) {
                 $enabled = 'on';
             } else {
@@ -160,17 +160,17 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Include the story budget link in the admin menu.
+     * Include the content overview link in the admin menu.
      *
      * @uses add_submenu_page()
      */
     public function action_admin_menu()
     {
-        add_submenu_page('index.php', __('Story Budget', 'publishpress'), __('Story Budget', 'publishpress'), apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget'), $this->module->slug, array($this, 'story_budget'));
+        add_submenu_page('index.php', __('Content Overview', 'publishpress'), __('Content Overview', 'publishpress'), apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget'), $this->module->slug, array($this, 'story_budget'));
     }
 
     /**
-     * Enqueue necessary admin scripts only on the story budget page.
+     * Enqueue necessary admin scripts only on the content overview page.
      *
      * @uses enqueue_admin_script()
      */
@@ -190,7 +190,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Enqueue a screen and print stylesheet for the story budget.
+     * Enqueue a screen and print stylesheet for the content overview.
      */
     public function action_enqueue_admin_styles()
     {
@@ -254,7 +254,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Get the number of columns to show on the story budget
+     * Get the number of columns to show on the content overview
      */
     public function get_num_columns()
     {
@@ -295,7 +295,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Create the story budget view. This calls lots of other methods to do its work. This will
+     * Create the content overview view. This calls lots of other methods to do its work. This will
      * ouput any messages, create the table navigation, then print the columns based on
      * get_num_columns(), which will in turn print the stories themselves.
      */
@@ -324,10 +324,10 @@ class PP_Story_Budget extends PP_Module
         <div class="wrap" id="pp-story-budget-wrap">
             <div id="pp-story-budget-title">
                 <span class="<?php echo esc_url($this->module->img_url); ?> module-icon" />
-                <h2><?php _e('Story Budget', 'publishpress');
+                <h2><?php _e('Content Overview', 'publishpress');
         ?>&nbsp;<span class="time-range"><?php $this->story_budget_time_range();
         ?></span></h2>
-            </div><!-- /Story Budget Title -->
+            </div><!-- /Content Overview Title -->
             <?php $this->print_messages();
         ?>
             <?php $this->table_navigation();
@@ -476,7 +476,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Prints the stories in a single term in the story budget.
+     * Prints the stories in a single term in the content overview.
      *
      * @param object $term The term to print.
      */
@@ -533,7 +533,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Prints a single post within a term in the story budget.
+     * Prints a single post within a term in the content overview.
      *
      * @param object $post The post to print.
      * @param object $parent_term The top-level term to which this post belongs.
@@ -725,7 +725,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Update the current user's filters for story budget display with the filters in $_GET. The filters
+     * Update the current user's filters for content overview display with the filters in $_GET. The filters
      * in $_GET take precedence over the current users filters if they exist.
      */
     public function update_user_filters()
@@ -765,7 +765,7 @@ class PP_Story_Budget extends PP_Module
     }
 
     /**
-     * Get the filters for the current user for the story budget display, or insert the default
+     * Get the filters for the current user for the content overview display, or insert the default
      * filters if not already set.
      *
      * @return array The filters for the current user, or the default filters if the current user has none.

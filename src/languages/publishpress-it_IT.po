@@ -429,7 +429,7 @@ msgstr "Ordinamento degli stati aggiornato."
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin
 #: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:60
-msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and story budget, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
+msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and content overview, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
 msgstr "<p>Gli stati di lavorazione di PublishPress permettono di definire i passaggi più importanti del flusso di lavoro. Wordpress offre solo gli stati “Bozza” and “In sospeso” per gli articoli. Con PublishPress potrai creare degli stati specifici come “In lavorazione”, “Idea”, o “In attesa di modifiche” ed eventualmente cancellare gli originali. Puoi inoltre trascinare gli stati di lavorazione per ordinarli come preferisci.</p><p>Gli stati di lavorazione sono completamente integrati nell'interfaccia di amministrazione di Wordpress. Nelle viste Calendario e Prospetto editoriale, potrai filtrare la visualizzazione in modo da vedere solo gli articoli a una determinata fase di lavorazione. Inoltre, quando lo stato di un articolo viene modificato, possono essere inviate notifiche via email a specifici utenti o gruppi.</p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1054,7 +1054,7 @@ msgstr "Visibilità modificata."
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:67
-msgid "<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the story budget. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>"
+msgid "<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>"
 msgstr "<p>Tiene traccia di informazioni importanti sul contenuto tramite le informazioni editoriali. Questa funzione ti permette di creare tutti i campi che ti servono (date, testo, numeri, checkbox ecc)  e di utilizzarli per raccogliere informazioni sull'articolo, come i riferimenti dell'autore, la lunghezza richiesta o la località di un'intervista.</p><p>Una volta impostati i campi, le informazioni editoriali si integrano sia con il calendario sia con il prospetto editoriale. Rendendo un'informazione editoriale visibile, sarà letto anche dal resto del team. Tienilo nascosto per limitare le informazioni ai giornalisti e i loro redattori.</p>"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1425,7 +1425,7 @@ msgstr "Visibile"
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1415
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1490
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1649
-msgid "When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, story budget, etc.)"
+msgid "When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)"
 msgstr "Quando visibile, l'informazione editoriale può essere visualizzata sia quando si modifica l'articolo sia in altre circostanze (come nel calendario, nel prospetto editoriale ecc.)"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1787,7 +1787,7 @@ msgstr "Disabilitato perchè l'integrazione tra '%1$s' e '%2$s')è assicurata da
 #: plugin wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:40
 #: flow\0.7.1/modules/story-budget/story-budget.php:135
 #: flow\0.7.1/modules/story-budget/story-budget.php:280
-msgid "Story Budget"
+msgid "Content Overview"
 msgstr "Prospetto editoriale"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
@@ -1797,7 +1797,7 @@ msgstr "Visualizza lo stato di lavorazione di tutti i tuoi contenuti in un'unica
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:42
-msgid "Use the story budget to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress."
+msgid "Use the content overview to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress."
 msgstr "Utilizza il prospetto editoriale per vedere come procede il lavoro sui contenuti. Filtra gli articoli per categorie o intervalli di tempo specifici, per vedere i dettagli di ogni articolo in lavorazione."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni

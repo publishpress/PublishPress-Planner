@@ -123,7 +123,7 @@ if (!class_exists('PP_Notifications')) {
                 // Manage Posts
                 add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
                 add_filter('page_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
-                // Calendar and Story Budget
+                // Calendar and Content Overview
                 add_filter('pp_calendar_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
                 add_filter('pp_story_budget_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
             }
