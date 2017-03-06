@@ -1184,10 +1184,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_edit_editorial_metadata()
         {
-            $referApproved = $_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] === self::SETTINGS_SLUG;
-
             if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
-                || !$referApproved || $_GET['action'] != 'edit-term') {
+                || !($_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] === self::SETTINGS_SLUG)
+                || $_GET['action'] != 'edit-term') {
                 return;
             }
 
