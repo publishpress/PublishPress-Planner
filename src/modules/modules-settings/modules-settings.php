@@ -45,7 +45,7 @@ if (!class_exists('PP_Modules_Settings')) {
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('General', 'publishpress'),
-                'short_description'    => __('PublishPress is the essential plugin for any site with multiple writers', 'publishpress'),
+                'short_description'    => false,
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
