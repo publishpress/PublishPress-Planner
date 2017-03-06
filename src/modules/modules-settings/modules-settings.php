@@ -45,7 +45,7 @@ if (!class_exists('PP_Modules_Settings')) {
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('General', 'publishpress'),
-                'short_description'    => false,
+                'short_description'    => __('This tab contain settings for key features including notifications, dashboard widgets, and comments.', 'publishpress'),
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
