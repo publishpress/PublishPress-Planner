@@ -43,8 +43,26 @@
     transition: all 200ms ease-in-out;
 }
 
-.pressshack-admin-wrapper a:hover {
-    color: #9D94C9;
+.pressshack-admin-wrapper a,
+.pressshack-admin-wrapper a div,
+.pressshack-admin-wrapper a p {
+    color: #655997;
+}
+
+.pressshack-admin-wrapper a:hover,
+.pressshack-admin-wrapper a:focus,
+.pressshack-admin-wrapper a:active,
+.pressshack-admin-wrapper a:hover div,
+.pressshack-admin-wrapper a:focus div,
+.pressshack-admin-wrapper a:active div,
+.pressshack-admin-wrapper a:hover p,
+.pressshack-admin-wrapper a:focus p,
+.pressshack-admin-wrapper a:active p {
+    color: #5A4F87;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
 }
 
 .pressshack-admin-wrapper > header .pressshack-title {
@@ -70,8 +88,15 @@
     color: #23282d;
 }
 
-.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab-active {
-    border-top: 1px solid #655997;
+.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab {
+    color: inherit;
+}
+
+.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab-active,
+.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:hover,
+.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:active,
+.pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:focus {
+    border-top-color: #655997;
     color: #655997;
 }
 
@@ -145,7 +170,13 @@
 .pressshack-admin-wrapper .button-primary:active,
 .pressshack-admin-wrapper .button-primary:focus {
     background-color: #F3AC04;
+    border-color: #C58C07;
     color: #333;
+    outline: none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .pressshack-admin-wrapper .button:not(.notice-dismiss):hover,

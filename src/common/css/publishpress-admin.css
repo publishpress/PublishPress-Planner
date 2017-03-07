@@ -54,6 +54,10 @@
     background-position: 0 -60px;
 }
 
+#toplevel_page_pp-modules-settings > a.current {
+    background: #655997 !important;
+}
+
 .pp-page-icon {
     font-size: 30px;
     display: inline-block;

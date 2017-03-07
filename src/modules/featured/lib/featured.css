@@ -3,7 +3,7 @@
 }
 
 .pp-block-items {
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .pp-block-items a.spaced {
@@ -19,9 +19,17 @@
 }
 
 .pp-block-item-description {
-    min-height: 130px;
+    min-height: 110px;
     padding: 20px;
     background: #fff;
+}
+
+.pp-block-item-description h3 {
+    margin-top: 0;
+}
+
+.pp-block-item-description p:last-of-type {
+    margin-bottom: 0;
 }
 
 .pp-block-item-icon {
@@ -48,5 +56,13 @@
     .pp-block-items a.spaced {
         margin-left: 0;
         margin-top: 25px;
+    }
+
+    .pp-block-item-description {
+        min-height: inherit;
+    }
+
+    .pp-module-settings {
+        overflow: visible;
     }
 }
