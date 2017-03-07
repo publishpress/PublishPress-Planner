@@ -366,7 +366,8 @@ if (!class_exists('PP_Settings')) {
             global $publishpress;
 
             $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Featured::SETTINGS_SLUG . '-settings';
-            $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
+            $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
+            $display_text         = '';
             
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
@@ -379,7 +380,7 @@ if (!class_exists('PP_Settings')) {
                 $message = false;
             }
             if ($message && isset($requested_module->messages[$message])) {
-                $display_text = '<div class="is-dismissible notice notice-info"><p>' . esc_html($requested_module->messages[$message]) . '</p></div>';
+                $display_text .= '<div class="is-dismissible notice notice-info"><p>' . esc_html($requested_module->messages[$message]) . '</p></div>';
             }
 
             // If there's been an error, let's display it
@@ -393,7 +394,7 @@ if (!class_exists('PP_Settings')) {
                 $error = false;
             }
             if ($error && isset($requested_module->messages[$error])) {
-                $display_text = '<div class="is-dismissible notice notice-error"><p>' . esc_html($requested_module->messages[$error]) . '</p></div>';
+                $display_text .= '<div class="is-dismissible notice notice-error"><p>' . esc_html($requested_module->messages[$error]) . '</p></div>';
             }
 
             $this->print_default_header($requested_module);
