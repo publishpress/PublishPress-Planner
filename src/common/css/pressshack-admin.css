@@ -57,7 +57,10 @@
 .pressshack-admin-wrapper a:active div,
 .pressshack-admin-wrapper a:hover p,
 .pressshack-admin-wrapper a:focus p,
-.pressshack-admin-wrapper a:active p {
+.pressshack-admin-wrapper a:active p,
+.pressshack-admin-wrapper a:hover .dashicons:before,
+.pressshack-admin-wrapper a:focus .dashicons:before,
+.pressshack-admin-wrapper a:active .dashicons:before {
     color: #5A4F87;
     box-shadow: none;
     -moz-box-shadow: none;
