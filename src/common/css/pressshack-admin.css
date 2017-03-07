@@ -63,6 +63,13 @@
     font-size: 2em;
 }
 
+.pressshack-admin-wrapper > header h1 a,
+.pressshack-admin-wrapper > header h1 a:hover,
+.pressshack-admin-wrapper > header h1 a:focus,
+.pressshack-admin-wrapper > header h1 a:active {
+    color: #23282d;
+}
+
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab-active {
     border-top: 1px solid #655997;
     color: #655997;

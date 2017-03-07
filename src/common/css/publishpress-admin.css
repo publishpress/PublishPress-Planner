@@ -50,7 +50,7 @@
     background-position: 0 -26px;
 }
 
-#toplevel_page_pp-modules-settings .wp-has-current-submenu .dashicons-before::before {
+#toplevel_page_pp-modules-settings .current .dashicons-before::before {
     background-position: 0 -60px;
 }
 
