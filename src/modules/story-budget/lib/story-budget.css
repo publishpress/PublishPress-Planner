@@ -8,25 +8,25 @@
     max-width: 300px;
 }
 
-#pp-story-budget-title h2 span {
+header h2 span {
     color: #999999;
 }
 
-#pp-story-budget-title h2 form {
+header h2 form {
     display: inline;
     position: relative;
 }
 
-#pp-story-budget-title h2 form input {
+header h2 form input {
     display:none;
 }
 
-#pp-story-budget-title h2 a.change-date {
+header h2 a.change-date {
     display:inline-block;
 }
 
-#pp-story-budget-title h2 a.change-date,
-#pp-story-budget-title h2 a.change-date-cancel {
+header h2 a.change-date,
+header h2 a.change-date-cancel {
     font-size: 14px;
 }
 
@@ -74,4 +74,8 @@
 
 #start_date, #end_date {
     width: 100px;
+}
+
+#wpbody-content .metabox-holder {
+    overflow: hidden;
 }

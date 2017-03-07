@@ -1,4 +1,4 @@
-#pp-calendar-title h2 span {
+header h2 span {
     color: #999999;
 }
 
@@ -383,7 +383,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     display:block;
     height:20px;
     margin-top:10px;
-    margin-bottom:15px;
+    margin-bottom:25px;
 }
 
 .pp-calendar-navigation select {

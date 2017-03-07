@@ -644,6 +644,8 @@ if (!class_exists('PP_Calendar')) {
          */
         public function view_calendar()
         {
+            global $publishpress;
+
             $this->dropdown_taxonomies = array();
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -684,15 +686,13 @@ if (!class_exists('PP_Calendar')) {
 
             // we sort by post statuses....... eventually
             $post_statuses = $this->get_post_statuses();
+
+
+            $description = sprintf('%s <span class="time-range">%s</span>', __('Calendar', 'publishpress'), $this->calendar_time_range());
+            $publishpress->settings->print_default_header($publishpress->modules->calendar, $description);
+
             ?>
             <div class="wrap">
-                <div id="pp-calendar-title"><!-- Calendar Title -->
-                    <?php echo '<span class="' . esc_html($this->module->icon_class) . '"></span>'; ?>
-                    <h2><?php _e('Calendar', 'publishpress');
-            ?>&nbsp;<span class="time-range"><?php $this->calendar_time_range();
-            ?></span></h2>
-                </div><!-- /Calendar Title -->
-
                 <?php
                     // Handle posts that have been trashed or untrashed
                     if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
@@ -896,6 +896,7 @@ if (!class_exists('PP_Calendar')) {
                   </div>
 
             <?php
+            $publishpress->settings->print_default_footer($publishpress->modules->calendar);
 
         }
 
@@ -1488,7 +1489,8 @@ if (!class_exists('PP_Calendar')) {
             $total_days     = ($this->total_weeks * 7) - 1;
             $last_datetime  = strtotime("+" . $total_days . " days", date('U', strtotime($this->start_date)));
             $last_date      = date_i18n(get_option('date_format'), $last_datetime);
-            echo sprintf(__('for %1$s through %2$s', 'publishpress'), $first_date, $last_date);
+            
+            return sprintf(__('for %1$s through %2$s', 'publishpress'), $first_date, $last_date);
         }
 
         /**

@@ -301,6 +301,7 @@ class PP_Story_Budget extends PP_Module
      */
     public function story_budget()
     {
+        global $publishpress;
 
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
@@ -320,14 +321,11 @@ class PP_Story_Budget extends PP_Module
         }
         $this->terms = apply_filters('pp_story_budget_filter_terms', $terms); // allow for reordering or any other filtering of terms
 
+        $description = sprintf('%s <span class="time-range">%s</span>', __('Content Overview', 'publishpress'), $this->story_budget_time_range());
+        $publishpress->settings->print_default_header($publishpress->modules->story_budget, $description);
+
         ?>
         <div class="wrap" id="pp-story-budget-wrap">
-            <div id="pp-story-budget-title">
-                <span class="<?php echo esc_url($this->module->img_url); ?> module-icon" />
-                <h2><?php _e('Content Overview', 'publishpress');
-        ?>&nbsp;<span class="time-range"><?php $this->story_budget_time_range();
-        ?></span></h2>
-            </div><!-- /Content Overview Title -->
             <?php $this->print_messages();
         ?>
             <?php $this->table_navigation();
@@ -355,7 +353,7 @@ class PP_Story_Budget extends PP_Module
             </div>
         </div>
         <?php
-
+        $publishpress->settings->print_default_footer($publishpress->modules->story_budget);
     }
 
     /**
@@ -382,14 +380,14 @@ class PP_Story_Budget extends PP_Module
         $output .= sprintf(_x('starting %1$s showing %2$s %3$s', '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'', 'publishpress'), $start_date_value, $number_days_value, _n('day', 'days', $this->user_filters['number_days'], 'publishpress'));
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-story-budget-range-submit" name="pp-story-budget-range-submit" type="submit"';
-        $output .= ' class="button-primary" value="' . __('Change', 'publishpress') . '" />';
+        $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
         $output .= '<a class="change-date" href="#">' . __('Change', 'publishpress') . '</a>';
         $output .= wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
         $output .= '</span></form>';
 
-        echo $output;
+        return $output;
     }
 
     /**

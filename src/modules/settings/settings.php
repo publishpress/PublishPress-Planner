@@ -130,7 +130,7 @@ if (!class_exists('PP_Settings')) {
         /**
          *
          */
-        public function print_default_header($current_module)
+        public function print_default_header($current_module, $custom_text = null)
         {
             $display_text = '';
 
@@ -176,8 +176,12 @@ if (!class_exists('PP_Settings')) {
                     <?php // We keep the H2 tag to keep notices tied to the header ?>
                     <h2>
 
-                        <?php if ($current_module->short_description): ?>
+                        <?php if ($current_module->short_description && empty($custom_text)): ?>
                             <?php echo $current_module->short_description; ?>
+                        <?php endif; ?>
+
+                        <?php if (!empty($custom_text)) : ?>
+                            <?php echo $custom_text; ?>
                         <?php endif; ?>
                     </h2>
 
