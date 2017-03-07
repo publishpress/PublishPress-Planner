@@ -3,7 +3,7 @@ Contributors: PressShack
 Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.0.5
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,14 @@ There're two ways to install PublishPress plugin:
 5. Activate the PublishPress plugin.
 
 == Changelog ==
+
+** 1.1.0 **
+* Complete rebranding to PublishPress and PressShack
+* Clean up on the UI
+* Move sub-pages to a common settings page
+* Clean up on the text
+* Refactor Story Budget to Content Overview
+* Move PublishPress menu to after Comments menu
 
 ** 1.0.5 **
 * Update version to trigger a new release fixing SVN issues on the last release

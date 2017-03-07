@@ -1,5 +1,13 @@
 ## Changelog
 
+**1.1.0 (Mar. 7, 2017)**
+* Complete rebranding to PublishPress and PressShack
+* Clean up on the UI
+* Move sub-pages to a common settings page
+* Clean up on the text
+* Refactor Story Budget to Content Overview
+* Move PublishPress menu to after Comments menu
+
 **1.0.5 (Feb. 16, 2017)**
 * Update version to trigger a new release fixing SVN issues on the last release
 
