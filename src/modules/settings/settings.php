@@ -166,11 +166,10 @@ if (!class_exists('PP_Settings')) {
 
             <div class="publishpress-admin pressshack-admin-wrapper wrap">
                 <header>
-                    <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress" class="pressshack-logo">
-                        <img src="<?php echo PUBLISHPRESS_URL; ?>/modules/settings/lib/icon-128x128.png">
-                    </a>
                     <h1 class="pressshack-title">
-                        <?php _e('PublishPress', 'publishpress') ?>
+                        <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress">
+                            <?php _e('PublishPress', 'publishpress') ?>
+                        </a>
                     </h1>
                     
                     <?php echo !empty($display_text) ? $display_text : ''; ?>

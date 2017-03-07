@@ -47,19 +47,20 @@
     color: #9D94C9;
 }
 
-.pressshack-admin-wrapper > header .pressshack-logo,
 .pressshack-admin-wrapper > header .pressshack-title {
     display: inline-block;
+    padding: 10px 0 10px 55px;
+    background-image: url(../../modules/settings/lib/icon-128x128.png);
+    background-size: 45px auto;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: transparent;
 }
 
 .pressshack-admin-wrapper > header h1 {
     margin: .67em 0 15px .15em;
     font-weight: 600;
     font-size: 2em;
-}
-
-.pressshack-admin-wrapper > header a.pressshack-logo img {
-    width: 35px;
 }
 
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab-active {
