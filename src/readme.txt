@@ -7,23 +7,33 @@ Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is the essential plugin for any site with multiple writers: Content Calendar, Email Notifications, Custom Publishing Statuses and more.
+PublishPress is the essential plugin for any site with multiple writers. PublishPress gives you the tools you need to manage content on a busy site.
 
 == Description ==
 
-Get the power to collaborate with your editorial team without leaving WordPress.
+Current features:
+
+* [Calendar](https://pressshack.com/publishpress/docs/calendar/) - The calendar lets you see your posts over a customizable date range.
+* [Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/) - Create custom post statuses to define the stages of your publishing workflow.
+* [Editorial Comments](https://pressshack.com/publishpress/docs/editorial-comments/) - Share internal notes with your team.
+* [Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) - With Metadata you can customize the extra data that’s tracked for your content.
+* [Notifications](https://pressshack.com/publishpress/docs/notifications/) - With email notifications, you can keep everyone updated about what’s happening with your content.
+* [Content Overview](https://pressshack.com/publishpress/docs/content-overview/) - A single screen that shows the publication status of all your content.
+* [User Groups](https://pressshack.com/publishpress/docs/user-groups/) - Organize your users into groups who can take different roles in your publishing workflow.
+
 
 PublishPress is based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
 
-Current features:
+You can easily migrate from Edit Flow into PublishPress importing all the data and settings automatically.
 
-* [Calendar](https://pressshack.com/publishpress/docs/calendar/) - A convenient month-by-month look at your content.
-* [Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/) - Define the key stages to your workflow.
-* [Editorial Comments](https://pressshack.com/publishpress/docs/editorial-comments/) - Threaded commenting in the admin for private discussion between writers and editors.
-* [Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) - Keep track of the important details.
-* [Notifications](https://pressshack.com/publishpress/docs/notifications/) - Receive timely updates on the content you're following.
-* [Content Overview](https://pressshack.com/publishpress/docs/content-overview/) - View your content overview.
-* [User Groups](https://pressshack.com/publishpress/docs/user-groups/) - Keep your users organized by department or function.
+== Screenshots ==
+
+1. The Calendar
+2. Content Overview
+3. Admin Panel
+4. Custom Statuses
+5. User Groups
+6. Metadata
 
 == Installation ==
 There're two ways to install PublishPress plugin:
