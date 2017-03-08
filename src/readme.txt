@@ -15,8 +15,8 @@ Current features:
 
 * [Calendar](https://pressshack.com/publishpress/docs/calendar/) - The calendar lets you see your posts over a customizable date range.
 * [Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/) - Create custom post statuses to define the stages of your publishing workflow.
-* [Editorial Comments](https://pressshack.com/publishpress/docs/editorial-comments/) - Share internal notes with your team.
-* [Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) - With Metadata you can customize the extra data that’s tracked for your content.
+* [Comments](https://pressshack.com/publishpress/docs/editorial-comments/) - Share internal notes with your team.
+* [Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) - With Metadata you can customize the extra data that’s tracked for your content.
 * [Notifications](https://pressshack.com/publishpress/docs/notifications/) - With email notifications, you can keep everyone updated about what’s happening with your content.
 * [Content Overview](https://pressshack.com/publishpress/docs/content-overview/) - A single screen that shows the publication status of all your content.
 * [User Groups](https://pressshack.com/publishpress/docs/user-groups/) - Organize your users into groups who can take different roles in your publishing workflow.
@@ -28,12 +28,12 @@ You can easily migrate from Edit Flow into PublishPress importing all the data a
 
 == Screenshots ==
 
-1. The Calendar
-2. Content Overview
-3. Admin Panel
-4. Custom Statuses
-5. User Groups
-6. Metadata
+1. With Calendar you can see your posts over a customizable date range
+2. Content Overview is a single screen that shows the publication status of all your content
+3. In the Admin Page you can have access too all features and settings
+4. Create Custom Statuses to define the stages of your publishing
+5. Organize your users into groups who can take different roles in your publishing workflow
+6. With Metadata your can customize the extra data that's tracked for your content
 
 == Installation ==
 There're two ways to install PublishPress plugin:
