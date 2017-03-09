@@ -40,7 +40,7 @@ if (!class_exists('PP_Module')) {
 
         public $published_statuses = array(
                                 'publish',
-                                'future',
+                                // 'future',
                                 'private',
                             );
 
