@@ -266,18 +266,6 @@ if (!class_exists('PP_Calendar')) {
 
             $output .= '&nbsp;&nbsp;&nbsp;<input id="screen-options-apply" name="screen-options-apply" type="submit" value="' . __('Apply') . '" class="button-secondary" />';
 
-            if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key) {
-                $args = array(
-                        'action'       => 'pp_calendar_ics_subscription',
-                        'user'         => wp_get_current_user()->user_login,
-                        'user_key'     => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
-                    );
-                $subscription_link = add_query_arg($args, admin_url('admin-ajax.php'));
-                $output .= '<br />';
-                $output .= __('Subscribe in iCal or Google Calendar', 'publishpress');
-                $output .= ':<br /><input type="text" size="100" value="' . esc_attr($subscription_link) . '" />';
-            }
-
             return $output;
         }
 
@@ -687,8 +675,25 @@ if (!class_exists('PP_Calendar')) {
             // we sort by post statuses....... eventually
             $post_statuses = $this->get_post_statuses();
 
-
+            // Get the custom description for this page
             $description = sprintf('%s <span class="time-range">%s</span>', __('Calendar', 'publishpress'), $this->calendar_time_range());
+
+            // Should we display the subscribe button?
+            if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key) {
+                $args = array(
+                        'action'       => 'pp_calendar_ics_subscription',
+                        'user'         => wp_get_current_user()->user_login,
+                        'user_key'     => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
+                    );
+                $subscription_link = add_query_arg($args, admin_url('admin-ajax.php'));
+
+                 $description .= sprintf(
+                    '<a href="%s" class="calendar-subscribe"><span class="dashicons dashicons-external"></span>%s</a>',
+                    esc_attr($subscription_link),
+                    __('Subscribe in iCal or Google Calendar', 'publishpress')
+                );
+            }
+
             $publishpress->settings->print_default_header($publishpress->modules->calendar, $description);
 
             ?>
@@ -925,7 +930,7 @@ if (!class_exists('PP_Calendar')) {
                 'custom-status-' . $post->post_status,
             );
 
-            // Add an icon for the item
+            // Add an icon for the items
             $icons = array(
                 'publish'    => 'yes',
                 'future'     => 'calendar-alt',
