@@ -15,7 +15,7 @@ table#pp-calendar-view {
 }
 
 #pp-calendar-view .day-unit {
-    border-right: 1px solid #e1e1e1;
+    border-right: 1px solid #eaeaea;
     vertical-align: top;
     height: 100px;
 }
@@ -106,7 +106,23 @@ table#pp-calendar-view .week-unit {
 }
 
 table#pp-calendar-view .day-unit.today {
-    border-top: 1px solid #000;
+    border-top: 2px solid #ffafaf;
+    background: #fff2f2;
+}
+
+.day-unit-label.calendar-today {
+    background: #ff5f5f;
+    color: white !important;
+    padding: 4px;
+    padding-top: 0px;
+    border-radius: 20px;
+    width: 18px;
+    text-align: center;
+    height: 18px;
+    display: block;
+    min-height: 18px;
+    line-height: 18px;
+    box-sizing: border-box;
 }
 
 table#pp-calendar-view .day-item {
@@ -115,22 +131,33 @@ table#pp-calendar-view .day-item {
 
 table#pp-calendar-view .day-unit{
     position: relative;
+    background: #fff;
+}
+
+table#pp-calendar-view .day-unit .dashicons {
+    font-size: 17px;
+    position: absolute;
+    left: 0px;
+    top: 1px;
+    color: #b7b7b7;
 }
 
 table#pp-calendar-view .day-unit .schedule-new-post-button{
-
-    background: none;
-    border: 1px solid rgb(180,180,180);
-    border-top: none;
-    border-left: none;
     display: none;
-    float:left;
-    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    min-height: 20px;
+    float: left;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 table#pp-calendar-view .day-unit .schedule-new-post-button:hover{
-
-    background-color: rgb(220,220,220);
 
 }
 
@@ -203,10 +230,10 @@ table#pp-calendar-view .day-unit ul {
 table#pp-calendar-view .day-unit ul li {
     list-style-type: none;
     margin: 0;
+    margin-bottom: 1px;
     word-wrap: break-word;
     padding: 1px;
-    border: 1px solid #FFF;
-    margin-bottom: 5px;
+    background: #e2e2e2;
 }
 
 table#pp-calendar-view .day-unit.weekend-day ul li {
@@ -219,6 +246,10 @@ table#pp-calendar-view .day-unit ul li:hover {
 
 table#pp-calendar-view .day-unit ul li:hover {
     border-color: #DDD;
+}
+
+table#pp-calendar-view .day-unit ul li.is-published {
+    background: #edeaf7;
 }
 
 table#pp-calendar-view .day-unit ul li .item-status {
@@ -243,6 +274,7 @@ table#pp-calendar-view .day-unit ul li .item-headline {
     line-height: 15px;
     margin-top:0;
     margin-bottom:0;
+    margin-left: 17px;
     color: #21759B;
 }
 

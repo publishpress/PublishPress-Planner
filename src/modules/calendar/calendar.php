@@ -825,13 +825,9 @@ if (!class_exists('PP_Calendar')) {
                     <td class="<?php echo esc_attr(implode(' ', $td_classes));
             ?>" id="<?php echo esc_attr($week_single_date);
             ?>">
-                        <button class='schedule-new-post-button'>+</button>
-                        <?php if ($week_single_date == date('Y-m-d', current_time('timestamp'))): ?>
-                            <div class="day-unit-today"><?php _e('Today', 'publishpress');
-            ?></div>
-                        <?php endif;
-            ?>
-                        <div class="day-unit-label"><?php echo esc_html(date('j', strtotime($week_single_date)));
+                        <button class='schedule-new-post-button button button-secondary'>+</button>
+                        <?php $class = ($week_single_date == date('Y-m-d', current_time('timestamp'))) ? 'calendar-today' : ''; ?>
+                        <div class="day-unit-label <?php echo $class; ?>"><?php echo esc_html(date('j', strtotime($week_single_date)));
             ?></div>
                         <ul class="post-list">
                             <?php
@@ -928,10 +924,22 @@ if (!class_exists('PP_Calendar')) {
                 'day-item',
                 'custom-status-' . $post->post_status,
             );
+
+            // Add an icon for the item
+            $icons = array(
+                'publish'    => 'yes',
+                'future'     => 'calendar-alt',
+                'private'    => 'lock',
+                'draft'      => 'edit',
+                'pending'    => 'edit',
+                'auto-draft' => 'edit'
+            );
+            $icon = isset($icons[$post->post_status]) ? $icons[$post->post_status] : 'edit';
+
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
             // This is checked on the ajax request too.
-            if ($this->current_user_can_modify_post($post) && !in_array($post->post_status, $this->published_statuses)) {
+            if ($this->current_user_can_modify_post($post) && (!in_array($post->post_status, $this->published_statuses) || $post->post_status == 'future')) {
                 $post_classes[] = 'sortable';
             }
 
@@ -955,9 +963,8 @@ if (!class_exists('PP_Calendar')) {
                 <div style="clear:right;"></div>
                 <div class="item-static">
                     <div class="item-default-visible">
-                        <div class="item-status"><span class="status-text"><?php echo esc_html($this->get_post_status_friendly_name(get_post_status($post_id)));
-            ?></span></div>
                         <div class="inner">
+                            <span class="dashicons dashicons-<?php echo $icon; ?>"></span>
                             <span class="item-headline post-title"><strong><?php echo esc_html(_draft_or_post_title($post->ID));
             ?></strong></span>
                         </div>
@@ -1135,12 +1142,7 @@ if (!class_exists('PP_Calendar')) {
                 );
             }
             // Publication time for published statuses
-            $published_statuses = array(
-                'publish',
-                'future',
-                'private',
-            );
-            if (in_array($post->post_status, $published_statuses)) {
+            if (in_array($post->post_status, $this->published_statuses)) {
                 if ($post->post_status == 'future') {
                     $information_fields['post_date'] = array(
                         'label' => __('Scheduled', 'publishpress'),

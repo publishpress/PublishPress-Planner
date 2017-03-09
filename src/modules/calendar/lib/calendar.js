@@ -230,7 +230,7 @@ jQuery(document).ready(function ($) {
                         } else if (response.status == 'error') {
                             html = '<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>';
                         }
-                        $('li.ajax-actions').prepend(html);
+                        $('header h2').after(html);
                         setTimeout(publishpress_calendar_hide_message, 10000);
                     }
                 );
