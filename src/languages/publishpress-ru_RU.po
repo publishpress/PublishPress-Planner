@@ -354,7 +354,7 @@ msgid "Post types to show"
 msgstr "Показывать типы записей"
 
 #: modules/calendar/calendar.php:1385
-msgid "Post type to create directly from calendar"
+msgid "Post types to create directly from calendar"
 msgstr "Создавать прямо из календаря"
 
 #: modules/calendar/calendar.php:1386

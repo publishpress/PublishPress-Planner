@@ -68,11 +68,8 @@ if (!class_exists('PP_Calendar')) {
                 'slug'                 => 'calendar',
                 'post_type_support'    => 'pp_calendar',
                 'default_options'      => array(
-                    'enabled'    => 'on',
-                    'post_types' => array(
-                        'post' => 'on',
-                        'page' => 'off',
-                    ),
+                    'enabled'                => 'on',
+                    'post_types'             => get_post_types(null, 'objects'),
                     'quick_create_post_type' => 'post',
                     'ics_subscription'       => 'off',
                     'ics_secret_key'         => '',
@@ -847,49 +844,61 @@ if (!class_exists('PP_Calendar')) {
             ?>
                         </ul>
                         <?php if ($this->hidden): ?>
-                            <a class="show-more" href="#"><?php printf(__('Show %d more', 'publishpress'), $this->hidden);
-            ?></a>
-                        <?php endif;
-            ?>
+                            <a class="show-more" href="#"><?php printf(__('Show %d more', 'publishpress'), $this->hidden); ?></a>
+                        <?php endif; ?>
 
                         <?php if (current_user_can($this->create_post_cap)) :
-                            $date_formatted = date('D, M jS, Y', strtotime($week_single_date));
-            ?>
+                            $date_formatted = date('D, M jS, Y', strtotime($week_single_date)); ?>
 
                             <form method="POST" class="post-insert-dialog">
                                 <?php /* translators: %1$s = post type name, %2$s = date */ ?>
-                                <h1><?php echo sprintf(__('Schedule a %1$s for %2$s', 'publishpress'), $this->get_quick_create_post_type_name(), $date_formatted);
-            ?></h1>
+                                <?php if (count($this->module->options->quick_create_post_type) === 1) : ?>
+                                    <h1>
+                                        <?php echo sprintf(__('Schedule a %1$s for %2$s', 'publishpress'), $this->get_quick_create_post_type_name($this->module->options->quick_create_post_type[0]), $date_formatted); ?>
+                                    </h1>    
+                                <?php else : ?>
+                                    <h1>
+                                        <?php echo sprintf(__('Schedule content for %1$s', 'publishpress'), $date_formatted);?>
+                                    </h1>
+
+                                    <select name="post-insert-dialog-post-type" class="post-insert-dialog-post-type">
+                                        <?php foreach ($this->module->options->quick_create_post_type as $type) : ?>
+                                            <option value="<?php echo $type; ?>">
+                                                <?php echo $this->get_quick_create_post_type_name($type); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    
+                                <?php endif; ?>
+
                                 <?php /* translators: %s = post type name */ ?>
-                                <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr(sprintf(_x('%s Title', 'post type name', 'publishpress'), $this->get_quick_create_post_type_name()));
-            ?>">
-                                <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr($week_single_date);
-            ?>">
+                                <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr(__('Title', 'publishpress')); ?>" />
+                                
+                                <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr($week_single_date); ?>" />
+
                                 <div class="post-insert-dialog-controls">
-                                    <input type="submit" class="button left" value="<?php echo esc_html(sprintf(_x('Create %s', 'post type name', 'publishpress'), $this->get_quick_create_post_type_name()));
-            ?>">
-                                    <a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html(sprintf(_x('Edit %s', 'post type name', 'publishpress'), $this->get_quick_create_post_type_name()));
-            ?>&nbsp;&raquo;</a>
+                                    <input type="submit" class="button left" value="<?php echo esc_html(__('Create', 'publishpress')); ?>" />
+
+                                    <a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html(__('Edit', 'publishpress')); ?>&nbsp;&raquo;</a>
                                 </div>
+
                                 <div class="spinner">&nbsp;</div>
                             </form>
-                        <?php endif;
-            ?>
+                        <?php endif; ?>
 
                         </td>
-                        <?php endforeach;
-            ?>
+                        <?php endforeach; ?>
                         </tr>
 
-                        <?php endfor;
-            ?>
+                        <?php endfor; ?>
 
                         </tbody>
                         </table><!-- /Week Wrapper -->
                         <?php
                         // Nonce field for AJAX actions
                         wp_nonce_field('pp-calendar-modify', 'pp-calendar-modify');
-            ?>
+
+                        ?>
 
                         <div class="clear"></div>
                     </div><!-- /Calendar Wrapper -->
@@ -1543,7 +1552,7 @@ if (!class_exists('PP_Calendar')) {
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
             add_settings_field('post_types', __('Post types to show', 'publishpress'), array($this, 'settings_post_types_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('quick_create_post_type', __('Post type to create directly from calendar', 'publishpress'), array($this, 'settings_quick_create_post_type_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('quick_create_post_type', __('Post types to create directly from calendar', 'publishpress'), array($this, 'settings_quick_create_post_type_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
             add_settings_field('ics_subscription', __('Subscription in iCal or Google Calendar', 'publishpress'), array($this, 'settings_ics_subscription_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
@@ -1566,12 +1575,28 @@ if (!class_exists('PP_Calendar')) {
         public function settings_quick_create_post_type_option()
         {
             $allowed_post_types = $this->get_all_post_types();
-
-            echo "<select name='" . $this->module->options_group_name . "[quick_create_post_type]'>";
-            foreach ($allowed_post_types as $post_type => $title) {
-                echo "<option value='" . esc_attr($post_type) . "' " . selected($post_type, $this->module->options->quick_create_post_type, false) . ">" . esc_html($title) . "</option>";
+            
+            $selection = $this->module->options->quick_create_post_type;
+            if (!is_array($selection)) {
+                $selection = array($selection);
             }
-            echo "</select>";
+
+            foreach ($allowed_post_types as $post_type => $title) {
+                echo '<label for="' . esc_attr($post_type) . '-' . $this->module->slug . '_create">';
+                echo '<input id="' . esc_attr($post_type) . '-' . $this->module->slug . '_create" name="'
+                    . $this->module->options_group_name . '[quick_create_post_type][' . esc_attr($post_type) . ']"';
+                if (in_array($post_type, $selection)) {
+                    checked($post_type, $post_type);
+                }
+                // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                disabled(post_type_supports($post_type, $this->module->post_type_support), true);
+                echo ' type="checkbox" value="' . $post_type . '" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
+                // Leave a note to the admin as a reminder that add_post_type_support has been used somewhere in their code
+                if (post_type_supports($post_type, $this->module->post_type_support)) {
+                    echo '&nbsp&nbsp;&nbsp;<span class="description">' . sprintf(__('Disabled because add_post_type_support(\'%1$s\', \'%2$s\') is included in a loaded file.', 'publishpress'), $post_type, $this->module->post_type_support) . '</span>';
+                }
+                echo '<br />';
+            }
         }
 
         /**
@@ -1626,8 +1651,16 @@ if (!class_exists('PP_Calendar')) {
 
             $options['post_types'] = $this->clean_post_type_options($new_options['post_types'], $this->module->post_type_support);
 
-            if (in_array($new_options['quick_create_post_type'], array_keys($this->get_all_post_types()))) {
-                $options['quick_create_post_type'] = $new_options['quick_create_post_type'];
+            // Set post as default
+            if (empty($new_options['quick_create_post_type'])) {
+                $options['quick_create_post_type'] = array('post');
+            } else {
+                $options['quick_create_post_type'] = array();
+                foreach ($new_options['quick_create_post_type'] as $option) {
+                    if (array_key_exists($option, $this->get_all_post_types())) {
+                        $options['quick_create_post_type'][] = $option;
+                    }
+                }
             }
 
             if ('on' != $new_options['ics_subscription']) {
@@ -1686,8 +1719,13 @@ if (!class_exists('PP_Calendar')) {
                 $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
             }
 
+
             // Post type has to be visible on the calendar to create a placeholder
-            if (! in_array($this->module->options->quick_create_post_type, $this->get_post_types_for_module($this->module))) {
+            $post_type = sanitize_text_field($_POST['pp_insert_type']);
+            if (empty($post_type)) {
+                $post_type = 'post';
+            }
+            if (! in_array($post_type, $this->get_post_types_for_module($this->module))) {
                 $this->print_ajax_response('error', __('Please change Quick Create to use a post type viewable on the calendar.', 'publishpress'));
             }
 
@@ -1704,10 +1742,10 @@ if (!class_exists('PP_Calendar')) {
 
             // Set new post parameters
             $post_placeholder = array(
-                'post_title' => $post_title,
+                'post_title'  => $post_title,
+                'post_type'   => $post_type,
                 'post_status' => $post_status,
-                'post_date' => date('Y-m-d H:i:s', strtotime($post_date)),
-                'post_type' => $this->module->options->quick_create_post_type,
+                'post_date'   => date('Y-m-d H:i:s', strtotime($post_date))
             );
 
             // By default, adding a post to the calendar won't set the timestamp.
@@ -1740,9 +1778,8 @@ if (!class_exists('PP_Calendar')) {
          *
          * @return str Singular label for a post-type
          */
-        public function get_quick_create_post_type_name()
+        public function get_quick_create_post_type_name($post_type_slug)
         {
-            $post_type_slug = $this->module->options->quick_create_post_type;
             $post_type_obj  = get_post_type_object($post_type_slug);
 
             return $post_type_obj->labels->singular_name ? $post_type_obj->labels->singular_name : $post_type_slug;

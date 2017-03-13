@@ -313,7 +313,7 @@ msgid "Post types to show"
 msgstr ""
 
 #: modules/calendar/calendar.php:1496
-msgid "Post type to create directly from calendar"
+msgid "Post types to create directly from calendar"
 msgstr ""
 
 #: modules/calendar/calendar.php:1497

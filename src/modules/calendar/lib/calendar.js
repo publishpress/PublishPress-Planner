@@ -288,6 +288,7 @@ jQuery(document).ready(function ($) {
 
             // Get the inputs and controls for this injected form and focus the cursor on the post title box
             var $edit_post_link = EFQuickPublish.$new_post_form.find('.post-insert-dialog-edit-post-link');
+            EFQuickPublish.$post_type_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-type');
             EFQuickPublish.$post_title_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-title').focus();
 
             // Setup the ajax mechanism for form submit
@@ -330,6 +331,7 @@ jQuery(document).ready(function ($) {
                     dataType: 'json',
                     data: {
                         action: 'pp_insert_post',
+                        pp_insert_type: EFQuickPublish.$post_type_input.val(),
                         pp_insert_date: EFQuickPublish.$new_post_form.find('input.post-insert-dialog-post-date').val(),
                         pp_insert_title: EFQuickPublish.$post_title_input.val(),
                         nonce: $(document).find('#pp-calendar-modify').val()
