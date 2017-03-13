@@ -12,7 +12,7 @@ class RoboFile extends \Robo\Tasks
 {
     const SOURCE_PATH = 'src';
 
-    const PACKAGE_PATH = 'package';
+    const PACKAGE_PATH = 'packages';
 
     const PLUGIN_SLUG = 'publishpress';
 
