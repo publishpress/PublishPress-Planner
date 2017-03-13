@@ -827,7 +827,9 @@ if (!class_exists('PP_Calendar')) {
                     <td class="<?php echo esc_attr(implode(' ', $td_classes));
             ?>" id="<?php echo esc_attr($week_single_date);
             ?>">
-                        <button class='schedule-new-post-button button button-secondary'>+</button>
+                        <button class='schedule-new-post-button button button-secondary'>
+                            <?php echo __('Create', 'publishpress'); ?>
+                        </button>
                         <?php $class = ($week_single_date == date('Y-m-d', current_time('timestamp'))) ? 'calendar-today' : ''; ?>
                         <div class="day-unit-label <?php echo $class; ?>"><?php echo esc_html(date('j', strtotime($week_single_date)));
             ?></div>

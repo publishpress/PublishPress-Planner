@@ -156,17 +156,14 @@ table#pp-calendar-view .day-unit .dashicons {
 
 table#pp-calendar-view .day-unit .schedule-new-post-button{
     display: none;
-    width: 20px;
-    height: 20px;
+    width: auto;
+    height: 22px;
     min-height: 20px;
     float: left;
-    padding: 0;
-    box-sizing: border-box;
+    padding: 3px;
+    box-sizing: border-box; 
     text-align: center;
     cursor: pointer;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
 }
 
 table#pp-calendar-view .day-unit .schedule-new-post-button:hover{
