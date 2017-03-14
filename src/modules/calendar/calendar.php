@@ -37,9 +37,9 @@ if (!class_exists('PP_Calendar')) {
      */
     class PP_Calendar extends PP_Module
     {
-
         const usermeta_key_prefix = 'pp_calendar_';
         const screen_id           = 'dashboard_page_calendar';
+        const DEFAULT_NUM_WEEKS   = 5;
 
         public $module;
 
@@ -117,8 +117,6 @@ if (!class_exists('PP_Calendar')) {
             $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
             require_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
-            add_screen_options_panel(self::usermeta_key_prefix . 'screen_options', __('Calendar Options', 'publishpress'), array($this, 'generate_screen_options'), self::screen_id, false, true);
-            add_action('admin_init', array($this, 'handle_save_screen_options'));
 
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_menu', array($this, 'action_admin_menu'));
@@ -242,62 +240,6 @@ if (!class_exists('PP_Calendar')) {
                 $pp_cal_js_params = array('can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false');
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
             }
-        }
-
-        /**
-         * Prepare the options that need to appear in Screen Options
-         *
-         * @since 0.7
-         */
-        public function generate_screen_options()
-        {
-            $output         = '';
-            $screen_options = $this->get_screen_options();
-
-            $output .= __('Number of Weeks: ', 'publishpress');
-            $output .= '<select id="' . self::usermeta_key_prefix . 'num_weeks" name="' . self::usermeta_key_prefix . 'num_weeks">';
-            for ($i = 1; $i <= 12; $i++) {
-                $output .= '<option value="' . esc_attr($i) . '" ' . selected($i, $screen_options['num_weeks'], false) . '>' . esc_attr($i) . '</option>';
-            }
-            $output .= '</select>';
-
-            $output .= '&nbsp;&nbsp;&nbsp;<input id="screen-options-apply" name="screen-options-apply" type="submit" value="' . __('Apply') . '" class="button-secondary" />';
-
-            return $output;
-        }
-
-        /**
-         * Handle the request to save the screen options
-         *
-         * @since 0.7
-         */
-        public function handle_save_screen_options()
-        {
-
-            // Only handle screen options submissions from the current screen
-            if (!isset($_POST['screen-options-apply'], $_POST['pp_calendar_num_weeks'])) {
-                return;
-            }
-
-            // Nonce check
-            if (!wp_verify_nonce($_POST['_wpnonce-' . self::usermeta_key_prefix . 'screen_options'], 'save_settings-' . self::usermeta_key_prefix . 'screen_options')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
-
-            // Get the current screen options
-            $screen_options = $this->get_screen_options();
-
-            // Save the number of weeks to show
-            $screen_options['num_weeks'] = (int)$_POST['pp_calendar_num_weeks'];
-
-            // Save the screen options
-            $current_user = wp_get_current_user();
-            $this->update_user_meta($current_user->ID, self::usermeta_key_prefix . 'screen_options', $screen_options);
-
-            // Redirect after we're complete
-            $redirect_to = menu_page_url($this->module->slug, false);
-            wp_redirect($redirect_to);
-            exit;
         }
 
         /**
@@ -565,26 +507,6 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
-         * Get a user's screen options
-         *
-         * @since 0.7
-         * @uses get_user_meta()
-         *
-         * @return array $screen_options The screen options values
-         */
-        public function get_screen_options()
-        {
-            $defaults = array(
-                'num_weeks' => (int)$this->total_weeks,
-            );
-            $current_user   = wp_get_current_user();
-            $screen_options = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'screen_options', true);
-            $screen_options = array_merge((array)$defaults, (array)$screen_options);
-
-            return $screen_options;
-        }
-
-        /**
          * Get the user's filters for calendar, either with $_GET or from saved
          *
          * @uses get_user_meta()
@@ -597,11 +519,12 @@ if (!class_exists('PP_Calendar')) {
             $old_filters  = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', true);
 
             $default_filters = array(
+                    'weeks' => self::DEFAULT_NUM_WEEKS,
                     'post_status' => '',
                     'cpt' => '',
                     'cat' => '',
                     'author' => '',
-                    'start_date' => date('Y-m-d', current_time('timestamp')),
+                    'start_date' => date('Y-m-d', current_time('timestamp'))
                 );
             $old_filters = array_merge($default_filters, (array)$old_filters);
 
@@ -635,11 +558,6 @@ if (!class_exists('PP_Calendar')) {
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
-            // Get the user's screen options for displaying the data
-            $screen_options = $this->get_screen_options();
-            // Total number of weeks to display on the calendar. Run it through a filter in case we want to override the
-            // user's standard
-            $this->total_weeks = apply_filters('pp_calendar_total_weeks', $screen_options['num_weeks'], 'dashboard');
 
             $dotw = array(
                 'Sat',
@@ -649,6 +567,11 @@ if (!class_exists('PP_Calendar')) {
 
             // Get filters either from $_GET or from user settings
             $filters = $this->get_filters();
+            
+            // Total number of weeks to display on the calendar. Run it through a filter in case we want to override the
+            // user's standard
+            $this->total_weeks = empty($filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $filters['weeks'];
+            
             // For generating the WP Query objects later on
             $post_query_args = array(
                 'post_status' => $filters['post_status'],
@@ -1882,6 +1805,7 @@ if (!class_exists('PP_Calendar')) {
                 $select_filter_names['cat']         = 'cat';
                 $select_filter_names['author']      = 'author';
                 $select_filter_names['type']        = 'cpt';
+                $select_filter_names['weeks']       = 'weeks';
 
                 return apply_filters('pp_calendar_filter_names', $select_filter_names);
             }
@@ -1925,6 +1849,10 @@ if (!class_exists('PP_Calendar')) {
                 case 'cat':
                 case 'author':
                     return intval($dirty_value);
+                    break;
+                case 'weeks':
+                    $weeks = intval($dirty_value);
+                    return empty($weeks) ? self::DEFAULT_NUM_WEEKS : $weeks;
                     break;
                 default:
                     return false;
@@ -1992,6 +1920,18 @@ if (!class_exists('PP_Calendar')) {
                     <?php
 
                     }
+                break;
+                case 'weeks':
+                    if (!isset($filters['weeks'])) {
+                        $filters['weeks'] = self::DEFAULT_NUM_WEEKS;
+                    }
+
+                    $output = '<select name="weeks">';
+                    for ($i = 1; $i <= 12; $i++) {
+                        $output .= '<option value="' . esc_attr($i) . '" ' . selected($i, $filters['weeks'], false) . '>' . sprintf(_n('%s week', '%s weeks', $i, 'publishpress'), esc_attr($i)) . '</option>';
+                    }
+                    $output .= '</select>';
+                    echo $output;
                 break;
                 default:
                     do_action('pp_calendar_filter_display', $select_id, $select_name, $filters);
