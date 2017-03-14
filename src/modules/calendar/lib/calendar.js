@@ -175,10 +175,7 @@ jQuery(document).ready(function ($) {
                     function(response) {
                         $('li.ajax-actions .waiting').hide();
                         var html = '';
-                        if (response.status == 'success') {
-                            html = '<div class="is-dismissible notice notice-success"><p>' + response.message + '</p></div>';
-                            //setTimeout(publishpress_calendar_hide_message, 5000);
-                        } else if (response.status == 'error') {
+                        if (response.status == 'error') {
                             html = '<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>';
                         }
                         $('header h2').after(html);
