@@ -229,6 +229,7 @@ table#pp-calendar-view .day-unit ul {
     margin-top: 22px;
     margin-bottom: 0;
     padding: 0;
+    min-height: 75px;
 }
 
 table#pp-calendar-view .day-unit ul li {
