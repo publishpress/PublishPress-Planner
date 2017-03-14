@@ -144,6 +144,7 @@ table#pp-calendar-view .day-item {
 table#pp-calendar-view .day-unit{
     position: relative;
     background: #fff;
+    cursor: pointer;
 }
 
 table#pp-calendar-view .day-unit .dashicons {
@@ -154,20 +155,15 @@ table#pp-calendar-view .day-unit .dashicons {
     color: #b7b7b7;
 }
 
-table#pp-calendar-view .day-unit .schedule-new-post-button{
+table#pp-calendar-view .day-unit .schedule-new-post-label{
     display: none;
-    width: auto;
-    height: 22px;
-    min-height: 20px;
-    float: left;
     padding: 3px;
-    box-sizing: border-box; 
-    text-align: center;
-    cursor: pointer;
-}
-
-table#pp-calendar-view .day-unit .schedule-new-post-button:hover{
-
+    font-size: 11px;
+    font-style: italic;
+    color: #adadad;
+    position: absolute;
+    top: 1px;
+    left: 1px;
 }
 
 table#pp-calendar-view .day-unit .ui-state-highlight {
@@ -233,7 +229,6 @@ table#pp-calendar-view .day-unit ul {
     margin-top: 22px;
     margin-bottom: 0;
     padding: 0;
-    min-height: 70px;
 }
 
 table#pp-calendar-view .day-unit ul li {
@@ -257,9 +252,15 @@ table#pp-calendar-view .day-unit ul li:hover {
     border-color: #DDD;
 }
 
-table#pp-calendar-view .day-unit ul li.is-published {
-    background: #edeaf7;
+table#pp-calendar-view .day-unit ul li .item-default-visible {
+    cursor: move;
 }
+
+table#pp-calendar-view .day-unit ul li.is-published .item-default-visible {
+    background: #edeaf7;
+    cursor: pointer;
+}
+
 
 table#pp-calendar-view .day-unit ul li .item-status {
     font-size: 11px;
@@ -410,10 +411,11 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 
 #pp-calendar-view .day-unit .show-more {
     margin-right: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
+    margin-top: 3px;
     display: block;
     text-align: right;
-    color: #999;
+    color: #adadad;
     font-size: 11px;
 }
 

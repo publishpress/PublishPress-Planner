@@ -113,65 +113,16 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    /**
-     * Somewhat hackish way to close overlays automagically when you click outside an overlay
-     */
-    $(document).click(function(event){
-        //Did we click on a list item? How do we figure that out?
-        //First let's see if we directly clicked on a .day-item
-        var target = $(event.target);
-        //Case where we've clicked on the list item directly
-        if(target.hasClass('day-item')) {
-            if(target.hasClass('active')) {
-                return;
-            }
-            else if(target.hasClass('post-insert-overlay')) {
-                return;
-            }
-            else {
-                publishpress_calendar_close_overlays();
-
-                target.addClass('active')
-                    .find('.item-static')
-                    .removeClass('item-static')
-                    .addClass('item-overlay');
-
-                return;
-            }
-        }
-
-        //Case where we've clicked in the list item
-        target = target.closest('.day-item');
-        if(target.length) {
-            if(target.hasClass('day-item')) {
-                if(target.hasClass('active')) {
-                    return;
-                }
-                else if(target.hasClass('post-insert-overlay')) {
-                    return;
-                }
-                else {
-                    publishpress_calendar_close_overlays();
-
-                    target.addClass('active')
-                        .find('.item-static')
-                        .removeClass('item-static')
-                        .addClass('item-overlay');
-
-                    return;
-                }
-            }
-        }
-
-        target = $(event.target).closest('#ui-datepicker-div');
-        if(target.length)
-            return;
-
-        target = $(event.target).closest('.post-insert-dialog');
-        if(target.length)
-            return;
+    $('.day-item').click(function(event) {
 
         publishpress_calendar_close_overlays();
+        
+        $(this).addClass('active');
+
+        var overlay = $(this).find('.item-static');
+
+        overlay.removeClass('item-static');
+        overlay.addClass('item-overlay');
     });
 
     function publishpress_calendar_close_overlays() {
@@ -250,15 +201,51 @@ jQuery(document).ready(function ($) {
 
             var $day_units = $('td.day-unit');
 
-            // Bind the form display to the '+' button
-            // or to a double click on the calendar square
-            $day_units.find('.schedule-new-post-button').on('click.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
+            // Bind the click on the calendar square
+            $day_units.on('click.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
             $day_units.on('dblclick.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
-            $day_units.hover(
-                function(){ $(this).find('.schedule-new-post-button').stop().fadeIn(100);},
-                function(){ $(this).find('.schedule-new-post-button').stop().hide();}
-           );
+            $day_units.mouseover(EFQuickPublish.show_quickpost_label);
+            $day_units.mouseout(EFQuickPublish.hide_quickpost_label);
+            // $day_units.find('li.day-item').on('mouseenter', EFQuickPublish.hide_quickpost_label);
         }, // init
+
+        /**
+         * When user hovers the day's cell, displays the label about
+         * click to create new content.
+         */
+        show_quickpost_label: function(e) {
+            $this = $(this);
+            
+            e.preventDefault();
+            e.stopPropagation();
+
+            if ($(e.srcElement).is('td.day-unit')) {
+                $('.schedule-new-post-label').stop().hide();
+                $this.find('.schedule-new-post-label').stop().show();
+            }
+        },
+
+        /**
+         * When user gets out of the day's cell, hides the label about
+         * click to create new content.
+         */
+        hide_quickpost_label: function(e) {
+            $this = $(this);
+
+            // Is it another day cell?
+            if ($(e.toElement).is('td') && e.toElement !== this) {
+                $this.find('.schedule-new-post-label').stop().hide();
+            }
+
+            if (!$(e.toElement).is('ul.post-list')
+                && !$(e.toElement).is('.schedule-new-post-label')
+                && !$(e.toElement).is('form')
+                && !$(e.toElement).is('div.day-unit-label')
+                && !($(e.toElement).is('td') && e.toElement == this)
+            ) {
+                $this.find('.schedule-new-post-label').stop().hide();
+            }
+        },
 
         /**
          * Callback for click and double click events that open the
@@ -266,19 +253,28 @@ jQuery(document).ready(function ($) {
          * @param  Event e The user interaction event
          */
         open_quickpost_dialogue : function(e){
+            // Ignore if the clicked element is a link
+            if ($(e.target).is('a')) {
+                return true;
+            }
 
             e.preventDefault();
+            e.stopPropagation();
 
+            $this = $(this);
+            
+            if (!$(e.target).is('.schedule-new-post-label')
+                && !$(e.target).is('div.day-unit-label')
+                && !$(e.target).is('.day-unit')
+            ) {
+                return false;
+            }
+            
             // Close other overlays
             publishpress_calendar_close_overlays();
 
-            $this = $(this);
-
             // Get the current calendar square
-            if($this.is('td.day-unit'))
-                EFQuickPublish.$current_date_square = $this;
-            else if($this.is('.schedule-new-post-button'))
-                EFQuickPublish.$current_date_square = $this.parent();
+            EFQuickPublish.$current_date_square = $this;
 
             //Get our form content
             var $new_post_form_content = EFQuickPublish.$current_date_square.find('.post-insert-dialog');
