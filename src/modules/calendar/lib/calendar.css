@@ -300,8 +300,8 @@ table#pp-calendar-view .day-unit ul li.is-published:hover {
 
 table#pp-calendar-view .day-unit ul li.sortable:hover {
     border-color: #21759B;
-    background-color: #F7F7F7;
-    cursor: pointer;
+    background-color: #f3f3f3;
+    cursor: move;
 }
 
 table#pp-calendar-view .day-unit ul li .item-headline:hover {
