@@ -219,7 +219,7 @@ jQuery(document).ready(function ($) {
             e.preventDefault();
             e.stopPropagation();
 
-            if ($(e.srcElement).is('td.day-unit')) {
+            if ($(e.srcElement).is('td.day-unit') || $(e.srcElement).is('.post-list')) {
                 $('.schedule-new-post-label').stop().hide();
                 $this.find('.schedule-new-post-label').stop().show();
             }
@@ -266,6 +266,7 @@ jQuery(document).ready(function ($) {
             if (!$(e.target).is('.schedule-new-post-label')
                 && !$(e.target).is('div.day-unit-label')
                 && !$(e.target).is('.day-unit')
+                && !$(e.target).is('.post-list')
             ) {
                 return false;
             }
