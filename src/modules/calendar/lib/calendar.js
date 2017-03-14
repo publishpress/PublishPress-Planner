@@ -254,14 +254,10 @@ jQuery(document).ready(function ($) {
          */
         open_quickpost_dialogue : function(e){
             // Ignore if the clicked element is a link
-            if ($(e.target).is('a')) {
+            
+            if ($(e.target).is('a') || $(e.target).is('input')) {
                 return true;
             }
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            $this = $(this);
             
             if (!$(e.target).is('.schedule-new-post-label')
                 && !$(e.target).is('div.day-unit-label')
@@ -270,6 +266,11 @@ jQuery(document).ready(function ($) {
             ) {
                 return false;
             }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            $this = $(this);
             
             // Close other overlays
             publishpress_calendar_close_overlays();
