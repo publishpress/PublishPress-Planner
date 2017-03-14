@@ -317,7 +317,7 @@ jQuery(document).ready(function ($) {
 
             // Set loading animation
             $submit_controls.hide();
-            $spinner.show();
+            $spinner.css('visibility', 'visible');
 
             // Delay submit to prevent spinner flashing
             setTimeout(function(){
@@ -375,7 +375,7 @@ jQuery(document).ready(function ($) {
         display_errors : function($form, error_msg){
 
             $form.find('.error').remove(); // clear out old errors
-            $form.find('.spinner').hide(); // stop the loading animation
+            $form.find('.spinner').css('visibility', 'hidden'); // stop the loading animation
 
             // show submit controls and the error
             $form.find('.post-insert-dialog-controls').show().before('<div class="error">Error: '+error_msg+'</div>');

@@ -201,7 +201,7 @@ table#pp-calendar-view .day-unit .post-insert-dialog{
     padding: 5px;
     position: absolute;
     top: -5px;
-    width: 225px;
+    width: 300px;
     z-index: 999;
     display: none;
 }
@@ -215,10 +215,14 @@ table#pp-calendar-view .day-unit .post-insert-dialog h1{
     font-weight: normal;
     font-style: italic;
     margin-bottom: 2px;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title{
+    margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {

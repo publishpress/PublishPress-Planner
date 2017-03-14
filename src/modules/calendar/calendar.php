@@ -862,15 +862,17 @@ if (!class_exists('PP_Calendar')) {
                                     <h1>
                                         <?php echo sprintf(__('Schedule content for %1$s', 'publishpress'), $date_formatted);?>
                                     </h1>
-
-                                    <select name="post-insert-dialog-post-type" class="post-insert-dialog-post-type">
-                                        <?php foreach ($this->module->options->quick_create_post_type as $type) : ?>
-                                            <option value="<?php echo $type; ?>">
-                                                <?php echo $this->get_quick_create_post_type_name($type); ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    
+                                    <label for="post-insert-dialog-post-type">
+                                        <?php echo __('Type', 'publishpress'); ?>
+                                        <select id="post-insert-dialog-post-type" name="post-insert-dialog-post-type" class="post-insert-dialog-post-type">
+                                            <?php foreach ($this->module->options->quick_create_post_type as $type) : ?>
+                                                <option value="<?php echo $type; ?>">
+                                                    <?php echo $this->get_quick_create_post_type_name($type); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </label>
+                                    <br />
                                 <?php endif; ?>
 
                                 <?php /* translators: %s = post type name */ ?>
@@ -880,7 +882,7 @@ if (!class_exists('PP_Calendar')) {
 
                                 <div class="post-insert-dialog-controls">
                                     <input type="submit" class="button left" value="<?php echo esc_html(__('Create', 'publishpress')); ?>" />
-
+                                    &nbsp;
                                     <a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html(__('Edit', 'publishpress')); ?>&nbsp;&raquo;</a>
                                 </div>
 
