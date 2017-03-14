@@ -7,6 +7,55 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
+    $(document).click(function(event){
+        //Did we click on a list item? How do we figure that out?
+        //First let's see if we directly clicked on a .day-item
+        var target = $(event.target);
+
+        //Case where we've clicked on the list item directly
+        if(target.hasClass('day-item')) {
+            if(target.hasClass('active')) {
+                return;
+            }
+            else if(target.hasClass('post-insert-overlay')) {
+                return;
+            }
+            else {
+                publishpress_calendar_close_overlays();
+
+                return;
+            }
+        }
+
+        //Case where we've clicked in the list item
+        target = target.closest('.day-item');
+        if(target.length) {
+            if(target.hasClass('day-item')) {
+                if(target.hasClass('active')) {
+                    return;
+                }
+                else if(target.hasClass('post-insert-overlay')) {
+                    return;
+                }
+                else {
+                    publishpress_calendar_close_overlays();
+
+                    return;
+                }
+            }
+        }
+
+        target = $(event.target).closest('#ui-datepicker-div');
+        if(target.length)
+            return;
+
+        target = $(event.target).closest('.post-insert-dialog');
+        if(target.length)
+            return;
+
+        publishpress_calendar_close_overlays();
+    });
+
     /**
      * Listen for click event and subsitute correct type of replacement
      * html given the input type
