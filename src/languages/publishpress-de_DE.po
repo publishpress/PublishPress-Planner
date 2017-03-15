@@ -695,7 +695,7 @@ msgstr "Verwendet bei diesen Beitrags Typen:"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:979
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Zeige immer als Dropdownliste an:"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin

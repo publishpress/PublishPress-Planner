@@ -602,8 +602,8 @@ msgid "Use on these post types:"
 msgstr "Utilizar neste tipo de posts:"
 
 #: modules/custom-status/custom-status.php:1075
-msgid "Always show dropdown:"
-msgstr "Sempre mostrar o menu dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
+msgstr "Mostrar o menu dropdown na tela de edição de posts:"
 
 #: modules/custom-status/custom-status.php:1160
 msgid "Custom Status"

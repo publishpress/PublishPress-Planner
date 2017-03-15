@@ -522,7 +522,7 @@ msgid "Use on these post types:"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1017
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1038 modules/dashboard/dashboard.php:225

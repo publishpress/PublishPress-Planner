@@ -685,7 +685,7 @@ msgid "Use on these post types:"
 msgstr "Använd för dessa posttyper:"
 
 #: ../modules/custom-status/custom-status.php:1081
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Visa alltid dropdown:"
 
 #: ../modules/custom-status/custom-status.php:1166

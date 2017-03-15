@@ -669,7 +669,7 @@ msgid "Use on these post types:"
 msgstr "Utilizar en este tipo de entradas:"
 
 #: modules/custom-status/custom-status.php:1075
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Mostrar siempre el desplegable:"
 
 #: modules/custom-status/custom-status.php:1160

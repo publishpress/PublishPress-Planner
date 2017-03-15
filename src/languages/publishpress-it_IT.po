@@ -628,7 +628,7 @@ msgstr "Abilita per questi tipi di contenuti:"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:979
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Mostra sempre il menù a tendina:"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni

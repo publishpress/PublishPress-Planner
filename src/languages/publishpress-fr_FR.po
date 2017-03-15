@@ -574,7 +574,7 @@ msgid "Use on these post types:"
 msgstr "Utiliser sur ces types de documents :"
 
 #: modules/custom-status/custom-status.php:1017
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Toujours afficher le menu déroulant :"
 
 #: modules/custom-status/custom-status.php:1038 modules/dashboard/dashboard.php:225
