@@ -138,7 +138,7 @@ if (!class_exists('PP_Calendar')) {
             // Action to regenerate the calendar feed sekret
             add_action('admin_init', array($this, 'handle_regenerate_calendar_feed_secret'));
 
-            // Hacks to fix deficiencies in core
+            // Temporary fixes to solve deficiencies in core
             add_action('pre_post_update', array($this, 'fix_post_date_on_update_part_one'), 10, 2);
             add_action('post_updated', array($this, 'fix_post_date_on_update_part_two'), 10, 3);
         }
@@ -1947,7 +1947,7 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
-         * This is a hack! hack! hack! until core is fixed
+         * This is a temporary fix, until core is fixed!
          *
          * The calendar uses 'post_date' field to store the position on the calendar
          * If a post has a core post status assigned (e.g. 'draft' or 'pending'), the `post_date`
@@ -1974,7 +1974,7 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
-         * This is a hack! hack! hack! until core is fixed
+         * This is a temporary fix, until core is fixed!
          *
          * The calendar uses 'post_date' field to store the position on the calendar
          * If a post has a core post status assigned (e.g. 'draft' or 'pending'), the `post_date`

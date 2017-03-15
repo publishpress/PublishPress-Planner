@@ -1243,7 +1243,7 @@
     };
 
     /*
-    * the bad hack :/ override datepicker so it doesnt close on select
+    * the temporary solution :/ override datepicker so it doesnt close on select
     // inspired: http://stackoverflow.com/questions/1252512/jquery-datepicker-prevent-closing-picker-when-clicking-a-date/1762378#1762378
     */
     $.datepicker._base_selectDate = $.datepicker._selectDate;
@@ -1265,7 +1265,7 @@
     };
 
     /*
-    * second bad hack :/ override datepicker so it triggers an event when changing the input field
+    * second temporary solution :/ override datepicker so it triggers an event when changing the input field
     * and does not redraw the datepicker on every selectDate event
     */
     $.datepicker._base_updateDatepicker = $.datepicker._updateDatepicker;
@@ -1296,7 +1296,7 @@
     };
 
     /*
-    * third bad hack :/ override datepicker so it allows spaces and colon in the input field
+    * third temporary solution :/ override datepicker so it allows spaces and colon in the input field
     */
     $.datepicker._base_doKeyPress = $.datepicker._doKeyPress;
     $.datepicker._doKeyPress = function(event) {
@@ -1329,7 +1329,7 @@
     };
 
     /*
-    * Fourth bad hack :/ override _updateAlternate function used in inline mode to init altField
+    * Fourth temporary solution :/ override _updateAlternate function used in inline mode to init altField
     */
     $.datepicker._base_updateAlternate = $.datepicker._updateAlternate;
     /* Update any alternate field to synchronise with the main field. */
@@ -1535,7 +1535,7 @@
         try {
             date = this._base_parseDate(format, value, settings);
         } catch (err) {
-            // Hack!  The error message ends with a colon, a space, and
+            // Temporary fix!  The error message ends with a colon, a space, and
             // the "extra" characters.  We rely on that instead of
             // attempting to perfectly reproduce the parsing algorithm.
             date = this._base_parseDate(format, value.substring(0,value.length-(err.length-err.indexOf(':')-2)), settings);
@@ -1722,7 +1722,7 @@
                     "\ntimeFormat = " + timeSettings.timeFormat);
 
             if (err.indexOf(":") >= 0) {
-                // Hack!  The error message ends with a colon, a space, and
+                // Temporary fix!  The error message ends with a colon, a space, and
                 // the "extra" characters.  We rely on that instead of
                 // attempting to perfectly reproduce the parsing algorithm.
                 var dateStringLength = dateTimeString.length - (err.length - err.indexOf(':') - 2),

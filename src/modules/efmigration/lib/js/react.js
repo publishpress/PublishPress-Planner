@@ -1078,7 +1078,7 @@ var ReactClass = {
   * @public
   */
  createClass: function (spec) {
-   // To keep our warnings more understandable, we'll use a little hack here to
+   // To keep our warnings more understandable, we'll use a little temp fix here to
    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
    // unnecessarily identify a class without displayName as 'Constructor'.
    var Constructor = identity(function (props, context, updater) {
@@ -3128,7 +3128,7 @@ var warning = _dereq_(29);
 var ReactComponentTreeHook;
 
 if (typeof process !== 'undefined' && process.env && "development" === 'test') {
- // Temporary hack.
+ // Temporary fix.
  // Inline requires don't work well with Jest:
  // https://github.com/facebook/react/issues/7240
  // Remove the inline requires when we don't need them anymore:

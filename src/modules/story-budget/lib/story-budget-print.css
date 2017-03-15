@@ -45,7 +45,7 @@ a {
 .inside,
 .widefat,
 .meta-box-sortables {
-    float: none !important; /* Hack to prevent Gecko from cutting off floated elements in print */
+    float: none !important; /* Prevent Gecko from cutting off floated elements in print */
 }
 
 .icon32 {
@@ -58,7 +58,7 @@ a {
 }
 
 .meta-box-sortables .postbox {
-    width: 100% !important; /* Important hack to override the inline styles applied to .postbox */
+    width: 100% !important; /* Important rule to override the inline styles applied to .postbox */
 }
 
 .postbox,

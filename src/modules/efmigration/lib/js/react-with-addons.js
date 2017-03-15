@@ -1522,9 +1522,9 @@ var ReactClass = {
   * @public
   */
  createClass: function (spec) {
-   // To keep our warnings more understandable, we'll use a little hack here to
-   // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
-   // unnecessarily identify a class without displayName as 'Constructor'.
+   // To keep our warnings more understandable, we'll use a little temporary fix
+   // here to ensure that Constructor.name !== 'Constructor'. This makes sure we
+   // don't unnecessarily identify a class without displayName as 'Constructor'.
    var Constructor = identity(function (props, context, updater) {
      // This constructor gets overridden by mocks. The argument is used
      // by mocks to assert on what gets mounted.
@@ -4323,7 +4323,7 @@ var warning = _dereq_(48);
 var ReactComponentTreeHook;
 
 if (typeof process !== 'undefined' && process.env && "development" === 'test') {
- // Temporary hack.
+ // Temporary fix.
  // Inline requires don't work well with Jest:
  // https://github.com/facebook/react/issues/7240
  // Remove the inline requires when we don't need them anymore:
@@ -4409,7 +4409,7 @@ var warning = _dereq_(48);
 var ReactComponentTreeHook;
 
 if (typeof process !== 'undefined' && process.env && "development" === 'test') {
- // Temporary hack.
+ // Temporary fix.
  // Inline requires don't work well with Jest:
  // https://github.com/facebook/react/issues/7240
  // Remove the inline requires when we don't need them anymore:

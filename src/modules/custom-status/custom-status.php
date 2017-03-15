@@ -131,7 +131,7 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('manage_pages_columns', array($this, '_filter_manage_posts_columns'));
             add_action('manage_pages_custom_column', array($this, '_filter_manage_posts_custom_column'));
 
-            // These seven-ish methods are hacks for fixing bugs in WordPress core
+            // These seven-ish methods are temporary fixes for solving bugs in WordPress core
             add_action('admin_init', array($this, 'check_timestamp_on_publish'));
             add_filter('wp_insert_post_data', array($this, 'fix_custom_status_timestamp'), 10, 2);
             add_action('wp_insert_post', array($this, 'fix_post_name'), 10, 2);
@@ -1426,7 +1426,7 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * This is a hack! hack! hack! until core is fixed/better supports custom statuses
+         * This is a temporary fix! until core is fixed/better supports custom statuses
          *
          * When publishing a post with a custom status, set the status to 'pending' temporarily
          * @see Works around this limitation: http://core.trac.wordpress.org/browser/tags/3.2.1/wp-includes/post.php#L2694
@@ -1467,8 +1467,8 @@ if (!class_exists('PP_Custom_Status')) {
                         }
                     }
                     if ($ret && empty($edit_date)) {
-                        add_filter('pre_post_date', array($this, 'helper_timestamp_hack'));
-                        add_filter('pre_post_date_gmt', array($this, 'helper_timestamp_hack'));
+                        add_filter('pre_post_date', array($this, 'helper_timestamp_temp_fix'));
+                        add_filter('pre_post_date_gmt', array($this, 'helper_timestamp_temp_fix'));
                     }
                 }
             }
@@ -1480,13 +1480,13 @@ if (!class_exists('PP_Custom_Status')) {
          *
          * @since 0.7.3
          */
-        public function helper_timestamp_hack()
+        public function helper_timestamp_temp_fix()
         {
             return ('pre_post_date' == current_filter()) ? current_time('mysql') : '';
         }
 
         /**
-         * This is a hack! hack! hack! until core is fixed/better supports custom statuses
+         * This is a temporary fix until core is fixed/better supports custom statuses
          *
          * @since 0.6.5
          *
@@ -1521,7 +1521,7 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Another hack! hack! hack! until core better supports custom statuses
+         * Another temporary fix until core better supports custom statuses
          *
          * @since 0.7.4
          *
@@ -1556,7 +1556,7 @@ if (!class_exists('PP_Custom_Status')) {
 
 
         /**
-         * Another hack! hack! hack! until core better supports custom statuses
+         * Another temporary fix until core better supports custom statuses
          *
          * @since 0.7.4
          *
@@ -1584,7 +1584,7 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Another hack! hack! hack! until core better supports custom statuses
+         * Another temporary fix until core better supports custom statuses
          *
          * @since 0.7.4
          *
@@ -1696,7 +1696,7 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Hack to work around post status check in get_sample_permalink_html
+         * Temporary fix to work around post status check in get_sample_permalink_html
          *
          *
          * The get_sample_permalink_html checks the status of the post and if it's
@@ -1807,7 +1807,7 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Another hack! hack! hack! until core better supports custom statuses
+         * Another temporary fix until core better supports custom statuses
          *
          * @since 0.7.4
          *
