@@ -898,9 +898,11 @@ if (!class_exists('PP_Calendar')) {
             $post_classes = apply_filters('pp_calendar_table_td_li_classes', $post_classes, $post_date, $post->ID);
 
             ?>
-            <li class="<?php echo esc_attr(implode(' ', $post_classes));
-            ?>" id="post-<?php echo esc_attr($post->ID);
-            ?>">
+
+            <li
+                class="<?php echo esc_attr(implode(' ', $post_classes)); ?>"
+                id="post-<?php echo esc_attr($post->ID);?>">
+
                 <div style="clear:right;"></div>
                 <div class="item-static">
                     <div class="item-default-visible">
@@ -913,8 +915,7 @@ if (!class_exists('PP_Calendar')) {
                         </div>
                     </div>
                     <div class="item-inner">
-                        <?php $this->get_inner_information($this->get_post_information_fields($post), $post);
-            ?>
+                        <?php $this->get_inner_information($this->get_post_information_fields($post), $post); ?>
                     </div>
                 </div>
             </li>
@@ -949,48 +950,39 @@ if (!class_exists('PP_Calendar')) {
             ?>
                 <table class="item-information">
                     <?php foreach ($this->get_post_information_fields($post) as $field => $values): ?>
-                        <tr class="item-field item-information-<?php echo esc_attr($field);
-            ?>">
-                            <th class="label"><?php echo esc_html($values['label']);
-            ?>:</th>
+                        <tr class="item-field item-information-<?php echo esc_attr($field); ?>">
+                            <th class="label"><?php echo esc_html($values['label']); ?>:</th>
                             <?php if ($values['value'] && isset($values['type'])): ?>
                                 <?php if (isset($values['editable']) && $this->current_user_can_modify_post($post)) : ?>
-                                    <td class="value<?php if ($values['editable']) {
-        ?> editable-value<?php
-    }
-            ?>"><?php echo esc_html($values['value']);
-            ?></td>
+                                    <td class="value<?php if ($values['editable']) { ?> editable-value<?php } ?>">
+                                        <?php echo esc_html($values['value']); ?>
+                                        
+                                    </td>
                                     <?php if ($values['editable']): ?>
-                                        <td class="editable-html hidden" data-type="<?php echo $values['type'];
-            ?>" data-metadataterm="<?php echo str_replace('editorial-metadata-', '', str_replace('tax_', '', $field));
-            ?>"><?php echo $this->get_editable_html($values['type'], $values['value']);
-            ?></td>
-                                    <?php endif;
-            ?>
+                                        <td class="editable-html hidden" data-type="<?php echo $values['type']; ?>" data-metadataterm="<?php echo str_replace('editorial-metadata-', '', str_replace('tax_', '', $field)); ?>">
+
+                                            <?php echo $this->get_editable_html($values['type'], $values['value']); ?>    
+                                        </td>
+                                    <?php endif; ?>
                                 <?php else: ?>
-                                    <td class="value"><?php echo esc_html($values['value']);
-            ?></td>
-                                <?php endif;
-            ?>
+                                    <td class="value"><?php echo esc_html($values['value']); ?></td>
+                                <?php endif; ?>
                             <?php elseif ($values['value']): ?>
-                                <td class="value"><?php echo esc_html($values['value']);
-            ?></td>
+                                <td class="value"><?php echo esc_html($values['value']); ?></td>
                             <?php else: ?>
-                            <td class="value"><em class="none"><?php echo _e('None', 'publishpress');
-            ?></em></td>
-                            <?php endif;
-            ?>
+                            <td class="value">
+                                <em class="none"><?php echo _e('None', 'publishpress');?></em>
+                            </td>
+                            <?php endif; ?>
                         </tr>
-                    <?php endforeach;
-            ?>
-                    <?php do_action('pp_calendar_item_additional_html', $post->ID);
-            ?>
+                    <?php endforeach; ?>
+                    <?php do_action('pp_calendar_item_additional_html', $post->ID); ?>
                 </table>
                 <?php
                     $post_type_object = get_post_type_object($post->post_type);
-            $item_actions             = array();
-            if ($this->current_user_can_modify_post($post)) {
-                // Edit this post
+                    $item_actions     = array();
+                    if ($this->current_user_can_modify_post($post)) {
+                        // Edit this post
                         $item_actions['edit'] = '<a href="' . get_edit_post_link($post->ID, true) . '" title="' . esc_attr(__('Edit this item', 'publishpress')) . '">' . __('Edit', 'publishpress') . '</a>';
                         // Trash this post
                         $item_actions['trash'] = '<a href="' . get_delete_post_link($post->ID) . '" title="' . esc_attr(__('Trash this item'), 'publishpress') . '">' . __('Trash', 'publishpress') . '</a>';
@@ -1002,21 +994,23 @@ if (!class_exists('PP_Calendar')) {
                         }
                         //Save metadata
                         $item_actions['save hidden'] = '<a href="#savemetadata" id="save-editorial-metadata" class="post-' . $post->ID . '" title="' . esc_attr(sprintf(__('Save &#8220;%s&#8221;', 'publishpress'), $post->post_title)) . '" >' . __('Save', 'publishpress') . '</a>';
-            }
+                    }
+                    
                     // Allow other plugins to add actions
                     $item_actions = apply_filters('pp_calendar_item_actions', $item_actions, $post->ID);
-            if (count($item_actions)) {
-                echo '<div class="item-actions">';
-                $html = '';
-                foreach ($item_actions as $class => $item_action) {
-                    $html .= '<span class="' . esc_attr($class) . '">' . $item_action . ' | </span> ';
-                }
-                echo rtrim($html, '| ');
-                echo '</div>';
-            }
-            ?>
+            
+                    if (count($item_actions)) {
+                        echo '<div class="item-actions">';
+                        $html = '';
+                        foreach ($item_actions as $class => $item_action) {
+                            $html .= '<span class="' . esc_attr($class) . '">' . $item_action . ' | </span> ';
+                        }
+                        echo rtrim($html, '| ');
+                        echo '</div>';
+                    }
+                    ?>
                 <div style="clear:right;"></div>
-            <?php
+                <?php
 
         } // generate_post_li_html()
 
@@ -1276,7 +1270,7 @@ if (!class_exists('PP_Calendar')) {
                 'post_status'      => null,
                 'cat'              => null,
                 'author'           => null,
-                'post_type'        => $supported_post_types,
+                'post_type'    => $supported_post_types,
                 'posts_per_page'   => -1,
             );
 
@@ -1301,6 +1295,7 @@ if (!class_exists('PP_Calendar')) {
             if ($args['cat'] === '0') {
                 unset($args['cat']);
             }
+
             if ($args['author'] === '0') {
                 unset($args['author']);
             }
@@ -1311,6 +1306,7 @@ if (!class_exists('PP_Calendar')) {
 
             // Filter for an end user to implement any of their own query args
             $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
+
             add_filter('posts_where', array($this, 'posts_where_week_range'));
             $post_results = new WP_Query($args);
             remove_filter('posts_where', array($this, 'posts_where_week_range'));
