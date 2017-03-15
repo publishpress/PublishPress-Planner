@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.1.0
+ * Version: 1.2.0
  *
  * Copyright (c) 2017 PressShack
  *
@@ -45,7 +45,7 @@ $settingsPage = add_query_arg(
 );
 
 // Define contants
-define('PUBLISHPRESS_VERSION', '1.1.0');
+define('PUBLISHPRESS_VERSION', '1.2.0');
 define('PUBLISHPRESS_ROOT', dirname(__FILE__));
 define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));

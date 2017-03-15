@@ -1,5 +1,12 @@
 ## Changelog
 
+**1.2.0 (Mar. 15, 2017)**
+* Improvement: Better style for the calendar
+* Improvement: Click anywhere on the calendar cell to create content, intead show a button
+* Improvement: Extends the drag-and-drop feature to custom statuses
+* Improvement: Minor improvements on the code
+* New Feature: Allow to create multiple types of content on the calendar
+
 **1.1.0 (Mar. 7, 2017)**
 * Complete rebranding to PublishPress and PressShack
 * Clean up on the UI

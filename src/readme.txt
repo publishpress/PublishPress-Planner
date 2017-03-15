@@ -3,7 +3,7 @@ Contributors: PressShack
 Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,13 @@ There're two ways to install PublishPress plugin:
 5. Activate the PublishPress plugin.
 
 == Changelog ==
+
+**1.2.0 (Mar. 15, 2017)**
+* Improvement: Better style for the calendar
+* Improvement: Click anywhere on the calendar cell to create content, intead show a button
+* Improvement: Extends the drag-and-drop feature to custom statuses
+* Improvement: Minor improvements on the code
+* New Feature: Allow to create multiple types of content on the calendar
 
 ** 1.1.0 **
 * Complete rebranding to PublishPress and PressShack
