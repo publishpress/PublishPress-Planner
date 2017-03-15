@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress\n"
-"POT-Creation-Date: 2017-03-15 19:53-0300\n"
+"POT-Creation-Date: 2017-03-15 20:41-0300\n"
 "PO-Revision-Date: 2016-04-22 07:37+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -179,7 +179,7 @@ msgid "Create"
 msgstr ""
 
 #: modules/calendar/calendar.php:809 modules/calendar/calendar.php:986
-#: modules/custom-status/custom-status.php:1777 modules/custom-status/custom-status.php:2023
+#: modules/custom-status/custom-status.php:1775 modules/custom-status/custom-status.php:2021
 #: modules/editorial-metadata/editorial-metadata.php:1918 modules/story-budget/story-budget.php:625
 #: modules/user-groups/user-groups.php:1324
 msgid "Edit"
@@ -197,13 +197,13 @@ msgstr ""
 msgid "Trash this item"
 msgstr ""
 
-#: modules/calendar/calendar.php:991 modules/custom-status/custom-status.php:1853
+#: modules/calendar/calendar.php:991 modules/custom-status/custom-status.php:1851
 #: modules/story-budget/story-budget.php:635
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr ""
 
-#: modules/calendar/calendar.php:991 modules/custom-status/custom-status.php:1853
+#: modules/calendar/calendar.php:991 modules/custom-status/custom-status.php:1851
 #: modules/story-budget/story-budget.php:635
 msgid "Preview"
 msgstr ""
@@ -594,14 +594,14 @@ msgid "Use on these post types:"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1208
-msgid "Always show dropdown:"
+msgid "Show the status dropdown menu on the post editing screen:"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1300
 msgid "Custom Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1304 modules/custom-status/custom-status.php:1397
+#: modules/custom-status/custom-status.php:1304 modules/custom-status/custom-status.php:1395
 msgid "The name is used to identify the status. (Max: 20 characters)"
 msgstr ""
 
@@ -614,8 +614,8 @@ msgstr ""
 msgid "The slug is the unique ID for the status and is changed when the name is changed."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1319 modules/custom-status/custom-status.php:1401
-#: modules/custom-status/custom-status.php:1934 modules/custom-status/custom-status.php:2092
+#: modules/custom-status/custom-status.php:1319 modules/custom-status/custom-status.php:1399
+#: modules/custom-status/custom-status.php:1932 modules/custom-status/custom-status.php:2090
 #: modules/editorial-metadata/editorial-metadata.php:1594
 #: modules/editorial-metadata/editorial-metadata.php:1709
 #: modules/editorial-metadata/editorial-metadata.php:1848
@@ -625,18 +625,18 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1324 modules/custom-status/custom-status.php:1407
+#: modules/custom-status/custom-status.php:1324 modules/custom-status/custom-status.php:1405
 msgid ""
 "The description is primarily for administrative use, to give you some context on what the custom "
 "status is to be used for."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1330 modules/custom-status/custom-status.php:2101
+#: modules/custom-status/custom-status.php:1330 modules/custom-status/custom-status.php:2099
 msgid "Update Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1333 modules/custom-status/custom-status.php:2098
-#: modules/custom-status/custom-status.php:2099 modules/editorial-comments/editorial-comments.php:245
+#: modules/custom-status/custom-status.php:1333 modules/custom-status/custom-status.php:2096
+#: modules/custom-status/custom-status.php:2097 modules/editorial-comments/editorial-comments.php:245
 #: modules/editorial-metadata/editorial-metadata.php:1643
 #: modules/editorial-metadata/editorial-metadata.php:1962
 #: modules/editorial-metadata/editorial-metadata.php:1963 modules/story-budget/story-budget.php:385
@@ -645,26 +645,22 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1350
-msgid "Deleting a post status will assign all posts to the default post status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1362 modules/editorial-metadata/editorial-metadata.php:1658
+#: modules/custom-status/custom-status.php:1360 modules/editorial-metadata/editorial-metadata.php:1658
 #: modules/user-groups/user-groups.php:685
 msgid "Add New"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1368 modules/editorial-metadata/editorial-metadata.php:1664
+#: modules/custom-status/custom-status.php:1366 modules/editorial-metadata/editorial-metadata.php:1664
 #: modules/user-groups/user-groups.php:691
 msgid "Options"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1375
+#: modules/custom-status/custom-status.php:1373
 msgid "Please note that checking a box will apply all statuses to that post type."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1391 modules/custom-status/custom-status.php:1933
-#: modules/custom-status/custom-status.php:2087 modules/editorial-metadata/editorial-metadata.php:1576
+#: modules/custom-status/custom-status.php:1389 modules/custom-status/custom-status.php:1931
+#: modules/custom-status/custom-status.php:2085 modules/editorial-metadata/editorial-metadata.php:1576
 #: modules/editorial-metadata/editorial-metadata.php:1689
 #: modules/editorial-metadata/editorial-metadata.php:1846
 #: modules/editorial-metadata/editorial-metadata.php:1951 modules/user-groups/user-groups.php:645
@@ -673,49 +669,49 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1414
+#: modules/custom-status/custom-status.php:1412
 msgid "Add New Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1743 modules/custom-status/custom-status.php:1774
+#: modules/custom-status/custom-status.php:1741 modules/custom-status/custom-status.php:1772
 msgid "Permalink:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1754
+#: modules/custom-status/custom-status.php:1752
 msgid "Change Permalinks"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1777
+#: modules/custom-status/custom-status.php:1775
 msgid "Edit permalink"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1916
+#: modules/custom-status/custom-status.php:1914
 msgid "No custom statuses found."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1932 modules/editorial-metadata/editorial-metadata.php:1845
+#: modules/custom-status/custom-status.php:1930 modules/editorial-metadata/editorial-metadata.php:1845
 msgid "Position"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2013
+#: modules/custom-status/custom-status.php:2011
 msgid "Default"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2024 modules/editorial-metadata/editorial-metadata.php:1919
+#: modules/custom-status/custom-status.php:2022 modules/editorial-metadata/editorial-metadata.php:1919
 #: modules/user-groups/user-groups.php:1325
 msgid "Quick&nbsp;Edit"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2026
+#: modules/custom-status/custom-status.php:2024
 msgid "Make&nbsp;Default"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2030 modules/editorial-metadata/editorial-metadata.php:1925
+#: modules/custom-status/custom-status.php:2028 modules/editorial-metadata/editorial-metadata.php:1925
 #: modules/user-groups/user-groups.php:1326
 msgid "Delete"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2084 modules/editorial-metadata/editorial-metadata.php:1948
+#: modules/custom-status/custom-status.php:2082 modules/editorial-metadata/editorial-metadata.php:1948
 #: modules/user-groups/user-groups.php:1387
 msgid "Quick Edit"
 msgstr ""
