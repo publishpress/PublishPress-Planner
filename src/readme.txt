@@ -59,6 +59,11 @@ There're two ways to install PublishPress plugin:
 
 **1.2.1 (Mar. 15, 2017)**
 * Improvement: Better label for Comments metadata box
+* Improvement: Set Calendar Subscriptions enabled by default
+* Improvement: Set Always Show Dropdown enabled by default on custom statuses
+* Improvement: Add small notes to some tabs
+* Improvement: Update POT file
+* Bug fix: Fixed empty messages while deleting custom statuses, metadata and user groups
 * Bug fix: Fixed link to redirect after the EditFlow migration
 
 **1.2.0 (Mar. 15, 2017)**
