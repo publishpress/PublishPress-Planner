@@ -37,3 +37,4 @@ node_modules
 !/src/vendor/twig/twig/LICENSE
 
 node_modules
+/.properties.ini

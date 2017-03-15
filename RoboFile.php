@@ -15,6 +15,23 @@ class RoboFile extends \Robo\Tasks
     const PACKAGE_PATH = 'packages';
 
     const PLUGIN_SLUG = 'publishpress';
+    
+    const PROPERTIES_FILE_PATH = __DIR__ . '/.properties.ini';
+
+    protected $options = array();
+
+    protected function getProperties()
+    {
+        if (empty($this->options)) {
+            if (!file_exists(self::PROPERTIES_FILE_PATH)) {
+                throw new Exception("Local properties file (.properties.ini) not found", 1);
+            }
+
+            $this->options = parse_ini_file(self::PROPERTIES_FILE_PATH);
+        }
+
+        return $this->options;
+    }
 
     /**
      * Get the current version of the plugin
@@ -228,6 +245,18 @@ class RoboFile extends \Robo\Tasks
     public function syncSrc()
     {
         $return = $this->_exec('sh ./sync-src.sh');
+
+        return $return;
+    }
+
+    public function syncSvnTag($tag)
+    {
+        $properties = $this->getProperties();
+        
+        $this->_exec('cd ' . $properties['svn_path'] . ' && svn update');
+        $this->_exec('cd ' . $properties['svn_path'] . ' && cp -r ' . realpath(__DIR__) . '/' . self::SOURCE_PATH . '/* ' . $properties['svn_path'] . '/trunk');
+        $this->_exec('cd ' . $properties['svn_path'] . ' && svn cp trunk tags/' . $tag);
+        $return = $this->_exec('cd ' . $properties['svn_path'] . ' && svn commit -m "Tagging ' . $tag . '"');
 
         return $return;
     }
