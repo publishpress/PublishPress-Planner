@@ -1371,6 +1371,8 @@ if (!class_exists('PP_Custom_Status')) {
                     <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
                     <form class="basic-settings" action="<?php echo esc_url($this->get_link(array('action' => 'change-options')));
             ?>" method="post">
+                        <br />
+                        <p><?php echo __('Please note that checking a box will apply all statuses to that post type.', 'publishpress'); ?></p>
                         <?php settings_fields($this->module->options_group_name);
             ?>
                         <?php do_settings_sections($this->module->options_group_name);
