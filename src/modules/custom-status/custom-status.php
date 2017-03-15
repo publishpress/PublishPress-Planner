@@ -1347,8 +1347,6 @@ if (!class_exists('PP_Custom_Status')) {
             ?>
                         <?php wp_nonce_field('custom-status-sortable', 'custom-status-sortable');
             ?>
-                        <p class="description" style="padding-top:10px;"><?php _e('Deleting a post status will assign all posts to the default post status.', 'publishpress');
-            ?></p>
                     </div>
                 </div>
                 <div id="col-left">
