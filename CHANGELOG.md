@@ -1,5 +1,9 @@
 ## Changelog
 
+**1.2.1 (Mar. 15, 2017)**
+* Improvement: Better label for Comments metadata box
+* Bug fix: Fixed link to redirect after the EditFlow migration
+
 **1.2.0 (Mar. 15, 2017)**
 * Improvement: Better style for the calendar
 * Improvement: Click anywhere on the calendar cell to create content, intead show a button

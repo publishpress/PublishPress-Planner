@@ -3,7 +3,7 @@ Contributors: PressShack
 Tags: publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ There're two ways to install PublishPress plugin:
 5. Activate the PublishPress plugin.
 
 == Changelog ==
+
+**1.2.1 (Mar. 15, 2017)**
+* Improvement: Better label for Comments metadata box
+* Bug fix: Fixed link to redirect after the EditFlow migration
 
 **1.2.0 (Mar. 15, 2017)**
 * Improvement: Better style for the calendar
