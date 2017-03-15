@@ -332,7 +332,7 @@ if (!class_exists('PP_Custom_Status')) {
 
                 wp_localize_script(
                     'publishpress-custom-status-configure',
-                    'objectL10n',
+                    'objectL10ncustomstatus',
                     array(
                         'pp_confirm_delete_status_string' => __('Are you sure you want to delete the post status? All posts with this status will be assigned to the default status.', 'publishpress')
                     )

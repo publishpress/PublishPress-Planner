@@ -349,7 +349,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                  wp_localize_script(
                     'publishpress-editorial-metadata-configure',
-                    'objectL10n',
+                    'objectL10nMetadata',
                     array(
                         'pp_confirm_delete_term_string' => __('Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.', 'publishpress')
                     )

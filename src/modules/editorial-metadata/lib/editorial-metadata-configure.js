@@ -118,7 +118,7 @@ $(document).ready(function(){inlineEditMetadataTerm.init();});
 jQuery(document).ready(function(){
 
     jQuery('.delete-status a').click(function(){
-        if (!confirm(objectL10n.pp_confirm_delete_term_string))
+        if (!confirm(objectL10nMetadata.pp_confirm_delete_term_string))
             return false;
     });
 

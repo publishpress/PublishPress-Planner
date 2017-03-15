@@ -266,7 +266,7 @@ if (!class_exists('PP_User_Groups')) {
 
                 wp_localize_script(
                     'publishpress-user-groups-js',
-                    'objectL10n',
+                    'objectL10nUsergroups',
                     array(
                         'pp_confirm_delete_usergroup_string' => __('Are you sure you want to delete the user group?', 'publishpress')
                     )

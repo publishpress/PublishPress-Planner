@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
     jQuery('#pp-usergroup-users ul').listFilterizer();
 
     jQuery('.delete-usergroup a').click(function(){
-        if (!confirm(objectL10n.pp_confirm_delete_usergroup_string))
+        if (!confirm(objectL10nUsergroups.pp_confirm_delete_usergroup_string))
             return false;
     });
 });
