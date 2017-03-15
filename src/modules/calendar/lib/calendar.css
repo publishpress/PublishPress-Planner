@@ -283,15 +283,24 @@ table#pp-calendar-view .day-unit ul li .item-status {
 table#pp-calendar-view .day-unit ul li .inner {
     margin-right: 57px;
     padding-left: 3px;
+    width: 100%;
+    padding-right: 3px;
+    box-sizing: border-box;
 }
 
 table#pp-calendar-view .day-unit ul li .item-headline {
     font-size: 12px;
     line-height: 15px;
-    margin-top:0;
-    margin-bottom:0;
-    margin-left: 17px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
     color: #21759B;
+    width: 87.8%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    padding-left: 17px;
 }
 
 table#pp-calendar-view .day-unit ul li.is-published:hover {

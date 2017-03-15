@@ -906,8 +906,10 @@ if (!class_exists('PP_Calendar')) {
                     <div class="item-default-visible">
                         <div class="inner">
                             <span class="dashicons dashicons-<?php echo $icon; ?>"></span>
-                            <span class="item-headline post-title"><strong><?php echo esc_html(_draft_or_post_title($post->ID));
-            ?></strong></span>
+                            <?php $title = esc_html(_draft_or_post_title($post->ID)); ?>
+                            <span class="item-headline post-title" title="<?php echo esc_attr($title); ?>">
+                                <strong><?php echo $title; ?></strong>
+                            </span>
                         </div>
                     </div>
                     <div class="item-inner">
