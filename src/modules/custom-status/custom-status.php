@@ -66,7 +66,7 @@ if (!class_exists('PP_Custom_Status')) {
                 'default_options'      => array(
                     'enabled'              => 'on',
                     'default_status'       => 'pitch',
-                    'always_show_dropdown' => 'off',
+                    'always_show_dropdown' => 'on',
                     'post_types'           => array(
                         'post' => 'on',
                         'page' => 'on',
