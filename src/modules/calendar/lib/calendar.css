@@ -12,6 +12,7 @@ table#pp-calendar-view {
     border: 1px solid #e1e1e1;
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 }
 
 .calendar-subscribe {
