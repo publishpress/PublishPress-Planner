@@ -782,8 +782,8 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Comments"
-msgstr "Commentaires"
+msgid "Editorial Comments"
+msgstr "Commentaires Éditoriaux"
 
 #: modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."

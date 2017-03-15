@@ -890,8 +890,8 @@ msgstr "Il modulo di notifica deve essere abilitato perchè questo widget sia vi
 #: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:22
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:119
-msgid "Comments"
-msgstr "Commenti"
+msgid "Editorial Comments"
+msgstr "Commenti editoriali"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit

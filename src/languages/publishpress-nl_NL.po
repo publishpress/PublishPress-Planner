@@ -719,7 +719,7 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Comments"
+msgid "Editorial Comments"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:23

@@ -832,7 +832,7 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:20
 #: modules/editorial-comments/editorial-comments.php:119
-msgid "Comments"
+msgid "Editorial Comments"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:21

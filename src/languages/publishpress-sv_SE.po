@@ -898,7 +898,7 @@ msgstr "Uppdatera notis"
 
 #: ../modules/editorial-comments/editorial-comments.php:21
 #: ../modules/editorial-comments/editorial-comments.php:115
-msgid "Comments"
+msgid "Editorial Comments"
 msgstr "Redaktionell dialog"
 
 #: ../modules/editorial-comments/editorial-comments.php:22

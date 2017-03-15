@@ -45,7 +45,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = array(
-                'title'                => __('Comments', 'publishpress'),
+                'title'                => __('Editorial Comments', 'publishpress'),
                 'short_description'    => __('Share internal notes with your team.', 'publishpress'),
                 'extended_description' => __('Use editorial comments to hold a private discussion about a post. Communicate directly with your writers or editors about what works and what needs to be improved for each piece.', 'publishpress'),
                 'module_url'           => $this->module_url,
@@ -144,7 +144,7 @@ if (!class_exists('PP_Editorial_Comments')) {
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
             foreach ($supported_post_types as $post_type) {
-                add_meta_box('publishpress-editorial-comments', __('Comments', 'publishpress'), array($this, 'editorial_comments_meta_box'), $post_type, 'normal');
+                add_meta_box('publishpress-editorial-comments', __('Editorial Comments', 'publishpress'), array($this, 'editorial_comments_meta_box'), $post_type, 'normal');
             }
         }
 

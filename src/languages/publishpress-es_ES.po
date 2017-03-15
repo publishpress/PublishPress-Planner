@@ -878,8 +878,8 @@ msgstr "Actualizar anotaciones"
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Comments"
-msgstr "Comentarios"
+msgid "Editorial Comments"
+msgstr "Comentarios Editoriales"
 
 #: modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."

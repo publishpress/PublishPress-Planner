@@ -952,8 +952,8 @@ msgstr ""
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:22
 #: flow\0.7.1/modules/editorial-comments/editorial-comments.php:119
-msgid "Comments"
-msgstr "Kommentare"
+msgid "Editorial Comments"
+msgstr "Redaktionelle Kommentare"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:23

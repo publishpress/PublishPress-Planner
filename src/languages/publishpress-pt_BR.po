@@ -800,8 +800,8 @@ msgstr "Atualizar nota"
 
 #: modules/editorial-comments/editorial-comments.php:22
 #: modules/editorial-comments/editorial-comments.php:116
-msgid "Comments"
-msgstr "Comentários"
+msgid "Editorial Comments"
+msgstr "Comentários Editoriais"
 
 #: modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."
