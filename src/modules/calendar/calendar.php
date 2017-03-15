@@ -71,7 +71,7 @@ if (!class_exists('PP_Calendar')) {
                     'enabled'                => 'on',
                     'post_types'             => get_post_types(null, 'objects'),
                     'quick_create_post_type' => 'post',
-                    'ics_subscription'       => 'off',
+                    'ics_subscription'       => 'on',
                     'ics_secret_key'         => '',
                 ),
                 'messages' => array(
