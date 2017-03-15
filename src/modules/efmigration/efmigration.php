@@ -133,7 +133,7 @@ if (!class_exists('PP_Efmigration')) {
 
             $publishPressUrl = add_query_arg(
                 array(
-                    'page' => 'pp-settings'
+                    'page' => 'pp-modules-settings'
                 ),
                 admin_url('/admin.php')
             );
