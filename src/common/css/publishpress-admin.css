@@ -27,6 +27,50 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@charset "UTF-8";
+
+/* publishpress */
+@font-face {
+  font-family: "publishpress";
+  src:url("../font/publishpress.eot");
+  src:url("../font/publishpress.eot?#iefix") format("embedded-opentype"),
+    url("../font/publishpress.woff") format("woff"),
+    url("../font/publishpress.ttf") format("truetype"),
+    url("../font/publishpress.svg#1489675140") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[data-icon]:before {
+  font-family: "publishpress" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="pp-icon-"]:before,
+[class*=" pp-icon-"]:before {
+  font-family: "publishpress" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pp-icon-print:before {
+  content: "\64";
+}
+
 #ui-datepicker-div {
     margin-top: 30px;
 }
@@ -87,3 +131,4 @@
 .basic-settings h3:not(:first-of-type) {
     margin-top: 35px;
 }
+

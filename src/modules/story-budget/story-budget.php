@@ -200,6 +200,7 @@ class PP_Story_Budget extends PP_Module
             return;
         }
 
+        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'screen');
         wp_enqueue_style('publishpress-story_budget-styles', $this->module_url . 'lib/story-budget.css', false, PUBLISHPRESS_VERSION, 'screen');
         wp_enqueue_style('publishpress-story_budget-print-styles', $this->module_url . 'lib/story-budget-print.css', false, PUBLISHPRESS_VERSION, 'print');
     }
@@ -712,7 +713,7 @@ class PP_Story_Budget extends PP_Module
         </div><!-- /alignleft actions -->
 
         <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
-            <a href="#" id="print_link"><?php _e('Print', 'publishpress');
+            <a href="#" id="print_link"><span class="pp-icon pp-icon-print"></span>&nbsp;<?php _e('Print', 'publishpress');
         ?></a>
         </div>
         <div class="clear"></div>
