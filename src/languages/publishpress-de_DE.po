@@ -2,2106 +2,2172 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-15 21:07-0300\n"
-"PO-Revision-Date: 2017-03-15 21:07-0300\n"
+"POT-Creation-Date: 2012-02-07 12:00+0100\n"
+"PO-Revision-Date: 2017-01-17 21:22-0200\n"
 "Last-Translator: Stefan Willuda <swilluda@web.de>\n"
 "Language-Team: Language IT <LL@li.org>\n"
-"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: C:/Documents and Settings/morfeo/Documenti/lavoro/00 opensource/"
+"traduzioni plugin wordpress/publishpress/0.7.1\n"
+"X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Generator: Poedit 1.8.11\n"
+"Language: de_DE\n"
+"X-Poedit-SearchPath-0: C:/Documents and Settings/morfeo/Documenti/lavoro/00 "
+"opensource/traduzioni plugin wordpress/publishpress/0.7.1\n"
 
-#: common/php/class-module.php:84
-msgid "Post"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:184
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:328
+msgid "Configure"
+msgstr "Konfigurieren"
 
-#: common/php/class-module.php:85
-msgid "Page"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:187
+msgid "Settings updated."
+msgstr "Einstellungen aktualisiert."
 
-#: common/php/class-module.php:193 common/php/class-module.php:261
-#: modules/custom-status/custom-status.php:181
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:188
+msgid "Please correct your form errors below and try again."
+msgstr "Bitte überprüfe deine fehlerhaften Eingaben und versuche es erneut."
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:189
+#: flow\0.7.1/modules/settings/settings.php:100
+#: flow\0.7.1/modules/settings/settings.php:358
+msgid "Cheatin&#8217; uh?"
+msgstr "Mogeln&#8217; was?"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:190
+msgid "You do not have necessary permissions to complete this action."
+msgstr "Du besitzt nicht die erforderlichen Rechte, um diese Aktion auszuführen."
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/publishpress.php:191
+msgid "Post does not exist"
+msgstr "Dieser Beitrag existiert nicht"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:92
+#: flow\0.7.1/common/php/class-module.php:137
+#: flow\0.7.1/modules/custom-status/custom-status.php:117
 msgid "Draft"
 msgstr "Entwurf"
 
-#: common/php/class-module.php:199 common/php/class-module.php:264
-#: modules/custom-status/custom-status.php:189
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:97
+#: flow\0.7.1/common/php/class-module.php:140
+#: flow\0.7.1/modules/custom-status/custom-status.php:124
 msgid "Pending Review"
 msgstr "Ausstehende Review"
 
-#: common/php/class-module.php:260 modules/calendar/calendar.php:1090
-#: modules/calendar/calendar.php:1876
-#: modules/custom-status/custom-status.php:441
-#: modules/story-budget/story-budget.php:827
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:136
+#: flow\0.7.1/modules/calendar/calendar.php:601
+#: flow\0.7.1/modules/calendar/calendar.php:736
+#: flow\0.7.1/modules/custom-status/custom-status.php:323
+#: flow\0.7.1/modules/story-budget/story-budget.php:608
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: common/php/class-module.php:262 modules/calendar/calendar.php:1085
-#: modules/calendar/calendar.php:1874
-#: modules/custom-status/custom-status.php:451
-#: modules/dashboard/dashboard.php:181
-#: modules/story-budget/story-budget.php:825
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:138
+#: flow\0.7.1/modules/calendar/calendar.php:596
+#: flow\0.7.1/modules/calendar/calendar.php:734
+#: flow\0.7.1/modules/custom-status/custom-status.php:333
+#: flow\0.7.1/modules/story-budget/story-budget.php:606
 msgid "Scheduled"
 msgstr "Eingeplant"
 
-#: common/php/class-module.php:263
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:139
 msgid "Private"
 msgstr "Privat"
 
-#: common/php/class-module.php:265 modules/calendar/calendar.php:988
-#: modules/story-budget/story-budget.php:628
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:141
+#: flow\0.7.1/modules/story-budget/story-budget.php:548
 msgid "Trash"
 msgstr "Papierkorb"
 
-#: common/php/class-module.php:468
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/class-module.php:318
 msgid "Invalid Taxonomy"
 msgstr "Ungültige Taxonomy"
 
-#: common/php/util.php:43
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/common/php/util.php:14
 msgid "(no title)"
 msgstr "(kein Titel)"
 
-#: modules/calendar/calendar.php:63 modules/calendar/calendar.php:200
-#: modules/calendar/calendar.php:599 modules/featured/featured.php:100
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:30
+#: flow\0.7.1/modules/calendar/calendar.php:138
+#: flow\0.7.1/modules/calendar/calendar.php:430
 msgid "Calendar"
 msgstr "Kalender"
 
-#: modules/calendar/calendar.php:64
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:31
 msgid "The calendar lets you see your posts over a customizable date range."
 msgstr "Zeige eingeplante Beiträge in einem anpassparen Kalender."
 
-#: modules/calendar/calendar.php:65
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:32
 msgid ""
-"PublishPress’s calendar lets you see your posts over a customizable date "
-"range. Filter by status or click on the post title to see its details. Drag "
-"and drop posts between days to change their publication date."
+"PublishPress’s calendar lets you see your posts over a customizable date range. "
+"Filter by status or click on the post title to see its details. Drag and drop "
+"posts between days to change their publication date date."
 msgstr ""
+"Der Kalender von PublishPress ermöglicht dir die Ansicht deiner Beiträge in einer "
+"anpassbaren Zeitspanne. Flitere die Beiträge anhand des Status oder zeige mit "
+"einem Klick auf den Beitragstitel Details an. Per drag and drop kannst du Beiträge "
+"auf ihren geplanten Veröffentlichungstermin verschieben."
 
-#: modules/calendar/calendar.php:78
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:45
 msgid "Post date updated."
 msgstr "Beitragsdatum wurde aktualisiert."
 
-#: modules/calendar/calendar.php:79
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:46
 msgid "There was an error updating the post. Please try again."
 msgstr ""
-"Bei dem Versuch den Beitrag zu aktualisieren ist ein Fehler aufgetreten. "
-"Bitte versuche es erneut."
+"Bei dem Versuch den Beitrag zu aktualisieren ist ein Fehler aufgetreten. Bitte "
+"versuche es erneut."
 
-#: modules/calendar/calendar.php:80
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:47
 #, php-format
 msgid ""
-"Updating the post date dynamically doesn't work for published content. "
-"Please <a href='%s'>edit the post</a>."
+"Updating the post date dynamically doesn't work for published content. Please <a "
+"href='%s'>edit the post</a>."
 msgstr ""
-"Bei veröffentlichten Beiträgen ist die dynamische Aktualisierung des Datums "
-"nicht möglich. Bitte <a href='%s'>bearbeite den Beitrag</a>."
+"Bei veröffentlichten Beiträgen ist die dynamische Aktualisierung des Datums nicht "
+"möglich. Bitte <a href='%s'>bearbeite den Beitrag</a>."
 
-#: modules/calendar/calendar.php:81
-msgid ""
-"iCal secret key regenerated. Please inform all users they will need to "
-"resubscribe."
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:50
+#: flow\0.7.1/modules/calendar/calendar.php:75
+msgid "Calendar Options"
+msgstr "Optionen"
 
-#: modules/calendar/calendar.php:86 modules/custom-status/custom-status.php:90
-#: modules/editorial-comments/editorial-comments.php:66
-#: modules/editorial-metadata/editorial-metadata.php:97
-#: modules/featured/featured.php:115 modules/notifications/notifications.php:80
-#: modules/user-groups/user-groups.php:93
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:53
+#: flow\0.7.1/modules/custom-status/custom-status.php:59
+#: flow\0.7.1/modules/editorial-comments/editorial-comments.php:40
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:66
+#: flow\0.7.1/modules/notifications/notifications.php:51
+#: flow\0.7.1/modules/user-groups/user-groups.php:62
 msgid "Overview"
 msgstr "Überblick"
 
-#: modules/calendar/calendar.php:87
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:54
 msgid ""
-"<p>The calendar is a convenient week-by-week or month-by-month view into "
-"your content. Quickly see which stories are on track to being published on "
-"time, and which will need extra effort.</p>"
+"<p>The calendar is a convenient week-by-week or month-by-month view into your "
+"content. Quickly see which stories are on track to being published on time, and "
+"which will need extra effort.</p>"
 msgstr ""
-"<p>Der Kalender ist eine komfortable Wochen- oder Monatsansicht deiner "
-"Beiträge. Sieh welche Beiträge im Zeitplan sind und für welche zusätzlicher "
-"Aufwand erforderlich ist.</p>"
+"<p>Der Kalender ist eine komfortable Wochen- oder Monatsansicht deiner Beiträge. "
+"Sieh welche Beiträge im Zeitplan sind und für welche zusätzlicher Aufwand "
+"erforderlich ist.</p>"
 
-#: modules/calendar/calendar.php:89
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:56
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://"
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://"
 "github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-"pressshack.com/features/calendar/\">Kalenderdokumentation</a></p><p><a href="
-"\"https://github.com/ostraining/PublishPress\">PublishPress auf Github</a></"
-"p>"
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/calendar/\">Kalenderdokumentation</a></p><p><a href=\"https://"
+"github.com/ostraining/PublishPress\">PublishPress auf Github</a></p>"
 
-#: modules/calendar/calendar.php:284
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:187
+msgid "Number of Weeks: "
+msgstr "Anzahl der Wochen: "
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:194
+msgid "Apply"
+msgstr "Anwenden"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:269
 msgid "Something is wrong with the format for the new date."
 msgstr "Mit dem Format des neuen Datums stimmt etwas nicht. "
 
-#: modules/calendar/calendar.php:613
-msgid "Subscribe in iCal or Google Calendar"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:535
+#: flow\0.7.1/modules/calendar/calendar.php:800
+msgid "Today"
+msgstr "Heute"
 
-#: modules/calendar/calendar.php:630 modules/story-budget/story-budget.php:668
-msgid "Undo"
-msgstr "Rückgängig"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:582
+#: flow\0.7.1/modules/story-budget/story-budget.php:180
+msgid "Author"
+msgstr "Autor"
 
-#: modules/calendar/calendar.php:754
-msgid "Click to create"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:588
+msgid "Post Type"
+msgstr "Beitragstyp"
 
-#: modules/calendar/calendar.php:772
-#, php-format
-msgid "Show %d more"
-msgstr ""
-
-#: modules/calendar/calendar.php:782
-#, php-format
-msgid "Schedule a %1$s for %2$s"
-msgstr ""
-
-#: modules/calendar/calendar.php:786
-#, php-format
-msgid "Schedule content for %1$s"
-msgstr ""
-
-#: modules/calendar/calendar.php:789
-#: modules/editorial-metadata/editorial-metadata.php:1604
-#: modules/editorial-metadata/editorial-metadata.php:1719
-msgid "Type"
-msgstr "Typ"
-
-#: modules/calendar/calendar.php:802 modules/story-budget/story-budget.php:216
-msgid "Title"
-msgstr "Titel"
-
-#: modules/calendar/calendar.php:807
-msgid "Create"
-msgstr ""
-
-#: modules/calendar/calendar.php:809 modules/calendar/calendar.php:986
-#: modules/custom-status/custom-status.php:1775
-#: modules/custom-status/custom-status.php:2021
-#: modules/editorial-metadata/editorial-metadata.php:1918
-#: modules/story-budget/story-budget.php:625
-#: modules/user-groups/user-groups.php:1324
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: modules/calendar/calendar.php:974
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:650
 msgid "None"
 msgstr "Keine"
 
-#: modules/calendar/calendar.php:986
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:661
 msgid "Edit this item"
 msgstr "Diesen Beitrag bearbeiten"
 
-#: modules/calendar/calendar.php:988
-msgid "Trash this item"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:661
+#: flow\0.7.1/modules/custom-status/custom-status.php:1370
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1644
+#: flow\0.7.1/modules/story-budget/story-budget.php:546
+#: flow\0.7.1/modules/user-groups/user-groups.php:1153
+msgid "Edit"
+msgstr "Bearbeiten"
 
-#: modules/calendar/calendar.php:991
-#: modules/custom-status/custom-status.php:1851
-#: modules/story-budget/story-budget.php:635
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:664
+#: flow\0.7.1/modules/story-budget/story-budget.php:554
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Vorschau &#8220;%s&#8221;"
 
-#: modules/calendar/calendar.php:991
-#: modules/custom-status/custom-status.php:1851
-#: modules/story-budget/story-budget.php:635
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:664
+#: flow\0.7.1/modules/story-budget/story-budget.php:554
 msgid "Preview"
 msgstr "Vorschau"
 
-#: modules/calendar/calendar.php:993 modules/story-budget/story-budget.php:633
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:666
+#: flow\0.7.1/modules/story-budget/story-budget.php:552
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Ansehen &#8220;%s&#8221;"
 
-#: modules/calendar/calendar.php:993 modules/story-budget/story-budget.php:633
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:666
+#: flow\0.7.1/modules/story-budget/story-budget.php:552
 msgid "View"
 msgstr "Ansehen"
 
-#: modules/calendar/calendar.php:996
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:688
 #, php-format
-msgid "Save &#8220;%s&#8221;"
-msgstr ""
+msgid "Show %1$s more "
+msgstr "Zeige %1$s weitere "
 
-#: modules/calendar/calendar.php:996
-msgid "Save"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:729
+#: flow\0.7.1/modules/story-budget/story-budget.php:601
+msgid "View all statuses"
+msgstr "Zeige alle Status"
 
-#: modules/calendar/calendar.php:1069 modules/story-budget/story-budget.php:218
-msgid "Author"
-msgstr "Autor"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:735
+#: flow\0.7.1/modules/story-budget/story-budget.php:607
+msgid "Unpublished"
+msgstr "Unveröffentlicht"
 
-#: modules/calendar/calendar.php:1077
-msgid "Post Type"
-msgstr "Beitragstyp"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:745
+#: flow\0.7.1/modules/story-budget/story-budget.php:616
+msgid "View all categories"
+msgstr "Zeige alle Kategorien"
 
-#: modules/calendar/calendar.php:1177 modules/story-budget/story-budget.php:696
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:756
+#: flow\0.7.1/modules/story-budget/story-budget.php:627
+msgid "View all users"
+msgstr "Zeige alle Benutzer"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:765
+msgid "View all types"
+msgstr "Zeige alle Typen"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:776
+#: flow\0.7.1/modules/story-budget/story-budget.php:633
 msgid "Filter"
 msgstr "Filter"
 
-#: modules/calendar/calendar.php:1192 modules/story-budget/story-budget.php:709
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:788
+#: flow\0.7.1/modules/story-budget/story-budget.php:640
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: modules/calendar/calendar.php:1199
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:794
 msgid "Forward 1 week"
 msgstr "Um eine Woche verschieben"
 
-#: modules/calendar/calendar.php:1201
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:794
 msgid "&rsaquo;"
 msgstr "&rsaquo;"
 
-#: modules/calendar/calendar.php:1204
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:796
 #, php-format
 msgid "Forward %d weeks"
 msgstr "Um %d Wochen verschieben"
 
-#: modules/calendar/calendar.php:1206
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:796
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: modules/calendar/calendar.php:1212
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:800
 #, php-format
 msgid "Today is %s"
 msgstr "Heute ist %s"
 
-#: modules/calendar/calendar.php:1214
-msgid "Today"
-msgstr "Heute"
-
-#: modules/calendar/calendar.php:1219
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:804
 #, php-format
 msgid "Back %d weeks"
 msgstr "Um %d Wochen zurückschieben"
 
-#: modules/calendar/calendar.php:1221
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:804
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: modules/calendar/calendar.php:1225
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:806
 msgid "Back 1 week"
 msgstr "Um 1 Woche zurückschieben"
 
-#: modules/calendar/calendar.php:1227
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:806
 msgid "&lsaquo;"
 msgstr "&lsaquo;"
 
-#: modules/calendar/calendar.php:1434
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:1008
 #, php-format
 msgid "for %1$s through %2$s"
 msgstr "von %1$s bis %2$s"
 
-#: modules/calendar/calendar.php:1479
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:1054
 msgid "Post types to show"
 msgstr "Anzuzeigende Beitragstypen"
 
-#: modules/calendar/calendar.php:1480
-msgid "Post types to create directly from calendar"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:1055
+msgid "Number of weeks to show"
+msgstr "Anzuzeigende Anzahl der Wochen"
 
-#: modules/calendar/calendar.php:1481
-msgid "Subscription in iCal or Google Calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:1521 modules/settings/settings.php:310
-#, php-format
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:1076
 msgid ""
-"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
-"loaded file."
-msgstr ""
-"Deaktiviert, weil add_post_type_support('%1$s', '%2$s') ist in einer "
-"geladenen Datei enthalten."
-
-#: modules/calendar/calendar.php:1535
-msgid ""
-"The number of weeks shown on the calendar can be changed on a user-by-user "
-"basis using the calendar's screen options."
+"The number of weeks shown on the calendar can be changed on a user-by-user basis "
+"using the calendar's screen options."
 msgstr ""
 "Die Anzahl der Kalenderwochen kann durch den Benutzer in den persönlichen "
 "Anzeigeoptionen festgelegt werden."
 
-#: modules/calendar/calendar.php:1546
-#: modules/custom-status/custom-status.php:1230
-#: modules/dashboard/dashboard.php:291 modules/dashboard/dashboard.php:312
-#: modules/dashboard/dashboard.php:341
-#: modules/notifications/notifications.php:1184
-msgid "Disabled"
-msgstr "Ausgeschaltet"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/calendar/calendar.php:1106
+#: flow\0.7.1/modules/custom-status/custom-status.php:1134
+#: flow\0.7.1/modules/dashboard/dashboard.php:290
+#: flow\0.7.1/modules/editorial-comments/editorial-comments.php:415
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1494
+#: flow\0.7.1/modules/notifications/notifications.php:947
+#: flow\0.7.1/modules/user-groups/user-groups.php:617
+msgid "Back to PublishPress"
+msgstr "Zurück zu PublishPress"
 
-#: modules/calendar/calendar.php:1547
-#: modules/custom-status/custom-status.php:1231
-#: modules/dashboard/dashboard.php:292 modules/dashboard/dashboard.php:313
-#: modules/dashboard/dashboard.php:342
-#: modules/notifications/notifications.php:1185
-msgid "Enabled"
-msgstr "Eingeschaltet"
-
-#: modules/calendar/calendar.php:1560
-msgid "Regenerate calendar feed secret"
-msgstr ""
-
-#: modules/calendar/calendar.php:1644
-msgid "No date supplied."
-msgstr ""
-
-#: modules/calendar/calendar.php:1654
-msgid "Please change Quick Create to use a post type viewable on the calendar."
-msgstr ""
-
-#: modules/calendar/calendar.php:1661
-msgid "Untitled"
-msgstr ""
-
-#: modules/calendar/calendar.php:1696
-msgid "Post could not be created"
-msgstr ""
-
-#: modules/calendar/calendar.php:1785
-msgid "Invalid metadata type"
-msgstr ""
-
-#: modules/calendar/calendar.php:1794
-msgid "Metadata could not be updated."
-msgstr ""
-
-#: modules/calendar/calendar.php:1868 modules/story-budget/story-budget.php:820
-msgid "View all statuses"
-msgstr "Zeige alle Status"
-
-#: modules/calendar/calendar.php:1875 modules/story-budget/story-budget.php:826
-msgid "Unpublished"
-msgstr "Unveröffentlicht"
-
-#: modules/calendar/calendar.php:1884 modules/story-budget/story-budget.php:836
-msgid "View all categories"
-msgstr "Zeige alle Kategorien"
-
-#: modules/calendar/calendar.php:1896 modules/story-budget/story-budget.php:848
-msgid "View all users"
-msgstr "Zeige alle Benutzer"
-
-#: modules/calendar/calendar.php:1909
-msgid "View all types"
-msgstr "Zeige alle Typen"
-
-#: modules/custom-status/custom-status.php:60
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:29
 msgid "Statuses"
 msgstr "Benutzerdefinierte Status"
 
-#: modules/custom-status/custom-status.php:61
-msgid ""
-"Create custom post statuses to define the stages of your publishing workflow."
-msgstr ""
-"Erstelle benutzerdefinierte Status um Etappen deines Workflows zu definieren"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:30
+msgid "Create custom post statuses to define the stages of your publishing workflow."
+msgstr "Erstelle benutzerdefinierte Status um Etappen deines Workflows zu definieren"
 
-#: modules/custom-status/custom-status.php:62
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:31
 msgid ""
-"Create your own post statuses to add structure your publishing workflow. You "
-"can change existing or add new ones anytime, and drag and drop to change "
-"their order."
+"Create your own post statuses to add structure your publishing workflow. You can "
+"change existing or add new ones anytime, and drag and drop to change their order."
 msgstr ""
-"Erstelle deine eigenen Betragsstatus um deinem Veröffentlichungs-Workflow "
-"Struktur zu zu geben. Du kannst bestehende Status überarbeiten, jederzeit "
-"neue ergänzen und ihre Reihenfolge per Drag and Drop ändern."
+"Erstelle deine eigenen Betragsstatus um deinem Veröffentlichungs-Workflow Struktur "
+"zu zu geben. Du kannst bestehende Status überarbeiten, jederzeit neue ergänzen und "
+"ihre Reihenfolge per Drag and Drop ändern."
 
-#: modules/custom-status/custom-status.php:77
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:46
 msgid "Edit Statuses"
 msgstr "Bearbeiten"
 
-#: modules/custom-status/custom-status.php:79
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:48
 msgid "Post status created."
 msgstr "Beitragsstatus erstellt"
 
-#: modules/custom-status/custom-status.php:80
-#: modules/custom-status/custom-status.php:83
-msgid "Post status updated."
-msgstr "Der Beitragsstatus wurde aktualisiert. "
-
-#: modules/custom-status/custom-status.php:81
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:49
 msgid "Post status doesn't exist."
 msgstr "Dieser Beitragsstatus existiert nicht."
 
-#: modules/custom-status/custom-status.php:82
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:50
 msgid "Default post status has been changed."
 msgstr "Der Standard Beitragsstatus wurde geändert."
 
-#: modules/custom-status/custom-status.php:84
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:51
+msgid "Post status updated."
+msgstr "Der Beitragsstatus wurde aktualisiert. "
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:52
 msgid "Post status deleted."
 msgstr "Der Beitragsstatus wurde gelöscht."
 
-#: modules/custom-status/custom-status.php:85
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:53
 msgid "Status order updated."
 msgstr "Statusreihenfolge wurde aktualisiert. "
 
-#: modules/custom-status/custom-status.php:91
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:60
 msgid ""
-"<p>PublishPress’s custom statuses allow you to define the most important "
-"stages of your editorial workflow. Out of the box, WordPress only offers "
-"“Draft” and “Pending Review” as post states. With custom statuses, you can "
-"create your own post states like “In Progress”, “Pitch”, or “Waiting for "
-"Edit” and keep or delete the originals. You can also drag and drop statuses "
-"to set the best order for your workflow.</p><p>Custom statuses are fully "
-"integrated into the rest of PublishPress and the WordPress admin. On the "
-"calendar and content overview, you can filter your view to see only posts of "
-"a specific post state. Furthermore, email notifications can be sent to a "
-"specific group of users when a post changes state.</p>"
+"<p>PublishPress’s custom statuses allow you to define the most important stages of "
+"your editorial workflow. Out of the box, WordPress only offers “Draft” and "
+"“Pending Review” as post states. With custom statuses, you can create your own "
+"post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete "
+"the originals. You can also drag and drop statuses to set the best order for your "
+"workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress "
+"and the WordPress admin. On the calendar and content overview, you can filter your "
+"view to see only posts of a specific post state. Furthermore, email notifications "
+"can be sent to a specific group of users when a post changes state.</p>"
 msgstr ""
 "<p>Die benutzerdefinierten Status von PublishPress ermöglichen es dir die "
 "wichtigsten Stationen deines Redaktionsprozesses zu definieren. Im WordPress "
-"Standard stehen dir lediglich die Status \"Entwurf\" und \"Ausstehende Review"
-"\" zur Verfügung. Benutzerdefinierte Status könnten z.B. sein \"in Arbeit\", "
-"\"Idee\" oder \"Warten auf Bearbeitung\". Du kannst die Standardstatus von "
-"WordPress löschen oder bestehen lassen. Per Drag and Drop kannst du die "
-"Reihenfolge der Status anpassen, um deinen Redaktionsprozess abzubilden.</"
-"p><p>Benutzerdefinierte Status sind voll in den Rest von PublishPress und in "
-"die WordPress Adminsitration integriert. Im Kalender oder in der Beitrags "
-"Vorrat Ansicht kannst du deine Beiträge nach Bearbeitungsstatus filtern. "
-"Darüber hinaus kannst du E-Mail Benachrichtigungen an definierte "
-"Benutzergruppen senden sobald sich der Status eines Beitrags ändert.</p>"
+"Standard stehen dir lediglich die Status \"Entwurf\" und \"Ausstehende Review\" "
+"zur Verfügung. Benutzerdefinierte Status könnten z.B. sein \"in Arbeit\", \"Idee\" "
+"oder \"Warten auf Bearbeitung\". Du kannst die Standardstatus von WordPress "
+"löschen oder bestehen lassen. Per Drag and Drop kannst du die Reihenfolge der "
+"Status anpassen, um deinen Redaktionsprozess abzubilden.</p><p>Benutzerdefinierte "
+"Status sind voll in den Rest von PublishPress und in die WordPress Adminsitration "
+"integriert. Im Kalender oder in der Beitrags Vorrat Ansicht kannst du deine "
+"Beiträge nach Bearbeitungsstatus filtern. Darüber hinaus kannst du E-Mail "
+"Benachrichtigungen an definierte Benutzergruppen senden sobald sich der Status "
+"eines Beitrags ändert.</p>"
 
-#: modules/custom-status/custom-status.php:93
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/custom-status/custom-status.php:62
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</"
-"a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/custom-statuses/\">Custom Status Documentation</a></p><p><a href="
+"\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-"pressshack.com/features/custom-statuses/\">Dokumentation der "
-"benutzerdefinierten Status</a></p><p><a href=\"https://github.com/ostraining/"
-"PublishPress\">PublishPress auf Github</a></p>"
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/custom-statuses/\">Dokumentation der benutzerdefinierten Status</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress"
+"\">PublishPress auf Github</a></p>"
 
-#: modules/custom-status/custom-status.php:157
-msgid "Pitch"
-msgstr "Vorschlagen"
-
-#: modules/custom-status/custom-status.php:160
-msgid "Idea proposed; waiting for acceptance."
-msgstr "Die Idee für den Beitrag wurde vorgeschlagen und wartet auf Freigabe. "
-
-#: modules/custom-status/custom-status.php:165
-msgid "Assigned"
-msgstr "Zugewiesen"
-
-#: modules/custom-status/custom-status.php:168
-msgid "Post idea assigned to writer."
-msgstr "Die Beitragsidee wurde einem Autor zugewiesen. "
-
-#: modules/custom-status/custom-status.php:173
-msgid "In Progress"
-msgstr "In Arbeit"
-
-#: modules/custom-status/custom-status.php:176
-msgid "Writer is working on the post."
-msgstr "Ein Autor arbeitet an diesem Beitrag"
-
-#: modules/custom-status/custom-status.php:184
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:120
 msgid "Post is a draft; not ready for review or publication."
 msgstr ""
 "Der Beitrag ist noch ein Entwurf. Er ist noch nicht für die Überprüfung oder "
 "Veröffentlichung bereit."
 
-#: modules/custom-status/custom-status.php:192
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:127
 msgid "Post needs to be reviewed by an editor."
 msgstr "Dieser Beitrag muss überprüft werden."
 
-#: modules/custom-status/custom-status.php:337
-msgid ""
-"Are you sure you want to delete the post status? All posts with this status "
-"will be assigned to the default status."
-msgstr ""
-"Bist du sicher, dass du den Beitragsstatus löschen willst? Alle Beiträge mit "
-"diesem Status werden den Standard Status erhalten."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:131
+msgid "Pitch"
+msgstr "Vorschlagen"
 
-#: modules/custom-status/custom-status.php:367
-msgid ""
-"<strong>Note:</strong> Your browser does not support JavaScript or has "
-"JavaScript disabled. You will not be able to access or change the post "
-"status."
-msgstr ""
-"<strong>Hinweis</strong> Dein Browser unterstützt kein JavaScript oder "
-"JavaScript ist deaktiviert. Es ist dir so nicht möglich Beiträge oder den "
-"Beitragsstatus zu ändern. "
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:134
+msgid "Idea proposed; waiting for acceptance."
+msgstr "Die Idee für den Beitrag wurde vorgeschlagen und wartet auf Freigabe. "
 
-#: modules/custom-status/custom-status.php:446
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:138
+msgid "Assigned"
+msgstr "Zugewiesen"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:141
+msgid "Post idea assigned to writer."
+msgstr "Die Beitragsidee wurde einem Autor zugewiesen. "
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:145
+msgid "In Progress"
+msgstr "In Arbeit"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:148
+msgid "Writer is working on the post."
+msgstr "Ein Autor arbeitet an diesem Beitrag"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:268
+msgid ""
+"<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript "
+"disabled. You will not be able to access or change the post status."
+msgstr ""
+"<strong>Hinweis</strong> Dein Browser unterstützt kein JavaScript oder JavaScript "
+"ist deaktiviert. Es ist dir so nicht möglich Beiträge oder den Beitragsstatus zu "
+"ändern. "
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:328
 msgid "Privately Published"
 msgstr "Privat veröffentlicht"
 
-#: modules/custom-status/custom-status.php:474
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:353
 msgid "&mdash; No Change &mdash;"
 msgstr "&mdash; Keine Änderung &mdash;"
 
-#: modules/custom-status/custom-status.php:537
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:401
 msgid "Custom status doesn't exist."
 msgstr "Der benutzerdefinierte Status existiert nicht."
 
-#: modules/custom-status/custom-status.php:586
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:444
 msgid "Cannot reassign to the status you want to delete"
 msgstr "Wiederzuweisung für einen zu löschenden Status nicht möglich"
 
-#: modules/custom-status/custom-status.php:609
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:462
 msgid "Restricted status "
 msgstr "Beschränkter Status"
 
-#: modules/custom-status/custom-status.php:759
-#: modules/story-budget/story-budget.php:217
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:580
+#: flow\0.7.1/modules/story-budget/story-budget.php:179
 msgid "Status"
 msgstr "Status"
 
-#: modules/custom-status/custom-status.php:837
-#: modules/custom-status/custom-status.php:914
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:657
+#: flow\0.7.1/modules/custom-status/custom-status.php:724
 msgid "Please enter a name for the status"
 msgstr "Bitte gib eine Statusbezeichnung ein."
 
-#: modules/custom-status/custom-status.php:841
-#: modules/custom-status/custom-status.php:918
-#: modules/custom-status/custom-status.php:1145
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:660
+#: flow\0.7.1/modules/custom-status/custom-status.php:727
+#: flow\0.7.1/modules/custom-status/custom-status.php:920
 msgid "Please enter a valid, non-numeric name for the status."
 msgstr "Bitte gib eine gültige, nicht numerische Statusbezeichnung ein"
 
-#: modules/custom-status/custom-status.php:845
-#: modules/custom-status/custom-status.php:922
-#: modules/custom-status/custom-status.php:1151
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:663
+#: flow\0.7.1/modules/custom-status/custom-status.php:730
+#: flow\0.7.1/modules/custom-status/custom-status.php:926
 msgid "Status name cannot exceed 20 characters. Please try a shorter name."
 msgstr ""
-"Die Statusbezeichnung darf nicht länger als 20 Zeichen sein. Bitte vergib "
-"einen kürzeren Namen."
+"Die Statusbezeichnung darf nicht länger als 20 Zeichen sein. Bitte vergib einen "
+"kürzeren Namen."
 
-#: modules/custom-status/custom-status.php:849
-#: modules/custom-status/custom-status.php:932
-#: modules/custom-status/custom-status.php:1175
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:666
+#: flow\0.7.1/modules/custom-status/custom-status.php:734
+#: flow\0.7.1/modules/custom-status/custom-status.php:945
 msgid "Status name conflicts with existing term. Please choose another."
 msgstr ""
 "Die gewählte Statusbezeichnung löst einen Konflikt mit einer bestehenden "
 "Bezeichnung aus. Bitte wähle eine andere Statusbezeichnung."
 
-#: modules/custom-status/custom-status.php:853
-#: modules/custom-status/custom-status.php:942
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:669
+#: flow\0.7.1/modules/custom-status/custom-status.php:741
 msgid "Status name is restricted. Please choose another name."
 msgstr "Diese Statusbezeichnung ist reserviert. Bitte wähle eine andere."
 
-#: modules/custom-status/custom-status.php:869
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:684
 msgid "Could not add status: "
 msgstr "Der Status konnte nicht hinzugefügt werden: "
 
-#: modules/custom-status/custom-status.php:938
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:738
 msgid "Status name conflicts with existing status. Please choose another."
 msgstr ""
-"Die Statusbezeichnung steht mit einer bestehenden in Konflikt. Bitte wähle "
-"eine andere."
+"Die Statusbezeichnung steht mit einer bestehenden in Konflikt. Bitte wähle eine "
+"andere."
 
-#: modules/custom-status/custom-status.php:959
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:757
 msgid "Error updating post status."
 msgstr "Es trat ein Fehler bei der Aktualisierung des Beitragsstatus auf."
 
-#: modules/custom-status/custom-status.php:984
-#: modules/custom-status/custom-status.php:1021
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:779
+#: flow\0.7.1/modules/custom-status/custom-status.php:813
 msgid "Invalid nonce for submission."
 msgstr "Im Augenblick ungültig."
 
-#: modules/custom-status/custom-status.php:989
-#: modules/custom-status/custom-status.php:1026
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:783
+#: flow\0.7.1/modules/custom-status/custom-status.php:817
 msgid "Sorry, you do not have permission to edit custom statuses."
 msgstr ""
-"Du besitzt nicht die ausreichenden Rechte um die benutzerdefinierten Status "
-"zu bearbeiten."
+"Du besitzt nicht die ausreichenden Rechte um die benutzerdefinierten Status zu "
+"bearbeiten."
 
-#: modules/custom-status/custom-status.php:1001
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:794
 msgid "Status doesn&#39;t exist."
 msgstr "Status esistiert nicht."
 
-#: modules/custom-status/custom-status.php:1033
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:823
 msgid "Status does not exist."
 msgstr "Status existiert nicht."
 
-#: modules/custom-status/custom-status.php:1038
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:827
 msgid "Cannot delete default status."
 msgstr "Der Standard Status lässt sich nicht löschen."
 
-#: modules/custom-status/custom-status.php:1043
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:831
 msgid "Could not delete the status: "
 msgstr "Dieser Status konnte nicht gelöscht werden."
 
-#: modules/custom-status/custom-status.php:1099
-#: modules/editorial-metadata/editorial-metadata.php:1417
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:878
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1233
 msgid "Terms not set."
 msgstr "Dieser Begriff ist nicht definiert. "
 
-#: modules/custom-status/custom-status.php:1139
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:914
 msgid "Please enter a name for the status."
 msgstr "Bitte wähle einen gültigen Namen für den Status."
 
-#: modules/custom-status/custom-status.php:1157
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:932
 msgid "Status name is restricted. Please chose another name."
 msgstr "Die Statusbezeichnung ist reserviert. Bitte wähle eine andere."
 
-#: modules/custom-status/custom-status.php:1163
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:938
 msgid "Status already exists. Please choose another name."
 msgstr "Diese Statusbezeichnung existiert bereits. Bitte wähle eine andere. "
 
-#: modules/custom-status/custom-status.php:1193
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:963
 #, php-format
 msgid "Could not update the status: <strong>%s</strong>"
 msgstr "Der Status konnte nicht aktualisiert werden: <strong>%s</strong>"
 
-#: modules/custom-status/custom-status.php:1207
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:978
 msgid "Use on these post types:"
 msgstr "Verwendet bei diesen Beitrags Typen:"
 
-#: modules/custom-status/custom-status.php:1208
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:979
 msgid "Show the status dropdown menu on the post editing screen:"
 msgstr "Zeige immer als Dropdownliste an:"
 
-#: modules/custom-status/custom-status.php:1300
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1000
+#: flow\0.7.1/modules/dashboard/dashboard.php:219
+#: flow\0.7.1/modules/dashboard/dashboard.php:239
+#: flow\0.7.1/modules/notifications/notifications.php:902
+msgid "Disabled"
+msgstr "Ausgeschaltet"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1001
+#: flow\0.7.1/modules/dashboard/dashboard.php:220
+#: flow\0.7.1/modules/dashboard/dashboard.php:240
+#: flow\0.7.1/modules/notifications/notifications.php:903
+msgid "Enabled"
+msgstr "Eingeschaltet"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1064
 msgid "Custom Status"
 msgstr "Benuterdefinierter Status"
 
-#: modules/custom-status/custom-status.php:1304
-#: modules/custom-status/custom-status.php:1395
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1066
+#: flow\0.7.1/modules/custom-status/custom-status.php:1125
 msgid "The name is used to identify the status. (Max: 20 characters)"
 msgstr "Diese Bezeichnung identifiziert den Status. (Max. 20 Zeichen)"
 
-#: modules/custom-status/custom-status.php:1309
-#: modules/editorial-metadata/editorial-metadata.php:1584
-#: modules/editorial-metadata/editorial-metadata.php:1699
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1070
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1381
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1453
 msgid "Slug"
 msgstr "Slug (Kurzname)"
 
-#: modules/custom-status/custom-status.php:1314
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1073
 msgid ""
-"The slug is the unique ID for the status and is changed when the name is "
-"changed."
+"The slug is the unique ID for the status and is changed when the name is changed."
 msgstr ""
-"Der Slug (Kurzname) ist die eindeutige ID für den Status. Sie wird geändert, "
-"wenn die Statusbezeichnung sich ändert."
+"Der Slug (Kurzname) ist die eindeutige ID für den Status. Sie wird geändert, wenn "
+"die Statusbezeichnung sich ändert."
 
-#: modules/custom-status/custom-status.php:1319
-#: modules/custom-status/custom-status.php:1399
-#: modules/custom-status/custom-status.php:1932
-#: modules/custom-status/custom-status.php:2090
-#: modules/editorial-metadata/editorial-metadata.php:1594
-#: modules/editorial-metadata/editorial-metadata.php:1709
-#: modules/editorial-metadata/editorial-metadata.php:1848
-#: modules/editorial-metadata/editorial-metadata.php:1956
-#: modules/user-groups/user-groups.php:653
-#: modules/user-groups/user-groups.php:724
-#: modules/user-groups/user-groups.php:1294
-#: modules/user-groups/user-groups.php:1395
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1077
+#: flow\0.7.1/modules/custom-status/custom-status.php:1128
+#: flow\0.7.1/modules/custom-status/custom-status.php:1288
+#: flow\0.7.1/modules/custom-status/custom-status.php:1432
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1388
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1458
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1577
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1678
+#: flow\0.7.1/modules/user-groups/user-groups.php:568
+#: flow\0.7.1/modules/user-groups/user-groups.php:611
+#: flow\0.7.1/modules/user-groups/user-groups.php:1123
+#: flow\0.7.1/modules/user-groups/user-groups.php:1218
 msgid "Description"
 msgstr "Beschreibung"
 
-#: modules/custom-status/custom-status.php:1324
-#: modules/custom-status/custom-status.php:1405
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1080
+#: flow\0.7.1/modules/custom-status/custom-status.php:1130
 msgid ""
-"The description is primarily for administrative use, to give you some "
-"context on what the custom status is to be used for."
+"The description is primarily for administrative use, to give you some context on "
+"what the custom status is to be used for."
 msgstr ""
 "Diese Beschreibung hilft dem Administrator zu verstehen wofür dieser Status "
 "verwendet wird."
 
-#: modules/custom-status/custom-status.php:1330
-#: modules/custom-status/custom-status.php:2099
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1085
+#: flow\0.7.1/modules/custom-status/custom-status.php:1438
 msgid "Update Status"
 msgstr "Aktualisiere den Status"
 
-#: modules/custom-status/custom-status.php:1333
-#: modules/custom-status/custom-status.php:2096
-#: modules/custom-status/custom-status.php:2097
-#: modules/editorial-comments/editorial-comments.php:245
-#: modules/editorial-metadata/editorial-metadata.php:1643
-#: modules/editorial-metadata/editorial-metadata.php:1962
-#: modules/editorial-metadata/editorial-metadata.php:1963
-#: modules/story-budget/story-budget.php:385
-#: modules/user-groups/user-groups.php:664
-#: modules/user-groups/user-groups.php:1401
-#: modules/user-groups/user-groups.php:1402
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1086
+#: flow\0.7.1/modules/custom-status/custom-status.php:1437
+#: flow\0.7.1/modules/editorial-comments/editorial-comments.php:207
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1422
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1683
+#: flow\0.7.1/modules/story-budget/story-budget.php:336
+#: flow\0.7.1/modules/user-groups/user-groups.php:574
+#: flow\0.7.1/modules/user-groups/user-groups.php:1223
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: modules/custom-status/custom-status.php:1360
-#: modules/editorial-metadata/editorial-metadata.php:1658
-#: modules/user-groups/user-groups.php:685
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1096
+msgid ""
+"Are you sure you want to delete the post status? All posts with this status will "
+"be assigned to the default status."
+msgstr ""
+"Bist du sicher, dass du den Beitragsstatus löschen willst? Alle Beiträge mit "
+"diesem Status werden den Standard Status erhalten."
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1102
+msgid "Deleting a post status will assign all posts to the default post status."
+msgstr ""
+"Wenn dieser Beitragsstatus gelöscht wird, dann erhalten alle Beiträge mit diesem "
+"Status den Standard Status."
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1109
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1432
+#: flow\0.7.1/modules/user-groups/user-groups.php:592
 msgid "Add New"
 msgstr "Hinzufügen"
 
-#: modules/custom-status/custom-status.php:1366
-#: modules/editorial-metadata/editorial-metadata.php:1664
-#: modules/user-groups/user-groups.php:691
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1110
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1433
+#: flow\0.7.1/modules/user-groups/user-groups.php:593
 msgid "Options"
 msgstr "Optionen"
 
-#: modules/custom-status/custom-status.php:1373
-msgid ""
-"Please note that checking a box will apply all statuses to that post type."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1389
-#: modules/custom-status/custom-status.php:1931
-#: modules/custom-status/custom-status.php:2085
-#: modules/editorial-metadata/editorial-metadata.php:1576
-#: modules/editorial-metadata/editorial-metadata.php:1689
-#: modules/editorial-metadata/editorial-metadata.php:1846
-#: modules/editorial-metadata/editorial-metadata.php:1951
-#: modules/user-groups/user-groups.php:645
-#: modules/user-groups/user-groups.php:714
-#: modules/user-groups/user-groups.php:1293
-#: modules/user-groups/user-groups.php:1390
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1123
+#: flow\0.7.1/modules/custom-status/custom-status.php:1287
+#: flow\0.7.1/modules/custom-status/custom-status.php:1428
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1376
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1448
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1575
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1674
+#: flow\0.7.1/modules/user-groups/user-groups.php:563
+#: flow\0.7.1/modules/user-groups/user-groups.php:606
+#: flow\0.7.1/modules/user-groups/user-groups.php:1122
+#: flow\0.7.1/modules/user-groups/user-groups.php:1214
 msgid "Name"
 msgstr "Bezeichnung"
 
-#: modules/custom-status/custom-status.php:1412
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1134
 msgid "Add New Status"
 msgstr "Füge neuen Status hinzu"
 
-#: modules/custom-status/custom-status.php:1741
-#: modules/custom-status/custom-status.php:1772
-msgid "Permalink:"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1752
-msgid "Change Permalinks"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1775
-msgid "Edit permalink"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1914
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1271
 msgid "No custom statuses found."
 msgstr "Keine benutzerdefinierten Status gefunden."
 
-#: modules/custom-status/custom-status.php:1930
-#: modules/editorial-metadata/editorial-metadata.php:1845
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1286
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1574
 msgid "Position"
 msgstr "Position"
 
-#: modules/custom-status/custom-status.php:2011
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1362
 msgid "Default"
 msgstr "Standard"
 
-#: modules/custom-status/custom-status.php:2022
-#: modules/editorial-metadata/editorial-metadata.php:1919
-#: modules/user-groups/user-groups.php:1325
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1371
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1645
+#: flow\0.7.1/modules/user-groups/user-groups.php:1154
 msgid "Quick&nbsp;Edit"
 msgstr "Schnell&nbsp;bearbeiten"
 
-#: modules/custom-status/custom-status.php:2024
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1373
 msgid "Make&nbsp;Default"
 msgstr "Zum&nbsp;Standard&nbsp;machen"
 
-#: modules/custom-status/custom-status.php:2028
-#: modules/editorial-metadata/editorial-metadata.php:1925
-#: modules/user-groups/user-groups.php:1326
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1376
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1650
+#: flow\0.7.1/modules/user-groups/user-groups.php:1155
 msgid "Delete"
 msgstr "Löschen"
 
-#: modules/custom-status/custom-status.php:2082
-#: modules/editorial-metadata/editorial-metadata.php:1948
-#: modules/user-groups/user-groups.php:1387
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/custom-status/custom-status.php:1426
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1672
+#: flow\0.7.1/modules/user-groups/user-groups.php:1212
 msgid "Quick Edit"
 msgstr "Schnellbearbeitung"
 
-#: modules/dashboard/dashboard.php:57
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:27
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: modules/dashboard/dashboard.php:58
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:28
 msgid "Track your content from the WordPress dashboard."
 msgstr "Verfolge deine Beiträge über das WordPress Dashboard."
 
-#: modules/dashboard/dashboard.php:59
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:29
 msgid ""
-"Enable dashboard widgets to quickly get an overview of what state your "
-"content is in."
+"Enable dashboard widgets to quickly get an overview of what state your content is "
+"in."
 msgstr ""
-"Mit den Dashboard Widgets bekommst du schnell einen Überblick über die "
-"Status deiner Beiträge."
+"Mit den Dashboard Widgets bekommst du schnell einen Überblick über die Status "
+"deiner Beiträge."
 
-#: modules/dashboard/dashboard.php:71
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:40
 msgid "Widget Options"
 msgstr "Optionen"
 
-#: modules/dashboard/dashboard.php:155
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:111
 msgid "Unpublished Content"
 msgstr "Unveröffentlichte Beiträge"
 
-#: modules/dashboard/dashboard.php:160 modules/dashboard/dashboard.php:280
-msgid "Notepad"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:115
+#: flow\0.7.1/modules/dashboard/dashboard.php:208
 msgid "Posts I'm Following"
 msgstr "Beiträge denen ich folge"
 
-#: modules/dashboard/dashboard.php:192
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:134
 msgid "Posts at a Glance"
 msgstr "Beiträge in der Übersicht"
 
-#: modules/dashboard/dashboard.php:225
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:159
 msgid "Edit Custom Statuses"
 msgstr "Bearbeite die benutzerdefinierten Status"
 
-#: modules/dashboard/dashboard.php:254
-#: modules/story-budget/story-budget.php:625
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:187
+#: flow\0.7.1/modules/story-budget/story-budget.php:546
 msgid "Edit this post"
 msgstr "Bearbeite diesen Beitrag"
 
-#: modules/dashboard/dashboard.php:256
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:188
 msgid "This post was last updated on"
 msgstr "Dieser Beitrag wurde zuletzt bearbeitet am"
 
-#: modules/dashboard/dashboard.php:261
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:192
 msgid "Sorry! You're not subscribed to any posts!"
 msgstr "Entschuldige, du folgst bis jetzt noch keinem Beitrag."
 
-#: modules/dashboard/dashboard.php:278
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:207
 msgid "Post Status Widget"
 msgstr "Beitragsstatus Widget"
 
-#: modules/dashboard/dashboard.php:329
-msgid ""
-"The notifications module will need to be enabled for this widget to display."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/dashboard/dashboard.php:256
+msgid "The notifications module will need to be enabled for this widget to display."
 msgstr ""
-"Das Modul für Benachrichtigungen muss aktiviert sein, um dieses Widget "
-"anzeigen zu können."
+"Das Modul für Benachrichtigungen muss aktiviert sein, um dieses Widget anzeigen zu "
+"können."
 
-#: modules/dashboard/widgets/dashboard-notepad.php:49
-msgid "Dashboard Note"
-msgstr ""
-
-#: modules/dashboard/widgets/dashboard-notepad.php:118
-#, php-format
-msgid "%1$s last updated on %2$s"
-msgstr ""
-
-#: modules/dashboard/widgets/dashboard-notepad.php:133
-msgid "Update Note"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:48
-#: modules/editorial-comments/editorial-comments.php:147
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:22
+#: flow\0.7.1/modules/editorial-comments/editorial-comments.php:119
 msgid "Editorial Comments"
 msgstr "Redaktionelle Kommentare"
 
-#: modules/editorial-comments/editorial-comments.php:49
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:23
 msgid "Share internal notes with your team."
 msgstr "Teile interne Notizen mit deinem Team."
 
-#: modules/editorial-comments/editorial-comments.php:50
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:24
 msgid ""
-"Use editorial comments to hold a private discussion about a post. "
-"Communicate directly with your writers or editors about what works and what "
-"needs to be improved for each piece."
+"Use editorial comments to hold a private discussion about a post. Communicate "
+"directly with your writers or editors about what works and what needs to be "
+"improved for each piece."
 msgstr ""
-"Verwende redaktionelle Kommentare für nicht öffentliche Diskussionen zu "
-"einem Beitrag. Stimme dich direkt mit den Autoren darüber ab was gelungen "
-"ist und wo noch etwas Feinschliff fehlt."
+"Verwende redaktionelle Kommentare für nicht öffentliche Diskussionen zu einem "
+"Beitrag. Stimme dich direkt mit den Autoren darüber ab was gelungen ist und wo "
+"noch etwas Feinschliff fehlt."
 
-#: modules/editorial-comments/editorial-comments.php:62
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:36
 msgid "Choose Post Types"
 msgstr "Einstellungen"
 
-#: modules/editorial-comments/editorial-comments.php:67
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:41
 msgid ""
 "<p>Editorial comments help you cut down on email overload and keep the "
-"conversation close to where it matters: your content. Threaded commenting in "
-"the admin, similar to what you find at the end of a blog post, allows "
-"writers and editors to privately leave feedback and discuss what needs to be "
-"changed before publication.</p><p>Anyone with access to view the story in "
-"progress will also have the ability to comment on it. If you have "
-"notifications enabled, those following the post will receive an email every "
-"time a comment is left.</p>"
+"conversation close to where it matters: your content. Threaded commenting in the "
+"admin, similar to what you find at the end of a blog post, allows writers and "
+"editors to privately leave feedback and discuss what needs to be changed before "
+"publication.</p><p>Anyone with access to view the story in progress will also have "
+"the ability to comment on it. If you have notifications enabled, those following "
+"the post will receive an email every time a comment is left.</p>"
 msgstr ""
 "<p>Redaktionelle Kommentare helfen dir die Flut an Abstimmungs-E­-Mails zu "
-"reduzieren und halten die Abstimmungen dort wo sie am nützlichsten sind, "
-"direkt am Beitrag/Artikel. Die gestaffelte Darstellung redaktioneller "
-"Kommentare entspricht der Darstellung unter Blogbeiträgen und hilft den "
-"Kommentatoren beitragsbezogene Diskussionen zu führen.</p><p>Jeder, der "
-"Zugriff auf einen Beitragsentwurf besitzt, kann redaktionelle Kommentare "
-"verfassen. Bei aktivierten Benachrichtigungen erhält jeder, der einem "
-"Beitrag folgt eine Benachrichtigung sobald ein neuer redaktioneller "
-"Kommentar verfasst wurde.</p>"
+"reduzieren und halten die Abstimmungen dort wo sie am nützlichsten sind, direkt am "
+"Beitrag/Artikel. Die gestaffelte Darstellung redaktioneller Kommentare entspricht "
+"der Darstellung unter Blogbeiträgen und hilft den Kommentatoren beitragsbezogene "
+"Diskussionen zu führen.</p><p>Jeder, der Zugriff auf einen Beitragsentwurf "
+"besitzt, kann redaktionelle Kommentare verfassen. Bei aktivierten "
+"Benachrichtigungen erhält jeder, der einem Beitrag folgt eine Benachrichtigung "
+"sobald ein neuer redaktioneller Kommentar verfasst wurde.</p>"
 
-#: modules/editorial-comments/editorial-comments.php:69
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:43
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/editorial-comments/\">Editorial Comments Documentation</a></"
-"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/editorial-comments/\">Editorial Comments Documentation</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
-"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-"pressshack.com/features/editorial-comments/\">Dokumentation der "
-"redaktionellen Kommentare</a></p><p><a href=\"https://github.com/ostraining/"
-"PublishPress\">PublishPress auf Github</a></p>"
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/editorial-comments/\">Dokumentation der redaktionellen Kommentare</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress"
+"\">PublishPress auf Github</a></p>"
 
-#: modules/editorial-comments/editorial-comments.php:211
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:178
 msgid ""
-"You can add editorial comments to a post once you've saved it for the first "
-"time."
+"You can add editorial comments to a post once you've saved it for the first time."
 msgstr ""
-"Du kannst redaktionelle Kommentare hinzufügen sobald du erstmalig "
-"gespeichert hast."
+"Du kannst redaktionelle Kommentare hinzufügen sobald du erstmalig gespeichert hast."
 
-#: modules/editorial-comments/editorial-comments.php:231
-#: modules/editorial-comments/editorial-comments.php:232
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:195
 msgid "Respond to this post"
 msgstr "internen Kommentar verfassen"
 
-#: modules/editorial-comments/editorial-comments.php:243
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:195
+msgid "Respond to this Post"
+msgstr "internen Kommentar abschicken"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:205
 msgid "Submit Response"
 msgstr "Kommentar abschicken"
 
-#: modules/editorial-comments/editorial-comments.php:288
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:245
 msgid "Reply to this comment"
 msgstr "Antworte auf diesen Kommentar"
 
-#: modules/editorial-comments/editorial-comments.php:288
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:245
 msgid "Reply"
 msgstr "Antworte"
 
-#: modules/editorial-comments/editorial-comments.php:314
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:267
 #, php-format
 msgid ""
-"<span class=\"comment-author\">%1$s</span><span class=\"meta\"> said on %2$s "
-"at %3$s</span>"
+"<span class=\"comment-author\">%1$s</span><span class=\"meta\"> said on %2$s at "
+"%3$s</span>"
 msgstr ""
-"<span class=\"comment-author\">%1$s</span><span class=\"meta\"> sagte am "
-"%2$s um %3$s</span>"
+"<span class=\"comment-author\">%1$s</span><span class=\"meta\"> sagte am %2$s um "
+"%3$s</span>"
 
-#: modules/editorial-comments/editorial-comments.php:341
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:289
 msgid ""
-"Nonce check failed. Please ensure you're supposed to be adding editorial "
-"comments."
+"Nonce check failed. Please ensure you're supposed to be adding editorial comments."
 msgstr ""
 
-#: modules/editorial-comments/editorial-comments.php:354
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:301
 msgid ""
-"Sorry, you don't have the privileges to add editorial comments. Please talk "
-"to your Administrator."
+"Sorry, you don't have the privileges to add editorial comments. Please talk to "
+"your Administrator."
 msgstr ""
-"Entschuldige, du besitzt nicht die erforderlichen Rechte, um einen "
-"redaktionellen Kommentar zu verfassen. Bitte nimm Kontakt zu deinem Admin "
-"auf."
+"Entschuldige, du besitzt nicht die erforderlichen Rechte, um einen redaktionellen "
+"Kommentar zu verfassen. Bitte nimm Kontakt zu deinem Admin auf."
 
-#: modules/editorial-comments/editorial-comments.php:360
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:306
 msgid "Please enter a comment."
 msgstr "Bitte gib einen Kommentar ein."
 
-#: modules/editorial-comments/editorial-comments.php:415
-msgid ""
-"There was a problem of some sort. Try again or contact your administrator."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:360
+msgid "There was a problem of some sort. Try again or contact your administrator."
 msgstr ""
-"Es ist irgendein Problem aufgetreten. Bitte versuche die Aktion erneut oder "
-"nimm Kontakt zu deinem Admin auf."
+"Es ist irgendein Problem aufgetreten. Bitte versuche die Aktion erneut oder nimm "
+"Kontakt zu deinem Admin auf."
 
-#: modules/editorial-comments/editorial-comments.php:428
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-comments/editorial-comments.php:372
 msgid "Enable for these post types:"
 msgstr "Aktivierung für folgende Inhaltstypen:"
 
-#: modules/editorial-metadata/editorial-metadata.php:73
-#: modules/editorial-metadata/editorial-metadata.php:397
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:42
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:324
 msgid "Metadata"
 msgstr "Metadaten"
 
-#: modules/editorial-metadata/editorial-metadata.php:74
-msgid ""
-"With Metadata you can customize the extra data that’s tracked for your "
-"content."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:43
+msgid "With Metadata you can customize the extra data that’s tracked for your content."
 msgstr "Ergänze Metadaten zu deinem Freigabeprozess."
 
-#: modules/editorial-metadata/editorial-metadata.php:75
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:44
 msgid ""
 "Log details on every assignment using configurable editorial metadata. It’s "
-"completely customizable; create fields for everything from due date to "
-"location to contact information to role assignments."
+"completely customizable; create fields for everything from due date to location to "
+"contact information to role assignments."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:87
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:56
 msgid "Metadata term added."
 msgstr "Metadaten hinzugefügt."
 
-#: modules/editorial-metadata/editorial-metadata.php:88
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:57
 msgid "Metadata term updated."
 msgstr "Metadaten aktualisiert."
 
-#: modules/editorial-metadata/editorial-metadata.php:89
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:58
 msgid "Metadata term doesn't exist."
 msgstr "Metadaten existieren nicht."
 
-#: modules/editorial-metadata/editorial-metadata.php:90
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:59
 msgid "Metadata term deleted."
 msgstr "Metadaten wurden gelöscht."
 
-#: modules/editorial-metadata/editorial-metadata.php:91
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:60
 msgid "Term order updated."
 msgstr "Reihenfolge aktualisiert."
 
-#: modules/editorial-metadata/editorial-metadata.php:92
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:61
 msgid "Term visibility changed."
 msgstr "Sichtbarkeit geändert."
 
-#: modules/editorial-metadata/editorial-metadata.php:98
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:67
 msgid ""
-"<p>Keep track of important details about your content with editorial "
-"metadata. This feature allows you to create as many date, text, number, etc. "
-"fields as you like, and then use them to store information like contact "
-"details, required word count, or the location of an interview.</p><p>Once "
-"you’ve set your fields up, editorial metadata integrates with both the "
-"calendar and the content overview. Make an editorial metadata item visible "
-"to have it appear to the rest of your team. Keep it hidden to restrict the "
-"information between the writer and their editor.</p>"
+"<p>Keep track of important details about your content with editorial metadata. "
+"This feature allows you to create as many date, text, number, etc. fields as you "
+"like, and then use them to store information like contact details, required word "
+"count, or the location of an interview.</p><p>Once you’ve set your fields up, "
+"editorial metadata integrates with both the calendar and the content overview. Make an "
+"editorial metadata item visible to have it appear to the rest of your team. Keep "
+"it hidden to restrict the information between the writer and their editor.</p>"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:100
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:69
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/editorial-metadata/\">Editorial Metadata Documentation</a></"
-"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/editorial-metadata/\">Metadata Documentation</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
 msgstr ""
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/editorial-metadata/\">Dokumentation zu redaktionellen Metadaten</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress"
+"\">PublishPress auf Github</a></p>"
 
-#: modules/editorial-metadata/editorial-metadata.php:165
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:130
 msgid "First Draft Date"
 msgstr "Entwurfsdatum"
 
-#: modules/editorial-metadata/editorial-metadata.php:168
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:133
 msgid "When the first draft needs to be ready."
 msgstr "Wann muss der erste Entwurf fertig sein?"
 
-#: modules/editorial-metadata/editorial-metadata.php:171
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:136
 msgid "Assignment"
 msgstr "Verantwortlichkeit"
 
-#: modules/editorial-metadata/editorial-metadata.php:174
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:139
 msgid "What the post needs to cover."
 msgstr "Was sollte das Foto abdecken?"
 
-#: modules/editorial-metadata/editorial-metadata.php:177
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:142
 msgid "Needs Photo"
 msgstr "Benötigt ein Foto"
 
-#: modules/editorial-metadata/editorial-metadata.php:180
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:145
 msgid "Checked if this post needs a photo."
 msgstr "Es wurde geprüft, ob dieser Beitrag ein Foto benötigt."
 
-#: modules/editorial-metadata/editorial-metadata.php:183
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:148
 msgid "Word Count"
 msgstr "Wortanzahl"
 
-#: modules/editorial-metadata/editorial-metadata.php:186
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:151
 msgid "Required post length in words."
 msgstr "Benötigte Beitragslänge in Worten."
 
-#: modules/editorial-metadata/editorial-metadata.php:261
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:200
 msgid "Checkbox"
 msgstr "Kontrollkästchen"
 
-#: modules/editorial-metadata/editorial-metadata.php:262
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:201
 msgid "Date"
 msgstr "Datum"
 
-#: modules/editorial-metadata/editorial-metadata.php:263
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:202
 msgid "Location"
 msgstr "Ort"
 
-#: modules/editorial-metadata/editorial-metadata.php:264
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:203
 msgid "Number"
 msgstr "Zahl"
 
-#: modules/editorial-metadata/editorial-metadata.php:265
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:204
 msgid "Paragraph"
 msgstr "Textbox"
 
-#: modules/editorial-metadata/editorial-metadata.php:266
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:205
 msgid "Text"
 msgstr "Textzeile"
 
-#: modules/editorial-metadata/editorial-metadata.php:267
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:206
 msgid "User"
 msgstr "Benutzer"
 
-#: modules/editorial-metadata/editorial-metadata.php:354
-msgid ""
-"Are you sure you want to delete this term? Any metadata for this term will "
-"remain but will not be visible unless this term is re-added."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:375
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:304
 msgid "Search Editorial Metadata"
 msgstr "Redaktionelle Metadaten suchen"
 
-#: modules/editorial-metadata/editorial-metadata.php:376
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:305
 msgid "Popular Editorial Metadata"
 msgstr "Häufig verwendete redaktionelle Metadaten"
 
-#: modules/editorial-metadata/editorial-metadata.php:377
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:306
 msgid "All Editorial Metadata"
 msgstr "Alle redaktionellen Metadaten"
 
-#: modules/editorial-metadata/editorial-metadata.php:378
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:307
 msgid "Edit Editorial Metadata"
 msgstr "Redaktionelle Metadaten bearbeiten"
 
-#: modules/editorial-metadata/editorial-metadata.php:379
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:308
 msgid "Update Editorial Metadata"
 msgstr "Redaktionelle Metadaten aktualisieren"
 
-#: modules/editorial-metadata/editorial-metadata.php:380
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:309
 msgid "Add New Editorial Metadata"
 msgstr "Füge neue redaktionelle Metadaten hinzu"
 
-#: modules/editorial-metadata/editorial-metadata.php:381
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:310
 msgid "New Editorial Metadata"
 msgstr "Neue redaktionelle Metadaten"
 
-#: modules/editorial-metadata/editorial-metadata.php:403 publishpress.php:267
-msgid "Configure"
-msgstr "Konfigurieren"
-
-#: modules/editorial-metadata/editorial-metadata.php:425
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:349
 msgid "No editorial metadata available."
 msgstr "Keine redaktionellen Metadaten verfügbar."
 
-#: modules/editorial-metadata/editorial-metadata.php:427
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:351
 #, php-format
 msgid " <a href=\"%s\">Add fields to get started</a>."
 msgstr " <a href=\"%s\">Zum Starten füge Felder hinzu</a>."
 
-#: modules/editorial-metadata/editorial-metadata.php:429
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:353
 msgid ""
-" Encourage your site administrator to configure your editorial workflow by "
-"adding editorial metadata."
+" Encourage your site administrator to configure your editorial workflow by adding "
+"editorial metadata."
 msgstr ""
-"Bitte deinen Website Admin den Redaktionsprozess durch Einsatz von "
-"zusätzlichen redaktionellen Metadaten zu optimieren."
+"Bitte deinen Website Admin den Redaktionsprozess durch Einsatz von zusätzlichen "
+"redaktionellen Metadaten zu optimieren."
 
-#: modules/editorial-metadata/editorial-metadata.php:464
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:384
 #, php-format
 msgid "View &#8220;%s&#8221; on Google Maps"
 msgstr "Auf &#8220;%s&#8221; Google Maps ansehen"
 
-#: modules/editorial-metadata/editorial-metadata.php:482
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:401
 msgid "-- Select a user --"
 msgstr "-- Wähle einen Benutzer --"
 
-#: modules/editorial-metadata/editorial-metadata.php:494
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:412
 msgid "This editorial metadata type is not yet supported."
 msgstr "Der Datentyp für das Metadatum ist noch nicht unterstützt."
 
-#: modules/editorial-metadata/editorial-metadata.php:914
-#: modules/notifications/notifications.php:1244
-#, php-format
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:928
-#: modules/editorial-metadata/editorial-metadata.php:1620
-#: modules/editorial-metadata/editorial-metadata.php:1744
-#: modules/editorial-metadata/editorial-metadata.php:1892
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:658
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:722
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:809
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1407
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1481
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1619
 msgid "Yes"
 msgstr "Ja"
 
-#: modules/editorial-metadata/editorial-metadata.php:930
-#: modules/editorial-metadata/editorial-metadata.php:1619
-#: modules/editorial-metadata/editorial-metadata.php:1743
-#: modules/editorial-metadata/editorial-metadata.php:1894
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:660
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:724
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:811
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1406
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1480
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1621
 msgid "No"
 msgstr "Nein"
 
-#: modules/editorial-metadata/editorial-metadata.php:1124
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:976
 msgid "Please enter a name for the editorial metadata."
 msgstr "Bitte vergib eine Bezeichnung für die redaktionellen Metadaten."
 
-#: modules/editorial-metadata/editorial-metadata.php:1128
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:979
 msgid "Please enter a slug for the editorial metadata."
 msgstr "Bitte vergib einen Slug (Kurzbezeichnung) für das Metadatum."
 
-#: modules/editorial-metadata/editorial-metadata.php:1131
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:981
 msgid "Name conflicts with existing term. Please choose another."
 msgstr "Namenskonflikt. Bitte wähle eine andere Bezeichnung."
 
-#: modules/editorial-metadata/editorial-metadata.php:1135
-#: modules/editorial-metadata/editorial-metadata.php:1235
-#: modules/editorial-metadata/editorial-metadata.php:1372
-#: modules/user-groups/user-groups.php:341
-#: modules/user-groups/user-groups.php:421
-#: modules/user-groups/user-groups.php:528
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:984
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1067
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1190
+#: flow\0.7.1/modules/user-groups/user-groups.php:289
+#: flow\0.7.1/modules/user-groups/user-groups.php:359
+#: flow\0.7.1/modules/user-groups/user-groups.php:454
 msgid "Name already in use. Please choose another."
 msgstr "Bezeichnung wird bereits verwendet. Bitte wähle eine andere."
 
-#: modules/editorial-metadata/editorial-metadata.php:1139
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:987
 msgid "Slug already in use. Please choose another."
 msgstr "Dieser Slug wird bereits verwendet. Bitte wähle einen anderen."
 
-#: modules/editorial-metadata/editorial-metadata.php:1144
-#: modules/editorial-metadata/editorial-metadata.php:1245
-#: modules/editorial-metadata/editorial-metadata.php:1358
-msgid "Name cannot exceed 200 characters. Please try a shorter name."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:991
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1075
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1176
+msgid "Name cannot exceed 50 characters. Please try a shorter name."
 msgstr ""
+"Die Bezeichnung darf 50 Zeichen Länge nicht überschreiten. Bitte kürze etwas."
 
-#: modules/editorial-metadata/editorial-metadata.php:1149
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:995
 msgid "Please select a valid metadata type."
 msgstr "Bitte wähle einen gültigen Metadatentyp."
 
-#: modules/editorial-metadata/editorial-metadata.php:1173
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1017
 msgid "Error adding term."
 msgstr "Fehler beim Hinzufügen."
 
-#: modules/editorial-metadata/editorial-metadata.php:1218
-#: modules/editorial-metadata/editorial-metadata.php:1346
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1054
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1164
 msgid "Please enter a name for the editorial metadata"
 msgstr "Bitte vergib eine Bezeichnung für das Metadatum"
 
-#: modules/editorial-metadata/editorial-metadata.php:1223
-#: modules/editorial-metadata/editorial-metadata.php:1352
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1058
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1170
 msgid "Please enter a valid, non-numeric name for the editorial metadata."
 msgstr "Bitte vergib ein gültiges redaktionelles Metadatum (keine Zahlen)."
 
-#: modules/editorial-metadata/editorial-metadata.php:1229
-#: modules/editorial-metadata/editorial-metadata.php:1365
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1062
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1183
 msgid "Metadata name conflicts with existing term. Please choose another."
-msgstr ""
-"Es trat ein Namenskonflikt mit dem Metadatum auf. Bitte wähle ein anderes."
+msgstr "Es trat ein Namenskonflikt mit dem Metadatum auf. Bitte wähle ein anderes."
 
-#: modules/editorial-metadata/editorial-metadata.php:1240
-msgid ""
-"Name conflicts with slug for another term. Please choose something else."
-msgstr ""
-"Es trat ein Namenskonflikt mit dem Slug auf. Bitte wähle einen anderen Slug."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1071
+msgid "Name conflicts with slug for another term. Please choose something else."
+msgstr "Es trat ein Namenskonflikt mit dem Slug auf. Bitte wähle einen anderen Slug."
 
-#: modules/editorial-metadata/editorial-metadata.php:1267
-#: modules/editorial-metadata/editorial-metadata.php:1309
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1095
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1131
 msgid "Error updating term."
 msgstr "Bei der Aktualisierung ist ein Fehler aufgetreten."
 
-#: modules/editorial-metadata/editorial-metadata.php:1379
-#: modules/user-groups/user-groups.php:345
-#: modules/user-groups/user-groups.php:426
-#: modules/user-groups/user-groups.php:534
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1196
+#: flow\0.7.1/modules/user-groups/user-groups.php:292
+#: flow\0.7.1/modules/user-groups/user-groups.php:363
+#: flow\0.7.1/modules/user-groups/user-groups.php:460
 msgid "Name conflicts with slug for another term. Please choose again."
 msgstr "Es trat ein Namenskonflikt mit dem Slug auf. Bitte versuche es erneut."
 
-#: modules/editorial-metadata/editorial-metadata.php:1396
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1213
 #, php-format
 msgid "Could not update the term: <strong>%s</strong>"
 msgstr "Der Begriff konnte nicht aktualisiert werden: <strong>%s</strong>"
 
-#: modules/editorial-metadata/editorial-metadata.php:1456
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1266
 msgid "Error deleting term."
 msgstr "Fehler beim Löschen."
 
-#: modules/editorial-metadata/editorial-metadata.php:1474
-#: modules/user-groups/user-groups.php:566
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1282
+#: flow\0.7.1/modules/user-groups/user-groups.php:492
 msgid "Add to these post types:"
 msgstr "Anwenden auf folgende Inhaltstypen:"
 
-#: modules/editorial-metadata/editorial-metadata.php:1580
-#: modules/editorial-metadata/editorial-metadata.php:1695
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1329
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will remain "
+"but will not be visible unless this term is re-added."
+msgstr ""
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1378
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1450
 msgid "The name is for labeling the metadata field."
 msgstr "Vergib einen Namen für das Metadatum."
 
-#: modules/editorial-metadata/editorial-metadata.php:1589
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1384
 msgid "The slug cannot be changed once the term has been created."
 msgstr "Der Slug kann nach seiner Erstellung nicht mehr geändert werden."
 
-#: modules/editorial-metadata/editorial-metadata.php:1599
-#: modules/editorial-metadata/editorial-metadata.php:1715
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1391
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1460
 msgid ""
-"The description can be used to communicate with your team about what the "
-"metadata is for."
+"The description can be used to communicate with your team about what the metadata "
+"is for."
 msgstr ""
-"Die Beschreibung dient dazu deinem Team zu zeigen wozu dieses Metadatum "
-"benötigt wird."
+"Die Beschreibung dient dazu deinem Team zu zeigen wozu dieses Metadatum benötigt "
+"wird."
 
-#: modules/editorial-metadata/editorial-metadata.php:1609
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1395
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1463
+msgid "Type"
+msgstr "Typ"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1398
 msgid "The metadata type cannot be changed once created."
-msgstr ""
-"Der Metadatentyp kann nach seiner Erstellung nicht mehr geändert werden."
+msgstr "Der Metadatentyp kann nach seiner Erstellung nicht mehr geändert werden."
 
-#: modules/editorial-metadata/editorial-metadata.php:1614
-#: modules/editorial-metadata/editorial-metadata.php:1739
-#: modules/editorial-metadata/editorial-metadata.php:1849
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1402
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1477
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1578
 msgid "Viewable"
 msgstr "Sichtbar"
 
-#: modules/editorial-metadata/editorial-metadata.php:1632
-#: modules/editorial-metadata/editorial-metadata.php:1757
-#: modules/editorial-metadata/editorial-metadata.php:1923
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1415
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1490
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1649
 msgid ""
-"When viewable, metadata can be seen on views other than the edit post view "
-"(e.g. calendar, manage posts, content overview, etc.)"
+"When viewable, metadata can be seen on views other than the edit post view (e.g. "
+"calendar, manage posts, content overview, etc.)"
 msgstr ""
-"Bei Sichtbarkeit wird das Metadatum zusätzlich zur \"Beitrag bearbeiten "
-"Ansicht\" auch in anderen Ansichten angezeigt (z.B. im Kalender, im Beitrags "
-"Vorrat, usw.)"
+"Bei Sichtbarkeit wird das Metadatum zusätzlich zur \"Beitrag bearbeiten Ansicht\" "
+"auch in anderen Ansichten angezeigt (z.B. im Kalender, im Beitrags Vorrat, usw.)"
 
-#: modules/editorial-metadata/editorial-metadata.php:1640
-#: modules/editorial-metadata/editorial-metadata.php:1965
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1421
+#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1684
 msgid "Update Metadata Term"
 msgstr "Aktualisiere Metadatum"
 
-#: modules/editorial-metadata/editorial-metadata.php:1673
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1455
 msgid ""
-"Please note that checking a box will apply all metadata to that post type."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1705
-msgid ""
-"The \"slug\" is the URL-friendly version of the name. It is usually all "
-"lowercase and contains only letters, numbers, and hyphens."
+"The \"slug\" is the URL-friendly version of the name. It is usually all lowercase "
+"and contains only letters, numbers, and hyphens."
 msgstr ""
 "Der \"Kurzname\" ist eine URL-freundliche Version des Namens des Metadatums. "
 "Schreibe diesen Namen in Kleinbuchstaben und ohne Zahlen oder Bindestriche."
 
-#: modules/editorial-metadata/editorial-metadata.php:1735
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1474
 msgid "Indicate the type of editorial metadata."
 msgstr "Lege den Datentyp für das Metadatum fest."
 
-#: modules/editorial-metadata/editorial-metadata.php:1763
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1494
 msgid "Add New Metadata Term"
 msgstr "Füge ein Metadatum hinzu"
 
-#: modules/editorial-metadata/editorial-metadata.php:1834
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1563
 msgid "No editorial metadata found."
 msgstr "Keine redaktionellen Metadaten gefunden."
 
-#: modules/editorial-metadata/editorial-metadata.php:1847
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1576
 msgid "Metadata Type"
 msgstr "Metadatentypen"
 
-#: modules/editorial-metadata/editorial-metadata.php:1921
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1647
 msgid "Hidden metadata can only be viewed on the edit post view."
 msgstr ""
-"Nicht sichtbare Metadaten können lediglich in der Ansicht zum Bearbeiten "
-"eines Beitrags eingesehen werden."
+"Nicht sichtbare Metadaten können lediglich in der Ansicht zum Bearbeiten eines "
+"Beitrags eingesehen werden."
 
-#: modules/editorial-metadata/editorial-metadata.php:1921
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1647
 msgid "Make Hidden"
 msgstr "Verbergen"
 
-#: modules/editorial-metadata/editorial-metadata.php:1923
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:1649
 msgid "Make Viewable"
 msgstr "Sichtbar machen"
 
-#: modules/efmigration/efmigration.php:60
-msgid "Edit Flow Migration"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:61
-msgid "Migrate data from Edit Flow into PublishPress"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:180
-#: modules/efmigration/efmigration.php:376
-#: modules/efmigration/efmigration.php:378
-msgid "Access Denied"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:234
-#, php-format
-msgid ""
-"We have found Edit Flow and its data! Would you like to import the data into "
-"PublishPress? <a href=\"%1$s\">Yes, import the data</a> | <a href=\"%2$s"
-"\">Dismiss</a>"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:290
-msgid "Unknown step"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:296
-msgid "Undefined migration method"
-msgstr ""
-
-#: modules/featured/featured.php:48
-msgid "Featured"
-msgstr ""
-
-#: modules/featured/featured.php:49
-msgid ""
-"PublishPress is the essential plugin for any site with multiple writers."
-msgstr "PublishPress definiert deinen WordPress Veröffentlichungsworkflow neu."
-
-#: modules/featured/featured.php:101
-msgid ""
-"Click here to see a calendar view of all your content, organized by "
-"publication date."
-msgstr ""
-
-#: modules/featured/featured.php:116
-msgid ""
-"Click here to see a list of all your content, organized by status, category "
-"or author."
-msgstr ""
-
-#: modules/featured/featured.php:122
-msgid "No featured modules found."
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:47
-msgid "General"
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:48
-msgid ""
-"This tab contain settings for key features including notifications, "
-"dashboard widgets, and comments."
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:175
-msgid "Features"
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:176
-msgid "Feel free to select only the features you need."
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:181
-msgid "Enabled features"
-msgstr ""
-
-#: modules/notifications/notifications.php:61
-#: modules/notifications/notifications.php:353
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:32
+#: flow\0.7.1/modules/notifications/notifications.php:207
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: modules/notifications/notifications.php:62
-msgid ""
-"With email notifications, you can keep everyone updated about what’s "
-"happening with your content."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:33
+msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Informiere dein Team über wichtige Änderungen an deinen Beiträgen."
 
-#: modules/notifications/notifications.php:63
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:34
 msgid ""
-"With email notifications, you can keep everyone updated about what’s "
-"happening with a given content. Each status change or editorial comment "
-"sends out an email notification to users subscribed to a post. User groups "
-"can be used to manage who receives notifications on what."
+"With email notifications, you can keep everyone updated about what’s happening "
+"with a given content. Each status change or editorial comment sends out an email "
+"notification to users subscribed to a post. User groups can be used to manage who "
+"receives notifications on what."
 msgstr ""
-"E-Mail Benachrichtigungen unterstützen dich dabei dein Team über Änderungen "
-"an Seiten und Beiträgen zu informieren. Jeder Statusänderung und jeder "
-"redaktionelle Kommentar löst eine E-Mail aus, die alle Benutzer informiert, "
-"die ein Abo auf Änderungen festgelegt haben. Du kannst Benutzergruppen "
-"festlegen, um zu steuern wer wann welche Benachrichtigungen erhält."
+"E-Mail Benachrichtigungen unterstützen dich dabei dein Team über Änderungen an "
+"Seiten und Beiträgen zu informieren. Jeder Statusänderung und jeder redaktionelle "
+"Kommentar löst eine E-Mail aus, die alle Benutzer informiert, die ein Abo auf "
+"Änderungen festgelegt haben. Du kannst Benutzergruppen festlegen, um zu steuern "
+"wer wann welche Benachrichtigungen erhält."
 
-#: modules/notifications/notifications.php:81
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:52
 msgid ""
-"<p>Notifications ensure you keep up to date with progress your most "
-"important content. Users can be subscribed to notifications on a post one by "
-"one or by selecting user groups.</p><p>When enabled, email notifications can "
-"be sent when a post changes status or an editorial comment is left by a "
-"writer or an editor.</p>"
+"<p>Notifications ensure you keep up to date with progress your most important "
+"content. Users can be subscribed to notifications on a post one by one or by "
+"selecting user groups.</p><p>When enabled, email notifications can be sent when a "
+"post changes status or an editorial comment is left by a writer or an editor.</p>"
 msgstr ""
 
-#: modules/notifications/notifications.php:83
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:54
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/notifications/\">Notifications Documentation</a></p><p><a href="
-"\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/notifications/\">Notifications Documentation</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-"pressshack.com/features/notifications/\">Dokumentation zu "
-"Benachrichtigungen</a></p><p><a href=\"https://github.com/ostraining/"
-"PublishPress\">PublishPress auf Github</a></p>"
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/notifications/\">Dokumentation zu Benachrichtigungen</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress auf "
+"Github</a></p>"
 
-#: modules/notifications/notifications.php:324
-msgid "Click to unfollow updates to this post"
-msgstr ""
-
-#: modules/notifications/notifications.php:325
-msgid "Following"
-msgstr ""
-
-#: modules/notifications/notifications.php:328
-msgid "Follow updates to this post"
-msgstr ""
-
-#: modules/notifications/notifications.php:329
-msgid "Follow"
-msgstr ""
-
-#: modules/notifications/notifications.php:370
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:223
 msgid ""
-"Select the users and user groups that should receive notifications when the "
-"status of this post is updated or when an editorial comment is added."
+"Select the users and user groups that should receive notifications when the status "
+"of this post is updated or when an editorial comment is added."
 msgstr ""
-"Wähle die Benutzer aus, die benachrichtig werden sollen, wenn sich der "
-"Status des Beitrags ändert oder wenn ein redaktioneller Kommentar "
-"hinterlassen wurde."
+"Wähle die Benutzer aus, die benachrichtig werden sollen, wenn sich der Status des "
+"Beitrags ändert oder wenn ein redaktioneller Kommentar hinterlassen wurde."
 
-#: modules/notifications/notifications.php:373
-#: modules/user-groups/user-groups.php:625
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:225
+#: flow\0.7.1/modules/user-groups/user-groups.php:546
 msgid "Users"
 msgstr "Benutzer"
 
-#: modules/notifications/notifications.php:386
-#: modules/user-groups/user-groups.php:69
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:236
+#: flow\0.7.1/modules/user-groups/user-groups.php:38
 msgid "User Groups"
 msgstr "Benutzergruppen"
 
-#: modules/notifications/notifications.php:413
-msgid ""
-"Nonce check failed. Please ensure you can add users or user groups to a post."
-msgstr ""
-
-#: modules/notifications/notifications.php:568
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:342
 msgid "WordPress Scheduler"
 msgstr ""
 
-#: modules/notifications/notifications.php:576
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:350
 #, php-format
 msgid "[%1$s] New %2$s Created: \"%3$s\""
 msgstr "[%1$s] Neuer %2$s erstellt: \"%3$s\""
 
-#: modules/notifications/notifications.php:578
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:352
 #, php-format
 msgid "A new %1$s (#%2$s \"%3$s\") was created by %4$s %5$s"
 msgstr "Ein neuer %1$s (#%2$s \"%3$s\") wurde von %4$s %5$s erstellt"
 
-#: modules/notifications/notifications.php:581
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:355
 #, php-format
 msgid "[%1$s] %2$s Trashed: \"%3$s\""
 msgstr "[%1$s] %2$s in den Papierkorb verschoben: \"%3$s\""
 
-#: modules/notifications/notifications.php:583
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:357
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
-msgstr ""
-"%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s in den Papierkorb verschoben."
+msgstr "%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s in den Papierkorb verschoben."
 
-#: modules/notifications/notifications.php:586
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:360
 #, php-format
 msgid "[%1$s] %2$s Restored (from Trash): \"%3$s\""
 msgstr "[%1$s] %2$s Wiederhergestellt: \"%3$s\""
 
-#: modules/notifications/notifications.php:588
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:362
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
 msgstr ""
-"%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s aus dem Papierkorb "
-"wiederhergestellt."
+"%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s aus dem Papierkorb wiederhergestellt."
 
-#: modules/notifications/notifications.php:591
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:365
 #, php-format
 msgid "[%1$s] %2$s Scheduled: \"%3$s\""
 msgstr "[%1$s] %2$s Eingeplant: \"%3$s\""
 
-#: modules/notifications/notifications.php:593
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:367
 #, php-format
-msgid ""
-"%1$s #%2$s \"%3$s\" was scheduled by %4$s %5$s.  It will be published on %6$s"
-msgstr ""
+msgid "%1$s #%2$s \"%3$s\" was scheduled by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s eingeplant"
 
-#: modules/notifications/notifications.php:596
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:370
 #, php-format
 msgid "[%1$s] %2$s Published: \"%3$s\""
 msgstr "[%1$s] %2$s Veröffentlicht: \"%3$s\""
 
-#: modules/notifications/notifications.php:598
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:372
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
 msgstr "%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s veröffentlicht"
 
-#: modules/notifications/notifications.php:601
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:375
 #, php-format
 msgid "[%1$s] %2$s Unpublished: \"%3$s\""
 msgstr "[%1$s] %2$s Veröffentlichung zurückgezogen: \"%3$s\""
 
-#: modules/notifications/notifications.php:603
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:377
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
 msgstr ""
-"%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s von der Veröffentlichung "
-"zurückgezogen"
+"%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s von der Veröffentlichung zurückgezogen"
 
-#: modules/notifications/notifications.php:606
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:380
 #, php-format
 msgid "[%1$s] %2$s Status Changed for \"%3$s\""
 msgstr "[%1$s] %2$s Status aktualisiert für \"%3$s\""
 
-#: modules/notifications/notifications.php:608
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:382
 #, php-format
 msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
 msgstr "Statusaktualisierung für %1$s #%2$s \"%3$s\" durch %4$s %5$s"
 
-#: modules/notifications/notifications.php:612
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:386
 #, php-format
 msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Änderung am %1$s um %2$s %3$s"
 
-#: modules/notifications/notifications.php:620
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:394
 #, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
-#: modules/notifications/notifications.php:625
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:399
 #, php-format
 msgid "== %s Details =="
 msgstr "== %s Details =="
 
-#: modules/notifications/notifications.php:626
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:400
 #, php-format
 msgid "Title: %s"
 msgstr "Titel: %s"
 
-#: modules/notifications/notifications.php:629
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:402
 #, php-format
 msgid "Author: %1$s (%2$s)"
 msgstr "Autor: %1$s (%2$s)"
 
-#: modules/notifications/notifications.php:639
-#: modules/notifications/notifications.php:712
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:412
+#: flow\0.7.1/modules/notifications/notifications.php:482
 msgid "== Actions =="
 msgstr "== Mögliche Aktionen =="
 
-#: modules/notifications/notifications.php:640
-#: modules/notifications/notifications.php:714
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:413
+#: flow\0.7.1/modules/notifications/notifications.php:484
 #, php-format
 msgid "Add editorial comment: %s"
 msgstr "Füge einen redaktionellen Kommentar hinzu: %s"
 
-#: modules/notifications/notifications.php:641
-#: modules/notifications/notifications.php:715
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:414
+#: flow\0.7.1/modules/notifications/notifications.php:485
 #, php-format
 msgid "Edit: %s"
 msgstr "Bearbeiten: %s"
 
-#: modules/notifications/notifications.php:642
-#: modules/notifications/notifications.php:716
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:415
+#: flow\0.7.1/modules/notifications/notifications.php:486
 #, php-format
 msgid "View: %s"
 msgstr "Vorschau: %s"
 
-#: modules/notifications/notifications.php:691
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:461
 #, php-format
 msgid "[%1$s] New Editorial Comment: \"%2$s\""
 msgstr "[%1$s] Neuer redaktioneller Kommentar: \"%2$s\""
 
-#: modules/notifications/notifications.php:694
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:464
 #, php-format
 msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
-msgstr ""
-"Ein neuer redaktioneller Kommentar wurde hinzugefügt zu %3$s #%1$s \"%2$s\""
+msgstr "Ein neuer redaktioneller Kommentar wurde hinzugefügt zu %3$s #%1$s \"%2$s\""
 
-#: modules/notifications/notifications.php:696
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:466
 #, php-format
 msgid "%1$s (%2$s) said on %3$s at %4$s:"
 msgstr "%1$s (%2$s) schrieb zu %3$s am %4$s:"
 
-#: modules/notifications/notifications.php:713
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:483
 #, php-format
 msgid "Reply: %s"
 msgstr "Antworten: %s"
 
-#: modules/notifications/notifications.php:718
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:488
 #, php-format
 msgid "You can see all editorial comments on this %s here: "
 msgstr "Öffne alle redaktionellen Kommentare zu dem %s hier:"
 
-#: modules/notifications/notifications.php:730
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:499
 #, php-format
 msgid "You are receiving this email because you are subscribed to \"%s\"."
 msgstr ""
-"Du bekommst diese Nachricht, weil du als Abonnent von Updates für den "
-"Beitrag \"%s\" eingetragen wurdest."
+"Du bekommst diese Nachricht, weil du als Abonnent von Updates für den Beitrag \"%s"
+"\" eingetragen wurdest."
 
-#: modules/notifications/notifications.php:732
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:501
 #, php-format
 msgid "This email was sent %s."
 msgstr "Diese E-Mail wurde gesendet %s."
 
-#: modules/notifications/notifications.php:1161
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:881
 msgid "Post types for notifications:"
 msgstr "Beitragstypen für Benachrichtigungen:"
 
-#: modules/notifications/notifications.php:1162
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\edit flow\0.7.1/modules/notifications/notifications.php:882
 msgid "Always notify blog admin"
 msgstr "Benachrichtige immer auch den Blog Admin"
 
-#: modules/settings/settings.php:50 modules/settings/settings.php:171
-#: modules/settings/settings.php:210
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:18
+#: flow\0.7.1/modules/settings/settings.php:185
+#: flow\0.7.1/modules/settings/settings.php:188
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: modules/settings/settings.php:213
-#, php-format
-msgid "If you like %s please leave us a %s rating. Thank you!"
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:19
+msgid "PublishPress is the essential plugin for any site with multiple writers."
+msgstr "PublishPress definiert deinen WordPress Veröffentlichungsworkflow neu."
 
-#: modules/settings/settings.php:223
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:132
+msgid "Not a registered PublishPress module"
+msgstr "Kein registriertes PublishPress Modul"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:138
+#, php-format
+msgid ""
+"Module not enabled. Please enable it from the <a href=\"%1$s\">PublishPress "
+"settings page</a>."
+msgstr ""
+"Das Modul ist nicht aktiviert. Bitte aktiviere es auf der <a href=\"%1$s"
+"\">PublishPress Einstellungsseite</a>."
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:232
 msgid "There are no PublishPress modules registered"
 msgstr "Es sind keine PublishPress Module registriert"
 
-#: modules/settings/settings.php:288
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:263
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:266
+msgid "Disable"
+msgstr "Deaktivieren"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:306
 msgid "Posts"
 msgstr "Beiträge"
 
-#: modules/settings/settings.php:289
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:307
 msgid "Pages"
 msgstr "Seiten"
 
-#: modules/settings/settings.php:341 publishpress.php:272
-msgid "Cheatin&#8217; uh?"
-msgstr "Mogeln&#8217; was?"
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/settings/settings.php:333
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded "
+"file."
+msgstr ""
+"Deaktiviert, weil add_post_type_support('%1$s', '%2$s') ist in einer geladenen "
+"Datei enthalten."
 
-#: modules/story-budget/story-budget.php:68
-#: modules/story-budget/story-budget.php:169
-#: modules/story-budget/story-budget.php:324
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:40
+#: flow\0.7.1/modules/story-budget/story-budget.php:135
+#: flow\0.7.1/modules/story-budget/story-budget.php:280
 msgid "Content Overview"
 msgstr "Beitrags Vorrat"
 
-#: modules/story-budget/story-budget.php:69
-msgid ""
-"Click here for a single screen that shows the publication status of all your "
-"content."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:41
+msgid "Click here for a single screen that shows the publication status of all your content."
 msgstr "Betrachte alle Status deiner Beiträge auf einen Blick."
 
-#: modules/story-budget/story-budget.php:70
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:42
 msgid ""
-"Use the content overview to see how content on your site is progressing. "
-"Filter by specific categories or date ranges to see details about each post "
-"in progress."
+"Use the content overview to see how content on your site is progressing. Filter by "
+"specific categories or date ranges to see details about each post in progress."
 msgstr ""
 "In der Ansicht des Beitrags Vorrat kannst du sehen wie sich deine Beiträge "
-"entwickeln. Filtere nach Kategorie oder Datum und sieh die Beitragsdetails "
-"ein."
+"entwickeln. Filtere nach Kategorie oder Datum und sieh die Beitragsdetails ein."
 
-#: modules/story-budget/story-budget.php:105
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:74
 msgid "Screen Layout"
 msgstr "Bildschirmlayout"
 
-#: modules/story-budget/story-budget.php:219
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:178
+msgid "Title"
+msgstr "Titel"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:181
 msgid "Post Date"
 msgstr "Beitragsdatum"
 
-#: modules/story-budget/story-budget.php:220
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:182
 msgid "Last Modified"
 msgstr "Letzte Aktualisierung"
 
-#: modules/story-budget/story-budget.php:278
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:235
 msgid "Number of Columns: "
 msgstr "Spaltenzahl:"
 
-#: modules/story-budget/story-budget.php:383
-#: modules/story-budget/story-budget.php:386
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:331
+#, php-format
+msgid "starting %1$s showing %2$s %3$s"
+msgstr "beginnend beim %1$s es werden %2$s %3$s angezeigt"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:334
+#: flow\0.7.1/modules/story-budget/story-budget.php:337
 msgid "Change"
 msgstr "Ändern"
 
-#: modules/story-budget/story-budget.php:495
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:434
 msgid "Click to toggle"
 msgstr "Zum Umschalten klicken"
 
-#: modules/story-budget/story-budget.php:523
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:455
 msgid "There are no posts for this term in the range or filter specified."
 msgstr "Zu dieser Kategorie existieren noch keine Beiträge."
 
-#: modules/story-budget/story-budget.php:628
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:548
 msgid "Move this item to the Trash"
 msgstr "Verschiebe dieses Element in den Papierkorb"
 
-#: modules/story-budget/story-budget.php:715
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:576
+msgid "Undo"
+msgstr "Rückgängig"
+
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:645
 msgid "Print"
 msgstr "Drucken"
 
-#: modules/user-groups/user-groups.php:70
-msgid ""
-"Organize your users into groups who can take different roles in your "
-"publishing workflow."
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:39
+msgid "Organize your users into groups who can take different roles in your publishing workflow."
 msgstr ""
-"Organisiere die Benutzer in Gruppen, um deine Organisationsstruktur "
-"abzubilden."
+"Organisiere die Benutzer in Gruppen, um deine Organisationsstruktur abzubilden."
 
-#: modules/user-groups/user-groups.php:71
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:40
 msgid ""
-"Configure user groups to organize all of the users on your site. Each user "
-"can be in many user groups and you can change them at any time."
+"Configure user groups to organize all of the users on your site. Each user can be "
+"in many user groups and you can change them at any time."
 msgstr ""
 "Definiere Benutzergruppen, um die Benutzer deiner Website zu organisieren. "
-"Benutzer können unterschiedlichen Benutzergruppen zugeordnet werden. "
-"Änderungen sind jederzeit möglich."
+"Benutzer können unterschiedlichen Benutzergruppen zugeordnet werden. Änderungen "
+"sind jederzeit möglich."
 
-#: modules/user-groups/user-groups.php:83
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:52
 msgid "User group created. Feel free to add users to the usergroup."
 msgstr "Benutzergruppe erstellt. Du kannst dieser Gruppe Benutzer hinzufügen."
 
-#: modules/user-groups/user-groups.php:84
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:53
 msgid "User group updated."
 msgstr "Benutzergruppe aktualisiert."
 
-#: modules/user-groups/user-groups.php:85
-#: modules/user-groups/user-groups.php:1054
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:54
+#: flow\0.7.1/modules/user-groups/user-groups.php:895
 msgid "User group doesn't exist."
 msgstr "Diese Benutzergruppe existiert nicht."
 
-#: modules/user-groups/user-groups.php:86
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:55
 msgid "User group deleted."
 msgstr "Benutzergruppe aktualisiert."
 
-#: modules/user-groups/user-groups.php:89
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:58
 msgid "Manage User Groups"
 msgstr "Verwaltung"
 
-#: modules/user-groups/user-groups.php:94
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:63
 msgid ""
-"<p>For those with many people involved in the publishing process, user "
-"groups helps you keep them organized.</p><p>Currently, user groups are "
-"primarily used for subscribing a set of users to a post for notifications.</"
-"p>"
+"<p>For those with many people involved in the publishing process, user groups "
+"helps you keep them organized.</p><p>Currently, user groups are primarily used for "
+"subscribing a set of users to a post for notifications.</p>"
 msgstr ""
-"<p>Wenn viele Benutzer bei der Erstellung von Beiträgen mitwirken, dann "
-"helfen Benutzergruppen diese Benutzer sinnvoll zu organisieren.</p><p>Im "
-"Augenblick dienen Benutzergruppen im Wesentlichen dazu eine Gruppe von "
-"Benutzern zu Benachrichtigen.</p>"
+"<p>Wenn viele Benutzer bei der Erstellung von Beiträgen mitwirken, dann helfen "
+"Benutzergruppen diese Benutzer sinnvoll zu organisieren.</p><p>Im Augenblick "
+"dienen Benutzergruppen im Wesentlichen dazu eine Gruppe von Benutzern zu "
+"Benachrichtigen.</p>"
 
-#: modules/user-groups/user-groups.php:96
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:65
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
-"com/features/user-groups/\">User Groups Documentation</a></p><p><a href="
+"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/"
+"features/user-groups/\">User Groups Documentation</a></p><p><a href="
 "\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-"pressshack.com/features/user-groups/\">Dokumentation der Benutzergruppen</"
-"a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
-"auf Github</a></p>"
+"<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://pressshack.com/"
+"features/user-groups/\">Dokumentation der Benutzergruppen</a></p>"
+"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress auf "
+"Github</a></p>"
 
-#: modules/user-groups/user-groups.php:157
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:123
 msgid "Copy Editors"
 msgstr "Kopiere Autoren"
 
-#: modules/user-groups/user-groups.php:158
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:124
 msgid "Making sure the quality is top-notch."
 msgstr "Stellt die Qualität sicher."
 
-#: modules/user-groups/user-groups.php:161
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:127
 msgid "Photographers"
 msgstr "Fotografen"
 
-#: modules/user-groups/user-groups.php:162
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:128
 msgid "Capturing the story visually."
 msgstr "Stützt die Geschichte des Beitrags bildhaft."
 
-#: modules/user-groups/user-groups.php:165
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:131
 msgid "Reporters"
 msgstr "Autoren/Reporter"
 
-#: modules/user-groups/user-groups.php:166
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:132
 msgid "Out in the field, writing stories."
 msgstr "Sie sind draußen auf der Straße und schreiben die Beiträge."
 
-#: modules/user-groups/user-groups.php:169
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:135
 msgid "Section Editors"
 msgstr "Teil Autoren (Section Editors)"
 
-#: modules/user-groups/user-groups.php:170
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:136
 msgid "Providing feedback and direction."
 msgstr "Steht mit Rat und Tat zur Seite."
 
-#: modules/user-groups/user-groups.php:271
-msgid "Are you sure you want to delete the user group?"
-msgstr "Bist du dir sicher, dass du die Benutzergruppe löschen möchtest?"
-
-#: modules/user-groups/user-groups.php:337
-#: modules/user-groups/user-groups.php:416
-#: modules/user-groups/user-groups.php:517
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:286
+#: flow\0.7.1/modules/user-groups/user-groups.php:355
+#: flow\0.7.1/modules/user-groups/user-groups.php:443
 msgid "Please enter a name for the user group."
 msgstr "Bitte vergib eine Bezeichnung für die Benutzergruppe."
 
-#: modules/user-groups/user-groups.php:348
-#: modules/user-groups/user-groups.php:429
-#: modules/user-groups/user-groups.php:522
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:294
+#: flow\0.7.1/modules/user-groups/user-groups.php:365
+#: flow\0.7.1/modules/user-groups/user-groups.php:448
 msgid "User group name cannot exceed 40 characters. Please try a shorter name."
 msgstr ""
-"Die Bezeichnung darf nicht länger als 40 Zeichen sein. Bitte kürze die "
-"Bezeichnung."
+"Die Bezeichnung darf nicht länger als 40 Zeichen sein. Bitte kürze die Bezeichnung."
 
-#: modules/user-groups/user-groups.php:363
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:308
 msgid "Error adding usergroup."
 msgstr "Fehler beim Hinzufügen der Benutzergruppe."
 
-#: modules/user-groups/user-groups.php:447
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:382
 msgid "Error updating user group."
 msgstr "Bei der Aktualisierung ist ein Fehler aufgetreten."
 
-#: modules/user-groups/user-groups.php:481
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:411
 msgid "Error deleting user group."
 msgstr "Beim Löschen der Benutzergruppe ist ein Fehler aufgetreten."
 
-#: modules/user-groups/user-groups.php:551
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:477
 #, php-format
 msgid "Could not update the user group: <strong>%s</strong>"
-msgstr ""
-"Die Benutzergruppe <strong>%s</strong> konnte nicht aktualisiert werden."
+msgstr "Die Benutzergruppe <strong>%s</strong> konnte nicht aktualisiert werden."
 
-#: modules/user-groups/user-groups.php:649
-#: modules/user-groups/user-groups.php:720
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:565
+#: flow\0.7.1/modules/user-groups/user-groups.php:608
 msgid "The name is used to identify the user group."
 msgstr "Diese Bezeichnung dient der Identifikation der Benutzergruppe."
 
-#: modules/user-groups/user-groups.php:657
-#: modules/user-groups/user-groups.php:730
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:570
+#: flow\0.7.1/modules/user-groups/user-groups.php:613
 msgid ""
-"The description is primarily for administrative use, to give you some "
-"context on what the user group is to be used for."
+"The description is primarily for administrative use, to give you some context on "
+"what the user group is to be used for."
 msgstr ""
-"Diese Beschreibung hilft dem Admin zu verstehen wozu diese Benutzergruppe "
-"benötigt wird."
+"Diese Beschreibung hilft dem Admin zu verstehen wozu diese Benutzergruppe benötigt "
+"wird."
 
-#: modules/user-groups/user-groups.php:661
-#: modules/user-groups/user-groups.php:1404
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:573
+#: flow\0.7.1/modules/user-groups/user-groups.php:1224
 msgid "Update User Group"
 msgstr "Aktualisiere die Benutzergruppe"
 
-#: modules/user-groups/user-groups.php:698
-msgid ""
-"Please note that checking a box will add all user groups to that post type."
-msgstr ""
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:585
+msgid "Are you sure you want to delete the user group?"
+msgstr "Bist du dir sicher, dass du die Benutzergruppe löschen möchtest?"
 
-#: modules/user-groups/user-groups.php:737
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:617
 msgid "Add New User Group"
 msgstr "Füge eine Benutzergruppe hinzu"
 
-#: modules/user-groups/user-groups.php:771
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:641
 msgid "Usergroups"
 msgstr "Benutzergruppen"
 
-#: modules/user-groups/user-groups.php:773
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:643
 msgid "Select the user groups that you would like to be a part of:"
 msgstr "Wähle eine zuzuweisende Benutzergruppe aus:"
 
-#: modules/user-groups/user-groups.php:775
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:645
 msgid "Select the user groups that this user should be a part of:"
 msgstr "Wähle die Benutzergruppe zu der der Benutzer gehören soll: "
 
-#: modules/user-groups/user-groups.php:891
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:745
 msgid "No user groups were found."
 msgstr "Keine Benutzergruppen gefunden."
 
-#: modules/user-groups/user-groups.php:892
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:745
 msgid "Add a new user group. Opens new window."
 msgstr "Erstelle eine neue Benutzergruppe. Öffnet ein neues Fenster."
 
-#: modules/user-groups/user-groups.php:892
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:745
 msgid "Add a User Group"
 msgstr "Füge eine Benutzergruppe hinzu"
 
-#: modules/user-groups/user-groups.php:1009
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:852
 msgid "New user groups must have a name"
 msgstr "Neue Benutzergruppen benötigen einen Namen"
 
-#: modules/user-groups/user-groups.php:1100
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:939
 msgid "Invalid users variable. Should be array."
 msgstr ""
 
-#: modules/user-groups/user-groups.php:1282
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:1111
 msgid "No user groups found."
 msgstr "Keine Benutzergruppe gefunden."
 
-#: modules/user-groups/user-groups.php:1295
+#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
+#: wordpress\publishpress\0.7.1/modules/user-groups/user-groups.php:1124
 msgid "Users in Group"
 msgstr "Benutzer in der Benutzergruppe"
-
-#: publishpress.php:270
-msgid "Settings updated."
-msgstr "Einstellungen aktualisiert."
-
-#: publishpress.php:271
-msgid "Please correct your form errors below and try again."
-msgstr "Bitte überprüfe deine fehlerhaften Eingaben und versuche es erneut."
-
-#: publishpress.php:273
-msgid "You do not have necessary permissions to complete this action."
-msgstr ""
-"Du besitzt nicht die erforderlichen Rechte, um diese Aktion auszuführen."
-
-#: publishpress.php:274
-msgid "Post does not exist"
-msgstr "Dieser Beitrag existiert nicht"
-
-#: publishpress.php:434
-msgid ""
-"Edit Flow was deactivated by PublishPress. If you want to activate it, "
-"deactive PublishPress first."
-msgstr ""
-
-#~ msgid ""
-#~ "PublishPress’s calendar lets you see your posts over a customizable date "
-#~ "range. Filter by status or click on the post title to see its details. "
-#~ "Drag and drop posts between days to change their publication date date."
-#~ msgstr ""
-#~ "Der Kalender von PublishPress ermöglicht dir die Ansicht deiner Beiträge "
-#~ "in einer anpassbaren Zeitspanne. Flitere die Beiträge anhand des Status "
-#~ "oder zeige mit einem Klick auf den Beitragstitel Details an. Per drag and "
-#~ "drop kannst du Beiträge auf ihren geplanten Veröffentlichungstermin "
-#~ "verschieben."
-
-#~ msgid "Calendar Options"
-#~ msgstr "Optionen"
-
-#~ msgid "Number of Weeks: "
-#~ msgstr "Anzahl der Wochen: "
-
-#~ msgid "Apply"
-#~ msgstr "Anwenden"
-
-#~ msgid "Show %1$s more "
-#~ msgstr "Zeige %1$s weitere "
-
-#~ msgid "Number of weeks to show"
-#~ msgstr "Anzuzeigende Anzahl der Wochen"
-
-#~ msgid "Back to PublishPress"
-#~ msgstr "Zurück zu PublishPress"
-
-#~ msgid ""
-#~ "Deleting a post status will assign all posts to the default post status."
-#~ msgstr ""
-#~ "Wenn dieser Beitragsstatus gelöscht wird, dann erhalten alle Beiträge mit "
-#~ "diesem Status den Standard Status."
-
-#~ msgid "Respond to this Post"
-#~ msgstr "internen Kommentar abschicken"
-
-#~ msgid ""
-#~ "<p><strong>For more information:</strong></p><p><a href=\"https://"
-#~ "pressshack.com/features/editorial-metadata/\">Metadata Documentation</a></"
-#~ "p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
-#~ "on Github</a></p>"
-#~ msgstr ""
-#~ "<p><strong>Für weitere Informationen:</strong></p><p><a href=\"https://"
-#~ "pressshack.com/features/editorial-metadata/\">Dokumentation zu "
-#~ "redaktionellen Metadaten</a></p><p><a href=\"https://github.com/"
-#~ "ostraining/PublishPress\">PublishPress auf Github</a></p>"
-
-#~ msgid "Name cannot exceed 50 characters. Please try a shorter name."
-#~ msgstr ""
-#~ "Die Bezeichnung darf 50 Zeichen Länge nicht überschreiten. Bitte kürze "
-#~ "etwas."
-
-#~ msgid "%1$s #%2$s \"%3$s\" was scheduled by %4$s %5$s"
-#~ msgstr "%1$s #%2$s \"%3$s\" wurde durch %4$s %5$s eingeplant"
-
-#~ msgid "Not a registered PublishPress module"
-#~ msgstr "Kein registriertes PublishPress Modul"
-
-#~ msgid ""
-#~ "Module not enabled. Please enable it from the <a href=\"%1$s"
-#~ "\">PublishPress settings page</a>."
-#~ msgstr ""
-#~ "Das Modul ist nicht aktiviert. Bitte aktiviere es auf der <a href=\"%1$s"
-#~ "\">PublishPress Einstellungsseite</a>."
-
-#~ msgid "Enable"
-#~ msgstr "Aktivieren"
-
-#~ msgid "Disable"
-#~ msgstr "Deaktivieren"
-
-#~ msgid "starting %1$s showing %2$s %3$s"
-#~ msgstr "beginnend beim %1$s es werden %2$s %3$s angezeigt"
