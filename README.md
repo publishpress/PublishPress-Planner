@@ -1,6 +1,5 @@
 # PublishPress
 
-[![Build Status](https://travis-ci.org/OSTraining/PublishPress.svg?branch=development)](https://travis-ci.org/OSTraining/PublishPress)
 
 ## Description
 
@@ -8,12 +7,34 @@ PublishPress is the essential plugin for any site with multiple writers: Content
 
 Based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
 
+## Documentation
+
+https://pressshack.com/publishpress/docs/
+
+## How to report bugs or send suggestions
+
+Feel free to email us via [help@pressshack.com](mailto:help@pressshack.com). We would love to hear you, and will work hard to help you.
+
+### Guidelines
+
+* Write a clear summary
+* Write precise steps to reproduce
+
+## How to contribute with code
+
+* Clone the repository
+* Create a new branch
+* Implement and commit the code
+* Create a Pull Request targetting the "development" branch adding details about your fix
+
+We will review and contact you as soon as possible.
+
 ## Development
 
 ### React
 
 We use [React](https://facebook.github.io/react/) to build part of the user interface.
-The sources files are named with the extension JSX. Which is optional on React, but provides a way to write modern code and compile to be compatible with legacy browsers. We use [babeljs.io](Babel) with the presets: react and es2015 to compile to JS files.
+The sources files are named with the extension JSX. Which is optional on React, but provides a way to write modern code and compile to be compatible with legacy browsers. We use [babeljs.io](babeljs.io) with the presets: react and es2015 to compile to JS files.
 
 #### Compiling JSX files to JS
 
@@ -34,6 +55,14 @@ $ docker run -it --rm -v `pwd`:/app ostraining/node-babel:latest bash
 ```
 # babel -w src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js
 ```
+
+### Todo
+
+Here are some changes on the development workflow which we are thinking about:
+
+- [ ] Improve the development workflow and build script to allow deploy to the SVN repo and other stuff (the shell scripts needs to be merged)
+- [ ] Improve tests and move to Codeception
+- [ ] Maybe move to Phing instead of Robo files
 
 ## License
 
