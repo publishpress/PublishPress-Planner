@@ -1,5 +1,9 @@
 ## Changelog
 
+**1.2.2 (Mar. 16, 2017)**
+* Improvement: Add icon to the print link on the Overview screen
+* Improvement: Update the language files
+
 **1.2.1 (Mar. 15, 2017)**
 * Improvement: Better label for Comments metadata box
 * Improvement: Set Calendar Subscriptions enabled by default
