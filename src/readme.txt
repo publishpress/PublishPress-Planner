@@ -76,38 +76,3 @@ There're two ways to install PublishPress plugin:
 * Improvement: Extends the drag-and-drop feature to custom statuses
 * Improvement: Minor improvements on the code
 * New Feature: Allow to create multiple types of content on the calendar
-
-** 1.1.0 **
-* Complete rebranding to PublishPress and PressShack
-* Clean up on the UI
-* Move sub-pages to a common settings page
-* Clean up on the text
-* Refactor Story Budget to Content Overview
-* Move PublishPress menu to after Comments menu
-
-** 1.0.5 **
-* Update version to trigger a new release fixing SVN issues on the last release
-
-** 1.0.4 **
-* Update language strings and some links
-* Cleanup on the code
-* Cleanup on the admin interface
-* Add PressShack logo to the top of admin pages
-* Set minimum WordPress version to 4.4
-* Set minimum PHP version to 5.4
-* Move the Settings menu item to the main PublishPress menu
-* Minor improvement to the icons
-* Fix bug on editorial comments box in the post form
-
-** 1.0.3 **
-* Update language .mo files
-
-** 1.0.2 **
-* Update plugin's description
-
-** 1.0.1 **
-* Update plugin's description
-* Update language strings
-
-** 1.0.0 **
-* First stable release
