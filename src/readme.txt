@@ -57,22 +57,31 @@ There're two ways to install PublishPress plugin:
 
 == Changelog ==
 
-**1.2.2 (Mar. 16, 2017)**
-* Improvement: Add icon to the print link on the Overview screen
-* Improvement: Update the language files
+## [1.2.2] - 2017-03-16
+### Changed:
+- Add icon to the print link on the Overview screen
+- Update the language files
 
-**1.2.1 (Mar. 15, 2017)**
-* Improvement: Better label for Comments metadata box
-* Improvement: Set Calendar Subscriptions enabled by default
-* Improvement: Set Always Show Dropdown enabled by default on custom statuses
-* Improvement: Add small notes to some tabs
-* Improvement: Update POT file
-* Bug fix: Fixed empty messages while deleting custom statuses, metadata and user groups
-* Bug fix: Fixed link to redirect after the EditFlow migration
+## [1.2.1] - 2017-03-15
+### Changed:
+- Better label for Comments metadata box
+- Set Calendar Subscriptions enabled by default
+- Set Always Show Dropdown enabled by default on custom statuses
+- Add small notes to some tabs
+- Update POT file
 
-**1.2.0 (Mar. 15, 2017)**
-* Improvement: Better style for the calendar
-* Improvement: Click anywhere on the calendar cell to create content, intead show a button
-* Improvement: Extends the drag-and-drop feature to custom statuses
-* Improvement: Minor improvements on the code
-* New Feature: Allow to create multiple types of content on the calendar
+### Fixed:
+- Fixed empty messages while deleting custom statuses, metadata and user groups
+- Fixed link to redirect after the EditFlow migration
+
+## [1.2.0] - 2017-03-15
+### Changed:
+- Better style for the calendar
+- Click anywhere on the calendar cell to create content, intead show a button
+- Extends the drag-and-drop feature to custom statuses
+- Minor improvements on the code
+
+### Added:
+- Allow to create multiple types of content on the calendar
+
+Full changelog: https://github.com/OSTraining/PublishPress/blob/master/CHANGELOG.md
