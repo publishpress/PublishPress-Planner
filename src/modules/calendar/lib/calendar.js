@@ -57,7 +57,7 @@ jQuery(document).ready(function ($) {
     });
 
     /**
-     * Listen for click event and subsitute correct type of replacement
+     * Listen for click event and substitute correct type of replacement
      * html given the input type
      */
     $('.day-unit').on('click', '.editable-value', function(event) {
