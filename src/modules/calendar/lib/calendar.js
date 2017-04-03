@@ -162,8 +162,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('.day-item').click(function(event) {
-
+    function publishpress_calendar_day_item_click(event) {
         publishpress_calendar_close_overlays();
         
         $(this).addClass('active');
@@ -172,7 +171,9 @@ jQuery(document).ready(function ($) {
 
         overlay.removeClass('item-static');
         overlay.addClass('item-overlay');
-    });
+    }
+
+    $('.day-item').click(publishpress_calendar_day_item_click);
 
     function publishpress_calendar_close_overlays() {
         reset_editorial_metadata();
@@ -397,6 +398,8 @@ jQuery(document).ready(function ($) {
                                 publishpress_calendar_close_overlays();
                             }
 
+                            // Add the event to display the quick post form
+                            $('.day-item').click(publishpress_calendar_day_item_click);
                         } else {
                             EFQuickPublish.display_errors(EFQuickPublish.$new_post_form, response.message);
                         }
