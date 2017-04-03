@@ -57,6 +57,10 @@ There're two ways to install PublishPress plugin:
 
 == Changelog ==
 
+## UNRELEASED
+### Fixed:
+- Fixed popup for items created as quick post
+
 ## [1.2.2] - 2017-03-16
 ### Changed:
 - Add icon to the print link on the Overview screen
