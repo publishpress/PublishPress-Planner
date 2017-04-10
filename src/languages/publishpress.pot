@@ -1330,7 +1330,7 @@ msgstr ""
 
 #: modules/modules-settings/modules-settings.php:48
 msgid ""
-"This tab contain settings for key features including notifications, dashboard widgets, and comments."
+"This tab contains settings for key features including notifications, dashboard widgets, and comments."
 msgstr ""
 
 #: modules/modules-settings/modules-settings.php:175
