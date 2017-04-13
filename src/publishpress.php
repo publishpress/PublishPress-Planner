@@ -51,6 +51,7 @@ define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
 define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
 
+require_once 'freemius.php';
 
 require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
