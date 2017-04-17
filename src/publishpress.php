@@ -110,39 +110,47 @@ class publishpress
         }
 
         // PublishPress base module
-        require_once(PUBLISHPRESS_ROOT . '/common/php/class-module.php');
+        if (!class_exists('PP_Module')) {
+            require_once(PUBLISHPRESS_ROOT . '/common/php/class-module.php');
+        }
 
         // Scan the modules directory and include any modules that exist there
         // $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
-        $module_dirs = array(
-            'featured',
-            'modules-settings',
-            'calendar',
-            'editorial-metadata',
-            'notifications',
-            'story-budget',
-            'custom-status',
-            'user-groups',
-
+        $default_module_dirs = array(
+            'featured'           => PUBLISHPRESS_ROOT,
+            'modules-settings'   => PUBLISHPRESS_ROOT,
+            'calendar'           => PUBLISHPRESS_ROOT,
+            'editorial-metadata' => PUBLISHPRESS_ROOT,
+            'notifications'      => PUBLISHPRESS_ROOT,
+            'story-budget'       => PUBLISHPRESS_ROOT,
+            'custom-status'      => PUBLISHPRESS_ROOT,
+            'user-groups'        => PUBLISHPRESS_ROOT,
+            
             // @TODO: Move for settings, and remove after cleanup
-            'dashboard',
-            'editorial-comments',
-            'settings',
-            'efmigration',
+            'dashboard'          => PUBLISHPRESS_ROOT,
+            'editorial-comments' => PUBLISHPRESS_ROOT,
+            'settings'           => PUBLISHPRESS_ROOT,
+            'efmigration'        => PUBLISHPRESS_ROOT
         );
 
+        // Add filters to extend the modules
+        $module_dirs = apply_filters('pp_module_dirs', $default_module_dirs);
+
         $class_names = array();
-        foreach ($module_dirs as $module_dir) {
-            if (file_exists(PUBLISHPRESS_ROOT . "/modules/{$module_dir}/$module_dir.php")) {
-                include_once(PUBLISHPRESS_ROOT . "/modules/{$module_dir}/$module_dir.php");
+        foreach ($module_dirs as $module_dir => $base_path) {
+            if (file_exists("{$base_path}/modules/{$module_dir}/{$module_dir}.php")) {
+                include_once "{$base_path}/modules/{$module_dir}/{$module_dir}.php";
+
                 // Prepare the class name because it should be standardized
                 $tmp        = explode('-', $module_dir);
                 $class_name = '';
                 $slug_name  = '';
+
                 foreach ($tmp as $word) {
                     $class_name .= ucfirst($word) . '_';
-                    $slug_name .= $word . '_';
+                    $slug_name  .= $word . '_';
                 }
+
                 $slug_name               = rtrim($slug_name, '_');
                 $class_names[$slug_name] = 'PP_' . rtrim($class_name, '_');
             }
