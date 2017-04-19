@@ -27,18 +27,18 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-jQuery(document).ready(function($) {
-    $('.date-time-pick')
-        .datetimepicker({
-            dateFormat: 'M dd yy',
-            firstDay: pp_week_first_day,
-            alwaysSetTime: false,
-            controlType: 'select',
-        });
+jQuery( document ).ready(function($) {
+	$( '.date-time-pick' )
+		.datetimepicker({
+			dateFormat: 'M dd yy',
+			firstDay: pp_week_first_day,
+			alwaysSetTime: false,
+			controlType: 'select',
+		});
 
-    $('.date-pick')
-        .datepicker({
-            dateFormat: 'M dd yy',
-            firstDay: pp_week_first_day
-        });
+	$( '.date-pick' )
+		.datepicker({
+			dateFormat: 'M dd yy',
+			firstDay: pp_week_first_day
+		});
 });

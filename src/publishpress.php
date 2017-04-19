@@ -37,417 +37,400 @@
  */
 
 $settingsPage = add_query_arg(
-    array(
-        'page'   => 'pp-modules-settings',
-        'module' => 'pp-modules-settings-settings'
-    ),
-    get_admin_url(null, 'admin.php')
+	array(
+		'page'   => 'pp-modules-settings',
+		'module' => 'pp-modules-settings-settings',
+	),
+	get_admin_url( null, 'admin.php' )
 );
 
 // Define contants
-define('PUBLISHPRESS_VERSION', '1.3.0');
-define('PUBLISHPRESS_ROOT', dirname(__FILE__));
-define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
-define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
-define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
+define( 'PUBLISHPRESS_VERSION', '1.3.0' );
+define( 'PUBLISHPRESS_ROOT', dirname( __FILE__ ) );
+define( 'PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename( __FILE__ ) );
+define( 'PUBLISHPRESS_URL', plugins_url( '/', __FILE__ ) );
+define( 'PUBLISHPRESS_SETTINGS_PAGE', $settingsPage );
 
 require_once 'freemius.php';
 
 require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
 // Core class
-class publishpress
-{
-    // Unique identified added as a prefix to all options
-    public $options_group      = 'publishpress_';
-    public $options_group_name = 'publishpress_options';
+class publishpress {
 
-    /**
-     * @var PublishPress The one true PublishPress
-     */
-    private static $instance;
+	// Unique identified added as a prefix to all options
+	public $options_group      = 'publishpress_';
+	public $options_group_name = 'publishpress_options';
 
-    /**
-     * Main PublishPress Instance
-     *
-     * Insures that only one instance of PublishPress exists in memory at any one
-     * time. Also prevents needing to define globals all over the place.
-     *
-     * @return The one true PublishPress
-     */
-    public static function instance()
-    {
-        if (! isset(self::$instance)) {
-            self::$instance = new publishpress;
-            self::$instance->setup_globals();
-            self::$instance->setup_actions();
-            // Backwards compat for when we promoted use of the $publishpress global
-            global $publishpress;
-            $publishpress = self::$instance;
-        }
+	/**
+	 * @var PublishPress The one true PublishPress
+	 */
+	private static $instance;
 
-        return self::$instance;
-    }
+	/**
+	 * Main PublishPress Instance
+	 *
+	 * Insures that only one instance of PublishPress exists in memory at any one
+	 * time. Also prevents needing to define globals all over the place.
+	 *
+	 * @return The one true PublishPress
+	 */
+	public static function instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new publishpress;
+			self::$instance->setup_globals();
+			self::$instance->setup_actions();
+			// Backwards compat for when we promoted use of the $publishpress global
+			global $publishpress;
+			$publishpress = self::$instance;
+		}
 
-    private function __construct()
-    {
-        /** Do nothing **/
-    }
+		return self::$instance;
+	}
 
-    private function setup_globals()
-    {
-        $this->modules = new stdClass();
-    }
+	private function __construct() {
+		/** Do nothing */
+	}
 
-    /**
-     * Include the common resources to PublishPress and dynamically load the modules
-     */
-    private function load_modules()
-    {
-        // We use the WP_List_Table API for some of the table gen
-        if (!class_exists('WP_List_Table')) {
-            require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
-        }
+	private function setup_globals() {
+		$this->modules = new stdClass();
+	}
 
-        // PublishPress base module
-        if (!class_exists('PP_Module')) {
-            require_once(PUBLISHPRESS_ROOT . '/common/php/class-module.php');
-        }
+	/**
+	 * Include the common resources to PublishPress and dynamically load the modules
+	 */
+	private function load_modules() {
+		// We use the WP_List_Table API for some of the table gen
+		if ( ! class_exists( 'WP_List_Table' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+		}
 
-        // Scan the modules directory and include any modules that exist there
-        // $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
-        $default_module_dirs = array(
-            'featured'           => PUBLISHPRESS_ROOT,
-            'modules-settings'   => PUBLISHPRESS_ROOT,
-            'calendar'           => PUBLISHPRESS_ROOT,
-            'editorial-metadata' => PUBLISHPRESS_ROOT,
-            'notifications'      => PUBLISHPRESS_ROOT,
-            'story-budget'       => PUBLISHPRESS_ROOT,
-            'custom-status'      => PUBLISHPRESS_ROOT,
-            'user-groups'        => PUBLISHPRESS_ROOT,
+		// PublishPress base module
+		if ( ! class_exists( 'PP_Module' ) ) {
+			require_once( PUBLISHPRESS_ROOT . '/common/php/class-module.php' );
+		}
 
-            // @TODO: Move for settings, and remove after cleanup
-            'dashboard'          => PUBLISHPRESS_ROOT,
-            'editorial-comments' => PUBLISHPRESS_ROOT,
-            'settings'           => PUBLISHPRESS_ROOT,
-            'efmigration'        => PUBLISHPRESS_ROOT
-        );
+		// Scan the modules directory and include any modules that exist there
+		// $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
+		$default_module_dirs = array(
+			'featured'           => PUBLISHPRESS_ROOT,
+			'modules-settings'   => PUBLISHPRESS_ROOT,
+			'calendar'           => PUBLISHPRESS_ROOT,
+			'editorial-metadata' => PUBLISHPRESS_ROOT,
+			'notifications'      => PUBLISHPRESS_ROOT,
+			'story-budget'       => PUBLISHPRESS_ROOT,
+			'custom-status'      => PUBLISHPRESS_ROOT,
+			'user-groups'        => PUBLISHPRESS_ROOT,
 
-        // Add filters to extend the modules
-        $module_dirs = apply_filters('pp_module_dirs', $default_module_dirs);
+			// @TODO: Move for settings, and remove after cleanup
+			'dashboard'          => PUBLISHPRESS_ROOT,
+			'editorial-comments' => PUBLISHPRESS_ROOT,
+			'settings'           => PUBLISHPRESS_ROOT,
+			'efmigration'        => PUBLISHPRESS_ROOT,
+		);
 
-        $class_names = array();
-        foreach ($module_dirs as $module_dir => $base_path) {
-            if (file_exists("{$base_path}/modules/{$module_dir}/{$module_dir}.php")) {
-                include_once "{$base_path}/modules/{$module_dir}/{$module_dir}.php";
+		// Add filters to extend the modules
+		$module_dirs = apply_filters( 'pp_module_dirs', $default_module_dirs );
 
-                // Prepare the class name because it should be standardized
-                $tmp        = explode('-', $module_dir);
-                $class_name = '';
-                $slug_name  = '';
+		$class_names = array();
+		foreach ( $module_dirs as $module_dir => $base_path ) {
+			if ( file_exists( "{$base_path}/modules/{$module_dir}/{$module_dir}.php" ) ) {
+				include_once "{$base_path}/modules/{$module_dir}/{$module_dir}.php";
 
-                foreach ($tmp as $word) {
-                    $class_name .= ucfirst($word) . '_';
-                    $slug_name  .= $word . '_';
-                }
+				// Prepare the class name because it should be standardized
+				$tmp        = explode( '-', $module_dir );
+				$class_name = '';
+				$slug_name  = '';
 
-                $slug_name               = rtrim($slug_name, '_');
-                $class_names[$slug_name] = 'PP_' . rtrim($class_name, '_');
-            }
-        }
+				foreach ( $tmp as $word ) {
+					$class_name .= ucfirst( $word ) . '_';
+					$slug_name  .= $word . '_';
+				}
 
-        // Instantiate PP_Module as $helpers for back compat and so we can
-        // use it in this class
-        $this->helpers = new PP_Module();
+				$slug_name               = rtrim( $slug_name, '_' );
+				$class_names[ $slug_name ] = 'PP_' . rtrim( $class_name, '_' );
+			}
+		}
 
-        // Other utils
-        require_once(PUBLISHPRESS_ROOT . '/common/php/util.php');
+		// Instantiate PP_Module as $helpers for back compat and so we can
+		// use it in this class
+		$this->helpers = new PP_Module();
 
-        // Instantiate all of our classes onto the PublishPress object
-        // but make sure they exist too
-        foreach ($class_names as $slug => $class_name) {
-            if (class_exists($class_name)) {
-                $this->$slug = new $class_name();
-            }
-        }
+		// Other utils
+		require_once( PUBLISHPRESS_ROOT . '/common/php/util.php' );
 
-        $this->class_names = $class_names;
+		// Instantiate all of our classes onto the PublishPress object
+		// but make sure they exist too
+		foreach ( $class_names as $slug => $class_name ) {
+			if ( class_exists( $class_name ) ) {
+				$this->$slug = new $class_name();
+			}
+		}
 
-        // Supplementary plugins can hook into this, include their own modules
-        // and add them to the $publishpress object
-        do_action('pp_modules_loaded');
-    }
+		$this->class_names = $class_names;
 
-    /**
-     * Setup the default hooks and actions
-     *
-     * @since PublishPress 0.7.4
-     * @access private
-     * @uses add_action() To add various actions
-     */
-    private function setup_actions()
-    {
-        add_action('init', array($this, 'action_init'));
-        add_action('init', array($this, 'action_init_after'), 1000);
+		// Supplementary plugins can hook into this, include their own modules
+		// and add them to the $publishpress object
+		do_action( 'pp_modules_loaded' );
+	}
 
-        add_action('admin_init', array($this, 'action_admin_init'));
+	/**
+	 * Setup the default hooks and actions
+	 *
+	 * @since PublishPress 0.7.4
+	 * @access private
+	 * @uses add_action() To add various actions
+	 */
+	private function setup_actions() {
+		add_action( 'init', array( $this, 'action_init' ) );
+		add_action( 'init', array( $this, 'action_init_after' ), 1000 );
 
-        do_action_ref_array('publishpress_after_setup_actions', array(&$this));
-    }
+		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
 
-    /**
-     * Inititalizes the PublishPresss!
-     * Loads options for each registered module and then initializes it if it's active
-     */
-    public function action_init()
-    {
-        $this->deactivate_editflow();
+		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
+	}
 
-        load_plugin_textdomain('publishpress', null, dirname(plugin_basename(__FILE__)) . '/languages/');
+	/**
+	 * Inititalizes the PublishPresss!
+	 * Loads options for each registered module and then initializes it if it's active
+	 */
+	public function action_init() {
+		$this->deactivate_editflow();
 
-        $this->load_modules();
+		load_plugin_textdomain( 'publishpress', null, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
-        // Load all of the module options
-        $this->load_module_options();
+		$this->load_modules();
 
-        // Load all of the modules that are enabled.
-        // Modules won't have an options value if they aren't enabled
-        foreach ($this->modules as $mod_name => $mod_data) {
-            if (isset($mod_data->options->enabled) && $mod_data->options->enabled == 'on') {
-                $this->$mod_name->init();
-            }
-        }
+		// Load all of the module options
+		$this->load_module_options();
 
-        do_action('pp_init');
-    }
+		// Load all of the modules that are enabled.
+		// Modules won't have an options value if they aren't enabled
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+			if ( isset( $mod_data->options->enabled ) && $mod_data->options->enabled == 'on' ) {
+				$this->$mod_name->init();
+			}
+		}
 
-    /**
-     * Initialize the plugin for the admin
-     */
-    public function action_admin_init()
-    {
+		do_action( 'pp_init' );
+	}
 
-        // Upgrade if need be but don't run the upgrade if the plugin has never been used
-        $previous_version = get_option($this->options_group . 'version');
-        if ($previous_version && version_compare($previous_version, PUBLISHPRESS_VERSION, '<')) {
-            foreach ($this->modules as $mod_name => $mod_data) {
-                if (method_exists($this->$mod_name, 'upgrade')) {
-                    $this->$mod_name->upgrade($previous_version);
-                }
-            }
-        }
+	/**
+	 * Initialize the plugin for the admin
+	 */
+	public function action_admin_init() {
 
-        update_option($this->options_group . 'version', PUBLISHPRESS_VERSION);
+		// Upgrade if need be but don't run the upgrade if the plugin has never been used
+		$previous_version = get_option( $this->options_group . 'version' );
+		if ( $previous_version && version_compare( $previous_version, PUBLISHPRESS_VERSION, '<' ) ) {
+			foreach ( $this->modules as $mod_name => $mod_data ) {
+				if ( method_exists( $this->$mod_name, 'upgrade' ) ) {
+					$this->$mod_name->upgrade( $previous_version );
+				}
+			}
+		}
 
-        // For each module that's been loaded, auto-load data if it's never been run before
-        foreach ($this->modules as $mod_name => $mod_data) {
-            // If the module has never been loaded before, run the install method if there is one
-            if (!isset($mod_data->options->loaded_once) || !$mod_data->options->loaded_once) {
-                if (method_exists($this->$mod_name, 'install')) {
-                    $this->$mod_name->install();
-                }
-                $this->update_module_option($mod_name, 'loaded_once', true);
-            }
-        }
+		update_option( $this->options_group . 'version', PUBLISHPRESS_VERSION );
 
-        $this->register_scripts_and_styles();
-    }
+		// For each module that's been loaded, auto-load data if it's never been run before
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+			// If the module has never been loaded before, run the install method if there is one
+			if ( ! isset( $mod_data->options->loaded_once ) || ! $mod_data->options->loaded_once ) {
+				if ( method_exists( $this->$mod_name, 'install' ) ) {
+					$this->$mod_name->install();
+				}
+				$this->update_module_option( $mod_name, 'loaded_once', true );
+			}
+		}
 
-    /**
-     * Register a new module with PublishPress
-     */
-    public function register_module($name, $args = array())
-    {
-        // A title and name is required for every module
-        if (!isset($args['title'], $name)) {
-            return false;
-        }
+		$this->register_scripts_and_styles();
+	}
 
-        $defaults = array(
-            'title'                => '',
-            'short_description'    => '',
-            'extended_description' => '',
-            'icon_class'           => 'dashicons dashicons-admin-generic',
-            'slug'                 => '',
-            'post_type_support'    => '',
-            'default_options'      => array(),
-            'options'              => false,
-            'configure_page_cb'    => false,
-            'configure_link_text'  => __('Configure', 'publishpress'),
-            // These messages are applied to modules and can be overridden if custom messages are needed
-            'messages'             => array(
-                'settings-updated'    => __('Settings updated.', 'publishpress'),
-                'form-error'          => __('Please correct your form errors below and try again.', 'publishpress'),
-                'nonce-failed'        => __('Cheatin&#8217; uh?', 'publishpress'),
-                'invalid-permissions' => __('You do not have necessary permissions to complete this action.', 'publishpress'),
-                'missing-post'        => __('Post does not exist', 'publishpress'),
-            ),
-            'autoload'             => false, // autoloading a module will remove the ability to enable or disable it
-        );
-        if (isset($args['messages'])) {
-            $args['messages'] = array_merge((array)$args['messages'], $defaults['messages']);
-        }
-        $args                       = array_merge($defaults, $args);
-        $args['name']               = $name;
-        $args['options_group_name'] = $this->options_group . $name . '_options';
+	/**
+	 * Register a new module with PublishPress
+	 */
+	public function register_module( $name, $args = array() ) {
+		// A title and name is required for every module
+		if ( ! isset( $args['title'], $name ) ) {
+			return false;
+		}
 
-        if (!isset($args['settings_slug'])) {
-            $args['settings_slug'] = 'pp-' . $args['slug'] . '-settings';
-        }
+		$defaults = array(
+			'title'                => '',
+			'short_description'    => '',
+			'extended_description' => '',
+			'icon_class'           => 'dashicons dashicons-admin-generic',
+			'slug'                 => '',
+			'post_type_support'    => '',
+			'default_options'      => array(),
+			'options'              => false,
+			'configure_page_cb'    => false,
+			'configure_link_text'  => __( 'Configure', 'publishpress' ),
+			// These messages are applied to modules and can be overridden if custom messages are needed
+			'messages'             => array(
+				'settings-updated'    => __( 'Settings updated.', 'publishpress' ),
+				'form-error'          => __( 'Please correct your form errors below and try again.', 'publishpress' ),
+				'nonce-failed'        => __( 'Cheatin&#8217; uh?', 'publishpress' ),
+				'invalid-permissions' => __( 'You do not have necessary permissions to complete this action.', 'publishpress' ),
+				'missing-post'        => __( 'Post does not exist', 'publishpress' ),
+			),
+			'autoload'             => false, // autoloading a module will remove the ability to enable or disable it
+		);
+		if ( isset( $args['messages'] ) ) {
+			$args['messages'] = array_merge( (array) $args['messages'], $defaults['messages'] );
+		}
+		$args                       = array_merge( $defaults, $args );
+		$args['name']               = $name;
+		$args['options_group_name'] = $this->options_group . $name . '_options';
 
-        if (empty($args['post_type_support'])) {
-            $args['post_type_support'] = 'pp_' . $name;
-        }
+		if ( ! isset( $args['settings_slug'] ) ) {
+			$args['settings_slug'] = 'pp-' . $args['slug'] . '-settings';
+		}
 
-        // If there's a Help Screen registered for the module, make sure we
-        // auto-load it
-        if (!empty($args['settings_help_tab'])) {
-            add_action('load-publishpress_page_' . $args['settings_slug'], array(&$this->$name, 'action_settings_help_menu'));
-        }
+		if ( empty( $args['post_type_support'] ) ) {
+			$args['post_type_support'] = 'pp_' . $name;
+		}
 
-        $this->modules->$name = (object) $args;
-        do_action('pp_module_registered', $name);
+		// If there's a Help Screen registered for the module, make sure we
+		// auto-load it
+		if ( ! empty( $args['settings_help_tab'] ) ) {
+			add_action( 'load-publishpress_page_' . $args['settings_slug'], array( &$this->$name, 'action_settings_help_menu' ) );
+		}
 
-        return $this->modules->$name;
-    }
+		$this->modules->$name = (object) $args;
+		do_action( 'pp_module_registered', $name );
 
-    /**
-     * Load all of the module options from the database
-     * If a given option isn't yet set, then set it to the module's default (upgrades, etc.)
-     */
-    public function load_module_options()
-    {
-        foreach ($this->modules as $mod_name => $mod_data) {
-            $this->modules->$mod_name->options = get_option($this->options_group . $mod_name . '_options', new stdClass);
-            foreach ($mod_data->default_options as $default_key => $default_value) {
-                if (!isset($this->modules->$mod_name->options->$default_key)) {
-                    $this->modules->$mod_name->options->$default_key = $default_value;
-                }
-            }
+		return $this->modules->$name;
+	}
 
-            $this->$mod_name->module = $this->modules->$mod_name;
-        }
+	/**
+	 * Load all of the module options from the database
+	 * If a given option isn't yet set, then set it to the module's default (upgrades, etc.)
+	 */
+	public function load_module_options() {
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+			$this->modules->$mod_name->options = get_option( $this->options_group . $mod_name . '_options', new stdClass );
+			foreach ( $mod_data->default_options as $default_key => $default_value ) {
+				if ( ! isset( $this->modules->$mod_name->options->$default_key ) ) {
+					$this->modules->$mod_name->options->$default_key = $default_value;
+				}
+			}
 
-        do_action('pp_module_options_loaded');
-    }
+			$this->$mod_name->module = $this->modules->$mod_name;
+		}
 
-    /**
-     * Load the post type options again so we give add_post_type_support() a chance to work
-     *
-     * @see https://pressshack.com/2011/11/17/publishpress-v0-7-alpha2-notes/#comment-232
-     */
-    public function action_init_after()
-    {
-        foreach ($this->modules as $mod_name => $mod_data) {
-            if (isset($this->modules->$mod_name->options->post_types)) {
-                $this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options($this->modules->$mod_name->options->post_types, $mod_data->post_type_support);
-            }
+		do_action( 'pp_module_options_loaded' );
+	}
 
-            $this->$mod_name->module = $this->modules->$mod_name;
-        }
-    }
+	/**
+	 * Load the post type options again so we give add_post_type_support() a chance to work
+	 *
+	 * @see https://pressshack.com/2011/11/17/publishpress-v0-7-alpha2-notes/#comment-232
+	 */
+	public function action_init_after() {
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+			if ( isset( $this->modules->$mod_name->options->post_types ) ) {
+				$this->modules->$mod_name->options->post_types = $this->helpers->clean_post_type_options( $this->modules->$mod_name->options->post_types, $mod_data->post_type_support );
+			}
 
-    /**
-     * Get a module by one of its descriptive values
-     */
-    public function get_module_by($key, $value)
-    {
-        $module = false;
-        foreach ($this->modules as $mod_name => $mod_data) {
-            if ($key == 'name' && $value == $mod_name) {
-                $module =  $this->modules->$mod_name;
-            } else {
-                foreach ($mod_data as $mod_data_key => $mod_data_value) {
-                    if ($mod_data_key == $key && $mod_data_value == $value) {
-                        $module = $this->modules->$mod_name;
-                    }
-                }
-            }
-        }
+			$this->$mod_name->module = $this->modules->$mod_name;
+		}
+	}
 
-        return $module;
-    }
+	/**
+	 * Get a module by one of its descriptive values
+	 */
+	public function get_module_by( $key, $value ) {
+		$module = false;
+		foreach ( $this->modules as $mod_name => $mod_data ) {
+			if ( $key == 'name' && $value == $mod_name ) {
+				$module = $this->modules->$mod_name;
+			} else {
+				foreach ( $mod_data as $mod_data_key => $mod_data_value ) {
+					if ( $mod_data_key == $key && $mod_data_value == $value ) {
+						$module = $this->modules->$mod_name;
+					}
+				}
+			}
+		}
 
-    /**
-     * Update the $publishpress object with new value and save to the database
-     */
-    public function update_module_option($mod_name, $key, $value)
-    {
-        $this->modules->$mod_name->options->$key = $value;
-        $this->$mod_name->module                 = $this->modules->$mod_name;
+		return $module;
+	}
 
-        return update_option($this->options_group . $mod_name . '_options', $this->modules->$mod_name->options);
-    }
+	/**
+	 * Update the $publishpress object with new value and save to the database
+	 */
+	public function update_module_option( $mod_name, $key, $value ) {
+		$this->modules->$mod_name->options->$key = $value;
+		$this->$mod_name->module                 = $this->modules->$mod_name;
 
-    public function update_all_module_options($mod_name, $new_options)
-    {
-        if (is_array($new_options)) {
-            $new_options = (object)$new_options;
-        }
+		return update_option( $this->options_group . $mod_name . '_options', $this->modules->$mod_name->options );
+	}
 
-        $this->modules->$mod_name->options = $new_options;
-        $this->$mod_name->module           = $this->modules->$mod_name;
+	public function update_all_module_options( $mod_name, $new_options ) {
+		if ( is_array( $new_options ) ) {
+			$new_options = (object) $new_options;
+		}
 
-        return update_option($this->options_group . $mod_name . '_options', $this->modules->$mod_name->options);
-    }
+		$this->modules->$mod_name->options = $new_options;
+		$this->$mod_name->module           = $this->modules->$mod_name;
 
-    /**
-     * Registers commonly used scripts + styles for easy enqueueing
-     */
-    public function register_scripts_and_styles()
-    {
-        wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', false, PUBLISHPRESS_VERSION, 'all');
-        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', ('pressshack-admin-css'), PUBLISHPRESS_VERSION, 'all');
+		return update_option( $this->options_group . $mod_name . '_options', $this->modules->$mod_name->options );
+	}
 
-        wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array('jquery'), PUBLISHPRESS_VERSION, true);
-        wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all');
+	/**
+	 * Registers commonly used scripts + styles for easy enqueueing
+	 */
+	public function register_scripts_and_styles() {
+		wp_enqueue_style( 'pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', false, PUBLISHPRESS_VERSION, 'all' );
+		wp_enqueue_style( 'pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', ('pressshack-admin-css'), PUBLISHPRESS_VERSION, 'all' );
 
-        wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array('jquery'), PUBLISHPRESS_VERSION, true);
+		wp_register_script( 'jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true );
+		wp_register_style( 'jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all' );
 
-        // @compat 3.3
-        // Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
-        global $wp_scripts;
-        if (!isset($wp_scripts->registered['jquery-ui-datepicker'])) {
-            wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core'), '1.8.16', true);
-        }
-    }
+		wp_register_script( 'jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true );
 
-    public function deactivate_editflow()
-    {
-        try {
-            if (!function_exists('get_plugins')) {
-                require_once ABSPATH . 'wp-admin/includes/plugin.php';
-            }
+		// @compat 3.3
+		// Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
+		global $wp_scripts;
+		if ( ! isset( $wp_scripts->registered['jquery-ui-datepicker'] ) ) {
+			wp_register_script( 'jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array( 'jquery', 'jquery-ui-core' ), '1.8.16', true );
+		}
+	}
 
-            $all_plugins = get_plugins();
+	public function deactivate_editflow() {
+		try {
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
 
-            // Check if Edit Flow is installed. The folder changes sometimes.
-            foreach ($all_plugins as $pluginFile => $data) {
-                if (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain'])  {
-                    // Is it activated?
-                    if (is_plugin_active($pluginFile)) {
-                        deactivate_plugins($pluginFile);
-                        add_action('admin_notices', array($this, 'notice_editflow_deactivated'));
-                    }
-                }
-            }
-        } catch(Exception $e) {
+			$all_plugins = get_plugins();
 
-        }
-    }
+			// Check if Edit Flow is installed. The folder changes sometimes.
+			foreach ( $all_plugins as $pluginFile => $data ) {
+				if ( isset( $data['TextDomain'] ) && 'edit-flow' === $data['TextDomain'] ) {
+					// Is it activated?
+					if ( is_plugin_active( $pluginFile ) ) {
+						deactivate_plugins( $pluginFile );
+						add_action( 'admin_notices', array( $this, 'notice_editflow_deactivated' ) );
+					}
+				}
+			}
+		} catch ( Exception $e ) {
 
-    public function notice_editflow_deactivated()
-    {
-        ?>
-        <div class="updated notice">
-            <p><?php _e('Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.', 'publishpress'); ?></p>
-        </div>
-        <?php
-    }
+		}
+	}
+
+	public function notice_editflow_deactivated() {
+		?>
+		<div class="updated notice">
+			<p><?php _e( 'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.', 'publishpress' ); ?></p>
+		</div>
+		<?php
+	}
 }
 
-function PublishPress()
-{
-    return publishpress::instance();
+function PublishPress() {
+	return publishpress::instance();
 }
-add_action('plugins_loaded', 'PublishPress');
+add_action( 'plugins_loaded', 'PublishPress' );
