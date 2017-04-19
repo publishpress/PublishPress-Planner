@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.2.3b1
+ * Version: 1.3.0
  *
  * Copyright (c) 2017 PressShack
  *
@@ -45,7 +45,7 @@ $settingsPage = add_query_arg(
 );
 
 // Define contants
-define('PUBLISHPRESS_VERSION', '1.2.2');
+define('PUBLISHPRESS_VERSION', '1.3.0');
 define('PUBLISHPRESS_ROOT', dirname(__FILE__));
 define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
 define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
@@ -125,7 +125,7 @@ class publishpress
             'story-budget'       => PUBLISHPRESS_ROOT,
             'custom-status'      => PUBLISHPRESS_ROOT,
             'user-groups'        => PUBLISHPRESS_ROOT,
-            
+
             // @TODO: Move for settings, and remove after cleanup
             'dashboard'          => PUBLISHPRESS_ROOT,
             'editorial-comments' => PUBLISHPRESS_ROOT,
