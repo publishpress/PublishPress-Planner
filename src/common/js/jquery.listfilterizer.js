@@ -10,7 +10,7 @@
 ;(function($) {
 
 	// Console buster
-	if (typeof(console) === undefined) { console = log: function() {} }
+	if (typeof(console) === undefined) { console = log || function() {} }
 
 	// We need :contains to be case insensitive so lets redefine it as containsi (i for case insensitive)
 	// http://stackoverflow.com/questions/187537/is-there-a-case-insensitive-jquery-contains-selector
