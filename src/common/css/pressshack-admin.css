@@ -194,3 +194,12 @@
 .pressshack-admin-wrapper .pp-pressshack-logo img {
 	width: 100px;
 }
+
+/**
+ * Fremius tweaks
+ */
+
+#piframe,
+.fs-secure-notice {
+    display: none;
+}
