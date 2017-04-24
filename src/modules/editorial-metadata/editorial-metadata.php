@@ -95,7 +95,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 'settings_help_tab' => array(
                     'id'      => 'pp-editorial-metadata-overview',
                     'title'   => __('Overview', 'publishpress'),
-                    'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details, required word count, or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
+                    'content' => __('<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-metadata/">Editorial Metadata Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
                 'options_page'       => true,
@@ -172,18 +172,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     'slug'        => 'assignment',
                     'type'        => 'paragraph',
                     'description' => __('What the post needs to cover.', 'publishpress'),
-                ),
-                array(
-                    'name'        => __('Needs Photo', 'publishpress'),
-                    'slug'        => 'needs-photo',
-                    'type'        => 'checkbox',
-                    'description' => __('Checked if this post needs a photo.', 'publishpress'),
-                ),
-                array(
-                    'name'        => __('Word Count', 'publishpress'),
-                    'slug'        => 'word-count',
-                    'type'        => 'number',
-                    'description' => __('Required post length in words.', 'publishpress'),
                 ),
             );
             // Load the metadata fields if the slugs don't conflict
@@ -396,7 +384,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
             $title = __('Metadata', 'publishpress');
             if (current_user_can('manage_options'))
-            {    
+            {
                 // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
                 $url = $this->get_link();
 
@@ -1310,7 +1298,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             $redirect_url = $this->get_link(array('message' => 'term-visibility-changed'));
-        
+
             wp_redirect($redirect_url);
             exit;
         }
