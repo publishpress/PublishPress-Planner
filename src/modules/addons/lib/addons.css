@@ -1,0 +1,43 @@
+.pp-block-addons-items {
+    margin: 0;
+    max-width: 590px;
+}
+
+.pp-block-addons-items li {
+    display: block;
+    width: 175px;
+    height: 416px;
+    float: left;
+    margin-right: 20px;
+    background: #fff;
+}
+
+.pp-block-addons-items li img {
+    width: 100%;
+}
+
+.pp-block-addons-items li h3 {
+    padding: 0 10px;
+    text-align: center;
+    height: 40px;
+}
+
+.pp-block-addons-items li p {
+    padding: 0 10px;
+    height: 110px;
+}
+
+.pp-block-addons-items li div {
+    padding: 5px;
+    text-align: center;
+    margin: 0 10px;
+    background: #efefef;
+}
+
+.pp-block-addons-items li a.button {
+    margin-left: 10px;
+}
+
+.pp-block-addons-items li .dashicons-cart {
+    margin-top: -10px;
+}

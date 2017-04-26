@@ -1,0 +1,32 @@
+<ul class="pp-block-addons-items">
+    {% for name, addon in addons %}
+        <li class="pp-block-addons-item {{ addon.active ? 'active' : '' }}">
+            <img src="{{ icons_base_path }}{{ name }}.jpg" />
+
+            <h3>{{ addon.title }}</h3>
+
+            <p>{{ addon.description }}</p>
+
+
+            {% if addon.available %}
+                {% if addon.installed %}
+                    {% if addon.active %}
+                        <div>
+                            <span class="dashicons dashicons-yes"></span><span>Active</span>
+                        </div>
+                    {% else %}
+                        <div>
+                            <span>Installed</span>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <a href="https://pressshack.com/downloads/publishpress-bundle/" class="button button-primary">
+                        <span class="dashicons dashicons-cart"></span> Get Pro Add-ons!
+                    </a>
+                {% endif %}
+            {% else %}
+                <div>Comming soon</div>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

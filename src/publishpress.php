@@ -126,11 +126,14 @@ class publishpress {
 			'dashboard'          => PUBLISHPRESS_ROOT,
 			'editorial-comments' => PUBLISHPRESS_ROOT,
 			'settings'           => PUBLISHPRESS_ROOT,
-			'efmigration'        => PUBLISHPRESS_ROOT,
+			'efmigration'        => PUBLISHPRESS_ROOT
 		);
 
 		// Add filters to extend the modules
 		$module_dirs = apply_filters( 'pp_module_dirs', $default_module_dirs );
+
+		// Add add-ons as the last tab
+		$module_dirs[ 'addons' ] = PUBLISHPRESS_ROOT;
 
 		$class_names = array();
 		foreach ( $module_dirs as $module_dir => $base_path ) {
