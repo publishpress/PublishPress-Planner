@@ -991,17 +991,9 @@ msgstr "Sujet"
 msgid "What the post needs to cover."
 msgstr "Ce que l&#8217;article devra couvrir."
 
-#: modules/editorial-metadata/editorial-metadata.php:143
-msgid "Needs Photo"
-msgstr "Photo Nécessaire"
-
 #: modules/editorial-metadata/editorial-metadata.php:146
 msgid "Checked if this post needs a photo."
 msgstr "Coché si l&#8217;article a besoin d&#8217;une photo."
-
-#: modules/editorial-metadata/editorial-metadata.php:149
-msgid "Word Count"
-msgstr "Nombre de Mots"
 
 #: modules/editorial-metadata/editorial-metadata.php:152
 msgid "Required post length in words."

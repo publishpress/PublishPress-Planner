@@ -932,17 +932,9 @@ msgstr "Atribuição"
 msgid "What the post needs to cover."
 msgstr "O que o post precisa cobrir."
 
-#: modules/editorial-metadata/editorial-metadata.php:143
-msgid "Needs Photo"
-msgstr "Precisa de uma foto"
-
 #: modules/editorial-metadata/editorial-metadata.php:146
 msgid "Checked if this post needs a photo."
 msgstr "Marque se esta publicação precisar de uma foto."
-
-#: modules/editorial-metadata/editorial-metadata.php:149
-msgid "Word Count"
-msgstr "Quantidade de palavras"
 
 #: modules/editorial-metadata/editorial-metadata.php:152
 msgid "Required post length in words."

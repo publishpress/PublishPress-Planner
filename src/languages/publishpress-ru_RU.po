@@ -1091,17 +1091,9 @@ msgstr "Задание"
 msgid "What the post needs to cover."
 msgstr "Какие аспекты должна раскрывать запись"
 
-#: modules/editorial-metadata/editorial-metadata.php:144
-msgid "Needs Photo"
-msgstr "Нужна фотография"
-
 #: modules/editorial-metadata/editorial-metadata.php:147
 msgid "Checked if this post needs a photo."
 msgstr "Отмечается, если для записи нужна фотография"
-
-#: modules/editorial-metadata/editorial-metadata.php:150
-msgid "Word Count"
-msgstr "Количество слов"
 
 #: modules/editorial-metadata/editorial-metadata.php:153
 msgid "Required post length in words."

@@ -885,16 +885,8 @@ msgstr ""
 msgid "What the post needs to cover."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:143
-msgid "Needs Photo"
-msgstr ""
-
 #: modules/editorial-metadata/editorial-metadata.php:146
 msgid "Checked if this post needs a photo."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:149
-msgid "Word Count"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:152

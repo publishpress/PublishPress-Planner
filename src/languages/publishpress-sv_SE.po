@@ -1097,17 +1097,9 @@ msgstr "Uppdrag"
 msgid "What the post needs to cover."
 msgstr "Vad inlägget behöver täcka."
 
-#: ../modules/editorial-metadata/editorial-metadata.php:144
-msgid "Needs Photo"
-msgstr "Behöver Foto"
-
 #: ../modules/editorial-metadata/editorial-metadata.php:147
 msgid "Checked if this post needs a photo."
 msgstr "Behöver Foto"
-
-#: ../modules/editorial-metadata/editorial-metadata.php:150
-msgid "Word Count"
-msgstr "Ordantal"
 
 #: ../modules/editorial-metadata/editorial-metadata.php:153
 msgid "Required post length in words."

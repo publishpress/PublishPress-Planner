@@ -1178,19 +1178,9 @@ msgid "What the post needs to cover."
 msgstr "Was sollte das Foto abdecken?"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
-#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:142
-msgid "Needs Photo"
-msgstr "Benötigt ein Foto"
-
-#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:145
 msgid "Checked if this post needs a photo."
 msgstr "Es wurde geprüft, ob dieser Beitrag ein Foto benötigt."
-
-#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
-#: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:148
-msgid "Word Count"
-msgstr "Wortanzahl"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\edit flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:151

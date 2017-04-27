@@ -1089,21 +1089,9 @@ msgstr "Di che cosa deve trattare l'articolo."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
-#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:142
-msgid "Needs Photo"
-msgstr "Fotografia necessaria"
-
-#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
-#: plugin wordpress\edit
 #: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:145
 msgid "Checked if this post needs a photo."
 msgstr "Seleziona se l'articolo necessita di fotografie."
-
-#: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
-#: plugin wordpress\edit
-#: flow\0.7.1/modules/editorial-metadata/editorial-metadata.php:148
-msgid "Word Count"
-msgstr "Conteggio caratter"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni
 #: plugin wordpress\edit
