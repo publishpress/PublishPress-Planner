@@ -12,20 +12,20 @@
                 {% if addon.installed %}
                     {% if addon.active %}
                         <div>
-                            <span class="dashicons dashicons-yes"></span><span>Active</span>
+                            <span class="dashicons dashicons-yes"></span><span>{{ labels.active }}</span>
                         </div>
                     {% else %}
                         <div>
-                            <span>Installed</span>
+                            <span>{{ labels.installed }}</span>
                         </div>
                     {% endif %}
                 {% else %}
                     <a href="https://pressshack.com/downloads/publishpress-bundle/" class="button button-primary">
-                        <span class="dashicons dashicons-cart"></span> Get Pro Add-ons!
+                        <span class="dashicons dashicons-cart"></span> {{ labels.get_pro_addons }}
                     </a>
                 {% endif %}
             {% else %}
-                <div>Coming soon</div>
+                <div>{{ labels.coming_soon }}</div>
             {% endif %}
         </li>
     {% endfor %}

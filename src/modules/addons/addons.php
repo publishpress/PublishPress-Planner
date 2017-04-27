@@ -180,6 +180,12 @@ if ( ! class_exists( 'PP_Addons' ) ) {
             $args = array(
                 'addons'          => $addons,
                 'icons_base_path' => $icons_base_path,
+                'labels'          => array(
+                    'active'         => __( 'Active', 'publishpress' ),
+                    'installed'      => __( 'Installed', 'publishpress' ),
+                    'get_pro_addons' => __( 'Get Pro Add-ons!', 'publishpress' ),
+                    'coming_soon'    => __( 'Coming soon', 'publishpress' ),
+                ),
             );
 
             echo $this->twig->render( 'list-of-addons.twig', $args );
