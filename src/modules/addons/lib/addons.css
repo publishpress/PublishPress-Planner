@@ -1,14 +1,15 @@
 .pp-block-addons-items {
     margin: 0;
-    max-width: 590px;
+    max-width: 740px;
 }
 
 .pp-block-addons-items li {
     display: block;
-    width: 175px;
-    height: 416px;
+    width: 225px;
+    height: 450px;
     float: left;
     margin-right: 20px;
+    margin-bottom: 20px;
     background: #fff;
 }
 
@@ -24,18 +25,20 @@
 
 .pp-block-addons-items li p {
     padding: 0 10px;
-    height: 110px;
+    height: 90px;
 }
 
 .pp-block-addons-items li div {
     padding: 5px;
+    padding-top: 10px;
     text-align: center;
     margin: 0 10px;
     background: #efefef;
+    height: 22px;
 }
 
 .pp-block-addons-items li a.button {
-    margin-left: 10px;
+    margin-left: 30px;
 }
 
 .pp-block-addons-items li .dashicons-cart {
