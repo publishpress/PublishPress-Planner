@@ -57,35 +57,25 @@ There're two ways to install PublishPress plugin:
 
 == Changelog ==
 
-## UNRELEASED
+## [1.3.0] - 2017-04-27
 ### Fixed:
 - Fixed popup for items created as quick post
+- Fixed typos
+
+### Added:
+- Added integration with Freemius for feedback and contact form
+- Added filters and actions allowing to extend modules with add-ons
+- Added default modal window scripts and styles for add-ons
+- Added new tab to showcase the add-ons
+
+### Changed:
+- Changed code standards for WordPress
+- Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
+- Improved twig files removing hardcoded strings
 
 ## [1.2.2] - 2017-03-16
 ### Changed:
 - Add icon to the print link on the Overview screen
 - Update the language files
-
-## [1.2.1] - 2017-03-15
-### Changed:
-- Better label for Comments metadata box
-- Set Calendar Subscriptions enabled by default
-- Set Always Show Dropdown enabled by default on custom statuses
-- Add small notes to some tabs
-- Update POT file
-
-### Fixed:
-- Fixed empty messages while deleting custom statuses, metadata and user groups
-- Fixed link to redirect after the EditFlow migration
-
-## [1.2.0] - 2017-03-15
-### Changed:
-- Better style for the calendar
-- Click anywhere on the calendar cell to create content, intead show a button
-- Extends the drag-and-drop feature to custom statuses
-- Minor improvements on the code
-
-### Added:
-- Allow to create multiple types of content on the calendar
 
 Full changelog: https://github.com/OSTraining/PublishPress/blob/master/CHANGELOG.md
