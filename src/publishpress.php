@@ -271,7 +271,6 @@ class publishpress {
 			'configure_link_text'  => __( 'Configure', 'publishpress' ),
 			// These messages are applied to modules and can be overridden if custom messages are needed
 			'messages'             => array(
-				'settings-updated'    => __( 'Settings updated.', 'publishpress' ),
 				'form-error'          => __( 'Please correct your form errors below and try again.', 'publishpress' ),
 				'nonce-failed'        => __( 'Cheatin&#8217; uh?', 'publishpress' ),
 				'invalid-permissions' => __( 'You do not have necessary permissions to complete this action.', 'publishpress' ),
