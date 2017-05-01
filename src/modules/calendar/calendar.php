@@ -768,7 +768,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 								<?php if ( count( $this->module->options->quick_create_post_type ) === 1 ) : ?>
 									<h1>
 										<?php echo sprintf( __( 'Schedule a %1$s for %2$s', 'publishpress' ), $this->get_quick_create_post_type_name( $this->module->options->quick_create_post_type[0] ), $date_formatted ); ?>
-									</h1>    
+									</h1>
 								<?php else : ?>
 									<h1>
 										<?php echo sprintf( __( 'Schedule content for %1$s', 'publishpress' ), $date_formatted );?>
@@ -788,7 +788,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
 								<?php /* translators: %s = post type name */ ?>
 								<input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( __( 'Title', 'publishpress' ) ); ?>" />
-								
+
 								<input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>" />
 
 								<div class="post-insert-dialog-controls">
@@ -944,12 +944,12 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 								<?php if ( isset( $values['editable'] ) && $this->current_user_can_modify_post( $post ) ) : ?>
 									<td class="value<?php if ( $values['editable'] ) { ?> editable-value<?php } ?>">
 										<?php echo esc_html( $values['value'] ); ?>
-										
+
 									</td>
 									<?php if ( $values['editable'] ) : ?>
 										<td class="editable-html hidden" data-type="<?php echo $values['type']; ?>" data-metadataterm="<?php echo str_replace( 'editorial-metadata-', '', str_replace( 'tax_', '', $field ) ); ?>">
 
-											<?php echo $this->get_editable_html( $values['type'], $values['value'] ); ?>    
+											<?php echo $this->get_editable_html( $values['type'], $values['value'] ); ?>
 										</td>
 									<?php endif; ?>
 								<?php else : ?>
