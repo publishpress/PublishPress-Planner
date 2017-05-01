@@ -144,7 +144,7 @@ if (!class_exists('PP_Settings')) {
             } else {
                 $message = false;
             }
-            
+
             if ($message && isset($current_module->messages[$message])) {
                 $display_text .= '<div class="is-dismissible notice notice-info"><p>' . esc_html($current_module->messages[$message]) . '</p></div>';
             }
@@ -171,7 +171,7 @@ if (!class_exists('PP_Settings')) {
                             <?php _e('PublishPress', 'publishpress') ?>
                         </a>
                     </h1>
-                    
+
                     <?php echo !empty($display_text) ? $display_text : ''; ?>
                     <?php // We keep the H2 tag to keep notices tied to the header ?>
                     <h2>
@@ -304,7 +304,7 @@ if (!class_exists('PP_Settings')) {
                 }
                 // Defining post_type_supports in the functions.php file or similar should disable the checkbox
                 disabled(post_type_supports($post_type, $module->post_type_support), true);
-                echo ' type="checkbox" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
+                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
                 // Leave a note to the admin as a reminder that add_post_type_support has been used somewhere in their code
                 if (post_type_supports($post_type, $module->post_type_support)) {
                     echo '&nbsp&nbsp;&nbsp;<span class="description">' . sprintf(__('Disabled because add_post_type_support(\'%1$s\', \'%2$s\') is included in a loaded file.', 'publishpress'), $post_type, $module->post_type_support) . '</span>';
@@ -322,10 +322,10 @@ if (!class_exists('PP_Settings')) {
         public function helper_settings_validate_and_save()
         {
             if (!isset($_POST['action'], $_POST['_wpnonce'], $_POST['option_page'], $_POST['_wp_http_referer'], $_POST['publishpress_module_name'], $_POST['submit']) || !is_admin()) {
-                
+
                 return false;
             }
-            
+
             global $publishpress;
 
             foreach ($_POST['publishpress_module_name'] as $moduleSlug) {
@@ -352,7 +352,7 @@ if (!class_exists('PP_Settings')) {
                 $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
                 $publishpress->update_all_module_options($publishpress->$module_name->module->name, $new_options);
 
-                // Check if the module has a custom save method   
+                // Check if the module has a custom save method
                 if (method_exists($publishpress->$module_name, 'settings_save')) {
                     $publishpress->$module_name->settings_save($new_options);
                 }
@@ -372,7 +372,7 @@ if (!class_exists('PP_Settings')) {
             $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Featured::SETTINGS_SLUG . '-settings';
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
-            
+
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
                 $message = $_GET['message'];
