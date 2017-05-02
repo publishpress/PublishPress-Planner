@@ -155,6 +155,11 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                     'description' => __( 'PublishPress with Slack, so you can get comment and status change notifications directly on Slack.' ),
                     'available'   => false,
                 ),
+                'publishpress-woocommerce' => array(
+                    'title'       => __( 'WooCommerce support', 'publishpress' ),
+                    'description' => __( 'This add-on allows WooCommerce teams to define tasks that must be complete before products are published.' ),
+                    'available'   => false,
+                ),
                 'publishpress-multiple-authors' => array(
                     'title'       => __( 'Multiple authors support', 'publishpress' ),
                     'description' => __( 'Allows you choose multiple authors for a single post. This add-on is ideal for teams who write collabratively.' ),
