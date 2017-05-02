@@ -144,7 +144,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 
             $addons = array(
                 'publishpress-checklist' => array(
-                    'title'       => __( 'Pre-publishing checklists', 'publishpress' ),
+                    'title'       => __( 'Content Checklist', 'publishpress' ),
                     'description' => __( 'Allows PublishPress teams to define tasks that must be complete before content is published.' ),
                     'available'   => true,
                     'installed'   => $this->is_plugin_installed( 'publishpress-checklist' ),
@@ -156,7 +156,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                     'available'   => false,
                 ),
                 'publishpress-woocommerce' => array(
-                    'title'       => __( 'WooCommerce support', 'publishpress' ),
+                    'title'       => __( 'WooCommerce Checklist', 'publishpress' ),
                     'description' => __( 'This add-on allows WooCommerce teams to define tasks that must be complete before products are published.' ),
                     'available'   => false,
                 ),
