@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: PressShack, PublishPress, publish, press, publish press, press publish, publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,20 @@ There're two ways to install PublishPress plugin:
 
 == Changelog ==
 
+= [1.3.1] - 2017-05-02 =
+* Fixed:
+* Fixed the calendar quick-edit popup
+* Fixed minor issue in the code style
+
+* Added:
+* Added WooCommerce add-on to the add-ons tab
+
+* Changed:
+* Removed message after update settings
+* Updated name of add-ons in the settings tab
+* Improved content from the readme file
+
+
 = [1.3.0] - 2017-04-27 =
 *  Fixed:
 *  Fixed popup for items created as quick post
@@ -75,9 +89,5 @@ There're two ways to install PublishPress plugin:
 *  Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
 *  Improved twig files removing hardcoded strings
 
-= [1.2.2] - 2017-03-16 =
-*  Changed:
-*  Add icon to the print link on the Overview screen
-*  Update the language files
 
 * Full changelog: https://github.com/OSTraining/PublishPress/blob/master/CHANGELOG.md
