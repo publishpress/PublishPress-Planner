@@ -60,24 +60,24 @@ There're two ways to install PublishPress plugin:
 == Changelog ==
 
 = [1.3.0] - 2017-04-27 =
-* ### Fixed:
-* - Fixed popup for items created as quick post
-* - Fixed typos
+*  Fixed:
+*  Fixed popup for items created as quick post
+*  Fixed typos
 
-* ### Added:
-* - Added integration with Freemius for feedback and contact form
-* - Added filters and actions allowing to extend modules with add-ons
-* - Added default modal window scripts and styles for add-ons
-* - Added new tab to showcase the add-ons
+*  Added:
+*  Added integration with Freemius for feedback and contact form
+*  Added filters and actions allowing to extend modules with add-ons
+*  Added default modal window scripts and styles for add-ons
+*  Added new tab to showcase the add-ons
 
-*### Changed:
-* - Changed code standards for WordPress
-* - Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
-* - Improved twig files removing hardcoded strings
+*  Changed:
+*  Changed code standards for WordPress
+*  Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
+*  Improved twig files removing hardcoded strings
 
 = [1.2.2] - 2017-03-16 =
-* ### Changed:
-* - Add icon to the print link on the Overview screen
-* - Update the language files
+*  Changed:
+*  Add icon to the print link on the Overview screen
+*  Update the language files
 
 * Full changelog: https://github.com/OSTraining/PublishPress/blob/master/CHANGELOG.md
