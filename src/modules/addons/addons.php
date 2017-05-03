@@ -143,19 +143,19 @@ if ( ! class_exists( 'PP_Addons' ) ) {
             $icons_base_path = plugins_url( 'publishpress' ) . '/modules/addons/lib/img/';
 
             $addons = array(
-                'publishpress-checklist' => array(
+                'publishpress-content-checklist' => array(
                     'title'       => __( 'Content Checklist', 'publishpress' ),
                     'description' => __( 'Allows PublishPress teams to define tasks that must be complete before content is published.' ),
                     'available'   => true,
-                    'installed'   => $this->is_plugin_installed( 'publishpress-checklist' ),
-                    'active'      => $this->is_plugin_active( 'publishpress-checklist' ),
+                    'installed'   => $this->is_plugin_installed( 'publishpress-content-checklist' ),
+                    'active'      => $this->is_plugin_active( 'publishpress-content-checklist' ),
                 ),
                 'publishpress-slack' => array(
                     'title'       => __( 'Slack support', 'publishpress' ),
                     'description' => __( 'PublishPress with Slack, so you can get comment and status change notifications directly on Slack.' ),
                     'available'   => false,
                 ),
-                'publishpress-woocommerce' => array(
+                'publishpress-woocommerce-checklist' => array(
                     'title'       => __( 'WooCommerce Checklist', 'publishpress' ),
                     'description' => __( 'This add-on allows WooCommerce teams to define tasks that must be complete before products are published.' ),
                     'available'   => false,
