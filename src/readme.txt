@@ -82,6 +82,12 @@ There're two ways to install PublishPress plugin:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.3.2] - 2017-05-04 =
+* Fixed:
+* Fixed the list of Add-ons, to list correctly the installation and activation status
+* Fixed selector for the active admin menu
+* Fixed readme.txt file with better title, tags and description
+
 = [1.3.1] - 2017-05-02 =
 * Fixed:
 * Fixed the calendar quick-edit popup
