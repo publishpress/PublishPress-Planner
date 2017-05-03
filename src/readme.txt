@@ -1,4 +1,4 @@
-=== PublishPress - Publish Press provides a user friendly multiple writers experience ===
+=== PublishPress - WordPress Editorial Calendar and Team Publishing by PublishPress ===
 Contributors: PressShack
 Author: PressShack, PublishPress
 Author URI: https://pressshack.com
