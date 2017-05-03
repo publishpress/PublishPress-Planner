@@ -1,4 +1,4 @@
-=== PublishPress - Publish Press user friendly multiple writers experience ===
+=== PublishPress - Publish Press provides a user friendly multiple writers experience ===
 Contributors: PressShack
 Author: PressShack, PublishPress
 Author URI: https://pressshack.com
@@ -32,6 +32,16 @@ Current features:
 * [Notifications](https://pressshack.com/publishpress/docs/notifications/) - With email notifications, you can keep everyone updated about what’s happening with your content.
 * [Content Overview](https://pressshack.com/publishpress/docs/content-overview/) - A single screen that shows the publication status of all your content.
 * [User Groups](https://pressshack.com/publishpress/docs/user-groups/) - Organize your users into groups who can take different roles in your publishing workflow.
+
+**PublishPress Pro Add-ons Coming soon:**
+
+* Content Checklist - This is a pre-publishing checklist that allows WordPress teams to specifiy tasks that must be completed before posts and pages are published.
+* Slack support for PublishPress - Due in mid-2017, this add-on integrates PublishPress with Slack, so you can get comment and status change notifications directly on Slack.
+* Pre-publishing checklists for WooCommerce - This add-on allows WooCommerce teams to define tasks that must be complete before products are published.
+* Multiple authors support for PublishPress - Due in mid-2017, this add-on allows you choose multiple authors for a single post. This add-on is ideal for teams who write collabratively.
+* Multi-site and Multiple support for PublishPress - Due in mid-late 2017, this add-on enables PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
+* Zapier support for PublishPress - Due in mid-2017, this add-on integrates PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.
+* Advanced permissions for PublishPress - Due in late-2017, this add-on allows you to control which users can complete certain tasks, such as publishing content.
 
 
 PublishPress is based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
