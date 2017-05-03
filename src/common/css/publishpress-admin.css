@@ -94,11 +94,11 @@
 	background-position: 0 -26px;
 }
 
-#toplevel_page_pp-modules-settings .current .dashicons-before::before {
+#toplevel_page_pp-modules-settings .wp-menu-open .dashicons-before::before {
 	background-position: 0 -60px;
 }
 
-#toplevel_page_pp-modules-settings > a.current {
+#toplevel_page_pp-modules-settings > a.wp-menu-open {
 	background: #655997 !important;
 }
 
