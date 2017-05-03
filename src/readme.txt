@@ -2,7 +2,7 @@
 Contributors: PressShack
 Author: PressShack
 Author URI: https://pressshack.com
-Tags: PressShack, PublishPress, publish, press, publish press, press publish, publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview
+Tags: PressShack, PublishPress, publish flow, workflow, editorial, edit flow, newsroom, management, journalism, post status, custom status, notifications, email, comments, editorial comments, usergroups, calendars, editorial calendar, content overview, publish, press, publish press, press publish,
 Requires at least: 4.4
 Tested up to: 4.7
 Stable tag: 1.3.1
