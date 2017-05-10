@@ -250,34 +250,37 @@ if (!class_exists('PP_Notifications')) {
         public function action_admin_head_follow_js()
         {
             ?>
-    <script type='text/Javascript'>
-    jQuery(document).ready(function($) {
-        /**
-         * Action to Follow / Unfollow posts on the manage posts screen
-         */
-        $('.wp-list-table, #pp-calendar-view, #pp-story-budget-wrap').on('click', '.pp_follow_link a', function(e){
+            <script type='text/javascript'>
+                ( function( $ ) {
+                    $( document ).ready( function($) {
+                        /**
+                         * Action to Follow / Unfollow posts on the manage posts screen
+                         */
+                        $( '.wp-list-table, #pp-calendar-view, #pp-story-budget-wrap' ).on( 'click', '.pp_follow_link a', function( e ) {
 
-            e.preventDefault();
+                            e.preventDefault();
 
-            var link = $(this);
+                            var link = $( this );
 
-            $.ajax({
-                type : 'GET',
-                url : link.attr('href'),
-                success : function(data) {
-                    if ('success' == data.status) {
-                        link.attr('href', data.message.link);
-                        link.attr('title', data.message.title);
-                        link.text(data.message.text);
-                    }
-                    // @todo expose the error somehow
-                }
-            });
-            return false;
-        });
-    });
-    </script><?php
+                            $.ajax({
+                                type : 'GET',
+                                url : link.attr( 'href' ),
+                                success : function( data ) {
+                                    if ( 'success' === data.status ) {
+                                        link.attr( 'href', data.message.link );
+                                        link.attr( 'title', data.message.title );
+                                        link.text( data.message.text );
+                                    }
+                                    // @todo expose the error somehow
+                                }
+                            } );
 
+                            return false;
+                        } );
+                    } );
+                } )( jQuery );
+            </script>
+            <?php
         }
 
         /**
