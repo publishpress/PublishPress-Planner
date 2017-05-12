@@ -1728,6 +1728,7 @@ msgid "Number of Columns: "
 msgstr "Número de Columnas:"
 
 #: modules/story-budget/story-budget.php:335
+msgctxt "%1$s = start date, %2$s = number of days, %3$s = translation of 'Days'"
 msgid "starting %1$s showing %2$s %3$s"
 msgstr "empezando en %1$s y mostrando %2$s %3$s"
 

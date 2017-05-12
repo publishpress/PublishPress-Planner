@@ -1904,6 +1904,7 @@ msgstr "Spaltenzahl:"
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/story-budget/story-budget.php:331
 #, php-format
+msgctxt "%1$s = start date, %2$s = number of days, %3$s = translation of 'Days'"
 msgid "starting %1$s showing %2$s %3$s"
 msgstr "beginnend beim %1$s es werden %2$s %3$s angezeigt"
 
