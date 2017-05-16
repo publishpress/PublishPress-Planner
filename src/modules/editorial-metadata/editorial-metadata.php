@@ -343,6 +343,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     )
                 );
             }
+
+            wp_enqueue_script('publishpress-editorial-metadata', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         }
 
         /**
