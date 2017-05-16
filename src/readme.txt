@@ -3,7 +3,7 @@ Contributors: PressShack
 Author: PressShack, PublishPress
 Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
-Requires at least: 4.4
+Requires at least: 4.6
 Tested up to: 4.7
 Stable tag: 1.3.2
 License: GPLv2 or later
