@@ -161,9 +161,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.3.3] - UNRELEASED =
-
 * Fixed:
 * Fixed the context in translations for date picker in the Story Budget module
+* Fixed the "Hello Dolly" message in the Freemius opt-in dialog
+* Fixed date fields in the Editorial Metadata box
+
+* Changed:
+* Added partial pt-PT translation
+* Increased the minimum WordPress version to 4.6
 
 = [1.3.2] - 2017-05-04 =
 * Fixed:
