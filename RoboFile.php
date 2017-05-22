@@ -15,7 +15,7 @@ class RoboFile extends \Robo\Tasks
     const PACKAGE_PATH = 'packages';
 
     const PLUGIN_SLUG = 'publishpress';
-    
+
     const PROPERTIES_FILE_PATH = __DIR__ . '/.properties.ini';
 
     protected $options = array();
@@ -72,17 +72,31 @@ class RoboFile extends \Robo\Tasks
         $packPath = self::PACKAGE_PATH . '/'. $filename;
         $pack     = $this->taskPack($packPath);
 
+        // Remove existent package
+        if (file_exists($packPath)) {
+            unlink($packPath);
+        }
+
         $srcContent = scandir(self::SOURCE_PATH);
         foreach ($srcContent as $content) {
-            if (! in_array($content, array('.', '..'))) {
+            $ignore = array(
+                '.',
+                '..',
+                'build',
+                'tests',
+                '.git',
+                '.gitignore',
+                'README',
+                '.DS_Store',
+            );
+
+            if (! in_array($content, $ignore)) {
                 $path = self::SOURCE_PATH . '/' . $content;
 
-                if ($content !== 'node_modules') {
-                    if (is_file($path)) {
-                        $pack->addFile($content, $path);
-                    } else {
-                        $pack->addDir($content, $path);
-                    }
+                if (is_file($path)) {
+                    $pack->addFile($content, $path);
+                } else {
+                    $pack->addDir($content, $path);
                 }
             }
         }
@@ -252,7 +266,7 @@ class RoboFile extends \Robo\Tasks
     public function syncSvnTag($tag)
     {
         $properties = $this->getProperties();
-        
+
         $this->_exec('cd ' . $properties['svn_path'] . ' && svn update');
         $this->_exec('cd ' . $properties['svn_path'] . ' && cp -r ' . realpath(__DIR__) . '/' . self::SOURCE_PATH . '/* ' . $properties['svn_path'] . '/trunk');
         $this->_exec('cd ' . $properties['svn_path'] . ' && svn cp trunk tags/' . $tag);
