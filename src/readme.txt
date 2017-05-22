@@ -160,7 +160,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.3.3] - UNRELEASED =
+= [1.3.3] - 2017-05-22 =
 * Fixed:
 * Fixed the context in translations for date picker in the Story Budget module
 * Fixed the "Hello Dolly" message in the Freemius opt-in dialog
