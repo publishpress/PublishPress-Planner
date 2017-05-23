@@ -68,11 +68,11 @@ By default, PublishPress provide 4 examples of metadata, but you can add your ow
 
 * [Click here for more on PublishPress Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/)
 
-= EMAIL NOTIFICATIONS =
+= NOTIFICATIONS =
 
-Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. You can quickly search through all your users to find the desired name or email address, or display just those users already subscribed to a post.
+Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. You can quickly search through all your users to find the desired name or email address, or display just those users already subscribed to a post. By default, notifications are sent by email.
 
-* [Click here for more on PublishPress EMail Notifications ](https://pressshack.com/publishpress/docs/notifications/)
+* [Click here for more on PublishPress Notifications ](https://pressshack.com/publishpress/docs/notifications/)
 
 = USER GROUPS =
 
