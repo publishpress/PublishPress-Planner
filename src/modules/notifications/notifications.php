@@ -59,8 +59,8 @@ if (!class_exists('PP_Notifications')) {
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = array(
                 'title'                => __('Notifications', 'publishpress'),
-                'short_description'    => __('With email notifications, you can keep everyone updated about what’s happening with your content.', 'publishpress'),
-                'extended_description' => __('With email notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out an email notification to users subscribed to a post. User groups can be used to manage who receives notifications on what.', 'publishpress'),
+                'short_description'    => __('With notifications, you can keep everyone updated about what’s happening with your content.', 'publishpress'),
+                'extended_description' => __('With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what.', 'publishpress'),
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-email',
                 'slug'                 => 'notifications',

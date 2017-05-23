@@ -1532,16 +1532,13 @@ msgstr "Benachrichtigungen"
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:33
-msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
+msgid "With notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Informiere dein Team über wichtige Änderungen an deinen Beiträgen."
 
 #: C:\Documents and Settings\morfeo\Documenti\lavoro\00 opensource\traduzioni plugin
 #: wordpress\publishpress\0.7.1/modules/notifications/notifications.php:34
 msgid ""
-"With email notifications, you can keep everyone updated about what’s happening "
-"with a given content. Each status change or editorial comment sends out an email "
-"notification to users subscribed to a post. User groups can be used to manage who "
-"receives notifications on what."
+"With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what."
 msgstr ""
 "E-Mail Benachrichtigungen unterstützen dich dabei dein Team über Änderungen an "
 "Seiten und Beiträgen zu informieren. Jeder Statusänderung und jeder redaktionelle "

@@ -1174,15 +1174,12 @@ msgid "Notifications"
 msgstr ""
 
 #: modules/notifications/notifications.php:35
-msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
+msgid "With notifications, you can keep everyone updated about what’s happening with your content."
 msgstr ""
 
 #: modules/notifications/notifications.php:36
 msgid ""
-"With email notifications, you can keep everyone updated about what’s happening "
-"with a given content. Each status change or editorial comment sends out an email "
-"notification to users subscribed to a post. User groups can be used to manage who "
-"receives notifications on what."
+"With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what."
 msgstr ""
 
 #: modules/notifications/notifications.php:54

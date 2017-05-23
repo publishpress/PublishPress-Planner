@@ -1396,15 +1396,12 @@ msgid "Notifications"
 msgstr "Notificaciones"
 
 #: modules/notifications/notifications.php:33
-msgid "With email notifications, you can keep everyone updated about what’s happening with your content."
+msgid "With notifications, you can keep everyone updated about what’s happening with your content."
 msgstr "Informe a su equipo de los cambios importantes en su contenido."
 
 #: modules/notifications/notifications.php:34
 msgid ""
-"With email notifications, you can keep everyone updated about what’s happening "
-"with a given content. Each status change or editorial comment sends out an email "
-"notification to users subscribed to a post. User groups can be used to manage who "
-"receives notifications on what."
+"With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what."
 msgstr ""
 "Con las notificaciones por correo electrónico, usted puede mantener a al día a "
 "todos sobre lo que está pasando con un contenido determinado. Cada cambio de "
