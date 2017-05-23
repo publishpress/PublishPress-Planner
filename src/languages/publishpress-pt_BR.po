@@ -1222,7 +1222,7 @@ msgid "With notifications, you can keep everyone updated about what’s happenin
 msgstr "Com as notificações por email, você pode manter todos atualizados sobre o que está acontecendo com determinado conteúdo. Cada alteração de status ou comentário editorial dispara uma notificação por email para os usuários que assinaram o post. Grupos de usuários podem ser usados para gerenciar quem recebe as notificações e sobre o quê."
 
 #: modules/notifications/notifications.php:52
-msgid "<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, email notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>"
+msgid "<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>"
 msgstr "<p>As notificações garantem que você se mantenha atualizado acerca do progresso do seu conteúdo mais importante. Os usuários podem receber as notificações de um post sendo marcados um por um ou selecionando um grupo de usuários. </p> Quando ativadas, as notificações de email podem ser enviadas quando um post tem seu status alterado ou quando um editor ou escritor deixa um comentário editorial.</p>"
 
 #: modules/notifications/notifications.php:54
