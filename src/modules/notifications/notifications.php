@@ -34,8 +34,8 @@ if (! defined('PP_NOTIFICATION_USE_CRON')) {
 
 if (!class_exists('PP_Notifications')) {
     /**
-     * class PP_Notifications
-     * Email notifications for PublishPress and more
+     * Class PP_Notifications
+     * Notifications for PublishPress and more
      */
     class PP_Notifications extends PP_Module
     {
@@ -108,7 +108,7 @@ if (!class_exists('PP_Notifications')) {
             add_action('transition_post_status', array($this, 'notification_status_change'), 10, 3);
             add_action('pp_post_insert_editorial_comment', array($this, 'notification_comment'));
             add_action('delete_user',  array($this, 'delete_user_action'));
-            add_action('pp_send_scheduled_email', array($this, 'send_single_email'), 10, 4);
+            add_action('pp_send_scheduled_notification', array($this, 'send_single_email'), 10, 4);
 
             add_action('admin_init', array($this, 'register_settings'));
 
@@ -223,7 +223,7 @@ if (!class_exists('PP_Notifications')) {
             if ($this->is_whitelisted_functional_view()) {
                 wp_enqueue_script('jquery-listfilterizer');
                 wp_enqueue_script('jquery-quicksearch');
-                wp_enqueue_script('publishpress-notifications-js', $this->module_url . 'lib/notifications.js', array('jquery', 'jquery-listfilterizer', 'jquery-quicksearch'), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-notifications-js', $this->module_url . 'assets/notifications.js', array('jquery', 'jquery-listfilterizer', 'jquery-quicksearch'), PUBLISHPRESS_VERSION, true);
             }
         }
 
@@ -238,7 +238,7 @@ if (!class_exists('PP_Notifications')) {
         {
             if ($this->is_whitelisted_functional_view() || $this->is_whitelisted_settings_view()) {
                 wp_enqueue_style('jquery-listfilterizer');
-                wp_enqueue_style('publishpress-notifications-css', $this->module->module_url . 'lib/notifications.css', false, PUBLISHPRESS_VERSION);
+                wp_enqueue_style('publishpress-notifications-css', $this->module->module_url . 'assets/notifications.css', false, PUBLISHPRESS_VERSION);
             }
         }
 
@@ -529,7 +529,7 @@ if (!class_exists('PP_Notifications')) {
         }
 
         /**
-         * Set up and send post status change notification email
+         * Set up and send post status change a notification
          */
         public function notification_status_change($new_status, $old_status, $post)
         {
@@ -780,7 +780,7 @@ if (!class_exists('PP_Notifications')) {
             $send_time = time();
 
             foreach ($recipients as $recipient) {
-                wp_schedule_single_event($send_time, 'pp_send_scheduled_email', array($recipient, $subject, $message, $message_headers));
+                wp_schedule_single_event($send_time, 'pp_send_scheduled_notification', array($recipient, $subject, $message, $message_headers));
                 $send_time += $time_offset;
             }
         }
