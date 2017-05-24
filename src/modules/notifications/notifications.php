@@ -130,6 +130,9 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             //Ajax for saving notifiction updates
             add_action( 'wp_ajax_save_notifications', array( $this, 'ajax_save_post_subscriptions' ) );
             add_action( 'wp_ajax_pp_notifications_user_post_subscription', array( $this, 'handle_user_post_subscription' ) );
+
+            add_action( 'pp_send_notification_status_update', array( $this, 'send_notification_status_update' ) );
+            add_action( 'pp_send_notification_comment', array( $this, 'send_notification_comment' ) );
         }
 
         /**
@@ -561,104 +564,13 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             $ignored_statuses = apply_filters( 'pp_notification_ignored_statuses', array( $old_status, 'inherit', 'auto-draft' ), $post->post_type );
 
             if ( ! in_array( $new_status, $ignored_statuses ) ) {
+                $args = array(
+                    'new_status' => $new_status,
+                    'old_status' => $old_status,
+                    'post'       => $post,
+                );
 
-                // Get current user
-                $current_user = wp_get_current_user();
-
-                $post_author = get_userdata( $post->post_author );
-                //$duedate = $publishpress->post_metadata->get_post_meta( $post->ID, 'duedate', true );
-
-                $blogname = get_option( 'blogname' );
-
-                $body  = '';
-
-                $post_id    = $post->ID;
-                $post_title = pp_draft_or_post_title( $post_id );
-                $post_type  = get_post_type_object( $post->post_type )->labels->singular_name;
-
-                if (0 ! = $current_user->ID ) {
-                    $current_user_display_name = $current_user->display_name;
-                    $current_user_email        = sprintf( '(%s )', $current_user->user_email );
-                } else {
-                    $current_user_display_name = __( 'WordPress Scheduler', 'publishpress' );
-                    $current_user_email        = '';
-                }
-
-                // Email subject and first line of body
-                // Set message subjects according to what action is being taken on the Post
-                if ( $old_status == 'new' || $old_status == 'auto-draft' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] New %2$s Created: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( 'A new %1$s (#%2$s "%3$s" ) was created by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user->display_name, $current_user->user_email ) . "\r\n";
-                } elseif ( $new_status == 'trash' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Trashed: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( '%1$s #%2$s "%3$s" was moved to the trash by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
-                } elseif ( $old_status == 'trash' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Restored (from Trash ): "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( '%1$s #%2$s "%3$s" was restored from trash by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
-                } elseif ( $new_status == 'future' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Scheduled: "%3$s"' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email 6. scheduled date  */
-                    $body .= sprintf(__( '%1$s #%2$s "%3$s" was scheduled by %4$s %5$s.  It will be published on %6$s' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email, $this->get_scheduled_datetime( $post ) ) . "\r\n";
-                } elseif ( $new_status == 'publish' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Published: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( '%1$s #%2$s "%3$s" was published by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
-                } elseif ( $old_status == 'publish' ) {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Unpublished: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( '%1$s #%2$s "%3$s" was unpublished by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
-                } else {
-                    /* translators: 1: site name, 2: post type, 3. post title */
-                    $subject = sprintf(__( '[%1$s] %2$s Status Changed for "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
-                    /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
-                    $body .= sprintf(__( 'Status was changed for %1$s #%2$s "%3$s" by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
-                }
-
-                /* translators: 1: date, 2: time, 3: timezone */
-                $body .= sprintf(__( 'This action was taken on %1$s at %2$s %3$s', 'publishpress' ), date_i18n(get_option( 'date_format' ) ), date_i18n(get_option( 'time_format' ) ), get_option( 'timezone_string' ) ) . "\r\n";
-
-                $old_status_friendly_name = $this->get_post_status_friendly_name( $old_status );
-                $new_status_friendly_name = $this->get_post_status_friendly_name( $new_status );
-
-                // Email body
-                $body .= "\r\n";
-                /* translators: 1: old status, 2: new status */
-                $body .= sprintf(__( '%1$s => %2$s', 'publishpress' ), $old_status_friendly_name, $new_status_friendly_name );
-                $body .= "\r\n\r\n";
-
-                $body .= "--------------------\r\n\r\n";
-
-                $body .= sprintf(__( '== %s Details ==', 'publishpress' ), $post_type ) . "\r\n";
-                $body .= sprintf(__( 'Title: %s', 'publishpress' ), $post_title ) . "\r\n";
-                if ( ! empty( $post_author ) ) {
-                    /* translators: 1: author name, 2: author email */
-                    $body .= sprintf(__( 'Author: %1$s (%2$s )', 'publishpress' ), $post_author->display_name, $post_author->user_email ) . "\r\n";
-                }
-
-                $edit_link = htmlspecialchars_decode(get_edit_post_link( $post_id ) );
-                if ( $new_status ! = 'publish' ) {
-                    $view_link = add_query_arg(array( 'preview' => 'true' ), wp_get_shortlink( $post_id ) );
-                } else {
-                    $view_link = htmlspecialchars_decode(get_permalink( $post_id ) );
-                }
-                $body .= "\r\n";
-                $body .= __( '== Actions ==', 'publishpress' ) . "\r\n";
-                $body .= sprintf(__( 'Add editorial comment: %s', 'publishpress' ), $edit_link . '#editorialcomments/add' ) . "\r\n";
-                $body .= sprintf(__( 'Edit: %s', 'publishpress' ), $edit_link ) . "\r\n";
-                $body .= sprintf(__( 'View: %s', 'publishpress' ), $view_link ) . "\r\n";
-
-                $body .= $this->get_notification_footer( $post );
-
-                $this->send_email( 'status-change', $post, $subject, $body );
+                do_action( 'pp_send_notification_status_update', $args );
             }
         }
 
@@ -702,53 +614,31 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
 
             $blogname = get_option( 'blogname' );
 
-            /* translators: 1: blog name, 2: post title */
-            $subject = sprintf(__( '[%1$s] New Editorial Comment: "%2$s"', 'publishpress' ), $blogname, $post_title );
+            // Send the notification
+            $args = array(
+                'blogname'     => $blogname,
+                'post'         => $post,
+                'post_title'   => $post_title,
+                'post_id'      => $post_id,
+                'post_type'    => $post_type,
+                'current_user' => $current_user,
+                'comment'      => $comment,
+            );
 
-            /* translators: 1: post id, 2: post title, 3. post type */
-            $body  = sprintf(__( 'A new editorial comment was added to %3$s #%1$s "%2$s"', 'publishpress' ), $post_id, $post_title, $post_type ) . "\r\n\r\n";
-            /* translators: 1: comment author, 2: author email, 3: date, 4: time */
-            $body .= sprintf(__( '%1$s (%2$s ) said on %3$s at %4$s:', 'publishpress' ), $current_user->display_name, $current_user->user_email, mysql2date(get_option( 'date_format' ), $comment->comment_date ), mysql2date(get_option( 'time_format' ), $comment->comment_date ) ) . "\r\n";
-            $body .= "\r\n" . $comment->comment_content . "\r\n";
-
-            // @TODO: mention if it was a reply
-            /*
-            if( $parent ) {
-
-            }
-            */
-
-            $body .= "\r\n--------------------\r\n";
-
-            $edit_link = htmlspecialchars_decode(get_edit_post_link( $post_id ) );
-            $view_link = htmlspecialchars_decode(get_permalink( $post_id ) );
-
-            $body .= "\r\n";
-            $body .= __( '== Actions ==', 'publishpress' ) . "\r\n";
-            $body .= sprintf(__( 'Reply: %s', 'publishpress' ), $edit_link . '#editorialcomments/reply/' . $comment->comment_ID ) . "\r\n";
-            $body .= sprintf(__( 'Add editorial comment: %s', 'publishpress' ), $edit_link . '#editorialcomments/add' ) . "\r\n";
-            $body .= sprintf(__( 'Edit: %s', 'publishpress' ), $edit_link ) . "\r\n";
-            $body .= sprintf(__( 'View: %s', 'publishpress' ), $view_link ) . "\r\n";
-
-            $body .= "\r\n" . sprintf(__( 'You can see all editorial comments on this %s here: ', 'publishpress' ), $post_type ) . "\r\n";
-            $body .= $edit_link . "#editorialcomments" . "\r\n\r\n";
-
-            $body .= $this->get_notification_footer( $post );
-
-            $this->send_email( 'comment', $post, $subject, $body );
+            do_action( 'pp_send_notification_comment', $args );
         }
 
-            public function get_notification_footer( $post )
-            {
-                $body  = "";
-                $body .= "\r\n--------------------\r\n";
-                $body .= sprintf(__( 'You are receiving this email because you are subscribed to "%s".', 'publishpress' ), pp_draft_or_post_title( $post->ID ) );
-                $body .= "\r\n";
-                $body .= sprintf(__( 'This email was sent %s.', 'publishpress' ), date( 'r' ) );
-                $body .= "\r\n \r\n";
-                $body .= get_option( 'blogname' ) . " | " . get_bloginfo( 'url' ) . " | " . admin_url( '/' ) . "\r\n";
-                return $body;
-            }
+        public function get_notification_footer( $post )
+        {
+            $body  = "";
+            $body .= "\r\n--------------------\r\n";
+            $body .= sprintf( __( 'You are receiving this email because you are subscribed to "%s".', 'publishpress' ), pp_draft_or_post_title( $post->ID ) );
+            $body .= "\r\n";
+            $body .= sprintf( __( 'This email was sent %s.', 'publishpress' ), date( 'r' ) );
+            $body .= "\r\n \r\n";
+            $body .= get_option( 'blogname' ) . " | " . get_bloginfo( 'url' ) . " | " . admin_url( '/' ) . "\r\n";
+            return $body;
+        }
 
         /**
          * send_email()
@@ -966,7 +856,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                  }
 
                  $key = array_search( $user->user_login, $user_terms );
-                 if (false ! == $key ) {
+                 if (false !== $key ) {
                      unset( $user_terms[$key] );
                  }
              }
@@ -1223,7 +1113,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             $new_options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
 
             // Whitelist validation for the 'always_notify_admin' options
-            if ( ! isset( $new_options['always_notify_admin'] ) || $new_options['always_notify_admin'] ! = 'on' ) {
+            if ( ! isset( $new_options['always_notify_admin'] ) || $new_options['always_notify_admin'] != 'on' ) {
                 $new_options['always_notify_admin'] = 'off';
             }
 
@@ -1256,7 +1146,150 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             $date = date_i18n(get_option( 'date_format' ), $scheduled_ts );
             $time = date_i18n(get_option( 'time_format' ), $scheduled_ts );
 
-            return sprintf(__( '%1$s at %2$s', 'publishpress' ), $date, $time );
+            return sprintf( __( '%1$s at %2$s', 'publishpress' ), $date, $time );
+        }
+
+        public function send_notification_status_update( $args ) {
+            $new_status = $args['new_status'];
+            $old_status = $args['old_status'];
+            $post       = $args['post'];
+
+            // Get current user
+            $current_user = wp_get_current_user();
+
+            $post_author = get_userdata( $post->post_author );
+            //$duedate = $publishpress->post_metadata->get_post_meta( $post->ID, 'duedate', true );
+
+            $blogname = get_option( 'blogname' );
+
+            $body  = '';
+
+            $post_id    = $post->ID;
+            $post_title = pp_draft_or_post_title( $post_id );
+            $post_type  = get_post_type_object( $post->post_type )->labels->singular_name;
+
+            if ( 0 != $current_user->ID ) {
+                $current_user_display_name = $current_user->display_name;
+                $current_user_email        = sprintf( '(%s )', $current_user->user_email );
+            } else {
+                $current_user_display_name = __( 'WordPress Scheduler', 'publishpress' );
+                $current_user_email        = '';
+            }
+
+            // Email subject and first line of body
+            // Set message subjects according to what action is being taken on the Post
+            if ( $old_status == 'new' || $old_status == 'auto-draft' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] New %2$s Created: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( 'A new %1$s (#%2$s "%3$s" ) was created by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user->display_name, $current_user->user_email ) . "\r\n";
+            } elseif ( $new_status == 'trash' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Trashed: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( '%1$s #%2$s "%3$s" was moved to the trash by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
+            } elseif ( $old_status == 'trash' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Restored (from Trash ): "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( '%1$s #%2$s "%3$s" was restored from trash by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
+            } elseif ( $new_status == 'future' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Scheduled: "%3$s"' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email 6. scheduled date  */
+                $body .= sprintf( __( '%1$s #%2$s "%3$s" was scheduled by %4$s %5$s.  It will be published on %6$s' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email, $this->get_scheduled_datetime( $post ) ) . "\r\n";
+            } elseif ( $new_status == 'publish' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Published: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( '%1$s #%2$s "%3$s" was published by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
+            } elseif ( $old_status == 'publish' ) {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Unpublished: "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( '%1$s #%2$s "%3$s" was unpublished by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
+            } else {
+                /* translators: 1: site name, 2: post type, 3. post title */
+                $subject = sprintf( __( '[%1$s] %2$s Status Changed for "%3$s"', 'publishpress' ), $blogname, $post_type, $post_title );
+                /* translators: 1: post type, 2: post id, 3. post title, 4. user name, 5. user email */
+                $body .= sprintf( __( 'Status was changed for %1$s #%2$s "%3$s" by %4$s %5$s', 'publishpress' ), $post_type, $post_id, $post_title, $current_user_display_name, $current_user_email ) . "\r\n";
+            }
+
+            /* translators: 1: date, 2: time, 3: timezone */
+            $body .= sprintf( __( 'This action was taken on %1$s at %2$s %3$s', 'publishpress' ), date_i18n(get_option( 'date_format' ) ), date_i18n(get_option( 'time_format' ) ), get_option( 'timezone_string' ) ) . "\r\n";
+
+            $old_status_friendly_name = $this->get_post_status_friendly_name( $old_status );
+            $new_status_friendly_name = $this->get_post_status_friendly_name( $new_status );
+
+            // Email body
+            $body .= "\r\n";
+            /* translators: 1: old status, 2: new status */
+            $body .= sprintf( __( '%1$s => %2$s', 'publishpress' ), $old_status_friendly_name, $new_status_friendly_name );
+            $body .= "\r\n\r\n";
+
+            $body .= "--------------------\r\n\r\n";
+
+            $body .= sprintf( __( '== %s Details ==', 'publishpress' ), $post_type ) . "\r\n";
+            $body .= sprintf( __( 'Title: %s', 'publishpress' ), $post_title ) . "\r\n";
+            if ( ! empty( $post_author ) ) {
+                /* translators: 1: author name, 2: author email */
+                $body .= sprintf( __( 'Author: %1$s (%2$s )', 'publishpress' ), $post_author->display_name, $post_author->user_email ) . "\r\n";
+            }
+
+            $edit_link = htmlspecialchars_decode(get_edit_post_link( $post_id ) );
+            if ( $new_status != 'publish' ) {
+                $view_link = add_query_arg(array( 'preview' => 'true' ), wp_get_shortlink( $post_id ) );
+            } else {
+                $view_link = htmlspecialchars_decode(get_permalink( $post_id ) );
+            }
+            $body .= "\r\n";
+            $body .= __( '== Actions ==', 'publishpress' ) . "\r\n";
+            $body .= sprintf( __( 'Add editorial comment: %s', 'publishpress' ), $edit_link . '#editorialcomments/add' ) . "\r\n";
+            $body .= sprintf( __( 'Edit: %s', 'publishpress' ), $edit_link ) . "\r\n";
+            $body .= sprintf( __( 'View: %s', 'publishpress' ), $view_link ) . "\r\n";
+
+            $body .= $this->get_notification_footer( $post );
+
+            $this->send_email( 'status-change', $post, $subject, $body );
+        }
+
+        public function send_notification_comment( $args ) {
+
+
+            /* translators: 1: blog name, 2: post title */
+            $subject = sprintf( __( '[%1$s] New Editorial Comment: "%2$s"', 'publishpress' ), $args['blogname'], $args['post_title'] );
+
+            /* translators: 1: post id, 2: post title, 3. post type */
+            $body  = sprintf( __( 'A new editorial comment was added to %3$s #%1$s "%2$s"', 'publishpress' ), $args['post_id'], $args['post_title'], $args['post_type'] ) . "\r\n\r\n";
+            /* translators: 1: comment author, 2: author email, 3: date, 4: time */
+            $body .= sprintf( __( '%1$s (%2$s ) said on %3$s at %4$s:', 'publishpress' ), $args['current_user']->display_name, $args['current_user']->user_email, mysql2date(get_option( 'date_format' ), $args['comment']->comment_date ), mysql2date(get_option( 'time_format' ), $args['comment']->comment_date ) ) . "\r\n";
+            $body .= "\r\n" . $args['comment']->comment_content . "\r\n";
+
+            // @TODO: mention if it was a reply
+            /*
+            if( $parent ) {
+
+            }
+            */
+
+            $body .= "\r\n--------------------\r\n";
+
+            $edit_link = htmlspecialchars_decode(get_edit_post_link( $args['post_id'] ) );
+            $view_link = htmlspecialchars_decode(get_permalink( $args['post_id'] ) );
+
+            $body .= "\r\n";
+            $body .= __( '== Actions ==', 'publishpress' ) . "\r\n";
+            $body .= sprintf( __( 'Reply: %s', 'publishpress' ), $edit_link . '#editorialcomments/reply/' . $args['comment']->comment_ID ) . "\r\n";
+            $body .= sprintf( __( 'Add editorial comment: %s', 'publishpress' ), $edit_link . '#editorialcomments/add' ) . "\r\n";
+            $body .= sprintf( __( 'Edit: %s', 'publishpress' ), $edit_link ) . "\r\n";
+            $body .= sprintf( __( 'View: %s', 'publishpress' ), $view_link ) . "\r\n";
+
+            $body .= "\r\n" . sprintf( __( 'You can see all editorial comments on this %s here: ', 'publishpress' ), $args['post_type'] ) . "\r\n";
+            $body .= $edit_link . "#editorialcomments" . "\r\n\r\n";
+
+            $body .= $this->get_notification_footer( $args['post'] );
+
+            $this->send_email( 'comment', $args['post'], $subject, $body );
         }
     }
 }

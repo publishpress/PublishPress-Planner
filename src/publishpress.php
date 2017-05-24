@@ -36,24 +36,7 @@
  * @author PressShack
  */
 
-$settingsPage = add_query_arg(
-	array(
-		'page'   => 'pp-modules-settings',
-		'module' => 'pp-modules-settings-settings',
-	),
-	get_admin_url( null, 'admin.php' )
-);
-
-// Define contants
-define( 'PUBLISHPRESS_VERSION', '1.4.0a1' );
-define( 'PUBLISHPRESS_ROOT', dirname( __FILE__ ) );
-define( 'PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename( __FILE__ ) );
-define( 'PUBLISHPRESS_URL', plugins_url( '/', __FILE__ ) );
-define( 'PUBLISHPRESS_SETTINGS_PAGE', $settingsPage );
-
-require_once 'freemius.php';
-
-require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
+require_once 'includes.php';
 
 // Core class
 class publishpress {
