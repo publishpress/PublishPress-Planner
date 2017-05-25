@@ -175,11 +175,8 @@ editorialCommentReply = {
 
         if (r.responseText) {
             er = r.responseText.replace(/<.[^<>]*?>/g, '');
-        }
 
-        if (er) {
             jQuery('#pp-replysubmit .error').html(er).show();
         }
-
     }
 };
