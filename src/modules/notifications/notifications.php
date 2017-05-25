@@ -104,7 +104,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure usergroup data
             // is properly saved before sending notifs
             add_action( 'transition_post_status', array( $this, 'save_post_subscriptions' ), 0, 3 );
-            add_action( 'transition_post_status', array( $this, 'notification_status_change' ), 10, 3 );
+            add_action( 'transition_post_status', array( $this, 'notification_status_change' ), PP_NOTIFICATION_PRIORITY_STATUS_CHANGE, 3 );
             add_action( 'pp_post_insert_editorial_comment', array( $this, 'notification_comment' ) );
             add_action( 'delete_user',  array( $this, 'delete_user_action' ) );
             add_action( 'pp_send_scheduled_notification', array( $this, 'send_single_email' ), 10, 4 );

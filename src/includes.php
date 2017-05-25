@@ -47,6 +47,12 @@ if ( ! defined( 'PP_LOADED' ) ) {
 	define( 'PUBLISHPRESS_SETTINGS_PAGE', $settingsPage );
 	define( 'PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_ROOT . '/libraries' );
 
+	// Define the Priority for the notification/notification_status_change method
+	// Added to allow users select a custom priority
+	if ( ! defined( 'PP_NOTIFICATION_PRIORITY_STATUS_CHANGE' ) ) {
+		define( 'PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10 );
+	}
+
 	require_once 'freemius.php';
 
 	require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
