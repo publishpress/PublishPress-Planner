@@ -153,7 +153,9 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                 'publishpress-slack' => array(
                     'title'       => __( 'Slack support', 'publishpress' ),
                     'description' => __( 'PublishPress with Slack, so you can get comment and status change notifications directly on Slack.' ),
-                    'available'   => false,
+                    'available'   => true,
+                    'installed'   => $this->is_plugin_installed( 'publishpress-slack' ),
+                    'active'      => $this->is_plugin_active( 'publishpress-slack' ),
                 ),
                 'publishpress-woocommerce-checklist' => array(
                     'title'       => __( 'WooCommerce Checklist', 'publishpress' ),
