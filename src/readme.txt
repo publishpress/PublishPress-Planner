@@ -160,6 +160,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.4.1] - UNRELEASED =
+
+* Changed:
+* Added the Slack add-on as available in the Add-on tab.
+
 = [1.4.0] - 2017-05-25 =
 
 * Fixed:
