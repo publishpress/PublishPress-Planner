@@ -30,6 +30,12 @@ The “Content Checklist” add-on is perfect for anyone who wants to create a c
 
 * [Click here to purchase the Content Checklist for WordPress!](https://pressshack.com/addons/content-checklist/)
 
+= SLACK INTEGRATION =
+
+The "Slack" add-on integrates PublishPress with Slack, so you can get comment and status change notifications directly inside your favorite Slack channels.
+
+* [Click here to purchase the Slack add-on!](https://pressshack.com/addons/slack/)
+
 = WHO SHOULD USE PUBLISHPRESS? =
 
 PublishPress is ideal for WordPress sites that have content teams. With PublishPress, you can collaborate muchmore effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
