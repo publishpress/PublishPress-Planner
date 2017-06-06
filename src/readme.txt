@@ -166,6 +166,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.4.2] - 2017-06-06 =
+
+* Fixed:
+* Fixed French translation. Thanks [Thierry Pasquier](https://github.com/jeau)
+
 = [1.4.1] - 2017-05-29 =
 
 * Changed:
