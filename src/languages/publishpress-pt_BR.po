@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PublishPress\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/PublishPress\n"
 "POT-Creation-Date: 2017-06-06 20:04-0300\n"
-"PO-Revision-Date: 2017-06-06 20:30-0300\n"
+"PO-Revision-Date: 2017-06-06 20:44-0300\n"
 "Last-Translator: Angelo <angelosds@gmail.com>\n"
 "Language-Team: Douglas Araujo de Moura <douglas.ademoura@gmail.com>\n"
 "Language: pt_BR\n"
@@ -59,7 +59,7 @@ msgstr "Lixo"
 
 #: common/php/class-module.php:297
 msgid "M dd yy"
-msgstr "dd mm yy "
+msgstr "dd/mm/yy"
 
 #: common/php/class-module.php:462
 msgid "Invalid Taxonomy"
