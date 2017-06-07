@@ -343,8 +343,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     )
                 );
             }
-
-            wp_enqueue_script('publishpress-editorial-metadata', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         }
 
         /**
@@ -499,9 +497,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
         private function show_date_or_datetime($current_date)
         {
             if (date('Hi', $current_date) == '0000') {
-                return date('M d Y', $current_date);
+                return date(__('M d Y', 'publishpress'), $current_date);
             } else {
-                return date('M d Y H:i', $current_date);
+                return date(__('M d Y H:i', 'publishpress'), $current_date);
             }
         }
 
@@ -549,7 +547,17 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                     // TODO: Move this to a function
                     if ($type == 'date') {
-                        $new_metadata = strtotime($new_metadata);
+                        $date = DateTime::createFromFormat( __( 'M d Y', 'publishpress' ), $new_metadata );
+
+                        // Check if the date is invalid. If it has specific time, we need another date format.
+                        if ( false === $date ) {
+                            // Try another format with time
+                            $date = DateTime::createFromFormat( __( 'M d Y H:i', 'publishpress' ), $new_metadata );
+                        }
+
+                        if ( false !== $date ) {
+                            $new_metadata = $date->getTimestamp();
+                        }
                     }
                     if ($type == 'number') {
                         $new_metadata = (int)$new_metadata;
