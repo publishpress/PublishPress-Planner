@@ -166,6 +166,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.4.3] - UNRELEASED =
+
+* Fixed:
+* Fixed thge pt-BR translations
+* Fixed datetime format in metadata fields for non-english languages
+* Fixed the metadata editing on the calendar
+
 = [1.4.2] - 2017-06-06 =
 
 * Fixed:
