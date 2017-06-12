@@ -107,9 +107,9 @@ jQuery( document ).ready(function ($) {
 		var metadata_info = {
 			action: 'pp_calendar_update_metadata',
 			nonce: $( "#pp-calendar-modify" ).val(),
-			metadata_type: $( '.editing' ).attr( 'data-type' ),
+			metadata_type: $( '.editing' ).data( 'type' ),
 			metadata_value: $( '.editing' ).children().first().val(),
-			metadata_term: $( '.editing' ).attr( 'data-metadataterm' ),
+			metadata_term: $( '.editing' ).data( 'metadataterm' ),
 			post_id: post_id
 		};
 
@@ -161,6 +161,12 @@ jQuery( document ).ready(function ($) {
 	});
 
 	function publishpress_calendar_day_item_click(event) {
+
+		// Ignores the event if it was a click inside the overlay window
+		if ( $( event.target ).parents( 'div.item-overlay' ).length > 0 ) {
+			return;
+		}
+
 		publishpress_calendar_close_overlays();
 
 		$( this ).addClass( 'active' );
