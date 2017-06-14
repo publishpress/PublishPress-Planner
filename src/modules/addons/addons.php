@@ -157,6 +157,13 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                     'installed'   => $this->is_plugin_installed( 'publishpress-slack' ),
                     'active'      => $this->is_plugin_active( 'publishpress-slack' ),
                 ),
+                'publishpress-permissions' => array(
+                    'title'       => __( 'Advanced Permissions', 'publishpress' ),
+                    'description' => __( 'Allows you to control which users can complete certain tasks, such as publishing content.' ),
+                    'available'   => true,
+                    'installed'   => $this->is_plugin_installed( 'publishpress-permissions' ),
+                    'active'      => $this->is_plugin_active( 'publishpress-permissions' ),
+                ),
                 'publishpress-woocommerce-checklist' => array(
                     'title'       => __( 'WooCommerce Checklist', 'publishpress' ),
                     'description' => __( 'This add-on allows WooCommerce teams to define tasks that must be complete before products are published.' ),
@@ -175,11 +182,6 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                 'publishpress-zapier' => array(
                     'title'       => __( 'Zapier support', 'publishpress' ),
                     'description' => __( 'Integrates PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.' ),
-                    'available'   => false,
-                ),
-                'publishpress-advanced-permissions' => array(
-                    'title'       => __( 'Advanced Permissions', 'publishpress' ),
-                    'description' => __( 'Allows you to control which users can complete certain tasks, such as publishing content.' ),
                     'available'   => false,
                 ),
             );
