@@ -5,7 +5,7 @@
     "type"       : "wordpress-plugin",
     "license"    : "GPL-2.0+",
     "config"     : {
-        "vendor-dir": "src/vendor"
+        "vendor-dir": "../src/vendor"
     },
     "require"    : {
         "php": ">= 5.3",

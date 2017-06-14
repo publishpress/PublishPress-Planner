@@ -2,7 +2,6 @@
 
 use Robo\Exception\TaskExitException;
 
-
 /**
  * This is project's console commands configuration for Robo task runner.
  *
@@ -10,52 +9,22 @@ use Robo\Exception\TaskExitException;
  */
 class RoboFile extends \Robo\Tasks
 {
-    const SOURCE_PATH = 'src';
+    const SOURCE_PATH = '../src';
 
     const PACKAGE_PATH = 'packages';
 
-    const PLUGIN_SLUG = 'publishpress';
-
-    const PROPERTIES_FILE_PATH = __DIR__ . '/.properties.ini';
-
-    protected $options = array();
-
-    protected function getProperties()
-    {
-        if (empty($this->options)) {
-            if (!file_exists(self::PROPERTIES_FILE_PATH)) {
-                throw new Exception("Local properties file (.properties.ini) not found", 1);
-            }
-
-            $this->options = parse_ini_file(self::PROPERTIES_FILE_PATH);
-        }
-
-        return $this->options;
-    }
+    const PLUGIN_NAME = 'publishpress';
 
     /**
      * Get the current version of the plugin
      */
     protected function getVersion()
     {
-        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PLUGIN_SLUG . '.php');
+        $file = file_get_contents(self::SOURCE_PATH . '/' .  self::PLUGIN_NAME . '.php');
 
         preg_match('/Version:\s*([0-9\.a-z]*)/i', $file, $matches);
 
         return $matches[1];
-    }
-
-    /**
-     * Register a change on the changelog for the current version
-     */
-    public function changelog()
-    {
-        $version = $this->getVersion();
-
-        return $this->taskChangelog()
-            ->version($version)
-            ->askForChanges()
-            ->run();
     }
 
     /**
@@ -68,7 +37,7 @@ class RoboFile extends \Robo\Tasks
         $this->say('Building the package');
 
         // Build the package
-        $filename = self::PLUGIN_SLUG . '.zip';
+        $filename = self::PLUGIN_NAME . '.zip';
         $packPath = self::PACKAGE_PATH . '/'. $filename;
         $pack     = $this->taskPack($packPath);
 
@@ -122,6 +91,17 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
+     * Build and move the package to a global path, set by PS_GLOBAL_PACKAGES_PATH
+     */
+    public function packBuildGlobal() {
+        $new_path = getenv('PS_GLOBAL_PACKAGES_PATH');
+
+        if (! empty($new_path)) {
+            $this->packBuild($new_path);
+        }
+    }
+
+    /**
      * Copy the folder to the wordpress given location
      *
      * @param string $wordPressPath Path for the WordPress installation
@@ -131,7 +111,7 @@ class RoboFile extends \Robo\Tasks
         $this->say('Building the package');
 
         // Build the package
-        $packPath = realpath(self::PACKAGE_PATH) . '/'. self::PLUGIN_SLUG;
+        $packPath = realpath(self::PACKAGE_PATH) . '/'. self::PLUGIN_NAME;
 
         if (is_dir($packPath)) {
             $this->_exec('rm -rf ' . $packPath);
@@ -149,7 +129,7 @@ class RoboFile extends \Robo\Tasks
             throw new RuntimeException('Invalid WordPress path');
         }
 
-        $dest = realpath($wordPressPath) . '/wp-content/plugins/' . self::PLUGIN_SLUG;
+        $dest = realpath($wordPressPath) . '/wp-content/plugins/' . self::PLUGIN_NAME;
         // Remove existent plugin directory
         if (is_dir($dest)) {
             $this->_exec('rm -rf ' . $dest);
@@ -186,9 +166,7 @@ class RoboFile extends \Robo\Tasks
      */
     protected function getPoFiles()
     {
-        $languageDir = 'src/languages';
-
-        return glob($languageDir . '/*.po');
+        return glob(SOURCE_PATH . 'languages' . '/*.po');
     }
 
     /**
@@ -201,7 +179,10 @@ class RoboFile extends \Robo\Tasks
     {
         $moFile = str_replace('.po', '.mo', $poFile);
 
-        return $this->_exec('msgfmt --output-file=' . $moFile . ' ' . $poFile);
+        return $this->taskExec('msgfmt')
+                ->arg('-o' . $moFile)
+                ->arg($poFile)
+                ->run();
     }
 
     /**
@@ -246,9 +227,11 @@ class RoboFile extends \Robo\Tasks
     /**
      * Sync WP files with src files
      */
-    public function syncWp()
+    public function syncStaging()
     {
-        $return = $this->_exec('sh ./sync-wp.sh');
+        $PS_WP_PATH = getenv('PS_WP_PATH');
+
+        $return = $this->_exec('PS_WP_PATH=' . $PS_WP_PATH . ' sh ./sync-staging.sh');
 
         return $return;
     }
@@ -256,32 +239,17 @@ class RoboFile extends \Robo\Tasks
     /**
      * Sync src files with WP files
      */
-    public function syncSrc()
+    public function syncRepo()
     {
-        $return = $this->_exec('sh ./sync-src.sh');
+        $PS_WP_PATH = getenv('PS_WP_PATH');
+
+        $return = $this->_exec('PS_WP_PATH=' . $PS_WP_PATH . ' sh ./sync-repo.sh');
 
         return $return;
     }
 
-    public function syncSvnTag($tag)
+    public function packCleanup()
     {
-        $properties = $this->getProperties();
-
-        $this->_exec('cd ' . $properties['svn_path'] . ' && svn update');
-        $this->_exec('cd ' . $properties['svn_path'] . ' && cp -r ' . realpath(__DIR__) . '/' . self::SOURCE_PATH . '/* ' . $properties['svn_path'] . '/trunk');
-        $this->_exec('cd ' . $properties['svn_path'] . ' && svn cp trunk tags/' . $tag);
-        $return = $this->_exec('cd ' . $properties['svn_path'] . ' && svn commit -m "Tagging ' . $tag . '"');
-
-        return $return;
-    }
-
-    /**
-     * Watch src files and sync with wordpress
-     */
-    public function reactCompile()
-    {
-        $return = $this->_exec('./node_modules/.bin/babel src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js --presets es2015 --presets react');
-
-        return $return;
+        shell_exec('git clean -xdf ' . self::SOURCE_PATH);
     }
 }
