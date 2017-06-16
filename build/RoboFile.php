@@ -274,25 +274,55 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Sync WP files with src files
+     * Sync src files with staging files
      */
-    public function syncStaging()
+    public function syncSrc()
     {
-        $PS_WP_PATH = getenv('PS_WP_PATH');
+        $wpPath      = getenv('PS_WP_PATH');
+        $stagingPath = $wpPath  . '/wp-content/plugins/' . self::PLUGIN_NAME;
 
-        $return = $this->_exec('PS_WP_PATH=' . $PS_WP_PATH . ' sh ./sync-staging.sh');
+        if (empty($wpPath)) {
+            throw new RuntimeException('Invalid WordPress path. Please, set the environment variable: PS_WP_PATH');
+        }
+
+        if (!file_exists($wpPath . '/wp-config.php')) {
+            throw new RuntimeException('WordPress not found on: ' . $wpPath . '. Check the PS_WP_PATH environment variable');
+        }
+
+        $this->say('Removing current source files...');
+        $this->_exec('rm -rf ' . self::SOURCE_PATH . '/*');
+
+        $this->say('Copying files from ' . $stagingPath . ' to ' . self::SOURCE_PATH);
+        $return = $this->_exec('cp -R ' . $stagingPath . '/* ' . self::SOURCE_PATH);
 
         return $return;
     }
 
     /**
-     * Sync src files with WP files
+     * Sync staging files with src files
      */
-    public function syncRepo()
+    public function syncStaging()
     {
-        $PS_WP_PATH = getenv('PS_WP_PATH');
+        $wpPath      = getenv('PS_WP_PATH');
+        $stagingPath = $wpPath  . '/wp-content/plugins/' . self::PLUGIN_NAME;
 
-        $return = $this->_exec('PS_WP_PATH=' . $PS_WP_PATH . ' sh ./sync-repo.sh');
+        if (empty($wpPath)) {
+            throw new RuntimeException('Invalid WordPress path. Please, set the environment variable: PS_WP_PATH');
+        }
+
+        if (!file_exists($wpPath . '/wp-config.php')) {
+            throw new RuntimeException('WordPress not found on: ' . $wpPath . '. Check the PS_WP_PATH environment variable');
+        }
+
+        if (is_dir($stagingPath)) {
+            $this->say('Removing current files...');
+            $this->_exec('rm -rf ' . $stagingPath . '/*');
+        } else {
+            mkdir($stagingPath);
+        }
+
+        $this->say('Copying files from ' . self::SOURCE_PATH . ' to ' . $stagingPath);
+        $return = $this->_exec('cp -R ' . self::SOURCE_PATH . '/* ' . $stagingPath);
 
         return $return;
     }
