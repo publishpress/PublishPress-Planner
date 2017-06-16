@@ -140,7 +140,7 @@ class RoboFile extends \Robo\Tasks
             $filename
         );
         $cmd    = sprintf(
-            's3cmd put --acl-public %s %s',
+            's3cmd put --acl-public --reduced-redundancy %s %s',
             $packPath,
             $s3Path
         );
