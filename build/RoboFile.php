@@ -57,6 +57,8 @@ class RoboFile extends \Robo\Tasks
                 '.gitignore',
                 'README',
                 '.DS_Store',
+                '.babelrc',
+                'package.json',
             );
 
             if (! in_array($content, $ignore)) {
@@ -91,7 +93,8 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Build and move the package to a global path, set by PS_GLOBAL_PACKAGES_PATH
+     * Build and move the package to a global path, set by
+     * PS_GLOBAL_PACKAGES_PATH
      */
     public function packBuildGlobal() {
         $new_path = getenv('PS_GLOBAL_PACKAGES_PATH');
@@ -99,6 +102,52 @@ class RoboFile extends \Robo\Tasks
         if (! empty($new_path)) {
             $this->packBuild($new_path);
         }
+    }
+
+    /**
+     * Build and move the package to an S4 bucket. After moving, display and
+     * copy the shared link for the file.
+     *
+     * Tested on linux only.
+     *
+     * Requirements:
+     *
+     *    - s3cmd <http://s3tools.org>
+     *    - xclip
+     *
+     * Configuring:
+     *
+     *    - Run: s3cmd --configure
+     *    - Set the environment variables:
+     *        - PS_S3_BUCKET
+     *
+     */
+    public function packBuildS3() {
+        $s3Bucket = getenv('PS_S3_BUCKET');
+        $filename = self::PLUGIN_NAME . '.zip';
+        $packPath = self::PACKAGE_PATH . '/'. $filename;
+
+        $this->packBuild();
+
+        // Create new prefix
+        $prefix = md5(microtime());
+
+        // Upload the new package to s3
+        $s3Path = sprintf(
+            's3://%s/%s/%s',
+            $s3Bucket,
+            $prefix,
+            $filename
+        );
+        $cmd    = sprintf(
+            's3cmd put --acl-public %s %s',
+            $packPath,
+            $s3Path
+        );
+        $this->_exec($cmd);
+
+        // Copy the public link to the clipboard
+        $this->_exec('s3cmd info ' . $s3Path . ' | grep "URL:" | awk \'{ print $2 }\' | xclip');
     }
 
     /**
