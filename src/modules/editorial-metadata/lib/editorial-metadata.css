@@ -129,3 +129,7 @@ div#normal-sortables .pp_editorial_meta_checkbox label {
 div#side-sortables .pp_editorial_meta_checkbox input {
     margin-left: 4px;
 }
+
+.pp_editorial_metadata_not_set {
+    font-style: italic;
+}

@@ -397,6 +397,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
         }
 
+        protected function echo_not_set_span() {
+            echo '<span class="pp_editorial_metadata_not_set">';
+            esc_html_e( 'Not set', 'default' );
+            echo '</span>';
+        }
+
         /**
          * Displays HTML output for Editorial Metadata post meta box
          *
@@ -498,7 +504,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
                                 if ($description_span) {
                                     echo "<label for='$postmeta_key'>$description_span</label>";
                                 }
-                                echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
                                 break;
                             case "location":
                                 echo "<label for='$postmeta_key'>{$term->name}</label>";
@@ -508,31 +518,53 @@ if (!class_exists('PP_Editorial_Metadata')) {
                                 echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
                                 if (!empty($current_metadata)) {
                                     echo "<div><a href='http://maps.google.com/?q={$current_metadata}&t=m' target='_blank'>" . sprintf(__('View &#8220;%s&#8221; on Google Maps', 'publishpress'), $current_metadata) . "</a></div>";
+                                } else {
+                                    $this->echo_not_set_span();
                                 }
                                 break;
                             case "text":
                                 echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                                echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
                                 break;
                             case "paragraph":
                                 echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                                echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
                                 break;
                             case "checkbox":
                                 echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                                echo empty( $current_metadata ) ? __( 'No', 'publishpress-editorial-metadata' )
-                                    : __( 'Yes', 'publishpress-editorial-metadata' );
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo empty( $current_metadata ) ? __( 'No', 'publishpress-editorial-metadata' )
+                                        : __( 'Yes', 'publishpress-editorial-metadata' );
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
                                 break;
                             case "user":
                                 echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
 
                                 $user = get_user_by( 'ID', $current_metadata );
-                                echo '<span class="pp_editorial_metadata_value">' . $user->user_nicename . '</span>';
+                                if ( is_object( $user ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $user->user_nicename . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
 
                                 break;
                             case "number":
                                 echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                                echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
                                 break;
                             default:
                                 echo "<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>";
