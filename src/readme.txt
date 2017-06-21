@@ -4,7 +4,7 @@ Author: PressShack, PublishPress
 Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Currently, the most important user of user groups is [Email Notifications](http:
 * **Zapier support for PublishPress** – This add-on will integrate PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.
 * **Pre-publishing checklists for WooCommerce** – This add-on allows WooCommerce teams to define tasks that must be complete before products are published.
 * **Multi-site and Multiple support for PublishPress** – This add-on will enable PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
-* **Advanced permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
+* **Permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
 
 = IMPORTING FROM EDITFLOW =
 
@@ -165,6 +165,13 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.4.3] - UNRELEASED =
+
+* Fixed:
+* Fixed thge pt-BR translations
+* Fixed datetime format in metadata fields for non-english languages
+* Fixed the metadata editing on the calendar
 
 = [1.4.2] - 2017-06-06 =
 

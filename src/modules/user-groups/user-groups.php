@@ -246,7 +246,7 @@ if (!class_exists('PP_User_Groups')) {
             $args = array(
                 'public' => false,
                 'rewrite' => false,
-           );
+            );
             register_taxonomy(self::taxonomy_key, $supported_post_types, $args);
         }
 
@@ -851,7 +851,7 @@ if (!class_exists('PP_User_Groups')) {
             if (!isset($args['module'])) {
                 $args['module'] = self::SETTINGS_SLUG;
             }
-            
+
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'delete-usergroup':

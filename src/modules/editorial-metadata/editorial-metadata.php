@@ -343,8 +343,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     )
                 );
             }
-
-            wp_enqueue_script('publishpress-editorial-metadata', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         }
 
         /**
@@ -399,6 +397,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
         }
 
+        protected function echo_not_set_span() {
+            echo '<span class="pp_editorial_metadata_not_set">';
+            esc_html_e( 'Not set', 'default' );
+            echo '</span>';
+        }
+
         /**
          * Displays HTML output for Editorial Metadata post meta box
          *
@@ -431,58 +435,143 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         $description_span = '';
                     }
                     echo "<div class='" . self::metadata_taxonomy . " " . self::metadata_taxonomy . "_$type'>";
-                    switch ($type) {
-                        case "date":
-                            // TODO: Move this to a function
-                            if (!empty($current_metadata)) {
-                                // Turn timestamp into a human-readable date
-                                $current_metadata = $this->show_date_or_datetime(intval($current_metadata));
-                            }
-                            echo "<label for='$postmeta_key'>{$term->name}</label>";
-                            if ($description_span) {
-                                echo "<label for='$postmeta_key'>$description_span</label>";
-                            }
-                            echo "<input id='$postmeta_key' name='$postmeta_key' type='text' class='date-time-pick' value='$current_metadata' />";
-                            break;
-                        case "location":
-                            echo "<label for='$postmeta_key'>{$term->name}</label>";
-                            if ($description_span) {
-                                echo "<label for='$postmeta_key'>$description_span</label>";
-                            }
-                            echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
-                            if (!empty($current_metadata)) {
-                                echo "<div><a href='http://maps.google.com/?q={$current_metadata}&t=m' target='_blank'>" . sprintf(__('View &#8220;%s&#8221; on Google Maps', 'publishpress'), $current_metadata) . "</a></div>";
-                            }
-                            break;
-                        case "text":
-                            echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                            echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
-                            break;
-                        case "paragraph":
-                            echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                            echo "<textarea id='$postmeta_key' name='$postmeta_key'>$current_metadata</textarea>";
-                            break;
-                        case "checkbox":
-                            echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                            echo "<input id='$postmeta_key' name='$postmeta_key' type='checkbox' value='1' " . checked($current_metadata, 1, false) . " />";
-                            break;
-                        case "user":
-                            echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                            $user_dropdown_args = array(
-                                    'show_option_all' => __('-- Select a user --', 'publishpress'),
-                                    'name'     => $postmeta_key,
-                                    'selected' => $current_metadata
-                                );
-                            $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
-                            wp_dropdown_users($user_dropdown_args);
-                            break;
-                        case "number":
-                            echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
-                            echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
-                            break;
-                        default:
-                            echo "<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>";
+
+                    // Check if the user can edit the metadata
+                    $can_edit = apply_filters( 'pp_editorial_metadata_user_can_edit', true );
+
+                    if ( $can_edit ) {
+                        switch ($type) {
+                            case "date":
+                                // TODO: Move this to a function
+                                if (!empty($current_metadata)) {
+                                    // Turn timestamp into a human-readable date
+                                    $current_metadata = $this->show_date_or_datetime(intval($current_metadata));
+                                }
+                                echo "<label for='$postmeta_key'>{$term->name}</label>";
+                                if ($description_span) {
+                                    echo "<label for='$postmeta_key'>$description_span</label>";
+                                }
+                                echo "<input id='$postmeta_key' name='$postmeta_key' type='text' class='date-time-pick' value='$current_metadata' />";
+                                break;
+                            case "location":
+                                echo "<label for='$postmeta_key'>{$term->name}</label>";
+                                if ($description_span) {
+                                    echo "<label for='$postmeta_key'>$description_span</label>";
+                                }
+                                echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                if (!empty($current_metadata)) {
+                                    echo "<div><a href='http://maps.google.com/?q={$current_metadata}&t=m' target='_blank'>" . sprintf(__('View &#8220;%s&#8221; on Google Maps', 'publishpress'), $current_metadata) . "</a></div>";
+                                }
+                                break;
+                            case "text":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                break;
+                            case "paragraph":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                echo "<textarea id='$postmeta_key' name='$postmeta_key'>$current_metadata</textarea>";
+                                break;
+                            case "checkbox":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                echo "<input id='$postmeta_key' name='$postmeta_key' type='checkbox' value='1' " . checked($current_metadata, 1, false) . " />";
+                                break;
+                            case "user":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                $user_dropdown_args = array(
+                                        'show_option_all' => __('-- Select a user --', 'publishpress'),
+                                        'name'     => $postmeta_key,
+                                        'selected' => $current_metadata
+                                    );
+                                $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
+                                wp_dropdown_users($user_dropdown_args);
+                                break;
+                            case "number":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                break;
+                            default:
+                                echo "<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>";
+                        }
+                    } else {
+                        switch ($type) {
+                            case "date":
+                                // TODO: Move this to a function
+                                if (!empty($current_metadata)) {
+                                    // Turn timestamp into a human-readable date
+                                    $current_metadata = $this->show_date_or_datetime(intval($current_metadata));
+                                }
+                                echo "<label for='$postmeta_key'>{$term->name}</label>";
+                                if ($description_span) {
+                                    echo "<label for='$postmeta_key'>$description_span</label>";
+                                }
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            case "location":
+                                echo "<label for='$postmeta_key'>{$term->name}</label>";
+                                if ($description_span) {
+                                    echo "<label for='$postmeta_key'>$description_span</label>";
+                                }
+                                echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                if (!empty($current_metadata)) {
+                                    echo "<div><a href='http://maps.google.com/?q={$current_metadata}&t=m' target='_blank'>" . sprintf(__('View &#8220;%s&#8221; on Google Maps', 'publishpress'), $current_metadata) . "</a></div>";
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            case "text":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            case "paragraph":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $current_metadata . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            case "checkbox":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo empty( $current_metadata ) ? __( 'No', 'publishpress-editorial-metadata' )
+                                        : __( 'Yes', 'publishpress-editorial-metadata' );
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            case "user":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+
+                                $user = get_user_by( 'ID', $current_metadata );
+                                if ( is_object( $user ) ) {
+                                    echo '<span class="pp_editorial_metadata_value">' . $user->user_nicename . '</span>';
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+
+                                break;
+                            case "number":
+                                echo "<label for='$postmeta_key'>{$term->name}$description_span</label>";
+                                if ( ! empty( $current_metadata ) ) {
+                                    echo "<input id='$postmeta_key' name='$postmeta_key' type='text' value='$current_metadata' />";
+                                } else {
+                                    $this->echo_not_set_span();
+                                }
+                                break;
+                            default:
+                                echo "<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>";
+                        }
+                        echo "<input id='$postmeta_key' name='$postmeta_key' type='hidden' value='$current_metadata' />";
                     }
+
                     echo "</div>";
                     echo "<div class='clear'></div>";
                 } // Done iterating through metadata terms
@@ -499,9 +588,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
         private function show_date_or_datetime($current_date)
         {
             if (date('Hi', $current_date) == '0000') {
-                return date('M d Y', $current_date);
+                return date(__('M d Y', 'publishpress'), $current_date);
             } else {
-                return date('M d Y H:i', $current_date);
+                return date(__('M d Y H:i', 'publishpress'), $current_date);
             }
         }
 
@@ -549,7 +638,17 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                     // TODO: Move this to a function
                     if ($type == 'date') {
-                        $new_metadata = strtotime($new_metadata);
+                        $date = DateTime::createFromFormat( __( 'M d Y', 'publishpress' ), $new_metadata );
+
+                        // Check if the date is invalid. If it has specific time, we need another date format.
+                        if ( false === $date ) {
+                            // Try another format with time
+                            $date = DateTime::createFromFormat( __( 'M d Y H:i', 'publishpress' ), $new_metadata );
+                        }
+
+                        if ( false !== $date ) {
+                            $new_metadata = $date->getTimestamp();
+                        }
                     }
                     if ($type == 'number') {
                         $new_metadata = (int)$new_metadata;

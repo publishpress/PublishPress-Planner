@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.4.2
+ * Version: 1.4.3
  *
  * Copyright (c) 2017 PressShack
  *
@@ -346,6 +346,10 @@ class publishpress {
 	 * Update the $publishpress object with new value and save to the database
 	 */
 	public function update_module_option( $mod_name, $key, $value ) {
+		if ( false === $this->modules->$mod_name->options ) {
+			$this->modules->$mod_name->options = new stdClass;
+		}
+
 		$this->modules->$mod_name->options->$key = $value;
 		$this->$mod_name->module                 = $this->modules->$mod_name;
 

@@ -289,6 +289,14 @@ if ( ! class_exists( 'PP_Module' ) ) {
 			// Now styles
 			wp_enqueue_style( 'jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css', array( 'wp-jquery-ui-dialog' ), PUBLISHPRESS_VERSION, 'screen' );
 			wp_enqueue_style( 'jquery-ui-theme', PUBLISHPRESS_URL . 'common/css/jquery.ui.theme.css', false, PUBLISHPRESS_VERSION, 'screen' );
+
+			wp_localize_script(
+                'publishpress-date_picker',
+                'objectL10ndate',
+                array(
+                    'date_format' => __('M dd yy', 'publishpress'),
+                )
+            );
 		}
 
 		/**

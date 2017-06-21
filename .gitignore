@@ -3,8 +3,8 @@
 .DS_Store
 wpcom-helper.php
 
-/packages/*
-!/packages/.gitkeep
+/build/packages/*
+!/build/packages/.gitkeep
 
 /local.sh
 node_modules
