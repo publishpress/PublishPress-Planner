@@ -166,12 +166,21 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.4.3] - UNRELEASED =
+= [1.4.3] - 2017-06-21 =
+
+* Added:
+* Added filter to control if users can or not edit metadata
+* Added new add-on PublishPress Permissions to the add-ons tab
 
 * Fixed:
 * Fixed thge pt-BR translations
 * Fixed datetime format in metadata fields for non-english languages
 * Fixed the metadata editing on the calendar
+* Fixed PHP warning after save options
+
+* Changed:
+* Updated "Tested up" to 4.8
+* Improved the output for unset medatada
 
 = [1.4.2] - 2017-06-06 =
 

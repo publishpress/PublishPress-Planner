@@ -149,7 +149,7 @@ class publishpress {
 		// but make sure they exist too
 		foreach ( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
-				$this->$slug = new $class_name();
+				$this->$slug = new $class_name;
 			}
 		}
 
