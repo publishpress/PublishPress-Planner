@@ -98,7 +98,7 @@ Currently, the most important user of user groups is [Email Notifications](http:
 * **Zapier support for PublishPress** – This add-on will integrate PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.
 * **Pre-publishing checklists for WooCommerce** – This add-on allows WooCommerce teams to define tasks that must be complete before products are published.
 * **Multi-site and Multiple support for PublishPress** – This add-on will enable PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
-* **Advanced permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
+* **Permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
 
 = IMPORTING FROM EDITFLOW =
 

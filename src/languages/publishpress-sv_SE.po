@@ -145,7 +145,7 @@ msgid ""
 msgstr ""
 
 #: modules/addons/addons.php:181
-msgid "Advanced Permissions"
+msgid "Permissions"
 msgstr ""
 
 #: modules/addons/addons.php:182

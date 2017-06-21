@@ -123,7 +123,7 @@ msgid "Integrates PublishPress with Zapier, so you can send comment and status c
 msgstr ""
 
 #: modules/addons/addons.php:181
-msgid "Advanced Permissions"
+msgid "Permissions"
 msgstr ""
 
 #: modules/addons/addons.php:182

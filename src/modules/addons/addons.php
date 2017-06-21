@@ -158,7 +158,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                     'active'      => $this->is_plugin_active( 'publishpress-slack' ),
                 ),
                 'publishpress-permissions' => array(
-                    'title'       => __( 'Advanced Permissions', 'publishpress' ),
+                    'title'       => __( 'Permissions', 'publishpress' ),
                     'description' => __( 'Allows you to control which users can complete certain tasks, such as publishing content.' ),
                     'available'   => true,
                     'installed'   => $this->is_plugin_installed( 'publishpress-permissions' ),

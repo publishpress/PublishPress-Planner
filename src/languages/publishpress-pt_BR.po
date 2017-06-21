@@ -157,8 +157,8 @@ msgstr ""
 "sobre mudança em comentários e estados diretamente ao Zapier."
 
 #: modules/addons/addons.php:181
-msgid "Advanced Permissions"
-msgstr "Permissões Avançadas"
+msgid "Permissions"
+msgstr "Permissões"
 
 #: modules/addons/addons.php:182
 msgid ""
