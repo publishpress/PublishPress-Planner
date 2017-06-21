@@ -27,6 +27,7 @@ function pp_fs() {
             'has_paid_plans'      => false,
             'menu'                => array(
                 'slug'           => 'pp-modules-settings',
+                'first-path'     => 'admin.php?page=pp-modules-settings',
                 'account'        => false,
                 'support'        => false,
             ),
