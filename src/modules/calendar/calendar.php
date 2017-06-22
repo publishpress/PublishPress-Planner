@@ -475,7 +475,9 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 );
 
             // Render the .ics template and set the content type
-            header( 'Content-type: text/calendar' );
+            header('Content-type: text/calendar; charset=utf-8');
+            header('Content-Disposition: inline; filename=calendar.ics');
+
             foreach ( array( $header, $formatted_posts, $footer ) as $section ) {
                 foreach ( $section as $key => $value ) {
                     if ( is_string( $value ) ) {
