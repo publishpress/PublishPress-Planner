@@ -37,7 +37,7 @@ if (!class_exists('PP_Modules_Settings')) {
      */
     class PP_Modules_Settings extends PP_Module
     {
-        const SETTINGS_SLUG = 'pp-modules-settings'; 
+        const SETTINGS_SLUG = 'pp-modules-settings';
 
         public function __construct()
         {
@@ -181,7 +181,7 @@ if (!class_exists('PP_Modules_Settings')) {
                                 <th scope="row"><?php echo __('Enabled features', 'publishpress'); ?></th>
                                 <td>
                                 <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
-                                    
+
                                     <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) continue; ?>
 
                                         <label for="feature-<?php echo $mod_data->slug; ?>">

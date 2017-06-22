@@ -366,7 +366,7 @@ if (!class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Featured::SETTINGS_SLUG . '-settings';
+            $module_settings_slug = isset($_GET['module']) && !empty($_GET['module']) ? $_GET['module'] : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
 

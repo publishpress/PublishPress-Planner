@@ -173,6 +173,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Moved Content Overview to the PublishPress menu
 * Changed the Calendar page as the main page
 * Renamed story-budget module to content-overview
+* Removed the Featured module and tab in settings
+* Moved the General tab as the first in the settings page
 
 * Fixed:
 * Fixed link and filename of the .ics file downloaded from the calendar

@@ -37,6 +37,11 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
      */
     class PP_Calendar extends PP_Module {
         /**
+         * Settings slug
+         */
+        const SETTINGS_SLUG = 'pp-calendar';
+
+        /**
          * Usermeta key prefix
          */
         const USERMETA_KEY_PREFIX = 'pp_calendar_';
