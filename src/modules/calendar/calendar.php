@@ -139,7 +139,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/calendar/">Calendar Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress' ),
                 'show_configure_btn' => false,
                 'options_page'       => true,
-                'page_link'          => admin_url( 'index.php?page=pp-calendar' ),
+                'page_link'          => admin_url( 'admin.php?page=pp-calendar' ),
             );
 
             $this->module = PublishPress()->register_module( 'calendar', $args );
