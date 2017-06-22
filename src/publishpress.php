@@ -97,8 +97,8 @@ class publishpress {
 		// $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
 		$default_module_dirs = array(
 			'featured'           => PUBLISHPRESS_ROOT,
+			'calendar'   => PUBLISHPRESS_ROOT,
 			'modules-settings'   => PUBLISHPRESS_ROOT,
-			'calendar'           => PUBLISHPRESS_ROOT,
 			'editorial-metadata' => PUBLISHPRESS_ROOT,
 			'notifications'      => PUBLISHPRESS_ROOT,
 			'story-budget'       => PUBLISHPRESS_ROOT,
@@ -172,6 +172,7 @@ class publishpress {
 		add_action( 'init', array( $this, 'action_init_after' ), 1000 );
 
 		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
+		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 
 		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
 	}
@@ -230,6 +231,24 @@ class publishpress {
 		}
 
 		$this->register_scripts_and_styles();
+	}
+
+	/**
+	 * Add the menu page and call an action for modules add submenus
+	 */
+	public function action_admin_menu() {
+		add_menu_page(
+			esc_html__( 'Calendar', 'publishpress' ),
+			esc_html__( 'PublishPress', 'publishpress' ),
+			'manage_options',
+			'pp-calendar',
+			array( $this->calendar, 'render_admin_page' ),
+			null,
+			26
+		);
+
+		// Submenus
+    	do_action( 'pp_admin_menu' );
 	}
 
 	/**

@@ -76,8 +76,8 @@
 }
 
 /* Admin icon */
-#toplevel_page_pp-modules-settings .dashicons-before::before,
-#toplevel_page_pp-modules-settings .wp-has-current-submenu .dashicons-before::before {
+#toplevel_page_pp-calendar .dashicons-before::before,
+#toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before {
 	background-image: url(../../modules/settings/lib/menu-icon.png);
 	background-repeat: no-repeat;
 	background-position: 0 8px;
@@ -89,16 +89,16 @@
 	-o-transition: none;
 }
 
-#toplevel_page_pp-modules-settings:active .wp-not-current-submenu .dashicons-before::before,
-#toplevel_page_pp-modules-settings:hover .wp-not-current-submenu .dashicons-before::before {
+#toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+#toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before {
 	background-position: 0 -26px;
 }
 
-#toplevel_page_pp-modules-settings .wp-menu-open .dashicons-before::before {
+#toplevel_page_pp-calendar .wp-menu-open .dashicons-before::before {
 	background-position: 0 -60px;
 }
 
-#toplevel_page_pp-modules-settings > a.wp-menu-open {
+#toplevel_page_pp-calendar > a.wp-menu-open {
 	background: #655997 !important;
 }
 

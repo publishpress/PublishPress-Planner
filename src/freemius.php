@@ -26,8 +26,8 @@ function pp_fs() {
             'has_addons'          => false,
             'has_paid_plans'      => false,
             'menu'                => array(
-                'slug'           => 'pp-modules-settings',
-                'first-path'     => 'admin.php?page=pp-modules-settings',
+                'slug'           => 'pp-calendar',
+                'first-path'     => 'admin.php?page=pp-calendar',
                 'account'        => false,
                 'support'        => false,
             ),

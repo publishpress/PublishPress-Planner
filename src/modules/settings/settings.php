@@ -74,7 +74,7 @@ if (!class_exists('PP_Settings')) {
             add_action('admin_print_styles', array($this, 'action_admin_print_styles'));
             add_action('admin_print_scripts', array($this, 'action_admin_print_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
-            add_action('admin_menu', array($this, 'action_admin_menu'));
+            add_action('pp_admin_menu', array($this, 'action_admin_menu'));
         }
 
         /**
@@ -82,16 +82,13 @@ if (!class_exists('PP_Settings')) {
          */
         public function action_admin_menu()
         {
-            global $publishpress;
-
-            add_menu_page(
-                $this->module->title,
-                $this->module->title,
+            add_submenu_page(
+                'pp-calendar',
+                esc_html__( 'PublishPress Settings', 'publishpress' ),
+                esc_html__( 'Settings', 'publishpress' ),
                 'manage_options',
-                PP_Modules_Settings::SETTINGS_SLUG,
-                array($this, 'options_page_controller'),
-                '',
-                25
+                'pp-modules-settings',
+                array($this, 'options_page_controller')
             );
         }
 
