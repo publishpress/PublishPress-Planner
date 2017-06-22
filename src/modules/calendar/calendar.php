@@ -465,13 +465,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Other template data
             $header = array(
-                    'BEGIN'             => 'VCALENDAR',
-                    'VERSION'           => '2.0',
-                    'PRODID'            => '-//PublishPress//PublishPress ' . PUBLISHPRESS_VERSION . '//EN',
+                    'BEGIN'   => 'VCALENDAR',
+                    'VERSION' => '2.0',
+                    'PRODID'  => '-//PublishPress//PublishPress ' . PUBLISHPRESS_VERSION . '//EN',
                 );
 
             $footer = array(
-                    'END'               => 'VCALENDAR',
+                    'END'     => 'VCALENDAR',
                 );
 
             // Render the .ics template and set the content type
