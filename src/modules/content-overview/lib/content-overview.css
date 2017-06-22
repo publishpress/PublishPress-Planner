@@ -1,10 +1,10 @@
 /** Content Overview **/
-#pp-story-budget-tablenav {
+#pp-content-overview-tablenav {
     height: auto;
     overflow: hidden;
 }
 
-#pp-story-budget-tablenav select {
+#pp-content-overview-tablenav select {
     max-width: 300px;
 }
 
@@ -48,7 +48,7 @@ header h2 a.change-date-cancel {
     margin-bottom: 10px;
 }
 
-.story-budget thead tr th {
+.content-overview thead tr th {
     background: #f1f1f1 !important;
 }
 

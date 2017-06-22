@@ -29,12 +29,12 @@
  */
 
 /**
- * class PP_Story_Budget
+ * class PP_Content_Overview
  * This class displays a budgeting system for an editorial desk's publishing workflow.
  *
  * @author sbressler
  */
-class PP_Story_Budget extends PP_Module
+class PP_Content_Overview extends PP_Module
 {
 
     public $taxonomy_used = 'category';
@@ -51,11 +51,11 @@ class PP_Story_Budget extends PP_Module
 
     public $user_filters;
 
-    const screen_id = 'dashboard_page_story-budget';
+    const SCREEN_ID = 'dashboard_page_content-overview';
 
-    const usermeta_key_prefix = 'pp_story_budget_';
+    const USERMETA_KEY_PREFIX = 'PP_Content_Overview_';
 
-    const default_num_columns = 1;
+    const DEFAULT_NUM_COLUMNS = 1;
 
     /**
      * Register the module with PublishPress but don't do anything else
@@ -63,6 +63,7 @@ class PP_Story_Budget extends PP_Module
     public function __construct()
     {
         $this->module_url = $this->get_module_url(__FILE__);
+
         // Register the module with PublishPress
         $args = array(
             'title'                => __('Content Overview', 'publishpress'),
@@ -70,16 +71,16 @@ class PP_Story_Budget extends PP_Module
             'extended_description' => __('Use the content overview to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
             'module_url'           => $this->module_url,
             'icon_class'           => 'dashicons dashicons-list-view',
-            'slug'                 => 'story-budget',
+            'slug'                 => 'content-overview',
             'default_options'      => array(
                 'enabled' => 'on',
             ),
             'configure_page_cb' => false,
             'autoload'          => false,
             'add_menu'          => true,
-            'page_link'         => admin_url('index.php?page=story-budget'),
+            'page_link'         => admin_url('admin.php?page=content-overview'),
         );
-        $this->module = PublishPress()->register_module('story_budget', $args);
+        $this->module = PublishPress()->register_module('content_overview', $args);
     }
 
     /**
@@ -87,29 +88,30 @@ class PP_Story_Budget extends PP_Module
      */
     public function init()
     {
-        $view_story_budget_cap = apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget');
-        if (!current_user_can($view_story_budget_cap)) {
+        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
+        if (!current_user_can($view_content_overview_cap)) {
             return;
         }
 
         $this->num_columns     = $this->get_num_columns();
-        $this->max_num_columns = apply_filters('pp_story_budget_max_num_columns', 3);
+        $this->max_num_columns = apply_filters('PP_Content_Overview_max_num_columns', 3);
 
         // Filter to allow users to pick a taxonomy other than 'category' for sorting their posts
-        $this->taxonomy_used = apply_filters('pp_story_budget_taxonomy_used', $this->taxonomy_used);
+        $this->taxonomy_used = apply_filters('PP_Content_Overview_taxonomy_used', $this->taxonomy_used);
 
         add_action('admin_init', array($this, 'handle_form_date_range_change'));
 
         include_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
         if (function_exists('add_screen_options_panel')) {
-            add_screen_options_panel(self::usermeta_key_prefix . 'screen_columns', __('Screen Layout', 'publishpress'), array($this, 'print_column_prefs'), self::screen_id, array($this, 'save_column_prefs'), true);
+            add_screen_options_panel(self::USERMETA_KEY_PREFIX . 'screen_columns', __('Screen Layout', 'publishpress'), array($this, 'print_column_prefs'), self::SCREEN_ID, array($this, 'save_column_prefs'), true);
         }
 
         // Register the columns of data appearing on every term. This is hooked into admin_init
         // so other PublishPress modules can register their filters if needed
         add_action('admin_init', array($this, 'register_term_columns'));
 
-        add_action('admin_menu', array($this, 'action_admin_menu'));
+        add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ) );
+
         // Load necessary scripts and stylesheets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'action_enqueue_admin_styles'));
@@ -122,14 +124,14 @@ class PP_Story_Budget extends PP_Module
      */
     public function install()
     {
-        $story_budget_roles = array(
-            'administrator' => array('pp_view_story_budget'),
-            'editor'        => array('pp_view_story_budget'),
-            'author'        => array('pp_view_story_budget'),
-            'contributor'   => array('pp_view_story_budget')
+        $content_overview_roles = array(
+            'administrator' => array('pp_view_content_overview'),
+            'editor'        => array('pp_view_content_overview'),
+            'author'        => array('pp_view_content_overview'),
+            'contributor'   => array('pp_view_content_overview')
        );
 
-        foreach ($story_budget_roles as $role => $caps) {
+        foreach ($content_overview_roles as $role => $caps) {
             $this->add_caps_to_role($role, $caps);
         }
     }
@@ -146,13 +148,13 @@ class PP_Story_Budget extends PP_Module
         // Upgrade path to v0.7
         if (version_compare($previous_version, '0.7', '<')) {
             // Migrate whether the content overview was enabled or not and clean up old option
-            if ($enabled = get_option('publishpress_story_budget_enabled')) {
+            if ($enabled = get_option('publishpress_content_overview_enabled')) {
                 $enabled = 'on';
             } else {
                 $enabled = 'off';
             }
             $publishpress->update_module_option($this->module->name, 'enabled', $enabled);
-            delete_option('publishpress_story_budget_enabled');
+            delete_option('publishpress_content_overview_enabled');
 
             // Technically we've run this code before so we don't want to auto-install new data
             $publishpress->update_module_option($this->module->name, 'loaded_once', true);
@@ -166,7 +168,14 @@ class PP_Story_Budget extends PP_Module
      */
     public function action_admin_menu()
     {
-        add_submenu_page('index.php', __('Content Overview', 'publishpress'), __('Content Overview', 'publishpress'), apply_filters('pp_view_story_budget_cap', 'pp_view_story_budget'), $this->module->slug, array($this, 'story_budget'));
+        add_submenu_page(
+                'pp-calendar',
+                esc_html__( 'Content Overview', 'publishpress' ),
+                esc_html__( 'Content Overview', 'publishpress' ),
+                apply_filters( 'pp_view_content_overview_cap', 'pp_view_calendar' ),
+                'pp-content-overview',
+                array( $this, 'render_admin_page' )
+            );
     }
 
     /**
@@ -176,17 +185,16 @@ class PP_Story_Budget extends PP_Module
      */
     public function enqueue_admin_scripts()
     {
-        global $current_screen;
+        global $pagenow;
 
-        if ($current_screen->id != self::screen_id) {
-            return;
+        // Only load calendar styles on the calendar page
+        if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && $_GET['page'] === 'pp-content-overview' ) {
+            $num_columns = $this->get_num_columns();
+            echo '<script type="text/javascript"> var PP_Content_Overview_number_of_columns="' . esc_js($this->num_columns) . '";</script>';
+
+            $this->enqueue_datepicker_resources();
+            wp_enqueue_script('publishpress-content_overview', $this->module_url . 'lib/content-overview.js', array('publishpress-date_picker'), PUBLISHPRESS_VERSION, true);
         }
-
-        $num_columns = $this->get_num_columns();
-        echo '<script type="text/javascript"> var pp_story_budget_number_of_columns="' . esc_js($this->num_columns) . '";</script>';
-
-        $this->enqueue_datepicker_resources();
-        wp_enqueue_script('publishpress-story_budget', $this->module_url . 'lib/story-budget.js', array('publishpress-date_picker'), PUBLISHPRESS_VERSION, true);
     }
 
     /**
@@ -194,15 +202,14 @@ class PP_Story_Budget extends PP_Module
      */
     public function action_enqueue_admin_styles()
     {
-        global $current_screen;
+        global $pagenow;
 
-        if ($current_screen->id != self::screen_id) {
-            return;
+        // Only load calendar styles on the calendar page
+        if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && $_GET['page'] === 'pp-content-overview' ) {
+            wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'screen');
+            wp_enqueue_style('publishpress-content_overview-styles', $this->module_url . 'lib/content-overview.css', false, PUBLISHPRESS_VERSION, 'screen');
+            wp_enqueue_style('publishpress-content_overview-print-styles', $this->module_url . 'lib/content-overview-print.css', false, PUBLISHPRESS_VERSION, 'print');
         }
-
-        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false, PUBLISHPRESS_VERSION, 'screen');
-        wp_enqueue_style('publishpress-story_budget-styles', $this->module_url . 'lib/story-budget.css', false, PUBLISHPRESS_VERSION, 'screen');
-        wp_enqueue_style('publishpress-story_budget-print-styles', $this->module_url . 'lib/story-budget-print.css', false, PUBLISHPRESS_VERSION, 'print');
     }
 
     /**
@@ -221,7 +228,7 @@ class PP_Story_Budget extends PP_Module
             'post_modified' => __('Last Modified', 'publishpress'),
         );
 
-        $term_columns       = apply_filters('pp_story_budget_term_columns', $term_columns);
+        $term_columns       = apply_filters('PP_Content_Overview_term_columns', $term_columns);
         $this->term_columns = $term_columns;
     }
 
@@ -232,25 +239,31 @@ class PP_Story_Budget extends PP_Module
      */
     public function handle_form_date_range_change()
     {
-        if (!isset($_POST['pp-story-budget-range-submit'], $_POST['pp-story-budget-number-days'], $_POST['pp-story-budget-start-date'])) {
+        if (
+            ! isset(
+                $_POST['pp-content-overview-range-submit'],
+                $_POST['pp-content-overview-number-days'],
+                $_POST['pp-content-overview-start-date']
+            )
+        ) {
             return;
         }
 
-        if (!wp_verify_nonce($_POST['nonce'], 'change-date')) {
-            wp_die($this->module->messages['nonce-failed']);
+        if ( ! wp_verify_nonce( $_POST['nonce'], 'change-date' ) ) {
+            wp_die( $this->module->messages['nonce-failed'] );
         }
 
         $current_user                = wp_get_current_user();
-        $user_filters                = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', true);
-        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['pp-story-budget-start-date']));
-        $user_filters['number_days'] = (int)$_POST['pp-story-budget-number-days'];
+        $user_filters                = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
+        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['pp-content-overview-start-date']));
+        $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
         if ($user_filters['number_days'] <= 1) {
             $user_filters['number_days'] = 1;
         }
 
-        $this->update_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', $user_filters);
-        wp_redirect(menu_page_url($this->module->slug, false));
+        $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+        wp_redirect(menu_page_url( 'pp-content-overview', false ));
         exit;
     }
 
@@ -261,11 +274,11 @@ class PP_Story_Budget extends PP_Module
     {
         if (empty($this->num_columns)) {
             $current_user      = wp_get_current_user();
-            $this->num_columns = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'screen_columns', true);
+            $this->num_columns = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'screen_columns', true);
             // If usermeta didn't have a value already, use a default value and insert into DB
             if (empty($this->num_columns)) {
-                $this->num_columns = self::default_num_columns;
-                $this->save_column_prefs(array(self::usermeta_key_prefix . 'screen_columns' => $this->num_columns));
+                $this->num_columns = self::DEFAULT_NUM_COLUMNS;
+                $this->save_column_prefs(array(self::USERMETA_KEY_PREFIX . 'screen_columns' => $this->num_columns));
             }
         }
         return $this->num_columns;
@@ -278,7 +291,7 @@ class PP_Story_Budget extends PP_Module
     {
         $return_val = __('Number of Columns: ', 'publishpress');
         for ($i = 1; $i <= $this->max_num_columns; ++$i) {
-            $return_val .= "<label><input type='radio' name='" . esc_attr(self::usermeta_key_prefix) . "screen_columns' value='" . esc_attr($i) . "' " . checked($this->get_num_columns(), $i, false) . " />&nbsp;" . esc_attr($i) . "</label>\n";
+            $return_val .= "<label><input type='radio' name='" . esc_attr(self::USERMETA_KEY_PREFIX) . "screen_columns' value='" . esc_attr($i) . "' " . checked($this->get_num_columns(), $i, false) . " />&nbsp;" . esc_attr($i) . "</label>\n";
         }
         return $return_val;
     }
@@ -288,7 +301,7 @@ class PP_Story_Budget extends PP_Module
      */
     public function save_column_prefs($posted_fields)
     {
-        $key               = self::usermeta_key_prefix . 'screen_columns';
+        $key               = self::USERMETA_KEY_PREFIX . 'screen_columns';
         $this->num_columns = (int) $posted_fields[$key];
 
         $current_user = wp_get_current_user();
@@ -300,7 +313,7 @@ class PP_Story_Budget extends PP_Module
      * ouput any messages, create the table navigation, then print the columns based on
      * get_num_columns(), which will in turn print the stories themselves.
      */
-    public function story_budget()
+    public function render_admin_page()
     {
         global $publishpress;
 
@@ -320,13 +333,13 @@ class PP_Story_Budget extends PP_Module
             );
             $terms = get_terms($this->taxonomy_used, $args);
         }
-        $this->terms = apply_filters('pp_story_budget_filter_terms', $terms); // allow for reordering or any other filtering of terms
+        $this->terms = apply_filters('PP_Content_Overview_filter_terms', $terms); // allow for reordering or any other filtering of terms
 
-        $description = sprintf('%s <span class="time-range">%s</span>', __('Content Overview', 'publishpress'), $this->story_budget_time_range());
-        $publishpress->settings->print_default_header($publishpress->modules->story_budget, $description);
+        $description = sprintf('%s <span class="time-range">%s</span>', __('Content Overview', 'publishpress'), $this->content_overview_time_range());
+        $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description);
 
         ?>
-        <div class="wrap" id="pp-story-budget-wrap">
+        <div class="wrap" id="pp-content-overview-wrap">
             <?php $this->print_messages();
         ?>
             <?php $this->table_navigation();
@@ -353,8 +366,9 @@ class PP_Story_Budget extends PP_Module
         ?>
             </div>
         </div>
+        <br clear="all">
         <?php
-        $publishpress->settings->print_default_footer($publishpress->modules->story_budget);
+        $publishpress->settings->print_default_footer($publishpress->modules->content_overview);
     }
 
     /**
@@ -362,25 +376,25 @@ class PP_Story_Budget extends PP_Module
      *
      * @since 0.7
      */
-    public function story_budget_time_range()
+    public function content_overview_time_range()
     {
-        $output = '<form method="POST" action="' . menu_page_url($this->module->slug, false) . '">';
+        $output = '<form method="POST" action="' . menu_page_url( 'pp-content-overview', false ) . '">';
 
-        $start_date_value = '<input type="text" id="pp-story-budget-start-date" name="pp-story-budget-start-date"'
+        $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
             . ' size="10" class="date-pick" value="'
             . esc_attr(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date']))) . '" /><span class="form-value">';
 
         $start_date_value .= esc_html(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date'])));
         $start_date_value .= '</span>';
 
-        $number_days_value = '<input type="text" id="pp-story-budget-number-days" name="pp-story-budget-number-days"'
+        $number_days_value = '<input type="text" id="pp-content-overview-number-days" name="pp-content-overview-number-days"'
             . ' size="3" maxlength="3" value="'
             . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html($this->user_filters['number_days'])
             . '</span>';
 
         $output .= sprintf(_x('starting %1$s showing %2$s %3$s', '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'', 'publishpress'), $start_date_value, $number_days_value, _n('day', 'days', $this->user_filters['number_days'], 'publishpress'));
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
-        $output .= '<input id="pp-story-budget-range-submit" name="pp-story-budget-range-submit" type="submit"';
+        $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
         $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
@@ -402,7 +416,7 @@ class PP_Story_Budget extends PP_Module
         $defaults = array(
             'post_status'    => null,
             'author'         => null,
-            'posts_per_page' => apply_filters('pp_story_budget_max_query', 200),
+            'posts_per_page' => apply_filters('PP_Content_Overview_max_query', 200),
         );
         $args = array_merge($defaults, $args);
 
@@ -440,7 +454,7 @@ class PP_Story_Budget extends PP_Module
         }
 
         // Filter for an end user to implement any of their own query args
-         $args = apply_filters('pp_story_budget_posts_query_args', $args);
+         $args = apply_filters('PP_Content_Overview_posts_query_args', $args);
 
         add_filter('posts_where', array($this, 'posts_where_range'));
         $term_posts_query_results = new WP_Query($args);
@@ -499,7 +513,7 @@ class PP_Story_Budget extends PP_Module
         ?></span></h3>
         <div class="inside">
             <?php if (!empty($posts)) : ?>
-            <table class="widefat post fixed story-budget" cellspacing="0">
+            <table class="widefat post fixed content-overview" cellspacing="0">
                 <thead>
                     <tr>
                         <?php foreach ((array)$this->term_columns as $key => $name): ?>
@@ -574,7 +588,7 @@ class PP_Story_Budget extends PP_Module
 
         // Hook for other modules to get data into columns
         $column_value = null;
-        $column_value = apply_filters('pp_story_budget_term_column_value', $column_name, $post, $parent_term);
+        $column_value = apply_filters('PP_Content_Overview_term_column_value', $column_name, $post, $parent_term);
         if (!is_null($column_value) && $column_value != $column_name) {
             return $column_value;
         }
@@ -636,7 +650,7 @@ class PP_Story_Budget extends PP_Module
             $item_actions['previewpost'] = '<a href="' . esc_url(apply_filters('preview_post_link', add_query_arg('preview', 'true', get_permalink($post->ID)), $post)) . '" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;', 'publishpress'), $post_title)) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
         }
 
-        $item_actions = apply_filters('pp_story_budget_item_actions', $item_actions, $post->ID);
+        $item_actions = apply_filters('PP_Content_Overview_item_actions', $item_actions, $post->ID);
         if (count($item_actions)) {
             $output .= '<div class="row-actions">';
             $html = '';
@@ -685,25 +699,25 @@ class PP_Story_Budget extends PP_Module
     public function table_navigation()
     {
         ?>
-    <div class="tablenav" id="pp-story-budget-tablenav">
+    <div class="tablenav" id="pp-content-overview-tablenav">
         <div class="alignleft actions">
             <form method="GET" style="float: left;">
-                <input type="hidden" name="page" value="story-budget"/>
+                <input type="hidden" name="page" value="pp-content-overview"/>
                 <?php
-                    foreach ($this->story_budget_filters() as $select_id => $select_name) {
-                        echo $this->story_budget_filter_options($select_id, $select_name, $this->user_filters);
+                    foreach ($this->content_overview_filters() as $select_id => $select_name) {
+                        echo $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
                     }
         ?>
                 <input type="submit" id="post-query-submit" value="<?php _e('Filter', 'publishpress');
         ?>" class="button-primary button" />
             </form>
             <form method="GET" style="float: left;">
-                <input type="hidden" name="page" value="story-budget"/>
+                <input type="hidden" name="page" value="pp-content-overview"/>
                 <input type="hidden" name="post_status" value=""/>
                 <input type="hidden" name="cat" value=""/>
                 <input type="hidden" name="author" value=""/>
                 <?php
-                foreach ($this->story_budget_filters() as $select_id => $select_name) {
+                foreach ($this->content_overview_filters() as $select_id => $select_name) {
                     echo '<input type="hidden" name="' . $select_name . '" value="" />';
                 }
         ?>
@@ -740,7 +754,7 @@ class PP_Story_Budget extends PP_Module
         );
 
         $current_user_filters = array();
-        $current_user_filters = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', true);
+        $current_user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
 
         // If any of the $_GET vars are missing, then use the current user filter
         foreach ($user_filters as $key => $value) {
@@ -757,9 +771,9 @@ class PP_Story_Budget extends PP_Module
             $user_filters['number_days'] = 10;
         }
 
-        $user_filters = apply_filters('pp_story_budget_filter_values', $user_filters, $current_user_filters);
+        $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
 
-        $this->update_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', $user_filters);
+        $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
         return $user_filters;
     }
 
@@ -773,7 +787,7 @@ class PP_Story_Budget extends PP_Module
     {
         $current_user = wp_get_current_user();
         $user_filters = array();
-        $user_filters = $this->get_user_meta($current_user->ID, self::usermeta_key_prefix . 'filters', true);
+        $user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
 
         // If usermeta didn't have filters already, insert defaults into DB
         if (empty($user_filters)) {
@@ -800,7 +814,7 @@ class PP_Story_Budget extends PP_Module
         return sanitize_key($_GET[$param]);
     }
 
-    public function story_budget_filters()
+    public function content_overview_filters()
     {
         $select_filter_names = array();
 
@@ -808,10 +822,10 @@ class PP_Story_Budget extends PP_Module
         $select_filter_names['cat']         = 'cat';
         $select_filter_names['author']      = 'author';
 
-        return apply_filters('pp_story_budget_filter_names', $select_filter_names);
+        return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
 
-    public function story_budget_filter_options($select_id, $select_name, $filters)
+    public function content_overview_filter_options($select_id, $select_name, $filters)
     {
         switch ($select_id) {
             case 'post_status':
@@ -851,11 +865,11 @@ class PP_Story_Budget extends PP_Module
                     'selected'        => $this->user_filters['author'],
                     'who'             => 'authors',
                 );
-                $users_dropdown_args = apply_filters('pp_story_budget_users_dropdown_args', $users_dropdown_args);
+                $users_dropdown_args = apply_filters('PP_Content_Overview_users_dropdown_args', $users_dropdown_args);
                 wp_dropdown_users($users_dropdown_args);
             break;
             default:
-                do_action('pp_story_budget_filter_display', $select_id, $select_name, $filters);
+                do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
             break;
         }
     }

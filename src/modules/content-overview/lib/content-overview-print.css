@@ -1,7 +1,7 @@
 /* Print styles for PublishPress's Content Overview view */
 
 /* Hide the styles that we don't need */
-#pp-story-budget-tablenav,
+#pp-content-overview-tablenav,
 #adminmenu,
 #wpadminbar,
 #adminmenuback,
@@ -9,14 +9,17 @@
 #wphead,
 #footer,
 #screen-meta,
-#pp-story-budget-wrap .change-date-buttons,
-#pp-story-budget-wrap .time-range input,
-#pp-story-budget-wrap .module-icon,
-.row-actions {
+#pp-content-overview-wrap .change-date-buttons,
+#pp-content-overview-wrap .time-range input,
+#pp-content-overview-wrap .module-icon,
+.row-actions,
+#wpfooter,
+footer,
+.change-date {
     display: none;
 }
 
-#pp-story-budget-wrap .time-range form {
+#pp-content-overview-wrap .time-range form {
     display: inline;
 }
 

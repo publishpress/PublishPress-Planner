@@ -101,7 +101,7 @@ class publishpress {
 			'modules-settings'   => PUBLISHPRESS_ROOT,
 			'editorial-metadata' => PUBLISHPRESS_ROOT,
 			'notifications'      => PUBLISHPRESS_ROOT,
-			'story-budget'       => PUBLISHPRESS_ROOT,
+			'content-overview'   => PUBLISHPRESS_ROOT,
 			'custom-status'      => PUBLISHPRESS_ROOT,
 			'user-groups'        => PUBLISHPRESS_ROOT,
 
