@@ -166,6 +166,18 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.5.0] - UNRELEASED =
+
+* Changed:
+* Moved Calendar to the PublishPress menu
+* Moved Content Overview to the PublishPress menu
+* Changed the Calendar page as the main page
+* Renamed story-budget module to content-overview
+
+* Fixed:
+* Fixed link and filename of the .ics file downloaded from the calendar
+
+
 = [1.4.3] - 2017-06-21 =
 
 * Added:
