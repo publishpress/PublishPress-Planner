@@ -186,36 +186,46 @@ table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight ul li.sortable
 
 }
 
-table#pp-calendar-view .day-unit .post-insert-dialog{
+table#pp-calendar-view .day-unit .post-insert-dialog {
 	background-color: #FFF;
 	border: 1px solid #CCC;
-	-moz-box-shadow:5px 5px 5px #888;
-	-webkit-box-shadow:5px 5px 5px #888;
-	box-shadow:5px 5px 5px #888;
-	left: -5px;
-	padding: 5px;
+	-moz-box-shadow: 0px 0px 40px #888;
+	-webkit-box-shadow: 0px 0px 40px #888;
+	box-shadow: 0px 0px 40px #888;
+	left: 0;
+	padding: 5px 12px 12px;
 	position: absolute;
-	top: -5px;
+	top: 0;
 	width: 300px;
 	z-index: 999;
 	display: none;
+}
+
+table#pp-calendar-view .day-unit .post-insert-dialog .spinner {
+    float: right;
+    margin-right: 0;
+}
+
+table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-controls {
+    display: inline-block;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog.item-overlay{
 	display: block;
 }
 
-table#pp-calendar-view .day-unit .post-insert-dialog h1{
-	font-size: 13px;
-	font-weight: normal;
-	font-style: italic;
-	margin-bottom: 2px;
-	margin-top: 0;
-	padding-top: 0;
+table#pp-calendar-view .day-unit .post-insert-dialog h1 {
+    font-size: 13px;
+    font-weight: normal;
+    font-style: italic;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title{
-	margin-top: 10px;
+	margin-top: 4px;
 	margin-bottom: 10px;
 	width: 100%;
 }
