@@ -150,6 +150,15 @@ table#pp-calendar-view .day-unit .dashicons {
 	color: #b7b7b7;
 }
 
+/*table#pp-calendar-view .day-unit .dashicons-yes:before {
+    color: #378137;
+}*/
+
+table#pp-calendar-view .day-unit .item-overlay .dashicons:before {
+    line-height: 37px;
+    margin-left: 12px;
+}
+
 table#pp-calendar-view .day-unit .schedule-new-post-label{
 	display: none;
 	padding: 3px;
@@ -308,7 +317,7 @@ table#pp-calendar-view .day-unit ul li .item-headline {
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 0;
-	color: #21759B;
+	color: #444;
 	width: 87.8%;
 	white-space: nowrap;
 	overflow: hidden;
@@ -393,19 +402,19 @@ table#pp-calendar-view .day-unit ul li.item-overlay-active {
 	position:relative;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay {
+table#pp-calendar-view .day-unit ul li .item-overlay:not(form) {
 	min-width: 250px;
 	max-width: 350px;
 	background-color: #FFF;
-	padding: 5px;
+	padding: 12px;
 	position: absolute;
 	z-index: 999;
-	top: -5px;
-	left: -5px;
+	top: 0;
+	left: 0;
 	border: 1px solid #CCC;
-	-moz-box-shadow:5px 5px 5px #888;
-	-webkit-box-shadow:5px 5px 5px #888;
-	box-shadow:5px 5px 5px #888;
+    -moz-box-shadow: 0px 0px 40px #888;
+    -webkit-box-shadow: 0px 0px 40px #888;
+    box-shadow: 0px 0px 40px #888;
 }
 
 table#pp-calendar-view .day-unit.last-day ul li .item-overlay {
