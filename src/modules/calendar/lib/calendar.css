@@ -111,16 +111,18 @@ table#pp-calendar-view .week-unit {
 }
 
 table#pp-calendar-view .day-unit.today {
-	border-top: 2px solid #ffafaf;
-	background: #fff2f2;
+	background: #E8E6F0;
+}
+
+table#pp-calendar-view .day-unit.today .day-wrapper {
+    border: 1px solid #655997;
 }
 
 .day-unit-label.calendar-today {
-	background: #ff5f5f;
+	background: #655997;
 	color: white !important;
 	padding: 3px;
 	padding-top: 0px;
-	border-radius: 20px;
 	width: 20px;
 	text-align: center;
 	height: 20px;
@@ -442,9 +444,8 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 .pp-calendar-navigation {
     padding: 0;
     display: block;
-    height: 30px;
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .pp-calendar-navigation select {
@@ -468,8 +469,17 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     background: #f7f7f7;
 	font-weight: bold;
 	font-size: 13px;
-	line-height: 0;
+	line-height: 35px;
     min-height: 28px;
+    vertical-align: middle;
+}
+
+.pp-calendar-navigation li.date-change a:hover,
+.pp-calendar-navigation li.date-change a:active,
+.pp-calendar-navigation li.date-change a:focus {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;
 }
 
 .pp-calendar-navigation li.next-week a:first-of-type {
@@ -489,13 +499,13 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     border-radius: 5px 0 0 5px;
     -moz-border-radius: 5px 0 0 5px;
     -webkit-border-radius: 5px 0 0 5px;
-    border-right: none;
 }
 
 .pp-calendar-navigation li.previous-week a:last-of-type {
     border-radius: 0 5px 5px 0;
     -moz-border-radius: 0 5px 5px 0;
     -webkit-border-radius: 0 5px 5px 0;
+    border-left: none;
 }
 
 .pp-calendar-navigation li.today a {
@@ -512,10 +522,6 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 	list-style-type:none;
 	margin-bottom: 0;
 	display: inline-block;
-}
-
-.pp-calendar-navigation li#calendar-filter {
-	margin-top: 2px;
 }
 
 .pp-calendar-navigation li.performing-ajax {
