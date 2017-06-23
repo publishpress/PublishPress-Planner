@@ -9,7 +9,6 @@ header h2 span {
 }
 
 table#pp-calendar-view {
-	border: 1px solid #e1e1e1;
 	border-collapse: separate;
 	width: 100%;
 	table-layout: fixed;
@@ -68,23 +67,17 @@ table#pp-calendar-view .day-unit.weekend-day {
 }
 
 #pp-calendar-view .calendar-heading {
-	height: 28px;
-	background: #DFDFDF url('menu-bits.gif') repeat-x scroll left top;
-	-webkit-border-top-left-radius: 6px;    /*** Adds the rounded effect to fit with WP styles ***/
-	-webkit-border-top-right-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-	-moz-border-radius-topright: 6px;
-	border-radius-topleft: 6px;
-	border-radius-topright: 6px;
-	margin-top:5px;
+	height: 36px;
+	background: #FFF;
+	margin-top: 5px;
 }
 
 #pp-calendar-view tr th.column-heading {
 	width: 12%;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 	color: #333333;
 	line-height: 1.3em;
-	font-size: 11px;
+	font-size: 13px;
+    border-bottom: 3px solid #655997;
 }
 
 #pp-calendar-view .day-heading span {
@@ -93,9 +86,9 @@ table#pp-calendar-view .day-unit.weekend-day {
 
 #pp-calendar-view .month-marker {
 	color: #666666;
-	border-bottom: 1px solid #E1E1E1;
 	font-size: 11px;
 	line-height: 15px;
+    background: #fff;
 }
 
 #pp-calendar-view .month-marker td {
@@ -105,12 +98,12 @@ table#pp-calendar-view .day-unit.weekend-day {
 
 #pp-calendar-view .month-marker-previous {
 	text-align: right;
-	padding-right: 8px;
+	padding-right: 3px;
 	border-right: 1px solid #E1E1E1;
 }
 
 #pp-calendar-view .month-marker-current {
-	padding-left: 8px;
+	padding-left: 3px;
 }
 
 table#pp-calendar-view .week-unit {
@@ -232,7 +225,7 @@ table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
 table#pp-calendar-view .day-unit ul {
 	margin-top: 0;
 	margin-bottom: 0;
-	padding: 0;
+	padding: 22px 0 0;
 	min-height: 75px;
 }
 
@@ -447,11 +440,11 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 /*** Week Navigation Links ***/
 
 .pp-calendar-navigation {
-	padding:0;
-	display:block;
-	height:20px;
-	margin-top:10px;
-	margin-bottom:25px;
+    padding: 0;
+    display: block;
+    height: 30px;
+    margin-top: 0;
+    margin-bottom: 25px;
 }
 
 .pp-calendar-navigation select {
@@ -466,16 +459,43 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 
 .pp-calendar-navigation li.date-change a {
 	text-decoration:none;
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
-	border: 1px solid #E3E3E3;
-	padding: 3px 6px;
-	color:#21759B;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	padding: 7px 10px;
+    color: #555;
+    background: #f7f7f7;
 	font-weight: bold;
-	font-size: 12px;
-	line-height: 30px;
-	background: url("menu-bits.gif") repeat-x scroll left -379px #EEEEEE;
+	font-size: 13px;
+	line-height: 0;
+    min-height: 28px;
+}
+
+.pp-calendar-navigation li.next-week a:first-of-type {
+    border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border-right: none;
+}
+
+.pp-calendar-navigation li.next-week a:last-of-type {
+    border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+}
+
+.pp-calendar-navigation li.previous-week a:first-of-type {
+    border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border-right: none;
+}
+
+.pp-calendar-navigation li.previous-week a:last-of-type {
+    border-radius: 0 5px 5px 0;
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
 }
 
 .pp-calendar-navigation li.today a {
@@ -522,7 +542,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 .pp-calendar-navigation li.ajax-actions,
 .pp-calendar-navigation li.previous-week,
 .pp-calendar-navigation li.today {
-	margin-right: 15px;
+	margin-right: 10px;
 }
 
 .pp_calendar_hidden_list {
