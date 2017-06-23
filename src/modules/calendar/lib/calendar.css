@@ -10,7 +10,7 @@ header h2 span {
 
 table#pp-calendar-view {
 	border: 1px solid #e1e1e1;
-	border-collapse: collapse;
+	border-collapse: separate;
 	width: 100%;
 	table-layout: fixed;
 }
@@ -28,7 +28,6 @@ table#pp-calendar-view {
 }
 
 #pp-calendar-view .day-unit {
-	border-right: 1px solid #eaeaea;
 	vertical-align: top;
 	height: 100px;
 }
@@ -231,7 +230,7 @@ table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
 }
 
 table#pp-calendar-view .day-unit ul {
-	margin-top: 22px;
+	margin-top: 0;
 	margin-bottom: 0;
 	padding: 0;
 	min-height: 75px;
@@ -244,6 +243,10 @@ table#pp-calendar-view .day-unit ul li {
 	word-wrap: break-word;
 	padding: 1px;
 	background: #e2e2e2;
+}
+
+table#pp-calendar-view td.day-unit:last-of-type {
+    border-right: none;
 }
 
 table#pp-calendar-view .day-unit.weekend-day ul li {
