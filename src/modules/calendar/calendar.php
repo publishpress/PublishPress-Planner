@@ -736,7 +736,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         $ids       = isset( $_GET['ids'] ) ? $_GET['ids'] : 0;
                         $pid       = explode( ',', $ids );
                         $post_type = get_post_type( $pid[0] );
-                        echo ' <a href="' . esc_url( wp_nonce_url( "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids", 'bulk-posts' ) ) . '">' . __( 'Undo', 'publishpress' ) . '</a><br />';
+                        echo ' <a href="' . esc_url( wp_nonce_url( "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids", 'bulk-posts' ) ) . '">' . __( 'Undo', 'publishpress' ) . ' <span class="dashicons dashicons-undo"></span></a><br />';
                         unset( $_GET['trashed'] );
                     }
                     if ( isset( $_GET['untrashed'] ) && (int) $_GET['untrashed'] ) {
@@ -1314,9 +1314,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     <a title="<?php printf( __( 'Forward 1 week', 'publishpress' ) );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'next', $filters, 1 ) );
             ?>"><?php _e( '&rsaquo;', 'publishpress' );
-            ?></a>
-                    <?php if ( $this->total_weeks > 1 ) : ?>
-                    <a title="<?php printf( __( 'Forward %d weeks', 'publishpress' ), $this->total_weeks );
+            ?></a><?php if ( $this->total_weeks > 1 ) : ?><a title="<?php printf( __( 'Forward %d weeks', 'publishpress' ), $this->total_weeks );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'next', $filters ) );
             ?>"><?php _e( '&raquo;', 'publishpress' );
             ?></a>
@@ -1334,10 +1332,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     <a title="<?php printf( __( 'Back %d weeks', 'publishpress' ), $this->total_weeks );
             ?>"  href="<?php echo esc_url( $this->get_pagination_link( 'previous', $filters ) );
             ?>"><?php _e( '&laquo;', 'publishpress' );
-            ?></a>
-                    <?php endif;
-            ?>
-                    <a title="<?php printf( __( 'Back 1 week', 'publishpress' ) );
+            ?></a><?php endif; ?><a title="<?php printf( __( 'Back 1 week', 'publishpress' ) );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'previous', $filters, 1 ) );
             ?>"><?php _e( '&lsaquo;', 'publishpress' );
             ?></a>
