@@ -859,71 +859,73 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     <td class="<?php echo esc_attr( implode( ' ', $td_classes ) );
             ?>" id="<?php echo esc_attr( $week_single_date );
             ?>">
-                        <div class='schedule-new-post-label'>
-                            <?php echo __( 'Click to create', 'publishpress' ); ?>
-                        </div>
-                        <?php $class = ($week_single_date == date( 'Y-m-d', current_time( 'timestamp' ) )) ? 'calendar-today' : ''; ?>
-                        <div class="day-unit-label <?php echo $class; ?>"><?php echo esc_html( date( 'j', strtotime( $week_single_date ) ) );
-            ?></div>
-                        <ul class="post-list">
-                            <?php
-                            $this->hidden = 0;
-                            if ( ! empty( $week_posts[ $week_single_date ] ) ) {
-                                $week_posts[ $week_single_date ] = apply_filters( 'pp_calendar_posts_for_week', $week_posts[ $week_single_date ] );
+                        <div class="day-wrapper">
+                            <div class='schedule-new-post-label'>
+                                <?php echo __( 'Click to create', 'publishpress' ); ?>
+                            </div>
+                            <?php $class = ($week_single_date == date( 'Y-m-d', current_time( 'timestamp' ) )) ? 'calendar-today' : ''; ?>
+                            <div class="day-unit-label <?php echo $class; ?>"><?php echo esc_html( date( 'j', strtotime( $week_single_date ) ) );
+                ?></div>
+                            <ul class="post-list">
+                                <?php
+                                $this->hidden = 0;
+                                if ( ! empty( $week_posts[ $week_single_date ] ) ) {
+                                    $week_posts[ $week_single_date ] = apply_filters( 'pp_calendar_posts_for_week', $week_posts[ $week_single_date ] );
 
-                                foreach ( $week_posts[ $week_single_date ] as $num => $post ) {
-                                    echo $this->generate_post_li_html( $post, $week_single_date, $num );
+                                    foreach ( $week_posts[ $week_single_date ] as $num => $post ) {
+                                        echo $this->generate_post_li_html( $post, $week_single_date, $num );
+                                    }
                                 }
-                            }
-            ?>
-                        </ul>
-                        <?php if ( $this->hidden ) : ?>
-                            <a class="show-more" href="#"><?php printf( __( 'Show %d more', 'publishpress' ), $this->hidden ); ?></a>
-                        <?php endif; ?>
+                ?>
+                            </ul>
+                            <?php if ( $this->hidden ) : ?>
+                                <a class="show-more" href="#"><?php printf( __( 'Show %d more', 'publishpress' ), $this->hidden ); ?></a>
+                            <?php endif; ?>
 
-                        <?php if ( current_user_can( $this->create_post_cap ) ) :
-                            $date_formatted = date( 'D, M jS, Y', strtotime( $week_single_date ) ); ?>
+                            <?php if ( current_user_can( $this->create_post_cap ) ) :
+                                $date_formatted = date( 'D, M jS, Y', strtotime( $week_single_date ) ); ?>
 
-                            <form method="POST" class="post-insert-dialog">
-                                <?php /* translators: %1$s = post type name, %2$s = date */ ?>
-                                <?php $post_types = $this->get_selected_post_types(); ?>
-                                <?php if ( count( $post_types ) === 1 ) : ?>
-                                    <h1>
-                                        <?php echo sprintf( __( 'Schedule a %1$s for %2$s', 'publishpress' ), $this->get_quick_create_post_type_name( $post_types ), $date_formatted ); ?>
-                                        <input type="hidden" id="post-insert-dialog-post-type" name="post-insert-dialog-post-type" class="post-insert-dialog-post-type" value="<?php echo $post_types[0]; ?>" />
-                                    </h1>
-                                <?php else : ?>
-                                    <h1>
-                                        <?php echo sprintf( __( 'Schedule content for %1$s', 'publishpress' ), $date_formatted );?>
-                                    </h1>
-                                    <label for="post-insert-dialog-post-type">
-                                        <?php echo __( 'Type', 'publishpress' ); ?>
-                                        <select id="post-insert-dialog-post-type" name="post-insert-dialog-post-type" class="post-insert-dialog-post-type">
-                                            <?php foreach ( $post_types as $type ) : ?>
-                                                <option value="<?php echo $type; ?>">
-                                                    <?php echo $this->get_quick_create_post_type_name( $type ); ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </label>
-                                    <br />
-                                <?php endif; ?>
+                                <form method="POST" class="post-insert-dialog">
+                                    <?php /* translators: %1$s = post type name, %2$s = date */ ?>
+                                    <?php $post_types = $this->get_selected_post_types(); ?>
+                                    <?php if ( count( $post_types ) === 1 ) : ?>
+                                        <h1>
+                                            <?php echo sprintf( __( 'Schedule a %1$s for %2$s', 'publishpress' ), $this->get_quick_create_post_type_name( $post_types ), $date_formatted ); ?>
+                                            <input type="hidden" id="post-insert-dialog-post-type" name="post-insert-dialog-post-type" class="post-insert-dialog-post-type" value="<?php echo $post_types[0]; ?>" />
+                                        </h1>
+                                    <?php else : ?>
+                                        <h1>
+                                            <?php echo sprintf( __( 'Schedule content for %1$s', 'publishpress' ), $date_formatted );?>
+                                        </h1>
+                                        <label for="post-insert-dialog-post-type">
+                                            <?php echo __( 'Type', 'publishpress' ); ?>
+                                            <select id="post-insert-dialog-post-type" name="post-insert-dialog-post-type" class="post-insert-dialog-post-type">
+                                                <?php foreach ( $post_types as $type ) : ?>
+                                                    <option value="<?php echo $type; ?>">
+                                                        <?php echo $this->get_quick_create_post_type_name( $type ); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </label>
+                                        <br />
+                                    <?php endif; ?>
 
-                                <?php /* translators: %s = post type name */ ?>
-                                <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( __( 'Title', 'publishpress' ) ); ?>" />
+                                    <?php /* translators: %s = post type name */ ?>
+                                    <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( __( 'Title', 'publishpress' ) ); ?>" />
 
-                                <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>" />
+                                    <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>" />
 
-                                <div class="post-insert-dialog-controls">
-                                    <input type="submit" class="button left" value="<?php echo esc_html( __( 'Create', 'publishpress' ) ); ?>" />
-                                    &nbsp;
-                                    <a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html( __( 'Edit', 'publishpress' ) ); ?>&nbsp;&raquo;</a>
-                                </div>
+                                    <div class="post-insert-dialog-controls">
+                                        <input type="submit" class="button left" value="<?php echo esc_html( __( 'Create', 'publishpress' ) ); ?>" />
+                                        &nbsp;
+                                        <a class="post-insert-dialog-edit-post-link" href="#"><?php echo esc_html( __( 'Edit', 'publishpress' ) ); ?>&nbsp;&raquo;</a>
+                                    </div>
 
-                                <div class="spinner">&nbsp;</div>
-                            </form>
-                        <?php endif; ?>
+                                    <div class="spinner">&nbsp;</div>
+                                </form>
+                            <?php endif; ?>
 
+                            </div>
                         </td>
                         <?php endforeach; ?>
                                         </tr>
