@@ -197,7 +197,6 @@ table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight ul li.sortable
 
 table#pp-calendar-view .day-unit .post-insert-dialog {
 	background-color: #FFF;
-	border: 1px solid #CCC;
 	-moz-box-shadow: 0px 0px 40px #888;
 	-webkit-box-shadow: 0px 0px 40px #888;
 	box-shadow: 0px 0px 40px #888;
@@ -411,7 +410,6 @@ table#pp-calendar-view .day-unit ul li .item-overlay:not(form) {
 	z-index: 999;
 	top: 0;
 	left: 0;
-	border: 1px solid #CCC;
     -moz-box-shadow: 0px 0px 40px #888;
     -webkit-box-shadow: 0px 0px 40px #888;
     box-shadow: 0px 0px 40px #888;
