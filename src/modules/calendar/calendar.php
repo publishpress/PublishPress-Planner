@@ -736,7 +736,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         $ids       = isset( $_GET['ids'] ) ? $_GET['ids'] : 0;
                         $pid       = explode( ',', $ids );
                         $post_type = get_post_type( $pid[0] );
-                        echo ' <a href="' . esc_url( wp_nonce_url( "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids", 'bulk-posts' ) ) . '">' . __( 'Undo', 'publishpress' ) . '</a><br />';
+                        echo ' <a href="' . esc_url( wp_nonce_url( "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids", 'bulk-posts' ) ) . '">' . __( 'Undo', 'publishpress' ) . ' <span class="dashicons dashicons-undo"></span></a><br />';
                         unset( $_GET['trashed'] );
                     }
                     if ( isset( $_GET['untrashed'] ) && (int) $_GET['untrashed'] ) {

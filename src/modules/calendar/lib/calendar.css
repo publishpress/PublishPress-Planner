@@ -254,7 +254,6 @@ table#pp-calendar-view .day-unit ul li {
 	margin: 0;
 	margin-bottom: 1px;
 	word-wrap: break-word;
-	padding: 1px;
 	background: #e2e2e2;
 }
 
@@ -287,6 +286,7 @@ table#pp-calendar-view .day-unit ul li.is-published .item-default-visible {
 table#pp-calendar-view .day-unit ul li.is-published .item-default-visible {
 	background: #edeaf7;
 	cursor: pointer;
+    padding: 1px;
 }
 
 
