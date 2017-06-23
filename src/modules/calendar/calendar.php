@@ -125,7 +125,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'post_type_support'    => 'pp_calendar',
                 'default_options'      => array(
                     'enabled'                => 'on',
-                    'post_types'             => get_post_types( null, 'objects' ),
+                    'post_types'             => $this->pre_select_all_post_types(),
                     'ics_subscription'       => 'on',
                     'ics_secret_key'         => '',
                 ),
@@ -614,6 +614,25 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             $this->update_user_meta( $current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $filters );
 
             return $filters;
+        }
+
+        /**
+         * Set all post types as selected, to be used as the default option.
+         *
+         * @return array
+         */
+        protected function pre_select_all_post_types() {
+            if ( ! isset( $this->module->options->post_types ) ) {
+                $this->module->options->post_types = get_post_types( null, 'objects' );
+            }
+
+            if ( ! empty( $this->module->options->post_types ) ) {
+                foreach ( $this->module->options->post_types as $type => $value ) {
+                    $this->module->options->post_types[ $type ] = 'on';
+                }
+            }
+
+            return $this->module->options->post_types;
         }
 
         /**
