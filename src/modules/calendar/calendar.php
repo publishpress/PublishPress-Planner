@@ -622,17 +622,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          * @return array
          */
         protected function pre_select_all_post_types() {
-            if ( ! isset( $this->module->options->post_types ) ) {
-                $this->module->options->post_types = get_post_types( null, 'objects' );
+            $list = get_post_types( null, 'objects' );
+
+            foreach ( $list as $type => $value ) {
+                $list[ $type ] = 'on';
             }
 
-            if ( ! empty( $this->module->options->post_types ) ) {
-                foreach ( $this->module->options->post_types as $type => $value ) {
-                    $this->module->options->post_types[ $type ] = 'on';
-                }
-            }
-
-            return $this->module->options->post_types;
+            return $list;
         }
 
         /**
