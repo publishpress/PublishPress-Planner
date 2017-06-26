@@ -1,4 +1,4 @@
-header h2 span {
+header h2 span:not(.time-range) {
 	color: #999999;
 }
 
@@ -521,6 +521,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 	line-height: 35px;
     min-height: 28px;
     vertical-align: middle;
+    margin: 0 3px;
 }
 
 .pp-calendar-navigation li.date-change a:hover,
@@ -529,32 +530,6 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     background: #fafafa;
     border-color: #999;
     color: #23282d;
-}
-
-.pp-calendar-navigation li.next-week a:first-of-type {
-    border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-    border-right: none;
-}
-
-.pp-calendar-navigation li.next-week a:last-of-type {
-    border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-}
-
-.pp-calendar-navigation li.previous-week a:first-of-type {
-    border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-}
-
-.pp-calendar-navigation li.previous-week a:last-of-type {
-    border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-    border-left: none;
 }
 
 .pp-calendar-navigation li.today a {
@@ -597,7 +572,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 .pp-calendar-navigation li.ajax-actions,
 .pp-calendar-navigation li.previous-week,
 .pp-calendar-navigation li.today {
-	margin-right: 10px;
+	margin-right: 5px;
 }
 
 .pp_calendar_hidden_list {
