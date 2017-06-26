@@ -160,10 +160,6 @@ table#pp-calendar-view .day-unit .dashicons {
 	color: #b7b7b7;
 }
 
-/*table#pp-calendar-view .day-unit .dashicons-yes:before {
-    color: #378137;
-}*/
-
 table#pp-calendar-view .day-unit .item-overlay .dashicons:before {
     line-height: 37px;
     margin-left: 12px;
@@ -584,7 +580,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 @media (min-width: 1024px) {
 
     table#pp-calendar-view tr td.day-unit:last-of-type .item-overlay {
-        left: unset;
+        left: auto;
         right: 0;
     }
 
