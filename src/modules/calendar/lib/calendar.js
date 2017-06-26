@@ -167,11 +167,14 @@ jQuery( document ).ready(function ($) {
 			return;
 		}
 
+		var $this = $( this );
+
 		publishpress_calendar_close_overlays();
 
-		$( this ).addClass( 'active' );
+		$this.addClass( 'active' );
+		$this.parents( 'td' ).addClass( 'popup-loaded' );
 
-		var overlay = $( this ).find( '.item-static' );
+		var overlay = $this.find( '.item-static' );
 
 		overlay.removeClass( 'item-static' );
 		overlay.addClass( 'item-overlay' );
