@@ -521,7 +521,6 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 	line-height: 35px;
     min-height: 28px;
     vertical-align: middle;
-    margin: 0 3px;
 }
 
 .pp-calendar-navigation li.date-change a:hover,
@@ -534,6 +533,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 
 .pp-calendar-navigation li.today a {
 	font-weight: normal;
+    margin: 0 4px;
 }
 
 .pp-calendar-navigation a:hover {
@@ -569,10 +569,8 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 	vertical-align:middle;
 }
 
-.pp-calendar-navigation li.ajax-actions,
-.pp-calendar-navigation li.previous-week,
-.pp-calendar-navigation li.today {
-	margin-right: 5px;
+.pp-calendar-navigation li.ajax-actions {
+	margin-right: 10px;
 }
 
 .pp_calendar_hidden_list {

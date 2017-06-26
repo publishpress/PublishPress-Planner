@@ -1310,12 +1310,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     <a title="<?php printf( __( 'Forward 1 week', 'publishpress' ) );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'next', $filters, 1 ) );
             ?>"><?php _e( '&rsaquo;', 'publishpress' );
-            ?></a><?php if ( $this->total_weeks > 1 ) : ?><a title="<?php printf( __( 'Forward %d weeks', 'publishpress' ), $this->total_weeks );
+            ?></a>
+                    <?php if ( $this->total_weeks > 1 ) : ?>
+                        <a title="<?php printf( __( 'Forward %d weeks', 'publishpress' ), $this->total_weeks );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'next', $filters ) );
             ?>"><?php _e( '&raquo;', 'publishpress' );
             ?></a>
-                    <?php endif;
-            ?>
+                    <?php endif; ?>
                 </li>
                 <li class="date-change today">
                     <a title="<?php printf( __( 'Today is %s', 'publishpress' ), date( get_option( 'date_format' ), current_time( 'timestamp' ) ) );
@@ -1328,7 +1329,9 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     <a title="<?php printf( __( 'Back %d weeks', 'publishpress' ), $this->total_weeks );
             ?>"  href="<?php echo esc_url( $this->get_pagination_link( 'previous', $filters ) );
             ?>"><?php _e( '&laquo;', 'publishpress' );
-            ?></a><?php endif; ?><a title="<?php printf( __( 'Back 1 week', 'publishpress' ) );
+            ?></a>
+                    <?php endif; ?>
+                    <a title="<?php printf( __( 'Back 1 week', 'publishpress' ) );
             ?>" href="<?php echo esc_url( $this->get_pagination_link( 'previous', $filters, 1 ) );
             ?>"><?php _e( '&lsaquo;', 'publishpress' );
             ?></a>
