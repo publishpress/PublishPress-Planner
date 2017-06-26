@@ -120,20 +120,22 @@ table#pp-calendar-view .week-unit {
 
 table#pp-calendar-view .day-unit.today {
 	background: #E8E6F0;
+    box-shadow: 1px 0 0 #655997 inset, -1px 0 0 #655997 inset, 0 1px 0 #655997 inset, 0 -1px 0 #655997 inset;
+    -moz-box-shadow: 1px 0 0 #655997 inset, -1px 0 0 #655997 inset, 0 1px 0 #655997 inset, 0 -1px 0 #655997 inset;
+    -webkit-box-shadow: 1px 0 0 #655997 inset, -1px 0 0 #655997 inset, 0 1px 0 #655997 inset, 0 -1px 0 #655997 inset;
 }
 
 table#pp-calendar-view .day-unit.today .day-wrapper {
-    border: 1px solid #655997;
+
 }
 
 .day-unit-label.calendar-today {
 	background: #655997;
 	color: white !important;
-	padding: 3px;
+    padding-right: 9px;
 	padding-top: 0px;
-	width: 20px;
+    padding-bottom: 3px;
 	text-align: center;
-	height: 20px;
 	display: block;
 	min-height: 20px;
 	line-height: 20px;
@@ -210,7 +212,7 @@ table#pp-calendar-view .day-unit .post-insert-dialog {
 	box-shadow: 0px 0px 40px #888;
 	padding: 5px 12px 12px;
 	position: absolute;
-    bottom: -50px;
+    top: 35px;
     left: 0;
 	width: 280px;
 	z-index: 999;
