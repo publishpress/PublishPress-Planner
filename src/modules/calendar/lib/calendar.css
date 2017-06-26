@@ -600,3 +600,15 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 .save-metadata-hide {
 	display: none;
 }
+
+@media (min-width: 1024px) {
+
+    table#pp-calendar-view tr td.day-unit:last-of-type .item-overlay {
+        left: unset;
+        right: 0;
+    }
+
+    table#pp-calendar-view tr td.day-unit:last-of-type .item-overlay:before {
+        right: 10px;
+    }
+}
