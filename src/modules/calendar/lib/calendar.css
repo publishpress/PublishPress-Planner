@@ -43,6 +43,11 @@ table#pp-calendar-view {
 	height: 150px;
 }
 
+table#pp-calendar-view .day-unit.popup-loaded,
+table#pp-calendar-view .day-unit.popup-loaded.weekend-day {
+    background-color: #edeaf7;
+}
+
 table#pp-calendar-view .day-unit.weekend-day {
 	background-color: #F9F9F9;
 }
