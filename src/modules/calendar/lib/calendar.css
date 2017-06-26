@@ -177,7 +177,7 @@ table#pp-calendar-view .day-unit .schedule-new-post-label{
 	color: #adadad;
 	position: absolute;
 	top: 1px;
-	left: 33px;
+	right: 8px;
 }
 
 table#pp-calendar-view .day-unit .ui-state-highlight {
