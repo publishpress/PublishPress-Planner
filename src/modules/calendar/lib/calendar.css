@@ -1,4 +1,4 @@
-header h2 span {
+header h2 span:not(.time-range) {
 	color: #999999;
 }
 
@@ -160,10 +160,6 @@ table#pp-calendar-view .day-unit .dashicons {
 	color: #b7b7b7;
 }
 
-/*table#pp-calendar-view .day-unit .dashicons-yes:before {
-    color: #378137;
-}*/
-
 table#pp-calendar-view .day-unit .item-overlay .dashicons:before {
     line-height: 37px;
     margin-left: 12px;
@@ -177,7 +173,7 @@ table#pp-calendar-view .day-unit .schedule-new-post-label{
 	color: #adadad;
 	position: absolute;
 	top: 1px;
-	left: 33px;
+	right: 8px;
 }
 
 table#pp-calendar-view .day-unit .ui-state-highlight {
@@ -531,34 +527,9 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     color: #23282d;
 }
 
-.pp-calendar-navigation li.next-week a:first-of-type {
-    border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-    border-right: none;
-}
-
-.pp-calendar-navigation li.next-week a:last-of-type {
-    border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-}
-
-.pp-calendar-navigation li.previous-week a:first-of-type {
-    border-radius: 5px 0 0 5px;
-    -moz-border-radius: 5px 0 0 5px;
-    -webkit-border-radius: 5px 0 0 5px;
-}
-
-.pp-calendar-navigation li.previous-week a:last-of-type {
-    border-radius: 0 5px 5px 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-    border-left: none;
-}
-
 .pp-calendar-navigation li.today a {
 	font-weight: normal;
+    margin: 0 4px;
 }
 
 .pp-calendar-navigation a:hover {
@@ -594,9 +565,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 	vertical-align:middle;
 }
 
-.pp-calendar-navigation li.ajax-actions,
-.pp-calendar-navigation li.previous-week,
-.pp-calendar-navigation li.today {
+.pp-calendar-navigation li.ajax-actions {
 	margin-right: 10px;
 }
 
@@ -611,7 +580,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 @media (min-width: 1024px) {
 
     table#pp-calendar-view tr td.day-unit:last-of-type .item-overlay {
-        left: unset;
+        left: auto;
         right: 0;
     }
 
