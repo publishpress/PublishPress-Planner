@@ -270,12 +270,16 @@ jQuery( document ).ready(function ($) {
 		 * click to create new content.
 		 */
 		show_quickpost_label: function(e) {
-			$this = $( this );
+			var $this = $( this ),
+				target = e.srcElement || e.target;
+				$target = $( target );
 
 			e.preventDefault();
 			e.stopPropagation();
 
-			if ($( e.srcElement ).is( 'td.day-unit' ) || $( e.srcElement ).is( '.post-list' )) {
+
+
+			if ($target.is( 'td.day-unit' ) || $target.is( '.post-list' )) {
 				$( '.schedule-new-post-label' ).stop().hide();
 				$this.find( '.schedule-new-post-label' ).stop().show();
 			}
