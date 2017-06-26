@@ -186,6 +186,8 @@ jQuery( document ).ready(function ($) {
 			.addClass( 'item-static' );
 
 		$( '.post-insert-overlay' ).remove();
+
+		$( '.popup-loaded' ).removeClass( 'popup-loaded' );
 	}
 
 	/**
@@ -325,6 +327,9 @@ jQuery( document ).ready(function ($) {
 
 			// Close other overlays
 			publishpress_calendar_close_overlays();
+
+			// Add the CSS class to sinalize the day which was clicked
+			$this.addClass( 'popup-loaded' );
 
 			// Get the current calendar square
 			EFQuickPublish.$current_date_square = $this;
