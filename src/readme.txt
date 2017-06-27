@@ -166,6 +166,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.6.0] - UNRELEASED =
+
+* Changed:
+* Updated internal method to show post type settings fields for add-ons.
+
 = [1.5.0] - 2017-06-27 =
 
 * Changed:
