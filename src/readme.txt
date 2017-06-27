@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.4.3
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,7 +166,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.5.0] - UNRELEASED =
+= [1.5.0] - 2017-06-27 =
 
 * Changed:
 * Moved Calendar to the PublishPress menu
@@ -175,10 +175,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Renamed story-budget module to content-overview
 * Removed the Featured module and tab in settings
 * Moved the General tab as the first in the settings page
+* Changed calendar settings enabling all post type by default
+* Improved styling in the calendar view
 
 * Fixed:
-* Fixed link and filename of the .ics file downloaded from the calendar
-
+* Fixed link and filename of the .ics file downloaded from the calendar\
+* Fixed the "Click to create" on Chrome label in Firefox
+* Fixed last column popup display in Internet Explorer 11
 
 = [1.4.3] - 2017-06-21 =
 
