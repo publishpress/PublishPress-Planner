@@ -274,25 +274,27 @@ if (!class_exists('PP_Settings')) {
         /**
          * Generate an option field to turn post type support on/off for a given module
          *
-         * @param object $module PublishPress module we're generating the option field for
-         * @param {missing}
+         * @param object $module      PublishPress module we're generating the option field for
+         * @param array  $post_types  If empty, we consider all post types
          *
          * @since 0.7
          */
-        public function helper_option_custom_post_type($module, $args = array())
+        public function helper_option_custom_post_type($module, $post_types = array())
         {
-            $all_post_types = array(
-                'post' => __('Posts'),
-                'page' => __('Pages'),
-            );
-            $custom_post_types = $this->get_supported_post_types_for_module();
-            if (count($custom_post_types)) {
-                foreach ($custom_post_types as $custom_post_type => $args) {
-                    $all_post_types[$custom_post_type] = $args->label;
+            if ( empty( $post_types ) ) {
+                $post_types = array(
+                    'post' => __('Posts'),
+                    'page' => __('Pages'),
+                );
+                $custom_post_types = $this->get_supported_post_types_for_module();
+                if (count($custom_post_types)) {
+                    foreach ($custom_post_types as $custom_post_type => $args) {
+                        $post_types[$custom_post_type] = $args->label;
+                    }
                 }
             }
 
-            foreach ($all_post_types as $post_type => $title) {
+            foreach ($post_types as $post_type => $title) {
                 echo '<label for="' . esc_attr($post_type) . '-' . $module->slug . '">';
                 echo '<input id="' . esc_attr($post_type) . '-' . $module->slug . '" name="'
                     . $module->options_group_name . '[post_types][' . esc_attr($post_type) . ']"';
