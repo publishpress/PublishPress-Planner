@@ -239,7 +239,7 @@ class publishpress {
 		add_menu_page(
 			esc_html__( 'Calendar', 'publishpress' ),
 			esc_html__( 'PublishPress', 'publishpress' ),
-			'manage_options',
+			'pp_view_calendar',
 			'pp-calendar',
 			array( $this->calendar, 'render_admin_page' ),
 			null,
