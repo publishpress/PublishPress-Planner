@@ -223,9 +223,9 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // view_calendar - administrator --> contributor
             $calendar_roles = array(
                 'administrator' => array( 'pp_view_calendar' ),
-                'editor' => array( 'pp_view_calendar' ),
-                'author' => array( 'pp_view_calendar' ),
-                'contributor' => array( 'pp_view_calendar' ),
+                'editor'        => array( 'pp_view_calendar' ),
+                'author'        => array( 'pp_view_calendar' ),
+                'contributor'   => array( 'pp_view_calendar' ),
             );
 
             foreach ( $calendar_roles as $role => $caps ) {
