@@ -218,7 +218,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          * @since 0.7
          */
         public function install() {
-
             // Add necessary capabilities to allow management of calendar
             // view_calendar - administrator --> contributor
             $calendar_roles = array(
