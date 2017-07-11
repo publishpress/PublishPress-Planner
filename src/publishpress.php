@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.6.0
+ * Version: 1.6.0a1
  *
  * Copyright (c) 2017 PressShack
  *
@@ -170,7 +170,7 @@ class publishpress {
 		add_action( 'init', array( $this, 'action_init' ) );
 		add_action( 'init', array( $this, 'action_init_after' ), 1000 );
 
-		add_action( 'admin_init', array( $this, 'action_admin_init' ) );
+		add_action( 'init', array( $this, 'action_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
 
 		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
@@ -239,7 +239,7 @@ class publishpress {
 		add_menu_page(
 			esc_html__( 'Calendar', 'publishpress' ),
 			esc_html__( 'PublishPress', 'publishpress' ),
-			'manage_options',
+			'pp_view_calendar',
 			'pp-calendar',
 			array( $this->calendar, 'render_admin_page' ),
 			null,

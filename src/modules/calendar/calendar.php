@@ -218,14 +218,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          * @since 0.7
          */
         public function install() {
-
             // Add necessary capabilities to allow management of calendar
             // view_calendar - administrator --> contributor
             $calendar_roles = array(
                 'administrator' => array( 'pp_view_calendar' ),
-                'editor' => array( 'pp_view_calendar' ),
-                'author' => array( 'pp_view_calendar' ),
-                'contributor' => array( 'pp_view_calendar' ),
+                'editor'        => array( 'pp_view_calendar' ),
+                'author'        => array( 'pp_view_calendar' ),
+                'contributor'   => array( 'pp_view_calendar' ),
             );
 
             foreach ( $calendar_roles as $role => $caps ) {

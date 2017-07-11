@@ -152,11 +152,11 @@ class RoboFile extends \Robo\Tasks
 
     /**
      * Copy the folder to the wordpress given location
-     *
-     * @param string $wordPressPath Path for the WordPress installation
      */
-    public function packInstall($wordPressPath)
+    public function packInstall()
     {
+        $wordPressPath = getenv('PS_WP_PATH');
+
         $this->say('Building the package');
 
         // Build the package

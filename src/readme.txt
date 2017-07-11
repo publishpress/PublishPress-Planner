@@ -171,6 +171,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed:
 * Updated internal method to show post type settings fields for add-ons.
 
+= [1.5.1] - 2017-06-28 =
+
+* Fixed:
+* Fixes required capability to see the calendar
+
 = [1.5.0] - 2017-06-27 =
 
 * Changed:

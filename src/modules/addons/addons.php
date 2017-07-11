@@ -31,9 +31,6 @@
 if ( ! class_exists( 'PP_Addons' ) ) {
     /**
      * class PP_Addons
-     * Threaded commenting in the admin for discussion between writers and editors
-     *
-     * @author batmoo
      */
     class PP_Addons extends PP_Module {
         /**
@@ -79,7 +76,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                 ),
                 'configure_page_cb'   => 'print_configure_view',
                 'autoload'            => true,
-                'options_page'        => true,
+                'options_page'        => false,
             );
 
             $this->module = PublishPress()->register_module( static::NAME, $args );
@@ -99,6 +96,8 @@ if ( ! class_exists( 'PP_Addons' ) ) {
          * Initialize the rest of the stuff in the class if the module is active
          */
         public function init() {
+            add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ), 19 );
+
             add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
         }
 
@@ -132,12 +131,29 @@ if ( ! class_exists( 'PP_Addons' ) ) {
         }
 
         /**
-         * Settings page for editorial comments
-         *
-         * @since 0.7
+         * Add necessary things to the admin menu
          */
-        public function print_configure_view() {
+        public function action_admin_menu() {
+            // Main Menu
+            add_submenu_page(
+                'pp-calendar',
+                esc_html__( 'Add-ons', 'publishpress' ),
+                esc_html__( 'Add-ons', 'publishpress' ),
+                apply_filters( 'pp_view_addons_cap', 'manage_options' ),
+                'pp-addons',
+                array( $this, 'render_admin_page' )
+            );
+        }
+
+        /**
+         * Renders the admin page
+         */
+        public function render_admin_page() {
             global $publishpress;
+
+            $description = '<h2>' . __( 'Add-ons', 'publishpress' ) . '</h2>';
+
+            $publishpress->settings->print_default_header( $publishpress->modules->addons, $description );
 
             $countEnabled    = 0;
             $icons_base_path = plugins_url( 'publishpress' ) . '/modules/addons/lib/img/';
@@ -167,7 +183,9 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                 'publishpress-woocommerce-checklist' => array(
                     'title'       => __( 'WooCommerce Checklist', 'publishpress' ),
                     'description' => __( 'This add-on allows WooCommerce teams to define tasks that must be complete before products are published.' ),
-                    'available'   => false,
+                    'available'   => true,
+                    'installed'   => $this->is_plugin_installed( 'publishpress-woocommerce-checklist' ),
+                    'active'      => $this->is_plugin_active( 'publishpress-woocommerce-checklist' ),
                 ),
                 'publishpress-multiple-authors' => array(
                     'title'       => __( 'Multiple authors support', 'publishpress' ),
@@ -194,6 +212,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                     'installed'      => __( 'Installed', 'publishpress' ),
                     'get_pro_addons' => __( 'Get Pro Add-ons!', 'publishpress' ),
                     'coming_soon'    => __( 'Coming soon', 'publishpress' ),
+                    'available'      => __( 'Available', 'publishpress' ),
                 ),
             );
 
