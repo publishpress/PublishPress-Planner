@@ -168,8 +168,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.6.0] - UNRELEASED =
 
+* Fixed:
+* Fixed an error message after install after redirect to the calendar;
+
 * Changed:
-* Updated internal method to show post type settings fields for add-ons.
+* Moved the Add-ons tab to a menu item;
+* Updated internal method to show post type settings fields for add-ons;
 
 = [1.5.1] - 2017-06-28 =
 
