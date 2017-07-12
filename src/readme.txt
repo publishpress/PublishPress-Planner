@@ -166,7 +166,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.6.0] - UNRELEASED =
+= [1.6.0] - 2017-07-12 =
 
 * Fixed:
 * Fixed an error message after install after redirect to the calendar;
