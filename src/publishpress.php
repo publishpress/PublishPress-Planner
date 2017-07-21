@@ -76,7 +76,7 @@ class publishpress {
 	}
 
 	private function setup_globals() {
-		$this->modules = new stdClass();
+		$this->modules = new stdClass;
 	}
 
 	/**
@@ -118,6 +118,7 @@ class publishpress {
 		$module_dirs[ 'addons' ] = PUBLISHPRESS_ROOT;
 
 		$class_names = array();
+
 		foreach ( $module_dirs as $module_dir => $base_path ) {
 			if ( file_exists( "{$base_path}/modules/{$module_dir}/{$module_dir}.php" ) ) {
 				include_once "{$base_path}/modules/{$module_dir}/{$module_dir}.php";
@@ -139,7 +140,7 @@ class publishpress {
 
 		// Instantiate PP_Module as $helpers for back compat and so we can
 		// use it in this class
-		$this->helpers = new PP_Module();
+		$this->helpers = new PP_Module;
 
 		// Other utils
 		require_once( PUBLISHPRESS_ROOT . '/common/php/util.php' );
@@ -148,6 +149,7 @@ class publishpress {
 		// but make sure they exist too
 		foreach ( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
+				$slug = PublishPress\Util::sanitize_module_name( $slug );
 				$this->$slug = new $class_name;
 			}
 		}

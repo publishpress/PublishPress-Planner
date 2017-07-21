@@ -144,16 +144,7 @@ if ( ! class_exists( 'PP_Module' ) ) {
 		 * @since 0.7
 		 */
 		public function get_post_types_for_module( $module ) {
-			$post_types = array();
-			if ( isset( $module->options->post_types ) && is_array( $module->options->post_types ) ) {
-				foreach ( $module->options->post_types as $post_type => $value ) {
-					if ( 'on' == $value ) {
-						$post_types[] = $post_type;
-					}
-				}
-			}
-
-			return $post_types;
+			return PublishPress\Util::get_post_types_for_module( $module );
 		}
 
 		/**
@@ -306,30 +297,7 @@ if ( ! class_exists( 'PP_Module' ) ) {
 		 * @return string|null $post_type The post type we've found, or null if no post type
 		 */
 		public function get_current_post_type() {
-			global $post, $typenow, $pagenow, $current_screen;
-
-			// get_post() needs a variable
-			$post_id = isset( $_REQUEST['post'] ) ? (int) $_REQUEST['post'] : false;
-
-			if ( $post && $post->post_type ) {
-				$post_type = $post->post_type;
-			} elseif ( $typenow ) {
-				$post_type = $typenow;
-			} elseif ( $current_screen && ! empty( $current_screen->post_type ) ) {
-				$post_type = $current_screen->post_type;
-			} elseif ( isset( $_REQUEST['post_type'] ) ) {
-				$post_type = sanitize_key( $_REQUEST['post_type'] );
-			} elseif ( 'post.php' == $pagenow
-				&& $post_id
-				&& ! empty( get_post( $post_id )->post_type ) ) {
-				$post_type = get_post( $post_id )->post_type;
-			} elseif ( 'edit.php' == $pagenow && empty( $_REQUEST['post_type'] ) ) {
-				$post_type = 'post';
-			} else {
-				$post_type = null;
-			}
-
-				return $post_type;
+			return PublishPress\Util::get_current_post_type();
 		}
 
 		/**
