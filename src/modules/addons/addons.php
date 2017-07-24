@@ -190,7 +190,9 @@ if ( ! class_exists( 'PP_Addons' ) ) {
                 'publishpress-multiple-authors' => array(
                     'title'       => __( 'Multiple authors support', 'publishpress' ),
                     'description' => __( 'Allows you choose multiple authors for a single post. This add-on is ideal for teams who write collabratively.' ),
-                    'available'   => false,
+                    'available'   => true,
+                    'installed'   => $this->is_plugin_installed( 'publishpress-multiple-authors' ),
+                    'active'      => $this->is_plugin_active( 'publishpress-multiple-authors' ),
                 ),
                 'publishpress-multi-site' => array(
                     'title'       => __( 'Multi-site and Multiple support', 'publishpress' ),
