@@ -3,38 +3,10 @@
 .DS_Store
 wpcom-helper.php
 
-/build/packages/*
-!/build/packages/.gitkeep
-
 /local.sh
 node_modules
 
-#Vendor folders
-/src/vendor/*
-
-!/src/vendor/autoload.php
-!/src/vendor/composer
-/src/vendor/composer/*
-!/src/vendor/composer/autoload_classmap.php
-!/src/vendor/composer/autoload_files.php
-!/src/vendor/composer/autoload_namespaces.php
-!/src/vendor/composer/autoload_psr4.php
-!/src/vendor/composer/autoload_real.php
-!/src/vendor/composer/autoload_static.php
-!/src/vendor/composer/ClassLoader.php
-!/src/vendor/composer/LICENSE
-!/src/vendor/composer/installed.json
-
-!/src/vendor/symfony
-/src/vendor/symfony/*
-!/src/vendor/symfony/polyfill-mbstring
-/src/vendor/symfony/polyfill-mbstring/composer.json
-/src/vendor/symfony/polyfill-mbstring/README.md
-!/src/vendor/twig
-!/src/vendor/twig/twig
-/src/vendor/twig/twig/*
-!/src/vendor/twig/twig/lib
-!/src/vendor/twig/twig/LICENSE
-
-node_modules
 /.properties.ini
+
+/vendor
+/composer.lock

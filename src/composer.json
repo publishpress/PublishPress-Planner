@@ -1,0 +1,11 @@
+{
+    "name"       : "pressshack/publishpress",
+    "description": "WordPress plugin to accelerate your publishing workflow.",
+    "homepage"   : "http://pressshack.com/",
+    "type"       : "wordpress-plugin",
+    "license"    : "GPL-2.0+",
+    "require"    : {
+        "php": ">= 5.3",
+        "twig/twig": "~1.0"
+    }
+}
