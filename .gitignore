@@ -8,5 +8,6 @@ node_modules
 
 /.properties.ini
 
+/packages
 /vendor
 /composer.lock
