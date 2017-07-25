@@ -10,6 +10,7 @@ require 'vendor/autoload.php';
 class RoboFile extends PressShack\Builder\Base
 {
     public function __construct() {
-        $this->plugin_name = 'publishpress';
+        $this->plugin_name      = 'publishpress';
+        $this->version_constant = 'PUBLISHPRESS_VERSION';
     }
 }
