@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.6.1
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,7 +166,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.6.1] - 2017-07-25 =
+= [1.6.1] - UNRELEASED =
 
 * Changed:
 * Preparing for supporting the new add-on: Multiple Authors
