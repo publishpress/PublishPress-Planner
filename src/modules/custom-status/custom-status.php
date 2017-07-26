@@ -531,7 +531,7 @@ if (!class_exists('PP_Custom_Status')) {
             $slug = (! empty($args['slug'])) ? $args['slug'] : sanitize_title($term);
             unset($args['slug']);
             $encoded_description = $this->get_encoded_description($args);
-            $response            = wp_insert_term($term, self::taxonomy_key, array('slug' => $slug, 'description' => $encoded_description/*, 'color' => $color, 'slug' => $icon*/));
+            $response            = wp_insert_term($term, self::taxonomy_key, array('slug' => $slug, 'description' => $encoded_description));
 
             // Reset our internal object cache
             $this->custom_statuses_cache = array();
@@ -926,6 +926,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             $name        = sanitize_text_field(trim($_POST['name']));
             $description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
+            $color       = sanitize_text_field($_POST['color']);
+            $icon        = sanitize_text_field($_POST['icon']);
 
             /**
              * Form validation for editing custom status
@@ -1356,22 +1358,22 @@ if (!class_exists('PP_Custom_Status')) {
                     </td>
                 </tr>
                 <tr class="form-field">
-                    <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
-                            ?></label></th>
-                    <td>
-                        <input name="icon" id="icon" type="text" value="<?php echo esc_attr($icon);
-                        ?>" size="40" aria-required="true" />
-                        <?php $publishpress->settings->helper_print_error_or_description('icon', __('The color is used to identify the status.', 'publishpress'));
-                        ?>
-                    </td>
-                </tr>
-                <tr class="form-field">
                     <th scope="row" valign="top"><label for="color"><?php _e('Color', 'publishpress');
                             ?></label></th>
                     <td>
                         <input name="color" id="color" type="text" value="<?php echo esc_attr($color);
                         ?>" size="40" aria-required="true" />
-                        <?php $publishpress->settings->helper_print_error_or_description('color', __('The icon is used to visually represent the status.', 'publishpress'));
+                        <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
+                        ?>
+                    </td>
+                </tr>
+                <tr class="form-field">
+                    <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
+                            ?></label></th>
+                    <td>
+                        <input name="icon" id="icon" type="text" value="<?php echo esc_attr($icon);
+                        ?>" size="40" aria-required="true" />
+                        <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
                         ?>
                     </td>
                 </tr>
