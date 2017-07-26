@@ -7,8 +7,8 @@ require 'vendor/autoload.php';
  *
  * @see http://robo.li/
  */
-class RoboFile extends PressShack\Builder\Base
-{
+class RoboFile extends PressShack\Builder\Robo_Task {
+
     public function __construct() {
         $this->plugin_name      = 'publishpress';
         $this->version_constant = 'PUBLISHPRESS_VERSION';
