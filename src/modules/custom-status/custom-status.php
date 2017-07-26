@@ -2131,6 +2131,32 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     }
 
     /**
+     * Displayed column showing the color of the status
+     *
+     * @since 1.7.0
+     *
+     * @param object $item Custom status as an object
+     * @return string $output What will be rendered
+     */
+    public function column_color($item)
+    {
+        return $item->color;
+    }
+
+    /**
+     * Displayed column showing the icon of the status
+     *
+     * @since 1.7.0
+     *
+     * @param object $item Custom status as an object
+     * @return string $output What will be rendered
+     */
+    public function column_icon($item)
+    {
+        return $item->icon;
+    }
+
+    /**
      * Prepare and echo a single custom status row
      *
      * @since 0.7
