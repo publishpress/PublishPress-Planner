@@ -1163,6 +1163,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['name']));
             $status_slug        = sanitize_title($_POST['name']);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
+            $status_color       = $_POST['color'];
+            $status_icon        = $_POST['icon'];
 
             // Check if name field was filled in
             if (empty($status_name)) {
@@ -1211,6 +1213,8 @@ if (!class_exists('PP_Custom_Status')) {
                 'name' => $status_name,
                 'description' => $status_description,
                 'slug' => $status_slug,
+                'color' => $status_color,
+                'icon' => $status_icon,
             );
             $return = $this->update_custom_status($term_id, $args);
             if (!is_wp_error($return)) {
@@ -2106,6 +2110,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
         $output .= '<div class="hidden" id="inline_' . esc_attr($item->term_id) . '">';
         $output .= '<div class="name">' . esc_html($item->name) . '</div>';
         $output .= '<div class="description">' . esc_html($item->description) . '</div>';
+        $output .= '<div class="color">' . esc_html($item->color) . '</div>';
+        $output .= '<div class="icon">' . esc_html($item->icon) . '</div>';
         $output .= '</div>';
 
         return $output;
@@ -2162,8 +2168,18 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                     </label>
                     <label>
                         <span class="title"><?php _e('Description', 'publishpress');
-            ?></span>
+        ?></span>
                         <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
+                    </label>
+                    <label>
+                        <span class="title"><?php _e('Color', 'publishpress');
+        ?></span>
+                        <span class="input-text-wrap"><input type="text" name="color" class="pcolor" value="" /></span>
+                    </label>
+                    <label>
+                        <span class="title"><?php _e('Icon', 'publishpress');
+        ?></span>
+                        <span class="input-text-wrap"><input type="text" name="icon" class="picon" value="" /></span>
                     </label>
                 </div></fieldset>
             <p class="inline-edit-save submit">
