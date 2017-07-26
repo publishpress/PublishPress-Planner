@@ -159,6 +159,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pitch',
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
+                        'color' => '#000',
+                        'icon' => 'dashicons-admin-appearance',
                     ),
                 ),
                 array(
@@ -167,6 +169,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'assigned',
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position' => 2,
+                        'color' => '#000',
+                        'icon' => 'dashicons-admin-appearance',
                     ),
                 ),
                 array(
@@ -175,6 +179,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'in-progress',
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position' => 3,
+                        'color' => '#000',
+                        'icon' => 'dashicons-admin-appearance',
                     ),
                 ),
                 array(
@@ -183,6 +189,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'draft',
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position' => 4,
+                        'color' => '#000',
+                        'icon' => 'dashicons-admin-appearance',
                     ),
                 ),
                 array(
@@ -191,6 +199,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pending',
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position' => 5,
+                        'color' => '#000',
+                        'icon' => 'dashicons-admin-appearance',
                     ),
                 ),
             );
@@ -441,16 +451,22 @@ if (!class_exists('PP_Custom_Status')) {
                     'name' => __('Published', 'publishpress'),
                     'slug' => 'publish',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
                 $all_statuses[] = array(
                     'name' => __('Privately Published', 'publishpress'),
                     'slug' => 'private',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
                 $all_statuses[] = array(
                     'name' => __('Scheduled', 'publishpress'),
                     'slug' => 'future',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
 
                 // Load the custom statuses
@@ -459,6 +475,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'name' => esc_js($status->name),
                         'slug' => esc_js($status->slug),
                         'description' => esc_js($status->description),
+                        'color' => esc_js($status->color),
+                        'icon' => esc_js($status->icon),
                     );
                 }
 
@@ -513,7 +531,7 @@ if (!class_exists('PP_Custom_Status')) {
             $slug = (! empty($args['slug'])) ? $args['slug'] : sanitize_title($term);
             unset($args['slug']);
             $encoded_description = $this->get_encoded_description($args);
-            $response            = wp_insert_term($term, self::taxonomy_key, array('slug' => $slug, 'description' => $encoded_description));
+            $response            = wp_insert_term($term, self::taxonomy_key, array('slug' => $slug, 'description' => $encoded_description/*, 'color' => $color, 'slug' => $icon*/));
 
             // Reset our internal object cache
             $this->custom_statuses_cache = array();
@@ -559,8 +577,12 @@ if (!class_exists('PP_Custom_Status')) {
             $args_to_encode                = array();
             $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
             $args_to_encode['position']    = (isset($args['position'])) ? $args['position'] : $old_status->position;
+            $args_to_encode['color']       = (isset($args['color'])) ? $args['color'] : $old_status->color;
+            $args_to_encode['icon']        = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
             $encoded_description           = $this->get_encoded_description($args_to_encode);
             $args['description']           = $encoded_description;
+            //$args['color']                 = $encoded_color;
+            //$args['icon']                  = $encoded_icon;
 
             $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
             $updated_status       = $this->get_custom_status_by('id', $updated_status_array['term_id']);
@@ -825,6 +847,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['status_name']));
             $status_slug        = sanitize_title($status_name);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['status_description'])));
+            $status_color       = $_POST['status_color'];
+            $status_icon        = $_POST['status_icon'];
 
             /**
              * Form validation
@@ -863,6 +887,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_args = array(
                 'description' => $status_description,
                 'slug' => $status_slug,
+                'color' => $status_color,
+                'icon' => $status_icon,
             );
             $return = $this->add_custom_status($status_name, $status_args);
             if (is_wp_error($return)) {
@@ -953,6 +979,8 @@ if (!class_exists('PP_Custom_Status')) {
                 'name' => $name,
                 'slug' => sanitize_title($name),
                 'description' => $description,
+                'color' => $color,
+                'icon' => $icon,
             );
             $return = $this->update_custom_status($existing_status->term_id, $args);
             if (is_wp_error($return)) {
@@ -1284,6 +1312,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             $name        = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $status->name;
             $description = (isset($_POST['description'])) ? strip_tags(stripslashes($_POST['description'])) : $status->description;
+            $color       = (isset($_POST['color'])) ? stripslashes($_POST['color']) : $status->color;
+            $icon        = (isset($_POST['icon'])) ? stripslashes($_POST['icon']) : $status->icon;
             ?>
 
             <div id="ajax-response"></div>
@@ -1317,12 +1347,32 @@ if (!class_exists('PP_Custom_Status')) {
                 </tr>
                 <tr class="form-field">
                     <th scope="row" valign="top"><label for="description"><?php _e('Description', 'publishpress');
-            ?></label></th>
+                            ?></label></th>
                     <td>
                         <textarea name="description" id="description" rows="5" cols="50" style="width: 97%;"><?php echo esc_textarea($description);
-            ?></textarea>
-                    <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
-            ?>
+                            ?></textarea>
+                        <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
+                        ?>
+                    </td>
+                </tr>
+                <tr class="form-field">
+                    <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
+                            ?></label></th>
+                    <td>
+                        <input name="icon" id="icon" type="text" value="<?php echo esc_attr($icon);
+                        ?>" size="40" aria-required="true" />
+                        <?php $publishpress->settings->helper_print_error_or_description('icon', __('The color is used to identify the status.', 'publishpress'));
+                        ?>
+                    </td>
+                </tr>
+                <tr class="form-field">
+                    <th scope="row" valign="top"><label for="color"><?php _e('Color', 'publishpress');
+                            ?></label></th>
+                    <td>
+                        <input name="color" id="color" type="text" value="<?php echo esc_attr($color);
+                        ?>" size="40" aria-required="true" />
+                        <?php $publishpress->settings->helper_print_error_or_description('color', __('The icon is used to visually represent the status.', 'publishpress'));
+                        ?>
                     </td>
                 </tr>
             </table>
@@ -1404,6 +1454,26 @@ if (!class_exists('PP_Custom_Status')) {
             ?></textarea>
                             <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
             ?>
+                        </div>
+                        <div class="form-field">
+                            <label for="status_color"><?php _e('Color', 'publishpress');
+                    ?></label>
+                            <input type="text" aria-required="true" size="20" maxlength="20" id="status_color" name="status_color" value="<?php if (!empty($_POST['status_color'])) {
+                        echo esc_attr($_POST['status_color']);
+                    }
+                    ?>" />
+                            <?php $publishpress->settings->helper_print_error_or_description('name', __('The color is used to identify the status.', 'publishpress'));
+                    ?>
+                        </div>
+                        <div class="form-field">
+                            <label for="status_icon"><?php _e('Icon', 'publishpress');
+                    ?></label>
+                            <input type="text" aria-required="true" size="20" maxlength="20" id="status_icon" name="status_icon" value="<?php if (!empty($_POST['status_icon'])) {
+                        echo esc_attr($_POST['status_icon']);
+                    }
+                    ?>" />
+                            <?php $publishpress->settings->helper_print_error_or_description('name', __('The icon is used to visually represent the status.', 'publishpress'));
+                    ?>
                         </div>
                         <?php wp_nonce_field('custom-status-add-nonce');
             ?>
@@ -1930,6 +2000,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
             'position'            => __('Position', 'publishpress'),
             'name'                => __('Name', 'publishpress'),
             'description'        => __('Description', 'publishpress'),
+            'color'              => __('Color', 'publishpress'),
+            'icon'               => __('Icon', 'publishpress'),
         );
 
         $post_types           = get_post_types('', 'objects');
