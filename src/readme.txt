@@ -166,10 +166,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.6.1] - UNRELEASED =
+= [1.6.1] - 2017-07-27 =
 
 * Changed:
-* Preparing for supporting the new add-on: Multiple Authors
+* Updated the add-ons page for supporting the new add-on: Multiple Authors
+
+* Fixed:
+* Fixed the icon size for calendar
 
 = [1.6.0] - 2017-07-12 =
 
