@@ -99,6 +99,7 @@ Currently, the most important user of user groups is [Email Notifications](http:
 * **Pre-publishing checklists for WooCommerce** – This add-on allows WooCommerce teams to define tasks that must be complete before products are published.
 * **Multi-site and Multiple support for PublishPress** – This add-on will enable PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
 * **Permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
+* **Multiple Authors** – This add-on allows you to assign multiple authors to one content item, and easily displayuu their information.
 
 = IMPORTING FROM EDITFLOW =
 
