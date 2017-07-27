@@ -153,7 +153,8 @@ table#pp-calendar-view .day-unit{
 }
 
 table#pp-calendar-view .day-unit .dashicons {
-	font-size: 14px;
+	font-size: 17px;
+    line-height: 20px;
 	position: absolute;
 	left: 0px;
 	top: 1px;
@@ -321,10 +322,9 @@ table#pp-calendar-view .day-unit ul li .item-status {
 
 table#pp-calendar-view .day-unit ul li .inner {
 	margin-right: 57px;
-	padding-left: 3px;
 	width: 100%;
-	padding-right: 3px;
 	box-sizing: border-box;
+    padding: 3px;
 }
 
 table#pp-calendar-view .day-unit ul li .item-headline {
