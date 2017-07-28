@@ -1737,10 +1737,9 @@ if (!class_exists('PP_Custom_Status')) {
                             <label for="status_color"><?php _e('Color', 'publishpress');
                     ?></label>
                             <input type="text" aria-required="true" size="20" maxlength="20" id="status_color" name="status_color" value="<?php if (!empty($_POST['status_color'])) {
-                        echo esc_attr($_POST['status_color']);
-                    }
+                        echo esc_attr($_POST['status_color']); } else { echo '#655997'; }
                     ?>" />
-                            <?php $publishpress->settings->helper_print_error_or_description('name', __('The color is used to identify the status.', 'publishpress'));
+                            <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                     ?>
                         </div>
                         <div class="form-field">
@@ -1749,7 +1748,7 @@ if (!class_exists('PP_Custom_Status')) {
 
                             <?php echo $this->dropdown_icons(esc_attr($_POST['status_icon']), 'status_icon', 'id="status_icon"') ?>
 
-                            <?php $publishpress->settings->helper_print_error_or_description('name', __('The icon is used to visually represent the status.', 'publishpress'));
+                            <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
                     ?>
                         </div>
                         <?php wp_nonce_field('custom-status-add-nonce');
