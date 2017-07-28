@@ -382,7 +382,32 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * Generate the color picker
+         * $current_value   Selected icon for the status
+         * fieldname        The name for the <select> field
+         * $attributes      Insert attributes different to name. For example: 'class="something"', 'id="something"'
+         */
+        public function color_picker($current_value = '', $fieldname = 'icon', $attributes = '') {
+
+            // Set default value if empty
+            if (!empty($current_value)){
+                $pp_color = $current_value;
+            }
+            else
+            {
+                $pp_color = '#b7b7b7';
+            }
+
+            $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" ' . $attributes . ' />';
+
+            return $color_picker;
+        }
+
+        /**
          * Generate the dropdown for dashicons
+         * $current_value   Selected icon for the status
+         * fieldname        The name for the <select> field
+         * $attributes      Insert attributes different to name. For example: 'class="something"', 'id="something"'
          */
         public function dropdown_icons($current_value = '', $fieldname = 'icon', $attributes = '')
         {
@@ -1638,8 +1663,9 @@ if (!class_exists('PP_Custom_Status')) {
                     <th scope="row" valign="top"><label for="color"><?php _e('Color', 'publishpress');
                             ?></label></th>
                     <td>
-                        <input name="color" id="color" type="text" value="<?php echo esc_attr($color);
-                        ?>" size="40" aria-required="true" />
+
+                        <?php echo $this->color_picker(esc_attr($color), 'color', 'id="color"') ?>
+
                         <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                         ?>
                     </td>
@@ -1736,9 +1762,9 @@ if (!class_exists('PP_Custom_Status')) {
                         <div class="form-field">
                             <label for="status_color"><?php _e('Color', 'publishpress');
                     ?></label>
-                            <input type="text" aria-required="true" size="20" maxlength="20" id="status_color" name="status_color" value="<?php if (!empty($_POST['status_color'])) {
-                        echo esc_attr($_POST['status_color']); } else { echo '#b7b7b7'; }
-                    ?>" />
+
+                            <?php echo $this->color_picker(esc_attr($_POST['status_color']), 'status_color', 'id="status_color"') ?>
+
                             <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                     ?>
                         </div>
