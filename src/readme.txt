@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,13 +92,20 @@ Currently, the most important user of user groups is [Email Notifications](http:
 
 = MORE PUBLISHPRESS PRO ADD-ONS COMING SOON =
 
-[Check out the PublishPress Everything Club](https://pressshack.com/addons/publishpress-club/) for access to all the add-ons we’ll release in the next year! Here are some of the add-ons we plan to release:
+[Check out the PublishPress Everything Club](https://pressshack.com/addons/publishpress-club/) for access to all the add-ons we’ll release in the next year! Here are the add-ons we have available now:
 
-* **Slack support for PublishPress** – This add-on will integrate PublishPress with Slack, so you can get comment and status change notifications directly on Slack.
+* **Content Checklist** – This is a pre-publishing checklist that allows WordPress teams to specify tasks that must be completed before posts and pages are published.
+* **WooCommerce Checklist** – This is a pre-publishing checklist that allows WordPress teams to specify tasks that must be completed before products are published.
+* **Slack Integration** – This add-on integrates PublishPress with Slack, so you can get comment and status change notifications directly inside Slack.
+* **Permissions** – This add-on allows you to control which users can complete certain tasks, such as publishing content and editing metadata.
+* **Multiple Authors** – This add-on allows you to assign multiple authors to one content item, and easily displayuu their information.
+
+Here are some of the add-ons we plan to release:
+
 * **Zapier support for PublishPress** – This add-on will integrate PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.
-* **Pre-publishing checklists for WooCommerce** – This add-on allows WooCommerce teams to define tasks that must be complete before products are published.
 * **Multi-site and Multiple support for PublishPress** – This add-on will enable PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
-* **Permissions for PublishPress** – This add-on will allow you to control which users can complete certain tasks, such as publishing content.
+* **Revision Management for PublishPress** – Coming soon, this add-on allows users to submit changes to published content. These revisions can be scheduled and / or approved.
+* **Notifications for PublishPress** – Coming soon, this add-on add support for better notifications. Keep up-to-date with all the content changes on your site.
 
 = IMPORTING FROM EDITFLOW =
 
@@ -166,10 +173,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.6.1] - UNRELEASED =
+= [1.6.1] - 2017-07-27 =
 
 * Changed:
-* Preparing for supporting the new add-on: Multiple Authors
+* Updated the add-ons page for supporting the new add-on: Multiple Authors
+
+* Fixed:
+* Fixed the icon size for calendar
 
 = [1.6.0] - 2017-07-12 =
 
