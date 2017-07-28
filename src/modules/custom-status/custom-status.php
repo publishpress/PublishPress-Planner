@@ -160,7 +160,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
                         'color' => '#b7b7b7',
-                        'icon' => 'dashicons-edit',
+                        'icon' => 'dashicons-marker',
                     ),
                 ),
                 array(
@@ -170,7 +170,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position' => 2,
                         'color' => '#b7b7b7',
-                        'icon' => 'dashicons-edit',
+                        'icon' => 'dashicons-admin-users',
                     ),
                 ),
                 array(
@@ -180,7 +180,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position' => 3,
                         'color' => '#b7b7b7',
-                        'icon' => 'dashicons-edit',
+                        'icon' => 'dashicons-format-status',
                     ),
                 ),
                 array(
@@ -190,7 +190,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position' => 4,
                         'color' => '#b7b7b7',
-                        'icon' => 'dashicons-edit',
+                        'icon' => 'dashicons-media-default',
                     ),
                 ),
                 array(
@@ -200,7 +200,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position' => 5,
                         'color' => '#b7b7b7',
-                        'icon' => 'dashicons-edit',
+                        'icon' => 'dashicons-clock',
                     ),
                 ),
             );
@@ -2276,7 +2276,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
             'position'            => __('Position', 'publishpress'),
             'name'                => __('Name', 'publishpress'),
             'description'        => __('Description', 'publishpress'),
-            'color'              => __('Color', 'publishpress'),
+            //'color'              => __('Color', 'publishpress'),
             'icon'               => __('Icon', 'publishpress'),
         );
 
@@ -2354,7 +2354,9 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
         $item_edit_link = esc_url($publishpress->custom_status->get_link(array('action' => 'edit-status', 'term-id' => $item->term_id)));
 
-        $output = '<strong><a href="' . $item_edit_link . '">' . esc_html($item->name) . '</a>';
+        $output  = '<span class="pp-status-color" style="background:' . $item->color . ';"></span>';
+
+        $output .= '<strong><a href="' . $item_edit_link . '">' . esc_html($item->name) . '</a>';
         if ($item->slug == $this->default_status) {
             $output .= ' - ' . __('Default', 'publishpress');
         }
@@ -2408,10 +2410,10 @@ class PP_Custom_Status_List_Table extends WP_List_Table
      * @param object $item Custom status as an object
      * @return string $output What will be rendered
      */
-    public function column_color($item)
+    /*public function column_color($item)
     {
-        return $item->color;
-    }
+        return '<span class="pp-status-color" style="background:' . $item->color . ';"></span>';
+    }*/
 
     /**
      * Displayed column showing the icon of the status
@@ -2423,7 +2425,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
      */
     public function column_icon($item)
     {
-        return $item->icon;
+        return '<span class="dashicons ' . $item->icon . '"></span>';
     }
 
     /**

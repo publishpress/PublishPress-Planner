@@ -132,7 +132,25 @@
 	margin-top: 35px;
 }
 
-/* Dropdown icons */
+/* @TODO load this code through custom-status.css
+Status color box */
+
+.pp-status-color {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.pp-status-color + strong {
+    margin-left: 5px;
+}
+
+/* @TODO load this code through custom-status.css
+Dropdown icons */
 
 .pp-icons-dropdown [value*="dashicons-"]:before {
     display: inline-block;
