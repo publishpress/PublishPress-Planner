@@ -382,6 +382,279 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * Generate the dropdown for dashicons
+         */
+        public function dropdown_icons($current_value = '', $fieldname = 'icon', $attributes = '')
+        {
+
+            $pp_icons_dropdown = '';
+
+            $pp_icons_list = array(
+                'edit',
+                'menu',
+                'admin-site',
+                'dashboard',
+                'admin-media',
+                'admin-page',
+                'admin-comments',
+                'admin-appearance',
+                'admin-plugins',
+                'admin-users',
+                'admin-tools',
+                'admin-settings',
+                'admin-network',
+                'admin-generic',
+                'admin-home',
+                'admin-collapse',
+                'filter',
+                'admin-customizer',
+                'admin-multisite',
+                'admin-links',
+                'format-links',
+                'admin-post',
+                'format-standard',
+                'format-image',
+                'format-gallery',
+                'format-audio',
+                'format-video',
+                'format-chat',
+                'format-status',
+                'format-aside',
+                'format-quote',
+                'welcome-edit-page',
+                'welcome-write-blog',
+                'welcome-add-page',
+                'welcome-view-site',
+                'welcome-widgets-menus',
+                'welcome-comments',
+                'welcome-learn-more',
+                'image-crop',
+                'image-rotate',
+                'image-rotate-left',
+                'image-rotate-right',
+                'image-flip-vertical',
+                'image-flip-horizontal',
+                'image-filter',
+                'undo',
+                'redo',
+                'editor-bold',
+                'editor-italic',
+                'editor-ul',
+                'editor-ol',
+                'editor-quote',
+                'editor-alignleft',
+                'editor-aligncenter',
+                'editor-alignright',
+                'editor-insertmore',
+                'editor-spellcheck',
+                'editor-distractionfree',
+                'editor-expand',
+                'editor-contract',
+                'editor-kitchensink',
+                'editor-underline',
+                'editor-justify',
+                'editor-textcolor',
+                'editor-paste-word',
+                'editor-paste-text',
+                'editor-removeformatting',
+                'editor-video',
+                'editor-customchar',
+                'editor-outdent',
+                'editor-indent',
+                'editor-help',
+                'editor-strikethrough',
+                'editor-unlink',
+                'editor-rtl',
+                'editor-break',
+                'editor-code',
+                'editor-paragraph',
+                'editor-table',
+                'align-left',
+                'align-right',
+                'align-center',
+                'align-none',
+                'lock',
+                'unlock',
+                'calendar',
+                'calendar-alt',
+                'visibility',
+                'hidden',
+                'post-status',
+                'post-trash',
+                'trash',
+                'sticky',
+                'external',
+                'arrow-up',
+                'arrow-down',
+                'arrow-left',
+                'arrow-right',
+                'arrow-up-alt',
+                'arrow-down-alt',
+                'arrow-left-alt',
+                'arrow-right-alt',
+                'arrow-up-alt2',
+                'arrow-down-alt2',
+                'arrow-left-alt2',
+                'arrow-right-alt2',
+                'leftright',
+                'sort',
+                'randomize',
+                'list-view',
+                'excerpt-view',
+                'exerpt-view',
+                'grid-view',
+                'move',
+                'hammer',
+                'art',
+                'migrate',
+                'performance',
+                'universal-access',
+                'universal-access-alt',
+                'tickets',
+                'nametag',
+                'clipboard',
+                'heart',
+                'megaphone',
+                'schedule',
+                'wordpress',
+                'wordpress-alt',
+                'pressthis',
+                'update',
+                'screenoptions',
+                'cart',
+                'feedback',
+                'cloud',
+                'translation',
+                'tag',
+                'category',
+                'archive',
+                'tagcloud',
+                'text',
+                'media-archive',
+                'media-audio',
+                'media-code',
+                'media-default',
+                'media-document',
+                'media-interactive',
+                'media-spreadsheet',
+                'media-text',
+                'media-video',
+                'playlist-audio',
+                'playlist-video',
+                'controls-play',
+                'controls-pause',
+                'controls-forward',
+                'controls-skipforward',
+                'controls-back',
+                'controls-skipback',
+                'controls-repeat',
+                'controls-volumeon',
+                'controls-volumeoff',
+                'yes',
+                'no',
+                'no-alt',
+                'plus',
+                'plus-alt',
+                'plus-alt2',
+                'minus',
+                'dismiss',
+                'marker',
+                'star-filled',
+                'star-half',
+                'star-empty',
+                'flag',
+                'info',
+                'warning',
+                'share',
+                'share1',
+                'share-alt',
+                'share-alt2',
+                'twitter',
+                'rss',
+                'email',
+                'email-alt',
+                'facebook',
+                'facebook-alt',
+                'networking',
+                'googleplus',
+                'location',
+                'location-alt',
+                'camera',
+                'images-alt',
+                'images-alt2',
+                'video-alt',
+                'video-alt2',
+                'video-alt3',
+                'vault',
+                'shield',
+                'shield-alt',
+                'sos',
+                'search',
+                'slides',
+                'analytics',
+                'chart-pie',
+                'chart-bar',
+                'chart-line',
+                'chart-area',
+                'groups',
+                'businessman',
+                'id',
+                'id-alt',
+                'products',
+                'awards',
+                'forms',
+                'testimonial',
+                'portfolio',
+                'book',
+                'book-alt',
+                'download',
+                'upload',
+                'backup',
+                'clock',
+                'lightbulb',
+                'microphone',
+                'desktop',
+                'laptop',
+                'tablet',
+                'smartphone',
+                'phone',
+                'smiley',
+                'index-card',
+                'carrot',
+                'building',
+                'store',
+                'album',
+                'palmtree',
+                'tickets-alt',
+                'money',
+                'thumbs-up',
+                'thumbs-down',
+                'layout',
+                'paperclip'
+            );
+
+            $pp_icons_dropdown .= '<select class="pp-icons-dropdown" name="' . $fieldname . '" ' . $attributes . '>';
+
+            foreach ($pp_icons_list as $pp_icon) {
+
+                // Set selected value if exist
+                if ('dashicons-' . $pp_icon == $current_value){
+                    $pp_icon_selected = ' selected';
+                }
+                else
+                {
+                    $pp_icon_selected = '';
+                }
+
+                $pp_icons_dropdown .= '<option value="dashicons-' . $pp_icon . '"' . $pp_icon_selected . '>' . $pp_icon . '</option>';
+            }
+
+            $pp_icons_dropdown .= '</select>';
+
+            return $pp_icons_dropdown;
+        }
+
+        /**
          * Check whether custom status stuff should be loaded on this page
          *
          * @todo migrate this to the base module class
@@ -847,7 +1120,7 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['status_name']));
             $status_slug        = sanitize_title($status_name);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['status_description'])));
-            $status_color       = $_POST['status_color'];
+            $status_color       = sanitize_hex_color($_POST['status_color']);
             $status_icon        = $_POST['status_icon'];
 
             /**
@@ -926,7 +1199,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             $name        = sanitize_text_field(trim($_POST['name']));
             $description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
-            $color       = sanitize_text_field($_POST['color']);
+            $color       = sanitize_hex_color($_POST['color']);
             $icon        = sanitize_text_field($_POST['icon']);
 
             /**
@@ -1163,7 +1436,7 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['name']));
             $status_slug        = sanitize_title($_POST['name']);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
-            $status_color       = $_POST['color'];
+            $status_color       = sanitize_hex_color($_POST['color']);
             $status_icon        = $_POST['icon'];
 
             // Check if name field was filled in
@@ -1375,8 +1648,7 @@ if (!class_exists('PP_Custom_Status')) {
                     <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
                             ?></label></th>
                     <td>
-                        <input name="icon" id="icon" type="text" value="<?php echo esc_attr($icon);
-                        ?>" size="40" aria-required="true" />
+                        <?php echo $this->dropdown_icons(esc_attr($icon), 'icon', 'id="icon"'); ?>
                         <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
                         ?>
                     </td>
@@ -1474,10 +1746,9 @@ if (!class_exists('PP_Custom_Status')) {
                         <div class="form-field">
                             <label for="status_icon"><?php _e('Icon', 'publishpress');
                     ?></label>
-                            <input type="text" aria-required="true" size="20" maxlength="20" id="status_icon" name="status_icon" value="<?php if (!empty($_POST['status_icon'])) {
-                        echo esc_attr($_POST['status_icon']);
-                    }
-                    ?>" />
+
+                            <?php echo $this->dropdown_icons(esc_attr($_POST['status_icon']), 'status_icon', 'id="status_icon"') ?>
+
                             <?php $publishpress->settings->helper_print_error_or_description('name', __('The icon is used to visually represent the status.', 'publishpress'));
                     ?>
                         </div>
@@ -2196,16 +2467,6 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                         <span class="title"><?php _e('Description', 'publishpress');
         ?></span>
                         <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
-                    </label>
-                    <label>
-                        <span class="title"><?php _e('Color', 'publishpress');
-        ?></span>
-                        <span class="input-text-wrap"><input type="text" name="color" class="pcolor" value="" /></span>
-                    </label>
-                    <label>
-                        <span class="title"><?php _e('Icon', 'publishpress');
-        ?></span>
-                        <span class="input-text-wrap"><input type="text" name="icon" class="picon" value="" /></span>
                     </label>
                 </div></fieldset>
             <p class="inline-edit-save submit">
