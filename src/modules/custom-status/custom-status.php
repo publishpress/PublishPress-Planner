@@ -2425,7 +2425,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
      */
     public function column_icon($item)
     {
-        return '<span class="dashicons ' . $item->icon . '"></span>';
+        return '<span class="dashicons ' . esc_html($item->icon) . '"></span>';
     }
 
     /**
