@@ -159,8 +159,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pitch',
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
-                        'color' => '#000',
-                        'icon' => 'dashicons-admin-appearance',
+                        'color' => '#b7b7b7',
+                        'icon' => 'dashicons-edit',
                     ),
                 ),
                 array(
@@ -169,8 +169,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'assigned',
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position' => 2,
-                        'color' => '#000',
-                        'icon' => 'dashicons-admin-appearance',
+                        'color' => '#b7b7b7',
+                        'icon' => 'dashicons-edit',
                     ),
                 ),
                 array(
@@ -179,8 +179,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'in-progress',
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position' => 3,
-                        'color' => '#000',
-                        'icon' => 'dashicons-admin-appearance',
+                        'color' => '#b7b7b7',
+                        'icon' => 'dashicons-edit',
                     ),
                 ),
                 array(
@@ -189,8 +189,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'draft',
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position' => 4,
-                        'color' => '#000',
-                        'icon' => 'dashicons-admin-appearance',
+                        'color' => '#b7b7b7',
+                        'icon' => 'dashicons-edit',
                     ),
                 ),
                 array(
@@ -199,8 +199,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pending',
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position' => 5,
-                        'color' => '#000',
-                        'icon' => 'dashicons-admin-appearance',
+                        'color' => '#b7b7b7',
+                        'icon' => 'dashicons-edit',
                     ),
                 ),
             );
@@ -1737,7 +1737,7 @@ if (!class_exists('PP_Custom_Status')) {
                             <label for="status_color"><?php _e('Color', 'publishpress');
                     ?></label>
                             <input type="text" aria-required="true" size="20" maxlength="20" id="status_color" name="status_color" value="<?php if (!empty($_POST['status_color'])) {
-                        echo esc_attr($_POST['status_color']); } else { echo '#655997'; }
+                        echo esc_attr($_POST['status_color']); } else { echo '#b7b7b7'; }
                     ?>" />
                             <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                     ?>
