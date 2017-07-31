@@ -385,9 +385,17 @@ if (!class_exists('PP_Custom_Status')) {
          * Generate the color picker
          * $current_value   Selected icon for the status
          * fieldname        The name for the <select> field
-         * $attributes      Insert attributes different to name. For example: 'class="something"', 'id="something"'
+         * $attributes      Insert attributes different to name and class. For example: 'id="something"'
          */
-        public function color_picker($current_value = '', $fieldname = 'icon', $attributes = '') {
+        public function pp_color_picker($current_value = '', $fieldname = 'icon', $attributes = '') {
+
+            add_action( 'admin_enqueue_scripts', 'pp_enqueue_color_picker' );
+            function pp_enqueue_color_picker( $hook_suffix ) {
+                if( is_admin() ) {
+                    wp_enqueue_style( 'wp-color-picker' );
+                    wp_enqueue_script('publishpress-color-picker', $this->module_url . 'lib/color-picker.js', array( 'wp-color-picker' ), false, true );
+                }
+            }
 
             // Set default value if empty
             if (!empty($current_value)){
@@ -398,7 +406,7 @@ if (!class_exists('PP_Custom_Status')) {
                 $pp_color = '#b7b7b7';
             }
 
-            $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" ' . $attributes . ' />';
+            $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" class="pp-color-picker" ' . $attributes . ' data-default-color="' . $pp_color . '" />';
 
             return $color_picker;
         }
@@ -1664,7 +1672,7 @@ if (!class_exists('PP_Custom_Status')) {
                             ?></label></th>
                     <td>
 
-                        <?php echo $this->color_picker(esc_attr($color), 'color', 'id="color"') ?>
+                        <?php echo $this->pp_color_picker(esc_attr($color), 'color') ?>
 
                         <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                         ?>
@@ -1763,7 +1771,7 @@ if (!class_exists('PP_Custom_Status')) {
                             <label for="status_color"><?php _e('Color', 'publishpress');
                     ?></label>
 
-                            <?php echo $this->color_picker(esc_attr($_POST['status_color']), 'status_color', 'id="status_color"') ?>
+                            <?php echo $this->pp_color_picker(esc_attr($_POST['status_color']), 'status_color') ?>
 
                             <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                     ?>
