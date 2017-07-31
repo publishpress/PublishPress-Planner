@@ -162,7 +162,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             }
 
             // Menu
-            add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ) );
+            add_action( 'publishpress_admin_menu', array( $this, 'action_admin_menu' ) );
 
             // .ics calendar subscriptions
             add_action( 'wp_ajax_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ) );

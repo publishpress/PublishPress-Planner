@@ -249,7 +249,7 @@ class publishpress {
 		);
 
 		// Submenus
-    	do_action( 'pp_admin_menu' );
+    	do_action( 'publishpress_admin_menu' );
 	}
 
 	/**
