@@ -1,7 +1,7 @@
-(function($) {
+jQuery(document).ready(function() {
 
-    $(function() {
-        $('.pp-color-picker').wpColorPicker();
+    jQuery(function() {
+        jQuery('.pp-color-picker').wpColorPicker();
     });
 
-})(jQuery);
+});
