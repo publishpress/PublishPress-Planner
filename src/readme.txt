@@ -173,6 +173,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.6.2] - UNRELEASED =
+
+* Fixed:
+* Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
+
 = [1.6.1] - 2017-07-27 =
 
 * Changed:
