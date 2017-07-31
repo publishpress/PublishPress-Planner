@@ -391,10 +391,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             add_action( 'admin_enqueue_scripts', 'pp_enqueue_color_picker' );
             function pp_enqueue_color_picker( $hook_suffix ) {
-                if( is_admin() ) {
-                    wp_enqueue_style( 'wp-color-picker' );
-                    wp_enqueue_script('publishpress-color-picker', $this->module_url . 'lib/color-picker.js', array( 'wp-color-picker' ), false, true );
-                }
+                wp_enqueue_style( 'wp-color-picker' );
+                wp_enqueue_script('publishpress-color-picker', $this->module_url . 'lib/color-picker.js', array( 'wp-color-picker' ), false, true );
             }
 
             // Set default value if empty
