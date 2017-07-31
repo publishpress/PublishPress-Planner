@@ -132,6 +132,14 @@
 	margin-top: 35px;
 }
 
+.publishpress-admin .wp-picker-default {
+    padding: 0 10px;
+}
+
+.publishpress-admin .wp-picker-open {
+    margin-bottom: 5px;
+}
+
 /* @TODO load this code through custom-status.css
 Status color box */
 
