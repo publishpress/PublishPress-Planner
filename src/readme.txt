@@ -177,10 +177,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed:
 * Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
-* Fixed the creation and drag-and-drop on the calendar to set the scheduled date (keeping the current status);
+* Fixed the creation and drag-and-drop of content on the calendar to set the scheduled date. Moving the content, if published or scheduled, now updates the status (and icon) according to the current time;
 
 * Changed:
 * Improves the description of the add-ons in the readme.txt file;
+* Allow to drag-and-drop published content on the calendar;
 
 = [1.6.1] - 2017-07-27 =
 
