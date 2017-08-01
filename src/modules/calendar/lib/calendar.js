@@ -233,6 +233,22 @@ jQuery( document ).ready(function ($) {
 				jQuery.post(ajaxurl, params,
 					function(response) {
 						$( 'li.ajax-actions .waiting' ).hide();
+
+						// Update the icon in case it switched between publish and future
+						var data = response.data,
+							$icon_span = $( ui.item ).find('.dashicons');
+
+						if ( data.post_status === 'future' || data.post_status === 'publish' ) {
+							$icon_span.removeClass();
+							$icon_span.addClass('dashicons');
+
+							if ( data.post_status === 'future' ) {
+								$icon_span.addClass('dashicons-calendar-alt');
+							} else if ( data.post_status === 'publish' ) {
+								$icon_span.addClass('dashicons-yes');
+							}
+						}
+
 						var html = '';
 						if (response.status == 'error') {
 							html = '<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>';

@@ -347,13 +347,22 @@ if ( ! class_exists( 'PP_Module' ) ) {
 		 * @since 0.7
 		 *
 		 * @param string $status Whether it was a 'success' or an 'error'
+		 * @param string $message
+		 * @param array  $data
 		 */
-		public function print_ajax_response( $status, $message = '' ) {
+		public function print_ajax_response( $status, $message = '', $data = null ) {
 			header( 'Content-type: application/json;' );
-			echo json_encode( array(
+
+			$result = array(
 				'status' => $status,
 				'message' => $message,
-			) );
+			);
+
+			if ( ! is_null( $data ) ) {
+				$result['data'] = $data;
+			}
+
+			echo json_encode( $result );
 
 			exit;
 		}

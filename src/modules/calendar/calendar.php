@@ -342,11 +342,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 $this->print_ajax_response( 'error', $this->module->messages['invalid-permissions'] );
             }
 
-            // Check that it's not yet published
-            if ( in_array( $post->post_status, $this->published_statuses ) ) {
-                $this->print_ajax_response( 'error', sprintf( $this->module->messages['published-post-ajax'], get_edit_post_link( $post_id ) ) );
-            }
-
             // Check that the new date passed is a valid one
             $next_date_full = strtotime( $_POST['next_date'] );
             if ( ! $next_date_full ) {
@@ -370,6 +365,17 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 $new_values['post_date_gmt'] = date( 'Y-m-d', $next_date_full ) . ' ' . $existing_time_gmt;
             }
 
+            // Check that it's already published, and adjust the status.
+            // If is in the past or today, set as published. If future, as scheduled.
+            $new_values['post_status'] = $post->post_status;
+            if ( in_array( $post->post_status, $this->published_statuses ) || $post->post_status === 'future' ) {
+                if ( $next_date_full <= time() ) {
+                    $new_values['post_status'] = 'publish';
+                } else {
+                    $new_values['post_status'] = 'future';
+                }
+            }
+
             // We have to do SQL unfortunately because of core bugginess
             // Note to those reading this: bug Nacin to allow us to finish the custom status API
             // See http://core.trac.wordpress.org/ticket/18362
@@ -381,7 +387,10 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 $this->print_ajax_response( 'error', $this->module->messages['update-error'] );
             }
 
-            $this->print_ajax_response( 'success', $this->module->messages['post-date-updated'] );
+            $data = array(
+                'post_status' => $new_values['post_status'],
+            );
+            $this->print_ajax_response( 'success', $this->module->messages['post-date-updated'], $data );
             exit;
         }
 
@@ -987,7 +996,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
             // This is checked on the ajax request too.
-            if ( $this->current_user_can_modify_post( $post ) && ( ! in_array( $post->post_status, $this->published_statuses ) || $post->post_status == 'future') ) {
+            if ( $this->current_user_can_modify_post( $post ) ) {
                 $post_classes[] = 'sortable';
             }
 
