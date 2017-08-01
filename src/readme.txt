@@ -177,6 +177,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed:
 * Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
+* Fixed the creation and drag-and-drop on the calendar to set the scheduled date (keeping the current status);
+
+* Changed:
+* Improves the description of the add-ons in the readme.txt file;
 
 = [1.6.1] - 2017-07-27 =
 
