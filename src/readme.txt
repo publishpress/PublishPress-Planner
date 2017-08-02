@@ -13,32 +13,33 @@ PublishPress is essential for WordPress sites with multiple writers. Get editori
 
 == Description ==
 
-Do you run a busy WordPress site? If your WordPress site has more than one content creator, then you need PublishPress.
+The slogan of PublishPress is “WordPress for Teams”
 
 PublishPress is the essential plugin for any WordPress site with multiple writers.
 
-PublishPress is a plugin with several tools that help your team stay organized:
+PublishPress has multiple tools that help your team stay organized:
 
 * Use the [Editorial Calendar](https://pressshack.com/publishpress/docs/calendar/) and [Content Overview](https://pressshack.com/publishpress/docs/calendar/) to get a clear picture of all your planned and published content.
 * You can create [Comments](https://pressshack.com/publishpress/docs/editorial-comments/) and [Notifications](https://pressshack.com/publishpress/docs/notifications/) to leave feedback and keep your team in the loop.
 * You can add [Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) to give your team extra information about each post.
 * Create [Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/) so that WordPress matches your team’s workflow.
 
-= WORDPRESS PRE-PUBLISHING CHECKLIST =
-
-The “Content Checklist” add-on is perfect for anyone who wants to create a consistent experience with their WordPress content. If you publish a lot of content, it can be hard to make sure every post has the features you need. Using the PublishPress Content Checklist, you can define tasks that must be complete before content is published. Next to every post and page, writers see a checklist box, showing the tasks they need to complete.
-
-* [Click here to purchase the Content Checklist for WordPress!](https://pressshack.com/addons/content-checklist/)
-
-= SLACK INTEGRATION =
-
-The "Slack" add-on integrates PublishPress with Slack, so you can get comment and status change notifications directly inside your favorite Slack channels.
-
-* [Click here to purchase the Slack add-on!](https://pressshack.com/addons/slack/)
-
 = WHO SHOULD USE PUBLISHPRESS? =
 
-PublishPress is ideal for WordPress sites that have content teams. With PublishPress, you can collaborate muchmore effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+PublishPress is ideal for WordPress sites that have content teams. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+
+= PREMIUM ADD-ONS FOR PUBLISHPRESS =
+
+[Content Checklist](https://pressshack.com/addons/content-checklist/): Set high standards for all your published content
+[Multiple Authors](https://pressshack.com/addons/multiple-authors/): Easily assign multiple authors to one content item
+[Permissions](https://pressshack.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
+[WooCommerce Checklist](https://pressshack.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
+[Slack Notifications](https://pressshack.com/addons/publishpress-slack/): Get Slack updates for all content changes
+[YouTube](https://pressshack.com/addons/embedpress-youtube/): More features and design options for your YouTube videos
+[Wistia](https://pressshack.com/addons/embedpress-wistia/): More features and design options for your Wistia videos
+[Vimeo](https://pressshack.com/addons/embedpress-vimeo/): More features and design options  for your Vimeo videos
+
+Check out the PublishPress Everything Club for access to all the PublishPress add-ons.
 
 = EDITORIAL CONTENT CALENDAR =
 
@@ -89,23 +90,6 @@ To find the user settings, go to the PublishPress link in your WordPress admin a
 Currently, the most important user of user groups is [Email Notifications](http://pressshack.com/publishpress/docs/notifications/), but we intend to expand the capabilities of user groups in future PublishPress releases.
 
 * [Click here for more on PublishPress User Groups](https://pressshack.com/publishpress/docs/user-groups/)
-
-= MORE PUBLISHPRESS PRO ADD-ONS COMING SOON =
-
-[Check out the PublishPress Everything Club](https://pressshack.com/addons/publishpress-club/) for access to all the add-ons we’ll release in the next year! Here are the add-ons we have available now:
-
-* **Content Checklist** – This is a pre-publishing checklist that allows WordPress teams to specify tasks that must be completed before posts and pages are published.
-* **WooCommerce Checklist** – This is a pre-publishing checklist that allows WordPress teams to specify tasks that must be completed before products are published.
-* **Slack Integration** – This add-on integrates PublishPress with Slack, so you can get comment and status change notifications directly inside Slack.
-* **Permissions** – This add-on allows you to control which users can complete certain tasks, such as publishing content and editing metadata.
-* **Multiple Authors** – This add-on allows you to assign multiple authors to one content item, and easily displayuu their information.
-
-Here are some of the add-ons we plan to release:
-
-* **Zapier support for PublishPress** – This add-on will integrate PublishPress with Zapier, so you can send comment and status changes notifications directly to Zapier.
-* **Multi-site and Multiple support for PublishPress** – This add-on will enable PublishPress to support multiple WordPress sites. Write on one site, but publish to many sites.
-* **Revision Management for PublishPress** – Coming soon, this add-on allows users to submit changes to published content. These revisions can be scheduled and / or approved.
-* **Notifications for PublishPress** – Coming soon, this add-on add support for better notifications. Keep up-to-date with all the content changes on your site.
 
 = IMPORTING FROM EDITFLOW =
 
