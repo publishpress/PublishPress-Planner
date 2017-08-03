@@ -162,7 +162,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             }
 
             // Menu
-            add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ) );
+            add_action( 'publishpress_admin_menu', array( $this, 'action_admin_menu' ) );
 
             // .ics calendar subscriptions
             add_action( 'wp_ajax_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ) );
@@ -342,11 +342,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 $this->print_ajax_response( 'error', $this->module->messages['invalid-permissions'] );
             }
 
-            // Check that it's not yet published
-            if ( in_array( $post->post_status, $this->published_statuses ) ) {
-                $this->print_ajax_response( 'error', sprintf( $this->module->messages['published-post-ajax'], get_edit_post_link( $post_id ) ) );
-            }
-
             // Check that the new date passed is a valid one
             $next_date_full = strtotime( $_POST['next_date'] );
             if ( ! $next_date_full ) {
@@ -363,11 +358,22 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'post_modified_gmt' => current_time( 'mysql', 1 ),
             );
 
-            // By default, changing a post on the calendar won't set the timestamp.
-            // If the user desires that to be the behaviour, they can set the result of this filter to 'true'
+            // By default, adding a post to the calendar will set the timestamp.
+            // If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
             // With how WordPress works internally, setting 'post_date_gmt' will set the timestamp
-            if ( apply_filters( 'pp_calendar_allow_ajax_to_set_timestamp', false ) ) {
+            if ( apply_filters( 'pp_calendar_allow_ajax_to_set_timestamp', true ) ) {
                 $new_values['post_date_gmt'] = date( 'Y-m-d', $next_date_full ) . ' ' . $existing_time_gmt;
+            }
+
+            // Check that it's already published, and adjust the status.
+            // If is in the past or today, set as published. If future, as scheduled.
+            $new_values['post_status'] = $post->post_status;
+            if ( in_array( $post->post_status, $this->published_statuses ) || $post->post_status === 'future' ) {
+                if ( $next_date_full <= time() ) {
+                    $new_values['post_status'] = 'publish';
+                } else {
+                    $new_values['post_status'] = 'future';
+                }
             }
 
             // We have to do SQL unfortunately because of core bugginess
@@ -381,7 +387,10 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 $this->print_ajax_response( 'error', $this->module->messages['update-error'] );
             }
 
-            $this->print_ajax_response( 'success', $this->module->messages['post-date-updated'] );
+            $data = array(
+                'post_status' => $new_values['post_status'],
+            );
+            $this->print_ajax_response( 'success', $this->module->messages['post-date-updated'], $data );
             exit;
         }
 
@@ -987,7 +996,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
             // This is checked on the ajax request too.
-            if ( $this->current_user_can_modify_post( $post ) && ( ! in_array( $post->post_status, $this->published_statuses ) || $post->post_status == 'future') ) {
+            if ( $this->current_user_can_modify_post( $post ) ) {
                 $post_classes[] = 'sortable';
             }
 
@@ -1732,10 +1741,10 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'post_date'   => date( 'Y-m-d H:i:s', strtotime( $post_date ) ),
             );
 
-            // By default, adding a post to the calendar won't set the timestamp.
-            // If the user desires that to be the behavior, they can set the result of this filter to 'true'
+            // By default, adding a post to the calendar will set the timestamp.
+            // If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
             // With how WordPress works internally, setting 'post_date_gmt' will set the timestamp
-            if ( apply_filters( 'pp_calendar_allow_ajax_to_set_timestamp', false ) ) {
+            if ( apply_filters( 'pp_calendar_allow_ajax_to_set_timestamp', true ) ) {
                 $post_placeholder['post_date_gmt'] = date( 'Y-m-d H:i:s', strtotime( $post_date ) );
             }
 

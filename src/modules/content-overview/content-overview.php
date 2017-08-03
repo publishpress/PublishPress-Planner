@@ -153,7 +153,7 @@ class PP_Content_Overview extends PP_Module
         // so other PublishPress modules can register their filters if needed
         add_action( 'admin_init', array( $this, 'register_term_columns' ) );
 
-        add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ) );
+        add_action( 'publishpress_admin_menu', array( $this, 'action_admin_menu' ) );
 
         // Load necessary scripts and stylesheets
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );

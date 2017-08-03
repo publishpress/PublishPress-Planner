@@ -74,7 +74,7 @@ if (!class_exists('PP_Settings')) {
             add_action('admin_print_styles', array($this, 'action_admin_print_styles'));
             add_action('admin_print_scripts', array($this, 'action_admin_print_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
-            add_action('pp_admin_menu', array($this, 'action_admin_menu'), 20);
+            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 20);
         }
 
         /**

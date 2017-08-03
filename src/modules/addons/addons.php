@@ -96,7 +96,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
          * Initialize the rest of the stuff in the class if the module is active
          */
         public function init() {
-            add_action( 'pp_admin_menu', array( $this, 'action_admin_menu' ), 19 );
+            add_action( 'publishpress_admin_menu', array( $this, 'action_admin_menu' ), 19 );
 
             add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
         }
