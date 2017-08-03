@@ -982,16 +982,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'custom-status-' . $post->post_status,
             );
 
-            // Add an icon for the items
-            $icons = array(
-                'publish'    => 'yes',
-                'future'     => 'calendar-alt',
-                'private'    => 'lock',
-                'draft'      => 'edit',
-                'pending'    => 'edit',
-                'auto-draft' => 'edit',
-            );
-            $icon = isset( $icons[ $post->post_status ] ) ? $icons[ $post->post_status ] : 'edit';
+            $post_type_options = $this->get_post_status_options( $post->post_status );
 
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
@@ -1023,8 +1014,9 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 <div class="item-static">
                     <div class="item-default-visible">
                         <div class="inner">
-                            <span class="dashicons dashicons-<?php echo $icon; ?>"></span>
+                            <span class="dashicons <?php echo $post_type_options[ 'icon' ]; ?>"></span>
                             <?php $title = esc_html( _draft_or_post_title( $post->ID ) ); ?>
+
                             <span class="item-headline post-title" title="<?php echo esc_attr( $title ); ?>">
                                 <strong><?php echo $title; ?></strong>
                             </span>
@@ -1049,6 +1041,52 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             return $post_li_html;
         } // generate_post_li_html()
+
+        /**
+         * Returns the CSS class name and color for the given custom status.
+         * It reutrns an array with the following keys:
+         *     - icon
+         *     - color
+         *
+         * @param string $post_status
+         *
+         * @return array
+         */
+        protected function get_post_status_options( $post_status ) {
+            global $publishpress;
+
+            // Check if we have a custom icon for this post_status
+            $term = $publishpress->custom_status->get_custom_status_by( 'slug', $post_status );
+
+            // Icon
+            $icon = null;
+            if ( ! empty( $term->icon ) ) {
+                $icon = $term->icon;
+            } else {
+                // Add an icon for the items
+                $default_icons = array(
+                    'publish'    => 'dashicons-yes',
+                    'future'     => 'dashicons-calendar-alt',
+                    'private'    => 'dashicons-lock',
+                    'draft'      => 'dashicons-edit',
+                    'pending'    => 'dashicons-edit',
+                    'auto-draft' => 'dashicons-edit',
+                );
+
+                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'edit';
+            }
+
+            // Color
+            $color = '#b7b7b7';
+            if ( ! empty( $term->color ) ) {
+                $color = $term->color;
+            }
+
+            return array(
+                'color' => $color,
+                'icon'  => $icon,
+            );
+        }
 
         /**
          * get_inner_information description
