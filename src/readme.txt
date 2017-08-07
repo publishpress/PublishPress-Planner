@@ -164,6 +164,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed the creation and drag-and-drop of content on the calendar to set the scheduled date. Moving the content, if published or scheduled, now updates the status (and icon) according to the current time;
 
 * Changed:
+* Added color and icon support to custom statuses;
 * Improves the description of the add-ons in the readme.txt file;
 * Allow to drag-and-drop published content on the calendar;
 

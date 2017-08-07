@@ -158,12 +158,15 @@ table#pp-calendar-view .day-unit .dashicons {
 	position: absolute;
 	left: 0px;
 	top: 1px;
-	color: #b7b7b7;
+	color: #fff;
+    text-shadow: 0 0 1px #666;
 }
 
-table#pp-calendar-view .day-unit .item-overlay .dashicons:before {
+table#pp-calendar-view .day-unit .item-overlay .dashicons {
     line-height: 37px;
     margin-left: 12px;
+    top: 4px;
+    left: 1px;
 }
 
 table#pp-calendar-view .day-unit .schedule-new-post-label{
@@ -333,13 +336,14 @@ table#pp-calendar-view .day-unit ul li .item-headline {
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 0;
-	color: #444;
+	color: #fff;
 	width: 87.8%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: block;
 	padding-left: 17px;
+    text-shadow: 0 0 1px #666;
 }
 
 table#pp-calendar-view .day-unit ul li .item-headline b {
@@ -408,10 +412,6 @@ table#pp-calendar-view .day-unit ul li .item-information .item-field .spinner-ca
 
 table#pp-calendar-view .day-unit ul li .item-information .item-field em.none {
 	color: #999999;
-}
-
-table#pp-calendar-view .day-unit ul li.is-published .item-headline {
-	color: #777;
 }
 
 table#pp-calendar-view .day-unit ul li.item-overlay-active {

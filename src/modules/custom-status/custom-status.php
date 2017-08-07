@@ -159,6 +159,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pitch',
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
+                        'color' => '#655997',
+                        'icon' => 'dashicons-post-status',
                     ),
                 ),
                 array(
@@ -167,6 +169,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'assigned',
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position' => 2,
+                        'color' => '#655997',
+                        'icon' => 'dashicons-admin-users',
                     ),
                 ),
                 array(
@@ -175,6 +179,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'in-progress',
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position' => 3,
+                        'color' => '#655997',
+                        'icon' => 'dashicons-format-status',
                     ),
                 ),
                 array(
@@ -183,6 +189,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'draft',
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position' => 4,
+                        'color' => '#655997',
+                        'icon' => 'dashicons-media-default',
                     ),
                 ),
                 array(
@@ -191,6 +199,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pending',
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position' => 5,
+                        'color' => '#655997',
+                        'icon' => 'dashicons-clock',
                     ),
                 ),
             );
@@ -372,6 +382,310 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * Generate the color picker
+         * $current_value   Selected icon for the status
+         * fieldname        The name for the <select> field
+         * $attributes      Insert attributes different to name and class. For example: 'id="something"'
+         */
+        public function pp_color_picker($current_value = '', $fieldname = 'icon', $attributes = '') {
+
+            // Load Color Picker
+            if ( is_admin() ) {
+                wp_enqueue_style('wp-color-picker');
+                wp_enqueue_script('publishpress-color-picker', $this->module_url . 'lib/color-picker.js', array('wp-color-picker'), false, true);
+            }
+
+            // Set default value if empty
+            if (!empty($current_value)){
+                $pp_color = $current_value;
+            }
+            else
+            {
+                $pp_color = '#655997';
+            }
+
+            $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" class="pp-color-picker" ' . $attributes . ' data-default-color="' . $pp_color . '" />';
+
+            return $color_picker;
+        }
+
+        /**
+         * Generate the dropdown for dashicons
+         * $current_value   Selected icon for the status
+         * fieldname        The name for the <select> field
+         * $attributes      Insert attributes different to name. For example: 'class="something"', 'id="something"'
+         */
+        public function dropdown_icons($current_value = '', $fieldname = 'icon', $attributes = '')
+        {
+
+            $pp_icons_dropdown = '';
+
+            $pp_icons_list = array(
+                'edit',
+                'menu',
+                'admin-site',
+                'dashboard',
+                'admin-media',
+                'admin-page',
+                'admin-comments',
+                'admin-appearance',
+                'admin-plugins',
+                'admin-users',
+                'admin-tools',
+                'admin-settings',
+                'admin-network',
+                'admin-generic',
+                'admin-home',
+                'admin-collapse',
+                'filter',
+                'admin-customizer',
+                'admin-multisite',
+                'admin-links',
+                'format-links',
+                'admin-post',
+                'format-standard',
+                'format-image',
+                'format-gallery',
+                'format-audio',
+                'format-video',
+                'format-chat',
+                'format-status',
+                'format-aside',
+                'format-quote',
+                'welcome-edit-page',
+                'welcome-write-blog',
+                'welcome-add-page',
+                'welcome-view-site',
+                'welcome-widgets-menus',
+                'welcome-comments',
+                'welcome-learn-more',
+                'image-crop',
+                'image-rotate',
+                'image-rotate-left',
+                'image-rotate-right',
+                'image-flip-vertical',
+                'image-flip-horizontal',
+                'image-filter',
+                'undo',
+                'redo',
+                'editor-bold',
+                'editor-italic',
+                'editor-ul',
+                'editor-ol',
+                'editor-quote',
+                'editor-alignleft',
+                'editor-aligncenter',
+                'editor-alignright',
+                'editor-insertmore',
+                'editor-spellcheck',
+                'editor-distractionfree',
+                'editor-expand',
+                'editor-contract',
+                'editor-kitchensink',
+                'editor-underline',
+                'editor-justify',
+                'editor-textcolor',
+                'editor-paste-word',
+                'editor-paste-text',
+                'editor-removeformatting',
+                'editor-video',
+                'editor-customchar',
+                'editor-outdent',
+                'editor-indent',
+                'editor-help',
+                'editor-strikethrough',
+                'editor-unlink',
+                'editor-rtl',
+                'editor-break',
+                'editor-code',
+                'editor-paragraph',
+                'editor-table',
+                'align-left',
+                'align-right',
+                'align-center',
+                'align-none',
+                'lock',
+                'unlock',
+                'calendar',
+                'calendar-alt',
+                'visibility',
+                'hidden',
+                'post-status',
+                'post-trash',
+                'trash',
+                'sticky',
+                'external',
+                'arrow-up',
+                'arrow-down',
+                'arrow-left',
+                'arrow-right',
+                'arrow-up-alt',
+                'arrow-down-alt',
+                'arrow-left-alt',
+                'arrow-right-alt',
+                'arrow-up-alt2',
+                'arrow-down-alt2',
+                'arrow-left-alt2',
+                'arrow-right-alt2',
+                'leftright',
+                'sort',
+                'randomize',
+                'list-view',
+                'excerpt-view',
+                'exerpt-view',
+                'grid-view',
+                'move',
+                'hammer',
+                'art',
+                'migrate',
+                'performance',
+                'universal-access',
+                'universal-access-alt',
+                'tickets',
+                'nametag',
+                'clipboard',
+                'heart',
+                'megaphone',
+                'schedule',
+                'wordpress',
+                'wordpress-alt',
+                'pressthis',
+                'update',
+                'screenoptions',
+                'cart',
+                'feedback',
+                'cloud',
+                'translation',
+                'tag',
+                'category',
+                'archive',
+                'tagcloud',
+                'text',
+                'media-archive',
+                'media-audio',
+                'media-code',
+                'media-default',
+                'media-document',
+                'media-interactive',
+                'media-spreadsheet',
+                'media-text',
+                'media-video',
+                'playlist-audio',
+                'playlist-video',
+                'controls-play',
+                'controls-pause',
+                'controls-forward',
+                'controls-skipforward',
+                'controls-back',
+                'controls-skipback',
+                'controls-repeat',
+                'controls-volumeon',
+                'controls-volumeoff',
+                'yes',
+                'no',
+                'no-alt',
+                'plus',
+                'plus-alt',
+                'plus-alt2',
+                'minus',
+                'dismiss',
+                'marker',
+                'star-filled',
+                'star-half',
+                'star-empty',
+                'flag',
+                'info',
+                'warning',
+                'share',
+                'share1',
+                'share-alt',
+                'share-alt2',
+                'twitter',
+                'rss',
+                'email',
+                'email-alt',
+                'facebook',
+                'facebook-alt',
+                'networking',
+                'googleplus',
+                'location',
+                'location-alt',
+                'camera',
+                'images-alt',
+                'images-alt2',
+                'video-alt',
+                'video-alt2',
+                'video-alt3',
+                'vault',
+                'shield',
+                'shield-alt',
+                'sos',
+                'search',
+                'slides',
+                'analytics',
+                'chart-pie',
+                'chart-bar',
+                'chart-line',
+                'chart-area',
+                'groups',
+                'businessman',
+                'id',
+                'id-alt',
+                'products',
+                'awards',
+                'forms',
+                'testimonial',
+                'portfolio',
+                'book',
+                'book-alt',
+                'download',
+                'upload',
+                'backup',
+                'clock',
+                'lightbulb',
+                'microphone',
+                'desktop',
+                'laptop',
+                'tablet',
+                'smartphone',
+                'phone',
+                'smiley',
+                'index-card',
+                'carrot',
+                'building',
+                'store',
+                'album',
+                'palmtree',
+                'tickets-alt',
+                'money',
+                'thumbs-up',
+                'thumbs-down',
+                'layout',
+                'paperclip'
+            );
+
+            $pp_icons_dropdown .= '<select class="pp-icons-dropdown" name="' . $fieldname . '" ' . $attributes . '>';
+
+            foreach ($pp_icons_list as $pp_icon) {
+
+                // Set selected value if exist
+                if ('dashicons-' . $pp_icon == $current_value){
+                    $pp_icon_selected = ' selected';
+                }
+                else
+                {
+                    $pp_icon_selected = '';
+                }
+
+                $pp_icons_dropdown .= '<option value="dashicons-' . $pp_icon . '"' . $pp_icon_selected . '>' . $pp_icon . '</option>';
+            }
+
+            $pp_icons_dropdown .= '</select>';
+
+            return $pp_icons_dropdown;
+        }
+
+        /**
          * Check whether custom status stuff should be loaded on this page
          *
          * @todo migrate this to the base module class
@@ -441,16 +755,22 @@ if (!class_exists('PP_Custom_Status')) {
                     'name' => __('Published', 'publishpress'),
                     'slug' => 'publish',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
                 $all_statuses[] = array(
                     'name' => __('Privately Published', 'publishpress'),
                     'slug' => 'private',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
                 $all_statuses[] = array(
                     'name' => __('Scheduled', 'publishpress'),
                     'slug' => 'future',
                     'description' => '',
+                    'color' => '',
+                    'icon' => '',
                 );
 
                 // Load the custom statuses
@@ -459,6 +779,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'name' => esc_js($status->name),
                         'slug' => esc_js($status->slug),
                         'description' => esc_js($status->description),
+                        'color' => esc_js($status->color),
+                        'icon' => esc_js($status->icon),
                     );
                 }
 
@@ -559,8 +881,12 @@ if (!class_exists('PP_Custom_Status')) {
             $args_to_encode                = array();
             $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
             $args_to_encode['position']    = (isset($args['position'])) ? $args['position'] : $old_status->position;
+            $args_to_encode['color']       = (isset($args['color'])) ? $args['color'] : $old_status->color;
+            $args_to_encode['icon']        = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
             $encoded_description           = $this->get_encoded_description($args_to_encode);
             $args['description']           = $encoded_description;
+            //$args['color']                 = $encoded_color;
+            //$args['icon']                  = $encoded_icon;
 
             $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
             $updated_status       = $this->get_custom_status_by('id', $updated_status_array['term_id']);
@@ -825,6 +1151,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['status_name']));
             $status_slug        = sanitize_title($status_name);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['status_description'])));
+            $status_color       = sanitize_hex_color($_POST['status_color']);
+            $status_icon        = $_POST['status_icon'];
 
             /**
              * Form validation
@@ -863,6 +1191,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_args = array(
                 'description' => $status_description,
                 'slug' => $status_slug,
+                'color' => $status_color,
+                'icon' => $status_icon,
             );
             $return = $this->add_custom_status($status_name, $status_args);
             if (is_wp_error($return)) {
@@ -900,6 +1230,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             $name        = sanitize_text_field(trim($_POST['name']));
             $description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
+            $color       = sanitize_hex_color($_POST['color']);
+            $icon        = sanitize_text_field($_POST['icon']);
 
             /**
              * Form validation for editing custom status
@@ -953,6 +1285,8 @@ if (!class_exists('PP_Custom_Status')) {
                 'name' => $name,
                 'slug' => sanitize_title($name),
                 'description' => $description,
+                'color' => $color,
+                'icon' => $icon,
             );
             $return = $this->update_custom_status($existing_status->term_id, $args);
             if (is_wp_error($return)) {
@@ -1133,6 +1467,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_name        = sanitize_text_field(trim($_POST['name']));
             $status_slug        = sanitize_title($_POST['name']);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
+            $status_color       = sanitize_hex_color($_POST['color']);
+            $status_icon        = $_POST['icon'];
 
             // Check if name field was filled in
             if (empty($status_name)) {
@@ -1181,6 +1517,8 @@ if (!class_exists('PP_Custom_Status')) {
                 'name' => $status_name,
                 'description' => $status_description,
                 'slug' => $status_slug,
+                'color' => $status_color,
+                'icon' => $status_icon,
             );
             $return = $this->update_custom_status($term_id, $args);
             if (!is_wp_error($return)) {
@@ -1284,6 +1622,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             $name        = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $status->name;
             $description = (isset($_POST['description'])) ? strip_tags(stripslashes($_POST['description'])) : $status->description;
+            $color       = (isset($_POST['color'])) ? stripslashes($_POST['color']) : $status->color;
+            $icon        = (isset($_POST['icon'])) ? stripslashes($_POST['icon']) : $status->icon;
             ?>
 
             <div id="ajax-response"></div>
@@ -1317,12 +1657,32 @@ if (!class_exists('PP_Custom_Status')) {
                 </tr>
                 <tr class="form-field">
                     <th scope="row" valign="top"><label for="description"><?php _e('Description', 'publishpress');
-            ?></label></th>
+                            ?></label></th>
                     <td>
                         <textarea name="description" id="description" rows="5" cols="50" style="width: 97%;"><?php echo esc_textarea($description);
-            ?></textarea>
-                    <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
-            ?>
+                            ?></textarea>
+                        <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
+                        ?>
+                    </td>
+                </tr>
+                <tr class="form-field">
+                    <th scope="row" valign="top"><label for="color"><?php _e('Color', 'publishpress');
+                            ?></label></th>
+                    <td>
+
+                        <?php echo $this->pp_color_picker(esc_attr($color), 'color') ?>
+
+                        <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
+                        ?>
+                    </td>
+                </tr>
+                <tr class="form-field">
+                    <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
+                            ?></label></th>
+                    <td>
+                        <?php echo $this->dropdown_icons(esc_attr($icon), 'icon', 'id="icon"'); ?>
+                        <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
+                        ?>
                     </td>
                 </tr>
             </table>
@@ -1404,6 +1764,24 @@ if (!class_exists('PP_Custom_Status')) {
             ?></textarea>
                             <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress'));
             ?>
+                        </div>
+                        <div class="form-field">
+                            <label for="status_color"><?php _e('Color', 'publishpress');
+                    ?></label>
+
+                            <?php echo $this->pp_color_picker(esc_attr($_POST['status_color']), 'status_color') ?>
+
+                            <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
+                    ?>
+                        </div>
+                        <div class="form-field">
+                            <label for="status_icon"><?php _e('Icon', 'publishpress');
+                    ?></label>
+
+                            <?php echo $this->dropdown_icons(esc_attr($_POST['status_icon']), 'status_icon', 'id="status_icon"') ?>
+
+                            <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
+                    ?>
                         </div>
                         <?php wp_nonce_field('custom-status-add-nonce');
             ?>
@@ -1930,6 +2308,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
             'position'            => __('Position', 'publishpress'),
             'name'                => __('Name', 'publishpress'),
             'description'        => __('Description', 'publishpress'),
+            //'color'              => __('Color', 'publishpress'),
+            'icon'               => __('Icon', 'publishpress'),
         );
 
         $post_types           = get_post_types('', 'objects');
@@ -2006,7 +2386,9 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
         $item_edit_link = esc_url($publishpress->custom_status->get_link(array('action' => 'edit-status', 'term-id' => $item->term_id)));
 
-        $output = '<strong><a href="' . $item_edit_link . '">' . esc_html($item->name) . '</a>';
+        $output  = '<span class="pp-status-color" style="background:' . $item->color . ';"></span>';
+
+        $output .= '<strong><a href="' . $item_edit_link . '">' . esc_html($item->name) . '</a>';
         if ($item->slug == $this->default_status) {
             $output .= ' - ' . __('Default', 'publishpress');
         }
@@ -2032,6 +2414,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
         $output .= '<div class="hidden" id="inline_' . esc_attr($item->term_id) . '">';
         $output .= '<div class="name">' . esc_html($item->name) . '</div>';
         $output .= '<div class="description">' . esc_html($item->description) . '</div>';
+        $output .= '<div class="color">' . esc_html($item->color) . '</div>';
+        $output .= '<div class="icon">' . esc_html($item->icon) . '</div>';
         $output .= '</div>';
 
         return $output;
@@ -2048,6 +2432,32 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     public function column_description($item)
     {
         return esc_html($item->description);
+    }
+
+    /**
+     * Displayed column showing the color of the status
+     *
+     * @since 1.7.0
+     *
+     * @param object $item Custom status as an object
+     * @return string $output What will be rendered
+     */
+    /*public function column_color($item)
+    {
+        return '<span class="pp-status-color" style="background:' . $item->color . ';"></span>';
+    }*/
+
+    /**
+     * Displayed column showing the icon of the status
+     *
+     * @since 1.7.0
+     *
+     * @param object $item Custom status as an object
+     * @return string $output What will be rendered
+     */
+    public function column_icon($item)
+    {
+        return '<span class="dashicons ' . esc_html($item->icon) . '"></span>';
     }
 
     /**
@@ -2088,7 +2498,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                     </label>
                     <label>
                         <span class="title"><?php _e('Description', 'publishpress');
-            ?></span>
+        ?></span>
                         <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
                     </label>
                 </div></fieldset>
