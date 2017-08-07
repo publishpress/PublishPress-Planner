@@ -159,7 +159,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pitch',
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
-                        'color' => '#b7b7b7',
+                        'color' => '#655997',
                         'icon' => 'dashicons-marker',
                     ),
                 ),
@@ -169,7 +169,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'assigned',
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position' => 2,
-                        'color' => '#b7b7b7',
+                        'color' => '#655997',
                         'icon' => 'dashicons-admin-users',
                     ),
                 ),
@@ -179,7 +179,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'in-progress',
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position' => 3,
-                        'color' => '#b7b7b7',
+                        'color' => '#655997',
                         'icon' => 'dashicons-format-status',
                     ),
                 ),
@@ -189,7 +189,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'draft',
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position' => 4,
-                        'color' => '#b7b7b7',
+                        'color' => '#655997',
                         'icon' => 'dashicons-media-default',
                     ),
                 ),
@@ -199,7 +199,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug' => 'pending',
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position' => 5,
-                        'color' => '#b7b7b7',
+                        'color' => '#655997',
                         'icon' => 'dashicons-clock',
                     ),
                 ),
@@ -401,7 +401,7 @@ if (!class_exists('PP_Custom_Status')) {
             }
             else
             {
-                $pp_color = '#b7b7b7';
+                $pp_color = '#655997';
             }
 
             $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" class="pp-color-picker" ' . $attributes . ' data-default-color="' . $pp_color . '" />';

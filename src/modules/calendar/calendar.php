@@ -1012,7 +1012,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
                 <div style="clear:right;"></div>
                 <div class="item-static">
-                    <div class="item-default-visible">
+                    <div class="item-default-visible" style="background:<?php echo $post_type_options[ 'color' ]; ?>;">
                         <div class="inner">
                             <span class="dashicons <?php echo $post_type_options[ 'icon' ]; ?>"></span>
                             <?php $title = esc_html( _draft_or_post_title( $post->ID ) ); ?>
@@ -1077,7 +1077,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             }
 
             // Color
-            $color = '#b7b7b7';
+            $color = '#655997';
             if ( ! empty( $term->color ) ) {
                 $color = $term->color;
             }
