@@ -1981,6 +1981,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         <option value="future" <?php selected( 'future', $filters['post_status'] ) ?> > <?php echo __( 'Scheduled', 'publishpress' ) ?> </option>
                         <option value="unpublish" <?php selected( 'unpublish', $filters['post_status'] ) ?> > <?php echo __( 'Unpublished', 'publishpress' ) ?> </option>
                         <option value="publish" <?php selected( 'publish', $filters['post_status'] ) ?> > <?php echo __( 'Published', 'publishpress' ) ?> </option>
+                        <option value="trash" <?php selected( 'trash', $filters['post_status'] ) ?> > <?php echo __( 'Trashed', 'publishpress' ) ?> </option>
                     </select>
                     <?php
                 break;
