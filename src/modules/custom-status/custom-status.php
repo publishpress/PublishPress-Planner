@@ -160,7 +160,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position' => 1,
                         'color' => '#655997',
-                        'icon' => 'dashicons-marker',
+                        'icon' => 'dashicons-post-status',
                     ),
                 ),
                 array(
