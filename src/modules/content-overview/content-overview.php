@@ -863,7 +863,7 @@ class PP_Content_Overview extends PP_Module
                         echo "<option value='future'" . selected( 'future', $filters['post_status'] ) . ">" . __( 'Scheduled', 'publishpress' ) . "</option>";
                         echo "<option value='unpublish'" . selected( 'unpublish', $filters['post_status'] ) . ">" . __( 'Unpublished', 'publishpress' ) . "</option>";
                         echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>";
-                    ?>
+                        echo "<option value='trash'" . selected( 'trash', $filters['post_status'] ) . ">" . __( 'Trashed', 'publishpress' ) . "</option>"; ?>
                 </select>
             <?php
             break;
