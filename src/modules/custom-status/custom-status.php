@@ -241,34 +241,40 @@ if (!class_exists('PP_Custom_Status')) {
         /**
          * Makes the call to register_post_status to register the user's custom statuses.
          * Also unregisters draft and pending, in case the user doesn't want them.
+         *
+         * @param array  $args
          */
-        public function register_custom_statuses()
+        public function register_custom_statuses( $args = [] )
         {
             global $wp_post_statuses;
 
             if ($this->disable_custom_statuses_for_post_type()) {
-                return;
+                return ;
             }
 
             // Register new taxonomy so that we can store all our fancy new custom statuses (or is it stati?)
             if (!taxonomy_exists(self::taxonomy_key)) {
-                $args = array(   'hierarchical' => false,
-                                'update_count_callback' => '_update_post_term_count',
-                                'label' => false,
-                                'query_var' => false,
-                                'rewrite' => false,
-                                'show_ui' => false
-                        );
-                register_taxonomy(self::taxonomy_key, 'post', $args);
+                register_taxonomy(
+                    self::taxonomy_key,
+                    'post',
+                    [
+                        'hierarchical'          => false,
+                        'update_count_callback' => '_update_post_term_count',
+                        'label'                 => false,
+                        'query_var'             => false,
+                        'rewrite'               => false,
+                        'show_ui'               => false
+                    ]
+                );
             }
-
+            // var_dump(register_post_status); die;
             if (function_exists('register_post_status')) {
                 // Users can delete draft and pending statuses if they want, so let's get rid of them
                 // They'll get re-added if the user hasn't "deleted" them
                 unset($wp_post_statuses['draft']);
                 unset($wp_post_statuses['pending']);
 
-                $custom_statuses = $this->get_custom_statuses();
+                $custom_statuses = $this->get_custom_statuses( $args );
 
                 // Unfortunately, register_post_status() doesn't accept a
                 // post type argument, so we have to register the post
@@ -291,9 +297,10 @@ if (!class_exists('PP_Custom_Status')) {
          *
          * @return bool
          */
-        public function disable_custom_statuses_for_post_type($post_type = null)
+        public function disable_custom_statuses_for_post_type( $post_type = null )
         {
             global $pagenow;
+
 
             // Only allow deregistering on 'edit.php' and 'post.php'
             if (! in_array($pagenow, array('edit.php', 'post.php', 'post-new.php'))) {
@@ -302,6 +309,11 @@ if (!class_exists('PP_Custom_Status')) {
 
             if (is_null($post_type)) {
                 $post_type = $this->get_current_post_type();
+            }
+
+            // Always allow for the notification workflows
+            if ( 'pspp_notif_workflow' === $post_type ) {
+                return false;
             }
 
             if ($post_type && ! in_array($post_type, $this->get_post_types_for_module($this->module))) {
@@ -632,7 +644,13 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             // Handle if the requested taxonomy doesn't exist
-            $args     = array_merge(array('hide_empty' => false), $args);
+            $args     = array_merge(
+                array(
+                    'hide_empty' => false,
+                    'taxonomy' => self::taxonomy_key
+                ),
+                $args
+            );
             $statuses = get_terms(self::taxonomy_key, $args);
 
             if (is_wp_error($statuses) || empty($statuses)) {
