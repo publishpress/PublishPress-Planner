@@ -1934,6 +1934,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     $valid_statuses[] = 'future';
                     $valid_statuses[] = 'unpublish';
                     $valid_statuses[] = 'publish';
+                    $valid_statuses[] = 'trash';
                     if ( in_array( $dirty_value, $valid_statuses ) ) {
                         return $dirty_value;
                     } else {
