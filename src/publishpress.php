@@ -320,7 +320,6 @@ class publishpress {
 					$this->modules->$mod_name->options->$default_key = $default_value;
 				}
 			}
-
 			$this->$mod_name->module = $this->modules->$mod_name;
 		}
 

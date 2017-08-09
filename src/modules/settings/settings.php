@@ -341,10 +341,18 @@ if (!class_exists('PP_Settings')) {
 
                 $new_options = (isset($_POST[$publishpress->$module_name->module->options_group_name])) ? $_POST[$publishpress->$module_name->module->options_group_name] : array();
 
-                // Only call the validation callback if it exists?
+                /**
+                 * Legacy way to validate the settings. Hook to the filter
+                 * publishpress_validate_settings instead.
+                 *
+                 * @deprecated
+                 */
                 if (method_exists($publishpress->$module_name, 'settings_validate')) {
                     $new_options = $publishpress->$module_name->settings_validate($new_options);
                 }
+
+                // New way to validate settings
+                $new_options = apply_filters( 'publishpress_validate_module_settings', $module_name, $new_options );
 
                 // Cast our object and save the data.
                 $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
