@@ -1321,7 +1321,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             ?>
             <ul class="pp-calendar-navigation">
                 <li id="calendar-filter">
-                    <form method="GET">
+                    <form method="GET" id="pp-calendar-filters">
                         <input type="hidden" name="page" value="pp-calendar" />
                         <input type="hidden" name="start_date" value="<?php echo esc_attr( $filters['start_date'] );
             ?>"/>
@@ -1331,8 +1331,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                             echo $this->calendar_filter_options( $select_id, $select_name, $filters );
                         }
             ?>
-                        <input type="submit" id="post-query-submit" class="button-primary button" value="<?php _e( 'Filter', 'publishpress' );
-            ?>"/>
                     </form>
                 </li>
                 <!-- Clear filters functionality (all of the fields, but empty) -->
