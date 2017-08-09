@@ -1073,7 +1073,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     'auto-draft' => 'dashicons-edit',
                 );
 
-                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'edit';
+                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'dashicons-edit';
             }
 
             // Color
