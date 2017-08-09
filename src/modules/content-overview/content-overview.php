@@ -730,14 +730,13 @@ class PP_Content_Overview extends PP_Module
         ?>
         <div class="tablenav" id="pp-content-overview-tablenav">
             <div class="alignleft actions">
-                <form method="GET" style="float: left;">
+                <form method="GET" style="float: left;" id="pp-content-filters">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
                         foreach ( $this->content_overview_filters() as $select_id => $select_name ) {
                             echo $this->content_overview_filter_options( $select_id, $select_name, $this->user_filters );
                         }
                     ?>
-                    <input type="submit" id="post-query-submit" value="<?php _e( 'Filter', 'publishpress' ); ?>" class="button-primary button" />
                 </form>
 
                 <form method="GET" style="float: left;">
@@ -862,8 +861,7 @@ class PP_Content_Overview extends PP_Module
 
                         echo "<option value='future'" . selected( 'future', $filters['post_status'] ) . ">" . __( 'Scheduled', 'publishpress' ) . "</option>";
                         echo "<option value='unpublish'" . selected( 'unpublish', $filters['post_status'] ) . ">" . __( 'Unpublished', 'publishpress' ) . "</option>";
-                        echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>";
-                        echo "<option value='trash'" . selected( 'trash', $filters['post_status'] ) . ">" . __( 'Trashed', 'publishpress' ) . "</option>"; ?>
+                        echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>"; ?>
                 </select>
             <?php
             break;

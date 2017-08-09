@@ -165,6 +165,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Changed:
 * Filter content in calendar page on change;
+* Filter content in content overview page on change;
 * Added color and icon support to custom statuses;
 * Improves the description of the add-ons in the readme.txt file;
 * Allow to drag-and-drop published content on the calendar;

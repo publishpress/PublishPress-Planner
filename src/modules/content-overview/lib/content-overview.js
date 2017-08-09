@@ -41,4 +41,8 @@ jQuery( document ).ready( function( $ ) {
 
         return false;
     } );
+
+    $('#pp-content-filters select').change(function () {
+        $(this).closest('form').trigger('submit');
+    });
 } );
