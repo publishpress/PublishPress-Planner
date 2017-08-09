@@ -267,7 +267,7 @@ if (!class_exists('PP_Custom_Status')) {
                     ]
                 );
             }
-            // var_dump(register_post_status); die;
+
             if (function_exists('register_post_status')) {
                 // Users can delete draft and pending statuses if they want, so let's get rid of them
                 // They'll get re-added if the user hasn't "deleted" them
