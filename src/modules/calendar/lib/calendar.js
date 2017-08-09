@@ -471,4 +471,7 @@ jQuery( document ).ready(function ($) {
 		EFQuickPublish.init();
 	}
 
+    $('#pp-calendar-filters select').change(function () {
+        $(this).closest('form').trigger('submit');
+    });
 });

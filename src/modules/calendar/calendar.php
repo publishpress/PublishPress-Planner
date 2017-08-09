@@ -1073,7 +1073,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     'auto-draft' => 'dashicons-edit',
                 );
 
-                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'edit';
+                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'dashicons-edit';
             }
 
             // Color
@@ -1321,7 +1321,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             ?>
             <ul class="pp-calendar-navigation">
                 <li id="calendar-filter">
-                    <form method="GET">
+                    <form method="GET" id="pp-calendar-filters">
                         <input type="hidden" name="page" value="pp-calendar" />
                         <input type="hidden" name="start_date" value="<?php echo esc_attr( $filters['start_date'] );
             ?>"/>
@@ -1331,8 +1331,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                             echo $this->calendar_filter_options( $select_id, $select_name, $filters );
                         }
             ?>
-                        <input type="submit" id="post-query-submit" class="button-primary button" value="<?php _e( 'Filter', 'publishpress' );
-            ?>"/>
                     </form>
                 </li>
                 <!-- Clear filters functionality (all of the fields, but empty) -->
@@ -1934,6 +1932,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     $valid_statuses[] = 'future';
                     $valid_statuses[] = 'unpublish';
                     $valid_statuses[] = 'publish';
+                    $valid_statuses[] = 'trash';
                     if ( in_array( $dirty_value, $valid_statuses ) ) {
                         return $dirty_value;
                     } else {
@@ -1981,6 +1980,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         <option value="future" <?php selected( 'future', $filters['post_status'] ) ?> > <?php echo __( 'Scheduled', 'publishpress' ) ?> </option>
                         <option value="unpublish" <?php selected( 'unpublish', $filters['post_status'] ) ?> > <?php echo __( 'Unpublished', 'publishpress' ) ?> </option>
                         <option value="publish" <?php selected( 'publish', $filters['post_status'] ) ?> > <?php echo __( 'Published', 'publishpress' ) ?> </option>
+                        <option value="trash" <?php selected( 'trash', $filters['post_status'] ) ?> > <?php echo __( 'Trashed', 'publishpress' ) ?> </option>
                     </select>
                     <?php
                 break;
