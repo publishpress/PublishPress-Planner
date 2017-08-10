@@ -916,6 +916,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
                                     <?php /* translators: %s = post type name */ ?>
                                     <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( __( 'Title', 'publishpress' ) ); ?>" />
+                                    <textarea class="post-insert-dialog-post-content" name="post-insert-dialog-post-content" placeholder="<?php echo esc_attr( __( 'Content', 'publishpress' ) ); ?>"></textarea>
 
                                     <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>" />
 
@@ -1760,9 +1761,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Sanitize post values
             $post_title = sanitize_text_field( $_POST['pp_insert_title'] );
+            $post_content = sanitize_text_field( $_POST['pp_insert_content'] );
 
             if ( ! $post_title ) {
                 $post_title = __( 'Untitled', 'publishpress' );
+            }
+            if ( ! $post_content ) {
+                $post_content = '';
             }
 
             $post_date = sanitize_text_field( $_POST['pp_insert_date'] );
@@ -1772,6 +1777,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // Set new post parameters
             $post_placeholder = array(
                 'post_title'  => $post_title,
+                'post_content'=> $post_content,
                 'post_type'   => $post_type,
                 'post_status' => $post_status,
                 'post_date'   => date( 'Y-m-d H:i:s', strtotime( $post_date ) ),
