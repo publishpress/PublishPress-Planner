@@ -173,7 +173,7 @@ class publishpress {
 		add_action( 'init', array( $this, 'action_init_after' ), 1000 );
 
 		add_action( 'init', array( $this, 'action_admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'action_admin_menu' ) );
+		add_action( 'admin_menu', array( $this, 'action_admin_menu' ), 9 );
 
 		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
 	}
