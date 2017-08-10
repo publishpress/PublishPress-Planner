@@ -312,8 +312,8 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             // Always allow for the notification workflows
-            if ( defined( 'PUBLISHPRESS_NOTIFICATIONS_POST_TYPE_WORKFLOW' ) ) {
-                if ( PUBLISHPRESS_NOTIFICATIONS_POST_TYPE_WORKFLOW === $post_type ) {
+            if ( defined( 'PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW' ) ) {
+                if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post_type ) {
                     return false;
                 }
             }
