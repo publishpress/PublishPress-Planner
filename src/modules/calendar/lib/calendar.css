@@ -253,10 +253,16 @@ table#pp-calendar-view .day-unit .post-insert-dialog h1 {
     padding-bottom: 0;
 }
 
-table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title{
-	margin-top: 4px;
-	margin-bottom: 10px;
-	width: 100%;
+table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-title {
+    margin-top: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+table#pp-calendar-view .day-unit .post-insert-dialog .post-insert-dialog-post-content {
+    margin-bottom: 10px;
+    width: 100%;
+    min-height: 80px;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
