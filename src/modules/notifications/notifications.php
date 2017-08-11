@@ -366,7 +366,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             foreach ( $usergroup_post_types as $post_type ) {
                 add_meta_box(
                     'publishpress-notifications',
-                    __( 'Notifications', 'publishpress' ),
+                    __( 'Following', 'publishpress' ),
                     array( $this, 'notifications_meta_box' ),
                     $post_type,
                     'advanced'
