@@ -1450,8 +1450,10 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             if ( $args['cat'] === '0' ) {
                 unset( $args['cat'] );
             }
-
             if ( $args['tag'] === '0' ) {
+                unset( $args['tag'] );
+            } else {
+                $args['tag_id'] = $args['tag'];
                 unset( $args['tag'] );
             }
 
