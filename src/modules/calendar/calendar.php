@@ -600,6 +600,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     'post_status' => '',
                     'cpt' => '',
                     'cat' => '',
+                    'tag' => '',
                     'author' => '',
                     'start_date' => date( 'Y-m-d', current_time( 'timestamp' ) ),
                 );
@@ -690,6 +691,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'post_status' => $filters['post_status'],
                 'post_type'   => $filters['cpt'],
                 'cat'         => $filters['cat'],
+                'tag'         => $filters['tag'],
                 'author'      => $filters['author'],
             );
             $this->start_date = $filters['start_date'];
@@ -1421,6 +1423,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             $defaults             = array(
                 'post_status'      => null,
                 'cat'              => null,
+                'tag'              => null,
                 'author'           => null,
                 'post_type'    => $supported_post_types,
                 'posts_per_page'   => -1,
@@ -1446,6 +1449,10 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // unset those arguments.
             if ( $args['cat'] === '0' ) {
                 unset( $args['cat'] );
+            }
+
+            if ( $args['tag'] === '0' ) {
+                unset( $args['tag'] );
             }
 
             if ( $args['author'] === '0' ) {
@@ -1914,6 +1921,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             $select_filter_names['post_status'] = 'post_status';
             $select_filter_names['cat']         = 'cat';
+            $select_filter_names['tag']         = 'tag';
             $select_filter_names['author']      = 'author';
             $select_filter_names['type']        = 'cpt';
             $select_filter_names['weeks']       = 'weeks';
@@ -1958,6 +1966,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     return date( 'Y-m-d', strtotime( $dirty_value ) );
                     break;
                 case 'cat':
+                case 'tag':
                 case 'author':
                     return intval( $dirty_value );
                     break;
@@ -1977,7 +1986,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     $post_statuses = $this->get_post_statuses();
                 ?>
                     <select id="<?php echo $select_id; ?>" name="<?php echo $select_name; ?>" >
-                        <option value=""><?php _e( 'View all statuses', 'publishpress' ); ?></option>
+                        <option value=""><?php _e( 'All statuses', 'publishpress' ); ?></option>
                         <?php
                         foreach ( $post_statuses as $post_status ) {
                             echo "<option value='" . esc_attr( $post_status->slug ) . "' " . selected( $post_status->slug, $filters['post_status'] ) . '>' . esc_html( $post_status->name ) . '</option>';
@@ -1994,7 +2003,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     // Filter by categories, borrowed from wp-admin/edit.php
                     if ( taxonomy_exists( 'category' ) ) {
                         $category_dropdown_args = array(
-                            'show_option_all' => __( 'View all categories', 'publishpress' ),
+                            'show_option_all' => __( 'All categories', 'publishpress' ),
                             'hide_empty' => 0,
                             'hierarchical' => 1,
                             'show_count' => 0,
@@ -2004,9 +2013,24 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         wp_dropdown_categories( $category_dropdown_args );
                     }
                 break;
+                case 'tag':
+                    if ( taxonomy_exists( 'post_tag' ) ) {
+                        $tag_dropdown_args = array(
+                            'show_option_all' => __( 'All tags', 'publishpress' ),
+                            'hide_empty' => 0,
+                            'hierarchical' => 0,
+                            'show_count' => 0,
+                            'orderby' => 'name',
+                            'selected' => $filters['tag'],
+                            'taxonomy' => 'post_tag',
+                            'name' => 'tag',
+                            );
+                        wp_dropdown_categories( $tag_dropdown_args );
+                    }
+                break;
                 case 'author':
                     $users_dropdown_args = array(
-                        'show_option_all'   => __( 'View all users', 'publishpress' ),
+                        'show_option_all'   => __( 'All users', 'publishpress' ),
                         'name'              => 'author',
                         'selected'          => $filters['author'],
                         'who'               => 'authors',
@@ -2019,7 +2043,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     if ( count( $supported_post_types ) > 1 ) {
                         ?>
                         <select id="type" name="cpt">
-                            <option value=""><?php _e( 'View all types', 'publishpress' );
+                            <option value=""><?php _e( 'All types', 'publishpress' );
                         ?></option>
                         <?php
                         foreach ( $supported_post_types as $key => $post_type_name ) {

@@ -32,23 +32,9 @@
     padding-left: 2px;
 }
 
-#pp_editorial_meta_meta_box div.pp_editorial_meta_date label:first-child  {
-    background: transparent url("date-button.gif") no-repeat scroll 2px 0;
-    padding-left: 20px;
-}
-    #pp_editorial_meta_meta_box div.pp_editorial_meta_date input[readonly] {
-        background: #fff;
-        cursor: pointer;
-    }
-
-#pp_editorial_meta_meta_box div.pp_editorial_meta_location label:first-child {
-    background: transparent url("globe-V3.png") no-repeat scroll 2px 0;
-}
-
-#pp_editorial_meta_meta_box div.pp_editorial_meta_location label:first-child,
-#pp_editorial_meta_meta_box div.pp_editorial_meta_date label:first-child {
-    padding-left: 20px;
-    margin-left: 2px;
+#pp_editorial_meta_meta_box div.pp_editorial_meta_date input[readonly] {
+    background: #fff;
+    cursor: pointer;
 }
 
 /* Spacing for Google Maps link */

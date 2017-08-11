@@ -170,6 +170,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added color and icon support to custom statuses;
 * Improves the description of the add-ons in the readme.txt file;
 * Allow to drag-and-drop published content on the calendar;
+* Improved responsive support for calendar page;
+* Improved responsive support for content overview page;
+* Improved editorial comments layout;
+* Improved users and user groups layout;
 
 = [1.6.1] - 2017-07-27 =
 

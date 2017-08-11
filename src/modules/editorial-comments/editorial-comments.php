@@ -228,8 +228,8 @@ if (!class_exists('PP_Editorial_Comments')) {
             global $post;
 
             ?>
-            <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;" class="button button-primary alignright hide-if-no-js" title=" <?php _e('Respond to this post', 'publishpress');
-            ?>"><span><?php _e('Respond to this post', 'publishpress');
+            <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;" class="button hide-if-no-js" title=" <?php _e('Add an editorial comment', 'publishpress');
+            ?>"><span><?php _e('Add an editorial comment', 'publishpress');
             ?></span></a>
 
             <!-- Reply form, hidden until reply clicked by user -->
@@ -240,7 +240,7 @@ if (!class_exists('PP_Editorial_Comments')) {
 
                 <p id="pp-replysubmit">
                     <a class="button pp-replysave button-primary alignright" href="#comments-form">
-                        <span id="pp-replybtn"><?php _e('Submit Response', 'publishpress') ?></span>
+                        <span id="pp-replybtn"><?php _e('Add Comment', 'publishpress') ?></span>
                     </a>
                     <a class="pp-replycancel button-secondary alignright" href="#comments-form"><?php _e('Cancel', 'publishpress');
             ?></a>

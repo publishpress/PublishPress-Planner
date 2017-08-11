@@ -730,7 +730,7 @@ class PP_Content_Overview extends PP_Module
         ?>
         <div class="tablenav" id="pp-content-overview-tablenav">
             <div class="alignleft actions">
-                <form method="GET" style="float: left;" id="pp-content-filters">
+                <form method="GET" id="pp-content-filters">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
                         foreach ( $this->content_overview_filters() as $select_id => $select_name ) {
@@ -739,7 +739,7 @@ class PP_Content_Overview extends PP_Module
                     ?>
                 </form>
 
-                <form method="GET" style="float: left;">
+                <form method="GET" id="pp-content-filters-hidden">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <input type="hidden" name="post_status" value=""/>
                     <input type="hidden" name="cat" value=""/>

@@ -500,7 +500,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 }
 
 .pp-calendar-navigation select {
-	max-width: 300px;
+	max-width: 120px;
 }
 
 .pp-calendar-navigation li #post-query-submit.button-primary,
@@ -581,6 +581,26 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
 
 .save-metadata-hide {
 	display: none;
+}
+
+@media (max-width: 1180px) {
+
+    .pp-calendar-navigation li {
+        display: block;
+    }
+
+    .pp-calendar-navigation li .button-secondary {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    table#pp-calendar-view {
+        padding-top: 10px;
+    }
+
+    #pp-calendar-wrap {
+        min-width: unset;
+    }
 }
 
 @media (min-width: 1024px) {
