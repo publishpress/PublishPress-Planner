@@ -59,7 +59,7 @@
     }
         #pp-post_following_users_box .pp-post_following_list,
         #pp-post_following_usergroups_box .pp-post_following_list {
-            height: 300px;
+            height: auto;
             overflow: auto;
         }
         #pp-post_following_users_box .list-filterizer-tools,
