@@ -52,7 +52,7 @@
     }
     #pp-post_following_users_box {
         float: left;
-        margin-right:10px;
+        margin-right: 2%;
     }
     #pp-post_following_usergroups_box {
         float: right;
@@ -61,6 +61,7 @@
         #pp-post_following_usergroups_box .pp-post_following_list {
             height: auto;
             overflow: auto;
+            margin-bottom: 0;
         }
         #pp-post_following_users_box .list-filterizer-tools,
         #pp-post_following_usergroups_box .list-filterizer-tools {
@@ -80,4 +81,18 @@
 
 #pp-usergroup-users h4 {
     margin-top: 0;
+}
+
+@media (max-width: 767px) {
+
+    #pp-post_following_usergroups_box,
+    #pp-post_following_users_box {
+        float: none;
+        width: 100%;
+    }
+
+    #pp-post_following_users_box {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
