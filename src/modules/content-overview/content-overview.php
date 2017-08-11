@@ -356,9 +356,9 @@ class PP_Content_Overview extends PP_Module
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
 
-        if ( ! empty( $this->user_filters[ $this->taxonomy_used] ) ) {
+        if ( ! empty( $this->user_filters[ 'cat' ] ) ) {
             $terms   = array();
-            $terms[] = get_term( $this->user_filters[ $this->taxonomy_used ], $this->taxonomy_used );
+            $terms[] = get_term( $this->user_filters[ 'cat' ], $this->taxonomy_used );
         } else {
             // Get all of the terms from the taxonomy, regardless whether there are published posts
             $args = array(
