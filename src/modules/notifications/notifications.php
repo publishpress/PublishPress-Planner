@@ -643,11 +643,12 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         /**
          * send_email()
          */
-        public function send_email( $action, $post, $subject, $message, $message_headers = '' )
+        public function send_email( $action, $post, $subject, $message, $message_headers = '', $recipients = null )
         {
-
-            // Get list of email recipients -- set them CC
-            $recipients = $this->_get_notification_recipients( $post, true );
+            if ( is_null( $recipients ) ) {
+                // Get list of email recipients -- set them CC
+                $recipients = $this->_get_notification_recipients( $post, true );
+            }
 
             if ( $recipients && ! is_array( $recipients ) ) {
                 $recipients = explode( ',', $recipients );
@@ -677,7 +678,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
          */
         public function schedule_emails( $recipients, $subject, $message, $message_headers = '', $time_offset = 1 )
         {
-            $recipients = (array ) $recipients;
+            $recipients = (array) $recipients;
 
             $send_time = time();
 
