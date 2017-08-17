@@ -83,6 +83,17 @@
     margin-top: 0;
 }
 
+.list-filterizer-tabs li {
+    color: #655997;
+}
+
+.list-filterizer-tabs li.active,
+.list-filterizer-tabs li:hover {
+    background: #655997;
+    border-color: #655997;
+    color: #fff;
+}
+
 @media (max-width: 767px) {
 
     #pp-post_following_usergroups_box,

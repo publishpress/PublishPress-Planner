@@ -196,7 +196,7 @@
 	$.fn.listFilterizer.defaults = {
 		filters: [
 			{
-				label: 'All'
+				label: 'Show all'
 				, selector: '*'
 		}
 			,
