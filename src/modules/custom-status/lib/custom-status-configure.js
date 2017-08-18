@@ -46,6 +46,8 @@ inlineEditCustomStatus = {
 
         $(':input[name="name"]', editRow).val($('.name', rowData).text());
         $(':input[name="description"]', editRow).val($('.description', rowData).text());
+        $(':input[name="color"]', editRow).val($('.color', rowData).text());
+        $(':input[name="icon"]', editRow).val($('.icon', rowData).text());
 
         $(editRow).attr('id', 'edit-'+id).addClass('inline-editor').show();
         $('.ptitle', editRow).eq(0).focus();

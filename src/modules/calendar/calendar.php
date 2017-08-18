@@ -600,6 +600,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     'post_status' => '',
                     'cpt' => '',
                     'cat' => '',
+                    'tag' => '',
                     'author' => '',
                     'start_date' => date( 'Y-m-d', current_time( 'timestamp' ) ),
                 );
@@ -690,6 +691,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'post_status' => $filters['post_status'],
                 'post_type'   => $filters['cpt'],
                 'cat'         => $filters['cat'],
+                'tag'         => $filters['tag'],
                 'author'      => $filters['author'],
             );
             $this->start_date = $filters['start_date'];
@@ -916,6 +918,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
                                     <?php /* translators: %s = post type name */ ?>
                                     <input type="text" class="post-insert-dialog-post-title" name="post-insert-dialog-post-title" placeholder="<?php echo esc_attr( __( 'Title', 'publishpress' ) ); ?>" />
+                                    <textarea class="post-insert-dialog-post-content" name="post-insert-dialog-post-content" placeholder="<?php echo esc_attr( __( 'Content', 'publishpress' ) ); ?>"></textarea>
 
                                     <input type="hidden" class="post-insert-dialog-post-date" name="post-insert-dialog-post-title" value="<?php echo esc_attr( $week_single_date ); ?>" />
 
@@ -982,16 +985,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                 'custom-status-' . $post->post_status,
             );
 
-            // Add an icon for the items
-            $icons = array(
-                'publish'    => 'yes',
-                'future'     => 'calendar-alt',
-                'private'    => 'lock',
-                'draft'      => 'edit',
-                'pending'    => 'edit',
-                'auto-draft' => 'edit',
-            );
-            $icon = isset( $icons[ $post->post_status ] ) ? $icons[ $post->post_status ] : 'edit';
+            $post_type_options = $this->get_post_status_options( $post->post_status );
 
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
@@ -1021,10 +1015,11 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
                 <div style="clear:right;"></div>
                 <div class="item-static">
-                    <div class="item-default-visible">
+                    <div class="item-default-visible" style="background:<?php echo $post_type_options[ 'color' ]; ?>;">
                         <div class="inner">
-                            <span class="dashicons dashicons-<?php echo $icon; ?>"></span>
+                            <span class="dashicons <?php echo $post_type_options[ 'icon' ]; ?>"></span>
                             <?php $title = esc_html( _draft_or_post_title( $post->ID ) ); ?>
+
                             <span class="item-headline post-title" title="<?php echo esc_attr( $title ); ?>">
                                 <strong><?php echo $title; ?></strong>
                             </span>
@@ -1049,6 +1044,52 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             return $post_li_html;
         } // generate_post_li_html()
+
+        /**
+         * Returns the CSS class name and color for the given custom status.
+         * It reutrns an array with the following keys:
+         *     - icon
+         *     - color
+         *
+         * @param string $post_status
+         *
+         * @return array
+         */
+        protected function get_post_status_options( $post_status ) {
+            global $publishpress;
+
+            // Check if we have a custom icon for this post_status
+            $term = $publishpress->custom_status->get_custom_status_by( 'slug', $post_status );
+
+            // Icon
+            $icon = null;
+            if ( ! empty( $term->icon ) ) {
+                $icon = $term->icon;
+            } else {
+                // Add an icon for the items
+                $default_icons = array(
+                    'publish'    => 'dashicons-yes',
+                    'future'     => 'dashicons-calendar-alt',
+                    'private'    => 'dashicons-lock',
+                    'draft'      => 'dashicons-edit',
+                    'pending'    => 'dashicons-edit',
+                    'auto-draft' => 'dashicons-edit',
+                );
+
+                $icon = isset( $default_icons[ $post_status ] ) ? $default_icons[ $post_status ] : 'dashicons-edit';
+            }
+
+            // Color
+            $color = '#655997';
+            if ( ! empty( $term->color ) ) {
+                $color = $term->color;
+            }
+
+            return array(
+                'color' => $color,
+                'icon'  => $icon,
+            );
+        }
 
         /**
          * get_inner_information description
@@ -1283,7 +1324,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             ?>
             <ul class="pp-calendar-navigation">
                 <li id="calendar-filter">
-                    <form method="GET">
+                    <form method="GET" id="pp-calendar-filters">
                         <input type="hidden" name="page" value="pp-calendar" />
                         <input type="hidden" name="start_date" value="<?php echo esc_attr( $filters['start_date'] );
             ?>"/>
@@ -1293,8 +1334,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                             echo $this->calendar_filter_options( $select_id, $select_name, $filters );
                         }
             ?>
-                        <input type="submit" id="post-query-submit" class="button-primary button" value="<?php _e( 'Filter', 'publishpress' );
-            ?>"/>
                     </form>
                 </li>
                 <!-- Clear filters functionality (all of the fields, but empty) -->
@@ -1384,6 +1423,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             $defaults             = array(
                 'post_status'      => null,
                 'cat'              => null,
+                'tag'              => null,
                 'author'           => null,
                 'post_type'    => $supported_post_types,
                 'posts_per_page'   => -1,
@@ -1409,6 +1449,12 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // unset those arguments.
             if ( $args['cat'] === '0' ) {
                 unset( $args['cat'] );
+            }
+            if ( $args['tag'] === '0' ) {
+                unset( $args['tag'] );
+            } else {
+                $args['tag_id'] = $args['tag'];
+                unset( $args['tag'] );
             }
 
             if ( $args['author'] === '0' ) {
@@ -1724,9 +1770,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Sanitize post values
             $post_title = sanitize_text_field( $_POST['pp_insert_title'] );
+            $post_content = sanitize_text_field( $_POST['pp_insert_content'] );
 
             if ( ! $post_title ) {
                 $post_title = __( 'Untitled', 'publishpress' );
+            }
+            if ( ! $post_content ) {
+                $post_content = '';
             }
 
             $post_date = sanitize_text_field( $_POST['pp_insert_date'] );
@@ -1736,6 +1786,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             // Set new post parameters
             $post_placeholder = array(
                 'post_title'  => $post_title,
+                'post_content'=> $post_content,
                 'post_type'   => $post_type,
                 'post_status' => $post_status,
                 'post_date'   => date( 'Y-m-d H:i:s', strtotime( $post_date ) ),
@@ -1872,6 +1923,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             $select_filter_names['post_status'] = 'post_status';
             $select_filter_names['cat']         = 'cat';
+            $select_filter_names['tag']         = 'tag';
             $select_filter_names['author']      = 'author';
             $select_filter_names['type']        = 'cpt';
             $select_filter_names['weeks']       = 'weeks';
@@ -1896,6 +1948,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     $valid_statuses[] = 'future';
                     $valid_statuses[] = 'unpublish';
                     $valid_statuses[] = 'publish';
+                    $valid_statuses[] = 'trash';
                     if ( in_array( $dirty_value, $valid_statuses ) ) {
                         return $dirty_value;
                     } else {
@@ -1915,6 +1968,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     return date( 'Y-m-d', strtotime( $dirty_value ) );
                     break;
                 case 'cat':
+                case 'tag':
                 case 'author':
                     return intval( $dirty_value );
                     break;
@@ -1934,7 +1988,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     $post_statuses = $this->get_post_statuses();
                 ?>
                     <select id="<?php echo $select_id; ?>" name="<?php echo $select_name; ?>" >
-                        <option value=""><?php _e( 'View all statuses', 'publishpress' ); ?></option>
+                        <option value=""><?php _e( 'All statuses', 'publishpress' ); ?></option>
                         <?php
                         foreach ( $post_statuses as $post_status ) {
                             echo "<option value='" . esc_attr( $post_status->slug ) . "' " . selected( $post_status->slug, $filters['post_status'] ) . '>' . esc_html( $post_status->name ) . '</option>';
@@ -1943,6 +1997,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         <option value="future" <?php selected( 'future', $filters['post_status'] ) ?> > <?php echo __( 'Scheduled', 'publishpress' ) ?> </option>
                         <option value="unpublish" <?php selected( 'unpublish', $filters['post_status'] ) ?> > <?php echo __( 'Unpublished', 'publishpress' ) ?> </option>
                         <option value="publish" <?php selected( 'publish', $filters['post_status'] ) ?> > <?php echo __( 'Published', 'publishpress' ) ?> </option>
+                        <option value="trash" <?php selected( 'trash', $filters['post_status'] ) ?> > <?php echo __( 'Trashed', 'publishpress' ) ?> </option>
                     </select>
                     <?php
                 break;
@@ -1950,7 +2005,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     // Filter by categories, borrowed from wp-admin/edit.php
                     if ( taxonomy_exists( 'category' ) ) {
                         $category_dropdown_args = array(
-                            'show_option_all' => __( 'View all categories', 'publishpress' ),
+                            'show_option_all' => __( 'All categories', 'publishpress' ),
                             'hide_empty' => 0,
                             'hierarchical' => 1,
                             'show_count' => 0,
@@ -1960,9 +2015,24 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         wp_dropdown_categories( $category_dropdown_args );
                     }
                 break;
+                case 'tag':
+                    if ( taxonomy_exists( 'post_tag' ) ) {
+                        $tag_dropdown_args = array(
+                            'show_option_all' => __( 'All tags', 'publishpress' ),
+                            'hide_empty' => 0,
+                            'hierarchical' => 0,
+                            'show_count' => 0,
+                            'orderby' => 'name',
+                            'selected' => $filters['tag'],
+                            'taxonomy' => 'post_tag',
+                            'name' => 'tag',
+                            );
+                        wp_dropdown_categories( $tag_dropdown_args );
+                    }
+                break;
                 case 'author':
                     $users_dropdown_args = array(
-                        'show_option_all'   => __( 'View all users', 'publishpress' ),
+                        'show_option_all'   => __( 'All users', 'publishpress' ),
                         'name'              => 'author',
                         'selected'          => $filters['author'],
                         'who'               => 'authors',
@@ -1975,7 +2045,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                     if ( count( $supported_post_types ) > 1 ) {
                         ?>
                         <select id="type" name="cpt">
-                            <option value=""><?php _e( 'View all types', 'publishpress' );
+                            <option value=""><?php _e( 'All types', 'publishpress' );
                         ?></option>
                         <?php
                         foreach ( $supported_post_types as $key => $post_type_name ) {

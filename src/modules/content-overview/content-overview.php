@@ -356,9 +356,9 @@ class PP_Content_Overview extends PP_Module
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
 
-        if ( ! empty( $this->user_filters[ $this->taxonomy_used] ) ) {
+        if ( ! empty( $this->user_filters[ 'cat' ] ) ) {
             $terms   = array();
-            $terms[] = get_term( $this->user_filters[ $this->taxonomy_used ], $this->taxonomy_used );
+            $terms[] = get_term( $this->user_filters[ 'cat' ], $this->taxonomy_used );
         } else {
             // Get all of the terms from the taxonomy, regardless whether there are published posts
             $args = array(
@@ -730,17 +730,16 @@ class PP_Content_Overview extends PP_Module
         ?>
         <div class="tablenav" id="pp-content-overview-tablenav">
             <div class="alignleft actions">
-                <form method="GET" style="float: left;">
+                <form method="GET" id="pp-content-filters">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
                         foreach ( $this->content_overview_filters() as $select_id => $select_name ) {
                             echo $this->content_overview_filter_options( $select_id, $select_name, $this->user_filters );
                         }
                     ?>
-                    <input type="submit" id="post-query-submit" value="<?php _e( 'Filter', 'publishpress' ); ?>" class="button-primary button" />
                 </form>
 
-                <form method="GET" style="float: left;">
+                <form method="GET" id="pp-content-filters-hidden">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <input type="hidden" name="post_status" value=""/>
                     <input type="hidden" name="cat" value=""/>
@@ -862,8 +861,7 @@ class PP_Content_Overview extends PP_Module
 
                         echo "<option value='future'" . selected( 'future', $filters['post_status'] ) . ">" . __( 'Scheduled', 'publishpress' ) . "</option>";
                         echo "<option value='unpublish'" . selected( 'unpublish', $filters['post_status'] ) . ">" . __( 'Unpublished', 'publishpress' ) . "</option>";
-                        echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>";
-                    ?>
+                        echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>"; ?>
                 </select>
             <?php
             break;
