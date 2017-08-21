@@ -163,6 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed spacing for content overview;
 * Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
 * Fixed the creation and drag-and-drop of content on the calendar to set the scheduled date. Moving the content, if published or scheduled, now updates the status (and icon) according to the current time;
+* Fixed the issue with notifications disappearing after a few seconds;
 
 * Changed:
 * Filter content in calendar page on change;
