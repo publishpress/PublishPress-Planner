@@ -95,7 +95,7 @@ if (!class_exists('PP_Settings')) {
         public function action_admin_enqueue_scripts()
         {
             if ($this->is_whitelisted_settings_view()) {
-                wp_enqueue_script('publishpress-settings-js', $this->module_url . 'lib/settings.js', array('jquery'), PUBLISHPRESS_VERSION, true);
+                // Enqueue scripts
             }
         }
 
