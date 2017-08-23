@@ -176,6 +176,9 @@ class publishpress {
 		add_action( 'init', array( $this, 'action_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ), 9 );
 
+		// Fix the order of the submenus
+		add_filter( 'custom_menu_order', [ $this, 'filter_custom_menu_order' ] );
+
 		do_action_ref_array( 'publishpress_after_setup_actions', array( &$this ) );
 	}
 
@@ -408,6 +411,31 @@ class publishpress {
 		if ( ! isset( $wp_scripts->registered['jquery-ui-datepicker'] ) ) {
 			wp_register_script( 'jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js', array( 'jquery', 'jquery-ui-core' ), '1.8.16', true );
 		}
+	}
+
+	public function filter_custom_menu_order( $menu_ord ) {
+		global $submenu;
+
+		$submenu_pp = $submenu['pp-calendar'];
+
+		// Calendar / Content Overview / Notifications / Settings / Add-ons / Contact Us
+		$new_submenu = [
+			$submenu_pp[0],
+			$submenu_pp[1],
+			$submenu_pp[4],
+			$submenu_pp[3],
+			$submenu_pp[2],
+			$submenu_pp[5],
+		];
+
+		// Check if we have additional items and add to the end
+		if ( count( $submenu_pp ) > 6 ) {
+			$new_submenu = array_merge( $new_submenu, array_splice( $submenu_pp, 6 ) );
+		}
+
+		$submenu['pp-calendar'] = $new_submenu;
+
+		return $menu_ord;
 	}
 
 	public function deactivate_editflow() {
