@@ -288,14 +288,16 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Renders the event section
 			$context = [
-				'id'   => 'event',
-				'html' => apply_filters( 'publishpress_notif_render_metabox_section_event', '' ),
+				'id'     => 'event',
+				'header' => __( 'When to notify?' ),
+				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event', '' ),
 			];
 			$main_context['section_event'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
 			// Renders the receiver section
 			$context = [
 				'id'   => 'receiver',
+				'header' => __( 'Who to notify?' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_receiver', '' ),
 			];
 			$main_context['section_receiver'] = $twig->render( 'workflow_metabox_section.twig', $context );
@@ -303,6 +305,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			// Renders the content section
 			$context = [
 				'id'   => 'content',
+				'header' => __( 'What to say?' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_content', '' ),
 			];
 			$main_context['section_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
