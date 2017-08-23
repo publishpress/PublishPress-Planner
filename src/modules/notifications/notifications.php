@@ -1064,7 +1064,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         public function register_settings()
         {
             add_settings_section( $this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name );
-            add_settings_field( 'post_types', __( 'Add to these post types:', 'publishpress' ), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
+            add_settings_field( 'post_types', __( 'Allow "following" on these post types:', 'publishpress' ), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
             add_settings_field( 'always_notify_admin', __( 'Always notify blog admin', 'publishpress' ), array( $this, 'settings_always_notify_admin_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
         }
 
