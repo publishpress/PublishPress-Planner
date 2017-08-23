@@ -161,6 +161,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added:
 * Added notification workflows for improved notifications;
+* Added special fields on the user profile to configure where to receive the new notifications;
 
 * Fixed:
 * Fixed spacing for content overview;
