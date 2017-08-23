@@ -103,15 +103,17 @@ class Base extends Base_Step {
 
 		$params = $_POST['publishpress_notif'];
 
-		// Is selected in the events?
-		$selected = in_array( static::META_VALUE_SELECTED, $params['event'] );
-		update_post_meta( $id, static::META_KEY_SELECTED, $selected );
+		if ( isset( $params['event'] ) ) {
+			// Is selected in the events?
+			$selected = in_array( static::META_VALUE_SELECTED, $params['event'] );
+			update_post_meta( $id, static::META_KEY_SELECTED, $selected );
 
-		// Process the filters
-		$filters = $this->get_filters();
-		if ( ! empty( $filters ) ) {
-			foreach ( $filters as $filter ) {
-				$filter->save_metabox_data( $id, $post );
+			// Process the filters
+			$filters = $this->get_filters();
+			if ( ! empty( $filters ) ) {
+				foreach ( $filters as $filter ) {
+					$filter->save_metabox_data( $id, $post );
+				}
 			}
 		}
 	}
