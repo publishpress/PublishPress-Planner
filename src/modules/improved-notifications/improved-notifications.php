@@ -409,7 +409,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 					'name'    => 'mute',
 					'label'   => __( 'Muted', 'publishpress-notifications' ),
 					'options' => [],
-					'icon'    => PUBLISHPRESS_NOTIF_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
+					'icon'    => PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
 				]
 			];
 			$channels = apply_filters( 'psppno_filter_channels_user_profile', $default_channels );
