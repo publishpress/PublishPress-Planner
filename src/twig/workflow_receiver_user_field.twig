@@ -1,0 +1,28 @@
+<div id="pp-post_following_box">
+	<a name="subscriptions"></a>
+	<div id="pp-post_following_users_box">
+		<h4>{{ label }}</h4>
+
+		{% if users %}
+			<ul class="{{ list_class }}">
+				{% for user in users %}
+					<li>
+						<label for="{{ input_id }}{{ user.ID }}">
+							<input
+								type="checkbox"
+								id="{{ input_id }}{{ user.ID }}"
+								name="{{ input_name }}[]"
+								value="{{ user.ID }}"
+								{{ checked( user.selected, true ) }} />
+
+							<span class="pp-user_displayname">{{ user.display_name }}</span>
+						</label>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+	</div>
+
+	<div class="clear"></div>
+</div>

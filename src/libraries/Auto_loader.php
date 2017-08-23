@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     PublishPress\Content_checklist
+ * @package     PublishPress\Notifications
  * @author      PressShack <help@pressshack.com>
  * @copyright   Copyright (C) 2017 PressShack. All rights reserved.
  * @license     GPLv2 or later

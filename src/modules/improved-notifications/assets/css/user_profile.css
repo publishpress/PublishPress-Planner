@@ -1,0 +1,20 @@
+.psppno_workflow_user_fields ul.psppno_workflows li {
+	padding: 10px 5px 5px 5px;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/*.psppno_workflow_user_fields .psppno_channel_icon {
+	border-left: 1px solid #ccc;
+	text-align: center;
+}*/
+
+.psppno_workflow_user_fields .psppno_workflow_channel input[type=radio] {
+	margin-top: -11px;
+	margin-right: 5px;
+}
+
+.psppno_workflow_user_fields .psppno_workflow_channel img {
+	width: 20px;
+	padding-top: 4px;
+}

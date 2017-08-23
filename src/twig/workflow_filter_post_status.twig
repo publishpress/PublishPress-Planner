@@ -1,0 +1,25 @@
+<label for="{{ id }}_from">{{ labels.status_transition }}</label>
+
+<label for="{{ id }}_from">{{ labels.from }}</label>
+<select name="{{ name }}[from][]" id="{{ id }}_from" multiple>
+	{% for option in options_from %}
+		<option
+			value="{{ option.value }}"
+			{{ selected( option.selected, true ) }} >
+
+			{{ option.label }}
+		</option>
+	{% endfor %}
+</select>
+
+<label for="{{ id }}_to">{{ labels.to }}</label>
+<select name="{{ name }}[to][]" id="{{ id }}_to" multiple>
+		{% for option in options_to %}
+		<option
+			value="{{ option.value }}"
+			{{ selected( option.selected, true ) }} >
+
+			{{ option.label }}
+		</option>
+	{% endfor %}
+</select>

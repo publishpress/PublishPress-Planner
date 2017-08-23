@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
 );

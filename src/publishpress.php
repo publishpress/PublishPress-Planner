@@ -96,13 +96,14 @@ class publishpress {
 		// Scan the modules directory and include any modules that exist there
 		// $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
 		$default_module_dirs = array(
-			'modules-settings'   => PUBLISHPRESS_ROOT,
-			'calendar'           => PUBLISHPRESS_ROOT,
-			'editorial-metadata' => PUBLISHPRESS_ROOT,
-			'notifications'      => PUBLISHPRESS_ROOT,
-			'content-overview'   => PUBLISHPRESS_ROOT,
-			'custom-status'      => PUBLISHPRESS_ROOT,
-			'user-groups'        => PUBLISHPRESS_ROOT,
+			'modules-settings'       => PUBLISHPRESS_ROOT,
+			'calendar'               => PUBLISHPRESS_ROOT,
+			'editorial-metadata'     => PUBLISHPRESS_ROOT,
+			'notifications'          => PUBLISHPRESS_ROOT,
+			'content-overview'       => PUBLISHPRESS_ROOT,
+			'custom-status'          => PUBLISHPRESS_ROOT,
+			'user-groups'            => PUBLISHPRESS_ROOT,
+			'improved-notifications' => PUBLISHPRESS_ROOT,
 
 			// @TODO: Move for settings, and remove after cleanup
 			'dashboard'          => PUBLISHPRESS_ROOT,
@@ -445,3 +446,10 @@ function PublishPress() {
 	return publishpress::instance();
 }
 add_action( 'plugins_loaded', 'PublishPress' );
+
+// Load the improved notifications
+require 'includes_notifications.php';
+if ( defined( 'PUBLISHPRESS_NOTIF_LOADED' ) ) {
+	$plugin = new PublishPress\Notifications\Plugin;
+	$plugin->init();
+}

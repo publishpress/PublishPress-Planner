@@ -1,0 +1,195 @@
+#post-body #normal-sortables {
+    min-height: 20px;
+}
+
+#publishpress_notif_workflow_div .list-filterizer-tabs li {
+    color: #655997;
+}
+
+#publishpress_notif_workflow_div .list-filterizer-tabs li.active,
+#publishpress_notif_workflow_div .list-filterizer-tabs li:hover {
+    background: #655997;
+    border-color: #655997;
+    color: #fff;
+}
+
+#publishpress_notif_workflow_div,
+#publishpress_notif_workflow_div > .inside {
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#psppno-workflow-metabox > div {
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin-right: 4%;
+}
+
+#publishpress_notif_workflow_div > .inside > #psppno-workflow-metabox > div#psppno-workflow-metabox-section-content,
+#publishpress_notif_workflow_div > .inside > #psppno-workflow-metabox > div#psppno-workflow-metabox-section-channel {
+    margin-right: 0;
+}
+
+#publishpress_notif_workflow_div input[type="checkbox"] {
+    margin-bottom: -4px;
+}
+
+/* Event */
+
+#psppno-workflow-metabox-section-event {
+    width: 20%;
+}
+
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters {
+    margin-bottom: 0;
+}
+
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters li,
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label {
+    display: block;
+    margin: 0;
+}
+
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label {
+    background: #F1F1F1;
+    font-weight: bold;
+    padding: 8px;
+    margin: 0 0 5px 0;
+    border: 1px solid #DFDFDF;
+}
+
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label[for="publishpress_notif_event_post_save_filters_post_status_from"]:nth-child(1),
+#psppno-workflow-metabox-section-event #publishpress_notif_event_post_save_filters_post_status_from {
+    margin-bottom: 10px;
+}
+
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label[for="publishpress_notif_event_post_save_filters_post_status_from"]:nth-child(2),
+#psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label[for="publishpress_notif_event_post_save_filters_post_status_to"] {
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+#psppno-workflow-metabox-section-event select[multiple] {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0 0 20px 0;
+}
+
+#psppno-workflow-metabox-section-event select#publishpress_notif_event_post_save_filters_post_status_to {
+    margin-bottom: 0;
+}
+
+/* Users */
+
+#psppno-workflow-metabox-section-receiver {
+    width: 27%;
+}
+
+#psppno-workflow-metabox-section-receiver #pp-post_following_users_box {
+    float: none;
+    margin-right: 0;
+}
+
+#psppno-workflow-metabox-section-receiver #pp-post_following_users_box,
+#psppno-workflow-metabox-section-receiver #pp-post_following_usergroups_box {
+    width: 100%;
+}
+
+#psppno-workflow-metabox-section-receiver input[type="search"] {
+    width: 50%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0;
+}
+
+#psppno-workflow-metabox-section-receiver .publishpress_notif_user_group_list {
+    margin-top: 20px;
+}
+
+#psppno-workflow-metabox-section-receiver .publishpress_notif_user_list,
+#psppno-workflow-metabox-section-receiver .publishpress_notif_user_group_list {
+    margin: 5px 0 20px;
+}
+
+/* Notification message */
+
+#psppno-workflow-metabox-section-content {
+    width: 45%;
+    margin-bottom: 10px;
+}
+
+#psppno-workflow-metabox-section-content input[type="text"],
+#psppno-workflow-metabox-section-content textarea {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#psppno-workflow-metabox-section-content textarea {
+    min-height: 120px;
+}
+
+#psppno-workflow-metabox-section-content label {
+    margin: 10px 0;
+    display: block;
+    font-weight: bold;
+}
+
+/* Channel (e.g. email) */
+
+#psppno-workflow-metabox-section-channel {
+    width: 35%;
+    float: none;
+}
+
+#psppno-workflow-metabox-section-channel .psppno-workflow-metabox-section-header {
+    margin-bottom: 10px;
+}
+
+/* Responsive support */
+
+@media (max-width:1500px) {
+    #psppno-workflow-metabox-section-event {
+        width: 42%;
+    }
+
+    #psppno-workflow-metabox-section-receiver {
+        width: 48%;
+    }
+
+    #psppno-workflow-metabox-section-content,
+    #psppno-workflow-metabox-section-channel {
+        float: none;
+        width: 100%;
+    }
+}
+
+@media (max-width:1024px) {
+
+    #publishpress_notif_workflow_div > .inside > div {
+        float: none;
+        margin-right: 0;
+    }
+
+    #psppno-workflow-metabox-section-event,
+    #psppno-workflow-metabox-section-receiver,
+    #psppno-workflow-metabox-section-content,
+    #psppno-workflow-metabox-section-channel {
+        width: 100%;
+    }
+
+    #psppno-workflow-metabox-section-event,
+    #psppno-workflow-metabox-section-receiver {
+        margin-bottom: 50px;
+    }
+}
