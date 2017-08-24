@@ -53,19 +53,19 @@ class Workflow {
 		$receivers = apply_filters( 'publishpress_notif_run_workflow_receivers', [], $this->workflow_post, $this->action_args );
 
 		if ( ! empty( $receivers ) ) {
-			// Sanitize values
-			$receivers = array_map( 'intval', $receivers );
-
-			// Remove duplicate IDs
+			// Remove duplicate receivers
 			$receivers = array_unique( $receivers, SORT_NUMERIC );
 		}
 
 		// Check if the receivers have muted or not this workflow
 		foreach ( $receivers as $index => $receiver ) {
-			$channel = get_user_meta( $receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true );
+			// Is an user (identified by the id)?
+			if ( is_numeric( $receiver ) ) {
+				$channel = get_user_meta( $receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true );
 
-			if ( 'mute' === $channel) {
-				unset( $receivers[ $index ] );
+				if ( 'mute' === $channel) {
+					unset( $receivers[ $index ] );
+				}
 			}
 		}
 

@@ -34,11 +34,21 @@ class Email extends Base implements Channel_Interface {
 		$emails = [];
 
 		if ( ! empty( $receivers ) ) {
-			foreach ( $receivers as $user_id ) {
-				$data = $this->get_user_data( $user_id );
-				$emails[] = $data->user_email;
+			foreach ( $receivers as $receiver ) {
+				// Check if we have the user ID or an email address
+				if ( is_numeric( $receiver ) ) {
+					$data = $this->get_user_data( $receiver );
+					$emails[] = $data->user_email;
+					continue;
+				}
+
+				// Is it a valid email address?
+				$emails[] = sanitize_email( $receiver );
 			}
 		}
+
+		// Remove duplicated
+		$emails = array_unique( $emails );
 
 		return $emails;
 	}
@@ -54,7 +64,7 @@ class Email extends Base implements Channel_Interface {
 	public function action_notify( $workflow_post, $action_args, $receivers, $content ) {
 		// Check if any of the receivers have Email configured as the channel
 		$controller = $this->get_service( 'workflow_controller' );
-		$filtered_receivers = $controller->get_filtered_receivers( $workflow_post->ID, $receivers, 'email' );
+		$filtered_receivers = $controller->get_receivers_by_channel( $workflow_post->ID, $receivers, 'email' );
 
 		if ( ! empty( $filtered_receivers ) ) {
 			// Send the emails

@@ -11,20 +11,20 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
-class Author extends Simple_Checkbox implements Receiver_Interface {
+class Site_Admin extends Simple_Checkbox implements Receiver_Interface {
 
-	const META_KEY   = '_psppno_toauthor';
-	const META_VALUE = 'author';
+	const META_KEY   = '_psppno_tositeadmin';
+	const META_VALUE = 'site_admin';
 
-	protected $option = 'receiver_author';
+	protected $option = 'receiver_site_admin';
 
 	/**
 	 * The constructor
 	 */
 	public function __construct() {
-		$this->name          = 'author';
-		$this->label         = __( 'Authors of the content', 'publishpress-notifications' );
-		$this->option_name   = 'receiver_author';
+		$this->name          = 'site_admin';
+		$this->label         = __( 'Site Administrator (email)', 'publishpress-notifications' );
+		$this->option_name   = 'receiver_site_admin';
 
 		parent::__construct();
 	}
@@ -40,7 +40,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface {
 	public function filter_workflow_receivers( $receivers, $workflow, $args ) {
 		// If checked, add the authors to the list of receivers
 		if ( $this->is_selected( $workflow->ID ) ) {
-			$receivers[] = (int) $args['post']->post_author;
+			$receivers[] = 'email:' . get_option( 'admin_email' );
 
 			/**
 			 * Filters the list of receivers, but triggers only when the authors are selected.
@@ -49,7 +49,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface {
 			 * @param WP_Post $workflow
 			 * @param array   $args
 			 */
-			$receivers = apply_filters( 'publishpress_notif_workflow_receiver_post_authors', $receivers, $workflow, $args );
+			$receivers = apply_filters( 'publishpress_notif_workflow_receiver_site_admin', $receivers, $workflow, $args );
 		}
 
 		return $receivers;
@@ -65,7 +65,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function filter_receivers_column_value( $values, $post_id ) {
 		if ( $this->is_selected( $post_id ) ) {
-			$values[] = __( 'Authors', 'publishpress-notifications' );
+			$values[] = __( 'Site Administrator', 'publishpress-notifications' );
 		}
 
 		return $values;

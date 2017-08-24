@@ -174,7 +174,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * @since 0.7
 		 */
 		public function upgrade( $previous_version ) {
-
 		}
 
 		/**
