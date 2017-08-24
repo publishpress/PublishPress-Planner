@@ -156,6 +156,11 @@
     border: 1px solid #5b7782;
 }
 
+/* Hide the Visibility option in the Workflow publishing metabox */
+body.wp-admin.post-type-psppnotif_workflow .misc-pub-visibility {
+    display: none;
+}
+
 /* Channel (e.g. email) */
 
 #psppno-workflow-metabox-section-channel {
