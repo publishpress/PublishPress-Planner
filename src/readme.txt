@@ -180,6 +180,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Improved editorial comments layout;
 * Improved users and user groups layout;
 * Changed the label of the setting for the notification module adjusting to the new notification workflows;
+* Removed field "Always notify the blog admin" from the notification settings. This is now set on the notification workflow;
 
 = [1.6.1] - 2017-07-27 =
 
