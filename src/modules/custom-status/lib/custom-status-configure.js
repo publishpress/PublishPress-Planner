@@ -164,5 +164,4 @@ jQuery(document).ready(function(){
         },
     });
     jQuery("#the-list tr.term-static").disableSelection();
-
 });

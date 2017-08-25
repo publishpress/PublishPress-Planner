@@ -1,5 +1,7 @@
 jQuery(document).ready(function() {
 
+
+
     jQuery('label[for=post_status]').show();
     jQuery('#post-status-display').show();
 
@@ -188,5 +190,4 @@ jQuery(document).ready(function() {
             jQuery(this).html(jQuery(this).html().replace(/(.*) - (<span class="post-state".*<\/span>)$/g, "$1$2"));
         });
     }
-
 });

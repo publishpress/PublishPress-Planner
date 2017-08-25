@@ -360,6 +360,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'pp_confirm_delete_status_string' => __('Are you sure you want to delete the post status? All posts with this status will be assigned to the default status.', 'publishpress')
                     )
                 );
+                wp_enqueue_script('publishpress-icon-preview', $this->module_url . 'lib/icon-picker.js', array('jquery'), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_style('publishpress-icon-preview', $this->module_url . 'lib/icon-picker.css', false, PUBLISHPRESS_VERSION, 'all');
             }
 
             // Custom javascript to modify the post status dropdown where it shows up
@@ -690,7 +692,7 @@ if (!class_exists('PP_Custom_Status')) {
                     $pp_icon_selected = '';
                 }
 
-                $pp_icons_dropdown .= '<option value="dashicons-' . $pp_icon . '"' . $pp_icon_selected . '>' . $pp_icon . '</option>';
+                $pp_icons_dropdown .= '<option value="dashicons-' . $pp_icon . '"' . $pp_icon_selected . '>dashicons-' . $pp_icon . '</option>';
             }
 
             $pp_icons_dropdown .= '</select>';
@@ -915,8 +917,6 @@ if (!class_exists('PP_Custom_Status')) {
             $args_to_encode['icon']        = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
             $encoded_description           = $this->get_encoded_description($args_to_encode);
             $args['description']           = $encoded_description;
-            //$args['color']                 = $encoded_color;
-            //$args['icon']                  = $encoded_icon;
 
             $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
             $updated_status       = $this->get_custom_status_by('id', $updated_status_array['term_id']);
@@ -1192,7 +1192,7 @@ if (!class_exists('PP_Custom_Status')) {
             $status_slug        = sanitize_title($status_name);
             $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['status_description'])));
             $status_color       = sanitize_hex_color($_POST['status_color']);
-            $status_icon        = $_POST['status_icon'];
+            $status_icon        = str_replace( 'dashicons|', '', $_POST['icon'] );
 
             /**
              * Form validation
@@ -1230,9 +1230,9 @@ if (!class_exists('PP_Custom_Status')) {
             // Try to add the status
             $status_args = array(
                 'description' => $status_description,
-                'slug' => $status_slug,
-                'color' => $status_color,
-                'icon' => $status_icon,
+                'slug'        => $status_slug,
+                'color'       => $status_color,
+                'icon'        => $status_icon,
             );
             $return = $this->add_custom_status($status_name, $status_args);
             if (is_wp_error($return)) {
@@ -1270,6 +1270,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             $color = sanitize_hex_color($_POST['color']);
             $icon  = sanitize_text_field($_POST['icon']);
+            $icon  = str_replace( 'dashicons|', '', $_POST['icon'] );
 
             if ( is_numeric( $_GET['term-id'] ) ) {
                 $name        = sanitize_text_field(trim($_POST['name']));
@@ -1589,6 +1590,7 @@ if (!class_exists('PP_Custom_Status')) {
             $description = (isset($_POST['description'])) ? strip_tags(stripslashes($_POST['description'])) : $status->description;
             $color       = (isset($_POST['color'])) ? stripslashes($_POST['color']) : $status->color;
             $icon        = (isset($_POST['icon'])) ? stripslashes($_POST['icon']) : $status->icon;
+            $icon        = str_replace( 'dashicons|', '', $icon );
             ?>
 
             <div id="ajax-response"></div>
@@ -1645,8 +1647,10 @@ if (!class_exists('PP_Custom_Status')) {
                     <th scope="row" valign="top"><label for="icon"><?php _e('Icon', 'publishpress');
                             ?></label></th>
                     <td>
-                        <?php echo $this->dropdown_icons(esc_attr($icon), 'icon', 'id="icon"'); ?>
-                        <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
+                        <input class="regular-text" type="hidden" id="status_icon" name="icon" value="<?php if( isset( $icon ) ) { echo esc_attr( $icon ); } ?>"/>
+                            <div id="preview_icon_picker_example_icon" data-target="#status_icon" class="button icon-picker dashicons <?php if( isset( $icon ) ) { echo $icon; } ?>"></div>
+
+                        <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress'));
                         ?>
                     </td>
                 </tr>
@@ -1746,10 +1750,12 @@ if (!class_exists('PP_Custom_Status')) {
                     ?></label>
 
                             <?php
-                                $status_icon = isset( $_POST['status_icon'] ) ? $_POST['status_icon'] : '';
-                                echo $this->dropdown_icons(esc_attr($status_icon), 'status_icon', 'id="status_icon"') ?>
+                                $status_icon = isset( $_POST['icon'] ) ? $_POST['icon'] : 'dashicons-yes';
+                                ?>
+                                <input class="regular-text" type="hidden" id="status_icon" name="icon" value="<?php if( isset( $status_icon ) ) { echo 'dashicons ' . esc_attr( $status_icon ); } ?>"/>
+                            <div id="preview_icon_picker_example_icon" data-target="#status_icon" class="button icon-picker dashicons <?php if( isset( $status_icon ) ) { echo $status_icon; } ?>"></div>
 
-                            <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
+                            <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress'));
                     ?>
                         </div>
                         <?php wp_nonce_field('custom-status-add-nonce');
