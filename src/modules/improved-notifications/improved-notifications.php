@@ -166,6 +166,9 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Load CSS
 			add_action( 'admin_print_styles', array( $this, 'add_admin_styles' ) );
+
+			// Inject the PublishPress footer
+			add_filter('admin_footer_text', [ $this, 'update_footer_admin' ] );
 		}
 
 		/**
@@ -630,6 +633,16 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		public function add_admin_styles() {
 			wp_enqueue_style( 'psppno-admin-css', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css');
 			wp_enqueue_style( 'psppno-user-profile', plugin_dir_url( __FILE__ ) . 'assets/css/user_profile.css');
+		}
+
+		public function update_footer_admin( $footer ) {
+			$publishpress = $this->get_service( 'publishpress' );
+			?>
+			<div class="pressshack-admin-wrapper">
+				<?php $publishpress->settings->print_default_footer( $publishpress->modules->improved_notifications ); ?>
+			</div>
+			<?php
+			echo $footer;
 		}
 	}
 }// End if().
