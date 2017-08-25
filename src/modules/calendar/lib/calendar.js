@@ -476,4 +476,9 @@ jQuery( document ).ready(function ($) {
     $('#pp-calendar-filters select').change(function () {
         $(this).closest('form').trigger('submit');
     });
+
+    // Hide empty tag filter
+    if ( $( 'select#tag' ).children().length === 0 ) {
+    	$( 'select#tag' ).hide();
+    }
 });
