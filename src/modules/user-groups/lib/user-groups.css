@@ -57,12 +57,12 @@
     #pp-post_following_usergroups_box {
         float: right;
     }
-        #pp-post_following_users_box .pp-post_following_list,
-        #pp-post_following_usergroups_box .pp-post_following_list {
-            height: auto;
-            overflow: auto;
+        .pp-post_following_list {
+            max-height: 500px !important;
+            overflow: auto !important;
             margin-bottom: 0;
         }
+
         #pp-post_following_users_box .list-filterizer-tools,
         #pp-post_following_usergroups_box .list-filterizer-tools {
             margin-top: 5px;

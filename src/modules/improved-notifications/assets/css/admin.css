@@ -172,6 +172,12 @@ body.wp-admin.post-type-psppnotif_workflow .misc-pub-visibility {
     margin-bottom: 10px;
 }
 
+.publishpress_notif_user_list,
+.publishpress_notif_user_group_list {
+    max-height: 200px;
+    overflow: auto;
+}
+
 /* Responsive support */
 
 @media (max-width:1500px) {
