@@ -15,6 +15,18 @@
 }
 
 .psppno_workflow_user_fields .psppno_workflow_channel img {
-	width: 20px;
+	width: 16px;
 	padding-top: 4px;
+}
+
+.psppno_workflow_column_header.psppno_channels {
+	width: 250px;
+}
+
+.psppno_workflow_channel_field {
+	display: inline;
+}
+
+.psppno_workflows td {
+	border-bottom: 1px solid #ccc;
 }

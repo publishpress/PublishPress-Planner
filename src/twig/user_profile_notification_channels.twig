@@ -8,29 +8,30 @@
 		<td>
 			<table class="psppno_workflows">
 				<tr>
-					<th>{{ labels.workflows }}</th>
-					<th>{{ labels.channels }}</th>
-					<th></th>
+					<th class="psppno_workflow_column_header psppno_workflows">{{ labels.workflows }}</th>
+					<th class="psppno_workflow_column_header psppno_channels">{{ labels.channels }}</th>
+					<th class="psppno_workflow_column_header psppno_options"></th>
 				</tr>
 				{% for workflow in workflows %}
 					<tr class="psppno_workflow_{{ workflow.ID }}">
 						<td class="psppno_workflow_title">{{ workflow.post_title }}</td>
 						<td class="psppno_workflow_channel">
 							{% for channel in channels %}
-								<input
-									type="radio"
-									id="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}"
-									name="psppno_workflow_channel[{{ workflow.ID }}]"
-									value="{{ channel.name }}"
-									data-workflow-id="{{ workflow.ID }}"
-									{{ checked( channel.name, attribute( workflow_channels, workflow.ID ) ) }}
-									/>
+								<div class="psppno_workflow_channel_field">
+									<input
+										type="radio"
+										id="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}"
+										name="psppno_workflow_channel[{{ workflow.ID }}]"
+										value="{{ channel.name }}"
+										data-workflow-id="{{ workflow.ID }}"
+										{{ checked( channel.name, attribute( workflow_channels, workflow.ID ) ) }}
+										/>
 
-								<label for="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}">
-									<img
-										src="{{ channel.icon }}"
-										title="{{ channel.label }}" />
-								</label>
+									<label for="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}">
+										<img src="{{ channel.icon }}" />
+										<span>{{ channel.label }}</span>
+									</label>
+								</div>
 							{% endfor %}
 						</td>
 						<td class="psppno_workflow_channel_options">
