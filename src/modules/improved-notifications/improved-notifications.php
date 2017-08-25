@@ -229,20 +229,9 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 					Filter_Category::META_KEY_CATEGORY            => 'all',
 					Content_Main::META_KEY_SUBJECT                => $args['content_subject'],
 					Content_Main::META_KEY_BODY                   => $args['content_body'],
+					Receiver_Site_Admin::META_KEY                 => 1,
 				],
 			];
-
-			// Check if we should notify the site admin (legacy setting for the notifications module)
-			$receivers = [];
-			$publishpress = $this->get_service( 'publishpress' );
-
-			if ( 'on' === $publishpress->notifications->module->options->always_notify_admin ) {
-				$admin = get_option( 'admin_email' );
-
-				if ( ! empty( $admin ) ) {
-					$workflow['meta_input'][ Receiver_Site_Admin::META_KEY ] = 1;
-				}
-			}
 
 			wp_insert_post( $workflow );
 		}
