@@ -415,6 +415,7 @@ class Shortcodes {
 		remove_shortcode( 'psppno_actor' );
 		remove_shortcode( 'psppno_post' );
 		remove_shortcode( 'psppno_workflow' );
+		remove_shortcode( 'psppno_edcomment' );
 
 		$this->cleanup();
 	}
