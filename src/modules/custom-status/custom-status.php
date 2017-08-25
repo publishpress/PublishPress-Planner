@@ -120,7 +120,6 @@ if (!class_exists('PP_Custom_Status')) {
             add_action('admin_init', array($this, 'handle_make_default_custom_status'));
             add_action('admin_init', array($this, 'handle_delete_custom_status'));
             add_action('wp_ajax_update_status_positions', array($this, 'handle_ajax_update_status_positions'));
-            add_action('wp_ajax_inline_save_status', array($this, 'ajax_inline_save_status'));
 
             // Hook to add the status column to Manage Posts
 
@@ -339,7 +338,7 @@ if (!class_exists('PP_Custom_Status')) {
          * Enqueue Javascript resources that we need in the admin:
          * - Primary use of Javascript is to manipulate the post status dropdown on Edit Post and Manage Posts
          * - jQuery Sortable plugin is used for drag and dropping custom statuses
-         * - We have other custom code for Quick Edit and JS niceties
+         * - We have other custom code for JS niceties
          */
         public function action_admin_enqueue_scripts()
         {
@@ -349,7 +348,7 @@ if (!class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            // Load Javascript we need to use on the configuration views (jQuery Sortable and Quick Edit)
+            // Load Javascript we need to use on the configuration views (jQuery Sortable)
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
                 wp_enqueue_script('publishpress-custom-status-configure', $this->module_url . 'lib/custom-status-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
@@ -1467,93 +1466,6 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Handle an Inline Edit POST request to update status values
-         *
-         * @since 0.7
-         */
-        public function ajax_inline_save_status()
-        {
-            global $publishpress;
-
-            if (!wp_verify_nonce($_POST['inline_edit'], 'custom-status-inline-edit-nonce')) {
-                die($this->module->messages['nonce-failed']);
-            }
-
-            if (!current_user_can('manage_options')) {
-                die($this->module->messages['invalid-permissions']);
-            }
-
-            $term_id            = (int) $_POST['status_id'];
-            $status_name        = sanitize_text_field(trim($_POST['name']));
-            $status_slug        = sanitize_title($_POST['name']);
-            $status_description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
-            $status_color       = sanitize_hex_color($_POST['color']);
-            $status_icon        = $_POST['icon'];
-
-            // Check if name field was filled in
-            if (empty($status_name)) {
-                $change_error = new WP_Error('invalid', __('Please enter a name for the status.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check that the name isn't numeric
-            if (is_numeric($status_name)) {
-                $change_error = new WP_Error('invalid', __('Please enter a valid, non-numeric name for the status.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check that the status name doesn't exceed 20 chars
-            if (strlen($status_name) > 20) {
-                $change_error = new WP_Error('invalid', __('Status name cannot exceed 20 characters. Please try a shorter name.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check to make sure the name is not restricted
-            if ($publishpress->custom_status->is_restricted_status(strtolower($status_name))) {
-                $change_error = new WP_Error('invalid', __('Status name is restricted. Please chose another name.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check to make sure the status doesn't already exist
-            if ($this->get_custom_status_by('slug', $status_slug) && ($this->get_custom_status_by('id', $term_id)->slug != $status_slug)) {
-                $change_error = new WP_Error('invalid', __('Status already exists. Please choose another name.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check to make sure the status doesn't already exist as another term because otherwise we'd get a fatal error
-            $term_exists = term_exists(sanitize_title($status_name), self::taxonomy_key);
-
-            if (is_array($term_exists)) {
-                $term_exists = (int)$term_exists['term_id'];
-            }
-
-            if ($term_exists && $term_exists != $term_id) {
-                $change_error = new WP_Error('invalid', __('Status name conflicts with existing term. Please choose another.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // get status_name & status_description
-            $args = array(
-                'name' => $status_name,
-                'description' => $status_description,
-                'slug' => $status_slug,
-                'color' => $status_color,
-                'icon' => $status_icon,
-            );
-            $return = $this->update_custom_status($term_id, $args);
-            if (!is_wp_error($return)) {
-                set_current_screen('edit-custom-status');
-                $wp_list_table = new PP_Custom_Status_List_Table();
-                $wp_list_table->prepare_items();
-                echo $wp_list_table->single_row($return);
-                die();
-            } else {
-                $change_error = new WP_Error('invalid', sprintf(__('Could not update the status: <strong>%s</strong>', 'publishpress'), $status_name));
-                die($change_error->get_error_message());
-            }
-        }
-
-        /**
          * Register settings for notifications so we can partially use the Settings API
          * (We use the Settings API for form generation, but not saving)
          *
@@ -1819,8 +1731,7 @@ if (!class_exists('PP_Custom_Status')) {
                     </div>
                 </div>
                 </div>
-                <?php $wp_list_table->inline_edit();
-            ?>
+
                 <?php endif;
             ?>
             <?php
@@ -2425,7 +2336,6 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
         $actions                         = array();
         $actions['edit']                 = "<a href='$item_edit_link'>" . __('Edit', 'publishpress') . "</a>";
-        $actions['inline hide-if-no-js'] = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
         if ($item->slug != $this->default_status) {
             $actions['make_default'] = sprintf('<a href="%1$s">' . __('Make&nbsp;Default', 'publishpress') . '</a>', $publishpress->custom_status->get_link(array('action' => 'make-default', 'term-id' => $item->term_id)));
         }
@@ -2498,52 +2408,5 @@ class PP_Custom_Status_List_Table extends WP_List_Table
         echo '<tr id="term-' . $item->term_id . '"' . $row_class . '>';
         echo $this->single_row_columns($item);
         echo '</tr>';
-    }
-
-    /**
-     * Hidden form used for inline editing functionality
-     *
-     * @since 0.7
-     */
-    public function inline_edit()
-    {
-        global $publishpress;
-        ?>
-        <form method="get" action=""><table style="display: none"><tbody id="inlineedit">
-            <tr id="inline-edit" class="inline-edit-row" style="display: none"><td colspan="<?php echo $this->get_column_count();
-            ?>" class="colspanchange">
-                <fieldset><div class="inline-edit-col">
-                    <h4><?php _e('Quick Edit');
-            ?></h4>
-                    <label>
-                        <span class="title"><?php _e('Name', 'publishpress');
-            ?></span>
-                        <span class="input-text-wrap"><input type="text" name="name" class="ptitle" value="" maxlength="20" /></span>
-                    </label>
-                    <label>
-                        <span class="title"><?php _e('Description', 'publishpress');
-        ?></span>
-                        <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
-                    </label>
-                </div></fieldset>
-            <p class="inline-edit-save submit">
-                <a accesskey="c" href="#inline-edit" title="<?php _e('Cancel');
-            ?>" class="cancel button-secondary alignleft"><?php _e('Cancel');
-            ?></a>
-                <?php $update_text = __('Update Status', 'publishpress');
-            ?>
-                <a accesskey="s" href="#inline-edit" title="<?php echo esc_attr($update_text);
-            ?>" class="button save button-primary alignright"><?php echo $update_text;
-            ?></a>
-                <img class="waiting" style="display:none;" src="<?php echo esc_url(admin_url('images/wpspin_light.gif'));
-            ?>" alt="" />
-                <span class="error" style="display:none;"></span>
-                <?php wp_nonce_field('custom-status-inline-edit-nonce', 'inline_edit', false);
-            ?>
-                <br class="clear" />
-            </p>
-            </td></tr>
-            </tbody></table></form>
-    <?php
     }
 }

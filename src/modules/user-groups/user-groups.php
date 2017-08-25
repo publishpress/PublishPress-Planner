@@ -123,7 +123,6 @@ if (!class_exists('PP_User_Groups')) {
             add_action('admin_init', array($this, 'handle_add_usergroup'));
             add_action('admin_init', array($this, 'handle_edit_usergroup'));
             add_action('admin_init', array($this, 'handle_delete_usergroup'));
-            add_action('wp_ajax_inline_save_usergroup', array($this, 'handle_ajax_inline_save_usergroup'));
 
             // Usergroups can be managed from the User profile view
             add_action('show_user_profile', array($this, 'user_profile_page'));
@@ -487,73 +486,6 @@ if (!class_exists('PP_User_Groups')) {
         }
 
         /**
-         * Handle the request to update a given Usergroup via inline edit
-         *
-         * @since 0.7
-         */
-        public function handle_ajax_inline_save_usergroup()
-        {
-            if (!wp_verify_nonce($_POST['inline_edit'], 'usergroups-inline-edit-nonce')) {
-                die($this->module->messages['nonce-failed']);
-            }
-
-            if (!current_user_can($this->manage_usergroups_cap)) {
-                die($this->module->messages['invalid-permissions']);
-            }
-
-            $usergroup_id = (int) $_POST['usergroup_id'];
-            if (!$existing_term = $this->get_usergroup_by('id', $usergroup_id)) {
-                die($this->module->messages['usergroup-missing']);
-            }
-
-            $name        = strip_tags(trim($_POST['name']));
-            $description = stripslashes(strip_tags(trim($_POST['description'])));
-
-            /**
-             * Form validation for editing Usergroup
-             */
-            // Check if name field was filled in
-            if (empty($name)) {
-                $change_error = new WP_Error('invalid', __('Please enter a name for the user group.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-            // Check that the name doesn't exceed 40 chars
-            if (strlen($name) > 40) {
-                $change_error = new WP_Error('invalid', __('User group name cannot exceed 40 characters. Please try a shorter name.'));
-                die($change_error->get_error_message());
-            }
-            // Check to ensure a term with the same name doesn't exist
-            $search_term = $this->get_usergroup_by('name', $name);
-            if (is_object($search_term) && $search_term->term_id != $existing_term->term_id) {
-                $change_error = new WP_Error('invalid', __('Name already in use. Please choose another.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-            // Check to ensure a term with the same slug doesn't exist
-            $search_term = $this->get_usergroup_by('slug', sanitize_title($name));
-            if (is_object($search_term) && $search_term->term_id != $existing_term->term_id) {
-                $change_error = new WP_Error('invalid', __('Name conflicts with slug for another term. Please choose again.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Prepare the term name and description for saving
-            $args = array(
-                'name' => $name,
-                'description' => $description,
-            );
-            $return = $this->update_usergroup($existing_term->term_id, $args);
-            if (!is_wp_error($return)) {
-                set_current_screen('edit-usergroup');
-                $wp_list_table = new PP_Usergroups_List_Table();
-                $wp_list_table->prepare_items();
-                echo $wp_list_table->single_row($return);
-                die();
-            } else {
-                $change_error = new WP_Error('invalid', sprintf(__('Could not update the user group: <strong>%s</strong>', 'publishpress'), $usergroup_name));
-                die($change_error->get_error_message());
-            }
-        }
-
-        /**
          * Register settings for notifications so we can partially use the Settings API
          * (We use the Settings API for form generation, but not saving)
          *
@@ -740,8 +672,6 @@ if (!class_exists('PP_User_Groups')) {
                     <?php endif;
             ?>
                 </div></div></div>
-                <?php $wp_list_table->inline_edit();
-            ?>
             <?php endif;
         }
 
@@ -1322,7 +1252,6 @@ if (!class_exists('PP_Usergroups_List_Table')) {
 
             $actions                            = array();
             $actions['edit edit-usergroup']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array('action' => 'edit-usergroup', 'usergroup-id' => $usergroup->term_id)));
-            $actions['inline hide-if-no-js']    = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
             $actions['delete delete-usergroup'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->user_groups->get_link(array('action' => 'delete-usergroup', 'usergroup-id' => $usergroup->term_id)));
 
             $output .= $this->row_actions($actions, false);
@@ -1369,54 +1298,6 @@ if (!class_exists('PP_Usergroups_List_Table')) {
             echo '<tr id="usergroup-' . $usergroup->term_id . '"' . $row_class . '>';
             echo $this->single_row_columns($usergroup);
             echo '</tr>';
-        }
-
-        /**
-         * If we use this form, we can have inline editing!
-         *
-         * @since 0.7
-         */
-        public function inline_edit()
-        {
-            global $publishpress;
-            ?>
-        <form method="get" action=""><table style="display: none"><tbody id="inlineedit">
-            <tr id="inline-edit" class="inline-edit-row" style="display: none"><td colspan="<?php echo $this->get_column_count();
-            ?>" class="colspanchange">
-                <fieldset><div class="inline-edit-col">
-                    <h4><?php _e('Quick Edit');
-            ?></h4>
-                    <label>
-                        <span class="title"><?php _e('Name', 'publishpress');
-            ?></span>
-                        <span class="input-text-wrap"><input type="text" name="name" class="ptitle" value="" maxlength="40" /></span>
-                    </label>
-                    <label>
-                        <span class="title"><?php _e('Description', 'publishpress');
-            ?></span>
-                        <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
-                    </label>
-                </div></fieldset>
-            <p class="inline-edit-save submit">
-                <a accesskey="c" href="#inline-edit" title="<?php _e('Cancel');
-            ?>" class="cancel button-secondary alignleft"><?php _e('Cancel');
-            ?></a>
-                <?php $update_text = __('Update User Group', 'publishpress');
-            ?>
-                <a accesskey="s" href="#inline-edit" title="<?php echo esc_attr($update_text);
-            ?>" class="button save button-primary alignright"><?php echo $update_text;
-            ?></a>
-                <img class="waiting" style="display:none;" src="<?php echo esc_url(admin_url('images/wpspin_light.gif'));
-            ?>" alt="" />
-                <span class="error" style="display:none;"></span>
-                <?php wp_nonce_field('usergroups-inline-edit-nonce', 'inline_edit', false);
-            ?>
-                <br class="clear" />
-            </p>
-            </td></tr>
-            </tbody></table></form>
-        <?php
-
         }
     }
 }
