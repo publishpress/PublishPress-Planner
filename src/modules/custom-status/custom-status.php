@@ -1789,7 +1789,9 @@ if (!class_exists('PP_Custom_Status')) {
                             <label for="status_color"><?php _e('Color', 'publishpress');
                     ?></label>
 
-                            <?php echo $this->pp_color_picker(esc_attr($_POST['status_color']), 'status_color') ?>
+                            <?php
+                                $status_color = isset( $_POST['status_color'] ) ? $_POST['status_color'] : '';
+                                echo $this->pp_color_picker(esc_attr($status_color), 'status_color') ?>
 
                             <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress'));
                     ?>
@@ -1798,7 +1800,9 @@ if (!class_exists('PP_Custom_Status')) {
                             <label for="status_icon"><?php _e('Icon', 'publishpress');
                     ?></label>
 
-                            <?php echo $this->dropdown_icons(esc_attr($_POST['status_icon']), 'status_icon', 'id="status_icon"') ?>
+                            <?php
+                                $status_icon = isset( $_POST['status_icon'] ) ? $_POST['status_icon'] : '';
+                                echo $this->dropdown_icons(esc_attr($status_icon), 'status_icon', 'id="status_icon"') ?>
 
                             <?php $publishpress->settings->helper_print_error_or_description('icon', __('The icon is used to visually represent the status.', 'publishpress'));
                     ?>

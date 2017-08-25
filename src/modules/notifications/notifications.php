@@ -70,7 +70,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                         'post' => 'on',
                         'page' => 'on',
                     ),
-                    'always_notify_admin' => 'off',
                 ),
                 'configure_page_cb' => 'print_configure_view',
                 'post_type_support' => 'pp_notification',
@@ -173,6 +172,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                 $publishpress->update_module_option( $this->module->name, 'enabled', $enabled );
                 delete_option( 'publishpress_notifications_enabled' );
                 // Migrate whether to always notify the admin
+                // @todo: Remove after sometime. The setting always notify admin was removed.
                 if ( $always_notify_admin = get_option( 'publishpress_always_notify_admin' ) ) {
                     $always_notify_admin = 'on';
                 } else {
@@ -721,11 +721,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             $admins     = array();
             $recipients = array();
 
-            // Email all admins, if enabled
-            if ( 'on' == $this->module->options->always_notify_admin ) {
-                $admins[] = get_option( 'admin_email' );
-            }
-
             $usergroup_users = array();
             if ( $this->module_enabled( 'user_groups' ) ) {
                 // Get following users and usergroups
@@ -1065,7 +1060,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         {
             add_settings_section( $this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name );
             add_settings_field( 'post_types', __( 'Allow "following" on these post types:', 'publishpress' ), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
-            add_settings_field( 'always_notify_admin', __( 'Always notify blog admin', 'publishpress' ), array( $this, 'settings_always_notify_admin_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
         }
 
         /**
@@ -1077,26 +1071,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type( $this->module );
-        }
-
-        /**
-         * Option for whether the blog admin email address should be always notified or not
-         *
-         * @since 0.7
-         */
-        public function settings_always_notify_admin_option()
-        {
-            $options = array(
-                'off' => __( 'Disabled', 'publishpress' ),
-                'on'  => __( 'Enabled', 'publishpress' ),
-            );
-            echo '<select id="always_notify_admin" name="' . $this->module->options_group_name . '[always_notify_admin]">';
-            foreach ( $options as $value => $label ) {
-                echo '<option value="' . esc_attr( $value ) . '"';
-                echo selected( $this->module->options->always_notify_admin, $value );
-                echo '>' . esc_html( $label ) . '</option>';
-            }
-            echo '</select>';
         }
 
         /**
@@ -1112,11 +1086,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                 $new_options['post_types'] = array();
             }
             $new_options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
-
-            // Whitelist validation for the 'always_notify_admin' options
-            if ( ! isset( $new_options['always_notify_admin'] ) || $new_options['always_notify_admin'] != 'on' ) {
-                $new_options['always_notify_admin'] = 'off';
-            }
 
             return $new_options;
         }

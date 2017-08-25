@@ -30,6 +30,13 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
+use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
+use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
+use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
+use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Type as Filter_Post_Type;
+use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
+use PublishPress\Notifications\Workflow\Step\Event\Filter\Category as Filter_Category;
+use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 
 if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 	/**
@@ -40,6 +47,8 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		use Dependency_Injector, PublishPress_Module;
 
 		const SETTINGS_SLUG = 'pp-improved-notifications-settings';
+
+		const META_KEY_IS_DEFAULT_WORKFLOW = '_psppno_is_default_workflow';
 
 		public $module_name = 'improved-notifications';
 
@@ -165,7 +174,102 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * @since 0.7
 		 */
 		public function install() {
+			// Check if we any other workflow before create, avoiding duplicated registers
+			if ( false === $this->has_default_workflows() ) {
+				$this->create_default_workflows();
+			}
+		}
 
+		/**
+		 * Create default notification workflows based on current notification settings
+		 */
+		protected function create_default_workflows() {
+			// Post Save
+			$args = [
+				'post_title'      => __( 'Notify when posts are saved', 'publishpress-notifications' ),
+				'event_meta_key'  => Event_Post_save::META_KEY_SELECTED,
+				'content_subject' => 'The post [psppno_post title] was saved',
+				'content_body'    => 'Post: [psppno_post id title separator="-"]',
+			];
+			$this->create_default_workflow( $args );
+
+			// Editorial Comment
+			$args = [
+				'post_title'      => __( 'Notify on editorial comments', 'publishpress-notifications' ),
+				'event_meta_key'  => Event_Editorial_Comment::META_KEY_SELECTED,
+				'content_subject' => 'New Editorial Comment on [psppno_post title]',
+				'content_body'    => 'Comment: [psppno_edcomment content]',
+			];
+			$this->create_default_workflow( $args );
+		}
+
+		/**
+		 * Create default notification workflow for the post_save event
+		 *
+		 * $args = [
+		 *   'post_title' => ...
+		 *   'content_subject' => ...
+		 *   'content_body' => ...
+		 *   'event_meta_key' => ...
+		 * ]
+		 *
+		 * @param array $args
+		 */
+		protected function create_default_workflow( $args ) {
+			$workflow = [
+				'post_status' => 'publish',
+				'post_title'  => $args['post_title'],
+				'post_type'   => 'psppnotif_workflow',
+				'meta_input'  => [
+					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
+					$args['event_meta_key']                       => '1',
+					Filter_Post_Type::META_KEY_POST_TYPE          => 'all',
+					Filter_Post_Status::META_KEY_POST_STATUS_FROM => 'all',
+					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'all',
+					Filter_Category::META_KEY_CATEGORY            => 'all',
+					Content_Main::META_KEY_SUBJECT                => $args['content_subject'],
+					Content_Main::META_KEY_BODY                   => $args['content_body'],
+				],
+			];
+
+			// Check if we should notify the site admin (legacy setting for the notifications module)
+			$receivers = [];
+			$publishpress = $this->get_service( 'publishpress' );
+
+			if ( 'on' === $publishpress->notifications->module->options->always_notify_admin ) {
+				$admin = get_option( 'admin_email' );
+
+				if ( ! empty( $admin ) ) {
+					$workflow['meta_input'][ Receiver_Site_Admin::META_KEY ] = 1;
+				}
+			}
+
+			wp_insert_post( $workflow );
+		}
+
+		/**
+		 * Returns true if we found any default workflow
+		 *
+		 * @return Bool
+		 */
+		protected function has_default_workflows() {
+			$query_args = [
+				'post_type'  => 'psppnotif_workflow',
+				'meta_query' => [
+					[
+						'key'   => static::META_KEY_IS_DEFAULT_WORKFLOW,
+						'value' => '1',
+					],
+				],
+			];
+
+			$query = new WP_Query( $query_args );
+
+			if ( ! $query->have_posts() ) {
+				return false;
+			}
+
+			return $query->the_post();
 		}
 
 		/**
