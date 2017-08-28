@@ -854,14 +854,11 @@ class PP_Content_Overview extends PP_Module
             ?>
                 <select id="post_status" name="post_status"><!-- Status selectors -->
                     <option value=""><?php _e( 'View all statuses', 'publishpress' ); ?></option>
-                    <?php
+                        <?php
                         foreach ( $post_statuses as $post_status ) {
                             echo "<option value='" . esc_attr( $post_status->slug ) . "' " . selected( $post_status->slug, $filters['post_status'] ) . ">" . esc_html( $post_status->name ) . "</option>";
                         }
-
-                        echo "<option value='future'" . selected( 'future', $filters['post_status'] ) . ">" . __( 'Scheduled', 'publishpress' ) . "</option>";
-                        echo "<option value='unpublish'" . selected( 'unpublish', $filters['post_status'] ) . ">" . __( 'Unpublished', 'publishpress' ) . "</option>";
-                        echo "<option value='publish'" . selected( 'publish', $filters['post_status'] ) . ">" . __( 'Published', 'publishpress' ) . "</option>"; ?>
+                        ?>
                 </select>
             <?php
             break;

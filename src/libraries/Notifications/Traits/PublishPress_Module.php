@@ -31,22 +31,7 @@ trait PublishPress_Module {
 	public function get_post_statuses() {
 		if ( $this->is_module_enabled( 'custom_status' ) ) {
 			$publishpress = $this->get_service( 'publishpress' );
-
-			$statuses = $publishpress->custom_status->get_custom_statuses();
-
-			// Add Scheduled and Published
-			$statuses[]  = (object) [
-				'name'         => __( 'Scheduled' ),
-				'description'  => '',
-				'slug'         => 'future',
-				'position'     => 1,
-			];
-			$statuses[]  = (object) [
-				'name'         => __( 'Published' ),
-				'description'  => '',
-				'slug'         => 'publish',
-				'position'     => 1,
-			];
+			$statuses     = $publishpress->custom_status->get_custom_statuses();
 
 			return $statuses;
 		} else {

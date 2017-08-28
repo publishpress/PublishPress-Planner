@@ -723,7 +723,7 @@ if (!class_exists('PP_Custom_Status')) {
             return in_array($pagenow, array('post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php'));
         }
 
-        protected function get_native_statuses() {
+        protected function get_core_statuses() {
             $all_statuses = [];
 
             // The some default statuses from WordPress
@@ -803,7 +803,7 @@ if (!class_exists('PP_Custom_Status')) {
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
 
                 // All right, we want to set up the JS var which contains all custom statuses
-                $all_statuses = $this->get_native_statuses();
+                $all_statuses = $this->get_core_statuses();
 
                 // Load the custom statuses
                 foreach ($custom_statuses as $status) {
@@ -1032,7 +1032,7 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             // Add native statuses, custom properties saved on the config
-            $native_statuses  = $this->get_native_statuses();
+            $native_statuses  = $this->get_core_statuses();
             $ordered_statuses = array_merge( $ordered_statuses, $native_statuses );
 
             $this->custom_statuses_cache[$arg_hash] = $ordered_statuses;
