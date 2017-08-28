@@ -25,6 +25,8 @@ class Plugin {
 		add_action( 'init', array( $this, 'create_post_type' ) );
 
 		add_action( 'load-edit.php', [ $this, 'add_load_edit_hooks' ] );
+
+		add_filter( 'post_updated_messages', [ $this, 'filter_post_updated_messages' ] );
 	}
 
 	/**
@@ -36,13 +38,15 @@ class Plugin {
 			PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
 			array(
 				'labels' => array(
-					'name'           => __( 'Notification Workflows', 'publishpress-notifications' ),
-					'singular_name'  => __( 'Notification Workflow', 'publishpress-notifications' ),
-					'add_new_item'   => __( 'Add New Notification Workflow', 'publishpress-notifications' ),
-					'edit_item'      => __( 'Edit Notification Workflow', 'publishpress-notifications' ),
-					'search_items'   => __( 'Search Workflows', 'publishpress-notifications' ),
-					'menu_name'      => __( 'Notifications', 'publishpress-notifications' ),
-					'name_admin_bar' => __( 'Notification Workflow', 'publishpress-notifications' ),
+					'name'               => __( 'Notification Workflows', 'publishpress-notifications' ),
+					'singular_name'      => __( 'Notification Workflow', 'publishpress-notifications' ),
+					'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress-notifications' ),
+					'edit_item'          => __( 'Edit Notification Workflow', 'publishpress-notifications' ),
+					'search_items'       => __( 'Search Workflows', 'publishpress-notifications' ),
+					'menu_name'          => __( 'Notifications', 'publishpress-notifications' ),
+					'name_admin_bar'     => __( 'Notification Workflow', 'publishpress-notifications' ),
+					'not_found'          => __( 'No Workflow found', 'publishpress-notifications' ),
+					'not_found_in_trash' => __( 'No Workflow found', 'publishpress-notifications' ),
 				),
 				'public'              => false,
 				'publicly_queryable'  => false,
@@ -179,5 +183,17 @@ class Plugin {
 		} else {
 			echo implode( ', ', $values );
 		}
+	}
+
+	public function filter_post_updated_messages( $messages ) {
+		global $current_screen;
+
+		if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type ) {
+			return $messages;
+		}
+
+		$messages['post'][1] = __( 'Notification workflow updated.', 'pulishpress' );
+
+		return $messages;
 	}
 }
