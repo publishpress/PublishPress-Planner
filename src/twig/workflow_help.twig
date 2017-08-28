@@ -1,0 +1,25 @@
+<p>{{ labels.pre_text }}</p>
+
+<h4>{{ labels.post }}</h4>
+<pre>[psppno_post]</pre>
+<p>{{ labels.available_fields }}: <em>id, title, permalink</em></p>
+
+<h4>{{ labels.actor }}</h4>
+<pre>[psppno_actor]</pre>
+<p>{{ labels.available_fields }}: <em>id, login, url, display_name, email</em></p>
+
+<h4>{{ labels.workflow }}</h4>
+<pre>[psppno_workflow]</pre>
+<p>{{ labels.available_fields }}: <em>id, title</em></p>
+
+<h4>{{ labels.edcomment }}</h4>
+<pre>[psppno_edcomment]</pre>
+<p>{{ labels.available_fields }}: <em>id, content, author, author_email, author_url, author_ip, date</em></p>
+
+<hr>
+<h4>{{ labels.format }}</h4>
+<p>{{ labels.format_text }}</p>
+
+<pre style="white-space: normal;">
+[{{ labels.shortcode }} {{ labels.field }}1 {{ labels.field }}2... separator=", "]
+</pre>
