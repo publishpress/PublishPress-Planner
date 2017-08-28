@@ -22,7 +22,7 @@ class Editorial_Comment extends Base {
 	 */
 	public function __construct() {
 		$this->name  = 'editorial_comment';
-		$this->label = __( 'When an editorial comment is added', 'publishpress-notifications' );
+		$this->label = __( 'When an editorial comment is added', 'publishpress' );
 
 		parent::__construct();
 	}

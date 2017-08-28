@@ -23,7 +23,7 @@ class Post_Save extends Base {
 	 */
 	public function __construct() {
 		$this->name  = 'post_save';
-		$this->label = __( 'When the content is saved', 'publishpress-notifications' );
+		$this->label = __( 'When the content is saved', 'publishpress' );
 
 		parent::__construct();
 	}

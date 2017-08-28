@@ -29,10 +29,10 @@ class Post_Status extends Base implements Filter_Interface {
 				'options_from' => $this->get_options( 'from' ),
 				'options_to'   => $this->get_options( 'to' ),
 				'labels'  => [
-					'status_transition' => esc_html__( 'When the status is changed', 'publishpress-notifications' ),
-					'from'              => esc_html__( 'Previous status', 'publishpress-notifications' ),
-					'to'                => esc_html__( 'New status', 'publishpress-notifications' ),
-					'any'               => esc_html__( '- any status -', 'publishpress-notifications' ),
+					'status_transition' => esc_html__( 'When the status is changed', 'publishpress' ),
+					'from'              => esc_html__( 'Previous status', 'publishpress' ),
+					'to'                => esc_html__( 'New status', 'publishpress' ),
+					'any'               => esc_html__( '- any status -', 'publishpress' ),
 				],
 			]
 		);

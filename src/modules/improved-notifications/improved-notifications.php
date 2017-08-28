@@ -78,9 +78,9 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Register the module with PublishPress
 			$args = array(
-				'title'                => __( 'Notifications', 'publishpress-notifications' ),
-				'short_description'    => __( 'Improved notifications for PublishPress', 'publishpress-notifications' ),
-				'extended_description' => __( 'Improved Notifications for PublishPress', 'publishpress-notifications' ),
+				'title'                => __( 'Notifications', 'publishpress' ),
+				'short_description'    => __( 'Improved notifications for PublishPress', 'publishpress' ),
+				'extended_description' => __( 'Improved Notifications for PublishPress', 'publishpress' ),
 				'module_url'           => $this->module_url,
 				'icon_class'           => 'dashicons dashicons-feedback',
 				'slug'                 => 'improved-notifications',
@@ -120,7 +120,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$this->twig->addFunction( $function );
 
 			$function = new Twig_SimpleFunction( '__', function ( $id ) {
-				return __( $id, 'publishpress-notifications' );
+				return __( $id, 'publishpress' );
 			} );
 			$this->twig->addFunction( $function );
 
@@ -193,7 +193,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Post Save
 			$args = [
-				'post_title'      => __( 'Notify when posts are saved', 'publishpress-notifications' ),
+				'post_title'      => __( 'Notify when posts are saved', 'publishpress' ),
 				'event_meta_key'  => Event_Post_save::META_KEY_SELECTED,
 				'content_subject' => 'Changes were saved to &quot;[psppno_post title]&quot;',
 				'content_body'    => $twig->render( 'workflow_default_content_post_save.twig', [] ),
@@ -202,7 +202,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Editorial Comment
 			$args = [
-				'post_title'      => __( 'Notify on editorial comments', 'publishpress-notifications' ),
+				'post_title'      => __( 'Notify on editorial comments', 'publishpress' ),
 				'event_meta_key'  => Event_Editorial_Comment::META_KEY_SELECTED,
 				'content_subject' => 'New editorial comment to &quot;[psppno_post title]&quot;',
 				'content_body'    => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
@@ -369,7 +369,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		public function action_meta_boxes_workflow() {
 			add_meta_box(
 				'publishpress_notif_workflow_div',
-				__( 'Workflow Settings', 'publishpress-notifications' ),
+				__( 'Workflow Settings', 'publishpress' ),
 				[ $this, 'publishpress_notif_workflow_metabox' ],
 				null,
 				'advanced',
@@ -388,7 +388,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			// Renders the event section
 			$context = [
 				'id'     => 'event',
-				'header' => __( 'When to notify?' ),
+				'header' => __( 'When to notify?', 'publishpress' ),
 				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event', '' ),
 			];
 			$main_context['section_event'] = $twig->render( 'workflow_metabox_section.twig', $context );
@@ -396,7 +396,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			// Renders the receiver section
 			$context = [
 				'id'   => 'receiver',
-				'header' => __( 'Who to notify?' ),
+				'header' => __( 'Who to notify?', 'publishpress' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_receiver', '' ),
 			];
 			$main_context['section_receiver'] = $twig->render( 'workflow_metabox_section.twig', $context );
@@ -404,7 +404,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			// Renders the content section
 			$context = [
 				'id'   => 'content',
-				'header' => __( 'What to say?' ),
+				'header' => __( 'What to say?', 'publishpress' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_content', '' ),
 			];
 			$main_context['section_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
@@ -509,7 +509,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$default_channels = [
 				[
 					'name'    => 'mute',
-					'label'   => __( 'Muted', 'publishpress-notifications' ),
+					'label'   => __( 'Muted', 'publishpress' ),
 					'options' => [],
 					'icon'    => PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
 				]
@@ -521,11 +521,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			$context = [
 				'labels' => [
-					'title'       => __( 'Editorial Notifications', 'publishpress-notifications' ),
-					'description' => __( 'Choose the channels where each workflow will send notifications to:', 'publishpress-notifications' ),
-					'mute'        => __( 'Muted', 'publishpress-notifications' ),
-					'workflows'   => __( 'Workflows', 'publishpress-notifications' ),
-					'channels'    => __( 'Channels', 'publishpress-notifications' ),
+					'title'       => __( 'Editorial Notifications', 'publishpress' ),
+					'description' => __( 'Choose the channels where each workflow will send notifications to:', 'publishpress' ),
+					'mute'        => __( 'Muted', 'publishpress' ),
+					'workflows'   => __( 'Workflows', 'publishpress' ),
+					'channels'    => __( 'Channels', 'publishpress' ),
 				],
 				'workflows'         => $this->get_published_workflows(),
 				'channels'          => $channels,

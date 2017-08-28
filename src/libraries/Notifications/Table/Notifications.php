@@ -47,10 +47,10 @@ class Notifications extends Base {
 	public function get_columns() {
 		return array(
 			'cb'           => 'cb',
-			'post_title'   => __( 'Title', 'publishpress-notifications' ),
-			'post_content' => __( 'Message', 'publishpress-notifications' ),
-			'post_date'    => __( 'Date', 'publishpress-notifications' ),
-			'ID'           => __( 'ID', 'publishpress-notifications' ),
+			'post_title'   => __( 'Title', 'publishpress' ),
+			'post_content' => __( 'Message', 'publishpress' ),
+			'post_date'    => __( 'Date', 'publishpress' ),
+			'ID'           => __( 'ID', 'publishpress' ),
 		);
 	}
 
@@ -213,6 +213,6 @@ class Notifications extends Base {
 	 * Message to be displayed when there are no items
 	 */
 	public function no_items() {
-		_e( 'You don\'t have any notifications', 'publishpress-notifications' );
+		_e( 'You don\'t have any notifications', 'publishpress' );
 	}
 }

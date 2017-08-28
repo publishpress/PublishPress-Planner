@@ -38,15 +38,15 @@ class Plugin {
 			PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
 			array(
 				'labels' => array(
-					'name'               => __( 'Notification Workflows', 'publishpress-notifications' ),
-					'singular_name'      => __( 'Notification Workflow', 'publishpress-notifications' ),
-					'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress-notifications' ),
-					'edit_item'          => __( 'Edit Notification Workflow', 'publishpress-notifications' ),
-					'search_items'       => __( 'Search Workflows', 'publishpress-notifications' ),
-					'menu_name'          => __( 'Notifications', 'publishpress-notifications' ),
-					'name_admin_bar'     => __( 'Notification Workflow', 'publishpress-notifications' ),
-					'not_found'          => __( 'No Workflow found', 'publishpress-notifications' ),
-					'not_found_in_trash' => __( 'No Workflow found', 'publishpress-notifications' ),
+					'name'               => __( 'Notification Workflows', 'publishpress' ),
+					'singular_name'      => __( 'Notification Workflow', 'publishpress' ),
+					'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress' ),
+					'edit_item'          => __( 'Edit Notification Workflow', 'publishpress' ),
+					'search_items'       => __( 'Search Workflows', 'publishpress' ),
+					'menu_name'          => __( 'Notifications', 'publishpress' ),
+					'name_admin_bar'     => __( 'Notification Workflow', 'publishpress' ),
+					'not_found'          => __( 'No Workflow found', 'publishpress' ),
+					'not_found_in_trash' => __( 'No Workflow found', 'publishpress' ),
 				),
 				'public'              => false,
 				'publicly_queryable'  => false,
@@ -72,8 +72,8 @@ class Plugin {
 			PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
 			array(
 				'labels' => array(
-					'name'          => __( 'Notifications', 'publishpress-notifications' ),
-					'singular_name' => __( 'Notification', 'publishpress-notifications' )
+					'name'          => __( 'Notifications', 'publishpress' ),
+					'singular_name' => __( 'Notification', 'publishpress' )
 				),
 				'public'              => false,
 				'publicly_queryable'  => false,
@@ -158,7 +158,7 @@ class Plugin {
 		}
 
 		if ( empty( $events ) ) {
-			echo __( '-', 'publishpress-notifications' );
+			echo __( '-', 'publishpress' );
 		} else {
 			echo implode( ', ', $events );
 		}
@@ -179,7 +179,7 @@ class Plugin {
 		$values = apply_filters( 'psppno_receivers_column_value', [], $post_id );
 
 		if ( empty( $values ) ) {
-			echo __( '-', 'publishpress-notifications' );
+			echo __( '-', 'publishpress' );
 		} else {
 			echo implode( ', ', $values );
 		}

@@ -23,7 +23,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function __construct() {
 		$this->name          = 'site_admin';
-		$this->label         = __( 'Site Administrator (email)', 'publishpress-notifications' );
+		$this->label         = __( 'Site Administrator (email)', 'publishpress' );
 		$this->option_name   = 'receiver_site_admin';
 
 		parent::__construct();
@@ -65,7 +65,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function filter_receivers_column_value( $values, $post_id ) {
 		if ( $this->is_selected( $post_id ) ) {
-			$values[] = __( 'Site Administrator', 'publishpress-notifications' );
+			$values[] = __( 'Site Administrator', 'publishpress' );
 		}
 
 		return $values;

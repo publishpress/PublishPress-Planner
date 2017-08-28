@@ -23,7 +23,7 @@ class Main extends Base_Step {
 		$this->attr_prefix   = 'content';
 		$this->twig_template = 'workflow_content_main_field.twig';
 		$this->name          = 'main';
-		$this->label         = __( 'Content', 'publishpress-notifications' );
+		$this->label         = __( 'Content', 'publishpress' );
 
 		parent::__construct();
 
@@ -46,8 +46,8 @@ class Main extends Base_Step {
 		$template_context['input_name'] = 'publishpress_notif[content_main]';
 		$template_context['input_id']   = 'publishpress_notification_content_main_';
 		$template_context['labels']     = [
-			'subject' => __( 'Subject', 'publishpress-notifications' ),
-			'body'    => __( 'Body', 'publishpress-notifications' ),
+			'subject' => __( 'Subject', 'publishpress' ),
+			'body'    => __( 'Body', 'publishpress' ),
 		];
 
 		$template_context['subject'] = esc_attr( $this->get_metadata( static::META_KEY_SUBJECT, true ) );

@@ -18,7 +18,7 @@ class Email extends Base implements Channel_Interface {
 	 */
 	public function __construct() {
 		$this->name  = 'email';
-		$this->label = __( 'Email', 'publishpress-notifications' );
+		$this->label = __( 'Email', 'publishpress' );
 		$this->icon  = PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-email.png';
 
 		parent::__construct();

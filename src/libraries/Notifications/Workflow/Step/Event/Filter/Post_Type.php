@@ -27,8 +27,8 @@ class Post_Type extends Base implements Filter_Interface {
 				'id'      => "publishpress_notif_{$this->step_name}_filters_post_type",
 				'options' => $this->get_options(),
 				'labels'  => [
-					'label' => esc_html__( 'Post Type', 'publishpress-notifications' ),
-					'any'   => esc_html__( '- any type -', 'publishpress-notifications' ),
+					'label' => esc_html__( 'Post Type', 'publishpress' ),
+					'any'   => esc_html__( '- any type -', 'publishpress' ),
 				]
 			]
 		);

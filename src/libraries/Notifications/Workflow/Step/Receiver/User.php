@@ -19,7 +19,7 @@ class User extends Base implements Receiver_Interface {
 	public function __construct() {
 		$this->twig_template = 'workflow_receiver_user_field.twig';
 		$this->name          = 'user';
-		$this->label         = __( 'Users', 'publishpress-notifications' );
+		$this->label         = __( 'Users', 'publishpress' );
 
 		parent::__construct();
 	}
@@ -110,7 +110,7 @@ class User extends Base implements Receiver_Interface {
 
 		if ( ! empty( $users ) ) {
 			$values[] = sprintf(
-				_n( '%d User', '%d Users', count( $users ), 'publishpress-notifications' ),
+				_n( '%d User', '%d Users', count( $users ), 'publishpress' ),
 				count( $users )
 			);
 		}

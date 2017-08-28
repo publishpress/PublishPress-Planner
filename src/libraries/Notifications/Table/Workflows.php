@@ -47,8 +47,8 @@ class Workflows extends Base {
     public function get_columns() {
         return array(
             'cb'           => 'cb',
-            'post_title'   => __( 'Title', 'publishpress-notifications' ),
-            'ID'           => __( 'ID', 'publishpress-notifications' ),
+            'post_title'   => __( 'Title', 'publishpress' ),
+            'ID'           => __( 'ID', 'publishpress' ),
         );
     }
 
@@ -200,6 +200,6 @@ class Workflows extends Base {
      * Message to be displayed when there are no items
      */
     public function no_items() {
-        _e( 'No workflows found.', 'publishpress-notifications' );
+        _e( 'No workflows found.', 'publishpress' );
     }
 }

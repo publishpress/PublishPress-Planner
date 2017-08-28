@@ -27,8 +27,8 @@ class Category extends Base implements Filter_Interface {
 				'id'      => "publishpress_notif_{$this->step_name}_filters_category",
 				'options' => $this->get_options(),
 				'labels'  => [
-					'label' => esc_html__( 'Category', 'publishpress-notifications' ),
-					'any'   => esc_html__( '- any category -', 'publishpress-notifications' ),
+					'label' => esc_html__( 'Category', 'publishpress' ),
+					'any'   => esc_html__( '- any category -', 'publishpress' ),
 				]
 			]
 		);

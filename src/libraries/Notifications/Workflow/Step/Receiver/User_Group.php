@@ -27,7 +27,7 @@ class User_Group extends Base implements Receiver_Interface {
 
 		$this->twig_template = 'workflow_receiver_user_group_field.twig';
 		$this->name          = 'user_group';
-		$this->label         = __( 'User Groups', 'publishpress-notifications' );
+		$this->label         = __( 'User Groups', 'publishpress' );
 
 		parent::__construct();
 	}
@@ -127,7 +127,7 @@ class User_Group extends Base implements Receiver_Interface {
 
 		if ( ! empty( $groups ) ) {
 			$values[] = sprintf(
-				_n( '%d Group', '%d Groups', count( $groups ), 'publishpress-notifications' ),
+				_n( '%d Group', '%d Groups', count( $groups ), 'publishpress' ),
 				count( $groups )
 			);
 		}

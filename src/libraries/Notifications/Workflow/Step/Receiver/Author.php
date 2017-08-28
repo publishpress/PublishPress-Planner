@@ -23,7 +23,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function __construct() {
 		$this->name          = 'author';
-		$this->label         = __( 'Authors of the content', 'publishpress-notifications' );
+		$this->label         = __( 'Authors of the content', 'publishpress' );
 		$this->option_name   = 'receiver_author';
 
 		parent::__construct();
@@ -65,7 +65,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function filter_receivers_column_value( $values, $post_id ) {
 		if ( $this->is_selected( $post_id ) ) {
-			$values[] = __( 'Authors', 'publishpress-notifications' );
+			$values[] = __( 'Authors', 'publishpress' );
 		}
 
 		return $values;
