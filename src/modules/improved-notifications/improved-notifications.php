@@ -435,15 +435,16 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$context = [
 				'labels' => [
 					'pre_text'         => __( 'You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress' ),
-					'post'             => __( 'Post', 'publishpress' ),
+					'content'          => __( 'Content', 'publishpress' ),
 					'edcomment'        => __( 'Editorial Comment', 'publishpress' ),
-					'actor'            => __( 'Actor', 'publishpress' ),
+					'actor'            => __( 'User making changes or comments', 'publishpress' ),
 					'workflow'         => __( 'Workflow', 'publishpress' ),
 					'format'           => __( 'Format', 'publishpress' ),
 					'shortcode'        => __( 'shortcode', 'publishpress' ),
 					'field'            => __( 'field', 'publishpress' ),
 					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
 					'available_fields' => __( 'Available fields', 'publishpress' ),
+					'read_more'        => __( 'Documentation', 'publishpress' ),
 				],
 			];
 

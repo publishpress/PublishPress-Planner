@@ -46,15 +46,6 @@ class Shortcodes {
 	}
 
 	/**
-	 * Returns the user who is being notified
-	 *
-	 * @return WP_User
-	 */
-	protected function get_user() {
-		// return wp_get_current_user();
-	}
-
-	/**
 	 * Adds the shortcodes to replace text
 	 *
 	 * @param WP_Post $workflow_post
@@ -79,22 +70,7 @@ class Shortcodes {
 	 * @return string
 	 */
 	public function handle_psppno_actor( $attrs ) {
-		$actor = $this->get_actor();
-
-		return $this->get_user_data( $actor, $attrs );
-	}
-
-	/**
-	 * Returns the info from the user who is being notified by the worflow.
-	 * You can specify which user's property should be printed:
-	 *
-	 * [psppno_user display_name]
-	 *
-	 * @param array $attrs
-	 * @return string
-	 */
-	public function handle_psppno_user( $attrs ) {
-		$user = $this->get_user();
+		$user = $this->get_actor();
 
 		return $this->get_user_data( $user, $attrs );
 	}
