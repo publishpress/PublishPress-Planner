@@ -375,6 +375,15 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'advanced',
 				'high'
 			);
+
+			add_meta_box(
+				'publishpress_notif_workflow_help_div',
+				__( 'Help', 'publishpress-notifications' ),
+				[ $this, 'publishpress_notif_workflow_help_metabox' ],
+				null,
+				'side',
+				'low'
+			);
 		}
 
 		public function publishpress_notif_workflow_metabox() {
@@ -417,6 +426,30 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$main_context['section_channel'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
 			echo $twig->render( 'workflow_metabox.twig', $main_context );
+		}
+
+		/**
+		 * Add the metabox for the help text
+		 */
+		public function publishpress_notif_workflow_help_metabox() {
+			$context = [
+				'labels' => [
+					'pre_text'         => __( 'You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress' ),
+					'post'             => __( 'Post', 'publishpress' ),
+					'edcomment'        => __( 'Editorial Comment', 'publishpress' ),
+					'actor'            => __( 'Actor', 'publishpress' ),
+					'workflow'         => __( 'Workflow', 'publishpress' ),
+					'format'           => __( 'Format', 'publishpress' ),
+					'shortcode'        => __( 'shortcode', 'publishpress' ),
+					'field'            => __( 'field', 'publishpress' ),
+					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
+					'available_fields' => __( 'Available fields', 'publishpress' ),
+				],
+			];
+
+			$twig = $this->get_service( 'twig' );
+
+			echo $twig->render( 'workflow_help.twig', $context );
 		}
 
 		/**
