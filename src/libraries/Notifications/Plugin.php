@@ -59,7 +59,6 @@ class Plugin {
 				'menu_position'       => '20',
 				'supports'            => array(
 					'title',
-					'revisions',
 				)
 			)
 		);
