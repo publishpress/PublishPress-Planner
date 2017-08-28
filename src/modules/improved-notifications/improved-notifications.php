@@ -636,13 +636,22 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		}
 
 		public function update_footer_admin( $footer ) {
+			global $current_screen;
+
+			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type ) {
+				return $footer;
+			}
+
 			$publishpress = $this->get_service( 'publishpress' );
-			?>
-			<div class="pressshack-admin-wrapper">
-				<?php $publishpress->settings->print_default_footer( $publishpress->modules->improved_notifications ); ?>
-			</div>
-			<?php
-			echo $footer;
+
+			$html = '<div class="pressshack-admin-wrapper">';
+			$html .= $publishpress->settings->print_default_footer( $publishpress->modules->improved_notifications, false );
+			// We do not close the div by purpose. The footer contains it.
+
+			// Add the wordpress footer
+			$html .= $footer;
+
+			return $html;
 		}
 	}
-}// End if().
+}

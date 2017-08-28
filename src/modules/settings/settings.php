@@ -198,9 +198,17 @@ if (!class_exists('PP_Settings')) {
             <?php
         }
 
-        public function print_default_footer($current_module)
+        /**
+         * Echo or returns the default footer
+         *
+         * @param object $current_module
+         * @param bool   $echo
+         *
+         * @return string
+         */
+        public function print_default_footer($current_module, $echo = true)
         {
-            echo $this->twig->render(
+            $html = $this->twig->render(
                 'footer-base.twig',
                 array(
                     'current_module' => $current_module,
@@ -210,6 +218,12 @@ if (!class_exists('PP_Settings')) {
                     'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
                 )
             );
+
+            if ( ! $echo ) {
+                return $html;
+            }
+
+            echo $html;
         }
 
         public function print_modules()
