@@ -71,12 +71,17 @@ class Email extends Base implements Channel_Interface {
 			$emails = $this->get_receivers_emails( $filtered_receivers );
 			$action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
 
+			$subject = html_entity_decode( $content['subject'] );
+
+			$body = apply_filters( 'the_content', $content['body'] );
+			$body = str_replace( ']]>', ']]&gt;', $body );
+
 			// Call the legacy notification module
 			$this->get_service( 'publishpress' )->notifications->send_email(
 				$action,
 				$action_args,
-				$content['subject'],
-				$content['body'],
+				$subject,
+				$body,
 				'',
 				$emails
 			);

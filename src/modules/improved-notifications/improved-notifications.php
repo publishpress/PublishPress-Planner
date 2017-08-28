@@ -189,12 +189,14 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * Create default notification workflows based on current notification settings
 		 */
 		protected function create_default_workflows() {
+			$twig = $this->get_service( 'twig' );
+
 			// Post Save
 			$args = [
 				'post_title'      => __( 'Notify when posts are saved', 'publishpress-notifications' ),
 				'event_meta_key'  => Event_Post_save::META_KEY_SELECTED,
-				'content_subject' => 'The post [psppno_post title] was saved',
-				'content_body'    => 'Post: [psppno_post id title separator="-"]',
+				'content_subject' => 'Changes were saved to &quot;[psppno_post title]&quot;',
+				'content_body'    => $twig->render( 'workflow_default_content_post_save.twig', [] ),
 			];
 			$this->create_default_workflow( $args );
 
@@ -202,8 +204,8 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$args = [
 				'post_title'      => __( 'Notify on editorial comments', 'publishpress-notifications' ),
 				'event_meta_key'  => Event_Editorial_Comment::META_KEY_SELECTED,
-				'content_subject' => 'New Editorial Comment on [psppno_post title]',
-				'content_body'    => 'Comment: [psppno_edcomment content]',
+				'content_subject' => 'New editorial comment to &quot;[psppno_post title]&quot;',
+				'content_body'    => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
 			];
 			$this->create_default_workflow( $args );
 		}
@@ -373,15 +375,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'advanced',
 				'high'
 			);
-
-			add_meta_box(
-				'publishpress_notif_workflow_help_div',
-				__( 'Help', 'publishpress-notifications' ),
-				[ $this, 'publishpress_notif_workflow_help_metabox' ],
-				null,
-				'side',
-				'low'
-			);
 		}
 
 		public function publishpress_notif_workflow_metabox() {
@@ -424,27 +417,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$main_context['section_channel'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
 			echo $twig->render( 'workflow_metabox.twig', $main_context );
-		}
-
-		public function publishpress_notif_workflow_help_metabox() {
-			$context = [
-				'labels' => [
-					'pre_text'         => __( 'You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress' ),
-					'post'             => __( 'Post', 'publishpress' ),
-					'edcomment'        => __( 'Editorial Comment', 'publishpress' ),
-					'actor'            => __( 'Actor', 'publishpress' ),
-					'workflow'         => __( 'Workflow', 'publishpress' ),
-					'format'           => __( 'Format', 'publishpress' ),
-					'shortcode'        => __( 'shortcode', 'publishpress' ),
-					'field'            => __( 'field', 'publishpress' ),
-					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
-					'available_fields' => __( 'Available fields', 'publishpress' ),
-				],
-			];
-
-			$twig = $this->get_service( 'twig' );
-
-			echo $twig->render( 'workflow_help.twig', $context );
 		}
 
 		/**
