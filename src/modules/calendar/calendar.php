@@ -1994,10 +1994,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                             echo "<option value='" . esc_attr( $post_status->slug ) . "' " . selected( $post_status->slug, $filters['post_status'] ) . '>' . esc_html( $post_status->name ) . '</option>';
                         }
                         ?>
-                        <option value="future" <?php selected( 'future', $filters['post_status'] ) ?> > <?php echo __( 'Scheduled', 'publishpress' ) ?> </option>
-                        <option value="unpublish" <?php selected( 'unpublish', $filters['post_status'] ) ?> > <?php echo __( 'Unpublished', 'publishpress' ) ?> </option>
-                        <option value="publish" <?php selected( 'publish', $filters['post_status'] ) ?> > <?php echo __( 'Published', 'publishpress' ) ?> </option>
-                        <option value="trash" <?php selected( 'trash', $filters['post_status'] ) ?> > <?php echo __( 'Trashed', 'publishpress' ) ?> </option>
                     </select>
                     <?php
                 break;

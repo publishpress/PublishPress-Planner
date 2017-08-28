@@ -169,6 +169,8 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Inject the PublishPress footer
 			add_filter('admin_footer_text', [ $this, 'update_footer_admin' ] );
+
+			add_filter( 'pp_notification_send_email_message_headers', [ $this, 'filter_send_email_message_headers' ], 10, 3 );
 		}
 
 		/**
@@ -635,6 +637,9 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			wp_enqueue_style( 'psppno-user-profile', plugin_dir_url( __FILE__ ) . 'assets/css/user_profile.css');
 		}
 
+		/**
+		 * Display the PublishPress footer on the custom post pages
+		 */
 		public function update_footer_admin( $footer ) {
 			global $current_screen;
 
@@ -652,6 +657,29 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$html .= $footer;
 
 			return $html;
+		}
+
+		/**
+		 * Filters the email message headers, to enable HTML emails
+		 *
+		 * @param array   $message_headers
+		 * @param string  $action
+		 * @param WP_Post $post
+		 *
+		 * @return array
+		 */
+		public function filter_send_email_message_headers( $message_headers, $action, $post ) {
+			if ( is_string( $message_headers ) && ! empty( $message_headers ) ) {
+				$message_headers = [ $message_headers ];
+			}
+
+			if ( ! is_array( $message_headers ) ) {
+				$message_headers = []				;
+			}
+
+			$message_headers[] = 'Content-Type: text/html; charset=UTF-8';
+
+			return $message_headers;
 		}
 	}
 }
