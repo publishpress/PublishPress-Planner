@@ -291,9 +291,20 @@ if (!class_exists('PP_Custom_Status')) {
                 // all post statuses for a post type appearing at the top
                 // of manage posts if there is a post with the status
                 foreach ($custom_statuses as $status) {
-                    register_post_status($status->slug, array(
-                        'label'       => $status->name, 'protected'   => true, '_builtin'    => false, 'label_count' => _n_noop("{$status->name} <span class='count'>(%s)</span>", "{$status->name} <span class='count'>(%s)</span>")
-                    ));
+                    // Ignore core statuses, defined as stdClass
+                    if ( 'stdClass' === get_class( $status ) ) {
+                        continue;
+                    }
+
+                    register_post_status(
+                        $status->slug,
+                        [
+                            'label'       => $status->name,
+                            'protected'   => true,
+                            '_builtin'    => false,
+                            'label_count' => _n_noop("{$status->name} <span class='count'>(%s)</span>", "{$status->name} <span class='count'>(%s)</span>"),
+                        ]
+                    );
                 }
             }
         }
