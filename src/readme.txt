@@ -1,5 +1,5 @@
 === PublishPress – WordPress Editorial Tools, Content Calendar and Team Publishing ===
-Contributors: PressShack
+Contributors: PressShack, andergmartins
 Author: PressShack, PublishPress
 Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
