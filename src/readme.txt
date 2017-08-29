@@ -160,26 +160,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [1.7.0] - UNRELEASED =
 
 * Added:
-* Added notification workflows for improved notifications;
+* Added notification workflows for more control over notifications with custom text and more;
 * Added special fields on the user profile to configure where to receive the new notifications;
-* Allow to customize color and icon for Published, Privately Published and Scheduled native statuses;
+* Added the option for users to mute notifications from specific workflows;
+* Allow to customize color and icon for all post statuses in the calendar;
+* Allow to send emails in HTML format for notifications;
 
 * Fixed:
 * Fixed spacing for content overview;
 * Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
 * Fixed the creation and drag-and-drop of content on the calendar to set the scheduled date. Moving the content, if published or scheduled, now updates the status (and icon) according to the current time;
-* Fixed the issue with notifications disappearing after a few seconds;
-* Fixed empty filter for tags in the calendar if there no tags;
+* Fixed the issue with notifications disappearing from the admin after a few seconds;
+* Fixed empty filter for tags in the calendar if there are no tags;
 
 * Changed:
-* Filter content in calendar page on change;
-* Filter content in content overview page on change;
-* Added color and icon support to custom statuses;
-* Improves the description of the add-ons in the readme.txt file;
+* Filter content in the calendar page on the change event;
+* Filter content in content overview page on the change event;
 * Allow to drag-and-drop published content on the calendar;
 * Improved responsive support for calendar page;
 * Improved responsive support for content overview page;
-* Improved editorial comments layout;
 * Improved users and user groups layout;
 * Changed the label of the setting for the notification module adjusting to the new notification workflows;
 * Removed field "Always notify the blog admin" from the notification settings. This is now set on the notification workflow;
