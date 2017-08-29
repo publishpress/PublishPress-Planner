@@ -366,7 +366,7 @@ if (!class_exists('PP_Settings')) {
                 }
 
                 // New way to validate settings
-                $new_options = apply_filters( 'publishpress_validate_module_settings', $module_name, $new_options );
+                $new_options = apply_filters( 'publishpress_validate_module_settings', $new_options, $module_name );
 
                 // Cast our object and save the data.
                 $new_options = (object)array_merge((array)$publishpress->$module_name->module->options, $new_options);
