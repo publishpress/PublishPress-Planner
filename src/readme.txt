@@ -157,7 +157,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.7.0] - UNRELEASED =
+= [1.7.0] - 2017-08-29 =
 
 * Added:
 * Added notification workflows for more control over notifications with custom text and more;
