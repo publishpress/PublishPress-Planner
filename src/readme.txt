@@ -163,6 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed bug which blocked pages for guests after installing;
 * Fixed error 500 on saving the calendar settings;
 * Fixed bug on saving modules settings where changes were not being saved;
+* Fixed default color and icon for existent statuses;
 
 = [1.7.0] - 2017-08-29 =
 

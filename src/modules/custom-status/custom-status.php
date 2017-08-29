@@ -145,64 +145,75 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * Returns the list of default custom statuses.
+         *
+         * @return array
+         */
+        protected function get_default_terms() {
+            $terms = [
+                'pitch' => [
+                    'term' => __('Pitch', 'publishpress'),
+                    'args' => [
+                        'slug'        => 'pitch',
+                        'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
+                        'position'    => 1,
+                        'color'       => '#218c8d',
+                        'icon'        => 'dashicons-post-status',
+                    ],
+                ],
+                'assigned' => [
+                    'term' => __('Assigned', 'publishpress'),
+                    'args' => [
+                        'slug'        => 'assigned',
+                        'description' => __('Post idea assigned to writer.', 'publishpress'),
+                        'position'    => 2,
+                        'color'       => '#6ccecb',
+                        'icon'        => 'dashicons-admin-users',
+                    ],
+                ],
+                'in-progress' => [
+                    'term' => __('In Progress', 'publishpress'),
+                    'args' => [
+                        'slug'        => 'in-progress',
+                        'description' => __('Writer is working on the post.', 'publishpress'),
+                        'position'    => 3,
+                        'color'       => '#e0d950',
+                        'icon'        => 'dashicons-format-status',
+                    ],
+                ],
+                'draft' => [
+                    'term' => __('Draft', 'publishpress'),
+                    'args' => [
+                        'slug'        => 'draft',
+                        'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
+                        'position'    => 4,
+                        'color'       => '#473e3f',
+                        'icon'        => 'dashicons-media-default',
+                    ],
+                ],
+                'pending' => [
+                    'term' => __('Pending Review'),
+                    'args' => [
+                        'slug'        => 'pending',
+                        'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
+                        'position'    => 5,
+                        'color'       => '#ef7126',
+                        'icon'        => 'dashicons-clock',
+                    ],
+                ],
+            ];
+
+            return $terms;
+        }
+
+        /**
          * Create the default set of custom statuses the first time the module is loaded
          *
          * @since 0.7
          */
         public function install()
         {
-            $default_terms = array(
-                array(
-                    'term' => __('Pitch', 'publishpress'),
-                    'args' => array(
-                        'slug' => 'pitch',
-                        'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
-                        'position' => 1,
-                        'color' => '#218c8d',
-                        'icon' => 'dashicons-post-status',
-                    ),
-                ),
-                array(
-                    'term' => __('Assigned', 'publishpress'),
-                    'args' => array(
-                        'slug' => 'assigned',
-                        'description' => __('Post idea assigned to writer.', 'publishpress'),
-                        'position' => 2,
-                        'color' => '#6ccecb',
-                        'icon' => 'dashicons-admin-users',
-                    ),
-                ),
-                array(
-                    'term' => __('In Progress', 'publishpress'),
-                    'args' => array(
-                        'slug' => 'in-progress',
-                        'description' => __('Writer is working on the post.', 'publishpress'),
-                        'position' => 3,
-                        'color' => '#e0d950',
-                        'icon' => 'dashicons-format-status',
-                    ),
-                ),
-                array(
-                    'term' => __('Draft', 'publishpress'),
-                    'args' => array(
-                        'slug' => 'draft',
-                        'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
-                        'position' => 4,
-                        'color' => '#473e3f',
-                        'icon' => 'dashicons-media-default',
-                    ),
-                ),
-                array(
-                    'term' => __('Pending Review'),
-                    'args' => array(
-                        'slug' => 'pending',
-                        'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
-                        'position' => 5,
-                        'color' => '#ef7126',
-                        'icon' => 'dashicons-clock',
-                    ),
-                ),
-            );
+            $default_terms = $this->get_default_terms();
 
             // Okay, now add the default statuses to the db if they don't already exist
             foreach ($default_terms as $term) {
@@ -240,6 +251,7 @@ if (!class_exists('PP_Custom_Status')) {
                 // Technically we've run this code before so we don't want to auto-install new data
                 $publishpress->update_module_option($this->module->name, 'loaded_once', true);
             }
+
             // Upgrade path to v0.7.4
             if (version_compare($previous_version, '0.7.4', '<')) {
                 // Custom status descriptions become base64_encoded, instead of maybe json_encoded.
@@ -1012,6 +1024,8 @@ if (!class_exists('PP_Custom_Status')) {
                 $statuses = array();
             }
 
+            $default_terms = $this->get_default_terms();
+
             // Expand and order the statuses
             $ordered_statuses = array();
             $hold_to_end      = array();
@@ -1034,6 +1048,25 @@ if (!class_exists('PP_Custom_Status')) {
                 } else {
                     $hold_to_end[] = $status;
                 }
+
+                // Check if we need to set default colors and icons for current status
+                if ( ! isset( $status->color ) || empty( $status->color ) ) {
+                    // Set default color
+                    if ( array_key_exists( $status->slug, $default_terms ) ) {
+                        $status->color = $default_terms[ $status->slug ]['args']['color'];
+                    } else {
+                        $status->color = '#655997';
+                    }
+                }
+
+                if ( ! isset( $status->icon ) || empty( $status->icon ) ) {
+                    // Set default icon
+                    if ( array_key_exists( $status->slug, $default_terms ) ) {
+                        $status->icon = $default_terms[ $status->slug ]['args']['icon'];
+                    } else {
+                        $status->icon = 'dashicons-arrow-right-alt2';
+                    }
+                }
             }
             // Sort the items numerically by key
             ksort($ordered_statuses, SORT_NUMERIC);
@@ -1042,9 +1075,9 @@ if (!class_exists('PP_Custom_Status')) {
                 $ordered_statuses[] = $unpositioned_status;
             }
 
-            // Add native statuses, custom properties saved on the config
-            $native_statuses  = $this->get_core_statuses();
-            $ordered_statuses = array_merge( $ordered_statuses, $native_statuses );
+            // Add core statuses, custom properties saved on the config
+            $core_statuses    = $this->get_core_statuses();
+            $ordered_statuses = array_merge( $ordered_statuses, $core_statuses );
 
             $this->custom_statuses_cache[$arg_hash] = $ordered_statuses;
 
