@@ -23,7 +23,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function __construct() {
 		$this->name          = 'site_admin';
-		$this->label         = __( 'Site Administrator (email)', 'publishpress' );
+		$this->label         = __( 'Site Administrator', 'publishpress' );
 		$this->option_name   = 'receiver_site_admin';
 
 		parent::__construct();
