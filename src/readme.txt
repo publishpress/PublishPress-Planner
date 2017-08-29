@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -156,6 +156,13 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.7.1] - 2017-08-30 =
+
+* Fixed:
+* Fixed bug which blocked pages for guests after installing;
+* Fixed error 500 on saving the calendar settings;
+* Fixed bug on saving modules settings where changes were not being saved;
 
 = [1.7.0] - 2017-08-29 =
 
