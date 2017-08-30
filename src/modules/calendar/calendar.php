@@ -1690,18 +1690,20 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
         public function settings_validate( $new_options ) {
             $options = (array) $this->module->options;
 
-            // Set post as default
-            $empty = true;
-            foreach ( $options['post_types'] as $value ) {
-                if ( 'on' === $value ) {
-                    $empty = false;
-                    break;
+            if ( isset( $new_options['post_types'] ) ) {
+                // Set post as default
+                $empty = true;
+                foreach ( $options['post_types'] as $value ) {
+                    if ( 'on' === $value ) {
+                        $empty = false;
+                        break;
+                    }
                 }
-            }
-            if ( $empty) {
-                $options['post_types'] = array( 'post' => 'on' );
-            } else {
-                $options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
+                if ( $empty) {
+                    $options['post_types'] = array( 'post' => 'on' );
+                } else {
+                    $options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
+                }
             }
 
             if ( 'on' != $new_options['ics_subscription'] ) {
