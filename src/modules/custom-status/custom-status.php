@@ -157,7 +157,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug'        => 'pitch',
                         'description' => __('Idea proposed; waiting for acceptance.', 'publishpress'),
                         'position'    => 1,
-                        'color'       => '#218c8d',
+                        'color'       => '#cecece',
                         'icon'        => 'dashicons-post-status',
                     ],
                 ],
@@ -167,7 +167,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug'        => 'assigned',
                         'description' => __('Post idea assigned to writer.', 'publishpress'),
                         'position'    => 2,
-                        'color'       => '#6ccecb',
+                        'color'       => '#7684c9',
                         'icon'        => 'dashicons-admin-users',
                     ],
                 ],
@@ -177,7 +177,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug'        => 'in-progress',
                         'description' => __('Writer is working on the post.', 'publishpress'),
                         'position'    => 3,
-                        'color'       => '#e0d950',
+                        'color'       => '#d7c515',
                         'icon'        => 'dashicons-format-status',
                     ],
                 ],
@@ -187,7 +187,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug'        => 'draft',
                         'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
                         'position'    => 4,
-                        'color'       => '#473e3f',
+                        'color'       => '#f91d84',
                         'icon'        => 'dashicons-media-default',
                     ],
                 ],
@@ -197,7 +197,7 @@ if (!class_exists('PP_Custom_Status')) {
                         'slug'        => 'pending',
                         'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
                         'position'    => 5,
-                        'color'       => '#ef7126',
+                        'color'       => '#d76515',
                         'icon'        => 'dashicons-clock',
                     ],
                 ],
@@ -750,7 +750,7 @@ if (!class_exists('PP_Custom_Status')) {
             $all_statuses = [];
 
             // The some default statuses from WordPress
-            $color = get_option( 'psppno_status_publish_color', '#655997' );
+            $color = get_option( 'psppno_status_publish_color', '#006557' );
             $icon  = get_option( 'psppno_status_publish_icon', 'dashicons-yes' );
             $all_statuses[] = (object) [
                 'term_id'     => 'publish',
@@ -761,7 +761,7 @@ if (!class_exists('PP_Custom_Status')) {
                 'icon'        => $icon,
             ];
 
-            $color = get_option( 'psppno_status_private_color', '#cccccc' );
+            $color = get_option( 'psppno_status_private_color', '#000000' );
             $icon  = get_option( 'psppno_status_private_icon', 'dashicons-lock' );
             $all_statuses[] = (object) [
                 'term_id'     => 'private',
@@ -772,7 +772,7 @@ if (!class_exists('PP_Custom_Status')) {
                 'icon'        => $icon,
             ];
 
-            $color = get_option( 'psppno_status_future_color', '#ad7fa8' );
+            $color = get_option( 'psppno_status_future_color', '#655997' );
             $icon  = get_option( 'psppno_status_future_icon', 'dashicons-calendar-alt' );
             $all_statuses[] = (object) [
                 'term_id'     => 'future',
@@ -1068,6 +1068,7 @@ if (!class_exists('PP_Custom_Status')) {
                     }
                 }
             }
+
             // Sort the items numerically by key
             ksort($ordered_statuses, SORT_NUMERIC);
             // Append all of the statuses that didn't have an existing position
