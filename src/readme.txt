@@ -165,6 +165,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed bug on saving modules settings where changes were not being saved;
 * Fixed default color and icon for existent statuses;
 
+* Changed:
+* Improved default colors for custom statuses;
+
 = [1.7.0] - 2017-08-29 =
 
 * Added:
