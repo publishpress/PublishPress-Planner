@@ -163,6 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed default notification workflows to avoid notifications on every post save, but only when the content transition to Published;
 * Fixed the message after delete workflows;
 * Fixed the notifications workflows to ignore autosaves;
+* Fixed post type options in the calendar settings, selecting the Post post type by default, if nothing is selected - Displaying a warning;
 
 = [1.7.1] - 2017-08-30 =
 
