@@ -310,6 +310,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				return;
 			}
 
+			// Ignores auto-save
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+
 			// Go ahead and do the action to run workflows
 			$args = [
 				'action'     => 'transition_post_status',
