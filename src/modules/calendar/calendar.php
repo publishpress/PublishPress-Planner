@@ -52,6 +52,12 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
         const DEFAULT_NUM_WEEKS   = 5;
 
         /**
+         * Name of the transient option to flag the warning for selecting
+         * at least one post type
+         */
+        const TRANSIENT_SHOW_ONE_POST_TYPE_WARNING = 'show_one_post_type_warning';
+
+        /**
          * [$module description]
          *
          * @var [type]
@@ -1642,6 +1648,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
         public function settings_post_types_option() {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type( $this->module );
+
+            // Check if we need to display the message about selecting at lest one post type
+            if ( get_transient( static::TRANSIENT_SHOW_ONE_POST_TYPE_WARNING ) ) {
+                echo '<p class="psppca_field_warning">' . __( 'At least one post type must be selected', 'publishpress' ) . '</p>';
+
+                delete_transient( static::TRANSIENT_SHOW_ONE_POST_TYPE_WARNING );
+            }
         }
 
         /**
@@ -1699,11 +1712,22 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
                         break;
                     }
                 }
+
                 if ( $empty) {
+                    // Check post by default
                     $options['post_types'] = array( 'post' => 'on' );
+
+                    // Add flag to display a warning to the user
+                    set_transient( static::TRANSIENT_SHOW_ONE_POST_TYPE_WARNING, 1, 300 );
                 } else {
                     $options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
                 }
+            } else {
+                // Check post by default
+                $options['post_types'] = array( 'post' => 'on' );
+
+                // Add flag to display a warning to the user
+                set_transient( static::TRANSIENT_SHOW_ONE_POST_TYPE_WARNING, 1, 300 );
             }
 
             if ( 'on' != $new_options['ics_subscription'] ) {

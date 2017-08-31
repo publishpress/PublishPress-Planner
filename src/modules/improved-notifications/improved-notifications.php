@@ -181,67 +181,86 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		public function install() {
 			// Check if we any other workflow before create, avoiding duplicated registers
 			if ( false === $this->has_default_workflows() ) {
-				$this->create_default_workflows();
+				$this->create_default_workflow_post_save();
+				$this->create_default_workflow_editorial_comment();
 			}
 		}
 
 		/**
 		 * Create default notification workflows based on current notification settings
 		 */
-		protected function create_default_workflows() {
+		protected function create_default_workflow_post_save() {
 			$twig = $this->get_service( 'twig' );
 
+			// Get post statuses
+			$statuses = $this->get_post_statuses();
+			// Remove the published state
+			foreach ( $statuses as $index => $status ) {
+				if ( $status->slug === 'publish' ) {
+					unset( $statuses[ $index ] );
+				}
+			}
+
 			// Post Save
-			$args = [
-				'post_title'      => __( 'Notify when posts are saved', 'publishpress' ),
-				'event_meta_key'  => Event_Post_save::META_KEY_SELECTED,
-				'content_subject' => 'Changes were saved to &quot;[psppno_post title]&quot;',
-				'content_body'    => $twig->render( 'workflow_default_content_post_save.twig', [] ),
-			];
-			$this->create_default_workflow( $args );
-
-			// Editorial Comment
-			$args = [
-				'post_title'      => __( 'Notify on editorial comments', 'publishpress' ),
-				'event_meta_key'  => Event_Editorial_Comment::META_KEY_SELECTED,
-				'content_subject' => 'New editorial comment to &quot;[psppno_post title]&quot;',
-				'content_body'    => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
-			];
-			$this->create_default_workflow( $args );
-		}
-
-		/**
-		 * Create default notification workflow for the post_save event
-		 *
-		 * $args = [
-		 *   'post_title' => ...
-		 *   'content_subject' => ...
-		 *   'content_body' => ...
-		 *   'event_meta_key' => ...
-		 * ]
-		 *
-		 * @param array $args
-		 */
-		protected function create_default_workflow( $args ) {
 			$workflow = [
 				'post_status' => 'publish',
-				'post_title'  => $args['post_title'],
+				'post_title'  => __( 'Notify when content is published', 'publishpress' ),
 				'post_type'   => 'psppnotif_workflow',
 				'meta_input'  => [
 					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
-					$args['event_meta_key']                       => '1',
-					Filter_Post_Type::META_KEY_POST_TYPE          => 'all',
-					Filter_Post_Status::META_KEY_POST_STATUS_FROM => 'all',
-					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'all',
+					Event_Post_save::META_KEY_SELECTED            => '1',
+					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'publish',
 					Filter_Category::META_KEY_CATEGORY            => 'all',
-					Content_Main::META_KEY_SUBJECT                => $args['content_subject'],
-					Content_Main::META_KEY_BODY                   => $args['content_body'],
+					Content_Main::META_KEY_SUBJECT                => '&quot;[psppno_post title]&quot; was published',
+					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_post_save.twig', [] ),
 					Receiver_Site_Admin::META_KEY                 => 1,
 				],
 			];
 
-			wp_insert_post( $workflow );
+			$post_id = wp_insert_post( $workflow );
+
+			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
+
+				// Add each status to the "From" filter, except the "publish" state
+				foreach ( $statuses as $status ) {
+					add_post_meta( $post_id, Filter_Post_Status ::META_KEY_POST_STATUS_FROM, $status->slug, false );
+				}
+			}
 		}
+
+		/**
+		 * Create default notification workflow for the editorial comments
+		 */
+		protected function create_default_workflow_editorial_comment() {
+			$twig = $this->get_service( 'twig' );
+
+			// Post Save
+			$workflow = [
+				'post_status' => 'publish',
+				'post_title'  => __( 'Notify on editorial comments', 'publishpress' ),
+				'post_type'   => 'psppnotif_workflow',
+				'meta_input'  => [
+					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
+					Event_Editorial_Comment::META_KEY_SELECTED    => '1',
+					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'all',
+					Filter_Post_Status::META_KEY_POST_STATUS_FROM => 'all',
+					Filter_Category::META_KEY_CATEGORY            => 'all',
+					Content_Main::META_KEY_SUBJECT                => 'New editorial comment to &quot;[psppno_post title]&quot;',
+					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
+					Receiver_Site_Admin::META_KEY                 => 1,
+				],
+			];
+
+			$post_id = wp_insert_post( $workflow );
+
+			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
+			}
+		}
+
 
 		/**
 		 * Returns true if we found any default workflow
@@ -297,6 +316,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Ignore if the post_type is an internal post_type
 			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type ) {
+				return;
+			}
+
+			// Ignores auto-save
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}
 

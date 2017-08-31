@@ -156,3 +156,7 @@ Status color box */
 .pp-status-color + strong {
     margin-left: 5px;
 }
+
+.psppca_field_warning {
+	font-style: italic;
+}

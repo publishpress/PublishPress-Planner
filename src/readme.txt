@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,6 +157,14 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.7.2] - 2017-08-31 =
+
+* Fixed:
+* Fixed default notification workflows to avoid notifications on every post save, but only when the content transition to Published;
+* Fixed the message after delete workflows;
+* Fixed the notifications workflows to ignore autosaves;
+* Fixed post type options in the calendar settings, selecting the Post post type by default, if nothing is selected - Displaying a warning;
+
 = [1.7.1] - 2017-08-30 =
 
 * Fixed:
@@ -164,6 +172,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed error 500 on saving the calendar settings;
 * Fixed bug on saving modules settings where changes were not being saved;
 * Fixed default color and icon for existent statuses;
+
+* Changed:
+* Improved default colors for custom statuses;
 
 = [1.7.0] - 2017-08-29 =
 
