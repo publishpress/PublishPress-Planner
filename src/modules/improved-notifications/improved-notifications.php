@@ -193,10 +193,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			// Post Save
 			$args = [
-				'post_title'      => __( 'Notify when posts are saved', 'publishpress' ),
+				'post_title'      => __( 'Notify when content is published', 'publishpress' ),
 				'event_meta_key'  => Event_Post_save::META_KEY_SELECTED,
-				'content_subject' => 'Changes were saved to &quot;[psppno_post title]&quot;',
+				'content_subject' => '&quot;[psppno_post title]&quot; was published',
 				'content_body'    => $twig->render( 'workflow_default_content_post_save.twig', [] ),
+				'meta_input'      => [ Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish' ],
 			];
 			$this->create_default_workflow( $args );
 
@@ -230,7 +231,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'meta_input'  => [
 					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
 					$args['event_meta_key']                       => '1',
-					Filter_Post_Type::META_KEY_POST_TYPE          => 'all',
 					Filter_Post_Status::META_KEY_POST_STATUS_FROM => 'all',
 					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'all',
 					Filter_Category::META_KEY_CATEGORY            => 'all',
@@ -240,7 +240,17 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				],
 			];
 
-			wp_insert_post( $workflow );
+			// Check if we have additional meta_inputs
+			if ( isset( $args['meta_input']) && ! empty( $args['meta_input'] ) ) {
+				$workflow['meta_input'] = array_merge( $workflow['meta_input'], $args['meta_input'] );
+			}
+
+			$post_id = wp_insert_post( $workflow );
+
+			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
+				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
+			}
 		}
 
 		/**
