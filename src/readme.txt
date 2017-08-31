@@ -157,6 +157,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.7.2] - 2017-08-31 =
+
+* Fixed:
+* Fixed default notification workflows to avoid notifications on every post save, but only when the content transition to Published;
+* Fixed the message after delete workflows;
+* Fixed the notifications workflows to ignore autosaves;
+
 = [1.7.1] - 2017-08-30 =
 
 * Fixed:
