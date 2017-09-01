@@ -160,3 +160,8 @@ Status color box */
 .psppca_field_warning {
 	font-style: italic;
 }
+
+.psppno_no_events_warning {
+	font-style: italic;
+	color: #9c9c9c;
+}

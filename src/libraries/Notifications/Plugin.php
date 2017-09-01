@@ -115,8 +115,8 @@ class Plugin {
 		$date_column = $post_columns['date'];
 		unset( $post_columns['date'] );
 
-		$post_columns['events']    = 'Events';
-		$post_columns['receivers'] = 'Receivers';
+		$post_columns['events']    = __( 'When to notify?', 'publishpress' );
+		$post_columns['receivers'] = __( 'Who to notify?', 'publishpress' );
 		$post_columns['date']      = $date_column;
 
 		return $post_columns;
@@ -159,7 +159,7 @@ class Plugin {
 		}
 
 		if ( empty( $events ) ) {
-			echo __( '-', 'publishpress' );
+			echo '<span class="psppno_no_events_warning">' . __( 'Please, select at least one event' , 'publishpress' ) . '</span>';
 		} else {
 			echo implode( ', ', $events );
 		}
@@ -180,7 +180,7 @@ class Plugin {
 		$values = apply_filters( 'psppno_receivers_column_value', [], $post_id );
 
 		if ( empty( $values ) ) {
-			echo __( '-', 'publishpress' );
+			echo '-';
 		} else {
 			echo implode( ', ', $values );
 		}
