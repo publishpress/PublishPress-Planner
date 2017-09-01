@@ -1,4 +1,4 @@
-=== PublishPress – WordPress Editorial Tools, Content Calendar and Team Publishing ===
+=== PublishPress – WordPress Content Calendar and Notification Workflows ===
 Contributors: PressShack, andergmartins
 Author: PressShack, PublishPress
 Author URI: https://pressshack.com
@@ -9,13 +9,15 @@ Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is essential for WordPress sites with multiple writers. Get editorial calendars, pre-publish checklists, content workflows and much more.
+PublishPress is the collaboration tool WordPress teams. You get a beautiful editorial calendar and powerful notification workflows.
 
 == Description ==
 
-The slogan of PublishPress is “WordPress for Teams”
+The slogan of PublishPress is “WordPress for Teams”.
 
-PublishPress is the essential plugin for any WordPress site with multiple writers.
+PublishPress is the essential plugin for any WordPress site with multiple team members.
+
+[Click here to try a free demo of PublishPress](http://pressshack.com/demo)
 
 PublishPress has multiple tools that help your team stay organized:
 
@@ -39,13 +41,19 @@ PublishPress is ideal for WordPress sites that have content teams. With PublishP
 [Wistia](https://pressshack.com/addons/embedpress-wistia/): More features and design options for your Wistia videos
 [Vimeo](https://pressshack.com/addons/embedpress-vimeo/): More features and design options  for your Vimeo videos
 
-Check out the PublishPress Everything Club for access to all the PublishPress add-ons.
+[Check out the PublishPress Everything Club](https://pressshack.com/addons/publishpress-club/) for access to all the PublishPress add-ons.
 
 = EDITORIAL CONTENT CALENDAR =
 
 The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next six weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
 * [Click here for more on the PublishPress Editorial Calendar](https://pressshack.com/publishpress/docs/calendar/)
+
+= NOTIFICATION WORKFLOWS =
+
+Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
+
+[Click here for more on PublishPress Notifications](https://pressshack.com/publishpress/docs/notifications/)
 
 = CONTENT OVERVIEW =
 
@@ -74,12 +82,6 @@ Metadata enabled you to keep track of important requirements for your content. T
 By default, PublishPress provide 4 examples of metadata, but you can add your own to meet your team’s needs.
 
 * [Click here for more on PublishPress Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/)
-
-= NOTIFICATIONS =
-
-Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. You can quickly search through all your users to find the desired name or email address, or display just those users already subscribed to a post. By default, notifications are sent by email.
-
-* [Click here for more on PublishPress Notifications ](https://pressshack.com/publishpress/docs/notifications/)
 
 = USER GROUPS =
 
@@ -156,6 +158,10 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.7.3] - UNRELEASED =
+
+
 
 = [1.7.2] - 2017-08-31 =
 
