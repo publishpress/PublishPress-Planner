@@ -53,7 +53,7 @@ The calendar gives you a powerful overview of your publishing schedule. Using th
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
-[Click here for more on PublishPress Notifications](https://pressshack.com/publishpress/docs/notifications/)
+* [Click here for more on PublishPress Notifications](https://pressshack.com/publishpress/docs/notifications/)
 
 = CONTENT OVERVIEW =
 
