@@ -121,7 +121,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -184,7 +184,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -266,7 +266,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -330,7 +330,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
