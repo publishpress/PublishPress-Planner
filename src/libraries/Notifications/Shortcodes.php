@@ -253,6 +253,8 @@ class Shortcodes {
 	 *   - id
 	 *   - title
 	 *   - permalink
+	 *   - date
+	 *   - time
 	 *   - separator
 	 *
 	 * @param WP_Post $post
@@ -276,6 +278,8 @@ class Shortcodes {
 			'id',
 			'title',
 			'permalink',
+			'date',
+			'time',
 			'separator',
 		];
 
@@ -291,6 +295,14 @@ class Shortcodes {
 
 				case 'permalink':
 					$info[] = get_post_permalink( $post->ID );
+					break;
+
+				case 'date':
+					$info[] = get_the_date( '', $post );
+					break;
+
+				case 'time':
+					$info[] = get_the_time( '', $post );
 					break;
 
 				default:
