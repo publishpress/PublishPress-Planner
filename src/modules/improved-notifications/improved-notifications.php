@@ -468,7 +468,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 					'field'            => __( 'field', 'publishpress' ),
 					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
 					'available_fields' => __( 'Available fields', 'publishpress' ),
-					'read_more'        => __( 'Read more...', 'publishpress' ),
+					'read_more'        => __( 'Click here to read more about shortcode options...', 'publishpress' ),
 				],
 			];
 

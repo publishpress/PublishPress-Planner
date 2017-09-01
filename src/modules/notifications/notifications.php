@@ -337,11 +337,11 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             if (in_array(wp_get_current_user()->user_login, $following_users ) ) {
                 $args['method'] = 'unfollow';
                 $title_text     = __( 'Click to stop being notified on updates for this post', 'publishpress' );
-                $follow_text    = __( 'Notifying', 'publishpress' );
+                $follow_text    = __( 'Stop notifying me', 'publishpress' );
             } else {
                 $args['method'] = 'follow';
                 $title_text     = __( 'Click to start being notified on updates for this post', 'publishpress' );
-                $follow_text    = __( 'Notify', 'publishpress' );
+                $follow_text    = __( 'Notify me', 'publishpress' );
             }
 
             // wp_nonce_url() has encoding issues: http://core.trac.wordpress.org/ticket/20771

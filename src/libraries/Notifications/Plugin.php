@@ -159,7 +159,7 @@ class Plugin {
 		}
 
 		if ( empty( $events ) ) {
-			echo '<span class="psppno_no_events_warning">' . __( 'Please, select at least one event' , 'publishpress' ) . '</span>';
+			echo '<span class="psppno_no_events_warning">' . __( 'Please select at least one event' , 'publishpress' ) . '</span>';
 		} else {
 			echo implode( ', ', $events );
 		}

@@ -2191,7 +2191,7 @@ msgid "Available fields"
 msgstr "Deaktivieren"
 
 #: modules/improved-notifications/improved-notifications.php:447
-msgid "Read more..."
+msgid "Click here to read more about shortcode options..."
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:546
