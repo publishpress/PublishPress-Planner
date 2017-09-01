@@ -35,10 +35,10 @@ if (!class_exists('PP_Dashboard')) {
      *
      * Dashboard widgets currently:
      * - Post Status Widget - Shows numbers for all (custom|post) statuses
-     * - Posts I'm Following Widget - Show the headlines with edit links for posts I'm following
+     * - My Content Notifications Widget - Show the headlines with edit links for My Content Notifications
      *
      * @todo for 0.7
-     * - Update the Posts I'm Following widget to use new activity class
+     * - Update the My Content Notifications widget to use new activity class
      */
     class PP_Dashboard extends PP_Module
     {
@@ -162,7 +162,7 @@ if (!class_exists('PP_Dashboard')) {
 
         // Add the MyPosts widget, if enabled
         if ($this->module->options->my_posts_widget == 'on' && $this->module_enabled('notifications')) {
-            wp_add_dashboard_widget('myposts_widget', __('Posts I\'m Following', 'publishpress'), array($this, 'myposts_widget'));
+            wp_add_dashboard_widget('myposts_widget', __('My Content Notifications', 'publishpress'), array($this, 'myposts_widget'));
         }
     }
 
@@ -276,7 +276,7 @@ if (!class_exists('PP_Dashboard')) {
         {
             add_settings_section($this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name);
             add_settings_field('post_status_widget', __('Post Status Widget', 'publishpress'), array($this, 'settings_post_status_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
-            add_settings_field('my_posts_widget', __('Posts I\'m Following', 'publishpress'), array($this, 'settings_my_posts_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
+            add_settings_field('my_posts_widget', __('My Content Notifications', 'publishpress'), array($this, 'settings_my_posts_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
             add_settings_field('notepad_widget', __('Notepad', 'publishpress'), array($this, 'settings_notepad_widget_option'), $this->module->options_group_name, $this->module->options_group_name . '_general');
         }
 
@@ -301,7 +301,7 @@ if (!class_exists('PP_Dashboard')) {
         }
 
         /**
-         * Enable or disable the Posts I'm Following Widget for the WP dashboard
+         * Enable or disable the My Content Notifications Widget for the WP dashboard
          *
          * @since 0.7
          */

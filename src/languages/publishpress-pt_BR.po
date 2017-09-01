@@ -1403,7 +1403,7 @@ msgid "Notepad"
 msgstr "Bloco de notas"
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr "Posts que sigo"
 
 #: modules/dashboard/dashboard.php:192

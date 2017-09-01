@@ -138,11 +138,6 @@ Not at all. You can set up everything your team needs without any coding knowled
 == Screenshots ==
 
 1. With Calendar you can see your posts over a customizable date range
-2. Content Overview is a single screen that shows the publication status of all your content
-3. In the Admin Page you can have access too all features and settings
-4. Create Custom Statuses to define the stages of your publishing
-5. Organize your users into groups who can take different roles in your publishing workflow
-6. With Metadata your can customize the extra data that's tracked for your content
 
 == Installation ==
 
@@ -158,10 +153,6 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
-
-= [1.7.3] - UNRELEASED =
-
-
 
 = [1.7.2] - 2017-08-31 =
 

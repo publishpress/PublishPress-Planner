@@ -1409,7 +1409,7 @@ msgid "Notepad"
 msgstr "Anteckningsblock"
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr "Poster jag följer"
 
 #: modules/dashboard/dashboard.php:192

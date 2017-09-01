@@ -1421,7 +1421,7 @@ msgid "Notepad"
 msgstr "Panel de anotaciones"
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr "Entradas que sigo"
 
 #: modules/dashboard/dashboard.php:192
