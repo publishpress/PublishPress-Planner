@@ -154,6 +154,20 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.7.3] - UNRELEASED =
+
+* Added:
+* Added shortcode for displaying the date and time set for the content on the notifications;
+* Added shortcode for displaying the old and new statuses on the notifications;
+
+* Fixed:
+* Fixed the save event filters when no event is selected;
+* Fixed the separator param on shortcodes for notifications;
+
+* Changed:
+* Improved the column titles on the workflows list to match the labels from the form;
+* Replaced the string 'Follow' to 'Notify' on the UI;
+
 = [1.7.2] - 2017-08-31 =
 
 * Fixed:
