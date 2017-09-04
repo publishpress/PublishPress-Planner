@@ -163,10 +163,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed:
 * Fixed the save event filters when no event is selected;
 * Fixed the separator param on shortcodes for notifications;
+* Fixed notifications avoiding messages for auto-drafts;
 
 * Changed:
 * Improved the column titles on the workflows list to match the labels from the form;
 * Replaced the string 'Follow' to 'Notify' on the UI;
+* Removed the filter for months on the Workflows list;
 
 = [1.7.2] - 2017-08-31 =
 
