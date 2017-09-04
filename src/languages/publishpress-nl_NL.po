@@ -1313,7 +1313,7 @@ msgid "Notepad"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:192
@@ -1993,7 +1993,7 @@ msgid "Available fields"
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:447
-msgid "Read more..."
+msgid "Click here to read more about shortcode options..."
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:546

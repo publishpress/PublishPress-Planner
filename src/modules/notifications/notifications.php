@@ -336,12 +336,12 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
 
             if (in_array(wp_get_current_user()->user_login, $following_users ) ) {
                 $args['method'] = 'unfollow';
-                $title_text     = __( 'Click to unfollow updates to this post', 'publishpress' );
-                $follow_text    = __( 'Following', 'publishpress' );
+                $title_text     = __( 'Click to stop being notified on updates for this post', 'publishpress' );
+                $follow_text    = __( 'Stop notifying me', 'publishpress' );
             } else {
                 $args['method'] = 'follow';
-                $title_text     = __( 'Follow updates to this post', 'publishpress' );
-                $follow_text    = __( 'Follow', 'publishpress' );
+                $title_text     = __( 'Click to start being notified on updates for this post', 'publishpress' );
+                $follow_text    = __( 'Notify me', 'publishpress' );
             }
 
             // wp_nonce_url() has encoding issues: http://core.trac.wordpress.org/ticket/20771
@@ -366,7 +366,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             foreach ( $usergroup_post_types as $post_type ) {
                 add_meta_box(
                     'publishpress-notifications',
-                    __( 'Following', 'publishpress' ),
+                    __( 'Notify', 'publishpress' ),
                     array( $this, 'notifications_meta_box' ),
                     $post_type,
                     'advanced'

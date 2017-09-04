@@ -1409,7 +1409,7 @@ msgid "Notepad"
 msgstr "Anteckningsblock"
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr "Poster jag följer"
 
 #: modules/dashboard/dashboard.php:192
@@ -2171,7 +2171,7 @@ msgstr "Inaktivera"
 #: modules/improved-notifications/improved-notifications.php:447
 #, fuzzy
 #| msgid "Read More"
-msgid "Read more..."
+msgid "Click here to read more about shortcode options..."
 msgstr "Läs mer"
 
 #: modules/improved-notifications/improved-notifications.php:546

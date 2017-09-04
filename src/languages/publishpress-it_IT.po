@@ -1427,7 +1427,7 @@ msgid "Notepad"
 msgstr ""
 
 #: modules/dashboard/dashboard.php:165 modules/dashboard/dashboard.php:279
-msgid "Posts I'm Following"
+msgid "My Content Notifications"
 msgstr "Articoli che sto seguendo"
 
 #: modules/dashboard/dashboard.php:192
@@ -2202,7 +2202,7 @@ msgid "Available fields"
 msgstr "Disabilita"
 
 #: modules/improved-notifications/improved-notifications.php:447
-msgid "Read more..."
+msgid "Click here to read more about shortcode options..."
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:546
@@ -2304,7 +2304,7 @@ msgstr ""
 #: modules/notifications/notifications.php:340
 #: modules/notifications/notifications.php:369
 #, fuzzy
-#| msgid "Posts I'm Following"
+#| msgid "My Content Notifications"
 msgid "Following"
 msgstr "Articoli che sto seguendo"
 

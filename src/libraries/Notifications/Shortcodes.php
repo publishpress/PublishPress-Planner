@@ -9,7 +9,11 @@
 
 namespace PublishPress\Notifications;
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 class Shortcodes {
+
+	use Dependency_Injector;
 
 	/**
 	 * The post of the workflow.
@@ -121,7 +125,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -184,7 +188,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -253,6 +257,10 @@ class Shortcodes {
 	 *   - id
 	 *   - title
 	 *   - permalink
+	 *   - date
+	 *   - time
+	 *   - old_status
+	 *   - new_status
 	 *   - separator
 	 *
 	 * @param WP_Post $post
@@ -260,13 +268,15 @@ class Shortcodes {
 	 * @return string
 	 */
 	protected function get_post_data( $post, $attrs ) {
+		$publishpress = $this->get_service( 'publishpress' );
+
 		// No attributes? Set the default one.
 		if ( empty( $attrs ) ) {
 			$attrs[] = 'title';
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 
@@ -276,6 +286,10 @@ class Shortcodes {
 			'id',
 			'title',
 			'permalink',
+			'date',
+			'time',
+			'old_status',
+			'new_status',
 			'separator',
 		];
 
@@ -291,6 +305,28 @@ class Shortcodes {
 
 				case 'permalink':
 					$info[] = get_post_permalink( $post->ID );
+					break;
+
+				case 'date':
+					$info[] = get_the_date( '', $post );
+					break;
+
+				case 'time':
+					$info[] = get_the_time( '', $post );
+					break;
+
+				case 'old_status':
+				case 'new_status':
+					$status = $publishpress->custom_status->get_custom_status_by(
+						'slug',
+						$this->action_args[ $item ]
+					);
+
+					if ( empty( $status ) || 'WP_Error' === get_class( $status ) ) {
+						break;
+					}
+
+					$info[] = $status->name;
 					break;
 
 				default:
@@ -330,7 +366,7 @@ class Shortcodes {
 		}
 
 		// Set the separator
-		if ( ! in_array( 'separator', $attrs ) ) {
+		if ( ! isset( $attrs['separator'] ) ) {
 			$attrs['separator'] = ', ';
 		}
 

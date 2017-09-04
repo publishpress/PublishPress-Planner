@@ -171,6 +171,8 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			add_filter('admin_footer_text', [ $this, 'update_footer_admin' ] );
 
 			add_filter( 'pp_notification_send_email_message_headers', [ $this, 'filter_send_email_message_headers' ], 10, 3 );
+
+			add_filter( 'months_dropdown_results', [ $this, 'hide_months_dropdown_filter' ], 10, 2 );
 		}
 
 		/**
@@ -324,6 +326,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				return;
 			}
 
+			// Ignores auto-draft
+			if ( 'new' === $old_status && 'auto-draft' === $new_status ) {
+				return;
+			}
+
 			// Go ahead and do the action to run workflows
 			$args = [
 				'action'     => 'transition_post_status',
@@ -468,7 +475,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 					'field'            => __( 'field', 'publishpress' ),
 					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
 					'available_fields' => __( 'Available fields', 'publishpress' ),
-					'read_more'        => __( 'Read more...', 'publishpress' ),
+					'read_more'        => __( 'Click here to read more about shortcode options...', 'publishpress' ),
 				],
 			];
 
@@ -740,6 +747,22 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$message_headers[] = 'Content-Type: text/html; charset=UTF-8';
 
 			return $message_headers;
+		}
+
+		/**
+		 * Hide the filter for months in the Workflows list.
+		 *
+		 * @param array  $months
+		 * @param string $post_type
+		 *
+		 * @return array
+		 */
+		public function hide_months_dropdown_filter( $months, $post_type ) {
+			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post_type ) {
+				$months = [];
+			}
+
+			return $months;
 		}
 	}
 }
