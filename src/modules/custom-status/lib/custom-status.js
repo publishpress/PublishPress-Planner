@@ -7,10 +7,10 @@ jQuery(document).ready(function() {
 
     if (jQuery('select[name="_status"]').length == 0) { // not on quick edit
 
-        if (current_user_can_publish_posts || (current_status == 'publish' && current_user_can_edit_published_posts)) {
-            // show publish button if allowed to publish
-            jQuery('#publish').show();
-        } else {
+        // Show the button for users who can, and can't publish. Those who can't, should see a button to Send for Review
+        jQuery('#publish').show();
+
+        if (! (current_user_can_publish_posts || (current_status == 'publish' && current_user_can_edit_published_posts)) ) {
             // mimic default post status dropdown
             jQuery('<span>&nbsp;<a href="#post_status" class="edit-post-status" tabindex=\'4\'>Edit</a></span>' +
             ' <div id="post-status-select">' +
@@ -40,6 +40,11 @@ jQuery(document).ready(function() {
                 jQuery('#post-status-display').text(jQuery('select[name="post_status"] :selected').text());
                 return false;
             });
+            // Make sure we have the button to save
+            if ( 0 === jQuery( '#save-post' ).length ) {
+                jQuery( '<input type="submit" name="save" id="save-post" value="' + label_save + '" class="button" />' ).appendTo('#save-action');
+                jQuery( '<span class="spinner"></span>' ).appendTo('#save-action');
+            }
         }
     }
 

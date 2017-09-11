@@ -154,6 +154,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed:
+* Fixed the button Submit for Review which was hidden for contributors, or users who can't publish;
+
 = [1.7.3] - 2017-09-04 =
 
 * Added:

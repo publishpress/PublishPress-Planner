@@ -846,22 +846,15 @@ if (!class_exists('PP_Custom_Status')) {
                 // Now, let's print the JS vars
                 ?>
                 <script type="text/javascript">
-                    var custom_statuses = <?php echo json_encode($all_statuses);
-                ?>;
-                    var pp_text_no_change = '<?php echo esc_js(__("&mdash; No Change &mdash;"));
-                ?>';
-                    var pp_default_custom_status = '<?php echo esc_js($this->get_default_custom_status()->slug);
-                ?>';
-                    var current_status = '<?php echo esc_js($selected);
-                ?>';
-                    var current_status_name = '<?php echo esc_js($selected_name);
-                ?>';
-                    var status_dropdown_visible = <?php echo esc_js($always_show_dropdown);
-                ?>;
-                    var current_user_can_publish_posts = <?php echo current_user_can($post_type_obj->cap->publish_posts) ? 1 : 0;
-                ?>;
-                    var current_user_can_edit_published_posts = <?php echo current_user_can($post_type_obj->cap->edit_published_posts) ? 1 : 0;
-                ?>;
+                    var custom_statuses = <?php echo json_encode($all_statuses); ?>;
+                    var pp_text_no_change = '<?php echo esc_js(__("&mdash; No Change &mdash;")); ?>';
+                    var pp_default_custom_status = '<?php echo esc_js($this->get_default_custom_status()->slug); ?>';
+                    var current_status = '<?php echo esc_js($selected); ?>';
+                    var current_status_name = '<?php echo esc_js($selected_name); ?>';
+                    var status_dropdown_visible = <?php echo esc_js($always_show_dropdown); ?>;
+                    var current_user_can_publish_posts = <?php echo current_user_can($post_type_obj->cap->publish_posts) ? 1 : 0; ?>;
+                    var current_user_can_edit_published_posts = <?php echo current_user_can($post_type_obj->cap->edit_published_posts) ? 1 : 0; ?>;
+                    var label_save = '<?php echo __( 'Save' ); ?>';
                 </script>
 
                 <?php
