@@ -5,7 +5,7 @@ Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Tested up to: 4.8
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,10 +154,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.7.4] - 2017-09-13 =
 
 * Fixed:
 * Fixed the button Submit for Review which was hidden for contributors, or users who can't publish;
+* Fixed empty permalink when publishing posts, or saving new posts with empty title;
 
 = [1.7.3] - 2017-09-04 =
 

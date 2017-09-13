@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.7.4b3
+ * Version: 1.7.4
  *
  * Copyright (c) 2017 PressShack
  *
