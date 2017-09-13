@@ -2018,7 +2018,14 @@ if (!class_exists('PP_Custom_Status')) {
 
             list($permalink, $post_name) = $permalink;
 
-            $post_name       = $post->post_name ? $post->post_name : sanitize_title($post->post_title);
+            $post_name = $post->post_name ? $post->post_name : sanitize_title($post->post_title);
+
+            // If the post name is still empty, we can't use it to fix the permalink. So, don't do anything.
+            if ( empty( $post_name ) ) {
+                return $permalink;
+            }
+
+            // Apply the fix
             $post->post_name = $post_name;
 
             $ptype = get_post_type_object($post->post_type);
