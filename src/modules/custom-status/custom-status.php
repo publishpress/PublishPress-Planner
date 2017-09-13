@@ -133,7 +133,6 @@ if (!class_exists('PP_Custom_Status')) {
             // These seven-ish methods are temporary fixes for solving bugs in WordPress core
             add_action('admin_init', array($this, 'check_timestamp_on_publish'));
             add_filter('wp_insert_post_data', array($this, 'fix_custom_status_timestamp'), 10, 2);
-            add_action('wp_insert_post', array($this, 'fix_post_name'), 10, 2);
             add_filter('preview_post_link', array($this, 'fix_preview_link_part_one'));
             add_filter('post_link', array($this, 'fix_preview_link_part_two'), 10, 3);
             add_filter('page_link', array($this, 'fix_preview_link_part_two'), 10, 3);
@@ -1909,41 +1908,6 @@ if (!class_exists('PP_Custom_Status')) {
 
             return $data;
         }
-
-        /**
-         * Another temporary fix until core better supports custom statuses
-         *
-         * @since 0.7.4
-         *
-         * Keep the post_name value empty for posts with custom statuses
-         * Unless they've set it customly
-         * @see https://github.com/ostraining/PublishPress/issues/123
-         * @see http://core.trac.wordpress.org/browser/tags/3.4.2/wp-includes/post.php#L2530
-         * @see http://core.trac.wordpress.org/browser/tags/3.4.2/wp-includes/post.php#L2646
-         */
-        public function fix_post_name($post_id, $post)
-        {
-            global $pagenow;
-
-            // Only modify if we're using a pre-publish status on a supported custom post type
-            $status_slugs = wp_list_pluck($this->get_custom_statuses(), 'slug');
-            if ('post.php' != $pagenow
-                || ! in_array($post->post_status, $status_slugs)
-                || ! in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
-                return;
-            }
-
-            // The slug has been set by the meta box
-            if (! empty($_POST['post_name'])) {
-                return;
-            }
-
-            global $wpdb;
-
-            $wpdb->update($wpdb->posts, array('post_name' => ''), array('ID' => $post_id));
-            clean_post_cache($post_id);
-        }
-
 
         /**
          * Another temporary fix until core better supports custom statuses
