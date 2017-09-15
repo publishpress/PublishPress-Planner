@@ -131,8 +131,6 @@ if (!class_exists('PP_Custom_Status')) {
             add_action('manage_pages_custom_column', array($this, '_filter_manage_posts_custom_column'));
 
             // These seven-ish methods are temporary fixes for solving bugs in WordPress core
-            add_action('admin_init', array($this, 'check_timestamp_on_publish'));
-            add_filter('wp_insert_post_data', array($this, 'fix_custom_status_timestamp'), 10, 2);
             add_filter('preview_post_link', array($this, 'fix_preview_link_part_one'));
             add_filter('post_link', array($this, 'fix_preview_link_part_two'), 10, 3);
             add_filter('page_link', array($this, 'fix_preview_link_part_two'), 10, 3);
@@ -1815,55 +1813,6 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * This is a temporary fix! until core is fixed/better supports custom statuses
-         *
-         * When publishing a post with a custom status, set the status to 'pending' temporarily
-         * @see Works around this limitation: http://core.trac.wordpress.org/browser/tags/3.2.1/wp-includes/post.php#L2694
-         * @see Original thread: http://wordpress.org/support/topic/plugin-publishpress-custom-statuses-create-timestamp-problem
-         * @see Core ticket: http://core.trac.wordpress.org/ticket/18362
-         */
-        public function check_timestamp_on_publish()
-        {
-            global $publishpress, $pagenow, $wpdb;
-
-            if ($this->disable_custom_statuses_for_post_type()) {
-                return;
-            }
-
-            // Handles the transition to 'publish' on edit.php
-            if (isset($publishpress) && $pagenow == 'edit.php' && isset($_REQUEST['bulk_edit'])) {
-                // For every post_id, set the post_status as 'pending' only when there's no timestamp set for $post_date_gmt
-                if ($_REQUEST['_status'] == 'publish') {
-                    $post_ids = array_map('intval', (array) $_REQUEST['post']);
-                    foreach ($post_ids as $post_id) {
-                        $wpdb->update($wpdb->posts, array('post_status' => 'pending'), array('ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00'));
-                        clean_post_cache($post_id);
-                    }
-                }
-            }
-
-            // Handles the transition to 'publish' on post.php
-            if (isset($publishpress) && $pagenow == 'post.php' && isset($_POST['publish'])) {
-                // Set the post_status as 'pending' only when there's no timestamp set for $post_date_gmt
-                if (isset($_POST['post_ID'])) {
-                    $post_id = (int) $_POST['post_ID'];
-                    $ret     = $wpdb->update($wpdb->posts, array('post_status' => 'pending'), array('ID' => $post_id, 'post_date_gmt' => '0000-00-00 00:00:00'));
-                    clean_post_cache($post_id);
-                    foreach (array('aa', 'mm', 'jj', 'hh', 'mn') as $timeunit) {
-                        if (!empty($_POST['hidden_' . $timeunit]) && $_POST['hidden_' . $timeunit] != $_POST[$timeunit]) {
-                            $edit_date = '1';
-                            break;
-                        }
-                    }
-                    if ($ret && empty($edit_date)) {
-                        add_filter('pre_post_date', array($this, 'helper_timestamp_temp_fix'));
-                        add_filter('pre_post_date_gmt', array($this, 'helper_timestamp_temp_fix'));
-                    }
-                }
-            }
-        }
-
-        /**
          * PHP < 5.3.x doesn't support anonymous functions
          * This helper is only used for the check_timestamp_on_publish method above
          *
@@ -1872,41 +1821,6 @@ if (!class_exists('PP_Custom_Status')) {
         public function helper_timestamp_temp_fix()
         {
             return ('pre_post_date' == current_filter()) ? current_time('mysql') : '';
-        }
-
-        /**
-         * This is a temporary fix until core is fixed/better supports custom statuses
-         *
-         * @since 0.6.5
-         *
-         * Normalize post_date_gmt if it isn't set to the past or the future
-         * @see Works around this limitation: https://core.trac.wordpress.org/browser/tags/4.5.1/src/wp-includes/post.php#L3182
-         * @see Original thread: http://wordpress.org/support/topic/plugin-publishpress-custom-statuses-create-timestamp-problem
-         * @see Core ticket: http://core.trac.wordpress.org/ticket/18362
-         */
-        public function fix_custom_status_timestamp($data, $postarr)
-        {
-            global $publishpress;
-            // Don't run this if PublishPress isn't active, or we're on some other page
-            if ($this->disable_custom_statuses_for_post_type()
-            || !isset($publishpress)) {
-                return $data;
-            }
-
-            $status_slugs = wp_list_pluck($this->get_custom_statuses(), 'slug');
-
-            //Post is scheduled or published? Ignoring.
-            if (!in_array($postarr['post_status'], $status_slugs)) {
-                return $data;
-            }
-
-            //If empty, keep empty.
-            if (empty($postarr['post_date_gmt'])
-            || '0000-00-00 00:00:00' == $postarr['post_date_gmt']) {
-                $data['post_date_gmt'] = '0000-00-00 00:00:00';
-            }
-
-            return $data;
         }
 
         /**
