@@ -14,9 +14,10 @@ namespace PublishPress\Notifications;
 defined( 'ABSPATH' ) or die( 'No direct script access allowed.' );
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Traits\PublishPress_Module;
 
 class Plugin {
-	use Dependency_Injector;
+	use Dependency_Injector, PublishPress_Module;
 
 	/**
 	 * The method which runs the plugin
@@ -34,64 +35,66 @@ class Plugin {
 	 * Creates the custom post types for the notifications
 	 */
 	public function create_post_type() {
-		// Notification Workflows
-		register_post_type(
-			PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
-			array(
-				'labels' => array(
-					'name'               => __( 'Notification Workflows', 'publishpress' ),
-					'singular_name'      => __( 'Notification Workflow', 'publishpress' ),
-					'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress' ),
-					'edit_item'          => __( 'Edit Notification Workflow', 'publishpress' ),
-					'search_items'       => __( 'Search Workflows', 'publishpress' ),
-					'menu_name'          => __( 'Notifications', 'publishpress' ),
-					'name_admin_bar'     => __( 'Notification Workflow', 'publishpress' ),
-					'not_found'          => __( 'No Workflow found', 'publishpress' ),
-					'not_found_in_trash' => __( 'No Workflow found', 'publishpress' ),
-				),
-				'public'              => false,
-				'publicly_queryable'  => false,
-				'has_archive'         => false,
-				'rewrite'             => array( 'slug' => 'notification-workflows' ),
-				'show_ui'             => true,
-				'query_var'           => true,
-				'capability_type'     => 'post',
-				'hierarchical'        => false,
-				'can_export'          => true,
-				'show_in_admin_bar'   => true,
-				'exclude_from_search' => true,
-				'show_in_menu'        => 'pp-calendar',
-				'menu_position'       => '20',
-				'supports'            => array(
-					'title',
+		if ( $this->is_module_enabled( 'improved_notifications' ) ) {
+			// Notification Workflows
+			register_post_type(
+				PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+				array(
+					'labels' => array(
+						'name'               => __( 'Notification Workflows', 'publishpress' ),
+						'singular_name'      => __( 'Notification Workflow', 'publishpress' ),
+						'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress' ),
+						'edit_item'          => __( 'Edit Notification Workflow', 'publishpress' ),
+						'search_items'       => __( 'Search Workflows', 'publishpress' ),
+						'menu_name'          => __( 'Notifications', 'publishpress' ),
+						'name_admin_bar'     => __( 'Notification Workflow', 'publishpress' ),
+						'not_found'          => __( 'No Workflow found', 'publishpress' ),
+						'not_found_in_trash' => __( 'No Workflow found', 'publishpress' ),
+					),
+					'public'              => false,
+					'publicly_queryable'  => false,
+					'has_archive'         => false,
+					'rewrite'             => array( 'slug' => 'notification-workflows' ),
+					'show_ui'             => true,
+					'query_var'           => true,
+					'capability_type'     => 'post',
+					'hierarchical'        => false,
+					'can_export'          => true,
+					'show_in_admin_bar'   => true,
+					'exclude_from_search' => true,
+					'show_in_menu'        => 'pp-calendar',
+					'menu_position'       => '20',
+					'supports'            => array(
+						'title',
+					)
 				)
-			)
-		);
+			);
 
-		// Notifications
-		register_post_type(
-			PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
-			array(
-				'labels' => array(
-					'name'          => __( 'Notifications', 'publishpress' ),
-					'singular_name' => __( 'Notification', 'publishpress' )
-				),
-				'public'              => false,
-				'publicly_queryable'  => false,
-				'has_archive'         => false,
-				'rewrite'             => array( 'slug' => 'notifications' ),
-				'show_ui'             => false,
-				'query_var'           => true,
-				'hierarchical'        => false,
-				'can_export'          => false,
-				'show_in_admin_bar'   => false,
-				'exclude_from_search' => true,
-				'supports' => array(
-					'title',
-					'editor',
+			// Notifications
+			register_post_type(
+				PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
+				array(
+					'labels' => array(
+						'name'          => __( 'Notifications', 'publishpress' ),
+						'singular_name' => __( 'Notification', 'publishpress' )
+					),
+					'public'              => false,
+					'publicly_queryable'  => false,
+					'has_archive'         => false,
+					'rewrite'             => array( 'slug' => 'notifications' ),
+					'show_ui'             => false,
+					'query_var'           => true,
+					'hierarchical'        => false,
+					'can_export'          => false,
+					'show_in_admin_bar'   => false,
+					'exclude_from_search' => true,
+					'supports' => array(
+						'title',
+						'editor',
+					)
 				)
-			)
-		);
+			);
+		}
 	}
 
 	public function add_load_edit_hooks() {

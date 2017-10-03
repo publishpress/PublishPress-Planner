@@ -18,8 +18,17 @@ trait PublishPress_Module {
 	public function is_module_enabled( $slug ) {
 		$publishpress = $this->get_service( 'publishpress' );
 
-		return isset( $publishpress->$slug )
-			&& $publishpress->$slug->module->options->enabled === 'on';
+		if (isset( $publishpress->$slug ) ) {
+			return 'on' === $publishpress->$slug->module->options->enabled;
+		}
+
+		// Try getting the setting from the db
+		$options = get_option('publishpress_improved_notifications_options');
+		if ( isset( $options->enabled ) ) {
+			return 'on' === $options->enabled;
+		}
+
+		return false;
 	}
 
 	/**
