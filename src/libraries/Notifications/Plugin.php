@@ -35,7 +35,8 @@ class Plugin {
 	 * Creates the custom post types for the notifications
 	 */
 	public function create_post_type() {
-		if ( $this->is_module_enabled( 'improved_notifications' ) ) {
+		if ( $this->is_module_enabled( 'notifications' )
+			&& $this->is_module_enabled( 'improved_notifications' ) ) {
 			// Notification Workflows
 			register_post_type(
 				PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,

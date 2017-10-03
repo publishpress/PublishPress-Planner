@@ -23,7 +23,7 @@ trait PublishPress_Module {
 		}
 
 		// Try getting the setting from the db
-		$options = get_option('publishpress_improved_notifications_options');
+		$options = get_option("publishpress_{$slug}_options");
 		if ( isset( $options->enabled ) ) {
 			return 'on' === $options->enabled;
 		}
