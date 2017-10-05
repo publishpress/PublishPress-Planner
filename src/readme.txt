@@ -154,6 +154,18 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.7.5] - UNRELEASED =
+
+* Fixed:
+* Fixed the empty pubDate for posts with custom status;
+* Fixed the title of the Notification Workflows module in the settings panel;
+* Fixed the verification of the notifications module statue before create content type and display the menu;
+* Fixed the drag and drop of metadata items in the settings tab;
+
+* Changed:
+* Removed quick edit option from the metadata tab;
+* Updated the Twig library to v1.35.0;
+
 = [1.7.4] - 2017-09-13 =
 
 * Fixed:
