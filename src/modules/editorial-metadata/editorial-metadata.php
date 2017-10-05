@@ -332,7 +332,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             // Load Javascript specific to the editorial metadata configuration view
             if ($this->is_whitelisted_settings_view($this->module->name)) {
                 wp_enqueue_script('jquery-ui-sortable');
-                wp_enqueue_script('publishpress-editorial-metadata-configure', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js', array('jquery', 'jquery-ui-sortable', 'publishpress-settings-js'), PUBLISHPRESS_VERSION, true);
+                wp_enqueue_script('publishpress-editorial-metadata-configure', PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js', array('jquery', 'jquery-ui-sortable'), PUBLISHPRESS_VERSION, true);
 
                  wp_localize_script(
                     'publishpress-editorial-metadata-configure',
