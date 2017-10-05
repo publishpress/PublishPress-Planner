@@ -123,7 +123,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
             add_action('admin_init', array($this, 'handle_edit_editorial_metadata'));
             add_action('admin_init', array($this, 'handle_change_editorial_metadata_visibility'));
             add_action('admin_init', array($this, 'handle_delete_editorial_metadata'));
-            add_action('wp_ajax_inline_save_term', array($this, 'handle_ajax_inline_save_term'));
             add_action('wp_ajax_update_term_positions', array($this, 'handle_ajax_update_term_positions'));
 
             add_action('add_meta_boxes', array($this, 'handle_post_metaboxes'));
@@ -1405,89 +1404,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * Handle the request to update a given Editorial Metadata term via inline edit
-         *
-         * @since 0.7
-         */
-        public function handle_ajax_inline_save_term()
-        {
-            if (!wp_verify_nonce($_POST['inline_edit'], 'editorial-metadata-inline-edit-nonce')) {
-                die($this->module->messages['nonce-failed']);
-            }
-
-            if (!current_user_can('manage_options')) {
-                die($this->module->messages['invalid-permissions']);
-            }
-
-            $term_id = (int) $_POST['term_id'];
-            if (!$existing_term = $this->get_editorial_metadata_term_by('id', $term_id)) {
-                die($this->module->messages['term-missing']);
-            }
-
-            $metadata_name        = sanitize_text_field(trim($_POST['name']));
-            $metadata_description = stripslashes(wp_filter_post_kses(trim($_POST['description'])));
-
-            /**
-             * Form validation for editing editorial metadata term
-             */
-            // Check if name field was filled in
-            if (empty($metadata_name)) {
-                $change_error = new WP_Error('invalid', __('Please enter a name for the editorial metadata', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check that the name isn't numeric
-            if (is_numeric($metadata_name)) {
-                $change_error = new WP_Error('invalid', __('Please enter a valid, non-numeric name for the editorial metadata.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check that the term name doesn't exceed 200 chars
-            if (strlen($metadata_name) > 200) {
-                $change_error = new WP_Error('invalid', __('Name cannot exceed 200 characters. Please try a shorter name.'));
-                die($change_error->get_error_message());
-            }
-
-            // Check to make sure the status doesn't already exist as another term because otherwise we'd get a fatal error
-            $term_exists = term_exists(sanitize_title($metadata_name));
-            if ($term_exists && $term_exists != $term_id) {
-                $change_error = new WP_Error('invalid', __('Metadata name conflicts with existing term. Please choose another.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Check to ensure a term with the same name doesn't exist,
-            $search_term = $this->get_editorial_metadata_term_by('name', $metadata_name);
-            if (is_object($search_term) && $search_term->term_id != $existing_term->term_id) {
-                $change_error = new WP_Error('invalid', __('Name already in use. Please choose another.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // or that the term name doesn't map to an existing term's slug
-            $search_term = $this->get_editorial_metadata_term_by('slug', sanitize_title($metadata_name));
-            if (is_object($search_term) && $search_term->term_id != $existing_term->term_id) {
-                $change_error = new WP_Error('invalid', __('Name conflicts with slug for another term. Please choose again.', 'publishpress'));
-                die($change_error->get_error_message());
-            }
-
-            // Prepare the term name and description for saving
-            $args = array(
-                'name' => $metadata_name,
-                'description' => $metadata_description,
-            );
-            $return = $this->update_editorial_metadata_term($existing_term->term_id, $args);
-            if (!is_wp_error($return)) {
-                set_current_screen('edit-editorial-metadata');
-                $wp_list_table = new PP_Editorial_Metadata_List_Table();
-                $wp_list_table->prepare_items();
-                echo $wp_list_table->single_row($return);
-                die();
-            } else {
-                $change_error = new WP_Error('invalid', sprintf(__('Could not update the term: <strong>%s</strong>', 'publishpress'), $status_name));
-                die($change_error->get_error_message());
-            }
-        }
-
-        /**
          * Handle the ajax request to update all of the term positions
          *
          * @since 0.7
@@ -1621,8 +1537,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
             </form>
             </div>
             </div><!-- /col-right -->
-            <?php $wp_list_table->inline_edit();
-            ?>
             <?php endif;
             ?>
 
@@ -2005,7 +1919,6 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
 
         $actions                         = array();
         $actions['edit']                 = "<a href='$item_edit_link'>" . __('Edit', 'publishpress') . "</a>";
-        $actions['inline hide-if-no-js'] = '<a href="#" class="editinline">' . __('Quick&nbsp;Edit') . '</a>';
         if ($item->viewable) {
             $actions['change-visibility make-hidden'] = '<a title="' . esc_attr(__('Hidden metadata can only be viewed on the edit post view.', 'publishpress')) . '" href="' . esc_url($publishpress->editorial_metadata->get_link(array('action' => 'make-hidden', 'term-id' => $item->term_id))) . '">' . __('Make Hidden', 'publishpress') . '</a>';
         } else {
@@ -2014,58 +1927,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         $actions['delete delete-status'] = "<a href='$item_delete_link'>" . __('Delete', 'publishpress') . "</a>";
 
         $out .= $this->row_actions($actions, false);
-        $out .= '<div class="hidden" id="inline_' . $item->term_id . '">';
-        $out .= '<div class="name">' . $item->name . '</div>';
-        $out .= '<div class="description">' . $item->description . '</div>';
-        $out .= '</div>';
-
+        
         return $out;
-    }
-
-    /**
-     * Admins can use the inline edit capability to quickly make changes to the title or description
-     *
-     * @since 0.7
-     */
-    public function inline_edit()
-    {
-        ?>
-        <form method="get" action=""><table style="display: none"><tbody id="inlineedit">
-            <tr id="inline-edit" class="inline-edit-row" style="display: none"><td colspan="<?php echo $this->get_column_count();
-            ?>" class="colspanchange">
-                <fieldset><div class="inline-edit-col">
-                    <h4><?php _e('Quick Edit');
-            ?></h4>
-                    <label>
-                        <span class="title"><?php _e('Name', 'publishpress');
-            ?></span>
-                        <span class="input-text-wrap"><input type="text" name="name" class="ptitle" value="" maxlength="200" /></span>
-                    </label>
-                    <label>
-                        <span class="title"><?php _e('Description', 'publishpress');
-            ?></span>
-                        <span class="input-text-wrap"><input type="text" name="description" class="pdescription" value="" /></span>
-                    </label>
-                </div></fieldset>
-            <p class="inline-edit-save submit">
-                <a accesskey="c" href="#inline-edit" title="<?php _e('Cancel');
-            ?>" class="cancel button-secondary alignleft"><?php _e('Cancel');
-            ?></a>
-                <?php $update_text = __('Update Metadata Term', 'publishpress');
-            ?>
-                <a accesskey="s" href="#inline-edit" title="<?php echo esc_attr($update_text);
-            ?>" class="button save button-primary alignright"><?php echo $update_text;
-            ?></a>
-                <img class="waiting" style="display:none;" src="<?php echo esc_url(admin_url('images/wpspin_light.gif'));
-            ?>" alt="" />
-                <span class="error" style="display:none;"></span>
-                <?php wp_nonce_field('editorial-metadata-inline-edit-nonce', 'inline_edit', false);
-            ?>
-                <br class="clear" />
-            </p>
-            </td></tr>
-            </tbody></table></form>
-    <?php
-
     }
 }
