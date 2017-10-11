@@ -83,16 +83,9 @@ class Post_Type extends Base implements Filter_Interface {
 
 		// From
 		$query_args['meta_query'][] = [
-			'relation' => 'OR',
 			[
 				'key'     => static::META_KEY_POST_TYPE,
 				'value'   => $action_args['post']->post_type,
-				'type'    => 'CHAR',
-				'compare' => '=',
-			],
-			[
-				'key'     => static::META_KEY_POST_TYPE,
-				'value'   => 'all',
 				'type'    => 'CHAR',
 				'compare' => '=',
 			],

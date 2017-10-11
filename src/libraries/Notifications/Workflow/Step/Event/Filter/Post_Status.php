@@ -35,7 +35,7 @@ class Post_Status extends Base implements Filter_Interface {
 					'any'               => esc_html__( '- any status -', 'publishpress' ),
 				],
 			]
-		);
+		);	
 	}
 
 	/**
@@ -110,16 +110,9 @@ class Post_Status extends Base implements Filter_Interface {
 
 		// From
 		$query_args['meta_query'][] = [
-			'relation' => 'OR',
 			[
 				'key'     => static::META_KEY_POST_STATUS_FROM,
 				'value'   => $action_args['old_status'],
-				'type'    => 'CHAR',
-				'compare' => '=',
-			],
-			[
-				'key'     => static::META_KEY_POST_STATUS_FROM,
-				'value'   => 'all',
 				'type'    => 'CHAR',
 				'compare' => '=',
 			],
@@ -127,16 +120,9 @@ class Post_Status extends Base implements Filter_Interface {
 
 		// To
 		$query_args['meta_query'][] = [
-			'relation' => 'OR',
 			[
 				'key'     => static::META_KEY_POST_STATUS_TO,
 				'value'   => $action_args['new_status'],
-				'type'    => 'CHAR',
-				'compare' => '=',
-			],
-			[
-				'key'     => static::META_KEY_POST_STATUS_TO,
-				'value'   => 'all',
 				'type'    => 'CHAR',
 				'compare' => '=',
 			],

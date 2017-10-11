@@ -98,17 +98,10 @@ class Category extends Base implements Filter_Interface {
 		$category_ids = implode( ',', $category_ids );
 
 		$query_args['meta_query'][] = [
-			'relation' => 'OR',
 			[
 				'key'     => static::META_KEY_CATEGORY,
 				'value'   => $category_ids,
 				'compare' => 'IN',
-			],
-			[
-				'key'     => static::META_KEY_CATEGORY,
-				'value'   => 'all',
-				'type'    => 'CHAR',
-				'compare' => '=',
 			],
 		];
 
