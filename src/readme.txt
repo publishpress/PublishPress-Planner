@@ -154,7 +154,7 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.7.5] - UNRELEASED =
+= [1.7.5] - 2017-10-11 =
 
 * Fixed:
 * Fixed the empty pubDate for posts with custom status;
