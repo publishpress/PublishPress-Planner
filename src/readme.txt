@@ -165,6 +165,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed:
 * Removed quick edit option from the metadata tab;
 * Updated the Twig library to v1.35.0;
+* Adjusted filters on notification workflows to only consider selected items. Before that, if no post type, category, or statuses where selected, all the items would be considered selected.
 
 = [1.7.4] - 2017-09-13 =
 
