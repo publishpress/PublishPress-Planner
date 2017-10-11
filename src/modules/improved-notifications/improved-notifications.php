@@ -212,7 +212,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
 					Event_Post_save::META_KEY_SELECTED            => '1',
 					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'publish',
-					Filter_Category::META_KEY_CATEGORY            => 'all',
 					Content_Main::META_KEY_SUBJECT                => '&quot;[psppno_post title]&quot; was published',
 					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_post_save.twig', [] ),
 					Receiver_Site_Admin::META_KEY                 => 1,
@@ -225,9 +224,20 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
 				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
 
+				// Add each category, so it sends to all them
+				$categories = get_categories([
+					'orderby'      => 'name',
+					'order'        => 'ASC',
+					'hide_empty'   => false,
+					'hierarchical' => true,
+				]);
+				foreach ( $categories as $category ) {
+					add_post_meta( $post_id, Filter_Category::META_KEY_CATEGORY, $category->slug, false );
+				}
+
 				// Add each status to the "From" filter, except the "publish" state
 				foreach ( $statuses as $status ) {
-					add_post_meta( $post_id, Filter_Post_Status ::META_KEY_POST_STATUS_FROM, $status->slug, false );
+					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false );
 				}
 			}
 		}
@@ -246,9 +256,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'meta_input'  => [
 					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
 					Event_Editorial_Comment::META_KEY_SELECTED    => '1',
-					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'all',
-					Filter_Post_Status::META_KEY_POST_STATUS_FROM => 'all',
-					Filter_Category::META_KEY_CATEGORY            => 'all',
 					Content_Main::META_KEY_SUBJECT                => 'New editorial comment to &quot;[psppno_post title]&quot;',
 					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
 					Receiver_Site_Admin::META_KEY                 => 1,
@@ -260,6 +267,25 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
 				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
 				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
+
+				// Add each category, so it sends to all them
+				$categories = get_categories([
+					'orderby'      => 'name',
+					'order'        => 'ASC',
+					'hide_empty'   => false,
+					'hierarchical' => true,
+				]);
+				foreach ( $categories as $category ) {
+					add_post_meta( $post_id, Filter_Category::META_KEY_CATEGORY, $category->slug, false );
+				}
+
+				// Get post statuses
+				$statuses = $this->get_post_statuses();
+				// Add each status to the "From" filter, except the "publish" state
+				foreach ( $statuses as $status ) {
+					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false );
+					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_TO, $status->slug, false );
+				}
 			}
 		}
 
