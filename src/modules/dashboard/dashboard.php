@@ -176,12 +176,7 @@ if (!class_exists('PP_Dashboard')) {
     {
         global $publishpress;
 
-        $statuses   = $this->get_post_statuses();
-        $statuses[] = (object)array(
-                'name' => __('Scheduled', 'publishpress'),
-                'description' => '',
-                'slug' => 'future',
-            );
+        $statuses = $this->get_post_statuses();
         $statuses = apply_filters('pp_dashboard_post_status_widget_statuses', $statuses);
         // If custom statuses are enabled, we'll output a link to edit the terms just below the post counts
         if ($this->module_enabled('custom_status')) {
