@@ -178,6 +178,7 @@ if (!class_exists('PP_Dashboard')) {
 
         $statuses = $this->get_post_statuses();
         $statuses = apply_filters('pp_dashboard_post_status_widget_statuses', $statuses);
+
         // If custom statuses are enabled, we'll output a link to edit the terms just below the post counts
         if ($this->module_enabled('custom_status')) {
             $edit_custom_status_url = add_query_arg('page', 'pp-custom-status-settings', get_admin_url(null, 'admin.php'));
@@ -189,41 +190,31 @@ if (!class_exists('PP_Dashboard')) {
         <div class="table">
             <table>
                 <tbody>
-                    <?php $post_count = wp_count_posts('post');
-        ?>
+                    <?php $post_count = wp_count_posts('post'); ?>
+
                     <?php foreach ($statuses as $status) : ?>
-                        <?php $filter_link = $this->filter_posts_link($status->slug);
-        ?>
+                        <?php $filter_link = $this->filter_posts_link($status->slug); ?>
                         <tr>
                             <td class="b">
-                                <a href="<?php echo esc_url($filter_link);
-        ?>">
+                                <a href="<?php echo esc_url($filter_link); ?>">
                                     <?php
                                     $slug = $status->slug;
-        echo esc_html($post_count->$slug);
-        ?>
+                                    echo esc_html($post_count->$slug);
+                                    ?>
                                 </a>
                             </td>
                             <td>
-                                <a href="<?php echo esc_url($filter_link);
-        ?>"><?php echo esc_html($status->name);
-            ?></a>
-                                </td>
+                                <a href="<?php echo esc_url($filter_link);?>">
+                                    <?php echo esc_html($status->name);?>
+                                </a>
+                            </td>
                             </tr>
 
-                        <?php endforeach;
-            ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php if (isset($edit_custom_status_url)) : ?>
-                    <span class="small"><a href="<?php echo esc_url($edit_custom_status_url);
-            ?>"><?php _e('Edit Custom Statuses', 'publishpress');
-            ?></a></span>
-                <?php endif;
-            ?>
             </div>
-            <?php
-
+        <?php
         }
 
         /**
@@ -242,16 +233,14 @@ if (!class_exists('PP_Dashboard')) {
 
                     <?php foreach ($myposts as $post) : ?>
                         <?php
-                        $url = esc_url(get_edit_post_link($post->ID));
-            $title           = esc_html($post->post_title);
-            ?>
+                        $url   = esc_url(get_edit_post_link($post->ID));
+                        $title = esc_html($post->post_title);
+                        ?>
                         <li>
-                            <h4><a href="<?php echo $url ?>" title="<?php _e('Edit this post', 'publishpress') ?>"><?php echo $title;
-            ?></a></h4>
+                            <h4><a href="<?php echo $url ?>" title="<?php _e('Edit this post', 'publishpress') ?>"><?php echo $title;?></a></h4>
                             <span class="pp-myposts-timestamp"><?php _e('This post was last updated on', 'publishpress') ?> <?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
                         </li>
-                    <?php endforeach;
-            ?>
+                    <?php endforeach; ?>
                 <?php else : ?>
                     <p><?php _e('Sorry! You\'re not subscribed to any posts!', 'publishpress') ?></p>
                 <?php endif;
