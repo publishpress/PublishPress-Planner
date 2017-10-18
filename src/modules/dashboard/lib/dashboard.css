@@ -1,12 +1,12 @@
 /* Post Status Widget - Dashboard */
 
-#post_status_widget .sub {margin-bottom:10px;font:20px Georgia, Times, serif;margin-top:5px;}
+#post_status_widget .sub {margin-bottom:10px;font-size:20px;margin-top:5px;}
 
 #post_status_widget a {font-size:14px;font-weight:bold;}
 
 #post_status_widget .table table tbody tr {line-height:22px; border-bottom:1px solid #e5e5e5; }
 
-#post_status_widget td.b a {color:#ba2000;margin-right:10px; font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; font-size: 18px; padding-right: 6px; text-align: right;}
+#post_status_widget td.b a {color:#ba2000;margin-right:10px; font-size: 18px; padding-right: 6px; text-align: right;}
 
 #post_status_widget span.small a {color:#989898;font-weight:normal;font-style:normal;line-height:22px;}
 
@@ -29,7 +29,7 @@
 #quick-pitch-notification h3 {
     background: none;
     text-shadow: none;
-    font: italic normal normal 16px/20px Georgia, "Times New Roman", "Bitstream Charter", Times, serif;
+    font: italic normal normal 16px/20px;
     padding-bottom: 0;
 }
 
@@ -38,7 +38,6 @@
 }
 
 #quick_pitch_widget h4 {
-    font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif !important;
     float: left;
     width: 5.5em;
     clear: both;
@@ -90,7 +89,6 @@
 .pp-myposts li .pp-myposts-timestamp {
     color: #999;
     font-style: italic;
-    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
     font-size: 10px;
 }
 
