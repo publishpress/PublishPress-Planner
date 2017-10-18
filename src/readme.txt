@@ -154,6 +154,11 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.7.6] - 2017-10-18 =
+
+* Fixed:
+* Fixed duplicated "Scheduled" status in the dashboard widget;
+
 = [1.7.5] - 2017-10-11 =
 
 * Fixed:
