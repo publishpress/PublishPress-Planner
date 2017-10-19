@@ -1059,7 +1059,21 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         public function register_settings()
         {
             add_settings_section( $this->module->options_group_name . '_general', false, '__return_false', $this->module->options_group_name );
-            add_settings_field( 'post_types', __( 'Allow "following" on these post types:', 'publishpress' ), array( $this, 'settings_post_types_option' ), $this->module->options_group_name, $this->module->options_group_name . '_general' );
+            add_settings_field(
+                'post_types',
+                __( 'Allow "following" on these post types:', 'publishpress' ),
+                array( $this, 'settings_post_types_option' ),
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'email_from',
+                __( 'Email from:', 'publishpress' ),
+                array( $this, 'settings_email_from_option' ),
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -1071,6 +1085,51 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
         {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type( $this->module );
+        }
+
+        public function get_email_from() {
+            if ( ! isset( $this->module->options->email_from_name ) ) {
+                $name = get_bloginfo('name');
+            } else {
+                $name = $this->module->options->email_from_name;
+            }
+
+            if ( ! isset( $this->module->options->email_from ) ) {
+                $email = get_bloginfo('admin_email');
+            } else {
+                $email = $this->module->options->email_from;
+            }
+
+            return array(
+                'name'  => $name,
+                'email' => $email,
+            );
+        }
+
+        /**
+         * Field to customize the email for the "email from".
+         */
+        public function settings_email_from_option()
+        {
+            $email_from = $this->get_email_from();
+
+            echo '<input
+                    id="' . $this->module->slug . '_email_from_name"
+                    type="text"
+                    style="min-width: 300px"
+                    placeholder="' . esc_html__( 'Name', 'publishpress' ) . '"
+                    name="' . $this->module->options_group_name . '[email_from_name]"
+                    value="' . $email_from['name'] . '" />
+                </label>';
+            echo '<br />';
+            echo '<input
+                    id="' . $this->module->slug . '_email_from"
+                    type="text"
+                    style="min-width: 300px"
+                    placeholder="' . esc_html__( 'Email', 'publishpress' ) . '"
+                    name="' . $this->module->options_group_name . '[email_from]"
+                    value="' . $email_from['email'] . '" />
+                </label>';
         }
 
         /**
@@ -1086,6 +1145,12 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                 $new_options['post_types'] = array();
             }
             $new_options['post_types'] = $this->clean_post_type_options( $new_options['post_types'], $this->module->post_type_support );
+
+            // var_dump($new_options['email_from']); die;
+            if ( isset( $new_options['email_from'] ) ) {
+                $new_options['email_from_name'] = filter_var( $new_options['email_from_name'], FILTER_SANITIZE_STRING );
+                $new_options['email_from']      = filter_var( $new_options['email_from'], FILTER_SANITIZE_EMAIL );
+            }
 
             return $new_options;
         }

@@ -772,6 +772,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			$message_headers[] = 'Content-Type: text/html; charset=UTF-8';
 
+			// Set a default "from" name and email
+			$publishpress = $this->get_service( 'publishpress' );
+			$email_from   = $publishpress->notifications->get_email_from();
+			$message_headers[] = sprintf( 'from: %s <%s>', $email_from['name'], $email_from['email'] );
+
 			return $message_headers;
 		}
 
