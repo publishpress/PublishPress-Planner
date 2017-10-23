@@ -1124,7 +1124,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
             echo '<br />';
             echo '<input
                     id="' . $this->module->slug . '_email_from"
-                    type="text"
+                    type="email"
                     style="min-width: 300px"
                     placeholder="' . esc_html__( 'Email', 'publishpress' ) . '"
                     name="' . $this->module->options_group_name . '[email_from]"
