@@ -378,7 +378,7 @@ msgid "- any type -"
 msgstr ""
 
 #: libraries/Notifications/Workflow/Step/Event/Post_Save.php:26
-msgid "When the content is saved"
+msgid "When the content is moved to a new status"
 msgstr ""
 
 #: libraries/Notifications/Workflow/Step/Receiver/Author.php:26
