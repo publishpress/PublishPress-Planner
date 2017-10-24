@@ -42,8 +42,6 @@ class Post_Save extends Base {
 
 		$step_name = 'event_' . $this->name;
 
-		$filters[] = new Filter\Post_Type( $step_name );
-        $filters[] = new Filter\Category( $step_name );
 		$filters[] = new Filter\Post_Status( $step_name );
 
 		return parent::get_filters( $filters );

@@ -42,19 +42,22 @@
 /* Event */
 
 #psppno-workflow-metabox-section-event {
-    width: 20%;
+    width: 29%;
 }
 
 #psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters {
     margin-bottom: 0;
 }
 
+.publishpress_notif_event_content_main_filters li,
+.publishpress_notif_event_content_main_filters li label,
 #psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters li,
 #psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label {
     display: block;
     margin: 0;
 }
 
+.publishpress_notif_event_content_main_filters li label,
 #psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label {
     background: #F1F1F1;
     font-weight: bold;
@@ -63,6 +66,7 @@
     border: 1px solid #DFDFDF;
 }
 
+.publishpress_notif_event_content_main_filters li label,
 #psppno-workflow-metabox-section-event .publishpress_notif_event_post_save_filters label[for="publishpress_notif_event_post_save_filters_post_status_from"]:nth-child(1),
 #psppno-workflow-metabox-section-event #publishpress_notif_event_post_save_filters_post_status_from {
     margin-bottom: 10px;
@@ -75,22 +79,34 @@
     border: none;
 }
 
+#psppno-workflow-metabox-section-event_content select[multiple],
 #psppno-workflow-metabox-section-event select[multiple] {
     width: 100%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     margin: 0 0 20px 0;
+    min-height: 120px;
+}
+
+#publishpress_notif_event_main_filters_category {
+    height: 164px !important;
 }
 
 #psppno-workflow-metabox-section-event select#publishpress_notif_event_post_save_filters_post_status_to {
     margin-bottom: 0;
 }
 
+/* Event Content */
+
+#psppno-workflow-metabox-section-event_content {
+    width: 29%;
+}
+
 /* Users */
 
 #psppno-workflow-metabox-section-receiver {
-    width: 27%;
+    width: 29%;
 }
 
 #psppno-workflow-metabox-section-receiver #pp-post_following_users_box {
@@ -123,7 +139,7 @@
 /* Notification message */
 
 #psppno-workflow-metabox-section-content {
-    width: 45%;
+    width: 100%;
     margin-bottom: 10px;
 }
 

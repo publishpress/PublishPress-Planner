@@ -7,7 +7,9 @@
  * @since       1.0.0
  */
 
-namespace PublishPress\Notifications\Workflow\Step\Event\Filter;
+namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
+
+use PublishPress\Notifications\Workflow\Step\Event\Filter\Filter_Interface;
 
 class Post_Type extends Base implements Filter_Interface {
 

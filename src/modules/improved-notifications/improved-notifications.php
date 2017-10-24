@@ -459,6 +459,14 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			];
 			$main_context['section_event'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
+			// Renders the event content filter section
+			$context = [
+				'id'     => 'event_content',
+				'header' => __( 'Which content?', 'publishpress' ),
+				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event_content', '' ),
+			];
+			$main_context['section_event_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
+
 			// Renders the receiver section
 			$context = [
 				'id'   => 'receiver',

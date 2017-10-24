@@ -21,12 +21,6 @@ class Base extends Base_Step {
 	const META_VALUE_SELECTED = 'undefined';
 
 	/**
-	 * Cache for the list of filters
-	 *
-	 * @param array
-	 */
-	protected $cache_filters = [];
-	/**
 	 * The constructor
 	 */
 	public function __construct() {
@@ -64,28 +58,6 @@ class Base extends Base_Step {
 		];
 
 		return $template_context;
-	}
-
-	/**
-	 * Method to return a list of fields to display in the filter area
-	 *
-	 * @param array
-	 *
-	 * @return array
-	 */
-	protected function get_filters( $filters = [] ) {
-		if ( ! empty( $this->cache_filters ) ) {
-			return $this->cache_filters;
-		}
-
-		/**
-		 * Filters the list of filters for the event Comment in the workflow.
-		 *
-		 * @param array $filters
-		 */
-		$this->cache_filters = apply_filters( "publishpress_notif_workflow_event_{$this->name}_filters", $filters );
-
-		return $this->cache_filters;
 	}
 
 	/**
