@@ -154,6 +154,12 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Changed:
+* Updated the label for the setting field "Allow 'following' on these post types" to make it clear;
+* Updated the placeholder for the "Email from" field to display the default values instead of a static label;
+
 = [1.8.0] - 2017-10-26 =
 
 * Fixed:
