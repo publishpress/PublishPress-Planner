@@ -1117,7 +1117,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                     id="' . $this->module->slug . '_email_from_name"
                     type="text"
                     style="min-width: 300px"
-                    placeholder="' . esc_html__( 'Name', 'publishpress' ) . '"
+                    placeholder="' . get_bloginfo('name') . '"
                     name="' . $this->module->options_group_name . '[email_from_name]"
                     value="' . $email_from['name'] . '" />
                 </label>';
@@ -1126,7 +1126,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                     id="' . $this->module->slug . '_email_from"
                     type="email"
                     style="min-width: 300px"
-                    placeholder="' . esc_html__( 'Email', 'publishpress' ) . '"
+                    placeholder="' . get_bloginfo('admin_email') . '"
                     name="' . $this->module->options_group_name . '[email_from]"
                     value="' . $email_from['email'] . '" />
                 </label>';
