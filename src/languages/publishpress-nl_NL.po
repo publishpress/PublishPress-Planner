@@ -2108,7 +2108,7 @@ msgid "This email was sent %s."
 msgstr ""
 
 #: modules/notifications/notifications.php:1062
-msgid "Allow \"following\" on these post types:"
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
 msgstr ""
 
 #: modules/notifications/notifications.php:1145

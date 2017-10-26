@@ -2352,7 +2352,7 @@ msgstr "Este correo electrónico fue enviado %s."
 #: modules/notifications/notifications.php:1062
 #, fuzzy
 #| msgid "Use on these post types:"
-msgid "Allow \"following\" on these post types:"
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
 msgstr "Utilizar en este tipo de entradas:"
 
 #: modules/notifications/notifications.php:1145

@@ -2332,7 +2332,7 @@ msgstr "Diese E-Mail wurde gesendet %s."
 #: modules/notifications/notifications.php:1062
 #, fuzzy
 #| msgid "Use on these post types:"
-msgid "Allow \"following\" on these post types:"
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
 msgstr "Verwendet bei diesen Beitrags Typen:"
 
 #: modules/notifications/notifications.php:1145
