@@ -154,10 +154,15 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.8.0] - 2017-10-18 =
+= [1.8.0] - 2017-10-26 =
 
 * Fixed:
 * Fixed duplicated "Scheduled" status in the dashboard widget;
+
+* Changed:
+* Improved style for the dashboard widget;
+* Updated form of notification workflow moving some fields to a new column;
+* Updated the POT file;
 
 * Added: 
 * Added a setting field to configure the "email from" information for email notifications;
