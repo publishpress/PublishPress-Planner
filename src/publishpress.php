@@ -421,7 +421,7 @@ class publishpress {
 		$submenu_pp = $submenu['pp-calendar'];
 
 		// Calendar / Content Overview / Notifications / Settings / Add-ons / Contact Us
-		$new_submenu = [
+		$new_submenu = @[
 			$submenu_pp[0],
 			$submenu_pp[1],
 			$submenu_pp[4],
