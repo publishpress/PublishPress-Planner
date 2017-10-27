@@ -6,6 +6,8 @@
  * Author: PressShack
  * Author URI: https://pressshack.com
  * Version: 1.8.0
+ * Text Domain: publishpress
+ * Domain Path: /languages
  *
  * Copyright (c) 2017 PressShack
  *
