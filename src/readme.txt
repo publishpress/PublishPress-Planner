@@ -156,61 +156,72 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
-* Changed:
+*Changed:*
+
 * Updated the label for the setting field "Allow 'following' on these post types" to make it clear;
 * Updated the placeholder for the "Email from" field to display the default values instead of a static label;
 
 = [1.8.0] - 2017-10-26 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed duplicated "Scheduled" status in the dashboard widget;
 
-* Changed:
+*Changed:*
+
 * Improved style for the dashboard widget;
 * Updated form of notification workflow moving some fields to a new column;
 * Updated the POT file;
 
-* Added: 
+*Added:*
+
 * Added a setting field to configure the "email from" information for email notifications;
 
 = [1.7.5] - 2017-10-11 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed the empty pubDate for posts with custom status;
 * Fixed the title of the Notification Workflows module in the settings panel;
 * Fixed the verification of the notifications module statue before create content type and display the menu;
 * Fixed the drag and drop of metadata items in the settings tab;
 
-* Changed:
+*Changed:*
+
 * Removed quick edit option from the metadata tab;
 * Updated the Twig library to v1.35.0;
 * Adjusted filters on notification workflows to only consider selected items. Before that, if no post type, category, or statuses where selected, all the items would be considered selected.
 
 = [1.7.4] - 2017-09-13 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed the button Submit for Review which was hidden for contributors, or users who can't publish;
 * Fixed empty permalink when publishing posts, or saving new posts with empty title;
 
 = [1.7.3] - 2017-09-04 =
 
-* Added:
+*Added:*
+
 * Added shortcode for displaying the date and time set for the content on the notifications;
 * Added shortcode for displaying the old and new statuses on the notifications;
 
-* Fixed:
+*Fixed:*
+
 * Fixed the save event filters when no event is selected;
 * Fixed the separator param on shortcodes for notifications;
 * Fixed notifications avoiding messages for auto-drafts;
 
-* Changed:
+*Changed:*
+
 * Improved the column titles on the workflows list to match the labels from the form;
 * Replaced the string 'Follow' to 'Notify' on the UI;
 * Removed the filter for months on the Workflows list;
 
 = [1.7.2] - 2017-08-31 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed default notification workflows to avoid notifications on every post save, but only when the content transition to Published;
 * Fixed the message after delete workflows;
 * Fixed the notifications workflows to ignore autosaves;
@@ -218,32 +229,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.7.1] - 2017-08-30 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed bug which blocked pages for guests after installing;
 * Fixed error 500 on saving the calendar settings;
 * Fixed bug on saving modules settings where changes were not being saved;
 * Fixed default color and icon for existent statuses;
 
-* Changed:
+*Changed:*
+
 * Improved default colors for custom statuses;
 
 = [1.7.0] - 2017-08-29 =
 
-* Added:
+*Added:*
+
 * Added notification workflows for more control over notifications with custom text and more;
 * Added special fields on the user profile to configure where to receive the new notifications;
 * Added the option for users to mute notifications from specific workflows;
 * Allow to customize color and icon for all post statuses in the calendar;
 * Allow to send emails in HTML format for notifications;
 
-* Fixed:
+*Fixed:*
+
 * Fixed spacing for content overview;
 * Fixed compatibility with Capsman Enhanced and Press Permit, refactoring the action pp_admin_menu to publishpress_admin_menu;
 * Fixed the creation and drag-and-drop of content on the calendar to set the scheduled date. Moving the content, if published or scheduled, now updates the status (and icon) according to the current time;
 * Fixed the issue with notifications disappearing from the admin after a few seconds;
 * Fixed empty filter for tags in the calendar if there are no tags;
 
-* Changed:
+*Changed:*
+
 * Filter content in the calendar page on the change event;
 * Filter content in content overview page on the change event;
 * Allow to drag-and-drop published content on the calendar;
@@ -255,29 +271,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.6.1] - 2017-07-27 =
 
-* Changed:
+*Changed:*
+
 * Updated the add-ons page for supporting the new add-on: Multiple Authors
 
-* Fixed:
+*Fixed:*
+
 * Fixed the icon size for calendar
 
 = [1.6.0] - 2017-07-12 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed an error message after install after redirect to the calendar;
 
-* Changed:
+*Changed:*
+
 * Moved the Add-ons tab to a menu item;
 * Updated internal method to show post type settings fields for add-ons;
 
 = [1.5.1] - 2017-06-28 =
 
-* Fixed:
+*Fixed:*
+
 * Fixes required capability to see the calendar
 
 = [1.5.0] - 2017-06-27 =
 
-* Changed:
+*Changed:*
+
 * Moved Calendar to the PublishPress menu
 * Moved Content Overview to the PublishPress menu
 * Changed the Calendar page as the main page
@@ -287,121 +309,152 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed calendar settings enabling all post type by default
 * Improved styling in the calendar view
 
-* Fixed:
+*Fixed:*
+
 * Fixed link and filename of the .ics file downloaded from the calendar\
 * Fixed the "Click to create" on Chrome label in Firefox
 * Fixed last column popup display in Internet Explorer 11
 
 = [1.4.3] - 2017-06-21 =
 
-* Added:
+*Added:*
+
 * Added filter to control if users can or not edit metadata
 * Added new add-on PublishPress Permissions to the add-ons tab
 
-* Fixed:
+*Fixed:*
+
 * Fixed thge pt-BR translations
 * Fixed datetime format in metadata fields for non-english languages
 * Fixed the metadata editing on the calendar
 * Fixed PHP warning after save options
 
-* Changed:
+*Changed:*
+
 * Updated "Tested up" to 4.8
 * Improved the output for unset medatada
 
 = [1.4.2] - 2017-06-06 =
 
-* Fixed:
+*Fixed:*
+
 * Fixed French translation. Thanks [Thierry Pasquier](https://github.com/jeau)
 
 = [1.4.1] - 2017-05-29 =
 
-* Changed:
+*Changed:*
+
 * Added the Slack add-on as available in the Add-on tab.
 
 = [1.4.0] - 2017-05-25 =
 
-* Fixed:
+*Fixed:*
+
 * Restores the icon in the freemius sdk
 * Fixed minor JavaScript warning in the Editorial Comment module
 
-* Changed:
+*Changed:*
+
 * Refactor notification module allowing add-ons to use any other message system
 * Allow to customize priority for the action triggered on the status change
 
 = [1.3.3] - 2017-05-22 =
-* Fixed:
+
+*Fixed:*
+
 * Fixed the context in translations for date picker in the Story Budget module
 * Fixed the "Hello Dolly" message in the Freemius opt-in dialog
 * Fixed date fields in the Editorial Metadata box
 
-* Changed:
+*Changed:*
+
 * Added partial pt-PT translation
 * Increased the minimum WordPress version to 4.6
 
 = [1.3.2] - 2017-05-04 =
-* Fixed:
+
+*Fixed:*
+
 * Fixed the list of Add-ons, to list correctly the installation and activation status
 * Fixed selector for the active admin menu
 * Fixed readme.txt file with better title, tags and description
 
 = [1.3.1] - 2017-05-02 =
-* Fixed:
+
+*Fixed:*
+
 * Fixed the calendar quick-edit popup
 * Fixed minor issue in the code style
 
-* Added:
+*Added:*
+
 * Added WooCommerce add-on to the add-ons tab
 
-* Changed:
+*Changed:*
+
 * Removed message after update settings
 * Updated name of add-ons in the settings tab
 * Improved content from the readme file
 
 = [1.3.0] - 2017-04-27 =
-* Fixed:
+
+*Fixed:*
+
 * Fixed popup for items created as quick post
 * Fixed typos
 
-* Added:
+*Added:*
+
 * Added integration with Freemius for feedback and contact form
 * Added filters and actions allowing to extend modules with add-ons
 * Added default modal window scripts and styles for add-ons
 * Added new tab to showcase the add-ons
 
-* Changed:
+*Changed:*
+
 * Changed code standards for WordPress
 * Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
 * Improved twig files removing hardcoded strings
 
 = [1.2.2] - 2017-03-16 =
-* Changed:
+
+*Changed:*
+
 * Add icon to the print link on the Overview screen
 * Update the language files
 
 = [1.2.1] - 2017-03-15 =
-* Changed:
+
+*Changed:*
+
 * Better label for Comments metadata box
 * Set Calendar Subscriptions enabled by default
 * Set Always Show Dropdown enabled by default on custom statuses
 * Add small notes to some tabs
 * Update POT file
 
-* Fixed:
+*Fixed:*
+
 * Fixed empty messages while deleting custom statuses, metadata and user groups
 * Fixed link to redirect after the EditFlow migration
 
 = [1.2.0] - 2017-03-15 =
-* Changed:
+
+*Changed:*
+
 * Better style for the calendar
 * Click anywhere on the calendar cell to create content, intead show a button
 * Extends the drag-and-drop feature to custom statuses
 * Minor improvements on the code
 
-* Added:
+*Added:*
+
 * Allow to create multiple types of content on the calendar
 
 = [1.1.0] - 2017-03-07 =
-* Changed:
+
+*Changed:*
+
 * Complete rebranding to PublishPress and PressShack
 * Clean up on the UI
 * Move sub-pages to a common settings page
@@ -410,11 +463,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Move PublishPress menu to after Comments menu
 
 = [1.0.5] - 2017-02-16 =
-* Changed:
+
+*Changed:*
+
 * Update version to trigger a new release fixing SVN issues on the last release
 
 = [1.0.4] - 2017-02-15 =
-* Changed:
+
+*Changed:*
+
 * Cleanup on the code
 * Cleanup on the admin interface
 * Add PressShack logo to the top of admin pages
@@ -423,24 +480,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Move the Settings menu item to the main PublishPress menu
 * Minor improvement to the icons
 
-* Fixed:
+*Fixed:*
+
 * Update language strings and some links
 * Fix bug on editorial comments box in the post form
 
 = [1.0.3] - 2017-02-01 =
-* Changed:
+
+*Changed:*
+
 * Update language .mo files
 
 = [1.0.2] - 2017-02-01 =
-* Changed:
+
+*Changed:*
+
 * Update plugin's description
 
 = [1.0.1] - 2017-02-01 =
-* Changed:
+
+*Changed:*
+
 * Update plugin's description
 * Update language strings
 
 = [1.0.0] - 2017-02-01 =
-* Changed:
+
+*Changed:*
+
 * Renamed to PublishPress
 * Rebrand for Joomlashack
