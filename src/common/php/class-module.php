@@ -173,20 +173,26 @@ if ( ! class_exists( 'PP_Module' ) ) {
 		 * @return array
 		 */
 		protected function get_core_post_statuses() {
-			return array(
-			(object) array(
-				'name'         => __( 'Draft' ),
-				'description'  => '',
-				'slug'         => 'draft',
-				'position'     => 1,
-			),
-			(object) array(
-				'name'         => __( 'Pending Review' ),
-				'description'  => '',
-				'slug'         => 'pending',
-				'position'     => 2,
-			),
-			);
+			return [
+				(object) [
+					'name'         => __( 'Draft' ),
+					'description'  => '',
+					'slug'         => 'draft',
+					'position'     => 1,
+				],
+				(object) [
+					'name'         => __( 'Pending Review' ),
+					'description'  => '',
+					'slug'         => 'pending',
+					'position'     => 2,
+				],
+				(object) [
+					'name'         => __( 'Published' ),
+					'description'  => '',
+					'slug'         => 'publish',
+					'position'     => 3,
+				],
+			];
 		}
 
 		/**

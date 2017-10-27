@@ -990,7 +990,8 @@ if (!class_exists('PP_Custom_Status')) {
         {
             global $wp_post_statuses;
 
-            if ($this->disable_custom_statuses_for_post_type()) {
+
+            if ($this->disable_custom_statuses_for_post_type() || 'off' === $this->module->options->enabled) {
                 return $this->get_core_post_statuses();
             }
 

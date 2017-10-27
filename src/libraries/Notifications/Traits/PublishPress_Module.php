@@ -67,6 +67,12 @@ trait PublishPress_Module {
 				'slug'         => 'pending',
 				'position'     => 2,
 			],
+			(object) [
+				'name'         => __( 'Published' ),
+				'description'  => '',
+				'slug'         => 'publish',
+				'position'     => 3,
+			],
 		];
 	}
 

@@ -10,10 +10,12 @@
 namespace PublishPress\Notifications;
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Traits\PublishPress_Module;
 
 class Shortcodes {
 
 	use Dependency_Injector;
+	use PublishPress_Module;
 
 	/**
 	 * The post of the workflow.
@@ -321,7 +323,7 @@ class Shortcodes {
 						'slug',
 						$this->action_args[ $item ]
 					);
-
+					
 					if ( empty( $status ) || 'WP_Error' === get_class( $status ) ) {
 						break;
 					}

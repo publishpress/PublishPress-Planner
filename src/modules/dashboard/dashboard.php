@@ -199,7 +199,12 @@ if (!class_exists('PP_Dashboard')) {
                                 <a href="<?php echo esc_url($filter_link); ?>">
                                     <?php
                                     $slug = $status->slug;
-                                    echo esc_html($post_count->$slug);
+
+                                    if (isset($post_count->$slug)) {
+                                        echo esc_html($post_count->$slug);
+                                    } else {
+                                        echo 0;
+                                    }
                                     ?>
                                 </a>
                             </td>
