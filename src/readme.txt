@@ -154,12 +154,18 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.8.1] - 2017-11-01 =
 
 *Changed:*
 
 * Updated the label for the setting field "Allow 'following' on these post types" to make it clear;
 * Updated the placeholder for the "Email from" field to display the default values instead of a static label;
+* Added text domain into the plugin header;
+
+*Fixed:*
+
+* Fixed missed "published" status on filters in notifications if "custom status" feature is disabled;
+* Fixed PHP warning when some features are disabled;
 
 = [1.8.0] - 2017-10-26 =
 
