@@ -396,7 +396,11 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 */
 		public function add_admin_scripts( $hook_suffix ) {
 			if ( in_array( $hook_suffix, [ 'profile.php', 'user-edit.php'] ) ) {
-				wp_enqueue_script( 'psppno-user-profile-notifications', plugin_dir_url( __FILE__ ) . 'assets/js/user_profile.js');
+				wp_enqueue_script( 'psppno-user-profile-notifications', plugin_dir_url( __FILE__ ) . 'assets/js/user_profile.js', [], PUBLISHPRESS_VERSION );
+			}
+
+			if ( in_array( $hook_suffix, [ 'post.php' ] ) ) {
+				wp_enqueue_script( 'psppno-workflow-form', plugin_dir_url( __FILE__ ) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION );
 			}
 		}
 

@@ -7,23 +7,20 @@
  * @since       1.0.0
  */
 
-namespace PublishPress\Notifications\Workflow\Step\Event;
+namespace PublishPress\Notifications\Workflow\Step\Event_Content;
 
-use PublishPress\Notifications\Traits\Dependency_Injector;
-use PublishPress\Notifications\Workflow\Step\Event\Filter;
+class Post_Type extends Base {
 
-class Post_Save extends Base {
+	const META_KEY_SELECTED = '_psppno_evtcontposttype';
 
-	const META_KEY_SELECTED = '_psppno_evtpostsave';
-
-	const META_VALUE_SELECTED = 'post_save';
+	const META_VALUE_SELECTED = 'post_type';
 
 	/**
 	 * The constructor
 	 */
 	public function __construct() {
-		$this->name  = 'post_save';
-		$this->label = __( 'When the content is moved to a new status', 'publishpress' );
+		$this->name  = 'post_type';
+		$this->label = __( 'Post type', 'publishpress' );
 
 		parent::__construct();
 	}
@@ -42,7 +39,7 @@ class Post_Save extends Base {
 
 		$step_name = $this->attr_prefix . '_' . $this->name;
 
-		$filters[] = new Filter\Post_Status( $step_name );
+		$filters[] = new Filter\Post_Type( $step_name );
 
 		return parent::get_filters( $filters );
 	}
@@ -57,20 +54,11 @@ class Post_Save extends Base {
 	 */
 	public function filter_run_workflow_query_args( $query_args, $action_args ) {
 
-		if ( 'transition_post_status' === $action_args['action'] ) {
-			$query_args['meta_query'][] = [
-				'key'     => static::META_KEY_SELECTED,
-				'value'   => 1,
-				'type'    => 'BOOL',
-				'compare' => '=',
-			];
+		// Check the filters
+		$filters = $this->get_filters();
 
-			// Check the filters
-			$filters = $this->get_filters();
-
-			foreach ( $filters as $filter ) {
-				$query_args = $filter->get_run_workflow_query_args( $query_args, $action_args );
-			}
+		foreach ( $filters as $filter ) {
+			$query_args = $filter->get_run_workflow_query_args( $query_args, $action_args );
 		}
 
 		return $query_args;

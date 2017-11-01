@@ -24,7 +24,10 @@ class Base extends Base_Step {
 	 * The constructor
 	 */
 	public function __construct() {
-		$this->attr_prefix   = 'event';
+		if ( 'base' === $this->attr_prefix ) {
+			$this->attr_prefix   =  'event';
+		}
+
 		$this->twig_template = 'workflow_event_field.twig';
 
 		parent::__construct();
@@ -68,7 +71,7 @@ class Base extends Base_Step {
 	 */
 	public function save_metabox_data( $id, $post ) {
 		if ( ! isset( $_POST['publishpress_notif'] )
-			|| ! isset( $_POST['publishpress_notif']['event'] ) ) {
+			|| ! isset( $_POST['publishpress_notif'][ $this->attr_prefix ] ) ) {
 			// Assume it is disabled
 			update_post_meta( $id, static::META_KEY_SELECTED, false );
 		}
@@ -76,9 +79,9 @@ class Base extends Base_Step {
 		$params = $_POST['publishpress_notif'];
 
 
-		if ( isset( $params['event'] ) ) {
+		if ( isset( $params[ $this->attr_prefix ] ) ) {
 			// Is selected in the events?
-			$selected = in_array( static::META_VALUE_SELECTED, $params['event'] );
+			$selected = in_array( static::META_VALUE_SELECTED, $params[ $this->attr_prefix ] );
 			update_post_meta( $id, static::META_KEY_SELECTED, $selected );
 		}
 
