@@ -6,7 +6,7 @@
 		value="{{ value }}"
 		{{ checked( meta.selected, 1 ) }} />
 
-	<label for="{{ id }}">{{ label }}</label>
+	<label for="{{ id }}" class="noselect">{{ label }}</label>
 
 	{% if event_filters %}
 		<ul class="{{ id }}_filters" {% if not meta.selected %}style="display:none;"{% endif %} >
