@@ -48,16 +48,11 @@ trait Metadata {
 	 * @param array   $meta_value
 	 * @param bool    $all_if_empty
 	 */
-	public function update_metadata_array( $post_id, $meta_key, $meta_value = [], $all_if_empty = false ) {
+	public function update_metadata_array( $post_id, $meta_key, $meta_value = [] ) {
 		// Cleanup the metadata
 		$this->delete_metadata( $meta_key );
 
-		if ( empty( $meta_value ) ) {
-			if ( $all_if_empty ) {
-				// Make sure we have the 'all' value
-				add_post_meta( $post_id, $meta_key, 'all' );
-			}
-		} else {
+		if ( ! empty( $meta_value ) ) {
 			foreach ( $meta_value as $value ) {
 				add_post_meta( $post_id, $meta_key, $value );
 			}

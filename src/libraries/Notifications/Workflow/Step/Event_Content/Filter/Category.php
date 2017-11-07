@@ -29,8 +29,7 @@ class Category extends Base implements Filter_Interface {
 				'id'      => "publishpress_notif_{$this->step_name}_filters_category",
 				'options' => $this->get_options(),
 				'labels'  => [
-					'label' => esc_html__( 'Category', 'publishpress' ),
-					'any'   => esc_html__( '- any category -', 'publishpress' ),
+					'label' => esc_html__( 'Categories', 'publishpress' ),
 				]
 			]
 		);
@@ -76,7 +75,7 @@ class Category extends Base implements Filter_Interface {
 			$values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
 		}
 
-		$this->update_metadata_array( $id, static::META_KEY_CATEGORY, $values, true );
+		$this->update_metadata_array( $id, static::META_KEY_CATEGORY, $values );
 	}
 
 	/**

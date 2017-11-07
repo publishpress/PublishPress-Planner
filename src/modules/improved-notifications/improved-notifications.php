@@ -67,6 +67,13 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		protected $workflows;
 
 		/**
+		 * List of published workflows
+		 *
+		 * @var array
+		 */
+		protected $published_workflows;
+
+		/**
 		 * Construct the Notifications class
 		 */
 		public function __construct() {
@@ -289,7 +296,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			}
 		}
 
-
 		/**
 		 * Returns true if we found any default workflow
 		 *
@@ -321,6 +327,40 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * @since 0.7
 		 */
 		public function upgrade( $previous_version ) {
+			if ( version_compare( $previous_version, '1.8.2', '<' ) ) {
+				// Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
+				$workflows = $this->get_workflows();
+
+				if ( ! empty( $workflows ) ) {
+					foreach ( $workflows as $workflow ) {
+						// Get the user list
+						$meta = get_post_meta( $workflow->ID, '_psppno_touser' );
+						if ( ! empty( $meta ) ) {
+							delete_post_meta( $workflow->ID, '_psppno_touserlist' );
+
+							foreach ( $meta as $data ) {
+								add_post_meta( $workflow->ID, '_psppno_touserlist', $data );
+							}
+
+							delete_post_meta( $workflow->ID, '_psppno_touser' );
+							add_post_meta( $workflow->ID, '_psppno_touser', 1 );
+						}
+
+						// Get the user group list
+						$meta = get_post_meta( $workflow->ID, '_psppno_togroup' );
+						if ( ! empty( $meta ) ) {
+							delete_post_meta( $workflow->ID, '_psppno_togrouplist' );
+
+							foreach ( $meta as $data ) {
+								add_post_meta( $workflow->ID, '_psppno_togrouplist', $data );
+							}
+
+							delete_post_meta( $workflow->ID, '_psppno_togroup' );
+							add_post_meta( $workflow->ID, '_psppno_togroup', 1 );
+						}
+					}
+				}
+			}
 		}
 
 		/**
@@ -563,12 +603,36 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * @return array
 		 */
 		protected function get_published_workflows() {
-			if ( empty( $this->workflows ) ) {
+			if ( empty( $this->published_workflows ) ) {
 				// Build the query
 				$query_args = [
 					'nopaging'    => true,
 					'post_type'   => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
 					'post_status' => 'publish',
+					'no_found_rows' => true,
+					'cache_results' => true,
+					'meta_query'  => [],
+				];
+
+				$query = new \WP_Query( $query_args );
+
+				$this->published_workflows = $query->posts;
+			}
+
+			return $this->published_workflows;
+		}
+
+		/**
+		 * Returns a list of workflows.
+		 *
+		 * @return array
+		 */
+		protected function get_workflows() {
+			if ( empty( $this->workflows ) ) {
+				// Build the query
+				$query_args = [
+					'nopaging'    => true,
+					'post_type'   => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
 					'no_found_rows' => true,
 					'cache_results' => true,
 					'meta_query'  => [],

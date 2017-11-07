@@ -9,8 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
-use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
-
 class Author extends Simple_Checkbox implements Receiver_Interface {
 
 	const META_KEY   = '_psppno_toauthor';

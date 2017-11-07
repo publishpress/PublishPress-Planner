@@ -29,8 +29,7 @@ class Post_Type extends Base implements Filter_Interface {
 				'id'      => "publishpress_notif_{$this->step_name}_filters_post_type",
 				'options' => $this->get_options(),
 				'labels'  => [
-					'label' => esc_html__( 'Post Type', 'publishpress' ),
-					'any'   => esc_html__( '- any type -', 'publishpress' ),
+					'label' => esc_html__( 'Post Types', 'publishpress' ),
 				]
 			]
 		);
@@ -70,7 +69,7 @@ class Post_Type extends Base implements Filter_Interface {
 			$values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type'];
 		}
 
-		$this->update_metadata_array( $id, static::META_KEY_POST_TYPE, $values, true );
+		$this->update_metadata_array( $id, static::META_KEY_POST_TYPE, $values );
 	}
 
 	/**

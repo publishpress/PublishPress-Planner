@@ -73,7 +73,7 @@ class Post_Status extends Base implements Filter_Interface {
 			$from = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
 		}
 
-		$this->update_metadata_array( $id, static::META_KEY_POST_STATUS_FROM, $from, true );
+		$this->update_metadata_array( $id, static::META_KEY_POST_STATUS_FROM, $from );
 
 		// To
 		if ( ! isset( $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'] ) ) {
@@ -81,7 +81,7 @@ class Post_Status extends Base implements Filter_Interface {
 		} else {
 			$to = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
 		}
-		$this->update_metadata_array( $id, static::META_KEY_POST_STATUS_TO, $to, true );
+		$this->update_metadata_array( $id, static::META_KEY_POST_STATUS_TO, $to );
 	}
 
 	/**

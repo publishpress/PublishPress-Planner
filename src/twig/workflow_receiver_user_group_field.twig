@@ -1,4 +1,10 @@
-<div id="pp-post_following_box">
+{% include 'workflow_receiver_checkbox_field.twig' %}
+
+<div
+	id="pp-post_following_box"
+	{% if not meta.selected %}style="display:none;"{% endif %}
+	class="{{ id }}_filters" >
+	
 	<a name="subscriptions"></a>
 	<div id="pp-post_following_users_box">
 		<h4>{{ label }}</h4>

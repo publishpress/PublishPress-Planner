@@ -9,14 +9,10 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
-use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
-
 class Site_Admin extends Simple_Checkbox implements Receiver_Interface {
 
 	const META_KEY   = '_psppno_tositeadmin';
 	const META_VALUE = 'site_admin';
-
-	protected $option = 'receiver_site_admin';
 
 	/**
 	 * The constructor
