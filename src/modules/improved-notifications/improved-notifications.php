@@ -441,6 +441,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 
 			if ( in_array( $hook_suffix, [ 'post.php' ] ) ) {
 				wp_enqueue_script( 'psppno-workflow-form', plugin_dir_url( __FILE__ ) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION );
+				wp_enqueue_script( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION );
 			}
 		}
 
@@ -803,6 +804,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 */
 		public function add_admin_styles() {
 			wp_enqueue_style( 'psppno-admin-css', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css');
+			wp_enqueue_style( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/css/multiple-select.css');
 			wp_enqueue_style( 'psppno-user-profile', plugin_dir_url( __FILE__ ) . 'assets/css/user_profile.css');
 		}
 

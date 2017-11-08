@@ -21,7 +21,7 @@ class User extends Simple_Checkbox implements Receiver_Interface {
 	public function __construct() {
 		$this->name          = 'user';
 		$this->label         = __( 'Users', 'publishpress' );
-		$this->option_name   = 'receiver_users_checkbox';
+		$this->option_name   = 'receiver_user_checkbox';
 
 		parent::__construct();
 
@@ -57,15 +57,14 @@ class User extends Simple_Checkbox implements Receiver_Interface {
 		parent::save_metabox_data( $id, $post );
 
 		if ( ! isset( $_POST['publishpress_notif'] )
-			|| ! isset( $_POST['publishpress_notif']['receiver_users'] ) ) {
+			|| ! isset( $_POST['publishpress_notif']['receiver_user'] ) ) {
 			// Assume it is disabled
 			$values = [];
 		} else {
-			$values = $_POST['publishpress_notif']['receiver_users'];
+			$values = $_POST['publishpress_notif']['receiver_user'];
 		}
 
 		$this->update_metadata_array( $id, static::META_LIST_KEY, $values );
-		// die;
 	}
 
 	/**
@@ -94,12 +93,12 @@ class User extends Simple_Checkbox implements Receiver_Interface {
 			}
 		}
 
-		$template_context['name']       = 'publishpress_notif[receiver_users_checkbox]';
+		$template_context['name']       = 'publishpress_notif[receiver_user_checkbox]';
 		$template_context['id']         = 'publishpress_notif_user';
 		$template_context['value']      = static::META_VALUE;
 		$template_context['users']      = $users;
 		$template_context['list_class'] = 'publishpress_notif_user_list';
-		$template_context['input_name'] = 'publishpress_notif[receiver_users]';
+		$template_context['input_name'] = 'publishpress_notif[receiver_user][]';
 		$template_context['input_id']   = 'publishpress_notif_user_';
 
 		$template_context = parent::filter_workflow_metabox_context( $template_context );
@@ -133,7 +132,7 @@ class User extends Simple_Checkbox implements Receiver_Interface {
 			 * @param WP_Post $workflow
 			 * @param array   $args
 			 */
-			$receivers = apply_filters( 'publishpress_notif_workflow_receiver_users', $receivers, $workflow, $args );
+			$receivers = apply_filters( 'publishpress_notif_workflow_receiver_user', $receivers, $workflow, $args );
 		}
 
 		return $receivers;

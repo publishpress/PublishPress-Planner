@@ -1,34 +1,15 @@
 {% include 'workflow_receiver_checkbox_field.twig' %}
 
 <div
-	id="pp-post_following_box"
+	id="publishpress_notif_user_group_list_filter"
 	{% if not meta.selected %}style="display:none;"{% endif %}
-	class="{{ id }}_filters" >
+	class="{{ id }}_filters publishpress-filter-checkbox-list" >
 	
-	<a name="subscriptions"></a>
-	<div id="pp-post_following_users_box">
-		<h4>{{ label }}</h4>
-
-		{% if user_groups %}
-			<ul class="{{ list_class }}">
-				{% for group in user_groups %}
-					<li>
-						<label for="{{ input_id }}{{ group.term_id }}">
-							<input
-								type="checkbox"
-								id="{{ input_id }}{{ group.term_id }}"
-								name="{{ input_name }}[]"
-								value="{{ group.term_id }}"
-								{{ checked( group.selected, true ) }} />
-
-							<span class="pp-usergroup_name">{{ group.name }}</span>
-						</label>
-					</li>
-				{% endfor %}
-			</ul>
-		{% endif %}
-
-	</div>
-
-	<div class="clear"></div>
+	{% if user_groups %}
+		<select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}">
+			{% for group in user_groups %}
+				<option value="{{ group.term_id }}" {{ selected( group.selected, true ) }}>{{ group.name }}</option>
+			{% endfor %}
+		</select>
+	{% endif %}
 </div>

@@ -77,7 +77,7 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface {
 		$template_context['value']       = static::META_VALUE;
 		$template_context['user_groups'] = $user_groups;
 		$template_context['list_class']  = 'publishpress_notif_user_group_list';
-		$template_context['input_name']  = 'publishpress_notif[receiver_user_group]';
+		$template_context['input_name']  = 'publishpress_notif[receiver_user_group][]';
 		$template_context['input_id']    = 'publishpress_notif_user_group_';
 
 		$template_context = parent::filter_workflow_metabox_context( $template_context );

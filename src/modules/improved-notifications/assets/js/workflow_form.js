@@ -44,5 +44,14 @@
 		setupFieldFilters( 'event_content_category' );
 		setupFieldFilters( 'user' );
 		setupFieldFilters( 'user_group' );
+
+		// List search
+		// $('.publishpress-filter-checkbox-list ul').listFilterizer();
+		$('.publishpress-filter-checkbox-list select').multipleSelect({
+            filter: true
+        });
+
+		// Form validation
+		
 	} );
 } )( jQuery );
