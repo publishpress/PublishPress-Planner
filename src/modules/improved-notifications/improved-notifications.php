@@ -501,14 +501,16 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'id'     => 'event',
 				'header' => __( 'When to notify?', 'publishpress' ),
 				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event', '' ),
+				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3',
 			];
 			$main_context['section_event'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
 			// Renders the event content filter section
 			$context = [
 				'id'     => 'event_content',
-				'header' => __( 'Which content?', 'publishpress' ),
+				'header' => __( 'Filter the content?', 'publishpress' ),
 				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event_content', '' ),
+				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
 			];
 			$main_context['section_event_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
@@ -517,6 +519,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'id'   => 'receiver',
 				'header' => __( 'Who to notify?', 'publishpress' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_receiver', '' ),
+				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
 			];
 			$main_context['section_receiver'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
@@ -525,6 +528,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				'id'   => 'content',
 				'header' => __( 'What to say?', 'publishpress' ),
 				'html' => apply_filters( 'publishpress_notif_render_metabox_section_content', '' ),
+				'class'  => 'pure-u-1',
 			];
 			$main_context['section_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
 
@@ -805,6 +809,8 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		public function add_admin_styles() {
 			wp_enqueue_style( 'psppno-admin-css', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css');
 			wp_enqueue_style( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/css/multiple-select.css');
+			wp_enqueue_style( 'psppno-grid', plugin_dir_url( __FILE__ ) . 'assets/css/grids-min.css');
+			wp_enqueue_style( 'psppno-grid-responsive', plugin_dir_url( __FILE__ ) . 'assets/css/grids-responsive-min.css');
 			wp_enqueue_style( 'psppno-user-profile', plugin_dir_url( __FILE__ ) . 'assets/css/user_profile.css');
 		}
 

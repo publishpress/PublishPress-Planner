@@ -1699,7 +1699,7 @@ msgid "Help"
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:465
-msgid "Which content?"
+msgid "Filter the content?"
 msgstr ""
 
 #: modules/improved-notifications/improved-notifications.php:481
