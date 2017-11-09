@@ -299,7 +299,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 		 * @since 0.7
 		 */
 		public function upgrade( $previous_version ) {
-			if ( version_compare( $previous_version, '1.8.2', '<' ) ) {
+			if ( version_compare( $previous_version, '1.8.1', '<=' ) ) {
 				// Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
 				$workflows = $this->get_workflows();
 
