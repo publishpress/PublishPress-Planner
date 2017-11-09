@@ -10,6 +10,7 @@
 namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
 
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Filter_Interface;
+use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type as Step_Post_Type;
 
 class Post_Type extends Base implements Filter_Interface {
 
@@ -82,8 +83,33 @@ class Post_Type extends Base implements Filter_Interface {
 	 */
 	public function get_run_workflow_query_args( $query_args, $action_args ) {
 
-		// From
 		$query_args['meta_query'][] = [
+			'relation' => 'OR',
+			// The filter is disabled
+			[
+				'key'     => Step_Post_Type::META_KEY_SELECTED,
+				'value'   => '0',
+				'compare' => '=',
+			],
+			// The filter is disabled
+			[
+				'key'     => Step_Post_Type::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => '=',
+			],
+			// The filter is disabled
+			[
+				'key'     => Step_Post_Type::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => 'IS NULL',
+			],
+			// The filter wasn't set yet
+			[
+				'key'     => Step_Post_Type::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => 'NOT EXISTS',
+			],
+			// The filter validates the value
 			[
 				'key'     => static::META_KEY_POST_TYPE,
 				'value'   => $action_args['post']->post_type,

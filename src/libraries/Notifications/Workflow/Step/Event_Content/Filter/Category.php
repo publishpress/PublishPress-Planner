@@ -10,6 +10,7 @@
 namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
 
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Filter_Interface;
+use PublishPress\Notifications\Workflow\Step\Event_Content\Category as Step_Category;
 
 class Category extends Base implements Filter_Interface {
 
@@ -99,6 +100,32 @@ class Category extends Base implements Filter_Interface {
 		$category_ids = implode( ',', $category_ids );
 
 		$query_args['meta_query'][] = [
+			'relation' => 'OR',
+			// The filter is disabled
+			[
+				'key'     => Step_Category::META_KEY_SELECTED,
+				'value'   => '0',
+				'compare' => '=',
+			],
+			// The filter is disabled
+			[
+				'key'     => Step_Category::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => '=',
+			],
+			// The filter is disabled
+			[
+				'key'     => Step_Category::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => 'IS NULL',
+			],
+			// The filter wasn't set yet
+			[
+				'key'     => Step_Category::META_KEY_SELECTED,
+				'value'   => '',
+				'compare' => 'NOT EXISTS',
+			],
+			// The filter validates the value
 			[
 				'key'     => static::META_KEY_CATEGORY,
 				'value'   => $category_ids,
