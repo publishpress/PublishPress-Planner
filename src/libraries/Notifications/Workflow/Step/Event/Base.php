@@ -40,8 +40,6 @@ class Base extends Base_Step {
 
 		// Add the fitler to the run workflow query args
 		add_filter( 'publishpress_notif_run_workflow_meta_query', [ $this, 'filter_run_workflow_query_args' ], 10, 2 );
-		// Add filter to return the metakey representing if it is selected or not
-		add_filter( 'psppno_events_metakeys', [ $this, 'filter_events_metakeys' ] );
 	}
 
 	/**

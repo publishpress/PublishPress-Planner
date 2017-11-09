@@ -26,6 +26,9 @@ class Post_Save extends Base {
 		$this->label = __( 'When the content is moved to a new status', 'publishpress' );
 
 		parent::__construct();
+
+		// Add filter to return the metakey representing if it is selected or not
+		add_filter( 'psppno_events_metakeys', [ $this, 'filter_events_metakeys' ] );
 	}
 
 	/**

@@ -120,6 +120,7 @@ class Plugin {
 		unset( $post_columns['date'] );
 
 		$post_columns['events']    = __( 'When to notify?', 'publishpress' );
+		$post_columns['filter']    = __( 'Filter the content?', 'publishpress' );
 		$post_columns['receivers'] = __( 'Who to notify?', 'publishpress' );
 		$post_columns['date']      = $date_column;
 
@@ -129,6 +130,7 @@ class Plugin {
 	public function action_manage_post_custom_column( $column_name, $post_id ) {
 		$columns = [
 			'events',
+			'filter',
 			'receivers',
 		];
 		// Ignore other columns
@@ -166,6 +168,35 @@ class Plugin {
 			echo '<span class="psppno_no_events_warning">' . __( 'Please select at least one event' , 'publishpress' ) . '</span>';
 		} else {
 			echo implode( ', ', $events );
+		}
+	}
+
+	/**
+	 * Print the column for the filters
+	 *
+	 * @param int $post_id
+	 */
+	protected function print_column_filter( $post_id ) {
+		/**
+		 * Get the event metakeys
+		 *
+		 * @param array $metakeys
+		 */
+		$metakeys = apply_filters( 'psppno_filter_metakeys', [] );
+		$filters  = [];
+
+		foreach ( $metakeys as $metakey => $label ) {
+			$selected = get_post_meta( $post_id, $metakey, true );
+
+			if ( $selected ) {
+				$filters[] = $label;
+			}
+		}
+
+		if ( empty( $filters ) ) {
+			echo '<span class="psppno_no_filter_warning">' . __( 'Not filtered' , 'publishpress' ) . '</span>';
+		} else {
+			echo implode( ', ', $filters );
 		}
 	}
 

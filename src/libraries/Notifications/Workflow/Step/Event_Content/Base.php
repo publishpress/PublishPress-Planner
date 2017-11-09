@@ -20,5 +20,8 @@ class Base extends Base_Step {
 		$this->attr_prefix  = 'event_content';
 		
 		parent::__construct();
+
+		// Add filter to return the metakey representing if it is selected or not
+		add_filter( 'psppno_filter_metakeys', [ $this, 'filter_events_metakeys' ] );
 	}
 }

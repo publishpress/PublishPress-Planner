@@ -25,6 +25,9 @@ class Editorial_Comment extends Base {
 		$this->label = __( 'When an editorial comment is added', 'publishpress' );
 
 		parent::__construct();
+
+		// Add filter to return the metakey representing if it is selected or not
+		add_filter( 'psppno_events_metakeys', [ $this, 'filter_events_metakeys' ] );
 	}
 
 	/**
