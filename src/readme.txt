@@ -4,6 +4,7 @@ Author: PressShack, PublishPress
 Author URI: https://pressshack.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
+Requires PHP: 5.4
 Tested up to: 4.8
 Stable tag: 1.9.0
 License: GPLv2 or later
