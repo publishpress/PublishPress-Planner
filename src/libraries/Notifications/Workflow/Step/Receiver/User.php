@@ -119,7 +119,7 @@ class User extends Simple_Checkbox implements Receiver_Interface {
 		if ( $this->is_selected( $workflow->ID ) ) {
 			// Get the users selected in the workflow
 			$users     = get_post_meta( $workflow->ID, static::META_LIST_KEY );
-			$receivers = arrray_merge( $receivers, $users );
+			$receivers = array_merge( $receivers, $users );
 
 			// Get the users following the post
 			$users = $this->get_service( 'publishpress' )->notifications->get_following_users( $args['post']->ID, 'id' );
