@@ -136,7 +136,7 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('page_link', array($this, 'fix_preview_link_part_two'), 10, 3);
             add_filter('post_type_link', array($this, 'fix_preview_link_part_two'), 10, 3);
             add_filter('get_sample_permalink', array($this, 'fix_get_sample_permalink'), 10, 5);
-            add_filter('get_sample_permalink_html', array($this, 'fix_get_sample_permalink_html'), 10, 5);
+            add_filter('get_sample_permalink_html', array($this, 'fix_get_sample_permalink_html'), 9, 5);
             add_filter('post_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
             add_filter('page_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
         }

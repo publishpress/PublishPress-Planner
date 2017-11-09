@@ -144,7 +144,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
 
 			// Workflow form
-			add_filter( 'get_sample_permalink_html', array( $this, 'filter_get_sample_permalink_html_workflow' ), 10, 5 );
+			add_filter( 'get_sample_permalink_html', array( $this, 'filter_get_sample_permalink_html_workflow' ), 9, 5 );
 			add_filter( 'post_row_actions', array( $this, 'filter_row_actions' ), 10, 2 );
 			add_action( 'add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW, array( $this, 'action_meta_boxes_workflow' ) );
 			add_action( 'save_post', [ $this, 'save_meta_boxes' ], 10, 2 );
