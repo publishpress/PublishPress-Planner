@@ -228,20 +228,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$post_id = wp_insert_post( $workflow );
 
 			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
-				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
-				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
-
-				// Add each category, so it sends to all them
-				$categories = get_categories([
-					'orderby'      => 'name',
-					'order'        => 'ASC',
-					'hide_empty'   => false,
-					'hierarchical' => true,
-				]);
-				foreach ( $categories as $category ) {
-					add_post_meta( $post_id, Filter_Category::META_KEY_CATEGORY, $category->slug, false );
-				}
-
 				// Add each status to the "From" filter, except the "publish" state
 				foreach ( $statuses as $status ) {
 					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false );
@@ -272,20 +258,6 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 			$post_id = wp_insert_post( $workflow );
 
 			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
-				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'post', false );
-				add_post_meta( $post_id, Filter_Post_Type::META_KEY_POST_TYPE, 'page', false );
-
-				// Add each category, so it sends to all them
-				$categories = get_categories([
-					'orderby'      => 'name',
-					'order'        => 'ASC',
-					'hide_empty'   => false,
-					'hierarchical' => true,
-				]);
-				foreach ( $categories as $category ) {
-					add_post_meta( $post_id, Filter_Category::META_KEY_CATEGORY, $category->slug, false );
-				}
-
 				// Get post statuses
 				$statuses = $this->get_post_statuses();
 				// Add each status to the "From" filter, except the "publish" state
