@@ -154,12 +154,26 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.9.0] - 2017-11-09 =
 
 *Changed:*
 
-* Updated the label for the setting field "Allow 'following' on these post types" to make it clear;
-* Updated the placeholder for the "Email from" field to display the default values instead of a static label;
+* Improved the form of notification workflows adding consistency between all the filters and fields;
+* Added search box for each list field on the notification workflow form;
+* Updated the Post Type and Category filters for notification workflows. If not selected, they disable the filter and all the content would be picked;
+
+= [1.8.1] - 2017-11-01 =
+
+*Changed:*
+
+* Updated the label for the setting field “Allow ‘following’ on these post types” to make it clear;
+* Updated the placeholder for the “Email from” field to display the default values instead of a static label;
+* Added text domain into the plugin header;
+
+*Fixed:*
+
+* Fixed missed “published” status on filters in notifications if “custom status” feature is disabled;
+* Fixed PHP warning when some features are disabled;
 
 = [1.8.0] - 2017-10-26 =
 
