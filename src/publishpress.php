@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
  * Author URI: https://pressshack.com
- * Version: 1.9.0
+ * Version: 1.9.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
