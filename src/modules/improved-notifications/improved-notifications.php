@@ -33,9 +33,9 @@ use PublishPress\Notifications\Traits\PublishPress_Module;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
 use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
-use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Type as Filter_Post_Type;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
-use PublishPress\Notifications\Workflow\Step\Event\Filter\Category as Filter_Category;
+use PublishPress\Notifications\Workflow\Step\Event\Filter_Content\Post_Type as Filter_Post_Type;
+use PublishPress\Notifications\Workflow\Step\Event\Filter_Content\Category as Filter_Category;
 use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 
 if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
