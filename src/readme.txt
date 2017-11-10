@@ -160,6 +160,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 *Fixed:*
 
 * Fixed compatibility with the plugin Custom Permalink;
+* Fixed PHP fatal error after activate plugin on fresh installs;
+
+*Changed:*
+
+* Updated required PHP version to 5.4;
 
 = [1.9.0] - 2017-11-09 =
 
