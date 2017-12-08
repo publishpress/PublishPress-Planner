@@ -2098,7 +2098,8 @@ if (!class_exists('PP_Custom_Status')) {
             $status_slugs = wp_list_pluck($this->get_custom_statuses(), 'slug');
             if ('edit.php' != $pagenow
                 || ! in_array($post->post_status, $status_slugs)
-                || ! in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
+                || ! in_array($post->post_type, $this->get_post_types_for_module($this->module))
+                || in_array($post->post_status, array('publish'))) {
                 return $actions;
             }
 
