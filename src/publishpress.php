@@ -43,6 +43,7 @@ require_once 'includes.php';
 // Core class
 class publishpress {
 
+
 	// Unique identified added as a prefix to all options
 	public $options_group      = 'publishpress_';
 	public $options_group_name = 'publishpress_options';
@@ -62,7 +63,7 @@ class publishpress {
 	 */
 	public static function instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new publishpress;
+			self::$instance = new publishpress();
 			self::$instance->setup_globals();
 			self::$instance->setup_actions();
 			// Backwards compat for when we promoted use of the $publishpress global
@@ -78,7 +79,7 @@ class publishpress {
 	}
 
 	private function setup_globals() {
-		$this->modules = new stdClass;
+		$this->modules = new stdClass();
 	}
 
 	/**
@@ -111,14 +112,14 @@ class publishpress {
 			'dashboard'          => PUBLISHPRESS_ROOT,
 			'editorial-comments' => PUBLISHPRESS_ROOT,
 			'settings'           => PUBLISHPRESS_ROOT,
-			'efmigration'        => PUBLISHPRESS_ROOT
+			'efmigration'        => PUBLISHPRESS_ROOT,
 		);
 
 		// Add filters to extend the modules
 		$module_dirs = apply_filters( 'pp_module_dirs', $default_module_dirs );
 
 		// Add add-ons as the last tab
-		$module_dirs[ 'addons' ] = PUBLISHPRESS_ROOT;
+		$module_dirs['addons'] = PUBLISHPRESS_ROOT;
 
 		$class_names = array();
 
@@ -143,7 +144,7 @@ class publishpress {
 
 		// Instantiate PP_Module as $helpers for back compat and so we can
 		// use it in this class
-		$this->helpers = new PP_Module;
+		$this->helpers = new PP_Module();
 
 		// Other utils
 		require_once( PUBLISHPRESS_ROOT . '/common/php/util.php' );
@@ -153,7 +154,7 @@ class publishpress {
 		foreach ( $class_names as $slug => $class_name ) {
 			if ( class_exists( $class_name ) ) {
 				$slug = PublishPress\Util::sanitize_module_name( $slug );
-				$this->$slug = new $class_name;
+				$this->$slug = new $class_name();
 			}
 		}
 
@@ -255,7 +256,7 @@ class publishpress {
 		);
 
 		// Submenus
-    	do_action( 'publishpress_admin_menu' );
+		do_action( 'publishpress_admin_menu' );
 	}
 
 	/**
@@ -320,7 +321,7 @@ class publishpress {
 	 */
 	public function load_module_options() {
 		foreach ( $this->modules as $mod_name => $mod_data ) {
-			$this->modules->$mod_name->options = get_option( $this->options_group . $mod_name . '_options', new stdClass );
+			$this->modules->$mod_name->options = get_option( $this->options_group . $mod_name . '_options', new stdClass() );
 			foreach ( $mod_data->default_options as $default_key => $default_value ) {
 				if ( ! isset( $this->modules->$mod_name->options->$default_key ) ) {
 					$this->modules->$mod_name->options->$default_key = $default_value;
@@ -372,7 +373,7 @@ class publishpress {
 	 */
 	public function update_module_option( $mod_name, $key, $value ) {
 		if ( false === $this->modules->$mod_name->options ) {
-			$this->modules->$mod_name->options = new stdClass;
+			$this->modules->$mod_name->options = new stdClass();
 		}
 
 		$this->modules->$mod_name->options->$key = $value;
@@ -401,7 +402,7 @@ class publishpress {
 		wp_register_style( 'jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all' );
 
 		wp_enqueue_style( 'pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', array( 'pp-remodal', 'pp-remodal-default-theme' ), PUBLISHPRESS_VERSION, 'all' );
-		wp_enqueue_style( 'pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', array('pressshack-admin-css'), PUBLISHPRESS_VERSION, 'all' );
+		wp_enqueue_style( 'pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', array( 'pressshack-admin-css' ), PUBLISHPRESS_VERSION, 'all' );
 
 		wp_register_script( 'pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true );
 		wp_register_script( 'jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array( 'jquery' ), PUBLISHPRESS_VERSION, true );
@@ -459,7 +460,6 @@ class publishpress {
 				}
 			}
 		} catch ( Exception $e ) {
-
 		}
 	}
 
@@ -480,6 +480,6 @@ add_action( 'plugins_loaded', 'PublishPress' );
 // Load the improved notifications
 require 'includes_notifications.php';
 if ( defined( 'PUBLISHPRESS_NOTIF_LOADED' ) ) {
-	$plugin = new PublishPress\Notifications\Plugin;
+	$plugin = new PublishPress\Notifications\Plugin();
 	$plugin->init();
 }
