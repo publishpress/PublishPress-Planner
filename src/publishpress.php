@@ -179,6 +179,8 @@ class publishpress {
 		add_action( 'init', array( $this, 'action_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ), 9 );
 
+		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts_and_styles' ] );
+
 		// Fix the order of the submenus
 		add_filter( 'custom_menu_order', [ $this, 'filter_custom_menu_order' ] );
 
@@ -237,8 +239,6 @@ class publishpress {
 				$this->update_module_option( $mod_name, 'loaded_once', true );
 			}
 		}
-
-		$this->register_scripts_and_styles();
 	}
 
 	/**
@@ -395,8 +395,10 @@ class publishpress {
 
 	/**
 	 * Registers commonly used scripts + styles for easy enqueueing
+	 *
+	 * @var  string $hook
 	 */
-	public function register_scripts_and_styles() {
+	public function register_scripts_and_styles( $hook ) {
 		wp_register_style( 'pp-remodal', PUBLISHPRESS_URL . 'common/css/remodal.css', false, PUBLISHPRESS_VERSION, 'all' );
 		wp_register_style( 'pp-remodal-default-theme', PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css', array( 'pp-remodal' ), PUBLISHPRESS_VERSION, 'all' );
 		wp_register_style( 'jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all' );
