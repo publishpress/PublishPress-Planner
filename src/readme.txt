@@ -155,6 +155,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.9.2] - 2017-12-14 =
+
+*Fixed:*
+
+* Fixed view link for published posts in the list of posts. It was displaying "preview" instead of "view";
+* Fixed CSS loader to only load it in the admin pages;
+
 = [1.9.1] - 2017-11-10 =
 
 *Fixed:*
