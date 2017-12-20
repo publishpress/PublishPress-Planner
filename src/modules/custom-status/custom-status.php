@@ -791,7 +791,6 @@ if (!class_exists('PP_Custom_Status')) {
         public function post_admin_header()
         {
             global $post, $publishpress, $pagenow, $current_user;
-
             if ($this->disable_custom_statuses_for_post_type()) {
                 return;
             }
@@ -799,28 +798,33 @@ if (!class_exists('PP_Custom_Status')) {
             // Get current user
             wp_get_current_user() ;
 
-            // Only add the script to Edit Post and Edit Page pages -- don't want to bog down the rest of the admin with unnecessary javascript
-            if (!empty($post) && $this->is_whitelisted_page()) {
+            if ($this->is_whitelisted_page()) {
+                $post_type_obj   = get_post_type_object($this->get_current_post_type());
                 $custom_statuses = $this->get_custom_statuses();
-
-                // Get the status of the current post
-                if ($post->ID == 0 || $post->post_status == 'auto-draft' || $pagenow == 'edit.php') {
-                    // TODO: check to make sure that the default exists
-                    $selected = $this->get_default_custom_status()->slug;
-                } else {
-                    $selected = $post->post_status;
-                }
-
-                // Get the current post status name
-                $selected_name = '';
-
-                foreach ($custom_statuses as $status) {
-                    if ($status->slug == $selected) {
-                        $selected_name = $status->name;
-                    }
-                }
+                $selected        = $this->get_default_custom_status()->slug;
+                $selected_name   = $this->get_default_custom_status()->name;;
 
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
+
+                // Only add the script to Edit Post and Edit Page pages -- don't want to bog down the rest of the admin with unnecessary javascript
+                if (!empty($post)) {
+
+                    // Get the status of the current post
+                    if ($post->ID == 0 || $post->post_status == 'auto-draft' || $pagenow == 'edit.php') {
+                        // TODO: check to make sure that the default exists
+                        $selected = $this->get_default_custom_status()->slug;
+                    } else {
+                        $selected = $post->post_status;
+                    }
+
+                    // Get the current post status name
+
+                    foreach ($custom_statuses as $status) {
+                        if ($status->slug == $selected) {
+                            $selected_name = $status->name;
+                        }
+                    }
+                }
 
                 // All right, we want to set up the JS var which contains all custom statuses
                 $all_statuses = $this->get_core_statuses();
@@ -836,26 +840,24 @@ if (!class_exists('PP_Custom_Status')) {
                     );
                 }
 
+                $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
+
                 $always_show_dropdown = ($this->module->options->always_show_dropdown == 'on') ? 1 : 0;
 
-                $post_type_obj = get_post_type_object($this->get_current_post_type());
-
-                // Now, let's print the JS vars
                 ?>
+
                 <script type="text/javascript">
-                    var custom_statuses = <?php echo json_encode($all_statuses); ?>;
                     var pp_text_no_change = '<?php echo esc_js(__("&mdash; No Change &mdash;")); ?>';
+                    var label_save = '<?php echo __( 'Save' ); ?>';
                     var pp_default_custom_status = '<?php echo esc_js($this->get_default_custom_status()->slug); ?>';
                     var current_status = '<?php echo esc_js($selected); ?>';
                     var current_status_name = '<?php echo esc_js($selected_name); ?>';
-                    var status_dropdown_visible = <?php echo esc_js($always_show_dropdown); ?>;
+                    var custom_statuses = <?php echo json_encode($all_statuses); ?>;
                     var current_user_can_publish_posts = <?php echo current_user_can($post_type_obj->cap->publish_posts) ? 1 : 0; ?>;
                     var current_user_can_edit_published_posts = <?php echo current_user_can($post_type_obj->cap->edit_published_posts) ? 1 : 0; ?>;
-                    var label_save = '<?php echo __( 'Save' ); ?>';
+                    var status_dropdown_visible = <?php echo esc_js($always_show_dropdown); ?>;
                 </script>
-
                 <?php
-
             }
         }
 
