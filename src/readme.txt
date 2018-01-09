@@ -162,6 +162,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed file permissions;
 * Fixed blank status dropdown on quick and build edit;
 * Fixed modified date for scheduled posts;
+* Fixed suppressed warning about undefined offset;
 
 = [1.9.2] - 2017-12-14 =
 
