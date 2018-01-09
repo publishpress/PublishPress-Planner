@@ -1807,11 +1807,13 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Set new post parameters
             $post_placeholder = array(
-                'post_title'  => $post_title,
-                'post_content'=> $post_content,
-                'post_type'   => $post_type,
-                'post_status' => $post_status,
-                'post_date'   => date( 'Y-m-d H:i:s', strtotime( $post_date ) ),
+                'post_title'        => $post_title,
+                'post_content'      => $post_content,
+                'post_type'         => $post_type,
+                'post_status'       => $post_status,
+                'post_date'         => date( 'Y-m-d H:i:s', strtotime( $post_date ) ),
+                'post_modified'     => current_time( 'mysql' ),
+                'post_modified_gmt' => current_time( 'mysql', 1 ),
             );
 
             // By default, adding a post to the calendar will set the timestamp.
@@ -1822,7 +1824,11 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             }
 
             // Create the post
+            add_filter( 'wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2 );
             $post_id = wp_insert_post( $post_placeholder );
+            remove_filter( 'wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2 );
+
+
 
             if ( $post_id ) { // success!
 
@@ -1836,6 +1842,26 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
             } else {
                 $this->print_ajax_response( 'error', __( 'Post could not be created', 'publishpress' ) );
             }
+        }
+
+        /**
+         * Allow to alter modified date when creating posts. WordPress by default
+         * doesn't allow that. We need it to fix an issue where the post_modified
+         * field is saved with the post_date value. That is a ptoblem when you save
+         * a post with post_date to the future. For scheduled posts.
+         *
+         * @param  array $data
+         * @param  array $postarr
+         *
+         * @return array
+         */
+        public function alter_post_modification_time( $data , $postarr ) {
+            if (!empty($postarr['post_modified']) && !empty($postarr['post_modified_gmt'])) {
+                $data['post_modified'] = $postarr['post_modified'];
+                $data['post_modified_gmt'] = $postarr['post_modified_gmt'];
+            }
+
+            return $data;
         }
 
         /**
