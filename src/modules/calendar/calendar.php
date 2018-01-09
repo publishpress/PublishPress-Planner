@@ -197,10 +197,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Action to regenerate the calendar feed sekret
             add_action( 'admin_init', array( $this, 'handle_regenerate_calendar_feed_secret' ) );
-
-            // Temporary fixes to solve deficiencies in core
-            add_action( 'pre_post_update', array( $this, 'fix_post_date_on_update_part_one' ), 10, 2 );
-            add_action( 'post_updated', array( $this, 'fix_post_date_on_update_part_two' ), 10, 3 );
         }
 
         /**
@@ -2104,61 +2100,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
         public function action_clean_li_html_cache( $post_id ) {
             wp_cache_delete( $post_id . 'can_modify', self::$post_li_html_cache_key );
             wp_cache_delete( $post_id . 'read_only', self::$post_li_html_cache_key );
-        }
-
-        /**
-         * This is a temporary fix, until core is fixed!
-         *
-         * The calendar uses 'post_date' field to store the position on the calendar
-         * If a post has a core post status assigned (e.g. 'draft' or 'pending'), the `post_date`
-         * field will be reset when `wp_update_post()`
-         * is used: http://core.trac.wordpress.org/browser/tags/3.7.1/src/wp-includes/post.php#L2998
-         *
-         * This method temporarily caches the `post_date` field if it needs to be restored.
-         *
-         * @uses fix_post_date_on_update_part_two()
-         */
-        public function fix_post_date_on_update_part_one( $post_ID, $data ) {
-            $post = get_post( $post_ID );
-
-            // `post_date` is only nooped for these three statuses,
-            // but don't try to persist if `post_date_gmt` is set
-            if ( ! in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) )
-                || '0000-00-00 00:00:00' !== $post->post_date_gmt
-                || '0000-00-00 00:00:00' !== $data['post_date_gmt'] ) {
-                return;
-            }
-
-            $this->post_date_cache[ $post_ID ] = $post->post_date;
-        }
-
-        /**
-         * This is a temporary fix, until core is fixed!
-         *
-         * The calendar uses 'post_date' field to store the position on the calendar
-         * If a post has a core post status assigned (e.g. 'draft' or 'pending'), the `post_date`
-         * field will be reset when `wp_update_post()`
-         * is used: http://core.trac.wordpress.org/browser/tags/3.7.1/src/wp-includes/post.php#L2998
-         *
-         * This method restores the `post_date` field if it needs to be restored.
-         *
-         * @uses fix_post_date_on_update_part_one()
-         */
-        public function fix_post_date_on_update_part_two( $post_ID, $post_after, $post_before ) {
-            global $wpdb;
-
-            if ( empty( $this->post_date_cache[ $post_ID ] ) ) {
-                return;
-            }
-
-            $post_date = $this->post_date_cache[ $post_ID ];
-            unset( $this->post_date_cache[ $post_ID ] );
-            $wpdb->update( $wpdb->posts, array(
-                'post_date' => $post_date,
-                ), array(
-                'ID' => $post_ID,
-            ) );
-            clean_post_cache( $post_ID );
         }
     }
 }
