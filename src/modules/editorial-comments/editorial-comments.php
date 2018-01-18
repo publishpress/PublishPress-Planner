@@ -1,9 +1,9 @@
 <?php
 /**
  * @package PublishPress
- * @author PressShack
+ * @author PublishPress
  *
- * Copyright (c) 2017 PressShack
+ * Copyright (c) 2018 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -66,7 +66,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>', 'publishpress'),
                 ),
-                'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
+                'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
                 'general_options'    => true
             );
 

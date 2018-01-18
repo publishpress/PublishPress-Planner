@@ -1,15 +1,15 @@
 <?php
 /**
  * @package PublishPress
- * @author PressShack
+ * @author PublishPress
  *
- * Copyright (c ) 2017 PressShack
+ * Copyright (c) 2018 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
  * Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, and
  * others
- * Copyright (c ) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
+ * Copyright (c) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
  * ------------------------------------------------------------------------------
  *
  * This file is part of PublishPress
@@ -79,7 +79,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                     'title'   => __( 'Overview', 'publishpress' ),
                     'content' => __( '<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress' ),
                 ),
-                'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/notifications/">Notifications Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress' ),
+                'settings_help_sidebar' => __( '<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/notifications/">Notifications Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress' ),
                 'general_options'    => true
             );
             $this->module = PublishPress()->register_module( 'notifications', $args );

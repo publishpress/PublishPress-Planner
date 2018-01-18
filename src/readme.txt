@@ -1,7 +1,7 @@
 === PublishPress – WordPress Content Calendar and Notification Workflows ===
 Contributors: PressShack, andergmartins
 Author: PressShack, PublishPress
-Author URI: https://pressshack.com
+Author URI: https://publishpress.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Requires PHP: 5.4
@@ -18,14 +18,14 @@ The slogan of PublishPress is “WordPress for Teams”.
 
 PublishPress is the essential plugin for any WordPress site with multiple team members.
 
-[Click here to try a free demo of PublishPress](http://pressshack.com/demo)
+[Click here to try a free demo of PublishPress](http://publishpress.com/demo)
 
 PublishPress has multiple tools that help your team stay organized:
 
-* Use the [Editorial Calendar](https://pressshack.com/publishpress/docs/calendar/) and [Content Overview](https://pressshack.com/publishpress/docs/calendar/) to get a clear picture of all your planned and published content.
-* You can create [Comments](https://pressshack.com/publishpress/docs/editorial-comments/) and [Notifications](https://pressshack.com/publishpress/docs/notifications/) to leave feedback and keep your team in the loop.
-* You can add [Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/) to give your team extra information about each post.
-* Create [Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/) so that WordPress matches your team’s workflow.
+* Use the [Editorial Calendar](https://publishpress.com/docs/calendar/) and [Content Overview](https://publishpress.com/docs/calendar/) to get a clear picture of all your planned and published content.
+* You can create [Comments](https://publishpress.com/docs/editorial-comments/) and [Notifications](https://publishpress.com/docs/notifications/) to leave feedback and keep your team in the loop.
+* You can add [Metadata](https://publishpress.com/docs/editorial-metadata/) to give your team extra information about each post.
+* Create [Custom Statuses](https://publishpress.com/docs/custom-statuses/) so that WordPress matches your team’s workflow.
 
 = WHO SHOULD USE PUBLISHPRESS? =
 
@@ -33,34 +33,34 @@ PublishPress is ideal for WordPress sites that have content teams. With PublishP
 
 = PREMIUM ADD-ONS FOR PUBLISHPRESS =
 
-[Content Checklist](https://pressshack.com/addons/content-checklist/): Set high standards for all your published content
-[Multiple Authors](https://pressshack.com/addons/multiple-authors/): Easily assign multiple authors to one content item
-[Permissions](https://pressshack.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
-[WooCommerce Checklist](https://pressshack.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
-[Slack Notifications](https://pressshack.com/addons/publishpress-slack/): Get Slack updates for all content changes
-[YouTube](https://pressshack.com/addons/embedpress-youtube/): More features and design options for your YouTube videos
-[Wistia](https://pressshack.com/addons/embedpress-wistia/): More features and design options for your Wistia videos
-[Vimeo](https://pressshack.com/addons/embedpress-vimeo/): More features and design options  for your Vimeo videos
+[Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content
+[Multiple Authors](https://publishpress.com/addons/multiple-authors/): Easily assign multiple authors to one content item
+[Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
+[WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
+[Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes
+[YouTube](https://publishpress.com/addons/embedpress-youtube/): More features and design options for your YouTube videos
+[Wistia](https://publishpress.com/addons/embedpress-wistia/): More features and design options for your Wistia videos
+[Vimeo](https://publishpress.com/addons/embedpress-vimeo/): More features and design options  for your Vimeo videos
 
-[Check out the PublishPress Everything Club](https://pressshack.com/addons/publishpress-club/) for access to all the PublishPress add-ons.
+[Check out the PublishPress Everything Club](https://publishpress.com/addons/publishpress-club/) for access to all the PublishPress add-ons.
 
 = EDITORIAL CONTENT CALENDAR =
 
 The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next six weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
-* [Click here for more on the PublishPress Editorial Calendar](https://pressshack.com/publishpress/docs/calendar/)
+* [Click here for more on the PublishPress Editorial Calendar](https://publishpress.com/docs/calendar/)
 
 = NOTIFICATION WORKFLOWS =
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
-* [Click here for more on PublishPress Notifications](https://pressshack.com/publishpress/docs/notifications/)
+* [Click here for more on PublishPress Notifications](https://publishpress.com/docs/notifications/)
 
 = CONTENT OVERVIEW =
 
 The Content Overview screen is a companion to the Calendar screen. Whereas the Calendar allows you to see content organized by dates, Content Overview allows you to drill down and see content organized by status, categories, or users. In the top-right corner is a “Print” button. Click this to get a printable overview of all your planned content.
 
-* [Click here for more on the PublishPress Content Overview](https://pressshack.com/publishpress/docs/content-overview/)
+* [Click here for more on the PublishPress Content Overview](https://publishpress.com/docs/content-overview/)
 
 = CUSTOM STATUSES =
 
@@ -68,13 +68,13 @@ This feature allows you to create custom post statuses such as “In Progress”
 
 By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress you’ll see a much wider range of options. When you first install PublishPress, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
 
-* [Click here for more on the PublishPress Custom Statuses](https://pressshack.com/publishpress/docs/custom-statuses/)
+* [Click here for more on the PublishPress Custom Statuses](https://publishpress.com/docs/custom-statuses/)
 
 = EDITORIAL COMMENTS =
 
 A very important feature in PublishPress is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
 
-* [Click here for more on PublishPress Editorial Comments](https://pressshack.com/publishpress/docs/editorial-comments/)
+* [Click here for more on PublishPress Editorial Comments](https://publishpress.com/docs/editorial-comments/)
 
 = EDITORIAL METADATA =
 
@@ -82,7 +82,7 @@ Metadata enabled you to keep track of important requirements for your content. T
 
 By default, PublishPress provide 4 examples of metadata, but you can add your own to meet your team’s needs.
 
-* [Click here for more on PublishPress Editorial Metadata](https://pressshack.com/publishpress/docs/editorial-metadata/)
+* [Click here for more on PublishPress Editorial Metadata](https://publishpress.com/docs/editorial-metadata/)
 
 = USER GROUPS =
 
@@ -90,15 +90,15 @@ For larger organizations with many people involved in the publishing process, us
 
 To find the user settings, go to the PublishPress link in your WordPress admin area, and click the “User Groups” tab. By default, PublishPress provides four user groups: Copy Editors, Photographers, Reporters and Section Editors.
 
-Currently, the most important user of user groups is [Email Notifications](http://pressshack.com/publishpress/docs/notifications/), but we intend to expand the capabilities of user groups in future PublishPress releases.
+Currently, the most important user of user groups is [Email Notifications](http://publishpress.com/docs/notifications/), but we intend to expand the capabilities of user groups in future PublishPress releases.
 
-* [Click here for more on PublishPress User Groups](https://pressshack.com/publishpress/docs/user-groups/)
+* [Click here for more on PublishPress User Groups](https://publishpress.com/docs/user-groups/)
 
 = IMPORTING FROM EDITFLOW =
 
 PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
 
-* [Click here for full instructions on moving from Edit Flow to PublishPress](https://pressshack.com/publishpress/docs/migrate/)
+* [Click here for full instructions on moving from Edit Flow to PublishPress](https://publishpress.com/docs/migrate/)
 
 = I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
 
@@ -106,17 +106,17 @@ Great! PublishPress [is available on Github](https://github.com/OSTraining/Publi
 
 = ALSO CHECK OUT THE EMBEDPRESS PLUGIN =
 
-If you like PublishPress, then consider checking out [EmbedPress](https://pressshack.com/embedpress/). The EmbedPress plugin allows you to embed anything in WordPress. Here are some video examples:
+If you like PublishPress, then consider checking out [EmbedPress](https://publishpress.com/embedpress/). The EmbedPress plugin allows you to embed anything in WordPress. Here are some video examples:
 
-* [How to embed YouTube Videos in WordPress](http://pressshack.com/embedpress/docs/youtube-wordpress/)
-* [How to embed Vimeo Videos in WordPress](http://pressshack.com/embedpress/docs/embed-vimeo-video-wordpress/)
-* [How to embed Wistia videos in WordPress](https://pressshack.com/embedpress/docs/add-wistia-videos-wordpress/)
+* [How to embed YouTube Videos in WordPress](http://publishpress.com/embedpress/docs/youtube-wordpress/)
+* [How to embed Vimeo Videos in WordPress](http://publishpress.com/embedpress/docs/embed-vimeo-video-wordpress/)
+* [How to embed Wistia videos in WordPress](https://publishpress.com/embedpress/docs/add-wistia-videos-wordpress/)
 
 EmbedPress also supports all the Google Drive formats, including these:
 
-* [How to embed Google Docs in WordPress](http://pressshack.com/embedpress/docs/google-docs-embed-wordpress/)
-* [How to embed Google Maps in WordPress](http://pressshack.com/embedpress/docs/google-maps-embed-wordpress/)
-* [How to embed Google Sheets in WordPress](http://pressshack.com/embedpress/docs/embed-google-sheets-wordpress/)
+* [How to embed Google Docs in WordPress](http://publishpress.com/embedpress/docs/google-docs-embed-wordpress/)
+* [How to embed Google Maps in WordPress](http://publishpress.com/embedpress/docs/google-maps-embed-wordpress/)
+* [How to embed Google Sheets in WordPress](http://publishpress.com/embedpress/docs/embed-google-sheets-wordpress/)
 
 = WORDPRESS TRAINING =
 
@@ -130,7 +130,7 @@ Visit [OSTraining](https://www.ostraining.com/) to learn from our [WordPress Tra
 
 = Where Can I Get Support? =
 
-You can ask for help via [the PublishPress contact form](https://pressshack.com/contact/).
+You can ask for help via [the PublishPress contact form](https://publishpress.com/contact/).
 
 = Do I Need Coding Skills to Use PublishPress? =
 

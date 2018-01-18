@@ -30,7 +30,7 @@ and
 
   PublishPress - Editorial workflow for WordPress
 
-  PublishPress is Copyright (c) 2017 PressShack
+  PublishPress is Copyright (c) 2018 PublishPress
 
   PublishPress is released under the GPL
 

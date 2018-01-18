@@ -552,7 +552,7 @@ msgid "<p>The calendar is a convenient week-by-week or month-by-month view into 
 msgstr ""
 
 #: modules/calendar/calendar.php:150
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/calendar/calendar.php:354
@@ -933,7 +933,7 @@ msgid ""
 msgstr ""
 
 #: modules/custom-status/custom-status.php:93
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:152
@@ -1247,7 +1247,7 @@ msgid ""
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:69
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:211
@@ -1339,7 +1339,7 @@ msgid ""
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:100
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:164
@@ -1802,7 +1802,7 @@ msgid ""
 msgstr ""
 
 #: modules/notifications/notifications.php:82
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/notifications/notifications.php:339
@@ -2066,7 +2066,7 @@ msgid "<p>For those with many people involved in the publishing process, user gr
 msgstr ""
 
 #: modules/user-groups/user-groups.php:96
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://pressshack.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/user-groups/\">User Groups Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
 #: modules/user-groups/user-groups.php:156
@@ -2206,7 +2206,7 @@ msgid "Edit Flow was deactivated by PublishPress. If you want to activate it, de
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://pressshack.com/publishpress/"
+msgid "https://publishpress.com/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -2218,5 +2218,5 @@ msgid "PressShack"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://pressshack.com"
+msgid "https://publishpress.com"
 msgstr ""

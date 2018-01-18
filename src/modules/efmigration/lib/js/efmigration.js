@@ -100,7 +100,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             ' ',
                             React.createElement(
                                 'a',
-                                { href: 'mailto:help@pressshack.com' },
+                                { href: 'mailto:help@publishpress.com' },
                                 objectL10n.error_msg_contact
                             )
                         )

@@ -556,7 +556,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:144
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://"
 "github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
@@ -1004,7 +1004,7 @@ msgstr ""
 
 #: modules/custom-status/custom-status.php:93
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a "
 "href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</"
 "a></p>"
@@ -1388,7 +1388,7 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:69
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/editorial-comments/\">Editorial Comments Documentation</a></"
 "p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
@@ -1505,7 +1505,7 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:100
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/editorial-metadata/\">Editorial Metadata Documentation</a></"
 "p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
 "Github</a></p>"
@@ -2064,7 +2064,7 @@ msgstr ""
 
 #: modules/notifications/notifications.php:82
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/notifications/\">Notifications Documentation</a></p><p><a href="
 "\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
@@ -2345,7 +2345,7 @@ msgstr ""
 
 #: modules/user-groups/user-groups.php:96
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https://pressshack."
+"<p><strong>For more information:</strong></p><p><a href=\"https://publishpress."
 "com/features/user-groups/\">User Groups Documentation</a></p><p><a href="
 "\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""

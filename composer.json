@@ -1,13 +1,13 @@
 {
-    "name"       : "pressshack/publishpress",
+    "name"       : "publishpress",
     "description": "WordPress plugin to accelerate your publishing workflow.",
-    "homepage"   : "http://pressshack.com/",
+    "homepage"   : "http://publishpress.com/",
     "type"       : "wordpress-plugin",
     "license"    : "GPL-2.0+",
     "authors": [
         {
-            "name": "PressShack",
-            "email": "help@pressshack.com"
+            "name": "PublishPress",
+            "email": "help@publishpress.com"
         }
     ],
     "repositories": [

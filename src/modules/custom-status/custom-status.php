@@ -1,9 +1,9 @@
 <?php
 /**
  * @package PublishPress
- * @author PressShack
+ * @author PublishPress
  *
- * Copyright (c) 2017 PressShack
+ * Copyright (c) 2018 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -90,7 +90,7 @@ if (!class_exists('PP_Custom_Status')) {
                     'title'   => __('Overview', 'publishpress'),
                     'content' => __('<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and content overview, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>', 'publishpress'),
                 ),
-                'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://pressshack.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
+                'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/custom-statuses/">Custom Status Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
                 'options_page'       => true,
             );
             $this->module = PublishPress()->register_module('custom_status', $args);

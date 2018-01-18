@@ -3,8 +3,8 @@ defined('ABSPATH') or die("No direct script access allowed.");
 
 /**
  * @package     EmbedPress
- * @author      PressShack <help@pressshack.com>
- * @copyright   Copyright (C) 2017 PressShack. All rights reserved.
+ * @author      PublishPress <help@publishpress.com>
+ * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.7.1
  */

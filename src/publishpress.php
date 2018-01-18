@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: PublishPress
- * Plugin URI: https://pressshack.com/publishpress/
+ * Plugin URI: https://publishpress.com/
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PressShack
- * Author URI: https://pressshack.com
+ * Author URI: https://publishpress.com
  * Version: 1.9.3
  * Text Domain: publishpress
  * Domain Path: /languages
  *
- * Copyright (c) 2017 PressShack
+ * Copyright (c) 2018 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -35,7 +35,7 @@
  *
  * @package PublishPress
  * @category Core
- * @author PressShack
+ * @author PublishPress
  */
 
 require_once 'includes.php';
@@ -336,7 +336,7 @@ class publishpress {
 	/**
 	 * Load the post type options again so we give add_post_type_support() a chance to work
 	 *
-	 * @see https://pressshack.com/2011/11/17/publishpress-v0-7-alpha2-notes/#comment-232
+	 * @see https://publishpress.com/2011/11/17/publishpress-v0-7-alpha2-notes/#comment-232
 	 */
 	public function action_init_after() {
 		foreach ( $this->modules as $mod_name => $mod_data ) {

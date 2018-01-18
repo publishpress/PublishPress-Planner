@@ -1,8 +1,8 @@
 <?php
 /**
  * @package     PublishPress\Notifications
- * @author      PressShack <help@pressshack.com>
- * @copyright   Copyright (C) 2017 PressShack. All rights reserved.
+ * @author      PublishPress <help@publishpress.com>
+ * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */
@@ -18,7 +18,7 @@ class Base extends Base_Step {
 	 */
 	public function __construct() {
 		$this->attr_prefix  = 'event_content';
-		
+
 		parent::__construct();
 
 		// Add filter to return the metakey representing if it is selected or not

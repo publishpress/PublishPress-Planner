@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # @package PublishPress
-# @author PressShack
+# @author PublishPress
 #
-# Copyright (c) 2017 PressShack
+# Copyright (c) 2018 PublishPress
 #
 # ------------------------------------------------------------------------------
 # Based on Edit Flow

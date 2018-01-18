@@ -30,7 +30,7 @@
                 <div>
                     <div className="pp-progressbar-container">
                         {inProgress
-                        &&                        
+                        &&
                             <div>
                                 <span className="dashicons dashicons-update pp-rotating"></span>
                                 <span className="pp-in-progress">{objectL10n.header_msg}</span>
@@ -45,7 +45,7 @@
                             <div>
                                 {errorRows}
                             </div>
-                            <p>{objectL10n.error_msg_intro} <a href="mailto:help@pressshack.com">{objectL10n.error_msg_contact}</a></p>
+                            <p>{objectL10n.error_msg_intro} <a href="mailto:help@publishpress.com">{objectL10n.error_msg_contact}</a></p>
                         </div>
                     }
 
