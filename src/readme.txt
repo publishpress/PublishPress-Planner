@@ -164,6 +164,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed modified date for scheduled posts;
 * Fixed suppressed warning about undefined offset;
 
+*Changed:*
+
+* Rebranded for PublishPress;
+* Added footer to the addons page;
+
 = [1.9.2] - 2017-12-14 =
 
 *Fixed:*
