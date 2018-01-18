@@ -219,6 +219,8 @@ if ( ! class_exists( 'PP_Addons' ) ) {
             );
 
             echo $this->twig->render( 'list-of-addons.twig', $args );
+
+            $publishpress->settings->print_default_footer( $publishpress->modules->addons );
         }
     }
 }
