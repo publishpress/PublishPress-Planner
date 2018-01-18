@@ -197,6 +197,8 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Action to regenerate the calendar feed sekret
             add_action( 'admin_init', array( $this, 'handle_regenerate_calendar_feed_secret' ) );
+
+            add_filter( 'post_date_column_status', array( $this, 'filter_post_date_column_status' ), 12, 4 );
         }
 
         /**
@@ -2126,6 +2128,42 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
         public function action_clean_li_html_cache( $post_id ) {
             wp_cache_delete( $post_id . 'can_modify', self::$post_li_html_cache_key );
             wp_cache_delete( $post_id . 'read_only', self::$post_li_html_cache_key );
+        }
+
+        /**
+         * Filters the status text of the post. Fixing the text for future and past dates.
+         *
+         * @param string  $status      The status text.
+         * @param WP_Post $post        Post object.
+         * @param string  $column_name The column name.
+         * @param string  $mode        The list display mode ('excerpt' or 'list').
+         */
+        public function filter_post_date_column_status($status, $post, $column_name, $mode) {
+            if ( 'date' === $column_name ) {
+                if ( '0000-00-00 00:00:00' === $post->post_date ) {
+                    $time_diff = 0;
+                } else {
+                    $time = get_post_time( 'G', true, $post );
+
+                    $time_diff = time() - $time;
+                }
+
+                if ( 'future' === $post->post_status ) {
+                    if ( $time_diff > 0 ) {
+                        return '<strong class="error-message">' . __( 'Missed schedule' ) . '</strong>';
+                    } else {
+                        return __( 'Scheduled' );
+                    }
+                }
+
+                if ( 'publish' === $post->post_status ) {
+                    return __( 'Published' );
+                }
+
+                return __( 'Publish on' );
+            }
+
+            return $status;
         }
     }
 }
