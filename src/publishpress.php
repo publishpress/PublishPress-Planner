@@ -419,47 +419,49 @@ class publishpress {
 	}
 
 	public function filter_custom_menu_order( $menu_ord ) {
-		global $submenu;
+		if ( isset( $submenu['pp-calendar'] ) ) {
+			global $submenu;
 
-		$submenu_pp  = $submenu['pp-calendar'];
-		$new_submenu = array();
+			$submenu_pp  = $submenu['pp-calendar'];
+			$new_submenu = array();
 
-		// Calendar
-		if (isset($submenu_pp[0])) {
-			$new_submenu[] = $submenu_pp[0];
+			// Calendar
+			if (isset($submenu_pp[0])) {
+				$new_submenu[] = $submenu_pp[0];
+			}
+
+			// Content Overview
+			if (isset($submenu_pp[1])) {
+				$new_submenu[] = $submenu_pp[1];
+			}
+
+			// Notifications
+			if (isset($submenu_pp[4])) {
+				$new_submenu[] = $submenu_pp[4];
+			}
+
+			// Settings
+			if (isset($submenu_pp[3])) {
+				$new_submenu[] = $submenu_pp[3];
+			}
+
+			// Add-ons
+			if (isset($submenu_pp[2])) {
+				$new_submenu[] = $submenu_pp[2];
+			}
+
+			// Contact Us
+			if (isset($submenu_pp[5])) {
+				$new_submenu[] = $submenu_pp[5];
+			}
+
+			// Check if we have additional items and add to the end
+			if ( count( $submenu_pp ) > 6 ) {
+				$new_submenu = array_merge( $new_submenu, array_splice( $submenu_pp, 6 ) );
+			}
+
+			$submenu['pp-calendar'] = $new_submenu;
 		}
-
-		// Content Overview
-		if (isset($submenu_pp[1])) {
-			$new_submenu[] = $submenu_pp[1];
-		}
-
-		// Notifications
-		if (isset($submenu_pp[4])) {
-			$new_submenu[] = $submenu_pp[4];
-		}
-
-		// Settings
-		if (isset($submenu_pp[3])) {
-			$new_submenu[] = $submenu_pp[3];
-		}
-
-		// Add-ons
-		if (isset($submenu_pp[2])) {
-			$new_submenu[] = $submenu_pp[2];
-		}
-
-		// Contact Us
-		if (isset($submenu_pp[5])) {
-			$new_submenu[] = $submenu_pp[5];
-		}
-
-		// Check if we have additional items and add to the end
-		if ( count( $submenu_pp ) > 6 ) {
-			$new_submenu = array_merge( $new_submenu, array_splice( $submenu_pp, 6 ) );
-		}
-
-		$submenu['pp-calendar'] = $new_submenu;
 
 		return $menu_ord;
 	}
