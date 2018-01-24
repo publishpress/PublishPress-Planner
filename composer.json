@@ -20,6 +20,7 @@
     "require-dev": {
         "pressshack/wordpress-plugin-builder": "*",
         "consolidation/robo": "~1",
-        "gettext/gettext": "^4.2"
+        "gettext/gettext": "^4.2",
+        "codeception/codeception": "^2.3"
     }
 }
