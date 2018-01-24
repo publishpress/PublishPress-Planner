@@ -411,7 +411,7 @@ if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
 				wp_enqueue_script( 'psppno-user-profile-notifications', plugin_dir_url( __FILE__ ) . 'assets/js/user_profile.js', [], PUBLISHPRESS_VERSION );
 			}
 
-			if ( in_array( $hook_suffix, [ 'post.php' ] ) ) {
+			if ( in_array( $hook_suffix, [ 'post.php', 'post-new.php' ] ) ) {
 				wp_enqueue_script( 'psppno-workflow-form', plugin_dir_url( __FILE__ ) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION );
 				wp_enqueue_script( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION );
 			}
