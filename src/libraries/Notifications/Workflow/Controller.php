@@ -125,6 +125,7 @@ class Controller {
 			'\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Author',
 			'\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User',
 			'\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User_Group',
+			'\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Follower',
 		];
 		/**
 		 * Filters the list of classes to define workflow "who" steps.

@@ -978,6 +978,9 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                     case 'user_email':
                         $users[$key] = $new_user->user_email;
                         break;
+                    case 'object':
+                        $users[$key] = $new_user;
+                        break;
                 }
             }
             if ( ! $users || is_wp_error( $users ) ) {
