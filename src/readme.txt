@@ -164,6 +164,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed a typo removing a PHP warning;
 * Fixed the status description on the date column for posts;
 * Fixed notifications for users who selected "Notify me" for the content;
+* Fixed string "Draft" and "Pending" after the post title in the post lists;
 
 *Added:*
 
