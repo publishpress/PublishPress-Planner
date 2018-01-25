@@ -21,7 +21,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function __construct() {
 		$this->name          = 'follower';
-		$this->label         = __( 'Followers of the content', 'publishpress' );
+		$this->label         = __( 'Users who selected "Notify me" for the content', 'publishpress' );
 		$this->option_name   = 'receiver_follower';
 
 		parent::__construct();
@@ -110,7 +110,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface {
 	 */
 	public function filter_receivers_column_value( $values, $post_id ) {
 		if ( $this->is_selected( $post_id ) ) {
-			$values[] = __( 'Authors', 'publishpress' );
+			$values[] = __( '"Notify me"', 'publishpress' );
 		}
 
 		return $values;
