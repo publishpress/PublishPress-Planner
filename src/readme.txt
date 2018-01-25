@@ -155,7 +155,21 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.9.4] - 2018-01-25 =
+
+*Fixed:*
+
+* Fixed the filters on the notification workflow form, allowing to creating new notifications again;
+* Fixed PHP warning when user does not have permission to see the menu;
+* Fixed a typo removing a PHP warning;
+* Fixed the status description on the date column for posts;
+* Fixed notifications for users who selected "Notify me" for the content;
+
+*Added:*
+
+* Added a new optional receiver to the notification workflow form, "Users who selected Notify Me for the content";
+
+= [1.9.3] - 2018-01-18 =
 
 *Fixed:*
  
