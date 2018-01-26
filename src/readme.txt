@@ -1,6 +1,6 @@
 === PublishPress – WordPress Content Calendar and Notification Workflows ===
-Contributors: PressShack, andergmartins
-Author: PressShack, PublishPress
+Contributors: publishpress, andergmartins, stevejburge, pressshack
+Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
