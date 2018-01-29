@@ -357,7 +357,7 @@ if (!class_exists('PP_Settings')) {
 
                 /**
                  * Legacy way to validate the settings. Hook to the filter
-                 * publishpress_validate_settings instead.
+                 * publishpress_validate_module_settings instead.
                  *
                  * @deprecated
                  */
