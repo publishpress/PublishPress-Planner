@@ -161,6 +161,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed fatal error when saving posts and triggering notification;
 
+*Changed:*
+
+* Removed Freemius integration;
+
 = [1.9.4] - 2018-01-25 =
 
 *Fixed:*

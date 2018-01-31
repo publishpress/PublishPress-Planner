@@ -53,8 +53,6 @@ if ( ! defined( 'PP_LOADED' ) ) {
 		define( 'PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10 );
 	}
 
-	require_once 'freemius.php';
-
 	require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
 	// Register the autoloader
