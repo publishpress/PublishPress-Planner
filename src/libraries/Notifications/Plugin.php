@@ -47,13 +47,12 @@ class Plugin {
 	}
 
 	public function filter_manage_post_columns( $post_columns ) {
-		$date_column = $post_columns['date'];
+		// Remove the Date column.
 		unset( $post_columns['date'] );
 
 		$post_columns['events']    = __( 'When to notify?', 'publishpress' );
 		$post_columns['filter']    = __( 'Filter the content?', 'publishpress' );
 		$post_columns['receivers'] = __( 'Who to notify?', 'publishpress' );
-		$post_columns['date']      = $date_column;
 
 		return $post_columns;
 	}
