@@ -419,9 +419,9 @@ class publishpress {
 	}
 
 	public function filter_custom_menu_order( $menu_ord ) {
-		if ( isset( $submenu['pp-calendar'] ) ) {
-			global $submenu;
+		global $submenu;
 
+		if ( isset( $submenu['pp-calendar'] ) ) {
 			$submenu_pp  = $submenu['pp-calendar'];
 			$new_submenu = array();
 
