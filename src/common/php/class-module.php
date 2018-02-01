@@ -615,30 +615,15 @@ if ( ! class_exists( 'PP_Module' ) ) {
 
 		}
 
+
 		/**
-		 * Adds an array of capabilities to a role.
-		 *
-		 * @since 0.7
-		 *
-		 * @param string $role A standard WP user role like 'administrator' or 'author'
-		 * @param array  $caps One or more user caps to add
+		 * @param $role
+		 * @param $caps
+         * @deprecated 1.9.8 Use PublishPress\Util class instead
 		 */
 		public function add_caps_to_role( $role, $caps ) {
 
-			// In some contexts, we don't want to add caps to roles
-			if ( apply_filters( 'pp_kill_add_caps_to_role', false, $role, $caps ) ) {
-				return;
-			}
-
-			global $wp_roles;
-
-			if ( $wp_roles->is_role( $role ) ) {
-				$role = get_role( $role );
-
-				foreach ( $caps as $cap ) {
-					$role->add_cap( $cap );
-				}
-			}
+			PublishPress\Util::add_caps_to_role($role, $caps);
 		}
 
 		/**

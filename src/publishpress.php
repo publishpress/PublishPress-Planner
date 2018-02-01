@@ -38,11 +38,15 @@
  * @author PublishPress
  */
 
+use PublishPress\Util as Util;
+use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Traits\PublishPress_Module;
+
 require_once 'includes.php';
 
 // Core class
 class publishpress {
-
+	use Dependency_Injector, PublishPress_Module;
 
 	// Unique identified added as a prefix to all options
 	public $options_group      = 'publishpress_';
@@ -521,16 +525,123 @@ class publishpress {
         </div>
 		<?php
 	}
+
+	/**
+	 * The capabilities need to be set before the modules are loaded,
+     * so the submenu items can be displayed correctly right after activate.
+     * Otherwise we only see the submenus after visiting the PublishPress settings
+     * menu for the first time.
+     *
+	 */
+	public static function activation_hook() {
+        // Add necessary capabilities to allow management of calendar, content overview, notifications
+        $genericCaps = array('pp_view_calendar', 'pp_view_content_overview', 'edit_post_subscriptions');
+
+        $roles = array(
+            'administrator' => $genericCaps,
+            'editor' => $genericCaps,
+            'author' => $genericCaps,
+            'contributor' => $genericCaps,
+        );
+
+        foreach ($roles as $role => $caps) {
+            PublishPress\Util::add_caps_to_role($role, $caps);
+        }
+
+        // User groups
+        $roles = array(
+            'administrator' => array('edit_usergroups'),
+        );
+
+        foreach ($roles as $role => $caps) {
+            PublishPress\Util::add_caps_to_role($role, $caps);
+        }
+    }
 }
 
 function PublishPress() {
+	if ( ! defined( 'PUBLISHPRESS_NOTIF_LOADED' ) ) {
+		require __DIR__ . '/includes_notifications.php';
+
+		// Load the improved notifications
+		if (defined('PUBLISHPRESS_NOTIF_LOADED')) {
+			$plugin = new PublishPress\Notifications\Plugin();
+			$plugin->init();
+		}
+	}
+
 	return publishpress::instance();
 }
-add_action( 'plugins_loaded', 'PublishPress' );
 
-// Load the improved notifications
-require 'includes_notifications.php';
-if ( defined( 'PUBLISHPRESS_NOTIF_LOADED' ) ) {
-	$plugin = new PublishPress\Notifications\Plugin();
-	$plugin->init();
+/**
+ * Registered here so the Notifications submenu is displayed right after the
+ * plugin is activate.
+ *
+ * @since 1.9.8
+ */
+function publishPressRegisterCustomPostTypes() {
+    if (! post_type_exists(PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW)) {
+        // Notification Workflows
+		register_post_type(
+			PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+			array(
+				'labels' => array(
+					'name'               => __( 'Notification Workflows', 'publishpress' ),
+					'singular_name'      => __( 'Notification Workflow', 'publishpress' ),
+					'add_new_item'       => __( 'Add New Notification Workflow', 'publishpress' ),
+					'edit_item'          => __( 'Edit Notification Workflow', 'publishpress' ),
+					'search_items'       => __( 'Search Workflows', 'publishpress' ),
+					'menu_name'          => __( 'Notifications', 'publishpress' ),
+					'name_admin_bar'     => __( 'Notification Workflow', 'publishpress' ),
+					'not_found'          => __( 'No Workflow found', 'publishpress' ),
+					'not_found_in_trash' => __( 'No Workflow found', 'publishpress' ),
+				),
+				'public'              => false,
+				'publicly_queryable'  => false,
+				'has_archive'         => false,
+				'rewrite'             => array( 'slug' => 'notification-workflows' ),
+				'show_ui'             => true,
+				'query_var'           => true,
+				'capability_type'     => 'post',
+				'hierarchical'        => false,
+				'can_export'          => true,
+				'show_in_admin_bar'   => true,
+				'exclude_from_search' => true,
+				'show_in_menu'        => 'pp-calendar',
+				'menu_position'       => '20',
+				'supports'            => array(
+					'title',
+				)
+			)
+		);
+
+		// Notifications
+		register_post_type(
+			PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
+			array(
+				'labels' => array(
+					'name'          => __( 'Notifications', 'publishpress' ),
+					'singular_name' => __( 'Notification', 'publishpress' )
+				),
+				'public'              => false,
+				'publicly_queryable'  => false,
+				'has_archive'         => false,
+				'rewrite'             => array( 'slug' => 'notifications' ),
+				'show_ui'             => false,
+				'query_var'           => true,
+				'hierarchical'        => false,
+				'can_export'          => false,
+				'show_in_admin_bar'   => false,
+				'exclude_from_search' => true,
+				'supports' => array(
+					'title',
+					'editor',
+				)
+			)
+		);
+	}
 }
+
+add_action('plugins_loaded', 'PublishPress');
+add_action('init', 'publishPressRegisterCustomPostTypes');
+register_activation_hook(__FILE__, array('publishpress', 'activation_hook'));

@@ -126,7 +126,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                 add_filter( 'pp_story_budget_item_actions', array( $this, 'filter_post_row_actions' ), 10, 2 );
             }
 
-            //Ajax for saving notifiction updates
+            // Ajax for saving notification updates
             add_action( 'wp_ajax_save_notifications', array( $this, 'ajax_save_post_subscriptions' ) );
             add_action( 'wp_ajax_pp_notifications_user_post_subscription', array( $this, 'handle_user_post_subscription' ) );
 
@@ -141,16 +141,6 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
          */
         public function install() {
 
-            // Add necessary capabilities to allow management of notifications
-            $notifications_roles = array(
-                'administrator' => array( 'edit_post_subscriptions' ),
-                'editor'        => array( 'edit_post_subscriptions' ),
-                'author'        => array( 'edit_post_subscriptions' ),
-            );
-
-            foreach ( $notifications_roles as $role => $caps ) {
-                $this->add_caps_to_role( $role, $caps );
-            }
         }
 
         /**

@@ -166,16 +166,7 @@ class PP_Content_Overview extends PP_Module
      * @since 0.7
      */
     public function install() {
-        $content_overview_roles = array(
-            'administrator' => array( 'pp_view_content_overview' ),
-            'editor'        => array( 'pp_view_content_overview' ),
-            'author'        => array( 'pp_view_content_overview' ),
-            'contributor'   => array( 'pp_view_content_overview' )
-       );
 
-        foreach ( $content_overview_roles as $role => $caps ) {
-            $this->add_caps_to_role( $role, $caps );
-        }
     }
 
     /**

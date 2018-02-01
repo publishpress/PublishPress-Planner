@@ -161,44 +161,45 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          *
          * @uses add_action()
          */
-        public function init() {
-            // Can view the calendar?
-            if ( ! $this->check_capability() ) {
-                return false;
-            }
+        public function init()
+        {
+	        // Can view the calendar?
+	        if (!$this->check_capability()) {
+		        return false;
+	        }
 
-            // Menu
-            add_action( 'publishpress_admin_menu', array( $this, 'action_admin_menu' ) );
+	        // Menu
+	        add_action('publishpress_admin_menu', array($this, 'action_admin_menu'));
 
-            // .ics calendar subscriptions
-            add_action( 'wp_ajax_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ) );
-            add_action( 'wp_ajax_nopriv_pp_calendar_ics_subscription', array( $this, 'handle_ics_subscription' ) );
+	        // .ics calendar subscriptions
+	        add_action('wp_ajax_pp_calendar_ics_subscription', array($this, 'handle_ics_subscription'));
+	        add_action('wp_ajax_nopriv_pp_calendar_ics_subscription', array($this, 'handle_ics_subscription'));
 
-            // Define the create-post capability
-            $this->create_post_cap = apply_filters( 'pp_calendar_create_post_cap', 'edit_posts' );
+	        // Define the create-post capability
+	        $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
-            require_once( PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php' );
+	        require_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
 
-            add_action( 'admin_init', array( $this, 'register_settings' ) );
-            add_action( 'admin_print_styles', array( $this, 'add_admin_styles' ) );
-            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+	        add_action('admin_init', array($this, 'register_settings'));
+	        add_action('admin_print_styles', array($this, 'add_admin_styles'));
+	        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 
-            // Ajax manipulation for the calendar
-            add_action( 'wp_ajax_pp_calendar_drag_and_drop', array( $this, 'handle_ajax_drag_and_drop' ) );
+	        // Ajax manipulation for the calendar
+	        add_action('wp_ajax_pp_calendar_drag_and_drop', array($this, 'handle_ajax_drag_and_drop'));
 
-            // Ajax insert post placeholder for a specific date
-            add_action( 'wp_ajax_pp_insert_post', array( $this, 'handle_ajax_insert_post' ) );
+	        // Ajax insert post placeholder for a specific date
+	        add_action('wp_ajax_pp_insert_post', array($this, 'handle_ajax_insert_post'));
 
-            // Update metadata
-            add_action( 'wp_ajax_pp_calendar_update_metadata', array( $this, 'handle_ajax_update_metadata' ) );
+	        // Update metadata
+	        add_action('wp_ajax_pp_calendar_update_metadata', array($this, 'handle_ajax_update_metadata'));
 
-            // Clear li cache for a post when post cache is cleared
-            add_action( 'clean_post_cache', array( $this, 'action_clean_li_html_cache' ) );
+	        // Clear li cache for a post when post cache is cleared
+	        add_action('clean_post_cache', array($this, 'action_clean_li_html_cache'));
 
-            // Action to regenerate the calendar feed sekret
-            add_action( 'admin_init', array( $this, 'handle_regenerate_calendar_feed_secret' ) );
+	        // Action to regenerate the calendar feed sekret
+	        add_action('admin_init', array($this, 'handle_regenerate_calendar_feed_secret'));
 
-            add_filter( 'post_date_column_status', array( $this, 'filter_post_date_column_status' ), 12, 4 );
+	        add_filter('post_date_column_status', array($this, 'filter_post_date_column_status'), 12, 4);
         }
 
         /**
@@ -222,18 +223,7 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          * @since 0.7
          */
         public function install() {
-            // Add necessary capabilities to allow management of calendar
-            // view_calendar - administrator --> contributor
-            $calendar_roles = array(
-                'administrator' => array( 'pp_view_calendar' ),
-                'editor'        => array( 'pp_view_calendar' ),
-                'author'        => array( 'pp_view_calendar' ),
-                'contributor'   => array( 'pp_view_calendar' ),
-            );
-
-            foreach ( $calendar_roles as $role => $caps ) {
-                $this->add_caps_to_role( $role, $caps );
-            }
+            
         }
 
         /**

@@ -93,4 +93,29 @@ class Util {
 	public static function sanitize_module_name( $name ) {
 		return str_replace( '-', '_', $name );
 	}
+
+	/**
+	 * Adds an array of capabilities to a role.
+	 *
+	 * @since 1.9.8
+	 *
+	 * @param string $role A standard WP user role like 'administrator' or 'author'
+	 * @param array  $caps One or more user caps to add
+	 */
+	public static function  add_caps_to_role($role, $caps) {
+		// In some contexts, we don't want to add caps to roles
+		if ( apply_filters( 'pp_kill_add_caps_to_role', false, $role, $caps ) ) {
+			return;
+		}
+
+		global $wp_roles;
+
+		if ( $wp_roles->is_role( $role ) ) {
+			$role = get_role( $role );
+
+			foreach ( $caps as $cap ) {
+				$role->add_cap( $cap );
+			}
+		}
+	}
 }

@@ -141,15 +141,6 @@ if (!class_exists('PP_User_Groups')) {
          */
         public function install()
         {
-
-            // Add necessary capabilities to allow management of user groups
-            $usergroup_roles = array(
-                'administrator' => array('edit_usergroups'),
-            );
-            foreach ($usergroup_roles as $role => $caps) {
-                $this->add_caps_to_role($role, $caps);
-            }
-
             // Create our default usergroups
             $default_usergroups = array(
                 array(
