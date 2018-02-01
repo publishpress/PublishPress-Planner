@@ -163,7 +163,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 *Changed:*
 
-* Removed Freemius integration;
+* Removed Freemius integration and contact form;
 
 = [1.9.4] - 2018-01-25 =
 
