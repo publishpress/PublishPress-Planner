@@ -155,6 +155,12 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.9.7] - 2018-02-01 =
+
+*Fixed:*
+
+* Fixed broken menu;
+
 = [1.9.6] - 2018-02-01 =
 
 *Fixed:*
