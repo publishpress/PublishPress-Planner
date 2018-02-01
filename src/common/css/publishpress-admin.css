@@ -89,9 +89,48 @@
 	-o-transition: none;
 }
 
+/* Admin icon customized per admin theme, excluding the default and light */
+.admin-color-blue #toplevel_page_pp-calendar .dashicons-before::before,
+.admin-color-coffee #toplevel_page_pp-calendar .dashicons-before::before,
+.admin-color-ectoplasm #toplevel_page_pp-calendar .dashicons-before::before,
+.admin-color-midnight #toplevel_page_pp-calendar .dashicons-before::before,
+.admin-color-ocean #toplevel_page_pp-calendar .dashicons-before::before,
+.admin-color-sunrise #toplevel_page_pp-calendar .dashicons-before::before,
+
+.admin-color-blue #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+.admin-color-coffee #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+.admin-color-ectoplasm #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+.admin-color-midnight #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+.admin-color-ocean #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+.admin-color-sunrise #toplevel_page_pp-calendar .wp-has-current-submenu .dashicons-before::before,
+
+.admin-color-blue #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-coffee #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-ectoplasm #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-midnight #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-ocean #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-sunrise #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+
+.admin-color-blue #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before,
+.admin-color-coffee #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before,
+.admin-color-ectoplasm #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before,
+.admin-color-midnight #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before,
+.admin-color-ocean #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before,
+.admin-color-sunrise #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before
+{
+	background-position: 0 -60px;
+}
+
 #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
 #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before {
 	background-position: 0 -26px;
+}
+
+/* Customize the icon for "Light" admin theme's hover and active states */
+.admin-color-light #toplevel_page_pp-calendar:active .wp-not-current-submenu .dashicons-before::before,
+.admin-color-light #toplevel_page_pp-calendar:hover .wp-not-current-submenu .dashicons-before::before
+{
+	background-position: 0 8px;
 }
 
 #toplevel_page_pp-calendar .wp-menu-open .dashicons-before::before {
