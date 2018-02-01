@@ -420,44 +420,70 @@ class publishpress {
 
 	public function filter_custom_menu_order( $menu_ord ) {
 		global $submenu;
-
 		if ( isset( $submenu['pp-calendar'] ) ) {
+
 			$submenu_pp  = $submenu['pp-calendar'];
 			$new_submenu = array();
 
+			// Get the index for the menus.
+			$relevantMenus = array(
+				'pp-calendar' => null,
+				'pp-content-overview' => null,
+				'pp-addons' => null,
+				'pp-modules-settings' => null,
+				'edit.php?post_type=psppnotif_workflow' => null,
+			);
+
+			foreach ($submenu_pp as $index => $item) {
+				if (array_key_exists($item[2], $relevantMenus)) {
+					$relevantMenus[$item[2]] = $index;
+				}
+			}
+
 			// Calendar
-			if (isset($submenu_pp[0])) {
-				$new_submenu[] = $submenu_pp[0];
+			if (! is_null($relevantMenus['pp-calendar'])) {
+				$new_submenu[] = $submenu_pp[$relevantMenus['pp-calendar']];
+
+				unset($submenu_pp[$relevantMenus['pp-calendar']]);
 			}
 
 			// Content Overview
-			if (isset($submenu_pp[1])) {
-				$new_submenu[] = $submenu_pp[1];
+			if (! is_null($relevantMenus['pp-content-overview'])) {
+				$new_submenu[] = $submenu_pp[$relevantMenus['pp-content-overview']];
+
+				unset($submenu_pp[$relevantMenus['pp-content-overview']]);
 			}
 
 			// Notifications
-			if (isset($submenu_pp[4])) {
-				$new_submenu[] = $submenu_pp[4];
+			if (! is_null($relevantMenus['edit.php?post_type=psppnotif_workflow'])) {
+				$new_submenu[] = $submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']];
+
+				unset($submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']]);
+			}
+
+			// Check if we have other menu items, except settings and add-ons. They will be added to the end.
+			if (count($submenu_pp) > 2) {
+				// Add the additional items
+				foreach ($submenu_pp as $index => $item) {
+					if (! in_array($index, $relevantMenus)) {
+						$new_submenu[] = $item;
+						unset($submenu_pp[$index]);
+					}
+				}
 			}
 
 			// Settings
-			if (isset($submenu_pp[3])) {
-				$new_submenu[] = $submenu_pp[3];
+			if (! is_null($relevantMenus['pp-modules-settings'])) {
+				$new_submenu[] = $submenu_pp[$relevantMenus['pp-modules-settings']];
+
+				unset($submenu_pp[$relevantMenus['pp-modules-settings']]);
 			}
 
 			// Add-ons
-			if (isset($submenu_pp[2])) {
-				$new_submenu[] = $submenu_pp[2];
-			}
+			if (! is_null($relevantMenus['pp-addons'])) {
+				$new_submenu[] = $submenu_pp[$relevantMenus['pp-addons']];
 
-			// Contact Us
-			if (isset($submenu_pp[5])) {
-				$new_submenu[] = $submenu_pp[5];
-			}
-
-			// Check if we have additional items and add to the end
-			if ( count( $submenu_pp ) > 6 ) {
-				$new_submenu = array_merge( $new_submenu, array_splice( $submenu_pp, 6 ) );
+				unset($submenu_pp[$relevantMenus['pp-addons']]);
 			}
 
 			$submenu['pp-calendar'] = $new_submenu;
@@ -490,9 +516,9 @@ class publishpress {
 
 	public function notice_editflow_deactivated() {
 		?>
-		<div class="updated notice">
-			<p><?php _e( 'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.', 'publishpress' ); ?></p>
-		</div>
+        <div class="updated notice">
+            <p><?php _e( 'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.', 'publishpress' ); ?></p>
+        </div>
 		<?php
 	}
 }

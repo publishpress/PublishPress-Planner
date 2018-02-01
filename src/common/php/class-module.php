@@ -38,6 +38,8 @@ if ( ! class_exists( 'PP_Module' ) ) {
 
 		protected $debug = false;
 
+		public $options;
+
 		public $published_statuses = array(
 								'publish',
 								// 'future',
