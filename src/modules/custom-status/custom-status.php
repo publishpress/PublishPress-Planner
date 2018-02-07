@@ -289,8 +289,9 @@ if (!class_exists('PP_Custom_Status')) {
             if (function_exists('register_post_status')) {
                 // Users can delete draft and pending statuses if they want, so let's get rid of them
                 // They'll get re-added if the user hasn't "deleted" them
-                unset($wp_post_statuses['draft']);
-                unset($wp_post_statuses['pending']);
+                // TODO: Disabled this code for now - PPRESS-316 - unsetting the pending status, sending to pend will make the post disappear.
+                // unset($wp_post_statuses['draft']);
+                // unset($wp_post_statuses['pending']);
 
                 $custom_statuses = $this->get_custom_statuses( $args );
 
