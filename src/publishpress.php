@@ -36,6 +36,7 @@
  * @package PublishPress
  * @category Core
  * @author PublishPress
+ * @copyright   Copyright (C) 2018 PublishPress. All rights reserved.
  */
 
 use PublishPress\Util as Util;
