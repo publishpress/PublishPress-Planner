@@ -163,6 +163,8 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          */
         public function init()
         {
+            add_action('template_include', array($this, 'handle_public_calendar_feed'));
+
 	        // Can view the calendar?
 	        if (!$this->check_capability()) {
 		        return false;
@@ -200,6 +202,30 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 	        add_action('admin_init', array($this, 'handle_regenerate_calendar_feed_secret'));
 
 	        add_filter('post_date_column_status', array($this, 'filter_post_date_column_status'), 12, 4);
+
+        }
+
+        /**
+         * @param $original_template
+         * @return mixed
+         */
+        public function handle_public_calendar_feed( $original_template ) {
+            // Only do .ics subscriptions when the option is active
+            if ( 'on' != $this->module->options->ics_subscription ) {
+                return $original_template;
+            }
+
+            // Confirm all of the arguments are present
+            if ( ! isset( $_GET['user'], $_GET['user_key'], $_GET['pp_action'] ) ) {
+                return $original_template;
+            }
+
+            // Confirm the action
+            if ( 'pp_calendar_ics_feed' !== $_GET['pp_action'] ) {
+                return $original_template;
+            }
+
+            $this->handle_ics_subscription();
         }
 
         /**
@@ -394,7 +420,6 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
          * @since 0.8
          */
         public function handle_ics_subscription() {
-
             // Only do .ics subscriptions when the option is active
             if ( 'on' != $this->module->options->ics_subscription ) {
                 die();
@@ -709,18 +734,33 @@ if ( ! class_exists( 'PP_Calendar' ) ) {
 
             // Should we display the subscribe button?
             if ( 'on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key ) {
+                // Prepare the download link
                 $args = array(
                         'action'       => 'pp_calendar_ics_subscription',
                         'user'         => wp_get_current_user()->user_login,
                         'user_key'     => md5( wp_get_current_user()->user_login . $this->module->options->ics_secret_key ),
                     );
-                $subscription_link = add_query_arg( $args, admin_url( 'admin-ajax.php' ) );
+                $download_link = add_query_arg( $args, admin_url( 'admin-ajax.php' ) );
 
-                 $description .= sprintf(
-                     '<a href="%s" class="calendar-subscribe"><span class="dashicons dashicons-external"></span>%s</a>',
-                     esc_attr( $subscription_link ),
-                     __( 'Subscribe in iCal or Google Calendar', 'publishpress' )
-                 );
+                // Prepare the subscribe link for the feed
+                unset($args['action']);
+                $args['post_status'] = 'unpublish';
+                $args['pp_action']   = 'pp_calendar_ics_feed';
+                $subscription_link   = add_query_arg( $args, site_url() );
+
+                $description .= '<div class="calendar-subscribe">';
+                $description .= sprintf(
+                    '<a href="%s"><span class="dashicons dashicons-download"></span></a>&nbsp;',
+                    esc_attr( $download_link )
+                );
+
+                $description .= sprintf(
+                    '<a href="%s"><span class="dashicons dashicons-external"></span>%s</a>',
+                    esc_attr( $subscription_link ),
+                    __( 'Subscribe in iCal or Google Calendar', 'publishpress' )
+                );
+
+                $description .= '</div>';
             }
 
             $publishpress->settings->print_default_header( $publishpress->modules->calendar, $description );
