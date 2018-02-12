@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *

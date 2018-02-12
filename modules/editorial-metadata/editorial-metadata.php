@@ -338,7 +338,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     'publishpress-editorial-metadata-configure',
                     'objectL10nMetadata',
                     array(
-                        'pp_confirm_delete_term_string' => __('Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.', 'publishpress')
+                        'pp_confirm_delete_term_string' => __('Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.', 'publishpress'),
                     )
                 );
             }
@@ -479,7 +479,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                                 $user_dropdown_args = array(
                                         'show_option_all' => __('-- Select a user --', 'publishpress'),
                                         'name'     => $postmeta_key,
-                                        'selected' => $current_metadata
+                                        'selected' => $current_metadata,
                                     );
                                 $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
                                 wp_dropdown_users($user_dropdown_args);
@@ -580,6 +580,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Show date or datetime
+         *
          * @param  int $current_date
          * @return string
          * @since 0.8
@@ -706,6 +707,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Get all of the editorial metadata terms as objects and sort by position
+         *
          * @todo Figure out what we should do with the filter...
          *
          * @param array $filter_args Filter to specific arguments
@@ -722,7 +724,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
             $args = array(
                     'orderby'    => apply_filters('pp_editorial_metadata_term_order', 'name'),
-                    'hide_empty' => false
+                    'hide_empty' => false,
                 );
 
             $terms         = get_terms(self::metadata_taxonomy, $args);
@@ -1079,6 +1081,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Insert a new editorial metadata term
+         *
          * @todo Handle conflicts with existing terms at that position (if relevant)
          *
          * @since 0.7
@@ -1812,32 +1815,6 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
     }
 
     /**
-     * Prepare the items to be displayed on the list table
-     *
-     * @since 0.7
-     */
-    public function prepare_items()
-    {
-        global $publishpress;
-        $this->items = $publishpress->editorial_metadata->get_editorial_metadata_terms();
-
-        $this->set_pagination_args(array(
-            'total_items' => count($this->items),
-            'per_page' => count($this->items),
-        ));
-    }
-
-    /**
-     * Message to be displayed when there is no editorial metadata
-     *
-     * @since 0.7
-     */
-    public function no_items()
-    {
-        _e('No editorial metadata found.', 'publishpress');
-    }
-
-    /**
      * Register the columns to appear in the table
      *
      * @since 0.7
@@ -1900,6 +1877,32 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             default:
                 break;
         }
+    }
+
+    /**
+     * Prepare the items to be displayed on the list table
+     *
+     * @since 0.7
+     */
+    public function prepare_items()
+    {
+        global $publishpress;
+        $this->items = $publishpress->editorial_metadata->get_editorial_metadata_terms();
+
+        $this->set_pagination_args(array(
+            'total_items' => count($this->items),
+            'per_page' => count($this->items),
+        ));
+    }
+
+    /**
+     * Message to be displayed when there is no editorial metadata
+     *
+     * @since 0.7
+     */
+    public function no_items()
+    {
+        _e('No editorial metadata found.', 'publishpress');
     }
 
     /**

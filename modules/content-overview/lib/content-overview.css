@@ -23,18 +23,17 @@ header h2 form {
 }
 
 header h2 form input {
-    display:none;
+    display: none;
 }
 
 header h2 a.change-date {
-    display:inline-block;
+    display: inline-block;
 }
 
 header h2 a.change-date,
 header h2 a.change-date-cancel {
     font-size: 14px;
 }
-
 
 .postbox-container {
     float: left;
@@ -66,7 +65,7 @@ header h2 a.change-date-cancel {
     padding: 0 0.6em;
 }
 
-.wrap .pp-updated  {
+.wrap .pp-updated {
     margin: 5px 0 15px;
 }
 
@@ -89,7 +88,7 @@ header h2 a.change-date-cancel {
     float: left;
 }
 
-@media (max-width:782px) {
+@media (max-width: 782px) {
 
     #post-query-clear {
         margin-top: 5px;

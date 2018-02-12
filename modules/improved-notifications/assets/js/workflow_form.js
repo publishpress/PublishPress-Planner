@@ -19,39 +19,39 @@
  * You should have received a copy of the GNU General Public License
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
-( function ( $ ) {
-	$( function() {
-		function setupFieldFilters( name ) {
-			// "When the content is moved to a new status"'s filters
-			if ( $( '#publishpress_notif_' + name ).length > 0 ) {
-				var $chkb    = $( '#publishpress_notif_' + name ),
-					$filters = $( '.publishpress_notif_' + name + '_filters' );
+(function ($) {
+    $(function () {
+        function setupFieldFilters(name) {
+            // "When the content is moved to a new status"'s filters
+            if ($('#publishpress_notif_' + name).length > 0) {
+                var $chkb = $('#publishpress_notif_' + name),
+                    $filters = $('.publishpress_notif_' + name + '_filters');
 
-				// Add event to the checkbox
-				$chkb.on( 'change', function() {
-					if ( $chkb.is(':checked') ) {
-						$filters.show();
-					} else {
-						$filters.hide();
-					}
-				} );
-			}
-		}
+                // Add event to the checkbox
+                $chkb.on('change', function () {
+                    if ($chkb.is(':checked')) {
+                        $filters.show();
+                    } else {
+                        $filters.hide();
+                    }
+                });
+            }
+        }
 
-		setupFieldFilters( 'event_post_save' );
-		setupFieldFilters( 'event_content_post_type' );
-		setupFieldFilters( 'event_content_category' );
-		setupFieldFilters( 'event_content_category' );
-		setupFieldFilters( 'user' );
-		setupFieldFilters( 'user_group' );
+        setupFieldFilters('event_post_save');
+        setupFieldFilters('event_content_post_type');
+        setupFieldFilters('event_content_category');
+        setupFieldFilters('event_content_category');
+        setupFieldFilters('user');
+        setupFieldFilters('user_group');
 
-		// List search
-		// $('.publishpress-filter-checkbox-list ul').listFilterizer();
-		$('.publishpress-filter-checkbox-list select').multipleSelect({
+        // List search
+        // $('.publishpress-filter-checkbox-list ul').listFilterizer();
+        $('.publishpress-filter-checkbox-list select').multipleSelect({
             filter: true
         });
 
-		// Form validation
+        // Form validation
 
-	} );
-} )( jQuery );
+    });
+})(jQuery);

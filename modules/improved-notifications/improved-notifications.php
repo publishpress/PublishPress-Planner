@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -30,826 +30,897 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
-use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
-use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
+use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
-use PublishPress\Notifications\Workflow\Step\Event\Filter_Content\Post_Type as Filter_Post_Type;
-use PublishPress\Notifications\Workflow\Step\Event\Filter_Content\Category as Filter_Category;
-use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
-
-if ( ! class_exists( 'PP_Improved_Notifications' ) ) {
-	/**
-	 * class Notifications
-	 */
-	class PP_Improved_Notifications extends PP_Module {
-
-		use Dependency_Injector, PublishPress_Module;
-
-		const SETTINGS_SLUG = 'pp-improved-notifications-settings';
-
-		const META_KEY_IS_DEFAULT_WORKFLOW = '_psppno_is_default_workflow';
-
-		public $module_name = 'improved-notifications';
-
-		/**
-		 * Instace for the module
-		 *
-		 * @var stdClass
-		 */
-		public $module;
-
-		/**
-		 * List of workflows
-		 *
-		 * @var array
-		 */
-		protected $workflows;
-
-		/**
-		 * List of published workflows
-		 *
-		 * @var array
-		 */
-		protected $published_workflows;
-
-		/**
-		 * Construct the Notifications class
-		 */
-		public function __construct() {
-			global $publishpress;
-
-			$this->twigPath = dirname( dirname( dirname( __FILE__ ) ) ) . '/twig';
-
-			$this->module_url = $this->get_module_url( __FILE__ );
-
-			// Register the module with PublishPress
-			$args = array(
-				'title'                => __( 'Notification Workflows', 'publishpress' ),
-				'short_description'    => __( 'Improved notifications for PublishPress', 'publishpress' ),
-				'extended_description' => __( 'Improved Notifications for PublishPress', 'publishpress' ),
-				'module_url'           => $this->module_url,
-				'icon_class'           => 'dashicons dashicons-feedback',
-				'slug'                 => 'improved-notifications',
-				'default_options'      => array(
-					'enabled'                  => 'on',
-					'post_types'               => array( 'post' ),
-				),
-				'options_page'      => false,
-			);
-
-			// Apply a filter to the default options
-			$args['default_options'] = apply_filters( 'publishpress_notif_default_options', $args['default_options'] );
-			$this->module = $publishpress->register_module(
-				PublishPress\Util::sanitize_module_name( $this->module_name ),
-				$args
-			);
-
-			parent::__construct();
-
-			$this->configure_twig();
-		}
-
-		protected function configure_twig() {
-			$function = new Twig_SimpleFunction( 'settings_fields', function () {
-				return settings_fields( $this->module->options_group_name );
-			} );
-			$this->twig->addFunction( $function );
-
-			$function = new Twig_SimpleFunction( 'nonce_field', function ( $context ) {
-				return wp_nonce_field( $context );
-			} );
-			$this->twig->addFunction( $function );
-
-			$function = new Twig_SimpleFunction( 'submit_button', function () {
-				return submit_button();
-			} );
-			$this->twig->addFunction( $function );
-
-			$function = new Twig_SimpleFunction( '__', function ( $id ) {
-				return __( $id, 'publishpress' );
-			} );
-			$this->twig->addFunction( $function );
-
-			$function = new Twig_SimpleFunction( 'do_settings_sections', function ( $section ) {
-				return do_settings_sections( $section );
-			} );
-			$this->twig->addFunction( $function );
-		}
-
-		/**
-		 * Initialize the module. Conditionally loads if the module is enabled
-		 */
-		public function init() {
-			add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
-
-			// Workflow form
-			add_filter( 'get_sample_permalink_html', array( $this, 'filter_get_sample_permalink_html_workflow' ), 9, 5 );
-			add_filter( 'post_row_actions', array( $this, 'filter_row_actions' ), 10, 2 );
-			add_action( 'add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW, array( $this, 'action_meta_boxes_workflow' ) );
-			add_action( 'save_post', [ $this, 'save_meta_boxes' ], 10, 2 );
-
-			// Cancel the PublishPress and PublishPress Slack Notifications
-			add_filter( 'publishpress_slack_enable_notifications', [ $this, 'filter_slack_enable_notifications' ] );
-			remove_all_actions( 'pp_send_notification_status_update' );
-			remove_all_actions( 'pp_send_notification_comment' );
-
-			// Instantiate the controller of workflow's
-			$workflow_controller = $this->get_service( 'workflow_controller' );
-			$workflow_controller->load_workflow_steps();
-
-			// Add action to intercept transition between post status - post save
-			add_action( 'transition_post_status', [ $this, 'action_transition_post_status' ], 999, 3 );
-			// Add action to intercep new editorial comments
-			add_action( 'pp_post_insert_editorial_comment', [ $this, 'action_editorial_comment' ], 999, 3 );
-
-			// Add fields to the user's profile screen to select notification channels
-			add_action( 'show_user_profile', [ $this, 'user_profile_fields' ] );
-			add_action( 'edit_user_profile', [ $this, 'user_profile_fields' ] );
-
-			// Add action to save data from the user's profile screen
-			add_action( 'personal_options_update', [ $this, 'save_user_profile_fields' ] );
-			add_action( 'edit_user_profile_update', [ $this, 'save_user_profile_fields' ] );
-
-			// Load CSS
-			add_action( 'admin_print_styles', array( $this, 'add_admin_styles' ) );
-
-			// Inject the PublishPress footer
-			add_filter('admin_footer_text', [ $this, 'update_footer_admin' ] );
-
-			add_filter( 'pp_notification_send_email_message_headers', [ $this, 'filter_send_email_message_headers' ], 10, 3 );
-
-			add_filter( 'months_dropdown_results', [ $this, 'hide_months_dropdown_filter' ], 10, 2 );
-		}
-
-		/**
-		 * Load default editorial metadata the first time the module is loaded
-		 *
-		 * @since 0.7
-		 */
-		public function install() {
-			// Check if we any other workflow before create, avoiding duplicated registers
-			if ( false === $this->has_default_workflows() ) {
-				$this->create_default_workflow_post_save();
-				$this->create_default_workflow_editorial_comment();
-			}
-		}
-
-		/**
-		 * Create default notification workflows based on current notification settings
-		 */
-		protected function create_default_workflow_post_save() {
-			$twig = $this->get_service( 'twig' );
-
-			// Get post statuses
-			$statuses = $this->get_post_statuses();
-			// Remove the published state
-			foreach ( $statuses as $index => $status ) {
-				if ( $status->slug === 'publish' ) {
-					unset( $statuses[ $index ] );
-				}
-			}
-
-			// Post Save
-			$workflow = [
-				'post_status' => 'publish',
-				'post_title'  => __( 'Notify when content is published', 'publishpress' ),
-				'post_type'   => 'psppnotif_workflow',
-				'meta_input'  => [
-					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
-					Event_Post_save::META_KEY_SELECTED            => '1',
-					Filter_Post_Status::META_KEY_POST_STATUS_TO   => 'publish',
-					Content_Main::META_KEY_SUBJECT                => '&quot;[psppno_post title]&quot; was published',
-					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_post_save.twig', [] ),
-					Receiver_Site_Admin::META_KEY                 => 1,
-				],
-			];
-
-			$post_id = wp_insert_post( $workflow );
-
-			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
-				// Add each status to the "From" filter, except the "publish" state
-				foreach ( $statuses as $status ) {
-					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false );
-				}
-			}
-		}
-
-		/**
-		 * Create default notification workflow for the editorial comments
-		 */
-		protected function create_default_workflow_editorial_comment() {
-			$twig = $this->get_service( 'twig' );
-
-			// Post Save
-			$workflow = [
-				'post_status' => 'publish',
-				'post_title'  => __( 'Notify on editorial comments', 'publishpress' ),
-				'post_type'   => 'psppnotif_workflow',
-				'meta_input'  => [
-					static::META_KEY_IS_DEFAULT_WORKFLOW          => '1',
-					Event_Editorial_Comment::META_KEY_SELECTED    => '1',
-					Content_Main::META_KEY_SUBJECT                => 'New editorial comment to &quot;[psppno_post title]&quot;',
-					Content_Main::META_KEY_BODY                   => $twig->render( 'workflow_default_content_editorial_comment.twig', [] ),
-					Receiver_Site_Admin::META_KEY                 => 1,
-				],
-			];
-
-			$post_id = wp_insert_post( $workflow );
-
-			if ( is_int( $post_id ) && ! empty( $post_id ) ) {
-				// Get post statuses
-				$statuses = $this->get_post_statuses();
-				// Add each status to the "From" filter, except the "publish" state
-				foreach ( $statuses as $status ) {
-					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false );
-					add_post_meta( $post_id, Filter_Post_Status::META_KEY_POST_STATUS_TO, $status->slug, false );
-				}
-			}
-		}
-
-		/**
-		 * Returns true if we found any default workflow
-		 *
-		 * @return Bool
-		 */
-		protected function has_default_workflows() {
-			$query_args = [
-				'post_type'  => 'psppnotif_workflow',
-				'meta_query' => [
-					[
-						'key'   => static::META_KEY_IS_DEFAULT_WORKFLOW,
-						'value' => '1',
-					],
-				],
-			];
-
-			$query = new WP_Query( $query_args );
-
-			if ( ! $query->have_posts() ) {
-				return false;
-			}
-
-			return $query->the_post();
-		}
-
-		/**
-		 * Upgrade our data in case we need to
-		 *
-		 * @since 0.7
-		 */
-		public function upgrade( $previous_version ) {
-			if ( version_compare( $previous_version, '1.8.1', '<=' ) ) {
-				// Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
-				$workflows = $this->get_workflows();
-
-				if ( ! empty( $workflows ) ) {
-					foreach ( $workflows as $workflow ) {
-						// Get the user list
-						$meta = get_post_meta( $workflow->ID, '_psppno_touser' );
-						if ( ! empty( $meta ) ) {
-							delete_post_meta( $workflow->ID, '_psppno_touserlist' );
-
-							foreach ( $meta as $data ) {
-								add_post_meta( $workflow->ID, '_psppno_touserlist', $data );
-							}
-
-							delete_post_meta( $workflow->ID, '_psppno_touser' );
-							add_post_meta( $workflow->ID, '_psppno_touser', 1 );
-						}
-
-						// Get the user group list
-						$meta = get_post_meta( $workflow->ID, '_psppno_togroup' );
-						if ( ! empty( $meta ) ) {
-							delete_post_meta( $workflow->ID, '_psppno_togrouplist' );
-
-							foreach ( $meta as $data ) {
-								add_post_meta( $workflow->ID, '_psppno_togrouplist', $data );
-							}
-
-							delete_post_meta( $workflow->ID, '_psppno_togroup' );
-							add_post_meta( $workflow->ID, '_psppno_togroup', 1 );
-						}
-					}
-				}
-			}
-		}
-
-		/**
-		 * Filters the enable_notifications on the Slack add-on to block it.
-		 *
-		 * @param bool  $enable_notifications
-		 */
-		public function filter_slack_enable_notifications( $enable_notifications ) {
-			return false;
-		}
-
-		/**
-		 * Action called on transitioning a post. Used to trigger the
-		 * controller of workflows to filter and execute them.
-		 *
-		 * @param string  $new_status
-		 * @param string  $old_status
-		 * @param WP_Post $post
-		 */
-		public function action_transition_post_status( $new_status, $old_status, $post ) {
-
-			// Ignore if the post_type is an internal post_type
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type ) {
-				return;
-			}
-
-			// Ignores auto-save
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-				return;
-			}
-
-			// Ignores auto-draft
-			if ( 'new' === $old_status && 'auto-draft' === $new_status ) {
-				return;
-			}
-
-			// Go ahead and do the action to run workflows
-			$args = [
-				'action'     => 'transition_post_status',
-				'post'       => $post,
-				'new_status' => $new_status,
-				'old_status' => $old_status,
-			];
-
-			do_action( 'publishpress_notif_run_workflows', $args );
-		}
-
-		/**
-		 * Action called on editorial comments. Used to trigger the
-		 * controller of workflows to filter and execute them.
-		 *
-		 * @param WP_Comment $comment
-		 */
-		public function action_editorial_comment( $comment ) {
-			// Go ahead and do the action to run workflows
-			$post = get_post( $comment->comment_post_ID );
-			$args = [
-				'action'     => 'editorial_comment',
-				'post'       => $post,
-				'new_status' => $post->post_status,
-				'old_status' => $post->post_status,
-				'comment'    => $comment,
-			];
-
-			do_action( 'publishpress_notif_run_workflows', $args );
-		}
-
-		/**
-		 * Enqueue scripts and stylesheets for the admin pages.
-		 * @TODO uncomment when admin.js is required
-		 *
-		 * @param string $hook_suffix
-		 */
-		public function add_admin_scripts( $hook_suffix ) {
-			if ( in_array( $hook_suffix, [ 'profile.php', 'user-edit.php'] ) ) {
-				wp_enqueue_script( 'psppno-user-profile-notifications', plugin_dir_url( __FILE__ ) . 'assets/js/user_profile.js', [], PUBLISHPRESS_VERSION );
-			}
-
-			if ( in_array( $hook_suffix, [ 'post.php', 'post-new.php' ] ) ) {
-				wp_enqueue_script( 'psppno-workflow-form', plugin_dir_url( __FILE__ ) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION );
-				wp_enqueue_script( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION );
-			}
-		}
-
-		/**
-		 * Filters the permalink output in the form, to disable it for the
-		 * workflow form.
-		 */
-		public function filter_get_sample_permalink_html_workflow( $return, $post_id, $new_title, $new_slug, $post ) {
-
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type ) {
-
-				$return = '';
-			}
-
-			return $return;
-		}
-
-		public function filter_row_actions( $actions, $post ) {
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type ) {
-
-				unset( $actions[ 'view' ] );
-			}
-
-			return $actions;
-		}
-
-		public function action_meta_boxes_workflow() {
-			add_meta_box(
-				'publishpress_notif_workflow_div',
-				__( 'Workflow Settings', 'publishpress' ),
-				[ $this, 'publishpress_notif_workflow_metabox' ],
-				null,
-				'advanced',
-				'high'
-			);
-
-			add_meta_box(
-				'publishpress_notif_workflow_help_div',
-				__( 'Help', 'publishpress-notifications' ),
-				[ $this, 'publishpress_notif_workflow_help_metabox' ],
-				null,
-				'side',
-				'low'
-			);
-		}
-
-		public function publishpress_notif_workflow_metabox() {
-			// Adds the nonce field
-			wp_nonce_field( 'publishpress_notif_save_metabox', 'publishpress_notif_metabox_events_nonce' );
-
-			$twig = $this->get_service( 'twig' );
-
-			$main_context = [];
-
-			// Renders the event section
-			$context = [
-				'id'     => 'event',
-				'header' => __( 'When to notify?', 'publishpress' ),
-				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event', '' ),
-				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3',
-			];
-			$main_context['section_event'] = $twig->render( 'workflow_metabox_section.twig', $context );
-
-			// Renders the event content filter section
-			$context = [
-				'id'     => 'event_content',
-				'header' => __( 'Filter the content?', 'publishpress' ),
-				'html'   => apply_filters( 'publishpress_notif_render_metabox_section_event_content', '' ),
-				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
-			];
-			$main_context['section_event_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
-
-			// Renders the receiver section
-			$context = [
-				'id'   => 'receiver',
-				'header' => __( 'Who to notify?', 'publishpress' ),
-				'html' => apply_filters( 'publishpress_notif_render_metabox_section_receiver', '' ),
-				'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
-			];
-			$main_context['section_receiver'] = $twig->render( 'workflow_metabox_section.twig', $context );
-
-			// Renders the content section
-			$context = [
-				'id'   => 'content',
-				'header' => __( 'What to say?', 'publishpress' ),
-				'html' => apply_filters( 'publishpress_notif_render_metabox_section_content', '' ),
-				'class'  => 'pure-u-1',
-			];
-			$main_context['section_content'] = $twig->render( 'workflow_metabox_section.twig', $context );
-
-			// Renders the channel section
-			$context = [
-				'id'   => 'channel',
-				'html' => apply_filters( 'publishpress_notif_render_metabox_section_channel', '' ),
-			];
-			$main_context['section_channel'] = $twig->render( 'workflow_metabox_section.twig', $context );
-
-			echo $twig->render( 'workflow_metabox.twig', $main_context );
-		}
-
-		/**
-		 * Add the metabox for the help text
-		 */
-		public function publishpress_notif_workflow_help_metabox() {
-			$context = [
-				'labels' => [
-					'pre_text'         => __( 'You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress' ),
-					'content'          => __( 'Content', 'publishpress' ),
-					'edcomment'        => __( 'Editorial Comment', 'publishpress' ),
-					'actor'            => __( 'User making changes or comments', 'publishpress' ),
-					'workflow'         => __( 'Workflow', 'publishpress' ),
-					'format'           => __( 'Format', 'publishpress' ),
-					'shortcode'        => __( 'shortcode', 'publishpress' ),
-					'field'            => __( 'field', 'publishpress' ),
-					'format_text'      => __( 'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress' ),
-					'available_fields' => __( 'Available fields', 'publishpress' ),
-					'read_more'        => __( 'Click here to read more about shortcode options...', 'publishpress' ),
-				],
-			];
-
-			$twig = $this->get_service( 'twig' );
-
-			echo $twig->render( 'workflow_help.twig', $context );
-		}
-
-		/**
-		 * If it detects a notification workflow is being saved, triggers an
-		 * action for the workflow steps to be able to save their specific
-		 * metadata from the metaboxes.
-		 *
-		 * @param int      $id    Unique ID for the post being saved
-		 * @param WP_Post  $post  Post object
-		 */
-		public function save_meta_boxes( $id, $post )
-		{
-			// Check if the saved post is a notification workflow
-
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type ) {
-				// Authentication checks. Make sure the data came from the metabox
-				if ( ! (
-					isset( $_POST['publishpress_notif_metabox_events_nonce'] )
-					&& wp_verify_nonce(
-						$_POST['publishpress_notif_metabox_events_nonce'],
-						'publishpress_notif_save_metabox'
-					)
-				) ) {
-					return $id;
-				}
-
-				// Avoids autosave
-				if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) ) {
-					return $id;
-				}
-
-				// Do the action so each workflow step class can save its metabox data
-				do_action( 'publishpress_notif_save_workflow_metadata', $id, $post );
-			}
-
-		}
-
-		/**
-		 * Returns a list of published workflows.
-		 *
-		 * @return array
-		 */
-		protected function get_published_workflows() {
-			if ( empty( $this->published_workflows ) ) {
-				// Build the query
-				$query_args = [
-					'nopaging'    => true,
-					'post_type'   => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
-					'post_status' => 'publish',
-					'no_found_rows' => true,
-					'cache_results' => true,
-					'meta_query'  => [],
-				];
-
-				$query = new \WP_Query( $query_args );
-
-				$this->published_workflows = $query->posts;
-			}
-
-			return $this->published_workflows;
-		}
-
-		/**
-		 * Returns a list of workflows.
-		 *
-		 * @return array
-		 */
-		protected function get_workflows() {
-			if ( empty( $this->workflows ) ) {
-				// Build the query
-				$query_args = [
-					'nopaging'    => true,
-					'post_type'   => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
-					'no_found_rows' => true,
-					'cache_results' => true,
-					'meta_query'  => [],
-				];
-
-				$query = new \WP_Query( $query_args );
-
-				$this->workflows = $query->posts;
-			}
-
-			return $this->workflows;
-		}
-
-		/**
-		 * Add extra fields to the user profile to allow them choose where to
-		 * receive notifications per workflow.
-		 *
-		 * @param WP_User $user
-		 */
-		public function user_profile_fields( $user ) {
-			$twig = $this->get_service( 'twig' );
-
-			// Adds the nonce field
-			wp_nonce_field( 'psppno_user_profile', 'psppno_user_profile_nonce' );
-
-			/**
-			 * Filters the list of notification channels to display in the
-			 * user profile.
-			 *
-			 * [
-			 *    'name': string
-			 *    'label': string
-			 *    'options': [
-			 *        'name'
-			 *        'html'
-			 *    ]
-			 * ]
-			 *
-			 * @param array
-			 */
-			$default_channels = [
-				[
-					'name'    => 'mute',
-					'label'   => __( 'Muted', 'publishpress' ),
-					'options' => [],
-					'icon'    => PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
-				]
-			];
-			$channels = apply_filters( 'psppno_filter_channels_user_profile', $default_channels );
-
-			$workflow_channels = $this->get_user_workflow_channels( $user );
-			$channels_options  = $this->get_user_workflow_channel_options( $user );
-
-			$context = [
-				'labels' => [
-					'title'       => __( 'Editorial Notifications', 'publishpress' ),
-					'description' => __( 'Choose the channels where each workflow will send notifications to:', 'publishpress' ),
-					'mute'        => __( 'Muted', 'publishpress' ),
-					'workflows'   => __( 'Workflows', 'publishpress' ),
-					'channels'    => __( 'Channels', 'publishpress' ),
-				],
-				'workflows'         => $this->get_published_workflows(),
-				'channels'          => $channels,
-				'workflow_channels' => $workflow_channels,
-				'channels_options'  => $channels_options,
-			];
-
-			echo $twig->render( 'user_profile_notification_channels.twig', $context );
-		}
-
-		/**
-		 * Returns the list of channels for the workflows we find in the user's
-		 * meta data
-		 *
-		 * @param WP_User $user
-		 *
-		 * @return array
-		 */
-		public function get_user_workflow_channels( $user ) {
-			$workflows = $this->get_published_workflows();
-			$channels  = [];
-
-			foreach ( $workflows as $workflow ) {
-				$channel = get_user_meta( $user->ID, 'psppno_workflow_channel_' . $workflow->ID, true );
-
-				// If no channel is set yet, use the default one
-				if ( empty( $channel ) ) {
-					/**
-					 * Filters the default notification channel.
-					 *
-					 * @param string $default_channel
-					 *
-					 * @return string
-					 */
-					$channel = apply_filters( 'psppno_filter_default_notification_channel', 'email' );
-				}
-
-				$channels[ $workflow->ID ] = $channel;
-			}
-
-			return $channels;
-		}
-
-		/**
-		 * Returns the list of options for the channels in the workflows we find
-		 * in the user's meta data.
-		 *
-		 * @param WP_User $user
-		 *
-		 * @return array
-		 */
-		public function get_user_workflow_channel_options( $user ) {
-			$workflows = $this->get_published_workflows();
-			$options   = [];
-
-			foreach ( $workflows as $workflow ) {
-				/**
-				 * Filters the options for the channel in the workflow
-				 *
-				 * @param array $options
-				 * @param int   $user_id
-				 * @param int   $workflow_id
-				 *
-				 * @return array
-				 */
-				$channels_options = apply_filters( 'psppno_filter_workflow_channel_options', [], $user->ID, $workflow->ID );
-				$options[ $workflow->ID ] = $channels_options;
-			}
-
-			return $options;
-		}
-
-		/**
-		 * Saves the data coming from the user profile
-		 *
-		 * @param int $user_id
-		 */
-		public function save_user_profile_fields( $user_id ) {
-			if ( ! current_user_can( 'edit_user', $user_id ) ) {
-				return false;
-			}
-
-			// Check the nonce field
-			if ( ! (
-				isset( $_POST['psppno_user_profile_nonce'] )
-				&& wp_verify_nonce(
-					$_POST['psppno_user_profile_nonce'],
-					'psppno_user_profile'
-				)
-			) ) {
-				return;
-			}
-
-			// Workflow Channels
-			if ( isset( $_POST['psppno_workflow_channel'] ) && ! empty( $_POST['psppno_workflow_channel'] ) ) {
-				foreach ( $_POST['psppno_workflow_channel'] as $workflow_id => $channel ) {
-					update_user_meta( $user_id, 'psppno_workflow_channel_' . $workflow_id, $channel );
-				}
-			}
-
-			do_action( 'psppno_save_user_profile', $user_id );
-		}
-
-		/**
-		 * Add any necessary CSS to the WordPress admin
-		 *
-		 * @uses wp_enqueue_style()
-		 */
-		public function add_admin_styles() {
-			wp_enqueue_style( 'psppno-admin-css', plugin_dir_url( __FILE__ ) . 'assets/css/admin.css');
-			wp_enqueue_style( 'psppno-multiple-select', plugin_dir_url( __FILE__ ) . 'assets/css/multiple-select.css');
-			wp_enqueue_style( 'psppno-grid', plugin_dir_url( __FILE__ ) . 'assets/css/grids-min.css');
-			wp_enqueue_style( 'psppno-grid-responsive', plugin_dir_url( __FILE__ ) . 'assets/css/grids-responsive-min.css');
-			wp_enqueue_style( 'psppno-user-profile', plugin_dir_url( __FILE__ ) . 'assets/css/user_profile.css');
-		}
-
-		/**
-		 * Display the PublishPress footer on the custom post pages
-		 */
-		public function update_footer_admin( $footer ) {
-			global $current_screen;
-
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type ) {
-				return $footer;
-			}
-
-			$publishpress = $this->get_service( 'publishpress' );
-
-			$html = '<div class="pressshack-admin-wrapper">';
-			$html .= $publishpress->settings->print_default_footer( $publishpress->modules->improved_notifications, false );
-			// We do not close the div by purpose. The footer contains it.
-
-			// Add the wordpress footer
-			$html .= $footer;
-
-			return $html;
-		}
-
-		/**
-		 * Filters the email message headers, to enable HTML emails
-		 *
-		 * @param array   $message_headers
-		 * @param string  $action
-		 * @param WP_Post $post
-		 *
-		 * @return array
-		 */
-		public function filter_send_email_message_headers( $message_headers, $action, $post ) {
-			if ( is_string( $message_headers ) && ! empty( $message_headers ) ) {
-				$message_headers = [ $message_headers ];
-			}
-
-			if ( ! is_array( $message_headers ) ) {
-				$message_headers = []				;
-			}
-
-			$message_headers[] = 'Content-Type: text/html; charset=UTF-8';
-
-			// Set a default "from" name and email
-			$publishpress = $this->get_service( 'publishpress' );
-			$email_from   = $publishpress->notifications->get_email_from();
-			$message_headers[] = sprintf( 'from: %s <%s>', $email_from['name'], $email_from['email'] );
-
-			return $message_headers;
-		}
-
-		/**
-		 * Hide the filter for months in the Workflows list.
-		 *
-		 * @param array  $months
-		 * @param string $post_type
-		 *
-		 * @return array
-		 */
-		public function hide_months_dropdown_filter( $months, $post_type ) {
-			if ( PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post_type ) {
-				$months = [];
-			}
-
-			return $months;
-		}
-	}
+use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
+use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
+
+if (!class_exists('PP_Improved_Notifications'))
+{
+    /**
+     * class Notifications
+     */
+    class PP_Improved_Notifications extends PP_Module
+    {
+
+        use Dependency_Injector, PublishPress_Module;
+
+        const SETTINGS_SLUG = 'pp-improved-notifications-settings';
+
+        const META_KEY_IS_DEFAULT_WORKFLOW = '_psppno_is_default_workflow';
+
+        public $module_name = 'improved-notifications';
+
+        /**
+         * Instace for the module
+         *
+         * @var stdClass
+         */
+        public $module;
+
+        /**
+         * List of workflows
+         *
+         * @var array
+         */
+        protected $workflows;
+
+        /**
+         * List of published workflows
+         *
+         * @var array
+         */
+        protected $published_workflows;
+
+        /**
+         * Construct the Notifications class
+         */
+        public function __construct()
+        {
+            global $publishpress;
+
+            $this->twigPath = dirname(dirname(dirname(__FILE__))) . '/twig';
+
+            $this->module_url = $this->get_module_url(__FILE__);
+
+            // Register the module with PublishPress
+            $args = array(
+                'title'                => __('Notification Workflows', 'publishpress'),
+                'short_description'    => __('Improved notifications for PublishPress', 'publishpress'),
+                'extended_description' => __('Improved Notifications for PublishPress', 'publishpress'),
+                'module_url'           => $this->module_url,
+                'icon_class'           => 'dashicons dashicons-feedback',
+                'slug'                 => 'improved-notifications',
+                'default_options'      => array(
+                    'enabled'    => 'on',
+                    'post_types' => array('post'),
+                ),
+                'options_page'         => false,
+            );
+
+            // Apply a filter to the default options
+            $args['default_options'] = apply_filters('publishpress_notif_default_options', $args['default_options']);
+            $this->module            = $publishpress->register_module(
+                PublishPress\Util::sanitize_module_name($this->module_name),
+                $args
+            );
+
+            parent::__construct();
+
+            $this->configure_twig();
+        }
+
+        protected function configure_twig()
+        {
+            $function = new Twig_SimpleFunction('settings_fields', function ()
+            {
+                return settings_fields($this->module->options_group_name);
+            });
+            $this->twig->addFunction($function);
+
+            $function = new Twig_SimpleFunction('nonce_field', function ($context)
+            {
+                return wp_nonce_field($context);
+            });
+            $this->twig->addFunction($function);
+
+            $function = new Twig_SimpleFunction('submit_button', function ()
+            {
+                return submit_button();
+            });
+            $this->twig->addFunction($function);
+
+            $function = new Twig_SimpleFunction('__', function ($id)
+            {
+                return __($id, 'publishpress');
+            });
+            $this->twig->addFunction($function);
+
+            $function = new Twig_SimpleFunction('do_settings_sections', function ($section)
+            {
+                return do_settings_sections($section);
+            });
+            $this->twig->addFunction($function);
+        }
+
+        /**
+         * Initialize the module. Conditionally loads if the module is enabled
+         */
+        public function init()
+        {
+            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
+
+            // Workflow form
+            add_filter('get_sample_permalink_html', array($this, 'filter_get_sample_permalink_html_workflow'), 9, 5);
+            add_filter('post_row_actions', array($this, 'filter_row_actions'), 10, 2);
+            add_action('add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW, array($this, 'action_meta_boxes_workflow'));
+            add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
+
+            // Cancel the PublishPress and PublishPress Slack Notifications
+            add_filter('publishpress_slack_enable_notifications', [$this, 'filter_slack_enable_notifications']);
+            remove_all_actions('pp_send_notification_status_update');
+            remove_all_actions('pp_send_notification_comment');
+
+            // Instantiate the controller of workflow's
+            $workflow_controller = $this->get_service('workflow_controller');
+            $workflow_controller->load_workflow_steps();
+
+            // Add action to intercept transition between post status - post save
+            add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
+            // Add action to intercep new editorial comments
+            add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
+
+            // Add fields to the user's profile screen to select notification channels
+            add_action('show_user_profile', [$this, 'user_profile_fields']);
+            add_action('edit_user_profile', [$this, 'user_profile_fields']);
+
+            // Add action to save data from the user's profile screen
+            add_action('personal_options_update', [$this, 'save_user_profile_fields']);
+            add_action('edit_user_profile_update', [$this, 'save_user_profile_fields']);
+
+            // Load CSS
+            add_action('admin_print_styles', array($this, 'add_admin_styles'));
+
+            // Inject the PublishPress footer
+            add_filter('admin_footer_text', [$this, 'update_footer_admin']);
+
+            add_filter('pp_notification_send_email_message_headers', [$this, 'filter_send_email_message_headers'], 10, 3);
+
+            add_filter('months_dropdown_results', [$this, 'hide_months_dropdown_filter'], 10, 2);
+        }
+
+        /**
+         * Load default editorial metadata the first time the module is loaded
+         *
+         * @since 0.7
+         */
+        public function install()
+        {
+            // Check if we any other workflow before create, avoiding duplicated registers
+            if (false === $this->has_default_workflows())
+            {
+                $this->create_default_workflow_post_save();
+                $this->create_default_workflow_editorial_comment();
+            }
+        }
+
+        /**
+         * Create default notification workflows based on current notification settings
+         */
+        protected function create_default_workflow_post_save()
+        {
+            $twig = $this->get_service('twig');
+
+            // Get post statuses
+            $statuses = $this->get_post_statuses();
+            // Remove the published state
+            foreach ($statuses as $index => $status)
+            {
+                if ($status->slug === 'publish')
+                {
+                    unset($statuses[$index]);
+                }
+            }
+
+            // Post Save
+            $workflow = [
+                'post_status' => 'publish',
+                'post_title'  => __('Notify when content is published', 'publishpress'),
+                'post_type'   => 'psppnotif_workflow',
+                'meta_input'  => [
+                    static::META_KEY_IS_DEFAULT_WORKFLOW        => '1',
+                    Event_Post_save::META_KEY_SELECTED          => '1',
+                    Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish',
+                    Content_Main::META_KEY_SUBJECT              => '&quot;[psppno_post title]&quot; was published',
+                    Content_Main::META_KEY_BODY                 => $twig->render('workflow_default_content_post_save.twig', []),
+                    Receiver_Site_Admin::META_KEY               => 1,
+                ],
+            ];
+
+            $post_id = wp_insert_post($workflow);
+
+            if (is_int($post_id) && !empty($post_id))
+            {
+                // Add each status to the "From" filter, except the "publish" state
+                foreach ($statuses as $status)
+                {
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
+                }
+            }
+        }
+
+        /**
+         * Create default notification workflow for the editorial comments
+         */
+        protected function create_default_workflow_editorial_comment()
+        {
+            $twig = $this->get_service('twig');
+
+            // Post Save
+            $workflow = [
+                'post_status' => 'publish',
+                'post_title'  => __('Notify on editorial comments', 'publishpress'),
+                'post_type'   => 'psppnotif_workflow',
+                'meta_input'  => [
+                    static::META_KEY_IS_DEFAULT_WORKFLOW       => '1',
+                    Event_Editorial_Comment::META_KEY_SELECTED => '1',
+                    Content_Main::META_KEY_SUBJECT             => 'New editorial comment to &quot;[psppno_post title]&quot;',
+                    Content_Main::META_KEY_BODY                => $twig->render('workflow_default_content_editorial_comment.twig', []),
+                    Receiver_Site_Admin::META_KEY              => 1,
+                ],
+            ];
+
+            $post_id = wp_insert_post($workflow);
+
+            if (is_int($post_id) && !empty($post_id))
+            {
+                // Get post statuses
+                $statuses = $this->get_post_statuses();
+                // Add each status to the "From" filter, except the "publish" state
+                foreach ($statuses as $status)
+                {
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_TO, $status->slug, false);
+                }
+            }
+        }
+
+        /**
+         * Returns true if we found any default workflow
+         *
+         * @return Bool
+         */
+        protected function has_default_workflows()
+        {
+            $query_args = [
+                'post_type'  => 'psppnotif_workflow',
+                'meta_query' => [
+                    [
+                        'key'   => static::META_KEY_IS_DEFAULT_WORKFLOW,
+                        'value' => '1',
+                    ],
+                ],
+            ];
+
+            $query = new WP_Query($query_args);
+
+            if (!$query->have_posts())
+            {
+                return false;
+            }
+
+            return $query->the_post();
+        }
+
+        /**
+         * Upgrade our data in case we need to
+         *
+         * @since 0.7
+         */
+        public function upgrade($previous_version)
+        {
+            if (version_compare($previous_version, '1.8.1', '<='))
+            {
+                // Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
+                $workflows = $this->get_workflows();
+
+                if (!empty($workflows))
+                {
+                    foreach ($workflows as $workflow)
+                    {
+                        // Get the user list
+                        $meta = get_post_meta($workflow->ID, '_psppno_touser');
+                        if (!empty($meta))
+                        {
+                            delete_post_meta($workflow->ID, '_psppno_touserlist');
+
+                            foreach ($meta as $data)
+                            {
+                                add_post_meta($workflow->ID, '_psppno_touserlist', $data);
+                            }
+
+                            delete_post_meta($workflow->ID, '_psppno_touser');
+                            add_post_meta($workflow->ID, '_psppno_touser', 1);
+                        }
+
+                        // Get the user group list
+                        $meta = get_post_meta($workflow->ID, '_psppno_togroup');
+                        if (!empty($meta))
+                        {
+                            delete_post_meta($workflow->ID, '_psppno_togrouplist');
+
+                            foreach ($meta as $data)
+                            {
+                                add_post_meta($workflow->ID, '_psppno_togrouplist', $data);
+                            }
+
+                            delete_post_meta($workflow->ID, '_psppno_togroup');
+                            add_post_meta($workflow->ID, '_psppno_togroup', 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * Filters the enable_notifications on the Slack add-on to block it.
+         *
+         * @param bool $enable_notifications
+         */
+        public function filter_slack_enable_notifications($enable_notifications)
+        {
+            return false;
+        }
+
+        /**
+         * Action called on transitioning a post. Used to trigger the
+         * controller of workflows to filter and execute them.
+         *
+         * @param string  $new_status
+         * @param string  $old_status
+         * @param WP_Post $post
+         */
+        public function action_transition_post_status($new_status, $old_status, $post)
+        {
+
+            // Ignore if the post_type is an internal post_type
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type)
+            {
+                return;
+            }
+
+            // Ignores auto-save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+            {
+                return;
+            }
+
+            // Ignores auto-draft
+            if ('new' === $old_status && 'auto-draft' === $new_status)
+            {
+                return;
+            }
+
+            // Go ahead and do the action to run workflows
+            $args = [
+                'action'     => 'transition_post_status',
+                'post'       => $post,
+                'new_status' => $new_status,
+                'old_status' => $old_status,
+            ];
+
+            do_action('publishpress_notif_run_workflows', $args);
+        }
+
+        /**
+         * Action called on editorial comments. Used to trigger the
+         * controller of workflows to filter and execute them.
+         *
+         * @param WP_Comment $comment
+         */
+        public function action_editorial_comment($comment)
+        {
+            // Go ahead and do the action to run workflows
+            $post = get_post($comment->comment_post_ID);
+            $args = [
+                'action'     => 'editorial_comment',
+                'post'       => $post,
+                'new_status' => $post->post_status,
+                'old_status' => $post->post_status,
+                'comment'    => $comment,
+            ];
+
+            do_action('publishpress_notif_run_workflows', $args);
+        }
+
+        /**
+         * Enqueue scripts and stylesheets for the admin pages.
+         *
+         * @TODO uncomment when admin.js is required
+         *
+         * @param string $hook_suffix
+         */
+        public function add_admin_scripts($hook_suffix)
+        {
+            if (in_array($hook_suffix, ['profile.php', 'user-edit.php']))
+            {
+                wp_enqueue_script('psppno-user-profile-notifications', plugin_dir_url(__FILE__) . 'assets/js/user_profile.js', [], PUBLISHPRESS_VERSION);
+            }
+
+            if (in_array($hook_suffix, ['post.php', 'post-new.php']))
+            {
+                wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION);
+                wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION);
+            }
+        }
+
+        /**
+         * Filters the permalink output in the form, to disable it for the
+         * workflow form.
+         */
+        public function filter_get_sample_permalink_html_workflow($return, $post_id, $new_title, $new_slug, $post)
+        {
+
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type)
+            {
+
+                $return = '';
+            }
+
+            return $return;
+        }
+
+        public function filter_row_actions($actions, $post)
+        {
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type)
+            {
+
+                unset($actions['view']);
+            }
+
+            return $actions;
+        }
+
+        public function action_meta_boxes_workflow()
+        {
+            add_meta_box(
+                'publishpress_notif_workflow_div',
+                __('Workflow Settings', 'publishpress'),
+                [$this, 'publishpress_notif_workflow_metabox'],
+                null,
+                'advanced',
+                'high'
+            );
+
+            add_meta_box(
+                'publishpress_notif_workflow_help_div',
+                __('Help', 'publishpress-notifications'),
+                [$this, 'publishpress_notif_workflow_help_metabox'],
+                null,
+                'side',
+                'low'
+            );
+        }
+
+        public function publishpress_notif_workflow_metabox()
+        {
+            // Adds the nonce field
+            wp_nonce_field('publishpress_notif_save_metabox', 'publishpress_notif_metabox_events_nonce');
+
+            $twig = $this->get_service('twig');
+
+            $main_context = [];
+
+            // Renders the event section
+            $context                       = [
+                'id'     => 'event',
+                'header' => __('When to notify?', 'publishpress'),
+                'html'   => apply_filters('publishpress_notif_render_metabox_section_event', ''),
+                'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3',
+            ];
+            $main_context['section_event'] = $twig->render('workflow_metabox_section.twig', $context);
+
+            // Renders the event content filter section
+            $context                               = [
+                'id'     => 'event_content',
+                'header' => __('Filter the content?', 'publishpress'),
+                'html'   => apply_filters('publishpress_notif_render_metabox_section_event_content', ''),
+                'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
+            ];
+            $main_context['section_event_content'] = $twig->render('workflow_metabox_section.twig', $context);
+
+            // Renders the receiver section
+            $context                          = [
+                'id'     => 'receiver',
+                'header' => __('Who to notify?', 'publishpress'),
+                'html'   => apply_filters('publishpress_notif_render_metabox_section_receiver', ''),
+                'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
+            ];
+            $main_context['section_receiver'] = $twig->render('workflow_metabox_section.twig', $context);
+
+            // Renders the content section
+            $context                         = [
+                'id'     => 'content',
+                'header' => __('What to say?', 'publishpress'),
+                'html'   => apply_filters('publishpress_notif_render_metabox_section_content', ''),
+                'class'  => 'pure-u-1',
+            ];
+            $main_context['section_content'] = $twig->render('workflow_metabox_section.twig', $context);
+
+            // Renders the channel section
+            $context                         = [
+                'id'   => 'channel',
+                'html' => apply_filters('publishpress_notif_render_metabox_section_channel', ''),
+            ];
+            $main_context['section_channel'] = $twig->render('workflow_metabox_section.twig', $context);
+
+            echo $twig->render('workflow_metabox.twig', $main_context);
+        }
+
+        /**
+         * Add the metabox for the help text
+         */
+        public function publishpress_notif_workflow_help_metabox()
+        {
+            $context = [
+                'labels' => [
+                    'pre_text'         => __('You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress'),
+                    'content'          => __('Content', 'publishpress'),
+                    'edcomment'        => __('Editorial Comment', 'publishpress'),
+                    'actor'            => __('User making changes or comments', 'publishpress'),
+                    'workflow'         => __('Workflow', 'publishpress'),
+                    'format'           => __('Format', 'publishpress'),
+                    'shortcode'        => __('shortcode', 'publishpress'),
+                    'field'            => __('field', 'publishpress'),
+                    'format_text'      => __('On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".', 'publishpress'),
+                    'available_fields' => __('Available fields', 'publishpress'),
+                    'read_more'        => __('Click here to read more about shortcode options...', 'publishpress'),
+                ],
+            ];
+
+            $twig = $this->get_service('twig');
+
+            echo $twig->render('workflow_help.twig', $context);
+        }
+
+        /**
+         * If it detects a notification workflow is being saved, triggers an
+         * action for the workflow steps to be able to save their specific
+         * metadata from the metaboxes.
+         *
+         * @param int     $id   Unique ID for the post being saved
+         * @param WP_Post $post Post object
+         */
+        public function save_meta_boxes($id, $post)
+        {
+            // Check if the saved post is a notification workflow
+
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type)
+            {
+                // Authentication checks. Make sure the data came from the metabox
+                if (!(
+                    isset($_POST['publishpress_notif_metabox_events_nonce'])
+                    && wp_verify_nonce(
+                        $_POST['publishpress_notif_metabox_events_nonce'],
+                        'publishpress_notif_save_metabox'
+                    )
+                ))
+                {
+                    return $id;
+                }
+
+                // Avoids autosave
+                if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE))
+                {
+                    return $id;
+                }
+
+                // Do the action so each workflow step class can save its metabox data
+                do_action('publishpress_notif_save_workflow_metadata', $id, $post);
+            }
+
+        }
+
+        /**
+         * Returns a list of published workflows.
+         *
+         * @return array
+         */
+        protected function get_published_workflows()
+        {
+            if (empty($this->published_workflows))
+            {
+                // Build the query
+                $query_args = [
+                    'nopaging'      => true,
+                    'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+                    'post_status'   => 'publish',
+                    'no_found_rows' => true,
+                    'cache_results' => true,
+                    'meta_query'    => [],
+                ];
+
+                $query = new \WP_Query($query_args);
+
+                $this->published_workflows = $query->posts;
+            }
+
+            return $this->published_workflows;
+        }
+
+        /**
+         * Returns a list of workflows.
+         *
+         * @return array
+         */
+        protected function get_workflows()
+        {
+            if (empty($this->workflows))
+            {
+                // Build the query
+                $query_args = [
+                    'nopaging'      => true,
+                    'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+                    'no_found_rows' => true,
+                    'cache_results' => true,
+                    'meta_query'    => [],
+                ];
+
+                $query = new \WP_Query($query_args);
+
+                $this->workflows = $query->posts;
+            }
+
+            return $this->workflows;
+        }
+
+        /**
+         * Add extra fields to the user profile to allow them choose where to
+         * receive notifications per workflow.
+         *
+         * @param WP_User $user
+         */
+        public function user_profile_fields($user)
+        {
+            $twig = $this->get_service('twig');
+
+            // Adds the nonce field
+            wp_nonce_field('psppno_user_profile', 'psppno_user_profile_nonce');
+
+            /**
+             * Filters the list of notification channels to display in the
+             * user profile.
+             *
+             * [
+             *    'name': string
+             *    'label': string
+             *    'options': [
+             *        'name'
+             *        'html'
+             *    ]
+             * ]
+             *
+             * @param array
+             */
+            $default_channels = [
+                [
+                    'name'    => 'mute',
+                    'label'   => __('Muted', 'publishpress'),
+                    'options' => [],
+                    'icon'    => PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
+                ],
+            ];
+            $channels         = apply_filters('psppno_filter_channels_user_profile', $default_channels);
+
+            $workflow_channels = $this->get_user_workflow_channels($user);
+            $channels_options  = $this->get_user_workflow_channel_options($user);
+
+            $context = [
+                'labels'            => [
+                    'title'       => __('Editorial Notifications', 'publishpress'),
+                    'description' => __('Choose the channels where each workflow will send notifications to:', 'publishpress'),
+                    'mute'        => __('Muted', 'publishpress'),
+                    'workflows'   => __('Workflows', 'publishpress'),
+                    'channels'    => __('Channels', 'publishpress'),
+                ],
+                'workflows'         => $this->get_published_workflows(),
+                'channels'          => $channels,
+                'workflow_channels' => $workflow_channels,
+                'channels_options'  => $channels_options,
+            ];
+
+            echo $twig->render('user_profile_notification_channels.twig', $context);
+        }
+
+        /**
+         * Returns the list of channels for the workflows we find in the user's
+         * meta data
+         *
+         * @param WP_User $user
+         *
+         * @return array
+         */
+        public function get_user_workflow_channels($user)
+        {
+            $workflows = $this->get_published_workflows();
+            $channels  = [];
+
+            foreach ($workflows as $workflow)
+            {
+                $channel = get_user_meta($user->ID, 'psppno_workflow_channel_' . $workflow->ID, true);
+
+                // If no channel is set yet, use the default one
+                if (empty($channel))
+                {
+                    /**
+                     * Filters the default notification channel.
+                     *
+                     * @param string $default_channel
+                     *
+                     * @return string
+                     */
+                    $channel = apply_filters('psppno_filter_default_notification_channel', 'email');
+                }
+
+                $channels[$workflow->ID] = $channel;
+            }
+
+            return $channels;
+        }
+
+        /**
+         * Returns the list of options for the channels in the workflows we find
+         * in the user's meta data.
+         *
+         * @param WP_User $user
+         *
+         * @return array
+         */
+        public function get_user_workflow_channel_options($user)
+        {
+            $workflows = $this->get_published_workflows();
+            $options   = [];
+
+            foreach ($workflows as $workflow)
+            {
+                /**
+                 * Filters the options for the channel in the workflow
+                 *
+                 * @param array $options
+                 * @param int   $user_id
+                 * @param int   $workflow_id
+                 *
+                 * @return array
+                 */
+                $channels_options       = apply_filters('psppno_filter_workflow_channel_options', [], $user->ID, $workflow->ID);
+                $options[$workflow->ID] = $channels_options;
+            }
+
+            return $options;
+        }
+
+        /**
+         * Saves the data coming from the user profile
+         *
+         * @param int $user_id
+         */
+        public function save_user_profile_fields($user_id)
+        {
+            if (!current_user_can('edit_user', $user_id))
+            {
+                return false;
+            }
+
+            // Check the nonce field
+            if (!(
+                isset($_POST['psppno_user_profile_nonce'])
+                && wp_verify_nonce(
+                    $_POST['psppno_user_profile_nonce'],
+                    'psppno_user_profile'
+                )
+            ))
+            {
+                return;
+            }
+
+            // Workflow Channels
+            if (isset($_POST['psppno_workflow_channel']) && !empty($_POST['psppno_workflow_channel']))
+            {
+                foreach ($_POST['psppno_workflow_channel'] as $workflow_id => $channel)
+                {
+                    update_user_meta($user_id, 'psppno_workflow_channel_' . $workflow_id, $channel);
+                }
+            }
+
+            do_action('psppno_save_user_profile', $user_id);
+        }
+
+        /**
+         * Add any necessary CSS to the WordPress admin
+         *
+         * @uses wp_enqueue_style()
+         */
+        public function add_admin_styles()
+        {
+            wp_enqueue_style('psppno-admin-css', plugin_dir_url(__FILE__) . 'assets/css/admin.css');
+            wp_enqueue_style('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/css/multiple-select.css');
+            wp_enqueue_style('psppno-grid', plugin_dir_url(__FILE__) . 'assets/css/grids-min.css');
+            wp_enqueue_style('psppno-grid-responsive', plugin_dir_url(__FILE__) . 'assets/css/grids-responsive-min.css');
+            wp_enqueue_style('psppno-user-profile', plugin_dir_url(__FILE__) . 'assets/css/user_profile.css');
+        }
+
+        /**
+         * Display the PublishPress footer on the custom post pages
+         */
+        public function update_footer_admin($footer)
+        {
+            global $current_screen;
+
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type)
+            {
+                return $footer;
+            }
+
+            $publishpress = $this->get_service('publishpress');
+
+            $html = '<div class="pressshack-admin-wrapper">';
+            $html .= $publishpress->settings->print_default_footer($publishpress->modules->improved_notifications, false);
+            // We do not close the div by purpose. The footer contains it.
+
+            // Add the wordpress footer
+            $html .= $footer;
+
+            return $html;
+        }
+
+        /**
+         * Filters the email message headers, to enable HTML emails
+         *
+         * @param array   $message_headers
+         * @param string  $action
+         * @param WP_Post $post
+         *
+         * @return array
+         */
+        public function filter_send_email_message_headers($message_headers, $action, $post)
+        {
+            if (is_string($message_headers) && !empty($message_headers))
+            {
+                $message_headers = [$message_headers];
+            }
+
+            if (!is_array($message_headers))
+            {
+                $message_headers = [];
+            }
+
+            $message_headers[] = 'Content-Type: text/html; charset=UTF-8';
+
+            // Set a default "from" name and email
+            $publishpress      = $this->get_service('publishpress');
+            $email_from        = $publishpress->notifications->get_email_from();
+            $message_headers[] = sprintf('from: %s <%s>', $email_from['name'], $email_from['email']);
+
+            return $message_headers;
+        }
+
+        /**
+         * Hide the filter for months in the Workflows list.
+         *
+         * @param array  $months
+         * @param string $post_type
+         *
+         * @return array
+         */
+        public function hide_months_dropdown_filter($months, $post_type)
+        {
+            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post_type)
+            {
+                $months = [];
+            }
+
+            return $months;
+        }
+    }
 }

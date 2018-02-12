@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -31,7 +31,6 @@
 /**
  * PublishPress Ajax test cases
  */
-
 abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
 {
 
@@ -45,7 +44,8 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
      */
     public static function setUpBeforeClass()
     {
-        if (! defined('DOING_AJAX')) {
+        if (!defined('DOING_AJAX'))
+        {
             define('DOING_AJAX', true);
         }
 
@@ -85,7 +85,7 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
     {
         parent::tearDown();
         $_POST = array();
-        $_GET = array();
+        $_GET  = array();
         unset($GLOBALS['post']);
         unset($GLOBALS['comment']);
         remove_filter('wp_die_ajax_handler', array($this, 'getDieHandler'), 1, 1);
@@ -95,10 +95,56 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
     }
 
     /**
+     * Return our callback handler
+     *
+     * @return callback
+     */
+    public function getDieHandler()
+    {
+        return array($this, 'dieHandler');
+    }
+
+    /**
+     * Handler for wp_die()
+     * Save the output for analysis, stop execution by throwing an exception.
+     * Error conditions (no output, just die) will throw <code>WPAjaxDieStopException($message)</code>
+     * You can test for this with:
+     * <code>
+     * $this->setExpectedException('WPAjaxDieStopException', 'something contained in $message');
+     * </code>
+     * Normal program termination (wp_die called at then end of output) will throw
+     * <code>WPAjaxDieContinueException($message)</code> You can test for this with:
+     * <code>
+     * $this->setExpectedException('WPAjaxDieContinueException', 'something contained in $message');
+     * </code>
+     *
+     * @param string $message
+     */
+    public function dieHandler($message)
+    {
+        $this->_last_response .= ob_get_clean();
+
+        if ('' === $this->_last_response)
+        {
+            if (is_scalar($message))
+            {
+                throw new WPAjaxDieStopException((string)$message);
+            } else
+            {
+                throw new WPAjaxDieStopException('0');
+            }
+        } else
+        {
+            throw new WPAjaxDieContinueException($message);
+        }
+    }
+
+    /**
      * Taken from testcase-ajax.php _handleAjax function
      * Mimic the ajax handling of admin-ajax.php
      * Capture the output via output buffering, and if there is any, store
      * it in $this->_last_response.
+     *
      * @param string $action
      */
     protected function _handleAjax($action)
@@ -117,47 +163,9 @@ abstract class WP_PublishPress_Ajax_UnitTestCase extends WP_UnitTestCase
 
         // Save the output
         $buffer = ob_get_clean();
-        if (!empty($buffer)) {
+        if (!empty($buffer))
+        {
             $this->_last_response = $buffer;
-        }
-    }
-
-    /**
-     * Return our callback handler
-     * @return callback
-     */
-    public function getDieHandler()
-    {
-        return array($this, 'dieHandler');
-    }
-
-    /**
-     * Handler for wp_die()
-     * Save the output for analysis, stop execution by throwing an exception.
-     * Error conditions (no output, just die) will throw <code>WPAjaxDieStopException($message)</code>
-     * You can test for this with:
-     * <code>
-     * $this->setExpectedException('WPAjaxDieStopException', 'something contained in $message');
-     * </code>
-     * Normal program termination (wp_die called at then end of output) will throw <code>WPAjaxDieContinueException($message)</code>
-     * You can test for this with:
-     * <code>
-     * $this->setExpectedException('WPAjaxDieContinueException', 'something contained in $message');
-     * </code>
-     * @param string $message
-     */
-    public function dieHandler($message)
-    {
-        $this->_last_response .= ob_get_clean();
-
-        if ('' === $this->_last_response) {
-            if (is_scalar($message)) {
-                throw new WPAjaxDieStopException((string) $message);
-            } else {
-                throw new WPAjaxDieStopException('0');
-            }
-        } else {
-            throw new WPAjaxDieContinueException($message);
         }
     }
 }

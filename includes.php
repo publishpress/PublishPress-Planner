@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -28,40 +28,43 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use \PublishPress\Auto_loader;
+use PublishPress\Auto_loader;
 
-if ( ! defined( 'PP_LOADED' ) ) {
-	$settingsPage = add_query_arg(
-		array(
-			'page'   => 'pp-modules-settings',
-			'module' => 'pp-modules-settings-settings',
-		),
-		get_admin_url( null, 'admin.php' )
-	);
+if (!defined('PP_LOADED'))
+{
+    $settingsPage = add_query_arg(
+        array(
+            'page'   => 'pp-modules-settings',
+            'module' => 'pp-modules-settings-settings',
+        ),
+        get_admin_url(null, 'admin.php')
+    );
 
-	// Define contants
-	define( 'PUBLISHPRESS_VERSION', '1.9.9-beta3' );
-	define( 'PUBLISHPRESS_ROOT', dirname( __FILE__ ) );
-	define( 'PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename( __FILE__ ) );
-	define( 'PUBLISHPRESS_URL', plugins_url( '/', __FILE__ ) );
-	define( 'PUBLISHPRESS_SETTINGS_PAGE', $settingsPage );
-	define( 'PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_ROOT . '/libraries' );
+    // Define contants
+    define('PUBLISHPRESS_VERSION', '1.9.9-beta3');
+    define('PUBLISHPRESS_ROOT', dirname(__FILE__));
+    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
+    define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
+    define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
+    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_ROOT . '/libraries');
 
-	// Define the Priority for the notification/notification_status_change method
-	// Added to allow users select a custom priority
-	if ( ! defined( 'PP_NOTIFICATION_PRIORITY_STATUS_CHANGE' ) ) {
-		define( 'PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10 );
-	}
+    // Define the Priority for the notification/notification_status_change method
+    // Added to allow users select a custom priority
+    if (!defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE'))
+    {
+        define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
+    }
 
-	require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
+    require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
-	// Register the autoloader
-	if ( ! class_exists( '\\PublishPress\\Auto_loader' ) ) {
-		require_once PUBLISHPRESS_LIBRARIES_PATH . '/Auto_loader.php';
-	}
+    // Register the autoloader
+    if (!class_exists('\\PublishPress\\Auto_loader'))
+    {
+        require_once PUBLISHPRESS_LIBRARIES_PATH . '/Auto_loader.php';
+    }
 
-	// Register the library
-	Auto_loader::register( '\\PublishPress\\', PUBLISHPRESS_LIBRARIES_PATH );
+    // Register the library
+    Auto_loader::register('\\PublishPress\\', PUBLISHPRESS_LIBRARIES_PATH);
 
-	define( 'PP_LOADED', 1 );
+    define('PP_LOADED', 1);
 }

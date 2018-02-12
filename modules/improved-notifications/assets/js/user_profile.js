@@ -19,32 +19,32 @@
  * You should have received a copy of the GNU General Public License
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
-( function ( $ ) {
-	$( function() {
+(function ($) {
+    $(function () {
 
-		show_workflow_channel_options();
+        show_workflow_channel_options();
 
-		// Add the event listener to the channel list
-		$( '.psppno_workflow_channel input[type="radio"]' ).change( function ( event ) {
-			show_workflow_channel_options();
-		} );
+        // Add the event listener to the channel list
+        $('.psppno_workflow_channel input[type="radio"]').change(function (event) {
+            show_workflow_channel_options();
+        });
 
 
-		function hide_all_channel_options() {
-			$( '.psppno_workflow_channel_options > div' ).hide();
-		}
+        function hide_all_channel_options() {
+            $('.psppno_workflow_channel_options > div').hide();
+        }
 
-		function show_workflow_channel_options() {
-			hide_all_channel_options();
+        function show_workflow_channel_options() {
+            hide_all_channel_options();
 
-			// Show the channel options for the selected channels
-			$( '.psppno_workflow_channel input[name^=psppno_workflow_channel]:checked' ).each( function () {
-				var $elem       = $( this ),
-					workflow_id = $elem.data( 'workflow-id' ),
-					channel     = $elem.val();
+            // Show the channel options for the selected channels
+            $('.psppno_workflow_channel input[name^=psppno_workflow_channel]:checked').each(function () {
+                var $elem = $(this),
+                    workflow_id = $elem.data('workflow-id'),
+                    channel = $elem.val();
 
-				$( '.psppno_workflow_' + workflow_id + '  .psppno_workflow_' + channel + '_options' ).show();
-			} );
-		}
-	} );
-} )( jQuery );
+                $('.psppno_workflow_' + workflow_id + '  .psppno_workflow_' + channel + '_options').show();
+            });
+        }
+    });
+})(jQuery);

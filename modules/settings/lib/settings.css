@@ -1,7 +1,7 @@
 /* @override http://localhost:8888/wpplugindev/wp-content/plugins/publishpress/css/settings.css?ver=0.6.4 */
 
 .float-right {
-    float:right;
+    float: right;
 }
 
 .float-left {
@@ -57,12 +57,12 @@
     font-size: 12px;
     color: #3d3d3d;
     line-height: 150%;
-    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Verdana, "Bitstream Vera Sans", sans-serif;
 }
 
 .publishpress-modules .publishpress-module h4 {
     color: #000000;
-    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Verdana, "Bitstream Vera Sans", sans-serif;
     font-size: 17px;
     font-style: normal;
     font-weight: normal;
@@ -83,8 +83,8 @@
     border: solid 1px #538312;
     background: #64991e;
     background: -webkit-gradient(linear, left top, left bottom, from(#86C67C), to(#3D8B37));
-    background: -moz-linear-gradient(top,  #86C67C,  #3D8B37);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#86C67C', endColorstr='#3D8B37');
+    background: -moz-linear-gradient(top, #86C67C, #3D8B37);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#86C67C', endColorstr='#3D8B37');
 }
 
 .publishpress-modules .publishpress-module .button-primary:hover {
@@ -97,7 +97,7 @@
     border: solid 1px #666;
     background: #655997;
     box-shadow: none;
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#BBB', endColorstr='#888');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BBB', endColorstr='#888');
     text-shadow: none;
 }
 
@@ -205,7 +205,7 @@ h3.nav-tab-wrapper {
 }
 
 .form-error p {
-    font-weight:bold;
+    font-weight: bold;
     color: #CC0000;
 }
 

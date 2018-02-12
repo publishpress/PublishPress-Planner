@@ -9,58 +9,64 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event_Content;
 
-class Category extends Base {
+class Category extends Base
+{
 
-	const META_KEY_SELECTED = '_psppno_evtcontcategory';
+    const META_KEY_SELECTED = '_psppno_evtcontcategory';
 
-	const META_VALUE_SELECTED = 'category';
+    const META_VALUE_SELECTED = 'category';
 
-	/**
-	 * The constructor
-	 */
-	public function __construct() {
-		$this->name  = 'category';
-		$this->label = __( 'Category', 'publishpress' );
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->name  = 'category';
+        $this->label = __('Category', 'publishpress');
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Method to return a list of fields to display in the filter area
-	 *
-	 * @param array
-	 *
-	 * @return array
-	 */
-	protected function get_filters( $filters = [] ) {
-		if ( ! empty( $this->cache_filters ) ) {
-			return $this->cache_filters;
-		}
+    /**
+     * Method to return a list of fields to display in the filter area
+     *
+     * @param array
+     *
+     * @return array
+     */
+    protected function get_filters($filters = [])
+    {
+        if (!empty($this->cache_filters))
+        {
+            return $this->cache_filters;
+        }
 
-		$step_name = $this->attr_prefix . '_' . $this->name;
+        $step_name = $this->attr_prefix . '_' . $this->name;
 
-		$filters[] = new Filter\Category( $step_name );
+        $filters[] = new Filter\Category($step_name);
 
-		return parent::get_filters( $filters );
-	}
+        return parent::get_filters($filters);
+    }
 
-	/**
-	 * Filters and returns the arguments for the query which locates
-	 * workflows that should be executed.
-	 *
-	 * @param array $query_args
-	 * @param array $action_args
-	 * @return array
-	 */
-	public function filter_run_workflow_query_args( $query_args, $action_args ) {
+    /**
+     * Filters and returns the arguments for the query which locates
+     * workflows that should be executed.
+     *
+     * @param array $query_args
+     * @param array $action_args
+     * @return array
+     */
+    public function filter_run_workflow_query_args($query_args, $action_args)
+    {
 
-		// Check the filters
-		$filters = $this->get_filters();
+        // Check the filters
+        $filters = $this->get_filters();
 
-		foreach ( $filters as $filter ) {
-			$query_args = $filter->get_run_workflow_query_args( $query_args, $action_args );
-		}
+        foreach ($filters as $filter)
+        {
+            $query_args = $filter->get_run_workflow_query_args($query_args, $action_args);
+        }
 
-		return $query_args;
-	}
+        return $query_args;
+    }
 }

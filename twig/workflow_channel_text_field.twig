@@ -1,17 +1,17 @@
 <div>
-	{% if label %}
-		<label for="{{ id }}">{{ label }}</label>
-	{% endif %}
+    {% if label %}
+        <label for="{{ id }}">{{ label }}</label>
+    {% endif %}
 
-	<input
-		type="text"
-		name="{{ name }}"
-		id="{{ id }}"
-		value="%value%"
-		placeholder="{{ placeholder }}"
-		{% if description %}
-			title="{{ description }}"
-		{% endif %}
-		/>
+    <input
+            type="text"
+            name="{{ name }}"
+            id="{{ id }}"
+            value="%value%"
+            placeholder="{{ placeholder }}"
+            {% if description %}
+                title="{{ description }}"
+            {% endif %}
+    />
 
 </div>

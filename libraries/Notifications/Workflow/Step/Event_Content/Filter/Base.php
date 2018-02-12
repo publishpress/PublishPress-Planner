@@ -11,6 +11,7 @@ namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
 
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Base as Event_Filter_Base;
 
-class Base extends Event_Filter_Base {
+class Base extends Event_Filter_Base
+{
 
 }

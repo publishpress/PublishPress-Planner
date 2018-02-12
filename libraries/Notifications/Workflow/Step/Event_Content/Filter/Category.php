@@ -12,127 +12,137 @@ namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Filter_Interface;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Category as Step_Category;
 
-class Category extends Base implements Filter_Interface {
+class Category extends Base implements Filter_Interface
+{
 
-	const META_KEY_CATEGORY = '_psppno_whencategory';
+    const META_KEY_CATEGORY = '_psppno_whencategory';
 
-	/**
-	 * Function to render and returnt the HTML markup for the
-	 * Field in the form.
-	 *
-	 * @return string
-	 */
-	public function render() {
-		echo $this->get_service( 'twig' )->render(
-			'workflow_filter_multiple_select.twig',
-			[
-				'name'    => "publishpress_notif[{$this->step_name}_filters][category]",
-				'id'      => "publishpress_notif_{$this->step_name}_filters_category",
-				'options' => $this->get_options(),
-				'labels'  => [
-					'label' => esc_html__( 'Categories', 'publishpress' ),
-				]
-			]
-		);
-	}
+    /**
+     * Function to render and returnt the HTML markup for the
+     * Field in the form.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        echo $this->get_service('twig')->render(
+            'workflow_filter_multiple_select.twig',
+            [
+                'name'    => "publishpress_notif[{$this->step_name}_filters][category]",
+                'id'      => "publishpress_notif_{$this->step_name}_filters_category",
+                'options' => $this->get_options(),
+                'labels'  => [
+                    'label' => esc_html__('Categories', 'publishpress'),
+                ],
+            ]
+        );
+    }
 
-	/**
-	 * Returns a list of post types in the options format
-	 *
-	 * @return array
-	 */
-	protected function get_options() {
-		$categories = get_categories([
-			'orderby'      => 'name',
-			'order'        => 'ASC',
-			'hide_empty'   => false,
-			'hierarchical' => true,
-		]);
+    /**
+     * Returns a list of post types in the options format
+     *
+     * @return array
+     */
+    protected function get_options()
+    {
+        $categories = get_categories([
+            'orderby'      => 'name',
+            'order'        => 'ASC',
+            'hide_empty'   => false,
+            'hierarchical' => true,
+        ]);
 
-		$metadata = (array) $this->get_metadata( static::META_KEY_CATEGORY );
+        $metadata = (array)$this->get_metadata(static::META_KEY_CATEGORY);
 
-		$options = [];
-		foreach ( $categories as $category ) {
-			$options[] = [
-				'value'    => $category->slug,
-				'label'    => $category->name,
-				'selected' => in_array( $category->slug, $metadata ),
-			];
-		}
+        $options = [];
+        foreach ($categories as $category)
+        {
+            $options[] = [
+                'value'    => $category->slug,
+                'label'    => $category->name,
+                'selected' => in_array($category->slug, $metadata),
+            ];
+        }
 
-		return $options;
-	}
+        return $options;
+    }
 
-	/**
-	 * Function to save the metadata from the metabox
-	 *
-	 * @param int     $id
-	 * @param WP_Post $post
-	 */
-	public function save_metabox_data( $id, $post ) {
-		if ( ! isset( $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'] ) ) {
-			$values = [];
-		} else {
-			$values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
-		}
+    /**
+     * Function to save the metadata from the metabox
+     *
+     * @param int     $id
+     * @param WP_Post $post
+     */
+    public function save_metabox_data($id, $post)
+    {
+        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category']))
+        {
+            $values = [];
+        } else
+        {
+            $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
+        }
 
-		$this->update_metadata_array( $id, static::META_KEY_CATEGORY, $values );
-	}
+        $this->update_metadata_array($id, static::META_KEY_CATEGORY, $values);
+    }
 
-	/**
-	 * Filters and returns the arguments for the query which locates
-	 * workflows that should be executed.
-	 *
-	 * @param array $query_args
-	 * @param array $action_args
-	 * @return array
-	 */
-	public function get_run_workflow_query_args( $query_args, $action_args ) {
+    /**
+     * Filters and returns the arguments for the query which locates
+     * workflows that should be executed.
+     *
+     * @param array $query_args
+     * @param array $action_args
+     * @return array
+     */
+    public function get_run_workflow_query_args($query_args, $action_args)
+    {
 
-		$categories = wp_get_post_terms( $action_args['post']->ID, 'category' );
-		$category_ids = [];
+        $categories   = wp_get_post_terms($action_args['post']->ID, 'category');
+        $category_ids = [];
 
-		if ( ! empty( $categories ) ) {
-			foreach ( $categories as $category ) {
-				$category_ids[] = $category->slug;
-			}
-		}
-		$category_ids = implode( ',', $category_ids );
+        if (!empty($categories))
+        {
+            foreach ($categories as $category)
+            {
+                $category_ids[] = $category->slug;
+            }
+        }
+        $category_ids = implode(',', $category_ids);
 
-		$query_args['meta_query'][] = [
-			'relation' => 'OR',
-			// The filter is disabled
-			[
-				'key'     => Step_Category::META_KEY_SELECTED,
-				'value'   => '0',
-				'compare' => '=',
-			],
-			// The filter is disabled
-			[
-				'key'     => Step_Category::META_KEY_SELECTED,
-				'value'   => '',
-				'compare' => '=',
-			],
-			// The filter is disabled
-			[
-				'key'     => Step_Category::META_KEY_SELECTED,
-				'value'   => '',
-				'compare' => 'IS NULL',
-			],
-			// The filter wasn't set yet
-			[
-				'key'     => Step_Category::META_KEY_SELECTED,
-				'value'   => '',
-				'compare' => 'NOT EXISTS',
-			],
-			// The filter validates the value
-			[
-				'key'     => static::META_KEY_CATEGORY,
-				'value'   => $category_ids,
-				'compare' => 'IN',
-			],
-		];
+        $query_args['meta_query'][] = [
+            'relation' => 'OR',
+            // The filter is disabled
+            [
+                'key'     => Step_Category::META_KEY_SELECTED,
+                'value'   => '0',
+                'compare' => '=',
+            ],
+            // The filter is disabled
+            [
+                'key'     => Step_Category::META_KEY_SELECTED,
+                'value'   => '',
+                'compare' => '=',
+            ],
+            // The filter is disabled
+            [
+                'key'     => Step_Category::META_KEY_SELECTED,
+                'value'   => '',
+                'compare' => 'IS NULL',
+            ],
+            // The filter wasn't set yet
+            [
+                'key'     => Step_Category::META_KEY_SELECTED,
+                'value'   => '',
+                'compare' => 'NOT EXISTS',
+            ],
+            // The filter validates the value
+            [
+                'key'     => static::META_KEY_CATEGORY,
+                'value'   => $category_ids,
+                'compare' => 'IN',
+            ],
+        ];
 
-		return parent::get_run_workflow_query_args( $query_args, $action_args );
-	}
+        return parent::get_run_workflow_query_args($query_args, $action_args);
+    }
 }

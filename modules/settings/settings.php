@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -28,7 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Settings')) {
+if (!class_exists('PP_Settings'))
+{
     class PP_Settings extends PP_Module
     {
         const SETTINGS_SLUG = 'pp-settings';
@@ -438,7 +439,7 @@ if (!class_exists('PP_Settings')) {
                     'settings_slug' => $module_settings_slug,
                     'slug'          => PP_Modules_Settings::SETTINGS_SLUG,
                     'module_output' => $module_output,
-                    'text'          => $display_text
+                    'text'          => $display_text,
                 )
             );
 

@@ -1,5 +1,5 @@
 .psppno_workflow_user_fields ul.psppno_workflows li {
-	padding: 10px 5px 5px 5px;
+    padding: 10px 5px 5px 5px;
     margin: 0;
     border-bottom: 1px solid #ccc;
 }
@@ -10,23 +10,23 @@
 }*/
 
 .psppno_workflow_user_fields .psppno_workflow_channel input[type=radio] {
-	margin-top: -11px;
-	margin-right: 5px;
+    margin-top: -11px;
+    margin-right: 5px;
 }
 
 .psppno_workflow_user_fields .psppno_workflow_channel img {
-	width: 16px;
-	padding-top: 4px;
+    width: 16px;
+    padding-top: 4px;
 }
 
 .psppno_workflow_column_header.psppno_channels {
-	width: 260px;
+    width: 260px;
 }
 
 .psppno_workflow_channel_field {
-	display: inline;
+    display: inline;
 }
 
 .psppno_workflows td {
-	border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }

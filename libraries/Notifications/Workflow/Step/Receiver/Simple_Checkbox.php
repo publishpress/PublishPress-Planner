@@ -9,88 +9,97 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
-class Simple_Checkbox extends Base implements Receiver_Interface {
+class Simple_Checkbox extends Base implements Receiver_Interface
+{
 
-	const META_KEY   = '_psppno_to_______';
-	const META_VALUE = 'define';
+    const META_KEY = '_psppno_to_______';
 
-	protected $option_name = 'define-option';
+    const META_VALUE = 'define';
 
-	/**
-	 * The constructor
-	 */
-	public function __construct() {
-		$this->twig_template = 'workflow_receiver_checkbox_field.twig';
+    protected $option_name = 'define-option';
 
-		parent::__construct();
-	}
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->twig_template = 'workflow_receiver_checkbox_field.twig';
 
-	/**
-	 * Filters the context sent to the twig template in the metabox
-	 *
-	 * @param array $template_context
-	 */
-	public function filter_workflow_metabox_context( $template_context ) {
-		// Metadata
-		$meta = $this->get_metadata( static::META_KEY, true );
+        parent::__construct();
+    }
 
-		$template_context['meta'] = [
-			'selected' => (bool) $meta,
-		];
+    /**
+     * Filters the context sent to the twig template in the metabox
+     *
+     * @param array $template_context
+     */
+    public function filter_workflow_metabox_context($template_context)
+    {
+        // Metadata
+        $meta = $this->get_metadata(static::META_KEY, true);
 
-		return $template_context;
-	}
+        $template_context['meta'] = [
+            'selected' => (bool)$meta,
+        ];
 
-	/**
-	 * Method called when a notification workflow is saved.
-	 *
-	 * @param int      $id
-	 * @param WP_Post  $post
-	 */
-	public function save_metabox_data( $id, $post ) {
-		if ( ! isset( $_POST['publishpress_notif'] )
-			|| ! isset( $_POST['publishpress_notif'][ $this->option_name ] ) ) {
-			// Assume it is disabled
-			$this->set_selection( $id, false );
-		}
+        return $template_context;
+    }
 
-		$params = $_POST['publishpress_notif'];
+    /**
+     * Filters the list of receivers for the workflow. Returns the list of IDs.
+     *
+     * @param array   $receivers
+     * @param WP_Post $workflow
+     * @param array   $args
+     * @return array
+     */
+    public function filter_workflow_receivers($receivers, $workflow, $args)
+    {
+        return $receivers;
+    }
 
-		// Is selected in the events?
-		$selected = isset( $params[ $this->option_name ] ) ? $params[ $this->option_name ] : false;
-		$this->set_selection( $id, $selected === static::META_VALUE );
-	}
+    /**
+     * Method called when a notification workflow is saved.
+     *
+     * @param int     $id
+     * @param WP_Post $post
+     */
+    public function save_metabox_data($id, $post)
+    {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif'][$this->option_name]))
+        {
+            // Assume it is disabled
+            $this->set_selection($id, false);
+        }
 
-	/**
-	 * Update the meta data to set the selection for the give workflow
-	 *
-	 * @param int  $post_id
-	 * @param bool $selected
-	 */
-	protected function set_selection( $post_id, $selected ) {
-		update_post_meta( $post_id, static::META_KEY, $selected );
-	}
+        $params = $_POST['publishpress_notif'];
 
-	/**
-	 * Filters the list of receivers for the workflow. Returns the list of IDs.
-	 *
-	 * @param array   $receivers
-	 * @param WP_Post $workflow
-	 * @param array   $args
-	 * @return array
-	 */
-	public function filter_workflow_receivers( $receivers, $workflow, $args ) {
-		return $receivers;
-	}
+        // Is selected in the events?
+        $selected = isset($params[$this->option_name]) ? $params[$this->option_name] : false;
+        $this->set_selection($id, $selected === static::META_VALUE);
+    }
 
-	/**
-	 * Returns true if the receiver is selected in the respective workflow.
-	 *
-	 * @param int $post_id
-	 *
-	 * @return bool
-	 */
-	protected function is_selected( $post_id ) {
-		return (bool) get_post_meta( $post_id, static::META_KEY, true );
-	}
+    /**
+     * Update the meta data to set the selection for the give workflow
+     *
+     * @param int  $post_id
+     * @param bool $selected
+     */
+    protected function set_selection($post_id, $selected)
+    {
+        update_post_meta($post_id, static::META_KEY, $selected);
+    }
+
+    /**
+     * Returns true if the receiver is selected in the respective workflow.
+     *
+     * @param int $post_id
+     *
+     * @return bool
+     */
+    protected function is_selected($post_id)
+    {
+        return (bool)get_post_meta($post_id, static::META_KEY, true);
+    }
 }

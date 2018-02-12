@@ -9,7 +9,7 @@
 
 namespace PublishPress;
 
-defined( 'ABSPATH' ) or die( 'No direct script access allowed.' );
+defined('ABSPATH') or die('No direct script access allowed.');
 
 class Auto_loader
 {
@@ -34,15 +34,6 @@ class Auto_loader
      */
     protected static $instance = null;
 
-    protected static function registerLoader($method)
-    {
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
-
-        spl_autoload_register(array(static::$instance, $method));
-    }
-
     /**
      * Register a psr4 namespace
      *
@@ -57,12 +48,14 @@ class Auto_loader
      */
     public static function register($prefix = null, $baseDir = null, $prepend = false)
     {
-        if ($prefix === null || $baseDir === null) {
+        if ($prefix === null || $baseDir === null)
+        {
             // Recognize old-style instantiations for backward compatibility
             return;
         }
 
-        if (count(self::$prefixes) == 0) {
+        if (count(self::$prefixes) == 0)
+        {
             // Register function on first call
             static::registerLoader('loadClass');
         }
@@ -74,70 +67,29 @@ class Auto_loader
         $baseDir = rtrim($baseDir, '\\/') . '/';
 
         // initialise the namespace prefix array
-        if (empty(self::$prefixes[$prefix])) {
+        if (empty(self::$prefixes[$prefix]))
+        {
             self::$prefixes[$prefix] = array();
         }
 
         // retain the base directory for the namespace prefix
-        if ($prepend) {
+        if ($prepend)
+        {
             array_unshift(self::$prefixes[$prefix], $baseDir);
-        } else {
+        } else
+        {
             array_push(self::$prefixes[$prefix], $baseDir);
         }
     }
 
-    /**
-     * Loads the class file for a given class name.
-     *
-     * @param string $class The fully-qualified class name.
-     *
-     * @return null|string The mapped file name on success, or boolean false on failure.
-     */
-    protected function loadClass($class)
+    protected static function registerLoader($method)
     {
-        $prefixes  = explode('\\', $class);
-        $className = '';
-        while ($prefixes) {
-            $className = array_pop($prefixes) . $className;
-            $prefix    = join('\\', $prefixes) . '\\';
-
-            if ($filePath = $this->loadMappedFile($prefix, $className)) {
-                return $filePath;
-            }
-            $className = '\\' . $className;
+        if (static::$instance === null)
+        {
+            static::$instance = new static();
         }
 
-        // never found a mapped file
-        return false;
-    }
-
-    /**
-     * Load the mapped file for a namespace prefix and class.
-     *
-     * @param string $prefix    The namespace prefix.
-     * @param string $className The relative class name.
-     *
-     * @return bool|string false if no mapped file can be loaded | path that was loaded
-     */
-    protected function loadMappedFile($prefix, $className)
-    {
-        // are there any base directories for this namespace prefix?
-        if (isset(self::$prefixes[$prefix]) === false) {
-            return false;
-        }
-
-        // look through base directories for this namespace prefix
-        foreach (self::$prefixes[$prefix] as $baseDir) {
-            $path = $baseDir . str_replace('\\', '/', $className) . '.php';
-
-            if (is_file($path)) {
-                require_once $path;
-                return $path;
-            }
-        }
-
-        // never found it
-        return false;
+        spl_autoload_register(array(static::$instance, $method));
     }
 
     /**
@@ -165,18 +117,81 @@ class Auto_loader
      */
     public static function registerCamelBase($prefix, $baseDir)
     {
-        if (!is_dir($baseDir)) {
+        if (!is_dir($baseDir))
+        {
             throw new \Exception("Cannot register '{$prefix}'. The requested base directory does not exist!'");
         }
 
-        if (count(self::$camelPrefixes) == 0) {
+        if (count(self::$camelPrefixes) == 0)
+        {
             // Register function on first call
             static::registerLoader('loadCamelClass');
         }
 
-        if (empty(self::$camelPrefixes[$prefix])) {
+        if (empty(self::$camelPrefixes[$prefix]))
+        {
             self::$camelPrefixes[$prefix] = $baseDir;
         }
+    }
+
+    /**
+     * Loads the class file for a given class name.
+     *
+     * @param string $class The fully-qualified class name.
+     *
+     * @return null|string The mapped file name on success, or boolean false on failure.
+     */
+    protected function loadClass($class)
+    {
+        $prefixes  = explode('\\', $class);
+        $className = '';
+        while ($prefixes)
+        {
+            $className = array_pop($prefixes) . $className;
+            $prefix    = join('\\', $prefixes) . '\\';
+
+            if ($filePath = $this->loadMappedFile($prefix, $className))
+            {
+                return $filePath;
+            }
+            $className = '\\' . $className;
+        }
+
+        // never found a mapped file
+        return false;
+    }
+
+    /**
+     * Load the mapped file for a namespace prefix and class.
+     *
+     * @param string $prefix    The namespace prefix.
+     * @param string $className The relative class name.
+     *
+     * @return bool|string false if no mapped file can be loaded | path that was loaded
+     */
+    protected function loadMappedFile($prefix, $className)
+    {
+        // are there any base directories for this namespace prefix?
+        if (isset(self::$prefixes[$prefix]) === false)
+        {
+            return false;
+        }
+
+        // look through base directories for this namespace prefix
+        foreach (self::$prefixes[$prefix] as $baseDir)
+        {
+            $path = $baseDir . str_replace('\\', '/', $className) . '.php';
+
+            if (is_file($path))
+            {
+                require_once $path;
+
+                return $path;
+            }
+        }
+
+        // never found it
+        return false;
     }
 
     /**
@@ -188,16 +203,21 @@ class Auto_loader
      */
     protected function loadCamelClass($class)
     {
-        if (!class_exists($class)) {
-            foreach (self::$camelPrefixes as $prefix => $baseDir) {
-                if (strpos($class, $prefix) === 0) {
+        if (!class_exists($class))
+        {
+            foreach (self::$camelPrefixes as $prefix => $baseDir)
+            {
+                if (strpos($class, $prefix) === 0)
+                {
                     $parts = preg_split('/(?<=[a-z])(?=[A-Z])/x', substr($class, strlen($prefix)));
 
                     $file     = strtolower(join('/', $parts));
                     $filePath = $baseDir . '/' . $file . '.php';
 
-                    if (is_file($filePath)) {
+                    if (is_file($filePath))
+                    {
                         require_once $filePath;
+
                         return $filePath;
                     }
                 }

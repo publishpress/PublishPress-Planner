@@ -1,12 +1,50 @@
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) defineProperties(Constructor, staticProps);
+        return Constructor;
+    };
+}();
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _possibleConstructorReturn(self, call) {
+    if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+        }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
 
 (function ($, React, ReactDOM) {
     var STEP_STATUS_IDLE = 'idle';
@@ -28,7 +66,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function render() {
                 return React.createElement(
                     'div',
-                    { className: 'error' },
+                    {className: 'error'},
                     React.createElement(
                         'p',
                         null,
@@ -60,7 +98,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var inProgress = started && !finished;
 
                 var errorRows = errors.map(function (error) {
-                    return React.createElement(ErrorRow, { key: error.key, msg: error.msg });
+                    return React.createElement(ErrorRow, {key: error.key, msg: error.msg});
                 });
 
                 return React.createElement(
@@ -68,56 +106,56 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     null,
                     React.createElement(
                         'div',
-                        { className: 'pp-progressbar-container' },
+                        {className: 'pp-progressbar-container'},
                         inProgress && React.createElement(
-                            'div',
-                            null,
-                            React.createElement('span', { className: 'dashicons dashicons-update pp-rotating' }),
-                            React.createElement(
-                                'span',
-                                { className: 'pp-in-progress' },
-                                objectL10n.header_msg
-                            )
+                        'div',
+                        null,
+                        React.createElement('span', {className: 'dashicons dashicons-update pp-rotating'}),
+                        React.createElement(
+                            'span',
+                            {className: 'pp-in-progress'},
+                            objectL10n.header_msg
+                        )
                         )
                     ),
                     hasErrors && React.createElement(
-                        'div',
-                        { className: 'pp-errors' },
-                        React.createElement(
-                            'h2',
-                            null,
-                            objectL10n.error
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
-                            errorRows
-                        ),
-                        React.createElement(
-                            'p',
-                            null,
-                            objectL10n.error_msg_intro,
-                            ' ',
-                            React.createElement(
-                                'a',
-                                { href: 'mailto:help@publishpress.com' },
-                                objectL10n.error_msg_contact
-                            )
-                        )
+                    'div',
+                    {className: 'pp-errors'},
+                    React.createElement(
+                        'h2',
+                        null,
+                        objectL10n.error
                     ),
-                    finished && React.createElement(
+                    React.createElement(
                         'div',
                         null,
-                        React.createElement(
-                            'p',
-                            { className: 'pp-success' },
-                            objectL10n.success_msg
-                        ),
+                        errorRows
+                    ),
+                    React.createElement(
+                        'p',
+                        null,
+                        objectL10n.error_msg_intro,
+                        ' ',
                         React.createElement(
                             'a',
-                            { className: 'button', href: objectL10n.back_to_publishpress_url },
-                            objectL10n.back_to_publishpress_label
+                            {href: 'mailto:help@publishpress.com'},
+                            objectL10n.error_msg_contact
                         )
+                    )
+                    ),
+                    finished && React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'p',
+                        {className: 'pp-success'},
+                        objectL10n.success_msg
+                    ),
+                    React.createElement(
+                        'a',
+                        {className: 'button', href: objectL10n.back_to_publishpress_url},
+                        objectL10n.back_to_publishpress_label
+                    )
                     )
                 );
             }
@@ -138,7 +176,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _createClass(StepListContainer, [{
             key: 'render',
             value: function render() {
-                return React.createElement(StepList, { started: this.props.started, finished: this.props.finished, errors: this.props.errors });
+                return React.createElement(StepList, {
+                    started: this.props.started,
+                    finished: this.props.finished,
+                    errors: this.props.errors
+                });
             }
         }]);
 
@@ -180,7 +222,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this5 = this;
 
                 // Go to the next step index.
-                this.setState({ currentStepIndex: this.state.currentStepIndex + 1 }, function () {
+                this.setState({currentStepIndex: this.state.currentStepIndex + 1}, function () {
                     // Check if we finished the step list to finish the process.
                     if (_this5.state.currentStepIndex >= _this5.state.steps.length) {
 
@@ -190,7 +232,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         };
 
                         $.post(ajaxurl, _data, function (response) {
-                            _this5.setState({ finished: true });
+                            _this5.setState({finished: true});
                         });
 
                         return;
@@ -243,15 +285,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return step.key === newStep.key ? newStep : step;
                 });
 
-                this.setState({ steps: newSteps });
+                this.setState({steps: newSteps});
             }
         }, {
             key: 'appendError',
             value: function appendError(msg) {
                 var errors = this.state.errors;
-                errors.push({ key: errors.length, msg: msg });
+                errors.push({key: errors.length, msg: msg});
 
-                this.setState({ errors: errors });
+                this.setState({errors: errors});
             }
         }, {
             key: 'eventStartMigration',
@@ -276,19 +318,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         )
                     ),
                     !started && React.createElement(
-                        'h4',
-                        { className: 'pp-warning' },
-                        objectL10n.migration_warning
+                    'h4',
+                    {className: 'pp-warning'},
+                    objectL10n.migration_warning
                     ),
                     React.createElement(
                         'div',
                         null,
-                        React.createElement(StepListContainer, { started: started, finished: this.state.finished, errors: this.state.errors }),
+                        React.createElement(StepListContainer, {
+                            started: started,
+                            finished: this.state.finished,
+                            errors: this.state.errors
+                        }),
                         React.createElement('br', null),
                         !started && React.createElement(
-                            'button',
-                            { onClick: this.eventStartMigration, className: 'button button-primary' },
-                            objectL10n.start_migration
+                        'button',
+                        {onClick: this.eventStartMigration, className: 'button button-primary'},
+                        objectL10n.start_migration
                         )
                     )
                 );

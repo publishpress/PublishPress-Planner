@@ -1,125 +1,134 @@
+(function ($) {
+    inlineEditCustomStatus = {
 
-(function($) {
-inlineEditCustomStatus = {
+        init: function () {
+            var t = this, row = $('#inline-edit');
 
-    init : function() {
-        var t = this, row = $('#inline-edit');
+            t.what = '#term-';
 
-        t.what = '#term-';
+            $('.editinline').live('click', function () {
+                inlineEditCustomStatus.edit(this);
+                return false;
+            });
 
-        $('.editinline').live('click', function(){
-            inlineEditCustomStatus.edit(this);
-            return false;
-        });
+            // prepare the edit row
+            row.keyup(function (e) {
+                if (e.which == 27) return inlineEditCustomStatus.revert();
+            });
 
-        // prepare the edit row
-        row.keyup(function(e) { if(e.which == 27) return inlineEditCustomStatus.revert(); });
+            $('a.cancel', row).click(function () {
+                return inlineEditCustomStatus.revert();
+            });
+            $('a.save', row).click(function () {
+                return inlineEditCustomStatus.save(this);
+            });
+            $('input, select', row).keydown(function (e) {
+                if (e.which == 13) return inlineEditCustomStatus.save(this);
+            });
 
-        $('a.cancel', row).click(function() { return inlineEditCustomStatus.revert(); });
-        $('a.save', row).click(function() { return inlineEditCustomStatus.save(this); });
-        $('input, select', row).keydown(function(e) { if(e.which == 13) return inlineEditCustomStatus.save(this); });
+            $('#posts-filter input[type="submit"]').mousedown(function (e) {
+                t.revert();
+            });
+        },
 
-        $('#posts-filter input[type="submit"]').mousedown(function(e){
+        toggle: function (el) {
+            var t = this;
+            $(t.what + t.getId(el)).css('display') == 'none' ? t.revert() : t.edit(el);
+        },
+
+        edit: function (id) {
+            var t = this, editRow;
             t.revert();
-        });
-    },
 
-    toggle : function(el) {
-        var t = this;
-        $(t.what+t.getId(el)).css('display') == 'none' ? t.revert() : t.edit(el);
-    },
+            if (typeof(id) == 'object')
+                id = t.getId(id);
 
-    edit : function(id) {
-        var t = this, editRow;
-        t.revert();
+            editRow = $('#inline-edit').clone(true), rowData = $('#inline_' + id);
+            $('td', editRow).attr('colspan', $('.widefat:first thead th:visible').length);
 
-        if (typeof(id) == 'object')
-            id = t.getId(id);
+            if ($(t.what + id).hasClass('alternate'))
+                $(editRow).addClass('alternate');
 
-        editRow = $('#inline-edit').clone(true), rowData = $('#inline_'+id);
-        $('td', editRow).attr('colspan', $('.widefat:first thead th:visible').length);
+            $(t.what + id).hide().after(editRow);
 
-        if ($(t.what+id).hasClass('alternate'))
-            $(editRow).addClass('alternate');
+            $(':input[name="name"]', editRow).val($('.name', rowData).text());
+            $(':input[name="description"]', editRow).val($('.description', rowData).text());
+            $(':input[name="color"]', editRow).val($('.color', rowData).text());
+            $(':input[name="icon"]', editRow).val($('.icon', rowData).text());
 
-        $(t.what+id).hide().after(editRow);
+            $(editRow).attr('id', 'edit-' + id).addClass('inline-editor').show();
+            $('.ptitle', editRow).eq(0).focus();
 
-        $(':input[name="name"]', editRow).val($('.name', rowData).text());
-        $(':input[name="description"]', editRow).val($('.description', rowData).text());
-        $(':input[name="color"]', editRow).val($('.color', rowData).text());
-        $(':input[name="icon"]', editRow).val($('.icon', rowData).text());
+            return false;
+        },
 
-        $(editRow).attr('id', 'edit-'+id).addClass('inline-editor').show();
-        $('.ptitle', editRow).eq(0).focus();
+        save: function (id) {
+            var params, fields, tax = $('input[name="taxonomy"]').val() || '';
 
-        return false;
-    },
+            if (typeof(id) == 'object')
+                id = this.getId(id);
 
-    save : function(id) {
-        var params, fields, tax = $('input[name="taxonomy"]').val() || '';
+            $('table.widefat .inline-edit-save .waiting').show();
 
-        if(typeof(id) == 'object')
-            id = this.getId(id);
+            params = {
+                action: 'inline_save_status',
+                status_id: id,
+            };
 
-        $('table.widefat .inline-edit-save .waiting').show();
-
-        params = {
-            action: 'inline_save_status',
-            status_id: id,
-        };
-
-        fields = $('#edit-'+id+' :input').serialize();
-        params = fields + '&' + $.param(params);
+            fields = $('#edit-' + id + ' :input').serialize();
+            params = fields + '&' + $.param(params);
 
 
-        // make ajax request
-        $.post(ajaxurl, params,
-            function(r) {
-                var row, new_id;
-                $('table.widefat .inline-edit-save .waiting').hide();
+            // make ajax request
+            $.post(ajaxurl, params,
+                function (r) {
+                    var row, new_id;
+                    $('table.widefat .inline-edit-save .waiting').hide();
 
-                if (r) {
-                    if (-1 != r.indexOf('<tr')) {
-                        $(inlineEditCustomStatus.what+id).remove();
-                        new_id = $(r).attr('id');
+                    if (r) {
+                        if (-1 != r.indexOf('<tr')) {
+                            $(inlineEditCustomStatus.what + id).remove();
+                            new_id = $(r).attr('id');
 
-                        $('#edit-'+id).before(r).remove();
-                        row = new_id ? $('#'+new_id) : $(inlineEditCustomStatus.what+id);
-                        row.hide().fadeIn();
+                            $('#edit-' + id).before(r).remove();
+                            row = new_id ? $('#' + new_id) : $(inlineEditCustomStatus.what + id);
+                            row.hide().fadeIn();
+                        } else
+                            $('#edit-' + id + ' .inline-edit-save .error').html(r).show();
                     } else
-                        $('#edit-'+id+' .inline-edit-save .error').html(r).show();
-                } else
-                    $('#edit-'+id+' .inline-edit-save .error').html(inlineEditL10n.error).show();
+                        $('#edit-' + id + ' .inline-edit-save .error').html(inlineEditL10n.error).show();
+                }
+            );
+            return false;
+        },
+
+        revert: function () {
+            var id = $('table.widefat tr.inline-editor').attr('id');
+
+            if (id) {
+                $('table.widefat .inline-edit-save .waiting').hide();
+                $('#' + id).remove();
+                id = id.substr(id.lastIndexOf('-') + 1);
+                $(this.what + id).show();
             }
-        );
-        return false;
-    },
 
-    revert : function() {
-        var id = $('table.widefat tr.inline-editor').attr('id');
+            return false;
+        },
 
-        if (id) {
-            $('table.widefat .inline-edit-save .waiting').hide();
-            $('#'+id).remove();
-            id = id.substr(id.lastIndexOf('-') + 1);
-            $(this.what+id).show();
+        getId: function (o) {
+            var id = o.tagName == 'TR' ? o.id : $(o).parents('tr').attr('id'), parts = id.split('-');
+            return parts[parts.length - 1];
         }
+    };
 
-        return false;
-    },
-
-    getId : function(o) {
-        var id = o.tagName == 'TR' ? o.id : $(o).parents('tr').attr('id'), parts = id.split('-');
-        return parts[parts.length - 1];
-    }
-};
-
-$(document).ready(function(){inlineEditCustomStatus.init();});
+    $(document).ready(function () {
+        inlineEditCustomStatus.init();
+    });
 })(jQuery);
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function () {
 
-    jQuery('.delete-status a').click(function(){
+    jQuery('.delete-status a').click(function () {
         if (!confirm(objectL10ncustomstatus.pp_confirm_delete_status_string))
             return false;
     });
@@ -129,17 +138,17 @@ jQuery(document).ready(function(){
      */
     jQuery("#the-list").sortable({
         items: 'tr.term-static',
-        update: function(event, ui) {
+        update: function (event, ui) {
             var affected_item = ui.item;
             // Reset the position indicies for all terms
             jQuery('#the-list tr').removeClass('alternate');
             var terms = new Array();
-            jQuery('#the-list tr.term-static').each(function(index, value){
-                var term_id = jQuery(this).attr('id').replace('term-','');
+            jQuery('#the-list tr.term-static').each(function (index, value) {
+                var term_id = jQuery(this).attr('id').replace('term-', '');
                 terms[index] = term_id;
                 jQuery('td.position', this).html(index + 1);
                 // Update the WP core design for alternating rows
-                if (index%2 == 0)
+                if (index % 2 == 0)
                     jQuery(this).addClass('alternate');
             });
             // Prepare the POST
@@ -149,7 +158,7 @@ jQuery(document).ready(function(){
                 custom_status_sortable_nonce: jQuery('#custom-status-sortable').val(),
             };
             // Inform WordPress of our updated positions
-            jQuery.post(ajaxurl, params, function(retval){
+            jQuery.post(ajaxurl, params, function (retval) {
                 jQuery('.notice').remove();
                 // If there's a success message, print it. Otherwise we assume we received an error message
                 if (retval.status == 'success') {

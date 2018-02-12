@@ -31,22 +31,22 @@
 .pressshack-admin-wrapper a:visited,
 .pressshack-admin-wrapper a:active,
 .pressshack-admin-wrapper a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .pressshack-admin-wrapper a,
 .pressshack-admin-wrapper button,
 .pressshack-admin-wrapper button::before {
-	-webkit-transition: all 200ms ease-in-out;
-	-moz-transition: all 200ms ease-in-out;
-	-o-transition: all 200ms ease-in-out;
-	transition: all 200ms ease-in-out;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
 }
 
 .pressshack-admin-wrapper a,
 .pressshack-admin-wrapper a div,
 .pressshack-admin-wrapper a p {
-	color: #655997;
+    color: #655997;
 }
 
 .pressshack-admin-wrapper a:hover,
@@ -61,138 +61,138 @@
 .pressshack-admin-wrapper a:hover .dashicons:before,
 .pressshack-admin-wrapper a:focus .dashicons:before,
 .pressshack-admin-wrapper a:active .dashicons:before {
-	color: #5A4F87;
-	box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	-o-box-shadow: none;
+    color: #5A4F87;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
 }
 
 .pressshack-admin-wrapper header .pressshack-title {
-	display: inline-block;
-	padding: 10px 0 10px 55px;
-	background-image: url(../../modules/settings/lib/icon-128x128.png);
-	background-size: 45px auto;
-	background-position: left center;
-	background-repeat: no-repeat;
-	background-color: transparent;
+    display: inline-block;
+    padding: 10px 0 10px 55px;
+    background-image: url(../../modules/settings/lib/icon-128x128.png);
+    background-size: 45px auto;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color: transparent;
 }
 
 .pressshack-admin-wrapper > header h1 {
-	margin: .67em 0 15px .15em;
-	font-weight: 600;
-	font-size: 2em;
+    margin: .67em 0 15px .15em;
+    font-weight: 600;
+    font-size: 2em;
 }
 
 .pressshack-admin-wrapper > header h1 a,
 .pressshack-admin-wrapper > header h1 a:hover,
 .pressshack-admin-wrapper > header h1 a:focus,
 .pressshack-admin-wrapper > header h1 a:active {
-	color: #23282d;
+    color: #23282d;
 }
 
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab {
-	color: inherit;
+    color: inherit;
 }
 
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab-active,
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:hover,
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:active,
 .pressshack-admin-wrapper .nav-tab-wrapper .nav-tab:focus {
-	border-top-color: #655997;
-	color: #655997;
+    border-top-color: #655997;
+    color: #655997;
 }
 
 .pressshack-admin-wrapper > footer {
-	text-align: center;
+    text-align: center;
 }
 
 .pressshack-admin-wrapper > footer > div.pp-rating {
-	font-size: 12px;
-	margin-bottom: 10px;
-	margin-top: 30px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 30px;
 }
 
 .pressshack-admin-wrapper > footer * {
-	color: #777;
+    color: #777;
 }
 
 .pressshack-admin-wrapper > footer > nav ul {
-	list-style: none;
+    list-style: none;
 }
 
 .pressshack-admin-wrapper > footer > nav ul > li {
-	display: inline-block;
+    display: inline-block;
 }
 
 .pressshack-admin-wrapper > footer > nav ul > li:not(:first-child) {
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
 .pressshack-admin-wrapper > footer > nav ul > li > a {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .pressshack-admin-wrapper > footer .dashicons.dashicons-star-filled {
-	line-height: 18px;
-	font-size: 12px;
-	width: 12px;
-	height: 12px;
-	color: #FFB300;
-	-webkit-transition: color 200ms ease-in-out;
-	-moz-transition: color 200ms ease-in-out;
-	-o-transition: color 200ms ease-in-out;
-	transition: color 200ms ease-in-out;
+    line-height: 18px;
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    color: #FFB300;
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out;
 }
 
 .pressshack-admin-wrapper button:not(.notice-dismiss),
 .pressshack-admin-wrapper .button:not(.notice-dismiss) {
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	text-shadow: initial;
-	-webkit-box-shadow: initial;
-	-moz-box-shadow: initial;
-	box-shadow: initial;
-	vertical-align: middle;
-	line-height: 0;
-	min-height: 28px;
-	text-decoration: none;
-	padding: 15px 10px;
-	border-width: 2px;
-	border-style: solid;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-shadow: initial;
+    -webkit-box-shadow: initial;
+    -moz-box-shadow: initial;
+    box-shadow: initial;
+    vertical-align: middle;
+    line-height: 0;
+    min-height: 28px;
+    text-decoration: none;
+    padding: 15px 10px;
+    border-width: 2px;
+    border-style: solid;
 }
 
 .pressshack-admin-wrapper .button-primary {
-	background-color: #FFB300;
-	border-color: #C58C07;
-	color: #754D26;
+    background-color: #FFB300;
+    border-color: #C58C07;
+    color: #754D26;
 }
 
 .pressshack-admin-wrapper .button-primary:hover,
 .pressshack-admin-wrapper .button-primary:active,
 .pressshack-admin-wrapper .button-primary:focus {
-	background-color: #F3AC04;
-	border-color: #C58C07;
-	color: #333;
-	outline: none;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	-o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #F3AC04;
+    border-color: #C58C07;
+    color: #333;
+    outline: none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .pressshack-admin-wrapper .button:not(.notice-dismiss):hover,
 .pressshack-admin-wrapper .button:not(.notice-dismiss):active,
 .pressshack-admin-wrapper .button:not(.notice-dismiss):focus {
-	outline: none;
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    outline: none;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .pressshack-admin-wrapper .pp-pressshack-logo img {
-	width: 100px;
+    width: 100px;
 }
 
 /**

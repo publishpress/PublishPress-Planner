@@ -71,6 +71,7 @@ div#normal-sortables #pp_editorial_meta_meta_box {
     column-width: 250px;
     column-span: 50px;
 }
+
 div#normal-sortables #pp_editorial_meta_meta_box .pp_editorial_meta {
     /* Get the items within the columns to break at reasonable points */
     -webkit-column-break-inside: avoid;

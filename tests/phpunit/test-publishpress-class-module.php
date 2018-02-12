@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PublishPress
- * @author PublishPress
+ * @author  PublishPress
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -32,6 +32,7 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
 {
 
     protected static $admin_user_id;
+
     protected static $PublishPressModule;
 
     public static function wpSetUpBeforeClass($factory)
@@ -39,15 +40,9 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
         self::$admin_user_id = $factory->user->create(array('role' => 'administrator'));
     }
 
-    public function _flush_roles()
+    public static function wpTearDownAfterClass()
     {
-        // we want to make sure we're testing against the db, not just in-memory data
-        // this will flush everything and reload it from the db
-        unset($GLOBALS['wp_user_roles']);
-        global $wp_roles;
-        if (is_object($wp_roles)) {
-            $wp_roles->_init();
-        }
+        self::delete_user(self::$admin_user_id);
     }
 
     public function setUp()
@@ -57,6 +52,18 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
         self::$PublishPressModule = new PP_Module();
 
         $this->_flush_roles();
+    }
+
+    public function _flush_roles()
+    {
+        // we want to make sure we're testing against the db, not just in-memory data
+        // this will flush everything and reload it from the db
+        unset($GLOBALS['wp_user_roles']);
+        global $wp_roles;
+        if (is_object($wp_roles))
+        {
+            $wp_roles->_init();
+        }
     }
 
     public function tearDown()
@@ -70,7 +77,8 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
             'administrator' => array('edit_usergroups'),
         );
 
-        foreach ($usergroup_roles as $role => $caps) {
+        foreach ($usergroup_roles as $role => $caps)
+        {
             self::$PublishPressModule->add_caps_to_role($role, $caps);
         }
 
@@ -96,7 +104,7 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
         set_current_screen('post.php');
 
         $post_id = $this->factory->post->create(array(
-            'post_author' => self::$admin_user_id
+            'post_author' => self::$admin_user_id,
         ));
 
         $_REQUEST['post'] = $post_id;
@@ -125,10 +133,5 @@ class WP_Test_PublishPress_Class_Module extends WP_UnitTestCase
 
         _unregister_post_type('content');
         set_current_screen('front');
-    }
-
-    public static function wpTearDownAfterClass()
-    {
-        self::delete_user(self::$admin_user_id);
     }
 }

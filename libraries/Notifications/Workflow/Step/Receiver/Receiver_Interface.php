@@ -11,30 +11,31 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
-interface Receiver_Interface {
+interface Receiver_Interface
+{
 
-	/**
-	 * Filters the context sent to the twig template in the metabox
-	 *
-	 * @param array $template_context
-	 */
-	public function filter_workflow_metabox_context( $template_context );
+    /**
+     * Filters the context sent to the twig template in the metabox
+     *
+     * @param array $template_context
+     */
+    public function filter_workflow_metabox_context($template_context);
 
-	/**
-	 * Method called when a notification workflow is saved.
-	 *
-	 * @param int      $id
-	 * @param WP_Post  $post
-	 */
-	public function save_metabox_data( $id, $post );
+    /**
+     * Method called when a notification workflow is saved.
+     *
+     * @param int     $id
+     * @param WP_Post $post
+     */
+    public function save_metabox_data($id, $post);
 
-	/**
-	 * Filters the list of receivers for the workflow. Returns the list.
-	 *
-	 * @param array   $receivers
-	 * @param WP_Post $workflow
-	 * @param array   $args
-	 * @return array
-	 */
-	public function filter_workflow_receivers( $receivers, $workflow, $args );
+    /**
+     * Filters the list of receivers for the workflow. Returns the list.
+     *
+     * @param array   $receivers
+     * @param WP_Post $workflow
+     * @param array   $args
+     * @return array
+     */
+    public function filter_workflow_receivers($receivers, $workflow, $args);
 }

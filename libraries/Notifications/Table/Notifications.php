@@ -9,210 +9,231 @@
 
 namespace PublishPress\Notifications\Table;
 
-class Notifications extends Base {
-	/**
-	* Constructor, we override the parent to pass our own arguments
-	* We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
-	*/
-	public function __construct() {
-		parent::__construct(
-			array(
-				'singular'=> 'pp_notification_list_notification',
-				'plural'  => 'pp_notification_list_notifications',
-				'ajax'    => false
-			)
-		);
-	}
+class Notifications extends Base
+{
+    /**
+     * Constructor, we override the parent to pass our own arguments
+     * We usually focus on three parameters: singular and plural labels, as well as whether the class supports AJAX.
+     */
+    public function __construct()
+    {
+        parent::__construct(
+            array(
+                'singular' => 'pp_notification_list_notification',
+                'plural'   => 'pp_notification_list_notifications',
+                'ajax'     => false,
+            )
+        );
+    }
 
-	/**
-	 * Add extra markup in the toolbars before or after the list
-	 *
-	 * @param string $which, helps you decide if you add the markup after (bottom) or before (top) the list
-	 */
-	public function extra_tablenav( $which ) {
-		if ( $which == "top" ) {
-			//The code that goes before the table is here
-		}
+    /**
+     * Add extra markup in the toolbars before or after the list
+     *
+     * @param string $which , helps you decide if you add the markup after (bottom) or before (top) the list
+     */
+    public function extra_tablenav($which)
+    {
+        if ($which == "top")
+        {
+            //The code that goes before the table is here
+        }
 
-		if ( $which == "bottom" ) {
-			//The code that goes after the table is there
-		}
-	}
+        if ($which == "bottom")
+        {
+            //The code that goes after the table is there
+        }
+    }
 
-	/**
-	 * Define the columns that are going to be used in the table
-	 *
-	 * @return array $columns, the array of columns to use with the table
-	 */
-	public function get_columns() {
-		return array(
-			'cb'           => 'cb',
-			'post_title'   => __( 'Title', 'publishpress' ),
-			'post_content' => __( 'Message', 'publishpress' ),
-			'post_date'    => __( 'Date', 'publishpress' ),
-			'ID'           => __( 'ID', 'publishpress' ),
-		);
-	}
+    /**
+     * Handles the post date column output.
+     *
+     * @global string $mode List table view mode.
+     *
+     * @param WP_Post $post The current WP_Post object.
+     */
+    public function column_post_date($post)
+    {
+        global $mode;
 
-	/**
-	 * Decide which columns to activate the sorting functionality on
-	 *
-	 * @return array $sortable, the array of columns that can be sorted by the user
-	 */
-	public function get_sortable_columns() {
-		return array(
-			'ID'         => array( 'ID', true ),
-			'post_title' => array( 'post_title', true ),
-			'post_date'  => array( 'post_date', true ),
-		);
-	}
+        if ('0000-00-00 00:00:00' === $post->post_date)
+        {
+            $t_time    = $h_time = __('Undefined');
+            $time_diff = 0;
+        } else
+        {
+            $t_time = get_the_time(__('Y/m/d g:i:s a'));
+            $m_time = $post->post_date;
+            $time   = get_post_time('G', true, $post);
 
-	/**
-	 * Decide which columns to hide
-	 *
-	 * @return array $hidden, the array of columns that will be hidden
-	 */
-	public function get_hidden_columns() {
-		return array(
-			'ID'
-		);
-	}
+            $time_diff = time() - $time;
 
-	/**
-	 * Prepare the table with different parameters, pagination, columns and table elements
-	 */
-	public function prepare_items() {
-		global $wpdb;
+            if ($time_diff > 0 && $time_diff < DAY_IN_SECONDS)
+            {
+                $h_time = sprintf(__('%s ago'), human_time_diff($time));
+            } else
+            {
+                $h_time = mysql2date(__('Y/m/d'), $m_time);
+            }
+        }
 
-		$this->_column_headers = array(
-			$this->get_columns(),
-			$this->get_hidden_columns(),
-			$this->get_sortable_columns()
-		);
+        /** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
+        echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
+    }    /**
+     * Define the columns that are going to be used in the table
+     *
+     * @return array $columns, the array of columns to use with the table
+     */
+    public function get_columns()
+    {
+        return array(
+            'cb'           => 'cb',
+            'post_title'   => __('Title', 'publishpress'),
+            'post_content' => __('Message', 'publishpress'),
+            'post_date'    => __('Date', 'publishpress'),
+            'ID'           => __('ID', 'publishpress'),
+        );
+    }
 
-		/* -- Ordering parameters -- */
-		// Parameters that are going to be used to order the result
-		$orderby = ! empty( $_GET["orderby"]) ? $wpdb->_real_escape( $_GET["orderby"] ) : '';
-		$order = ! empty( $_GET["order"] ) ? $wpdb->_real_escape( $_GET["order"] ) : 'DESC';
+    /**
+     * Decide which columns to activate the sorting functionality on
+     *
+     * @return array $sortable, the array of columns that can be sorted by the user
+     */
+    public function get_sortable_columns()
+    {
+        return array(
+            'ID'         => array('ID', true),
+            'post_title' => array('post_title', true),
+            'post_date'  => array('post_date', true),
+        );
+    }
 
-		$posts_per_page = 10;
+    /**
+     * Decide which columns to hide
+     *
+     * @return array $hidden, the array of columns that will be hidden
+     */
+    public function get_hidden_columns()
+    {
+        return array(
+            'ID',
+        );
+    }
 
-		$user_id = get_current_user_id();
+    /**
+     * Prepare the table with different parameters, pagination, columns and table elements
+     */
+    public function prepare_items()
+    {
+        global $wpdb;
 
-		$args = array(
-			'post_type'      => PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
-			'posts_per_page' => $posts_per_page,
-			'order'          => $order,
-			'orderby'        => $orderby,
-			'meta_query'     => array(
-				// Filters the notifications for the current user
-				array(
-					'key'     => '_psppno_targetuserid',
-					'value'   => $user_id,
-					'type'    => 'numeric',
-					'compare' => '='
-				)
-			)
-		);
+        $this->_column_headers = array(
+            $this->get_columns(),
+            $this->get_hidden_columns(),
+            $this->get_sortable_columns(),
+        );
 
-		$query = new \WP_Query( $args );
+        /* -- Ordering parameters -- */
+        // Parameters that are going to be used to order the result
+        $orderby = !empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
+        $order   = !empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
 
-		/* -- Pagination parameters -- */
-		$totalitems = $query->post_count;
+        $posts_per_page = 10;
 
-		// Which page is this?
-		$paged = ! empty( $_GET["paged"] ) ? $wpdb->_real_escape( $_GET["paged"] ) : '';
+        $user_id = get_current_user_id();
 
-		// Page Number
-		if ( empty( $paged ) || ! is_numeric( $paged ) || $paged <= 0 ) {
-			$paged = 1;
-		}
+        $args = array(
+            'post_type'      => PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
+            'posts_per_page' => $posts_per_page,
+            'order'          => $order,
+            'orderby'        => $orderby,
+            'meta_query'     => array(
+                // Filters the notifications for the current user
+                array(
+                    'key'     => '_psppno_targetuserid',
+                    'value'   => $user_id,
+                    'type'    => 'numeric',
+                    'compare' => '=',
+                ),
+            ),
+        );
 
-		// How many pages do we have in total?
-		$totalpages = ceil( $totalitems / $posts_per_page );
+        $query = new \WP_Query($args);
 
-		/* -- Register the pagination -- */
-		$this->set_pagination_args(
-			array(
-				'total_items' => $totalitems,
-				'total_pages' => $totalpages,
-				'per_page'    => $posts_per_page,
-				'offset'      => (int) $offset
-			)
-		);
+        /* -- Pagination parameters -- */
+        $totalitems = $query->post_count;
 
-		/* -- Fetch the items -- */
-		$this->items = $query->posts;
-	}
+        // Which page is this?
+        $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
 
-	/**
-	 * Method to return the content of the columns
-	 *
-	 * @param WP_Post $item
-	 * @param string  $column_name
-	 *
-	 * @return string
-	 */
-	public function column_default( $item, $column_name ) {
-		switch( $column_name ) {
-			case 'ID':
-			case 'post_title':
-			case 'post_content':
-			case 'post_date':
-				return $item->$column_name;
-			default:
-				//Show the whole array for troubleshooting purposes
-				return print_r( $item, true );
-		}
-	}
+        // Page Number
+        if (empty($paged) || !is_numeric($paged) || $paged <= 0)
+        {
+            $paged = 1;
+        }
 
-	/**
-	 * Handles the checkbox column output.
-	 *
-	 * @param object $post The current post object.
-	 */
-	public function column_cb( $post ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf( __( 'Select %s' ), $post->post_title ); ?></label>
-		<input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo $post->ID; ?>" value="<?php echo esc_attr( $post->ID ); ?>" />
-		<?php
-	}
+        // How many pages do we have in total?
+        $totalpages = ceil($totalitems / $posts_per_page);
 
-	/**
-	 * Handles the post date column output.
-	 *
-	 * @global string $mode List table view mode.
-	 *
-	 * @param WP_Post $post The current WP_Post object.
-	 */
-	public function column_post_date( $post ) {
-		global $mode;
+        /* -- Register the pagination -- */
+        $this->set_pagination_args(
+            array(
+                'total_items' => $totalitems,
+                'total_pages' => $totalpages,
+                'per_page'    => $posts_per_page,
+                'offset'      => (int)$offset,
+            )
+        );
 
-		if ( '0000-00-00 00:00:00' === $post->post_date ) {
-			$t_time = $h_time = __( 'Undefined' );
-			$time_diff = 0;
-		} else {
-			$t_time = get_the_time( __( 'Y/m/d g:i:s a' ) );
-			$m_time = $post->post_date;
-			$time = get_post_time( 'G', true, $post );
+        /* -- Fetch the items -- */
+        $this->items = $query->posts;
+    }
 
-			$time_diff = time() - $time;
+    /**
+     * Method to return the content of the columns
+     *
+     * @param WP_Post $item
+     * @param string  $column_name
+     *
+     * @return string
+     */
+    public function column_default($item, $column_name)
+    {
+        switch ($column_name)
+        {
+            case 'ID':
+            case 'post_title':
+            case 'post_content':
+            case 'post_date':
+                return $item->$column_name;
+            default:
+                //Show the whole array for troubleshooting purposes
+                return print_r($item, true);
+        }
+    }
 
-			if ( $time_diff > 0 && $time_diff < DAY_IN_SECONDS ) {
-				$h_time = sprintf( __( '%s ago' ), human_time_diff( $time ) );
-			} else {
-				$h_time = mysql2date( __( 'Y/m/d' ), $m_time );
-			}
-		}
+    /**
+     * Handles the checkbox column output.
+     *
+     * @param object $post The current post object.
+     */
+    public function column_cb($post)
+    {
+        ?>
+        <label class="screen-reader-text"
+               for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf(__('Select %s'), $post->post_title); ?></label>
+        <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo $post->ID; ?>"
+               value="<?php echo esc_attr($post->ID); ?>"/>
+        <?php
+    }
 
-		/** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
-		echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
-	}
 
-	/**
-	 * Message to be displayed when there are no items
-	 */
-	public function no_items() {
-		_e( 'You don\'t have any notifications', 'publishpress' );
-	}
+
+    /**
+     * Message to be displayed when there are no items
+     */
+    public function no_items()
+    {
+        _e('You don\'t have any notifications', 'publishpress');
+    }
 }

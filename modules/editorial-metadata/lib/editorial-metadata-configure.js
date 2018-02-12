@@ -1,54 +1,54 @@
-( function( $ ) {
-    $( function () {
-        $( '.delete-status a' ).click( function() {
-            if ( ! confirm( objectL10nMetadata.pp_confirm_delete_term_string ) ) {
+(function ($) {
+    $(function () {
+        $('.delete-status a').click(function () {
+            if (!confirm(objectL10nMetadata.pp_confirm_delete_term_string)) {
                 return false;
             }
-        } );
+        });
 
         /**
          * Instantiate the drag and drop sorting functionality
          */
-        $( "#the-list" ).sortable( {
-            items : 'tr.term-static',
+        $("#the-list").sortable({
+            items: 'tr.term-static',
             placeholder: 'test',
-            update: function( event, ui ) {
+            update: function (event, ui) {
                 var affected_item = ui.item;
 
                 // Reset the position indicies for all terms
-                $( '#the-list tr' ).removeClass( 'alternate' );
+                $('#the-list tr').removeClass('alternate');
 
                 var terms = new Array();
-                
-                $( '#the-list tr.term-static' ).each( function( index, value ) {
-                    var term_id = $( this ).attr( 'id' ).replace( 'term-', '' );
-                    terms[ index ] = term_id;
 
-                    $( 'td.position', this ).html( index + 1 );
+                $('#the-list tr.term-static').each(function (index, value) {
+                    var term_id = $(this).attr('id').replace('term-', '');
+                    terms[index] = term_id;
+
+                    $('td.position', this).html(index + 1);
                     // Update the WP core design for alternating rows
-                    if ( index %2  == 0 )
-                        $( this ).addClass( 'alternate' );
+                    if (index % 2 == 0)
+                        $(this).addClass('alternate');
                 });
 
                 // Prepare the POST
                 var params = {
                     action: 'update_term_positions',
                     term_positions: terms,
-                    editorial_metadata_sortable_nonce: $( '#editorial-metadata-sortable' ).val(),
+                    editorial_metadata_sortable_nonce: $('#editorial-metadata-sortable').val(),
                 };
 
                 // Inform WordPress of our updated positions
-                $.post( ajaxurl, params, function( retval ) {
-                    $( '.notice' ).remove();
-                    
+                $.post(ajaxurl, params, function (retval) {
+                    $('.notice').remove();
+
                     // If there's a success message, print it. Otherwise we assume we received an error message
-                    if ( retval.status == 'success' ) {
+                    if (retval.status == 'success') {
                         var message = '<div class="is-dismissible notice notice-success"><p>' + retval.message + '</p></div>';
                     } else {
                         var message = '<div class="is-dismissible notice notice-error"><p>' + retval.message + '</p></div>';
                     }
 
-                    $( '.publishpress-admin header' ).after( message );
+                    $('.publishpress-admin header').after(message);
                 });
             },
             sort: function (e, ui) {
@@ -60,6 +60,6 @@
             }
         });
 
-        $( "#the-list tr.term-static" ).disableSelection();
-    } );
-} )( jQuery );
+        $("#the-list tr.term-static").disableSelection();
+    });
+})(jQuery);

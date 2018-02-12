@@ -1,5 +1,4 @@
-jQuery(document).ready(function() {
-
+jQuery(document).ready(function () {
 
 
     jQuery('label[for=post_status]').show();
@@ -10,40 +9,40 @@ jQuery(document).ready(function() {
         // Show the button for users who can, and can't publish. Those who can't, should see a button to Send for Review
         jQuery('#publish').show();
 
-        if (! (current_user_can_publish_posts || (current_status == 'publish' && current_user_can_edit_published_posts)) ) {
+        if (!(current_user_can_publish_posts || (current_status == 'publish' && current_user_can_edit_published_posts))) {
             // mimic default post status dropdown
             jQuery('<span>&nbsp;<a href="#post_status" class="edit-post-status" tabindex=\'4\'>Edit</a></span>' +
-            ' <div id="post-status-select">' +
-            ' <input type="hidden" name="hidden_post_status" id="hidden_post_status" value="in-progress" />' +
-            ' <select name=\'post_status\' id=\'post_status\' tabindex=\'4\'>' +
-            ' </select>' +
-            '  <a href="#post_status" class="save-post-status button">OK</a>' +
-            '  <a href="#post_status" class="cancel-post-status">Cancel</a>' +
-            ' </div>').insertAfter('#post-status-display');
+                ' <div id="post-status-select">' +
+                ' <input type="hidden" name="hidden_post_status" id="hidden_post_status" value="in-progress" />' +
+                ' <select name=\'post_status\' id=\'post_status\' tabindex=\'4\'>' +
+                ' </select>' +
+                '  <a href="#post_status" class="save-post-status button">OK</a>' +
+                '  <a href="#post_status" class="cancel-post-status">Cancel</a>' +
+                ' </div>').insertAfter('#post-status-display');
 
             if (!status_dropdown_visible) {
                 jQuery('#post-status-select').hide();
                 jQuery('.edit-post-status').show();
             }
 
-            jQuery('.edit-post-status').click(function() {
+            jQuery('.edit-post-status').click(function () {
                 jQuery('#post-status-select').slideDown();
                 jQuery('.edit-post-status').hide();
                 return false;
             });
-            jQuery('.cancel-post-status, .save-post-status').click(function() {
+            jQuery('.cancel-post-status, .save-post-status').click(function () {
                 jQuery('#post-status-select').slideUp();
                 jQuery('.edit-post-status').show();
                 return false;
             });
-            jQuery('.save-post-status').click(function() {
+            jQuery('.save-post-status').click(function () {
                 jQuery('#post-status-display').text(jQuery('select[name="post_status"] :selected').text());
                 return false;
             });
             // Make sure we have the button to save
-            if ( 0 === jQuery( '#save-post' ).length ) {
-                jQuery( '<input type="submit" name="save" id="save-post" value="' + label_save + '" class="button" />' ).appendTo('#save-action');
-                jQuery( '<span class="spinner"></span>' ).appendTo('#save-action');
+            if (0 === jQuery('#save-post').length) {
+                jQuery('<input type="submit" name="save" id="save-post" value="' + label_save + '" class="button" />').appendTo('#save-action');
+                jQuery('<span class="spinner"></span>').appendTo('#save-action');
             }
         }
     }
@@ -57,7 +56,7 @@ jQuery(document).ready(function() {
         pp_update_save_button('Save');
 
         // Bind event when OK button is clicked
-        jQuery('.save-post-status').bind('click', function() {
+        jQuery('.save-post-status').bind('click', function () {
             pp_update_save_button();
         });
 
@@ -87,7 +86,7 @@ jQuery(document).ready(function() {
     } else if (jQuery('select[name="_status"]').length > 0) {
         pp_append_to_dropdown('select[name="_status"]');
         // Refresh the custom status dropdowns everytime Quick Edit is loaded
-        jQuery('#the-list a.editinline').bind('click', function() {
+        jQuery('#the-list a.editinline').bind('click', function () {
             pp_append_to_dropdown('#the-list select[name="_status"]');
         });
         // Clean up the bulk edit selector because it's non-standard
@@ -115,15 +114,15 @@ jQuery(document).ready(function() {
         jQuery(id + ' option').not('[value="future"]').remove();
 
         // Add "Published" status to quick-edit for users that can publish
-        if (id=='select[name="_status"]' && current_user_can_publish_posts) {
+        if (id == 'select[name="_status"]' && current_user_can_publish_posts) {
             jQuery(id).append(jQuery('<option></option')
-                .attr('value','publish')
+                .attr('value', 'publish')
                 .text('Published')
             );
         }
 
         // Add remaining statuses to dropdown. 'private' is always handled by a checkbox, and 'future' already exists if we need it
-        jQuery.each(custom_statuses, function() {
+        jQuery.each(custom_statuses, function () {
             if (this.slug == 'private' || this.slug == 'future')
                 return;
 
@@ -131,12 +130,12 @@ jQuery(document).ready(function() {
                 return;
 
             var $option = jQuery('<option></option>')
-                            .text(this.name)
-                            .attr('value', this.slug)
-                            .attr('title', (this.description) ? this.description : '')
-                            ;
+                .text(this.name)
+                .attr('value', this.slug)
+                .attr('title', (this.description) ? this.description : '')
+            ;
 
-            if(current_status == this.slug) $option.attr('selected','selected');
+            if (current_status == this.slug) $option.attr('selected', 'selected');
 
             $option.appendTo(jQuery(id));
         });
@@ -145,8 +144,8 @@ jQuery(document).ready(function() {
     function pp_can_change_status(slug) {
         var change = false;
 
-        jQuery.each(custom_statuses, function() {
-            if(this.slug==slug) change = true;
+        jQuery.each(custom_statuses, function () {
+            if (this.slug == slug) change = true;
         });
         if (slug == 'publish' && !current_user_can_publish_posts) {
             change = false;
@@ -155,8 +154,8 @@ jQuery(document).ready(function() {
     }
 
     function pp_add_tooltips_to_filter_links(selector) {
-        jQuery.each(custom_statuses, function() {
-            jQuery(selector + ':contains("'+ this.name +'")')
+        jQuery.each(custom_statuses, function () {
+            jQuery(selector + ':contains("' + this.name + '")')
                 .attr('title', this.description)
         })
 
@@ -164,15 +163,15 @@ jQuery(document).ready(function() {
 
     // Update "Save" button text
     function pp_update_save_button(text) {
-        if(!text) text = 'Save as ' + jQuery('select[name="post_status"] :selected').text();
+        if (!text) text = 'Save as ' + jQuery('select[name="post_status"] :selected').text();
         jQuery(':input#save-post').attr('value', text);
     }
 
     // Returns the name of the status given a slug
-    function pp_get_status_name (slug) {
+    function pp_get_status_name(slug) {
         var name = '';
-        jQuery.each(custom_statuses, function() {
-            if(this.slug==slug) name = this.name;
+        jQuery.each(custom_statuses, function () {
+            if (this.slug == slug) name = this.name;
         });
 
         if (!name) {
@@ -191,7 +190,7 @@ jQuery(document).ready(function() {
     // Remove the " - " in between a post title and the post-state span (separately hidden via CSS).
     // This will not affect the dash before post-state-format spans.
     function pp_remove_post_title_trailing_dashes() {
-        jQuery('.post-title.column-title strong').each(function() {
+        jQuery('.post-title.column-title strong').each(function () {
             jQuery(this).html(jQuery(this).html().replace(/(.*) - (<span class="post-state".*<\/span>)$/g, "$1$2"));
         });
     }
