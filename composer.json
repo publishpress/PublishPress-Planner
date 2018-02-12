@@ -1,26 +1,30 @@
 {
-    "name"       : "publishpress",
-    "description": "WordPress plugin to accelerate your publishing workflow.",
-    "homepage"   : "http://publishpress.com/",
-    "type"       : "wordpress-plugin",
-    "license"    : "GPL-2.0+",
-    "authors": [
-        {
-            "name": "PublishPress",
-            "email": "help@publishpress.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/OSTraining/WordPress-Plugin-Builder"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require-dev": {
-        "pressshack/wordpress-plugin-builder": "*",
-        "consolidation/robo": "~1",
-        "gettext/gettext": "^4.2",
-        "codeception/codeception": "^2.3"
+  "name": "publishpress",
+  "description": "WordPress plugin to accelerate your publishing workflow.",
+  "homepage": "http://publishpress.com/",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "PublishPress",
+      "email": "help@publishpress.com"
     }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/OSTraining/WordPress-Plugin-Builder"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">= 5.3",
+    "twig/twig": "~1.0",
+    "pimple/pimple": "~3.0",
+    "publishpress/wordpress-plugin-builder": "^2"
+  },
+  "require-dev": {
+    "gettext/gettext": "^4.2",
+    "codeception/codeception": "^2.3"
+  }
 }
