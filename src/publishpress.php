@@ -178,10 +178,10 @@ class publishpress {
 	 * @uses add_action() To add various actions
 	 */
 	private function setup_actions() {
-		add_action( 'init', array( $this, 'action_init' ) );
-		add_action( 'init', array( $this, 'action_init_after' ), 1000 );
+		add_action( 'init', array( $this, 'action_init' ), 1000 );
+		add_action( 'init', array( $this, 'action_init_after' ), 1100 );
 
-		add_action( 'init', array( $this, 'action_admin_init' ) );
+		add_action( 'init', array( $this, 'action_admin_init' ), 1010 );
 		add_action( 'admin_menu', array( $this, 'action_admin_menu' ), 9 );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts_and_styles' ] );
