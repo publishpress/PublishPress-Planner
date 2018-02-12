@@ -513,46 +513,51 @@ if (!class_exists('PP_Improved_Notifications'))
             $main_context = [];
 
             // Renders the event section
-            $context                       = [
+            $context = [
                 'id'     => 'event',
                 'header' => __('When to notify?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_event', ''),
                 'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3',
             ];
+
             $main_context['section_event'] = $twig->render('workflow_metabox_section.twig', $context);
 
             // Renders the event content filter section
-            $context                               = [
+            $context = [
                 'id'     => 'event_content',
                 'header' => __('Filter the content?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_event_content', ''),
                 'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
+
             $main_context['section_event_content'] = $twig->render('workflow_metabox_section.twig', $context);
 
             // Renders the receiver section
-            $context                          = [
+            $context = [
                 'id'     => 'receiver',
                 'header' => __('Who to notify?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_receiver', ''),
                 'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
+
             $main_context['section_receiver'] = $twig->render('workflow_metabox_section.twig', $context);
 
             // Renders the content section
-            $context                         = [
+            $context = [
                 'id'     => 'content',
                 'header' => __('What to say?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_content', ''),
                 'class'  => 'pure-u-1',
             ];
+
             $main_context['section_content'] = $twig->render('workflow_metabox_section.twig', $context);
 
             // Renders the channel section
-            $context                         = [
+            $context = [
                 'id'   => 'channel',
                 'html' => apply_filters('publishpress_notif_render_metabox_section_channel', ''),
             ];
+
             $main_context['section_channel'] = $twig->render('workflow_metabox_section.twig', $context);
 
             echo $twig->render('workflow_metabox.twig', $main_context);
