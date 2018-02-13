@@ -947,8 +947,10 @@ if (!class_exists('PP_Custom_Status'))
             // Reset our internal object cache
             $this->custom_statuses_cache = array();
 
-            // If the name was changed, we need to change the slug
-            if (isset($args['name']) && $args['name'] != $old_status->name)
+            $args['slug'] = sanitize_title($args['slug']);
+
+            // If the slug is empty we need to defined one
+            if (empty($args['slug']))
             {
                 $args['slug'] = sanitize_title($args['name']);
             }
@@ -1406,6 +1408,7 @@ if (!class_exists('PP_Custom_Status'))
             if (is_numeric($_GET['term-id']))
             {
                 $name        = sanitize_text_field(trim($_POST['name']));
+                $slug        = sanitize_text_field(trim($_POST['slug']));
                 $description = stripslashes(wp_filter_nohtml_kses(trim($_POST['description'])));
 
                 /**
@@ -1468,7 +1471,7 @@ if (!class_exists('PP_Custom_Status'))
                 // Try to add the new post status
                 $args   = array(
                     'name'        => $name,
-                    'slug'        => sanitize_title($name),
+                    'slug'        => $slug,
                     'description' => $description,
                     'color'       => $color,
                     'icon'        => $icon,
@@ -1782,8 +1785,7 @@ if (!class_exists('PP_Custom_Status'))
                     <th scope="row" valign="top"><?php _e('Slug', 'publishpress');
             ?></th>
                     <td>
-                        <input type="text" disabled="disabled" value="<?php echo esc_attr($status->slug);
-            ?>" />
+                        <input type="text" name="slug" id="slug" value="<?php echo esc_attr($status->slug);?>" <?php if ( ! is_numeric( $term_id ) ) : echo 'disabled="disabled"'; endif; ?> />
                         <?php $publishpress->settings->helper_print_error_or_description('slug', __('The slug is the unique ID for the status and is changed when the name is changed.', 'publishpress'));
             ?>
                     </td>
