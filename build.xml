@@ -3,7 +3,7 @@
 <project name="PublishPress Plugin Builder" default="build">
     <!-- TODO: Grab this from the plugin's code -->
     <property name="plugin.name" value="publishpress"/>
-    <property name="plugin.version" value="1.9.9-beta3"/>
+    <property name="plugin.version" value="1.9.9-beta4"/>
 
     <import file="vendor/publishpress/wordpress-plugin-builder/build.xml"/>
 </project>

@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.9.9-beta3
+ * Version: 1.9.9-beta4
  * Text Domain: publishpress
  * Domain Path: /languages
  *
