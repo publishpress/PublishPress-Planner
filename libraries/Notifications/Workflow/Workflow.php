@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
