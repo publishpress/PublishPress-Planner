@@ -68,11 +68,13 @@ if (!class_exists('PP_Notifications'))
                 'icon_class'            => 'dashicons dashicons-email',
                 'slug'                  => 'notifications',
                 'default_options'       => array(
-                    'enabled'    => 'on',
-                    'post_types' => array(
+                    'enabled'                   => 'on',
+                    'post_types'                => array(
                         'post' => 'on',
                         'page' => 'on',
                     ),
+                    'notify_author_by_default'  => '1',
+                    'notify_current_user_by_default' => '1',
                 ),
                 'configure_page_cb'     => 'print_configure_view',
                 'post_type_support'     => 'pp_notification',
@@ -130,6 +132,9 @@ if (!class_exists('PP_Notifications'))
                 add_filter('pp_calendar_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
                 add_filter('pp_story_budget_item_actions', array($this, 'filter_post_row_actions'), 10, 2);
             }
+
+            add_filter('pp_notification_auto_subscribe_post_author', array($this, 'filter_pp_notification_auto_subscribe_post_author'), 10, 2);
+            add_filter('pp_notification_auto_subscribe_current_user', array($this, 'filter_pp_notification_auto_subscribe_current_user'), 10, 2);
 
             // Ajax for saving notification updates
             add_action('wp_ajax_save_notifications', array($this, 'ajax_save_post_subscriptions'));
@@ -428,7 +433,8 @@ if (!class_exists('PP_Notifications'))
 
                 <div class="clear"></div>
 
-                <input type="hidden" name="pp-save_followers" value="1"/> <?php // Extra protection against autosaves ?>
+                <input type="hidden" name="pp-save_followers" value="1"/> <?php // Extra protection against autosaves
+                ?>
 
                 <?php wp_nonce_field('save_user_usergroups', 'pp_notifications_nonce', false); ?>
             </div>
@@ -506,6 +512,36 @@ if (!class_exists('PP_Notifications'))
             }
 
             $this->print_ajax_response('success', (object )$this->get_follow_action_parts($post));
+        }
+
+        /**
+         * @param $default
+         * @param $context
+         * @return bool
+         */
+        public function filter_pp_notification_auto_subscribe_post_author($default, $context)
+        {
+            if (!isset($this->module->options->notify_author_by_default))
+            {
+                return $default;
+            }
+
+            return (booL)$this->module->options->notify_author_by_default;
+        }
+
+        /**
+         * @param $default
+         * @param $context
+         * @return bool
+         */
+        public function filter_pp_notification_auto_subscribe_current_user($default, $context)
+        {
+            if (!isset($this->module->options->notify_current_user_by_default))
+            {
+                return $default;
+            }
+
+            return (booL)$this->module->options->notify_current_user_by_default;
         }
 
 
@@ -1182,6 +1218,22 @@ if (!class_exists('PP_Notifications'))
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'notify_author_by_default',
+                __('Notify authors by default:', 'publishpress'),
+                array($this, 'settings_notify_author_by_default_option'),
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'notify_current_user_by_default',
+                __('Notify current user by default:', 'publishpress'),
+                array($this, 'settings_notify_current_user_by_default_option'),
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -1246,6 +1298,46 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
+         * Field to choose between auto select author for notifications.
+         */
+        public function settings_notify_author_by_default_option()
+        {
+            $checked = '1';
+            if (isset($this->module->options->notify_author_by_default))
+            {
+                $checked = $this->module->options->notify_author_by_default;
+            }
+
+            $checked = (bool)$checked ? 'checked="checked"' : '';
+
+            echo '<input
+                    id="' . $this->module->slug . '_notify_author_by_default"
+                    type="checkbox"
+                    name="' . $this->module->options_group_name . '[notify_author_by_default]"
+                    value="1" ' . $checked . '/>';
+        }
+
+        /**
+         * Field to choose between auto select current user for notifications.
+         */
+        public function settings_notify_current_user_by_default_option()
+        {
+            $checked = '1';
+            if (isset($this->module->options->notify_current_user_by_default))
+            {
+                $checked = $this->module->options->notify_current_user_by_default;
+            }
+
+            $checked = (bool)$checked ? 'checked="checked"' : '';
+
+            echo '<input
+                    id="' . $this->module->slug . '_notify_current_user_by_default"
+                    type="checkbox"
+                    name="' . $this->module->options_group_name . '[notify_current_user_by_default]"
+                    value="1" ' . $checked . '/>';
+        }
+
+        /**
          * Validate our user input as the settings are being saved
          *
          * @since 0.7
@@ -1260,11 +1352,28 @@ if (!class_exists('PP_Notifications'))
             }
             $new_options['post_types'] = $this->clean_post_type_options($new_options['post_types'], $this->module->post_type_support);
 
-            // var_dump($new_options['email_from']); die;
             if (isset($new_options['email_from']))
             {
                 $new_options['email_from_name'] = filter_var($new_options['email_from_name'], FILTER_SANITIZE_STRING);
                 $new_options['email_from']      = filter_var($new_options['email_from'], FILTER_SANITIZE_EMAIL);
+            }
+
+
+            if (isset($new_options['notify_author_by_default']))
+            {
+                $new_options['notify_author_by_default'] = (bool)$new_options['notify_author_by_default'] ? '1' : '0';
+            } else
+            {
+                $new_options['notify_author_by_default'] = '0';
+            }
+
+
+            if (isset($new_options['notify_current_user_by_default']))
+            {
+                $new_options['notify_current_user_by_default'] = (bool)$new_options['notify_current_user_by_default'] ? '1' : '0';
+            } else
+            {
+                $new_options['notify_current_user_by_default'] = '0';
             }
 
             return $new_options;
