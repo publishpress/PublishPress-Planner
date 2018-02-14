@@ -232,7 +232,73 @@ if (!class_exists('PP_Calendar'))
                 return $original_template;
             }
 
+            add_filter('pp_calendar_total_weeks', array($this, 'filter_calendar_total_weeks_public_feed'), 10, 3);
+            add_filter('pp_calendar_ics_subscription_start_date', array($this, 'filter_calendar_start_date_public_feed'), 10);
+
             $this->handle_ics_subscription();
+
+            remove_filter('pp_calendar_total_weeks', array($this, 'filter_calendar_total_weeks_public_feed'));
+            remove_filter('pp_calendar_ics_subscription_start_date', array($this, 'filter_calendar_start_date_public_feed'));
+        }
+
+        /**
+         * @param $weeks
+         * @param $startDate
+         * @param $context
+         * @return float|int
+         */
+        public function filter_calendar_total_weeks_public_feed($weeks, $startDate, $context)
+        {
+            if (!isset($_GET['end']))
+            {
+                $end = 'm2';
+            } else
+            {
+                $end = preg_replace('/[^wm0-9]/', '', $_GET['end']);
+            }
+
+            if (preg_match('/m[0-9]*/', $end))
+            {
+                $weeks = (int)str_replace('m', '', $end) * 4;
+            } else
+            {
+                $weeks = (int)str_replace('w', '', $end);
+            }
+
+            // Calculate the diff in weeks from start date until now
+            $today = date('Y-m-d');
+
+            $first  = DateTime::createFromFormat('Y-m-d', $startDate);
+            $second = DateTime::createFromFormat('Y-m-d', $today);
+
+            $diff = floor($first->diff($second)->days / 7);
+
+            $weeks += $diff;
+
+            return $weeks;
+        }
+
+        /**
+         * @param $startDate
+         * @return false|string
+         */
+        public function filter_calendar_start_date_public_feed($startDate)
+        {
+            if (!isset($_GET['start']))
+            {
+                // Current week
+                $start = 0;
+            } else
+            {
+                $start = (int)$_GET['start'];
+            }
+
+            if ($start > 0)
+            {
+                $startDate = date('Y-m-d', strtotime('-' . $start . ' months', strtotime($startDate)));
+            }
+
+            return $startDate;
         }
 
         /**
@@ -337,11 +403,13 @@ if (!class_exists('PP_Calendar'))
                     'jquery-ui-sortable',
                     'jquery-ui-draggable',
                     'jquery-ui-droppable',
+                    'clipboard-js',
                 );
                 foreach ($js_libraries as $js_library)
                 {
                     wp_enqueue_script($js_library);
                 }
+                wp_enqueue_script('clipboard-js', $this->module_url . 'lib/clipboard.min.js', array('jquery'), PUBLISHPRESS_VERSION, true);
                 wp_enqueue_script('publishpress-calendar-js', $this->module_url . 'lib/calendar.js', $js_libraries, PUBLISHPRESS_VERSION, true);
 
                 $pp_cal_js_params = array(
@@ -485,7 +553,8 @@ if (!class_exists('PP_Calendar'))
             // Set the start date for the posts_where filter
             $this->start_date = apply_filters('pp_calendar_ics_subscription_start_date', $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))));
 
-            $this->total_weeks = apply_filters('pp_calendar_total_weeks', $this->total_weeks, 'ics_subscription');
+            $this->total_weeks = apply_filters('pp_calendar_total_weeks', $this->total_weeks, $this->start_date, 'ics_subscription');
+
 
             $formatted_posts = array();
             for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++)
@@ -807,12 +876,12 @@ if (!class_exists('PP_Calendar'))
             if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key)
             {
                 // Prepare the download link
-                $args          = array(
+                $args = array(
                     'action'   => 'pp_calendar_ics_subscription',
                     'user'     => wp_get_current_user()->user_login,
                     'user_key' => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
                 );
-                $download_link = add_query_arg($args, admin_url('admin-ajax.php'));
+//                $download_link = add_query_arg($args, admin_url('admin-ajax.php'));
 
                 // Prepare the subscribe link for the feed
                 unset($args['action']);
@@ -821,16 +890,76 @@ if (!class_exists('PP_Calendar'))
                 $subscription_link   = add_query_arg($args, site_url());
 
                 $description .= '<div class="calendar-subscribe">';
-                $description .= sprintf(
-                    '<a href="%s"><span class="dashicons dashicons-download"></span></a>&nbsp;',
-                    esc_attr($download_link)
-                );
 
-                $description .= sprintf(
-                    '<a href="%s"><span class="dashicons dashicons-external"></span>%s</a>',
-                    esc_attr($subscription_link),
-                    __('Subscribe in iCal or Google Calendar', 'publishpress')
-                );
+                add_thickbox();
+
+                ob_start();
+                ?>
+                <div id="publishpress-calendar-ics-subs" style="display:none;">
+                    <h3><?php echo __('PublishPress', 'publishpress'); ?>
+                        - <?php echo __('Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    </h3>
+
+                    <div>
+                        <h4><?php echo __('Start date', 'publishpress'); ?></h4>
+                        <select id="publishpress-start-date">
+                            <option value="0"
+                                    selected="selected"><?php echo __('Current week', 'publishpress'); ?></option>
+                            <option value="1"><?php echo __('One month ago', 'publishpress'); ?></option>
+                            <option value="2"><?php echo __('Two months ago', 'publishpress'); ?></option>
+                            <option value="3"><?php echo __('Three months ago', 'publishpress'); ?></option>
+                            <option value="4"><?php echo __('Four months ago', 'publishpress'); ?></option>
+                            <option value="5"><?php echo __('Five months ago', 'publishpress'); ?></option>
+                            <option value="6"><?php echo __('Six months ago', 'publishpress'); ?></option>
+                        </select>
+
+                        <br/>
+
+                        <h4><?php echo __('End date', 'publishpress'); ?></h4>
+                        <select id="publishpress-end-date">
+                            <optgroup label="<?php echo __('Weeks'); ?>">
+                                <option value="w1"><?php echo __('One week', 'publishpress'); ?></option>
+                                <option value="w2"><?php echo __('Two weeks', 'publishpress'); ?></option>
+                                <option value="w3"><?php echo __('Three weeks', 'publishpress'); ?></option>
+                                <option value="w4"><?php echo __('Four weeks', 'publishpress'); ?></option>
+                            </optgroup>
+
+                            <optgroup label="<?php echo __('Months'); ?>">
+                                <option value="m1"><?php echo __('One month', 'publishpress'); ?></option>
+                                <option value="m2"
+                                        selected="selected"><?php echo __('Two months', 'publishpress'); ?></option>
+                                <option value="m3"><?php echo __('Three months', 'publishpress'); ?></option>
+                                <option value="m4"><?php echo __('Four months', 'publishpress'); ?></option>
+                                <option value="m5"><?php echo __('Five months', 'publishpress'); ?></option>
+                                <option value="m6"><?php echo __('Six months', 'publishpress'); ?></option>
+                                <option value="m7"><?php echo __('Seven months', 'publishpress'); ?></option>
+                                <option value="m8"><?php echo __('Eight months', 'publishpress'); ?></option>
+                                <option value="m9"><?php echo __('Nine months', 'publishpress'); ?></option>
+                                <option value="m10"><?php echo __('Ten months', 'publishpress'); ?></option>
+                                <option value="m11"><?php echo __('Eleven months', 'publishpress'); ?></option>
+                                <option value="m12"><?php echo __('Twelve months', 'publishpress'); ?></option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <br/>
+
+                    <a href="<?php echo $subscription_link; ?>" id="publishpress-ics-download"
+                       style="margin-right: 20px;" class="button">
+                        <span class="dashicons dashicons-download" style="text-decoration: none"></span>
+                        <?php echo __('Download .ics file'); ?></a>
+
+                    <button data-clipboard-text="<?php echo $subscription_link; ?>" id="publishpress-ics-copy" class="button-primary">
+                        <span class="dashicons dashicons-clipboard" style="text-decoration: none"></span>
+                        <?php echo __('Copy to the clipboard'); ?>
+                    </button>
+                </div>
+
+                <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
+                    <?php echo __('Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                </a>
+                <?php
+                $description .= ob_get_clean();
 
                 $description .= '</div>';
             }
