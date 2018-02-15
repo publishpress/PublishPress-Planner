@@ -956,7 +956,7 @@ if (!class_exists('PP_Calendar'))
                 </div>
 
                 <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
-                    <?php echo __('Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    <?php echo __('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
                 </a>
                 <?php
                 $description .= ob_get_clean();
