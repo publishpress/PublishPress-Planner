@@ -140,6 +140,8 @@ if (!class_exists('PP_Custom_Status'))
             add_filter('get_sample_permalink_html', array($this, 'fix_get_sample_permalink_html'), 9, 5);
             add_filter('post_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
             add_filter('page_row_actions', array($this, 'fix_post_row_actions'), 10, 2);
+
+            add_filter('wp_insert_post_data', array($this, 'filter_insert_post_data'), 10, 2);
         }
 
         /**
@@ -433,7 +435,7 @@ if (!class_exists('PP_Custom_Status'))
                 </style>
                 <div class="update-nag hide-if-js">
                     <?php _e('<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript disabled. You will not be able to access or change the post status.', 'publishpress');
-            ?>
+                    ?>
                 </div>
             <?php
             endif;
@@ -2290,6 +2292,41 @@ if (!class_exists('PP_Custom_Status'))
             $actions['view'] = '<a href="' . esc_url($preview_link) . '" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;'), $post->post_title)) . '" rel="permalink">' . __('Preview') . '</a>';
 
             return $actions;
+        }
+
+        /**
+         * Filters slashed post data just before it is inserted into the database.
+         *
+         * @param array $data    An array of slashed post data.
+         * @param array $postarr An array of sanitized, but otherwise unmodified post data.
+         *
+         * @return array
+         */
+        public function filter_insert_post_data($data, $postarr)
+        {
+            // Check if we have a post type which this module is activated, before continue.
+            if (!in_array($data['post_type'], $this->get_post_types_for_module($this->module)))
+            {
+                return $data;
+            }
+
+            /*
+             * If status is different from draft, auto-draft, and pending, WordPress will automatically
+             * set the post_date_gmt to the current date time, like it was being published. But since
+             * we provide other post statuses, this produces wrong date for posts not published yet.
+             * They should have the post_date_gmt empty, so they are kept as "publish immediately".
+             */
+            if (!in_array($data['post_status'], array('publish', 'future')))
+            {
+                // Check if the dates are the same, indicating they were auto-set.
+                if ($data['post_date'] === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date'])
+                {
+                    // Reset the date
+                    $data['post_date_gmt'] = '0000-00-00 00:00:00';
+                }
+            }
+
+            return $data;
         }
     }
 }
