@@ -1946,17 +1946,6 @@ if (!class_exists('PP_Custom_Status'))
         }
 
         /**
-         * PHP < 5.3.x doesn't support anonymous functions
-         * This helper is only used for the check_timestamp_on_publish method above
-         *
-         * @since 0.7.3
-         */
-        public function helper_timestamp_temp_fix()
-        {
-            return ('pre_post_date' == current_filter()) ? current_time('mysql') : '';
-        }
-
-        /**
          * Another temporary fix until core better supports custom statuses
          *
          * @since 0.7.4
