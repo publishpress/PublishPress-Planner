@@ -61,7 +61,7 @@ if (!class_exists('PP_Notifications'))
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = array(
-                'title'                 => __('Notifications', 'publishpress'),
+                'title'                 => __('Default Notifications', 'publishpress'),
                 'short_description'     => __('With notifications, you can keep everyone updated about what’s happening with your content.', 'publishpress'),
                 'extended_description'  => __('With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what.', 'publishpress'),
                 'module_url'            => $this->module_url,
