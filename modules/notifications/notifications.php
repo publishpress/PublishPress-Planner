@@ -1221,7 +1221,7 @@ if (!class_exists('PP_Notifications'))
 
             add_settings_field(
                 'notify_author_by_default',
-                __('Notify authors by default:', 'publishpress'),
+                __('Always notify the author of the content:', 'publishpress'),
                 array($this, 'settings_notify_author_by_default_option'),
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
@@ -1229,7 +1229,7 @@ if (!class_exists('PP_Notifications'))
 
             add_settings_field(
                 'notify_current_user_by_default',
-                __('Notify current user by default:', 'publishpress'),
+                __('Always notify users who have edited the content:', 'publishpress'),
                 array($this, 'settings_notify_current_user_by_default_option'),
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
