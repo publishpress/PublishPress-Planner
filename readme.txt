@@ -157,18 +157,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.10.0] - 2018-02-21 =
 
+*Added:*
+
+* Added form to configure filters for the calendar subscription link;
+* Added option to the notifications to subscribe or not the author and current user by default;
+* Allow to configure custom slugs for statuses, making easy to fix issues with titles and UTF-8 chars;
+
 *Fixed:*
 
 * Fixed the issue where posts with "Pending" status where hidden;
 * Fixed the subscription link for the calendar and add download link;
 * Fixed issue where custom post types where not recognized by some modules;
 * Fixed the publishing date for unpublished posts. Now it is not changed when saved so unscheduled posts keep ready for publishing immediately;
-
-*Added:*
-
-* Added form to configure filters for the calendar subscription link;
-* Added option to the notifications to subscribe or not the author and current user by default;
-* Allow to configure custom slugs for statuses, making easy to fix issues with titles and UTF-8 chars;
 
 = [1.9.8] - 2018-02-06 =
 
