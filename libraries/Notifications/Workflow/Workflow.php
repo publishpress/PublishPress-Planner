@@ -65,14 +65,26 @@ class Workflow
         $this->get_service('shortcodes')->unregister();
 
         /**
+         * Filters the action to be executed. By default it will trigger the notifcation.
+         * But it can be changed to do another action. This allows to change the flow and
+         * catch the params to cache or queue for async notifications.
+         *
+         * @param string   $action
+         * @param Workflow $workflow
+         */
+        $action = apply_filters('publishpress_notif_workflow_run_action', 'publishpress_notif_notify', $this);
+
+        /**
          * Triggers the notification. This can be caught by notification channels.
+         * But can be intercepted by other plugins (cache, async, etc) to change the
+         * workflow.
          *
          * @param WP_Post $workflow_post
          * @param array   $action_args
          * @param array   $receivers
          * @param array   $content
          */
-        do_action('publishpress_notif_notify', $this->workflow_post, $this->action_args, $receivers, $content);
+        do_action($action, $this->workflow_post, $this->action_args, $receivers, $content);
     }
 
     /**

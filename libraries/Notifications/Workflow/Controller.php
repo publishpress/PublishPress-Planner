@@ -215,7 +215,7 @@ class Controller
         {
             $this->receivers_by_channel[$channel] = [];
         }
-
+        error_log('receivers-by-channel: ' . serialize($this->receivers_by_channel));
         return $this->receivers_by_channel[$channel];
     }
 

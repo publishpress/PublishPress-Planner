@@ -36,9 +36,11 @@ class Email extends Base implements Channel_Interface
      */
     public function action_notify($workflow_post, $action_args, $receivers, $content)
     {
+        error_log('email -> ' . serialize($receivers));
         // Check if any of the receivers have Email configured as the channel
         $controller         = $this->get_service('workflow_controller');
         $filtered_receivers = $controller->get_receivers_by_channel($workflow_post->ID, $receivers, 'email');
+        error_log('email (filtered) -> ' . serialize($filtered_receivers));
 
         if (!empty($filtered_receivers))
         {
@@ -51,6 +53,7 @@ class Email extends Base implements Channel_Interface
             $body = apply_filters('the_content', $content['body']);
             $body = str_replace(']]>', ']]&gt;', $body);
 
+            error_log('sending-email: ' . serialize($emails));
             // Call the legacy notification module
             $this->get_service('publishpress')->notifications->send_email(
                 $action,

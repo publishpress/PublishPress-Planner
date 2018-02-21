@@ -21,6 +21,5 @@ if (!defined('PUBLISHPRESS_NOTIF_LOADED'))
     define('PUBLISHPRESS_NOTIF_TWIG_PATH', PUBLISHPRESS_ROOT . '/twig');
     define('PUBLISHPRESS_NOTIF_LOADED', 1);
 
-    define('PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE', 'psppnotif_message');
     define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
 }

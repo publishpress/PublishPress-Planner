@@ -9,6 +9,8 @@
 
 namespace PublishPress\Notifications;
 
+use PublishPress\AsyncNotifications\Queue\WPCron;
+
 class Pimple_Container extends \Pimple\Container
 {
     /**
@@ -87,6 +89,26 @@ class Pimple_Container extends \Pimple\Container
             $instance['shortcodes'] = function ($c)
             {
                 return new Shortcodes;
+            };
+
+            /**
+             * @param $c
+             *
+             * @return WPCron
+             */
+            $instance['notification_queue'] = function($c)
+            {
+                return new WPCron();
+            };
+
+            /**
+             * @param $c
+             *
+             * @return string
+             */
+            $instance['NOTIFICATION_CRON_HOOK_NOTIFY'] = function($c)
+            {
+                return 'publishpress_cron_notify';
             };
 
             static::$instance = $instance;

@@ -235,6 +235,7 @@ class publishpress
             'custom-status'          => PUBLISHPRESS_ROOT,
             'user-groups'            => PUBLISHPRESS_ROOT,
             'improved-notifications' => PUBLISHPRESS_ROOT,
+            'async-notifications'    => PUBLISHPRESS_ROOT,
 
             // @TODO: Move for settings, and remove after cleanup
             'dashboard'              => PUBLISHPRESS_ROOT,
@@ -690,31 +691,6 @@ function publishPressRegisterCustomPostTypes()
                 'menu_position'       => '20',
                 'supports'            => array(
                     'title',
-                ),
-            )
-        );
-
-        // Notifications
-        register_post_type(
-            PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
-            array(
-                'labels'              => array(
-                    'name'          => __('Notifications', 'publishpress'),
-                    'singular_name' => __('Notification', 'publishpress'),
-                ),
-                'public'              => false,
-                'publicly_queryable'  => false,
-                'has_archive'         => false,
-                'rewrite'             => array('slug' => 'notifications'),
-                'show_ui'             => false,
-                'query_var'           => true,
-                'hierarchical'        => false,
-                'can_export'          => false,
-                'show_in_admin_bar'   => false,
-                'exclude_from_search' => true,
-                'supports'            => array(
-                    'title',
-                    'editor',
                 ),
             )
         );
