@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.4
-Stable tag: 1.9.8
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,6 +155,21 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.10.0] - 2018-02-21 =
+
+*Added:*
+
+* Added form to configure filters for the calendar subscription link;
+* Added option to the notifications to subscribe or not the author and current user by default;
+* Allow to configure custom slugs for statuses, making easy to fix issues with titles and UTF-8 chars;
+
+*Fixed:*
+
+* Fixed the issue where posts with "Pending" status where hidden;
+* Fixed the subscription link for the calendar and add download link;
+* Fixed issue where custom post types where not recognized by some modules;
+* Fixed the publishing date for unpublished posts. Now it is not changed when saved so unscheduled posts keep ready for publishing immediately;
+
 = [1.9.8] - 2018-02-06 =
 
 *Fixed:*
@@ -207,7 +222,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [1.9.3] - 2018-01-18 =
 
 *Fixed:*
- 
+
 * Fixed file permissions;
 * Fixed blank status dropdown on quick and build edit;
 * Fixed modified date for scheduled posts;
