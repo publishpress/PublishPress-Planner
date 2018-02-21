@@ -41,12 +41,11 @@ class WPCron implements QueueInterface
      * @param $actionArgs
      * @param $receivers
      * @param $content
+     * @param $channel
      *
      * @throws \Exception
-     *
-     * @return mixed|void
      */
-    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content)
+    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel)
     {
         if (!is_array($receivers))
         {
@@ -62,6 +61,7 @@ class WPCron implements QueueInterface
                 'content'          => $content,
                 'old_status'       => isset($actionArgs['old_status']) ? $actionArgs['old_status'] : null,
                 'new_status'       => isset($actionArgs['new_status']) ? $actionArgs['new_status'] : null,
+                'channel'          => $channel,
             ];
 
             // Create one notification for each receiver in the queue
@@ -82,11 +82,9 @@ class WPCron implements QueueInterface
      */
     protected function scheduleEvent($data)
     {
-        $hook = $this->get_service('NOTIFICATION_CRON_HOOK_NOTIFY');
-
         wp_schedule_single_event(
             time(),
-            $hook,
+            'publishpress_cron_notify',
             $data
         );
     }

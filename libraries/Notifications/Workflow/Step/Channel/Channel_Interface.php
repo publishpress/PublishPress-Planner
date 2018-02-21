@@ -9,9 +9,10 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
+use WP_Post;
+
 interface Channel_Interface
 {
-
     /**
      * Check if this channel is selected and triggers the notification.
      *
@@ -19,6 +20,7 @@ interface Channel_Interface
      * @param array   $action_args
      * @param array   $receivers
      * @param array   $content
+     * @param string  $channel
      */
-    public function action_notify($workflow_post, $action_args, $receivers, $content);
+    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel);
 }

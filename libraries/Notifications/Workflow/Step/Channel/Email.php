@@ -9,6 +9,8 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
+use WP_Post;
+
 class Email extends Base implements Channel_Interface
 {
 
@@ -16,6 +18,8 @@ class Email extends Base implements Channel_Interface
 
     /**
      * The constructor
+     *
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -33,37 +37,44 @@ class Email extends Base implements Channel_Interface
      * @param array   $action_args
      * @param array   $receivers
      * @param array   $content
+     * @param string  $channel
+     *
+     * @throws \Exception
      */
-    public function action_notify($workflow_post, $action_args, $receivers, $content)
+    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
     {
-        error_log('email -> ' . serialize($receivers));
-        // Check if any of the receivers have Email configured as the channel
-        $controller         = $this->get_service('workflow_controller');
-        $filtered_receivers = $controller->get_receivers_by_channel($workflow_post->ID, $receivers, 'email');
-        error_log('email (filtered) -> ' . serialize($filtered_receivers));
-
-        if (!empty($filtered_receivers))
-        {
-            // Send the emails
-            $emails = $this->get_receivers_emails($filtered_receivers);
-            $action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
-
-            $subject = html_entity_decode($content['subject']);
-
-            $body = apply_filters('the_content', $content['body']);
-            $body = str_replace(']]>', ']]&gt;', $body);
-
-            error_log('sending-email: ' . serialize($emails));
-            // Call the legacy notification module
-            $this->get_service('publishpress')->notifications->send_email(
-                $action,
-                $action_args,
-                $subject,
-                $body,
-                '',
-                $emails
-            );
+        if (empty($receivers)) {
+            return;
         }
+
+        $signature  = $this->get_notification_signature($content, $channel . ':' . serialize($receivers));
+        $controller = $this->get_service('workflow_controller');
+
+        // Check if the notification was already sent
+        if ($controller->is_notification_signature_registered($signature)) {
+            return;
+        }
+
+        // Send the emails
+        $emails = $this->get_receivers_emails($receivers);
+        $action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
+
+        $subject = html_entity_decode($content['subject']);
+
+        $body = apply_filters('the_content', $content['body']);
+        $body = str_replace(']]>', ']]&gt;', $body);
+
+        // Call the legacy notification module
+        $this->get_service('publishpress')->notifications->send_email(
+            $action,
+            $action_args,
+            $subject,
+            $body,
+            '',
+            $emails
+        );
+
+        $controller->register_notification_signature($signature);
     }
 
     /**
@@ -76,13 +87,10 @@ class Email extends Base implements Channel_Interface
     {
         $emails = [];
 
-        if (!empty($receivers))
-        {
-            foreach ($receivers as $receiver)
-            {
+        if (!empty($receivers)) {
+            foreach ($receivers as $receiver) {
                 // Check if we have the user ID or an email address
-                if (is_numeric($receiver))
-                {
+                if (is_numeric($receiver)) {
                     $data     = $this->get_user_data($receiver);
                     $emails[] = $data->user_email;
                     continue;
@@ -97,5 +105,20 @@ class Email extends Base implements Channel_Interface
         $emails = array_unique($emails);
 
         return $emails;
+    }
+
+    /**
+     * Filter the receivers organizing it by channel. Each channel get the list of receivers
+     * and return
+     *
+     * @param array   $receivers
+     * @param WP_Post $workflow_post
+     * @param array   $action_args
+     *
+     * @return array
+     */
+    public function filter_receivers($receivers, $workflow_post, $action_args)
+    {
+        return $receivers;
     }
 }

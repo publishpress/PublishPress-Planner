@@ -104,12 +104,11 @@ if (!class_exists('PP_Async_Notifications'))
          */
         public function init()
         {
-            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 2);
+            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
 
-            add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 4);
+            add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 5);
 
-            $hook = $this->get_service('NOTIFICATION_CRON_HOOK_NOTIFY');
-            add_action($hook, [$this, 'action_notify'], 10, 7);
+            add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
         }
 
         /**
@@ -133,10 +132,11 @@ if (!class_exists('PP_Async_Notifications'))
         /**
          * @param string                               $action
          * @param PublishPress\Notifications\Workflow\ $workflow
+         * @param string                               $channel
          *
          * @return string
          */
-        public function filter_workflow_run_action($action, $workflow)
+        public function filter_workflow_run_action($action, $workflow, $channel)
         {
             // Change the action to send the notification to the queue, instead sending to receiver, directly.
             $action = 'publishpress_notif_queue';
@@ -149,16 +149,17 @@ if (!class_exists('PP_Async_Notifications'))
          *
          * @param $workflow_post
          * @param $action_args
-         * @param $receivers
+         * @param $receiver
          * @param $content
+         * @param $channel
          *
          * @throws Exception;
          */
-        public function action_notif_queue($workflow_post, $action_args, $receivers, $content)
+        public function action_notif_queue($workflow_post, $action_args, $receiver, $content, $channel)
         {
             $queue = $this->get_service('notification_queue');
 
-            $queue->enqueueNotification($workflow_post, $action_args, $receivers, $content);
+            $queue->enqueueNotification($workflow_post, $action_args, $receiver, $content, $channel);
         }
 
         /**
@@ -168,9 +169,10 @@ if (!class_exists('PP_Async_Notifications'))
          * @param $content
          * @param $oldStatus
          * @param $newStatus
+         * @param $channel
          * @param $receiver
          */
-        public function action_notify($workflowPostId, $action, $postId, $content, $oldStatus, $newStatus, $receiver)
+        public function action_cron_notify($workflowPostId, $action, $postId, $content, $oldStatus, $newStatus, $channel, $receiver)
         {
             $workflowPost = get_post($workflowPostId);
             $actionArgs   = [
@@ -181,12 +183,6 @@ if (!class_exists('PP_Async_Notifications'))
             ];
             $receivers    = [$receiver];
 
-            $a = [
-                'receiver' => $receiver,
-                'workflow' => $workflowPostId,
-            ];
-            error_log(serialize($a));
-
             /**
              * Triggers the notification. This can be caught by notification channels.
              *
@@ -194,8 +190,9 @@ if (!class_exists('PP_Async_Notifications'))
              * @param array   $action_args
              * @param array   $receivers
              * @param array   $content
+             * @param array   $channel
              */
-            do_action('publishpress_notif_notify', $workflowPost, $actionArgs, $receivers, $content);
+            do_action('publishpress_notif_send_notification_' . $channel, $workflowPost, $actionArgs, $receivers, $content, $channel);
         }
     }
 }

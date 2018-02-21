@@ -37,8 +37,9 @@ interface QueueInterface
      * @param $actionArgs
      * @param $receivers
      * @param $content
+     * @param $channel
      *
-     * @return mixed
+     * @throws \Exception
      */
-    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content);
+    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel);
 }

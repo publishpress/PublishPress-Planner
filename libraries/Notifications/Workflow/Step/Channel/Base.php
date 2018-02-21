@@ -10,9 +10,13 @@
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
+use PublishPress\Notifications\Traits\Dependency_Injector;
+use WP_Post;
+use WP_User;
 
 class Base extends Base_Step
 {
+    use Dependency_Injector;
 
     const META_KEY_EMAIL = '_psppno_chnbase';
 
@@ -23,6 +27,8 @@ class Base extends Base_Step
 
     /**
      * The constructor
+     *
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -53,7 +59,7 @@ class Base extends Base_Step
         add_filter('psppno_filter_channels_user_profile', [$this, 'filter_channel_user_profile']);
 
         // Hook to the notification action
-        add_action('publishpress_notif_notify', [$this, 'action_notify'], 10, 4);
+        add_action('publishpress_notif_send_notification_' . $this->name, [$this, 'action_send_notification'], 10, 5);
 
         // Check if we can hook to the psppno_save_user_profile action
         add_action('psppno_save_user_profile', [$this, 'action_save_user_profile']);
@@ -78,12 +84,12 @@ class Base extends Base_Step
      */
     public function filter_channel_user_profile($channels)
     {
-        $channels[] = (object)array(
+        $channels[] = (object)[
             'name'    => $this->name,
             'label'   => $this->label,
             'options' => $this->get_user_profile_option_fields(),
             'icon'    => $this->icon,
-        );
+        ];
 
         return $channels;
     }
@@ -110,6 +116,8 @@ class Base extends Base_Step
      * anything for now.
      *
      * @param string $html
+     *
+     * @return string
      */
     public function render_metabox_section($html)
     {
@@ -135,5 +143,30 @@ class Base extends Base_Step
     protected function get_user_data($user_id)
     {
         return get_userdata($user_id);
+    }
+
+    /**
+     * @param $workflow_post
+     * @param $action_args
+     * @param $receivers
+     * @param $content
+     * @param $channel
+     */
+    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
+    {
+        return;
+    }
+
+    /**
+     * @param $content
+     * @param $channel
+     *
+     * @return string
+     */
+    protected function get_notification_signature($content, $channel)
+    {
+        $signature = md5($content . '|' . $channel);
+
+        return $signature;
     }
 }

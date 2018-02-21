@@ -101,16 +101,6 @@ class Pimple_Container extends \Pimple\Container
                 return new WPCron();
             };
 
-            /**
-             * @param $c
-             *
-             * @return string
-             */
-            $instance['NOTIFICATION_CRON_HOOK_NOTIFY'] = function($c)
-            {
-                return 'publishpress_cron_notify';
-            };
-
             static::$instance = $instance;
         }
 
