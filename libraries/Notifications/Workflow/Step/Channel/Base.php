@@ -165,7 +165,7 @@ class Base extends Base_Step
      */
     protected function get_notification_signature($content, $channel)
     {
-        $signature = md5($content . '|' . $channel);
+        $signature = md5(serialize($content) . '|' . $channel);
 
         return $signature;
     }

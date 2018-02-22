@@ -88,6 +88,10 @@ class Email extends Base implements Channel_Interface
         $emails = [];
 
         if (!empty($receivers)) {
+            if (!is_array($receivers)) {
+                $receivers = [$receivers];
+            }
+
             foreach ($receivers as $receiver) {
                 // Check if we have the user ID or an email address
                 if (is_numeric($receiver)) {
