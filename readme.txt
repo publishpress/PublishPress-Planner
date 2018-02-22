@@ -159,6 +159,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 *Added:*
 
+* Added async notifications using WP Cron;
 * Added form to configure filters for the calendar subscription link;
 * Added option to the notifications to subscribe or not the author and current user by default;
 * Allow to configure custom slugs for statuses, making easy to fix issues with titles and UTF-8 chars;
