@@ -80,7 +80,7 @@ if (!class_exists('PP_Async_Notifications'))
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'async-notifications',
                 'default_options'      => [
-                    'enabled' => 'no',
+                    'enabled' => 'on',
                 ],
                 'options_page'         => false,
             ];
