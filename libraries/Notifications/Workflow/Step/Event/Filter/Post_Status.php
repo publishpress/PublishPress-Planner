@@ -57,7 +57,7 @@ class Post_Status extends Base implements Filter_Interface
             $options = [
                 [
                     'value'    => 'auto-draft',
-                    'label'    => __('New', 'publishpress'),
+                    'label'    => __('"New"', 'publishpress'),
                     'selected' => in_array('auto-draft', $metadata[$group]),
                 ],
             ];
