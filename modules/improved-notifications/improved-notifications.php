@@ -450,8 +450,9 @@ if (!class_exists('PP_Improved_Notifications'))
 
             if (in_array($hook_suffix, ['post.php', 'post-new.php']))
             {
-                wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION);
-                wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION);
+                wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', ['jquery'], PUBLISHPRESS_VERSION);
+                wp_enqueue_script('psppno-workflow-tooltip', plugin_dir_url(__FILE__) . 'libs/opentip/downloads/opentip-jquery.js', ['jquery'], PUBLISHPRESS_VERSION);
+                wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', ['jquery', 'psppno-workflow-tooltip', 'psppno-multiple-select'], PUBLISHPRESS_VERSION);
             }
         }
 
@@ -525,7 +526,7 @@ if (!class_exists('PP_Improved_Notifications'))
             // Renders the event content filter section
             $context = [
                 'id'     => 'event_content',
-                'header' => __('Filter the content?', 'publishpress'),
+                'header' => __('For which content?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_event_content', ''),
                 'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
@@ -570,6 +571,7 @@ if (!class_exists('PP_Improved_Notifications'))
         {
             $context = [
                 'labels' => [
+                    'validation_help'  => __('Select at least one option for each section.', 'publishpress'),
                     'pre_text'         => __('You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress'),
                     'content'          => __('Content', 'publishpress'),
                     'edcomment'        => __('Editorial Comment', 'publishpress'),
@@ -596,6 +598,8 @@ if (!class_exists('PP_Improved_Notifications'))
          *
          * @param int     $id   Unique ID for the post being saved
          * @param WP_Post $post Post object
+         *
+         * @return int|null
          */
         public function save_meta_boxes($id, $post)
         {

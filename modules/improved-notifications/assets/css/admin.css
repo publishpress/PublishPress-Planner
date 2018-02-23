@@ -210,3 +210,8 @@ body.post-type-psppnotif_workflow #wpbody-content {
     margin-bottom: 5px;
     border-left: 8px solid #f3f3f3;
 }
+
+
+.psppno_workflow_metabox_section_header.invalid {
+    background-color: #ff8585 !important;
+}
