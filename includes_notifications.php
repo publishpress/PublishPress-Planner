@@ -13,7 +13,9 @@ use PublishPress\Notifications\Auto_loader;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-require_once 'vendor/autoload.php';
+if ( file_exists( 'vendor/autoload.php' ) ) {
+    require_once 'vendor/autoload.php';
+}
 
 if (!defined('PUBLISHPRESS_NOTIF_LOADED'))
 {
