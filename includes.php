@@ -55,10 +55,10 @@ if (!defined('PP_LOADED'))
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
-    if ( file_exists( PUBLISHPRESS_ROOT . 'vendor/autoload.php' ) ) {
+    if ( file_exists( PUBLISHPRESS_ROOT . '/vendor/autoload.php' ) ) {
         require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
     }
-    
+
     // Register the autoloader
     if (!class_exists('\\PublishPress\\Auto_loader'))
     {
