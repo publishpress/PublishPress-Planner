@@ -233,6 +233,7 @@ class publishpress
             'notifications'          => PUBLISHPRESS_ROOT,
             'content-overview'       => PUBLISHPRESS_ROOT,
             'custom-status'          => PUBLISHPRESS_ROOT,
+            'roles'                  => PUBLISHPRESS_ROOT,
             'user-groups'            => PUBLISHPRESS_ROOT,
             'improved-notifications' => PUBLISHPRESS_ROOT,
             'async-notifications'    => PUBLISHPRESS_ROOT,
