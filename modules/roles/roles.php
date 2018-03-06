@@ -149,10 +149,6 @@ if (!class_exists('PP_Roles')) {
             $this->cap_manage_roles = apply_filters('pp_cap_manage_roles', $this->cap_manage_roles);
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-
-            if ($this->convertLegacyUserGroupsToRoles()) {
-                $this->cleanupUserGroups();
-            }
         }
 
         /**
@@ -162,7 +158,10 @@ if (!class_exists('PP_Roles')) {
          */
         public function install()
         {
-
+            // Maybe we just migrated from Edit flow, so we need to convert the User Groups.
+            if ($this->convertLegacyUserGroupsToRoles()) {
+                $this->cleanupUserGroups();
+            }
         }
 
         /**
