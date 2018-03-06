@@ -183,7 +183,7 @@ if (!class_exists('PP_Calendar'))
             // Define the create-post capability
             $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
-            require_once(PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php');
+            require_once(PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php');
 
             add_action('admin_init', array($this, 'register_settings'));
             add_action('admin_print_styles', array($this, 'add_admin_styles'));

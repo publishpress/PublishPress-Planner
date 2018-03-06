@@ -947,7 +947,6 @@ if (!class_exists('PP_User_Groups'))
          */
         public function get_usergroups($args = array())
         {
-
             // We want empty terms by default
             if (!isset($args['hide_empty']))
             {

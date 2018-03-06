@@ -102,7 +102,7 @@ if (!class_exists('PP_Improved_Notifications'))
             // Apply a filter to the default options
             $args['default_options'] = apply_filters('publishpress_notif_default_options', $args['default_options']);
             $this->module            = $publishpress->register_module(
-                PublishPress\Util::sanitize_module_name($this->module_name),
+                PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
                 $args
             );
 

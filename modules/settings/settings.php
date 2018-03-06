@@ -343,7 +343,7 @@ if (!class_exists('PP_Settings'))
             global $publishpress;
 
             foreach ($_POST['publishpress_module_name'] as $moduleSlug) {
-                $module_name = sanitize_key( PublishPress\Util::sanitize_module_name( $moduleSlug ) );
+                $module_name = sanitize_key( PublishPress\Legacy\Util::sanitize_module_name( $moduleSlug ) );
 
                 if ($_POST['action'] != 'update'
                     || $_GET['page'] != 'pp-modules-settings') {

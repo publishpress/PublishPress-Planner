@@ -136,7 +136,7 @@ class publishpress
 
         foreach ($roles as $role => $caps)
         {
-            PublishPress\Util::add_caps_to_role($role, $caps);
+            PublishPress\Legacy\Util::add_caps_to_role($role, $caps);
         }
 
         // User groups
@@ -146,7 +146,7 @@ class publishpress
 
         foreach ($roles as $role => $caps)
         {
-            PublishPress\Util::add_caps_to_role($role, $caps);
+            PublishPress\Legacy\Util::add_caps_to_role($role, $caps);
         }
     }
 
@@ -221,35 +221,35 @@ class publishpress
         // PublishPress base module
         if (!class_exists('PP_Module'))
         {
-            require_once(PUBLISHPRESS_ROOT . '/common/php/class-module.php');
+            require_once(PUBLISHPRESS_BASE_PATH . '/common/php/class-module.php');
         }
 
         // Scan the modules directory and include any modules that exist there
-        // $module_dirs = scandir(PUBLISHPRESS_ROOT . '/modules/');
+        // $module_dirs = scandir(PUBLISHPRESS_BASE_PATH . '/modules/');
         $default_module_dirs = array(
-            'modules-settings'       => PUBLISHPRESS_ROOT,
-            'calendar'               => PUBLISHPRESS_ROOT,
-            'editorial-metadata'     => PUBLISHPRESS_ROOT,
-            'notifications'          => PUBLISHPRESS_ROOT,
-            'content-overview'       => PUBLISHPRESS_ROOT,
-            'custom-status'          => PUBLISHPRESS_ROOT,
-            'roles'                  => PUBLISHPRESS_ROOT,
-            'user-groups'            => PUBLISHPRESS_ROOT,
-            'improved-notifications' => PUBLISHPRESS_ROOT,
-            'async-notifications'    => PUBLISHPRESS_ROOT,
+            'modules-settings'       => PUBLISHPRESS_BASE_PATH,
+            'calendar'               => PUBLISHPRESS_BASE_PATH,
+            'editorial-metadata'     => PUBLISHPRESS_BASE_PATH,
+            'notifications'          => PUBLISHPRESS_BASE_PATH,
+            'content-overview'       => PUBLISHPRESS_BASE_PATH,
+            'custom-status'          => PUBLISHPRESS_BASE_PATH,
+            'user-groups'            => PUBLISHPRESS_BASE_PATH,
+            'roles'                  => PUBLISHPRESS_BASE_PATH,
+            'improved-notifications' => PUBLISHPRESS_BASE_PATH,
+            'async-notifications'    => PUBLISHPRESS_BASE_PATH,
 
             // @TODO: Move for settings, and remove after cleanup
-            'dashboard'              => PUBLISHPRESS_ROOT,
-            'editorial-comments'     => PUBLISHPRESS_ROOT,
-            'settings'               => PUBLISHPRESS_ROOT,
-            'efmigration'            => PUBLISHPRESS_ROOT,
+            'dashboard'              => PUBLISHPRESS_BASE_PATH,
+            'editorial-comments'     => PUBLISHPRESS_BASE_PATH,
+            'settings'               => PUBLISHPRESS_BASE_PATH,
+            'efmigration'            => PUBLISHPRESS_BASE_PATH,
         );
 
         // Add filters to extend the modules
         $module_dirs = apply_filters('pp_module_dirs', $default_module_dirs);
 
         // Add add-ons as the last tab
-        $module_dirs['addons'] = PUBLISHPRESS_ROOT;
+        $module_dirs['addons'] = PUBLISHPRESS_BASE_PATH;
 
         $class_names = array();
 
@@ -280,7 +280,7 @@ class publishpress
         $this->helpers = new PP_Module();
 
         // Other utils
-        require_once(PUBLISHPRESS_ROOT . '/common/php/util.php');
+        require_once(PUBLISHPRESS_BASE_PATH . '/common/php/util.php');
 
         // Instantiate all of our classes onto the PublishPress object
         // but make sure they exist too
@@ -288,7 +288,7 @@ class publishpress
         {
             if (class_exists($class_name))
             {
-                $slug        = PublishPress\Util::sanitize_module_name($slug);
+                $slug        = PublishPress\Legacy\Util::sanitize_module_name($slug);
                 $this->$slug = new $class_name();
             }
         }

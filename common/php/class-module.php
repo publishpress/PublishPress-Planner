@@ -160,7 +160,7 @@ if (!class_exists('PP_Module'))
          */
         public function get_post_types_for_module($module)
         {
-            return PublishPress\Util::get_post_types_for_module($module);
+            return PublishPress\Legacy\Util::get_post_types_for_module($module);
         }
 
         /**
@@ -334,7 +334,7 @@ if (!class_exists('PP_Module'))
          */
         public function get_current_post_type()
         {
-            return PublishPress\Util::get_current_post_type();
+            return PublishPress\Legacy\Util::get_current_post_type();
         }
 
         /**
@@ -685,7 +685,7 @@ if (!class_exists('PP_Module'))
         public function add_caps_to_role($role, $caps)
         {
 
-            PublishPress\Util::add_caps_to_role($role, $caps);
+            PublishPress\Legacy\Util::add_caps_to_role($role, $caps);
         }
 
         /**
