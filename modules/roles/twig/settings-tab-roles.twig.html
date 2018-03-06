@@ -41,6 +41,21 @@
                     <p class="description">{{ labels.display_name_description }}</p>
                 </div>
 
+                <div class="form-field form-required">
+                    <label for="users">{{ labels.users}}</label>
+                    <select data-placeholder="{{ labels.select_users }}" multiple class="chosen-select" name="users[]">
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if user.id in role_users %}selected{% endif %}>{{ user.display_name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    {% if errors.display_name|length %}
+                    <p class="error">{{ errors.display_name }}</p>
+                    {% endif %}
+
+                    <p class="description">{{ labels.display_name_description }}</p>
+                </div>
+
                 {{ nonce|raw }}
 
                 <input type="hidden" name="role-id" maxlength="40" value="{{ role.name }}"/>

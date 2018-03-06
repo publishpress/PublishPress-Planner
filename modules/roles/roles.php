@@ -66,7 +66,8 @@ if (!class_exists('PP_Roles')) {
             $args = array(
                 'title'                => __('Roles', 'publishpress'),
                 'short_description'    => __('Roles allows you to create custom roles.', 'publishpress'),
-                'extended_description' => __('Roles allows you to create custom roles and allow users be on more than one role.', 'publishpress'),
+                'extended_description' => __('Roles allows you to create custom roles and allow users be on more than one role.',
+                    'publishpress'),
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'roles',
@@ -144,7 +145,7 @@ if (!class_exists('PP_Roles')) {
 
             $this->cap_manage_roles = apply_filters('pp_cap_manage_roles', $this->cap_manage_roles);
 
-            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         }
 
         /**
@@ -174,10 +175,18 @@ if (!class_exists('PP_Roles')) {
         /**
          * Enqueue necessary admin styles, but only on the proper pages
          */
-        public function enqueue_admin_styles()
+        public function enqueue_admin_scripts()
         {
             if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings' && isset($_GET['module']) && $_GET['module'] === 'pp-roles-settings') {
-                wp_enqueue_style('publishpress-roles-css', $this->module_url . 'assets/css/admin.css', false, PUBLISHPRESS_VERSION);
+                wp_enqueue_script('publishpress-chosen-js', $this->module_url . 'assets/libs/chosen/chosen.jquery.js',
+                    array('jquery'), PUBLISHPRESS_VERSION);
+                wp_enqueue_script('publishpress-roles-js', $this->module_url . 'assets/js/admin.js',
+                    array('jquery', 'publishpress-chosen-js'), PUBLISHPRESS_VERSION);
+
+                wp_enqueue_style('publishpress-chosen-css', $this->module_url . 'assets/libs/chosen/chosen.css', false,
+                    PUBLISHPRESS_VERSION);
+                wp_enqueue_style('publishpress-roles-css', $this->module_url . 'assets/css/admin.css',
+                    array('publishpress-chosen-css'), PUBLISHPRESS_VERSION);
             }
         }
 
@@ -255,6 +264,26 @@ if (!class_exists('PP_Roles')) {
                 }
             }
 
+            // Get a list of users to display in the select field.
+            $users = get_users();
+
+            // Get selected users, if any role is being edited.
+            $role_users = array();
+
+            if (!empty($role->name)) {
+                $users_in_the_role = get_users(
+                    array(
+                        'role' => $role->name,
+                    )
+                );
+
+                if (!empty($users_in_the_role)) {
+                    foreach ($users_in_the_role as $user) {
+                        $role_users[] = $user->ID;
+                    }
+                }
+            }
+
             echo $this->twig->render(
                 'settings-tab-roles.twig.html',
                 array(
@@ -263,13 +292,18 @@ if (!class_exists('PP_Roles')) {
                     'options_group_name' => $this->module->options_group_name,
                     'module_name'        => $this->module->slug,
                     'labels'             => array(
-                        'add_new'          => __('Add New Role', 'publishpress'),
-                        'edit'             => __('Edit Role', 'publishpress'),
-                        'name'             => __('Name (ID)', 'publishpress'),
-                        'name_description' => __('The name used to identify the role. Only use latin chars and "-".', 'publishpress'),
-                        'display_name'     => __("Display name", 'publishpress'),
+                        'add_new'           => __('Add New Role', 'publishpress'),
+                        'edit'              => __('Edit Role', 'publishpress'),
+                        'name'              => __('Name (ID)', 'publishpress'),
+                        'name_description'  => __('The name used to identify the role. Only use latin chars and "-".',
+                            'publishpress'),
+                        'display_name'      => __("Display name", 'publishpress'),
+                        'users'             => __("Users", 'publishpress'),
+                        'users_description' => __("Add users that belongs to this role.", 'publishpress'),
                     ),
                     'role'               => $role,
+                    'users'              => $users,
+                    'role_users'         => $role_users,
                     'nonce'              => wp_nonce_field('manage-role'),
                     'errors'             => isset($_REQUEST['form-errors']) ? $_REQUEST['form-errors'] : array(),
                 )
@@ -297,6 +331,7 @@ if (!class_exists('PP_Roles')) {
             // Sanitize all of the user-entered values
             $name         = sanitize_title(strip_tags(trim($_POST['name'])));
             $display_name = stripslashes(strip_tags(trim($_POST['display_name'])));
+            $users        = $_POST['users'];
 
             $_REQUEST['form-errors'] = array();
 
@@ -319,15 +354,18 @@ if (!class_exists('PP_Roles')) {
             }
 
             if (strlen($name) > 40) {
-                $_REQUEST['form-errors']['name'] = __('Role name cannot exceed 40 characters. Please try a shorter name.', 'publishpress');
+                $_REQUEST['form-errors']['name'] = __('Role name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress');
             }
 
             if (empty($display_name)) {
-                $_REQUEST['form-errors']['display_name'] = __('Please enter a display name for the role.', 'publishpress');
+                $_REQUEST['form-errors']['display_name'] = __('Please enter a display name for the role.',
+                    'publishpress');
             }
 
             if (strlen($display_name) > 40) {
-                $_REQUEST['form-errors']['display_name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.', 'publishpress');
+                $_REQUEST['form-errors']['display_name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress');
             }
 
             // Kick out if there are any errors
@@ -341,6 +379,14 @@ if (!class_exists('PP_Roles')) {
             $role = add_role($name, $display_name, array());
             if (is_wp_error($role)) {
                 wp_die(__('Error adding role.', 'publishpress'));
+            }
+
+            // Check if we have to add users to this role.
+            if (!empty($users)) {
+                foreach ($users as $user_id) {
+                    $user = get_user_by('ID', (int)$user_id);
+                    $user->add_role($name);
+                }
             }
 
             $args         = array(
@@ -374,6 +420,7 @@ if (!class_exists('PP_Roles')) {
             // Sanitize all of the user-entered values
             $name         = sanitize_title(strip_tags(trim($_POST['role-id'])));
             $display_name = stripslashes(strip_tags(trim($_POST['display_name'])));
+            $users        = $_POST['users'];
 
             $_REQUEST['form-errors'] = array();
 
@@ -390,12 +437,13 @@ if (!class_exists('PP_Roles')) {
             }
 
             if (strlen($display_name) > 40) {
-                $_REQUEST['form-errors']['name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.', 'publishpress');
+                $_REQUEST['form-errors']['name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress');
             }
 
             // Kick out if there are any errors
             if (count($_REQUEST['form-errors'])) {
-                $_REQUEST['error'] = 'form-error';
+                $_REQUEST['error'] = 'form-error';r
 
                 return;
             }
@@ -413,6 +461,29 @@ if (!class_exists('PP_Roles')) {
             $roles[$name]['name'] = $display_name;
 
             update_option('wp_user_roles', $roles);
+
+            // Check if we have to remove users from this role.
+            $users_in_the_role = get_users(
+                array(
+                    'role' => $name,
+                )
+            );
+
+            if (!empty($users_in_the_role)) {
+                foreach ($users_in_the_role as $user) {
+                    if (!in_array($user->ID, $users)) {
+                        $user->remove_role($name);
+                    }
+                }
+            }
+
+            // Check if we have to add users to this role.
+            if (!empty($users)) {
+                foreach ($users as $user_id) {
+                    $user = get_user_by('ID', (int)$user_id);
+                    $user->add_role($name);
+                }
+            }
 
             $args         = array(
                 'action'  => 'edit-role',
@@ -434,8 +505,7 @@ if (!class_exists('PP_Roles')) {
                 return;
             }
 
-            if (!wp_verify_nonce($_GET['nonce'], 'manage-role'))
-            {
+            if (!wp_verify_nonce($_GET['nonce'], 'manage-role')) {
                 wp_die($this->module->messages['nonce-failed']);
             }
 
