@@ -183,7 +183,7 @@ if (!class_exists('PP_Roles_List_Table')) {
             static $row_class = '';
             $row_class = ($row_class == '' ? ' class="alternate"' : '');
 
-            echo '<tr id="role-' . $role->term_id . '"' . $row_class . '>';
+            echo '<tr id="role-' . $role->name . '"' . $row_class . '>';
             echo $this->single_row_columns($role);
             echo '</tr>';
         }
