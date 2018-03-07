@@ -370,12 +370,12 @@ if (!class_exists('PP_Notifications'))
 
             if (in_array(wp_get_current_user()->user_login, $user_to_notify))
             {
-                $args['method'] = 'start_notifying';
+                $args['method'] = 'stop_notifying';
                 $title_text     = __('Click to stop being notified on updates for this post', 'publishpress');
                 $link_text      = __('Stop notifying me', 'publishpress');
             } else
             {
-                $args['method'] = 'stop_notifying';
+                $args['method'] = 'start_notifying';
                 $title_text     = __('Click to start being notified on updates for this post', 'publishpress');
                 $link_text      = __('Notify me', 'publishpress');
             }
@@ -516,12 +516,12 @@ if (!class_exists('PP_Notifications'))
                 $this->print_ajax_response('error', $this->module->messages['missing-post']);
             }
 
-            if ('start_notifying' == $_GET['method'])
+            if ('start_notifying' === $_GET['method'])
             {
                 $retval = $this->post_set_users_to_notify($post, get_current_user_id());
             } else
             {
-                $retval = $this->post_set_users_to_notify($post, get_current_user_id());
+                $retval = $this->post_set_users_stop_notify($post, get_current_user_id());
             }
 
             if (is_wp_error($retval))
