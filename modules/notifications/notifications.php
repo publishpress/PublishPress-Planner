@@ -1113,7 +1113,6 @@ if (!class_exists('PP_Notifications'))
          */
         public function get_users_to_notify($post_id, $return = 'user_login')
         {
-
             // Get pp_notify_user terms for the post
             $users = wp_get_object_terms($post_id, $this->notify_user_taxonomy, array('fields' => 'names'));
 

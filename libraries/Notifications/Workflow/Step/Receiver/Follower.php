@@ -45,7 +45,6 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID))
         {
-
             $post_id = $args['post']->ID;
 
             if (empty($post_id))
@@ -55,29 +54,51 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
 
             $followers = array();
 
-            // Get following users and roles
-            $roles = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
 
+            // Check if we just created the post and the metadata is not saved yet.
+            if ('POST' === $_SERVER['REQUEST_METHOD']
+                && (isset($_POST['action']) && 'editpost' === $_POST['action'])
+                && (isset($_POST['original_post_status']) && 'auto-draft' === $_POST['original_post_status'])
+            ) {
+                $toNotify = $_POST['to_notify'];
+
+                $roles = array();
+                $users = array();
+
+                foreach ($toNotify as $item) {
+                    if (is_numeric($item)) {
+                        $users[] = $item;
+                    } else {
+                        $roles[] = $item;
+                    }
+                }
+            } else {
+                // Get following users and roles
+                $roles = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
+                $users = $publishpress->notifications->get_users_to_notify($post_id, 'id');
+            }
+
+            // Extract users from roles
             if (!empty($roles)) {
                 foreach ($roles as $role)
                 {
-                    $users = get_users(
+                    $roleUsers = get_users(
                         [
                             'role' => $role,
                         ]
                     );
 
-                    foreach ($users as $user)
-                    {
-                        if (is_user_member_of_blog($user->ID))
+                    if (!empty($roleUsers)) {
+                        foreach ($roleUsers as $user)
                         {
-                            $followers[] = $user->ID;
+                            if (is_user_member_of_blog($user->ID))
+                            {
+                                $followers[] = $user->ID;
+                            }
                         }
                     }
                 }
             }
-
-            $users = $publishpress->notifications->get_users_to_notify($post_id, 'object');
 
             // Merge roles' users and users
             $followers = array_merge($followers, $users);
@@ -86,6 +107,10 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             if (!empty($followers)) {
                 foreach ($followers as $key => $user)
                 {
+                    // Make sure we have only user objects in the list
+                    if (is_numeric($user)) {
+                        $user = get_user_by('ID', $user);
+                    }
 
                     // Don't send the email to the current user unless we've explicitly indicated they should receive it
                     if (false === apply_filters('publishpress_notify_current_user', false) && wp_get_current_user()->user_email == $user->user_email)
@@ -109,7 +134,11 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             {
                 foreach ($followers as $user)
                 {
-                    $receivers[] = $user->ID;
+                    if (is_object($user)) {
+                        $receivers[] = $user->ID;
+                    } else {
+                        $receivers[] = $user;
+                    }
                 }
             }
         }
