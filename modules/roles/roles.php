@@ -385,6 +385,7 @@ if (!class_exists('PP_Roles')) {
         public function enqueue_admin_scripts()
         {
             if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings' && isset($_GET['module']) && $_GET['module'] === 'pp-roles-settings') {
+                // Settings page
                 wp_enqueue_script('publishpress-chosen-js', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
                     ['jquery'], PUBLISHPRESS_VERSION);
                 wp_enqueue_script('publishpress-roles-js', $this->module_url . 'assets/js/admin.js',
@@ -394,7 +395,58 @@ if (!class_exists('PP_Roles')) {
                     PUBLISHPRESS_VERSION);
                 wp_enqueue_style('publishpress-roles-css', $this->module_url . 'assets/css/admin.css',
                     ['publishpress-chosen-css'], PUBLISHPRESS_VERSION);
+            } else {
+                if (function_exists('get_current_screen')) {
+                    $screen = get_current_screen();
+
+                    if ('user-edit' === $screen->base) {
+                        // Check if we are on the user's profile page
+                        wp_enqueue_script('publishpress-chosen-js',
+                            PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
+                            ['jquery'], PUBLISHPRESS_VERSION);
+                        wp_enqueue_script('publishpress-roles-profile-js', $this->module_url . 'assets/js/profile.js',
+                            ['jquery', 'publishpress-chosen-js'], PUBLISHPRESS_VERSION);
+
+                        wp_enqueue_style('publishpress-chosen-css', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css',
+                            false,
+                            PUBLISHPRESS_VERSION);
+                        wp_enqueue_style('publishpress-roles-profile-css', $this->module_url . 'assets/css/profile.css',
+                            ['publishpress-chosen-css'], PUBLISHPRESS_VERSION);
+
+                        $userId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
+
+                        wp_localize_script(
+                            'publishpress-roles-profile-js',
+                            'publishpressProfileData',
+                            [
+                                'roles' => $this->getUsersRoles($userId)
+                            ]
+                        );
+                    }
+                }
             }
+        }
+
+        /**
+         * Returns a list of roles with name and display name to populate a select field.
+         *
+         * @param int $userId
+         *
+         * @return array
+         */
+        protected function getUsersRoles($userId)
+        {
+            if (empty($userId)) {
+                return [];
+            }
+
+            $user = get_user_by('id', $userId);
+
+            if (empty($user)) {
+                return [];
+            }
+
+            return $user->roles;
         }
 
         /**
