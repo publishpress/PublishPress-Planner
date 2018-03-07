@@ -616,6 +616,7 @@ if (!class_exists('PP_Notifications'))
         {
             global $publishpress;
 
+
             // Kill switch for notification
             if (!apply_filters('pp_notification_status_change', $new_status, $old_status, $post) || !apply_filters("pp_notification_{$post->post_type}_status_change", $new_status, $old_status, $post))
             {
@@ -805,17 +806,22 @@ if (!class_exists('PP_Notifications'))
             $role_users = array();
 
             // Get users and roles to notify
-            $roles = $this->get_roles_to_notify($post_id, 'ids');
+            $roles = $this->get_roles_to_notify($post_id, 'slugs');
             foreach ((array )$roles as $role_id)
             {
-                // @todo
-                $role = $publishpress->user_groups->get_role_by('id', $role_id);
-                foreach ((array )$role->user_ids as $user_id)
-                {
-                    $role_user = get_user_by('id', $user_id);
-                    if ($role_user && is_user_member_of_blog($user_id))
+                $users = get_users(
+                    [
+                        'role' => $role_id,
+                    ]
+                );
+
+                if (!empty($users)) {
+                    foreach ($users as $user)
                     {
-                        $role_users[] = $role_user->user_email;
+                        if (is_user_member_of_blog($user->ID))
+                        {
+                            $role_users[] = $user->user_email;
+                        }
                     }
                 }
             }
@@ -1572,8 +1578,6 @@ if (!class_exists('PP_Notifications'))
 
         public function send_notification_comment($args)
         {
-
-
             /* translators: 1: blog name, 2: post title */
             $subject = sprintf(__('[%1$s] New Editorial Comment: "%2$s"', 'publishpress'), $args['blogname'], $args['post_title']);
 
