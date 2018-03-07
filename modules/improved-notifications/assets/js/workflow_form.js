@@ -43,7 +43,7 @@
         setupFieldFilters('event_content_category');
         setupFieldFilters('event_content_category');
         setupFieldFilters('user');
-        setupFieldFilters('user_group');
+        setupFieldFilters('role');
 
         // List search
         $('.publishpress-filter-checkbox-list select').multipleSelect({

@@ -361,7 +361,23 @@ if (!class_exists('PP_Improved_Notifications'))
                     }
                 }
             }
+
+            if (version_compare($previous_version, '1.10', '<=')) {
+                $this->migrate_legacy_metadata_for_role();
+            }
         }
+
+        protected function migrate_legacy_metadata_for_role()
+        {
+            global $wpdb;
+
+            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torole' WHERE meta_key = '_psppno_togroup'";
+            $wpdb->query($query);
+
+            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torolelist' WHERE meta_key = '_psppno_togrouplist'";
+            $wpdb->query($query);
+        }
+
 
         /**
          * Filters the enable_notifications on the Slack add-on to block it.
