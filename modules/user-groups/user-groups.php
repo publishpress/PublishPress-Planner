@@ -592,7 +592,7 @@ if (!class_exists('PP_User_Groups'))
                                     ?></h4>
                                 <?php
                                 $select_form_args = array(
-                                    'list_class' => 'pp-post_following_list',
+                                    'list_class' => 'pp_post_notify_list',
                                     'input_id'   => 'usergroup_users',
                                 );
                                 ?>
@@ -881,7 +881,7 @@ if (!class_exists('PP_User_Groups'))
             // e.g. showing members assigned to group (John Smith, Jane Doe, and 9 others)
             // before <tag>, after <tag>, class, id names?
             $defaults = array(
-                'list_class' => 'pp-post_following_list',
+                'list_class' => 'pp_post_notify_list',
                 'list_id'    => 'pp-following_usergroups',
                 'input_id'   => 'following_usergroups',
             );

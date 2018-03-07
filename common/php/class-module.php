@@ -623,6 +623,7 @@ if (!class_exists('PP_Module'))
          */
         public function users_select_form($selected = null, $args = null)
         {
+            global $publishpress;
 
             // Set up arguments
             $defaults    = array(
@@ -648,32 +649,29 @@ if (!class_exists('PP_Module'))
             {
                 $selected = array();
             }
+
+            $roles = get_editable_roles();
             ?>
 
             <?php if (!empty($users)) : ?>
-            <ul class="<?php echo esc_attr($list_class) ?>">
-                <?php foreach ($users as $user) : ?>
-                    <?php $checked = (in_array($user->ID, $selected)) ? 'checked="checked"' : '';
-                    ?>
-                    <li>
-                        <label for="<?php echo esc_attr($input_id . '-' . $user->ID) ?>">
-                            <input type="checkbox" id="<?php echo esc_attr($input_id . '-' . $user->ID) ?>"
-                                   name="<?php echo esc_attr($input_id) ?>[]" value="<?php echo esc_attr($user->ID);
-                            ?>" <?php echo $checked;
-                            ?> />
-                            <span class="pp-user_displayname"><?php echo esc_html($user->display_name);
-                                ?></span>
-                            <span class="pp-user_useremail"><?php echo esc_html($user->user_email);
-                                ?></span>
-                        </label>
-                    </li>
-                <?php endforeach;
-                ?>
-            </ul>
-        <?php endif;
-            ?>
+                <select class="chosen-select" name="to_notify[]" multiple>
+                    <?php if (!empty($roles)) : ?>
+                        <optgroup label="<?php echo __('Roles', 'publishpress'); ?>">
+                            <?php foreach ($roles as $role => $data) : ?>
+                                <?php $attrSelected = (in_array($role, $selected)) ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $role; ?>" <?php echo $attrSelected; ?>><?php echo __('Role', 'publishpress'); ?>: <?php echo $data['name']; ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endif; ?>
+                    <optgroup label="<?php echo __('Users', 'publishpress'); ?>">
+                        <?php foreach ($users as $user) : ?>
+                            <?php $attrSelected = (in_array($user->ID, $selected)) ? 'selected="selected"' : ''; ?>
+                            <option value="<?php echo $user->ID; ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                </select>
+            <?php endif; ?>
             <?php
-
         }
 
 

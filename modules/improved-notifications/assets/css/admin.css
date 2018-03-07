@@ -92,12 +92,12 @@
     margin-bottom: 0;
 }
 
-#psppno-workflow-metabox-section-receiver #pp-post_following_users_box {
+#psppno-workflow-metabox-section-receiver #pp_post_notify_users_box {
     float: none;
     margin-right: 0;
 }
 
-#psppno-workflow-metabox-section-receiver #pp-post_following_users_box,
+#psppno-workflow-metabox-section-receiver #pp_post_notify_users_box,
 #psppno-workflow-metabox-section-receiver #pp-post_following_usergroups_box {
     width: 100%;
 }

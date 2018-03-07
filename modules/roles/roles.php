@@ -159,9 +159,9 @@ if (!class_exists('PP_Roles')) {
         public function install()
         {
             // Maybe we just migrated from Edit flow, so we need to convert the User Groups.
-            if ($this->convertLegacyUserGroupsToRoles()) {
-                $this->cleanupUserGroups();
-            }
+            $this->convertLegacyUserGroupsToRoles();
+            $this->convertLegacyPostFollowingUserGroupsToRoles();
+            $this->cleanupUserGroups();
         }
 
         /**
@@ -174,9 +174,9 @@ if (!class_exists('PP_Roles')) {
             if (version_compare($previous_version, '1.10.0', '<=')) {
                 $this->addCapabilitiesToAdmin();
 
-                if ($this->convertLegacyUserGroupsToRoles()) {
-                    $this->cleanupUserGroups();
-                }
+                $this->convertLegacyUserGroupsToRoles();
+                $this->convertLegacyPostFollowingUserGroupsToRoles();
+                $this->cleanupUserGroups();
             }
         }
 
@@ -192,8 +192,6 @@ if (!class_exists('PP_Roles')) {
 
         /**
          * Convert the user groups to roles.
-         *
-         * @return boolean
          */
         protected function convertLegacyUserGroupsToRoles()
         {
@@ -205,8 +203,42 @@ if (!class_exists('PP_Roles')) {
                     $this->convertUserGroupToRole($userGroup);
                 }
             }
+        }
 
-            return true;
+        /**
+         * Convert user groups to roles into posts' selected for notification.
+         */
+        protected function convertLegacyPostFollowingUserGroupsToRoles()
+        {
+            global $wpdb;
+
+            // We do a custom query to save memory.
+            $query   = "SELECT `ID` FROM {$wpdb->prefix}posts";
+            $postIds = $wpdb->get_results($query);
+
+            if (!empty($postIds)) {
+                foreach ($postIds as $post) {
+                    $userGroups = $this->getUserGroups();
+                    if (!empty($userGroups)) {
+                        foreach ($userGroups as $userGroup) {
+                            // Add a term and taxonomy for the role (usergroup->slug).
+                            $term = wp_insert_term(
+                                $userGroup->slug,
+                                'pp_notify_role',
+                                [
+                                    'slug' => $userGroup->slug,
+                                ]);
+
+                            // Add the term to the post
+                            wp_set_post_terms(
+                                $post->ID,
+                                $userGroup->slug,
+                                'pp_notify_role'
+                            );
+                        }
+                    }
+                }
+            }
         }
 
         /**
@@ -353,12 +385,12 @@ if (!class_exists('PP_Roles')) {
         public function enqueue_admin_scripts()
         {
             if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings' && isset($_GET['module']) && $_GET['module'] === 'pp-roles-settings') {
-                wp_enqueue_script('publishpress-chosen-js', $this->module_url . 'assets/libs/chosen/chosen.jquery.js',
+                wp_enqueue_script('publishpress-chosen-js', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
                     ['jquery'], PUBLISHPRESS_VERSION);
                 wp_enqueue_script('publishpress-roles-js', $this->module_url . 'assets/js/admin.js',
                     ['jquery', 'publishpress-chosen-js'], PUBLISHPRESS_VERSION);
 
-                wp_enqueue_style('publishpress-chosen-css', $this->module_url . 'assets/libs/chosen/chosen.css', false,
+                wp_enqueue_style('publishpress-chosen-css', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css', false,
                     PUBLISHPRESS_VERSION);
                 wp_enqueue_style('publishpress-roles-css', $this->module_url . 'assets/css/admin.css',
                     ['publishpress-chosen-css'], PUBLISHPRESS_VERSION);
