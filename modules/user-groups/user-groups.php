@@ -35,11 +35,16 @@
  * @todo Resolve whether the notifications component of this class should be moved to "subscriptions"
  * @todo Decide whether it's functional to store user_ids in the term description array
  * - Argument against: it's going to be expensive to look up usergroups for a user
- *
+ * @todo Remove this module. It is deprecated.
  */
 
 if (!class_exists('PP_User_Groups'))
 {
+    /**
+     * Class PP_User_Groups
+     *
+     * @deprecated
+     */
     class PP_User_Groups extends PP_Module
     {
         const SETTINGS_SLUG = 'pp-user-groups-settings';

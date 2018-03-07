@@ -233,7 +233,6 @@ class publishpress
             'notifications'          => PUBLISHPRESS_BASE_PATH,
             'content-overview'       => PUBLISHPRESS_BASE_PATH,
             'custom-status'          => PUBLISHPRESS_BASE_PATH,
-            'user-groups'            => PUBLISHPRESS_BASE_PATH,
             'roles'                  => PUBLISHPRESS_BASE_PATH,
             'improved-notifications' => PUBLISHPRESS_BASE_PATH,
             'async-notifications'    => PUBLISHPRESS_BASE_PATH,
