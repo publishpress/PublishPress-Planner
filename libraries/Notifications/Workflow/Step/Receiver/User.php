@@ -136,7 +136,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
             $receivers = array_merge($receivers, $users);
 
             // Get the users following the post
-            $users     = $this->get_service('publishpress')->notifications->get_following_users($args['post']->ID, 'id');
+            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify($args['post']->ID, 'id');
             $receivers = array_merge($receivers, $users);
 
             /**

@@ -455,7 +455,7 @@ if (!class_exists('PP_Notifications'))
 
         public function action_save_post($postId)
         {
-            if (!wp_verify_nonce($_POST['pp_notifications_nonce'], 'save_roles')) {
+            if (!isset($_POST['pp_notifications_nonce']) || !wp_verify_nonce($_POST['pp_notifications_nonce'], 'save_roles')) {
                 return;
             }
 
@@ -841,7 +841,7 @@ if (!class_exists('PP_Notifications'))
                     unset($recipients[$key]);
                 }
                 // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                if (false === apply_filters('pp_notification_email_current_user', false) && wp_get_current_user()->user_email == $user_email)
+                if (false === apply_filters('publishpress_notify_current_user', false) && wp_get_current_user()->user_email == $user_email)
                 {
                     unset($recipients[$key]);
                 }
