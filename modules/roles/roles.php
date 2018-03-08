@@ -199,7 +199,7 @@ if (!class_exists('PP_Roles')) {
         protected function convertLegacyUserGroupsToRoles()
         {
             // Try to get the user groups.
-            $userGroups = $this->getUserGroups();
+            $userGroups = $this->getLegacyUserGroups();
 
             if (!empty($userGroups)) {
                 foreach ($userGroups as $userGroup) {
@@ -221,7 +221,7 @@ if (!class_exists('PP_Roles')) {
 
             if (!empty($postIds)) {
                 foreach ($postIds as $post) {
-                    $userGroups = $this->getUserGroups();
+                    $userGroups = $this->getLegacyUserGroups();
                     if (!empty($userGroups)) {
                         foreach ($userGroups as $userGroup) {
                             // Add a term and taxonomy for the role (usergroup->slug).
@@ -329,7 +329,7 @@ if (!class_exists('PP_Roles')) {
          *
          * @return array
          */
-        protected function getUserGroups()
+        public function getLegacyUserGroups()
         {
             $userGroupTerms = get_terms([
                 'taxonomy'   => 'pp_usergroup',
@@ -371,7 +371,7 @@ if (!class_exists('PP_Roles')) {
         protected function cleanupUserGroups()
         {
             // Try to get thea user groups.
-            $userGroups = $this->getUserGroups();
+            $userGroups = $this->getLegacyUserGroups();
 
             if (!empty($userGroups)) {
                 foreach ($userGroups as $userGroup) {
