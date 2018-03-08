@@ -149,6 +149,9 @@ if (!class_exists('PP_Roles')) {
             $this->cap_manage_roles = apply_filters('pp_cap_manage_roles', $this->cap_manage_roles);
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+
+            add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
+            add_action('user_register', [$this, 'action_profile_update'], 10);
         }
 
         /**
@@ -399,7 +402,7 @@ if (!class_exists('PP_Roles')) {
                 if (function_exists('get_current_screen')) {
                     $screen = get_current_screen();
 
-                    if ('user-edit' === $screen->base) {
+                    if ('user-edit' === $screen->base || ('user' === $screen->base && 'add' === $screen->action)) {
                         // Check if we are on the user's profile page
                         wp_enqueue_script('publishpress-chosen-js',
                             PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
@@ -419,9 +422,41 @@ if (!class_exists('PP_Roles')) {
                             'publishpress-roles-profile-js',
                             'publishpressProfileData',
                             [
-                                'roles' => $this->getUsersRoles($userId)
+                                'selected_roles' => $this->getUsersRoles($userId),
                             ]
                         );
+                    }
+                }
+            }
+        }
+
+        /**
+         * Action executed when the user profile is updated.
+         *
+         * @param $userId
+         * @param $oldUserData
+         */
+        public function action_profile_update($userId, $oldUserData = [])
+        {
+            // Check if we need to update the user's roles, allowing to set multiple roles.
+            if (isset($_POST['pp_roles'])) {
+                // Remove the user's roles
+                $user = get_user_by('ID', $userId);
+
+                $newRoles     = $_POST['pp_roles'];
+                $currentRoles = $user->roles;
+
+                // Remove unselected roles
+                foreach ($currentRoles as $role) {
+                    if (!in_array($role, $newRoles)) {
+                        $user->remove_role($role);
+                    }
+                }
+
+                // Add new roles
+                foreach ($newRoles as $role) {
+                    if (!in_array($role, $currentRoles)) {
+                        $user->add_role($role);
                     }
                 }
             }
