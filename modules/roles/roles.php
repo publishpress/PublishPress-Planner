@@ -327,10 +327,23 @@ if (!class_exists('PP_Roles')) {
         /**
          * Get legacy User Groups.
          *
-         * @return array
+         * @return array|false
          */
         public function getLegacyUserGroups()
         {
+            // Make sure the taxonomy is registered, so we can query it.
+            register_taxonomy(
+                'pp_usergroup',
+                'post',
+                [
+                    'label' => 'User Group',
+                    'public' => false,
+                    'rewrite' => false,
+                    'hierarchical' => false,
+                ]
+            );
+
+            // Query the user groups
             $userGroupTerms = get_terms([
                 'taxonomy'   => 'pp_usergroup',
                 'hide_empty' => false,
