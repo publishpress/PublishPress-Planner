@@ -50,6 +50,8 @@ if (!class_exists('PP_Roles')) {
 
         const VALUE_NO = 'no';
 
+        const PAGE_SLUG = 'pp-manage-roles';
+
         public $module_name = 'roles';
 
         public $module;
@@ -83,8 +85,6 @@ if (!class_exists('PP_Roles')) {
                     'role-missing' => __("Role doesn't exist.", 'publishpress'),
                     'role-deleted' => __("Role deleted.", 'publishpress'),
                 ],
-                'configure_page_cb'    => 'print_configure_view',
-                'options_page'         => true,
             ];
 
             $this->module = PublishPress()->register_module($this->module_name, $args);
@@ -149,6 +149,8 @@ if (!class_exists('PP_Roles')) {
             $this->cap_manage_roles = apply_filters('pp_cap_manage_roles', $this->cap_manage_roles);
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+
+            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 20);
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
             add_action('user_register', [$this, 'action_profile_update'], 10);
@@ -511,11 +513,9 @@ if (!class_exists('PP_Roles')) {
             if (!isset($args['action'])) {
                 $args['action'] = '';
             }
+
             if (!isset($args['page'])) {
-                $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
-            }
-            if (!isset($args['module'])) {
-                $args['module'] = self::SETTINGS_SLUG;
+                $args['page'] = static::PAGE_SLUG;
             }
 
             // Add other things we may need depending on the action
@@ -531,12 +531,32 @@ if (!class_exists('PP_Roles')) {
         }
 
         /**
-         * Print the content of the configure tab.
-         *
-         * @throws Exception
+         * Add necessary things to the admin menu
          */
-        public function print_configure_view()
+        public function action_admin_menu()
         {
+            // Main Menu
+            add_submenu_page(
+                'pp-calendar',
+                esc_html__('Roles', 'publishpress'),
+                esc_html__('Roles', 'publishpress'),
+                apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
+                'pp-manage-roles',
+                array($this, 'render_admin_page')
+            );
+        }
+
+        /**
+         *
+         */
+        public function render_admin_page()
+        {
+            global $publishpress;
+
+            $publishpress->settings->print_default_header($publishpress->modules->roles, __('Roles', 'publishpress'));
+
+            echo '<div class="wrap">';
+
             $action = isset($_GET['action']) && !empty($_GET['action']) ? $_GET['action'] : 'add-role';
 
             $role = (object)[
@@ -615,6 +635,10 @@ if (!class_exists('PP_Roles')) {
                     'errors'             => isset($_REQUEST['form-errors']) ? $_REQUEST['form-errors'] : [],
                 ]
             );
+
+            echo '</div>';
+
+            $publishpress->settings->print_default_footer($publishpress->modules->roles);
         }
 
         /**
@@ -622,8 +646,8 @@ if (!class_exists('PP_Roles')) {
          */
         public function handle_add_role()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-role') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
+                || ($_GET['page'] != static::PAGE_SLUG) || $_POST['form-action'] != 'add-role') {
                 return;
             }
 
@@ -711,8 +735,8 @@ if (!class_exists('PP_Roles')) {
          */
         public function handle_edit_role()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'edit-role') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
+                || ($_GET['page'] != static::PAGE_SLUG) || $_POST['form-action'] != 'edit-role') {
                 return;
             }
 
@@ -757,7 +781,7 @@ if (!class_exists('PP_Roles')) {
 
             // Get all the roles and edit the current role. Saving all the roles again in the options table.
             $roles = get_option('wp_user_roles');
-            if (is_wp_error($role) || empty($roles)) {
+            if (is_wp_error($roles) || empty($roles)) {
                 wp_die(__('Error loading role.', 'publishpress'));
             }
 
@@ -807,8 +831,8 @@ if (!class_exists('PP_Roles')) {
          */
         public function handle_delete_role()
         {
-            if (!isset($_GET['action'], $_GET['page'], $_GET['module'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-role') {
+            if (!isset($_GET['action'], $_GET['page'])
+                || ($_GET['page'] != static::PAGE_SLUG) || $_GET['action'] != 'delete-role') {
                 return;
             }
 
