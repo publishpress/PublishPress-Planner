@@ -139,9 +139,9 @@ class publishpress
             PublishPress\Legacy\Util::add_caps_to_role($role, $caps);
         }
 
-        // User groups
+        // Additional capabilities
         $roles = array(
-            'administrator' => array('edit_usergroups'),
+            'administrator' => array(apply_filters('pp_manage_roles_cap', 'pp_manage_roles')),
         );
 
         foreach ($roles as $role => $caps)
