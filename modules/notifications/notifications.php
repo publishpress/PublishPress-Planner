@@ -408,7 +408,8 @@ if (!class_exists('PP_Notifications'))
                     __('Notify', 'publishpress'),
                     array($this, 'notifications_meta_box'),
                     $post_type,
-                    'advanced'
+                    'side',
+                    'high'
                 );
             }
         }
@@ -426,8 +427,10 @@ if (!class_exists('PP_Notifications'))
             <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
 
-                <p><?php _e('Select the users and roles that should receive notifications when the status of this post is updated or when an editorial comment is added.', 'publishpress'); ?>
+                <p>
+                    <?php _e('Select the users and roles that should receive notifications by workflows.', 'publishpress'); ?>
                 </p>
+
                 <div id="pp_post_notify_users_box">
                     <?php
                     $users_to_notify        = $this->get_users_to_notify($post->ID, 'id');
@@ -440,7 +443,13 @@ if (!class_exists('PP_Notifications'))
                     );
                     $this->users_select_form($selected , $select_form_args);
                     ?>
+
+
                 </div>
+
+                <p>
+                    <a href="https://publishpress.com/docs/notifications/"><?php _e('Click here to read more about notifications...', 'publishpress'); ?></a>
+                </p>
 
                 <div class="clear"></div>
 
