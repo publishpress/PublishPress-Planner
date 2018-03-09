@@ -70,9 +70,6 @@ if (!class_exists('PP_Roles')) {
             // Register the module with PublishPress
             $args = [
                 'title'                => __('Roles', 'publishpress'),
-                'short_description'    => __('Roles allows you to create custom roles.', 'publishpress'),
-                'extended_description' => __('Roles allows you to create custom roles and allow users be on more than one role.',
-                    'publishpress'),
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'roles',
@@ -553,7 +550,7 @@ if (!class_exists('PP_Roles')) {
         {
             global $publishpress;
 
-            $publishpress->settings->print_default_header($publishpress->modules->roles, __('Roles', 'publishpress'));
+            $publishpress->settings->print_default_header($publishpress->modules->roles);
 
             echo '<div class="wrap">';
 

@@ -167,28 +167,6 @@ body.wp-admin.post-type-psppnotif_workflow .misc-pub-visibility {
     margin-bottom: 10px;
 }
 
-/* Branding for pages */
-body.post-type-psppnotif_workflow h1.wp-heading-inline:before {
-    display: block;
-    padding: 10px 0 10px 55px;
-    background-image: url(../../../settings/lib/icon-128x128.png);
-    background-size: 45px auto;
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    content: 'PublishPress';
-    font-weight: bold;
-    font-size: 26px;
-    margin-bottom: 15px;
-    margin-top: 8px;
-    margin-left: 4px;
-    margin-right: 0;
-    padding-bottom: 10px;
-    padding-left: 55px;
-    padding-right: 0px;
-    padding-top: 10px;
-}
-
 body.post-type-psppnotif_workflow #wpbody-content {
     margin-bottom: 100px;
 }
