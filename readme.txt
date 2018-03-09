@@ -155,6 +155,27 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.11.0] - UNRELEASED =
+
+*Fixed:*
+
+* Fixed workflows and notifications for new posts;
+* Fixed issue when installed from composer, related to the vendor dir not being found;
+* Fixed style for icons in the buttons of the popup for iCal subscriptions in the calendar;
+* Fixed hidden submenus adding basic capabilities after installing for the first time;
+
+*Changed:*
+
+* Changed the workflow form, adding all fields as required;
+* Removed support for User Groups - they are deprecated in favor of Roles, in PublishPress;
+
+*Added:*
+
+* Added new "From" status: New. Allowing to create workflows specifically from new posts;
+* Added new submenu for managing Roles;
+* Added new receiver option for notification workflows to reach Roles;
+* Added support for multiple Roles per user. A new field is displayed in the user's profile allowing to select multiple roles;
+
 = [1.10.0] - 2018-02-21 =
 
 *Added:*
