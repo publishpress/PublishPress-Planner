@@ -168,6 +168,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Changed the workflow form, adding all fields as required;
 * Removed support for User Groups - they are deprecated in favor of Roles, in PublishPress;
+* Moved Notifications metabox to the sidebar with high priority for posts;
+* Cleaned up UI removing logo from the title in the admin;
 
 *Added:*
 
