@@ -31,10 +31,6 @@
 /**
  * class PP_User_Groups
  *
- * @todo all of them PHPdocs
- * @todo Resolve whether the notifications component of this class should be moved to "subscriptions"
- * @todo Decide whether it's functional to store user_ids in the term description array
- * - Argument against: it's going to be expensive to look up usergroups for a user
  * @todo Remove this module. It is deprecated.
  */
 
