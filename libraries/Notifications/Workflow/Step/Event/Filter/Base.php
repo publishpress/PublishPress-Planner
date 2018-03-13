@@ -40,6 +40,8 @@ class Base implements Filter_Interface
      * Field in the form.
      *
      * @return string
+     *
+     * @throws \Exception
      */
     public function render()
     {

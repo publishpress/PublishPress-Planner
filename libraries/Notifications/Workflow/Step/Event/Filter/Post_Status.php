@@ -49,8 +49,19 @@ class Post_Status extends Base implements Filter_Interface
     protected function get_options($group)
     {
         $statuses = $this->get_post_statuses();
-        $options  = [];
         $metadata = (array)$this->get_metadata('');
+        $options  = [];
+
+        if ('from' === $group) {
+            // Add an status to represent new posts
+            $options = [
+                [
+                    'value'    => 'auto-draft',
+                    'label'    => __('"New"', 'publishpress'),
+                    'selected' => in_array('auto-draft', $metadata[$group]),
+                ],
+            ];
+        }
 
         foreach ($statuses as $status)
         {

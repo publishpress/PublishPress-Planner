@@ -31,15 +31,16 @@
 /**
  * class PP_User_Groups
  *
- * @todo all of them PHPdocs
- * @todo Resolve whether the notifications component of this class should be moved to "subscriptions"
- * @todo Decide whether it's functional to store user_ids in the term description array
- * - Argument against: it's going to be expensive to look up usergroups for a user
- *
+ * @todo Remove this module. It is deprecated.
  */
 
 if (!class_exists('PP_User_Groups'))
 {
+    /**
+     * Class PP_User_Groups
+     *
+     * @deprecated
+     */
     class PP_User_Groups extends PP_Module
     {
         const SETTINGS_SLUG = 'pp-user-groups-settings';
@@ -592,7 +593,7 @@ if (!class_exists('PP_User_Groups'))
                                     ?></h4>
                                 <?php
                                 $select_form_args = array(
-                                    'list_class' => 'pp-post_following_list',
+                                    'list_class' => 'pp_post_notify_list',
                                     'input_id'   => 'usergroup_users',
                                 );
                                 ?>
@@ -881,7 +882,7 @@ if (!class_exists('PP_User_Groups'))
             // e.g. showing members assigned to group (John Smith, Jane Doe, and 9 others)
             // before <tag>, after <tag>, class, id names?
             $defaults = array(
-                'list_class' => 'pp-post_following_list',
+                'list_class' => 'pp_post_notify_list',
                 'list_id'    => 'pp-following_usergroups',
                 'input_id'   => 'following_usergroups',
             );
@@ -947,7 +948,6 @@ if (!class_exists('PP_User_Groups'))
          */
         public function get_usergroups($args = array())
         {
-
             // We want empty terms by default
             if (!isset($args['hide_empty']))
             {
@@ -1258,7 +1258,11 @@ if (!class_exists('PP_User_Groups'))
                 $usergroup_objects_or_ids = array();
                 foreach ($all_usergroups as $usergroup)
                 {
-                    // Not in this usergroup, so keep going
+                    // Not in this user group, so keep going
+                    if (!isset($usergroup->user_ids) || empty($usergroup->user_ids || !is_array($usergroup->user_ids))) {
+                        continue;
+                    }
+
                     if (!in_array($user_id, $usergroup->user_ids))
                     {
                         continue;

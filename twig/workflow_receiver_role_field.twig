@@ -1,0 +1,15 @@
+{% include 'workflow_receiver_checkbox_field.twig' %}
+
+<div
+        id="publishpress_notif_role_list_filter"
+        {% if not meta.selected %}style="display:none;"{% endif %}
+        class="{{ id }}_filters publishpress-filter-checkbox-list">
+
+    {% if roles %}
+        <select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}" id="{{ input_id }}">
+            {% for role, data in roles %}
+                <option value="{{ role }}" {{ selected( data.selected, true ) }}>{{ data.name }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+</div>

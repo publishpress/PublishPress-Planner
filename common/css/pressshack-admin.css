@@ -78,7 +78,7 @@
     background-color: transparent;
 }
 
-.pressshack-admin-wrapper > header h1 {
+.pressshack-admin-wrapper > header .pressshack-title {
     margin: .67em 0 15px .15em;
     font-weight: 600;
     font-size: 2em;

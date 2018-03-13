@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\Auto_loader;
+use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
@@ -88,7 +88,7 @@ if (!class_exists('PP_Async_Notifications'))
             // Apply a filter to the default options
             $args['default_options'] = apply_filters('publishpress_async_notif_default_options', $args['default_options']);
             $this->module            = $publishpress->register_module(
-                PublishPress\Util::sanitize_module_name($this->module_name),
+                PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
                 $args
             );
 
@@ -182,6 +182,9 @@ if (!class_exists('PP_Async_Notifications'))
                 'old_status' => $oldStatus,
             ];
             $receivers    = [$receiver];
+
+            // Decode the content
+            $content = base64_decode(maybe_unserialize($content));
 
             /**
              * Triggers the notification. This can be caught by notification channels.
