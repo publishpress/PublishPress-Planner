@@ -53,7 +53,8 @@
         // Form validation
         $('form#post').on('submit', function (event) {
             var selected,
-                sections = ['event', 'event_content'];
+                sections = ['event', 'event_content'],
+                messages = [];
 
             /**
              * Set the validation status to the given section.
@@ -84,32 +85,120 @@
 
                 if (selected === 0) {
                     set_validation_status(section, false);
+
+                        messages.push(workflowFormData.messages['selectAllIn_' + section]);
                 } else {
                     set_validation_status(section, true);
                 }
             });
 
+            // Check if any status was selected for "moving to new status"
+            if ($('#publishpress_notif_event_post_save:checked').length > 0) {
+                if ($('#publishpress_notif_event_post_save_filters_post_status_from').val() == null
+                    || $('#publishpress_notif_event_post_save_filters_post_status_to').val() == null) {
+
+                    set_validation_status('event', false);
+
+                    if ($('#publishpress_notif_event_post_save_filters_post_status_from').val() == null) {
+                        messages.push(workflowFormData.messages['selectAPreviousStatus']);
+                    }
+
+                    if ($('#publishpress_notif_event_post_save_filters_post_status_to').val() == null) {
+                        messages.push(workflowFormData.messages['selectANewStatus']);
+                    }
+                } else {
+                    set_validation_status('event', true);
+                }
+            }
+
+            // Check if any post type was selected (if checked)
+            if ($('#publishpress_notif_event_content_post_type:checked').length > 0) {
+                if ($('#publishpress_notif_event_content_post_type_filters_post_type').val() == null) {
+                    set_validation_status('event_content', false);
+
+                    messages.push(workflowFormData.messages['selectPostType']);
+                } else {
+                    set_validation_status('event_content', true);
+                }
+            }
+
+            // Check if any category was selected (if checked)
+            if ($('#publishpress_notif_event_content_category:checked').length > 0) {
+                if ($('#publishpress_notif_event_content_category_filters_category').val() == null) {
+                    set_validation_status('event_content', false);
+
+                    messages.push(workflowFormData.messages['selectCategory']);
+                } else {
+                    set_validation_status('event_content', true);
+                }
+            }
+
             // Check the Receivers section
             if ($('#psppno-workflow-metabox-section-receiver input[type="checkbox"][name^="publishpress_notif"]:checked').length === 0) {
                 set_validation_status('receiver', false);
+
+                messages.push(workflowFormData.messages['selectAReceiver']);
             } else {
                 set_validation_status('receiver', true);
             }
 
+            // Check if any user was selected (if checked)
+            if ($('#publishpress_notif_user:checked').length > 0) {
+                if ($('#publishpress_notif_user_list').val() == null) {
+                    set_validation_status('receiver', false);
+
+                    messages.push(workflowFormData.messages['selectAUser']);
+                } else {
+                    set_validation_status('receiver', true);
+                }
+            }
+
+            // Check if any role was selected (if checked)
+            if ($('#publishpress_notif_role:checked').length > 0) {
+                if ($('#publishpress_notif_roles').val() == null) {
+                    set_validation_status('receiver', false);
+
+                    messages.push(workflowFormData.messages['selectARole']);
+                } else {
+                    set_validation_status('receiver', true);
+                }
+            }
+
             // Check the Content section
-            if ($('input[name="publishpress_notif[content_main][subject]"]').val().trim() === '') {
+            if ($('#publishpress_notification_content_main_subject').val().trim() == ''
+                || tinymce.activeEditor.getContent().trim() === '') {
                 set_validation_status('content', false);
+
+                if ($('#publishpress_notification_content_main_subject').val().trim() == '') {
+                    messages.push(workflowFormData.messages['setASubject']);
+                }
+
+                if (tinymce.activeEditor.getContent().trim() === '') {
+                    messages.push(workflowFormData.messages['setABody']);
+                }
             } else {
                 set_validation_status('content', true);
             }
 
-            if (tinymce.activeEditor.getContent().trim() === '') {
-                set_validation_status('content', false);
+            var valid = $('form#post .invalid').length === 0;
+
+            if (!valid) {
+                if (messages.length > 0) {
+                    $('#error_messages').remove();
+                    var $messageBox = $('<div id="error_messages" class="notice notice-error"></div>');
+                    $('.wp-header-end').after($messageBox);
+
+                    for (var i = 0; i < messages.length; i++) {
+                        $element = $('<p>');
+                        $element.text(messages[i]);
+                        $messageBox.append($element);
+                    }
+                }
             } else {
-                set_validation_status('content', true);
+                $('#error_messages').remove();
             }
 
-            return $('form#post .invalid').length === 0;
+            return valid;
         });
     });
 })(jQuery);

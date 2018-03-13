@@ -6,7 +6,7 @@
         class="{{ id }}_filters publishpress-filter-checkbox-list">
 
     {% if roles %}
-        <select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}">
+        <select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}" id="{{ input_id }}">
             {% for role, data in roles %}
                 <option value="{{ role }}" {{ selected( data.selected, true ) }}>{{ data.name }}</option>
             {% endfor %}

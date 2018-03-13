@@ -6,7 +6,7 @@
         class="{{ id }}_filters publishpress-filter-checkbox-list">
 
     {% if users %}
-        <select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}">
+        <select multiple="multiple" class="{{ list_class }}" name="{{ input_name }}" id="{{ input_id }}">
             {% for user in users %}
                 <option value="{{ user.ID }}" {{ selected( user.selected, true ) }}>{{ user.display_name }}</option>
             {% endfor %}

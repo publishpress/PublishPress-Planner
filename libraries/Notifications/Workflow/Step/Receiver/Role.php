@@ -87,7 +87,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
         $template_context['roles']       = $roles;
         $template_context['list_class']  = 'publishpress_notif_role_list';
         $template_context['input_name']  = 'publishpress_notif[receiver_role][]';
-        $template_context['input_id']    = 'publishpress_notif_role_';
+        $template_context['input_id']    = 'publishpress_notif_roles';
 
         $template_context = parent::filter_workflow_metabox_context($template_context);
 

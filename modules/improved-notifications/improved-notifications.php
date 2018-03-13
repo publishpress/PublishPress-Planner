@@ -469,6 +469,26 @@ if (!class_exists('PP_Improved_Notifications'))
                 wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', ['jquery'], PUBLISHPRESS_VERSION);
                 wp_enqueue_script('psppno-workflow-tooltip', plugin_dir_url(__FILE__) . 'libs/opentip/downloads/opentip-jquery.js', ['jquery'], PUBLISHPRESS_VERSION);
                 wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', ['jquery', 'psppno-workflow-tooltip', 'psppno-multiple-select'], PUBLISHPRESS_VERSION);
+
+                wp_localize_script(
+                    'psppno-workflow-form',
+                    'workflowFormData',
+                    [
+                        'messages' => [
+                            'selectAllIn_event'         => 'Select at least one event.',
+                            'selectAllIn_event_content' => 'Select at least a filter for the content.',
+                            'selectAPreviousStatus'     => 'Select at least one previous status.',
+                            'selectANewStatus'          => 'Select at least one new status.',
+                            'selectPostType'            => 'Select at least one post type.',
+                            'selectCategory'            => 'Select at least one category.',
+                            'selectAReceiver'           => 'Select at least one receiver.',
+                            'selectAUser'               => 'Select at least one user.',
+                            'selectARole'               => 'Select at least one role.',
+                            'setASubject'               => 'Type a subject for the notification.',
+                            'setABody'                  => 'Type a body text for the notification.',
+                        ],
+                    ]
+                );
             }
         }
 
