@@ -1,4 +1,4 @@
-=== PublishPress – PublishPress helps WordPress teams create great content ===
+=== PublishPress helps WordPress teams create great content ===
 Contributors: publishpress, andergmartins, stevejburge, pressshack
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.4
-Stable tag: 1.11.0
+Stable tag: 1.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,12 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.11.1] - 2018-03-13 =
+
+*Fixed:*
+
+* Fixed backward compatibility with legacy PublishPress Permissions;
 
 = [1.11.0] - 2018-03-13 =
 
