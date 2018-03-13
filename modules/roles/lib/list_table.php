@@ -109,9 +109,9 @@ if (!class_exists('PP_Roles_List_Table')) {
         public function get_columns()
         {
             $columns = array(
-                'name'         => __('Name', 'publishpress'),
                 'display_name' => __('Display Name', 'publishpress'),
-                'users'        => __('Users on the role', 'publishpress'),
+                'name'         => __('Name', 'publishpress'),
+                'users'        => __('Users in this role', 'publishpress'),
             );
 
             return $columns;
@@ -134,6 +134,17 @@ if (!class_exists('PP_Roles_List_Table')) {
          */
         public function column_name($role)
         {
+            return esc_html($role->name);
+        }
+
+        /**
+         * Handle the 'description' column for the table of Roles
+         * Don't need to unencode this because we already did when the role was loaded
+         *
+         * @since 0.7
+         */
+        public function column_display_name($role)
+        {
             global $publishpress;
 
             $actions                       = array();
@@ -151,26 +162,19 @@ if (!class_exists('PP_Roles_List_Table')) {
         }
 
         /**
-         * Handle the 'description' column for the table of Roles
-         * Don't need to unencode this because we already did when the role was loaded
-         *
-         * @since 0.7
-         */
-        public function column_display_name($role)
-        {
-            return esc_html($role->display_name);
-        }
-
-        /**
          * Show the "Total Users" in a given role
          *
          * @since 0.7
          */
         public function column_users($role)
         {
-            global $publishpress;
-
-            return $role->users_count;
+            return $this->twig->render(
+                'roles-list-table-column-users.twig.html',
+                array(
+                    'role' => $role,
+                    'link' => '/wp-admin/users.php?role=' . $role->name,
+                )
+            );
         }
 
         /**

@@ -18,18 +18,6 @@
                     name="addrole">
 
                 <div class="form-field form-required">
-                    <label for="name">{{ labels.name }}</label>
-                    <input type="text" aria-required="true" id="name" name="name" maxlength="40" value="{{ role.name }}"
-                           {% if action== 'edit-role' %}readonly{% endif %}/>
-
-                    {% if errors.name|length %}
-                        <p class="error">{{ errors.name }}</p>
-                    {% endif %}
-
-                    <p class="description">{{ labels.name_description }}</p>
-                </div>
-
-                <div class="form-field form-required">
                     <label for="dislpay_name">{{ labels.display_name }}</label>
                     <input type="text" aria-required="true" id="display_name" name="display_name" maxlength="40"
                            value="{{ role.display_name }}"/>
@@ -39,6 +27,18 @@
                     {% endif %}
 
                     <p class="description">{{ labels.display_name_description }}</p>
+                </div>
+
+                <div class="form-field form-required">
+                    <label for="name">{{ labels.name }}</label>
+                    <input type="text" aria-required="true" id="name" name="name" maxlength="40" value="{{ role.name }}"
+                           {% if action== 'edit-role' %}readonly{% endif %}/>
+
+                    {% if errors.name|length %}
+                        <p class="error">{{ errors.name }}</p>
+                    {% endif %}
+
+                    <p class="description">{{ labels.name_description }}</p>
                 </div>
 
                 <div class="form-field form-required">
