@@ -97,7 +97,7 @@ if (!class_exists('PP_User_Groups'))
                     'content' => __('<p>For those with many people involved in the publishing process, user groups helps you keep them organized.</p><p>Currently, user groups are primarily used for subscribing a set of users to a post for notifications.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/user-groups/">User Groups Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
-                'options_page'          => true,
+//                'options_page'          => true,
             );
             $this->module = PublishPress()->register_module('user_groups', $args);
         }
