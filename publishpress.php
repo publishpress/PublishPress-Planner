@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.11.0
+ * Version: 1.11.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -236,6 +236,7 @@ class publishpress
             'roles'                  => PUBLISHPRESS_BASE_PATH,
             'improved-notifications' => PUBLISHPRESS_BASE_PATH,
             'async-notifications'    => PUBLISHPRESS_BASE_PATH,
+            'user-groups'            => PUBLISHPRESS_BASE_PATH,
 
             // @TODO: Move for settings, and remove after cleanup
             'dashboard'              => PUBLISHPRESS_BASE_PATH,
