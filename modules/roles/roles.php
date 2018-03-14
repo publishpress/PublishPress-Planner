@@ -151,6 +151,8 @@ if (!class_exists('PP_Roles')) {
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
             add_action('user_register', [$this, 'action_profile_update'], 10);
+
+            add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
         }
 
         /**
@@ -160,13 +162,10 @@ if (!class_exists('PP_Roles')) {
          */
         public function install()
         {
-            // Maybe we just migrated from Edit flow, so we need to convert the User Groups.
-            $this->convertLegacyUserGroupsToRoles();
-            $this->convertLegacyPostFollowingUserGroupsToRoles();
-            $this->cleanupUserGroups();
+            $this->scheduleUserGroupMigration();
         }
 
-        /**
+        /*[$*
          * Upgrade our data in case we need to
          *
          * @since 0.7
@@ -175,11 +174,64 @@ if (!class_exists('PP_Roles')) {
         {
             if (version_compare($previous_version, '1.10.0', '<=')) {
                 $this->addCapabilitiesToAdmin();
-
-                $this->convertLegacyUserGroupsToRoles();
-                $this->convertLegacyPostFollowingUserGroupsToRoles();
-                $this->cleanupUserGroups();
+                $this->scheduleUserGroupMigration();
             }
+        }
+
+        public function scheduleUserGroupMigration()
+        {
+            // Schedule for after 1 minute.
+            wp_schedule_single_event(
+                time() + 60,
+                'publishpress_migrate_groups_to_role'
+            );
+
+            add_action('admin_notices', [$this, 'showAdminNoticeMigrationScheduled']);
+        }
+
+        /**
+         * Migrate the groups into roles. Expected to run as cron job.
+         */
+        public function migrateUserGroupsToRoles()
+        {
+            // Check if we have the flag saying the data is already migrated.
+            $flag = get_opotion('publishpress_migrated_usergroups_to_role', 0);
+            if ($flag != 0) {
+                return;
+            }
+
+            $this->convertLegacyUserGroupsToRoles();
+            $this->convertLegacyPostFollowingUserGroupsToRoles();
+            $this->cleanupUserGroups();
+
+            add_action('admin_notices', [$this, 'showAdminNoticeMigrationFinished']);
+
+            // Set a flag to say we already migrated the data.
+            update_option('publishpress_migrated_usergroups_to_role', 1);
+        }
+
+        /**
+         * Show admin notice for saying the migration is scheduled.
+         */
+        public function showAdminNoticeMigrationScheduled()
+        {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e('PublishPress detected legacy data which needs to be migrated. The task should run in the background on the next minutes.', 'publishpress'); ?></p>
+                </div>
+            <?php
+        }
+
+        /**
+         * Show admin notice for saying the migration has finished.
+         */
+        public function showAdminNoticeMigrationFinished()
+        {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e('PublishPress finished migrating the legacy data.', 'publishpress'); ?></p>
+                </div>
+            <?php
         }
 
         /**
@@ -220,6 +272,14 @@ if (!class_exists('PP_Roles')) {
 
             if (!empty($postIds)) {
                 foreach ($postIds as $post) {
+                    $postTerms    = get_the_terms($post, 'pp_notify_role');
+                    $postTermsIds = [];
+
+                    foreach ($postTerms as $term) {
+                        $postTermsIds[] = $term->term_id;
+                    }
+
+
                     $userGroups = $this->getLegacyUserGroups();
                     if (!empty($userGroups)) {
                         foreach ($userGroups as $userGroup) {
@@ -230,6 +290,11 @@ if (!class_exists('PP_Roles')) {
                                 [
                                     'slug' => $userGroup->slug,
                                 ]);
+
+                            // Check if the post has the term, before add it.
+                            if (in_array($term->term_id, $postTermsIds)) {
+                                continue;
+                            }
 
                             // Add the term to the post
                             wp_set_post_terms(
