@@ -29,7 +29,8 @@ function _manually_load_plugin() {
     $_wp_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress';
     $_plugins_dir = $_wp_dir . '/wp-content/plugins';
 
-    if (file_exists($_plugins_dir . '/publishpress-permissions')) {
+    var_dump(file_exists($_plugins_dir . '/publishpress-permissions/publishpress-permissions.php')); die;
+    if (file_exists($_plugins_dir . '/publishpress-permissions/publishpress-permissions.php')) {
         require $_plugins_dir . '/publishpress-permissions/publishpress-permissions.php';
     }
 }
