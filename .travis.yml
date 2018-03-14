@@ -1,52 +1,76 @@
+# Based on https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
+
+sudo: false
 language: php
 
 services:
   - mysql
 
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+hosts:
+  - publishpress.localhost
+
+env:
+  global:
+    - SITE_URL="http://publishpress.localhost"
+    - SITE_DOMAIN="publishpress.localhost"
+    - DB_NAME="test"
+    - PLUGIN_SLUG="publishpress"
+
+install:
+  - composer install --no-dev --prefer-dist
+
 matrix:
   include:
     - php: '7.1'
-      env: WP_VERSION=4.8 WP_MULTISITE=0
+      env: WP_VERSION=latest
     - php: '7.1'
-      env: WP_VERSION=4.8 WP_MULTISITE=1
-    - php: '5.6'
-      env: WP_VERSION=4.8 WP_MULTISITE=0
-    - php: '5.6'
-      env: WP_VERSION=4.8 WP_MULTISITE=1
+      env: WP_VERSION=master
     - php: '7.1'
-      env: WP_VERSION=4.7 WP_MULTISITE=0
-    - php: '7.1'
-      env: WP_VERSION=4.7 WP_MULTISITE=1
+      env: WP_VERSION=4.8
     - php: '5.6'
-      env: WP_VERSION=4.7 WP_MULTISITE=0
+      env: WP_VERSION=master
     - php: '5.6'
-      env: WP_VERSION=4.7 WP_MULTISITE=1
-    - php: '5.6'
-      env: WP_VERSION=4.6 WP_MULTISITE=0
-    - php: '5.6'
-      env: WP_VERSION=4.6 WP_MULTISITE=1
-    - php: '7.1'
-      env: WP_VERSION=master WP_MULTISITE=0
-    - php: '5.6'
-      env: WP_VERSION=master WP_MULTISITE=0
+      env: WP_VERSION=4.8
+    - php: '5.4'
+      env: WP_VERSION=master
+    - php: '5.4'
+      env: WP_VERSION=4.8
+  allow_failures:
+    - env: WP_VERSION=latest
 
 before_script:
-  - export PLUGIN_SLUG=$(basename $(pwd))
-  - git clone --depth=1 --branch $WP_VERSION git://develop.git.wordpress.org/ /tmp/wordpress
-  - cd ..
-  - mv $PLUGIN_SLUG "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
-  - cd /tmp/wordpress
-  - git checkout $WP_VERSION
-  - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
-  - cp wp-tests-config-sample.php wp-tests-config.php
-  - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
-  - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
-  - sed -i "s/yourpasswordhere//" wp-tests-config.php
-  - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - |
+    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+      phpenv config-rm xdebug.ini
+    else
+      echo "xdebug.ini does not exist"
+    fi
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+      composer global require "phpunit/phpunit=4.8.*|5.7.*"
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer global require wp-coding-standards/wpcs
+      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+    fi
 
-script: phpunit
-
-sudo: false
+script:
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      codecept run unit
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      phpcs
+    fi
 
 notifications:
   slack:
