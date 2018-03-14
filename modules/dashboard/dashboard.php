@@ -246,7 +246,7 @@ if (!class_exists('PP_Dashboard'))
         {
             global $publishpress;
 
-            $myposts = $publishpress->notifications->get_user_to_notify_posts();
+            $myposts = $publishpress->notifications->get_user_following_posts();
 
             ?>
             <div class="pp-myposts">

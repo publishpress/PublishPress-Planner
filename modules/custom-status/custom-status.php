@@ -215,7 +215,6 @@ if (!class_exists('PP_Custom_Status'))
         public function install()
         {
             $default_terms = $this->get_default_terms();
-            $roles         = ['administrator', 'author', 'editor', 'contributor'];
 
             // Okay, now add the default statuses to the db if they don't already exist
             foreach ($default_terms as $term)
@@ -223,21 +222,6 @@ if (!class_exists('PP_Custom_Status'))
                 if (!term_exists($term['term'], self::taxonomy_key))
                 {
                     $this->add_custom_status($term['term'], $term['args']);
-                }
-            }
-
-            // Add basic capabilities for each post status
-            $default_terms['publish'] = array();
-            foreach ($default_terms as $termSlug => $data)
-            {
-                foreach ($roles as $roleName) {
-                    $role = get_role($roleName);
-                    $role->add_cap('status_change_' . str_replace('-', '_', $termSlug));
-
-                    if ('publish' === $termSlug) {
-                        $role->add_cap('status_change_private');
-                        $role->add_cap('status_change_future');
-                    }
                 }
             }
         }
@@ -941,15 +925,6 @@ if (!class_exists('PP_Custom_Status'))
 
             // Reset our internal object cache
             $this->custom_statuses_cache = array();
-
-            // Set permissions for the base roles
-            $roles = ['administrator', 'editor', 'author', 'contributor'];
-            foreach ($roles as $roleSlug) {
-                $role = get_role($roleSlug);
-                if (!empty($role)) {
-                    $role->add_cap('status_change_' . str_replace('-', '_', $slug));
-                }
-            }
 
             return $response;
         }

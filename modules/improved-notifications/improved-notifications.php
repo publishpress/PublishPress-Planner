@@ -102,7 +102,7 @@ if (!class_exists('PP_Improved_Notifications'))
             // Apply a filter to the default options
             $args['default_options'] = apply_filters('publishpress_notif_default_options', $args['default_options']);
             $this->module            = $publishpress->register_module(
-                PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
+                PublishPress\Util::sanitize_module_name($this->module_name),
                 $args
             );
 
@@ -361,23 +361,7 @@ if (!class_exists('PP_Improved_Notifications'))
                     }
                 }
             }
-
-            if (version_compare($previous_version, '1.10', '<=')) {
-                $this->migrate_legacy_metadata_for_role();
-            }
         }
-
-        protected function migrate_legacy_metadata_for_role()
-        {
-            global $wpdb;
-
-            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torole' WHERE meta_key = '_psppno_togroup'";
-            $wpdb->query($query);
-
-            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torolelist' WHERE meta_key = '_psppno_togrouplist'";
-            $wpdb->query($query);
-        }
-
 
         /**
          * Filters the enable_notifications on the Slack add-on to block it.
@@ -466,29 +450,8 @@ if (!class_exists('PP_Improved_Notifications'))
 
             if (in_array($hook_suffix, ['post.php', 'post-new.php']))
             {
-                wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', ['jquery'], PUBLISHPRESS_VERSION);
-                wp_enqueue_script('psppno-workflow-tooltip', plugin_dir_url(__FILE__) . 'libs/opentip/downloads/opentip-jquery.js', ['jquery'], PUBLISHPRESS_VERSION);
-                wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', ['jquery', 'psppno-workflow-tooltip', 'psppno-multiple-select'], PUBLISHPRESS_VERSION);
-
-                wp_localize_script(
-                    'psppno-workflow-form',
-                    'workflowFormData',
-                    [
-                        'messages' => [
-                            'selectAllIn_event'         => 'Select at least one event.',
-                            'selectAllIn_event_content' => 'Select at least a filter for the content.',
-                            'selectAPreviousStatus'     => 'Select at least one previous status.',
-                            'selectANewStatus'          => 'Select at least one new status.',
-                            'selectPostType'            => 'Select at least one post type.',
-                            'selectCategory'            => 'Select at least one category.',
-                            'selectAReceiver'           => 'Select at least one receiver.',
-                            'selectAUser'               => 'Select at least one user.',
-                            'selectARole'               => 'Select at least one role.',
-                            'setASubject'               => 'Type a subject for the notification.',
-                            'setABody'                  => 'Type a body text for the notification.',
-                        ],
-                    ]
-                );
+                wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js', [], PUBLISHPRESS_VERSION);
+                wp_enqueue_script('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', [], PUBLISHPRESS_VERSION);
             }
         }
 
@@ -562,7 +525,7 @@ if (!class_exists('PP_Improved_Notifications'))
             // Renders the event content filter section
             $context = [
                 'id'     => 'event_content',
-                'header' => __('For which content?', 'publishpress'),
+                'header' => __('Filter the content?', 'publishpress'),
                 'html'   => apply_filters('publishpress_notif_render_metabox_section_event_content', ''),
                 'class'  => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
@@ -607,7 +570,6 @@ if (!class_exists('PP_Improved_Notifications'))
         {
             $context = [
                 'labels' => [
-                    'validation_help'  => __('Select at least one option for each section.', 'publishpress'),
                     'pre_text'         => __('You can add dynamic information to the Subject or Body text using the following shortcodes:', 'publishpress'),
                     'content'          => __('Content', 'publishpress'),
                     'edcomment'        => __('Editorial Comment', 'publishpress'),
@@ -634,8 +596,6 @@ if (!class_exists('PP_Improved_Notifications'))
          *
          * @param int     $id   Unique ID for the post being saved
          * @param WP_Post $post Post object
-         *
-         * @return int|null
          */
         public function save_meta_boxes($id, $post)
         {

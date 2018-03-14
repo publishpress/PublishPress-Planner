@@ -135,7 +135,7 @@ if (!class_exists('PP_Addons'))
          */
         protected function is_plugin_installed($plugin)
         {
-            return file_exists(plugin_dir_path(PUBLISHPRESS_BASE_PATH) . "{$plugin}/{$plugin}.php");
+            return file_exists(plugin_dir_path(PUBLISHPRESS_ROOT) . "{$plugin}/{$plugin}.php");
         }
 
         /**

@@ -28,9 +28,10 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\Legacy\Auto_loader;
+use PublishPress\Auto_loader;
 
-if (!defined('PP_LOADED')) {
+if (!defined('PP_LOADED'))
+{
     $settingsPage = add_query_arg(
         array(
             'page'   => 'pp-modules-settings',
@@ -40,40 +41,30 @@ if (!defined('PP_LOADED')) {
     );
 
     // Define contants
-    define('PUBLISHPRESS_VERSION', '1.11.1');
-    define('PUBLISHPRESS_BASE_PATH', __DIR__);
-    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/' . basename(__FILE__));
+    define('PUBLISHPRESS_VERSION', '1.10.0');
+    define('PUBLISHPRESS_ROOT', dirname(__FILE__));
+    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_ROOT . '/' . basename(__FILE__));
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
     define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
-    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
-
-    /**
-     * Use PUBLISHPRESS_BASE_PATH instead.
-     *
-     * @deprecated
-     */
-    define('PUBLISHPRESS_ROOT', PUBLISHPRESS_BASE_PATH);
+    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_ROOT . '/libraries');
 
     // Define the Priority for the notification/notification_status_change method
     // Added to allow users select a custom priority
-    if (!defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE')) {
+    if (!defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE'))
+    {
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
-    if (file_exists(PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php')) {
-        require_once PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php';
-    }
+    require_once PUBLISHPRESS_ROOT . '/vendor/autoload.php';
 
     // Register the autoloader
-    if (!class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
-        require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
+    if (!class_exists('\\PublishPress\\Auto_loader'))
+    {
+        require_once PUBLISHPRESS_LIBRARIES_PATH . '/Auto_loader.php';
     }
 
     // Register the library
-    Auto_loader::register('\\PublishPress\\Legacy\\', PUBLISHPRESS_LIBRARIES_PATH . '/Legacy');
-    Auto_loader::register('\\PublishPress\\Notifications\\', PUBLISHPRESS_LIBRARIES_PATH . '/Notifications');
-
-    require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
+    Auto_loader::register('\\PublishPress\\', PUBLISHPRESS_LIBRARIES_PATH);
 
     define('PP_LOADED', 1);
 }
