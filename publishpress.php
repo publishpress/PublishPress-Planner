@@ -236,7 +236,7 @@ class publishpress
             'roles'                  => PUBLISHPRESS_BASE_PATH,
             'improved-notifications' => PUBLISHPRESS_BASE_PATH,
             'async-notifications'    => PUBLISHPRESS_BASE_PATH,
-            'user-groups'            => PUBLISHPRESS_BASE_PATH,
+//            'user-groups'            => PUBLISHPRESS_BASE_PATH,
 
             // @TODO: Move for settings, and remove after cleanup
             'dashboard'              => PUBLISHPRESS_BASE_PATH,
