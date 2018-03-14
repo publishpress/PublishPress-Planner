@@ -24,15 +24,6 @@ require_once $_tests_dir . '/includes/functions.php';
  */
 function _manually_load_plugin() {
     require dirname( dirname( __FILE__ ) ) . '/publishpress.php';
-
-    // Check if there are plugins available
-    $_wp_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress';
-    $_plugins_dir = $_wp_dir . '/wp-content/plugins';
-
-    var_dump(file_exists($_plugins_dir . '/publishpress-permissions/publishpress-permissions.php')); die;
-    if (file_exists($_plugins_dir . '/publishpress-permissions/publishpress-permissions.php')) {
-        require $_plugins_dir . '/publishpress-permissions/publishpress-permissions.php';
-    }
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
