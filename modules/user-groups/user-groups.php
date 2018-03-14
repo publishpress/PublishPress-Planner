@@ -1259,7 +1259,8 @@ if (!class_exists('PP_User_Groups'))
                 foreach ($all_usergroups as $usergroup)
                 {
                     // Not in this user group, so keep going
-                    if (!isset($usergroup->user_ids) || empty($usergroup->user_ids || !is_array($usergroup->user_ids))) {
+                    $
+                    if (!isset($usergroup->user_ids) || false == ($usergroup->user_ids || !is_array($usergroup->user_ids))) {
                         continue;
                     }
 
