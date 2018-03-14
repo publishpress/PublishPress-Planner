@@ -428,7 +428,7 @@ if (!class_exists('PP_Notifications'))
                 <a name="subscriptions"></a>
 
                 <p>
-                    <?php _e('Select the users and roles that should receive notifications by workflows.', 'publishpress'); ?>
+                    <?php _e('Select the users and roles that should receive notifications from workflows.', 'publishpress'); ?>
                 </p>
 
                 <div id="pp_post_notify_users_box">
@@ -448,7 +448,7 @@ if (!class_exists('PP_Notifications'))
                 </div>
 
                 <p>
-                    <a href="https://publishpress.com/docs/notifications/"><?php _e('Click here to read more about notifications...', 'publishpress'); ?></a>
+                    <a href="https://publishpress.com/docs/notifications/"><?php _e('Click to read more about notifications', 'publishpress'); ?></a>
                 </p>
 
                 <div class="clear"></div>
