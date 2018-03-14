@@ -22,13 +22,19 @@ matrix:
     - php: '7.1'
       env: WP_VERSION=latest
     - php: '7.1'
+      env: WP_VERSION=latest INCLUDE_ADDONS=1
+    - php: '7.1'
       env: WP_VERSION=4.8
     - php: '5.6'
       env: WP_VERSION=latest
+    - php: '5.6'
+      env: WP_VERSION=latest INCLUDE_ADDONS=1
     - php: '5.6'
       env: WP_VERSION=4.8
     - php: '5.4'
       env: WP_VERSION=latest
+    - php: '5.4'
+      env: WP_VERSION=latest INCLUDE_ADDONS=1
     - php: '5.4'
       env: WP_VERSION=4.8
 
@@ -44,6 +50,10 @@ before_script:
     if [[ ! -z "$WP_VERSION" ]] ; then
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
       composer global require "phpunit/phpunit=4.8.*|5.7.*"
+
+      if [[ ! -z "$INCLUDE_ADDONS" ]] ; then
+        bash bin/install-addons.sh
+      fi
     fi
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
