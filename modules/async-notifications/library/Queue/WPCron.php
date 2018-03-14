@@ -94,7 +94,7 @@ class WPCron implements QueueInterface
     protected function scheduleEvent($data)
     {
         wp_schedule_single_event(
-            time(),
+            time() + 4,
             'publishpress_cron_notify',
             $data
         );
