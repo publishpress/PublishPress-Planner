@@ -49,11 +49,11 @@
                         {% endfor %}
                     </select>
 
-                    {% if errors.display_name|length %}
-                    <p class="error">{{ errors.display_name }}</p>
+                    {% if errors.users|length %}
+                    <p class="error">{{ errors.users }}</p>
                     {% endif %}
 
-                    <p class="description">{{ labels.display_name_description }}</p>
+                    <p class="description">{{ labels.users_description }}</p>
                 </div>
 
                 {{ nonce|raw }}

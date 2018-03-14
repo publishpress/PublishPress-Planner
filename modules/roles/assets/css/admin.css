@@ -1,7 +1,12 @@
-.pp-module-settings .error {
+.publishpress-admin .error {
     color: red;
 }
 
-.pressshack-admin-wrapper #display_name {
+.publishpress-admin input#display_name {
     width: 95%;
+}
+
+
+.publishpress-admin .wp-list-table #display_name {
+    width: 75%;
 }

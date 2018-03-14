@@ -399,7 +399,7 @@ if (!class_exists('PP_Roles')) {
          */
         public function enqueue_admin_scripts()
         {
-            if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings' && isset($_GET['module']) && $_GET['module'] === 'pp-roles-settings') {
+            if (isset($_GET['page']) && $_GET['page'] === 'pp-manage-roles') {
                 // Settings page
                 wp_enqueue_script('publishpress-chosen-js', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
                     ['jquery'], PUBLISHPRESS_VERSION);
@@ -616,14 +616,15 @@ if (!class_exists('PP_Roles')) {
                     'options_group_name' => $this->module->options_group_name,
                     'module_name'        => $this->module->slug,
                     'labels'             => [
-                        'add_new'           => __('Add New Role', 'publishpress'),
-                        'edit'              => __('Edit Role', 'publishpress'),
-                        'name'              => __('Name (ID)', 'publishpress'),
-                        'name_description'  => __('The name used to identify the role. Only use latin chars and "-".',
+                        'add_new'                  => __('Add New Role', 'publishpress'),
+                        'edit'                     => __('Edit Role', 'publishpress'),
+                        'display_name'             => __("Display name", 'publishpress'),
+                        'display_name_description' => __("This is the name that users will see.", 'publishpress'),
+                        'name'                     => __('Developer Name (ID)', 'publishpress'),
+                        'name_description'         => __('This is the name that developers can use to interact with this role. Only use A-Z letters and the "-" sign.',
                             'publishpress'),
-                        'display_name'      => __("Display name", 'publishpress'),
-                        'users'             => __("Users", 'publishpress'),
-                        'users_description' => __("Add users that belongs to this role.", 'publishpress'),
+                        'users'                    => __("Users", 'publishpress'),
+                        'users_description'        => __("Add users that belongs to this role.", 'publishpress'),
                     ],
                     'role'               => $role,
                     'users'              => $users,
@@ -657,7 +658,7 @@ if (!class_exists('PP_Roles')) {
             }
 
             // Sanitize all of the user-entered values
-            $name         = sanitize_title(strip_tags(trim($_POST['name'])));
+            $name         = strtolower(sanitize_title(strip_tags(trim($_POST['name']))));
             $display_name = stripslashes(strip_tags(trim($_POST['display_name'])));
             $users        = $_POST['users'];
 

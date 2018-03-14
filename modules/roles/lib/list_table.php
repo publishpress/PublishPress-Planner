@@ -110,7 +110,6 @@ if (!class_exists('PP_Roles_List_Table')) {
         {
             $columns = array(
                 'display_name' => __('Display Name', 'publishpress'),
-                'name'         => __('Name', 'publishpress'),
                 'users'        => __('Users in this role', 'publishpress'),
             );
 
@@ -124,17 +123,6 @@ if (!class_exists('PP_Roles_List_Table')) {
          */
         public function column_default($role, $column_name)
         {
-        }
-
-        /**
-         * Process the Role name column value.
-         * Displays the name of the WP_Role, and action links
-         *
-         * @since 0.7
-         */
-        public function column_name($role)
-        {
-            return esc_html($role->name);
         }
 
         /**
