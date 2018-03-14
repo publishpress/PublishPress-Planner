@@ -14,13 +14,6 @@ cache:
 hosts:
   - publishpress.localhost
 
-env:
-  global:
-    - SITE_URL="http://publishpress.localhost"
-    - SITE_DOMAIN="publishpress.localhost"
-    - DB_NAME="test"
-    - PLUGIN_SLUG="publishpress"
-
 install:
   - composer install --no-dev --prefer-dist
 
