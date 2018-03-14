@@ -138,7 +138,7 @@ class Controller
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Site_Admin',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Author',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User',
-            '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Role',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User_Group',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Follower',
         ];
         /**

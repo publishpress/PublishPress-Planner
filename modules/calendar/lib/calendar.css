@@ -613,10 +613,3 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
         right: 10px;
     }
 }
-
-#publishpress-ics-copy .dashicons,
-#publishpress-ics-download .dashicons {
-    margin-top: 4px;
-    margin-right: 2px;
-}
-

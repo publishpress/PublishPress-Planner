@@ -54,31 +54,20 @@ class WPCron implements QueueInterface
 
         if (!empty($receivers))
         {
-            $baseData = [
-                // workflow_post_id
-                $workflowPost->ID,
-                // action
-                $actionArgs['action'],
-                // post_id
-                $actionArgs['post']->ID,
-                // content
-                base64_encode(maybe_serialize($content)),
-                // old_status
-                isset($actionArgs['old_status']) ? $actionArgs['old_status'] : null,
-                // new_status
-                isset($actionArgs['new_status']) ? $actionArgs['new_status'] : null,
-                // channel
-                $channel,
+            $data = [
+                'workflow_post_id' => $workflowPost->ID,
+                'action'           => $actionArgs['action'],
+                'post_id'          => $actionArgs['post']->ID,
+                'content'          => $content,
+                'old_status'       => isset($actionArgs['old_status']) ? $actionArgs['old_status'] : null,
+                'new_status'       => isset($actionArgs['new_status']) ? $actionArgs['new_status'] : null,
+                'channel'          => $channel,
             ];
 
             // Create one notification for each receiver in the queue
             foreach ($receivers as $receiver)
             {
-                // Base data
-                $data = $baseData;
-
-                // Receiver
-                $data[] = $receiver;
+                $data['receiver'] = $receiver;
 
                 $this->scheduleEvent($data);
             }
