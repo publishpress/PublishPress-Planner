@@ -254,7 +254,7 @@ if (!class_exists('PP_Roles')) {
         {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php _e('PublishPress finished migrating the legacy data.', 'publishpress'); ?></p>
+                <p><?php _e('PublishPress finished migrating the legacy data successfully.', 'publishpress'); ?></p>
                 </div>
             <?php
         }
