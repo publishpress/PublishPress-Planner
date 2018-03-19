@@ -1,0 +1,12 @@
+.publishpress-admin .error {
+    color: red;
+}
+
+.publishpress-admin input#display_name {
+    width: 95%;
+}
+
+
+.publishpress-admin .wp-list-table #display_name {
+    width: 75%;
+}

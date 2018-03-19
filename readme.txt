@@ -1,16 +1,16 @@
-=== PublishPress – WordPress Content Calendar and Notification Workflows ===
+=== PublishPress helps WordPress teams create great content ===
 Contributors: publishpress, andergmartins, stevejburge, pressshack
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
-Tags: Content Calendar, Editorial Calendar, workflow, checklist, pre-publish
+Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.4
-Stable tag: 1.10.0
+Stable tag: 1.11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is the collaboration tool WordPress teams. You get a beautiful editorial calendar and powerful notification workflows.
+PublishPress is the plugin for WordPress teams. Your team gets an editorial calendar, flexible permissions and notification workflows.
 
 == Description ==
 
@@ -18,14 +18,19 @@ The slogan of PublishPress is “WordPress for Teams”.
 
 PublishPress is the essential plugin for any WordPress site with multiple team members.
 
-[Click here to try a free demo of PublishPress](http://publishpress.com/demo)
+PublishPress has multiple tools that help your team stay organized when creating content:
 
-PublishPress has multiple tools that help your team stay organized:
-
-* Use the [Editorial Calendar](https://publishpress.com/docs/calendar/) and [Content Overview](https://publishpress.com/docs/calendar/) to get a clear picture of all your planned and published content.
-* You can create [Comments](https://publishpress.com/docs/editorial-comments/) and [Notifications](https://publishpress.com/docs/notifications/) to leave feedback and keep your team in the loop.
+* Use the [Editorial Calendar](https://publishpress.com/docs/calendar/) and [Content Overview](https://publishpress.com/docs/content-overview/) to get a clear picture of all your planned and published content.
+* You can write [Comments](https://publishpress.com/docs/editorial-comments/) to leave feedback.
+* Set up [Notification Workflows](https://publishpress.com/docs/notifications/) to keep your team up-to-date with what’s happening.
 * You can add [Metadata](https://publishpress.com/docs/editorial-metadata/) to give your team extra information about each post.
 * Create [Custom Statuses](https://publishpress.com/docs/custom-statuses/) so that WordPress matches your team’s workflow.
+
+Interested in finding out more?
+
+[Click here to try a free demo of PublishPress](https://publishpress.com/demo/).
+[Check out premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
+
 
 = WHO SHOULD USE PUBLISHPRESS? =
 
@@ -33,18 +38,15 @@ PublishPress is ideal for WordPress sites that have content teams. With PublishP
 
 = PREMIUM ADD-ONS FOR PUBLISHPRESS =
 
-[Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content
-[Multiple Authors](https://publishpress.com/addons/multiple-authors/): Easily assign multiple authors to one content item
-[Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
-[WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
-[Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes
-[YouTube](https://publishpress.com/addons/embedpress-youtube/): More features and design options for your YouTube videos
-[Wistia](https://publishpress.com/addons/embedpress-wistia/): More features and design options for your Wistia videos
-[Vimeo](https://publishpress.com/addons/embedpress-vimeo/): More features and design options  for your Vimeo videos
+* [Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content
+* [Multiple Authors](https://publishpress.com/addons/multiple-authors-publishpress/): Easily assign multiple authors to one content item
+* [Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
+* [WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
+* [Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes
 
-[Check out the PublishPress Everything Club](https://publishpress.com/addons/publishpress-club/) for access to all the PublishPress add-ons.
+[Check out premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
 
-= EDITORIAL CONTENT CALENDAR =
+= EDITORIAL CALENDAR =
 
 The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next six weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
@@ -84,15 +86,13 @@ By default, PublishPress provide 4 examples of metadata, but you can add your ow
 
 * [Click here for more on PublishPress Editorial Metadata](https://publishpress.com/docs/editorial-metadata/)
 
-= USER GROUPS =
+= CUSTOM USER ROLES =
 
-For larger organizations with many people involved in the publishing process, user groups help keep your workflow organized and informed.
+For larger organizations, user roles can keep your publishing workflows organized and make sure notifications are sent to the correct people.
 
-To find the user settings, go to the PublishPress link in your WordPress admin area, and click the “User Groups” tab. By default, PublishPress provides four user groups: Copy Editors, Photographers, Reporters and Section Editors.
+To find the role settings, go to the PublishPress link in your WordPress admin area, and click the “Roles” link.
 
-Currently, the most important user of user groups is [Email Notifications](http://publishpress.com/docs/notifications/), but we intend to expand the capabilities of user groups in future PublishPress releases.
-
-* [Click here for more on PublishPress User Groups](https://publishpress.com/docs/user-groups/)
+* [Click here for more on PublishPress Custom User Roles](https://publishpress.com/docs/roles/)
 
 = IMPORTING FROM EDITFLOW =
 
@@ -102,29 +102,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 = I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
 
-Great! PublishPress [is available on Github](https://github.com/OSTraining/PublishPress), and we welcome contributions from everyone.
-
-= ALSO CHECK OUT THE EMBEDPRESS PLUGIN =
-
-If you like PublishPress, then consider checking out [EmbedPress](https://publishpress.com/embedpress/). The EmbedPress plugin allows you to embed anything in WordPress. Here are some video examples:
-
-* [How to embed YouTube Videos in WordPress](http://publishpress.com/embedpress/docs/youtube-wordpress/)
-* [How to embed Vimeo Videos in WordPress](http://publishpress.com/embedpress/docs/embed-vimeo-video-wordpress/)
-* [How to embed Wistia videos in WordPress](https://publishpress.com/embedpress/docs/add-wistia-videos-wordpress/)
-
-EmbedPress also supports all the Google Drive formats, including these:
-
-* [How to embed Google Docs in WordPress](http://publishpress.com/embedpress/docs/google-docs-embed-wordpress/)
-* [How to embed Google Maps in WordPress](http://publishpress.com/embedpress/docs/google-maps-embed-wordpress/)
-* [How to embed Google Sheets in WordPress](http://publishpress.com/embedpress/docs/embed-google-sheets-wordpress/)
-
-= WORDPRESS TRAINING =
-
-Visit [OSTraining](https://www.ostraining.com/) to learn from our [WordPress Training](https://www.ostraining.com/wordpress-training/) and read our [best WordPress blog posts](https://www.ostraining.com/blog/wordpress). If you’re interested in a specific WordPress topic, try specific topic areas such as these:
-
-* [WordPress Development Classes - learn to build plugins](https://www.ostraining.com/classes/wordpress-development)
-* [WordPress Theme Design Classes - create your first theme](https://www.ostraining.com/classes/wordpress-themes)
-* [WordPress eCommerce Classes - set up a WordPress store](https://www.ostraining.com/classes/wordpress-ecommerce)
+Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/OSTraining/PublishPress), and we welcome contributions from everyone.
 
 == Frequently Asked Questions ==
 
@@ -154,6 +132,35 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.11.1] - 2018-03-13 =
+
+*Fixed:*
+
+* Fixed backward compatibility with legacy PublishPress Permissions;
+
+= [1.11.0] - 2018-03-13 =
+
+*Fixed:*
+
+* Fixed workflows and notifications for new posts;
+* Fixed issue when installed from composer, related to the vendor dir not being found;
+* Fixed style for icons in the buttons of the popup for iCal subscriptions in the calendar;
+* Fixed hidden submenus adding basic capabilities after installing for the first time;
+
+*Changed:*
+
+* Changed the workflow form, adding all fields as required;
+* Removed support for User Groups - they are deprecated in favor of Roles, in PublishPress;
+* Moved Notifications metabox to the sidebar with high priority for posts;
+* Cleaned up UI removing logo from the title in the admin;
+
+*Added:*
+
+* Added new "From" status: New. Allowing to create workflows specifically from new posts;
+* Added new submenu for managing Roles;
+* Added new receiver option for notification workflows to reach Roles;
+* Added support for multiple Roles per user. A new field is displayed in the user's profile allowing to select multiple roles;
 
 = [1.10.0] - 2018-02-21 =
 
