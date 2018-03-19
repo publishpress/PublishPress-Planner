@@ -152,8 +152,6 @@ if (!class_exists('PP_Roles')) {
             add_action('user_register', [$this, 'action_profile_update'], 10);
 
             add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
-
-            $this->migrateUserGroupsToRoles();
         }
 
         /**
