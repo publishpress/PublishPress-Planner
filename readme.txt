@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.4
-Stable tag: 1.11.1
+Stable tag: 1.11.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
