@@ -42,11 +42,11 @@ if (!class_exists('PP_Notifications'))
     class PP_Notifications extends PP_Module
     {
 
-        // Taxonomy name used to store users following posts
-        public $following_users_taxonomy = 'following_users';
+        // Taxonomy name used to store users which will be notified for changes in the posts.
+        public $notify_user_taxonomy = 'pp_notify_user';
 
-        // Taxonomy name used to store user groups following posts
-        public $following_usergroups_taxonomy = PP_User_Groups::taxonomy_key;
+        // Taxonomy name used to store roles which will be notified for changes in the posts.
+        public $notify_role_taxonomy = 'pp_notify_role';
 
         public $module;
 
@@ -63,7 +63,7 @@ if (!class_exists('PP_Notifications'))
             $args             = array(
                 'title'                 => __('Default Notifications', 'publishpress'),
                 'short_description'     => __('With notifications, you can keep everyone updated about what’s happening with your content.', 'publishpress'),
-                'extended_description'  => __('With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. User groups can be used to manage who receives notifications on what.', 'publishpress'),
+                'extended_description'  => __('With notifications, you can keep everyone updated about what’s happening with a given content. Each status change or editorial comment sends out a message to users subscribed to a post. Roles can be used to manage who receives notifications on what.', 'publishpress'),
                 'module_url'            => $this->module_url,
                 'icon_class'            => 'dashicons dashicons-email',
                 'slug'                  => 'notifications',
@@ -82,7 +82,7 @@ if (!class_exists('PP_Notifications'))
                 'settings_help_tab'     => array(
                     'id'      => 'pp-notifications-overview',
                     'title'   => __('Overview', 'publishpress'),
-                    'content' => __('<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting user groups.</p><p>When enabled, notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress'),
+                    'content' => __('<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting roles.</p><p>When enabled, notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>', 'publishpress'),
                 ),
                 'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/notifications/">Notifications Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>', 'publishpress'),
                 'general_options'       => true,
@@ -106,9 +106,8 @@ if (!class_exists('PP_Notifications'))
             add_action('add_meta_boxes', array($this, 'add_post_meta_box'));
 
             // Saving post actions
-            // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure usergroup data
+            // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure role data
             // is properly saved before sending notifs
-            add_action('transition_post_status', array($this, 'save_post_subscriptions'), 0, 3);
             add_action('transition_post_status', array($this, 'notification_status_change'), PP_NOTIFICATION_PRIORITY_STATUS_CHANGE, 3);
             add_action('pp_post_insert_editorial_comment', array($this, 'notification_comment'));
             add_action('delete_user', array($this, 'delete_user_action'));
@@ -120,11 +119,11 @@ if (!class_exists('PP_Notifications'))
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
 
-            // Add a "Follow" link to posts
-            if (apply_filters('pp_notifications_show_follow_link', true))
+            // Add a "Notify" link to posts
+            if (apply_filters('pp_notifications_show_notify_link', true))
             {
-                // A little extra JS for the follow button
-                add_action('admin_head', array($this, 'action_admin_head_follow_js'));
+                // A little extra JS for the Notify button
+                add_action('admin_head', array($this, 'action_admin_head_notify_js'));
                 // Manage Posts
                 add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
                 add_filter('page_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
@@ -136,8 +135,9 @@ if (!class_exists('PP_Notifications'))
             add_filter('pp_notification_auto_subscribe_post_author', array($this, 'filter_pp_notification_auto_subscribe_post_author'), 10, 2);
             add_filter('pp_notification_auto_subscribe_current_user', array($this, 'filter_pp_notification_auto_subscribe_current_user'), 10, 2);
 
+            add_action('save_post', array($this, 'action_save_post'), 10);
+
             // Ajax for saving notification updates
-            add_action('wp_ajax_save_notifications', array($this, 'ajax_save_post_subscriptions'));
             add_action('wp_ajax_pp_notifications_user_post_subscription', array($this, 'handle_user_post_subscription'));
 
             add_action('pp_send_notification_status_update', array($this, 'send_notification_status_update'));
@@ -151,7 +151,8 @@ if (!class_exists('PP_Notifications'))
          */
         public function install()
         {
-
+            // Considering we could be moving from Edit Flow, we need to migrate the following users.
+            $this->migrateLegacyFollowingTerms();
         }
 
         /**
@@ -191,6 +192,20 @@ if (!class_exists('PP_Notifications'))
                 // Technically we've run this code before so we don't want to auto-install new data
                 $publishpress->update_module_option($this->module->name, 'loaded_once', true);
             }
+
+            if (version_compare($previous_version, '1.10', '<=')) {
+                $this->migrateLegacyFollowingTerms();
+            }
+        }
+
+
+        protected function migrateLegacyFollowingTerms()
+        {
+            global $wpdb;
+
+            // Migrate Following Users
+            $query = "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = '{$this->notify_user_taxonomy}' WHERE taxonomy = 'following_users'";
+            $wpdb->query($query);
         }
 
         /**
@@ -215,7 +230,8 @@ if (!class_exists('PP_Notifications'))
                 'show_ui'               => false,
             );
 
-            register_taxonomy($this->following_users_taxonomy, $supported_post_types, $args);
+            register_taxonomy($this->notify_user_taxonomy, $supported_post_types, $args);
+            register_taxonomy($this->notify_role_taxonomy, $supported_post_types, $args);
         }
 
         /**
@@ -229,19 +245,18 @@ if (!class_exists('PP_Notifications'))
         {
             if ($this->is_whitelisted_functional_view())
             {
-                wp_enqueue_script('jquery-listfilterizer');
-                wp_enqueue_script('jquery-quicksearch');
                 wp_enqueue_script(
                     'publishpress-notifications-js',
                     $this->module_url . 'assets/notifications.js',
                     array(
                         'jquery',
-                        'jquery-listfilterizer',
-                        'jquery-quicksearch',
                     ),
                     PUBLISHPRESS_VERSION,
                     true
                 );
+
+                wp_enqueue_script('publishpress-chosen-js', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
+                    ['jquery'], PUBLISHPRESS_VERSION);
             }
         }
 
@@ -263,24 +278,27 @@ if (!class_exists('PP_Notifications'))
                     false,
                     PUBLISHPRESS_VERSION
                 );
+
+                wp_enqueue_style('publishpress-chosen-css', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css', false,
+                    PUBLISHPRESS_VERSION);
             }
         }
 
         /**
-         * JS required for the Follow link to work
+         * JS required for the Notify link to work
          *
          * @since 0.8
          */
-        public function action_admin_head_follow_js()
+        public function action_admin_head_notify_js()
         {
             ?>
             <script type='text/javascript'>
                 (function ($) {
                     $(document).ready(function ($) {
                         /**
-                         * Action to Follow / Unfollow posts on the manage posts screen
+                         * Action to Notify / Stop Notifying posts on the manage posts screen
                          */
-                        $('.wp-list-table, #pp-calendar-view, #pp-story-budget-wrap').on('click', '.pp_follow_link a', function (e) {
+                        $('.wp-list-table, #pp-calendar-view, #pp-story-budget-wrap').on('click', '.pp_notify_link a', function (e) {
 
                             e.preventDefault();
 
@@ -308,7 +326,7 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * Add a "Follow" link to supported post types Manage Posts view
+         * Add a "Notify" link to supported post types Manage Posts view
          *
          * @since 0.8
          *
@@ -330,36 +348,36 @@ if (!class_exists('PP_Notifications'))
                 return $actions;
             }
 
-            $parts                     = $this->get_follow_action_parts($post);
-            $actions['pp_follow_link'] = '<a title="' . esc_attr($parts['title']) . '" href="' . esc_url($parts['link']) . '">' . $parts['text'] . '</a>';
+            $parts                     = $this->get_notify_action_parts($post);
+            $actions['pp_notify_link'] = '<a title="' . esc_attr($parts['title']) . '" href="' . esc_url($parts['link']) . '">' . $parts['text'] . '</a>';
 
             return $actions;
         }
 
         /**
-         * Get an action parts for a user to follow or unfollow a post
+         * Get an action parts for a user to set Notify or Stop Notify for a post
          *
          * @since 0.8
          */
-        private function get_follow_action_parts($post)
+        private function get_notify_action_parts($post)
         {
             $args = array(
                 'action'  => 'pp_notifications_user_post_subscription',
                 'post_id' => $post->ID,
             );
 
-            $following_users = $this->get_following_users($post->ID);
+            $user_to_notify = $this->get_users_to_notify($post->ID);
 
-            if (in_array(wp_get_current_user()->user_login, $following_users))
+            if (in_array(wp_get_current_user()->user_login, $user_to_notify))
             {
-                $args['method'] = 'unfollow';
+                $args['method'] = 'stop_notifying';
                 $title_text     = __('Click to stop being notified on updates for this post', 'publishpress');
-                $follow_text    = __('Stop notifying me', 'publishpress');
+                $link_text      = __('Stop notifying me', 'publishpress');
             } else
             {
-                $args['method'] = 'follow';
+                $args['method'] = 'start_notifying';
                 $title_text     = __('Click to start being notified on updates for this post', 'publishpress');
-                $follow_text    = __('Notify me', 'publishpress');
+                $link_text      = __('Notify me', 'publishpress');
             }
 
             // wp_nonce_url() has encoding issues: http://core.trac.wordpress.org/ticket/20771
@@ -367,7 +385,7 @@ if (!class_exists('PP_Notifications'))
 
             return array(
                 'title' => $title_text,
-                'text'  => $follow_text,
+                'text'  => $link_text,
                 'link'  => add_query_arg($args, admin_url('admin-ajax.php')),
             );
         }
@@ -382,21 +400,22 @@ if (!class_exists('PP_Notifications'))
                 return;
             }
 
-            $usergroup_post_types = $this->get_post_types_for_module($this->module);
-            foreach ($usergroup_post_types as $post_type)
+            $role_post_types = $this->get_post_types_for_module($this->module);
+            foreach ($role_post_types as $post_type)
             {
                 add_meta_box(
                     'publishpress-notifications',
                     __('Notify', 'publishpress'),
                     array($this, 'notifications_meta_box'),
                     $post_type,
-                    'advanced'
+                    'side',
+                    'high'
                 );
             }
         }
 
         /**
-         * Outputs box used to subscribe users and usergroups to Posts
+         * Outputs box used to subscribe users and roles to Posts
          *
          * @todo add_cap to set subscribers for posts; default to Admin and editors
          */
@@ -405,73 +424,81 @@ if (!class_exists('PP_Notifications'))
             global $post, $post_ID, $publishpress;
 
             ?>
-            <div id="pp-post_following_box">
+            <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
 
-                <p><?php _e('Select the users and user groups that should receive notifications when the status of this post is updated or when an editorial comment is added.', 'publishpress'); ?>
+                <p>
+                    <?php _e('Select the users and roles that should receive notifications from workflows.', 'publishpress'); ?>
                 </p>
-                <div id="pp-post_following_users_box">
-                    <h4><?php _e('Users', 'publishpress'); ?></h4>
+
+                <div id="pp_post_notify_users_box">
                     <?php
-                    $followers        = $this->get_following_users($post->ID, 'id');
+                    $users_to_notify        = $this->get_users_to_notify($post->ID, 'id');
+                    $roles_to_notify        = $this->get_roles_to_notify($post->ID, 'slugs');
+
+                    $selected = array_merge($users_to_notify, $roles_to_notify);
+
                     $select_form_args = array(
-                        'list_class' => 'pp-post_following_list',
+                        'list_class' => 'pp_post_notify_list',
                     );
-                    $this->users_select_form($followers, $select_form_args);
+                    $this->users_select_form($selected , $select_form_args);
                     ?>
+
+
                 </div>
 
-                <?php if ($this->module_enabled('user_groups') && in_array($this->get_current_post_type(), $this->get_post_types_for_module($publishpress->user_groups->module))): ?>
-                    <div id="pp-post_following_usergroups_box">
-                        <h4><?php _e('User Groups', 'publishpress') ?></h4>
-                        <?php
-                        $following_usergroups = $this->get_following_usergroups($post->ID, 'ids');
-                        $publishpress->user_groups->usergroups_select_form($following_usergroups);
-                        ?>
-                    </div>
-                <?php endif; ?>
+                <p>
+                    <a href="https://publishpress.com/docs/notifications/"><?php _e('Click to read more about notifications', 'publishpress'); ?></a>
+                </p>
 
                 <div class="clear"></div>
 
-                <input type="hidden" name="pp-save_followers" value="1"/> <?php // Extra protection against autosaves
+                <input type="hidden" name="pp_save_notify" value="1"/> <?php // Extra protection against autosaves
                 ?>
 
-                <?php wp_nonce_field('save_user_usergroups', 'pp_notifications_nonce', false); ?>
+                <?php wp_nonce_field('save_roles', 'pp_notifications_nonce', false); ?>
             </div>
 
             <?php
         }
 
-        /**
-         * Called when a notification editorial metadata checkbox is checked. Handles saving of a user/usergroup to a post.
-         */
-        public function ajax_save_post_subscriptions()
+        public function action_save_post($postId)
         {
-            global $publishpress;
-
-            // Verify nonce
-            if (!wp_verify_nonce($_POST['_nonce'], 'save_user_usergroups'))
-            {
-                die(__("Nonce check failed. Please ensure you can add users or user groups to a post.", 'publishpress'));
+            if (!isset($_POST['pp_notifications_nonce']) || !wp_verify_nonce($_POST['pp_notifications_nonce'], 'save_roles')) {
+                return;
             }
 
-            $post_id            = (int )$_POST['post_id'];
-            $post               = get_post($post_id);
-            $user_usergroup_ids = array_map('intval', $_POST['user_group_ids']);
-            if ((!wp_is_post_revision($post_id) && !wp_is_post_autosave($post_id)) && current_user_can($this->edit_post_subscriptions_cap))
-            {
-                if ($_POST['pp_notifications_name'] === 'pp-selected-users[]')
-                {
-                    $this->save_post_following_users($post, $user_usergroup_ids);
-                } else if ($_POST['pp_notifications_name'] == 'following_usergroups[]')
-                {
-                    if ($this->module_enabled('user_groups') && in_array(get_post_type($post_id), $this->get_post_types_for_module($publishpress->user_groups->module)))
-                    {
-                        $this->save_post_following_usergroups($post, $user_usergroup_ids);
+            if (isset($_POST['to_notify'])) {
+                // Remove current users
+                $terms = get_the_terms($postId, $this->notify_user_taxonomy);
+                $users = array();
+                if (!empty($terms)) {
+                    foreach ($terms as $term) {
+                        $users[] = $term->term_id;
+                    }
+                }
+                wp_remove_object_terms($postId, $users, $this->notify_user_taxonomy);
+
+                // Remove current roles
+                $terms = get_the_terms($postId, $this->notify_role_taxonomy);
+                $roles = array();
+                if (!empty($terms)) {
+                    foreach ($terms as $term) {
+                        $roles[] = $term->term_id;
+                    }
+                }
+                wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
+
+                foreach ($_POST['to_notify'] as $id) {
+                    if (is_numeric($id)) {
+                        // User id
+                        $this->post_set_users_to_notify($postId, (int)$id, true);
+                    } else {
+                        // Role name
+                        $this->post_set_roles_to_notify($postId, $id, true);
                     }
                 }
             }
-            die();
         }
 
         /**
@@ -498,12 +525,12 @@ if (!class_exists('PP_Notifications'))
                 $this->print_ajax_response('error', $this->module->messages['missing-post']);
             }
 
-            if ('follow' == $_GET['method'])
+            if ('start_notifying' === $_GET['method'])
             {
-                $retval = $this->follow_post_user($post, get_current_user_id());
+                $retval = $this->post_set_users_to_notify($post, get_current_user_id());
             } else
             {
-                $retval = $this->unfollow_post_user($post, get_current_user_id());
+                $retval = $this->post_set_users_stop_notify($post, get_current_user_id());
             }
 
             if (is_wp_error($retval))
@@ -511,7 +538,7 @@ if (!class_exists('PP_Notifications'))
                 $this->print_ajax_response('error', $retval->get_error_message());
             }
 
-            $this->print_ajax_response('success', (object )$this->get_follow_action_parts($post));
+            $this->print_ajax_response('success', (object )$this->get_notify_action_parts($post));
         }
 
         /**
@@ -544,48 +571,26 @@ if (!class_exists('PP_Notifications'))
             return (booL)$this->module->options->notify_current_user_by_default;
         }
 
-
         /**
-         * Called when post is saved. Handles saving of user/usergroup followers
+         * Sets users to be notified for the specified post
          *
          * @param int $post ID of the post
          */
-        public function save_post_subscriptions($new_status, $old_status, $post)
-        {
-            global $publishpress;
-            // only if has edit_post_subscriptions cap
-            if ((!wp_is_post_revision($post) && !wp_is_post_autosave($post)) && isset($_POST['pp-save_followers']) && current_user_can($this->edit_post_subscriptions_cap))
-            {
-                $users      = isset($_POST['pp-selected-users']) ? $_POST['pp-selected-users'] : array();
-                $usergroups = isset($_POST['following_usergroups']) ? $_POST['following_usergroups'] : array();
-                $this->save_post_following_users($post, $users);
-                if ($this->module_enabled('user_groups') && in_array($this->get_current_post_type(), $this->get_post_types_for_module($publishpress->user_groups->module)))
-                {
-                    $this->save_post_following_usergroups($post, $usergroups);
-                }
-            }
-        }
-
-        /**
-         * Sets users to follow specified post
-         *
-         * @param int $post ID of the post
-         */
-        public function save_post_following_users($post, $users = null)
+        public function save_post_notify_users($post, $users = null)
         {
             if (!is_array($users))
             {
                 $users = array();
             }
 
-            // Add current user to following users
+            // Add current user to notify list
             $user = wp_get_current_user();
             if ($user && apply_filters('pp_notification_auto_subscribe_current_user', true, 'subscription_action'))
             {
                 $users[] = $user->ID;
             }
 
-            // Add post author to following users
+            // Add post author to notify list
             if (apply_filters('pp_notification_auto_subscribe_post_author', true, 'subscription_action'))
             {
                 $users[] = $post->post_author;
@@ -593,24 +598,24 @@ if (!class_exists('PP_Notifications'))
 
             $users = array_unique(array_map('intval', $users));
 
-            $follow = $this->follow_post_user($post, $users, false);
+            $this->post_set_users_to_notify($post, $users, false);
         }
 
         /**
-         * Sets usergroups to follow specified post
+         * Sets roles to be notified for the specified post
          *
          * @param int   $post       ID of the post
-         * @param array $usergroups Usergroups to follow posts
+         * @param array $roles   Roles to be notified for posts
          */
-        public function save_post_following_usergroups($post, $usergroups = null)
+        public function save_post_notify_roles($post, $roles = null)
         {
-            if (!is_array($usergroups))
+            if (!is_array($roles))
             {
-                $usergroups = array();
+                $roles = array();
             }
-            $usergroups = array_map('intval', $usergroups);
+            $roles = array_map('intval', $roles);
 
-            $follow = $this->follow_post_usergroups($post, $usergroups, false);
+            $this->add_role_to_notify($post, $roles, false);
         }
 
         /**
@@ -619,6 +624,7 @@ if (!class_exists('PP_Notifications'))
         public function notification_status_change($new_status, $old_status, $post)
         {
             global $publishpress;
+
 
             // Kill switch for notification
             if (!apply_filters('pp_notification_status_change', $new_status, $old_status, $post) || !apply_filters("pp_notification_{$post->post_type}_status_change", $new_status, $old_status, $post))
@@ -677,16 +683,16 @@ if (!class_exists('PP_Notifications'))
             //$parent_ID = isset( $comment->comment_parent_ID ) ? $comment->comment_parent_ID : 0;
             //if( $parent_ID ) $parent = get_comment( $parent_ID );
 
-            // Set user to follow post, but make it filterable
+            // Set user to be notified for a post, but make it filterable
             if (apply_filters('pp_notification_auto_subscribe_current_user', true, 'comment'))
             {
-                $this->follow_post_user($post, (int )$current_user->ID);
+                $this->post_set_users_to_notify($post, (int )$current_user->ID);
             }
 
-            // Set the post author to follow the post but make it filterable
+            // Set the post author to be notified for the post but make it filterable
             if (apply_filters('pp_notification_auto_subscribe_post_author', true, 'comment'))
             {
-                $this->follow_post_user($post, (int )$post->post_author);
+                $this->post_set_users_to_notify($post, (int )$post->post_author);
             }
 
             $blogname = get_option('blogname');
@@ -806,29 +812,33 @@ if (!class_exists('PP_Notifications'))
             $admins     = array();
             $recipients = array();
 
-            $usergroup_users = array();
-            if ($this->module_enabled('user_groups'))
+            $role_users = array();
+
+            // Get users and roles to notify
+            $roles = $this->get_roles_to_notify($post_id, 'slugs');
+            foreach ((array )$roles as $role_id)
             {
-                // Get following users and usergroups
-                $usergroups = $this->get_following_usergroups($post_id, 'ids');
-                foreach ((array )$usergroups as $usergroup_id)
-                {
-                    $usergroup = $publishpress->user_groups->get_usergroup_by('id', $usergroup_id);
-                    foreach ((array )$usergroup->user_ids as $user_id)
+                $users = get_users(
+                    [
+                        'role' => $role_id,
+                    ]
+                );
+
+                if (!empty($users)) {
+                    foreach ($users as $user)
                     {
-                        $usergroup_user = get_user_by('id', $user_id);
-                        if ($usergroup_user && is_user_member_of_blog($user_id))
+                        if (is_user_member_of_blog($user->ID))
                         {
-                            $usergroup_users[] = $usergroup_user->user_email;
+                            $role_users[] = $user->user_email;
                         }
                     }
                 }
             }
 
-            $users = $this->get_following_users($post_id, 'user_email');
+            $users = $this->get_users_to_notify($post_id, 'user_email');
 
             // Merge arrays and filter any duplicates
-            $recipients = array_merge($authors, $admins, $users, $usergroup_users);
+            $recipients = array_merge($authors, $admins, $users, $role_users);
             $recipients = array_unique($recipients);
 
             // Process the recipients for this email to be sent
@@ -840,7 +850,7 @@ if (!class_exists('PP_Notifications'))
                     unset($recipients[$key]);
                 }
                 // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                if (false === apply_filters('pp_notification_email_current_user', false) && wp_get_current_user()->user_email == $user_email)
+                if (false === apply_filters('publishpress_notify_current_user', false) && wp_get_current_user()->user_email == $user_email)
                 {
                     unset($recipients[$key]);
                 }
@@ -860,15 +870,15 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * Set a user or users to follow a post
+         * Set a user or users to be notified for a post
          *
          * @param int|object   $post   Post object or ID
          * @param string|array $users  User or users to subscribe to post updates
-         * @param bool         $append Whether users should be added to following_users list or replace existing list
+         * @param bool         $append Whether users should be added to pp_notify_user list or replace existing list
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function follow_post_user($post, $users, $append = true)
+        public function post_set_users_to_notify($post, $users, $append = true)
         {
             $post = get_post($post);
             if (!$post)
@@ -882,6 +892,7 @@ if (!class_exists('PP_Notifications'))
             }
 
             $user_terms = array();
+
             foreach ($users as $user)
             {
                 if (is_int($user))
@@ -900,14 +911,15 @@ if (!class_exists('PP_Notifications'))
                 $name = $user->user_login;
 
                 // Add user as a term if they don't exist
-                $term = $this->add_term_if_not_exists($name, $this->following_users_taxonomy);
+                $term = $this->add_term_if_not_exists($name, $this->notify_user_taxonomy);
 
                 if (!is_wp_error($term))
                 {
                     $user_terms[] = $name;
                 }
             }
-            $set = wp_set_object_terms($post->ID, $user_terms, $this->following_users_taxonomy, $append);
+
+            $set = wp_set_object_terms($post->ID, $user_terms, $this->notify_user_taxonomy, $append);
 
             if (is_wp_error($set))
             {
@@ -919,14 +931,67 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * Removes user from following_users taxonomy for the given Post,
+         * Set a role or roles to be notified for a post
+         *
+         * @param int|object   $post   Post object or ID
+         * @param string|array $roles  Role or roles to subscribe to post updates
+         * @param bool         $append Whether roles should be added to pp_notify_role list or replace existing list
+         *
+         * @return true|WP_Error     $response  True on success, WP_Error on failure
+         */
+        public function post_set_roles_to_notify($post, $roles, $append = true)
+        {
+            $post = get_post($post);
+            if (!$post)
+            {
+                return new WP_Error('missing-post', $this->module->messages['missing-post']);
+            }
+
+            if (!is_array($roles))
+            {
+                $roles = array($roles);
+            }
+
+            $role_terms = array();
+
+            foreach ($roles as $role)
+            {
+                $role = get_role($role);
+
+                if (!is_object($role))
+                {
+                    continue;
+                }
+
+                // Add user as a term if they don't exist
+                $term = $this->add_term_if_not_exists($role->name, $this->notify_role_taxonomy);
+
+                if (!is_wp_error($term))
+                {
+                    $role_terms[] = $role->name;
+                }
+            }
+
+            $set = wp_set_object_terms($post->ID, $role_terms, $this->notify_role_taxonomy, $append);
+
+            if (is_wp_error($set))
+            {
+                return $set;
+            } else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Removes user from pp_notify_user taxonomy for the given Post,
          * so they no longer receive future notifications.
          *
          * @param object           $post  Post object or ID
-         * @param int|string|array $users One or more users to unfollow from the post
+         * @param int|string|array $users One or more users to stop being notified for the post
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function unfollow_post_user($post, $users)
+        public function post_set_users_stop_notify($post, $users)
         {
             $post = get_post($post);
             if (!$post)
@@ -939,7 +1004,7 @@ if (!class_exists('PP_Notifications'))
                 $users = array($users);
             }
 
-            $terms = get_the_terms($post->ID, $this->following_users_taxonomy);
+            $terms = get_the_terms($post->ID, $this->notify_user_taxonomy);
             if (is_wp_error($terms))
             {
                 return $terms;
@@ -967,7 +1032,7 @@ if (!class_exists('PP_Notifications'))
                     unset($user_terms[$key]);
                 }
             }
-            $set = wp_set_object_terms($post->ID, $user_terms, $this->following_users_taxonomy, false);
+            $set = wp_set_object_terms($post->ID, $user_terms, $this->notify_user_taxonomy, false);
 
             if (is_wp_error($set))
             {
@@ -979,35 +1044,30 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * follow_post_usergroups()
+         * add_role_to_notify()
          *
          */
-        public function follow_post_usergroups($post, $usergroups = 0, $append = true)
+        public function add_role_to_notify($post, $roles = 0, $append = true)
         {
-            if (!$this->module_enabled('user_groups'))
-            {
-                return;
-            }
-
             $post_id = (is_int($post)) ? $post : $post->ID;
-            if (!is_array($usergroups))
+            if (!is_array($roles))
             {
-                $usergroups = array($usergroups);
+                $roles = array($roles);
             }
 
-            // make sure each usergroup id is an integer and not a number stored as a string
-            foreach ($usergroups as $key => $usergroup)
+            // make sure each role id is an integer and not a number stored as a string
+            foreach ($roles as $key => $role)
             {
-                $usergroups[$key] = intval($usergroup);
+                $roles[$key] = intval($role);
             }
 
-            wp_set_object_terms($post_id, $usergroups, $this->following_usergroups_taxonomy, $append);
+            wp_set_object_terms($post_id, $roles, $this->notify_role_taxonomy, $append);
 
             return;
         }
 
         /**
-         * Removes users that are deleted from receiving future notifications (i.e. makes them unfollow posts FOREVER! )
+         * Removes users that are deleted from receiving future notifications (i.e. makes them out of notify list for posts FOREVER! )
          *
          * @param $id int ID of the user
          */
@@ -1023,11 +1083,11 @@ if (!class_exists('PP_Notifications'))
 
             if ($user)
             {
-                // Delete term from the following_users taxonomy
-                $user_following_term = get_term_by('name', $user->user_login, $this->following_users_taxonomy);
-                if ($user_following_term)
+                // Delete term from the pp_notify_user taxonomy
+                $notify_user_term = get_term_by('name', $user->user_login, $this->notify_user_taxonomy);
+                if ($notify_user_term)
                 {
-                    wp_delete_term($user_following_term->term_id, $this->following_users_taxonomy);
+                    wp_delete_term($notify_user_term->term_id, $this->notify_user_taxonomy);
                 }
             }
 
@@ -1054,19 +1114,18 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * Gets a list of the users following the specified post
+         * Gets a list of the users to be notified for the specified post
          *
          * @param int    $post_id The ID of the post
          * @param string $return  The field to return
-         * @return array $users Users following the specified posts
+         * @return array $users Users to notify for the specified posts
          */
-        public function get_following_users($post_id, $return = 'user_login')
+        public function get_users_to_notify($post_id, $return = 'user_login')
         {
+            // Get pp_notify_user terms for the post
+            $users = wp_get_object_terms($post_id, $this->notify_user_taxonomy, array('fields' => 'names'));
 
-            // Get following_users terms for the post
-            $users = wp_get_object_terms($post_id, $this->following_users_taxonomy, array('fields' => 'names'));
-
-            // Don't have any following users
+            // Don't have any users to notify
             if (!$users || is_wp_error($users))
             {
                 return array();
@@ -1123,12 +1182,12 @@ if (!class_exists('PP_Notifications'))
         }
 
         /**
-         * Gets a list of the usergroups that are following specified post
+         * Gets a list of the roles that should be notified for the specified post
          *
          * @param int $post_id
-         * @return array $usergroups All of the usergroup slugs
+         * @return array $roles All of the role slugs
          */
-        public function get_following_usergroups($post_id, $return = 'all')
+        public function get_roles_to_notify($post_id, $return = 'all')
         {
             global $publishpress;
 
@@ -1141,29 +1200,29 @@ if (!class_exists('PP_Notifications'))
                 $fields = $return;
             }
 
-            $usergroups = wp_get_object_terms($post_id, $this->following_usergroups_taxonomy, array('fields' => $fields));
+            $roles = wp_get_object_terms($post_id, $this->notify_role_taxonomy, array('fields' => $fields));
 
             if ($return == 'slugs')
             {
                 $slugs = array();
-                foreach ($usergroups as $usergroup)
+                foreach ($roles as $role)
                 {
-                    $slugs[] = $usergroup->slug;
+                    $slugs[] = $role->slug;
                 }
-                $usergroups = $slugs;
+                $roles = $slugs;
             }
 
-            return $usergroups;
+            return $roles;
         }
 
         /**
-         * Gets a list of posts that a user is following
+         * Gets a list of posts that a user is selected to be notified
          *
          * @param string|int $user user_login or id of user
          * @param array      $args
-         * @return array $posts Posts a user is following
+         * @return array $posts Posts a user is selected to be notified
          */
-        public function get_user_following_posts($user = 0, $args = null)
+        public function get_user_to_notify_posts($user = 0, $args = null)
         {
             if (!$user)
             {
@@ -1178,7 +1237,7 @@ if (!class_exists('PP_Notifications'))
             $post_args = array(
                 'tax_query'      => array(
                     array(
-                        'taxonomy' => $this->following_users_taxonomy,
+                        'taxonomy' => $this->notify_user_taxonomy,
                         'field'    => 'slug',
                         'terms'    => $user,
                     ),
@@ -1188,7 +1247,7 @@ if (!class_exists('PP_Notifications'))
                 'order'          => 'DESC',
                 'post_status'    => 'any',
             );
-            $post_args = apply_filters('pp_user_following_posts_query_args', $post_args);
+            $post_args = apply_filters('pp_user_to_notify_posts_query_args', $post_args);
             $posts     = get_posts($post_args);
 
             return $posts;
@@ -1527,8 +1586,6 @@ if (!class_exists('PP_Notifications'))
 
         public function send_notification_comment($args)
         {
-
-
             /* translators: 1: blog name, 2: post title */
             $subject = sprintf(__('[%1$s] New Editorial Comment: "%2$s"', 'publishpress'), $args['blogname'], $args['post_title']);
 
