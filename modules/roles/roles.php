@@ -28,8 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\Core\Modules\AbstractModule;
-use PublishPress\Core\Modules\ModuleInterface;
+use PublishPress\Core\Modules\AbstractModule;use PublishPress\Core\Modules\ModuleInterface;
 
 if (!class_exists('PP_Roles')) {
 
@@ -153,6 +152,8 @@ if (!class_exists('PP_Roles')) {
             add_action('user_register', [$this, 'action_profile_update'], 10);
 
             add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
+
+            $this->migrateUserGroupsToRoles();
         }
 
         /**
@@ -178,15 +179,40 @@ if (!class_exists('PP_Roles')) {
             }
         }
 
+        /**
+         * @return bool
+         */
+        protected function isUserGroupMigrationScheduled()
+        {
+            $scheduled = false;
+
+            $crons = get_option('cron');
+
+            if (!empty($crons)) {
+                foreach ($crons as $time => $list) {
+                    if (is_array($list) && array_key_exists('publishpress_migrate_groups_to_role', $list)) {
+                        $scheduled = true;
+                    }
+                }
+            }
+
+            return $scheduled;
+        }
+
         public function scheduleUserGroupMigration()
         {
-            // Schedule for after 1 minute.
-            wp_schedule_single_event(
-                time() + 60,
-                'publishpress_migrate_groups_to_role'
-            );
+            // Check if the cron do not exists before schedule another one
 
-            add_action('admin_notices', [$this, 'showAdminNoticeMigrationScheduled']);
+            if (!$this->isUserGroupMigrationScheduled()) {
+                // Schedule for after 15 seconds.
+                wp_schedule_single_event(
+                    time() + 15,
+                    'publishpress_migrate_groups_to_role',
+                    []
+                );
+
+                add_action('admin_notices', [$this, 'showAdminNoticeMigrationScheduled']);
+            }
         }
 
         /**
@@ -195,7 +221,7 @@ if (!class_exists('PP_Roles')) {
         public function migrateUserGroupsToRoles()
         {
             // Check if we have the flag saying the data is already migrated.
-            $flag = get_opotion('publishpress_migrated_usergroups_to_role', 0);
+            $flag = get_option('publishpress_migrated_usergroups_to_role', 0);
             if ($flag != 0) {
                 return;
             }
@@ -216,7 +242,7 @@ if (!class_exists('PP_Roles')) {
         public function showAdminNoticeMigrationScheduled()
         {
             ?>
-            <div class="notice notice-success is-dismissible">
+            <div class="notice notice-warning is-dismissible">
                 <p><?php _e('PublishPress detected legacy data which needs to be migrated. The task should run in the background on the next minutes.', 'publishpress'); ?></p>
                 </div>
             <?php
@@ -266,42 +292,82 @@ if (!class_exists('PP_Roles')) {
         {
             global $wpdb;
 
+            // Create the terms for each role
+            $userGroups = $this->getLegacyUserGroups();
+            if (!empty($userGroups)) {
+                foreach ($userGroups as $userGroup) {
+                    $term = term_exists($userGroup->slug, 'pp_notify_role');
+
+                    if (empty($term)) {
+                        // Add a term and taxonomy for the role (usergroup->slug).
+                        $term = wp_insert_term(
+                            $userGroup->slug,
+                            'pp_notify_role',
+                            [
+                                'slug' => $userGroup->slug,
+                            ]);
+                    }
+
+                    if (is_wp_error($term)) {
+                        error_log('PublishPress error loading term for migrating: ' . maybe_serialize($term));
+                    }
+                }
+            }
             // We do a custom query to save memory.
-            $query   = "SELECT `ID` FROM {$wpdb->prefix}posts";
+            $query = "SELECT `ID` FROM {$wpdb->prefix}posts";
             $postIds = $wpdb->get_results($query);
 
             if (!empty($postIds)) {
-                foreach ($postIds as $post) {
-                    $postTerms    = get_the_terms($post, 'pp_notify_role');
+                foreach ($postIds as $postId) {
+                    $postId = $postId->ID;
+
+                    // Get the current post terms, to avoid duplicate
+                    $postTerms    = get_the_terms($postId, 'pp_notify_role');
                     $postTermsIds = [];
 
-                    foreach ($postTerms as $term) {
-                        $postTermsIds[] = $term->term_id;
-                    }
-
-
-                    $userGroups = $this->getLegacyUserGroups();
-                    if (!empty($userGroups)) {
-                        foreach ($userGroups as $userGroup) {
-                            // Add a term and taxonomy for the role (usergroup->slug).
-                            $term = wp_insert_term(
-                                $userGroup->slug,
-                                'pp_notify_role',
-                                [
-                                    'slug' => $userGroup->slug,
-                                ]);
-
-                            // Check if the post has the term, before add it.
-                            if (in_array($term->term_id, $postTermsIds)) {
-                                continue;
+                    if (!empty($postTerms)) {
+                        foreach ($postTerms as $term) {
+                            if (is_object($term)) {
+                                $termId = $term->term_id;
+                            } else if (is_array($term)) {
+                                $termId = $term['term_id'];
                             }
 
-                            // Add the term to the post
-                            wp_set_post_terms(
-                                $post->ID,
-                                $userGroup->slug,
-                                'pp_notify_role'
-                            );
+                            $postTermsIds[] = $termId;
+                        }
+                    }
+
+                    // debug
+                    if (!in_array($postId, [138, 140])) {
+                        continue;
+                    }
+
+                    // Get the following user groups
+                    $terms = get_the_terms($postId, 'pp_usergroup');
+
+                    if (!empty($terms)) {
+                        foreach ($terms as $oldTerm) {
+                            // Get the new term
+                            $newTerm = get_term_by('slug', $oldTerm->slug, 'pp_notify_role');
+
+                            if (is_object($newTerm)) {
+                                // Append to the post
+                                $result = wp_set_post_terms(
+                                    $postId,
+                                    $newTerm->slug,
+                                    'pp_notify_role',
+                                    true
+                                );
+
+                                if (!empty($result)) {
+                                    // Remove old terms
+                                    wp_remove_object_terms(
+                                        $postId,
+                                        $oldTerm->slug,
+                                        'pp_usergroup'
+                                    );
+                                }
+                            }
                         }
                     }
                 }
