@@ -16,6 +16,11 @@
       "url": "https://github.com/OSTraining/WordPress-Plugin-Builder"
     }
   ],
+  "autoload": {
+     "psr-4": {
+       "PublishPress\\Core\\": "core/"
+     }
+  },
   "minimum-stability": "stable",
   "require": {
     "php": ">= 5.3",

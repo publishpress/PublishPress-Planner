@@ -1,13 +1,13 @@
 <?php
 /**
- * @package     PublishPress\Notifications
+ * @package     PublishPress\Legacy
  * @author      PublishPress <help@publishpress.com>
  * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */
 
-namespace PublishPress;
+namespace PublishPress\Legacy;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 

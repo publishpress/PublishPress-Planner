@@ -111,7 +111,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
         $template_context['users']      = $users;
         $template_context['list_class'] = 'publishpress_notif_user_list';
         $template_context['input_name'] = 'publishpress_notif[receiver_user][]';
-        $template_context['input_id']   = 'publishpress_notif_user_';
+        $template_context['input_id']   = 'publishpress_notif_user_list';
 
         $template_context = parent::filter_workflow_metabox_context($template_context);
 
@@ -136,7 +136,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
             $receivers = array_merge($receivers, $users);
 
             // Get the users following the post
-            $users     = $this->get_service('publishpress')->notifications->get_following_users($args['post']->ID, 'id');
+            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify($args['post']->ID, 'id');
             $receivers = array_merge($receivers, $users);
 
             /**
