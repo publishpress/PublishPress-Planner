@@ -227,6 +227,7 @@ if (!class_exists('PP_Roles')) {
             }
 
             $this->convertLegacyUserGroupsToRoles();
+            $this->convertLegacyPostFollowingUser();
             $this->convertLegacyPostFollowingUserGroupsToRoles();
             $this->cleanupUserGroups();
 
@@ -283,6 +284,17 @@ if (!class_exists('PP_Roles')) {
                     $this->convertUserGroupToRole($userGroup);
                 }
             }
+        }
+
+        /**
+         * Convert following_user taxonomy to pp_notify_user.
+         */
+        protected function convertLegacyPostFollowingUser()
+        {
+            global $wpdb;
+
+            $query = "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = 'pp_notify_user' WHERE taxonomy = 'following_users'";
+            $wpdb->query($query);
         }
 
         /**
