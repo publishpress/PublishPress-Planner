@@ -293,8 +293,7 @@ if (!class_exists('PP_Roles')) {
         {
             global $wpdb;
 
-            $query = "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = 'pp_notify_user' WHERE taxonomy = 'following_users'";
-            $wpdb->query($query);
+            $wpdb->update($wpdb->term_taxonomy, array('taxonomy' => 'pp_notify_user'), array('taxonomy' => 'following_users'));
         }
 
         /**
