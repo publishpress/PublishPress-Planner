@@ -242,7 +242,7 @@ if (!class_exists('PP_Roles')) {
         {
             ?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php _e('PublishPress detected legacy data which needs to be migrated. The task should run in the background on the next minutes.', 'publishpress'); ?></p>
+                <p><?php _e('PublishPress detected legacy data which needs to be migrated. This task should run in the background in the next minutes.', 'publishpress'); ?></p>
                 </div>
             <?php
         }
