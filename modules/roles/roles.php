@@ -161,6 +161,7 @@ if (!class_exists('PP_Roles')) {
          */
         public function install()
         {
+            $this->addCapabilitiesToAdmin();
             $this->scheduleUserGroupMigration();
         }
 
@@ -171,7 +172,7 @@ if (!class_exists('PP_Roles')) {
          */
         public function upgrade($previous_version)
         {
-            if (version_compare($previous_version, '1.10.0', '<=')) {
+            if (version_compare($previous_version, '1.11.3', '<')) {
                 $this->addCapabilitiesToAdmin();
                 $this->scheduleUserGroupMigration();
             }
