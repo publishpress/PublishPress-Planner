@@ -86,13 +86,13 @@ By default, PublishPress provide 4 examples of metadata, but you can add your ow
 
 * [Click here for more on PublishPress Editorial Metadata](https://publishpress.com/docs/editorial-metadata/)
 
-= USER GROUPS =
+= CUSTOM USER ROLES =
 
-For larger organizations with many people involved in the publishing process, user groups help keep your workflow organized and informed.
+For larger organizations, user roles can keep your publishing workflows organized and make sure notifications are sent to the correct people.
 
-To find the user settings, go to the PublishPress link in your WordPress admin area, and click the “User Groups” tab. By default, PublishPress provides four user groups: Copy Editors, Photographers, Reporters and Section Editors.
+To find the role settings, go to the PublishPress link in your WordPress admin area, and click the “Roles” link.
 
-* [Click here for more on PublishPress User Groups](https://publishpress.com/docs/user-groups/)
+* [Click here for more on PublishPress Custom User Roles](https://publishpress.com/docs/roles/)
 
 = IMPORTING FROM EDITFLOW =
 
