@@ -47,6 +47,11 @@ class Email extends Base implements Channel_Interface
             return;
         }
 
+        // Make sure we unserialize the content when it comes from async notifications.
+        if (is_string($content)) {
+            $content = maybe_unserialize($content);
+        }
+
         $signature  = $this->get_notification_signature($content, $channel . ':' . serialize($receivers));
         $controller = $this->get_service('workflow_controller');
 

@@ -11,34 +11,28 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
-class User_Group extends Simple_Checkbox implements Receiver_Interface
+class Role extends Simple_Checkbox implements Receiver_Interface
 {
     use PublishPress_Module;
 
-    const META_KEY = '_psppno_togroup';
+    const META_KEY = '_psppno_torole';
 
-    const META_LIST_KEY = '_psppno_togrouplist';
+    const META_LIST_KEY = '_psppno_torolelist';
 
-    const META_VALUE = 'group';
+    const META_VALUE = 'role';
 
     /**
      * The constructor
      */
     public function __construct()
     {
-        // Check if the user groups module is enabled before use this step
-        if (!$this->is_module_enabled('user_groups'))
-        {
-            return;
-        }
-
-        $this->name        = 'user_group';
-        $this->label       = __('User Groups', 'publishpress');
-        $this->option_name = 'receiver_user_group_checkbox';
+        $this->name        = 'role';
+        $this->label       = __('Roles', 'publishpress');
+        $this->option_name = 'receiver_role_checkbox';
 
         parent::__construct();
 
-        $this->twig_template = 'workflow_receiver_user_group_field.twig';
+        $this->twig_template = 'workflow_receiver_role_field.twig';
     }
 
     /**
@@ -52,13 +46,13 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface
         parent::save_metabox_data($id, $post);
 
         if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif']['receiver_user_group']))
+            || !isset($_POST['publishpress_notif']['receiver_role']))
         {
             // Assume it is disabled
             $values = [];
         } else
         {
-            $values = $_POST['publishpress_notif']['receiver_user_group'];
+            $values = $_POST['publishpress_notif']['receiver_role'];
         }
 
         $this->update_metadata_array($id, static::META_LIST_KEY, $values);
@@ -71,25 +65,29 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_workflow_metabox_context($template_context)
     {
-        // Get User Groups
-        $user_groups = $this->get_service('publishpress')->user_groups->get_usergroups();
+        // Get Roles
+        $roles = get_editable_roles();
 
-        $selected_groups = (array)$this->get_metadata(static::META_LIST_KEY);
-        foreach ($user_groups as $group)
+        $selected_roles = (array)$this->get_metadata(static::META_LIST_KEY);
+        if (empty($selected_groups)) {
+            $selected_groups = array();
+        }
+        foreach ($roles as $role => &$data)
         {
-            if (in_array($group->term_id, $selected_groups))
+            $data = (object)$data;
+            if (in_array($role, $selected_roles))
             {
-                $group->selected = true;
+                $data->selected = true;
             }
         }
 
-        $template_context['name']        = 'publishpress_notif[receiver_user_group_checkbox]';
-        $template_context['id']          = 'publishpress_notif_user_group';
+        $template_context['name']        = 'publishpress_notif[receiver_role_checkbox]';
+        $template_context['id']          = 'publishpress_notif_role';
         $template_context['value']       = static::META_VALUE;
-        $template_context['user_groups'] = $user_groups;
-        $template_context['list_class']  = 'publishpress_notif_user_group_list';
-        $template_context['input_name']  = 'publishpress_notif[receiver_user_group][]';
-        $template_context['input_id']    = 'publishpress_notif_user_group_';
+        $template_context['roles']       = $roles;
+        $template_context['list_class']  = 'publishpress_notif_role_list';
+        $template_context['input_name']  = 'publishpress_notif[receiver_role][]';
+        $template_context['input_id']    = 'publishpress_notif_roles';
 
         $template_context = parent::filter_workflow_metabox_context($template_context);
 
@@ -110,12 +108,12 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface
         if ($this->is_selected($workflow->ID))
         {
             // Get the users selected in the workflow
-            $groups    = get_post_meta($workflow->ID, static::META_LIST_KEY);
-            $receivers = array_merge($receivers, $this->get_users_from_user_groups($groups));
+            $roles     = get_post_meta($workflow->ID, static::META_LIST_KEY);
+            $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
 
-            // Get the groups following the post
-            $groups    = $this->get_service('publishpress')->notifications->get_following_usergroups($args['post']->ID, 'ids');
-            $receivers = array_merge($receivers, $this->get_users_from_user_groups($groups));
+            // Get the roles that should receive notification
+            $roles     = $this->get_service('publishpress')->notifications->get_roles_to_notify($args['post']->ID, 'slugs');
+            $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
 
             /**
              * Filters the list of receivers, but triggers only when the authors are selected.
@@ -124,29 +122,34 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface
              * @param WP_Post $workflow
              * @param array   $args
              */
-            $receivers = apply_filters('publishpress_notif_workflow_receiver_user_group', $receivers, $workflow, $args);
+            $receivers = apply_filters('publishpress_notif_workflow_receiver_role', $receivers, $workflow, $args);
         }
 
         return $receivers;
     }
 
     /**
-     * Returns an array with a list of users' ids from the given user groups.
+     * Returns an array with a list of users' ids from the given roles.
      *
-     * @param array $user_groups
+     * @param array $roles
+     *
      * @return array
      */
-    protected function get_users_from_user_groups($user_groups)
+    protected function get_users_from_roles($roles)
     {
         $users = [];
 
-        if (!empty($user_groups))
+        if (!empty($roles))
         {
-            foreach ((array)$user_groups as $user_group_id)
+            foreach ((array)$roles as $role_name)
             {
-                $user_group = $this->get_service('publishpress')->user_groups->get_usergroup_by('id', $user_group_id);
+                $role_users = get_users(
+                    [
+                        'role' => $role_name,
+                    ]
+                );
 
-                $users = array_merge($users, (array)$user_group->user_ids);
+                $users[] = $role_users;
             }
         }
 
@@ -172,7 +175,7 @@ class User_Group extends Simple_Checkbox implements Receiver_Interface
                 $count = count($items);
 
                 $values[] = sprintf(
-                    _n('%d Group', "%d Groups", count($items), 'publishpress'),
+                    _n('%d Role', "%d Roles", count($items), 'publishpress'),
                     count($items)
                 );
             }

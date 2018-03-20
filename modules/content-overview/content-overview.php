@@ -146,7 +146,7 @@ class PP_Content_Overview extends PP_Module
 
         add_action('admin_init', array($this, 'handle_form_date_range_change'));
 
-        include_once PUBLISHPRESS_ROOT . '/common/php/' . 'screen-options.php';
+        include_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
 
         if (function_exists('add_screen_options_panel'))
         {

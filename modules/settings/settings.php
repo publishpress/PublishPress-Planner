@@ -164,11 +164,7 @@ if (!class_exists('PP_Settings'))
 
             <div class="publishpress-admin pressshack-admin-wrapper wrap">
                 <header>
-                    <h1 class="pressshack-title">
-                        <a href="//wordpress.org/plugins/publishpress" target="_blank" rel="noopener noreferrer" title="PublishPress">
-                            <?php _e('PublishPress', 'publishpress') ?>
-                        </a>
-                    </h1>
+                    <h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
                     <?php echo !empty($display_text) ? $display_text : ''; ?>
                     <?php // We keep the H2 tag to keep notices tied to the header ?>
@@ -343,7 +339,7 @@ if (!class_exists('PP_Settings'))
             global $publishpress;
 
             foreach ($_POST['publishpress_module_name'] as $moduleSlug) {
-                $module_name = sanitize_key( PublishPress\Util::sanitize_module_name( $moduleSlug ) );
+                $module_name = sanitize_key( PublishPress\Legacy\Util::sanitize_module_name( $moduleSlug ) );
 
                 if ($_POST['action'] != 'update'
                     || $_GET['page'] != 'pp-modules-settings') {

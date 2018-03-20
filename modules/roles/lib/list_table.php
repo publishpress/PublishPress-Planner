@@ -137,7 +137,10 @@ if (!class_exists('PP_Roles_List_Table')) {
 
             $actions                       = array();
             $actions['edit edit-role']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>', $publishpress->roles->getLink(array('action' => 'edit-role', 'role-id' => $role->name)));
-            $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->roles->getLink(array('action' => 'delete-role', 'role-id' => $role->name)));
+
+            if ('administrator' !== $role->name) {
+                $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->roles->getLink(array('action' => 'delete-role', 'role-id' => $role->name)));
+            }
 
             return $this->twig->render(
                 'roles-list-table-column-name.twig.html',

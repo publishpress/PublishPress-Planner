@@ -45,7 +45,7 @@
                     <label for="users">{{ labels.users}}</label>
                     <select data-placeholder="{{ labels.select_users }}" multiple class="chosen-select" name="users[]">
                         {% for user in users %}
-                            <option value="{{ user.id }}" {% if user.id in role_users %}selected{% endif %}>{{ user.display_name }}</option>
+                            <option value="{{ user.ID }}" {% if user.ID in role_users %}selected{% endif %}>{{ user.display_name }}</option>
                         {% endfor %}
                     </select>
 

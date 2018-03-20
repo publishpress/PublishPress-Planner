@@ -161,6 +161,7 @@ if (!class_exists('PP_Roles')) {
          */
         public function install()
         {
+            $this->addCapabilitiesToAdmin();
             $this->scheduleUserGroupMigration();
         }
 
@@ -171,7 +172,7 @@ if (!class_exists('PP_Roles')) {
          */
         public function upgrade($previous_version)
         {
-            if (version_compare($previous_version, '1.10.0', '<=')) {
+            if (version_compare($previous_version, '1.11.3', '<')) {
                 $this->addCapabilitiesToAdmin();
                 $this->scheduleUserGroupMigration();
             }
@@ -242,7 +243,7 @@ if (!class_exists('PP_Roles')) {
         {
             ?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php _e('PublishPress detected legacy data which needs to be migrated. This task should run in the background in the next minutes.', 'publishpress'); ?></p>
+                <p><?php _e('PublishPress detected legacy data which needs to be migrated. This task should run in the background in the next few minutes.', 'publishpress'); ?></p>
                 </div>
             <?php
         }
@@ -254,7 +255,7 @@ if (!class_exists('PP_Roles')) {
         {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php _e('PublishPress finished migrating the legacy data successfully.', 'publishpress'); ?></p>
+                <p><?php _e('PublishPress finished migrating the legacy data.', 'publishpress'); ?></p>
                 </div>
             <?php
         }
@@ -684,7 +685,7 @@ if (!class_exists('PP_Roles')) {
         }
 
         /**
-         *
+         * @throws Exception
          */
         public function render_admin_page()
         {
@@ -764,7 +765,7 @@ if (!class_exists('PP_Roles')) {
                         'name_description'         => __('This is the name that developers can use to interact with this role. Only use A-Z letters and the "-" sign.',
                             'publishpress'),
                         'users'                    => __("Users", 'publishpress'),
-                        'users_description'        => __("Add users that belongs to this role.", 'publishpress'),
+                        'users_description'        => __("Add users to this role.", 'publishpress'),
                     ],
                     'role'               => $role,
                     'users'              => $users,
@@ -889,7 +890,7 @@ if (!class_exists('PP_Roles')) {
             // Sanitize all of the user-entered values
             $name         = sanitize_title(strip_tags(trim($_POST['role-id'])));
             $display_name = stripslashes(strip_tags(trim($_POST['display_name'])));
-            $users        = $_POST['users'];
+            $users        = isset($_POST['users']) ? $_POST['users'] : [];
 
             $_REQUEST['form-errors'] = [];
 
@@ -940,6 +941,11 @@ if (!class_exists('PP_Roles')) {
 
             if (!empty($users_in_the_role)) {
                 foreach ($users_in_the_role as $user) {
+                    // Check if you not are trying to remove yourself from administrator, and block if so.
+                    if ('administrator' === $name && $user->ID === get_current_user_id()) {
+                        continue;
+                    }
+
                     if (!in_array($user->ID, $users)) {
                         $user->remove_role($name);
                     }
@@ -984,6 +990,11 @@ if (!class_exists('PP_Roles')) {
 
             // Sanitize all of the user-entered values
             $name = sanitize_title(strip_tags(trim($_GET['role-id'])));
+
+            // Avoid deleting administrator
+            if ('administrator' === $name) {
+                wp_die(__('You can\'t delete the administrator role.', 'publishpress'));
+            }
 
             // Check if the role exists
             $role = get_role($name);

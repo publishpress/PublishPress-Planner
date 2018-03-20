@@ -1,0 +1,11 @@
+<strong>
+    <a href="{{ link }}">{{ role.display_name }}</a>
+</strong>
+
+{{ actions|raw }}
+
+<div class="hidden" id="inline_{{ role.name }}">
+    <div class="display_name">{{ role.display_name }}</div>
+    <div class="name">{{ role.name }}</div>
+    <div class="count">{{ role.users_count }}</div>
+</div>
