@@ -138,10 +138,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 *Fixed:*
 
 * Fixed roles editing form, denying to remove current user from the administrator role;
+* Fixed error in the dashboard widget "My Content Notifications"
+* Fixed default permissions for administrators for being able to see the Roles menu item;
 
 *Changed:*
 
 * Removed option to delete the administrator role;
+* Improved some text;
 
 = [1.11.2] - 2018-03-19 =
 
