@@ -890,7 +890,7 @@ if (!class_exists('PP_Roles')) {
             // Sanitize all of the user-entered values
             $name         = sanitize_title(strip_tags(trim($_POST['role-id'])));
             $display_name = stripslashes(strip_tags(trim($_POST['display_name'])));
-            $users        = $_POST['users'];
+            $users        = isset($_POST['users']) ? $_POST['users'] : [];
 
             $_REQUEST['form-errors'] = [];
 
@@ -941,6 +941,11 @@ if (!class_exists('PP_Roles')) {
 
             if (!empty($users_in_the_role)) {
                 foreach ($users_in_the_role as $user) {
+                    // Check if you not are trying to remove yourself from administrator, and block if so.
+                    if ('administrator' === $name && $user->ID === get_current_user_id()) {
+                        continue;
+                    }
+
                     if (!in_array($user->ID, $users)) {
                         $user->remove_role($name);
                     }
@@ -985,6 +990,11 @@ if (!class_exists('PP_Roles')) {
 
             // Sanitize all of the user-entered values
             $name = sanitize_title(strip_tags(trim($_GET['role-id'])));
+
+            // Avoid deleting administrator
+            if ('administrator' === $name) {
+                wp_die(__('You can\'t delete the administrator role.', 'publishpress'));
+            }
 
             // Check if the role exists
             $role = get_role($name);
