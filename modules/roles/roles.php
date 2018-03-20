@@ -243,7 +243,7 @@ if (!class_exists('PP_Roles')) {
         {
             ?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php _e('PublishPress detected legacy data which needs to be migrated. The task should run in the background on the next minutes.', 'publishpress'); ?></p>
+                <p><?php _e('PublishPress detected legacy data which needs to be migrated. This task should run in the background in the next few minutes.', 'publishpress'); ?></p>
                 </div>
             <?php
         }
@@ -685,7 +685,7 @@ if (!class_exists('PP_Roles')) {
         }
 
         /**
-         *
+         * @throws Exception
          */
         public function render_admin_page()
         {
@@ -765,7 +765,7 @@ if (!class_exists('PP_Roles')) {
                         'name_description'         => __('This is the name that developers can use to interact with this role. Only use A-Z letters and the "-" sign.',
                             'publishpress'),
                         'users'                    => __("Users", 'publishpress'),
-                        'users_description'        => __("Add users that belongs to this role.", 'publishpress'),
+                        'users_description'        => __("Add users to this role.", 'publishpress'),
                     ],
                     'role'               => $role,
                     'users'              => $users,
