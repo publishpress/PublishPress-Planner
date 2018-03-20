@@ -141,7 +141,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 *Changed:*
 
-* Removed  option to delete the administrator role;
+* Removed option to delete the administrator role;
 
 = [1.11.2] - 2018-03-19 =
 
