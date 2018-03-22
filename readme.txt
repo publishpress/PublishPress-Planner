@@ -133,6 +133,13 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.11.4] - UNRELEASED =
+
+*Fixed:*
+
+* Fixed error 500 while saving users;
+* Fixed Preview and Publish buttond for posts;
+
 = [1.11.3] - 2018-03-20 =
 
 *Fixed:*
