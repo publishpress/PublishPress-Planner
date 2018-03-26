@@ -138,7 +138,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 *Fixed:*
 
 * Fixed error 500 while saving users;
-* Fixed Preview and Publish buttond for posts;
+* Fixed Preview and Publish button for posts;
 
 = [1.11.3] - 2018-03-20 =
 
