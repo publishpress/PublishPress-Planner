@@ -2157,6 +2157,12 @@ if (!class_exists('PP_Custom_Status'))
         {
             $status_slugs = wp_list_pluck($this->get_custom_statuses(), 'slug');
 
+            // Remove publish status
+            $publishKey = array_search('publish', $status_slugs);
+            if (false !== $publishKey) {
+                unset($status_slugs[$publishKey]);
+            }
+
             list($permalink, $post_name) = get_sample_permalink($post->ID, $new_title, $new_slug);
 
             $view_link      = false;
