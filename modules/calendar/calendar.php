@@ -764,6 +764,11 @@ if (!class_exists('PP_Calendar'))
                 }
             }
 
+            // Fix start_date, if no specific date was set
+            if (!isset($_GET['start_date'])) {
+                $filters['start_date'] = $default_filters['start_date'];
+            }
+
             // Set the start date as the beginning of the week, according to blog settings
             $filters['start_date'] = $this->get_beginning_of_week($filters['start_date']);
 

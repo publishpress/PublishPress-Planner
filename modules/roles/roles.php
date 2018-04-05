@@ -601,7 +601,10 @@ if (!class_exists('PP_Roles')) {
 
                 // Remove unselected roles
                 foreach ($currentRoles as $role) {
-                    if (!in_array($role, $newRoles)) {
+                    // Check if it is a bbPress rule. If so, don't remove it.
+                    $isBBPressRole = preg_match('/^bbp_/', $role);
+
+                    if (!in_array($role, $newRoles) && !$isBBPressRole) {
                         $user->remove_role($role);
                     }
                 }
