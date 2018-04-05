@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.4
-Stable tag: 1.11.3
+Stable tag: 1.11.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,12 +133,14 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.11.4] - UNRELEASED =
+= [1.11.4] - 2018-04-05  =
 
 *Fixed:*
 
 * Fixed error 500 while saving users;
 * Fixed Preview and Publish button for posts;
+* Fixed compatibility with Forum Role field of bbPress;
+* Fixed start date for the calendar to display current week if a custom date is not set;
 
 = [1.11.3] - 2018-03-20 =
 
