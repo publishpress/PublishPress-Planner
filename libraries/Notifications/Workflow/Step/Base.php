@@ -67,6 +67,10 @@ class Base
      * Action to display the metabox
      *
      * @param string $html
+     *
+     * @return string
+     *
+     * @throws \Exception
      */
     public function render_metabox_section($html)
     {
