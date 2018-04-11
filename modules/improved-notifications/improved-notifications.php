@@ -162,9 +162,6 @@ if (!class_exists('PP_Improved_Notifications'))
             remove_all_actions('pp_send_notification_status_update');
             remove_all_actions('pp_send_notification_comment');
 
-            // Instantiate the controller of workflow's
-            $workflow_controller = $this->get_service('workflow_controller');
-            $workflow_controller->load_workflow_steps();
 
             // Add action to intercept transition between post status - post save
             add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
@@ -188,6 +185,8 @@ if (!class_exists('PP_Improved_Notifications'))
             add_filter('pp_notification_send_email_message_headers', [$this, 'filter_send_email_message_headers'], 10, 3);
 
             add_filter('months_dropdown_results', [$this, 'hide_months_dropdown_filter'], 10, 2);
+
+            add_action('pp_init', [$this, 'action_after_init']);
         }
 
         /**
@@ -203,6 +202,17 @@ if (!class_exists('PP_Improved_Notifications'))
                 $this->create_default_workflow_post_save();
                 $this->create_default_workflow_editorial_comment();
             }
+        }
+
+        /**
+         * Methods called after all modules where loaded and initialized,
+         * to make sure all hooks are set before we start some specific features.
+         */
+        public function action_after_init()
+        {
+            // Instantiate the controller of workflow's
+            $workflow_controller = $this->get_service('workflow_controller');
+            $workflow_controller->load_workflow_steps();
         }
 
         /**
