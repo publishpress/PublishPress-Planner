@@ -58,7 +58,6 @@ class Post_Type extends Base
      */
     public function filter_run_workflow_query_args($query_args, $action_args)
     {
-
         // Check the filters
         $filters = $this->get_filters();
 

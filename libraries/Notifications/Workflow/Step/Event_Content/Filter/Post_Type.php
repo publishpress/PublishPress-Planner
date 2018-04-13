@@ -90,7 +90,12 @@ class Post_Type extends Base implements Filter_Interface
      */
     public function get_run_workflow_query_args($query_args, $action_args)
     {
+        // If post is not set, we ignore.
+        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
+            return parent::get_run_workflow_query_args($query_args, $action_args);
+        }
 
+        // Add the filters
         $query_args['meta_query'][] = [
             'relation' => 'OR',
             // The filter is disabled

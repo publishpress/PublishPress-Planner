@@ -17,6 +17,8 @@ class Workflow
 
     use Dependency_Injector;
 
+    const NOTIFICATION_SCHEDULE_META_KEY = '_psppre_notification_scheduled';
+
     /**
      * The post of this workflow.
      *
@@ -222,5 +224,62 @@ class Workflow
     protected function filter_shortcodes($text)
     {
         return do_shortcode($text);
+    }
+
+    /**
+     * Get posts related to this workflow, applying the filters, in a reverse way, not founding a workflow related
+     * to the post. Used by add-ons like Reminders.
+     *
+     * @return array
+     */
+    public function get_related_posts()
+    {
+        $posts = [];
+
+        // Build the query
+        $query_args = [
+            'nopaging'      => true,
+            'post_status'   => 'future',
+            'no_found_rows' => true,
+            'cache_results' => true,
+            'meta_query' => [
+                [
+                    'key' => static::NOTIFICATION_SCHEDULE_META_KEY,
+                    'compare' => 'NOT EXISTS',
+                ],
+            ]
+        ];
+
+        // Check if the workflow filters by post type
+        $workflowPostTypes = get_post_meta(
+            $this->workflow_post->ID,
+            Step\Event_Content\Filter\Post_Type::META_KEY_POST_TYPE
+        );
+
+        if (!empty($workflowPostTypes)) {
+            $query_args['post_type'] = $workflowPostTypes;
+        }
+
+        // Check if the workflow filters by category
+        $workflowCategories = get_post_meta(
+            $this->workflow_post->ID,
+            Step\Event_Content\Filter\Category::META_KEY_CATEGORY
+        );
+
+        if (!empty($workflowCategories)) {
+            $query_args['category__in'] = $workflowCategories;
+        }
+
+        $query = new \WP_Query($query_args);
+
+        if (!empty($query->posts))
+        {
+            foreach ($query->posts as $post)
+            {
+                $posts[] = $post;
+            }
+        }
+
+        return $posts;
     }
 }

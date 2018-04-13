@@ -213,6 +213,8 @@ if (!class_exists('PP_Improved_Notifications'))
             // Instantiate the controller of workflow's
             $workflow_controller = $this->get_service('workflow_controller');
             $workflow_controller->load_workflow_steps();
+
+            do_action('publishpress_workflow_steps_loaded');
         }
 
         /**
