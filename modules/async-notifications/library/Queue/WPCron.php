@@ -71,6 +71,14 @@ class WPCron implements QueueInterface
                 $channel,
             ];
 
+            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID);
+
+            if (false === $timestamp) {
+                // Abort.
+                error_log('PublishPress aborted a notification. Invalid timestamp for workflow ' . $workflowPost->ID);
+                return;
+            }
+
             // Create one notification for each receiver in the queue
             foreach ($receivers as $receiver)
             {
@@ -80,7 +88,7 @@ class WPCron implements QueueInterface
                 // Receiver
                 $data[] = $receiver;
 
-                $this->scheduleEvent($data);
+                $this->scheduleEvent($data, $timestamp);
             }
         }
     }
@@ -89,12 +97,14 @@ class WPCron implements QueueInterface
      * Schedule the notification event.
      *
      * @param $data
+     * @param $timestamp
+     *
      * @throws \Exception
      */
-    protected function scheduleEvent($data)
+    protected function scheduleEvent($data, $timestamp)
     {
         wp_schedule_single_event(
-            time() + 4,
+            $timestamp,
             'publishpress_cron_notify',
             $data
         );
