@@ -265,7 +265,7 @@ class Shortcodes
                     break;
 
                 case 'permalink':
-                    $info[] = get_post_permalink($post->ID);
+                    $info[] = get_permalink($post->ID);
                     break;
 
                 case 'date':
