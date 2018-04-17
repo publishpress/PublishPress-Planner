@@ -125,8 +125,8 @@ if (!class_exists('PP_Calendar'))
             // Register the module with PublishPress
             $args = array(
                 'title'                 => __('Calendar', 'publishpress'),
-                'short_description'     => __('The calendar lets you see your posts over a customizable date range.', 'publishpress'),
-                'extended_description'  => __('PublishPress’s calendar lets you see your posts over a customizable date range. Filter by status or click on the post title to see its details. Drag and drop posts between days to change their publication date.', 'publishpress'),
+                'short_description'     => false,
+                'extended_description'  => false,
                 'module_url'            => $this->module_url,
                 'icon_class'            => 'dashicons dashicons-calendar-alt',
                 'slug'                  => 'calendar',

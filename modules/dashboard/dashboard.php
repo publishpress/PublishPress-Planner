@@ -56,8 +56,8 @@ if (!class_exists('PP_Dashboard'))
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = array(
                 'title'                => __('Dashboard', 'publishpress'),
-                'short_description'    => __('Track your content from the WordPress dashboard.', 'publishpress'),
-                'extended_description' => __('Enable dashboard widgets to quickly get an overview of what state your content is in.', 'publishpress'),
+                'short_description'    => false,
+                'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-layout',
                 'slug'                 => 'dashboard',

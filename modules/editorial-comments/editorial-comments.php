@@ -47,8 +47,8 @@ if (!class_exists('PP_Editorial_Comments'))
             // Register the module with PublishPress
             $args = array(
                 'title'                 => __('Editorial Comments', 'publishpress'),
-                'short_description'     => __('Share internal notes with your team.', 'publishpress'),
-                'extended_description'  => __('Use editorial comments to hold a private discussion about a post. Communicate directly with your writers or editors about what works and what needs to be improved for each piece.', 'publishpress'),
+                'short_description'     => false,
+                'extended_description'  => false,
                 'module_url'            => $this->module_url,
                 'icon_class'            => 'dashicons dashicons-admin-comments',
                 'slug'                  => 'editorial-comments',

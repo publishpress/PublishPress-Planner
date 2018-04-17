@@ -87,8 +87,8 @@ if (!class_exists('PP_Improved_Notifications'))
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('Notification Workflows', 'publishpress'),
-                'short_description'    => __('Advanced notification workflows for PublishPress', 'publishpress'),
-                'extended_description' => __('Advanced Notification workflows for PublishPress', 'publishpress'),
+                'short_description'    => false,
+                'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'improved-notifications',
