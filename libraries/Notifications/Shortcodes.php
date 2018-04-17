@@ -111,32 +111,20 @@ class Shortcodes
     protected function get_user_data($user, $attrs)
     {
         // No attributes? Set the default one.
-        if (empty($attrs))
-        {
+        if (empty($attrs)) {
             $attrs[] = 'display_name';
         }
 
         // Set the separator
-        if (!isset($attrs['separator']))
-        {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
         // Get the user's info
-        $info             = [];
-        $valid_attributes = [
-            'id',
-            'login',
-            'url',
-            'display_name',
-            'email',
-            'separator',
-        ];
+        $info = [];
 
-        foreach ($attrs as $index => $item)
-        {
-            switch ($item)
-            {
+        foreach ($attrs as $index => $item) {
+            switch ($item) {
                 case 'id':
                     $info[] = $user->ID;
                     break;
@@ -217,6 +205,7 @@ class Shortcodes
      *   - old_status
      *   - new_status
      *   - separator
+     *   - edit_link
      *
      * @param WP_Post $post
      * @param array   $attrs
@@ -227,35 +216,20 @@ class Shortcodes
         $publishpress = $this->get_service('publishpress');
 
         // No attributes? Set the default one.
-        if (empty($attrs))
-        {
-            $attrs = array('title');
+        if (empty($attrs)) {
+            $attrs = ['title'];
         }
 
         // Set the separator
-        if (!isset($attrs['separator']))
-        {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
         // Get the post's info
-        $info             = [];
-        $valid_attributes = [
-            'id',
-            'title',
-            'permalink',
-            'date',
-            'time',
-            'old_status',
-            'new_status',
-            'separator',
-            'edit_link',
-        ];
+        $info = [];
 
-        foreach ($attrs as $index => $item)
-        {
-            switch ($item)
-            {
+        foreach ($attrs as $index => $item) {
+            switch ($item) {
                 case 'id':
                     $info[] = $post->ID;
                     break;
@@ -283,8 +257,7 @@ class Shortcodes
                         $this->action_args[$item]
                     );
 
-                    if (empty($status) || 'WP_Error' === get_class($status))
-                    {
+                    if (empty($status) || 'WP_Error' === get_class($status)) {
                         break;
                     }
 
@@ -293,7 +266,7 @@ class Shortcodes
 
                 case 'edit_link':
                     $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
-                    $info[] = htmlspecialchars_decode(admin_url($admin_path));
+                    $info[]     = htmlspecialchars_decode(admin_url($admin_path));
                     break;
 
                 default:
@@ -324,29 +297,20 @@ class Shortcodes
         $post = $this->workflow_post;
 
         // No attributes? Set the default one.
-        if (empty($attrs))
-        {
+        if (empty($attrs)) {
             $attrs[] = 'title';
         }
 
         // Set the separator
-        if (!isset($attrs['separator']))
-        {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
         // Get the post's info
-        $info             = [];
-        $valid_attributes = [
-            'id',
-            'title',
-            'separator',
-        ];
+        $info = [];
 
-        foreach ($attrs as $index => $item)
-        {
-            switch ($item)
-            {
+        foreach ($attrs as $index => $item) {
+            switch ($item) {
                 case 'id':
                     $info[] = $post->ID;
                     break;
@@ -385,42 +349,27 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if (!isset($this->action_args['comment']))
-        {
+        if (!isset($this->action_args['comment'])) {
             return;
         }
 
         $comment = $this->action_args['comment'];
 
         // No attributes? Set the default one.
-        if (empty($attrs))
-        {
+        if (empty($attrs)) {
             $attrs[] = 'content';
         }
 
         // Set the separator
-        if (!isset($attrs['separator']))
-        {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
         // Get the post's info
-        $info             = [];
-        $valid_attributes = [
-            'id',
-            'content',
-            'author',
-            'author_email',
-            'author_url',
-            'author_ip',
-            'date',
-            'separator',
-        ];
+        $info = [];
 
-        foreach ($attrs as $index => $item)
-        {
-            switch ($item)
-            {
+        foreach ($attrs as $index => $item) {
+            switch ($item) {
                 case 'id':
                     $info[] = $comment->comment_ID;
                     break;
