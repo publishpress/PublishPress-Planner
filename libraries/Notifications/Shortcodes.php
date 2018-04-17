@@ -249,6 +249,7 @@ class Shortcodes
             'old_status',
             'new_status',
             'separator',
+            'edit_link',
         ];
 
         foreach ($attrs as $index => $item)
@@ -288,6 +289,11 @@ class Shortcodes
                     }
 
                     $info[] = $status->name;
+                    break;
+
+                case 'edit_link':
+                    $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
+                    $info[] = htmlspecialchars_decode(admin_url($admin_path));
                     break;
 
                 default:
