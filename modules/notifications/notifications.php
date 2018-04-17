@@ -1565,7 +1565,8 @@ if (!class_exists('PP_Notifications'))
                 $body .= sprintf(__('Author: %1$s (%2$s )', 'publishpress'), $post_author->display_name, $post_author->user_email) . "\r\n";
             }
 
-            $edit_link = htmlspecialchars_decode(get_edit_post_link($post_id));
+            $admin_path = 'post.php?post=' . $post_id . '&action=edit';
+            $edit_link  = htmlspecialchars_decode(admin_url($admin_path));
             if ($new_status != 'publish')
             {
                 $view_link = add_query_arg(array('preview' => 'true'), wp_get_shortlink($post_id));
@@ -1604,7 +1605,8 @@ if (!class_exists('PP_Notifications'))
 
             $body .= "\r\n--------------------\r\n";
 
-            $edit_link = htmlspecialchars_decode(get_edit_post_link($args['post_id']));
+            $admin_path = 'post.php?post=' . $args['post_id'] . '&action=edit';
+            $edit_link  = htmlspecialchars_decode(admin_url($admin_path));
             $view_link = htmlspecialchars_decode(get_permalink($args['post_id']));
 
             $body .= "\r\n";
