@@ -96,6 +96,10 @@ class Category extends Base implements Filter_Interface
      */
     public function get_run_workflow_query_args($query_args, $action_args)
     {
+        // If post is not set, we ignore.
+        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
+            return parent::get_run_workflow_query_args($query_args, $action_args);
+        }
 
         $categories   = wp_get_post_terms($action_args['post']->ID, 'category');
         $category_ids = [];

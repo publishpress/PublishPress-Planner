@@ -71,8 +71,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
             // Register the module with PublishPress
             $args = array(
                 'title'                => __('Metadata', 'publishpress'),
-                'short_description'    => __('With Metadata you can customize the extra data that’s tracked for your content.', 'publishpress'),
-                'extended_description' => __('Log details on every assignment using configurable editorial metadata. It’s completely customizable; create fields for everything from due date to location to contact information to role assignments.', 'publishpress'),
+                'short_description'    => false,
+                'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'editorial-metadata',

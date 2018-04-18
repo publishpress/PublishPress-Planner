@@ -151,7 +151,25 @@ if (!class_exists('PP_Roles')) {
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
             add_action('user_register', [$this, 'action_profile_update'], 10);
 
-            add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
+            if ($this->wasPublishPressInstalledBefore()) {
+                add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
+            }
+        }
+
+        /**
+         * Detects if PublishPress was previously installed.
+         */
+        public function wasPublishPressInstalledBefore()
+        {
+            $version = get_option('publishpress_version', false);
+
+            $installed = !empty($version);
+
+            if (PUBLISHPRESS_VERSION === $version) {
+                $installed = false;
+            }
+
+            return $installed;
         }
 
         /**
@@ -162,7 +180,10 @@ if (!class_exists('PP_Roles')) {
         public function install()
         {
             $this->addCapabilitiesToAdmin();
-            $this->scheduleUserGroupMigration();
+
+            if ($this->wasPublishPressInstalledBefore()) {
+                $this->scheduleUserGroupMigration();
+            }
         }
 
         /*[$*
@@ -201,7 +222,6 @@ if (!class_exists('PP_Roles')) {
         public function scheduleUserGroupMigration()
         {
             // Check if the cron do not exists before schedule another one
-
             if (!$this->isUserGroupMigrationScheduled()) {
                 // Schedule for after 15 seconds.
                 wp_schedule_single_event(

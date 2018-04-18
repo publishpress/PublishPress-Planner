@@ -110,8 +110,8 @@ class PP_Content_Overview extends PP_Module
         // Register the module with PublishPress
         $args = array(
             'title'                => __('Content Overview', 'publishpress'),
-            'short_description'    => __('Click here for a single screen that shows the publication status of all your content.', 'publishpress'),
-            'extended_description' => __('Use the content overview to see how content on your site is progressing. Filter by specific categories or date ranges to see details about each post in progress.', 'publishpress'),
+            'short_description'    => false,
+            'extended_description' => false,
             'module_url'           => $this->module_url,
             'icon_class'           => 'dashicons dashicons-list-view',
             'slug'                 => 'content-overview',

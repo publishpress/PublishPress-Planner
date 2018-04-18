@@ -68,7 +68,7 @@ class Controller
      * @param array $args
      * @return array
      */
-    protected function get_filtered_workflows($args)
+    public function get_filtered_workflows($args)
     {
         $workflows = [];
 

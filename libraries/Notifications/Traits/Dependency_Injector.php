@@ -24,6 +24,8 @@ trait Dependency_Injector
      *
      * @param string $service_name
      *
+     * @return mix
+     *
      * @throws \Exception
      */
     public function get_service($service_name)

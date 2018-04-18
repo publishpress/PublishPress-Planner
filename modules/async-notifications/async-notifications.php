@@ -74,8 +74,8 @@ if (!class_exists('PP_Async_Notifications'))
             // Register the module with PublishPress
             $args = [
                 'title'                => __('Async Notifications', 'publishpress'),
-                'short_description'    => __('Async notifications for PublishPress', 'publishpress'),
-                'extended_description' => __('Async Notifications for PublishPress', 'publishpress'),
+                'short_description'    => false,
+                'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'async-notifications',
