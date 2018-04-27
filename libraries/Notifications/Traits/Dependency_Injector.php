@@ -16,7 +16,7 @@ trait Dependency_Injector
     /**
      * Instance of the Pimple container
      */
-    protected $pimple_container;
+    protected $container;
 
     /**
      * Returns the required service or dependency from the container.
@@ -30,21 +30,21 @@ trait Dependency_Injector
      */
     public function get_service($service_name)
     {
-        if (empty($this->pimple_container))
+        if (empty($this->container))
         {
             $this->init_pimple();
         }
 
-        if (!isset($this->pimple_container[$service_name]))
+        if (!isset($this->container[$service_name]))
         {
             throw new \Exception("Service \"{$service_name}\" not found in the container");
         }
 
-        return $this->pimple_container[$service_name];
+        return $this->container[$service_name];
     }
 
     protected function init_pimple()
     {
-        $this->pimple_container = Pimple_Container::get_instance();
+        $this->container = Pimple_Container::get_instance();
     }
 }
