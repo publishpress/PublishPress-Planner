@@ -406,7 +406,7 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
                 <a name="subscriptions"></a>
 
                 <p>
-					<?php _e( 'SELECT the users AND roles that should receive notifications FROM workflows.',
+					<?php _e( 'Select the users and roles that should receive notifications from workflows.',
 						'publishpress' ); ?>
                 </p>
 
@@ -750,20 +750,16 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
 		 * @param $post   object
 		 * @param $string bool Whether to return recipients as comma-delimited string or array
 		 *
-		 * @return string or array of recipients to receive notification
+		 * @return string|array
 		 */
 		private function _get_notification_recipients( $post, $string = false ) {
-			global $publishpress;
-
 			$post_id = $post->ID;
 			if ( ! $post_id ) {
-				return;
+				return [];
 			}
 
 			$authors    = [];
 			$admins     = [];
-			$recipients = [];
-
 			$role_users = [];
 
 			// Get users and roles to notify
