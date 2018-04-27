@@ -47,6 +47,8 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 
 		const POST_STATUS_FAILED = 'failed';
 
+		const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 60;
+
 		public $module_name = 'async-notifications';
 
 		public $module_url;
@@ -156,6 +158,32 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 		}
 
 		/**
+		 * Check if the notification was just sent, to avoid duplicated notifications when
+		 * multiple requests try to run the same job.
+		 *
+		 * @param $args
+		 *
+		 * @return bool
+		 */
+		protected function is_duplicated_notification( $args ) {
+			// Calculate unique ID to avoid repeated notifications.
+			$uid = md5( maybe_serialize( func_get_args() ) );
+
+			$transientName = 'ppnotif_' . $uid;
+
+			// Check if we already have the transient.
+			if ( get_transient( $transientName ) ) {
+				// Yes, duplicated notification.
+				return true;
+			}
+
+			// No, set the flag and return as non-duplicated.
+			set_transient( $transientName, 1, self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT );
+
+			return false;
+		}
+
+		/**
 		 * @param $workflowPostId
 		 * @param $action
 		 * @param $postId
@@ -175,6 +203,14 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 			$channel,
 			$receiver
 		) {
+			// Check if this is a duplicated notification and skip it.
+			// I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
+			// by the same cron task.
+			if ( $this->is_duplicated_notification( func_get_args() ) ) {
+				return;
+			}
+
+			// Work the notification
 			$workflowPost = get_post( $workflowPostId );
 			$actionArgs   = [
 				'action'     => $action,
@@ -186,9 +222,6 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 
 			// Decode the content
 			$content = base64_decode( maybe_unserialize( $content ) );
-
-			// Calculate unique ID to avoid repeated notifications
-
 
 			/**
 			 * Triggers the notification. This can be caught by notification channels.
