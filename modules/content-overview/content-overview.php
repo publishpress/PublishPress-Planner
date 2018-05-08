@@ -146,19 +146,7 @@ class PP_Content_Overview extends PP_Module
 
         add_action('admin_init', array($this, 'handle_form_date_range_change'));
 
-        include_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
-
-        if (function_exists('add_screen_options_panel'))
-        {
-            add_screen_options_panel(
-                self::USERMETA_KEY_PREFIX . 'screen_columns',
-                __('Screen Layout', 'publishpress'),
-                array($this, 'print_column_prefs'),
-                self::SCREEN_ID,
-                array($this, 'save_column_prefs'),
-                true
-            );
-        }
+        add_action('admin_init', array($this, 'handle_screen_options'));
 
         // Register the columns of data appearing on every term. This is hooked into admin_init
         // so other PublishPress modules can register their filters if needed
@@ -170,6 +158,23 @@ class PP_Content_Overview extends PP_Module
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         add_action('admin_enqueue_scripts', array($this, 'action_enqueue_admin_styles'));
     }
+
+    public function handle_screen_options() {
+	    include_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
+
+	    if (function_exists('add_screen_options_panel'))
+	    {
+		    add_screen_options_panel(
+			    self::USERMETA_KEY_PREFIX . 'screen_columns',
+			    __('Screen Layout', 'publishpress'),
+			    array($this, 'print_column_prefs'),
+			    self::SCREEN_ID,
+			    array($this, 'save_column_prefs'),
+			    true
+		    );
+	    }
+    }
+
 
     /**
      * Get the number of columns to show on the content overview
@@ -859,7 +864,12 @@ class PP_Content_Overview extends PP_Module
             case 'author':
                 $post_author = get_userdata($post->post_author);
 
-                return $post_author->display_name;
+                $author_name = is_object( $post_author ) ? $post_author->display_name : '';
+
+                // @todo: Make this compatible with Multiple Authors
+                $author_name = apply_filters( 'the_author', $author_name );
+
+                return $author_name;
                 break;
             case 'post_date':
                 $output = get_the_time(get_option('date_format'), $post->ID) . '<br />';
