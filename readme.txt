@@ -138,6 +138,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 *Fixed:*
 
 * Fixed PHP strict warning about trait and a redefined property;
+* Fixed duplicated notifications on some scenarios;
+
+*Changed:*
+
+* Increased the priority of the hook user_register to have the multiple roles loaded and available for add-ons;
 
 = [1.12.0] - 2018-04-18  =
 
