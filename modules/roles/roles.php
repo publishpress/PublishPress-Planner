@@ -149,7 +149,7 @@ if (!class_exists('PP_Roles')) {
             add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 20);
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
-            add_action('user_register', [$this, 'action_profile_update'], 10);
+            add_action('user_register', [$this, 'action_profile_update'], 9);
 
             if ($this->wasPublishPressInstalledBefore()) {
                 add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
