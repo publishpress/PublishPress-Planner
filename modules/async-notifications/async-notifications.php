@@ -32,170 +32,208 @@ use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
-if (!class_exists('PP_Async_Notifications'))
-{
-    /**
-     * class PP_Async_Notifications. Depends on the Improved Notifications module.
-     */
-    class PP_Async_Notifications extends PP_Module
-    {
-        use Dependency_Injector, PublishPress_Module;
+if ( ! class_exists( 'PP_Async_Notifications' ) ) {
+	/**
+	 * class PP_Async_Notifications. Depends on the Improved Notifications module.
+	 */
+	class PP_Async_Notifications extends PP_Module {
+		use Dependency_Injector, PublishPress_Module;
 
-        const SETTINGS_SLUG = 'pp-async-notifications-settings';
+		const SETTINGS_SLUG = 'pp-async-notifications-settings';
 
-        const POST_STATUS_QUEUED = 'queued';
+		const POST_STATUS_QUEUED = 'queued';
 
-        const POST_STATUS_SENT = 'sent';
+		const POST_STATUS_SENT = 'sent';
 
-        const POST_STATUS_FAILED = 'failed';
+		const POST_STATUS_FAILED = 'failed';
 
-        public $module_name = 'async-notifications';
+		const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 60;
 
-        public $module_url;
+		public $module_name = 'async-notifications';
 
-        /**
-         * Instace for the module
-         *
-         * @var stdClass
-         */
-        public $module;
+		public $module_url;
 
-        /**
-         * Construct the Notifications class
-         */
-        public function __construct()
-        {
-            global $publishpress;
+		/**
+		 * Instace for the module
+		 *
+		 * @var stdClass
+		 */
+		public $module;
 
-            $this->twigPath = dirname(dirname(dirname(__FILE__))) . '/twig';
+		/**
+		 * Construct the Notifications class
+		 */
+		public function __construct() {
+			global $publishpress;
 
-            $this->module_url = $this->get_module_url(__FILE__);
+			$this->twigPath = dirname( dirname( dirname( __FILE__ ) ) ) . '/twig';
 
-            // Register the module with PublishPress
-            $args = [
-                'title'                => __('Async Notifications', 'publishpress'),
-                'short_description'    => false,
-                'extended_description' => false,
-                'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-feedback',
-                'slug'                 => 'async-notifications',
-                'default_options'      => [
-                    'enabled' => 'on',
-                ],
-                'options_page'         => false,
-            ];
+			$this->module_url = $this->get_module_url( __FILE__ );
 
-            // Apply a filter to the default options
-            $args['default_options'] = apply_filters('publishpress_async_notif_default_options', $args['default_options']);
-            $this->module            = $publishpress->register_module(
-                PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
-                $args
-            );
+			// Register the module with PublishPress
+			$args = [
+				'title'                => __( 'Async Notifications', 'publishpress' ),
+				'short_description'    => false,
+				'extended_description' => false,
+				'module_url'           => $this->module_url,
+				'icon_class'           => 'dashicons dashicons-feedback',
+				'slug'                 => 'async-notifications',
+				'default_options'      => [
+					'enabled' => 'on',
+				],
+				'options_page'         => false,
+			];
 
-            Auto_loader::register('\\PublishPress\\AsyncNotifications\\', __DIR__ . '/library');
+			// Apply a filter to the default options
+			$args['default_options'] = apply_filters( 'publishpress_async_notif_default_options',
+				$args['default_options'] );
+			$this->module            = $publishpress->register_module(
+				PublishPress\Legacy\Util::sanitize_module_name( $this->module_name ),
+				$args
+			);
 
-            parent::__construct();
-        }
+			Auto_loader::register( '\\PublishPress\\AsyncNotifications\\', __DIR__ . '/library' );
 
-        /**
-         * Initialize the module. Conditionally loads if the module is enabled
-         *
-         * @throws Exception
-         */
-        public function init()
-        {
-            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
+			parent::__construct();
+		}
 
-            add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 5);
+		/**
+		 * Initialize the module. Conditionally loads if the module is enabled
+		 *
+		 * @throws Exception
+		 */
+		public function init() {
+			add_filter( 'publishpress_notif_workflow_run_action', [ $this, 'filter_workflow_run_action' ], 10, 3 );
 
-            add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
-        }
+			add_action( 'publishpress_notif_queue', [ $this, 'action_notif_queue' ], 10, 5 );
 
-        /**
-         * Load default editorial metadata the first time the module is loaded
-         *
-         * @since 0.7
-         */
-        public function install()
-        {
-        }
+			add_action( 'publishpress_cron_notify', [ $this, 'action_cron_notify' ], 10, 8 );
+		}
 
-        /**
-         * Upgrade our data in case we need to
-         *
-         * @since 0.7
-         */
-        public function upgrade($previous_version)
-        {
-        }
+		/**
+		 * Load default editorial metadata the first time the module is loaded
+		 *
+		 * @since 0.7
+		 */
+		public function install() {
+		}
 
-        /**
-         * @param string                               $action
-         * @param PublishPress\Notifications\Workflow\ $workflow
-         * @param string                               $channel
-         *
-         * @return string
-         */
-        public function filter_workflow_run_action($action, $workflow, $channel)
-        {
-            // Change the action to send the notification to the queue, instead sending to receiver, directly.
-            $action = 'publishpress_notif_queue';
+		/**
+		 * Upgrade our data in case we need to
+		 *
+		 * @since 0.7
+		 */
+		public function upgrade( $previous_version ) {
+		}
 
-            return $action;
-        }
+		/**
+		 * @param string                               $action
+		 * @param PublishPress\Notifications\Workflow\ $workflow
+		 * @param string                               $channel
+		 *
+		 * @return string
+		 */
+		public function filter_workflow_run_action( $action, $workflow, $channel ) {
+			// Change the action to send the notification to the queue, instead sending to receiver, directly.
+			$action = 'publishpress_notif_queue';
 
-        /**
-         * Enqueue the notification inse
-         *
-         * @param $workflow_post
-         * @param $action_args
-         * @param $receiver
-         * @param $content
-         * @param $channel
-         *
-         * @throws Exception;
-         */
-        public function action_notif_queue($workflow_post, $action_args, $receiver, $content, $channel)
-        {
-            $queue = $this->get_service('notification_queue');
+			return $action;
+		}
 
-            $queue->enqueueNotification($workflow_post, $action_args, $receiver, $content, $channel);
-        }
+		/**
+		 * Enqueue the notification inse
+		 *
+		 * @param $workflow_post
+		 * @param $action_args
+		 * @param $receiver
+		 * @param $content
+		 * @param $channel
+		 *
+		 * @throws Exception;
+		 */
+		public function action_notif_queue( $workflow_post, $action_args, $receiver, $content, $channel ) {
+			$queue = $this->get_service( 'notification_queue' );
 
-        /**
-         * @param $workflowPostId
-         * @param $action
-         * @param $postId
-         * @param $content
-         * @param $oldStatus
-         * @param $newStatus
-         * @param $channel
-         * @param $receiver
-         */
-        public function action_cron_notify($workflowPostId, $action, $postId, $content, $oldStatus, $newStatus, $channel, $receiver)
-        {
-            $workflowPost = get_post($workflowPostId);
-            $actionArgs   = [
-                'action'     => $action,
-                'post'       => get_post($postId),
-                'new_status' => $newStatus,
-                'old_status' => $oldStatus,
-            ];
-            $receivers    = [$receiver];
+			$queue->enqueueNotification( $workflow_post, $action_args, $receiver, $content, $channel );
+		}
 
-            // Decode the content
-            $content = base64_decode(maybe_unserialize($content));
+		/**
+		 * Check if the notification was just sent, to avoid duplicated notifications when
+		 * multiple requests try to run the same job.
+		 *
+		 * @param $args
+		 *
+		 * @return bool
+		 */
+		protected function is_duplicated_notification( $args ) {
+			// Calculate unique ID to avoid repeated notifications.
+			$uid = md5( maybe_serialize( func_get_args() ) );
 
-            /**
-             * Triggers the notification. This can be caught by notification channels.
-             *
-             * @param WP_Post $workflow_post
-             * @param array   $action_args
-             * @param array   $receivers
-             * @param array   $content
-             * @param array   $channel
-             */
-            do_action('publishpress_notif_send_notification_' . $channel, $workflowPost, $actionArgs, $receivers, $content, $channel);
-        }
-    }
+			$transientName = 'ppnotif_' . $uid;
+
+			// Check if we already have the transient.
+			if ( get_transient( $transientName ) ) {
+				// Yes, duplicated notification.
+				return true;
+			}
+
+			// No, set the flag and return as non-duplicated.
+			set_transient( $transientName, 1, self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT );
+
+			return false;
+		}
+
+		/**
+		 * @param $workflowPostId
+		 * @param $action
+		 * @param $postId
+		 * @param $content
+		 * @param $oldStatus
+		 * @param $newStatus
+		 * @param $channel
+		 * @param $receiver
+		 */
+		public function action_cron_notify(
+			$workflowPostId,
+			$action,
+			$postId,
+			$content,
+			$oldStatus,
+			$newStatus,
+			$channel,
+			$receiver
+		) {
+			// Check if this is a duplicated notification and skip it.
+			// I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
+			// by the same cron task.
+			if ( $this->is_duplicated_notification( func_get_args() ) ) {
+				return;
+			}
+
+			// Work the notification
+			$workflowPost = get_post( $workflowPostId );
+			$actionArgs   = [
+				'action'     => $action,
+				'post'       => get_post( $postId ),
+				'new_status' => $newStatus,
+				'old_status' => $oldStatus,
+			];
+			$receivers    = [ $receiver ];
+
+			// Decode the content
+			$content = base64_decode( maybe_unserialize( $content ) );
+
+			/**
+			 * Triggers the notification. This can be caught by notification channels.
+			 *
+			 * @param WP_Post $workflow_post
+			 * @param array   $action_args
+			 * @param array   $receivers
+			 * @param array   $content
+			 * @param array   $channel
+			 */
+			do_action( 'publishpress_notif_send_notification_' . $channel, $workflowPost, $actionArgs, $receivers,
+				$content, $channel );
+		}
+	}
 }

@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
-Tested up to: 4.9.4
-Stable tag: 1.12.0
+Tested up to: 4.9.5
+Stable tag: 1.12.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,17 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.12.1] - 2018-05-09  =
+
+*Fixed:*
+
+* Fixed PHP strict warning about trait and a redefined property;
+* Fixed duplicated notifications on some scenarios;
+
+*Changed:*
+
+* Increased the priority of the hook user_register to have the multiple roles loaded and available for add-ons;
 
 = [1.12.0] - 2018-04-18  =
 
