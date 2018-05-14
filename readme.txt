@@ -137,7 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 *Added:*
 
-* Added new shortcodes for displaying author's data in the notification content: author_display_name, author_id, author_email, author_login;
+* Added new shortcodes for displaying author's data in the notification content: author_display_name, author_email, author_login;
 
 = [1.12.1] - 2018-05-09 =
 

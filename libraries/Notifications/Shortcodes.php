@@ -265,13 +265,11 @@ class Shortcodes {
 					break;
 
 				case 'author_display_name':
-				case 'author_id':
 				case 'author_email':
 				case 'author_login':
 					$authordata = get_userdata( $post->post_author );
 
 					$field_map = [
-						'author_id'           => 'ID',
 						'author_display_name' => 'display_name',
 						'author_email'        => 'user_email',
 						'author_login'        => 'user_login',
