@@ -269,6 +269,25 @@ class Shortcodes
                     $info[] = htmlspecialchars_decode(admin_url($admin_path));
                     break;
 
+                case 'author_display_name':
+                case 'author_id':
+                case 'author_email':
+                case 'author_login':
+		            $authordata = get_userdata($post->post_author);
+
+		            $field_map = [
+		            	'author_id' => 'ID',
+		            	'author_display_name' => 'display_name',
+		            	'author_email' => 'user_email',
+		            	'author_login' => 'user_login',
+		            ];
+
+		            $user_field = $field_map[$item];
+	                $data = $authordata->{$user_field};
+
+		            $info[] = apply_filters( 'pp_get_author_data', $data, $item, $post );
+		            break;
+
                 default:
                     break;
             }
