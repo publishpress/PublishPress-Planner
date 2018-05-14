@@ -518,7 +518,7 @@ class PP_Content_Overview extends PP_Module
 
         $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
             . ' size="10" class="date-pick" value="'
-            . esc_attr(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date']))) . '" /><span class="form-value">';
+            . esc_attr(date_i18n('M d Y', strtotime($this->user_filters['start_date']))) . '" data-alt-field="#pp-content-overview-start-date" /><span class="form-value">';
 
         $start_date_value .= esc_html(date_i18n(get_option('date_format'), strtotime($this->user_filters['start_date'])));
         $start_date_value .= '</span>';
