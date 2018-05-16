@@ -12,419 +12,429 @@ namespace PublishPress\Notifications;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
-class Shortcodes
-{
+class Shortcodes {
 
-    use Dependency_Injector;
-    use PublishPress_Module;
+	use Dependency_Injector;
+	use PublishPress_Module;
 
-    /**
-     * The post of the workflow.
-     *
-     * @var WP_Post
-     */
-    protected $workflow_post;
+	/**
+	 * The post of the workflow.
+	 *
+	 * @var WP_Post
+	 */
+	protected $workflow_post;
 
-    /**
-     * An array with arguments set by the action
-     *
-     * @var array
-     */
-    protected $action_args;
+	/**
+	 * An array with arguments set by the action
+	 *
+	 * @var array
+	 */
+	protected $action_args;
 
-    /**
-     * Adds the shortcodes to replace text
-     *
-     * @param WP_Post $workflow_post
-     * @param array   $action_args
-     */
-    public function register($workflow_post, $action_args)
-    {
-        $this->set_properties($workflow_post, $action_args);
+	/**
+	 * Adds the shortcodes to replace text
+	 *
+	 * @param WP_Post $workflow_post
+	 * @param array   $action_args
+	 */
+	public function register( $workflow_post, $action_args ) {
+		$this->set_properties( $workflow_post, $action_args );
 
-        add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
-        add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
-        add_shortcode('psppno_workflow', [$this, 'handle_psppno_workflow']);
-        add_shortcode('psppno_edcomment', [$this, 'handle_psppno_edcomment']);
-    }
+		add_shortcode( 'psppno_actor', [ $this, 'handle_psppno_actor' ] );
+		add_shortcode( 'psppno_post', [ $this, 'handle_psppno_post' ] );
+		add_shortcode( 'psppno_workflow', [ $this, 'handle_psppno_workflow' ] );
+		add_shortcode( 'psppno_edcomment', [ $this, 'handle_psppno_edcomment' ] );
+	}
 
-    /**
-     * Set the instance properties
-     *
-     * @param WP_Post $workflow_post
-     * @param array   $action_args
-     */
-    protected function set_properties($workflow_post, $action_args)
-    {
-        $this->workflow_post = $workflow_post;
-        $this->action_args   = $action_args;
-    }
+	/**
+	 * Set the instance properties
+	 *
+	 * @param WP_Post $workflow_post
+	 * @param array   $action_args
+	 */
+	protected function set_properties( $workflow_post, $action_args ) {
+		$this->workflow_post = $workflow_post;
+		$this->action_args   = $action_args;
+	}
 
-    /**
-     * Returns the user who triggered the worflow for notification.
-     * You can specify which user's property should be printed:
-     *
-     * [psppno_actor display_name]
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function handle_psppno_actor($attrs)
-    {
-        $user = $this->get_actor();
+	/**
+	 * Returns the user who triggered the worflow for notification.
+	 * You can specify which user's property should be printed:
+	 *
+	 * [psppno_actor display_name]
+	 *
+	 * @param array $attrs
+	 *
+	 * @return string
+	 */
+	public function handle_psppno_actor( $attrs ) {
+		$user = $this->get_actor();
 
-        return $this->get_user_data($user, $attrs);
-    }
+		return $this->get_user_data( $user, $attrs );
+	}
 
-    /**
-     * Returns the current user, the actor of the action
-     *
-     * @return WP_User
-     */
-    protected function get_actor()
-    {
-        return wp_get_current_user();
-    }
+	/**
+	 * Returns the current user, the actor of the action
+	 *
+	 * @return WP_User
+	 */
+	protected function get_actor() {
+		return wp_get_current_user();
+	}
 
-    /**
-     * Returns the user's info. You can specify which user's property should be
-     * printed passing that on the $attrs.
-     *
-     * If more than one attribute is given, we returns all the data
-     * separated by comma (default) or specified separator, in the order it was
-     * received.
-     *
-     * If no attribute is provided, we use display_name as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - login
-     *   - url
-     *   - display_name
-     *   - email
-     *   - separator
-     *
-     * @param WP_User $user
-     * @param array   $attrs
-     * @return string
-     */
-    protected function get_user_data($user, $attrs)
-    {
-        // No attributes? Set the default one.
-        if (empty($attrs)) {
-            $attrs[] = 'display_name';
-        }
+	/**
+	 * Returns the user's info. You can specify which user's property should be
+	 * printed passing that on the $attrs.
+	 *
+	 * If more than one attribute is given, we returns all the data
+	 * separated by comma (default) or specified separator, in the order it was
+	 * received.
+	 *
+	 * If no attribute is provided, we use display_name as default.
+	 *
+	 * Accepted attributes:
+	 *   - id
+	 *   - login
+	 *   - url
+	 *   - display_name
+	 *   - email
+	 *   - separator
+	 *
+	 * @param WP_User $user
+	 * @param array   $attrs
+	 *
+	 * @return string
+	 */
+	protected function get_user_data( $user, $attrs ) {
+		// No attributes? Set the default one.
+		if ( empty( $attrs ) ) {
+			$attrs[] = 'display_name';
+		}
 
-        // Set the separator
-        if (!isset($attrs['separator'])) {
-            $attrs['separator'] = ', ';
-        }
+		// Set the separator
+		if ( ! isset( $attrs['separator'] ) ) {
+			$attrs['separator'] = ', ';
+		}
 
-        // Get the user's info
-        $info = [];
+		// Get the user's info
+		$info = [];
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $user->ID;
-                    break;
+		foreach ( $attrs as $index => $item ) {
+			switch ( $item ) {
+				case 'id':
+					$info[] = $user->ID;
+					break;
 
-                case 'login':
-                    $info[] = $user->user_login;
-                    break;
+				case 'login':
+					$info[] = $user->user_login;
+					break;
 
-                case 'url':
-                    $info[] = $user->user_url;
-                    break;
+				case 'url':
+					$info[] = $user->user_url;
+					break;
 
-                case 'display_name':
-                    $info[] = $user->display_name;
-                    break;
+				case 'display_name':
+					$info[] = $user->display_name;
+					break;
 
-                case 'email':
-                    $info[] = $user->user_email;
-                    break;
+				case 'email':
+					$info[] = $user->user_email;
+					break;
 
-                default:
-                    break;
-            }
-        }
+				default:
+					break;
+			}
+		}
 
-        return implode($attrs['separator'], $info);
-    }
+		return implode( $attrs['separator'], $info );
+	}
 
-    /**
-     * Returns the info from the post related to the notification.
-     * You can specify which post's property should be printed:
-     *
-     * [psppno_post title]
-     *
-     * If no attribute is provided, we use title as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - title
-     *   - url
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function handle_psppno_post($attrs)
-    {
-        $post = $this->get_post();
+	/**
+	 * Returns the info from the post related to the notification.
+	 * You can specify which post's property should be printed:
+	 *
+	 * [psppno_post title]
+	 *
+	 * If no attribute is provided, we use title as default.
+	 *
+	 * Accepted attributes:
+	 *   - id
+	 *   - title
+	 *   - url
+	 *
+	 * @param array $attrs
+	 *
+	 * @return string
+	 */
+	public function handle_psppno_post( $attrs ) {
+		$post = $this->get_post();
 
-        return $this->get_post_data($post, $attrs);
-    }
+		return $this->get_post_data( $post, $attrs );
+	}
 
-    /**
-     * Returns the post related to the notification.
-     *
-     * @return WP_Post
-     */
-    protected function get_post()
-    {
-        return $this->action_args['post'];
-    }
+	/**
+	 * Returns the post related to the notification.
+	 *
+	 * @return WP_Post
+	 */
+	protected function get_post() {
+		return $this->action_args['post'];
+	}
 
-    /**
-     * Returns the post's info. You can specify which post's property should be
-     * printed passing that on the $attrs.
-     *
-     * If more than one attribute is given, we returns all the data
-     * separated by comma (default) or specified separator, in the order it was
-     * received.
-     *
-     * If no attribute is provided, we use title as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - title
-     *   - permalink
-     *   - date
-     *   - time
-     *   - old_status
-     *   - new_status
-     *   - separator
-     *   - edit_link
-     *
-     * @param WP_Post $post
-     * @param array   $attrs
-     * @return string
-     */
-    protected function get_post_data($post, $attrs)
-    {
-        $publishpress = $this->get_service('publishpress');
+	/**
+	 * Returns the post's info. You can specify which post's property should be
+	 * printed passing that on the $attrs.
+	 *
+	 * If more than one attribute is given, we returns all the data
+	 * separated by comma (default) or specified separator, in the order it was
+	 * received.
+	 *
+	 * If no attribute is provided, we use title as default.
+	 *
+	 * Accepted attributes:
+	 *   - id
+	 *   - title
+	 *   - permalink
+	 *   - date
+	 *   - time
+	 *   - old_status
+	 *   - new_status
+	 *   - separator
+	 *   - edit_link
+	 *
+	 * @param WP_Post $post
+	 * @param array   $attrs
+	 *
+	 * @return string
+	 */
+	protected function get_post_data( $post, $attrs ) {
+		$publishpress = $this->get_service( 'publishpress' );
 
-        // No attributes? Set the default one.
-        if (empty($attrs)) {
-            $attrs = ['title'];
-        }
+		// No attributes? Set the default one.
+		if ( empty( $attrs ) ) {
+			$attrs = [ 'title' ];
+		}
 
-        // Set the separator
-        if (!isset($attrs['separator'])) {
-            $attrs['separator'] = ', ';
-        }
+		// Set the separator
+		if ( ! isset( $attrs['separator'] ) ) {
+			$attrs['separator'] = ', ';
+		}
 
-        // Get the post's info
-        $info = [];
+		// Get the post's info
+		$info = [];
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $post->ID;
-                    break;
+		foreach ( $attrs as $index => $item ) {
+			switch ( $item ) {
+				case 'id':
+					$info[] = $post->ID;
+					break;
 
-                case 'title':
-                    $info[] = $post->post_title;
-                    break;
+				case 'title':
+					$info[] = $post->post_title;
+					break;
 
-                case 'permalink':
-                    $info[] = get_permalink($post->ID);
-                    break;
+				case 'permalink':
+					$info[] = get_permalink( $post->ID );
+					break;
 
-                case 'date':
-                    $info[] = get_the_date('', $post);
-                    break;
+				case 'date':
+					$info[] = get_the_date( '', $post );
+					break;
 
-                case 'time':
-                    $info[] = get_the_time('', $post);
-                    break;
+				case 'time':
+					$info[] = get_the_time( '', $post );
+					break;
 
-                case 'old_status':
-                case 'new_status':
-                    $status = $publishpress->custom_status->get_custom_status_by(
-                        'slug',
-                        $this->action_args[$item]
-                    );
+				case 'old_status':
+				case 'new_status':
+					$status = $publishpress->custom_status->get_custom_status_by(
+						'slug',
+						$this->action_args[ $item ]
+					);
 
-                    if (empty($status) || 'WP_Error' === get_class($status)) {
-                        break;
-                    }
+					if ( empty( $status ) || 'WP_Error' === get_class( $status ) ) {
+						break;
+					}
 
-                    $info[] = $status->name;
-                    break;
+					$info[] = $status->name;
+					break;
 
-                case 'edit_link':
-                    $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
-                    $info[] = htmlspecialchars_decode(admin_url($admin_path));
-                    break;
+				case 'edit_link':
+					$admin_path = 'post.php?post=' . $post->ID . '&action=edit';
+					$info[]     = htmlspecialchars_decode( admin_url( $admin_path ) );
+					break;
 
-                default:
-                    break;
-            }
-        }
+				case 'author_display_name':
+				case 'author_email':
+				case 'author_login':
+					$authordata = get_userdata( $post->post_author );
 
-        return implode($attrs['separator'], $info);
-    }
+					$field_map = [
+						'author_display_name' => 'display_name',
+						'author_email'        => 'user_email',
+						'author_login'        => 'user_login',
+					];
 
-    /**
-     * Returns the info from the post related to the workflow.
-     * You can specify which workflow's property should be printed:
-     *
-     * [psppno_workflow title]
-     *
-     * If no attribute is provided, we use title as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - title
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function handle_psppno_workflow($attrs)
-    {
-        $post = $this->workflow_post;
+					$user_field = $field_map[ $item ];
+					$data       = $authordata->{$user_field};
 
-        // No attributes? Set the default one.
-        if (empty($attrs)) {
-            $attrs[] = 'title';
-        }
+					$info[] = apply_filters( 'pp_get_author_data', $data, $item, $post );
+					break;
 
-        // Set the separator
-        if (!isset($attrs['separator'])) {
-            $attrs['separator'] = ', ';
-        }
+				default:
+					break;
+			}
+		}
 
-        // Get the post's info
-        $info = [];
+		return implode( $attrs['separator'], $info );
+	}
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $post->ID;
-                    break;
+	/**
+	 * Returns the info from the post related to the workflow.
+	 * You can specify which workflow's property should be printed:
+	 *
+	 * [psppno_workflow title]
+	 *
+	 * If no attribute is provided, we use title as default.
+	 *
+	 * Accepted attributes:
+	 *   - id
+	 *   - title
+	 *
+	 * @param array $attrs
+	 *
+	 * @return string
+	 */
+	public function handle_psppno_workflow( $attrs ) {
+		$post = $this->workflow_post;
 
-                case 'title':
-                    $info[] = $post->post_title;
-                    break;
+		// No attributes? Set the default one.
+		if ( empty( $attrs ) ) {
+			$attrs[] = 'title';
+		}
 
-                default:
-                    break;
-            }
-        }
+		// Set the separator
+		if ( ! isset( $attrs['separator'] ) ) {
+			$attrs['separator'] = ', ';
+		}
 
-        return implode($attrs['separator'], $info);
-    }
+		// Get the post's info
+		$info = [];
 
-    /**
-     * Returns the info from the comment related to the workflow.
-     * You can specify which comment's property should be printed:
-     *
-     * [psppno_comment content]
-     *
-     * If no attribute is provided, we use content as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - content
-     *   - author
-     *   - author_email
-     *   - author_url
-     *   - author_ip
-     *   - date
-     *
-     * @param array $attrs
-     * @return string
-     */
-    public function handle_psppno_edcomment($attrs)
-    {
-        if (!isset($this->action_args['comment'])) {
-            return;
-        }
+		foreach ( $attrs as $index => $item ) {
+			switch ( $item ) {
+				case 'id':
+					$info[] = $post->ID;
+					break;
 
-        $comment = $this->action_args['comment'];
+				case 'title':
+					$info[] = $post->post_title;
+					break;
 
-        // No attributes? Set the default one.
-        if (empty($attrs)) {
-            $attrs[] = 'content';
-        }
+				default:
+					break;
+			}
+		}
 
-        // Set the separator
-        if (!isset($attrs['separator'])) {
-            $attrs['separator'] = ', ';
-        }
+		return implode( $attrs['separator'], $info );
+	}
 
-        // Get the post's info
-        $info = [];
+	/**
+	 * Returns the info from the comment related to the workflow.
+	 * You can specify which comment's property should be printed:
+	 *
+	 * [psppno_comment content]
+	 *
+	 * If no attribute is provided, we use content as default.
+	 *
+	 * Accepted attributes:
+	 *   - id
+	 *   - content
+	 *   - author
+	 *   - author_email
+	 *   - author_url
+	 *   - author_ip
+	 *   - date
+	 *
+	 * @param array $attrs
+	 *
+	 * @return string
+	 */
+	public function handle_psppno_edcomment( $attrs ) {
+		if ( ! isset( $this->action_args['comment'] ) ) {
+			return;
+		}
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $comment->comment_ID;
-                    break;
+		$comment = $this->action_args['comment'];
 
-                case 'content':
-                    $info[] = $comment->comment_content;
-                    break;
+		// No attributes? Set the default one.
+		if ( empty( $attrs ) ) {
+			$attrs[] = 'content';
+		}
 
-                case 'author':
-                    $info[] = $comment->comment_author;
-                    break;
+		// Set the separator
+		if ( ! isset( $attrs['separator'] ) ) {
+			$attrs['separator'] = ', ';
+		}
 
-                case 'author_email':
-                    $info[] = $comment->comment_author_email;
-                    break;
+		// Get the post's info
+		$info = [];
 
-                case 'author_url':
-                    $info[] = $comment->comment_author_url;
-                    break;
+		foreach ( $attrs as $index => $item ) {
+			switch ( $item ) {
+				case 'id':
+					$info[] = $comment->comment_ID;
+					break;
 
-                case 'author_ip':
-                    $info[] = $comment->comment_author_ip;
-                    break;
+				case 'content':
+					$info[] = $comment->comment_content;
+					break;
 
-                case 'date':
-                    $info[] = $comment->comment_date;
-                    break;
+				case 'author':
+					$info[] = $comment->comment_author;
+					break;
 
-                default:
-                    break;
-            }
-        }
+				case 'author_email':
+					$info[] = $comment->comment_author_email;
+					break;
 
-        return implode($attrs['separator'], $info);
-    }
+				case 'author_url':
+					$info[] = $comment->comment_author_url;
+					break;
 
-    /**
-     * Removes the shortcodes
-     */
-    public function unregister()
-    {
-        remove_shortcode('psppno_actor');
-        remove_shortcode('psppno_post');
-        remove_shortcode('psppno_workflow');
-        remove_shortcode('psppno_edcomment');
+				case 'author_ip':
+					$info[] = $comment->comment_author_ip;
+					break;
 
-        $this->cleanup();
-    }
+				case 'date':
+					$info[] = $comment->comment_date;
+					break;
 
-    /**
-     * Cleanup the data
-     */
-    protected function cleanup()
-    {
-        $this->workflow_post = null;
-        $this->action_args   = null;
-    }
+				default:
+					break;
+			}
+		}
+
+		return implode( $attrs['separator'], $info );
+	}
+
+	/**
+	 * Removes the shortcodes
+	 */
+	public function unregister() {
+		remove_shortcode( 'psppno_actor' );
+		remove_shortcode( 'psppno_post' );
+		remove_shortcode( 'psppno_workflow' );
+		remove_shortcode( 'psppno_edcomment' );
+
+		$this->cleanup();
+	}
+
+	/**
+	 * Cleanup the data
+	 */
+	protected function cleanup() {
+		$this->workflow_post = null;
+		$this->action_args   = null;
+	}
 }

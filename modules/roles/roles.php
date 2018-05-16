@@ -28,7 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\Core\Modules\AbstractModule;use PublishPress\Core\Modules\ModuleInterface;
+use PublishPress\Core\Modules\AbstractModule;
+use PublishPress\Core\Modules\ModuleInterface;
 
 if (!class_exists('PP_Roles')) {
 

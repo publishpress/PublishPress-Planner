@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.12.1
+Stable tag: 1.13.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,7 +133,18 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.12.1] - 2018-05-09  =
+= [1.13.0] - 2018-05-16 =
+
+*Added:*
+
+* Added new shortcodes for displaying author's data in the notification content: author_display_name, author_email, author_login;
+
+*Changed:*
+
+* Improved some help texts;
+* Updated language files;
+
+= [1.12.1] - 2018-05-09 =
 
 *Fixed:*
 
@@ -144,7 +155,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Increased the priority of the hook user_register to have the multiple roles loaded and available for add-ons;
 
-= [1.12.0] - 2018-04-18  =
+= [1.12.0] - 2018-04-18 =
 
 *Added:*
 
@@ -159,7 +170,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Improved async notifications module for allowing extending workflows with add-ons (specially Reminders);
 
-= [1.11.4] - 2018-04-05  =
+= [1.11.4] - 2018-04-05 =
 
 *Fixed:*
 
