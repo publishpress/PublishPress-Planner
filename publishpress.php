@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.13.0-beta.1
+ * Version: 1.13.0.beta.2
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -327,7 +327,6 @@ class publishpress
      */
     public function action_admin_init()
     {
-
         // Upgrade if need be but don't run the upgrade if the plugin has never been used
         $previous_version = get_option($this->options_group . 'version');
         if ($previous_version && version_compare($previous_version, PUBLISHPRESS_VERSION, '<'))
