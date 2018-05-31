@@ -59,10 +59,9 @@ class publishpress
 
     public $options_group_name = 'publishpress_options';
 
-    private function __construct()
-    {
-        /** Do nothing */
-    }
+    protected $added_menu_page = false;
+
+    protected $menu_slug;
 
     /**
      * Main PublishPress Instance
@@ -373,23 +372,79 @@ class publishpress
         return update_option($this->options_group . $mod_name . '_options', $this->modules->$mod_name->options);
     }
 
+	/**
+	 * @param        $page_title
+	 * @param        $menu_title
+	 * @param        $capability
+	 * @param        $menu_slug
+	 * @param string $function
+	 * @param string $icon_url
+	 * @param null   $position
+	 */
+    public function add_menu_page( $page_title, $capability, $menu_slug, $function = '' ) {
+        if ( $this->added_menu_page ) {
+            return;
+        }
+
+	    add_menu_page(
+		    $page_title,
+		    esc_html__('PublishPress', 'publishpress'),
+		    $capability,
+		    $menu_slug,
+		    $function,
+		    '',
+		    26
+	    );
+
+	    $this->added_menu_page = true;
+	    $this->menu_slug = $menu_slug;
+    }
+
+	/**
+	 * Returns true if the menu page was already created. Returns false if not.
+     *
+     * @return bool
+	 */
+    public function is_menu_page_created() {
+        return (bool) $this->added_menu_page;
+    }
+
+	/**
+     * Returns the menu slug for the menu page.
+     *
+	 * @return string
+	 */
+    public function get_menu_slug() {
+        return $this->menu_slug;
+    }
+
     /**
      * Add the menu page and call an action for modules add submenus
      */
     public function action_admin_menu()
     {
-        add_menu_page(
-            esc_html__('Calendar', 'publishpress'),
-            esc_html__('PublishPress', 'publishpress'),
-            'pp_view_calendar',
-            'pp-calendar',
-            array($this->calendar, 'render_admin_page'),
-            null,
-            26
-        );
+	    /**
+	     * Filters the menu slug. By default, each filter should only set a menu slug if it is empty.
+	     * To determine the precedence of menus, use different priorities among the filters.
+         *
+         * @param string $menu_slug
+	     */
+        $this->menu_slug = apply_filters('publishpress_admin_menu_slug', $this->menu_slug);
 
-        // Submenus
+	    /**
+	     * Action for adding menu pages.
+	     */
+	    do_action('publishpress_admin_menu_page');
+
+	    /**
+	     * @deprecated
+	     */
         do_action('publishpress_admin_menu');
+
+	    /**
+	     * Action for adding submenus.
+	     */
+	    do_action('publishpress_admin_submenu');
     }
 
     /**
@@ -541,10 +596,13 @@ class publishpress
     public function filter_custom_menu_order($menu_ord)
     {
         global $submenu;
-        if (isset($submenu['pp-calendar']))
-        {
+        global $publishpress;
 
-            $submenu_pp  = $submenu['pp-calendar'];
+        $menu_slug = $publishpress->get_menu_slug();
+
+        if (isset($submenu[$menu_slug]))
+        {
+            $submenu_pp  = $submenu[$menu_slug];
             $new_submenu = array();
 
             // Get the index for the menus.
@@ -552,6 +610,9 @@ class publishpress
                 'pp-calendar'                           => null,
                 'pp-content-overview'                   => null,
                 'pp-addons'                             => null,
+                'pp-roles'                              => null,
+                'pp-manage-capabilities'                => null,
+                'edit-tags.php?taxonomy=author'         => null,
                 'pp-modules-settings'                   => null,
                 'edit.php?post_type=psppnotif_workflow' => null,
             );
@@ -588,6 +649,30 @@ class publishpress
                 unset($submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']]);
             }
 
+	        // Roles
+	        if (!is_null($relevantMenus['pp-roles']))
+	        {
+		        $new_submenu[] = $submenu_pp[$relevantMenus['pp-roles']];
+
+		        unset($submenu_pp[$relevantMenus['pp-roles']]);
+	        }
+
+	        // Permissions
+	        if (!is_null($relevantMenus['pp-manage-capabilities']))
+	        {
+		        $new_submenu[] = $submenu_pp[$relevantMenus['pp-manage-capabilities']];
+
+		        unset($submenu_pp[$relevantMenus['pp-manage-capabilities']]);
+	        }
+
+	        // Authors
+	        if (!is_null($relevantMenus['edit-tags.php?taxonomy=author']))
+	        {
+		        $new_submenu[] = $submenu_pp[$relevantMenus['edit-tags.php?taxonomy=author']];
+
+		        unset($submenu_pp[$relevantMenus['edit-tags.php?taxonomy=author']]);
+	        }
+
             // Check if we have other menu items, except settings and add-ons. They will be added to the end.
             if (count($submenu_pp) > 2)
             {
@@ -618,7 +703,7 @@ class publishpress
                 unset($submenu_pp[$relevantMenus['pp-addons']]);
             }
 
-            $submenu['pp-calendar'] = $new_submenu;
+            $submenu[$menu_slug] = $new_submenu;
         }
 
         return $menu_ord;
@@ -659,6 +744,8 @@ function PublishPress()
  */
 function publishPressRegisterCustomPostTypes()
 {
+    global $publishpress;
+
     // Check if the notification module is enabled, before register the post type.
 	$options = get_option( 'publishpress_improved_notifications_options', null );
 
@@ -699,7 +786,7 @@ function publishPressRegisterCustomPostTypes()
                 'can_export'          => true,
                 'show_in_admin_bar'   => true,
                 'exclude_from_search' => true,
-                'show_in_menu'        => 'pp-calendar',
+                'show_in_menu'        => $publishpress->get_menu_slug(),
                 'menu_position'       => '20',
                 'supports'            => array(
                     'title',
@@ -710,5 +797,5 @@ function publishPressRegisterCustomPostTypes()
 }
 
 add_action('plugins_loaded', 'PublishPress');
-add_action('init', 'publishPressRegisterCustomPostTypes');
+add_action('publishpress_admin_menu_page', 'publishPressRegisterCustomPostTypes', 1001);
 register_activation_hook(__FILE__, array('publishpress', 'activation_hook'));

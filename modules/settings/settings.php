@@ -28,11 +28,20 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if (!class_exists('PP_Settings'))
 {
     class PP_Settings extends PP_Module
     {
+        use Dependency_Injector;
+
         const SETTINGS_SLUG = 'pp-settings';
+
+        /**
+	     * @var string
+	     */
+        const MENU_SLUG = 'pp-modules-settings';
 
         public $module;
 
@@ -72,26 +81,66 @@ if (!class_exists('PP_Settings'))
         {
             add_action('admin_init', array($this, 'helper_settings_validate_and_save'), 100);
 
+            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 990);
+	        add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 990);
+	        add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 990);
+
             add_action('admin_print_styles', array($this, 'action_admin_print_styles'));
             add_action('admin_print_scripts', array($this, 'action_admin_print_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue_scripts'));
-            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 30);
         }
 
         /**
-         * Add necessary things to the admin menu
-         */
-        public function action_admin_menu()
-        {
-            add_submenu_page(
-                'pp-calendar',
-                esc_html__( 'PublishPress Settings', 'publishpress' ),
+	     * Filters the menu slug.
+	     *
+	     * @param $menu_slug
+	     *
+	     * @return string
+	     */
+	    public function filter_admin_menu_slug($menu_slug) {
+		    if (empty($menu_slug) && $this->module_enabled('settings')) {
+			    $menu_slug = self::MENU_SLUG;
+		    }
+
+		    return $menu_slug;
+	    }
+
+	    /**
+	     * Creates the admin menu if there is no menu set.
+	     */
+	    public function action_admin_menu_page() {
+
+		    $publishpress = $this->get_service('publishpress');
+
+		    if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+			    return;
+		    }
+
+		    $publishpress->add_menu_page(
+			    esc_html__('settings', 'publishpress'),
+			    apply_filters('pp_view_settings_cap', 'manage_options'),
+			    self::MENU_SLUG,
+			    array($this, 'options_page_controller')
+		    );
+	    }
+
+	    /**
+	     * Add necessary things to the admin menu
+	     */
+	    public function action_admin_submenu()
+	    {
+		    $publishpress = $this->get_service('publishpress');
+
+		    // Main Menu
+		    add_submenu_page(
+			    $publishpress->get_menu_slug(),
+			    esc_html__( 'PublishPress Settings', 'publishpress' ),
                 esc_html__( 'Settings', 'publishpress' ),
-                'manage_options',
-                'pp-modules-settings',
-                array($this, 'options_page_controller')
-            );
-        }
+			    apply_filters('pp_view_settings_cap', 'manage_options'),
+			    self::MENU_SLUG,
+			    array($this, 'options_page_controller')
+		    );
+	    }
 
         public function action_admin_enqueue_scripts()
         {
