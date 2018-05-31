@@ -105,7 +105,6 @@ class publishpress
 
         add_action('init', array($this, 'action_ini_for_admin'), 1010);
         add_action('admin_menu', array($this, 'action_admin_menu'), 9);
-        add_action('admin_init', [$this, 'action_admin_init']);
 
         add_action('admin_enqueue_scripts', [$this, 'register_scripts_and_styles']);
 
