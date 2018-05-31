@@ -659,6 +659,18 @@ function PublishPress()
  */
 function publishPressRegisterCustomPostTypes()
 {
+    // Check if the notification module is enabled, before register the post type.
+	$options = get_option( 'publishpress_improved_notifications_options', null );
+
+	if ( ! is_object( $options ) ) {
+	    return;
+    }
+
+    if ( ! isset( $options->enabled ) || $options->enabled !== 'on' ) {
+	    return;
+    }
+
+    // Create the post type if not exists
     if (!post_type_exists(PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW))
     {
         // Notification Workflows
