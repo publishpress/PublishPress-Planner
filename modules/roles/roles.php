@@ -52,7 +52,7 @@ if (!class_exists('PP_Roles')) {
 	    /**
 	     * @var string
 	     */
-	    const MENU_SLUG = 'pp-roles';
+	    const MENU_SLUG = 'pp-manage-roles';
 
         const VALUE_YES = 'yes';
 

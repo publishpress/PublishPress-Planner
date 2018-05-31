@@ -617,7 +617,7 @@ class publishpress
                 'pp-calendar'                           => null,
                 'pp-content-overview'                   => null,
                 'pp-addons'                             => null,
-                'pp-roles'                              => null,
+                'pp-manage-roles'                       => null,
                 'pp-manage-capabilities'                => null,
                 'edit-tags.php?taxonomy=author'         => null,
                 'pp-modules-settings'                   => null,
@@ -657,11 +657,11 @@ class publishpress
             }
 
 	        // Roles
-	        if (!is_null($relevantMenus['pp-roles']))
+	        if (!is_null($relevantMenus['pp-manage-roles']))
 	        {
-		        $new_submenu[] = $submenu_pp[$relevantMenus['pp-roles']];
+		        $new_submenu[] = $submenu_pp[$relevantMenus['pp-manage-roles']];
 
-		        unset($submenu_pp[$relevantMenus['pp-roles']]);
+		        unset($submenu_pp[$relevantMenus['pp-manage-roles']]);
 	        }
 
 	        // Permissions
