@@ -103,8 +103,9 @@ class publishpress
         add_action('init', array($this, 'action_init'), 1000);
         add_action('init', array($this, 'action_init_after'), 1100);
 
-        add_action('init', array($this, 'action_admin_init'), 1010);
+        add_action('init', array($this, 'action_ini_for_admin'), 1010);
         add_action('admin_menu', array($this, 'action_admin_menu'), 9);
+        add_action('admin_init', [$this, 'action_admin_init']);
 
         add_action('admin_enqueue_scripts', [$this, 'register_scripts_and_styles']);
 
@@ -324,7 +325,7 @@ class publishpress
     /**
      * Initialize the plugin for the admin
      */
-    public function action_admin_init()
+    public function action_ini_for_admin()
     {
         // Upgrade if need be but don't run the upgrade if the plugin has never been used
         $previous_version = get_option($this->options_group . 'version');
@@ -356,7 +357,7 @@ class publishpress
         }
     }
 
-    /**
+	/**
      * Update the $publishpress object with new value and save to the database
      */
     public function update_module_option($mod_name, $key, $value)
@@ -576,13 +577,19 @@ class publishpress
         wp_register_style('pp-remodal', PUBLISHPRESS_URL . 'common/css/remodal.css', false, PUBLISHPRESS_VERSION, 'all');
         wp_register_style('pp-remodal-default-theme', PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css', array('pp-remodal'), PUBLISHPRESS_VERSION, 'all');
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false, PUBLISHPRESS_VERSION, 'all');
+	    wp_enqueue_style( 'multiple-authors-css', plugins_url( 'common/libs/chosen/chosen.min.css', __FILE__ ), false,
+		    PUBLISHPRESS_VERSION, 'all' );
 
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', array('pp-remodal', 'pp-remodal-default-theme'), PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', array('pressshack-admin-css'), PUBLISHPRESS_VERSION, 'all');
 
+	    wp_enqueue_script( 'multiple-authors-chosen',
+		    plugins_url( 'common/libs/chosen/chosen.jquery.min.js', __FILE__ ), [ 'jquery' ], PUBLISHPRESS_VERSION );
         wp_register_script('pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array('jquery'), PUBLISHPRESS_VERSION, true);
+
+
 
         // @compat 3.3
         // Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
