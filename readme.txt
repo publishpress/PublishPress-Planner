@@ -133,6 +133,18 @@ You can install PublishPress through your WordPress admin area:
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+ = UNRELEASED =
+
+*Fixed:*
+
+* Fixed the menu structure when the calendar and notification workflow modules are deactivated;
+* Fixed saving post when you remove all the notification receivers. Before the fix it wasn't removing the receivers if you remove all, only if you left at least one;
+
+*Changed:*
+
+* Increased the timeout for duplicated notifications to 10 minutes and added filter to customize the timeout;
+* Added chosen JS library for add-ons;
+
 = [1.13.0] - 2018-05-16 =
 
 *Added:*
