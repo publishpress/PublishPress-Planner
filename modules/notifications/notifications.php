@@ -443,32 +443,34 @@ if ( ! class_exists( 'PP_Notifications' ) ) {
 		}
 
 		public function action_save_post( $postId ) {
+
 			if ( ! isset( $_POST['pp_notifications_nonce'] ) || ! wp_verify_nonce( $_POST['pp_notifications_nonce'],
 					'save_roles' ) ) {
 				return;
 			}
 
+            // Remove current users
+            $terms = get_the_terms( $postId, $this->notify_user_taxonomy );
+            $users = [];
+            if ( ! empty( $terms ) ) {
+                foreach ( $terms as $term ) {
+                    $users[] = $term->term_id;
+                }
+            }
+            wp_remove_object_terms( $postId, $users, $this->notify_user_taxonomy );
+
+
+            // Remove current roles
+            $terms = get_the_terms( $postId, $this->notify_role_taxonomy );
+            $roles = [];
+            if ( ! empty( $terms ) ) {
+                foreach ( $terms as $term ) {
+                    $roles[] = $term->term_id;
+                }
+            }
+            wp_remove_object_terms( $postId, $roles, $this->notify_role_taxonomy );
+
 			if ( isset( $_POST['to_notify'] ) ) {
-				// Remove current users
-				$terms = get_the_terms( $postId, $this->notify_user_taxonomy );
-				$users = [];
-				if ( ! empty( $terms ) ) {
-					foreach ( $terms as $term ) {
-						$users[] = $term->term_id;
-					}
-				}
-				wp_remove_object_terms( $postId, $users, $this->notify_user_taxonomy );
-
-				// Remove current roles
-				$terms = get_the_terms( $postId, $this->notify_role_taxonomy );
-				$roles = [];
-				if ( ! empty( $terms ) ) {
-					foreach ( $terms as $term ) {
-						$roles[] = $term->term_id;
-					}
-				}
-				wp_remove_object_terms( $postId, $roles, $this->notify_role_taxonomy );
-
 				foreach ( $_POST['to_notify'] as $id ) {
 					if ( is_numeric( $id ) ) {
 						// User id
