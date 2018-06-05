@@ -144,6 +144,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Increased the timeout for duplicated notifications to 10 minutes and added filter to customize the timeout;
 * Added chosen JS library for add-ons;
+* Changed the filter publishpress_notif_async_timestamp to send the post id as the 3rd param;
 
 = [1.13.0] - 2018-05-16 =
 
