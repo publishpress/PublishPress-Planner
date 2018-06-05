@@ -71,7 +71,7 @@ class WPCron implements QueueInterface
                 $channel,
             ];
 
-            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID);
+            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID, $actionArgs['post']->ID);
 
             if (false === $timestamp) {
                 // Abort.
