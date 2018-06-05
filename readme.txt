@@ -146,6 +146,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added chosen JS library for add-ons;
 * Changed the filter publishpress_notif_async_timestamp to send the post id as the 3rd param;
 
+*Added:*
+
+* Added a new action (action_enqueue_notification) after enqueue notifications;
+
 = [1.13.0] - 2018-05-16 =
 
 *Added:*

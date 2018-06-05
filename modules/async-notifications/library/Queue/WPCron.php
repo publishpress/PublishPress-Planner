@@ -90,6 +90,8 @@ class WPCron implements QueueInterface
 
                 $this->scheduleEvent($data, $timestamp);
             }
+
+            do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'], $actionArgs['post']->ID);
         }
     }
 
