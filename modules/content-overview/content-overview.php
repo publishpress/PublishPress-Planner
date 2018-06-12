@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 /**
  * class PP_Content_Overview
  * This class displays a budgeting system for an editorial desk's publishing workflow.
@@ -36,6 +38,8 @@
  */
 class PP_Content_Overview extends PP_Module
 {
+    use Dependency_Injector;
+
     /**
      * Screen id
      */
@@ -50,6 +54,11 @@ class PP_Content_Overview extends PP_Module
      * Default number of columns
      */
     const DEFAULT_NUM_COLUMNS = 1;
+
+	/**
+	 * @var string
+	 */
+	const MENU_SLUG = 'pp-content-overview';
 
     /**
      * [$taxonomy_used description]
@@ -152,7 +161,10 @@ class PP_Content_Overview extends PP_Module
         // so other PublishPress modules can register their filters if needed
         add_action('admin_init', array($this, 'register_term_columns'));
 
-        add_action('publishpress_admin_menu', array($this, 'action_admin_menu'));
+	    // Menu
+	    add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
+	    add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 20);
+	    add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
         // Load necessary scripts and stylesheets
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -246,22 +258,57 @@ class PP_Content_Overview extends PP_Module
         }
     }
 
-    /**
-     * Include the content overview link in the admin menu.
-     *
-     * @uses add_submenu_page()
-     */
-    public function action_admin_menu()
-    {
-        add_submenu_page(
-            'pp-calendar',
-            esc_html__('Content Overview', 'publishpress'),
-            esc_html__('Content Overview', 'publishpress'),
-            apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
-            'pp-content-overview',
-            array($this, 'render_admin_page')
-        );
-    }
+	/**
+	 * Filters the menu slug.
+	 *
+	 * @param $menu_slug
+	 *
+	 * @return string
+	 */
+	public function filter_admin_menu_slug($menu_slug) {
+		if (empty($menu_slug) && $this->module_enabled('content_overview')) {
+			$menu_slug = self::MENU_SLUG;
+		}
+
+		return $menu_slug;
+	}
+
+	/**
+	 * Creates the admin menu if there is no menu set.
+	 */
+	public function action_admin_menu_page() {
+
+		$publishpress = $this->get_service('publishpress');
+
+		if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+			return;
+		}
+
+		$publishpress->add_menu_page(
+			esc_html__('Content Overview', 'publishpress'),
+			apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
+			self::MENU_SLUG,
+			array($this, 'render_admin_page')
+		);
+	}
+
+	/**
+	 * Add necessary things to the admin menu
+	 */
+	public function action_admin_submenu()
+	{
+		$publishpress = $this->get_service('publishpress');
+
+		// Main Menu
+		add_submenu_page(
+			$publishpress->get_menu_slug(),
+			esc_html__('Content Overview', 'publishpress'),
+			esc_html__('Content Overview', 'publishpress'),
+			apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
+			self::MENU_SLUG,
+			array($this, 'render_admin_page')
+		);
+	}
 
     /**
      * Enqueue necessary admin scripts only on the content overview page.

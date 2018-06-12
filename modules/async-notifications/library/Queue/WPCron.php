@@ -71,7 +71,7 @@ class WPCron implements QueueInterface
                 $channel,
             ];
 
-            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID);
+            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID, $actionArgs['post']->ID);
 
             if (false === $timestamp) {
                 // Abort.
@@ -90,6 +90,8 @@ class WPCron implements QueueInterface
 
                 $this->scheduleEvent($data, $timestamp);
             }
+
+            do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'], $actionArgs['post']->ID);
         }
     }
 

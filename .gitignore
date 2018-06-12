@@ -10,6 +10,5 @@ node_modules
 
 /packages
 /vendor
-/composer.lock
 .idea
 /dist

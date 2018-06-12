@@ -47,7 +47,7 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 
 		const POST_STATUS_FAILED = 'failed';
 
-		const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 60;
+		const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 600;
 
 		public $module_name = 'async-notifications';
 
@@ -177,8 +177,19 @@ if ( ! class_exists( 'PP_Async_Notifications' ) ) {
 				return true;
 			}
 
-			// No, set the flag and return as non-duplicated.
-			set_transient( $transientName, 1, self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT );
+			/**
+			 * Filters the value of the timeout to ignore duplicated notifications.
+			 *
+			 * @param int    $timeout
+			 * @param string $uid
+			 *
+			 * @return int
+			 */
+			$timeout = (int) apply_filters( 'pp_duplicated_notification_timeout',
+				self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT, $uid );
+
+			// Set the flag and return as non-duplicated.
+			set_transient( $transientName, 1, $timeout );
 
 			return false;
 		}

@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.13.0
+Stable tag: 1.14.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,23 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+ = [1.14.0] - 2018-06-12 =
+
+*Fixed:*
+
+* Fixed the menu structure when the calendar and notification workflow modules are deactivated;
+* Fixed saving post when you remove all the notification receivers. Before the fix it wasn't removing the receivers if you remove all, only if you left at least one;
+
+*Changed:*
+
+* Increased the timeout for duplicated notifications to 10 minutes and added filter to customize the timeout;
+* Added chosen JS library for add-ons;
+* Changed the filter publishpress_notif_async_timestamp to send the post id as the 3rd param;
+
+*Added:*
+
+* Added a new action (action_enqueue_notification) after enqueuing  notifications;
 
 = [1.13.0] - 2018-05-16 =
 

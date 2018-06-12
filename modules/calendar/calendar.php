@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use \PublishPress\Notifications\Traits\Dependency_Injector;
+
 if (!class_exists('PP_Calendar'))
 {
     /**
@@ -38,6 +40,8 @@ if (!class_exists('PP_Calendar'))
      */
     class PP_Calendar extends PP_Module
     {
+        use Dependency_Injector;
+
         /**
          * Settings slug
          */
@@ -58,6 +62,11 @@ if (!class_exists('PP_Calendar'))
          * at least one post type
          */
         const TRANSIENT_SHOW_ONE_POST_TYPE_WARNING = 'show_one_post_type_warning';
+
+	    /**
+	     * The menu slug.
+	     */
+        const MENU_SLUG = 'pp-calendar';
 
         /**
          * [$module description]
@@ -174,7 +183,9 @@ if (!class_exists('PP_Calendar'))
             }
 
             // Menu
-            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'));
+            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug']);
+            add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page']);
+            add_action('publishpress_admin_submenu', array($this, 'action_admin_submenu'));
 
             // .ics calendar subscriptions
             add_action('wp_ajax_pp_calendar_ics_subscription', array($this, 'handle_ics_subscription'));
@@ -205,7 +216,6 @@ if (!class_exists('PP_Calendar'))
             add_action('admin_init', array($this, 'handle_regenerate_calendar_feed_secret'));
 
             add_filter('post_date_column_status', array($this, 'filter_post_date_column_status'), 12, 4);
-
         }
 
         /**
@@ -301,18 +311,53 @@ if (!class_exists('PP_Calendar'))
             return $startDate;
         }
 
+	    /**
+         * Filters the menu slug.
+         *
+	     * @param $menu_slug
+         *
+         * @return string
+	     */
+        public function filter_admin_menu_slug($menu_slug) {
+	        if (empty($menu_slug) && $this->module_enabled('calendar')) {
+		        $menu_slug = self::MENU_SLUG;
+	        }
+
+            return $menu_slug;
+        }
+
+	    /**
+	     * Creates the admin menu if there is no menu set.
+	     */
+        public function action_admin_menu_page() {
+            $publishpress = $this->get_service('publishpress');
+
+            if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+                return;
+            }
+
+	        $publishpress->add_menu_page(
+		        esc_html__('Calendar', 'publishpress'),
+		        'pp_view_calendar',
+		        self::MENU_SLUG,
+		        array($this, 'render_admin_page')
+	        );
+        }
+
         /**
          * Add necessary things to the admin menu
          */
-        public function action_admin_menu()
+        public function action_admin_submenu()
         {
+	        $publishpress = $this->get_service('publishpress');
+
             // Main Menu
             add_submenu_page(
-                'pp-calendar',
+                $publishpress->get_menu_slug(),
                 esc_html__('Calendar', 'publishpress'),
                 esc_html__('Calendar', 'publishpress'),
                 apply_filters('pp_view_calendar_cap', 'pp_view_calendar'),
-                'pp-calendar',
+                self::MENU_SLUG,
                 array($this, 'render_admin_page')
             );
         }

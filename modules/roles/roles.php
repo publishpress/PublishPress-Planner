@@ -30,6 +30,7 @@
 
 use PublishPress\Core\Modules\AbstractModule;
 use PublishPress\Core\Modules\ModuleInterface;
+use PublishPress\Notifications\Traits\Dependency_Injector;
 
 if (!class_exists('PP_Roles')) {
 
@@ -44,7 +45,14 @@ if (!class_exists('PP_Roles')) {
      */
     class PP_Roles extends AbstractModule implements ModuleInterface
     {
+        use Dependency_Injector;
+
         const SETTINGS_SLUG = 'pp-roles-settings';
+
+	    /**
+	     * @var string
+	     */
+	    const MENU_SLUG = 'pp-manage-roles';
 
         const VALUE_YES = 'yes';
 
@@ -147,7 +155,10 @@ if (!class_exists('PP_Roles')) {
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
-            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 20);
+	        // Menu
+	        add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 40);
+	        add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 40);
+	        add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 40);
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
             add_action('user_register', [$this, 'action_profile_update'], 9);
@@ -692,21 +703,57 @@ if (!class_exists('PP_Roles')) {
             return add_query_arg($args, get_admin_url(null, 'admin.php'));
         }
 
-        /**
-         * Add necessary things to the admin menu
-         */
-        public function action_admin_menu()
-        {
-            // Main Menu
-            add_submenu_page(
-                'pp-calendar',
-                esc_html__('Roles', 'publishpress'),
-                esc_html__('Roles', 'publishpress'),
-                apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
-                'pp-manage-roles',
-                array($this, 'render_admin_page')
-            );
-        }
+	    /**
+	     * Filters the menu slug.
+	     *
+	     * @param $menu_slug
+	     *
+	     * @return string
+	     */
+	    public function filter_admin_menu_slug($menu_slug) {
+		    if (empty($menu_slug) && $this->module_enabled('roles')) {
+			    $menu_slug = self::MENU_SLUG;
+		    }
+
+		    return $menu_slug;
+	    }
+
+	    /**
+	     * Creates the admin menu if there is no menu set.
+	     */
+	    public function action_admin_menu_page() {
+
+		    $publishpress = $this->get_service('publishpress');
+
+		    if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+			    return;
+		    }
+
+		    $publishpress->add_menu_page(
+			    esc_html__('Roles', 'publishpress'),
+			    apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
+			    self::MENU_SLUG,
+			    array($this, 'render_admin_page')
+		    );
+	    }
+
+	    /**
+	     * Add necessary things to the admin menu
+	     */
+	    public function action_admin_submenu()
+	    {
+		    $publishpress = $this->get_service('publishpress');
+
+		    // Main Menu
+		    add_submenu_page(
+			    $publishpress->get_menu_slug(),
+			    esc_html__('Roles', 'publishpress'),
+			    esc_html__('Roles', 'publishpress'),
+			    apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
+			    self::MENU_SLUG,
+			    array($this, 'render_admin_page')
+		    );
+	    }
 
         /**
          * @throws Exception

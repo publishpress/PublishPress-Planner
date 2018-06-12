@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if (!class_exists('PP_Addons'))
 {
     /**
@@ -35,6 +37,8 @@ if (!class_exists('PP_Addons'))
      */
     class PP_Addons extends PP_Module
     {
+    	use Dependency_Injector;
+
         /**
          * The name of the module
          */
@@ -44,6 +48,11 @@ if (!class_exists('PP_Addons'))
          * The settings slug
          */
         const SETTINGS_SLUG = 'pp-addons';
+
+	    /**
+	     * @var string
+	     */
+        const MENU_SLUG = 'pp-addons';
 
         /**
          * Twig instance
@@ -101,7 +110,10 @@ if (!class_exists('PP_Addons'))
          */
         public function init()
         {
-            add_action('publishpress_admin_menu', array($this, 'action_admin_menu'), 19);
+	        // Menu
+	        add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 1000);
+	        add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 1000);
+	        add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 1000);
 
             add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
         }
@@ -138,21 +150,57 @@ if (!class_exists('PP_Addons'))
             return file_exists(plugin_dir_path(PUBLISHPRESS_BASE_PATH) . "{$plugin}/{$plugin}.php");
         }
 
-        /**
-         * Add necessary things to the admin menu
-         */
-        public function action_admin_menu()
-        {
-            // Main Menu
-            add_submenu_page(
-                'pp-calendar',
-                esc_html__('Add-ons', 'publishpress'),
-                esc_html__('Add-ons', 'publishpress'),
-                apply_filters('pp_view_addons_cap', 'manage_options'),
-                'pp-addons',
-                array($this, 'render_admin_page')
-            );
-        }
+	    /**
+	     * Filters the menu slug.
+	     *
+	     * @param $menu_slug
+	     *
+	     * @return string
+	     */
+	    public function filter_admin_menu_slug($menu_slug) {
+		    if (empty($menu_slug) && $this->module_enabled('addons')) {
+			    $menu_slug = self::MENU_SLUG;
+		    }
+
+		    return $menu_slug;
+	    }
+
+	    /**
+	     * Creates the admin menu if there is no menu set.
+	     */
+	    public function action_admin_menu_page() {
+
+		    $publishpress = $this->get_service('publishpress');
+
+		    if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+			    return;
+		    }
+
+		    $publishpress->add_menu_page(
+			    esc_html__('Add-ons', 'publishpress'),
+			    apply_filters('pp_view_addons_cap', 'manage_options'),
+			    self::MENU_SLUG,
+			    array($this, 'render_admin_page')
+		    );
+	    }
+
+	    /**
+	     * Add necessary things to the admin menu
+	     */
+	    public function action_admin_submenu()
+	    {
+		    $publishpress = $this->get_service('publishpress');
+
+		    // Main Menu
+		    add_submenu_page(
+			    $publishpress->get_menu_slug(),
+			    esc_html__('Add-ons', 'publishpress'),
+			    esc_html__('Add-ons', 'publishpress'),
+			    apply_filters('pp_view_addons_cap', 'manage_options'),
+			    self::MENU_SLUG,
+			    array($this, 'render_admin_page')
+		    );
+	    }
 
         /**
          * Renders the admin page
