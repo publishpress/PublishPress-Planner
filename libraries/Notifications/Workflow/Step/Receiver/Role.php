@@ -149,7 +149,11 @@ class Role extends Simple_Checkbox implements Receiver_Interface
                     ]
                 );
 
-                $users[] = $role_users;
+                if (! empty($role_users)) {
+                	foreach ($role_users as $user) {
+                        $users[] = (int) $user->ID;
+	                }
+                }
             }
         }
 

@@ -128,9 +128,23 @@ class Workflow
             // Classify receivers per channel, ignoring who has muted the channel.
             foreach ($receivers as $index => $receiver)
             {
-                // Is an user (identified by the id)?
-                if (is_numeric($receiver))
+	            // Is an user (identified by the id)?
+                if (is_numeric($receiver) || is_object($receiver))
                 {
+                	// Try to extract the ID from the object
+	                if (is_object($receiver)) {
+	                	if (isset($receiver->ID) && ! empty($receiver->ID)) {
+							$receiver = $receiver->ID;
+		                } else {
+			                if (isset($receiver->id) && ! empty($receiver->id)) {
+				                $receiver = $receiver->id;
+			                } else {
+		                		// If the object doesn't have an ID, we ignore it.
+		                		continue;
+			                }
+		                }
+	                }
+
                     $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
 
                     // If channel is empty, we set a default channel.
