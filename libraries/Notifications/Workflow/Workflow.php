@@ -152,7 +152,7 @@ class Workflow
 
                     // Add to the channel's list.
                     $filtered_receivers[$channel][] = $receiver;
-                } else
+                } elseif (is_string($receiver))
                 {
                     // Check if it is an explicit email address.
                     if (preg_match('/^email:/', $receiver))
