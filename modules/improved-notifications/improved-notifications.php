@@ -494,6 +494,7 @@ if (!class_exists('PP_Improved_Notifications'))
                                 'selectANewStatus'          => 'Select at least one new status.',
                                 'selectPostType'            => 'Select at least one post type.',
                                 'selectCategory'            => 'Select at least one category.',
+                                'selectTaxonomy'            => 'Select at least one taxonomy.',
                                 'selectAReceiver'           => 'Select at least one receiver.',
                                 'selectAUser'               => 'Select at least one user.',
                                 'selectARole'               => 'Select at least one role.',

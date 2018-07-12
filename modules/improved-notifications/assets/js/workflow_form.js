@@ -44,7 +44,7 @@
         setupFieldFilters('event_post_save');
         setupFieldFilters('event_content_post_type');
         setupFieldFilters('event_content_category');
-        setupFieldFilters('event_content_category');
+        setupFieldFilters('event_content_taxonomy');
         setupFieldFilters('user');
         setupFieldFilters('role');
 
@@ -131,6 +131,17 @@
                     set_validation_status('event_content', false);
 
                     messages.push(workflowFormData.messages['selectCategory']);
+                } else {
+                    set_validation_status('event_content', true);
+                }
+            }
+
+            // Check if any taxonomy was selected (if checked)
+            if ($('#publishpress_notif_event_content_taxonomy:checked').length > 0) {
+                if ($('#publishpress_notif_event_content_taxonomy_filters_term').val() == null) {
+                    set_validation_status('event_content', false);
+
+                    messages.push(workflowFormData.messages['selectTaxonomy']);
                 } else {
                     set_validation_status('event_content', true);
                 }

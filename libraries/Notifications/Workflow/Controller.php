@@ -125,6 +125,7 @@ class Controller
         $classes_event_content = [
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event_Content\\Post_Type',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event_Content\\Category',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Event_Content\\Taxonomy',
         ];
         /**
          * Filters the list of classes to define workflow "when - which content" steps.
