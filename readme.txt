@@ -6,7 +6,7 @@ Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.14.1
+Stable tag: 1.15.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -132,6 +132,12 @@ You can install PublishPress through your WordPress admin area:
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.15.0] - 2018-07-19 =
+
+*Added:*
+
+* Added filter for taxonomies and improved custom post type support in notification workflows;
 
 = [1.14.1] - 2018-07-12 =
 
