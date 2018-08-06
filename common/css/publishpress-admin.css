@@ -200,3 +200,7 @@ Status color box */
     font-style: italic;
     color: #9c9c9c;
 }
+
+.alledia-framework-upgrade-link.publishpress {
+    color: #655997;
+}

@@ -29,6 +29,9 @@ class Plugin
 
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
+
+        $framework_container = $this->get_service('framework')->get_container();
+	    $framework_container['upgrade']->add_action_upgrade_link( 'https://publishpress.com/pricing/' );
     }
 
     public function add_load_edit_hooks()

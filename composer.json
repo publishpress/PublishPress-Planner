@@ -13,7 +13,11 @@
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/OSTraining/WordPress-Plugin-Builder"
+      "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework"
     }
   ],
   "autoload": {
@@ -26,6 +30,7 @@
     "php": ">= 5.3",
     "twig/twig": "~1.0",
     "pimple/pimple": "~3.0",
+    "alledia/plugin-framework": "*",
     "publishpress/wordpress-plugin-builder": "^2"
   },
   "require-dev": {
