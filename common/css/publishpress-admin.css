@@ -201,6 +201,6 @@ Status color box */
     color: #9c9c9c;
 }
 
-.alledia-framework-upgrade-link.publishpress {
-    color: #655997;
+.alledia-framework-highlight.publishpress a {
+    color: #7f73b4 !important;
 }

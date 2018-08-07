@@ -584,11 +584,11 @@ class publishpress
 
 	    wp_enqueue_script( 'multiple-authors-chosen',
 		    plugins_url( 'common/libs/chosen/chosen.jquery.min.js', __FILE__ ), [ 'jquery' ], PUBLISHPRESS_VERSION );
+        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', array('jquery'), PUBLISHPRESS_VERSION);
+
         wp_register_script('pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', array('jquery'), PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', array('jquery'), PUBLISHPRESS_VERSION, true);
-
-
 
         // @compat 3.3
         // Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3

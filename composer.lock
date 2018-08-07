@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "37b4661291a23e753e375019efc10047",
+    "content-hash": "0814ccb52ec29cb0599da1902b2be4fb",
     "packages": [
         {
             "name": "alledia/plugin-framework",
-            "version": "0.1.4",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework",
-                "reference": "f8986e3f25135b079e961796a94c8ca61eb5eba1"
+                "reference": "591f36b88b2d902eae0f5136e4a83f49e9eeeb7c"
             },
             "require": {
                 "php": ">=5.6",
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "Alledia framework for building plugins.",
-            "time": "2018-08-06T23:44:03+00:00"
+            "time": "2018-08-07T16:47:56+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -2859,7 +2859,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">= 5.3"
+        "php": ">= 5.4"
     },
     "platform-dev": []
 }
