@@ -27,7 +27,7 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">= 5.3",
+    "php": ">= 5.4",
     "twig/twig": "~1.0",
     "pimple/pimple": "~3.0",
     "alledia/plugin-framework": "*",
