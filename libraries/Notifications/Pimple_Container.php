@@ -101,9 +101,12 @@ class Pimple_Container extends \Pimple\Container
                 return new WPCron();
             };
 
-
 	        $instance['framework'] = function ( $c ) {
 		        return new \AllediaFramework\Core( $c['PLUGIN_BASENAME'] );
+	        };
+
+	        $instance['reviews'] = function ( $c ) {
+	        	return new Reviews();
 	        };
 
 	        $instance['PLUGIN_BASENAME'] = function ( $c ) {
