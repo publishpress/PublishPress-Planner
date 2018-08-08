@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications;
 
+use Allex\Core;
 use PublishPress\AsyncNotifications\Queue\WPCron;
 
 class Pimple_Container extends \Pimple\Container
@@ -102,7 +103,7 @@ class Pimple_Container extends \Pimple\Container
             };
 
 	        $instance['framework'] = function ( $c ) {
-		        return new \AllediaFramework\Core( $c['PLUGIN_BASENAME'] );
+		        return new Core( $c['PLUGIN_BASENAME'] );
 	        };
 
 	        $instance['reviews'] = function ( $c ) {

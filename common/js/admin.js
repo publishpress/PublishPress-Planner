@@ -29,6 +29,6 @@
 
 jQuery(function ($) {
     // Highlight the extensions submenu.
-    var publishpressFramework = new Alledia_Framework('publishpress');
-    publishpressFramework.highlight_submenu('admin.php?page=pp-addons');
+    var allex = new Allex('publishpress');
+    allex.highlight_submenu('admin.php?page=pp-addons');
 });

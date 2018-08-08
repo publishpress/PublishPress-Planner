@@ -8,11 +8,11 @@
     "packages": [
         {
             "name": "alledia/plugin-framework",
-            "version": "0.2.2",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework",
-                "reference": "27e9d5436d0d3d4697d039e319353e340611ac96"
+                "reference": "74a05627a80ae8fcd108844e64a78ca29c35481b"
             },
             "require": {
                 "php": ">=5.6",
@@ -27,7 +27,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "AllediaFramework\\": "src/library"
+                    "Allex\\": "src/library"
                 }
             },
             "license": [
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "Alledia framework for building plugins.",
-            "time": "2018-08-08T13:22:04+00:00"
+            "time": "2018-08-08T16:23:08+00:00"
         },
         {
             "name": "pimple/pimple",

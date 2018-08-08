@@ -15,15 +15,6 @@ class Reviews {
 	const OPTION_LAST_CHECK = 'publishpress_review_last_check';
 
 	/**
-	 * @var \AllediaFramework\Reviews
-	 */
-	protected $service;
-
-	public function __construct() {
-		$this->service = $this->get_service( 'framework' )->get_service( 'reviews' );
-	}
-
-	/**
 	 * The method which runs the plugin
 	 */
 	public function init() {
@@ -48,7 +39,8 @@ class Reviews {
 					'publishpress' ),
 			];
 
-			$this->service->check_review_notification( $params );
+			// Enable the Reviews module from the Allex framework.
+			do_action( 'allex_enable_module_reviews', $params );
 		}
 	}
 

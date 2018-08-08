@@ -580,7 +580,7 @@ class publishpress
 		    PUBLISHPRESS_VERSION, 'all' );
 
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', array('pp-remodal', 'pp-remodal-default-theme'), PUBLISHPRESS_VERSION, 'all');
-        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', array('pressshack-admin-css'), PUBLISHPRESS_VERSION, 'all');
+        wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', array('pressshack-admin-css', 'allex'), PUBLISHPRESS_VERSION, 'all');
 
 	    wp_enqueue_script( 'multiple-authors-chosen',
 		    plugins_url( 'common/libs/chosen/chosen.jquery.min.js', __FILE__ ), [ 'jquery' ], PUBLISHPRESS_VERSION );
