@@ -40,7 +40,7 @@ class Plugin
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
 
-	    do_action( 'alex_enable_module_upgrade', 'https://publishpress.com/pricing/' );
+	    do_action( 'allex_enable_module_upgrade', 'https://publishpress.com/pricing/' );
     }
 
 	/**

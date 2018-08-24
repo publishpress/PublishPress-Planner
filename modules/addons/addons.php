@@ -325,7 +325,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 
 			$publishpress->settings->print_default_header( $publishpress->modules->addons, $description );
 
-			do_action( 'alex_echo_addons_page', 'https://publishpress.com/pricing/' );
+			do_action( 'allex_echo_addons_page', 'https://publishpress.com/pricing/' );
 
 			$publishpress->settings->print_default_footer( $publishpress->modules->addons );
 		}
