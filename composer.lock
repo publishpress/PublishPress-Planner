@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder.git",
-                "reference": "a7cb7b8436eba45707e5d8ba2956e9e34e3923b4"
+                "reference": "96bdacc9fef7a92ab95e604c4b47eaca67967e66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/a7cb7b8436eba45707e5d8ba2956e9e34e3923b4",
-                "reference": "a7cb7b8436eba45707e5d8ba2956e9e34e3923b4",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/96bdacc9fef7a92ab95e604c4b47eaca67967e66",
+                "reference": "96bdacc9fef7a92ab95e604c4b47eaca67967e66",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-22T19:40:29+00:00"
+            "time": "2018-08-24T13:59:50+00:00"
         },
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -70,12 +70,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "e110bd00b0ee0be605782e68349782b5a5b4e96e"
+                "reference": "1de97368136220a063e16eaffa4339f980e5411c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/e110bd00b0ee0be605782e68349782b5a5b4e96e",
-                "reference": "e110bd00b0ee0be605782e68349782b5a5b4e96e",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/1de97368136220a063e16eaffa4339f980e5411c",
+                "reference": "1de97368136220a063e16eaffa4339f980e5411c",
                 "shasum": ""
             },
             "require": {
@@ -112,7 +112,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-24T12:47:18+00:00"
+            "time": "2018-08-24T14:04:25+00:00"
         },
         {
             "name": "phing/phing",
