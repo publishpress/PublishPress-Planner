@@ -33,7 +33,7 @@ class Pimple_Container extends \Pimple\Container {
 			};
 
 			$instance['SUBSCRIPTION_AD_URL'] = function( $c ) {
-				return 'https://publishpress.us4.list-manage.com/subscribe/post?u=a42978bc16dd60d0ce3cac4d4&amp;id=83b571c8f0';
+				return 'https://alledia.us4.list-manage.com/subscribe/post?u=a42978bc16dd60d0ce3cac4d4&amp;id=bb6f51185b';
 			} ;
 
 			$instance['twig_function_checked'] = function ( $c ) {
