@@ -67,8 +67,8 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 
 			// Register the module with PublishPress
 			$args = [
-				'title'                => __( 'Add-ons', 'publishpress' ),
-				'short_description'    => __( 'Pro Add-ons for PublishPress', 'publishpress' ),
+				'title'                => __( 'Add-ons for PublishPress', 'publishpress' ),
+				'short_description'    => '',
 				'extended_description' => false,
 				'module_url'           => $this->module_url,
 				'icon_class'           => 'dashicons dashicons-admin-settings',
@@ -321,9 +321,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 		public function render_admin_page() {
 			global $publishpress;
 
-			$description = '<h2>' . __( 'Add-ons', 'publishpress' ) . '</h2>';
-
-			$publishpress->settings->print_default_header( $publishpress->modules->addons, $description );
+			$publishpress->settings->print_default_header( $publishpress->modules->addons, '' );
 
 			do_action( 'allex_echo_addons_page', 'https://publishpress.com/pricing/' );
 
