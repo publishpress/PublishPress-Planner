@@ -1,126 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "73710faf18c0a87cfc9e3adb3a0e0e32",
     "packages": [
-        {
-            "name": "alledia/edd-license-handler",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/AllediaWordPress/Alledia-EDD-License-Handler.git",
-                "reference": "35eeaf07ed5d193183fd0b899cba099868ba7b53"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/Alledia-EDD-License-Handler/zipball/35eeaf07ed5d193183fd0b899cba099868ba7b53",
-                "reference": "35eeaf07ed5d193183fd0b899cba099868ba7b53",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "EDD_License_Handler.php",
-                    "EDD_SL_Plugin_Updater.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "EasyDigitalDownloads",
-                    "email": "contact@easydigitaldownloads.com"
-                },
-                {
-                    "name": "PublishPress",
-                    "email": "help@publishpress.com"
-                },
-                {
-                    "name": "Alledia",
-                    "email": "help@alledia.com"
-                }
-            ],
-            "description": "EDD License Handler for WordPress Plugins",
-            "keywords": [
-                "edd",
-                "license",
-                "wordpress"
-            ],
-            "time": "2018-08-22T16:02:50+00:00"
-        },
-        {
-            "name": "alledia/wordpress-edd-license-integration",
-            "version": "dev-development",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/AllediaWordPress/WordPress-EDD-License-Integration.git",
-                "reference": "c7d9a624fcb23dd2b7d89a7b8fca92866d544dc1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-EDD-License-Integration/zipball/c7d9a624fcb23dd2b7d89a7b8fca92866d544dc1",
-                "reference": "c7d9a624fcb23dd2b7d89a7b8fca92866d544dc1",
-                "shasum": ""
-            },
-            "require": {
-                "alledia/edd-license-handler": "dev-master",
-                "php": ">=5.4.0",
-                "pimple/pimple": "~3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PublishPress\\EDD_License\\Core\\": "src/core/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "PublishPress",
-                    "email": "help@publishpress.com"
-                },
-                {
-                    "name": "Alledia",
-                    "email": "help@alledia.com"
-                },
-                {
-                    "name": "Anderson Grudtner Martins",
-                    "email": "anderson@grudtner.me",
-                    "homepage": "http://anderson.grudtner.me",
-                    "role": "Lead Developer"
-                }
-            ],
-            "description": "EDD license integration library for WordPress plugins",
-            "keywords": [
-                "edd",
-                "license",
-                "wordpress"
-            ],
-            "time": "2018-08-22T16:27:13+00:00"
-        },
         {
             "name": "alledia/wordpress-plugin-builder",
             "version": "dev-development",
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder.git",
-                "reference": "b317c04d589b4df64f22a9279d832998ca63f081"
+                "reference": "a7cb7b8436eba45707e5d8ba2956e9e34e3923b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/b317c04d589b4df64f22a9279d832998ca63f081",
-                "reference": "b317c04d589b4df64f22a9279d832998ca63f081",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/a7cb7b8436eba45707e5d8ba2956e9e34e3923b4",
+                "reference": "a7cb7b8436eba45707e5d8ba2956e9e34e3923b4",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +62,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-22T16:53:47+00:00"
+            "time": "2018-08-22T19:40:29+00:00"
         },
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -173,16 +70,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "75bc69c967154cc303e3612fd880921744177727"
+                "reference": "839f8aaccd884a5f31904b2f055d05d628ab16e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/75bc69c967154cc303e3612fd880921744177727",
-                "reference": "75bc69c967154cc303e3612fd880921744177727",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/839f8aaccd884a5f31904b2f055d05d628ab16e4",
+                "reference": "839f8aaccd884a5f31904b2f055d05d628ab16e4",
                 "shasum": ""
             },
             "require": {
-                "alledia/wordpress-edd-license-integration": "dev-development",
                 "php": ">=5.6",
                 "pimple/pimple": "~3.0",
                 "twig/twig": "~1.20"
@@ -216,7 +112,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-22T16:33:43+00:00"
+            "time": "2018-08-24T06:51:20+00:00"
         },
         {
             "name": "phing/phing",
