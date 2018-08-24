@@ -97,6 +97,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 			add_action( 'allex_addon_update_license', [ $this, 'action_allex_addon_update_license' ], 10, 4 );
 			add_filter( 'allex_addons_get_license_key', [ $this, 'filter_allex_addons_get_license_key' ], 10, 2 );
 			add_filter( 'allex_addons_get_license_status', [ $this, 'filter_allex_addons_get_license_status' ], 10, 2 );
+			add_filter( 'allex_upgrade_mailchimp_config', [ $this, 'filter_allex_upgrade_mailchimp_config' ], 10, 2 );
 
 			$this->init_allex_addons();
 		}
@@ -313,6 +314,20 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 			}
 
 			return $license_status;
+		}
+
+		/**
+		 * @param array  $mailchimp_config
+		 * @param string $plugin_name
+		 *
+		 * @return array
+		 */
+		public function filter_allex_upgrade_mailchimp_config( $mailchimp_config, $plugin_name ) {
+			$mailchimp_config['code']     = 'b_a42978bc16dd60d0ce3cac4d4_bb6f51185b';
+			$mailchimp_config['id']       = '132405';
+			$mailchimp_config['group_id'] = '2';
+
+			return $mailchimp_config;
 		}
 
 		/**
