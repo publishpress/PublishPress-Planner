@@ -246,12 +246,12 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 		}
 
 		/**
-		 * @param $plugin_name
 		 * @param $addons
+		 * @param $plugin_name
 		 *
 		 * @return array
 		 */
-		public function filter_allex_addons( $plugin_name, $addons ) {
+		public function filter_allex_addons( $addons, $plugin_name ) {
 			if ( 'publishpress' === $plugin_name ) {
 				$addons = $this->get_addons_list();
 			}
