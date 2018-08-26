@@ -945,6 +945,8 @@ if (!class_exists('PP_Roles')) {
          */
         public function handle_edit_role()
         {
+            global $wpdb;
+
             if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
                 || ($_GET['page'] != static::PAGE_SLUG) || $_POST['form-action'] != 'edit-role') {
                 return;
@@ -990,7 +992,7 @@ if (!class_exists('PP_Roles')) {
             }
 
             // Get all the roles and edit the current role. Saving all the roles again in the options table.
-            $roles = get_option('wp_user_roles');
+            $roles = get_option($wpdb->prefix . 'user_roles');
             if (is_wp_error($roles) || empty($roles)) {
                 wp_die(__('Error loading role.', 'publishpress'));
             }
@@ -1001,7 +1003,7 @@ if (!class_exists('PP_Roles')) {
 
             $roles[$name]['name'] = $display_name;
 
-            update_option('wp_user_roles', $roles);
+            update_option($wpdb->prefix . 'user_roles', $roles);
 
             // Check if we have to remove users from this role.
             $users_in_the_role = get_users(
