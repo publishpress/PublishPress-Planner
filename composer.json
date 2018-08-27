@@ -1,5 +1,5 @@
 {
-  "name": "publishpress",
+  "name": "publishpress/publishpress",
   "description": "WordPress plugin to accelerate your publishing workflow.",
   "homepage": "http://publishpress.com/",
   "type": "wordpress-plugin",
@@ -8,25 +8,32 @@
     {
       "name": "PublishPress",
       "email": "help@publishpress.com"
-    }
-  ],
-  "repositories": [
+    },
     {
-      "type": "git",
-      "url": "https://github.com/OSTraining/WordPress-Plugin-Builder"
+      "name": "Alledia",
+      "email": "help@alledia.com",
+      "homepage": "https://alledia.com"
+    },
+    {
+      "name": "Anderson Grudtner Martins",
+      "email": "anderson@grudtner.me",
+      "homepage": "http://anderson.grudtner.me",
+      "role": "Lead Developer"
     }
   ],
   "autoload": {
-     "psr-4": {
-       "PublishPress\\Core\\": "core/"
-     }
+    "psr-4": {
+      "PublishPress\\Core\\": "core/"
+    }
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
-    "php": ">= 5.3",
+    "php": ">= 5.4",
     "twig/twig": "~1.0",
     "pimple/pimple": "~3.0",
-    "publishpress/wordpress-plugin-builder": "^2"
+    "alledia/wordpress-plugin-framework": "dev-development",
+    "alledia/wordpress-plugin-builder": "dev-development"
   },
   "require-dev": {
     "gettext/gettext": "^4.2",

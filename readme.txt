@@ -1,56 +1,53 @@
-=== PublishPress helps WordPress teams create great content ===
+=== PublishPress - Professional publishing tools for WordPress ===
 Contributors: publishpress, andergmartins, stevejburge, pressshack
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
-Tags: Content Calendar, Editorial Calendar, workflow, checklist, permissions
+Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.15.0
+Stable tag: 1.16.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is the plugin for WordPress teams. Your team gets an editorial calendar, flexible permissions and notification workflows.
+PublishPress is the plugin for professional publishers. Get an editorial calendar, flexible permissions and notifications.
 
 == Description ==
 
-The slogan of PublishPress is “WordPress for Teams”.
+PublishPress can help you create great content in WordPress. Here’s an overview of the publishing tools you’ll find in PublishPress:
 
-PublishPress is the essential plugin for any WordPress site with multiple team members.
 
-PublishPress has multiple tools that help your team stay organized when creating content:
-
-* Use the [Editorial Calendar](https://publishpress.com/docs/calendar/) and [Content Overview](https://publishpress.com/docs/content-overview/) to get a clear picture of all your planned and published content.
-* You can write [Comments](https://publishpress.com/docs/editorial-comments/) to leave feedback.
-* Set up [Notification Workflows](https://publishpress.com/docs/notifications/) to keep your team up-to-date with what’s happening.
+* There’s a beautiful [Editorial Calendar](https://publishpress.com/docs/calendar/) to give a clear picture of all your planned and published content.
+* You can create [Notifications](https://publishpress.com/docs/notifications/) to keep your team up-to-date with what’s happening.
+* You can write [Editorial Comments](https://publishpress.com/docs/editorial-comments/) to leave feedback for your site’s authors.
+* There are [Custom Statuses](https://publishpress.com/docs/custom-statuses/) so you can see where content is in your publishing workflow.
+* The [Content Overview](https://publishpress.com/docs/calendar/) screen allows you to drill down and analyze your site’s content.
 * You can add [Metadata](https://publishpress.com/docs/editorial-metadata/) to give your team extra information about each post.
-* Create [Custom Statuses](https://publishpress.com/docs/custom-statuses/) so that WordPress matches your team’s workflow.
 
-Interested in finding out more?
+Interested in finding out more about PublishPress?
 
-[Click here to try a free demo of PublishPress](https://publishpress.com/demo/).
-[Check out premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
-
+* [Click here to try a free demo](https://publishpress.com/demo/).
+* [Check out the premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
 
 = WHO SHOULD USE PUBLISHPRESS? =
 
-PublishPress is ideal for WordPress sites that have content teams. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
 = PREMIUM ADD-ONS FOR PUBLISHPRESS =
 
-* [Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content
-* [Multiple Authors](https://publishpress.com/addons/multiple-authors-publishpress/): Easily assign multiple authors to one content item
-* [Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets the click the “Publish” button
-* [WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products
-* [Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes
-
-[Check out premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
+* [Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content.
+* [Multiple Authors](https://publishpress.com/addons/multiple-authors-publishpress/): Easily assign multiple authors to one content item.
+* [Reminders](http://publishpress.com/addons/reminders): Automatically send notifications before or after content is published.
+* [Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets to click the “Publish” button.
+* [WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products.
+* [Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes.
 
 = EDITORIAL CALENDAR =
 
 The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next six weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
-* [Click here for more on the PublishPress Editorial Calendar](https://publishpress.com/docs/calendar/)
+[Click here for more on the PublishPress Editorial Calendar](https://publishpress.com/docs/calendar/)
+
 
 = NOTIFICATION WORKFLOWS =
 
@@ -78,21 +75,21 @@ A very important feature in PublishPress is commenting. You can leave comments u
 
 * [Click here for more on PublishPress Editorial Comments](https://publishpress.com/docs/editorial-comments/)
 
-= EDITORIAL METADATA =
+= METADATA =
 
-Metadata enabled you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items.
+Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items.
 
 By default, PublishPress provide 4 examples of metadata, but you can add your own to meet your team’s needs.
 
 * [Click here for more on PublishPress Editorial Metadata](https://publishpress.com/docs/editorial-metadata/)
 
-= CUSTOM USER ROLES =
+= USER GROUPS =
 
-For larger organizations, user roles can keep your publishing workflows organized and make sure notifications are sent to the correct people.
+For larger organizations with many people involved in the publishing process, user groups help keep your workflow organized and informed.
 
-To find the role settings, go to the PublishPress link in your WordPress admin area, and click the “Roles” link.
+To find the user settings, go to the PublishPress link in your WordPress admin area, and click the “User Groups” tab. By default, PublishPress provides four user groups: Copy Editors, Photographers, Reporters and Section Editors.
 
-* [Click here for more on PublishPress Custom User Roles](https://publishpress.com/docs/roles/)
+* [Click here for more on PublishPress User Groups](https://publishpress.com/docs/user-groups/)
 
 = IMPORTING FROM EDITFLOW =
 
@@ -102,21 +99,9 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 = I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
 
-Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/OSTraining/PublishPress), and we welcome contributions from everyone.
+Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/AllediaWordPress/PublishPress), and we welcome contributions from everyone.
 
-== Frequently Asked Questions ==
-
-= Where Can I Get Support? =
-
-You can ask for help via [the PublishPress contact form](https://publishpress.com/contact/).
-
-= Do I Need Coding Skills to Use PublishPress? =
-
-Not at all. You can set up everything your team needs without any coding knowledge. We made it super easy.
-
-== Screenshots ==
-
-1. With Calendar you can see your posts over a customizable date range
+= FAQ =
 
 == Installation ==
 
@@ -128,10 +113,33 @@ You can install PublishPress through your WordPress admin area:
 1. Install the PublishPress plugin.
 1. Activate the PublishPress plugin.
 
+= Where Can I Get Support? =
+
+You can ask for help via [the PublishPress contact form](https://publishpress.com/contact/).
+
+= Do I Need Coding Skills to Use PublishPress? =
+
+Not at all. You can set up everything your team needs without any coding knowledge. We made it super easy.
+
+== Screenshots ==
+
+1. With Calendar you can see your posts over a customizable date range.
+
 == Changelog ==
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.16.0] - 2018-07-19 =
+
+* Added:*
+
+* Added a new menu item and page centralizing the license key management for add-ons;
+
+* Changed:*
+
+* Rebranded with the new logo;
+* Added sidebar with form offering discount of 20% in a plan when the user doesn't have any plugin installed;
 
 = [1.15.0] - 2018-07-19 =
 

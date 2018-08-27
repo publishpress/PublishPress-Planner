@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="PublishPress Plugin Builder" default="build">
-    <import file="vendor/publishpress/wordpress-plugin-builder/build.xml"/>
+<project name="The Builder" default="build">
+    <import file="vendor/alledia/wordpress-plugin-builder/build.xml"/>
 </project>
