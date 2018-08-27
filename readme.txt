@@ -130,6 +130,17 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.16.0] - 2018-07-19 =
+
+* Added:*
+
+* Added a new menu item and page centralizing the license key management for add-ons;
+
+* Changed:*
+
+* Rebranded with the new logo;
+* Added sidebar with form offering discount of 20% in a plan when the user doesn't have any plugin installed;
+
 = [1.15.0] - 2018-07-19 =
 
 *Added:*
