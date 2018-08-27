@@ -70,12 +70,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "1de97368136220a063e16eaffa4339f980e5411c"
+                "reference": "36464bbe750753ff615b04a4a4a0e5ec7ad9e17d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/1de97368136220a063e16eaffa4339f980e5411c",
-                "reference": "1de97368136220a063e16eaffa4339f980e5411c",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/36464bbe750753ff615b04a4a4a0e5ec7ad9e17d",
+                "reference": "36464bbe750753ff615b04a4a4a0e5ec7ad9e17d",
                 "shasum": ""
             },
             "require": {
@@ -112,7 +112,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-24T14:04:25+00:00"
+            "time": "2018-08-24T17:57:08+00:00"
         },
         {
             "name": "phing/phing",
