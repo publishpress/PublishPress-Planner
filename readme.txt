@@ -130,6 +130,12 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.16.1] - 2018-08-27 =
+
+*Fixed:*
+
+* Fixed a bug in the validation of license keys for add-ons;
+
 = [1.16.0] - 2018-08-27 =
 
 * Changed:*
