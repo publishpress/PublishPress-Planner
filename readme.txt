@@ -132,12 +132,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.16.0] - 2018-07-19 =
 
-* Added:*
-
-* Added a new menu item and page centralizing the license key management for add-ons;
-
 * Changed:*
 
+* Refactored the add-ons page centralizing the license key management;
 * Rebranded with the new logo;
 * Added sidebar with form offering discount of 20% in a plan when the user doesn't have any plugin installed;
 
