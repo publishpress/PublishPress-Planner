@@ -190,8 +190,6 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 		 * @return array
 		 */
 		protected function get_addons_list() {
-			$icons_base_path = __DIR__ . '/lib/img';
-
 			$addons = [
 				'publishpress-content-checklist'     => [
 					'slug'        => 'publishpress-content-checklist',
