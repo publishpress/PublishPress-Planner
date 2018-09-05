@@ -273,7 +273,11 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 				'publishpress-reminders'             => 'publishpress_reminders_options',
 			];
 
-			return $options_map[ $slug ];
+			if ( array_key_exists( $slug, $options_map ) ) {
+				return $options_map[ $slug ];
+			}
+
+			return false;
 		}
 
 		/**
