@@ -323,7 +323,7 @@ if (!class_exists('PP_Custom_Status'))
                 // unset($wp_post_statuses['draft']);
                 // unset($wp_post_statuses['pending']);
 
-                $custom_statuses = $this->get_custom_statuses($args);
+                $custom_statuses = $this->get_custom_statuses($args, true);
 
                 // Unfortunately, register_post_status() doesn't accept a
                 // post type argument, so we have to register the post
@@ -789,43 +789,68 @@ if (!class_exists('PP_Custom_Status'))
             return in_array($pagenow, array('post.php', 'edit.php', 'post-new.php', 'page.php', 'edit-pages.php', 'page-new.php'));
         }
 
-        protected function get_core_statuses()
+	    /**
+         * If the $only_basic_data argument is true, we do not load color and icon information, to save resources.
+         * That information is not required in the front-end for example.
+         *
+	     * @param bool $only_basic_data
+	     *
+	     * @return array
+	     */
+        protected function get_core_statuses( $only_basic_data = false )
         {
             $all_statuses = [];
 
             // The some default statuses from WordPress
-            $color          = get_option('psppno_status_publish_color', '#006557');
-            $icon           = get_option('psppno_status_publish_icon', 'dashicons-yes');
-            $all_statuses[] = (object)[
-                'term_id'     => 'publish',
-                'name'        => __('Published', 'publishpress'),
-                'slug'        => 'publish',
-                'description' => '-',
-                'color'       => $color,
-                'icon'        => $icon,
-            ];
+	        $status = (object) [
+		        'term_id'     => 'publish',
+		        'name'        => __( 'Published', 'publishpress' ),
+		        'slug'        => 'publish',
+		        'description' => '-',
+		        'color'       => '',
+		        'icon'        => '',
+	        ];
 
-            $color          = get_option('psppno_status_private_color', '#000000');
-            $icon           = get_option('psppno_status_private_icon', 'dashicons-lock');
-            $all_statuses[] = (object)[
+	        if ( ! $only_basic_data ) {
+		        $status->color = get_option( 'psppno_status_publish_color', '#006557' );
+		        $status->icon  = get_option( 'psppno_status_publish_icon', 'dashicons-yes' );
+	        }
+
+	        $all_statuses[] = $status;
+
+
+            $status = (object) [
                 'term_id'     => 'private',
                 'name'        => __('Privately Published', 'publishpress'),
                 'slug'        => 'private',
                 'description' => '-',
-                'color'       => $color,
-                'icon'        => $icon,
+                'color'       => '',
+                'icon'        => '',
             ];
 
-            $color          = get_option('psppno_status_future_color', '#655997');
-            $icon           = get_option('psppno_status_future_icon', 'dashicons-calendar-alt');
-            $all_statuses[] = (object)[
+	        if ( ! $only_basic_data ) {
+		        $status->color = get_option( 'psppno_status_private_color', '#000000' );
+		        $status->icon  = get_option( 'psppno_status_private_icon', 'dashicons-lock' );
+	        }
+
+	        $all_statuses[] = $status;
+
+
+            $status = (object) [
                 'term_id'     => 'future',
                 'name'        => __('Scheduled', 'publishpress'),
                 'slug'        => 'future',
                 'description' => '-',
-                'color'       => $color,
-                'icon'        => $icon,
+                'color'       => '',
+                'icon'        => '',
             ];
+
+	        if ( ! $only_basic_data ) {
+		        $status->color = get_option( 'psppno_status_future_color', '#655997' );
+		        $status->icon  = get_option( 'psppno_status_future_icon', 'dashicons-calendar-alt' );
+	        }
+
+	        $all_statuses[] = $status;
 
             return $all_statuses;
         }
@@ -899,6 +924,7 @@ if (!class_exists('PP_Custom_Status'))
 
                 $always_show_dropdown = ($this->module->options->always_show_dropdown == 'on') ? 1 : 0;
 
+                // TODO: Move this to a script localization method.
                 ?>
 
                 <script type="text/javascript">
@@ -1062,9 +1088,10 @@ if (!class_exists('PP_Custom_Status'))
          *
          * @param array|string $statuses
          * @param array        $args
+         * @param bool         $only_basic_info
          * @return array $statuses All of the statuses
          */
-        public function get_custom_statuses($args = array())
+        public function get_custom_statuses($args = array(), $only_basic_info = false)
         {
             global $wp_post_statuses;
 
@@ -1162,7 +1189,7 @@ if (!class_exists('PP_Custom_Status'))
             }
 
             // Add core statuses, custom properties saved on the config
-            $core_statuses    = $this->get_core_statuses();
+            $core_statuses    = $this->get_core_statuses($only_basic_info);
             $ordered_statuses = array_merge($ordered_statuses, $core_statuses);
 
             $this->custom_statuses_cache[$arg_hash] = $ordered_statuses;
