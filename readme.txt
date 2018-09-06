@@ -130,6 +130,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.16.3] - UNRELEASED =
+
+*Fixed:*
+
+* Fixed a PHP warning displayed in the UpStream settings page, related to PublishPress getting confuse with both using Allex for dealing with add-ons;
+* Fixed some queries executed when they were not useful. The queries are related to the options for icon and color of custom statuses.
+
 = [1.16.2] - 2018-08-28 =
 
 *Fixed:*
