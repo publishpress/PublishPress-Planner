@@ -228,7 +228,7 @@ if ( ! class_exists( 'PP_Addons' ) ) {
 					'title'       => __( 'Multiple authors support', 'publishpress' ),
 					'description' => __( 'Allows you choose multiple authors for a single post. This add-on is ideal for teams who write collaboratively.',
 						'publishpress' ),
-					'icon_class'  => 'fa fa-user-edit',
+					'icon_class'  => 'fas fa-user-edit',
 					'edd_id'      => 7203,
 				],
 				'publishpress-reminders'             => [
