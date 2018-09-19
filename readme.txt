@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.16.2
+Stable tag: 1.16.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,16 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.16.3] - 2018-09-19 =
+
+*Fixed:*
+
+* Fixed compatibility with UpStream fixing a PHP warning displayed in the UpStream settings page, related to PublishPress getting confuse with both using Allex Framework for dealing with add-ons. You need to update UpStream as well;
+* Fixed some queries executed when they were not useful. The queries are related to the options for icon and color of custom statuses;
+* Fixed license key activation and upgrade form when installed alongside UpStream - requires to update UpStream as well;
+* Fixed icon of Multiple Authors add-on in the add-ons page;
+* Fixed wrong URL for assets on Windows machines;
 
 = [1.16.2] - 2018-08-28 =
 

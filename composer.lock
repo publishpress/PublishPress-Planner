@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder.git",
-                "reference": "f0454c0c77dfa502e7d43b2304695a1cfbf13a61"
+                "reference": "f15b3d5f3fa35220eedde1306531155d424f2d84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/f0454c0c77dfa502e7d43b2304695a1cfbf13a61",
-                "reference": "f0454c0c77dfa502e7d43b2304695a1cfbf13a61",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/f15b3d5f3fa35220eedde1306531155d424f2d84",
+                "reference": "f15b3d5f3fa35220eedde1306531155d424f2d84",
                 "shasum": ""
             },
             "require": {
@@ -61,7 +61,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-27T17:18:34+00:00"
+            "time": "2018-09-02T20:47:17+00:00"
         },
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -69,12 +69,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "58b61739d7d742dbab08c1a66d72e8c22cc82c67"
+                "reference": "56290abea3789eb09d3f17b528b0a6a85323bd43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/58b61739d7d742dbab08c1a66d72e8c22cc82c67",
-                "reference": "58b61739d7d742dbab08c1a66d72e8c22cc82c67",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/56290abea3789eb09d3f17b528b0a6a85323bd43",
+                "reference": "56290abea3789eb09d3f17b528b0a6a85323bd43",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-08-28T20:54:52+00:00"
+            "time": "2018-09-17T18:14:08+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -490,21 +490,21 @@
         },
         {
             "name": "codeception/phpunit-wrapper",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/phpunit-wrapper.git",
-                "reference": "e12834e076632262f1f85da41f53c06bb1fd28fb"
+                "reference": "a4990126a20bbaa67ca34088ff91960c209a664b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/e12834e076632262f1f85da41f53c06bb1fd28fb",
-                "reference": "e12834e076632262f1f85da41f53c06bb1fd28fb",
+                "url": "https://api.github.com/repos/Codeception/phpunit-wrapper/zipball/a4990126a20bbaa67ca34088ff91960c209a664b",
+                "reference": "a4990126a20bbaa67ca34088ff91960c209a664b",
                 "shasum": ""
             },
             "require": {
                 "phpunit/php-code-coverage": "^6.0",
-                "phpunit/phpunit": "~7.1.0|~7.2.0",
+                "phpunit/phpunit": "~7.1.0|~7.2.0|~7.3.0",
                 "sebastian/comparator": "^3.0",
                 "sebastian/diff": "^3.0"
             },
@@ -529,7 +529,7 @@
                 }
             ],
             "description": "PHPUnit classes used by Codeception",
-            "time": "2018-08-01T08:17:04+00:00"
+            "time": "2018-08-28T23:24:24+00:00"
         },
         {
             "name": "codeception/stub",
@@ -1409,20 +1409,23 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/cecbc684605bb0cc288828eb5d65d93d5c676d3c",
-                "reference": "cecbc684605bb0cc288828eb5d65d93d5c676d3c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
@@ -1452,7 +1455,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2018-06-11T11:44:00+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1595,16 +1598,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.2.7",
+            "version": "7.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8e878aff7917ef66e702e03d1359b16eee254e2c"
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8e878aff7917ef66e702e03d1359b16eee254e2c",
-                "reference": "8e878aff7917ef66e702e03d1359b16eee254e2c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b331efabbb628c518c408fdfcaf571156775de2",
+                "reference": "7b331efabbb628c518c408fdfcaf571156775de2",
                 "shasum": ""
             },
             "require": {
@@ -1649,7 +1652,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.2-dev"
+                    "dev-master": "7.3-dev"
                 }
             },
             "autoload": {
@@ -1675,7 +1678,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-07-15T05:20:50+00:00"
+            "time": "2018-09-08T15:14:29+00:00"
         },
         {
             "name": "psr/http-message",

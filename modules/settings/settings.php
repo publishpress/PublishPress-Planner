@@ -477,7 +477,7 @@ if ( ! class_exists( 'PP_Settings' ) ) {
 			$module_output = ob_get_clean();
 
 			ob_start();
-			do_action( 'allex_upgrade_sidebar_ad' );
+			do_action( 'allex_upgrade_sidebar_ad', 'publishpress' );
 			$sidebar_output = ob_get_clean();
 
 
@@ -486,7 +486,7 @@ if ( ! class_exists( 'PP_Settings' ) ) {
 			 *
 			 * @var bool
 			 */
-			$show_sidebar = apply_filters( 'allex_upgrade_show_sidebar_ad', true );
+			$show_sidebar = apply_filters( 'allex_upgrade_show_sidebar_ad', true, 'publishpress' );
 
 			echo $this->twig->render(
 				'settings.twig',
