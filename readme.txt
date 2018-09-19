@@ -130,7 +130,7 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.16.3] - UNRELEASED =
+= [1.16.3] - 2018-09-19 =
 
 *Fixed:*
 
@@ -138,6 +138,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed some queries executed when they were not useful. The queries are related to the options for icon and color of custom statuses;
 * Fixed license key activation and upgrade form when installed alongside UpStream;
 * Fixed icon of Multiple Authors add-on in the add-ons page;
+* Fixed wrong URL for assets on Windows machines;
 
 = [1.16.2] - 2018-08-28 =
 
