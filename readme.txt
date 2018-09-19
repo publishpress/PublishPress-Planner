@@ -136,7 +136,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed compatibility with UpStream fixing a PHP warning displayed in the UpStream settings page, related to PublishPress getting confuse with both using Allex Framework for dealing with add-ons. You need to update UpStream as well;
 * Fixed some queries executed when they were not useful. The queries are related to the options for icon and color of custom statuses;
-* Fixed license key activation and upgrade form when installed alongside UpStream;
+* Fixed license key activation and upgrade form when installed alongside UpStream - requires to update UpStream as well;
 * Fixed icon of Multiple Authors add-on in the add-ons page;
 * Fixed wrong URL for assets on Windows machines;
 
