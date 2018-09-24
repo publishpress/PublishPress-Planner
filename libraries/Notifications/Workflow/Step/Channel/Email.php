@@ -13,7 +13,6 @@ use WP_Post;
 
 class Email extends Base implements Channel_Interface
 {
-
     const META_KEY_EMAIL = '_psppno_chnemail';
 
     /**

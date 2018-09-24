@@ -34,8 +34,7 @@
  * @todo Remove this module. It is deprecated.
  */
 
-if (!class_exists('PP_User_Groups'))
-{
+if (!class_exists('PP_User_Groups')) {
     /**
      * Class PP_User_Groups
      *
@@ -149,8 +148,7 @@ if (!class_exists('PP_User_Groups'))
                     'description' => __('Providing feedback and direction.', 'publishpress'),
                 ),
             );
-            foreach ($default_usergroups as $args)
-            {
+            foreach ($default_usergroups as $args) {
                 $this->add_usergroup($args);
             }
         }
@@ -165,8 +163,7 @@ if (!class_exists('PP_User_Groups'))
             global $publishpress;
 
             // Upgrade path to v0.7
-            if (version_compare($previous_version, '0.7', '<'))
-            {
+            if (version_compare($previous_version, '0.7', '<')) {
                 global $wpdb;
 
                 // Set all of the user group terms to our new taxonomy
@@ -178,23 +175,19 @@ if (!class_exists('PP_User_Groups'))
 
                 // Sort all of the users based on their usergroup(s)
                 $users_to_add = array();
-                foreach ((array)$usergroup_users as $usergroup_user)
-                {
-                    if (is_object($usergroup_user))
-                    {
+                foreach ((array)$usergroup_users as $usergroup_user) {
+                    if (is_object($usergroup_user)) {
                         $users_to_add[$usergroup_user->meta_value][] = (int)$usergroup_user->user_id;
                     }
                 }
                 // Add user IDs to each usergroup
-                foreach ($users_to_add as $usergroup_slug => $users_array)
-                {
+                foreach ($users_to_add as $usergroup_slug => $users_array) {
                     $usergroup = $this->get_usergroup_by('slug', $usergroup_slug);
                     $this->add_users_to_usergroup($users_array, $usergroup->term_id);
                 }
                 // Update the term slugs for each user group
                 $all_usergroups = $this->get_usergroups();
-                foreach ($all_usergroups as $usergroup)
-                {
+                foreach ($all_usergroups as $usergroup) {
                     $new_slug = str_replace('pp_', self::term_prefix, $usergroup->slug);
                     $this->update_usergroup($usergroup->term_id, array('slug' => $new_slug));
                 }
@@ -206,8 +199,7 @@ if (!class_exists('PP_User_Groups'))
                 $publishpress->update_module_option($this->module->name, 'loaded_once', true);
             }
             // Upgrade path to v0.7.4
-            if (version_compare($previous_version, '0.7.4', '<'))
-            {
+            if (version_compare($previous_version, '0.7.4', '<')) {
                 // Usergroup descriptions become base64_encoded, instead of maybe json_encoded.
                 $this->upgrade_074_term_descriptions(self::taxonomy_key);
             }
@@ -273,8 +265,7 @@ if (!class_exists('PP_User_Groups'))
 
 
             // Whitelist validation for the post type options
-            if (!isset($new_options['post_types']))
-            {
+            if (!isset($new_options['post_types'])) {
                 $new_options['post_types'] = array();
             }
             $new_options['post_types'] = $this->clean_post_type_options($new_options['post_types'], $this->module->post_type_support);
@@ -303,22 +294,18 @@ if (!class_exists('PP_User_Groups'))
          */
         public function get_link($args = array())
         {
-            if (!isset($args['action']))
-            {
+            if (!isset($args['action'])) {
                 $args['action'] = '';
             }
-            if (!isset($args['page']))
-            {
+            if (!isset($args['page'])) {
                 $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
-            if (!isset($args['module']))
-            {
+            if (!isset($args['module'])) {
                 $args['module'] = self::SETTINGS_SLUG;
             }
 
             // Add other things we may need depending on the action
-            switch ($args['action'])
-            {
+            switch ($args['action']) {
                 case 'delete-usergroup':
                     $args['nonce'] = wp_create_nonce($args['action']);
                     break;
@@ -344,21 +331,18 @@ if (!class_exists('PP_User_Groups'))
         public function get_usergroups($args = array())
         {
             // We want empty terms by default
-            if (!isset($args['hide_empty']))
-            {
+            if (!isset($args['hide_empty'])) {
                 $args['hide_empty'] = 0;
             }
 
             $usergroup_terms = get_terms(self::taxonomy_key, $args);
-            if (!$usergroup_terms)
-            {
+            if (!$usergroup_terms) {
                 return false;
             }
 
             // Run the usergroups through get_usergroup_by() so we load users too
             $usergroups = array();
-            foreach ($usergroup_terms as $usergroup_term)
-            {
+            foreach ($usergroup_terms as $usergroup_term) {
                 $usergroups[] = $this->get_usergroup_by('id', $usergroup_term->term_id);
             }
 
@@ -384,8 +368,7 @@ if (!class_exists('PP_User_Groups'))
         {
             $usergroup = get_term_by($field, $value, self::taxonomy_key);
 
-            if (!$usergroup || is_wp_error($usergroup))
-            {
+            if (!$usergroup || is_wp_error($usergroup)) {
                 return $usergroup;
             }
 
@@ -393,10 +376,8 @@ if (!class_exists('PP_User_Groups'))
             // Declare $user_ids ahead of time just in case it's empty
             $usergroup->user_ids   = array();
             $unencoded_description = $this->get_unencoded_description($usergroup->description);
-            if (is_array($unencoded_description))
-            {
-                foreach ($unencoded_description as $key => $value)
-                {
+            if (is_array($unencoded_description)) {
+                foreach ($unencoded_description as $key => $value) {
                     $usergroup->$key = $value;
                 }
             }
@@ -419,8 +400,7 @@ if (!class_exists('PP_User_Groups'))
          */
         public function add_usergroup($args = array(), $user_ids = array())
         {
-            if (!isset($args['name']))
-            {
+            if (!isset($args['name'])) {
                 return new WP_Error('invalid', __('New user groups must have a name', 'publishpress'));
             }
 
@@ -440,8 +420,7 @@ if (!class_exists('PP_User_Groups'))
             $encoded_description = $this->get_encoded_description($args_to_encode);
             $args['description'] = $encoded_description;
             $usergroup           = wp_insert_term($name, self::taxonomy_key, $args);
-            if (is_wp_error($usergroup))
-            {
+            if (is_wp_error($usergroup)) {
                 return $usergroup;
             }
 
@@ -466,8 +445,7 @@ if (!class_exists('PP_User_Groups'))
         public function update_usergroup($id, $args = array(), $users = null)
         {
             $existing_usergroup = $this->get_usergroup_by('id', $id);
-            if (is_wp_error($existing_usergroup))
-            {
+            if (is_wp_error($existing_usergroup)) {
                 return new WP_Error('invalid', __("User group doesn't exist.", 'publishpress'));
             }
 
@@ -480,8 +458,7 @@ if (!class_exists('PP_User_Groups'))
             $args['description']           = $encoded_description;
 
             $usergroup = wp_update_term($id, self::taxonomy_key, $args);
-            if (is_wp_error($usergroup))
-            {
+            if (is_wp_error($usergroup)) {
                 return $usergroup;
             }
 
@@ -515,37 +492,30 @@ if (!class_exists('PP_User_Groups'))
          */
         public function add_users_to_usergroup($user_ids_or_logins, $id, $reset = true)
         {
-            if (!is_array($user_ids_or_logins))
-            {
+            if (!is_array($user_ids_or_logins)) {
                 return new WP_Error('invalid', __("Invalid users variable. Should be array.", 'publishpress'));
             }
 
             // To dump the existing users from a usergroup, we need to pass an empty array
             $usergroup = $this->get_usergroup_by('id', $id);
-            if ($reset)
-            {
+            if ($reset) {
                 $retval = $this->update_usergroup($id, null, array());
-                if (is_wp_error($retval))
-                {
+                if (is_wp_error($retval)) {
                     return $retval;
                 }
             }
 
             // Add the new users one by one to an array we'll pass back to the usergroup
             $new_users = array();
-            foreach ((array)$user_ids_or_logins as $user_id_or_login)
-            {
-                if (!is_numeric($user_id_or_login))
-                {
+            foreach ((array)$user_ids_or_logins as $user_id_or_login) {
+                if (!is_numeric($user_id_or_login)) {
                     $new_users[] = get_user_by('login', $user_id_or_login)->ID;
-                } else
-                {
+                } else {
                     $new_users[] = (int)$user_id_or_login;
                 }
             }
             $retval = $this->update_usergroup($id, null, $new_users);
-            if (is_wp_error($retval))
-            {
+            if (is_wp_error($retval)) {
                 return $retval;
             }
 
@@ -563,21 +533,17 @@ if (!class_exists('PP_User_Groups'))
          */
         public function add_user_to_usergroup($user_id_or_login, $ids)
         {
-            if (!is_numeric($user_id_or_login))
-            {
+            if (!is_numeric($user_id_or_login)) {
                 $user_id = get_user_by('login', $user_id_or_login)->ID;
-            } else
-            {
+            } else {
                 $user_id = (int)$user_id_or_login;
             }
 
-            foreach ((array)$ids as $usergroup_id)
-            {
+            foreach ((array)$ids as $usergroup_id) {
                 $usergroup             = $this->get_usergroup_by('id', $usergroup_id);
                 $usergroup->user_ids[] = $user_id;
                 $retval                = $this->update_usergroup($usergroup_id, null, $usergroup->user_ids);
-                if (is_wp_error($retval))
-                {
+                if (is_wp_error($retval)) {
                     return $retval;
                 }
             }
@@ -596,29 +562,23 @@ if (!class_exists('PP_User_Groups'))
          */
         public function remove_user_from_usergroup($user_id_or_login, $ids)
         {
-            if (!is_numeric($user_id_or_login))
-            {
+            if (!is_numeric($user_id_or_login)) {
                 $user_id = get_user_by('login', $user_id_or_login)->ID;
-            } else
-            {
+            } else {
                 $user_id = (int)$user_id_or_login;
             }
 
             // Remove the user from each usergroup specified
-            foreach ((array)$ids as $usergroup_id)
-            {
+            foreach ((array)$ids as $usergroup_id) {
                 $usergroup = $this->get_usergroup_by('id', $usergroup_id);
                 // @todo I bet there's a PHP function for this I couldn't look up at 35,000 over the Atlantic
-                foreach ($usergroup->user_ids as $key => $usergroup_user_id)
-                {
-                    if ($usergroup_user_id == $user_id)
-                    {
+                foreach ($usergroup->user_ids as $key => $usergroup_user_id) {
+                    if ($usergroup_user_id == $user_id) {
                         unset($usergroup->user_ids[$key]);
                     }
                 }
                 $retval = $this->update_usergroup($usergroup_id, null, $usergroup->user_ids);
-                if (is_wp_error($retval))
-                {
+                if (is_wp_error($retval)) {
                     return $retval;
                 }
             }
@@ -637,43 +597,35 @@ if (!class_exists('PP_User_Groups'))
          */
         public function get_usergroups_for_user($user_id_or_login, $ids_or_objects = 'ids')
         {
-            if (!is_numeric($user_id_or_login))
-            {
+            if (!is_numeric($user_id_or_login)) {
                 $user_id = get_user_by('login', $user_id_or_login)->ID;
-            } else
-            {
+            } else {
                 $user_id = (int)$user_id_or_login;
             }
 
             // Unfortunately, the easiest way to do this is get all usergroups
             // and then loop through each one to see if the user ID is stored
             $all_usergroups = $this->get_usergroups();
-            if (!empty($all_usergroups))
-            {
+            if (!empty($all_usergroups)) {
                 $usergroup_objects_or_ids = array();
-                foreach ($all_usergroups as $usergroup)
-                {
+                foreach ($all_usergroups as $usergroup) {
                     // Not in this user group, so keep going
                     if (!isset($usergroup->user_ids) || false == ($usergroup->user_ids || !is_array($usergroup->user_ids))) {
                         continue;
                     }
 
-                    if (!in_array($user_id, $usergroup->user_ids))
-                    {
+                    if (!in_array($user_id, $usergroup->user_ids)) {
                         continue;
                     }
-                    if ($ids_or_objects == 'ids')
-                    {
+                    if ($ids_or_objects == 'ids') {
                         $usergroup_objects_or_ids[] = (int)$usergroup->term_id;
-                    } else if ($ids_or_objects == 'objects')
-                    {
+                    } elseif ($ids_or_objects == 'objects') {
                         $usergroup_objects_or_ids[] = $usergroup;
                     }
                 }
 
                 return $usergroup_objects_or_ids;
-            } else
-            {
+            } else {
                 return false;
             }
         }
@@ -681,8 +633,7 @@ if (!class_exists('PP_User_Groups'))
 }
 
 
-if (!class_exists('PP_Usergroups_List_Table'))
-{
+if (!class_exists('PP_Usergroups_List_Table')) {
     /**
      * Usergroups uses WordPress' List Table API for generating the Usergroup management table
      *
@@ -690,7 +641,6 @@ if (!class_exists('PP_Usergroups_List_Table'))
      */
     class PP_Usergroups_List_Table extends WP_List_Table
     {
-
         public $callback_args;
 
         public function __construct()

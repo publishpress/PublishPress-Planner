@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 class User extends Simple_Checkbox implements Receiver_Interface
 {
-
     const META_KEY = '_psppno_touser';
 
     const META_LIST_KEY = '_psppno_touserlist';
@@ -41,8 +40,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters))
-        {
+        if (!empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 
@@ -64,12 +62,10 @@ class User extends Simple_Checkbox implements Receiver_Interface
         parent::save_metabox_data($id, $post);
 
         if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif']['receiver_user']))
-        {
+            || !isset($_POST['publishpress_notif']['receiver_user'])) {
             // Assume it is disabled
             $values = [];
-        } else
-        {
+        } else {
             $values = $_POST['publishpress_notif']['receiver_user'];
         }
 
@@ -97,10 +93,8 @@ class User extends Simple_Checkbox implements Receiver_Interface
         $users = get_users($args);
 
         $selected_users = (array)$this->get_metadata(static::META_LIST_KEY);
-        foreach ($users as $user)
-        {
-            if (in_array($user->ID, $selected_users))
-            {
+        foreach ($users as $user) {
+            if (in_array($user->ID, $selected_users)) {
                 $user->selected = true;
             }
         }
@@ -129,8 +123,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
     public function filter_workflow_receivers($receivers, $workflow, $args)
     {
         // If checked, add the authors to the list of receivers
-        if ($this->is_selected($workflow->ID))
-        {
+        if ($this->is_selected($workflow->ID)) {
             // Get the users selected in the workflow
             $users     = get_post_meta($workflow->ID, static::META_LIST_KEY);
             $receivers = array_merge($receivers, $users);
@@ -162,12 +155,10 @@ class User extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_receivers_column_value($values, $post_id)
     {
-        if ($this->is_selected($post_id))
-        {
+        if ($this->is_selected($post_id)) {
             $items = get_post_meta($post_id, static::META_LIST_KEY);
 
-            if (!empty($items))
-            {
+            if (!empty($items)) {
                 $count = count($items);
 
                 $values[] = sprintf(

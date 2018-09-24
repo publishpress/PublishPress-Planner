@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 class Author extends Simple_Checkbox implements Receiver_Interface
 {
-
     const META_KEY = '_psppno_toauthor';
 
     const META_VALUE = 'author';
@@ -41,8 +40,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface
     public function filter_workflow_receivers($receivers, $workflow, $args)
     {
         // If checked, add the authors to the list of receivers
-        if ($this->is_selected($workflow->ID))
-        {
+        if ($this->is_selected($workflow->ID)) {
             $receivers[] = (int)$args['post']->post_author;
 
             /**
@@ -68,8 +66,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_receivers_column_value($values, $post_id)
     {
-        if ($this->is_selected($post_id))
-        {
+        if ($this->is_selected($post_id)) {
             $values[] = __('Authors', 'publishpress');
         }
 

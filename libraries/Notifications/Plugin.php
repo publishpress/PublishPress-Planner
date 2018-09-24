@@ -22,32 +22,34 @@ class Plugin
 
     protected $framework;
 
-    public function __construct() {
-	    $this->framework = $this->get_service( 'framework' );
+    public function __construct()
+    {
+        $this->framework = $this->get_service('framework');
 
-	    $this->init_framework();
+        $this->init_framework();
     }
 
-	/**
+    /**
      * The method which runs the plugin
      */
     public function init()
     {
         add_action('load-edit.php', [$this, 'add_load_edit_hooks']);
 
-	    add_action( 'admin_init', [ $this->get_service('reviews'), 'init' ] );
+        add_action('admin_init', [ $this->get_service('reviews'), 'init' ]);
 
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
 
-	    do_action( 'allex_enable_module_upgrade', 'https://publishpress.com/pricing/' );
+        do_action('allex_enable_module_upgrade', 'https://publishpress.com/pricing/');
     }
 
-	/**
-	 * Initialize the Allex framework.
-	 */
-    public function init_framework() {
-    	$this->framework->init();
+    /**
+     * Initialize the Allex framework.
+     */
+    public function init_framework()
+    {
+        $this->framework->init();
     }
 
     public function add_load_edit_hooks()
@@ -55,13 +57,11 @@ class Plugin
         $post_type = 'psppnotif_workflow';
         $screen    = get_current_screen();
 
-        if (!isset ($screen->id))
-        {
+        if (!isset($screen->id)) {
             return;
         }
 
-        if ("edit-$post_type" !== $screen->id)
-        {
+        if ("edit-$post_type" !== $screen->id) {
             return;
         }
 
@@ -90,8 +90,7 @@ class Plugin
             'receivers',
         ];
         // Ignore other columns
-        if (!in_array($column_name, $columns))
-        {
+        if (!in_array($column_name, $columns)) {
             return;
         }
 
@@ -111,8 +110,7 @@ class Plugin
     {
         global $current_screen;
 
-        if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type)
-        {
+        if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type) {
             return $messages;
         }
 
@@ -145,8 +143,7 @@ class Plugin
     {
         global $current_screen;
 
-        if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type)
-        {
+        if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW !== $current_screen->post_type) {
             return $bulk_messages;
         }
 
@@ -175,21 +172,17 @@ class Plugin
         $metakeys = apply_filters('psppno_events_metakeys', []);
         $events   = [];
 
-        foreach ($metakeys as $metakey => $label)
-        {
+        foreach ($metakeys as $metakey => $label) {
             $selected = get_post_meta($post_id, $metakey, true);
 
-            if ($selected)
-            {
+            if ($selected) {
                 $events[] = $label;
             }
         }
 
-        if (empty($events))
-        {
+        if (empty($events)) {
             echo '<span class="psppno_no_events_warning">' . __('Please select at least one event', 'publishpress') . '</span>';
-        } else
-        {
+        } else {
             echo implode(', ', $events);
         }
     }
@@ -209,21 +202,17 @@ class Plugin
         $metakeys = apply_filters('psppno_filter_metakeys', []);
         $filters  = [];
 
-        foreach ($metakeys as $metakey => $label)
-        {
+        foreach ($metakeys as $metakey => $label) {
             $selected = get_post_meta($post_id, $metakey, true);
 
-            if ($selected)
-            {
+            if ($selected) {
                 $filters[] = $label;
             }
         }
 
-        if (empty($filters))
-        {
+        if (empty($filters)) {
             echo '<span class="psppno_no_filter_warning">' . __('Not filtered', 'publishpress') . '</span>';
-        } else
-        {
+        } else {
             echo implode(', ', $filters);
         }
     }
@@ -243,11 +232,9 @@ class Plugin
          */
         $values = apply_filters('psppno_receivers_column_value', [], $post_id);
 
-        if (empty($values))
-        {
+        if (empty($values)) {
             echo '-';
-        } else
-        {
+        } else {
             echo implode(', ', $values);
         }
     }

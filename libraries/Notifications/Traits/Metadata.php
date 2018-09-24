@@ -38,10 +38,8 @@ trait Metadata
         // Cleanup the metadata
         $this->delete_metadata($meta_key);
 
-        if (!empty($meta_value))
-        {
-            foreach ($meta_value as $value)
-            {
+        if (!empty($meta_value)) {
+            foreach ($meta_value as $value) {
                 add_post_meta($post_id, $meta_key, $value);
             }
         }
@@ -58,8 +56,7 @@ trait Metadata
     {
         global $post;
 
-        if (empty($id))
-        {
+        if (empty($id)) {
             $id = $post->ID;
         }
 

@@ -14,7 +14,6 @@ use PublishPress\Notifications\Workflow\Step\Event\Filter;
 
 class Post_Save extends Base
 {
-
     const META_KEY_SELECTED = '_psppno_evtpostsave';
 
     const META_VALUE_SELECTED = 'post_save';
@@ -42,8 +41,7 @@ class Post_Save extends Base
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters))
-        {
+        if (!empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 
@@ -64,9 +62,7 @@ class Post_Save extends Base
      */
     public function filter_run_workflow_query_args($query_args, $action_args)
     {
-
-        if ('transition_post_status' === $action_args['action'])
-        {
+        if ('transition_post_status' === $action_args['action']) {
             $query_args['meta_query'][] = [
                 'key'     => static::META_KEY_SELECTED,
                 'value'   => 1,
@@ -77,8 +73,7 @@ class Post_Save extends Base
             // Check the filters
             $filters = $this->get_filters();
 
-            foreach ($filters as $filter)
-            {
+            foreach ($filters as $filter) {
                 $query_args = $filter->get_run_workflow_query_args($query_args, $action_args);
             }
         }

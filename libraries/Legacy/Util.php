@@ -44,28 +44,21 @@ class Util
         // get_post() needs a variable
         $post_id = isset($_REQUEST['post']) ? (int)$_REQUEST['post'] : false;
 
-        if ($post && $post->post_type)
-        {
+        if ($post && $post->post_type) {
             $post_type = $post->post_type;
-        } else if ($typenow)
-        {
+        } elseif ($typenow) {
             $post_type = $typenow;
-        } else if ($current_screen && !empty($current_screen->post_type))
-        {
+        } elseif ($current_screen && !empty($current_screen->post_type)) {
             $post_type = $current_screen->post_type;
-        } else if (isset($_REQUEST['post_type']))
-        {
+        } elseif (isset($_REQUEST['post_type'])) {
             $post_type = sanitize_key($_REQUEST['post_type']);
-        } else if ('post.php' == $pagenow
+        } elseif ('post.php' == $pagenow
             && $post_id
-            && !empty(get_post($post_id)->post_type))
-        {
+            && !empty(get_post($post_id)->post_type)) {
             $post_type = get_post($post_id)->post_type;
-        } else if ('edit.php' == $pagenow && empty($_REQUEST['post_type']))
-        {
+        } elseif ('edit.php' == $pagenow && empty($_REQUEST['post_type'])) {
             $post_type = 'post';
-        } else
-        {
+        } else {
             $post_type = null;
         }
 
@@ -82,12 +75,9 @@ class Util
     {
         $post_types = array();
 
-        if (isset($module->options->post_types) && is_array($module->options->post_types))
-        {
-            foreach ($module->options->post_types as $post_type => $value)
-            {
-                if ('on' == $value)
-                {
+        if (isset($module->options->post_types) && is_array($module->options->post_types)) {
+            foreach ($module->options->post_types as $post_type => $value) {
+                if ('on' == $value) {
                     $post_types[] = $post_type;
                 }
             }
@@ -119,19 +109,16 @@ class Util
     public static function add_caps_to_role($role, $caps)
     {
         // In some contexts, we don't want to add caps to roles
-        if (apply_filters('pp_kill_add_caps_to_role', false, $role, $caps))
-        {
+        if (apply_filters('pp_kill_add_caps_to_role', false, $role, $caps)) {
             return;
         }
 
         global $wp_roles;
 
-        if ($wp_roles->is_role($role))
-        {
+        if ($wp_roles->is_role($role)) {
             $role = get_role($role);
 
-            foreach ($caps as $cap)
-            {
+            foreach ($caps as $cap) {
                 $role->add_cap($cap);
             }
         }

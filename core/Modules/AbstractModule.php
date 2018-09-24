@@ -37,5 +37,4 @@ namespace PublishPress\Core\Modules;
  */
 abstract class AbstractModule extends \PP_Module
 {
-
 }

@@ -32,24 +32,19 @@ class Base extends Base_Step
      */
     public function __construct()
     {
-        if (empty($this->attr_prefix))
-        {
+        if (empty($this->attr_prefix)) {
             $this->attr_prefix = 'channel';
         }
 
-        if (empty($this->twig_template))
-        {
+        if (empty($this->twig_template)) {
             $this->twig_template = 'workflow_channel_field.twig';
         }
 
-        if (empty($this->name))
-        {
+        if (empty($this->name)) {
             throw new \Exception("Channel name not defined");
-
         }
 
-        if (empty($this->label))
-        {
+        if (empty($this->label)) {
             throw new \Exception("Channel label not defined");
         }
 

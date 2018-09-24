@@ -28,14 +28,12 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Module'))
-{
+if (!class_exists('PP_Module')) {
     /**
      * PP_Module
      */
     class PP_Module
     {
-
         protected $twig;
 
         protected $debug = false;
@@ -52,15 +50,13 @@ if (!class_exists('PP_Module'))
 
         public function __construct()
         {
-            if (!empty($this->twigPath))
-            {
+            if (!empty($this->twigPath)) {
                 $loader     = new Twig_Loader_Filesystem($this->twigPath);
                 $this->twig = new Twig_Environment($loader, array(
                     'debug' => $this->debug,
                 ));
 
-                if ($this->debug)
-                {
+                if ($this->debug) {
                     $this->twig->addExtension(new Twig_Extension_Debug());
                 }
             }
@@ -94,8 +90,7 @@ if (!class_exists('PP_Module'))
             );
             $custom_post_types  = $this->get_supported_post_types_for_module();
 
-            foreach ($custom_post_types as $custom_post_type => $args)
-            {
+            foreach ($custom_post_types as $custom_post_type => $args) {
                 $allowed_post_types[$custom_post_type] = $args->label;
             }
 
@@ -117,13 +112,10 @@ if (!class_exists('PP_Module'))
         {
             $normalized_post_type_options = array();
             $all_post_types               = array_keys($this->get_all_post_types());
-            foreach ($all_post_types as $post_type)
-            {
-                if ((isset($module_post_types[$post_type]) && $module_post_types[$post_type] == 'on') || post_type_supports($post_type, $post_type_support))
-                {
+            foreach ($all_post_types as $post_type) {
+                if ((isset($module_post_types[$post_type]) && $module_post_types[$post_type] == 'on') || post_type_supports($post_type, $post_type_support)) {
                     $normalized_post_type_options[$post_type] = 'on';
-                } else
-                {
+                } else {
                     $normalized_post_type_options[$post_type] = 'off';
                 }
             }
@@ -175,11 +167,9 @@ if (!class_exists('PP_Module'))
         {
             global $publishpress;
 
-            if ($this->module_enabled('custom_status'))
-            {
+            if ($this->module_enabled('custom_status')) {
                 return $publishpress->custom_status->get_custom_statuses();
-            } else
-            {
+            } else {
                 return $this->get_core_post_statuses();
             }
         }
@@ -227,11 +217,9 @@ if (!class_exists('PP_Module'))
             // Check if custom status module is enabled
             $custom_status_module = PublishPress()->custom_status->module->options;
 
-            if ($custom_status_module->enabled == 'on')
-            {
+            if ($custom_status_module->enabled == 'on') {
                 return $custom_status_module->default_status;
-            } else
-            {
+            } else {
                 return 'draft';
             }
         }
@@ -248,8 +236,7 @@ if (!class_exists('PP_Module'))
         public function filter_posts_link($slug, $post_type = 'post')
         {
             $filter_link = add_query_arg('post_status', $slug, get_admin_url(null, 'edit.php'));
-            if ($post_type != 'post' && in_array($post_type, get_post_types('', 'names')))
-            {
+            if ($post_type != 'post' && in_array($post_type, get_post_types('', 'names'))) {
                 $filter_link = add_query_arg('post_type', $post_type, $filter_link);
             }
 
@@ -281,15 +268,12 @@ if (!class_exists('PP_Module'))
 
             // Custom statuses only handles workflow statuses
             if ($this->module_enabled('custom_status')
-                && !in_array($status, array('publish', 'future', 'private', 'trash')))
-            {
+                && !in_array($status, array('publish', 'future', 'private', 'trash'))) {
                 $status_object = $publishpress->custom_status->get_custom_status_by('slug', $status);
-                if ($status_object && !is_wp_error($status_object))
-                {
+                if ($status_object && !is_wp_error($status_object)) {
                     $status_friendly_name = $status_object->name;
                 }
-            } else if (array_key_exists($status, $builtin_stati))
-            {
+            } elseif (array_key_exists($status, $builtin_stati)) {
                 $status_friendly_name = $builtin_stati[$status];
             }
 
@@ -351,8 +335,7 @@ if (!class_exists('PP_Module'))
         {
             $response = null;
             $response = apply_filters('pp_get_user_meta', $response, $user_id, $key, $string);
-            if (!is_null($response))
-            {
+            if (!is_null($response)) {
                 return $response;
             }
 
@@ -374,8 +357,7 @@ if (!class_exists('PP_Module'))
         {
             $response = null;
             $response = apply_filters('pp_update_user_meta', $response, $user_id, $key, $value, $previous);
-            if (!is_null($response))
-            {
+            if (!is_null($response)) {
                 return $response;
             }
 
@@ -400,8 +382,7 @@ if (!class_exists('PP_Module'))
                 'message' => $message,
             );
 
-            if (!is_null($data))
-            {
+            if (!is_null($data)) {
                 $result['data'] = $data;
             }
 
@@ -440,29 +421,23 @@ if (!class_exists('PP_Module'))
             global $pagenow, $publishpress;
 
             // All of the settings views are based on admin.php and a $_GET['page'] parameter
-            if ($pagenow != 'admin.php' || !isset($_GET['page']))
-            {
+            if ($pagenow != 'admin.php' || !isset($_GET['page'])) {
                 return false;
             }
 
-            if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings')
-            {
-                if (empty($module_name))
-                {
+            if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings') {
+                if (empty($module_name)) {
                     return true;
                 }
 
-                if (!isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings')
-                {
-                    if (in_array($module_name, array('editorial_comments', 'notifications', 'dashboard')))
-                    {
+                if (!isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings') {
+                    if (in_array($module_name, array('editorial_comments', 'notifications', 'dashboard'))) {
                         return true;
                     }
                 }
 
                 $slug = str_replace('_', '-', $module_name);
-                if (isset($_GET['module']) && $_GET['module'] === 'pp-' . $slug . '-settings')
-                {
+                if (isset($_GET['module']) && $_GET['module'] === 'pp-' . $slug . '-settings') {
                     return true;
                 }
             }
@@ -487,26 +462,22 @@ if (!class_exists('PP_Module'))
         {
             global $wpdb;
 
-            if (!taxonomy_exists($taxonomy))
-            {
+            if (!taxonomy_exists($taxonomy)) {
                 return new WP_Error('invalid_taxonomy', __('Invalid Taxonomy'));
             }
 
-            if (!is_array($object_id))
-            {
+            if (!is_array($object_id)) {
                 $object_id = array($object_id);
             }
 
-            if (!is_array($terms))
-            {
+            if (!is_array($terms)) {
                 $terms = array($terms);
             }
 
             $delete_objects = array_map('intval', $object_id);
             $delete_terms   = array_map('intval', $terms);
 
-            if ($delete_terms)
-            {
+            if ($delete_terms) {
                 $in_delete_terms   = "'" . implode("', '", $delete_terms) . "'";
                 $in_delete_objects = "'" . implode("', '", $delete_objects) . "'";
                 $return            = $wpdb->query($wpdb->prepare("DELETE FROM $wpdb->term_relationships WHERE object_id IN ($in_delete_objects) AND term_taxonomy_id IN ($in_delete_terms)", $object_id));
@@ -583,12 +554,10 @@ if (!class_exists('PP_Module'))
             $today = time(); /* Current unix time  */
             $since = $today - $original;
 
-            if ($since > $chunks[2][0])
-            {
+            if ($since > $chunks[2][0]) {
                 $print = date('M jS', $original);
 
-                if ($since > $chunks[0][0])
-                { // Seconds in a year
+                if ($since > $chunks[0][0]) { // Seconds in a year
                     $print .= ', ' . date('Y', $original);
                 }
 
@@ -596,14 +565,12 @@ if (!class_exists('PP_Module'))
             }
 
             // $j saves performing the count function each time around the loop
-            for ($i = 0, $j = count($chunks); $i < $j; $i++)
-            {
+            for ($i = 0, $j = count($chunks); $i < $j; $i++) {
                 $seconds = $chunks[$i][0];
                 $name    = $chunks[$i][1];
 
                 // finding the biggest chunk (if the chunk fits, break)
-                if (($count = floor($since / $seconds)) != 0)
-                {
+                if (($count = floor($since / $seconds)) != 0) {
                     break;
                 }
             }
@@ -645,13 +612,11 @@ if (!class_exists('PP_Module'))
             $args  = apply_filters('pp_users_select_form_get_users_args', $args);
             $users = get_users($args);
 
-            if (!is_array($selected))
-            {
+            if (!is_array($selected)) {
                 $selected = array();
             }
 
-            $roles = get_editable_roles();
-            ?>
+            $roles = get_editable_roles(); ?>
 
             <?php if (!empty($users)) : ?>
                 <select class="chosen-select" name="to_notify[]" multiple>
@@ -682,7 +647,6 @@ if (!class_exists('PP_Module'))
          */
         public function add_caps_to_role($role, $caps)
         {
-
             PublishPress\Legacy\Util::add_caps_to_role($role, $caps);
         }
 
@@ -696,23 +660,19 @@ if (!class_exists('PP_Module'))
         {
             $screen = get_current_screen();
 
-            if (!method_exists($screen, 'add_help_tab'))
-            {
+            if (!method_exists($screen, 'add_help_tab')) {
                 return;
             }
 
-            if ($screen->id != 'publishpress_page_' . $this->module->settings_slug)
-            {
+            if ($screen->id != 'publishpress_page_' . $this->module->settings_slug) {
                 return;
             }
 
             // Make sure we have all of the required values for our tab
-            if (isset($this->module->settings_help_tab['id'], $this->module->settings_help_tab['title'], $this->module->settings_help_tab['content']))
-            {
+            if (isset($this->module->settings_help_tab['id'], $this->module->settings_help_tab['title'], $this->module->settings_help_tab['content'])) {
                 $screen->add_help_tab($this->module->settings_help_tab);
 
-                if (isset($this->module->settings_help_sidebar))
-                {
+                if (isset($this->module->settings_help_sidebar)) {
                     $screen->set_help_sidebar($this->module->settings_help_sidebar);
                 }
             }
@@ -728,39 +688,31 @@ if (!class_exists('PP_Module'))
             );
 
             $terms = get_terms($taxonomy, $args);
-            foreach ($terms as $term)
-            {
+            foreach ($terms as $term) {
                 // If we can detect that this term already follows the new scheme, let's skip it
                 $maybe_serialized = base64_decode($term->description);
-                if (is_serialized($maybe_serialized))
-                {
+                if (is_serialized($maybe_serialized)) {
                     continue;
                 }
 
                 $description_args = array();
 
                 // This description has been JSON-encoded, so let's decode it
-                if (0 === strpos($term->description, '{'))
-                {
+                if (0 === strpos($term->description, '{')) {
                     $string_to_unencode = stripslashes(htmlspecialchars_decode($term->description));
                     $unencoded_array    = json_decode($string_to_unencode, true);
                     // Only continue processing if it actually was an array. Otherwise, set to the original string
-                    if (is_array($unencoded_array))
-                    {
-                        foreach ($unencoded_array as $key => $value)
-                        {
+                    if (is_array($unencoded_array)) {
+                        foreach ($unencoded_array as $key => $value) {
                             // html_entity_decode only works on strings but sometimes we store nested arrays
-                            if (!is_array($value))
-                            {
+                            if (!is_array($value)) {
                                 $description_args[$key] = html_entity_decode($value, ENT_QUOTES);
-                            } else
-                            {
+                            } else {
                                 $description_args[$key] = $value;
                             }
                         }
                     }
-                } else
-                {
+                } else {
                     $description_args['description'] = $term->description;
                 }
 

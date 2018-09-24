@@ -50,8 +50,7 @@ class Controller
     {
         $workflows = $this->get_filtered_workflows($args);
 
-        foreach ($workflows as $workflow)
-        {
+        foreach ($workflows as $workflow) {
             $workflow->run($args);
         }
     }
@@ -93,10 +92,8 @@ class Controller
 
         $query = new \WP_Query($query_args);
 
-        if (!empty($query->posts))
-        {
-            foreach ($query->posts as $post)
-            {
+        if (!empty($query->posts)) {
+            foreach ($query->posts as $post) {
                 $workflows[] = new Workflow($post);
             }
         }
@@ -174,10 +171,8 @@ class Controller
         $classes = array_merge($classes_event, $classes_event_content, $classes_receiver, $classes_channel, $classes_content);
 
         // Instantiate each class
-        foreach ($classes as $class)
-        {
-            if (class_exists($class))
-            {
+        foreach ($classes as $class) {
+            if (class_exists($class)) {
                 new $class;
             }
         }

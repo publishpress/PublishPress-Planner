@@ -33,13 +33,11 @@ class Workflows extends Base
      */
     public function extra_tablenav($which)
     {
-        if ($which == "top")
-        {
+        if ($which == "top") {
             //The code that goes before the table is here
         }
 
-        if ($which == "bottom")
-        {
+        if ($which == "bottom") {
             //The code that goes after the table is there
         }
     }
@@ -55,23 +53,19 @@ class Workflows extends Base
     {
         global $mode;
 
-        if ('0000-00-00 00:00:00' === $post->post_date)
-        {
+        if ('0000-00-00 00:00:00' === $post->post_date) {
             $t_time    = $h_time = __('Undefined');
             $time_diff = 0;
-        } else
-        {
+        } else {
             $t_time = get_the_time(__('Y/m/d g:i:s a'));
             $m_time = $post->post_date;
             $time   = get_post_time('G', true, $post);
 
             $time_diff = time() - $time;
 
-            if ($time_diff > 0 && $time_diff < DAY_IN_SECONDS)
-            {
+            if ($time_diff > 0 && $time_diff < DAY_IN_SECONDS) {
                 $h_time = sprintf(__('%s ago'), human_time_diff($time));
-            } else
-            {
+            } else {
                 $h_time = mysql2date(__('Y/m/d'), $m_time);
             }
         }
@@ -156,8 +150,7 @@ class Workflows extends Base
         $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
 
         // Page Number
-        if (empty($paged) || !is_numeric($paged) || $paged <= 0)
-        {
+        if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
 
@@ -188,8 +181,7 @@ class Workflows extends Base
      */
     public function column_default($item, $column_name)
     {
-        switch ($column_name)
-        {
+        switch ($column_name) {
             case 'ID':
             case 'post_title':
                 return $item->$column_name;

@@ -33,7 +33,6 @@ use PublishPress\Core\Modules\ModuleInterface;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 if (!class_exists('PP_Roles')) {
-
     if (!class_exists('PP_Roles_List_Table')) {
         require_once __DIR__ . '/lib/list_table.php';
     }
@@ -49,10 +48,10 @@ if (!class_exists('PP_Roles')) {
 
         const SETTINGS_SLUG = 'pp-roles-settings';
 
-	    /**
-	     * @var string
-	     */
-	    const MENU_SLUG = 'pp-manage-roles';
+        /**
+         * @var string
+         */
+        const MENU_SLUG = 'pp-manage-roles';
 
         const VALUE_YES = 'yes';
 
@@ -155,10 +154,10 @@ if (!class_exists('PP_Roles')) {
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
-	        // Menu
-	        add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 40);
-	        add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 40);
-	        add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 40);
+            // Menu
+            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 40);
+            add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 40);
+            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 40);
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
             add_action('user_register', [$this, 'action_profile_update'], 9);
@@ -347,7 +346,8 @@ if (!class_exists('PP_Roles')) {
                             'pp_notify_role',
                             [
                                 'slug' => $userGroup->slug,
-                            ]);
+                            ]
+                        );
                     }
 
                     if (is_wp_error($term)) {
@@ -371,7 +371,7 @@ if (!class_exists('PP_Roles')) {
                         foreach ($postTerms as $term) {
                             if (is_object($term)) {
                                 $termId = $term->term_id;
-                            } else if (is_array($term)) {
+                            } elseif (is_array($term)) {
                                 $termId = $term['term_id'];
                             }
 
@@ -574,32 +574,62 @@ if (!class_exists('PP_Roles')) {
         {
             if (isset($_GET['page']) && $_GET['page'] === 'pp-manage-roles') {
                 // Settings page
-                wp_enqueue_script('publishpress-chosen-js', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
-                    ['jquery'], PUBLISHPRESS_VERSION);
-                wp_enqueue_script('publishpress-roles-js', $this->module_url . 'assets/js/admin.js',
-                    ['jquery', 'publishpress-chosen-js'], PUBLISHPRESS_VERSION);
+                wp_enqueue_script(
+                    'publishpress-chosen-js',
+                    PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+                wp_enqueue_script(
+                    'publishpress-roles-js',
+                    $this->module_url . 'assets/js/admin.js',
+                    ['jquery', 'publishpress-chosen-js'],
+                    PUBLISHPRESS_VERSION
+                );
 
-                wp_enqueue_style('publishpress-chosen-css', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css', false,
-                    PUBLISHPRESS_VERSION);
-                wp_enqueue_style('publishpress-roles-css', $this->module_url . 'assets/css/admin.css',
-                    ['publishpress-chosen-css'], PUBLISHPRESS_VERSION);
+                wp_enqueue_style(
+                    'publishpress-chosen-css',
+                    PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css',
+                    false,
+                    PUBLISHPRESS_VERSION
+                );
+                wp_enqueue_style(
+                    'publishpress-roles-css',
+                    $this->module_url . 'assets/css/admin.css',
+                    ['publishpress-chosen-css'],
+                    PUBLISHPRESS_VERSION
+                );
             } else {
                 if (function_exists('get_current_screen')) {
                     $screen = get_current_screen();
 
                     if ('user-edit' === $screen->base || ('user' === $screen->base && 'add' === $screen->action)) {
                         // Check if we are on the user's profile page
-                        wp_enqueue_script('publishpress-chosen-js',
+                        wp_enqueue_script(
+                            'publishpress-chosen-js',
                             PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
-                            ['jquery'], PUBLISHPRESS_VERSION);
-                        wp_enqueue_script('publishpress-roles-profile-js', $this->module_url . 'assets/js/profile.js',
-                            ['jquery', 'publishpress-chosen-js'], PUBLISHPRESS_VERSION);
+                            ['jquery'],
+                            PUBLISHPRESS_VERSION
+                        );
+                        wp_enqueue_script(
+                            'publishpress-roles-profile-js',
+                            $this->module_url . 'assets/js/profile.js',
+                            ['jquery', 'publishpress-chosen-js'],
+                            PUBLISHPRESS_VERSION
+                        );
 
-                        wp_enqueue_style('publishpress-chosen-css', PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css',
+                        wp_enqueue_style(
+                            'publishpress-chosen-css',
+                            PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css',
                             false,
-                            PUBLISHPRESS_VERSION);
-                        wp_enqueue_style('publishpress-roles-profile-css', $this->module_url . 'assets/css/profile.css',
-                            ['publishpress-chosen-css'], PUBLISHPRESS_VERSION);
+                            PUBLISHPRESS_VERSION
+                        );
+                        wp_enqueue_style(
+                            'publishpress-roles-profile-css',
+                            $this->module_url . 'assets/css/profile.css',
+                            ['publishpress-chosen-css'],
+                            PUBLISHPRESS_VERSION
+                        );
 
                         $userId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
 
@@ -703,57 +733,58 @@ if (!class_exists('PP_Roles')) {
             return add_query_arg($args, get_admin_url(null, 'admin.php'));
         }
 
-	    /**
-	     * Filters the menu slug.
-	     *
-	     * @param $menu_slug
-	     *
-	     * @return string
-	     */
-	    public function filter_admin_menu_slug($menu_slug) {
-		    if (empty($menu_slug) && $this->module_enabled('roles')) {
-			    $menu_slug = self::MENU_SLUG;
-		    }
+        /**
+         * Filters the menu slug.
+         *
+         * @param $menu_slug
+         *
+         * @return string
+         */
+        public function filter_admin_menu_slug($menu_slug)
+        {
+            if (empty($menu_slug) && $this->module_enabled('roles')) {
+                $menu_slug = self::MENU_SLUG;
+            }
 
-		    return $menu_slug;
-	    }
+            return $menu_slug;
+        }
 
-	    /**
-	     * Creates the admin menu if there is no menu set.
-	     */
-	    public function action_admin_menu_page() {
+        /**
+         * Creates the admin menu if there is no menu set.
+         */
+        public function action_admin_menu_page()
+        {
+            $publishpress = $this->get_service('publishpress');
 
-		    $publishpress = $this->get_service('publishpress');
+            if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
+                return;
+            }
 
-		    if ($publishpress->get_menu_slug() !== self::MENU_SLUG) {
-			    return;
-		    }
+            $publishpress->add_menu_page(
+                esc_html__('Roles', 'publishpress'),
+                apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
+                self::MENU_SLUG,
+                array($this, 'render_admin_page')
+            );
+        }
 
-		    $publishpress->add_menu_page(
-			    esc_html__('Roles', 'publishpress'),
-			    apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
-			    self::MENU_SLUG,
-			    array($this, 'render_admin_page')
-		    );
-	    }
+        /**
+         * Add necessary things to the admin menu
+         */
+        public function action_admin_submenu()
+        {
+            $publishpress = $this->get_service('publishpress');
 
-	    /**
-	     * Add necessary things to the admin menu
-	     */
-	    public function action_admin_submenu()
-	    {
-		    $publishpress = $this->get_service('publishpress');
-
-		    // Main Menu
-		    add_submenu_page(
-			    $publishpress->get_menu_slug(),
-			    esc_html__('Roles', 'publishpress'),
-			    esc_html__('Roles', 'publishpress'),
-			    apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
-			    self::MENU_SLUG,
-			    array($this, 'render_admin_page')
-		    );
-	    }
+            // Main Menu
+            add_submenu_page(
+                $publishpress->get_menu_slug(),
+                esc_html__('Roles', 'publishpress'),
+                esc_html__('Roles', 'publishpress'),
+                apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
+                self::MENU_SLUG,
+                array($this, 'render_admin_page')
+            );
+        }
 
         /**
          * @throws Exception
@@ -833,8 +864,10 @@ if (!class_exists('PP_Roles')) {
                         'display_name'             => __("Display name", 'publishpress'),
                         'display_name_description' => __("This is the name that users will see.", 'publishpress'),
                         'name'                     => __('Developer Name (ID)', 'publishpress'),
-                        'name_description'         => __('This is the name that developers can use to interact with this role. Only use A-Z letters and the "-" sign.',
-                            'publishpress'),
+                        'name_description'         => __(
+                            'This is the name that developers can use to interact with this role. Only use A-Z letters and the "-" sign.',
+                            'publishpress'
+                        ),
                         'users'                    => __("Users", 'publishpress'),
                         'users_description'        => __("Add users to this role.", 'publishpress'),
                     ],
@@ -895,18 +928,24 @@ if (!class_exists('PP_Roles')) {
             }
 
             if (strlen($name) > 40) {
-                $_REQUEST['form-errors']['name'] = __('Role name cannot exceed 40 characters. Please try a shorter name.',
-                    'publishpress');
+                $_REQUEST['form-errors']['name'] = __(
+                    'Role name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress'
+                );
             }
 
             if (empty($display_name)) {
-                $_REQUEST['form-errors']['display_name'] = __('Please enter a display name for the role.',
-                    'publishpress');
+                $_REQUEST['form-errors']['display_name'] = __(
+                    'Please enter a display name for the role.',
+                    'publishpress'
+                );
             }
 
             if (strlen($display_name) > 40) {
-                $_REQUEST['form-errors']['display_name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
-                    'publishpress');
+                $_REQUEST['form-errors']['display_name'] = __(
+                    'Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress'
+                );
             }
 
             // Kick out if there are any errors
@@ -978,8 +1017,10 @@ if (!class_exists('PP_Roles')) {
             }
 
             if (strlen($display_name) > 40) {
-                $_REQUEST['form-errors']['name'] = __('Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
-                    'publishpress');
+                $_REQUEST['form-errors']['name'] = __(
+                    'Role\'s display name cannot exceed 40 characters. Please try a shorter name.',
+                    'publishpress'
+                );
             }
 
             // Kick out if there are any errors
@@ -1091,7 +1132,6 @@ if (!class_exists('PP_Roles')) {
          */
         public function register_settings()
         {
-
         }
     }
 }

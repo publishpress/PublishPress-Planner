@@ -47,13 +47,11 @@ class WPCron implements QueueInterface
      */
     public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel)
     {
-        if (!is_array($receivers))
-        {
+        if (!is_array($receivers)) {
             $receivers = [$receivers];
         }
 
-        if (!empty($receivers))
-        {
+        if (!empty($receivers)) {
             $baseData = [
                 // workflow_post_id
                 $workflowPost->ID,
@@ -80,8 +78,7 @@ class WPCron implements QueueInterface
             }
 
             // Create one notification for each receiver in the queue
-            foreach ($receivers as $receiver)
-            {
+            foreach ($receivers as $receiver) {
                 // Base data
                 $data = $baseData;
 

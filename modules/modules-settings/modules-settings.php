@@ -28,8 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Modules_Settings'))
-{
+if (!class_exists('PP_Modules_Settings')) {
     /**
      * class PP_Modules_Settings
      * Threaded commenting in the admin for discussion between writers and editors
@@ -90,7 +89,6 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function register_settings()
         {
-
         }
 
         /**
@@ -113,8 +111,7 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function settings_save($new_options)
         {
-            if (!isset($_POST['publishpress_options']))
-            {
+            if (!isset($_POST['publishpress_options'])) {
                 return true;
             }
 
@@ -123,12 +120,9 @@ if (!class_exists('PP_Modules_Settings'))
             $enabledFeatures = $_POST['publishpress_options']['features'];
 
             // Run through all the modules updating their statuses
-            foreach ($publishpress->modules as $mod_data)
-            {
+            foreach ($publishpress->modules as $mod_data) {
                 if ($mod_data->autoload
-                    || $mod_data->slug === $this->module->slug)
-                {
-
+                    || $mod_data->slug === $this->module->slug) {
                     continue;
                 }
 
@@ -146,24 +140,20 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function print_configure_view()
         {
-            global $publishpress;
-            ?>
+            global $publishpress; ?>
             <form class="basic-settings"
                   action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
                 <?php settings_fields($this->module->options_group_name); ?>
                 <?php do_settings_sections($this->module->options_group_name); ?>
 
                 <?php
-                foreach ($publishpress->class_names as $slug => $class_name)
-                {
+                foreach ($publishpress->class_names as $slug => $class_name) {
                     $mod_data = $publishpress->$slug->module;
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
                         || !isset($mod_data->general_options)
-                        || $mod_data->options->enabled != 'on')
-                    {
-
+                        || $mod_data->options->enabled != 'on') {
                         continue;
                     }
 
@@ -173,9 +163,7 @@ if (!class_exists('PP_Modules_Settings'))
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($mod_data->name) . '" />';
 
                     $publishpress->$slug->print_configure_view();
-                }
-
-                ?>
+                } ?>
 
                 <div id="modules-wrapper">
                     <h3><?php echo __('Features', 'publishpress'); ?></h3>
@@ -188,7 +176,9 @@ if (!class_exists('PP_Modules_Settings'))
                             <td>
                                 <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
-                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) continue; ?>
+                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
+                    continue;
+                } ?>
 
                                     <label for="feature-<?php echo $mod_data->slug; ?>">
                                         <input id="feature-<?php echo $mod_data->slug; ?>"
@@ -208,8 +198,7 @@ if (!class_exists('PP_Modules_Settings'))
                 <?php
                 wp_nonce_field('edit-publishpress-settings');
 
-                submit_button(null, 'primary', 'submit', false);
-                ?>
+            submit_button(null, 'primary', 'submit', false); ?>
             </form>
             <?php
         }

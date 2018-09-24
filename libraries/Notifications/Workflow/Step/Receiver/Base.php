@@ -13,7 +13,6 @@ use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
 class Base extends Base_Step
 {
-
     const META_KEY_SELECTED = '_psppno_toundefined';
 
     /**

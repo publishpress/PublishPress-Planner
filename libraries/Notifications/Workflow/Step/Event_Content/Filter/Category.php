@@ -14,7 +14,6 @@ use PublishPress\Notifications\Workflow\Step\Event_Content\Category as Step_Cate
 
 class Category extends Base implements Filter_Interface
 {
-
     const META_KEY_CATEGORY = '_psppno_whencategory';
 
     /**
@@ -55,8 +54,7 @@ class Category extends Base implements Filter_Interface
         $metadata = (array)$this->get_metadata(static::META_KEY_CATEGORY);
 
         $options = [];
-        foreach ($categories as $category)
-        {
+        foreach ($categories as $category) {
             $options[] = [
                 'value'    => $category->slug,
                 'label'    => $category->name,
@@ -75,11 +73,9 @@ class Category extends Base implements Filter_Interface
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category']))
-        {
+        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category'])) {
             $values = [];
-        } else
-        {
+        } else {
             $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
         }
 
@@ -104,10 +100,8 @@ class Category extends Base implements Filter_Interface
         $categories   = wp_get_post_terms($action_args['post']->ID, 'category');
         $category_ids = [];
 
-        if (!empty($categories))
-        {
-            foreach ($categories as $category)
-            {
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
                 $category_ids[] = $category->slug;
             }
         }

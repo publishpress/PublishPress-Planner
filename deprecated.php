@@ -42,7 +42,6 @@ namespace PublishPress;
  */
 class Util extends \PublishPress\Legacy\Util
 {
-
 }
 
 /**
@@ -53,5 +52,4 @@ class Util extends \PublishPress\Legacy\Util
  */
 class Auto_loader extends \PublishPress\Legacy\Auto_loader
 {
-
 }

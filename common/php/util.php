@@ -28,8 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!function_exists('pp_draft_or_post_title'))
-{
+if (!function_exists('pp_draft_or_post_title')) {
     /**
      * Copy of core's _draft_or_post_title without the filters
      *

@@ -32,8 +32,7 @@
  * class PP_Efmigration
  */
 
-if (!class_exists('PP_Efmigration'))
-{
+if (!class_exists('PP_Efmigration')) {
     class PP_Efmigration extends PP_Module
     {
         const OPTION_PREFIX = 'publishpress_';
@@ -90,8 +89,7 @@ if (!class_exists('PP_Efmigration'))
          */
         public function init()
         {
-            if (!current_user_can('manage_options'))
-            {
+            if (!current_user_can('manage_options')) {
                 return;
             }
 
@@ -101,8 +99,7 @@ if (!class_exists('PP_Efmigration'))
             add_action('wp_ajax_pp_migrate_ef_data', array($this, 'migrate_data'));
             add_action('wp_ajax_pp_finish_migration', array($this, 'migrate_data_finish'));
 
-            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG)
-            {
+            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) {
                 add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
                 add_action('admin_print_styles', array($this, 'enqueue_admin_styles'));
             }
@@ -115,7 +112,6 @@ if (!class_exists('PP_Efmigration'))
          */
         public function install()
         {
-
         }
 
         /**
@@ -125,7 +121,6 @@ if (!class_exists('PP_Efmigration'))
          */
         public function upgrade($previous_version)
         {
-
         }
 
         /**
@@ -186,16 +181,13 @@ if (!class_exists('PP_Efmigration'))
         {
             global $publishpress;
 
-            if (!current_user_can('manage_options'))
-            {
+            if (!current_user_can('manage_options')) {
                 _e('Access Denied', self::PLUGIN_NAMESPACE);
 
                 return;
             }
 
-            $publishpress->settings->print_default_header($this->module);
-
-            ?>
+            $publishpress->settings->print_default_header($this->module); ?>
             <div class="wrap publishpress-admin">
                 <div id="pp-content"></div>
             </div>
@@ -237,11 +229,9 @@ if (!class_exists('PP_Efmigration'))
         public function action_admin_notice()
         {
             // Check if EditFlow is installed
-            if ($this->checkEditFlowIsInstalled())
-            {
+            if ($this->checkEditFlowIsInstalled()) {
                 $dismissMigration = (bool)get_site_option(self::OPTION_DISMISS_MIGRATION, 0);
-                if (!$dismissMigration && (!isset($_GET['page']) || self::PAGE_SLUG !== $_GET['page']))
-                {
+                if (!$dismissMigration && (!isset($_GET['page']) || self::PAGE_SLUG !== $_GET['page'])) {
                     echo '<div class="updated"><p>';
                     printf(
                         __('We have found Edit Flow and its data! Would you like to import the data into PublishPress? <a href="%1$s">Yes, import the data</a> | <a href="%2$s">Dismiss</a>'),
@@ -266,22 +256,17 @@ if (!class_exists('PP_Efmigration'))
          */
         public function action_editflow_migrate()
         {
-            if ($this->checkEditFlowIsInstalled())
-            {
+            if ($this->checkEditFlowIsInstalled()) {
                 $dismissMigration = (bool)get_site_option(self::OPTION_DISMISS_MIGRATION, 0);
-                if (!$dismissMigration)
-                {
+                if (!$dismissMigration) {
                     // If user clicks to ignore the notice, and register in the options
-                    if (isset($_GET[self::EDITFLOW_MIGRATION_URL_FLAG]))
-                    {
-                        if (!current_user_can('manage_options'))
-                        {
+                    if (isset($_GET[self::EDITFLOW_MIGRATION_URL_FLAG])) {
+                        if (!current_user_can('manage_options')) {
                             $this->accessDenied();
                         }
 
                         $migrate = (bool)$_GET[self::EDITFLOW_MIGRATION_URL_FLAG];
-                        if (!$migrate)
-                        {
+                        if (!$migrate) {
                             update_site_option(self::OPTION_DISMISS_MIGRATION, 1, true);
                         }
                     }
@@ -293,8 +278,7 @@ if (!class_exists('PP_Efmigration'))
         {
             check_ajax_referer(self::NONCE_KEY);
 
-            if (!current_user_can('manage_options'))
-            {
+            if (!current_user_can('manage_options')) {
                 $this->accessDenied();
             }
 
@@ -306,18 +290,15 @@ if (!class_exists('PP_Efmigration'))
 
             // Get and validate the step
             $step = $_POST['step'];
-            if (!in_array($step, $allowedSteps))
-            {
+            if (!in_array($step, $allowedSteps)) {
                 $result->error = __('Unknown step', self::PLUGIN_NAMESPACE);
             }
 
             $methodName = 'migrate_data_' . $step;
 
-            if (!method_exists($this, $methodName))
-            {
+            if (!method_exists($this, $methodName)) {
                 $result->error = __('Undefined migration method', self::PLUGIN_NAMESPACE);
-            } else
-            {
+            } else {
                 $this->$methodName();
             }
 
@@ -331,8 +312,7 @@ if (!class_exists('PP_Efmigration'))
          */
         protected function migrate_data_options()
         {
-            if (!get_site_option(self::OPTION_MIGRATED_OPTIONS, false))
-            {
+            if (!get_site_option(self::OPTION_MIGRATED_OPTIONS, false)) {
                 $optionsToMigrate = array(
                     'calendar_options',
                     'custom_status_options',
@@ -345,8 +325,7 @@ if (!class_exists('PP_Efmigration'))
                     'user_groups_options',
                 );
 
-                foreach ($optionsToMigrate as $option)
-                {
+                foreach ($optionsToMigrate as $option) {
                     $efOption = get_option('edit_flow_' . $option);
 
                     // Update the current publishpress settings
@@ -361,8 +340,7 @@ if (!class_exists('PP_Efmigration'))
         {
             global $wpdb;
 
-            if (!get_site_option(self::OPTION_MIGRATED_USERMETA, false))
-            {
+            if (!get_site_option(self::OPTION_MIGRATED_USERMETA, false)) {
                 // Remove PublishPress data
                 $data = $wpdb->get_results(
                     "
@@ -372,10 +350,8 @@ if (!class_exists('PP_Efmigration'))
                     "
                 );
 
-                if (!empty($data))
-                {
-                    foreach ($data as $meta)
-                    {
+                if (!empty($data)) {
+                    foreach ($data as $meta) {
                         $key = preg_replace('/^ef_/', 'pp_', $meta->meta_key);
                         update_user_meta($meta->user_id, $key, $meta->meta_value);
                     }
@@ -389,8 +365,7 @@ if (!class_exists('PP_Efmigration'))
         {
             check_ajax_referer(self::NONCE_KEY);
 
-            if (!current_user_can('manage_options'))
-            {
+            if (!current_user_can('manage_options')) {
                 $this->accessDenied();
             }
 
@@ -401,11 +376,9 @@ if (!class_exists('PP_Efmigration'))
 
         protected function accessDenied()
         {
-            if (!headers_sent())
-            {
+            if (!headers_sent()) {
                 header('HTTP/1.1 403 ' . __('Access Denied', self::PLUGIN_NAMESPACE));
-            } else
-            {
+            } else {
                 _e('Access Denied', self::PLUGIN_NAMESPACE);
             }
 
