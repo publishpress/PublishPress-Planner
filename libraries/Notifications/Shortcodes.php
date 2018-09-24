@@ -58,7 +58,7 @@ class Shortcodes {
 	}
 
 	/**
-	 * Returns the user who triggered the worflow for notification.
+	 * Returns the user who triggered the workflow for notification.
 	 * You can specify which user's property should be printed:
 	 *
 	 * [psppno_actor display_name]
