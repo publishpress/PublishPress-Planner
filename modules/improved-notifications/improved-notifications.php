@@ -150,7 +150,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             add_action('add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW, array($this, 'action_meta_boxes_workflow'));
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
 
-            // Cancel the PublishPress and PublishPress Slack Notifications
+            // Cancel the PublishPress and PublishPress Slack Notifications, since they will be sent by the cron task.
             add_filter('publishpress_slack_enable_notifications', [$this, 'filter_slack_enable_notifications']);
             remove_all_actions('pp_send_notification_status_update');
             remove_all_actions('pp_send_notification_comment');
