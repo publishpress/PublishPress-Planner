@@ -311,7 +311,7 @@ if (!class_exists('PP_Custom_Status')) {
                 // unset($wp_post_statuses['draft']);
                 // unset($wp_post_statuses['pending']);
 
-                $custom_statuses = $this->get_custom_statuses($args, true);
+                $custom_statuses = $this->get_custom_statuses($args, ! is_admin());
 
                 // Unfortunately, register_post_status() doesn't accept a
                 // post type argument, so we have to register the post
