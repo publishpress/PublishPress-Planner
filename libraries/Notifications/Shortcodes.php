@@ -41,10 +41,10 @@ class Shortcodes
     {
         $this->set_properties($workflow_post, $action_args);
 
-        add_shortcode('psppno_actor', [ $this, 'handle_psppno_actor' ]);
-        add_shortcode('psppno_post', [ $this, 'handle_psppno_post' ]);
-        add_shortcode('psppno_workflow', [ $this, 'handle_psppno_workflow' ]);
-        add_shortcode('psppno_edcomment', [ $this, 'handle_psppno_edcomment' ]);
+        add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
+        add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
+        add_shortcode('psppno_workflow', [$this, 'handle_psppno_workflow']);
+        add_shortcode('psppno_edcomment', [$this, 'handle_psppno_edcomment']);
     }
 
     /**
@@ -125,7 +125,7 @@ class Shortcodes
         }
 
         // Set the separator
-        if (! isset($attrs['separator'])) {
+        if ( ! isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -230,11 +230,11 @@ class Shortcodes
 
         // No attributes? Set the default one.
         if (empty($attrs)) {
-            $attrs = [ 'title' ];
+            $attrs = ['title'];
         }
 
         // Set the separator
-        if (! isset($attrs['separator'])) {
+        if ( ! isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -267,7 +267,7 @@ class Shortcodes
                 case 'new_status':
                     $status = $publishpress->custom_status->get_custom_status_by(
                         'slug',
-                        $this->action_args[ $item ]
+                        $this->action_args[$item]
                     );
 
                     if (empty($status) || 'WP_Error' === get_class($status)) {
@@ -293,7 +293,7 @@ class Shortcodes
                         'author_login'        => 'user_login',
                     ];
 
-                    $user_field = $field_map[ $item ];
+                    $user_field = $field_map[$item];
                     $data       = $authordata->{$user_field};
 
                     $info[] = apply_filters('pp_get_author_data', $data, $item, $post);
@@ -333,7 +333,7 @@ class Shortcodes
         }
 
         // Set the separator
-        if (! isset($attrs['separator'])) {
+        if ( ! isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -381,7 +381,7 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if (! isset($this->action_args['comment'])) {
+        if ( ! isset($this->action_args['comment'])) {
             return;
         }
 
@@ -393,7 +393,7 @@ class Shortcodes
         }
 
         // Set the separator
-        if (! isset($attrs['separator'])) {
+        if ( ! isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
