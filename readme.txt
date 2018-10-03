@@ -130,11 +130,12 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.16.4] - UNRELEASED =
+= [1.16.4] - 2018-10-03 =
 
 *Fixed:*
 
-* Fixed properties for customizing core statuses;
+* Fixed properties (color and icon) for customizing core statuses;
+* Fixed fatal error in shortcode processing when the param is sent as string - for notifications' body;
 
 = [1.16.3] - 2018-09-19 =
 
