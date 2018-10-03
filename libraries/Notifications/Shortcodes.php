@@ -111,6 +111,14 @@ class Shortcodes
      */
     protected function get_user_data($user, $attrs)
     {
+        if ( ! is_array($attrs)) {
+            if ( ! empty($attrs)) {
+                $attrs[] = $attrs;
+            } else {
+                $attrs = [];
+            }
+        }
+
         // No attributes? Set the default one.
         if (empty($attrs)) {
             $attrs[] = 'display_name';
