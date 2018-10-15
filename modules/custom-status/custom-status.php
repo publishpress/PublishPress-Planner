@@ -2099,7 +2099,8 @@ if (!class_exists('PP_Custom_Status')) {
 
             $args['preview_id'] = $post->ID;
 
-            return add_query_arg($args, home_url());
+
+            return add_query_arg($args, trailingslashit(home_url()));
         }
 
         /**
