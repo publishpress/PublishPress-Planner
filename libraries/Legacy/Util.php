@@ -123,4 +123,21 @@ class Util
             }
         }
     }
+
+    /**
+     * @return bool
+     */
+    public static function isGutenbergEnabled()
+    {
+        $isEnabled = defined('GUTENBERG_VERSION');
+
+        // Is WordPress 5?
+        if ( ! $isEnabled) {
+            $wpVersion = get_bloginfo('version');
+
+            $isEnabled = version_compare($wpVersion, '5.0', '>=');
+        }
+
+        return $isEnabled;
+    }
 }
