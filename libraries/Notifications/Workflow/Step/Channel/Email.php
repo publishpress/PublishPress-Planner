@@ -85,14 +85,15 @@ class Email extends Base implements Channel_Interface
      * Returns a list of the receivers' emails
      *
      * @param array $receivers
+     *
      * @return array
      */
     protected function get_receivers_emails($receivers)
     {
         $emails = [];
 
-        if (!empty($receivers)) {
-            if (!is_array($receivers)) {
+        if ( ! empty($receivers)) {
+            if ( ! is_array($receivers)) {
                 $receivers = [$receivers];
             }
 

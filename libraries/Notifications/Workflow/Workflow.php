@@ -81,7 +81,8 @@ class Workflow
                  * @param Workflow $workflow
                  * @param string   $channel
                  */
-                $action = apply_filters('publishpress_notif_workflow_run_action', 'publishpress_notif_send_notification_' . $channel, $this, $channel);
+                $action = apply_filters('publishpress_notif_workflow_run_action',
+                    'publishpress_notif_send_notification_' . $channel, $this, $channel);
 
                 /**
                  * Triggers the notification. This can be caught by notification channels.
@@ -114,9 +115,10 @@ class Workflow
          * @param WP_Post $workflow
          * @param array   $args
          */
-        $receivers = apply_filters('publishpress_notif_run_workflow_receivers', [], $this->workflow_post, $this->action_args);
+        $receivers = apply_filters('publishpress_notif_run_workflow_receivers', [], $this->workflow_post,
+            $this->action_args);
 
-        if (!empty($receivers)) {
+        if ( ! empty($receivers)) {
             // Remove duplicate receivers
             $receivers = array_unique($receivers, SORT_NUMERIC);
 
@@ -151,7 +153,7 @@ class Workflow
                     }
 
                     // Make sure the array for the channel is initialized.
-                    if (!isset($filtered_receivers[$channel])) {
+                    if ( ! isset($filtered_receivers[$channel])) {
                         $filtered_receivers[$channel] = [];
                     }
 
@@ -160,7 +162,7 @@ class Workflow
                 } elseif (is_string($receiver)) {
                     // Check if it is an explicit email address.
                     if (preg_match('/^email:/', $receiver)) {
-                        if (!isset($filtered_receivers['email'])) {
+                        if ( ! isset($filtered_receivers['email'])) {
                             $filtered_receivers['email'] = [];
                         }
 
@@ -197,13 +199,14 @@ class Workflow
          * @param WP_Post $workflow
          * @param array   $args
          */
-        $content = apply_filters('publishpress_notif_run_workflow_content', $content, $this->workflow_post, $this->action_args);
+        $content = apply_filters('publishpress_notif_run_workflow_content', $content, $this->workflow_post,
+            $this->action_args);
 
-        if (!array_key_exists('subject', $content)) {
+        if ( ! array_key_exists('subject', $content)) {
             $content['subject'] = '';
         }
 
-        if (!array_key_exists('body', $content)) {
+        if ( ! array_key_exists('body', $content)) {
             $content['body'] = '';
         }
 
@@ -242,12 +245,12 @@ class Workflow
             'post_status'   => 'future',
             'no_found_rows' => true,
             'cache_results' => true,
-            'meta_query' => [
+            'meta_query'    => [
                 [
-                    'key' => static::NOTIFICATION_SCHEDULE_META_KEY,
+                    'key'     => static::NOTIFICATION_SCHEDULE_META_KEY,
                     'compare' => 'NOT EXISTS',
                 ],
-            ]
+            ],
         ];
 
         // Check if the workflow filters by post type
@@ -256,7 +259,7 @@ class Workflow
             Step\Event_Content\Filter\Post_Type::META_KEY_POST_TYPE
         );
 
-        if (!empty($workflowPostTypes)) {
+        if ( ! empty($workflowPostTypes)) {
             $query_args['post_type'] = $workflowPostTypes;
         }
 
@@ -266,13 +269,13 @@ class Workflow
             Step\Event_Content\Filter\Category::META_KEY_CATEGORY
         );
 
-        if (!empty($workflowCategories)) {
+        if ( ! empty($workflowCategories)) {
             $query_args['category__in'] = $workflowCategories;
         }
 
         $query = new \WP_Query($query_args);
 
-        if (!empty($query->posts)) {
+        if ( ! empty($query->posts)) {
             foreach ($query->posts as $post) {
                 $posts[] = $post;
             }

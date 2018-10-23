@@ -67,8 +67,8 @@ class Main extends Base_Step
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif']['content_main'])) {
+        if ( ! isset($_POST['publishpress_notif'])
+             || ! isset($_POST['publishpress_notif']['content_main'])) {
             // Assume it is disabled
             update_post_meta($id, static::META_KEY_SUBJECT, false);
             update_post_meta($id, static::META_KEY_BODY, false);
@@ -91,6 +91,7 @@ class Main extends Base_Step
      * @param array   $content
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_content($content, $workflow, $args)

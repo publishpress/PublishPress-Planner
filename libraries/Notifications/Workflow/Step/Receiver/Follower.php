@@ -35,6 +35,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
@@ -49,7 +50,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 return $receivers;
             }
 
-            $followers = array();
+            $followers = [];
 
 
             // Check if we just created the post and the metadata is not saved yet.
@@ -59,8 +60,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             ) {
                 $toNotify = $_POST['to_notify'];
 
-                $roles = array();
-                $users = array();
+                $roles = [];
+                $users = [];
 
                 foreach ($toNotify as $item) {
                     if (is_numeric($item)) {
@@ -76,7 +77,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             }
 
             // Extract users from roles
-            if (!empty($roles)) {
+            if ( ! empty($roles)) {
                 foreach ($roles as $role) {
                     $roleUsers = get_users(
                         [
@@ -84,7 +85,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                         ]
                     );
 
-                    if (!empty($roleUsers)) {
+                    if ( ! empty($roleUsers)) {
                         foreach ($roleUsers as $user) {
                             if (is_user_member_of_blog($user->ID)) {
                                 $followers[] = $user->ID;
@@ -98,7 +99,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             $followers = array_merge($followers, $users);
 
             // Process the recipients for this email to be sent
-            if (!empty($followers)) {
+            if ( ! empty($followers)) {
                 foreach ($followers as $key => $user) {
                     // Make sure we have only user objects in the list
                     if (is_numeric($user)) {
@@ -106,7 +107,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                     }
 
                     // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                    if (false === apply_filters('publishpress_notify_current_user', false) && wp_get_current_user()->user_email == $user->user_email) {
+                    if (false === apply_filters('publishpress_notify_current_user',
+                            false) && wp_get_current_user()->user_email == $user->user_email) {
                         unset($followers[$key]);
                     }
                 }
@@ -119,10 +121,11 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
              * @param WP_Post $workflow
              * @param array   $args
              */
-            $followers = apply_filters('publishpress_notif_workflow_receiver_post_followers', $followers, $workflow, $args);
+            $followers = apply_filters('publishpress_notif_workflow_receiver_post_followers', $followers, $workflow,
+                $args);
 
             // Add the user ids for the receivers list
-            if (!empty($followers)) {
+            if ( ! empty($followers)) {
                 foreach ($followers as $user) {
                     if (is_object($user)) {
                         $receivers[] = $user->ID;

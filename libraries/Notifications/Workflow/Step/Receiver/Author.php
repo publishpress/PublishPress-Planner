@@ -35,6 +35,7 @@ class Author extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
@@ -50,7 +51,8 @@ class Author extends Simple_Checkbox implements Receiver_Interface
              * @param WP_Post $workflow
              * @param array   $args
              */
-            $receivers = apply_filters('publishpress_notif_workflow_receiver_post_authors', $receivers, $workflow, $args);
+            $receivers = apply_filters('publishpress_notif_workflow_receiver_post_authors', $receivers, $workflow,
+                $args);
         }
 
         return $receivers;

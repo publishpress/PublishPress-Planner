@@ -48,13 +48,13 @@ class Util
             $post_type = $post->post_type;
         } elseif ($typenow) {
             $post_type = $typenow;
-        } elseif ($current_screen && !empty($current_screen->post_type)) {
+        } elseif ($current_screen && ! empty($current_screen->post_type)) {
             $post_type = $current_screen->post_type;
         } elseif (isset($_REQUEST['post_type'])) {
             $post_type = sanitize_key($_REQUEST['post_type']);
         } elseif ('post.php' == $pagenow
-            && $post_id
-            && !empty(get_post($post_id)->post_type)) {
+                  && $post_id
+                  && ! empty(get_post($post_id)->post_type)) {
             $post_type = get_post($post_id)->post_type;
         } elseif ('edit.php' == $pagenow && empty($_REQUEST['post_type'])) {
             $post_type = 'post';
@@ -69,11 +69,12 @@ class Util
      * Collect all of the active post types for a given module
      *
      * @param object $module Module's data
+     *
      * @return array $post_types All of the post types that are 'on'
      */
     public static function get_post_types_for_module($module)
     {
-        $post_types = array();
+        $post_types = [];
 
         if (isset($module->options->post_types) && is_array($module->options->post_types)) {
             foreach ($module->options->post_types as $post_type => $value) {
@@ -91,6 +92,7 @@ class Util
      * valid chars, replacing - with _.
      *
      * @param  string $name
+     *
      * @return string
      */
     public static function sanitize_module_name($name)

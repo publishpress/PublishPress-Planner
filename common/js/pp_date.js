@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
         dateFormat: objectL10ndate.date_format,
         firstDay: pp_week_first_day,
         alwaysSetTime: false,
-        controlType: 'select',
+        controlType: 'select'
     });
 
     $('.date-pick').datepicker({

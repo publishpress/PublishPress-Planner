@@ -30,7 +30,7 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
-if (! class_exists('PP_Addons')) {
+if ( ! class_exists('PP_Addons')) {
     /**
      * class PP_Addons
      */
@@ -92,15 +92,15 @@ if (! class_exists('PP_Addons')) {
         public function init()
         {
             // Menu
-            add_filter('publishpress_admin_menu_slug', [ $this, 'filter_admin_menu_slug' ], 1000);
-            add_action('publishpress_admin_menu_page', [ $this, 'action_admin_menu_page' ], 1000);
-            add_action('publishpress_admin_submenu', [ $this, 'action_admin_submenu' ], 1000);
+            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 1000);
+            add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 1000);
+            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 1000);
 
-            add_filter('allex_addons', [ $this, 'filter_allex_addons' ], 10, 2);
-            add_action('allex_addon_update_license', [ $this, 'action_allex_addon_update_license' ], 10, 4);
-            add_filter('allex_addons_get_license_key', [ $this, 'filter_allex_addons_get_license_key' ], 10, 2);
-            add_filter('allex_addons_get_license_status', [ $this, 'filter_allex_addons_get_license_status' ], 10, 2);
-            add_filter('allex_upgrade_mailchimp_config', [ $this, 'filter_allex_upgrade_mailchimp_config' ], 10, 2);
+            add_filter('allex_addons', [$this, 'filter_allex_addons'], 10, 2);
+            add_action('allex_addon_update_license', [$this, 'action_allex_addon_update_license'], 10, 4);
+            add_filter('allex_addons_get_license_key', [$this, 'filter_allex_addons_get_license_key'], 10, 2);
+            add_filter('allex_addons_get_license_status', [$this, 'filter_allex_addons_get_license_status'], 10, 2);
+            add_filter('allex_upgrade_mailchimp_config', [$this, 'filter_allex_upgrade_mailchimp_config'], 10, 2);
 
             $this->init_allex_addons();
         }
@@ -144,7 +144,7 @@ if (! class_exists('PP_Addons')) {
                 esc_html__('Add-ons', 'publishpress'),
                 apply_filters('pp_view_addons_cap', 'manage_options'),
                 self::MENU_SLUG,
-                [ $this, 'render_admin_page' ]
+                [$this, 'render_admin_page']
             );
         }
 
@@ -162,7 +162,7 @@ if (! class_exists('PP_Addons')) {
                 esc_html__('Add-ons', 'publishpress'),
                 apply_filters('pp_view_addons_cap', 'manage_options'),
                 self::MENU_SLUG,
-                [ $this, 'render_admin_page' ]
+                [$this, 'render_admin_page']
             );
         }
 
@@ -296,7 +296,7 @@ if (! class_exists('PP_Addons')) {
             ];
 
             if (array_key_exists($slug, $options_map)) {
-                return $options_map[ $slug ];
+                return $options_map[$slug];
             }
 
             return false;
@@ -315,7 +315,7 @@ if (! class_exists('PP_Addons')) {
             // Get the option
             $options = get_option($option_name);
 
-            if (! empty($options) && is_object($options) && isset($options->license_key)) {
+            if ( ! empty($options) && is_object($options) && isset($options->license_key)) {
                 $license_key = $options->license_key;
             }
 
@@ -335,7 +335,7 @@ if (! class_exists('PP_Addons')) {
             // Get the option
             $options = get_option($option_name);
 
-            if (! empty($options) && is_object($options) && isset($options->license_status)) {
+            if ( ! empty($options) && is_object($options) && isset($options->license_status)) {
                 $license_status = $options->license_status;
             }
 

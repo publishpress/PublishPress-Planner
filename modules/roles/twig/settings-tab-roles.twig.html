@@ -23,7 +23,7 @@
                            value="{{ role.display_name }}"/>
 
                     {% if errors.display_name|length %}
-                        <p class="error">{{ errors.display_name }}</p>
+                    <p class="error">{{ errors.display_name }}</p>
                     {% endif %}
 
                     <p class="description">{{ labels.display_name_description }}</p>
@@ -35,7 +35,7 @@
                            {% if action== 'edit-role' %}readonly{% endif %}/>
 
                     {% if errors.name|length %}
-                        <p class="error">{{ errors.name }}</p>
+                    <p class="error">{{ errors.name }}</p>
                     {% endif %}
 
                     <p class="description">{{ labels.name_description }}</p>
@@ -45,7 +45,9 @@
                     <label for="users">{{ labels.users}}</label>
                     <select data-placeholder="{{ labels.select_users }}" multiple class="chosen-select" name="users[]">
                         {% for user in users %}
-                            <option value="{{ user.ID }}" {% if user.ID in role_users %}selected{% endif %}>{{ user.display_name }}</option>
+                        <option value="{{ user.ID }}" {% if user.ID in role_users %}selected{% endif %}>{{
+                            user.display_name }}
+                        </option>
                         {% endfor %}
                     </select>
 

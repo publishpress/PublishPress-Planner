@@ -65,6 +65,7 @@ class Controller
      * ]
      *
      * @param array $args
+     *
      * @return array
      */
     public function get_filtered_workflows($args)
@@ -92,7 +93,7 @@ class Controller
 
         $query = new \WP_Query($query_args);
 
-        if (!empty($query->posts)) {
+        if ( ! empty($query->posts)) {
             foreach ($query->posts as $post) {
                 $workflows[] = new Workflow($post);
             }
@@ -129,7 +130,8 @@ class Controller
          *
          * @param array $classes The list of classes to be loaded
          */
-        $classes_event_content = apply_filters('publishpress_notif_workflow_steps_event_content', $classes_event_content);
+        $classes_event_content = apply_filters('publishpress_notif_workflow_steps_event_content',
+            $classes_event_content);
 
         // Who
         $classes_receiver = [
@@ -168,7 +170,8 @@ class Controller
          */
         $classes_content = apply_filters('publishpress_notif_workflow_steps_content', $classes_content);
 
-        $classes = array_merge($classes_event, $classes_event_content, $classes_receiver, $classes_channel, $classes_content);
+        $classes = array_merge($classes_event, $classes_event_content, $classes_receiver, $classes_channel,
+            $classes_content);
 
         // Instantiate each class
         foreach ($classes as $class) {

@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Modules_Settings')) {
+if ( ! class_exists('PP_Modules_Settings')) {
     /**
      * class PP_Modules_Settings
      * Threaded commenting in the admin for discussion between writers and editors
@@ -43,20 +43,20 @@ if (!class_exists('PP_Modules_Settings')) {
         {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
-            $args = array(
+            $args = [
                 'title'                => __('General', 'publishpress'),
                 'short_description'    => false,
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'modules-settings',
-                'default_options'      => array(
+                'default_options'      => [
                     'enabled' => 'on',
-                ),
+                ],
                 'configure_page_cb'    => 'print_configure_view',
                 'autoload'             => false,
                 'options_page'         => true,
-            );
+            ];
 
             $this->module = PublishPress()->register_module('modules_settings', $args);
         }
@@ -66,8 +66,8 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function init()
         {
-            add_action('admin_init', array($this, 'register_settings'));
-            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
+            add_action('admin_init', [$this, 'register_settings']);
+            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
         }
 
         /**
@@ -77,7 +77,8 @@ if (!class_exists('PP_Modules_Settings')) {
         {
             global $pagenow;
 
-            wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false, PUBLISHPRESS_VERSION, 'all');
+            wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false,
+                PUBLISHPRESS_VERSION, 'all');
         }
 
         /**
@@ -97,6 +98,7 @@ if (!class_exists('PP_Modules_Settings')) {
          * @since 0.7
          *
          * @param array $new_options New values that have been entered by the user
+         *
          * @return array $new_options Form values after they've been sanitized
          */
         public function settings_validate($new_options)
@@ -111,7 +113,7 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function settings_save($new_options)
         {
-            if (!isset($_POST['publishpress_options'])) {
+            if ( ! isset($_POST['publishpress_options'])) {
                 return true;
             }
 
@@ -152,7 +154,7 @@ if (!class_exists('PP_Modules_Settings')) {
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
-                        || !isset($mod_data->general_options)
+                        || ! isset($mod_data->general_options)
                         || $mod_data->options->enabled != 'on') {
                         continue;
                     }
@@ -177,8 +179,8 @@ if (!class_exists('PP_Modules_Settings')) {
                                 <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
                                     <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
-                    continue;
-                } ?>
+                                        continue;
+                                    } ?>
 
                                     <label for="feature-<?php echo $mod_data->slug; ?>">
                                         <input id="feature-<?php echo $mod_data->slug; ?>"
@@ -198,7 +200,7 @@ if (!class_exists('PP_Modules_Settings')) {
                 <?php
                 wp_nonce_field('edit-publishpress-settings');
 
-            submit_button(null, 'primary', 'submit', false); ?>
+                submit_button(null, 'primary', 'submit', false); ?>
             </form>
             <?php
         }

@@ -73,7 +73,7 @@ class Category extends Base implements Filter_Interface
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category'])) {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category'])) {
             $values = [];
         } else {
             $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
@@ -88,19 +88,20 @@ class Category extends Base implements Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args)
     {
         // If post is not set, we ignore.
-        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
+        if ( ! isset($action_args['post']) || ! is_object($action_args['post'])) {
             return parent::get_run_workflow_query_args($query_args, $action_args);
         }
 
         $categories   = wp_get_post_terms($action_args['post']->ID, 'category');
         $category_ids = [];
 
-        if (!empty($categories)) {
+        if ( ! empty($categories)) {
             foreach ($categories as $category) {
                 $category_ids[] = $category->slug;
             }

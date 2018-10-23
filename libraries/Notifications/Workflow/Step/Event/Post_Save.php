@@ -9,7 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event;
 
-use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Workflow\Step\Event\Filter;
 
 class Post_Save extends Base
@@ -41,7 +40,7 @@ class Post_Save extends Base
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters)) {
+        if ( ! empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 
@@ -58,6 +57,7 @@ class Post_Save extends Base
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function filter_run_workflow_query_args($query_args, $action_args)

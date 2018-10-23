@@ -36,7 +36,7 @@ class Plugin
     {
         add_action('load-edit.php', [$this, 'add_load_edit_hooks']);
 
-        add_action('admin_init', [ $this->get_service('reviews'), 'init' ]);
+        add_action('admin_init', [$this->get_service('reviews'), 'init']);
 
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
@@ -57,7 +57,7 @@ class Plugin
         $post_type = 'psppnotif_workflow';
         $screen    = get_current_screen();
 
-        if (!isset($screen->id)) {
+        if ( ! isset($screen->id)) {
             return;
         }
 
@@ -90,7 +90,7 @@ class Plugin
             'receivers',
         ];
         // Ignore other columns
-        if (!in_array($column_name, $columns)) {
+        if ( ! in_array($column_name, $columns)) {
             return;
         }
 
@@ -124,7 +124,8 @@ class Plugin
         $messages['post'][6]  = __('Notification workflow published.', 'pulishpress');
         $messages['post'][7]  = __('Notification workflow saved.', 'pulishpress');
         $messages['post'][8]  = __('Notification workflow submitted.', 'pulishpress');
-        $messages['post'][9]  = sprintf(__('Notification workflow scheduled for: %s.'), '<strong>' . $scheduled_date . '</strong>');
+        $messages['post'][9]  = sprintf(__('Notification workflow scheduled for: %s.'),
+            '<strong>' . $scheduled_date . '</strong>');
         $messages['post'][10] = __('Notification workflow draft updated.', 'pulishpress');
 
         return $messages;
@@ -147,12 +148,17 @@ class Plugin
             return $bulk_messages;
         }
 
-        $bulk_messages['post']['updated']   = _n('%s notification workflow updated.', '%s notification workflows updated.', $bulk_counts['updated']);
+        $bulk_messages['post']['updated']   = _n('%s notification workflow updated.',
+            '%s notification workflows updated.', $bulk_counts['updated']);
         $bulk_messages['post']['locked']    = (1 == $bulk_counts['locked']) ? __('1 notification workflow not updated, somebody is editing it.') :
-            _n('%s notification workflow not updated, somebody is editing it.', '%s notification workflows not updated, somebody is editing them.', $bulk_counts['locked']);
-        $bulk_messages['post']['deleted']   = _n('%s notification workflow permanently deleted.', '%s notification workflows permanently deleted.', $bulk_counts['deleted']);
-        $bulk_messages['post']['trashed']   = _n('%s notification workflow moved to the Trash.', '%s notification workflows moved to the Trash.', $bulk_counts['trashed']);
-        $bulk_messages['post']['untrashed'] = _n('%s notification workflow restored from the Trash.', '%s notification workflows restored from the Trash.', $bulk_counts['untrashed']);
+            _n('%s notification workflow not updated, somebody is editing it.',
+                '%s notification workflows not updated, somebody is editing them.', $bulk_counts['locked']);
+        $bulk_messages['post']['deleted']   = _n('%s notification workflow permanently deleted.',
+            '%s notification workflows permanently deleted.', $bulk_counts['deleted']);
+        $bulk_messages['post']['trashed']   = _n('%s notification workflow moved to the Trash.',
+            '%s notification workflows moved to the Trash.', $bulk_counts['trashed']);
+        $bulk_messages['post']['untrashed'] = _n('%s notification workflow restored from the Trash.',
+            '%s notification workflows restored from the Trash.', $bulk_counts['untrashed']);
 
         return $bulk_messages;
     }
@@ -181,7 +187,8 @@ class Plugin
         }
 
         if (empty($events)) {
-            echo '<span class="psppno_no_events_warning">' . __('Please select at least one event', 'publishpress') . '</span>';
+            echo '<span class="psppno_no_events_warning">' . __('Please select at least one event',
+                    'publishpress') . '</span>';
         } else {
             echo implode(', ', $events);
         }

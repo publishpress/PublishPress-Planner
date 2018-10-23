@@ -40,7 +40,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters)) {
+        if ( ! empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 
@@ -61,8 +61,8 @@ class User extends Simple_Checkbox implements Receiver_Interface
     {
         parent::save_metabox_data($id, $post);
 
-        if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif']['receiver_user'])) {
+        if ( ! isset($_POST['publishpress_notif'])
+             || ! isset($_POST['publishpress_notif']['receiver_user'])) {
             // Assume it is disabled
             $values = [];
         } else {
@@ -80,15 +80,15 @@ class User extends Simple_Checkbox implements Receiver_Interface
     public function filter_workflow_metabox_context($template_context)
     {
         // Get Users
-        $args  = array(
+        $args  = [
             'who'     => 'authors',
-            'fields'  => array(
+            'fields'  => [
                 'ID',
                 'display_name',
                 'user_email',
-            ),
+            ],
             'orderby' => 'display_name',
-        );
+        ];
         $args  = apply_filters('publishpress_notif_users_select_form_get_users_args', $args);
         $users = get_users($args);
 
@@ -118,6 +118,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
@@ -129,7 +130,8 @@ class User extends Simple_Checkbox implements Receiver_Interface
             $receivers = array_merge($receivers, $users);
 
             // Get the users following the post
-            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify($args['post']->ID, 'id');
+            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify($args['post']->ID,
+                'id');
             $receivers = array_merge($receivers, $users);
 
             /**
@@ -158,7 +160,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
         if ($this->is_selected($post_id)) {
             $items = get_post_meta($post_id, static::META_LIST_KEY);
 
-            if (!empty($items)) {
+            if ( ! empty($items)) {
                 $count = count($items);
 
                 $values[] = sprintf(

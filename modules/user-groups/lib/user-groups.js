@@ -4,7 +4,7 @@ jQuery(document).ready(function () {
         attached: 'ul#pp-post_following_users',
         loaderText: '',
         delay: 100
-    })
+    });
     jQuery('#pp-usergroup-users ul').listFilterizer();
 
     jQuery('.delete-usergroup a').click(function () {

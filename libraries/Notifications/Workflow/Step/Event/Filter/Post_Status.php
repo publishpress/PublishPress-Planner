@@ -78,6 +78,7 @@ class Post_Status extends Base implements Filter_Interface
      *
      * @param string $meta_key
      * @param bool   $single
+     *
      * @return mixed
      */
     public function get_metadata($meta_key, $single = false)
@@ -97,7 +98,7 @@ class Post_Status extends Base implements Filter_Interface
     public function save_metabox_data($id, $post)
     {
         // From
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'])) {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'])) {
             $from = [];
         } else {
             $from = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
@@ -106,7 +107,7 @@ class Post_Status extends Base implements Filter_Interface
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_FROM, $from);
 
         // To
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'])) {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'])) {
             $to = [];
         } else {
             $to = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
@@ -120,6 +121,7 @@ class Post_Status extends Base implements Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args)

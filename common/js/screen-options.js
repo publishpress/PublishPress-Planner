@@ -28,7 +28,7 @@
  */
 
 jQuery(function ($) {
-    function performAutosave() {
+    function performAutosave () {
         var panel = $(this).parents('div.custom-options-panel');
         var params = panel.find('input, select, textarea').serialize();
         params = params + '&action=save_settings-' + panel.attr('id');

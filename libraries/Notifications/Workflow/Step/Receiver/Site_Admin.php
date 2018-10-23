@@ -33,6 +33,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css"/>
 
 <div id="mocha"></div>
 
@@ -32,37 +32,32 @@
 
 
 <script>
-  mocha.ui('bdd'); 
-  mocha.reporter('html');
+    mocha.ui('bdd');
+    mocha.reporter('html');
 
-
-
-
-  window.Test = {
-    triggerEvent: function(element, event) {
-      if (document.createEvent) {
-        // dispatch for firefox + others
-        evt = document.createEvent("HTMLEvents");
-        evt.initEvent(event, true, true); // event type,bubbling,cancelable
-        element.dispatchEvent(evt);
-      }
-      else {
-        // dispatch for IE
-        evt = document.createEventObject();
-        element.fireEvent("on#{event}", evt);
-      }
-    },
-    clickElement: function(element) {
-      this.triggerEvent(element, "click");
-    }
-  };
+    window.Test = {
+        triggerEvent: function (element, event) {
+            if (document.createEvent) {
+                // dispatch for firefox + others
+                evt = document.createEvent('HTMLEvents');
+                evt.initEvent(event, true, true); // event type,bubbling,cancelable
+                element.dispatchEvent(evt);
+            } else {
+                // dispatch for IE
+                evt = document.createEventObject();
+                element.fireEvent('on#{event}', evt);
+            }
+        },
+        clickElement: function (element) {
+            this.triggerEvent(element, 'click');
+        }
+    };
 
 </script>
 
 <script src="test.js"></script>
 
 <script>
-  mocha.globals([ "stats", "report", "opentip-*", "jQuery*" ]);
-  if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-  else { mocha.run(); }
+    mocha.globals(['stats', 'report', 'opentip-*', 'jQuery*']);
+    if (window.mochaPhantomJS) { mochaPhantomJS.run(); } else { mocha.run(); }
 </script>

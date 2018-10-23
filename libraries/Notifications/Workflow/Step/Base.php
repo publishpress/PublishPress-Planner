@@ -121,7 +121,7 @@ class Base
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters)) {
+        if ( ! empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 

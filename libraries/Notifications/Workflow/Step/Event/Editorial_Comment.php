@@ -37,6 +37,7 @@ class Editorial_Comment extends Base
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function filter_run_workflow_query_args($query_args, $action_args)

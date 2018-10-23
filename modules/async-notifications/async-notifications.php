@@ -32,7 +32,7 @@ use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
-if (! class_exists('PP_Async_Notifications')) {
+if ( ! class_exists('PP_Async_Notifications')) {
     /**
      * class PP_Async_Notifications. Depends on the Improved Notifications module.
      */
@@ -108,11 +108,11 @@ if (! class_exists('PP_Async_Notifications')) {
          */
         public function init()
         {
-            add_filter('publishpress_notif_workflow_run_action', [ $this, 'filter_workflow_run_action' ], 10, 3);
+            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
 
-            add_action('publishpress_notif_queue', [ $this, 'action_notif_queue' ], 10, 5);
+            add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 5);
 
-            add_action('publishpress_cron_notify', [ $this, 'action_cron_notify' ], 10, 8);
+            add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
         }
 
         /**
@@ -195,7 +195,7 @@ if (! class_exists('PP_Async_Notifications')) {
              *
              * @return int
              */
-            $timeout = (int) apply_filters(
+            $timeout = (int)apply_filters(
                 'pp_duplicated_notification_timeout',
                 self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT,
                 $uid
@@ -242,7 +242,7 @@ if (! class_exists('PP_Async_Notifications')) {
                 'new_status' => $newStatus,
                 'old_status' => $oldStatus,
             ];
-            $receivers    = [ $receiver ];
+            $receivers    = [$receiver];
 
             // Decode the content
             $content = base64_decode(maybe_unserialize($content));
