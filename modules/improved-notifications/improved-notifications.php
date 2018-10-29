@@ -716,6 +716,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function user_profile_fields($user)
         {
+            // Check if the user has permission to see this field. If not, do nothing.
+            if ( ! current_user_can('pp_set_notification_channel')) {
+                return;
+            }
+
             $twig = $this->get_service('twig');
 
             // Adds the nonce field

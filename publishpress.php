@@ -122,8 +122,9 @@ class publishpress
      */
     public static function activation_hook()
     {
+        // @todo: This should be executed only when it is an upgrade, for specific versions, otherwise it overwrites the user's customizations.
         // Add necessary capabilities to allow management of calendar, content overview, notifications
-        $genericCaps = ['pp_view_calendar', 'pp_view_content_overview', 'edit_post_subscriptions'];
+        $genericCaps = ['pp_view_calendar', 'pp_view_content_overview', 'edit_post_subscriptions', 'pp_set_notification_channel'];
 
         $roles = [
             'administrator' => $genericCaps,
