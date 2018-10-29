@@ -179,7 +179,7 @@ if ( ! class_exists('PP_Dashboard')) {
         {
             global $publishpress;
 
-            $statuses = $this->get_post_statuses();
+            $statuses = $this->get_unpublished_post_statuses();
             $statuses = apply_filters('pp_dashboard_post_status_widget_statuses', $statuses);
 
             // If custom statuses are enabled, we'll output a link to edit the terms just below the post counts
@@ -221,6 +221,29 @@ if ( ! class_exists('PP_Dashboard')) {
                 </table>
             </div>
             <?php
+        }
+
+        /**
+         * Get all of the currently available and non published post statuses.
+         *
+         * @return array $post_statuses All of the post statuses that aren't a published state
+         *
+         * @since 0.7d
+         */
+        public function get_unpublished_post_statuses()
+        {
+            $statuses = $this->get_post_statuses();
+
+            $newList = [];
+            foreach ($statuses as $status) {
+                if ( ! in_array($status->term_id, ['publish', 'private'])) {
+                    $newList[] = $status;
+                }
+            }
+
+            $statuses = $newList;
+
+            return $statuses;
         }
 
         /**
