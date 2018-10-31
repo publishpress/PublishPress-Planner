@@ -1392,7 +1392,7 @@ if ( ! class_exists('PP_Custom_Status')) {
 
             $color = sanitize_hex_color($_POST['color']);
             $icon  = sanitize_text_field($_POST['icon']);
-            $icon  = str_replace('dashicons|', '', $_POST['icon']);
+            $icon  = str_replace('dashicons|', '', $icon);
 
             if (is_numeric($_GET['term-id'])) {
                 $name        = sanitize_text_field(trim($_POST['name']));
