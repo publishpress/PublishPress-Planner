@@ -114,6 +114,32 @@ class Pimple_Container extends \Pimple\Container
                 return plugin_basename('publishpress/publishpress.php');
             };
 
+            /**
+             * @param $c
+             *
+             * @return bool
+             */
+            $instance['DEBUGGING'] = function ($c) {
+                if ( ! isset($c['publishpress']->modules->debug)) {
+                    return false;
+                }
+
+                if ( ! isset($c['publishpress']->modules->debug->options)) {
+                    return false;
+                }
+
+                return $c['publishpress']->modules->debug->options->enabled === 'on';
+            };
+
+            /**
+             * @param $c
+             *
+             * @return \PP_Debug
+             */
+            $instance['debug'] = function ($c) {
+                return $c['publishpress']->debug;
+            };
+
             static::$instance = $instance;
         }
 
