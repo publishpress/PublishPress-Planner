@@ -142,4 +142,21 @@ class Util
 
         return $isEnabled;
     }
+
+    public static function hasAnyValidLicenseKeySet()
+    {
+        $addons = apply_filters('allex_addons', [], 'publishpress');
+
+        if (empty($addons)) {
+            return false;
+        }
+
+        foreach ($addons as $addon) {
+            if (!empty($addon['license_key']) && $addon['license_status'] === 'valid') {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

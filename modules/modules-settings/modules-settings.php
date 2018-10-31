@@ -39,6 +39,8 @@ if ( ! class_exists('PP_Modules_Settings')) {
     {
         const SETTINGS_SLUG = 'pp-modules-settings';
 
+        protected $options_group_name = 'modules_settings';
+
         public function __construct()
         {
             $this->module_url = $this->get_module_url(__FILE__);
@@ -51,14 +53,15 @@ if ( ! class_exists('PP_Modules_Settings')) {
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'modules-settings',
                 'default_options'      => [
-                    'enabled' => 'on',
+                    'enabled'          => 'on',
+                    'display_branding' => 'on',
                 ],
                 'configure_page_cb'    => 'print_configure_view',
                 'autoload'             => false,
                 'options_page'         => true,
             ];
 
-            $this->module = PublishPress()->register_module('modules_settings', $args);
+            $this->module = PublishPress()->register_module($this->options_group_name, $args);
         }
 
         /**
@@ -90,6 +93,30 @@ if ( ! class_exists('PP_Modules_Settings')) {
          */
         public function register_settings()
         {
+            if (PublishPress\Legacy\Util::hasAnyValidLicenseKeySet()) {
+                add_settings_section($this->module->options_group_name . '_general', false, '__return_false',
+                    $this->module->options_group_name);
+                add_settings_field('display_branding', __('Display PublishPress branding:', 'publishpress'),
+                    [$this, 'settings_branding_option'], $this->module->options_group_name,
+                    $this->module->options_group_name . '_general');
+            }
+        }
+
+        /**
+         * Branding options
+         *
+         * @since 0.7
+         */
+        public function settings_branding_option()
+        {
+            echo '<label for="publishpress_display_branding">';
+            echo '<input id="publishpress_display_branding" name="'
+                 . $this->options_group_name . '[display_branding]"';
+            if (isset($this->module->options->display_branding)) {
+                checked($this->module->options->display_branding, 'on');
+            }
+            echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;</label>';
+            echo '<br />';
         }
 
         /**
@@ -118,6 +145,13 @@ if ( ! class_exists('PP_Modules_Settings')) {
             }
 
             global $publishpress;
+
+            $displayBranding = 'off';
+            if (isset($_POST[$this->options_group_name]['display_branding'])) {
+                $displayBranding = $_POST[$this->options_group_name]['display_branding'];
+            }
+            $publishpress->update_module_option($this->options_group_name, 'display_branding', $displayBranding);
+
 
             $enabledFeatures = $_POST['publishpress_options']['features'];
 

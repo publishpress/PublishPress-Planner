@@ -207,7 +207,8 @@ if ( ! class_exists('PP_Settings')) {
             }
             if ($error && isset($current_module->messages[$error])) {
                 $display_text .= '<div class="is-dismissible notice notice-error"><p>' . esc_html($current_module->messages[$error]) . '</p></div>';
-            } ?>
+            }
+            ?>
 
 			<div class="publishpress-admin pressshack-admin-wrapper wrap">
 				<header>
@@ -252,6 +253,16 @@ if ( ! class_exists('PP_Settings')) {
          */
         public function print_default_footer($current_module, $echo = true)
         {
+            // If we have any license key set, we check if the branding is disabled.
+            if (PublishPress\Legacy\Util::hasAnyValidLicenseKeySet()) {
+                global $publishpress;
+
+                // Check if the branding is disabled.
+                if ($publishpress->modules->modules_settings->options->display_branding === 'off') {
+                    return;
+                }
+            }
+
             $html = $this->twig->render(
                 'footer-base.twig',
                 [
