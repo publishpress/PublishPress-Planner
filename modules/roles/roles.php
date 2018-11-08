@@ -654,12 +654,12 @@ if ( ! class_exists('PP_Roles')) {
          */
         public function action_profile_update($userId, $oldUserData = [])
         {
-            if ( ! current_user_can('promote_users')) {
-                wp_die(__('Sorry, you are not allowed to promote this user.', 'publishpress'), 403);
-            }
-
             // Check if we need to update the user's roles, allowing to set multiple roles.
             if (isset($_POST['pp_roles'])) {
+                if ( ! current_user_can('promote_users')) {
+                    wp_die(__('Sorry, you are not allowed to promote this user.', 'publishpress'), 403);
+                }
+
                 // Remove the user's roles
                 $user = get_user_by('ID', $userId);
 
