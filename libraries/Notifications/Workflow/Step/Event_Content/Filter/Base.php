@@ -13,5 +13,4 @@ use PublishPress\Notifications\Workflow\Step\Event\Filter\Base as Event_Filter_B
 
 class Base extends Event_Filter_Base
 {
-
 }

@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Roles_List_Table')) {
+if ( ! class_exists('PP_Roles_List_Table')) {
     /**
      * Roles uses WordPress' List Table API for generating the Role management table
      *
@@ -42,11 +42,11 @@ if (!class_exists('PP_Roles_List_Table')) {
 
         public function __construct($twig)
         {
-            parent::__construct(array(
-                                    'plural'   => 'roles',
-                                    'singular' => 'role',
-                                    'ajax'     => true,
-                                ));
+            parent::__construct([
+                'plural'   => 'roles',
+                'singular' => 'role',
+                'ajax'     => true,
+            ]);
 
             $this->twig = $twig;
         }
@@ -59,35 +59,35 @@ if (!class_exists('PP_Roles_List_Table')) {
         public function prepare_items()
         {
             $columns  = $this->get_columns();
-            $hidden   = array();
-            $sortable = array();
+            $hidden   = [];
+            $sortable = [];
 
-            $this->_column_headers = array($columns, $hidden, $sortable);
+            $this->_column_headers = [$columns, $hidden, $sortable];
 
             $roles = get_editable_roles();
 
-            $this->items = array();
+            $this->items = [];
 
             foreach ($roles as $role => $data) {
                 $total = count(get_users(
-                                   array(
-                                       'role' => $role,
-                                   )
-                               ));
+                    [
+                        'role' => $role,
+                    ]
+                ));
 
-                $this->items[] = (object)array(
+                $this->items[] = (object)[
                     'name'         => $role,
                     'display_name' => $data['name'],
                     'capabilities' => $data['capabilities'],
                     'users_count'  => $total,
-                );
+                ];
             }
 
             $this->set_pagination_args(
-                array(
+                [
                     'total_items' => count($this->items),
                     'per_page'    => count($this->items),
-                )
+                ]
             );
         }
 
@@ -108,10 +108,10 @@ if (!class_exists('PP_Roles_List_Table')) {
          */
         public function get_columns()
         {
-            $columns = array(
+            $columns = [
                 'display_name' => __('Display Name', 'publishpress'),
                 'users'        => __('Users in this role', 'publishpress'),
-            );
+            ];
 
             return $columns;
         }
@@ -135,20 +135,22 @@ if (!class_exists('PP_Roles_List_Table')) {
         {
             global $publishpress;
 
-            $actions                       = array();
-            $actions['edit edit-role']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>', $publishpress->roles->getLink(array('action' => 'edit-role', 'role-id' => $role->name)));
+            $actions                   = [];
+            $actions['edit edit-role'] = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>',
+                $publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name]));
 
             if ('administrator' !== $role->name) {
-                $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>', $publishpress->roles->getLink(array('action' => 'delete-role', 'role-id' => $role->name)));
+                $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
+                    $publishpress->roles->getLink(['action' => 'delete-role', 'role-id' => $role->name]));
             }
 
             return $this->twig->render(
                 'roles-list-table-column-name.twig.html',
-                array(
+                [
                     'actions' => $this->row_actions($actions, false),
-                    'role' => $role,
-                    'link' => $publishpress->roles->getLink(array('action' => 'edit-role', 'role-id' => $role->name)),
-                )
+                    'role'    => $role,
+                    'link'    => $publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name]),
+                ]
             );
         }
 
@@ -161,10 +163,10 @@ if (!class_exists('PP_Roles_List_Table')) {
         {
             return $this->twig->render(
                 'roles-list-table-column-users.twig.html',
-                array(
+                [
                     'role' => $role,
                     'link' => '/wp-admin/users.php?role=' . $role->name,
-                )
+                ]
             );
         }
 

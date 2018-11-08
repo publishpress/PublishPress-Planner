@@ -47,13 +47,11 @@ class WPCron implements QueueInterface
      */
     public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel)
     {
-        if (!is_array($receivers))
-        {
+        if ( ! is_array($receivers)) {
             $receivers = [$receivers];
         }
 
-        if (!empty($receivers))
-        {
+        if ( ! empty($receivers)) {
             $baseData = [
                 // workflow_post_id
                 $workflowPost->ID,
@@ -71,17 +69,18 @@ class WPCron implements QueueInterface
                 $channel,
             ];
 
-            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID, $actionArgs['post']->ID);
+            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID,
+                $actionArgs['post']->ID);
 
             if (false === $timestamp) {
                 // Abort.
                 error_log('PublishPress aborted a notification. Invalid timestamp for workflow ' . $workflowPost->ID);
+
                 return;
             }
 
             // Create one notification for each receiver in the queue
-            foreach ($receivers as $receiver)
-            {
+            foreach ($receivers as $receiver) {
                 // Base data
                 $data = $baseData;
 
@@ -91,7 +90,8 @@ class WPCron implements QueueInterface
                 $this->scheduleEvent($data, $timestamp);
             }
 
-            do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'], $actionArgs['post']->ID);
+            do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'],
+                $actionArgs['post']->ID);
         }
     }
 

@@ -9,9 +9,8 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
-use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use PublishPress\Notifications\Traits\Dependency_Injector;
-use WP_Post;
+use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use WP_User;
 
 class Base extends Base_Step
@@ -32,24 +31,19 @@ class Base extends Base_Step
      */
     public function __construct()
     {
-        if (empty($this->attr_prefix))
-        {
+        if (empty($this->attr_prefix)) {
             $this->attr_prefix = 'channel';
         }
 
-        if (empty($this->twig_template))
-        {
+        if (empty($this->twig_template)) {
             $this->twig_template = 'workflow_channel_field.twig';
         }
 
-        if (empty($this->name))
-        {
+        if (empty($this->name)) {
             throw new \Exception("Channel name not defined");
-
         }
 
-        if (empty($this->label))
-        {
+        if (empty($this->label)) {
             throw new \Exception("Channel label not defined");
         }
 
@@ -138,6 +132,7 @@ class Base extends Base_Step
      * Returns the user's data, by the user id.
      *
      * @param int $user_id
+     *
      * @return WP_User
      */
     protected function get_user_data($user_id)

@@ -32,5 +32,4 @@ namespace PublishPress\Core\Modules;
 
 interface ModuleInterface
 {
-
 }

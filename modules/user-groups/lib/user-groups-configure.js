@@ -40,7 +40,7 @@
             var t = this, editRow;
             t.revert();
 
-            if (typeof(id) == 'object')
+            if (typeof (id) == 'object')
                 id = t.getId(id);
 
             editRow = $('#inline-edit').clone(true), rowData = $('#inline_' + id);
@@ -63,19 +63,18 @@
         save: function (id) {
             var params, fields, tax = $('input[name="taxonomy"]').val() || '';
 
-            if (typeof(id) == 'object')
+            if (typeof (id) == 'object')
                 id = this.getId(id);
 
             $('table.widefat .inline-edit-save .waiting').show();
 
             params = {
                 action: 'inline_save_usergroup',
-                usergroup_id: id,
+                usergroup_id: id
             };
 
             fields = $('#edit-' + id + ' :input').serialize();
             params = fields + '&' + $.param(params);
-
 
             // make ajax request
             $.post(ajaxurl, params,

@@ -14,7 +14,6 @@ use WP_Post;
 
 class Workflow
 {
-
     use Dependency_Injector;
 
     const NOTIFICATION_SCHEDULE_META_KEY = '_psppre_notification_scheduled';
@@ -59,8 +58,7 @@ class Workflow
         $receivers = $this->get_receivers();
 
         // If we don't have receivers, abort the workflow.
-        if (empty($receivers))
-        {
+        if (empty($receivers)) {
             return;
         }
 
@@ -72,10 +70,8 @@ class Workflow
         $content = $this->get_content();
 
         // Run the action to each receiver.
-        foreach ($receivers as $channel => $channel_receivers)
-        {
-            foreach ($channel_receivers as $receiver)
-            {
+        foreach ($receivers as $channel => $channel_receivers) {
+            foreach ($channel_receivers as $receiver) {
                 /**
                  * Filters the action to be executed. By default it will trigger the notification.
                  * But it can be changed to do another action. This allows to change the flow and
@@ -85,7 +81,8 @@ class Workflow
                  * @param Workflow $workflow
                  * @param string   $channel
                  */
-                $action = apply_filters('publishpress_notif_workflow_run_action', 'publishpress_notif_send_notification_' . $channel, $this, $channel);
+                $action = apply_filters('publishpress_notif_workflow_run_action',
+                    'publishpress_notif_send_notification_' . $channel, $this, $channel);
 
                 /**
                  * Triggers the notification. This can be caught by notification channels.
@@ -118,32 +115,30 @@ class Workflow
          * @param WP_Post $workflow
          * @param array   $args
          */
-        $receivers = apply_filters('publishpress_notif_run_workflow_receivers', [], $this->workflow_post, $this->action_args);
+        $receivers = apply_filters('publishpress_notif_run_workflow_receivers', [], $this->workflow_post,
+            $this->action_args);
 
-        if (!empty($receivers))
-        {
+        if ( ! empty($receivers)) {
             // Remove duplicate receivers
             $receivers = array_unique($receivers, SORT_NUMERIC);
 
             // Classify receivers per channel, ignoring who has muted the channel.
-            foreach ($receivers as $index => $receiver)
-            {
-	            // Is an user (identified by the id)?
-                if (is_numeric($receiver) || is_object($receiver))
-                {
-                	// Try to extract the ID from the object
-	                if (is_object($receiver)) {
-	                	if (isset($receiver->ID) && ! empty($receiver->ID)) {
-							$receiver = $receiver->ID;
-		                } else {
-			                if (isset($receiver->id) && ! empty($receiver->id)) {
-				                $receiver = $receiver->id;
-			                } else {
-		                		// If the object doesn't have an ID, we ignore it.
-		                		continue;
-			                }
-		                }
-	                }
+            foreach ($receivers as $index => $receiver) {
+                // Is an user (identified by the id)?
+                if (is_numeric($receiver) || is_object($receiver)) {
+                    // Try to extract the ID from the object
+                    if (is_object($receiver)) {
+                        if (isset($receiver->ID) && ! empty($receiver->ID)) {
+                            $receiver = $receiver->ID;
+                        } else {
+                            if (isset($receiver->id) && ! empty($receiver->id)) {
+                                $receiver = $receiver->id;
+                            } else {
+                                // If the object doesn't have an ID, we ignore it.
+                                continue;
+                            }
+                        }
+                    }
 
                     $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
 
@@ -153,26 +148,21 @@ class Workflow
                     }
 
                     // If the channel is "mute", we ignore this receiver.
-                    if ('mute' === $channel)
-                    {
+                    if ('mute' === $channel) {
                         continue;
                     }
 
                     // Make sure the array for the channel is initialized.
-                    if (!isset($filtered_receivers[$channel]))
-                    {
+                    if ( ! isset($filtered_receivers[$channel])) {
                         $filtered_receivers[$channel] = [];
                     }
 
                     // Add to the channel's list.
                     $filtered_receivers[$channel][] = $receiver;
-                } elseif (is_string($receiver))
-                {
+                } elseif (is_string($receiver)) {
                     // Check if it is an explicit email address.
-                    if (preg_match('/^email:/', $receiver))
-                    {
-                        if (!isset($filtered_receivers['email']))
-                        {
+                    if (preg_match('/^email:/', $receiver)) {
+                        if ( ! isset($filtered_receivers['email'])) {
                             $filtered_receivers['email'] = [];
                         }
 
@@ -209,15 +199,14 @@ class Workflow
          * @param WP_Post $workflow
          * @param array   $args
          */
-        $content = apply_filters('publishpress_notif_run_workflow_content', $content, $this->workflow_post, $this->action_args);
+        $content = apply_filters('publishpress_notif_run_workflow_content', $content, $this->workflow_post,
+            $this->action_args);
 
-        if (!array_key_exists('subject', $content))
-        {
+        if ( ! array_key_exists('subject', $content)) {
             $content['subject'] = '';
         }
 
-        if (!array_key_exists('body', $content))
-        {
+        if ( ! array_key_exists('body', $content)) {
             $content['body'] = '';
         }
 
@@ -256,12 +245,12 @@ class Workflow
             'post_status'   => 'future',
             'no_found_rows' => true,
             'cache_results' => true,
-            'meta_query' => [
+            'meta_query'    => [
                 [
-                    'key' => static::NOTIFICATION_SCHEDULE_META_KEY,
+                    'key'     => static::NOTIFICATION_SCHEDULE_META_KEY,
                     'compare' => 'NOT EXISTS',
                 ],
-            ]
+            ],
         ];
 
         // Check if the workflow filters by post type
@@ -270,7 +259,7 @@ class Workflow
             Step\Event_Content\Filter\Post_Type::META_KEY_POST_TYPE
         );
 
-        if (!empty($workflowPostTypes)) {
+        if ( ! empty($workflowPostTypes)) {
             $query_args['post_type'] = $workflowPostTypes;
         }
 
@@ -280,16 +269,14 @@ class Workflow
             Step\Event_Content\Filter\Category::META_KEY_CATEGORY
         );
 
-        if (!empty($workflowCategories)) {
+        if ( ! empty($workflowCategories)) {
             $query_args['category__in'] = $workflowCategories;
         }
 
         $query = new \WP_Query($query_args);
 
-        if (!empty($query->posts))
-        {
-            foreach ($query->posts as $post)
-            {
+        if ( ! empty($query->posts)) {
+            foreach ($query->posts as $post) {
                 $posts[] = $post;
             }
         }

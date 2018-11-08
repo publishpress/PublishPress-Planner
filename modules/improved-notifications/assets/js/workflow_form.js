@@ -21,7 +21,7 @@
  */
 (function ($) {
     $(function () {
-        function setupFieldFilters(name) {
+        function setupFieldFilters (name) {
             // "When the content is moved to a new status"'s filters
             if ($('#publishpress_notif_' + name).length > 0) {
                 var $chkb = $('#publishpress_notif_' + name),
@@ -65,7 +65,7 @@
              * @param section
              * @param status
              */
-            function set_validation_status(section, status) {
+            function set_validation_status (section, status) {
                 var selector = '#psppno-workflow-metabox-section-' + section + ' .psppno_workflow_metabox_section_header';
 
                 if (status) {
@@ -75,7 +75,7 @@
                 }
             }
 
-            function set_tooltip(section) {
+            function set_tooltip (section) {
                 var selector = '#psppno-workflow-metabox-section-' + section + ' .psppno_workflow_metabox_section_header';
 
                 $(selector).tooltip();
@@ -89,7 +89,7 @@
                 if (selected === 0) {
                     set_validation_status(section, false);
 
-                        messages.push(workflowFormData.messages['selectAllIn_' + section]);
+                    messages.push(workflowFormData.messages['selectAllIn_' + section]);
                 } else {
                     set_validation_status(section, true);
                 }

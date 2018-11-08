@@ -14,7 +14,6 @@ use PublishPress\Notifications\Workflow\Step\Event_Content\Taxonomy as Step_Taxo
 
 class Term extends Base implements Filter_Interface
 {
-
     const META_KEY_TERM = '_psppno_whenterm';
 
     /**
@@ -38,17 +37,17 @@ class Term extends Base implements Filter_Interface
         );
     }
 
-	/**
-	 * @param $a
-	 * @param $b
-	 */
+    /**
+     * @param $a
+     * @param $b
+     */
     protected function sort_options($a, $b)
     {
-		if ($a['label'] == $b['label']) {
-			return 0;
-		}
+        if ($a['label'] == $b['label']) {
+            return 0;
+        }
 
-		return ($a['label'] < $b['label']) ? -1 : 1;
+        return ($a['label'] < $b['label']) ? -1 : 1;
     }
 
     /**
@@ -63,8 +62,7 @@ class Term extends Base implements Filter_Interface
         $metadata = (array)$this->get_metadata(static::META_KEY_TERM);
 
         $options = [];
-        foreach ($terms as $term)
-        {
+        foreach ($terms as $term) {
             $options[] = [
                 'value'    => $term->term_id,
                 'label'    => $term->taxonomy . '/' . $term->name,
@@ -85,11 +83,9 @@ class Term extends Base implements Filter_Interface
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term']))
-        {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term'])) {
             $values = [];
-        } else
-        {
+        } else {
             $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['term'];
         }
 
@@ -102,12 +98,13 @@ class Term extends Base implements Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args)
     {
         // If post is not set, we ignore.
-        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
+        if ( ! isset($action_args['post']) || ! is_object($action_args['post'])) {
             return parent::get_run_workflow_query_args($query_args, $action_args);
         }
 
@@ -116,10 +113,8 @@ class Term extends Base implements Filter_Interface
         $terms    = wp_get_post_terms($action_args['post']->ID, $taxonomies);
         $term_ids = [];
 
-        if (!empty($terms))
-        {
-            foreach ($terms as $term)
-            {
+        if ( ! empty($terms)) {
+            foreach ($terms as $term) {
                 $term_ids[] = $term->term_id;
             }
         }

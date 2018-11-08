@@ -30,13 +30,11 @@ trait Dependency_Injector
      */
     public function get_service($service_name)
     {
-        if (empty($this->container))
-        {
+        if (empty($this->container)) {
             $this->init_pimple();
         }
 
-        if (!isset($this->container[$service_name]))
-        {
+        if ( ! isset($this->container[$service_name])) {
             throw new \Exception("Service \"{$service_name}\" not found in the container");
         }
 

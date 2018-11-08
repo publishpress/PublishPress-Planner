@@ -9,12 +9,11 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event;
 
-use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use PublishPress\Notifications\Traits\Metadata;
+use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
 class Base extends Base_Step
 {
-
     use Metadata;
 
     const META_KEY_SELECTED = '_psppno_evtundefined';
@@ -26,8 +25,7 @@ class Base extends Base_Step
      */
     public function __construct()
     {
-        if ('base' === $this->attr_prefix)
-        {
+        if ('base' === $this->attr_prefix) {
             $this->attr_prefix = 'event';
         }
 
@@ -73,9 +71,8 @@ class Base extends Base_Step
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif'][$this->attr_prefix]))
-        {
+        if ( ! isset($_POST['publishpress_notif'])
+             || ! isset($_POST['publishpress_notif'][$this->attr_prefix])) {
             // Assume it is disabled
             update_post_meta($id, static::META_KEY_SELECTED, false);
         }
@@ -83,8 +80,7 @@ class Base extends Base_Step
         $params = $_POST['publishpress_notif'];
 
 
-        if (isset($params[$this->attr_prefix]))
-        {
+        if (isset($params[$this->attr_prefix])) {
             // Is selected in the events?
             $selected = in_array(static::META_VALUE_SELECTED, $params[$this->attr_prefix]);
             update_post_meta($id, static::META_KEY_SELECTED, $selected);
@@ -92,10 +88,8 @@ class Base extends Base_Step
 
         // Process the filters
         $filters = $this->get_filters();
-        if (!empty($filters))
-        {
-            foreach ($filters as $filter)
-            {
+        if ( ! empty($filters)) {
+            foreach ($filters as $filter) {
                 $filter->save_metabox_data($id, $post);
             }
         }
@@ -107,6 +101,7 @@ class Base extends Base_Step
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function filter_run_workflow_query_args($query_args, $action_args)

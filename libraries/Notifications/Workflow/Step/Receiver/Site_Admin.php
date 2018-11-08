@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 class Site_Admin extends Simple_Checkbox implements Receiver_Interface
 {
-
     const META_KEY = '_psppno_tositeadmin';
 
     const META_VALUE = 'site_admin';
@@ -34,13 +33,13 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
     {
         // If checked, add the authors to the list of receivers
-        if ($this->is_selected($workflow->ID))
-        {
+        if ($this->is_selected($workflow->ID)) {
             $receivers[] = 'email:' . get_option('admin_email');
 
             /**
@@ -66,8 +65,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_receivers_column_value($values, $post_id)
     {
-        if ($this->is_selected($post_id))
-        {
+        if ($this->is_selected($post_id)) {
             $values[] = __('Site Administrator', 'publishpress');
         }
 

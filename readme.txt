@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 4.9.5
-Stable tag: 1.16.3
+Stable tag: 1.17.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,23 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.17.0] - 2018-11-08 =
+
+* Fixed permalink for posts in multisite URLs;
+* Fixed the position for the editorial comments metabox for Gutenberg;
+* Fixed dashboard widget hiding Published and Private Posts counts, since the box relates to unpublished content;
+* Fixed method that changes user's data to make a verification before change anything;
+* Added a new capability, "pp_set_notification_channel", for controlling who can select a different notification channel in the profile page;
+* Added a new option to disable PublishPress' branding for who has at least one activated license key;
+* Added a debug module with basic information for debugging, and log viewer;
+
+= [1.16.4] - 2018-10-03 =
+
+*Fixed:*
+
+* Fixed properties (color and icon) for customizing core statuses;
+* Fixed fatal error in shortcode processing when the param is sent as string - for notifications' body;
 
 = [1.16.3] - 2018-09-19 =
 

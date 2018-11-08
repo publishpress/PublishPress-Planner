@@ -9,8 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event\Filter;
 
-use PublishPress\Notifications\Traits\Dependency_Injector;
-
 interface Filter_Interface
 {
 
@@ -36,6 +34,7 @@ interface Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args);

@@ -14,7 +14,6 @@ use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type as Step_Pos
 
 class Post_Type extends Base implements Filter_Interface
 {
-
     const META_KEY_POST_TYPE = '_psppno_posttype';
 
     /**
@@ -49,8 +48,7 @@ class Post_Type extends Base implements Filter_Interface
         $options    = [];
         $metadata   = (array)$this->get_metadata(static::META_KEY_POST_TYPE);
 
-        foreach ($post_types as $slug => $label)
-        {
+        foreach ($post_types as $slug => $label) {
             $options[] = [
                 'value'    => $slug,
                 'label'    => $label,
@@ -69,11 +67,9 @@ class Post_Type extends Base implements Filter_Interface
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type']))
-        {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type'])) {
             $values = [];
-        } else
-        {
+        } else {
             $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type'];
         }
 
@@ -86,12 +82,13 @@ class Post_Type extends Base implements Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args)
     {
         // If post is not set, we ignore.
-        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
+        if ( ! isset($action_args['post']) || ! is_object($action_args['post'])) {
             return parent::get_run_workflow_query_args($query_args, $action_args);
         }
 

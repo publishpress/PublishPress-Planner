@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Event\Filter;
 
 class Post_Status extends Base implements Filter_Interface
 {
-
     const META_KEY_POST_STATUS_FROM = '_psppno_poststatfrom';
 
     const META_KEY_POST_STATUS_TO = '_psppno_poststatto';
@@ -63,8 +62,7 @@ class Post_Status extends Base implements Filter_Interface
             ];
         }
 
-        foreach ($statuses as $status)
-        {
+        foreach ($statuses as $status) {
             $options[] = [
                 'value'    => $status->slug,
                 'label'    => $status->name,
@@ -80,6 +78,7 @@ class Post_Status extends Base implements Filter_Interface
      *
      * @param string $meta_key
      * @param bool   $single
+     *
      * @return mixed
      */
     public function get_metadata($meta_key, $single = false)
@@ -99,22 +98,18 @@ class Post_Status extends Base implements Filter_Interface
     public function save_metabox_data($id, $post)
     {
         // From
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from']))
-        {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'])) {
             $from = [];
-        } else
-        {
+        } else {
             $from = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
         }
 
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_FROM, $from);
 
         // To
-        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to']))
-        {
+        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'])) {
             $to = [];
-        } else
-        {
+        } else {
             $to = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
         }
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_TO, $to);
@@ -126,6 +121,7 @@ class Post_Status extends Base implements Filter_Interface
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function get_run_workflow_query_args($query_args, $action_args)

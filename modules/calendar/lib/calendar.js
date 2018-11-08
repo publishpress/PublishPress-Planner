@@ -88,7 +88,7 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    function reset_editorial_metadata() {
+    function reset_editorial_metadata () {
         $('.editing').removeClass('editing')
             .addClass('hidden')
             .prev()
@@ -103,10 +103,10 @@ jQuery(document).ready(function ($) {
      *
      * @param post_id Id of post we're editing
      */
-    function save_editorial_metadata(post_id) {
+    function save_editorial_metadata (post_id) {
         var metadata_info = {
             action: 'pp_calendar_update_metadata',
-            nonce: $("#pp-calendar-modify").val(),
+            nonce: $('#pp-calendar-modify').val(),
             metadata_type: $('.editing').data('type'),
             metadata_value: $('.editing').children().first().val(),
             metadata_term: $('.editing').data('metadataterm'),
@@ -148,7 +148,7 @@ jQuery(document).ready(function ($) {
     }
 
     // Hide a message. Used by setTimeout()
-    function publishpress_calendar_hide_message() {
+    function publishpress_calendar_hide_message () {
         $('.notice').fadeOut(function () {
             $(this).remove();
         });
@@ -162,7 +162,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    function publishpress_calendar_day_item_click(event) {
+    function publishpress_calendar_day_item_click (event) {
 
         // Ignores the event if it was a click inside the overlay window
         if ($(event.target).parents('div.item-overlay').length > 0) {
@@ -184,7 +184,7 @@ jQuery(document).ready(function ($) {
 
     $('.day-item').click(publishpress_calendar_day_item_click);
 
-    function publishpress_calendar_close_overlays() {
+    function publishpress_calendar_close_overlays () {
         reset_editorial_metadata();
         $('.day-item.active').removeClass('active')
             .find('.item-overlay').removeClass('item-overlay')
@@ -294,7 +294,6 @@ jQuery(document).ready(function ($) {
 
             e.preventDefault();
             e.stopPropagation();
-
 
             if ($target.is('td.day-unit') || $target.is('.post-list')) {
                 $('.schedule-new-post-label').stop().hide();
@@ -483,7 +482,7 @@ jQuery(document).ready(function ($) {
         $('select#tag').hide();
     }
 
-    function updateParam(url, paramToUpdate, newValue) {
+    function updateParam (url, paramToUpdate, newValue) {
         var parts = url.split('?'),
             query,
             param,
@@ -536,7 +535,7 @@ jQuery(document).ready(function ($) {
 
     $('#publishpress-calendar-ics-subs #publishpress-start-date').change(function () {
         var buttonDownload = document.getElementById('publishpress-ics-download'),
-            buttonCopy     = document.getElementById('publishpress-ics-copy');
+            buttonCopy = document.getElementById('publishpress-ics-copy');
 
         // Get the URL
         var url = buttonDownload.href;
@@ -549,7 +548,7 @@ jQuery(document).ready(function ($) {
 
     $('#publishpress-calendar-ics-subs #publishpress-end-date').change(function () {
         var buttonDownload = document.getElementById('publishpress-ics-download'),
-            buttonCopy     = document.getElementById('publishpress-ics-copy');
+            buttonCopy = document.getElementById('publishpress-ics-copy');
 
         // Get the URL
         var url = buttonDownload.href;

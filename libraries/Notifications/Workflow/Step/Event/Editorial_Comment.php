@@ -13,7 +13,6 @@ use PublishPress\Notifications\Workflow\Filter;
 
 class Editorial_Comment extends Base
 {
-
     const META_KEY_SELECTED = '_psppno_evtedcomment';
 
     const META_VALUE_SELECTED = 'editorial_comment';
@@ -38,13 +37,12 @@ class Editorial_Comment extends Base
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function filter_run_workflow_query_args($query_args, $action_args)
     {
-
-        if ('editorial_comment' === $action_args['action'])
-        {
+        if ('editorial_comment' === $action_args['action']) {
             $query_args['meta_query'][] = [
                 'key'     => static::META_KEY_SELECTED,
                 'value'   => 1,
@@ -55,8 +53,7 @@ class Editorial_Comment extends Base
             // Check the filters
             $filters = $this->get_filters();
 
-            foreach ($filters as $filter)
-            {
+            foreach ($filters as $filter) {
                 $query_args = $filter->get_run_workflow_query_args($query_args, $action_args);
             }
         }

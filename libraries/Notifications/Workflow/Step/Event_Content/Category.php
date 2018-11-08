@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Event_Content;
 
 class Category extends Base
 {
-
     const META_KEY_SELECTED = '_psppno_evtcontcategory';
 
     const META_VALUE_SELECTED = 'category';
@@ -36,8 +35,7 @@ class Category extends Base
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters))
-        {
+        if ( ! empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 
@@ -54,6 +52,7 @@ class Category extends Base
      *
      * @param array $query_args
      * @param array $action_args
+     *
      * @return array
      */
     public function filter_run_workflow_query_args($query_args, $action_args)
@@ -62,8 +61,7 @@ class Category extends Base
         // Check the filters
         $filters = $this->get_filters();
 
-        foreach ($filters as $filter)
-        {
+        foreach ($filters as $filter) {
             $query_args = $filter->get_run_workflow_query_args($query_args, $action_args);
         }
 

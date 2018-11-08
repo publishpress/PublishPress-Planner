@@ -29,7 +29,7 @@
  */
 
 // Retrieved from this blog post: http://w-shadow.com/blog/2010/06/29/adding-stuff-to-wordpress-screen-options/
-if (!class_exists('wsScreenOptions10')) :
+if ( ! class_exists('wsScreenOptions10')) :
 
     /**
      * Class for adding new panels to the "Screen Options" box.
@@ -43,7 +43,6 @@ if (!class_exists('wsScreenOptions10')) :
      */
     class wsScreenOptions10
     {
-
         public $registered_panels; // List of custom "Screen Options" panels
 
         public $page_panels;       // Index of panels registered for each page ($page => array of panel ids).
@@ -55,11 +54,11 @@ if (!class_exists('wsScreenOptions10')) :
          */
         public function __construct()
         {
-            $this->registered_panels = array();
-            $this->page_panels       = array();
+            $this->registered_panels = [];
+            $this->page_panels       = [];
 
-            add_filter('screen_settings', array($this, 'append_screen_settings'), 10, 2);
-            add_action('admin_print_scripts', array($this, 'add_autosave_script'));
+            add_filter('screen_settings', [$this, 'append_screen_settings'], 10, 2);
+            add_action('admin_print_scripts', [$this, 'add_autosave_script']);
         }
 
         /**
@@ -71,37 +70,40 @@ if (!class_exists('wsScreenOptions10')) :
          * @param string|array $page          The page(s) on which to show the panel (similar to add_meta_box()).
          * @param callback     $save_callback Optional. Function that saves the settings.
          * @param bool         $autosave      Optional. If se, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
+         *
          * @return void
          */
-        public function add_screen_options_panel($id, $title, $callback, $page, $save_callback = null, $autosave = false)
-        {
-            if (!is_array($page))
-            {
-                $page = array($page);
+        public function add_screen_options_panel(
+            $id,
+            $title,
+            $callback,
+            $page,
+            $save_callback = null,
+            $autosave = false
+        ) {
+            if ( ! is_array($page)) {
+                $page = [$page];
             }
             // Convert page hooks/slugs to screen IDs
-            $page = array_map(array($this, 'page_to_screen_id'), $page);
+            $page = array_map([$this, 'page_to_screen_id'], $page);
             $page = array_unique($page);
 
-            $new_panel = array(
+            $new_panel = [
                 'title'         => $title,
                 'callback'      => $callback,
                 'page'          => $page,
                 'save_callback' => $save_callback,
                 'autosave'      => $autosave,
-            );
+            ];
 
-            if ($save_callback)
-            {
-                add_action('wp_ajax_save_settings-' . $id, array($this, 'ajax_save_callback'));
+            if ($save_callback) {
+                add_action('wp_ajax_save_settings-' . $id, [$this, 'ajax_save_callback']);
             }
 
             // Store the panel ID in each relevant page's list
-            foreach ($page as $page_id)
-            {
-                if (!isset($this->page_panels[$page_id]))
-                {
-                    $this->page_panels[$page_id] = array();
+            foreach ($page as $page_id) {
+                if ( ! isset($this->page_panels[$page_id])) {
+                    $this->page_panels[$page_id] = [];
                 }
                 $this->page_panels[$page_id][] = $id;
             }
@@ -116,23 +118,20 @@ if (!class_exists('wsScreenOptions10')) :
          * @access private
          *
          * @param string $page
+         *
          * @return string
          */
         public function page_to_screen_id($page)
         {
-            if (function_exists('convert_to_screen'))
-            {
+            if (function_exists('convert_to_screen')) {
                 $screen = convert_to_screen($page);
-                if (isset($screen->id))
-                {
+                if (isset($screen->id)) {
                     return $screen->id;
-                } else
-                {
+                } else {
                     return '';
                 }
-            } else
-            {
-                return str_replace(array('.php', '-new', '-add'), '', $page);
+            } else {
+                return str_replace(['.php', '-new', '-add'], '', $page);
             }
         }
 
@@ -144,6 +143,7 @@ if (!class_exists('wsScreenOptions10')) :
          *
          * @param string $current
          * @param string $screen Screen object (undocumented).
+         *
          * @return string The HTML code to append to "Screen Options"
          */
         public function append_screen_settings($current, $screen)
@@ -151,38 +151,32 @@ if (!class_exists('wsScreenOptions10')) :
             global $hook_suffix;
 
             // Sanity check
-            if (!isset($screen->id))
-            {
+            if ( ! isset($screen->id)) {
                 return $current;
             }
 
             // Are there any panels that want to appear on this page?
             $panels = $this->get_panels_for_screen($screen->id, $hook_suffix);
-            if (empty($panels))
-            {
+            if (empty($panels)) {
                 return $current;
             }
 
             // Append all panels registered for this screen
-            foreach ($panels as $panel_id)
-            {
+            foreach ($panels as $panel_id) {
                 $panel = $this->registered_panels[$panel_id];
 
                 // Add panel title
-                if (!empty($panel['title']))
-                {
+                if ( ! empty($panel['title'])) {
                     $current .= "\n<h5>" . $panel['title'] . "</h5>\n";
                 }
                 // Generate panel contents
-                if (is_callable($panel['callback']))
-                {
+                if (is_callable($panel['callback'])) {
                     $contents = call_user_func($panel['callback']);
-                    $classes  = array(
+                    $classes  = [
                         'metabox-prefs',
                         'custom-options-panel',
-                    );
-                    if ($panel['autosave'])
-                    {
+                    ];
+                    if ($panel['autosave']) {
                         $classes[] = 'requires-autosave';
                     }
 
@@ -210,8 +204,7 @@ if (!class_exists('wsScreenOptions10')) :
          */
         public function ajax_save_callback()
         {
-            if (empty($_POST['action']))
-            {
+            if (empty($_POST['action'])) {
                 die('0');
             }
 
@@ -222,17 +215,14 @@ if (!class_exists('wsScreenOptions10')) :
             check_ajax_referer('save_settings-' . $id, '_wpnonce-' . $id);
 
             // Hand the request to the registered callback, if any
-            if (!isset($this->registered_panels[$id]))
-            {
+            if ( ! isset($this->registered_panels[$id])) {
                 exit('0');
             }
             $panel = $this->registered_panels[$id];
-            if (is_callable($panel['save_callback']))
-            {
+            if (is_callable($panel['save_callback'])) {
                 call_user_func($panel['save_callback'], $_POST);
                 die('1');
-            } else
-            {
+            } else {
                 die('0');
             }
         }
@@ -252,26 +242,22 @@ if (!class_exists('wsScreenOptions10')) :
 
             // Check if we have some panels with autosave registered for this page.
             $panels = $this->get_panels_for_screen('', $hook_suffix);
-            if (empty($panels))
-            {
+            if (empty($panels)) {
                 return;
             }
 
             $got_autosave = false;
-            foreach ($panels as $panel_id)
-            {
-                if ($this->registered_panels[$panel_id]['autosave'])
-                {
+            foreach ($panels as $panel_id) {
+                if ($this->registered_panels[$panel_id]['autosave']) {
                     $got_autosave = true;
                     break;
                 }
             }
 
-            if ($got_autosave)
-            {
+            if ($got_autosave) {
                 // Enqueue the script itself
                 $url = PUBLISHPRESS_URL . '/common/js/screen-options.js';
-                wp_enqueue_script('screen-options-custom-autosave', $url, array('jquery'), PUBLISHPRESS_VERSION);
+                wp_enqueue_script('screen-options-custom-autosave', $url, ['jquery'], PUBLISHPRESS_VERSION);
             }
         }
 
@@ -280,22 +266,19 @@ if (!class_exists('wsScreenOptions10')) :
          *
          * @param string $screen_id Screen ID.
          * @param string $page      Optional. Page filename or hook name.
+         *
          * @return array Array of custom panels.
          */
         public function get_panels_for_screen($screen_id, $page = '')
         {
-            if (isset($this->page_panels[$screen_id]) && !empty($this->page_panels[$screen_id]))
-            {
+            if (isset($this->page_panels[$screen_id]) && ! empty($this->page_panels[$screen_id])) {
                 $panels = $this->page_panels[$screen_id];
-            } else
-            {
-                $panels = array();
+            } else {
+                $panels = [];
             }
-            if (!empty($page))
-            {
+            if ( ! empty($page)) {
                 $page_as_screen = $this->page_to_screen_id($page);
-                if (isset($this->page_panels[$page_as_screen]) && !empty($this->page_panels[$page_as_screen]))
-                {
+                if (isset($this->page_panels[$page_as_screen]) && ! empty($this->page_panels[$page_as_screen])) {
                     $panels = array_merge($panels, $this->page_panels[$page_as_screen]);
                 }
             }
@@ -307,16 +290,14 @@ if (!class_exists('wsScreenOptions10')) :
     // All versions of the class are stored in a global array
     // and only the latest version is actually used.
     global $ws_screen_options_versions;
-    if (!isset($ws_screen_options_versions))
-    {
-        $ws_screen_options_versions = array();
+    if ( ! isset($ws_screen_options_versions)) {
+        $ws_screen_options_versions = [];
     }
     $ws_screen_options_versions['1.0'] = 'wsScreenOptions10';
 
 endif;
 
-if (!function_exists('add_screen_options_panel'))
-{
+if ( ! function_exists('add_screen_options_panel')) {
 
     /**
      * Add a new settings panel to the "Screen Options" box.
@@ -329,6 +310,7 @@ if (!function_exists('add_screen_options_panel'))
      * @param string|array $page          The page(s) on which to show the panel (similar to add_meta_box()).
      * @param callback     $save_callback Optional. Function that saves the settings contained in the panel.
      * @param bool         $autosave      Optional. If set, settings will be automatically saved (via AJAX) when the value of any input element in the panel changes. Defaults to false.
+     *
      * @return void
      */
     function add_screen_options_panel($id, $title, $callback, $page, $save_callback = null, $autosave = false)
@@ -336,8 +318,7 @@ if (!function_exists('add_screen_options_panel'))
         global $ws_screen_options_versions;
 
         static $instance = null;
-        if (is_null($instance))
-        {
+        if (is_null($instance)) {
             // Instantiate the latest version of the wsScreenOptions class
             uksort($ws_screen_options_versions, 'version_compare');
             $className = end($ws_screen_options_versions);

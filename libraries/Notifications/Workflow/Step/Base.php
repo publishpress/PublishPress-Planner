@@ -74,8 +74,7 @@ class Base
      */
     public function render_metabox_section($html)
     {
-        if (empty($this->twig_template))
-        {
+        if (empty($this->twig_template)) {
             throw new \Exception('Undefined twig template for the workflow metabox: ' . $this->name);
         }
 
@@ -122,8 +121,7 @@ class Base
      */
     protected function get_filters($filters = [])
     {
-        if (!empty($this->cache_filters))
-        {
+        if ( ! empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 

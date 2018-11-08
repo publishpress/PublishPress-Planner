@@ -9,8 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
-use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
-
 interface Receiver_Interface
 {
 
@@ -35,6 +33,7 @@ interface Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args);

@@ -1,0 +1,50 @@
+<h1>{{ label.title }}</h1>
+
+{% if messages %}
+    <div id="message" class="upstream-messages notice is-dismissible">
+        {% for message in messages %}
+            <p>{{ message|raw }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div id="upstream-debug-data">
+    <h2>{{ label.debug_data }}</h2>
+    <pre>{{ debug_data }}</pre>
+</div>
+
+<hr>
+
+<div id="upstream-debug-log">
+    <h2>{{ label.log_file }}</h2>
+
+    {% if not is_log_found %}
+        <p>{{ message.log_not_found }}</p>
+
+        <p>{{ message.contact_support_tip }} <a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+    {% endif %}
+
+    {% if is_log_found %}
+        <h3>{{ label.file_info }}</h3>
+        <table id="upstream-debug-log-info">
+            <tr>
+                <th>{{ label.path }}:</th>
+                <td>{{ file.path }}</td>
+            </tr>
+            <tr>
+                <th>{{ label.size }}:</th>
+                <td>{{ file.size }} KB</td>
+            </tr>
+            <tr>
+                <th>{{ label.modification_time }}:</th>
+                <td>{{ file.modification_time }}</td>
+            </tr>
+        </table>
+
+        <p>{{ message.click_to_delete }}</p>
+        <a class="button button-danger" href="{{ link_delete }}">{{ label.delete_file }}</a>
+
+        <h3>{{ label.log_content }}</h3>
+        <pre id="upstream-debug-log">{{ file.content }}</pre>
+    {% endif %}
+</div>

@@ -11,7 +11,6 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 class Simple_Checkbox extends Base implements Receiver_Interface
 {
-
     const META_KEY = '_psppno_to_______';
 
     const META_VALUE = 'define';
@@ -51,6 +50,7 @@ class Simple_Checkbox extends Base implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
@@ -66,9 +66,8 @@ class Simple_Checkbox extends Base implements Receiver_Interface
      */
     public function save_metabox_data($id, $post)
     {
-        if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif'][$this->option_name]))
-        {
+        if ( ! isset($_POST['publishpress_notif'])
+             || ! isset($_POST['publishpress_notif'][$this->option_name])) {
             // Assume it is disabled
             $this->set_selection($id, false);
         }

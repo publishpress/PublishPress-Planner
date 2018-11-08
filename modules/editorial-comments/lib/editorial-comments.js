@@ -102,9 +102,9 @@ editorialCommentReply = {
 
         // Prepare data
         post.action = 'publishpress_ajax_insert_comment';
-        post.parent = (jQuery("#pp-comment_parent").val() == '') ? 0 : jQuery("#pp-comment_parent").val();
-        post._nonce = jQuery("#pp_comment_nonce").val();
-        post.post_id = jQuery("#pp-post_id").val();
+        post.parent = (jQuery('#pp-comment_parent').val() == '') ? 0 : jQuery('#pp-comment_parent').val();
+        post._nonce = jQuery('#pp_comment_nonce').val();
+        post.post_id = jQuery('#pp-post_id').val();
 
         // Send the request
         jQuery.ajax({
@@ -126,7 +126,7 @@ editorialCommentReply = {
         var response, comment, supplemental, id, bg;
 
         // Didn't pass validation, so let's throw an error
-        if (typeof(xml) == 'string') {
+        if (typeof (xml) == 'string') {
             this.error({'responseText': xml});
             return false;
         }
@@ -143,7 +143,7 @@ editorialCommentReply = {
         comment = response.data;
         supplemental = response.supplemental;
 
-        jQuery(comment).hide()
+        jQuery(comment).hide();
 
         if (response.action.indexOf('reply') == -1 || !pp_thread_comments) {
             // Not a reply, so add it to the bottom
@@ -161,7 +161,7 @@ editorialCommentReply = {
                     .addClass('children')
                     .append(comment)
                 ;
-                jQuery('#pp-replyrow').parent().after(newUL)
+                jQuery('#pp-replyrow').parent().after(newUL);
             }
         }
 

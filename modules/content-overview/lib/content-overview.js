@@ -2,26 +2,26 @@
 
 jQuery(document).ready(function ($) {
     // Hide all post details when directed
-    $("#toggle_details").click(function () {
-        $(".post-title > p").toggle('hidden');
+    $('#toggle_details').click(function () {
+        $('.post-title > p').toggle('hidden');
     });
 
     // Make print link open up print dialog
-    $("#print_link").click(function () {
+    $('#print_link').click(function () {
         window.print();
         return false;
     });
 
     // Hide a single section when directed
-    $("h3.hndle,div.handlediv").click(function () {
-        $(this).parent().children("div.inside").toggle();
+    $('h3.hndle,div.handlediv').click(function () {
+        $(this).parent().children('div.inside').toggle();
     });
 
     // Change number of columns when choosing a new number from Screen Options
-    $("input[name=pp_story_budget_screen_columns]").click(function () {
+    $('input[name=pp_story_budget_screen_columns]').click(function () {
         var numColumns = $(this).val();
 
-        jQuery(".postbox-container").css('width', (100 / numColumns) + '%');
+        jQuery('.postbox-container').css('width', (100 / numColumns) + '%');
     });
 
     jQuery('h2 a.change-date').click(function () {

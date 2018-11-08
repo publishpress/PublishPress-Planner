@@ -18,11 +18,11 @@ class Notifications extends Base
     public function __construct()
     {
         parent::__construct(
-            array(
+            [
                 'singular' => 'pp_notification_list_notification',
                 'plural'   => 'pp_notification_list_notifications',
                 'ajax'     => false,
-            )
+            ]
         );
     }
 
@@ -33,13 +33,11 @@ class Notifications extends Base
      */
     public function extra_tablenav($which)
     {
-        if ($which == "top")
-        {
+        if ($which == "top") {
             //The code that goes before the table is here
         }
 
-        if ($which == "bottom")
-        {
+        if ($which == "bottom") {
             //The code that goes after the table is there
         }
     }
@@ -55,43 +53,41 @@ class Notifications extends Base
     {
         global $mode;
 
-        if ('0000-00-00 00:00:00' === $post->post_date)
-        {
+        if ('0000-00-00 00:00:00' === $post->post_date) {
             $t_time    = $h_time = __('Undefined');
             $time_diff = 0;
-        } else
-        {
+        } else {
             $t_time = get_the_time(__('Y/m/d g:i:s a'));
             $m_time = $post->post_date;
             $time   = get_post_time('G', true, $post);
 
             $time_diff = time() - $time;
 
-            if ($time_diff > 0 && $time_diff < DAY_IN_SECONDS)
-            {
+            if ($time_diff > 0 && $time_diff < DAY_IN_SECONDS) {
                 $h_time = sprintf(__('%s ago'), human_time_diff($time));
-            } else
-            {
+            } else {
                 $h_time = mysql2date(__('Y/m/d'), $m_time);
             }
         }
 
         /** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
         echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
-    }    /**
+    }
+
+    /**
      * Define the columns that are going to be used in the table
      *
      * @return array $columns, the array of columns to use with the table
      */
     public function get_columns()
     {
-        return array(
+        return [
             'cb'           => 'cb',
             'post_title'   => __('Title', 'publishpress'),
             'post_content' => __('Message', 'publishpress'),
             'post_date'    => __('Date', 'publishpress'),
             'ID'           => __('ID', 'publishpress'),
-        );
+        ];
     }
 
     /**
@@ -101,11 +97,11 @@ class Notifications extends Base
      */
     public function get_sortable_columns()
     {
-        return array(
-            'ID'         => array('ID', true),
-            'post_title' => array('post_title', true),
-            'post_date'  => array('post_date', true),
-        );
+        return [
+            'ID'         => ['ID', true],
+            'post_title' => ['post_title', true],
+            'post_date'  => ['post_date', true],
+        ];
     }
 
     /**
@@ -115,9 +111,9 @@ class Notifications extends Base
      */
     public function get_hidden_columns()
     {
-        return array(
+        return [
             'ID',
-        );
+        ];
     }
 
     /**
@@ -127,36 +123,36 @@ class Notifications extends Base
     {
         global $wpdb;
 
-        $this->_column_headers = array(
+        $this->_column_headers = [
             $this->get_columns(),
             $this->get_hidden_columns(),
             $this->get_sortable_columns(),
-        );
+        ];
 
         /* -- Ordering parameters -- */
         // Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
-        $order   = !empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
+        $orderby = ! empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
+        $order   = ! empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
 
         $posts_per_page = 10;
 
         $user_id = get_current_user_id();
 
-        $args = array(
+        $args = [
             'post_type'      => PUBLISHPRESS_NOTIF_POST_TYPE_MESSAGE,
             'posts_per_page' => $posts_per_page,
             'order'          => $order,
             'orderby'        => $orderby,
-            'meta_query'     => array(
+            'meta_query'     => [
                 // Filters the notifications for the current user
-                array(
+                [
                     'key'     => '_psppno_targetuserid',
                     'value'   => $user_id,
                     'type'    => 'numeric',
                     'compare' => '=',
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $query = new \WP_Query($args);
 
@@ -164,11 +160,10 @@ class Notifications extends Base
         $totalitems = $query->post_count;
 
         // Which page is this?
-        $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
+        $paged = ! empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
 
         // Page Number
-        if (empty($paged) || !is_numeric($paged) || $paged <= 0)
-        {
+        if (empty($paged) || ! is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
 
@@ -177,12 +172,12 @@ class Notifications extends Base
 
         /* -- Register the pagination -- */
         $this->set_pagination_args(
-            array(
+            [
                 'total_items' => $totalitems,
                 'total_pages' => $totalpages,
                 'per_page'    => $posts_per_page,
                 'offset'      => (int)$offset,
-            )
+            ]
         );
 
         /* -- Fetch the items -- */
@@ -199,8 +194,7 @@ class Notifications extends Base
      */
     public function column_default($item, $column_name)
     {
-        switch ($column_name)
-        {
+        switch ($column_name) {
             case 'ID':
             case 'post_title':
             case 'post_content':
@@ -221,12 +215,12 @@ class Notifications extends Base
     {
         ?>
         <label class="screen-reader-text"
-               for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf(__('Select %s'), $post->post_title); ?></label>
+               for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf(__('Select %s'),
+                $post->post_title); ?></label>
         <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo $post->ID; ?>"
                value="<?php echo esc_attr($post->ID); ?>"/>
         <?php
     }
-
 
 
     /**

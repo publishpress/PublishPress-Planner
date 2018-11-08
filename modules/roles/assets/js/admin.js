@@ -1,5 +1,5 @@
-jQuery(function($) {
-    $(".chosen-select").chosen({
+jQuery(function ($) {
+    $('.chosen-select').chosen({
         'width': '95%'
     });
 });

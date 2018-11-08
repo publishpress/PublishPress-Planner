@@ -45,13 +45,11 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     {
         parent::save_metabox_data($id, $post);
 
-        if (!isset($_POST['publishpress_notif'])
-            || !isset($_POST['publishpress_notif']['receiver_role']))
-        {
+        if ( ! isset($_POST['publishpress_notif'])
+             || ! isset($_POST['publishpress_notif']['receiver_role'])) {
             // Assume it is disabled
             $values = [];
-        } else
-        {
+        } else {
             $values = $_POST['publishpress_notif']['receiver_role'];
         }
 
@@ -70,24 +68,22 @@ class Role extends Simple_Checkbox implements Receiver_Interface
 
         $selected_roles = (array)$this->get_metadata(static::META_LIST_KEY);
         if (empty($selected_groups)) {
-            $selected_groups = array();
+            $selected_groups = [];
         }
-        foreach ($roles as $role => &$data)
-        {
+        foreach ($roles as $role => &$data) {
             $data = (object)$data;
-            if (in_array($role, $selected_roles))
-            {
+            if (in_array($role, $selected_roles)) {
                 $data->selected = true;
             }
         }
 
-        $template_context['name']        = 'publishpress_notif[receiver_role_checkbox]';
-        $template_context['id']          = 'publishpress_notif_role';
-        $template_context['value']       = static::META_VALUE;
-        $template_context['roles']       = $roles;
-        $template_context['list_class']  = 'publishpress_notif_role_list';
-        $template_context['input_name']  = 'publishpress_notif[receiver_role][]';
-        $template_context['input_id']    = 'publishpress_notif_roles';
+        $template_context['name']       = 'publishpress_notif[receiver_role_checkbox]';
+        $template_context['id']         = 'publishpress_notif_role';
+        $template_context['value']      = static::META_VALUE;
+        $template_context['roles']      = $roles;
+        $template_context['list_class'] = 'publishpress_notif_role_list';
+        $template_context['input_name'] = 'publishpress_notif[receiver_role][]';
+        $template_context['input_id']   = 'publishpress_notif_roles';
 
         $template_context = parent::filter_workflow_metabox_context($template_context);
 
@@ -100,19 +96,20 @@ class Role extends Simple_Checkbox implements Receiver_Interface
      * @param array   $receivers
      * @param WP_Post $workflow
      * @param array   $args
+     *
      * @return array
      */
     public function filter_workflow_receivers($receivers, $workflow, $args)
     {
         // If checked, add the authors to the list of receivers
-        if ($this->is_selected($workflow->ID))
-        {
+        if ($this->is_selected($workflow->ID)) {
             // Get the users selected in the workflow
             $roles     = get_post_meta($workflow->ID, static::META_LIST_KEY);
             $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
 
             // Get the roles that should receive notification
-            $roles     = $this->get_service('publishpress')->notifications->get_roles_to_notify($args['post']->ID, 'slugs');
+            $roles     = $this->get_service('publishpress')->notifications->get_roles_to_notify($args['post']->ID,
+                'slugs');
             $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
 
             /**
@@ -139,20 +136,18 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     {
         $users = [];
 
-        if (!empty($roles))
-        {
-            foreach ((array)$roles as $role_name)
-            {
+        if ( ! empty($roles)) {
+            foreach ((array)$roles as $role_name) {
                 $role_users = get_users(
                     [
                         'role' => $role_name,
                     ]
                 );
 
-                if (! empty($role_users)) {
-                	foreach ($role_users as $user) {
-                        $users[] = (int) $user->ID;
-	                }
+                if ( ! empty($role_users)) {
+                    foreach ($role_users as $user) {
+                        $users[] = (int)$user->ID;
+                    }
                 }
             }
         }
@@ -170,12 +165,10 @@ class Role extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_receivers_column_value($values, $post_id)
     {
-        if ($this->is_selected($post_id))
-        {
+        if ($this->is_selected($post_id)) {
             $items = get_post_meta($post_id, static::META_LIST_KEY);
 
-            if (!empty($items))
-            {
+            if ( ! empty($items)) {
                 $count = count($items);
 
                 $values[] = sprintf(

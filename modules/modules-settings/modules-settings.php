@@ -28,8 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Modules_Settings'))
-{
+if ( ! class_exists('PP_Modules_Settings')) {
     /**
      * class PP_Modules_Settings
      * Threaded commenting in the admin for discussion between writers and editors
@@ -40,26 +39,29 @@ if (!class_exists('PP_Modules_Settings'))
     {
         const SETTINGS_SLUG = 'pp-modules-settings';
 
+        protected $options_group_name = 'modules_settings';
+
         public function __construct()
         {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
-            $args = array(
+            $args = [
                 'title'                => __('General', 'publishpress'),
                 'short_description'    => false,
                 'extended_description' => false,
                 'module_url'           => $this->module_url,
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'modules-settings',
-                'default_options'      => array(
-                    'enabled' => 'on',
-                ),
+                'default_options'      => [
+                    'enabled'          => 'on',
+                    'display_branding' => 'on',
+                ],
                 'configure_page_cb'    => 'print_configure_view',
                 'autoload'             => false,
                 'options_page'         => true,
-            );
+            ];
 
-            $this->module = PublishPress()->register_module('modules_settings', $args);
+            $this->module = PublishPress()->register_module($this->options_group_name, $args);
         }
 
         /**
@@ -67,8 +69,8 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function init()
         {
-            add_action('admin_init', array($this, 'register_settings'));
-            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
+            add_action('admin_init', [$this, 'register_settings']);
+            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
         }
 
         /**
@@ -78,7 +80,8 @@ if (!class_exists('PP_Modules_Settings'))
         {
             global $pagenow;
 
-            wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false, PUBLISHPRESS_VERSION, 'all');
+            wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false,
+                PUBLISHPRESS_VERSION, 'all');
         }
 
         /**
@@ -90,7 +93,30 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function register_settings()
         {
+            if (PublishPress\Legacy\Util::hasAnyValidLicenseKeySet()) {
+                add_settings_section($this->module->options_group_name . '_general', false, '__return_false',
+                    $this->module->options_group_name);
+                add_settings_field('display_branding', __('Display PublishPress branding:', 'publishpress'),
+                    [$this, 'settings_branding_option'], $this->module->options_group_name,
+                    $this->module->options_group_name . '_general');
+            }
+        }
 
+        /**
+         * Branding options
+         *
+         * @since 0.7
+         */
+        public function settings_branding_option()
+        {
+            echo '<label for="publishpress_display_branding">';
+            echo '<input id="publishpress_display_branding" name="'
+                 . $this->options_group_name . '[display_branding]"';
+            if (isset($this->module->options->display_branding)) {
+                checked($this->module->options->display_branding, 'on');
+            }
+            echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;</label>';
+            echo '<br />';
         }
 
         /**
@@ -99,6 +125,7 @@ if (!class_exists('PP_Modules_Settings'))
          * @since 0.7
          *
          * @param array $new_options New values that have been entered by the user
+         *
          * @return array $new_options Form values after they've been sanitized
          */
         public function settings_validate($new_options)
@@ -113,22 +140,25 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function settings_save($new_options)
         {
-            if (!isset($_POST['publishpress_options']))
-            {
+            if ( ! isset($_POST['publishpress_options'])) {
                 return true;
             }
 
             global $publishpress;
 
+            $displayBranding = 'off';
+            if (isset($_POST[$this->options_group_name]['display_branding'])) {
+                $displayBranding = $_POST[$this->options_group_name]['display_branding'];
+            }
+            $publishpress->update_module_option($this->options_group_name, 'display_branding', $displayBranding);
+
+
             $enabledFeatures = $_POST['publishpress_options']['features'];
 
             // Run through all the modules updating their statuses
-            foreach ($publishpress->modules as $mod_data)
-            {
+            foreach ($publishpress->modules as $mod_data) {
                 if ($mod_data->autoload
-                    || $mod_data->slug === $this->module->slug)
-                {
-
+                    || $mod_data->slug === $this->module->slug) {
                     continue;
                 }
 
@@ -146,24 +176,20 @@ if (!class_exists('PP_Modules_Settings'))
          */
         public function print_configure_view()
         {
-            global $publishpress;
-            ?>
+            global $publishpress; ?>
             <form class="basic-settings"
                   action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
                 <?php settings_fields($this->module->options_group_name); ?>
                 <?php do_settings_sections($this->module->options_group_name); ?>
 
                 <?php
-                foreach ($publishpress->class_names as $slug => $class_name)
-                {
+                foreach ($publishpress->class_names as $slug => $class_name) {
                     $mod_data = $publishpress->$slug->module;
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
-                        || !isset($mod_data->general_options)
-                        || $mod_data->options->enabled != 'on')
-                    {
-
+                        || ! isset($mod_data->general_options)
+                        || $mod_data->options->enabled != 'on') {
                         continue;
                     }
 
@@ -173,9 +199,7 @@ if (!class_exists('PP_Modules_Settings'))
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($mod_data->name) . '" />';
 
                     $publishpress->$slug->print_configure_view();
-                }
-
-                ?>
+                } ?>
 
                 <div id="modules-wrapper">
                     <h3><?php echo __('Features', 'publishpress'); ?></h3>
@@ -188,7 +212,9 @@ if (!class_exists('PP_Modules_Settings'))
                             <td>
                                 <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
-                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) continue; ?>
+                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
+                                        continue;
+                                    } ?>
 
                                     <label for="feature-<?php echo $mod_data->slug; ?>">
                                         <input id="feature-<?php echo $mod_data->slug; ?>"
@@ -208,8 +234,7 @@ if (!class_exists('PP_Modules_Settings'))
                 <?php
                 wp_nonce_field('edit-publishpress-settings');
 
-                submit_button(null, 'primary', 'submit', false);
-                ?>
+                submit_button(null, 'primary', 'submit', false); ?>
             </form>
             <?php
         }

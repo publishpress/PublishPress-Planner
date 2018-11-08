@@ -19,14 +19,12 @@ trait PublishPress_Module
      */
     public function get_post_statuses()
     {
-        if ($this->is_module_enabled('custom_status'))
-        {
+        if ($this->is_module_enabled('custom_status')) {
             $publishpress = $this->get_service('publishpress');
             $statuses     = $publishpress->custom_status->get_custom_statuses();
 
             return $statuses;
-        } else
-        {
+        } else {
             return $this->get_core_post_statuses();
         }
     }
@@ -40,15 +38,13 @@ trait PublishPress_Module
     {
         $publishpress = $this->get_service('publishpress');
 
-        if (isset($publishpress->$slug))
-        {
+        if (isset($publishpress->$slug)) {
             return 'on' === $publishpress->$slug->module->options->enabled;
         }
 
         // Try getting the setting from the db
         $options = get_option("publishpress_{$slug}_options");
-        if (isset($options->enabled))
-        {
+        if (isset($options->enabled)) {
             return 'on' === $options->enabled;
         }
 

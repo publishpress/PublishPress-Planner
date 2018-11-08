@@ -40,7 +40,7 @@
             var t = this, editRow;
             t.revert();
 
-            if (typeof(id) == 'object')
+            if (typeof (id) == 'object')
                 id = t.getId(id);
 
             editRow = $('#inline-edit').clone(true), rowData = $('#inline_' + id);
@@ -65,19 +65,18 @@
         save: function (id) {
             var params, fields, tax = $('input[name="taxonomy"]').val() || '';
 
-            if (typeof(id) == 'object')
+            if (typeof (id) == 'object')
                 id = this.getId(id);
 
             $('table.widefat .inline-edit-save .waiting').show();
 
             params = {
                 action: 'inline_save_status',
-                status_id: id,
+                status_id: id
             };
 
             fields = $('#edit-' + id + ' :input').serialize();
             params = fields + '&' + $.param(params);
-
 
             // make ajax request
             $.post(ajaxurl, params,
@@ -136,7 +135,7 @@ jQuery(document).ready(function () {
     /**
      * Instantiate the drag and drop sorting functionality
      */
-    jQuery("#the-list").sortable({
+    jQuery('#the-list').sortable({
         items: 'tr.term-static',
         update: function (event, ui) {
             var affected_item = ui.item;
@@ -155,7 +154,7 @@ jQuery(document).ready(function () {
             var params = {
                 action: 'update_status_positions',
                 status_positions: terms,
-                custom_status_sortable_nonce: jQuery('#custom-status-sortable').val(),
+                custom_status_sortable_nonce: jQuery('#custom-status-sortable').val()
             };
             // Inform WordPress of our updated positions
             jQuery.post(ajaxurl, params, function (retval) {
@@ -170,7 +169,7 @@ jQuery(document).ready(function () {
                 // Set a timeout to eventually remove it
                 setTimeout(publishpress_hide_message, 8000);
             });
-        },
+        }
     });
-    jQuery("#the-list tr.term-static").disableSelection();
+    jQuery('#the-list tr.term-static').disableSelection();
 });

@@ -1,4 +1,4 @@
-jQuery(function($) {
+jQuery(function ($) {
     // Check if the Role field is available. If not, abort.
     if (!$('.user-role-wrap select#role, #createuser select#role').length) {
         return;
@@ -18,10 +18,10 @@ jQuery(function($) {
     // $newField.attr('name', 'role[]');
 
     // Select additional roles
-    $newField.find('option').each(function(i, option) {
+    $newField.find('option').each(function (i, option) {
         $option = $(option);
 
-        $.each(publishpressProfileData.selected_roles, function(i, role) {
+        $.each(publishpressProfileData.selected_roles, function (i, role) {
             if ($option.val() === role) {
                 $option.attr('selected', 'selected');
             }
