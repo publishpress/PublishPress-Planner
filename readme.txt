@@ -130,6 +130,16 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.17.0] - 2018-11-08 =
+
+* Fixed permalink for posts in multisite URLs;
+* Fixed the position for the editorial comments metabox for Gutenberg;
+* Fixed dashboard widget hiding Published and Private Posts counts, since the box relates to unpublished content;
+* Fixed method that changes user's data to make a verification before change anything;
+* Added a new capability, "pp_set_notification_channel", for controlling who can select a different notification channel in the profile page;
+* Added a new option to disable PublishPress' branding for who has at least one activated license key;
+* Added a debug module with basic information for debugging, and log viewer;
+
 = [1.16.4] - 2018-10-03 =
 
 *Fixed:*
