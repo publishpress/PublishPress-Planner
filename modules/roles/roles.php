@@ -654,6 +654,10 @@ if ( ! class_exists('PP_Roles')) {
          */
         public function action_profile_update($userId, $oldUserData = [])
         {
+            if ( ! current_user_can('promote_users')) {
+                wp_die(__('Sorry, you are not allowed to promote this user.', 'publishpress'), 403);
+            }
+
             // Check if we need to update the user's roles, allowing to set multiple roles.
             if (isset($_POST['pp_roles'])) {
                 // Remove the user's roles
@@ -661,6 +665,10 @@ if ( ! class_exists('PP_Roles')) {
 
                 $newRoles     = $_POST['pp_roles'];
                 $currentRoles = $user->roles;
+
+                if (empty($newRoles) || ! is_array($newRoles)) {
+                    return;
+                }
 
                 // Remove unselected roles
                 foreach ($currentRoles as $role) {
