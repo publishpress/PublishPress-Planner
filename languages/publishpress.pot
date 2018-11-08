@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress\n"
-"POT-Creation-Date: 2018-11-08 14:52-0200\n"
+"POT-Creation-Date: 2018-11-08 16:29-0200\n"
 "PO-Revision-Date: 2016-04-22 07:37+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Invalid Taxonomy"
 msgstr ""
 
-#: common/php/class-module.php:644 libraries/Notifications/Workflow/Step/Receiver/Role.php:30 modules/roles/roles.php:79 modules/roles/roles.php:774 modules/roles/roles.php:791 modules/roles/roles.php:792
+#: common/php/class-module.php:644 libraries/Notifications/Workflow/Step/Receiver/Role.php:30 modules/roles/roles.php:79 modules/roles/roles.php:770 modules/roles/roles.php:787 modules/roles/roles.php:788
 msgid "Roles"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
-#: common/php/class-module.php:652 libraries/Notifications/Workflow/Step/Receiver/User.php:26 modules/roles/roles.php:881
+#: common/php/class-module.php:652 libraries/Notifications/Workflow/Step/Receiver/User.php:26 modules/roles/roles.php:877
 msgid "Users"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #. Author of the plugin/theme
-#: modules/calendar/calendar.php:911 modules/settings/settings.php:59 modules/settings/settings.php:270 publishpress.php:367
+#: modules/calendar/calendar.php:911 modules/settings/settings.php:59 modules/settings/settings.php:270 publishpress.php:365
 msgid "PublishPress"
 msgstr ""
 
@@ -1555,7 +1555,7 @@ msgstr ""
 msgid "New Editorial Metadata"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:383 publishpress.php:448
+#: modules/editorial-metadata/editorial-metadata.php:383 publishpress.php:446
 msgid "Configure"
 msgstr ""
 
@@ -1624,7 +1624,7 @@ msgstr ""
 msgid "Name conflicts with existing term. Please choose another."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1231 modules/editorial-metadata/editorial-metadata.php:1331 modules/roles/roles.php:937
+#: modules/editorial-metadata/editorial-metadata.php:1231 modules/editorial-metadata/editorial-metadata.php:1331 modules/roles/roles.php:933
 msgid "Name already in use. Please choose another."
 msgstr ""
 
@@ -1805,7 +1805,7 @@ msgstr ""
 msgid "Undefined migration method"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:87 publishpress.php:744
+#: modules/improved-notifications/improved-notifications.php:87 publishpress.php:742
 msgid "Notification Workflows"
 msgstr ""
 
@@ -2164,67 +2164,63 @@ msgstr ""
 msgid "PublishPress finished migrating the legacy data."
 msgstr ""
 
-#: modules/roles/roles.php:658
-msgid "Sorry, you are not allowed to promote this user."
-msgstr ""
-
-#: modules/roles/roles.php:872
+#: modules/roles/roles.php:868
 msgid "Add New Role"
 msgstr ""
 
-#: modules/roles/roles.php:873
+#: modules/roles/roles.php:869
 msgid "Edit Role"
 msgstr ""
 
-#: modules/roles/roles.php:874
+#: modules/roles/roles.php:870
 msgid "Display name"
 msgstr ""
 
-#: modules/roles/roles.php:875
+#: modules/roles/roles.php:871
 msgid "This is the name that users will see."
 msgstr ""
 
-#: modules/roles/roles.php:876
+#: modules/roles/roles.php:872
 msgid "Developer Name (ID)"
 msgstr ""
 
-#: modules/roles/roles.php:878
+#: modules/roles/roles.php:874
 msgid "This is the name that developers can use to interact with this role. Only use A-Z letters and the \"-\" sign."
 msgstr ""
 
-#: modules/roles/roles.php:882
+#: modules/roles/roles.php:878
 msgid "Add users to this role."
 msgstr ""
 
-#: modules/roles/roles.php:931
+#: modules/roles/roles.php:927
 msgid "Please enter a name for the role."
 msgstr ""
 
-#: modules/roles/roles.php:942
+#: modules/roles/roles.php:938
 msgid "Role name cannot exceed 40 characters. Please try a shorter name."
 msgstr ""
 
-#: modules/roles/roles.php:949 modules/roles/roles.php:1028
+#: modules/roles/roles.php:945 modules/roles/roles.php:1024
 msgid "Please enter a display name for the role."
 msgstr ""
 
-#: modules/roles/roles.php:956 modules/roles/roles.php:1033
+#: modules/roles/roles.php:952 modules/roles/roles.php:1029
 msgid "Role's display name cannot exceed 40 characters. Please try a shorter name."
 msgstr ""
 
-#: modules/roles/roles.php:971
+#: modules/roles/roles.php:967
 msgid "Error adding role."
 msgstr ""
 
-#: modules/roles/roles.php:1048
+#: modules/roles/roles.php:1044
 msgid "Error loading role."
 msgstr ""
 
-#: modules/roles/roles.php:1052 modules/roles/roles.php:1127
+#: modules/roles/roles.php:1048 modules/roles/roles.php:1123
 msgid "Role not found. Can't edit."
 msgstr ""
 
-#: modules/roles/roles.php:1120
+#: modules/roles/roles.php:1116
 msgid "You can't delete the administrator role."
 msgstr ""
 
@@ -2262,7 +2258,7 @@ msgstr ""
 msgid "Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded file."
 msgstr ""
 
-#: modules/settings/settings.php:407 publishpress.php:452
+#: modules/settings/settings.php:407 publishpress.php:450
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
@@ -2350,43 +2346,43 @@ msgstr ""
 msgid "Users in Group"
 msgstr ""
 
-#: publishpress.php:451
+#: publishpress.php:449
 msgid "Please correct your form errors below and try again."
 msgstr ""
 
-#: publishpress.php:453
+#: publishpress.php:451
 msgid "You do not have necessary permissions to complete this action."
 msgstr ""
 
-#: publishpress.php:455
+#: publishpress.php:453
 msgid "Post does not exist"
 msgstr ""
 
-#: publishpress.php:694
+#: publishpress.php:692
 msgid "Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first."
 msgstr ""
 
-#: publishpress.php:745 publishpress.php:750
+#: publishpress.php:743 publishpress.php:748
 msgid "Notification Workflow"
 msgstr ""
 
-#: publishpress.php:746
+#: publishpress.php:744
 msgid "Add New Notification Workflow"
 msgstr ""
 
-#: publishpress.php:747
+#: publishpress.php:745
 msgid "Edit Notification Workflow"
 msgstr ""
 
-#: publishpress.php:748
+#: publishpress.php:746
 msgid "Search Workflows"
 msgstr ""
 
-#: publishpress.php:749
+#: publishpress.php:747
 msgid "Notifications"
 msgstr ""
 
-#: publishpress.php:751 publishpress.php:752
+#: publishpress.php:749 publishpress.php:750
 msgid "No Workflow found"
 msgstr ""
 
