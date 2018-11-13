@@ -130,6 +130,10 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed non-escaped attributes and URLs in the whole plugin;
+
 = [1.17.0] - 2018-11-08 =
 
 * Fixed permalink for posts in multisite URLs;
