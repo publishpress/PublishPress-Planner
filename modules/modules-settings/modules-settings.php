@@ -111,7 +111,7 @@ if ( ! class_exists('PP_Modules_Settings')) {
         {
             echo '<label for="publishpress_display_branding">';
             echo '<input id="publishpress_display_branding" name="'
-                 . $this->options_group_name . '[display_branding]"';
+                 . esc_attr($this->options_group_name) . '[display_branding]"';
             if (isset($this->module->options->display_branding)) {
                 checked($this->module->options->display_branding, 'on');
             }
@@ -216,9 +216,9 @@ if ( ! class_exists('PP_Modules_Settings')) {
                                         continue;
                                     } ?>
 
-                                    <label for="feature-<?php echo $mod_data->slug; ?>">
-                                        <input id="feature-<?php echo $mod_data->slug; ?>"
-                                               name="publishpress_options[features][<?php echo $mod_data->slug; ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
+                                    <label for="feature-<?php echo esc_attr($mod_data->slug); ?>">
+                                        <input id="feature-<?php echo esc_attr($mod_data->slug); ?>"
+                                               name="publishpress_options[features][<?php echo esc_attr($mod_data->slug); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
                                         &nbsp;&nbsp;&nbsp;<?php echo $mod_data->title; ?>
                                     </label>

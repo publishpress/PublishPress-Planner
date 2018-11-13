@@ -295,7 +295,7 @@ if ( ! class_exists('PP_Module')) {
         public function enqueue_datepicker_resources()
         {
             // Add the first day of the week as an available variable to wp_head
-            echo '<script type="text/javascript">var pp_week_first_day="' . get_option('start_of_week') . '";</script>';
+            echo '<script type="text/javascript">var pp_week_first_day="' . esc_attr(get_option('start_of_week')) . '";</script>';
 
             // Datepicker is available WordPress 3.3. We have to register it ourselves for previous versions of WordPress
             wp_enqueue_script('jquery-ui-datepicker');
@@ -641,10 +641,10 @@ if ( ! class_exists('PP_Module')) {
             <?php if ( ! empty($users)) : ?>
             <select class="chosen-select" name="to_notify[]" multiple>
                 <?php if ( ! empty($roles)) : ?>
-                    <optgroup label="<?php echo __('Roles', 'publishpress'); ?>">
+                    <optgroup label="<?php echo esc_attr__('Roles', 'publishpress'); ?>">
                         <?php foreach ($roles as $role => $data) : ?>
                             <?php $attrSelected = (in_array($role, $selected)) ? 'selected="selected"' : ''; ?>
-                            <option value="<?php echo $role; ?>" <?php echo $attrSelected; ?>><?php echo __('Role',
+                            <option value="<?php echo esc_attr($role); ?>" <?php echo $attrSelected; ?>><?php echo __('Role',
                                     'publishpress'); ?>: <?php echo $data['name']; ?></option>
                         <?php endforeach; ?>
                     </optgroup>
@@ -652,7 +652,7 @@ if ( ! class_exists('PP_Module')) {
                 <optgroup label="<?php echo __('Users', 'publishpress'); ?>">
                     <?php foreach ($users as $user) : ?>
                         <?php $attrSelected = (in_array($user->ID, $selected)) ? 'selected="selected"' : ''; ?>
-                        <option value="<?php echo $user->ID; ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
+                        <option value="<?php echo esc_attr($user->ID); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
                     <?php endforeach; ?>
                 </optgroup>
             </select>

@@ -745,18 +745,18 @@ if ( ! class_exists('PP_Usergroups_List_Table')) {
 
             $actions                            = [];
             $actions['edit edit-usergroup']     = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>',
-                $publishpress->user_groups->get_link([
+                esc_url($publishpress->user_groups->get_link([
                     'action'       => 'edit-usergroup',
                     'usergroup-id' => $usergroup->term_id,
-                ]));
+                ])));
             $actions['delete delete-usergroup'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
-                $publishpress->user_groups->get_link([
+                esc_url($publishpress->user_groups->get_link([
                     'action'       => 'delete-usergroup',
                     'usergroup-id' => $usergroup->term_id,
-                ]));
+                ])));
 
             $output .= $this->row_actions($actions, false);
-            $output .= '<div class="hidden" id="inline_' . $usergroup->term_id . '">';
+            $output .= '<div class="hidden" id="inline_' . esc_attr($usergroup->term_id) . '">';
             $output .= '<div class="name">' . esc_html($usergroup->name) . '</div>';
             $output .= '<div class="description">' . esc_html($usergroup->description) . '</div>';
             $output .= '</div>';
@@ -800,7 +800,7 @@ if ( ! class_exists('PP_Usergroups_List_Table')) {
             static $row_class = '';
             $row_class = ($row_class == '' ? ' class="alternate"' : '');
 
-            echo '<tr id="usergroup-' . $usergroup->term_id . '"' . $row_class . '>';
+            echo '<tr id="usergroup-' . esc_attr($usergroup->term_id) . '"' . $row_class . '>';
             echo $this->single_row_columns($usergroup);
             echo '</tr>';
         }

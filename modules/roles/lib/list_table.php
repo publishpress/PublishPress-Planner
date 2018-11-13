@@ -137,11 +137,11 @@ if ( ! class_exists('PP_Roles_List_Table')) {
 
             $actions                   = [];
             $actions['edit edit-role'] = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>',
-                $publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name]));
+                esc_url($publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name])));
 
             if ('administrator' !== $role->name) {
                 $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
-                    $publishpress->roles->getLink(['action' => 'delete-role', 'role-id' => $role->name]));
+                    esc_url($publishpress->roles->getLink(['action' => 'delete-role', 'role-id' => $role->name])));
             }
 
             return $this->twig->render(
@@ -180,7 +180,7 @@ if ( ! class_exists('PP_Roles_List_Table')) {
             static $row_class = '';
             $row_class = ($row_class == '' ? ' class="alternate"' : '');
 
-            echo '<tr id="role-' . $role->name . '"' . $row_class . '>';
+            echo '<tr id="role-' . esc_attr($role->name) . '"' . $row_class . '>';
             echo $this->single_row_columns($role);
             echo '</tr>';
         }

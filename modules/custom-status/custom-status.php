@@ -726,7 +726,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 'paperclip',
             ];
 
-            $pp_icons_dropdown .= '<select class="pp-icons-dropdown" name="' . $fieldname . '" ' . $attributes . '>';
+            $pp_icons_dropdown .= '<select class="pp-icons-dropdown" name="' . esc_attr($fieldname) . '" ' . $attributes . '>';
 
             foreach ($pp_icons_list as $pp_icon) {
 
@@ -737,7 +737,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                     $pp_icon_selected = '';
                 }
 
-                $pp_icons_dropdown .= '<option value="dashicons-' . $pp_icon . '"' . $pp_icon_selected . '>dashicons-' . $pp_icon . '</option>';
+                $pp_icons_dropdown .= '<option value="dashicons-' . esc_attr($pp_icon) . '"' . $pp_icon_selected . '>dashicons-' . esc_html__($pp_icon) . '</option>';
             }
 
             $pp_icons_dropdown .= '</select>';
@@ -1776,7 +1776,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 echo esc_attr($icon);
             } ?>"/>
                             <div id="preview_icon_picker_example_icon" data-target="#status_icon" class="button icon-picker dashicons <?php if (isset($icon)) {
-                echo $icon;
+                echo esc_attr($icon);
             } ?>"></div>
 
                         <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress')); ?>
@@ -1857,7 +1857,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                                     echo 'dashicons ' . esc_attr($status_icon);
                                 } ?>"/>
                             <div id='preview_icon_picker_example_icon' data-target='#status_icon' class="button icon-picker dashicons <?php if (isset($status_icon)) {
-                                    echo $status_icon;
+                                    echo esc_attr($status_icon);
                                 } ?>"></div>
 
                             <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress')); ?>
@@ -2061,7 +2061,8 @@ if ( ! class_exists('PP_Custom_Status')) {
             if (current_user_can('read_post', $post_id)) {
                 if (in_array($post->post_status, $status_slugs)) {
                     $view_link      = $this->get_preview_link($post);
-                    $preview_target = " target='wp-preview-{$post->ID}'";
+                    $postId         = esc_attr($post->ID);
+                    $preview_target = " target='wp-preview-{$postId}'";
                 } else {
                     if ('publish' === $post->post_status || 'attachment' === $post->post_type) {
                         $view_link = get_permalink($post);
@@ -2349,8 +2350,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                 }
                 //wp_cache_set("pp_custom_status_count_$column_name", $post_count);
             }
-            $output = sprintf('<a title="See all %1$ss saved as \'%2$s\'" href="%3$s">%4$s</a>', $column_name,
-                $item->name, $publishpress->helpers->filter_posts_link($item->slug, $column_name), $post_count);
+            $output = sprintf('<a title="See all %1$ss saved as \'%2$s\'" href="%3$s">%4$s</a>', esc_attr($column_name),
+                esc_attr($item->name), $publishpress->helpers->filter_posts_link($item->slug, $column_name), esc_html($post_count));
 
             return $output;
         }
@@ -2367,7 +2368,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
         $alternate_class = ($alternate_class == '' ? ' alternate' : '');
         $row_class       = ' class="term-static' . $alternate_class . '"';
 
-        echo '<tr id="term-' . $item->term_id . '"' . $row_class . '>';
+        echo '<tr id="term-' . esc_attr($item->term_id) . '"' . $row_class . '>';
         echo $this->single_row_columns($item);
         echo '</tr>';
     }
@@ -2403,7 +2404,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                                                                           'term-id' => $item->term_id,
         ]));
 
-        $output = '<span class="pp-status-color" style="background:' . $item->color . ';"></span>';
+        $output = '<span class="pp-status-color" style="background:' . esc_attr($item->color) . ';"></span>';
 
         $output .= '<strong>';
         if ( ! is_numeric($item->term_id)) {

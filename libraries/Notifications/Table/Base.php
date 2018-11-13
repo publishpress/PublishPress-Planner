@@ -386,7 +386,7 @@ class Base
 
         echo "<ul class='subsubsub'>\n";
         foreach ($views as $class => $view) {
-            $views[$class] = "\t<li class='$class'>$view";
+            $views[$class] = "\t<li class='" . esc_attr($class) . "'>$view";
         }
         echo implode(" |</li>\n", $views) . "</li>\n";
         echo "</ul>";
@@ -534,12 +534,12 @@ class Base
      */
     public function display()
     {
-        $singular = $this->_args['singular'];
+        $singular = esc_attr($this->_args['singular']);
 
         $this->display_tablenav('top');
 
         $this->screen->render_screen_reader_content('heading_list'); ?>
-        <table class="wp-list-table <?php echo implode(' ', $this->get_table_classes()); ?>">
+        <table class="wp-list-table <?php echo esc_attr(implode(' ', $this->get_table_classes())); ?>">
             <thead>
             <tr>
                 <?php $this->print_column_headers(); ?>
@@ -634,7 +634,7 @@ class Base
         foreach ($this->_actions as $name => $title) {
             $class = 'edit' === $name ? ' class="hide-if-no-js"' : '';
 
-            echo "\t" . '<option value="' . $name . '"' . $class . '>' . $title . "</option>\n";
+            echo "\t" . '<option value="' . esc_attr($name) . '"' . esc_attr($class) . '>' . esc_html($title) . "</option>\n";
         }
 
         echo "</select>\n";
@@ -755,7 +755,7 @@ class Base
             $html_current_page = sprintf(
                 "%s<input class='current-page' id='current-page-selector' type='text' name='paged' value='%s' size='%d' aria-describedby='table-paging' /><span class='tablenav-paging-text'>",
                 '<label for="current-page-selector" class="screen-reader-text">' . __('Current Page') . '</label>',
-                $current,
+                esc_attr($current),
                 strlen($total_pages)
             );
         }
@@ -789,7 +789,7 @@ class Base
         if ( ! empty($infinite_scroll)) {
             $pagination_links_class = ' hide-if-js';
         }
-        $output .= "\n<span class='$pagination_links_class'>" . join("\n", $page_links) . '</span>';
+        $output .= "\n<span class='" . esc_attr($pagination_links_class) . "'>" . join("\n", $page_links) . '</span>';
 
         if ($total_pages) {
             $page_class = $total_pages < 2 ? ' one-page' : '';
@@ -845,8 +845,8 @@ class Base
 
         if ( ! empty($columns['cb'])) {
             static $cb_counter = 1;
-            $columns['cb'] = '<label class="screen-reader-text" for="cb-select-all-' . $cb_counter . '">' . __('Select All') . '</label>'
-                             . '<input id="cb-select-all-' . $cb_counter . '" type="checkbox" />';
+            $columns['cb'] = '<label class="screen-reader-text" for="cb-select-all-' . esc_attr($cb_counter) . '">' . __('Select All') . '</label>'
+                             . '<input id="cb-select-all-' . esc_attr($cb_counter) . '" type="checkbox" />';
             $cb_counter++;
         }
 
@@ -907,7 +907,7 @@ class Base
         if ($this->has_items()) {
             $this->display_rows();
         } else {
-            echo '<tr class="no-items"><td class="colspanchange" colspan="' . $this->get_column_count() . '">';
+            echo '<tr class="no-items"><td class="colspanchange" colspan="' . esc_attr($this->get_column_count()) . '">';
             $this->no_items();
             echo '</td></tr>';
         }
@@ -1271,7 +1271,7 @@ class Base
         foreach ($actions as $action => $link) {
             ++$i;
             ($i == $action_count) ? $sep = '' : $sep = ' | ';
-            $out .= "<span class='$action'>$link$sep</span>";
+            $out .= "<span class='" . esc_attr($action) . "'>$link$sep</span>";
         }
         $out .= '</div>';
 
@@ -1385,7 +1385,7 @@ class Base
                 printf(
                     "<a href='%s' class='%s' id='view-switch-$mode'><span class='screen-reader-text'>%s</span></a>\n",
                     esc_url(add_query_arg('mode', $mode)),
-                    implode(' ', $classes),
+                    esc_attr(implode(' ', $classes)),
                     $title
                 );
             } ?>

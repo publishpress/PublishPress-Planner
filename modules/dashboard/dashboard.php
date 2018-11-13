@@ -264,7 +264,7 @@ if ( ! class_exists('PP_Dashboard')) {
                         $title = esc_html($post->post_title); ?>
                         <li>
                             <h4><a href="<?php echo $url ?>"
-                                   title="<?php _e('Edit this post', 'publishpress') ?>"><?php echo $title; ?></a></h4>
+                                   title="<?php esc_attr(_e('Edit this post', 'publishpress')); ?>"><?php echo $title; ?></a></h4>
                             <span class="pp-myposts-timestamp"><?php _e('This post was last updated on',
                                     'publishpress') ?><?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
                         </li>
@@ -308,7 +308,7 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="post_status_widget" name="' . $this->module->options_group_name . '[post_status_widget]">';
+            echo '<select id="post_status_widget" name="' . esc_attr($this->module->options_group_name) . '[post_status_widget]">';
             foreach ($options as $value => $label) {
                 echo '<option value="' . esc_attr($value) . '"';
                 echo selected($this->module->options->post_status_widget, $value);
@@ -329,7 +329,7 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="my_posts_widget" name="' . $this->module->options_group_name . '[my_posts_widget]"';
+            echo '<select id="my_posts_widget" name="' . esc_attr($this->module->options_group_name) . '[my_posts_widget]"';
             // Notifications module has to be enabled for the My Posts widget to work
             if ( ! $this->module_enabled('notifications')) {
                 echo ' disabled="disabled"';
@@ -359,7 +359,7 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="notepad_widget" name="' . $this->module->options_group_name . '[notepad_widget]">';
+            echo '<select id="notepad_widget" name="' . esc_attr($this->module->options_group_name) . '[notepad_widget]">';
             foreach ($options as $value => $label) {
                 echo '<option value="' . esc_attr($value) . '"';
                 echo selected($this->module->options->notepad_widget, $value);

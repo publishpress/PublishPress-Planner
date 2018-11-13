@@ -132,7 +132,7 @@ if ( ! class_exists('PP_Editorial_Comments')) {
 
             $thread_comments = (int)get_option('thread_comments'); ?>
             <script type="text/javascript">
-                var pp_thread_comments = <?php echo ($thread_comments) ? $thread_comments : 0; ?>;
+                var pp_thread_comments = <?php echo ($thread_comments) ? esc_html__($thread_comments) : 0; ?>;
             </script>
             <?php
         }

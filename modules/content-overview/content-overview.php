@@ -443,7 +443,7 @@ class PP_Content_Overview extends PP_Module
         $this->terms = apply_filters('PP_Content_Overview_filter_terms',
             $terms); // allow for reordering or any other filtering of terms
 
-        $description = sprintf('%s <span class="time-range">%s</span>', __('Content Overview', 'publishpress'),
+        $description = sprintf('%s <span class="time-range">%s</span>', esc_html__('Content Overview', 'publishpress'),
             $this->content_overview_time_range());
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
         <div class="wrap" id="pp-content-overview-wrap">
@@ -590,7 +590,7 @@ class PP_Content_Overview extends PP_Module
             // Following mostly stolen from edit.php
 
             if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                printf(_n('Item moved to the trash.', '%d items moved to the trash.', $_GET['trashed']),
+                printf(_n('Item moved to the trash.', '%d items moved to the trash.', (int)$_GET['trashed']),
                     number_format_i18n($_GET['trashed']));
                 $ids = isset($_GET['ids']) ? $_GET['ids'] : 0;
                 echo ' <a href="' . esc_url(wp_nonce_url("edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
@@ -599,7 +599,7 @@ class PP_Content_Overview extends PP_Module
             }
 
             if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                printf(_n('Item restored from the Trash.', '%d items restored from the Trash.', $_GET['untrashed']),
+                printf(_n('Item restored from the Trash.', '%d items restored from the Trash.', (int)$_GET['untrashed']),
                     number_format_i18n($_GET['untrashed']));
                 unset($_GET['undeleted']);
             }
@@ -633,14 +633,14 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . $select_name . '" value="" />';
                     } ?>
-                    <input type="submit" id="post-query-clear" value="<?php _e('Reset', 'publishpress'); ?>"
+                    <input type="submit" id="post-query-clear" value="<?php esc_attr(_e('Reset', 'publishpress')); ?>"
                            class="button-secondary button"/>
                 </form>
             </div><!-- /alignleft actions -->
 
             <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
                 <a href="#" id="print_link"><span
-                            class="pp-icon pp-icon-print"></span>&nbsp;<?php _e('Print', 'publishpress'); ?></a>
+                            class="pp-icon pp-icon-print"></span>&nbsp;<?php esc_attr(_e('Print', 'publishpress')); ?></a>
             </div>
             <div class="clear"></div>
         </div><!-- /tablenav -->
@@ -721,7 +721,7 @@ class PP_Content_Overview extends PP_Module
             $this->no_matching_posts = false;
         } ?>
         <div class="postbox<?php echo ( ! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
-            <div class="handlediv" title="<?php _e('Click to toggle', 'publishpress'); ?>">
+            <div class="handlediv" title="<?php esc_attr(_e('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
             <h3 class='hndle'><span><?php echo esc_html($term->name); ?></span></h3>
             <div class="inside">
@@ -938,7 +938,7 @@ class PP_Content_Overview extends PP_Module
         $post_type_object = get_post_type_object($post->post_type);
         $can_edit_post    = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
-            $output = '<strong><a href="' . get_edit_post_link($post->ID) . '">' . esc_html($post_title) . '</a></strong>';
+            $output = '<strong><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html($post_title) . '</a></strong>';
         } else {
             $output = '<strong>' . esc_html($post_title) . '</strong>';
         }
@@ -948,20 +948,20 @@ class PP_Content_Overview extends PP_Module
         $item_actions = [];
 
         if ($can_edit_post) {
-            $item_actions['edit'] = '<a title="' . __('Edit this post',
-                    'publishpress') . '" href="' . get_edit_post_link($post->ID) . '">' . __('Edit',
+            $item_actions['edit'] = '<a title="' . esc_attr(__('Edit this post',
+                    'publishpress')) . '" href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html__('Edit',
                     'publishpress') . '</a>';
         }
 
         if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $post->ID)) {
-            $item_actions['trash'] = '<a class="submitdelete" title="' . __('Move this item to the Trash',
-                    'publishpress') . '" href="' . get_delete_post_link($post->ID) . '">' . __('Trash',
+            $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(__('Move this item to the Trash',
+                    'publishpress')) . '" href="' . esc_url(get_delete_post_link($post->ID)) . '">' . esc_html__('Trash',
                     'publishpress') . '</a>';
         }
 
         // Display a View or a Preview link depending on whether the post has been published or not
         if (in_array($post->post_status, ['publish'])) {
-            $item_actions['view'] = '<a href="' . get_permalink($post->ID) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;',
+            $item_actions['view'] = '<a href="' . esc_url(get_permalink($post->ID)) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;',
                     'publishpress'), $post_title)) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
         } elseif ($can_edit_post) {
             $item_actions['previewpost'] = '<a href="' . esc_url(apply_filters('preview_post_link',

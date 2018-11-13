@@ -197,7 +197,7 @@ if ( ! class_exists('PP_Calendar')) {
             // Define the create-post capability
             $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
-            require_once(PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php');
+            require_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
 
             add_action('admin_init', [$this, 'register_settings']);
             add_action('admin_print_styles', [$this, 'add_admin_styles']);
@@ -215,7 +215,7 @@ if ( ! class_exists('PP_Calendar')) {
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
 
-            // Action to regenerate the calendar feed sekret
+            // Action to regenerate the calendar feed secret
             add_action('admin_init', [$this, 'handle_regenerate_calendar_feed_secret']);
 
             add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
@@ -497,7 +497,7 @@ if ( ! class_exists('PP_Calendar')) {
                     __('Something is wrong with the format for the new date.', 'publishpress'));
             }
 
-            // Persist the old hourstamp because we can't manipulate the exact time on the calendar
+            // Persist the old timestamp because we can't manipulate the exact time on the calendar
             // Bump the last modified timestamps too
             $existing_time     = date('H:i:s', strtotime($post->post_date));
             $existing_time_gmt = date('H:i:s', strtotime($post->post_date_gmt));
@@ -956,12 +956,12 @@ if ( ! class_exists('PP_Calendar')) {
 
                     <br/>
 
-                    <a href="<?php echo $subscription_link; ?>" id="publishpress-ics-download"
+                    <a href="<?php echo esc_url($subscription_link); ?>" id="publishpress-ics-download"
                        style="margin-right: 20px;" class="button">
                         <span class="dashicons dashicons-download" style="text-decoration: none"></span>
                         <?php echo __('Download .ics file'); ?></a>
 
-                    <button data-clipboard-text="<?php echo $subscription_link; ?>" id="publishpress-ics-copy"
+                    <button data-clipboard-text="<?php echo esc_attr($subscription_link); ?>" id="publishpress-ics-copy"
                             class="button-primary">
                         <span class="dashicons dashicons-clipboard" style="text-decoration: none"></span>
                         <?php echo __('Copy to the clipboard'); ?>
@@ -984,7 +984,7 @@ if ( ! class_exists('PP_Calendar')) {
                 if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
                     echo '<div id="trashed-message" class="updated"><p>';
                     if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                        printf(_n('Post moved to the trash.', '%d posts moved to the trash.', $_GET['trashed']),
+                        printf(_n('Post moved to the trash.', '%d posts moved to the trash.', (int)$_GET['trashed']),
                             number_format_i18n($_GET['trashed']));
                         $ids       = isset($_GET['ids']) ? $_GET['ids'] : 0;
                         $pid       = explode(',', $ids);
@@ -996,7 +996,7 @@ if ( ! class_exists('PP_Calendar')) {
                     }
                     if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
                         printf(_n('Post restored from the Trash.', '%d posts restored from the Trash.',
-                            $_GET['untrashed']), number_format_i18n($_GET['untrashed']));
+                            (int)$_GET['untrashed']), number_format_i18n($_GET['untrashed']));
                         unset($_GET['undeleted']);
                     }
                     echo '</p></div>';
@@ -1116,7 +1116,7 @@ if ( ! class_exists('PP_Calendar')) {
                             </div>
                                             <?php $class = ($week_single_date == date('Y-m-d',
                                                     current_time('timestamp'))) ? 'calendar-today' : ''; ?>
-                                            <div class="day-unit-label <?php echo $class; ?>"><?php echo esc_html(date('j',
+                                            <div class="day-unit-label <?php echo esc_attr($class); ?>"><?php echo esc_html(date('j',
                                                     strtotime($week_single_date))); ?></div>
                                             <ul class="post-list">
                                                 <?php
@@ -1152,7 +1152,7 @@ if ( ! class_exists('PP_Calendar')) {
                                                             <input type="hidden" id="post-insert-dialog-post-type"
                                                                    name="post-insert-dialog-post-type"
                                                                    class="post-insert-dialog-post-type"
-                                                                   value="<?php echo $post_types[0]; ?>"/>
+                                                                   value="<?php echo esc_attr($post_types[0]); ?>"/>
                                                         </h1>
                                                     <?php else : ?>
                                                         <h1>
@@ -1165,7 +1165,7 @@ if ( ! class_exists('PP_Calendar')) {
                                                                     name="post-insert-dialog-post-type"
                                                                     class="post-insert-dialog-post-type">
                                                                 <?php foreach ($post_types as $type) : ?>
-                                                                    <option value="<?php echo $type; ?>">
+                                                                    <option value="<?php echo esc_attr($type); ?>">
                                                                         <?php echo $this->get_quick_create_post_type_name($type); ?>
                                                                     </option>
                                                                 <?php endforeach; ?>
@@ -1190,7 +1190,7 @@ if ( ! class_exists('PP_Calendar')) {
 
                                                     <div class="post-insert-dialog-controls">
                                                         <input type="submit" class="button left"
-                                                               value="<?php echo esc_html(__('Create',
+                                                               value="<?php echo esc_attr(__('Create',
                                                                    'publishpress')); ?>"/>
                                                         &nbsp;
                                                         <a class="post-insert-dialog-edit-post-link"
@@ -1286,7 +1286,7 @@ if ( ! class_exists('PP_Calendar')) {
                 <div class="item-static">
                     <div class="item-default-visible" style="background:<?php echo $post_type_options['color']; ?>;">
                         <div class="inner">
-                            <span class="dashicons <?php echo $post_type_options['icon']; ?>"></span>
+                            <span class="dashicons <?php echo esc_attr($post_type_options['icon']); ?>"></span>
                             <?php $title = esc_html(_draft_or_post_title($post->ID)); ?>
 
                             <span class="item-headline post-title" title="<?php echo esc_attr($title); ?>">
@@ -1389,9 +1389,9 @@ if ( ! class_exists('PP_Calendar')) {
 
                                 </td>
                                 <?php if ($values['editable']) : ?>
-                                    <td class="editable-html hidden" data-type="<?php echo $values['type']; ?>"
-                                        data-metadataterm="<?php echo str_replace('editorial-metadata-', '',
-                                            str_replace('tax_', '', $field)); ?>">
+                                    <td class="editable-html hidden" data-type="<?php echo esc_attr($values['type']); ?>"
+                                        data-metadataterm="<?php echo esc_attr(str_replace('editorial-metadata-', '',
+                                            str_replace('tax_', '', $field))); ?>">
 
                                         <?php echo $this->get_editable_html($values['type'], $values['value']); ?>
                                     </td>
@@ -1415,11 +1415,11 @@ if ( ! class_exists('PP_Calendar')) {
             $item_actions     = [];
             if ($this->current_user_can_modify_post($post)) {
                 // Edit this post
-                $item_actions['edit'] = '<a href="' . get_edit_post_link($post->ID,
-                        true) . '" title="' . esc_attr(__('Edit this item', 'publishpress')) . '">' . __('Edit',
+                $item_actions['edit'] = '<a href="' . esc_url(get_edit_post_link($post->ID,
+                        true)) . '" title="' . esc_attr(__('Edit this item', 'publishpress')) . '">' . __('Edit',
                         'publishpress') . '</a>';
                 // Trash this post
-                $item_actions['trash'] = '<a href="' . get_delete_post_link($post->ID) . '" title="' . esc_attr(__('Trash this item'),
+                $item_actions['trash'] = '<a href="' . esc_url(get_delete_post_link($post->ID)) . '" title="' . esc_attr(__('Trash this item'),
                         'publishpress') . '">' . __('Trash', 'publishpress') . '</a>';
                 // Preview/view this post
                 if ( ! in_array($post->post_status, $this->published_statuses)) {
@@ -1428,7 +1428,7 @@ if ( ! class_exists('PP_Calendar')) {
                             $post)) . '" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;', 'publishpress'),
                             $post->post_title)) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
                 } elseif ('trash' != $post->post_status) {
-                    $item_actions['view'] = '<a href="' . get_permalink($post->ID) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;',
+                    $item_actions['view'] = '<a href="' . esc_url(get_permalink($post->ID)) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;',
                             'publishpress'), $post->post_title)) . '" rel="permalink">' . __('View',
                             'publishpress') . '</a>';
                 }
@@ -1459,13 +1459,13 @@ if ( ! class_exists('PP_Calendar')) {
                 case 'text':
                 case 'location':
                 case 'number':
-                    return '<input type="text" class="metadata-edit-' . $type . '" value="' . $value . '"/>';
+                    return '<input type="text" class="metadata-edit-' . esc_attr($type) . '" value="' . $value . '"/>';
                     break;
                 case 'paragraph':
-                    return '<textarea type="text" class="metadata-edit-' . $type . '">' . $value . '</textarea>';
+                    return '<textarea type="text" class="metadata-edit-' . esc_attr($type) . '">' . $value . '</textarea>';
                     break;
                 case 'date':
-                    return '<input type="text" value="' . $value . '" class="date-time-pick metadata-edit-' . $type . '"/>';
+                    return '<input type="text" value="' . esc_attr($value) . '" class="date-time-pick metadata-edit-' . esc_attr($type) . '"/>';
                     break;
                 case 'checkbox':
                     $output = '<select class="metadata-edit">';
@@ -1486,7 +1486,7 @@ if ( ! class_exists('PP_Calendar')) {
                     ]);
                     break;
                 case 'taxonomy':
-                    return '<input type="text" class="metadata-edit-' . $type . '" value="' . $value . '" />';
+                    return '<input type="text" class="metadata-edit-' . esc_attr($type) . '" value="' . esc_attr($value) . '" />';
                     break;
                 case 'taxonomy hierarchical':
                     return wp_dropdown_categories([
@@ -1637,28 +1637,28 @@ if ( ! class_exists('PP_Calendar')) {
 
                 <?php /** Previous and next navigation items (translatable so they can be increased if needed)**/ ?>
                 <li class="date-change next-week">
-                    <a title="<?php printf(__('Forward 1 week', 'publishpress')); ?>"
+                    <a title="<?php esc_attr(printf(__('Forward 1 week', 'publishpress'))); ?>"
                        href="<?php echo esc_url($this->get_pagination_link('next', $filters,
                            1)); ?>"><?php _e('&rsaquo;', 'publishpress'); ?></a>
                     <?php if ($this->total_weeks > 1) : ?>
-                        <a title="<?php printf(__('Forward %d weeks', 'publishpress'), $this->total_weeks); ?>"
+                        <a title="<?php esc_attr(printf(__('Forward %d weeks', 'publishpress'), $this->total_weeks)); ?>"
                            href="<?php echo esc_url($this->get_pagination_link('next',
                                $filters)); ?>"><?php _e('&raquo;', 'publishpress'); ?></a>
                     <?php endif; ?>
                 </li>
                 <li class="date-change today">
-                    <a title="<?php printf(__('Today is %s', 'publishpress'),
-                        date(get_option('date_format'), current_time('timestamp'))); ?>"
+                    <a title="<?php esc_attr(printf(__('Today is %s', 'publishpress'),
+                        date(get_option('date_format'), current_time('timestamp')))); ?>"
                        href="<?php echo esc_url($this->get_pagination_link('next', $filters, 0)); ?>"><?php _e('Today',
                             'publishpress'); ?></a>
                 </li>
                 <li class="date-change previous-week">
                     <?php if ($this->total_weeks > 1) : ?>
-                        <a title="<?php printf(__('Back %d weeks', 'publishpress'), $this->total_weeks); ?>"
+                        <a title="<?php esc_attr(printf(__('Back %d weeks', 'publishpress'), $this->total_weeks)); ?>"
                            href="<?php echo esc_url($this->get_pagination_link('previous',
                                $filters)); ?>"><?php _e('&laquo;', 'publishpress'); ?></a>
                     <?php endif; ?>
-                    <a title="<?php printf(__('Back 1 week', 'publishpress')); ?>"
+                    <a title="<?php esc_attr(printf(__('Back 1 week', 'publishpress'))); ?>"
                        href="<?php echo esc_url($this->get_pagination_link('previous', $filters,
                            1)); ?>"><?php _e('&lsaquo;', 'publishpress'); ?></a>
                 </li>
@@ -1982,7 +1982,7 @@ if ( ! class_exists('PP_Calendar')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="ics_subscription" name="' . $this->module->options_group_name . '[ics_subscription]">';
+            echo '<select id="ics_subscription" name="' . esc_attr($this->module->options_group_name) . '[ics_subscription]">';
             foreach ($options as $value => $label) {
                 echo '<option value="' . esc_attr($value) . '"';
                 echo selected($this->module->options->ics_subscription, $value);
@@ -2352,7 +2352,7 @@ if ( ! class_exists('PP_Calendar')) {
                 case 'post_status':
                     $post_statuses = $this->get_post_statuses();
                     ?>
-                    <select id="<?php echo $select_id; ?>" name="<?php echo $select_name; ?>">
+                    <select id="<?php echo esc_attr($select_id); ?>" name="<?php echo esc_attr($select_name); ?>">
                         <option value=""><?php _e('All statuses', 'publishpress'); ?></option>
                         <?php
                         foreach ($post_statuses as $post_status) {

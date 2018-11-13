@@ -56,8 +56,8 @@ class Category extends Base implements Filter_Interface
         $options = [];
         foreach ($categories as $category) {
             $options[] = [
-                'value'    => $category->slug,
-                'label'    => $category->name,
+                'value'    => esc_attr($category->slug),
+                'label'    => esc_html($category->name),
                 'selected' => in_array($category->slug, $metadata),
             ];
         }

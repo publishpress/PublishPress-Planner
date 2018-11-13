@@ -51,11 +51,8 @@ class Workflows extends Base
      */
     public function column_post_date($post)
     {
-        global $mode;
-
         if ('0000-00-00 00:00:00' === $post->post_date) {
             $t_time    = $h_time = __('Undefined');
-            $time_diff = 0;
         } else {
             $t_time = get_the_time(__('Y/m/d g:i:s a'));
             $m_time = $post->post_date;
@@ -71,7 +68,7 @@ class Workflows extends Base
         }
 
         /** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
-        echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
+        echo '<abbr title="' . esc_attr($t_time) . '">' . $h_time . '</abbr>';
     }
 
     /**
@@ -202,9 +199,9 @@ class Workflows extends Base
     {
         ?>
         <label class="screen-reader-text"
-               for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf(__('Select %s'),
+               for="cb-select-<?php echo esc_attr($post->ID); ?>"><?php echo sprintf(__('Select %s'),
                 $post->post_title); ?></label>
-        <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo $post->ID; ?>"
+        <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo esc_attr($post->ID); ?>"
                value="<?php echo esc_attr($post->ID); ?>"/>
         <?php
     }

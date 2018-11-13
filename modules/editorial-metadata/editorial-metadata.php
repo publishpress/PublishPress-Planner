@@ -221,9 +221,9 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
             $current_metadata_type = $description->type;
             $metadata_types        = $this->get_supported_metadata_types(); ?>
-            <select id="<?php echo self::metadata_taxonomy; ?>'_type" name="<?php echo self::metadata_taxonomy; ?>'_type">
+            <select id="<?php echo esc_attr(self::metadata_taxonomy); ?>'_type" name="<?php echo esc_attr(self::metadata_taxonomy); ?>'_type">
             <?php foreach ($metadata_types as $metadata_type => $metadata_type_name) : ?>
-                <option value="<?php echo $metadata_type; ?>" <?php selected($metadata_type, $current_metadata_type); ?>><?php echo $metadata_type_name; ?></option>
+                <option value="<?php echo esc_attr($metadata_type); ?>" <?php selected($metadata_type, $current_metadata_type); ?>><?php echo esc_html($metadata_type_name); ?></option>
             <?php endforeach; ?>
             </select>
         <?php
@@ -411,14 +411,14 @@ if (!class_exists('PP_Editorial_Metadata')) {
             if (!count($terms)) {
                 $message = __('No editorial metadata available.');
                 if (current_user_can('manage_options')) {
-                    $message .= sprintf(__(' <a href="%s">Add fields to get started</a>.'), $this->get_link());
+                    $message .= sprintf(__(' <a href="%s">Add fields to get started</a>.'), esc_url($this->get_link()));
                 } else {
                     $message .= __(' Encourage your site administrator to configure your editorial workflow by adding editorial metadata.');
                 }
                 echo '<p>' . $message . '</p>';
             } else {
                 foreach ($terms as $term) {
-                    $postmeta_key     = $this->get_postmeta_key($term);
+                    $postmeta_key     = esc_attr($this->get_postmeta_key($term));
                     $current_metadata = esc_attr($this->get_postmeta_value($term, $post->ID));
                     $type             = $term->type;
                     $description      = $term->description;
@@ -427,7 +427,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     } else {
                         $description_span = '';
                     }
-                    echo "<div class='" . self::metadata_taxonomy . " " . self::metadata_taxonomy . "_$type'>";
+                    echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(self::metadata_taxonomy) . "_$type'>";
 
                     // Check if the user can edit the metadata
                     $can_edit = apply_filters('pp_editorial_metadata_user_can_edit', true);
@@ -1618,7 +1618,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                             <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress')); ?>
                         </td>
                     </tr>
-                <input type='hidden' name="<?php echo self::metadata_taxonomy ?>'_type" value="<?php echo $type; ?>" />
+                <input type='hidden' name="<?php echo esc_attr(self::metadata_taxonomy); ?>'_type" value="<?php echo esc_attr($type); ?>" />
                 </table>
                 <p class='submit'>
                 <?php submit_button(__('Update Metadata Term', 'publishpress'), 'primary', 'submit', false); ?>
@@ -1786,7 +1786,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         $alternate_class        = ($alternate_class == '' ? ' alternate' : '');
         $row_class              = ' class="term-static' . $alternate_class . '"';
 
-        echo '<tr id="term-' . $term->term_id . '"' . $row_class . '>';
+        echo '<tr id="term-' . esc_attr($term->term_id) . '"' . $row_class . '>';
         echo $this->single_row_columns($term);
         echo '</tr>';
     }

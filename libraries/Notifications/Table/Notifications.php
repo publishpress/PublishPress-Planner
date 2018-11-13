@@ -71,7 +71,7 @@ class Notifications extends Base
         }
 
         /** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
-        echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
+        echo '<abbr title="' . esc_attr($t_time) . '">' . $h_time . '</abbr>';
     }
 
     /**
@@ -215,9 +215,9 @@ class Notifications extends Base
     {
         ?>
         <label class="screen-reader-text"
-               for="cb-select-<?php echo $post->ID; ?>"><?php echo sprintf(__('Select %s'),
+               for="cb-select-<?php echo esc_attr($post->ID); ?>"><?php echo sprintf(__('Select %s'),
                 $post->post_title); ?></label>
-        <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo $post->ID; ?>"
+        <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo esc_attr($post->ID); ?>"
                value="<?php echo esc_attr($post->ID); ?>"/>
         <?php
     }

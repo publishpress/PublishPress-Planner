@@ -183,7 +183,7 @@ if ( ! class_exists('wsScreenOptions10')) :
                     $contents = sprintf(
                         '<div id="%s" class="%s"><input type="hidden" name="_wpnonce-%s" value="%s" />%s</div>',
                         esc_attr($panel_id),
-                        implode(' ', $classes),
+                        esc_attr(implode(' ', $classes)),
                         esc_attr($panel_id),
                         wp_create_nonce('save_settings-' . $panel_id),
                         $contents
