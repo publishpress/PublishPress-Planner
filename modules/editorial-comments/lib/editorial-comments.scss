@@ -1,4 +1,5 @@
 /** Comments **/
+
 #pp-comments_wrapper {
   padding: 0;
 }
@@ -81,6 +82,9 @@
   margin: 0.7em 0;
 }
 
+#pp-replyrow {
+}
+
 #pp-replyrow #pp-replycontent {
   width: 100%;
   height: 100px;
@@ -118,36 +122,43 @@
 }
 
 /* Gutenberg support */
-body.gutenberg-editor-page #pp-comments li {
-  border-left: none;
-  border-right: none;
-  padding: 0 4px 0 0;
-  margin-bottom: 5px;
-}
-body.gutenberg-editor-page #pp-comments img.avatar {
-  width: 30px;
-  margin-left: 0;
-  margin-right: 6px;
-}
-body.gutenberg-editor-page #pp-comments h5 {
-  margin-top: 1px;
-  margin-bottom: 4px;
-}
-body.gutenberg-editor-page #pp-comments ul.children {
-  margin-left: 14px;
-  margin-bottom: 7px;
-}
-body.gutenberg-editor-page #pp-comments .comment-content {
-  margin-left: 0;
-}
-body.gutenberg-editor-page #pp-comments {
-  background: none;
-}
-body.gutenberg-editor-page #pp-comments .comment-content p {
-  margin: 0;
-}
-body.gutenberg-editor-page #pp-comments li p.row-actions {
-  margin: 4px 0;
-}
+body.gutenberg-editor-page {
+  #pp-comments li {
+    border-left: none;
+    border-right: none;
+    padding: 0 4px 0 0;
+    margin-bottom: 5px;
+  }
 
-/*# sourceMappingURL=editorial-comments.css.map */
+  #pp-comments img.avatar {
+    width: 30px;
+    margin-left: 0;
+    margin-right: 6px;
+  }
+
+  #pp-comments h5 {
+    margin-top: 1px;
+    margin-bottom: 4px;
+  }
+
+  #pp-comments ul.children {
+    margin-left: 14px;
+    margin-bottom: 7px;
+  }
+
+  #pp-comments .comment-content {
+    margin-left: 0;
+  }
+
+  #pp-comments {
+    background: none;
+  }
+
+  #pp-comments .comment-content p {
+    margin: 0;
+  }
+
+  #pp-comments li p.row-actions {
+    margin: 4px 0;
+  }
+}
