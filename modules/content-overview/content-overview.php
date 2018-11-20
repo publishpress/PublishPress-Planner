@@ -631,7 +631,7 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="author" value=""/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
-                        echo '<input type="hidden" name="' . $select_name . '" value="" />';
+                        echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
                     <input type="submit" id="post-query-clear" value="<?php esc_attr(_e('Reset', 'publishpress')); ?>"
                            class="button-secondary button"/>
