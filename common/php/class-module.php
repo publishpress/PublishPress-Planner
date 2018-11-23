@@ -143,7 +143,11 @@ if ( ! class_exists('PP_Module')) {
             ];
             $pt_args = apply_filters('publishpress_supported_module_post_types_args', $pt_args, $module);
 
-            return get_post_types($pt_args, 'objects');
+            $postTypes = get_post_types($pt_args, 'objects');
+
+            $postTypes = apply_filters('publishpress_supported_module_post_types', $postTypes, $module);
+
+            return $postTypes;
         }
 
         /**
