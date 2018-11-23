@@ -145,7 +145,7 @@ if ( ! class_exists('PP_Module')) {
 
             $postTypes = get_post_types($pt_args, 'objects');
 
-            $postTypes = apply_filters('publishpress_supported_module_post_types', $postTypes, $module);
+            $postTypes = apply_filters('publishpress_supported_module_post_types', $postTypes);
 
             return $postTypes;
         }
