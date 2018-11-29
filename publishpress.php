@@ -770,6 +770,6 @@ function publishPressRegisterCustomPostTypes()
     }
 }
 
-add_action('plugins_loaded', 'PublishPress');
+add_action('init', 'PublishPress');
 add_action('publishpress_admin_menu_page', 'publishPressRegisterCustomPostTypes', 1001);
 register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
