@@ -1869,7 +1869,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                     <?php endif; ?>
                     </div>
                 </div>
-                </div>;
+                </div>
 
                 <?php endif; ?>
             <?php
