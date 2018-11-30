@@ -230,11 +230,13 @@ if ( ! class_exists('PP_Custom_Status')) {
             foreach ($default_terms as $termSlug => $data) {
                 foreach ($roles as $roleName) {
                     $role = get_role($roleName);
-                    $role->add_cap('status_change_' . str_replace('-', '_', $termSlug));
+                    if (!empty($role)) {
+                        $role->add_cap('status_change_' . str_replace('-', '_', $termSlug));
 
-                    if ('publish' === $termSlug) {
-                        $role->add_cap('status_change_private');
-                        $role->add_cap('status_change_future');
+                        if ('publish' === $termSlug) {
+                            $role->add_cap('status_change_private');
+                            $role->add_cap('status_change_future');
+                        }
                     }
                 }
             }
