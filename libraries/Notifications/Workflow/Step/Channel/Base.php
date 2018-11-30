@@ -9,14 +9,11 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
-use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use WP_User;
 
 class Base extends Base_Step
 {
-    use Dependency_Injector;
-
     const META_KEY_EMAIL = '_psppno_chnbase';
 
     /**
