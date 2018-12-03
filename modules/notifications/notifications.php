@@ -445,6 +445,8 @@ if ( ! class_exists('PP_Notifications')) {
         public function notifications_meta_box()
         {
             global $post;
+
+            $workflows = $this->get_workflows_related_to_followers();
             ?>
             <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
@@ -458,17 +460,30 @@ if ( ! class_exists('PP_Notifications')) {
 
                 <div id="pp_post_notify_users_box">
                     <?php
-                    $users_to_notify        = $this->get_users_to_notify($post->ID, 'id');
-                    $roles_to_notify        = $this->get_roles_to_notify($post->ID, 'slugs');
-                    $emails_to_notify       = $this->get_emails_to_notify($post->ID);
+                    $users_to_notify  = $this->get_users_to_notify($post->ID, 'id');
+                    $roles_to_notify  = $this->get_roles_to_notify($post->ID, 'slugs');
+                    $emails_to_notify = $this->get_emails_to_notify($post->ID);
 
                     $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
 
                     $select_form_args = [
-                                'list_class' => 'pp_post_notify_list',
-                            ];
+                        'list_class' => 'pp_post_notify_list',
+                    ];
                     $this->users_select_form($selected, $select_form_args); ?>
 
+                </div>
+
+                <div class="pp_post_notify_workflows">
+                    <h3>Related Workflows</h3>
+                    <?php if ( ! empty($workflows)) : ?>
+                        <ul>
+                            <?php foreach ($workflows as $workflow) : ?>
+                                <li><?php echo $workflow->post_title; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else : ?>
+                        <p><?php echo __('This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.', 'publishpress'); ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <p>
@@ -480,13 +495,38 @@ if ( ! class_exists('PP_Notifications')) {
 
                 <div class="clear"></div>
 
-                <input type="hidden" name="pp_save_notify" value="1"/> <?php // Extra protection against autosaves
+                <?php
+                // Extra protection against autosaves
                 ?>
+                <input type="hidden" name="pp_save_notify" value="1"/>
 
                 <?php wp_nonce_field('save_roles', 'pp_notifications_nonce', false); ?>
             </div>
 
             <?php
+        }
+
+        /**
+         * Return workflows with the "Notify to followers" set as true.
+         *
+         * @return array
+         */
+        protected function get_workflows_related_to_followers()
+        {
+            $publishpress = PublishPress();
+
+            $meta_query = [
+                'relation' => 'OR',
+                [
+                    'key'     => '_psppno_tofollower',
+                    'value'   => 1,
+                    'compare' => '=',
+                ],
+            ];
+
+            $workflows = $publishpress->improved_notifications->get_workflows($meta_query);
+
+            return $workflows;
         }
 
         public function action_save_post($postId)

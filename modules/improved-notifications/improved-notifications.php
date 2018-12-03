@@ -687,9 +687,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Returns a list of workflows.
          *
+         * @param array $meta_query
+         *
          * @return array
          */
-        protected function get_workflows()
+        public function get_workflows($meta_query = [])
         {
             if (empty($this->workflows)) {
                 // Build the query
@@ -698,7 +700,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
                     'no_found_rows' => true,
                     'cache_results' => true,
-                    'meta_query'    => [],
+                    'meta_query'    => $meta_query,
                 ];
 
                 $query = new \WP_Query($query_args);

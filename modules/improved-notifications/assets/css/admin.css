@@ -115,6 +115,23 @@
     margin-bottom: 9px;
 }
 
+#pp_post_notify_box .pp_post_notify_workflows p {
+    font-style: italic;
+    color: gray;
+}
+
+#pp_post_notify_box .pp_post_notify_workflows h3 {
+    font-size: 14px;
+    background: transparent;
+    padding-left: 0;
+}
+
+#pp_post_notify_box .pp_post_notify_workflows li {
+    list-style-type: square;
+    margin-left: 20px;
+    font-style: italic;
+}
+
 /* Notification message */
 
 #psppno-workflow-metabox-section-content {
