@@ -70,11 +70,9 @@ class Email extends Base implements Channel_Interface
 
         // Call the legacy notification module
         foreach ($emails as $email) {
-            $name = '';
             // Split the name and email, if set.
             $separatorPos = strpos($email, '/');
             if ($separatorPos > 0) {
-                $name  = substr($email, 0, $separatorPos);
                 $email = substr($email, $separatorPos + 1, strlen($email));
             }
 

@@ -607,6 +607,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'actor'            => __('User making changes or comments', 'publishpress'),
                     'workflow'         => __('Workflow', 'publishpress'),
                     'format'           => __('Format', 'publishpress'),
+                    'receiver'         => __('Receiver', 'publishpress'),
                     'shortcode'        => __('shortcode', 'publishpress'),
                     'field'            => __('field', 'publishpress'),
                     'format_text'      => __('On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".',

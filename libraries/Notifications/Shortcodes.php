@@ -32,6 +32,19 @@ class Shortcodes
     protected $action_args;
 
     /**
+     * @var mixed
+     */
+    protected $cache_receiver;
+
+    /**
+     * Shortcodes constructor.
+     */
+    public function __construct()
+    {
+        add_action('publishpress_workflow_do_shortcode_in_content', [$this, 'setReceiverForShortcode'], 10, 2);
+    }
+
+    /**
      * Adds the shortcodes to replace text
      *
      * @param WP_Post $workflow_post
@@ -44,6 +57,8 @@ class Shortcodes
         add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
         add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
         add_shortcode('psppno_workflow', [$this, 'handle_psppno_workflow']);
+        add_shortcode('psppno_edcomment', [$this, 'handle_psppno_edcomment']);
+        add_shortcode('psppno_receiver', [$this, 'handle_psppno_receiver']);
     }
 
     /**
@@ -73,6 +88,48 @@ class Shortcodes
         $user = $this->get_actor();
 
         return $this->get_user_data($user, $attrs);
+    }
+
+    /**
+     * Returns data from the receiver, if available.
+     *
+     * [psppno_receiver name]
+     *
+     * @param array $attrs
+     *
+     * @return string
+     */
+    public function handle_psppno_receiver($attrs)
+    {
+        $receiver = $this->cache_receiver;
+
+        if (is_numeric($receiver)) {
+            $user = get_user_by('id', $receiver);
+
+            if (in_array('name', $attrs)) {
+                $result = $user->display_name;
+            } else {
+                $result = $user->user_email;
+            }
+        } else {
+            $result = $receiver;
+
+            // Do we have an email address?
+            if (strpos($receiver, '@') > 0) {
+                // Do we have a name?
+                $separatorPos = strpos($receiver, '/');
+                if ($separatorPos > 0) {
+
+                    if (in_array('name', $attrs)) {
+                        $result = substr($receiver, 0, $separatorPos);
+                    } else {
+                        $result = substr($receiver, $separatorPos + 1, strlen($receiver));
+                    }
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -438,6 +495,15 @@ class Shortcodes
     }
 
     /**
+     * @param string $content
+     * @param mixed $receiver
+     */
+    public function setReceiverForShortcode($content, $receiver)
+    {
+        $this->cache_receiver = $receiver;
+    }
+
+    /**
      * Removes the shortcodes
      */
     public function unregister()
@@ -446,6 +512,7 @@ class Shortcodes
         remove_shortcode('psppno_post');
         remove_shortcode('psppno_workflow');
         remove_shortcode('psppno_edcomment');
+        remove_shortcode('psppno_receiver');
 
         $this->cleanup();
     }

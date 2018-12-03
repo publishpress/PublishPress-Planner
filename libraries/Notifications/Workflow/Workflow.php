@@ -62,12 +62,14 @@ class Workflow
             return;
         }
 
+        // Prepare the shortcodes.
+        $shortcodes = $this->get_service('shortcodes');
+        $shortcodes->register($this->workflow_post, $this->action_args);
+
         /*
          * What will the notification says?
-         *
-         * TODO: Allow custom message for each user, so we can mention him, or other user related data. Add another shortcode replacements?
          */
-        $content = $this->get_content();
+        $base_content = $this->get_content();
 
         // Run the action to each receiver.
         foreach ($receivers as $channel => $channel_receivers) {
@@ -85,6 +87,11 @@ class Workflow
                     'publishpress_notif_send_notification_' . $channel, $this, $channel);
 
                 /**
+                 * Prepare the content replacing shortcodes.
+                 */
+                $content = $this->do_shortcodes_in_content($base_content, $receiver, $channel);
+
+                /**
                  * Triggers the notification. This can be caught by notification channels.
                  * But can be intercepted by other plugins (cache, async, etc) to change the
                  * workflow.
@@ -98,6 +105,9 @@ class Workflow
                 do_action($action, $this->workflow_post, $this->action_args, $receiver, $content, $channel);
             }
         }
+
+        // Remove the shortcodes.
+        $shortcodes->unregister();
     }
 
     /**
@@ -188,10 +198,6 @@ class Workflow
      */
     protected function get_content()
     {
-        $shortcodes = $this->get_service('shortcodes');
-
-        $shortcodes->register($this->workflow_post, $this->action_args);
-
         $content = ['subject' => '', 'body' => ''];
         /**
          * Filters the content for the notification workflow.
@@ -210,23 +216,32 @@ class Workflow
             $content['body'] = '';
         }
 
-        // Replace placeholders in the subject and body
-        $content['subject'] = $this->filter_shortcodes($content['subject']);
-        $content['body']    = $this->filter_shortcodes($content['body']);
-
-        $shortcodes->unregister();
-
         return $content;
     }
 
     /**
-     * @param $text
+     * @param string $content
+     * @param mixed  $receiver
+     * @param string $channel
      *
      * @return string
      */
-    protected function filter_shortcodes($text)
+    protected function do_shortcodes_in_content($content, $receiver, $channel)
     {
-        return do_shortcode($text);
+        /**
+         * Action triggered before do shortcodes in the content.
+         *
+         * @param string $content
+         * @param mixed  $receiver
+         * @param string $channel
+         */
+        do_action('publishpress_workflow_do_shortcode_in_content', $content, $receiver, $channel);
+
+        // Replace placeholders in the subject and body
+        $content['subject'] = do_shortcode($content['subject']);
+        $content['body']    = do_shortcode($content['body']);
+
+        return $content;
     }
 
     /**
