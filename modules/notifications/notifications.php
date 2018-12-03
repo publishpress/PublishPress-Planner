@@ -39,12 +39,14 @@ if ( ! class_exists('PP_Notifications')) {
      */
     class PP_Notifications extends PP_Module
     {
-
         // Taxonomy name used to store users which will be notified for changes in the posts.
         public $notify_user_taxonomy = 'pp_notify_user';
 
         // Taxonomy name used to store roles which will be notified for changes in the posts.
         public $notify_role_taxonomy = 'pp_notify_role';
+
+        // Taxonomy name used to store emails which will be notified for changes in the posts.
+        public $notify_email_taxonomy = 'pp_notify_email';
 
         public $module;
 
@@ -248,6 +250,7 @@ if ( ! class_exists('PP_Notifications')) {
 
             register_taxonomy($this->notify_user_taxonomy, $supported_post_types, $args);
             register_taxonomy($this->notify_role_taxonomy, $supported_post_types, $args);
+            register_taxonomy($this->notify_email_taxonomy, $supported_post_types, $args);
         }
 
         /**
@@ -272,7 +275,7 @@ if ( ! class_exists('PP_Notifications')) {
 
                 wp_enqueue_script(
                     'publishpress-chosen-js',
-                    PUBLISHPRESS_URL . '/common/libs/chosen/chosen.jquery.js',
+                    PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.jquery.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -299,7 +302,7 @@ if ( ! class_exists('PP_Notifications')) {
 
                 wp_enqueue_style(
                     'publishpress-chosen-css',
-                    PUBLISHPRESS_URL . '/common/libs/chosen/chosen.css',
+                    PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.css',
                     false,
                     PUBLISHPRESS_VERSION
                 );
@@ -441,7 +444,8 @@ if ( ! class_exists('PP_Notifications')) {
          */
         public function notifications_meta_box()
         {
-            global $post, $post_ID, $publishpress; ?>
+            global $post;
+            ?>
             <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
 
@@ -455,15 +459,15 @@ if ( ! class_exists('PP_Notifications')) {
                 <div id="pp_post_notify_users_box">
                     <?php
                     $users_to_notify        = $this->get_users_to_notify($post->ID, 'id');
-            $roles_to_notify        = $this->get_roles_to_notify($post->ID, 'slugs');
+                    $roles_to_notify        = $this->get_roles_to_notify($post->ID, 'slugs');
+                    $emails_to_notify       = $this->get_emails_to_notify($post->ID);
 
-            $selected = array_merge($users_to_notify, $roles_to_notify);
+                    $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
 
-            $select_form_args = [
-                        'list_class' => 'pp_post_notify_list',
-                    ];
-            $this->users_select_form($selected, $select_form_args); ?>
-
+                    $select_form_args = [
+                                'list_class' => 'pp_post_notify_list',
+                            ];
+                    $this->users_select_form($selected, $select_form_args); ?>
 
                 </div>
 
@@ -515,14 +519,33 @@ if ( ! class_exists('PP_Notifications')) {
             }
             wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
 
+            // Remove current emails
+            $terms = get_the_terms($postId, $this->notify_email_taxonomy);
+            $emails = [];
+            if ( ! empty($terms)) {
+                foreach ($terms as $term) {
+                    $emails[] = $term->term_id;
+                }
+            }
+            wp_remove_object_terms($postId, $emails, $this->notify_email_taxonomy);
+
             if (isset($_POST['to_notify'])) {
+
+
                 foreach ($_POST['to_notify'] as $id) {
                     if (is_numeric($id)) {
                         // User id
                         $this->post_set_users_to_notify($postId, (int)$id, true);
                     } else {
-                        // Role name
-                        $this->post_set_roles_to_notify($postId, $id, true);
+                        $id = sanitize_text_field($id);
+
+                        // Is an email address?
+                        if (strpos($id, '@') > 0) {
+                            $this->post_set_emails_to_notify($postId, $id, true);
+                        } else {
+                            // Role name
+                            $this->post_set_roles_to_notify($postId, $id, true);
+                        }
                     }
                 }
             }
@@ -993,6 +1016,62 @@ if ( ! class_exists('PP_Notifications')) {
         }
 
         /**
+         * Set a non-user or non-users to be notified for a post
+         *
+         * @param int|object   $post   Post object or ID
+         * @param string|array $emails Role or roles to subscribe to post updates
+         * @param bool         $append Whether roles should be added to pp_notify_role list or replace existing list
+         *
+         * @return true|WP_Error     $response  True on success, WP_Error on failure
+         */
+        public function post_set_emails_to_notify($post, $emails, $append = true)
+        {
+            $post = get_post($post);
+            if ( ! $post) {
+                return new WP_Error('missing-post', $this->module->messages['missing-post']);
+            }
+
+            if ( ! is_array($emails)) {
+                $emails = [$emails];
+            }
+
+            $email_terms = [];
+
+            foreach ($emails as $string) {
+                // Do we have the name/email separator?
+                $separatorPos = strpos($string, '/');
+                if ($separatorPos > 0) {
+                    $email = trim(substr($string, $separatorPos + 1, strlen($string)));
+
+                } else {
+                    $email = $string;
+                }
+
+                // Do we have a valid email?
+                $email = sanitize_email($email);
+
+                if (empty($email)) {
+                    continue;
+                }
+
+                // Add the email as a term if they don't exist
+                $term = $this->add_term_if_not_exists($string, $this->notify_email_taxonomy);
+
+                if ( ! is_wp_error($term)) {
+                    $email_terms[] = $string;
+                }
+            }
+
+            $set = wp_set_object_terms($post->ID, $email_terms, $this->notify_email_taxonomy, $append);
+
+            if (is_wp_error($set)) {
+                return $set;
+            } else {
+                return true;
+            }
+        }
+
+        /**
          * Removes user from pp_notify_user taxonomy for the given Post,
          * so they no longer receive future notifications.
          *
@@ -1171,16 +1250,36 @@ if ( ! class_exists('PP_Notifications')) {
         }
 
         /**
-         * Gets a list of the roles that should be notified for the specified post
+         * Gets a list of the emails that should be notified for the specified post
          *
          * @param int $post_id
          *
          * @return array $roles All of the role slugs
          */
+        public function get_emails_to_notify($post_id)
+        {
+            $emails = wp_get_object_terms($post_id, $this->notify_email_taxonomy);
+
+            $list = [];
+            if ( ! empty($emails)) {
+                foreach ($emails as $email) {
+                    $list[] = $email->name;
+                }
+            }
+
+            return $list;
+        }
+
+        /**
+         * Gets a list of the roles that should be notified for the specified post
+         *
+         * @param int $post_id
+         * @param string $return
+         *
+         * @return array $roles All of the role slugs
+         */
         public function get_roles_to_notify($post_id, $return = 'all')
         {
-            global $publishpress;
-
             // Workaround for the fact that get_object_terms doesn't return just slugs
             if ($return == 'slugs') {
                 $fields = 'all';

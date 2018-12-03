@@ -69,14 +69,24 @@ class Email extends Base implements Channel_Interface
         $body = str_replace(']]>', ']]&gt;', $body);
 
         // Call the legacy notification module
-        $this->get_service('publishpress')->notifications->send_email(
-            $action,
-            $action_args,
-            $subject,
-            $body,
-            '',
-            $emails
-        );
+        foreach ($emails as $email) {
+            $name = '';
+            // Split the name and email, if set.
+            $separatorPos = strpos($email, '/');
+            if ($separatorPos > 0) {
+                $name  = substr($email, 0, $separatorPos);
+                $email = substr($email, $separatorPos + 1, strlen($email));
+            }
+
+            $this->get_service('publishpress')->notifications->send_email(
+                $action,
+                $action_args,
+                $subject,
+                $body,
+                '',
+                $email
+            );
+        }
 
         $controller->register_notification_signature($signature);
     }

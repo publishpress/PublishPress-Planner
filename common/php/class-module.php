@@ -614,8 +614,6 @@ if ( ! class_exists('PP_Module')) {
          */
         public function users_select_form($selected = null, $args = null)
         {
-            global $publishpress;
-
             // Set up arguments
             $defaults    = [
                 'list_class' => 'pp-users-select-form',
@@ -640,6 +638,16 @@ if ( ! class_exists('PP_Module')) {
                 $selected = [];
             }
 
+            // Extract emails from the selected list, if there is any.
+            $emails = [];
+            if ( ! empty($selected)) {
+                foreach ($selected as $item) {
+                    if (strpos($item, '@') > 0) {
+                        $emails[] = $item;
+                    }
+                }
+            }
+
             $roles = get_editable_roles(); ?>
 
             <?php if ( ! empty($users)) : ?>
@@ -659,6 +667,14 @@ if ( ! class_exists('PP_Module')) {
                         <option value="<?php echo esc_attr($user->ID); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
                     <?php endforeach; ?>
                 </optgroup>
+                <?php if ( ! empty($emails)) : ?>
+                    <optgroup label="<?php echo __('E-mails', 'publishpress'); ?>">
+                        <?php foreach ($emails as $email) : ?>
+                            <?php $attrSelected = (in_array($email, $selected)) ? 'selected="selected"' : ''; ?>
+                            <option value="<?php echo esc_attr($email); ?>" <?php echo $attrSelected; ?>><?php echo $email; ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endif; ?>
             </select>
         <?php endif; ?>
             <?php

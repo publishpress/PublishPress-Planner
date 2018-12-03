@@ -60,20 +60,26 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             ) {
                 $toNotify = $_POST['to_notify'];
 
-                $roles = [];
-                $users = [];
+                $roles  = [];
+                $users  = [];
+                $emails = [];
 
                 foreach ($toNotify as $item) {
                     if (is_numeric($item)) {
                         $users[] = $item;
                     } else {
-                        $roles[] = $item;
+                        if (strpos($item, '@') > 0) {
+                            $emails[] = $item;
+                        } else {
+                            $roles[] = $item;
+                        }
                     }
                 }
             } else {
                 // Get following users and roles
-                $roles = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
-                $users = $publishpress->notifications->get_users_to_notify($post_id, 'id');
+                $roles  = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
+                $users  = $publishpress->notifications->get_users_to_notify($post_id, 'id');
+                $emails = $publishpress->notifications->get_emails_to_notify($post_id);
             }
 
             // Extract users from roles
@@ -96,7 +102,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             }
 
             // Merge roles' users and users
-            $followers = array_merge($followers, $users);
+            $followers         = array_merge($followers, $users);
+            $notifyCurrentUser = apply_filters('publishpress_notify_current_user', false);
 
             // Process the recipients for this email to be sent
             if ( ! empty($followers)) {
@@ -107,10 +114,29 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                     }
 
                     // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                    if (false === apply_filters('publishpress_notify_current_user',
-                            false) && wp_get_current_user()->user_email == $user->user_email) {
+                    if (false === $notifyCurrentUser && wp_get_current_user()->user_email == $user->user_email) {
                         unset($followers[$key]);
                     }
+                }
+            }
+
+            // Merge the emails.
+            if ( ! empty($emails)) {
+                foreach ($emails as $email) {
+                    // Do we have a name?
+                    $separatorPost = strpos($email, '/');
+                    if ($separatorPost > 0) {
+                        $emailAddr = substr($email, strpos($email, '/') + 1, strlen($email));
+                    } else {
+                        $emailAddr = $email;
+                    }
+
+                    // Don't send the email to the current user unless we've explicitly indicated they should receive it
+                    if (false === $notifyCurrentUser && wp_get_current_user()->user_email == $emailAddr) {
+                        continue;
+                    }
+
+                    $followers[] = 'email:' . $email;
                 }
             }
 

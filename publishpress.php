@@ -547,7 +547,7 @@ class publishpress
             PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style(
             'multiple-authors-css',
-            plugins_url('common/libs/chosen/chosen.min.css', __FILE__),
+            plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
             false,
             PUBLISHPRESS_VERSION,
             'all'
@@ -560,7 +560,7 @@ class publishpress
 
         wp_enqueue_script(
             'multiple-authors-chosen',
-            plugins_url('common/libs/chosen/chosen.jquery.min.js', __FILE__),
+            plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
             ['jquery'],
             PUBLISHPRESS_VERSION
         );
