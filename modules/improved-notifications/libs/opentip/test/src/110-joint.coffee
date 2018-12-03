@@ -1,5 +1,3 @@
-
-
 extend = (target, sources...) ->
   for source in sources
     for own key, val of source
@@ -7,7 +5,6 @@ extend = (target, sources...) ->
   target
 
 describe "Opentip.Joint", ->
-
   describe "constructor()", ->
     it "should forward to set()", ->
       sinon.stub Opentip.Joint::, "set"
@@ -26,7 +23,7 @@ describe "Opentip.Joint", ->
       p = new Opentip.Joint
       p.set "top-left"
       expect(p.toString()).to.eql "top left"
-      
+
       p.set "top-Right"
       expect(p.toString()).to.eql "top right"
 
@@ -45,7 +42,7 @@ describe "Opentip.Joint", ->
       expect(p.toString()).to.eql "top left"
 
     it "should add .bottom, .left etc... properties on the position", ->
-      positions = 
+      positions =
         top: no
         bottom: no
         middle: no
@@ -55,11 +52,10 @@ describe "Opentip.Joint", ->
 
       testCount = sinon.stub()
       testPointers = (position, thisPositions) ->
-        thisPositions = extend { }, positions, thisPositions
+        thisPositions = extend {}, positions, thisPositions
         for positionName, shouldBeTrue of thisPositions
           testCount()
-          if shouldBeTrue then expect(position[positionName]).to.be.ok()
-          else expect(position[positionName]).to.not.be.ok()
+          if shouldBeTrue then expect(position[positionName]).to.be.ok() else expect(position[positionName]).to.not.be.ok()
 
       testPointers (new Opentip.Joint("top")), center: yes, top: yes
       testPointers (new Opentip.Joint("top right")), right: yes, top: yes

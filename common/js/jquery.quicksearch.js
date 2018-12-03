@@ -192,7 +192,7 @@ jQuery(function ($) {
 
                     if (k != '') {
                         if (typeof score[k] === 'undefined') {
-                            score[k] = new Array();
+                            score[k] = [];
                             cache.each(function (i) {
                                 if (test_key(k, cache[i], k_type)) {
                                     score[k][i] = true;

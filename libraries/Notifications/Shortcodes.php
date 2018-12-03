@@ -44,7 +44,6 @@ class Shortcodes
         add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
         add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
         add_shortcode('psppno_workflow', [$this, 'handle_psppno_workflow']);
-        add_shortcode('psppno_edcomment', [$this, 'handle_psppno_edcomment']);
     }
 
     /**

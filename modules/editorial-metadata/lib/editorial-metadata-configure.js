@@ -18,7 +18,7 @@
                 // Reset the position indicies for all terms
                 $('#the-list tr').removeClass('alternate');
 
-                var terms = new Array();
+                var terms = [];
 
                 $('#the-list tr.term-static').each(function (index, value) {
                     var term_id = $(this).attr('id').replace('term-', '');

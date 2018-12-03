@@ -1,5 +1,4 @@
 module.exports = (grunt) ->
-
   grunt.initConfig
     pkg: grunt.file.readJSON "package.json"
 
@@ -18,7 +17,7 @@ module.exports = (grunt) ->
         options:
           bare: true
         cwd: "src/"
-        src: [ "*.coffee" ]
+        src: ["*.coffee"]
         dest: "lib/"
         ext: ".js"
 
@@ -29,18 +28,21 @@ module.exports = (grunt) ->
     watch:
       css:
         files: "css/stylus/*.styl"
-        tasks: [ "css" ]
-        options: nospawn: on
+        tasks: ["css"]
+        options:
+          nospawn: on
       js:
         files: "src/*.coffee"
-        tasks: [ "js" ]
-        options: nospawn: on
+        tasks: ["js"]
+        options:
+          nospawn: on
       test:
         files: [
           "test/src/*.coffee"
         ]
-        tasks: [ "coffee:test" ]
-        options: nospawn: on
+        tasks: ["coffee:test"]
+        options:
+          nospawn: on
 
 
     curl:
@@ -54,14 +56,15 @@ module.exports = (grunt) ->
     concat:
       js:
         files:
-          "downloads/opentip-jquery.js": [ "lib/opentip.js", "lib/adapter-jquery.js" ]
-          "downloads/opentip-jquery-excanvas.js": [ "downloads/opentip-jquery.js", ".tmp-excanvas.js" ]
+          "downloads/opentip-jquery.js": ["lib/opentip.js", "lib/adapter-jquery.js"]
+          "downloads/opentip-jquery-excanvas.js": ["downloads/opentip-jquery.js", ".tmp-excanvas.js"]
 
-          "downloads/opentip-prototype.js": [ "lib/opentip.js", "lib/adapter-prototype.js" ]
-          "downloads/opentip-prototype-excanvas.js": [ "downloads/opentip-prototype.js", ".tmp-excanvas.js" ]
+          "downloads/opentip-prototype.js": ["lib/opentip.js", "lib/adapter-prototype.js"]
+          "downloads/opentip-prototype-excanvas.js": ["downloads/opentip-prototype.js", ".tmp-excanvas.js"]
 
-          "downloads/opentip-native.js": [ "lib/opentip.js", "lib/adapter-native.js", ".tmp-classlist.js", ".tmp-addeventlistener.js" ]
-          "downloads/opentip-native-excanvas.js": [ "downloads/opentip-native.js", ".tmp-excanvas.js" ]
+          "downloads/opentip-native.js": ["lib/opentip.js", "lib/adapter-native.js", ".tmp-classlist.js",
+            ".tmp-addeventlistener.js"]
+          "downloads/opentip-native-excanvas.js": ["downloads/opentip-native.js", ".tmp-excanvas.js"]
 
 
     uglify:
@@ -93,10 +96,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-curl"
 
   # Default tasks
-  grunt.registerTask "default", [ "downloads" ]
+  grunt.registerTask "default", ["downloads"]
 
-  grunt.registerTask "css", "Compile the stylus files to css", [ "stylus" ]
+  grunt.registerTask "css", "Compile the stylus files to css", ["stylus"]
 
-  grunt.registerTask "js", "Compile coffeescript and create all download files", [ "coffee" ]
+  grunt.registerTask "js", "Compile coffeescript and create all download files", ["coffee"]
 
-  grunt.registerTask "downloads", [ "css", "js", "curl", "concat", "clean", "uglify" ]
+  grunt.registerTask "downloads", ["css", "js", "curl", "concat", "clean", "uglify"]

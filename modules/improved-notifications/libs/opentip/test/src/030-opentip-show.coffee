@@ -1,4 +1,3 @@
-
 $ = jQuery
 
 describe "Opentip - Appearing", ->
@@ -134,10 +133,10 @@ describe "Opentip - Appearing", ->
 
   describe "grouped Opentips", ->
     it "should hide all other opentips", ->
-      Opentip.tips = [ ]
-      opentip = new Opentip adapter.create("<div></div>"), "Test", { delay: 0, group: "test" }
-      opentip2 = new Opentip adapter.create("<div></div>"), "Test", { delay: 0, group: "test" }
-      opentip3 = new Opentip adapter.create("<div></div>"), "Test", { delay: 0, group: "test" }
+      Opentip.tips = []
+      opentip = new Opentip adapter.create("<div></div>"), "Test", {delay: 0, group: "test"}
+      opentip2 = new Opentip adapter.create("<div></div>"), "Test", {delay: 0, group: "test"}
+      opentip3 = new Opentip adapter.create("<div></div>"), "Test", {delay: 0, group: "test"}
       sinon.stub opentip, "_triggerElementExists", -> triggerElementExists
       sinon.stub opentip2, "_triggerElementExists", -> triggerElementExists
       sinon.stub opentip3, "_triggerElementExists", -> triggerElementExists
@@ -160,10 +159,10 @@ describe "Opentip - Appearing", ->
       opentip3.deactivate()
 
     it "should abort showing other opentips", ->
-      Opentip.tips = [ ]
-      opentip = new Opentip adapter.create("<div></div>"), "Test", { delay: 1000, group: "test" }
-      opentip2 = new Opentip adapter.create("<div></div>"), "Test", { delay: 1000, group: "test" }
-      opentip3 = new Opentip adapter.create("<div></div>"), "Test", { delay: 1000, group: "test" }
+      Opentip.tips = []
+      opentip = new Opentip adapter.create("<div></div>"), "Test", {delay: 1000, group: "test"}
+      opentip2 = new Opentip adapter.create("<div></div>"), "Test", {delay: 1000, group: "test"}
+      opentip3 = new Opentip adapter.create("<div></div>"), "Test", {delay: 1000, group: "test"}
       sinon.stub opentip, "_triggerElementExists", -> triggerElementExists
       sinon.stub opentip2, "_triggerElementExists", -> triggerElementExists
       sinon.stub opentip3, "_triggerElementExists", -> triggerElementExists
@@ -191,7 +190,6 @@ describe "Opentip - Appearing", ->
       opentip3.deactivate()
 
   describe "events", ->
-
     element = ""
 
     beforeEach ->
@@ -212,7 +210,7 @@ describe "Opentip - Appearing", ->
           done e
       , 2
 
-    for event in [ "click", "mouseover", "focus" ]
+    for event in ["click", "mouseover", "focus"]
       it "should show on #{event}", (done) ->
         opentip = new Opentip element, "test", delay: 0, showOn: event
         sinon.stub opentip, "_triggerElementExists", -> triggerElementExists
@@ -220,7 +218,12 @@ describe "Opentip - Appearing", ->
 
   describe "hide", ->
     it "should remove HTML elements if removeElementsOnHide: true", (done) ->
-      opentip = new Opentip adapter.create("<div></div>"), "Test", { delay: 0, removeElementsOnHide: yes, hideEffectDuration: 0, hideDelay: 0 }
+      opentip = new Opentip adapter.create("<div></div>"), "Test", {
+        delay: 0,
+        removeElementsOnHide: yes,
+        hideEffectDuration: 0,
+        hideDelay: 0
+      }
       sinon.stub opentip, "_triggerElementExists", -> yes
       opentip.show()
       expect($("#opentip-#{opentip.id}").length).to.be 1
@@ -286,8 +289,8 @@ describe "Opentip - Appearing", ->
       sinon.stub opentip, "prepareToHide"
 
       opentip.prepareToShow()
-    
-    
+
+
       setTimeout ->
         try
           closeButtons = $(opentip.container).find(".#{closeClass}")

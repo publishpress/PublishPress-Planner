@@ -1,4 +1,3 @@
-
 $ = jQuery
 
 describe "Opentip - AJAX", ->
@@ -33,10 +32,11 @@ describe "Opentip - AJAX", ->
 
 
       it "should be called by show() and update the content (only once!)", ->
-        opentip = new Opentip adapter.create("<div></div>"), "Test", ajax: "http://www.test.com", ajaxMethod: "post", cache: yes
+        opentip = new Opentip adapter.create("<div></div>"), "Test",
+          ajax: "http://www.test.com", ajaxMethod: "post", cache: yes
         sinon.stub opentip, "_triggerElementExists", -> yes
 
-        sinon.spy opentip, "setContent"#, (content) -> #expect(content).to.be "response text"
+        sinon.spy opentip, "setContent" #, (content) -> #expect(content).to.be "response text"
 
         opentip.show()
         opentip.hide()
@@ -50,9 +50,10 @@ describe "Opentip - AJAX", ->
 
 
       it "if cache: false, should be called by show() and update the content every time show is called", ->
-        opentip = new Opentip adapter.create("<div></div>"), "Test", ajax: "http://www.test.com", ajaxMethod: "post", cache: no
+        opentip = new Opentip adapter.create("<div></div>"), "Test",
+          ajax: "http://www.test.com", ajaxMethod: "post", cache: no
         sinon.stub opentip, "_triggerElementExists", -> yes
-        sinon.spy opentip, "setContent"#, (content) -> expect(content).to.be "response text"
+        sinon.spy opentip, "setContent" #, (content) -> expect(content).to.be "response text"
         opentip.show()
         opentip.hide()
         opentip.show()
@@ -70,7 +71,8 @@ describe "Opentip - AJAX", ->
         adapter.ajax.restore()
 
       it "should use the options.ajaxErrorMessage on failure", ->
-        opentip = new Opentip adapter.create("<div></div>"), "Test", ajax: "http://www.test.com", ajaxMethod: "post", ajaxErrorMessage: "No download dude."
+        opentip = new Opentip adapter.create("<div></div>"), "Test",
+          ajax: "http://www.test.com", ajaxMethod: "post", ajaxErrorMessage: "No download dude."
         opentip._setup()
         expect(opentip.options.ajaxErrorMessage).to.be "No download dude."
 

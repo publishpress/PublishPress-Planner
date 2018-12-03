@@ -599,7 +599,8 @@ class PP_Content_Overview extends PP_Module
             }
 
             if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                printf(_n('Item restored from the Trash.', '%d items restored from the Trash.', (int)$_GET['untrashed']),
+                printf(_n('Item restored from the Trash.', '%d items restored from the Trash.',
+                    (int)$_GET['untrashed']),
                     number_format_i18n($_GET['untrashed']));
                 unset($_GET['undeleted']);
             }
@@ -640,7 +641,8 @@ class PP_Content_Overview extends PP_Module
 
             <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
                 <a href="#" id="print_link"><span
-                            class="pp-icon pp-icon-print"></span>&nbsp;<?php esc_attr(_e('Print', 'publishpress')); ?></a>
+                            class="pp-icon pp-icon-print"></span>&nbsp;<?php esc_attr(_e('Print', 'publishpress')); ?>
+                </a>
             </div>
             <div class="clear"></div>
         </div><!-- /tablenav -->

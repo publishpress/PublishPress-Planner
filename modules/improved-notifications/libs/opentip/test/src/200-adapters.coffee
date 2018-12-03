@@ -1,8 +1,7 @@
-
 $ = jQuery
 
 if Opentip.adapters.component
-  adapters = [ "component" ]
+  adapters = ["component"]
 else
   adapters = [
     "native"
@@ -15,7 +14,6 @@ else
 describe "Generic adapter", ->
   for adapterName in adapters
     describe "#{adapterName} adapter", ->
-
       it "should add itself to Opentip.adapters.#{adapterName}", ->
         expect(Opentip.adapters[adapterName]).to.be.ok()
 
@@ -109,18 +107,18 @@ describe "Generic adapter", ->
           it "should set and return arbitrary data for element", ->
             element = document.createElement "div"
             element2 = document.createElement "div"
-            adapter.data element, "test", [ "a", "b" ]
+            adapter.data element, "test", ["a", "b"]
             adapter.data adapter.wrap(element), "someOtherTest", "simple string"
 
-            expect(adapter.data element, "test").to.eql [ "a", "b" ]
+            expect(adapter.data element, "test").to.eql ["a", "b"]
             expect(adapter.data adapter.wrap(element), "someOtherTest").to.equal "simple string"
 
             expect(adapter.data element2, "someOtherTest").to.not.be.ok()
 
           it "should set empty data element", ->
             element = document.createElement "a"
-            adapter.data element, "test", [ "a", "b" ]
-            expect(adapter.data element, "test").to.eql [ "a", "b" ]
+            adapter.data element, "test", ["a", "b"]
+            expect(adapter.data element, "test").to.eql ["a", "b"]
             adapter.data element, "test", null
             expect(adapter.data element, "test").to.eql null
 
@@ -136,7 +134,7 @@ describe "Generic adapter", ->
             element = document.createElement "div"
             adapter.addClass element, "test"
             adapter.addClass adapter.wrap(element), "test2" # Testing with wrapped as well
-            expect(val for val in element.classList).to.eql [ "test", "test2" ]
+            expect(val for val in element.classList).to.eql ["test", "test2"]
 
         describe "removeClass()", ->
           it "should properly add the class", ->
@@ -144,9 +142,9 @@ describe "Generic adapter", ->
             adapter.addClass element, "test"
             adapter.addClass adapter.wrap(element), "test2" # Testing with wrapped as well
             adapter.removeClass element, "test2"
-            expect(val for val in element.classList).to.eql [ "test" ]
+            expect(val for val in element.classList).to.eql ["test"]
             adapter.removeClass element, "test"
-            expect(val for val in element.classList).to.eql [ ]
+            expect(val for val in element.classList).to.eql []
 
         describe "css()", ->
           it "should properly set the style", ->
@@ -180,8 +178,7 @@ describe "Generic adapter", ->
 
         describe "viewportDimensions()", ->
           it "should return the viewportDimensions", ->
-            
-            origDimensions = 
+            origDimensions =
               width: document.documentElement.clientWidth
               height: document.documentElement.clientHeight
 
@@ -192,7 +189,7 @@ describe "Generic adapter", ->
 
         describe "scrollOffset()", ->
           it "should return the correct scroll offset", ->
-            # I know it's not pretty, but I trus my adapter
+# I know it's not pretty, but I trus my adapter
             origScrollOffset = [
               window.pageXOffset or document.documentElement.scrollLeft or document.body.scrollLeft
               window.pageYOffset or document.documentElement.scrollTop or document.body.scrollTop
@@ -201,7 +198,6 @@ describe "Generic adapter", ->
             expect(scrollOffset).to.eql origScrollOffset
             expect(scrollOffset).to.be.an Array
             expect(scrollOffset.length).to.be 2
-
 
 
         describe "find()", ->
@@ -367,15 +363,15 @@ describe "Generic adapter", ->
           before ->
             server = sinon.fakeServer.create()
             server.respondWith "GET", "/ajax-test", "success get" # [ 200, { "Content-Type": "text/plain" }, "success get" ]
-            server.respondWith "POST", "/ajax-test", "success post"# [ 200, { "Content-Type": "text/plain" }, "success post" ]
-            server.respondWith "GET", "/ajax-test404", [ 404, { "Content-Type": "text/plain" }, "error" ]
+            server.respondWith "POST", "/ajax-test", "success post" # [ 200, { "Content-Type": "text/plain" }, "success post" ]
+            server.respondWith "GET", "/ajax-test404", [404, {"Content-Type": "text/plain"}, "error"]
             server.autoRespond = true
           after ->
             server.restore()
 
           it "should throw an exception if no url provided", ->
             try
-              adapter.ajax { }
+              adapter.ajax {}
               expect(true).to.be false
             catch e
               expect(e.message).to.be "No url provided"

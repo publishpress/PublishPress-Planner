@@ -1,4 +1,3 @@
-
 $ = jQuery
 
 describe "Opentip - Drawing", ->
@@ -64,18 +63,18 @@ describe "Opentip - Drawing", ->
     it "should set the correct offset of the canvas"
 
   describe "with close button", ->
-    options = { }
+    options = {}
     element = null
     beforeEach ->
       element = $("<div />")
       $(document.body).append(element)
-      sinon.stub Opentip.adapter, "dimensions", -> { width: 199, height: 100 } # -1 because of the firefox bug
-      options = 
+      sinon.stub Opentip.adapter, "dimensions", -> {width: 199, height: 100} # -1 because of the firefox bug
+      options =
         delay: 0
         stem: no
         hideTrigger: "closeButton"
         closeButtonRadius: 20
-        closeButtonOffset: [ 0, 10 ]
+        closeButtonOffset: [0, 10]
         closeButtonCrossSize: 10
         closeButtonLinkOverscan: 5
         borderWidth: 0
@@ -95,13 +94,13 @@ describe "Opentip - Drawing", ->
       #   }
       sinon.stub opentip, "_triggerElementExists", -> yes
       opentip.show()
-      expect(opentip._dimensionsEqual opentip.dimensions, { width: 200, height: 100 }).to.be.ok()
+      expect(opentip._dimensionsEqual opentip.dimensions, {width: 200, height: 100}).to.be.ok()
       opentip
 
 
     it "should position the close link when no border", ->
       options.borderWidth = 0
-      options.closeButtonOffset = [ 0, 10 ]
+      options.closeButtonOffset = [0, 10]
 
       createAndShowTooltip()
 
@@ -126,7 +125,7 @@ describe "Opentip - Drawing", ->
       expect(el.style.height).to.be "30px"
 
     it "should position the close link with different offsets and overscans", ->
-      options.closeButtonOffset = [ 10, 5 ]
+      options.closeButtonOffset = [10, 5]
       options.closeButtonCrossSize = 10
       options.closeButtonLinkOverscan = 0
 
@@ -140,7 +139,7 @@ describe "Opentip - Drawing", ->
       expect(el.style.height).to.be "10px"
 
     it "should correctly position the close link on the left when stem on top right", ->
-      options.closeButtonOffset = [ 20, 17 ]
+      options.closeButtonOffset = [20, 17]
       options.closeButtonCrossSize = 12
       options.closeButtonLinkOverscan = 5
       options.stem = "top right"
@@ -171,7 +170,7 @@ describe "Opentip - Drawing", ->
 
   describe "_getColor()", ->
     dimensions = width: 200, height: 100
-    
+
     cavans = document.createElement "canvas"
     ctx = cavans.getContext "2d"
     gradient = ctx.createLinearGradient 0, 0, 1, 1
@@ -191,7 +190,7 @@ describe "Opentip - Drawing", ->
       expect(Opentip::_getColor ctx, dimensions, "red").to.be "red"
 
     it "should create and return gradient", ->
-      color = Opentip::_getColor ctx, dimensions, [ [0, "black"], [1, "white"] ]
+      color = Opentip::_getColor ctx, dimensions, [[0, "black"], [1, "white"]]
       expect(gradient.addColorStop.callCount).to.be 2
       expect(color).to.be gradient
 

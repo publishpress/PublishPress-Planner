@@ -1389,7 +1389,8 @@ if ( ! class_exists('PP_Calendar')) {
 
                                 </td>
                                 <?php if ($values['editable']) : ?>
-                                    <td class="editable-html hidden" data-type="<?php echo esc_attr($values['type']); ?>"
+                                    <td class="editable-html hidden"
+                                        data-type="<?php echo esc_attr($values['type']); ?>"
                                         data-metadataterm="<?php echo esc_attr(str_replace('editorial-metadata-', '',
                                             str_replace('tax_', '', $field))); ?>">
 
@@ -1641,7 +1642,8 @@ if ( ! class_exists('PP_Calendar')) {
                        href="<?php echo esc_url($this->get_pagination_link('next', $filters,
                            1)); ?>"><?php _e('&rsaquo;', 'publishpress'); ?></a>
                     <?php if ($this->total_weeks > 1) : ?>
-                        <a title="<?php esc_attr(printf(__('Forward %d weeks', 'publishpress'), $this->total_weeks)); ?>"
+                        <a title="<?php esc_attr(printf(__('Forward %d weeks', 'publishpress'),
+                            $this->total_weeks)); ?>"
                            href="<?php echo esc_url($this->get_pagination_link('next',
                                $filters)); ?>"><?php _e('&raquo;', 'publishpress'); ?></a>
                     <?php endif; ?>

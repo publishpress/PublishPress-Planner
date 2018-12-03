@@ -520,7 +520,7 @@ if ( ! class_exists('PP_Notifications')) {
             wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
 
             // Remove current emails
-            $terms = get_the_terms($postId, $this->notify_email_taxonomy);
+            $terms  = get_the_terms($postId, $this->notify_email_taxonomy);
             $emails = [];
             if ( ! empty($terms)) {
                 foreach ($terms as $term) {
@@ -1273,7 +1273,7 @@ if ( ! class_exists('PP_Notifications')) {
         /**
          * Gets a list of the roles that should be notified for the specified post
          *
-         * @param int $post_id
+         * @param int    $post_id
          * @param string $return
          *
          * @return array $roles All of the role slugs

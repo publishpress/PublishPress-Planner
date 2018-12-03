@@ -1,4 +1,3 @@
-
 $ = jQuery
 
 describe "Opentip - Startup", ->

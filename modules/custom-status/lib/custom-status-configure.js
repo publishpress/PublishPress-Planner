@@ -141,7 +141,7 @@ jQuery(document).ready(function () {
             var affected_item = ui.item;
             // Reset the position indicies for all terms
             jQuery('#the-list tr').removeClass('alternate');
-            var terms = new Array();
+            var terms = [];
             jQuery('#the-list tr.term-static').each(function (index, value) {
                 var term_id = jQuery(this).attr('id').replace('term-', '');
                 terms[index] = term_id;

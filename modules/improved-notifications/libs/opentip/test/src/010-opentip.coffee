@@ -1,4 +1,3 @@
-
 $ = jQuery
 
 describe "Opentip", ->
@@ -22,13 +21,13 @@ describe "Opentip", ->
       expect(opentip.content).to.equal "content"
       expect(adapter.unwrap(opentip.triggerElement)).to.equal adapter.unwrap element
 
-      opentip = new Opentip element, "content", "title", { hideOn: "click" }
+      opentip = new Opentip element, "content", "title", {hideOn: "click"}
       expect(opentip.content).to.equal "content"
       expect(adapter.unwrap opentip.triggerElement).to.equal adapter.unwrap element
       expect(opentip.options.hideOn).to.equal "click"
       expect(opentip.options.title).to.equal "title"
 
-      opentip = new Opentip element, { hideOn: "click" }
+      opentip = new Opentip element, {hideOn: "click"}
       expect(adapter.unwrap opentip.triggerElement).to.equal adapter.unwrap element
       expect(opentip.options.hideOn).to.equal "click"
       expect(opentip.content).to.equal ""
@@ -92,16 +91,19 @@ describe "Opentip", ->
 
     it "chaining incorrect styles should throw an exception", ->
       element = document.createElement "div"
-      expect(-> new Opentip element, { extends: "invalidstyle" }).to.throwException /Invalid style\: invalidstyle/
+      expect(-> new Opentip element, {extends: "invalidstyle"}).to.throwException /Invalid style\: invalidstyle/
 
     it "chaining styles should work", ->
       element = document.createElement "div"
 
-      Opentip.styles.test1 = stemLength: 40
-      Opentip.styles.test2 = extends: "test1", title: "overwritten title"
-      Opentip.styles.test3 = extends: "test2", className: "test5", title: "some title"
+      Opentip.styles.test1 =
+        stemLength: 40
+      Opentip.styles.test2 =
+        extends: "test1", title: "overwritten title"
+      Opentip.styles.test3 =
+        extends: "test2", className: "test5", title: "some title"
 
-      opentip = new Opentip element, { extends: "test3", stemBase: 20 }
+      opentip = new Opentip element, {extends: "test3", stemBase: 20}
 
       expect(opentip.options.className).to.equal "test5"
       expect(opentip.options.title).to.equal "some title"
@@ -161,35 +163,35 @@ describe "Opentip", ->
       opentip = new Opentip element, showOn: "click"
       expect(opentip.showTriggers[0].event).to.eql "click"
       expect(adapter.unwrap opentip.showTriggers[0].element).to.equal adapter.unwrap element
-      expect(opentip.showTriggersWhenVisible).to.eql [ ]
-      expect(opentip.hideTriggers).to.eql [ ]
+      expect(opentip.showTriggersWhenVisible).to.eql []
+      expect(opentip.hideTriggers).to.eql []
       opentip = new Opentip element, showOn: "creation"
-      expect(opentip.showTriggers).to.eql [ ]
-      expect(opentip.showTriggersWhenVisible).to.eql [ ]
-      expect(opentip.hideTriggers).to.eql [ ]
+      expect(opentip.showTriggers).to.eql []
+      expect(opentip.showTriggersWhenVisible).to.eql []
+      expect(opentip.hideTriggers).to.eql []
 
     it "should copy options.hideTrigger onto options.hideTriggers", ->
       element = adapter.create "<div></div>"
-      opentip = new Opentip element, hideTrigger: "closeButton", hideTriggers: [ ]
-      expect(opentip.options.hideTriggers).to.eql [ "closeButton"]
+      opentip = new Opentip element, hideTrigger: "closeButton", hideTriggers: []
+      expect(opentip.options.hideTriggers).to.eql ["closeButton"]
 
     it "should NOT copy options.hideTrigger onto options.hideTriggers when hideTriggers are set", ->
       element = adapter.create "<div></div>"
-      opentip = new Opentip element, hideTrigger: "closeButton", hideTriggers: [ "tip", "trigger" ]
-      expect(opentip.options.hideTriggers).to.eql [ "tip", "trigger" ]
+      opentip = new Opentip element, hideTrigger: "closeButton", hideTriggers: ["tip", "trigger"]
+      expect(opentip.options.hideTriggers).to.eql ["tip", "trigger"]
 
     it "should attach itself to the elements `data-opentips` property", ->
       element = $("<div></div>")[0]
       expect(adapter.data element, "opentips").to.not.be.ok()
       opentip = new Opentip element
-      expect(adapter.data element, "opentips").to.eql [ opentip ]
+      expect(adapter.data element, "opentips").to.eql [opentip]
       opentip2 = new Opentip element
       opentip3 = new Opentip element
-      expect(adapter.data element, "opentips").to.eql [ opentip, opentip2, opentip3 ]
+      expect(adapter.data element, "opentips").to.eql [opentip, opentip2, opentip3]
 
     it "should add itself to the Opentip.tips list", ->
       element = $("<div></div>")[0]
-      Opentip.tips = [ ]
+      Opentip.tips = []
       opentip1 = new Opentip element
       opentip2 = new Opentip element
       expect(Opentip.tips.length).to.equal 2
@@ -227,7 +229,7 @@ describe "Opentip", ->
       expect(opentip.content).to.equal "TEST2"
       expect(opentip._updateElementContent.callCount).to.equal 1
       opentip._updateElementContent.restore()
-      
+
     it "should not set the content directly if function", ->
       element = document.createElement "div"
       opentip = new Opentip element, showOn: "click"
@@ -237,14 +239,13 @@ describe "Opentip", ->
 
 
   describe "_updateElementContent()", ->
-
     it "should escape the content if @options.escapeContent", ->
       element = document.createElement "div"
       opentip = new Opentip element, "<div><span></span></div>", escapeContent: yes
       sinon.stub opentip, "_triggerElementExists", -> yes
       opentip.show()
       expect($(opentip.container).find(".ot-content").html()).to.be """&lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;"""
-      
+
     it "should not escape the content if not @options.escapeContent", ->
       element = document.createElement "div"
       opentip = new Opentip element, "<div><span></span></div>", escapeContent: no
@@ -340,7 +341,8 @@ describe "Opentip", ->
 
     beforeEach ->
       element = document.createElement "div"
-      opentip = new Opentip element, "the content", "the title", hideTrigger: "closeButton", stem: "top left", ajax: "bla"
+      opentip = new Opentip element, "the content", "the title",
+        hideTrigger: "closeButton", stem: "top left", ajax: "bla"
       opentip._setup()
       opentip._buildElements()
 
@@ -365,7 +367,7 @@ describe "Opentip", ->
   describe "addAdapter()", ->
     it "should set the current adapter, and add the adapter to the list", ->
       expect(Opentip.adapters.testa).to.not.be.ok()
-      testAdapter = { name: "testa" }
+      testAdapter = {name: "testa"}
       Opentip.addAdapter testAdapter
       expect(Opentip.adapters.testa).to.equal testAdapter
 

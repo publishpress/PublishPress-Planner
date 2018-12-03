@@ -230,7 +230,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             foreach ($default_terms as $termSlug => $data) {
                 foreach ($roles as $roleName) {
                     $role = get_role($roleName);
-                    if (!empty($role)) {
+                    if ( ! empty($role)) {
                         $role->add_cap('status_change_' . str_replace('-', '_', $termSlug));
 
                         if ('publish' === $termSlug) {
@@ -1796,25 +1796,25 @@ if ( ! class_exists('PP_Custom_Status')) {
             $wp_list_table = new PP_Custom_Status_List_Table();
             $wp_list_table->prepare_items(); ?>
             </script>
-                <div id='col-right'>
-                    <div class='col-wrap'>
+                <div; id='col-right'>
+                    <div; class='col-wrap'>
                         <?php $wp_list_table->display(); ?>
                         <?php wp_nonce_field('custom-status-sortable', 'custom-status-sortable'); ?>
                     </div>
                 </div>
-                <div id='col-left'>
-                    <div class='col-wrap'>
-                    <div class='form-wrap'>
-                    <h3 class='nav-tab-wrapper'>
-                        <a href="<?php echo esc_url($this->get_link()); ?>" class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
+                <div; id='col-left'>
+                    <div; class='col-wrap'>
+                    <div; class='form-wrap'>
+                    <h3; class='nav-tab-wrapper'>
+                        <a; href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
                 echo ' nav-tab-active';
             } ?>"><?php _e('Add New', 'publishpress'); ?></a>
-                        <a href="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
+                        <a; href="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
                 echo ' nav-tab-active';
             } ?>"><?php _e('Options', 'publishpress'); ?></a>
                     </h3>
                     <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
-                    <form class='basic-settings' action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" method='post'>
+                    <form; class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
                         <br />
                         <p><?php echo __('Please note that checking a box will apply all statuses to that post type.', 'publishpress'); ?></p>
                         <?php settings_fields($this->module->options_group_name); ?>
@@ -1826,23 +1826,23 @@ if ( ! class_exists('PP_Custom_Status')) {
                     </form>
                     <?php else: ?>
                     <?php /** Custom form for adding a new Custom Status term **/ ?>
-                        <form class='add:the-list:' action="<?php echo esc_url($this->get_link()); ?>" method='post' id='addstatus' name='addstatus'>
-                        <div class='form-field form-required'>
-                            <label for='status_name'><?php _e('Name', 'publishpress'); ?></label>
-                            <input type="text" aria-required='true' size='20' maxlength='20' id='status_name' name='status_name' value="<?php if (!empty($_POST['status_name'])) {
+                        <form; class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addstatus'; name='addstatus'>
+                        <div; class='form-field form-required'>
+                            <label; for='status_name'><?php _e('Name', 'publishpress'); ?></label>
+                            <input type="text"; aria-required='true'; size='20'; maxlength='20'; id='status_name'; name='status_name'; value="<?php if (!empty($_POST['status_name'])) {
                 echo esc_attr($_POST['status_name']);
             } ?>" />
                             <?php $publishpress->settings->helper_print_error_or_description('name', __('The name is used to identify the status. (Max: 20 characters)', 'publishpress')); ?>
                         </div>
-                        <div class='form-field'>
-                            <label for='status_description'><?php _e('Description', 'publishpress'); ?></label>
-                            <textarea cols="40" rows='5' id='status_description' name='status_description'><?php if (!empty($_POST['status_description'])) {
+                        <div; class='form-field'>
+                            <label; for='status_description'><?php _e('Description', 'publishpress'); ?></label>
+                            <textarea cols="40"; rows='5'; id='status_description'; name='status_description'><?php if (!empty($_POST['status_description'])) {
                 echo esc_textarea($_POST['status_description']);
             } ?></textarea>
                             <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress')); ?>
                         </div>
-                        <div class='form-field'>
-                            <label for='status_color'><?php _e('Color', 'publishpress'); ?></label>
+                        <div; class='form-field'>
+                            <label; for='status_color'><?php _e('Color', 'publishpress'); ?></label>
 
                             <?php
                                 $status_color = isset($_POST['status_color']) ? $_POST['status_color'] : '';
@@ -1851,14 +1851,14 @@ if ( ! class_exists('PP_Custom_Status')) {
                             <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress')); ?>
                         </div>
                         <div class='form-field'>
-                            <label for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
+                            <label; for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
 
                             <?php
                                 $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
-                                <input class='regular-text' type='hidden' id='status_icon' name='icon' value="<?php if (isset($status_icon)) {
+                                <input class='regular-text'; type='hidden'; id='status_icon'; name='icon'; value="<?php if (isset($status_icon)) {
                                     echo 'dashicons ' . esc_attr($status_icon);
                                 } ?>"/>
-                            <div id='preview_icon_picker_example_icon' data-target='#status_icon' class="button icon-picker dashicons <?php if (isset($status_icon)) {
+                            <div; id='preview_icon_picker_example_icon'; data-target='#status_icon'; class="button icon-picker dashicons <?php if (isset($status_icon)) {
                                     echo esc_attr($status_icon);
                                 } ?>"></div>
 
@@ -1866,12 +1866,12 @@ if ( ! class_exists('PP_Custom_Status')) {
                         </div>
                         <?php wp_nonce_field('custom-status-add-nonce'); ?>
                         <?php echo '<input id="action" name="action" type="hidden" value="add-new" />'; ?>
-                        <p class='submit'><?php submit_button(__('Add New Status', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
+                        <p; class='submit'><?php submit_button(__('Add New Status', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
                         </form>
                     <?php endif; ?>
                     </div>
                 </div>
-                </div>
+                </div>;
 
                 <?php endif; ?>
             <?php
@@ -2353,7 +2353,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
                 //wp_cache_set("pp_custom_status_count_$column_name", $post_count);
             }
             $output = sprintf('<a title="See all %1$ss saved as \'%2$s\'" href="%3$s">%4$s</a>', esc_attr($column_name),
-                esc_attr($item->name), $publishpress->helpers->filter_posts_link($item->slug, $column_name), esc_html($post_count));
+                esc_attr($item->name), $publishpress->helpers->filter_posts_link($item->slug, $column_name),
+                esc_html($post_count));
 
             return $output;
         }
@@ -2402,8 +2403,9 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     {
         global $publishpress;
 
-        $item_edit_link = esc_url($publishpress->custom_status->get_link(['action'  => 'edit-status',
-                                                                          'term-id' => $item->term_id,
+        $item_edit_link = esc_url($publishpress->custom_status->get_link([
+            'action'  => 'edit-status',
+            'term-id' => $item->term_id,
         ]));
 
         $output = '<span class="pp-status-color" style="background:' . esc_attr($item->color) . ';"></span>';

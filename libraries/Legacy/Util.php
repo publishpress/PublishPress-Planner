@@ -152,7 +152,7 @@ class Util
         }
 
         foreach ($addons as $addon) {
-            if (!empty($addon['license_key']) && $addon['license_status'] === 'valid') {
+            if ( ! empty($addon['license_key']) && $addon['license_status'] === 'valid') {
                 return true;
             }
         }

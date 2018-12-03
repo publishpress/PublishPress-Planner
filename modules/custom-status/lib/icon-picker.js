@@ -705,8 +705,7 @@
                 ];
                 options[1] = 'genericon';
             }
-            ;
-        };
+        }
         font_set();
 
         function build_list ($popup, $button, clear) {
@@ -717,7 +716,6 @@
             for (var i in icons) {
                 $list.append('<li data-icon="' + icons[i] + '"><a href="#" title="' + icons[i] + '"><span class="' + options[0] + ' ' + options[1] + '-' + icons[i] + '"></span></a></li>');
             }
-            ;
             $('a', $list).click(function (e) {
                 e.preventDefault();
                 var title = $(this).attr('title');
@@ -725,8 +723,7 @@
                 $button.removeClass().addClass('button icon-picker ' + options[0] + ' ' + options[1] + '-' + title);
                 removePopup();
             });
-        };
-
+        }
         function removePopup () {
             $('.icon-picker-container').remove();
         }
@@ -763,7 +760,6 @@
                     font_set();
                     build_list($popup, $button, 1);
                 }
-                ;
             });
 
             $('a', $control).click(function (e) {

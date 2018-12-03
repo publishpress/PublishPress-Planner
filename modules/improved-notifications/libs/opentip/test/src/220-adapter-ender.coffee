@@ -1,4 +1,3 @@
-
 unless Opentip.adapters.component?
 # Only test this adapter if not testing component
   $ = jQuery

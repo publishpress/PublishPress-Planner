@@ -52,7 +52,7 @@ class Workflows extends Base
     public function column_post_date($post)
     {
         if ('0000-00-00 00:00:00' === $post->post_date) {
-            $t_time    = $h_time = __('Undefined');
+            $t_time = $h_time = __('Undefined');
         } else {
             $t_time = get_the_time(__('Y/m/d g:i:s a'));
             $m_time = $post->post_date;
