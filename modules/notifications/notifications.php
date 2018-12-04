@@ -428,7 +428,7 @@ if ( ! class_exists('PP_Notifications')) {
             foreach ($role_post_types as $post_type) {
                 add_meta_box(
                     'publishpress-notifications',
-                    __('Notify', 'publishpress'),
+                    __('Notifications', 'publishpress'),
                     [$this, 'notifications_meta_box'],
                     $post_type,
                     'side',
@@ -453,7 +453,7 @@ if ( ! class_exists('PP_Notifications')) {
 
                 <p>
                     <?php _e(
-                        'Select the users and roles that should receive notifications from workflows.',
+                        'Enter any users, roles, or email address that should receive notifications from workflows.',
                         'publishpress'
                     ); ?>
                 </p>
@@ -474,24 +474,21 @@ if ( ! class_exists('PP_Notifications')) {
                 </div>
 
                 <div class="pp_post_notify_workflows">
-                    <h3>Related Workflows</h3>
+                    <h3><?php echo __('Active Notifications', 'publishpress'); ?></h3>
                     <?php if ( ! empty($workflows)) : ?>
                         <ul>
                             <?php foreach ($workflows as $workflow) : ?>
-                                <li><?php echo $workflow->post_title; ?></li>
+                                <li>
+                                    <a href="<?php echo admin_url('post.php?post=' . $workflow->ID . '&action=edit&classic-editor'); ?>" target="_blank">
+                                        <?php echo $workflow->post_title; ?>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         </ul>
                     <?php else : ?>
                         <p><?php echo __('This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.', 'publishpress'); ?></p>
                     <?php endif; ?>
                 </div>
-
-                <p>
-                    <a href="https://publishpress.com/docs/notifications/"><?php _e(
-                            'Click to read more about notifications',
-                            'publishpress'
-                        ); ?></a>
-                </p>
 
                 <div class="clear"></div>
 
