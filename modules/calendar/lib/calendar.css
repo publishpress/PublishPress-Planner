@@ -96,7 +96,7 @@ table#pp-calendar-view .day-unit.weekend-day {
     color: #666666;
     font-size: 11px;
     line-height: 15px;
-    background: #fff;
+    background: #fbfbfb;
 }
 
 #pp-calendar-view .month-marker td {
@@ -619,4 +619,3 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a 
     margin-top: 4px;
     margin-right: 2px;
 }
-
