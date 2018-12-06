@@ -165,6 +165,8 @@ class publishpress
         // Load all of the module options
         $this->load_module_options();
 
+        $this->disableBlockEditor();
+
         // Load all of the modules that are enabled.
         // Modules won't have an options value if they aren't enabled
         foreach ($this->modules as $mod_name => $mod_data) {
@@ -698,6 +700,68 @@ class publishpress
                     'publishpress'); ?></p>
         </div>
         <?php
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGutenbergPluginActive()
+    {
+        if ( ! function_exists('is_plugin_active')) {
+            include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        }
+
+        $isActive = is_plugin_active('gutenberg/gutenberg.php');
+
+        return $isActive;
+    }
+
+    /**
+     * Check if is WordPress lower than
+     */
+    protected function disableBlockEditor()
+    {
+        global $wp_version;
+
+        // If version is < 5.0 and Gutenberg is installed we need to disable the block editor for some post types.
+        if (version_compare($wp_version, '5.0', '<') && $this->isGutenbergPluginActive()) {
+            add_filter('use_block_editor_for_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
+            add_filter('gutenberg_can_edit_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
+        }
+    }
+
+    /**
+     * Disable Gutenberg/Block Editor for post types.
+     *
+     * @param bool   $canEdit
+     * @param string $postType
+     *
+     * @return bool
+     */
+    public function canUseBlockEditorForPostType($canEdit, $postType)
+    {
+        global $publishpress;
+
+        $postTypes = [];
+        $modules   = [
+            'custom_status',
+            'content_checklist',
+        ];
+
+        // Get the post types activated for each module
+        foreach ($modules as $module) {
+            if ( ! isset($publishpress->{$module})) {
+                continue;
+            }
+
+            $modulePostTypes = PublishPress\Legacy\Util::get_post_types_for_module($publishpress->modules->{$module});
+
+            $postTypes = array_merge($postTypes, $modulePostTypes);
+        }
+
+        $canUse = in_array($postType, $postTypes) ? false : $canEdit;
+
+        return $canUse;
     }
 }
 
