@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.0
-Stable tag: 1.17.0
+Stable tag: 1.18.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,9 +130,23 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.18.0] - 2018-12-06 =
 
 * Fixed non-escaped attributes and URLs in the whole plugin;
+* Fixed style of editorial comments for fitting the sidebar in Gutenberg;
+* Added a new filter for get_post_types methods: "publishpress_supported_module_post_types";
+* Fixed a missed ";" from the admin interface;
+* Changed the action publishpress is hooked to. From "plugins_loaded" to "init";
+* Fixed double "use" statement for Dependence_Injector in the PublishPress\Notifications\Workflow\Step\Channel\Base class;
+* Added the option to add non-users emails (and name) in the notify box for posts;
+* Improved the title and text for the notify box;
+* Added a new shortcode "psppno_receiver" for the notification content, which supports name and email params;
+* Added a list of active workflows to the notify box;
+* Added a slightly darker background color to the month name row in the calendar;
+* Added a check for Gutenberg, disabling the block editor for post types where custom statuses and the content-checklist (add-on) are enabled;
+* Added a check for Classic Editor in WordPress 5.0, showing a notice advising to install and activate it;
+* Fixed broken HTML syntax in some settings panels;
+* Updated the "Tested up" version to 5.0
 
 = [1.17.0] - 2018-11-08 =
 
