@@ -92,6 +92,13 @@ class Shortcodes
 
     /**
      * Returns data from the receiver, if available.
+     * Available attributes:
+     *   - name (display_name - default)
+     *   - email
+     *   - first_name
+     *   - last_name
+     *   - login
+     *   - nickname
      *
      * [psppno_receiver name]
      *
@@ -103,13 +110,63 @@ class Shortcodes
     {
         $receiver = $this->cache_receiver;
 
-        if (is_numeric($receiver)) {
-            $user = get_user_by('id', $receiver);
+        // Decide what field to display.
+        if (empty($attrs)) {
+            $field = 'name';
+        } else {
+            $whitelist = [
+                'name',
+                'email',
+                'first_name',
+                'last_name',
+                'login',
+                'nickname',
+            ];
 
-            if (in_array('name', $attrs)) {
-                $result = $user->display_name;
+            if (in_array($attrs[0], $whitelist)) {
+                $field = $attrs[0];
             } else {
-                $result = $user->user_email;
+                $field = 'name';
+            }
+        }
+
+        if (is_numeric($receiver)) {
+            // Do we have an user?
+            $user   = get_user_by('id', $receiver);
+            $result = '';
+
+            switch ($field) {
+                case 'name':
+                    $result = $user->display_name;
+                    break;
+
+                case 'email':
+                    $result = $user->user_email;
+                    break;
+
+                case 'first_name':
+                    $result = $user->first_name;
+                    break;
+
+                case 'last_name':
+                    $result = $user->last_name;
+                    break;
+
+                case 'login':
+                    $result = $user->user_login;
+                    break;
+
+                case 'nickname':
+                    $result = $user->nickname;
+                    break;
+
+                default:
+                    $result = $user->user_email;
+                    break;
+            }
+
+            if (empty($result)) {
+                $result = $user->display_name;
             }
         } else {
             $result = $receiver;
@@ -496,7 +553,7 @@ class Shortcodes
 
     /**
      * @param string $content
-     * @param mixed $receiver
+     * @param mixed  $receiver
      */
     public function setReceiverForShortcode($content, $receiver)
     {
