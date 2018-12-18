@@ -154,7 +154,7 @@ class Workflow
 
                     // If channel is empty, we set a default channel.
                     if (empty($channel)) {
-                        $channel = apply_filters('psppno_default_channel', 'email');
+                        $channel = apply_filters('psppno_default_channel', 'email', $this->workflow_post->ID);
                     }
 
                     // If the channel is "mute", we ignore this receiver.
