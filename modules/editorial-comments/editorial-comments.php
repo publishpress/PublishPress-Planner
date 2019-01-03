@@ -145,13 +145,10 @@ if ( ! class_exists('PP_Editorial_Comments')) {
         public function add_post_meta_box()
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            $isGutenbergEnabled   = \PublishPress\Legacy\Util::isGutenbergEnabled();
 
             foreach ($supported_post_types as $post_type) {
-                $context = $isGutenbergEnabled ? 'side' : 'normal';
-
                 add_meta_box('publishpress-editorial-comments', __('Editorial Comments', 'publishpress'),
-                    [$this, 'editorial_comments_meta_box'], $post_type, $context);
+                    [$this, 'editorial_comments_meta_box'], $post_type, 'normal');
             }
         }
 
