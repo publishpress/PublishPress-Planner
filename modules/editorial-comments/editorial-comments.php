@@ -148,7 +148,7 @@ if ( ! class_exists('PP_Editorial_Comments')) {
 
             foreach ($supported_post_types as $post_type) {
                 add_meta_box('publishpress-editorial-comments', __('Editorial Comments', 'publishpress'),
-                    [$this, 'editorial_comments_meta_box'], $post_type, 'normal');
+                    [$this, 'editorial_comments_meta_box'], $post_type, 'normal', 'high');
             }
         }
 
