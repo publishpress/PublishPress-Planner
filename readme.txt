@@ -130,6 +130,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.18.1] - 2019-01-14 =
+
+* Fixed minor performance issue in the settings page removing a code from a loop;
+* Added an option for selecting a default notification channel;
+* Fixed the position of the editorial comments metabox removing from the sidebar and added as high priority;
+* Fixed the output of boolean values in the Debug page;
+
 = [1.18.0] - 2018-12-06 =
 
 * Fixed non-escaped attributes and URLs in the whole plugin;
