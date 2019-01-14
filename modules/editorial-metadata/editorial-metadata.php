@@ -1712,7 +1712,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 <?php endif; ?>
                     </div>
                     </div>
-                </div>;;;
+                </div>
 
                 <?php
             endif;
