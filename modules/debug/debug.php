@@ -147,7 +147,11 @@ if ( ! class_exists('PP_Debug')) {
 
             // Make sure we have a string to write.
             if ( ! is_string($message)) {
-                $message = print_r($message, true);
+                if (is_bool($message)) {
+                    $message = $message ? 'true' : 'false';
+                } else {
+                    $message = print_r($message, true);
+                }
             }
 
             // Prepend the id, if set.
