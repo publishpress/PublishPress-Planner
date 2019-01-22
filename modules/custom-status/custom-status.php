@@ -1359,7 +1359,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 wp_die(__('Could not add status: ', 'publishpress') . $return->get_error_message());
             }
             // Redirect if successful
-            $redirect_url = $this->get_link(['message' => 'status-added']);
+            $redirect_url = $this->get_link(['message' => 'status-added', 'action' => 'add-new']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1474,7 +1474,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 update_option("psppno_status_{$slug}_icon", $icon);
             }
 
-            $redirect_url = $this->get_link(['message' => 'status-updated']);
+            $redirect_url = $this->get_link(['message' => 'status-updated', 'action' => 'add-new']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1509,7 +1509,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             if (is_object($term)) {
                 $publishpress->update_module_option($this->module->name, 'default_status', $term->slug);
                 // @todo How do we want to handle users who click the link from "Add New Status"
-                $redirect_url = $this->get_link(['message' => 'default-status-changed']);
+                $redirect_url = $this->get_link(['message' => 'default-status-changed', 'action' => 'add-new']);
                 wp_redirect($redirect_url);
                 exit;
             } else {
@@ -1558,7 +1558,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 wp_die(__('Could not delete the status: ', 'publishpress') . $return->get_error_message());
             }
 
-            $redirect_url = $this->get_link(['message' => 'status-deleted']);
+            $redirect_url = $this->get_link(['message' => 'status-deleted', 'action' => 'add-new']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1802,67 +1802,67 @@ if ( ! class_exists('PP_Custom_Status')) {
                         <div class='col-wrap'>
                         <div class='form-wrap'>
                         <h3 class='nav-tab-wrapper'>
-                            <a href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
-                    echo ' nav-tab-active';
-                } ?>"><?php _e('Add New', 'publishpress'); ?></a>
-                            <a href="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
+                            <a href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'add-new') {
                     echo ' nav-tab-active';
                 } ?>"><?php _e('Options', 'publishpress'); ?></a>
+                            <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'add-new') {
+                    echo ' nav-tab-active';
+                } ?>"><?php _e('Add New', 'publishpress'); ?></a>
                         </h3>
-                        <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
-                        <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
-                            <br />
-                            <p><?php echo __('Please note that checking a box will apply all statuses to that post type.', 'publishpress'); ?></p>
-                            <?php settings_fields($this->module->options_group_name); ?>
-                            <?php do_settings_sections($this->module->options_group_name); ?>
-                            <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
-                            <?php submit_button(); ?>
+                        <?php if (isset($_GET['action']) && $_GET['action'] == 'add-new'): ?>
+                            <?php /** Custom form for adding a new Custom Status term **/ ?>
+                                <form class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addstatus'; name='addstatus'>
+                                <div class='form-field form-required'>
+                                    <label for='status_name'><?php _e('Name', 'publishpress'); ?></label>
+                                    <input type="text"; aria-required='true'; size='20'; maxlength='20'; id='status_name'; name='status_name'; value="<?php if (!empty($_POST['status_name'])) {
+                        echo esc_attr($_POST['status_name']);
+                    } ?>" />
+                                    <?php $publishpress->settings->helper_print_error_or_description('name', __('The name is used to identify the status. (Max: 20 characters)', 'publishpress')); ?>
+                                </div>
+                                <div class='form-field'>
+                                    <label for='status_description'><?php _e('Description', 'publishpress'); ?></label>
+                                    <textarea cols="40"; rows='5'; id='status_description'; name='status_description'><?php if (!empty($_POST['status_description'])) {
+                        echo esc_textarea($_POST['status_description']);
+                    } ?></textarea>
+                                    <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress')); ?>
+                                </div>
+                                <div class='form-field'>
+                                    <label for='status_color'><?php _e('Color', 'publishpress'); ?></label>
 
-                            <?php wp_nonce_field('edit-publishpress-settings'); ?>
-                        </form>
+                                    <?php
+                                        $status_color = isset($_POST['status_color']) ? $_POST['status_color'] : '';
+                    echo $this->pp_color_picker(esc_attr($status_color), 'status_color') ?>
+
+                                    <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress')); ?>
+                                </div>
+                                <div class='form-field'>
+                                    <label for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
+
+                                    <?php
+                                        $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
+                                        <input class='regular-text'; type='hidden'; id='status_icon'; name='icon'; value="<?php if (isset($status_icon)) {
+                                            echo 'dashicons ' . esc_attr($status_icon);
+                                        } ?>"/>
+                                    <div id='preview_icon_picker_example_icon'; data-target='#status_icon'; class="button icon-picker dashicons <?php if (isset($status_icon)) {
+                                            echo esc_attr($status_icon);
+                                        } ?>"></div>
+
+                                    <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress')); ?>
+                                </div>
+                                <?php wp_nonce_field('custom-status-add-nonce'); ?>
+                                <?php echo '<input id="action" name="action" type="hidden" value="add-new" />'; ?>
+                                <p class='submit'><?php submit_button(__('Add New Status', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
+                                </form>
                         <?php else: ?>
-                        <?php /** Custom form for adding a new Custom Status term **/ ?>
-                            <form class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addstatus'; name='addstatus'>
-                            <div class='form-field form-required'>
-                                <label for='status_name'><?php _e('Name', 'publishpress'); ?></label>
-                                <input type="text"; aria-required='true'; size='20'; maxlength='20'; id='status_name'; name='status_name'; value="<?php if (!empty($_POST['status_name'])) {
-                    echo esc_attr($_POST['status_name']);
-                } ?>" />
-                                <?php $publishpress->settings->helper_print_error_or_description('name', __('The name is used to identify the status. (Max: 20 characters)', 'publishpress')); ?>
-                            </div>
-                            <div class='form-field'>
-                                <label for='status_description'><?php _e('Description', 'publishpress'); ?></label>
-                                <textarea cols="40"; rows='5'; id='status_description'; name='status_description'><?php if (!empty($_POST['status_description'])) {
-                    echo esc_textarea($_POST['status_description']);
-                } ?></textarea>
-                                <?php $publishpress->settings->helper_print_error_or_description('description', __('The description is primarily for administrative use, to give you some context on what the custom status is to be used for.', 'publishpress')); ?>
-                            </div>
-                            <div class='form-field'>
-                                <label for='status_color'><?php _e('Color', 'publishpress'); ?></label>
+                            <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
+                                <br />
+                                <p><?php echo __('Please note that checking a box will apply all statuses to that post type.', 'publishpress'); ?></p>
+                                <?php settings_fields($this->module->options_group_name); ?>
+                                <?php do_settings_sections($this->module->options_group_name); ?>
+                                <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+                                <?php submit_button(); ?>
 
-                                <?php
-                                    $status_color = isset($_POST['status_color']) ? $_POST['status_color'] : '';
-                echo $this->pp_color_picker(esc_attr($status_color), 'status_color') ?>
-
-                                <?php $publishpress->settings->helper_print_error_or_description('color', __('The color is used to identify the status.', 'publishpress')); ?>
-                            </div>
-                            <div class='form-field'>
-                                <label for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
-
-                                <?php
-                                    $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
-                                    <input class='regular-text'; type='hidden'; id='status_icon'; name='icon'; value="<?php if (isset($status_icon)) {
-                                        echo 'dashicons ' . esc_attr($status_icon);
-                                    } ?>"/>
-                                <div id='preview_icon_picker_example_icon'; data-target='#status_icon'; class="button icon-picker dashicons <?php if (isset($status_icon)) {
-                                        echo esc_attr($status_icon);
-                                    } ?>"></div>
-
-                                <?php $publishpress->settings->helper_print_error_or_description('status_icon', __('The icon is used to visually represent the status.', 'publishpress')); ?>
-                            </div>
-                            <?php wp_nonce_field('custom-status-add-nonce'); ?>
-                            <?php echo '<input id="action" name="action" type="hidden" value="add-new" />'; ?>
-                            <p class='submit'><?php submit_button(__('Add New Status', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
+                                <?php wp_nonce_field('edit-publishpress-settings'); ?>
                             </form>
                         <?php endif; ?>
                         </div>
