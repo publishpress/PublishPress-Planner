@@ -130,6 +130,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.18.2] - 2019-01-23 =
+
+* Updated the subscription form for discount coupon, for the new Mailchimp account;
+* Updated the settings tabs for the editorial metadata and custom statuses moving Options before Add New;
+* Removed warning about Classic Editor as requirement;
+* Updated the default value for selected post types for the custom status module, disabling by default if Gutenberg is installed;
+
 = [1.18.1] - 2019-01-14 =
 
 * Fixed minor performance issue in the settings page removing a code from a loop;
