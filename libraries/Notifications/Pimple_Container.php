@@ -98,6 +98,8 @@ class Pimple_Container extends \Pimple\Container
             };
 
             $instance['framework'] = function ($c) {
+                // The 4th param is there just for backward compatibility with older versions of the Allex framework
+                // packed in UpStream.
                 return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'], '');
             };
 
