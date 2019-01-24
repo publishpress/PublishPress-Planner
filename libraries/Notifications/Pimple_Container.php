@@ -98,7 +98,7 @@ class Pimple_Container extends \Pimple\Container
             };
 
             $instance['framework'] = function ($c) {
-                return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR']);
+                return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'], '');
             };
 
             $instance['reviews'] = function ($c) {
