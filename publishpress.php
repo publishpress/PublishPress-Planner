@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.18.0
+ * Version: 1.18.4
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -754,42 +754,6 @@ class publishpress
     protected function checkBlockEditor()
     {
         // If version is > 5+, check if the classical editor is installed, if not, ask to install.
-        if ($this->isWp5() && ! $this->isClassicEditorInstalled()) {
-
-            $postType       = $this->getCurrentPostType();
-            $displayWarning = false;
-
-            if ($this->postTypeRequiresClassicEditor($postType)) {
-                $displayWarning = true;
-            } else {
-                global $pagenow;
-
-                $paramPage   = isset($_GET['page']) ? $_GET['page'] : '';
-                $paramModule = isset($_GET['module']) ? $_GET['module'] : '';
-
-                $paramsModulesToWarn = [
-                    'pp-custom-status-settings',
-                    'pp-checklist-settings',
-                    'pp-woocommerce-checklist-settings',
-                    'pp-modules-settings-settings',
-                ];
-
-                /**
-                 * @param array $paramsModulesToWarn
-                 */
-                $paramsModulesToWarn = apply_filters('publishpress_params_to_warn_missed_classic_editor', $paramsModulesToWarn);
-
-
-                $displayWarning = $pagenow === 'admin.php'
-                    && $paramPage === 'pp-modules-settings'
-                    && in_array($paramModule, $paramsModulesToWarn);
-            }
-
-            if ($displayWarning) {
-                add_action('admin_notices', [$this, 'noticeClassicEditorIsRequired']);
-            }
-        }
-
         add_filter('use_block_editor_for_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
         add_filter('gutenberg_can_edit_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
 
@@ -807,47 +771,6 @@ class publishpress
         if ($this->isWp5() && $isClassicEditor && $this->postTypeRequiresClassicEditor($postType)) {
             remove_meta_box('classic-editor-switch-editor', null, 'side');
         }
-    }
-
-    /**
-     * Warn the user that PublishPress requires classic editor.
-     */
-    public function noticeClassicEditorIsRequired()
-    {
-        $plugins = get_plugins();
-        ?>
-        <div class="notice notice-warning is-dismissible">
-            <?php
-            if ( ! isset($plugins['classic-editor/classic-editor.php'])) {
-                if (current_user_can('install_plugins')) {
-                    echo '<p>';
-                    /* translators: %s: A link to install the Classic Editor plugin. */
-                    printf(__('Please install the <a href="%s">Classic Editor plugin</a> to use all PublishPress features.'),
-                        esc_url(self_admin_url('plugin-install.php?tab=featured')));
-                    echo '</p>';
-                } else {
-                    echo '<p>';
-                    echo __('Some PublishPress features require the Classic Editor plugin. Please, <a href="mailto:help@publishpress.com">contact the support team</a>.');
-                    echo '</p>';
-                }
-            } elseif (is_plugin_inactive('classic-editor/classic-editor.php')) {
-                if (current_user_can('activate_plugins')) {
-                    $activate_url = wp_nonce_url(self_admin_url('plugins.php?action=activate&plugin=classic-editor/classic-editor.php'),
-                        'activate-plugin_classic-editor/classic-editor.php');
-                    echo '<p>';
-                    /* translators: %s: A link to activate the Classic Editor plugin. */
-                    printf(__('Please <a href="%s">activate</a> the Classic Editor plugin to use all PublishPress features.'),
-                        esc_url($activate_url));
-                    echo '</p>';
-                } else {
-                    echo '<p>';
-                    echo __('Some PublishPress features require the Classic Editor plugin. Please, <a href="mailto:help@publishpress.com">contact the support team</a>.');
-                    echo '</p>';
-                }
-            }
-            ?>
-        </div>
-        <?php
     }
 
     /**

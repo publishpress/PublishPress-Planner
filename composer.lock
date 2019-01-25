@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder.git",
-                "reference": "66bbe74c1cd2e3cf255fce3a2573a5f962d141ce"
+                "reference": "1bf3a36415281289623492efdd4841308a2f6e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/66bbe74c1cd2e3cf255fce3a2573a5f962d141ce",
-                "reference": "66bbe74c1cd2e3cf255fce3a2573a5f962d141ce",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/1bf3a36415281289623492efdd4841308a2f6e94",
+                "reference": "1bf3a36415281289623492efdd4841308a2f6e94",
                 "shasum": ""
             },
             "require": {
@@ -61,7 +61,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-11-13T17:47:40+00:00"
+            "time": "2019-01-04T14:59:35+00:00"
         },
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -69,12 +69,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "035653454769425fc61e7f4abaafd682c3a1c59d"
+                "reference": "4bbb80311a98243cc85f2afdeccf9ffe531bed36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/035653454769425fc61e7f4abaafd682c3a1c59d",
-                "reference": "035653454769425fc61e7f4abaafd682c3a1c59d",
+                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/4bbb80311a98243cc85f2afdeccf9ffe531bed36",
+                "reference": "4bbb80311a98243cc85f2afdeccf9ffe531bed36",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2018-10-18T18:41:44+00:00"
+            "time": "2019-01-16T18:29:39+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -272,31 +272,31 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.35.4",
+            "version": "v1.37.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "7e081e98378a1e78c29cc9eba4aefa5d78a05d2a"
+                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7e081e98378a1e78c29cc9eba4aefa5d78a05d2a",
-                "reference": "7e081e98378a1e78c29cc9eba4aefa5d78a05d2a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66be9366c76cbf23e82e7171d47cbfa54a057a62",
+                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
+                "php": ">=5.4.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "psr/container": "^1.0",
                 "symfony/debug": "^2.7",
-                "symfony/phpunit-bridge": "^3.3"
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.35-dev"
+                    "dev-master": "1.37-dev"
                 }
             },
             "autoload": {
@@ -334,7 +334,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-07-13T07:12:17+00:00"
+            "time": "2019-01-14T14:59:29+00:00"
         }
     ],
     "packages-dev": [],

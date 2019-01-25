@@ -350,9 +350,12 @@ if ( ! class_exists('PP_Addons')) {
          */
         public function filter_allex_upgrade_mailchimp_config($mailchimp_config, $plugin_name)
         {
-            $mailchimp_config['code']     = 'b_a42978bc16dd60d0ce3cac4d4_bb6f51185b';
-            $mailchimp_config['id']       = '132405';
-            $mailchimp_config['group_id'] = '2';
+            if ($plugin_name === 'publishpress') {
+                $mailchimp_config['action_url'] = 'https://publishpress.us1.list-manage.com/subscribe/post?u=c4fe34ed80790dd773846d4e1&amp;id=940d504160';
+                $mailchimp_config['code']       = 'b_c4fe34ed80790dd773846d4e1_940d504160';
+                $mailchimp_config['id']         = '165';
+                $mailchimp_config['group_id']   = '2';
+            }
 
             return $mailchimp_config;
         }

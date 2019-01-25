@@ -91,10 +91,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 'icon_class'           => 'dashicons dashicons-feedback',
                 'slug'                 => 'improved-notifications',
                 'default_options'      => [
-                    'enabled'    => 'on',
-                    'post_types' => ['post'],
+                    'enabled'          => 'on',
+                    'post_types'       => ['post'],
+                    'default_channels' => apply_filters('psppno_filter_default_notification_channel', 'email'),
                 ],
-                'options_page'         => false,
+                'general_options'      => true,
             ];
 
             // Apply a filter to the default options
@@ -144,6 +145,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         {
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
 
+            add_action('admin_init', [$this, 'register_settings']);
+
             // Workflow form
             add_filter('get_sample_permalink_html', [$this, 'filter_get_sample_permalink_html_workflow'], 9, 5);
             add_filter('post_row_actions', [$this, 'filter_row_actions'], 10, 2);
@@ -182,6 +185,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             add_filter('months_dropdown_results', [$this, 'hide_months_dropdown_filter'], 10, 2);
 
             add_action('pp_init', [$this, 'action_after_init']);
+
+            add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
         }
 
         /**
@@ -209,6 +214,41 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $workflow_controller->load_workflow_steps();
 
             do_action('publishpress_workflow_steps_loaded');
+        }
+
+        /**
+         * Register settings for notifications so we can partially use the Settings API
+         * (We use the Settings API for form generation, but not saving )
+         *
+         * @since 1.18.1-beta.1
+         */
+        public function register_settings()
+        {
+            add_settings_section(
+                $this->module->options_group_name . '_general',
+                false,
+                '__return_false',
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'default_channels',
+                __('Default notification channels:', 'publishpress'),
+                [$this, 'settings_default_channels_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+        }
+
+        /**
+         * Settings page for notifications
+         *
+         * @since 1.18.1-beta.1
+         */
+        public function print_configure_view()
+        {
+            settings_fields($this->module->options_group_name);
+            do_settings_sections($this->module->options_group_name);
         }
 
         /**
@@ -251,6 +291,59 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
                 }
             }
+        }
+
+        /**
+         *
+         */
+        public function settings_default_channels_option()
+        {
+            $twig = $this->get_service('twig');
+
+            /**
+             * Filters the list of notification channels to display in the
+             * user profile.
+             *
+             * [
+             *    'name': string
+             *    'label': string
+             *    'options': [
+             *        'name'
+             *        'html'
+             *    ]
+             * ]
+             *
+             * @param array
+             */
+            $default_channels  = [];
+            $channels          = apply_filters('psppno_filter_channels_user_profile', $default_channels);
+            $default_channel   = apply_filters('psppno_filter_default_notification_channel', 'email');
+            $workflows         = $this->get_published_workflows();
+            $channels_options  = isset($this->module->options->channel_options) ? (array)$this->module->options->channel_options : [];
+            $selected_channels = isset($this->module->options->default_channels) ? (array)$this->module->options->default_channels : [];
+
+            foreach ($workflows as $workflow) {
+                if ( ! isset($selected_channels[$workflow->ID])) {
+                    $selected_channels[$workflow->ID] = $default_channel;
+                }
+            }
+
+            $context = [
+                'labels'            => [
+                    'title'       => __('Editorial Notifications', 'publishpress'),
+                    'description' => __('Choose the channels where each workflow will send notifications to:',
+                        'publishpress'),
+                    'mute'        => __('Muted', 'publishpress'),
+                    'workflows'   => __('Workflows', 'publishpress'),
+                    'channels'    => __('Channels', 'publishpress'),
+                ],
+                'workflows'         => $workflows,
+                'channels'          => $channels,
+                'selected_channels' => $selected_channels,
+                'channels_options'  => $channels_options,
+            ];
+
+            echo $twig->render('settings_notification_channels.twig', $context);
         }
 
         /**
@@ -800,13 +893,44 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                      *
                      * @return string
                      */
-                    $channel = apply_filters('psppno_filter_default_notification_channel', 'email');
+                    $channel = $this->get_workflow_default_channel($workflow->ID);
                 }
 
                 $channels[$workflow->ID] = $channel;
             }
 
             return $channels;
+        }
+
+        public function get_workflow_default_channel($workflowId)
+        {
+            $channels = $this->module->options->default_channels;
+
+            if (isset($channels[$workflowId])) {
+                return $channels[$workflowId];
+            }
+
+            return apply_filters('psppno_filter_default_notification_channel', 'email');
+        }
+
+        /**
+         * Validate data entered by the user
+         *
+         * @since 0.7
+         *
+         * @param array $new_options New values that have been entered by the user
+         *
+         * @return array $new_options Form values after they've been sanitized
+         */
+        public function settings_validate($new_options)
+        {
+            if (isset($new_options['channel_options']) && ! empty($new_options['channel_options'])) {
+                foreach ($new_options['channel_options'] as &$item) {
+                    $item = sanitize_text_field($item);
+                }
+            }
+
+            return $new_options;
         }
 
         /**
@@ -955,6 +1079,21 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
 
             return $months;
+        }
+
+        /**
+         * @param $channel
+         * @param $workflowId
+         *
+         * @return mixed
+         */
+        public function filter_default_channel($channel, $workflowId = 0)
+        {
+            if ( ! empty($workflowId)) {
+                $channel = $this->get_workflow_default_channel($workflowId);
+            }
+
+            return $channel;
         }
     }
 }

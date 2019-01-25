@@ -47,7 +47,8 @@ class Base extends Base_Step
         parent::__construct();
 
         // Add filter to display the channel in the user's profile
-        add_filter('psppno_filter_channels_user_profile', [$this, 'filter_channel_user_profile']);
+        add_filter('psppno_filter_channels_user_profile', [$this, 'filter_channel']);
+        add_filter('psppno_filter_channels', [$this, 'filter_channel']);
 
         // Hook to the notification action
         add_action('publishpress_notif_send_notification_' . $this->name, [$this, 'action_send_notification'], 10, 5);
@@ -72,8 +73,32 @@ class Base extends Base_Step
      * @param array $channels
      *
      * @return array
+     *
+     * @deprecated
      */
     public function filter_channel_user_profile($channels)
+    {
+        return $this->filter_channel($channels);
+    }
+
+    /**
+     * Filters the list of notification channels to display in the
+     * user profile.
+     *
+     * [
+     *    'name': string
+     *    'label': string
+     *    'options': [
+     *        'name'
+     *        'html'
+     *    ]
+     * ]
+     *
+     * @param array $channels
+     *
+     * @return array
+     */
+    public function filter_channel($channels)
     {
         $channels[] = (object)[
             'name'    => $this->name,

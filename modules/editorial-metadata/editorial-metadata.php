@@ -1269,7 +1269,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error adding term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-added']);
+            $redirect_url = $this->get_link(['message' => 'term-added', 'action' => 'add-new']);
             wp_redirect($redirect_url);
 
             exit;
@@ -1363,7 +1363,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-updated']);
+            $redirect_url = $this->get_link(['message' => 'term-updated', 'action' => 'add-new']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1405,7 +1405,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-visibility-changed']);
+            $redirect_url = $this->get_link(['message' => 'term-visibility-changed', 'action' => 'add-new']);
 
             wp_redirect($redirect_url);
             exit;
@@ -1469,7 +1469,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 wp_die(__('Error deleting term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-deleted']);
+            $redirect_url = $this->get_link(['message' => 'term-deleted', 'action' => 'add-new']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1573,8 +1573,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 <input type='hidden'; name='tag_id'; value="<?php echo esc_attr($term->term_id); ?>" />
                 <input type='hidden'; name='taxonomy'; value="<?php echo esc_attr(self::metadata_taxonomy) ?>" />
                 <?php
-                    wp_original_referer_field();
-            wp_nonce_field('editorial-metadata-edit-nonce'); ?>
+                wp_original_referer_field();
+                wp_nonce_field('editorial-metadata-edit-nonce'); ?>
                 <table class='form-table'>
                     <tr class='form-field form-required'>
                         <th scope='row'; valign='top'><label for='name'><?php _e('Name'); ?></label></th>
@@ -1632,87 +1632,87 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     <div class='col-wrap'>
                     <div class='form-wrap'>
                     <h3 class='nav-tab-wrapper'>
-                        <a href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'change-options') {
-                                    echo ' nav-tab-active';
-                                } ?>"><?php _e('Add New', 'publishpress'); ?></a>
-                        <a href="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'change-options') {
+                        <a href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'add-new') {
                                     echo ' nav-tab-active';
                                 } ?>"><?php _e('Options', 'publishpress'); ?></a>
+                        <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'add-new') {
+                                    echo ' nav-tab-active';
+                                } ?>"><?php _e('Add New', 'publishpress'); ?></a>
                     </h3>
 
-                <?php if (isset($_GET['action']) && $_GET['action'] == 'change-options'): ?>
-                <?php /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
-                <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
-                    <br />
-                    <p><?php echo __('Please note that checking a box will apply all metadata to that post type.', 'publishpress'); ?></p>
-                    <?php settings_fields($this->module->options_group_name); ?>
-                    <?php do_settings_sections($this->module->options_group_name); ?>
-                    <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
-                    <?php wp_nonce_field('edit-publishpress-settings'); ?>
+                    <?php if (isset($_GET['action']) && $_GET['action'] == 'add-new'): ?>
+                        <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
+                        <form class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addmetadata'; name='addmetadata'>
+                        <div class='form-field form-required'>
+                            <label for='metadata_name'><?php _e('Name', 'publishpress'); ?></label>
+                            <input type="text"; aria-required='true'; size='20'; maxlength='200'; id='metadata_name'; name='metadata_name'; value="<?php if (!empty($_POST['metadata_name'])) {
+                                        echo esc_attr(stripslashes($_POST['metadata_name']));
+                                    } ?>" />
+                            <?php $publishpress->settings->helper_print_error_or_description('name', __('The name is for labeling the metadata field.', 'publishpress')); ?>
+                        </div>
+                        <div class='form-field form-required'>
+                            <label for='metadata_slug'><?php _e('Slug', 'publishpress'); ?></label>
+                            <input type="text"; aria-required='true'; size='20'; maxlength='200'; id='metadata_slug'; name='metadata_slug'; value="<?php if (!empty($_POST['metadata_slug'])) {
+                                        echo esc_attr($_POST['metadata_slug']);
+                                    } ?>" />
+                            <?php $publishpress->settings->helper_print_error_or_description('slug', __('The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'publishpress')); ?>
+                        </div>
+                        <div class='form-field'>
+                            <label for='metadata_description'><?php _e('Description', 'publishpress'); ?></label>
+                            <textarea cols="40"; rows='5'; id='metadata_description'; name='metadata_description'><?php if (!empty($_POST['metadata_description'])) {
+                                        echo esc_html(stripslashes($_POST['metadata_description']));
+                                    } ?></textarea>
+                            <?php $publishpress->settings->helper_print_error_or_description('description', __('The description can be used to communicate with your team about what the metadata is for.', 'publishpress')); ?>
+                        </div>
+                        <div class='form-field form-required'>
+                            <label for='metadata_type'><?php _e('Type', 'publishpress'); ?></label>
+                            <?php
+                                $metadata_types = $this->get_supported_metadata_types();
+                // Select the previously selected metadata type if a valid one exists
+                $current_metadata_type = (isset($_POST['metadata_type']) && in_array($_POST['metadata_type'], array_keys($metadata_types))) ? $_POST['metadata_type'] : false; ?>
+                            <select id="metadata_type"; name='metadata_type'>
+                            <?php foreach ($metadata_types as $metadata_type => $metadata_type_name) : ?>
+                                <option value="<?php echo esc_attr($metadata_type); ?>" <?php selected($metadata_type, $current_metadata_type); ?>><?php echo esc_attr($metadata_type_name); ?></option>
+                            <?php endforeach; ?>
+                            </select>
+                            <?php $publishpress->settings->helper_print_error_or_description('type', __('Indicate the type of editorial metadata.', 'publishpress')); ?>
+                        </div>
+                        <div class='form-field form-required'>
+                            <label for='metadata_viewable'><?php _e('Viewable', 'publishpress'); ?></label>
+                            <?php
+                                $metadata_viewable_options = [
+                                    'no' => __('No', 'publishpress'),
+                                    'yes' => __('Yes', 'publishpress'),
+                                ];
+                $current_metadata_viewable = (isset($_POST['metadata_viewable']) && in_array($_POST['metadata_viewable'], array_keys($metadata_viewable_options))) ? $_POST['metadata_viewable'] : 'no'; ?>
+                            <select id="metadata_viewable"; name='metadata_viewable'>
+                            <?php foreach ($metadata_viewable_options as $metadata_viewable_key => $metadata_viewable_value) : ?>
+                                <option value="<?php echo esc_attr($metadata_viewable_key); ?>" <?php selected($current_metadata_viewable, $metadata_viewable_key); ?>><?php echo esc_attr($metadata_viewable_value); ?></option>
+                            <?php endforeach; ?>
+                            </select>
+                            <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress')); ?>
+                        </div>
+                        <?php wp_nonce_field('edit-publishpress-settings'); ?>
 
-                    <?php submit_button(); ?>
-                </form>
-                <?php else: ?>
-                <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
-                    <form class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addmetadata'; name='addmetadata'>
-                    <div class='form-field form-required'>
-                        <label for='metadata_name'><?php _e('Name', 'publishpress'); ?></label>
-                        <input type="text"; aria-required='true'; size='20'; maxlength='200'; id='metadata_name'; name='metadata_name'; value="<?php if (!empty($_POST['metadata_name'])) {
-                                    echo esc_attr(stripslashes($_POST['metadata_name']));
-                                } ?>" />
-                        <?php $publishpress->settings->helper_print_error_or_description('name', __('The name is for labeling the metadata field.', 'publishpress')); ?>
-                    </div>
-                    <div class='form-field form-required'>
-                        <label for='metadata_slug'><?php _e('Slug', 'publishpress'); ?></label>
-                        <input type="text"; aria-required='true'; size='20'; maxlength='200'; id='metadata_slug'; name='metadata_slug'; value="<?php if (!empty($_POST['metadata_slug'])) {
-                                    echo esc_attr($_POST['metadata_slug']);
-                                } ?>" />
-                        <?php $publishpress->settings->helper_print_error_or_description('slug', __('The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.', 'publishpress')); ?>
-                    </div>
-                    <div class='form-field'>
-                        <label for='metadata_description'><?php _e('Description', 'publishpress'); ?></label>
-                        <textarea cols="40"; rows='5'; id='metadata_description'; name='metadata_description'><?php if (!empty($_POST['metadata_description'])) {
-                                    echo esc_html(stripslashes($_POST['metadata_description']));
-                                } ?></textarea>
-                        <?php $publishpress->settings->helper_print_error_or_description('description', __('The description can be used to communicate with your team about what the metadata is for.', 'publishpress')); ?>
-                    </div>
-                    <div class='form-field form-required'>
-                        <label for='metadata_type'><?php _e('Type', 'publishpress'); ?></label>
-                        <?php
-                            $metadata_types = $this->get_supported_metadata_types();
-            // Select the previously selected metadata type if a valid one exists
-            $current_metadata_type = (isset($_POST['metadata_type']) && in_array($_POST['metadata_type'], array_keys($metadata_types))) ? $_POST['metadata_type'] : false; ?>
-                        <select id="metadata_type"; name='metadata_type'>
-                        <?php foreach ($metadata_types as $metadata_type => $metadata_type_name) : ?>
-                            <option value="<?php echo esc_attr($metadata_type); ?>" <?php selected($metadata_type, $current_metadata_type); ?>><?php echo esc_attr($metadata_type_name); ?></option>
-                        <?php endforeach; ?>
-                        </select>
-                        <?php $publishpress->settings->helper_print_error_or_description('type', __('Indicate the type of editorial metadata.', 'publishpress')); ?>
-                    </div>
-                    <div class='form-field form-required'>
-                        <label for='metadata_viewable'><?php _e('Viewable', 'publishpress'); ?></label>
-                        <?php
-                            $metadata_viewable_options = [
-                                'no' => __('No', 'publishpress'),
-                                'yes' => __('Yes', 'publishpress'),
-                            ];
-            $current_metadata_viewable = (isset($_POST['metadata_viewable']) && in_array($_POST['metadata_viewable'], array_keys($metadata_viewable_options))) ? $_POST['metadata_viewable'] : 'no'; ?>
-                        <select id="metadata_viewable"; name='metadata_viewable'>
-                        <?php foreach ($metadata_viewable_options as $metadata_viewable_key => $metadata_viewable_value) : ?>
-                            <option value="<?php echo esc_attr($metadata_viewable_key); ?>" <?php selected($current_metadata_viewable, $metadata_viewable_key); ?>><?php echo esc_attr($metadata_viewable_value); ?></option>
-                        <?php endforeach; ?>
-                        </select>
-                        <?php $publishpress->settings->helper_print_error_or_description('viewable', __('When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)', 'publishpress')); ?>
-                    </div>
-                    <?php wp_nonce_field('edit-publishpress-settings'); ?>
+                        <input type='hidden'; id='form-action'; name='form-action'; value='add-term' />
+                        <p class='submit'><?php submit_button(__('Add New Metadata Term', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
+                        </form>
+                    <?php else: ?>
+                        <?php /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
+                        <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
+                            <br />
+                            <p><?php echo __('Please note that checking a box will apply all metadata to that post type.', 'publishpress'); ?></p>
+                            <?php settings_fields($this->module->options_group_name); ?>
+                            <?php do_settings_sections($this->module->options_group_name); ?>
+                            <?php echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+                            <?php wp_nonce_field('edit-publishpress-settings'); ?>
 
-                    <input type='hidden'; id='form-action'; name='form-action'; value='add-term' />
-                    <p class='submit'><?php submit_button(__('Add New Metadata Term', 'publishpress'), 'primary', 'submit', false); ?>&nbsp;</p>
-                    </form>
+                            <?php submit_button(); ?>
+                        </form>
                 <?php endif; ?>
                     </div>
                     </div>
-                </div>;;;
+                </div>
 
                 <?php
             endif;

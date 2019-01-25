@@ -1,0 +1,32 @@
+<table class="psppno_workflow_user_fields psppno_workflows">
+    <tr>
+        <th class="psppno_workflow_column_header psppno_workflows">{{ labels.workflows }}</th>
+        <th class="psppno_workflow_column_header psppno_channels">{{ labels.channels }}</th>
+        <th class="psppno_workflow_column_header psppno_options"></th>
+    </tr>
+    {% for workflow in workflows %}
+        <tr class="psppno_workflow_{{ workflow.ID }}">
+            <td class="psppno_workflow_title">{{ workflow.post_title }}</td>
+            <td class="psppno_workflow_channel">
+                {% for channel in channels %}
+                    <div class="psppno_workflow_channel_field">
+                        <input
+                                type="radio"
+                                id="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}"
+                                name="publishpress_improved_notifications_options[default_channels][{{ workflow.ID }}]"
+                                value="{{ channel.name }}"
+                                data-workflow-id="{{ workflow.ID }}"
+                                {{ checked( channel.name, attribute( selected_channels, workflow.ID ) ) }}
+                        />
+
+                        <label for="psppno_workflow_channel_{{ workflow.ID }}_{{ channel.name }}">
+                            <img src="{{ channel.icon }}"/>
+                            <span>{{ channel.label }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </td>
+
+        </tr>
+    {% endfor %}
+</table>

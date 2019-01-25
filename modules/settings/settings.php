@@ -393,19 +393,19 @@ if ( ! class_exists('PP_Settings')) {
                 return false;
             }
 
+            if ($_POST['action'] != 'update'
+                || $_GET['page'] != 'pp-modules-settings') {
+                return false;
+            }
+
+            if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
+                wp_die(__('Cheatin&#8217; uh?'));
+            }
+
             global $publishpress;
 
             foreach ($_POST['publishpress_module_name'] as $moduleSlug) {
                 $module_name = sanitize_key(PublishPress\Legacy\Util::sanitize_module_name($moduleSlug));
-
-                if ($_POST['action'] != 'update'
-                    || $_GET['page'] != 'pp-modules-settings') {
-                    return false;
-                }
-
-                if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
-                    wp_die(__('Cheatin&#8217; uh?'));
-                }
 
                 $new_options = (isset($_POST[$publishpress->$module_name->module->options_group_name])) ? $_POST[$publishpress->$module_name->module->options_group_name] : [];
 

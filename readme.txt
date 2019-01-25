@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.0
-Stable tag: 1.18.0
+Stable tag: 1.18.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,7 +62,7 @@ The Content Overview screen is a companion to the Calendar screen. Whereas the C
 * [Click here for more on the PublishPress Content Overview](https://publishpress.com/docs/content-overview/)
 
 = CUSTOM STATUSES =
-
+ tru
 This feature allows you to create custom post statuses such as “In Progress” or “Pending Review”. You can define statuses to match the stages of your team’s publishing workflow.
 
 By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress you’ll see a much wider range of options. When you first install PublishPress, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
@@ -98,7 +98,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 * [Click here for full instructions on moving from Edit Flow to PublishPress](https://publishpress.com/docs/migrate/)
 
 = I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
-
+K_TCPDF_CALLS_IN_HTML
 Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/AllediaWordPress/PublishPress), and we welcome contributions from everyone.
 
 = FAQ =
@@ -129,6 +129,29 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.18.4] - 2019-01-25 =
+
+* Fixed incompatibility with UpStream 1.23.1;
+
+
+= [1.18.3] - 2019-01-23 =
+
+* Released only to trigger a new update on sites due to corrupted package for 1.18.2;
+
+= [1.18.2] - 2019-01-23 =
+
+* Updated the subscription form for discount coupon, for the new Mailchimp account;
+* Updated the settings tabs for the editorial metadata and custom statuses moving Options before Add New;
+* Removed warning about Classic Editor as requirement;
+* Updated the default value for selected post types for the custom status module, disabling by default if Gutenberg is installed;
+
+= [1.18.1] - 2019-01-14 =
+
+* Fixed minor performance issue in the settings page removing a code from a loop;
+* Added an option for selecting a default notification channel;
+* Fixed the position of the editorial comments metabox removing from the sidebar and added as high priority;
+* Fixed the output of boolean values in the Debug page;
 
 = [1.18.0] - 2018-12-06 =
 

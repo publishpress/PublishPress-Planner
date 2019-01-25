@@ -34,10 +34,6 @@ class Pimple_Container extends \Pimple\Container
                 return 'PublishPress';
             };
 
-            $instance['SUBSCRIPTION_AD_URL'] = function ($c) {
-                return 'https://alledia.us4.list-manage.com/subscribe/post?u=a42978bc16dd60d0ce3cac4d4&amp;id=bb6f51185b';
-            };
-
             $instance['twig_function_checked'] = function ($c) {
                 return new \Twig_SimpleFunction('checked', function ($checked, $current = true, $echo = true) {
                     return checked($checked, $current, $echo);
@@ -102,8 +98,9 @@ class Pimple_Container extends \Pimple\Container
             };
 
             $instance['framework'] = function ($c) {
-                return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'],
-                    $c['SUBSCRIPTION_AD_URL']);
+                // The 4th param is there just for backward compatibility with older versions of the Allex framework
+                // packed in UpStream.
+                return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'], '');
             };
 
             $instance['reviews'] = function ($c) {
