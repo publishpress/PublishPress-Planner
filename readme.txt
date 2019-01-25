@@ -130,6 +130,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.18.4] - 2019-01-25 =
+
+* Fixed incompatibility with UpStream 1.23.1;
+
+
 = [1.18.3] - 2019-01-23 =
 
 * Released only to trigger a new update on sites due to corrupted package for 1.18.2;
