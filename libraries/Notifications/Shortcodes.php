@@ -438,6 +438,10 @@ class Shortcodes
      */
     public function handle_psppno_workflow($attrs)
     {
+	    if (is_string( $attrs )) {
+		    $attrs = [ $attrs ];
+	    }
+
         $post = $this->workflow_post;
 
         // No attributes? Set the default one.
