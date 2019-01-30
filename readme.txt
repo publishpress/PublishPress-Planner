@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.0
-Stable tag: 1.18.3
+Stable tag: 1.18.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,17 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.18.5] - 2019-01-30 =
+
+* Fixed warning message when a string is added as param for the shortcode psppno_workflow;
+* Fixed redirection after dismissing the alert regarding reviewing PublishPress, when calendar is not activated;
+* Fixed Gutenberg compatibility do not falling off to the classic editor;
+* Fixed compatibility with Bedrock, fixing paths for assets and the plugin;
+
+= [1.18.4] - 2019-01-25 =
+
+* Fixed incompatibility with UpStream 1.23.1;
 
 = [1.18.3] - 2019-01-23 =
 

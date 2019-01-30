@@ -34,8 +34,24 @@ class Reviews
         }
 
         if ($this->time_to_show_notice()) {
+            global $submenu;
+
+            $redirectURL = '';
+
+            if (isset($submenu['pp-modules-settings'])) {
+                $redirectURL = $submenu['pp-modules-settings'][0][2];
+            }
+
+            if (empty($redirectURL)) {
+                if (isset($submenu['pp-manage-roles'])) {
+                    $redirectURL = $submenu['pp-manage-roles'][0][2];
+                } else {
+                    $redirectURL = 'admin.php?page=pp-calendar';
+                }
+            }
+
             $params = [
-                'redirect_url' => 'admin.php?page=pp-calendar',
+                'redirect_url' => $redirectURL,
                 'review_link'  => 'http://wordpress.org/support/plugin/publishpress/reviews/#new-post',
                 'notice_text'  => __(
                     'Hey, I noticed you have been using %sPublishPress%s for a few weeks - that\'s awesome! May I ask you to give it a %s5-star%s rating on WordPress? Just to help us spread the word and boost our motivation.',
