@@ -783,8 +783,6 @@ class publishpress
         $postTypes = [];
         $modules   = [
             'custom_status',
-            'content_checklist',
-            'woocommerce-checklist',
         ];
 
         /**
