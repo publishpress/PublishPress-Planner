@@ -58,20 +58,22 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 && (isset($_POST['action']) && 'editpost' === $_POST['action'])
                 && (isset($_POST['original_post_status']) && 'auto-draft' === $_POST['original_post_status'])
             ) {
-                $toNotify = $_POST['to_notify'];
+                $toNotify = (array)$_POST['to_notify'];
 
                 $roles  = [];
                 $users  = [];
                 $emails = [];
 
-                foreach ($toNotify as $item) {
-                    if (is_numeric($item)) {
-                        $users[] = $item;
-                    } else {
-                        if (strpos($item, '@') > 0) {
-                            $emails[] = $item;
+                if ( ! empty($toNotify)) {
+                    foreach ($toNotify as $item) {
+                        if (is_numeric($item)) {
+                            $users[] = $item;
                         } else {
-                            $roles[] = $item;
+                            if (strpos($item, '@') > 0) {
+                                $emails[] = $item;
+                            } else {
+                                $roles[] = $item;
+                            }
                         }
                     }
                 }

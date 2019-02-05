@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.18.5
+ * Version: 1.18.6-beta.1
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -783,8 +783,6 @@ class publishpress
         $postTypes = [];
         $modules   = [
             'custom_status',
-            'content_checklist',
-            'woocommerce-checklist',
         ];
 
         /**
