@@ -1250,6 +1250,11 @@ if ( ! class_exists('PP_Calendar')) {
             $post_id        = $post->ID;
             $edit_post_link = get_edit_post_link($post_id);
 
+            $default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
+
+            $post_publish_datetime = get_the_date('c', $post);
+            $post_publish_date_timestamp = strtotime($post_publish_datetime);
+
             $post_classes = [
                 'day-item',
                 'custom-status-' . $post->post_status,
@@ -1290,6 +1295,13 @@ if ( ! class_exists('PP_Calendar')) {
                             <?php $title = esc_html(_draft_or_post_title($post->ID)); ?>
 
                             <span class="item-headline post-title" title="<?php echo esc_attr($title); ?>">
+                                <time
+                                    class="item-headline-time"
+                                    datetime="<?php echo $post_publish_datetime; ?>"
+                                    title="<?php echo date_i18n($default_date_time_format, $post_publish_date_timestamp); ?>"
+                                >
+                                    <?php echo date_i18n('ga', $post_publish_date_timestamp); ?>
+                                </time>
                                 <strong><?php echo $title; ?></strong>
                             </span>
                         </div>
