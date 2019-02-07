@@ -124,6 +124,13 @@ if ( ! class_exists('PP_Calendar')) {
         private static $post_li_html_cache_key = 'pp_calendar_post_li_html';
 
         /**
+         * Store default WordPress Date and Time formats for caching purposes.
+         *
+         * @var string
+         */
+        private $default_date_time_format = '';
+
+        /**
          * Construct the PP_Calendar class
          */
         public function __construct()
@@ -219,6 +226,11 @@ if ( ! class_exists('PP_Calendar')) {
             add_action('admin_init', [$this, 'handle_regenerate_calendar_feed_secret']);
 
             add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
+
+            if ($this->module->options->show_publish_time === 'on') {
+                // Cache WordPress default date/time formats.
+                $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
+            }
         }
 
         /**
@@ -1253,7 +1265,6 @@ if ( ! class_exists('PP_Calendar')) {
             $edit_post_link = get_edit_post_link($post_id);
 
             if ($show_posts_publish_time) {
-                $default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
                 $post_publish_datetime = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
             }
@@ -1302,7 +1313,7 @@ if ( ! class_exists('PP_Calendar')) {
                                 <time
                                     class="item-headline-time"
                                     datetime="<?php echo $post_publish_datetime; ?>"
-                                    title="<?php echo date_i18n($default_date_time_format, $post_publish_date_timestamp); ?>"
+                                    title="<?php echo date_i18n($this->default_date_time_format, $post_publish_date_timestamp); ?>"
                                 >
                                     <?php echo date_i18n('ga', $post_publish_date_timestamp); ?>
                                 </time>
