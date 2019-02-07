@@ -11,12 +11,12 @@
             "version": "dev-development",
             "source": {
                 "type": "git",
-                "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Builder.git",
+                "url": "https://github.com/upstreamplugin/WordPress-Plugin-Builder.git",
                 "reference": "1bf3a36415281289623492efdd4841308a2f6e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Builder/zipball/1bf3a36415281289623492efdd4841308a2f6e94",
+                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Builder/zipball/1bf3a36415281289623492efdd4841308a2f6e94",
                 "reference": "1bf3a36415281289623492efdd4841308a2f6e94",
                 "shasum": ""
             },
@@ -68,13 +68,13 @@
             "version": "dev-development",
             "source": {
                 "type": "git",
-                "url": "https://github.com/AllediaWordPress/WordPress-Plugin-Framework.git",
-                "reference": "4fd4662fc139b9767ac8c8c75959899b0c7f1ef3"
+                "url": "https://github.com/upstreamplugin/WordPress-Plugin-Framework.git",
+                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AllediaWordPress/WordPress-Plugin-Framework/zipball/4fd4662fc139b9767ac8c8c75959899b0c7f1ef3",
-                "reference": "4fd4662fc139b9767ac8c8c75959899b0c7f1ef3",
+                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/e71bed761dcca3616be00e5a45ca6fc16a2637d6",
+                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-01-30T18:08:43+00:00"
+            "time": "2019-02-07T18:56:30+00:00"
         },
         {
             "name": "pimple/pimple",
