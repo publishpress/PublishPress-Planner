@@ -227,7 +227,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
 
-            if ($this->module->options->show_publish_time === 'on') {
+            if ($this->module->options->show_posts_publish_time === 'on') {
                 // Cache WordPress default date/time formats.
                 $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
             }
@@ -857,7 +857,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
-            $show_posts_publish_time = $this->module->options->show_publish_time === 'on';
+            $show_posts_publish_time = $this->module->options->show_posts_publish_time === 'on';
 
             $dotw = [
                 'Sat',
@@ -1969,9 +1969,9 @@ if ( ! class_exists('PP_Calendar')) {
                 [$this, 'settings_ics_subscription_option'], $this->module->options_group_name,
                 $this->module->options_group_name . '_general');
             add_settings_field(
-                'show_publish_time',
-                __('Display publish time', 'publishpress'),
-                [$this, 'settings_show_publish_time_option'],
+                'show_posts_publish_time',
+                __('Display Posts publish time', 'publishpress'),
+                [$this, 'settings_show_posts_publish_time_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2042,7 +2042,7 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * @todo
          */
-        public function settings_show_publish_time_option()
+        public function settings_show_posts_publish_time_option()
         {
             $VALUE_ON = 'on';
             $VALUE_OFF = 'off';
@@ -2066,9 +2066,9 @@ if ( ! class_exists('PP_Calendar')) {
                             /> %s
                         </label>
                     </div>',
-                    esc_attr($this->module->options_group_name) . '[show_publish_time]',
+                    esc_attr($this->module->options_group_name) . '[show_posts_publish_time]',
                     $optionValue,
-                    $this->module->options->show_publish_time === $optionValue ? 'checked' : '',
+                    $this->module->options->show_posts_publish_time === $optionValue ? 'checked' : '',
                     $optionLabel
                 );
             }
@@ -2118,7 +2118,7 @@ if ( ! class_exists('PP_Calendar')) {
                 $options['ics_subscription'] = 'on';
             }
 
-            $options['show_publish_time'] = isset($new_options['show_publish_time']) && $new_options['show_publish_time'] === 'on'
+            $options['show_posts_publish_time'] = isset($new_options['show_posts_publish_time']) && $new_options['show_posts_publish_time'] === 'on'
                 ? 'on'
                 : 'off';
 
@@ -2220,7 +2220,7 @@ if ( ! class_exists('PP_Calendar')) {
 
                 $post = get_post($post_id);
 
-                $show_posts_publish_time = $this->module->options->show_publish_time === 'on';
+                $show_posts_publish_time = $this->module->options->show_posts_publish_time === 'on';
 
                 // Generate the HTML for the post item so it can be injected
                 $post_li_html = $this->generate_post_li_html($post, $post_date, 0, $show_posts_publish_time);
