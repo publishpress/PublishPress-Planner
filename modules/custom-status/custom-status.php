@@ -440,7 +440,11 @@ if ( ! class_exists('PP_Custom_Status')) {
         {
             global $publishpress;
 
-            if ($publishpress->isBlockEditorActive()) {
+            if ($this->disable_custom_statuses_for_post_type()) {
+                return;
+            }
+
+            if ($publishpress->isBlockEditorActive() ) {
                 wp_enqueue_script(
                     'pp-custom-status-block',
                     plugins_url('/modules/custom-status/lib/custom-status-block.js', 'publishpress/publishpress.php'),
