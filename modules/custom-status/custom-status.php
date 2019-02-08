@@ -444,7 +444,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if ($publishpress->isBlockEditorActive() ) {
+            if ($publishpress->isBlockEditorActive()) {
                 wp_enqueue_script(
                     'pp-custom-status-block',
                     plugins_url('/modules/custom-status/lib/custom-status-block.js', 'publishpress/publishpress.php'),
@@ -1936,8 +1936,6 @@ if ( ! class_exists('PP_Custom_Status')) {
                                     <br/>
                                     <p><?php echo __('Please note that checking a box will apply all statuses to that post type.',
                                             'publishpress'); ?>
-                                        <a href="https://publishpress.com/blog/gutenberg/"><?php echo __('(read more)',
-                                                'publishpress'); ?></a>
                                     </p>
                                     <?php settings_fields($this->module->options_group_name); ?>
                                     <?php do_settings_sections($this->module->options_group_name); ?>
