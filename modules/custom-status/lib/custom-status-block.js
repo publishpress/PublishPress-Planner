@@ -39,11 +39,13 @@ let getStatusLabel = slug => statuses.find(s => s.value === slug).label; // Hack
 
 
 let sideEffectL10nManipulation = status => {
-  let node = document.querySelector('.editor-post-save-draft');
+  setTimeout(() => {
+    let node = document.querySelector('.editor-post-save-draft');
 
-  if (node) {
-    document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
-  }
+    if (node) {
+      document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
+    }
+  }, 100);
 };
 /**
  * Custom status component

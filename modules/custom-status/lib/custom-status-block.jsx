@@ -23,10 +23,12 @@ let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
 // Hack :(
 // @see https://github.com/WordPress/gutenberg/issues/3144
 let sideEffectL10nManipulation = status => {
-    let node = document.querySelector('.editor-post-save-draft');
-    if (node) {
-        document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
-    }
+    setTimeout(() => {
+        let node = document.querySelector('.editor-post-save-draft');
+        if (node) {
+            document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
+        }
+    }, 100);
 };
 
 /**
