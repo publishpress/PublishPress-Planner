@@ -42,6 +42,8 @@ class Email extends Base implements Channel_Interface
      */
     public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
     {
+        $this->get_service('debug')->write($receivers, 'Email::action_send_notification $receivers');
+
         if (empty($receivers)) {
             return;
         }
@@ -63,6 +65,8 @@ class Email extends Base implements Channel_Interface
         $emails = $this->get_receivers_emails($receivers);
         $action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
 
+        $this->get_service('debug')->write($emails, 'Email::action_send_notification $emails');
+
         $subject = html_entity_decode($content['subject']);
 
         $body = apply_filters('the_content', $content['body']);
@@ -75,6 +79,8 @@ class Email extends Base implements Channel_Interface
             if ($separatorPos > 0) {
                 $email = substr($email, $separatorPos + 1, strlen($email));
             }
+
+            $this->get_service('debug')->write($email, 'Email::action_send_notification $email');
 
             $this->get_service('publishpress')->notifications->send_email(
                 $action,
