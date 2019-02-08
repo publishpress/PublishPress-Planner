@@ -39,7 +39,7 @@ let PPCustomPostStatusInfo = ({onUpdate, status}) => (
     <PluginPostStatusInfo
         className={`publishpress-extended-post-status publishpress-extended-post-status-${status}`}
     >
-        <h4>{status !== 'publish' ? __('Extended Post Status', 'publishpress') : __('Extended Post Status Disabled.', 'publishpress')}</h4>
+        <h4>{status !== 'publish' ? __('Post Status', 'publishpress') : __('Post Status Disabled.', 'publishpress')}</h4>
 
         {status !== 'publish' ? <SelectControl
             label=""

@@ -1930,7 +1930,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                                       action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" ;
                                       method='post'>
                                     <br/>
-                                    <p><?php echo __('Please note that checking a box will apply all statuses to that post type. This feature is not compatible with the Gutenberg editor.',
+                                    <p><?php echo __('Please note that checking a box will apply all statuses to that post type.',
                                             'publishpress'); ?>
                                         <a href="https://publishpress.com/blog/gutenberg/"><?php echo __('(read more)',
                                                 'publishpress'); ?></a>

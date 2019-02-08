@@ -58,7 +58,7 @@ let PPCustomPostStatusInfo = ({
   status
 }) => wp.element.createElement(PluginPostStatusInfo, {
   className: `publishpress-extended-post-status publishpress-extended-post-status-${status}`
-}, wp.element.createElement("h4", null, status !== 'publish' ? __('Extended Post Status', 'publishpress') : __('Extended Post Status Disabled.', 'publishpress')), status !== 'publish' ? wp.element.createElement(SelectControl, {
+}, wp.element.createElement("h4", null, status !== 'publish' ? __('Post Status', 'publishpress') : __('Post Status Disabled.', 'publishpress')), status !== 'publish' ? wp.element.createElement(SelectControl, {
   label: "",
   value: status,
   options: statuses,
