@@ -1267,6 +1267,9 @@ if ( ! class_exists('PP_Calendar')) {
             if ($show_posts_publish_time) {
                 $post_publish_datetime = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
+                $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
+                    ? 'ha'
+                    : $this->module->options->posts_publish_time_format;
             }
 
             $post_classes = [
@@ -1315,7 +1318,7 @@ if ( ! class_exists('PP_Calendar')) {
                                     datetime="<?php echo $post_publish_datetime; ?>"
                                     title="<?php echo date_i18n($this->default_date_time_format, $post_publish_date_timestamp); ?>"
                                 >
-                                    <?php echo date_i18n('ga', $post_publish_date_timestamp); ?>
+                                    <?php echo date_i18n($posts_publish_time_format, $post_publish_date_timestamp); ?>
                                 </time>
                                 <?php endif; ?>
                                 <strong><?php echo $title; ?></strong>
@@ -1975,6 +1978,13 @@ if ( ! class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+            add_settings_field(
+                'posts_publish_time_format',
+                __('Posts publish time format', 'publishpress'),
+                [$this, 'settings_posts_publish_time_format_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -2040,7 +2050,9 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
-         * @todo
+         * Option that define either Posts publish times are displayed or not.
+         *
+         * @since @todo
          */
         public function settings_show_posts_publish_time_option()
         {
@@ -2072,6 +2084,50 @@ if ( ! class_exists('PP_Calendar')) {
                     $optionLabel
                 );
             }
+            echo '</div>';
+        }
+
+        /**
+         * Define the time format for Posts publish date.
+         *
+         * @since @todo
+         */
+        public function settings_posts_publish_time_format_option()
+        {
+            $timeFormats = [
+                'ga' => '1-12 am/pm',
+                'ha' => '01-12 am/pm',
+                'H'  => '00-24',
+            ];
+
+            $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
+                ? 'ha'
+                : $this->module->options->posts_publish_time_format;
+
+            echo '<div class="c-input-group c-pp-calendar-options-posts_publish_time_format">';
+
+            foreach ($timeFormats as $timeFormat => $timeMockValue) {
+                printf('
+                    <div style="max-width: 175px; display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
+                        <label>
+                            <input
+                                class="o-radio"
+                                type="radio"
+                                name="%s"
+                                value="%s"
+                                %s
+                            />
+                            <span>%s</span>
+                        </label>
+                        <code>%2$s</code>
+                    </div>',
+                    esc_attr($this->module->options_group_name) . '[posts_publish_time_format]',
+                    $timeFormat,
+                    $posts_publish_time_format === $timeFormat ? 'checked' : '',
+                    $timeMockValue
+                );
+            }
+
             echo '</div>';
         }
 
@@ -2121,6 +2177,10 @@ if ( ! class_exists('PP_Calendar')) {
             $options['show_posts_publish_time'] = isset($new_options['show_posts_publish_time']) && $new_options['show_posts_publish_time'] === 'on'
                 ? 'on'
                 : 'off';
+
+            $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
+                ? $new_options['posts_publish_time_format']
+                : 'ha';
 
             return $options;
         }
