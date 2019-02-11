@@ -130,11 +130,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [1.19.0] - 2019-02-11 =
 
 * Fixed PHP Warning about to_notify variable;
 * Removed the requirement for the classic editor when the Content Checklist is active;
 * Removed the 20% discount subscription form and replaced with a simple banner;
+* Added support to custom statuses for posts in Gutenberg;
+* Improved text for custom status settings options;
 
 = [1.18.5] - 2019-01-30 =
 
