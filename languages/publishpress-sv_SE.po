@@ -1371,7 +1371,7 @@ msgstr ""
 
 #: modules/custom-status/custom-status.php:1897
 msgid ""
-"Please note that checking a box will apply all statuses to that post type. This feature is not compatible with the Gutenberg editor."
+"Please note that checking a box will apply all statuses to that post type."
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1913

@@ -9,8 +9,12 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 class Follower extends Simple_Checkbox implements Receiver_Interface
 {
+    use Dependency_Injector;
+
     const META_KEY = '_psppno_tofollower';
 
     const META_VALUE = 'follower';
@@ -58,20 +62,22 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 && (isset($_POST['action']) && 'editpost' === $_POST['action'])
                 && (isset($_POST['original_post_status']) && 'auto-draft' === $_POST['original_post_status'])
             ) {
-                $toNotify = $_POST['to_notify'];
+                $toNotify = (array)$_POST['to_notify'];
 
                 $roles  = [];
                 $users  = [];
                 $emails = [];
 
-                foreach ($toNotify as $item) {
-                    if (is_numeric($item)) {
-                        $users[] = $item;
-                    } else {
-                        if (strpos($item, '@') > 0) {
-                            $emails[] = $item;
+                if ( ! empty($toNotify)) {
+                    foreach ($toNotify as $item) {
+                        if (is_numeric($item)) {
+                            $users[] = $item;
                         } else {
-                            $roles[] = $item;
+                            if (strpos($item, '@') > 0) {
+                                $emails[] = $item;
+                            } else {
+                                $roles[] = $item;
+                            }
                         }
                     }
                 }
@@ -81,6 +87,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 $users  = $publishpress->notifications->get_users_to_notify($post_id, 'id');
                 $emails = $publishpress->notifications->get_emails_to_notify($post_id);
             }
+
+            $this->get_service('debug')->write($emails, 'Follower::filter_workflow_receivers $emails');
 
             // Extract users from roles
             if ( ! empty($roles)) {
@@ -149,6 +157,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
              */
             $followers = apply_filters('publishpress_notif_workflow_receiver_post_followers', $followers, $workflow,
                 $args);
+            $this->get_service('debug')->write($followers, 'Follower::filter_workflow_receivers $followers');
 
             // Add the user ids for the receivers list
             if ( ! empty($followers)) {

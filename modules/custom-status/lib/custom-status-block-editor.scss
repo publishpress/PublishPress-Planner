@@ -1,0 +1,19 @@
+.publishpress-extended-post-status {
+  flex-flow: row wrap;
+  > * {
+    flex-basis: 45%;
+  }
+
+  .publishpress-extended-post-status-note {
+    flex-basis: 100%;
+  }
+}
+.publishpress-extended-post-status-switch-to-draft {
+  flex-basis: 100%;
+}
+
+.publishpress-extended-post-status-publish {
+  > * {
+    flex-basis: 100%;
+  }
+}

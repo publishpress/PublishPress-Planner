@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.18.5
+ * Version: 1.19.0
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -306,6 +306,18 @@ class publishpress
         }
 
         do_action('pp_module_options_loaded');
+    }
+
+    /**
+     * Check if need to restrict the use of the block editor, or Gutenberg.
+     */
+    protected function checkBlockEditor()
+    {
+        // If version is > 5+, check if the classical editor is installed, if not, ask to install.
+        add_filter('use_block_editor_for_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
+        add_filter('gutenberg_can_edit_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
+
+        add_action('add_meta_boxes', [$this, 'removeEditorMetaBox']);
     }
 
     /**
@@ -703,15 +715,11 @@ class publishpress
     }
 
     /**
-     * Returns true if is a beta or stable version of WP 5.
-     *
      * @return bool
      */
-    public function isWp5()
+    public function hasMissedRequirements()
     {
-        global $wp_version;
-
-        return version_compare($wp_version, '5.0', '>=') || substr($wp_version, 0, 2) === '5.';
+        return $this->isBlockEditorActive() && ! $this->isClassicEditorInstalled();
     }
 
     /**
@@ -733,31 +741,23 @@ class publishpress
     }
 
     /**
+     * Returns true if is a beta or stable version of WP 5.
+     *
+     * @return bool
+     */
+    public function isWp5()
+    {
+        global $wp_version;
+
+        return version_compare($wp_version, '5.0', '>=') || substr($wp_version, 0, 2) === '5.';
+    }
+
+    /**
      * @return mixed
      */
     public function isClassicEditorInstalled()
     {
         return is_plugin_active('classic-editor/classic-editor.php');
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMissedRequirements()
-    {
-        return $this->isBlockEditorActive() && ! $this->isClassicEditorInstalled();
-    }
-
-    /**
-     * Check if need to restrict the use of the block editor, or Gutenberg.
-     */
-    protected function checkBlockEditor()
-    {
-        // If version is > 5+, check if the classical editor is installed, if not, ask to install.
-        add_filter('use_block_editor_for_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
-        add_filter('gutenberg_can_edit_post_type', [$this, 'canUseBlockEditorForPostType'], 5, 2);
-
-        add_action('add_meta_boxes', [$this, 'removeEditorMetaBox']);
     }
 
     /**
@@ -771,67 +771,6 @@ class publishpress
         if ($this->isWp5() && $isClassicEditor && $this->postTypeRequiresClassicEditor($postType)) {
             remove_meta_box('classic-editor-switch-editor', null, 'side');
         }
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPostTypesWhichRequiresClassicEditor()
-    {
-        global $publishpress;
-
-        $postTypes = [];
-        $modules   = [
-            'custom_status',
-            'content_checklist',
-            'woocommerce-checklist',
-        ];
-
-        /**
-         * @param array $modules
-         */
-        $modules = apply_filters('publishpress_modules_require_classic_editor', $modules);
-
-        // Get the post types activated for each module.
-        foreach ($modules as $module) {
-            // Check if the plugin is active.
-            if ( ! isset($publishpress->{$module}) || $publishpress->{$module}->module->options->enabled != 'on') {
-                continue;
-            }
-
-            $modulePostTypes = PublishPress\Legacy\Util::get_post_types_for_module($publishpress->modules->{$module});
-
-            $postTypes = array_merge($postTypes, $modulePostTypes);
-        }
-
-        return $postTypes;
-    }
-
-    /**
-     * @param $postType
-     *
-     * @return bool
-     */
-    protected function postTypeRequiresClassicEditor($postType)
-    {
-        $specialPostTypes = $this->getPostTypesWhichRequiresClassicEditor();
-
-        return in_array($postType, $specialPostTypes);
-    }
-
-    /**
-     * Disable Gutenberg/Block Editor for post types.
-     *
-     * @param bool   $canEdit
-     * @param string $postType
-     *
-     * @return bool
-     */
-    public function canUseBlockEditorForPostType($canEdit, $postType)
-    {
-        $canUse = $this->postTypeRequiresClassicEditor($postType) ? false : $canEdit;
-
-        return $canUse;
     }
 
     /**
@@ -863,6 +802,65 @@ class publishpress
 
         // We do not know the post type!
         return null;
+    }
+
+    /**
+     * @param $postType
+     *
+     * @return bool
+     */
+    protected function postTypeRequiresClassicEditor($postType)
+    {
+        $specialPostTypes = $this->getPostTypesWhichRequiresClassicEditor();
+
+        return in_array($postType, $specialPostTypes);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPostTypesWhichRequiresClassicEditor()
+    {
+        global $publishpress;
+
+        $postTypes = [];
+        $modules   = [];
+
+        /**
+         * @param array $modules
+         */
+        $modules = apply_filters('publishpress_modules_require_classic_editor', $modules);
+
+        if ( ! empty($modules)) {
+            // Get the post types activated for each module.
+            foreach ($modules as $module) {
+                // Check if the plugin is active.
+                if ( ! isset($publishpress->{$module}) || $publishpress->{$module}->module->options->enabled != 'on') {
+                    continue;
+                }
+
+                $modulePostTypes = PublishPress\Legacy\Util::get_post_types_for_module($publishpress->modules->{$module});
+
+                $postTypes = array_merge($postTypes, $modulePostTypes);
+            }
+        }
+
+        return $postTypes;
+    }
+
+    /**
+     * Disable Gutenberg/Block Editor for post types.
+     *
+     * @param bool   $canEdit
+     * @param string $postType
+     *
+     * @return bool
+     */
+    public function canUseBlockEditorForPostType($canEdit, $postType)
+    {
+        $canUse = $this->postTypeRequiresClassicEditor($postType) ? false : $canEdit;
+
+        return $canUse;
     }
 }
 

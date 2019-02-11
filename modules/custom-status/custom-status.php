@@ -119,6 +119,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
             add_action('admin_notices', [$this, 'no_js_notice']);
             add_action('admin_print_scripts', [$this, 'post_admin_header']);
+            add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
             // Methods for handling the actions of creating, making default, and deleting post stati
             add_action('admin_init', [$this, 'handle_add_custom_status']);
@@ -350,19 +351,18 @@ if ( ! class_exists('PP_Custom_Status')) {
          * Whether custom post statuses should be disabled for this post type.
          * Used to stop custom statuses from being registered for post types that don't support them.
          *
-         * @since 0.7.5
-         *
          * @return bool
+         * @since 0.7.5
          */
         public function disable_custom_statuses_for_post_type($post_type = null)
         {
             global $pagenow;
 
-
             // Only allow deregistering on 'edit.php' and 'post.php'
             if ( ! in_array($pagenow, ['edit.php', 'post.php', 'post-new.php'])) {
                 return false;
             }
+
 
             if (is_null($post_type)) {
                 $post_type = $this->get_current_post_type();
@@ -390,7 +390,7 @@ if ( ! class_exists('PP_Custom_Status')) {
          */
         public function action_admin_enqueue_scripts()
         {
-            global $pagenow;
+            global $publishpress;
 
             if ($this->disable_custom_statuses_for_post_type()) {
                 return;
@@ -415,14 +415,49 @@ if ( ! class_exists('PP_Custom_Status')) {
                     PUBLISHPRESS_VERSION, true);
                 wp_enqueue_style('publishpress-icon-preview', $this->module_url . 'lib/icon-picker.css', false,
                     PUBLISHPRESS_VERSION, 'all');
+
             }
 
             // Custom javascript to modify the post status dropdown where it shows up
             if ($this->is_whitelisted_page()) {
-                wp_enqueue_script('publishpress-custom_status', $this->module_url . 'lib/custom-status.js',
-                    ['jquery', 'post'], PUBLISHPRESS_VERSION, true);
-                wp_enqueue_style('publishpress-custom_status', $this->module_url . 'lib/custom-status.css', false,
-                    PUBLISHPRESS_VERSION, 'all');
+                if ($publishpress->isBlockEditorActive()) {
+                    wp_enqueue_style('publishpress-custom_status-block',
+                        $this->module_url . 'lib/custom-status-block-editor.css', false,
+                        PUBLISHPRESS_VERSION, 'all');
+                } else {
+                    wp_enqueue_script('publishpress-custom_status', $this->module_url . 'lib/custom-status.js',
+                        ['jquery', 'post'], PUBLISHPRESS_VERSION, true);
+                    wp_enqueue_style('publishpress-custom_status', $this->module_url . 'lib/custom-status.css', false,
+                        PUBLISHPRESS_VERSION, 'all');
+                }
+            }
+        }
+
+        /**
+         * Enqueue Gutenberg assets.
+         */
+        public function enqueue_block_editor_assets()
+        {
+            global $publishpress;
+
+            if ($this->disable_custom_statuses_for_post_type()) {
+                return;
+            }
+
+            if ($publishpress->isBlockEditorActive()) {
+                wp_enqueue_script(
+                    'pp-custom-status-block',
+                    plugins_url('/modules/custom-status/lib/custom-status-block.js', 'publishpress/publishpress.php'),
+                    ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-hooks'],
+                    PUBLISHPRESS_VERSION,
+                    true
+                );
+
+                wp_localize_script(
+                    'pp-custom-status-block',
+                    'PPCustomStatuses',
+                    $this->get_custom_statuses()
+                );
             }
         }
 
@@ -444,7 +479,8 @@ if ( ! class_exists('PP_Custom_Status')) {
                     }
                 </style>
                 <div class="update-nag hide-if-js">
-                    <?php _e('<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript disabled. You will not be able to access or change the post status.', 'publishpress'); ?>
+                    <?php _e('<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript disabled. You will not be able to access or change the post status.',
+                        'publishpress'); ?>
                 </div>
             <?php
             endif;
@@ -1570,11 +1606,11 @@ if ( ! class_exists('PP_Custom_Status')) {
         /**
          * Generate a link to one of the custom status actions
          *
-         * @since 0.7
-         *
          * @param array $args (optional) Action and any query args to add to the URL
          *
          * @return string $link Direct link to complete the action
+         * @since 0.7
+         *
          */
         public function get_link($args = [])
         {
@@ -1817,9 +1853,9 @@ if ( ! class_exists('PP_Custom_Status')) {
 
                 <div id='col-right'>
                     <div class='col-wrap'>
-                            <?php $wp_list_table->display(); ?>
-                            <?php wp_nonce_field('custom-status-sortable', 'custom-status-sortable'); ?>
-                        </div>
+                        <?php $wp_list_table->display(); ?>
+                        <?php wp_nonce_field('custom-status-sortable', 'custom-status-sortable'); ?>
+                    </div>
                 </div>
                 <div id='col-left'>
                     <div class='col-wrap'>
@@ -1898,9 +1934,8 @@ if ( ! class_exists('PP_Custom_Status')) {
                                       action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" ;
                                       method='post'>
                                     <br/>
-                                    <p><?php echo __('Please note that checking a box will apply all statuses to that post type. This feature is not compatible with the Gutenberg editor.',
+                                    <p><?php echo __('Please note that checking a box will apply all statuses to that post type.',
                                             'publishpress'); ?>
-                                        <a href="https://publishpress.com/blog/gutenberg/"><?php echo __('(read more)', 'publishpress'); ?></a>
                                     </p>
                                     <?php settings_fields($this->module->options_group_name); ?>
                                     <?php do_settings_sections($this->module->options_group_name); ?>
@@ -2000,8 +2035,6 @@ if ( ! class_exists('PP_Custom_Status')) {
          * manipulating the slug. Critical for cases like editing the sample permalink on
          * hierarchical post types.
          *
-         * @since 0.8.2
-         *
          * @param string  $permalink Sample permalink
          * @param int     $post_id   Post ID
          * @param string  $title     Post title
@@ -2009,6 +2042,8 @@ if ( ! class_exists('PP_Custom_Status')) {
          * @param WP_Post $post      Post object
          *
          * @return string $link Direct link to complete the action
+         * @since 0.8.2
+         *
          */
         public function fix_get_sample_permalink($permalink, $post_id, $title, $name, $post)
         {
@@ -2324,9 +2359,9 @@ class PP_Custom_Status_List_Table extends WP_List_Table
      * Table shows (hidden) position, status name, status description, and the post count for each activated
      * post type
      *
+     * @return array $columns Columns to be registered with the List Table
      * @since 0.7
      *
-     * @return array $columns Columns to be registered with the List Table
      */
     public function get_columns()
     {
@@ -2365,12 +2400,12 @@ class PP_Custom_Status_List_Table extends WP_List_Table
      * Fallback column callback.
      * Primarily used to display post count for each post type
      *
-     * @since 0.7
-     *
      * @param object $item        Custom status as an object
      * @param string $column_name Name of the column as registered in $this->prepare_items()
      *
      * @return string $output What will be rendered
+     * @since 0.7
+     *
      */
     public function column_default($item, $column_name)
     {
@@ -2420,11 +2455,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     /**
      * Hidden column for storing the status position
      *
-     * @since 0.7
-     *
      * @param object $item Custom status as an object
      *
      * @return string $output What will be rendered
+     * @since 0.7
+     *
      */
     public function column_position($item)
     {
@@ -2434,11 +2469,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     /**
      * Displayed column showing the name of the status
      *
-     * @since 0.7
-     *
      * @param object $item Custom status as an object
      *
      * @return string $output What will be rendered
+     * @since 0.7
+     *
      */
     public function column_name($item)
     {
@@ -2495,11 +2530,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     /**
      * Displayed column showing the color of the status
      *
-     * @since 1.7.0
-     *
      * @param object $item Custom status as an object
      *
      * @return string $output What will be rendered
+     * @since 1.7.0
+     *
      */
     /*public function column_color($item)
     {
@@ -2509,11 +2544,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     /**
      * Displayed column showing the description of the status
      *
-     * @since 0.7
-     *
      * @param object $item Custom status as an object
      *
      * @return string $output What will be rendered
+     * @since 0.7
+     *
      */
     public function column_description($item)
     {
@@ -2523,11 +2558,11 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     /**
      * Displayed column showing the icon of the status
      *
-     * @since 1.7.0
-     *
      * @param object $item Custom status as an object
      *
      * @return string $output What will be rendered
+     * @since 1.7.0
+     *
      */
     public function column_icon($item)
     {
