@@ -43,7 +43,13 @@ let sideEffectL10nManipulation = status => {
     let node = document.querySelector('.editor-post-save-draft');
 
     if (node) {
-      document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
+      document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save')} ${status}`;
+    } else {
+      let node = document.querySelector('.editor-post-switch-to-draft');
+
+      if (node) {
+        document.querySelector('.editor-post-switch-to-draft').innerText = `${__('Switch to')} ${status}`;
+      }
     }
   }, 100);
 };
