@@ -133,6 +133,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [1.19.1] - 2019-02-12 =
 
 * Fixed method that detects the block editor, restoring the publish button in the classic editor;
+* Fixed the Save button for custom statuses in the block editor;
 
 = [1.19.0] - 2019-02-11 =
 
