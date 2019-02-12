@@ -34,24 +34,57 @@ let statuses = window.PPCustomStatuses.map(s => ({
   value: s.slug
 }));
 
-let getStatusLabel = slug => statuses.find(s => s.value === slug).label; // Hack :(
-// @see https://github.com/WordPress/gutenberg/issues/3144
+let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
+/**
+ * Hack :(
+ *
+ * @see https://github.com/WordPress/gutenberg/issues/3144
+ *
+ * @param status
+ */
 
 
 let sideEffectL10nManipulation = status => {
+  let statusLabel = getStatusLabel(status);
   setTimeout(() => {
     let node = document.querySelector('.editor-post-save-draft');
 
+    if (!node) {
+      node = document.querySelector('.editor-post-switch-to-draft');
+    }
+
     if (node) {
-      document.querySelector('.editor-post-save-draft').innerText = `${__('Save')} ${status}`;
+      document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
+      node.dataset.ppInnerTextUpdated = true;
     }
   }, 100);
 };
 /**
+ * Hack :(
+ * We need an interval because the DOM element is removed by autosave and rendered back after finishing.
+ *
+ * @see https://github.com/WordPress/gutenberg/issues/3144
+ */
+
+
+setInterval(() => {
+  let status = wp.data.select('core/editor').getEditedPostAttribute('status');
+  let statusLabel = getStatusLabel(status);
+  let node = document.querySelector('.editor-post-save-draft');
+
+  if (!node) {
+    node = document.querySelector('.editor-post-switch-to-draft');
+  }
+
+  if (node && !node.dataset.ppInnerTextUpdated) {
+    document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
+    node.dataset.ppInnerTextUpdated = true;
+  }
+}, 200);
+/**
  * Custom status component
  * @param object props
  */
-
 
 let PPCustomPostStatusInfo = ({
   onUpdate,
@@ -74,7 +107,7 @@ let plugin = compose(withSelect(select => ({
     dispatch('core/editor').editPost({
       status
     });
-    sideEffectL10nManipulation(getStatusLabel(status));
+    sideEffectL10nManipulation(status);
   }
 
 })))(PPCustomPostStatusInfo);
