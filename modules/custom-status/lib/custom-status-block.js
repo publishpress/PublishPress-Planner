@@ -61,7 +61,7 @@ let sideEffectL10nManipulation = status => {
 };
 /**
  * Hack :(
- * We need an interval because the DOM element is removed by autosave and redered back after finishing.
+ * We need an interval because the DOM element is removed by autosave and rendered back after finishing.
  *
  * @see https://github.com/WordPress/gutenberg/issues/3144
  */
