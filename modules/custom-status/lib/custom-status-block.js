@@ -91,14 +91,14 @@ let PPCustomPostStatusInfo = ({
   status
 }) => wp.element.createElement(PluginPostStatusInfo, {
   className: `publishpress-extended-post-status publishpress-extended-post-status-${status}`
-}, wp.element.createElement("h4", null, status !== 'publish' ? __('Post Status', 'publishpress') : __('Post Status Disabled.', 'publishpress')), status !== 'publish' ? wp.element.createElement(SelectControl, {
+}, wp.element.createElement("h4", null, __('Post Status', 'publishpress')), wp.element.createElement(SelectControl, {
   label: "",
   value: status,
   options: statuses,
   onChange: onUpdate
-}) : null, wp.element.createElement("small", {
+}), wp.element.createElement("small", {
   className: "publishpress-extended-post-status-note"
-}, status !== 'publish' ? __(`Note: this will override all status settings above.`, 'publishpress') : __('To select a custom status, please unpublish the content first.', 'publishpress')));
+}, __(`Note: this will override all status settings above.`, 'publishpress')));
 
 let plugin = compose(withSelect(select => ({
   status: select('core/editor').getEditedPostAttribute('status')
