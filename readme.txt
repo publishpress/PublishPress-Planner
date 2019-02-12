@@ -130,6 +130,10 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.19.2] - 2019-02-12 =
+
+* Fixed bug preventing to unpublish posts;
+
 = [1.19.1] - 2019-02-12 =
 
 * Fixed method that detects the block editor, restoring the publish button in the classic editor;
