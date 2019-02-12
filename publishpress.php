@@ -723,21 +723,37 @@ class publishpress
     }
 
     /**
+     * Based on Edit Flow's \Block_Editor_Compatible::should_apply_compat method.
+     *
      * @return bool
      */
     public function isBlockEditorActive()
     {
-        if ( ! function_exists('is_plugin_active')) {
-            include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        }
+        $pluginsState = [
+            'classic-editor' => is_plugin_active('classic-editor/classic-editor.php'),
+            'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
+        ];
 
-        $isActive = is_plugin_active('gutenberg/gutenberg.php');
+        $conditions = [
+            /**
+             * 5.0:
+             *
+             * Classic editor either disabled or enabled (either via an option or with GET argument).
+             * It's a hairy conditional :(
+             */
+            // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
+            $this->isWp5() && ! $pluginsState['classic-editor'],
+            $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'block' && ! isset($_GET['classic-editor__forget'])),
+            $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'classic' && isset($_GET['classic-editor__forget'])),
+            /**
+             * < 5.0 but Gutenberg plugin is active.
+             */
+            ! $this->isWp5() && $pluginsState['gutenberg'],
+        ];
 
-        if ( ! $isActive) {
-            $isActive = $this->isWp5();
-        }
-
-        return $isActive;
+        return count(array_filter($conditions, function ($c) {
+                return (bool)$c;
+            })) > 0;
     }
 
     /**
