@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.0
-Stable tag: 1.19.2
+Stable tag: 1.19.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.19.3] - 2019-02-15 =
+
+* Fixed the publishing workflow, removing Published from the select box of post statuses;
+* Fixed the list of statuses applying the filter which allows to add-ons like Permissions to filter the list;
 
 = [1.19.2] - 2019-02-12 =
 

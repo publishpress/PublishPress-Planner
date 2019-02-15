@@ -453,10 +453,14 @@ if ( ! class_exists('PP_Custom_Status')) {
                     true
                 );
 
+                $post = get_post();
+
+                $statuses = apply_filters('pp_custom_status_list', $this->get_custom_statuses(), $post);
+
                 wp_localize_script(
                     'pp-custom-status-block',
                     'PPCustomStatuses',
-                    $this->get_custom_statuses()
+                    $statuses
                 );
             }
         }

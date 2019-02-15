@@ -20,6 +20,11 @@ let {SelectControl} = wp.components;
 let statuses = window.PPCustomStatuses.map(s => ({label: s.name, value: s.slug}));
 let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
 
+// Remove the Published status from the list.
+statuses = statuses.filter((item) => {
+    return item.value !== 'publish';
+});
+
 /**
  * Hack :(
  *
@@ -28,6 +33,11 @@ let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
  * @param status
  */
 let sideEffectL10nManipulation = status => {
+
+    if (status === 'publish') {
+        return;
+    }
+
     let statusLabel = getStatusLabel(status);
 
     setTimeout(() => {
@@ -52,6 +62,11 @@ let sideEffectL10nManipulation = status => {
  */
 setInterval(() => {
     let status = wp.data.select('core/editor').getEditedPostAttribute('status');
+
+    if (status === 'publish') {
+        return;
+    }
+
     let statusLabel = getStatusLabel(status);
     let node = document.querySelector('.editor-post-save-draft');
 
@@ -63,7 +78,7 @@ setInterval(() => {
         document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
         node.dataset.ppInnerTextUpdated = true;
     }
-}, 200);
+}, 250);
 
 /**
  * Custom status component
@@ -75,15 +90,15 @@ let PPCustomPostStatusInfo = ({onUpdate, status}) => (
     >
         <h4>{__('Post Status', 'publishpress')}</h4>
 
-        <SelectControl
+        {status !== 'publish' ? <SelectControl
             label=""
             value={status}
             options={statuses}
             onChange={onUpdate}
-        />
+        /> : <div>{__('Published', 'publishpress')}</div>
 
         <small className="publishpress-extended-post-status-note">
-            {__(`Note: this will override all status settings above.`, 'publishpress')}
+            {status !== 'publish' ? __(`Note: this will override all status settings above.`, 'publishpress') : __('To select a custom status, please unpublish the content first.', 'publishpress')}
         </small>
     </PluginPostStatusInfo>
 );

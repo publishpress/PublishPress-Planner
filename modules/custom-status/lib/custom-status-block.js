@@ -34,7 +34,12 @@ let statuses = window.PPCustomStatuses.map(s => ({
   value: s.slug
 }));
 
-let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
+let getStatusLabel = slug => statuses.find(s => s.value === slug).label; // Remove the Published status from the list.
+
+
+statuses = statuses.filter(item => {
+  return item.value !== 'publish';
+});
 /**
  * Hack :(
  *
@@ -43,8 +48,11 @@ let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
  * @param status
  */
 
-
 let sideEffectL10nManipulation = status => {
+  if (status === 'publish') {
+    return;
+  }
+
   let statusLabel = getStatusLabel(status);
   setTimeout(() => {
     let node = document.querySelector('.editor-post-save-draft');
@@ -69,6 +77,11 @@ let sideEffectL10nManipulation = status => {
 
 setInterval(() => {
   let status = wp.data.select('core/editor').getEditedPostAttribute('status');
+
+  if (status === 'publish') {
+    return;
+  }
+
   let statusLabel = getStatusLabel(status);
   let node = document.querySelector('.editor-post-save-draft');
 
@@ -80,7 +93,7 @@ setInterval(() => {
     document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
     node.dataset.ppInnerTextUpdated = true;
   }
-}, 200);
+}, 250);
 /**
  * Custom status component
  * @param object props
@@ -91,14 +104,14 @@ let PPCustomPostStatusInfo = ({
   status
 }) => wp.element.createElement(PluginPostStatusInfo, {
   className: `publishpress-extended-post-status publishpress-extended-post-status-${status}`
-}, wp.element.createElement("h4", null, __('Post Status', 'publishpress')), wp.element.createElement(SelectControl, {
+}, wp.element.createElement("h4", null, __('Post Status', 'publishpress')), status !== 'publish' ? wp.element.createElement(SelectControl, {
   label: "",
   value: status,
   options: statuses,
   onChange: onUpdate
-}), wp.element.createElement("small", {
+}) : __('Published', 'publishpress'), wp.element.createElement("small", {
   className: "publishpress-extended-post-status-note"
-}, __(`Note: this will override all status settings above.`, 'publishpress')));
+}, status !== 'publish' ? __(`Note: this will override all status settings above.`, 'publishpress') : __('To select a custom status, please unpublish the content first.', 'publishpress')));
 
 let plugin = compose(withSelect(select => ({
   status: select('core/editor').getEditedPostAttribute('status')
