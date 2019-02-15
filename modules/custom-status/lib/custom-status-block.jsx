@@ -21,7 +21,7 @@ let statuses = window.PPCustomStatuses.map(s => ({label: s.name, value: s.slug})
 let getStatusLabel = slug => {
     let item = statuses.find(s => s.value === slug);
 
-    if (label) {
+    if (item) {
         return item.label;
     }
 

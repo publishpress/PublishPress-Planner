@@ -30,7 +30,7 @@ var getStatusLabel = function getStatusLabel(slug) {
     return s.value === slug;
   });
 
-  if (label) {
+  if (item) {
     return item.label;
   }
 
@@ -133,5 +133,4 @@ registerPlugin('publishpress-custom-status-block', {
   icon: 'admin-site',
   render: plugin
 });
-
 //# sourceMappingURL=custom-status-block.js.map
