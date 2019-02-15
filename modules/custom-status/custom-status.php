@@ -460,7 +460,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 wp_localize_script(
                     'pp-custom-status-block',
                     'PPCustomStatuses',
-                    $statusesf
+                    $statuses
                 );
             }
         }
