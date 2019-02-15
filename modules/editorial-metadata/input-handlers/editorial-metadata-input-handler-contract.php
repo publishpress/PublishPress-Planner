@@ -38,5 +38,16 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
          * @param   mixed   $value          Actual input value
          */
         public function handlePreviewRendering($type, $inputOptions = array(), $value = null);
+
+        /**
+         * Iterate through the chain until a node handles the action and render
+         * the appropriated meta-input raw value based on $type.
+         *
+         * @since   @todo
+         *
+         * @param   string  $type           Input type
+         * @param   mixed   $value          Actual input value
+         */
+        public function handleMetaValueHtmling($type, $value = null);
     }
 }

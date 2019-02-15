@@ -111,5 +111,32 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                 $value
             );
         }
+
+        /**
+         * Get meta-input value html formatted.
+         *
+         * @access  protected
+         * @since   @todo
+         *
+         * @param   mixed   $value  Actual input value
+         *
+         * @return  string
+         */
+        protected function getMetaValueHtml($value = null)
+        {
+            if (empty($value)) {
+                return '';
+            }
+
+            // All day vs. day and time
+            $date = date(get_option('date_format'), $value);
+            $time = date(get_option('time_format'), $value);
+
+            $output = date('Hi', $value) === '0000'
+                ? $date
+                : sprintf(__('%1$s at %2$s', 'publishpress'), $date, $time);
+
+            return esc_html($output);
+        }
     }
 }

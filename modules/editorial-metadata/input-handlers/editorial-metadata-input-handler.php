@@ -60,6 +60,19 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
         abstract protected function renderInputPreview($inputOptions = array(), $value = null);
 
         /**
+         * Get meta-input value html formatted.
+         *
+         * @abstract
+         * @access  protected
+         * @since   @todo
+         *
+         * @param   mixed   $value  Actual input value
+         *
+         * @return  string
+         */
+        abstract protected function getMetaValueHtml($value = null);
+
+        /**
          * Check if the input can handle a given action based on $type.
          *
          * @final
@@ -139,6 +152,26 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
             }
 
             return $this->renderInputPreview($inputOptions, $value);
+        }
+
+        /**
+         * Iterate through the chain until a node handles the action and render
+         * the appropriated meta-input raw value based on $type.
+         *
+         * @since   @todo
+         *
+         * @param   string  $type           Input type
+         * @param   mixed   $value          Actual input value
+         */
+        final public function handleMetaValueHtmling($type, $value = null)
+        {
+            if (!$this->canHandle($type)) {
+                return !is_null($this->nextHandler)
+                    ? $this->nextHandler->handleMetaValueHtmling($type, $value)
+                    : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
+            }
+
+            return $this->getMetaValueHtml($value);
         }
 
         /**

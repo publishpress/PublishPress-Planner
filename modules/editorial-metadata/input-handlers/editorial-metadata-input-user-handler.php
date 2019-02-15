@@ -100,5 +100,29 @@ if (!class_exists('Editorial_Metadata_Input_User_Handler')) {
                 $value
             );
         }
+
+        /**
+         * Get meta-input value html formatted.
+         *
+         * @access  protected
+         * @since   @todo
+         *
+         * @param   mixed   $value  Actual input value
+         *
+         * @return  string
+         */
+        protected function getMetaValueHtml($value = null)
+        {
+            if (empty($value)) {
+                return '';
+            }
+
+            $user = get_user_by('id', (int)$value);
+            if (!is_object($user)) {
+                return '';
+            }
+
+            return esc_html($user->display_name);
+        }
     }
 }

@@ -883,51 +883,10 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         private function generate_editorial_metadata_term_output($term, $pm_value)
         {
-            $output = '';
-            switch ($term->type) {
-                case "date":
-                    if (empty($pm_value)) {
-                        break;
-                    }
-
-                    // All day vs. day and time
-                    $date = date(get_option('date_format'), $pm_value);
-                    $time = date(get_option('time_format'), $pm_value);
-                    if (date('Hi', $pm_value) == '0000') {
-                        $pm_value = $date;
-                    } else {
-                        $pm_value = sprintf(__('%1$s at %2$s', 'publishpress'), $date, $time);
-                    }
-                    $output = esc_html($pm_value);
-                    break;
-                case "location":
-                case "text":
-                case "number":
-                case "paragraph":
-                    if ($pm_value) {
-                        $output = esc_html($pm_value);
-                    }
-                    break;
-                case "checkbox":
-                    if ($pm_value) {
-                        $output = __('Yes', 'publishpress');
-                    } else {
-                        $output = __('No', 'publishpress');
-                    }
-                    break;
-                case "user":
-                    if (empty($pm_value)) {
-                        break;
-                    }
-                    $userdata = get_user_by('id', $pm_value);
-                    if (is_object($userdata)) {
-                        $output = esc_html($userdata->display_name);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return $output;
+            return $this->editorial_metadata_input_handler->handleMetaValueHtmling(
+                $term->type,
+                $pm_value
+            );
         }
 
         /**
