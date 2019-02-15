@@ -18,7 +18,15 @@ let {SelectControl} = wp.components;
  * Map Custom Statuses as options for SelectControl
  */
 let statuses = window.PPCustomStatuses.map(s => ({label: s.name, value: s.slug}));
-let getStatusLabel = slug => statuses.find(s => s.value === slug).label;
+let getStatusLabel = slug => {
+    let item = statuses.find(s => s.value === slug);
+
+    if (label) {
+        return item.label;
+    }
+
+    return '';
+};
 
 // Remove the Published status from the list.
 statuses = statuses.filter((item) => {
@@ -95,7 +103,7 @@ let PPCustomPostStatusInfo = ({onUpdate, status}) => (
             value={status}
             options={statuses}
             onChange={onUpdate}
-        /> : <div>{__('Published', 'publishpress')}</div>
+        /> : <div>{__('Published', 'publishpress')}</div>}
 
         <small className="publishpress-extended-post-status-note">
             {status !== 'publish' ? __(`Note: this will override all status settings above.`, 'publishpress') : __('To select a custom status, please unpublish the content first.', 'publishpress')}
