@@ -1283,7 +1283,7 @@ if ( ! class_exists('PP_Calendar')) {
                 $post_publish_datetime = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
                 $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
-                    ? self::TIME_FORMAT_12H_WITH_LEADING_ZEROES
+                    ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                     : $this->module->options->posts_publish_time_format;
             }
 
@@ -2116,7 +2116,7 @@ if ( ! class_exists('PP_Calendar')) {
             ];
 
             $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
-                ? self::TIME_FORMAT_12H_WITH_LEADING_ZEROES
+                ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                 : $this->module->options->posts_publish_time_format;
 
             echo '<div class="c-input-group c-pp-calendar-options-posts_publish_time_format">';
@@ -2195,7 +2195,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
-                : self::TIME_FORMAT_12H_WITH_LEADING_ZEROES;
+                : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
 
             return $options;
         }
