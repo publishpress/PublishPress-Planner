@@ -2,7 +2,7 @@
 defined('ABSPATH') or die('No direct script access allowed.');
 
 if (!class_exists('Editorial_Metadata_Input_Handler')) {
-    require_once 'editorial-metadata-input-handler-contract.php';
+    require_once 'editorial-metadata-input-handler-interface.php';
 
     abstract class Editorial_Metadata_Input_Handler implements Editorial_Metadata_Input_Handler_Contract
     {
