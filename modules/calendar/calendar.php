@@ -68,6 +68,21 @@ if ( ! class_exists('PP_Calendar')) {
         const MENU_SLUG = 'pp-calendar';
 
         /**
+         * Time 12h-format without leading zeroes.
+         */
+        const TIME_FORMAT_12H_WO_LEADING_ZEROES = 'ga';
+
+        /**
+         * Time 12h-format with leading zeroes.
+         */
+        const TIME_FORMAT_12H_WITH_LEADING_ZEROES = 'ha';
+
+        /**
+         * Time 24h-format with leading zeroes.
+         */
+        const TIME_FORMAT_24H = 'H';
+
+        /**
          * [$module description]
          *
          * @var [type]
@@ -1268,7 +1283,7 @@ if ( ! class_exists('PP_Calendar')) {
                 $post_publish_datetime = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
                 $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
-                    ? 'ha'
+                    ? self::TIME_FORMAT_12H_WITH_LEADING_ZEROES
                     : $this->module->options->posts_publish_time_format;
             }
 
@@ -2095,13 +2110,13 @@ if ( ! class_exists('PP_Calendar')) {
         public function settings_posts_publish_time_format_option()
         {
             $timeFormats = [
-                'ga' => '1-12 am/pm',
-                'ha' => '01-12 am/pm',
-                'H'  => '00-24',
+                self::TIME_FORMAT_12H_WO_LEADING_ZEROES => '1-12 am/pm',
+                self::TIME_FORMAT_12H_WITH_LEADING_ZEROES => '01-12 am/pm',
+                self::TIME_FORMAT_24H  => '00-24',
             ];
 
             $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
-                ? 'ha'
+                ? self::TIME_FORMAT_12H_WITH_LEADING_ZEROES
                 : $this->module->options->posts_publish_time_format;
 
             echo '<div class="c-input-group c-pp-calendar-options-posts_publish_time_format">';
@@ -2180,7 +2195,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
-                : 'ha';
+                : self::TIME_FORMAT_12H_WITH_LEADING_ZEROES;
 
             return $options;
         }
