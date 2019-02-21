@@ -130,7 +130,7 @@ class Workflow
 
         if ( ! empty($receivers)) {
             // Remove duplicate receivers
-            $receivers = array_unique($receivers, SORT_NUMERIC);
+            $receivers = array_unique($receivers, SORT_STRING);
 
             // Classify receivers per channel, ignoring who has muted the channel.
             foreach ($receivers as $index => $receiver) {
