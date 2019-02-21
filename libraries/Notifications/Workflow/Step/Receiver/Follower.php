@@ -56,13 +56,12 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
 
             $followers = [];
 
-
-            // Check if we just created the post and the metadata is not saved yet.
+            // Check if we are saving the post and use that data instead of the stored taxonomies/metadata.
             if ('POST' === $_SERVER['REQUEST_METHOD']
                 && (isset($_POST['action']) && 'editpost' === $_POST['action'])
-                && (isset($_POST['original_post_status']) && 'auto-draft' === $_POST['original_post_status'])
             ) {
                 $toNotify = (array)$_POST['to_notify'];
+
 
                 $roles  = [];
                 $users  = [];
