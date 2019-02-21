@@ -734,6 +734,15 @@ class publishpress
             'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
         ];
 
+
+        if (function_exists('get_post_type')) {
+            $postType = get_post_type();
+        }
+
+        if (!isset($postType) || empty($postType)) {
+            $postType = 'post';
+        }
+
         $conditions = [
             /**
              * 5.0:
@@ -749,8 +758,14 @@ class publishpress
              * < 5.0 but Gutenberg plugin is active.
              */
             ! $this->isWp5() && $pluginsState['gutenberg'],
+
+            /**
+             * Not disabled by filter.
+             */
+            apply_filters('use_block_editor_for_post_type', true, $postType)
         ];
 
+        // Returns true if at least one condition is true.
         return count(array_filter($conditions, function ($c) {
                 return (bool)$c;
             })) > 0;
