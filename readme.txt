@@ -137,7 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed the method to detect when a post is using the block editor, checking additionally the filter "use_block_editor_for_post_type";
 * Fixed default state for custom statuses, do not disabling it by default when the block editor is being used;
 * Updated Tested Up To version to 5.1 and added kevinb as contributor;
-
+* Fixed compatibility with Revisionary < v1.2.3 and Statuses;
 
 = [1.19.3] - 2019-02-15 =
 
