@@ -765,8 +765,6 @@ class publishpress
             apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX)
         ];
 
-        var_dump($conditions); die;
-
         // Returns true if at least one condition is true.
         return count(array_filter($conditions, function ($c) {
                 return (bool)$c;
