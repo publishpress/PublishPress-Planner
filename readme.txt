@@ -1,11 +1,11 @@
 === PublishPress - Professional publishing tools for WordPress ===
-Contributors: publishpress, andergmartins, stevejburge, pressshack
+Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: 1.19.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
