@@ -130,6 +130,15 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.19.4] - 2019-02-22 =
+
+* Fixed the list of notification receivers for not excluding emails with numeric chars;
+* Fixed email notifications for email addresses added directly into the post, using the "Notify" box;
+* Fixed the method to detect when a post is using the block editor, checking additionally the filter "use_block_editor_for_post_type";
+* Fixed default state for custom statuses, do not disabling it by default when the block editor is being used;
+* Updated Tested Up To version to 5.1 and added kevinb as contributor;
+
+
 = [1.19.3] - 2019-02-15 =
 
 * Fixed the publishing workflow, removing Published from the select box of post statuses;
