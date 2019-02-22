@@ -1,7 +1,10 @@
 {
   "presets": [
     [
-      "@wordpress/default"
+      "@wordpress/babel-preset-default"
+    ],
+    [
+      "minify"
     ]
   ],
   "plugins": [
@@ -11,5 +14,6 @@
         "pragma": "wp.element.createElement"
       }
     ]
-  ]
+  ],
+  "sourceMaps": "inline"
 }

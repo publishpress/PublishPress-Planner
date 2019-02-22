@@ -1,12 +1,12 @@
 === PublishPress - Professional publishing tools for WordPress ===
-Contributors: publishpress, andergmartins, stevejburge, pressshack
+Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
-Tested up to: 5.0
-Stable tag: 1.19.3
+Tested up to: 5.1
+Stable tag: 1.19.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,15 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.19.4] - 2019-02-22 =
+
+* Fixed the list of notification receivers for not excluding emails with numeric chars;
+* Fixed email notifications for email addresses added directly into the post, using the "Notify" box;
+* Fixed the method to detect when a post is using the block editor, checking additionally the filter "use_block_editor_for_post_type";
+* Fixed default state for custom statuses, do not disabling it by default when the block editor is being used;
+* Updated Tested Up To version to 5.1 and added kevinb as contributor;
+* Fixed compatibility with Revisionary < v1.2.3 and Statuses;
 
 = [1.19.3] - 2019-02-15 =
 
