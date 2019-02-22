@@ -442,26 +442,24 @@ if ( ! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if ($publishpress->isBlockEditorActive()) {
-                wp_enqueue_script(
-                    'pp-custom-status-block',
-                    plugins_url('/modules/custom-status/lib/custom-status-block.min.js',
-                        'publishpress/publishpress.php'),
-                    ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-hooks'],
-                    PUBLISHPRESS_VERSION,
-                    true
-                );
+            wp_enqueue_script(
+                'pp-custom-status-block',
+                plugins_url('/modules/custom-status/lib/custom-status-block.min.js',
+                    'publishpress/publishpress.php'),
+                ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-hooks'],
+                PUBLISHPRESS_VERSION,
+                true
+            );
 
-                $post = get_post();
+            $post = get_post();
 
-                $statuses = apply_filters('pp_custom_status_list', $this->get_custom_statuses(), $post);
+            $statuses = apply_filters('pp_custom_status_list', $this->get_custom_statuses(), $post);
 
-                wp_localize_script(
-                    'pp-custom-status-block',
-                    'PPCustomStatuses',
-                    $statuses
-                );
-            }
+            wp_localize_script(
+                'pp-custom-status-block',
+                'PPCustomStatuses',
+                $statuses
+            );
         }
 
         /**
