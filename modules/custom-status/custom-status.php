@@ -56,8 +56,6 @@ if ( ! class_exists('PP_Custom_Status')) {
         {
             global $publishpress;
 
-            $defaultChecked = $publishpress->isBlockEditorActive() ? 'off' : 'on';
-
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args         = [
@@ -72,8 +70,8 @@ if ( ! class_exists('PP_Custom_Status')) {
                     'default_status'       => 'pitch',
                     'always_show_dropdown' => 'on',
                     'post_types'           => [
-                        'post' => $defaultChecked,
-                        'page' => $defaultChecked,
+                        'post' => 'on',
+                        'page' => 'on',
                     ],
                 ],
                 'post_type_support'     => 'pp_custom_statuses', // This has been plural in all of our docs
