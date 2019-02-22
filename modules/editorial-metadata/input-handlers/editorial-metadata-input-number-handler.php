@@ -65,7 +65,7 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
          *
          * @return  string
          */
-        protected function getMetaValueHtml($value = null)
+        public static function getMetaValueHtml($value = null)
         {
             return !empty($value)
                 ? esc_html($value)

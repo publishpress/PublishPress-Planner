@@ -111,7 +111,7 @@ if (!class_exists('Editorial_Metadata_Input_User_Handler')) {
          *
          * @return  string
          */
-        protected function getMetaValueHtml($value = null)
+        public static function getMetaValueHtml($value = null)
         {
             if (empty($value)) {
                 return '';

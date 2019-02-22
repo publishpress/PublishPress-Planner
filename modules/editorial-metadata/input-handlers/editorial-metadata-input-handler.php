@@ -70,7 +70,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @return  string
          */
-        abstract protected function getMetaValueHtml($value = null);
+        abstract public static function getMetaValueHtml($value = null);
 
         /**
          * Check if the input can handle a given action based on $type.
@@ -171,7 +171,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
                     : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
 
-            return $this->getMetaValueHtml($value);
+            return static::getMetaValueHtml($value);
         }
 
         /**

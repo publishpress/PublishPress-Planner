@@ -105,7 +105,7 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          *
          * @return  string
          */
-        protected function getMetaValueHtml($value = null)
+        public static function getMetaValueHtml($value = null)
         {
             return $value
                 ? __('Yes', 'publishpress')
