@@ -49,5 +49,14 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
          * @param   mixed   $value          Actual input value
          */
         public function handleMetaValueHtmling($type, $value = null);
+
+        /**
+         * Get input-handler type.
+         *
+         * @since   @todo
+         *
+         * @return  string
+         */
+        public function getType();
     }
 }

@@ -175,6 +175,17 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
         }
 
         /**
+         * Get input-handler type.
+         *
+         * @since   @todo
+         *
+         * @return  string
+         */
+        public function getType() {
+            return $this->type;
+        }
+
+        /**
          * Return the input type in case the class is treated as string.
          *
          * @since   @todo
