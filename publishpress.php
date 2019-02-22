@@ -751,18 +751,13 @@ class publishpress
              * It's a hairy conditional :(
              */
             // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
-            $this->isWp5() && ! $pluginsState['classic-editor'],
+            $this->isWp5() && ! $pluginsState['classic-editor'] && apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX),
             $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'block' && ! isset($_GET['classic-editor__forget'])),
             $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'classic' && isset($_GET['classic-editor__forget'])),
             /**
              * < 5.0 but Gutenberg plugin is active.
              */
             ! $this->isWp5() && $pluginsState['gutenberg'],
-
-            /**
-             * Not disabled by filter.
-             */
-            apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX)
         ];
 
         // Returns true if at least one condition is true.
