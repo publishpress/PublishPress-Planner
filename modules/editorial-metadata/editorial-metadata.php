@@ -1604,6 +1604,10 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 }
 
                 $this->editorial_metadata_input_handler->registerHandler($handler);
+
+                $handler_type = $handler->getType();
+
+                add_filter("pp_editorial_metadata_{$handler_type}_render_value_html", [get_class($handler), 'getMetaValueHtml']);
             }
         }
     }
