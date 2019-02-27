@@ -30,6 +30,11 @@ jQuery(document).ready(function ($) {
         jQuery('h2 form input').show();
         jQuery('h2 form a.change-date-cancel').show();
 
+        var use_today_as_start_date_input = $('#pp-content-overview-range-use-today');
+        if (use_today_as_start_date_input.length > 0) {
+            use_today_as_start_date_input.val(0);
+        }
+
         return false;
     });
 
@@ -44,5 +49,22 @@ jQuery(document).ready(function ($) {
 
     $('#pp-content-filters select').change(function () {
         $(this).closest('form').trigger('submit');
+    });
+
+    $('#pp-content-overview-range-today-btn').click(function (event) {
+        var start_date_input = $('#pp-content-overview-start-date');
+        var use_today_as_start_date_input = $('#pp-content-overview-range-use-today');
+
+        if (
+            start_date_input.length === 0
+            || !start_date_input.is(':visible')
+            || use_today_as_start_date_input.length === 0
+        ) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+
+        use_today_as_start_date_input.val(1);
     });
 });
