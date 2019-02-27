@@ -1,5 +1,5 @@
 === PublishPress - Professional publishing tools for WordPress ===
-Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb
+Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb, deenison
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: notifications, Editorial Calendar, workflow, statuses, permissions
