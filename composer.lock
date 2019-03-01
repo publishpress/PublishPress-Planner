@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6784616264897ba6ba11711ea63be8d0",
+    "content-hash": "c3e4739635768130338398e79fb4415d",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-builder",
@@ -65,16 +65,16 @@
         },
         {
             "name": "alledia/wordpress-plugin-framework",
-            "version": "dev-development",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/upstreamplugin/WordPress-Plugin-Framework.git",
-                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6"
+                "reference": "cc68f8432ff713b87053187203e0b8b8d5513805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/e71bed761dcca3616be00e5a45ca6fc16a2637d6",
-                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6",
+                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/cc68f8432ff713b87053187203e0b8b8d5513805",
+                "reference": "cc68f8432ff713b87053187203e0b8b8d5513805",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-02-07T18:56:30+00:00"
+            "time": "2019-03-01T19:32:55+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -341,7 +341,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "alledia/wordpress-plugin-framework": 20,
         "alledia/wordpress-plugin-builder": 20
     },
     "prefer-stable": true,
