@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.19.5-beta.1
+ * Version: 1.19.5-beta.2
  *
  * Copyright (c) 2018 PublishPress
  *
