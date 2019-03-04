@@ -254,6 +254,13 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
             echo self::generateDescriptionHtml($description);
         }
 
+        /**
+         * Render a default placeholder for when there's no value to be shown.
+         *
+         * @static
+         * @access  protected
+         * @since   @todo
+         */
         protected static function renderValuePlaceholder()
         {
             echo '<span class="pp_editorial_metadata_not_set">';

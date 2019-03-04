@@ -104,7 +104,7 @@ if (!class_exists('Editorial_Metadata_Input_User_Handler')) {
         /**
          * Get meta-input value html formatted.
          *
-         * @access  protected
+         * @static
          * @since   @todo
          *
          * @param   mixed   $value  Actual input value
