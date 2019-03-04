@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.19.2
+ * Version: 1.19.5-beta.2
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -729,31 +729,63 @@ class publishpress
      */
     public function isBlockEditorActive()
     {
+        // Check if Revisionary lower than v1.3 is installed. It disables Gutenberg.
+        if (is_plugin_active('revisionary/revisionary.php')
+            && defined('RVY_VERSION')
+            && version_compare(RVY_VERSION, '1.3', '<')) {
+            return false;
+        }
+
         $pluginsState = [
             'classic-editor' => is_plugin_active('classic-editor/classic-editor.php'),
             'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
         ];
 
-        $conditions = [
-            /**
-             * 5.0:
-             *
-             * Classic editor either disabled or enabled (either via an option or with GET argument).
-             * It's a hairy conditional :(
-             */
-            // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
-            $this->isWp5() && ! $pluginsState['classic-editor'],
-            $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'block' && ! isset($_GET['classic-editor__forget'])),
-            $this->isWp5() && $pluginsState['classic-editor'] && (get_option('classic-editor-replace') === 'classic' && isset($_GET['classic-editor__forget'])),
-            /**
-             * < 5.0 but Gutenberg plugin is active.
-             */
-            ! $this->isWp5() && $pluginsState['gutenberg'],
-        ];
 
-        return count(array_filter($conditions, function ($c) {
-                return (bool)$c;
-            })) > 0;
+        if (function_exists('get_post_type')) {
+            $postType = get_post_type();
+        }
+
+        if ( ! isset($postType) || empty($postType)) {
+            $postType = 'post';
+        }
+
+        $conditions = [];
+
+        /**
+         * 5.0:
+         *
+         * Classic editor either disabled or enabled (either via an option or with GET argument).
+         * It's a hairy conditional :(
+         */
+        // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
+        $conditions[] = $this->isWp5()
+                        && ! $pluginsState['classic-editor']
+                        && apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX);
+
+        $conditions[] = $this->isWp5()
+                        && $pluginsState['classic-editor']
+                        && (get_option('classic-editor-replace') === 'block'
+                            && ! isset($_GET['classic-editor__forget']));
+
+        $conditions[] = $this->isWp5()
+                        && $pluginsState['classic-editor']
+                        && (get_option('classic-editor-replace') === 'classic'
+                            && isset($_GET['classic-editor__forget']));
+
+        /**
+         * < 5.0 but Gutenberg plugin is active.
+         */
+        $conditions[] = ! $this->isWp5() && $pluginsState['gutenberg'];
+
+        // Returns true if at least one condition is true.
+        return count(
+                   array_filter($conditions,
+                       function ($c) {
+                           return (bool)$c;
+                       }
+                   )
+               ) > 0;
     }
 
     /**
@@ -867,16 +899,19 @@ class publishpress
     /**
      * Disable Gutenberg/Block Editor for post types.
      *
-     * @param bool   $canEdit
+     * @param bool   $useBlockEditor
      * @param string $postType
      *
      * @return bool
      */
-    public function canUseBlockEditorForPostType($canEdit, $postType)
+    public function canUseBlockEditorForPostType($useBlockEditor, $postType)
     {
-        $canUse = $this->postTypeRequiresClassicEditor($postType) ? false : $canEdit;
+        // Short-circuit in case any other plugin disabled the block editor.
+        if ( ! $useBlockEditor) {
+            return false;
+        }
 
-        return $canUse;
+        return $this->postTypeRequiresClassicEditor($postType) ? false : $useBlockEditor;
     }
 }
 

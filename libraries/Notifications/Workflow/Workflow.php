@@ -66,6 +66,12 @@ class Workflow
         $shortcodes = $this->get_service('shortcodes');
         $shortcodes->register($this->workflow_post, $this->action_args);
 
+        /**
+         * @param WP_Post $workflow_post
+         * @param array $action_args
+         */
+        do_action('publishpress_notif_before_run_workflow', $this->workflow_post, $this->action_args, $receivers);
+
         /*
          * What will the notification says?
          */
@@ -108,6 +114,8 @@ class Workflow
 
         // Remove the shortcodes.
         $shortcodes->unregister();
+
+        do_action('publishpress_notif_after_run_workflow');
     }
 
     /**
@@ -130,7 +138,7 @@ class Workflow
 
         if ( ! empty($receivers)) {
             // Remove duplicate receivers
-            $receivers = array_unique($receivers, SORT_NUMERIC);
+            $receivers = array_unique($receivers, SORT_STRING);
 
             // Classify receivers per channel, ignoring who has muted the channel.
             foreach ($receivers as $index => $receiver) {

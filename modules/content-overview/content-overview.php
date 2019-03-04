@@ -410,11 +410,15 @@ class PP_Content_Overview extends PP_Module
     public function handle_form_date_range_change()
     {
         if (
-        ! isset(
-            $_POST['pp-content-overview-range-submit'],
-            $_POST['pp-content-overview-number-days'],
-            $_POST['pp-content-overview-start-date']
-        )
+            ! isset(
+                $_POST['pp-content-overview-number-days'],
+                $_POST['pp-content-overview-start-date'],
+                $_POST['pp-content-overview-range-use-today']
+            )
+            || (
+                ! isset($_POST['pp-content-overview-range-submit'])
+                && $_POST['pp-content-overview-range-use-today'] == '0'
+            )
         ) {
             return;
         }
@@ -426,7 +430,14 @@ class PP_Content_Overview extends PP_Module
         $current_user                = wp_get_current_user();
         $user_filters                = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters',
             true);
-        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['pp-content-overview-start-date']));
+
+        $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
+
+        $start_date_format = 'Y-m-d';
+        $user_filters['start_date'] = $use_today_as_start_date
+            ? current_time($start_date_format)
+            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date']));
+
         $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
         if ($user_filters['number_days'] <= 1) {
@@ -624,6 +635,10 @@ class PP_Content_Overview extends PP_Module
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
         $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
+        $output .= '&nbsp;';
+        $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
+        $output .= ' class="button button-secondary hidden" value="' . __('Reset', 'publishpress') . '" />';
+        $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
         $output .= '<a class="change-date" href="#">' . __('Change', 'publishpress') . '</a>';
