@@ -1174,6 +1174,21 @@ if ( ! class_exists('PP_Calendar')) {
                                                         <br/>
                                                     <?php endif; ?>
 
+                                                    <label for="post-insert-dialog-post-author">
+                                                        <?php echo __('Author', 'publishpress'); ?>
+                                                        <?php $authors = self::getUsersWithAuthorPermissions(); ?>
+                                                        <select id="post-insert-dialog-post-author"
+                                                            name="post-insert-dialog-post-author"
+                                                            class="post-insert-dialog-post-author">
+                                                            <?php foreach ($authors as $author): ?>
+                                                            <option value="<?php echo $author->ID; ?>">
+                                                                <?php echo $author->display_name; ?>
+                                                            </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <?php unset($author, $authors); ?>
+                                                    </label>
+
                                                     <?php /* translators: %s = post type name */ ?>
                                                     <input type="text" class="post-insert-dialog-post-title"
                                                            name="post-insert-dialog-post-title"
@@ -2105,12 +2120,34 @@ if ( ! class_exists('PP_Calendar')) {
             // Sanitize post values
             $post_title   = sanitize_text_field($_POST['pp_insert_title']);
             $post_content = sanitize_text_field($_POST['pp_insert_content']);
+            $post_author = (int)sanitize_text_field($_POST['pp_insert_author']);
 
             if ( ! $post_title) {
                 $post_title = __('Untitled', 'publishpress');
             }
             if ( ! $post_content) {
                 $post_content = '';
+            }
+
+            $authorsPermissions = self::getAuthorPermissions();
+            if ($post_author > 0) {
+                $user = get_user_by('id', $post_author);
+                if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
+                    $this->print_ajax_response(
+                        'error',
+                        __("The selected user doesn't have enough permissions to be set as the post author.", 'publishpress')
+                    );
+                }
+            } else {
+                $user = wp_get_current_user();
+                if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
+                    $this->print_ajax_response(
+                        'error',
+                        __('You do not have necessary permissions to complete this action.', 'publishpress')
+                    );
+                }
+
+                $post_author = $user->ID;
             }
 
             $post_date = sanitize_text_field($_POST['pp_insert_date']);
@@ -2121,6 +2158,7 @@ if ( ! class_exists('PP_Calendar')) {
             $post_placeholder = [
                 'post_title'        => $post_title,
                 'post_content'      => $post_content,
+                'post_author'       => $post_author,
                 'post_type'         => $post_type,
                 'post_status'       => $post_status,
                 'post_date'         => date('Y-m-d H:i:s', strtotime($post_date)),
@@ -2484,6 +2522,44 @@ if ( ! class_exists('PP_Calendar')) {
             }
 
             return $status;
+        }
+
+        /**
+         * Retrieve a set of permissions that an Author user might have.
+         *
+         * @access  private
+         * @static
+         * @since   @todo
+         *
+         * @return  array
+         */
+        private static function getAuthorPermissions()
+        {
+            return [
+                'administrator',
+                'author',
+                'editor',
+                'contributor',
+            ];
+        }
+
+        /**
+         * Retrieve an array of users that have Author capabilities.
+         *
+         * @access  private
+         * @static
+         * @since   @todo
+         *
+         * @return  array
+         */
+        private static function getUsersWithAuthorPermissions()
+        {
+            return get_users([
+                'role__in' => self::getAuthorPermissions(),
+                'fields'   => ['ID', 'display_name'],
+                'orderby'  => 'display_name',
+                'order'    => 'ASC'
+            ]);
         }
     }
 }
