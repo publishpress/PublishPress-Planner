@@ -266,7 +266,7 @@ if ( ! class_exists('PP_Dashboard')) {
                             <h4><a href="<?php echo $url ?>"
                                    title="<?php esc_attr(_e('Edit this post',
                                        'publishpress')); ?>"><?php echo $title; ?></a></h4>
-                            <span class="pp-myposts-timestamp"><?php _e('This post was last updated on',
+                            <span class="pp-myposts-timestamp"><?php _e('This post was last updated on ',
                                     'publishpress') ?><?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
                         </li>
                     <?php endforeach; ?>
