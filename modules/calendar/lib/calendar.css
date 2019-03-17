@@ -351,6 +351,10 @@ table#pp-calendar-view .day-unit ul li .item-headline {
     text-shadow: 0 0 1px #666;
 }
 
+table#pp-calendar-view .day-unit ul li .item-headline .item-headline-time {
+    opacity: .75;
+}
+
 table#pp-calendar-view .day-unit ul li .item-headline b {
     cursor: pointer !important;
 }
