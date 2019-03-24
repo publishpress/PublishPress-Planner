@@ -104,14 +104,14 @@ if (!class_exists('Editorial_Metadata_Input_User_Handler')) {
         /**
          * Get meta-input value html formatted.
          *
-         * @access  protected
+         * @static
          * @since   @todo
          *
          * @param   mixed   $value  Actual input value
          *
          * @return  string
          */
-        protected function getMetaValueHtml($value = null)
+        public static function getMetaValueHtml($value = null)
         {
             if (empty($value)) {
                 return '';

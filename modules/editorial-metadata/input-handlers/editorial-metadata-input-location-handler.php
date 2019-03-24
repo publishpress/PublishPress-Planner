@@ -34,6 +34,17 @@ if (!class_exists('Editorial_Metadata_Input_Location_Handler')) {
             }
         }
 
+        /**
+         * Generate a link that leads to a google maps location.
+         *
+         * @access  private
+         * @static
+         * @since   @todo
+         *
+         * @param   string  $location
+         *
+         * @return  string
+         */
         private static function generateMapLinkWithLocation($location)
         {
             return sprintf(
@@ -94,14 +105,14 @@ if (!class_exists('Editorial_Metadata_Input_Location_Handler')) {
         /**
          * Get meta-input value html formatted.
          *
-         * @access  protected
+         * @static
          * @since   @todo
          *
          * @param   mixed   $value  Actual input value
          *
          * @return  string
          */
-        protected function getMetaValueHtml($value = null)
+        public static function getMetaValueHtml($value = null)
         {
             return !empty($value)
                 ? esc_html($value)

@@ -70,7 +70,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @return  string
          */
-        abstract protected function getMetaValueHtml($value = null);
+        abstract public static function getMetaValueHtml($value = null);
 
         /**
          * Check if the input can handle a given action based on $type.
@@ -171,7 +171,18 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
                     : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
 
-            return $this->getMetaValueHtml($value);
+            return static::getMetaValueHtml($value);
+        }
+
+        /**
+         * Get input-handler type.
+         *
+         * @since   @todo
+         *
+         * @return  string
+         */
+        public function getType() {
+            return $this->type;
         }
 
         /**
@@ -243,6 +254,13 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
             echo self::generateDescriptionHtml($description);
         }
 
+        /**
+         * Render a default placeholder for when there's no value to be shown.
+         *
+         * @static
+         * @access  protected
+         * @since   @todo
+         */
         protected static function renderValuePlaceholder()
         {
             echo '<span class="pp_editorial_metadata_not_set">';
