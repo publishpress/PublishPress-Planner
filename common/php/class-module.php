@@ -320,7 +320,7 @@ if ( ! class_exists('PP_Module')) {
                 'publishpress-date_picker',
                 'objectL10ndate',
                 [
-                    'date_format' => __('M dd yy', 'publishpress'),
+                    'date_format' => pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format')),
                 ]
             );
         }
