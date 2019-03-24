@@ -412,7 +412,7 @@ class PP_Content_Overview extends PP_Module
         if (
             ! isset(
                 $_POST['pp-content-overview-number-days'],
-                $_POST['pp-content-overview-start-date'],
+                $_POST['pp-content-overview-start-date_hidden'],
                 $_POST['pp-content-overview-range-use-today']
             )
             || (
@@ -436,7 +436,7 @@ class PP_Content_Overview extends PP_Module
         $start_date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
             ? current_time($start_date_format)
-            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date']));
+            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
 
         $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
@@ -614,12 +614,16 @@ class PP_Content_Overview extends PP_Module
     {
         $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
 
-        $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
-                            . ' size="10" class="date-pick" value="'
-                            . esc_attr(date_i18n(get_option('date_format'),
-                strtotime($this->user_filters['start_date']))) . '" /><span class="form-value">';
+        $date_format = get_option('date_format');
 
-        $start_date_value .= esc_html(date_i18n(get_option('date_format'),
+        $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
+                            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="'. pp_convert_date_format_to_jqueryui_datepicker('Y-m-d') .'" value="'
+                            . esc_attr(date_i18n($date_format,
+                strtotime($this->user_filters['start_date']))) . '" />';
+        $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" />';
+        $start_date_value .= '<span class="form-value">';
+
+        $start_date_value .= esc_html(date_i18n($date_format,
             strtotime($this->user_filters['start_date'])));
         $start_date_value .= '</span>';
 
