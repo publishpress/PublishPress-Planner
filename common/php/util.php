@@ -47,7 +47,6 @@ if ( ! function_exists('pp_draft_or_post_title')) {
     }
 }
 
-
 if ( ! function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
     /**
      * Converts a given WordPress date format to jQuery UI Datepicker format.
@@ -95,5 +94,26 @@ if ( ! function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
             },
             $date_format_original
         );
+    }
+}
+
+if ( ! function_exists('pp_get_users_with_author_permissions')) {
+    function pp_get_users_with_author_permissions()
+    {
+        $author_permissions = [
+            'administrator',
+            'author',
+            'editor',
+            'contributor',
+        ];
+
+        $authors = (array)get_users([
+            'role__in' => $author_permissions,
+            'fields'   => ['ID', 'display_name'],
+            'orderby'  => 'display_name',
+            'order'    => 'ASC'
+        ]);
+
+        return apply_filters('pp_get_users_eligible_to_be_authors', $authors);
     }
 }
