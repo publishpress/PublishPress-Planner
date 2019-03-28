@@ -651,7 +651,14 @@ if ( ! class_exists('PP_Module')) {
                 }
             }
 
-            $roles = get_editable_roles(); ?>
+            /**
+             * Filters the list of roles available for notification.
+             *
+             * @param array $roles
+             * @param int   $post_id
+             */
+            $roles = apply_filters('publishpress_notification_roles', get_editable_roles(), (int)$_GET['post']);
+            ?>
 
             <?php if ( ! empty($users)) : ?>
             <select class="chosen-select" name="to_notify[]" multiple>
