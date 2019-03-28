@@ -65,11 +65,11 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Returns whether the module with the given name is enabled.
          *
-         * @since  0.7
-         *
          * @param string module Slug of the module to check
          *
          * @return <code>true</code> if the module is enabled, <code>false</code> otherwise
+         * @since  0.7
+         *
          */
         public function module_enabled($slug)
         {
@@ -186,9 +186,9 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Get core's 'draft' and 'pending' post statuses, but include our special attributes
          *
+         * @return array
          * @since 0.8.1
          *
-         * @return array
          */
         protected function get_core_post_statuses()
         {
@@ -236,12 +236,12 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Filter to all posts with a given post status (can be a custom status or a built-in status) and optional custom post type.
          *
-         * @since 0.7
-         *
          * @param string $slug      The slug for the post status to which to filter
          * @param string $post_type Optional post type to which to filter
          *
          * @return an edit.php link to all posts with the given post status and, optionally, the given post type
+         * @since 0.7
+         *
          */
         public function filter_posts_link($slug, $post_type = 'post')
         {
@@ -256,11 +256,11 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Returns the friendly name for a given status
          *
-         * @since 0.7
-         *
          * @param string $status The status slug
          *
          * @return string $status_friendly_name The friendly name for the status
+         * @since 0.7
+         *
          */
         public function get_post_status_friendly_name($status)
         {
@@ -328,8 +328,8 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Checks for the current post type
          *
-         * @since 0.7
          * @return string|null $post_type The post type we've found, or null if no post type
+         * @since 0.7
          */
         public function get_current_post_type()
         {
@@ -339,13 +339,13 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Wrapper for the get_user_meta() function so we can replace it if we need to
          *
-         * @since 0.7
-         *
          * @param int    $user_id Unique ID for the user
          * @param string $key     Key to search against
          * @param bool   $single  Whether or not to return just one value
          *
          * @return string|bool|array $value Whatever the stored value was
+         * @since 0.7
+         *
          */
         public function get_user_meta($user_id, $key, $string = true)
         {
@@ -361,14 +361,14 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Wrapper for the update_user_meta() function so we can replace it if we need to
          *
-         * @since 0.7
-         *
          * @param int               $user_id  Unique ID for the user
          * @param string            $key      Key to search against
          * @param string|bool|array $value    Whether or not to return just one value
          * @param string|bool|array $previous (optional) Previous value to replace
          *
          * @return bool $success Whether we were successful in saving
+         * @since 0.7
+         *
          */
         public function update_user_meta($user_id, $key, $value, $previous = null)
         {
@@ -384,11 +384,12 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Take a status and a message, JSON encode and print
          *
-         * @since 0.7
-         *
          * @param string $status Whether it was a 'success' or an 'error'
          * @param string $message
          * @param array  $data
+         *
+         * @since 0.7
+         *
          */
         public function print_ajax_response($status, $message = '', $data = null)
         {
@@ -411,11 +412,12 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Whether or not the current page is a user-facing PublishPress View
          *
-         * @todo  Think of a creative way to make this work
+         * @param string $module_name (Optional) Module name to check against
          *
          * @since 0.7
          *
-         * @param string $module_name (Optional) Module name to check against
+         * @todo  Think of a creative way to make this work
+         *
          */
         public function is_whitelisted_functional_view($module_name = null)
         {
@@ -428,11 +430,11 @@ if ( ! class_exists('PP_Module')) {
          * Determination is based on $pagenow, $_GET['page'], and the module's $settings_slug
          * If there's no module name specified, it will return true against all PublishPress settings views
          *
-         * @since 0.7
-         *
          * @param string $module_name (Optional) Module name to check against
          *
          * @return bool $is_settings_view Return true if it is
+         * @since 0.7
+         *
          */
         public function is_whitelisted_settings_view($module_name = null)
         {
@@ -513,11 +515,11 @@ if ( ! class_exists('PP_Module')) {
          * Encode all of the given arguments as a serialized array, and then base64_encode
          * Used to store extra data in a term's description field.
          *
-         * @since 0.7
-         *
          * @param array $args The arguments to encode
          *
          * @return string Arguments encoded in base64
+         * @since 0.7
+         *
          */
         public function get_encoded_description($args = [])
         {
@@ -528,11 +530,11 @@ if ( ! class_exists('PP_Module')) {
          * If given an encoded string from a term's description field,
          * return an array of values. Otherwise, return the original string
          *
-         * @since 0.7
-         *
          * @param string $string_to_unencode Possibly encoded string
          *
          * @return array Array if string was encoded, otherwise the string as the 'description' field
+         * @since 0.7
+         *
          */
         public function get_unencoded_description($string_to_unencode)
         {
@@ -542,11 +544,11 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Get the publicly accessible URL for the module based on the filename
          *
-         * @since 0.7
-         *
          * @param string $filepath File path for the module
          *
          * @return string $module_url Publicly accessible URL for the module
+         * @since 0.7
+         *
          */
         public function get_module_url($file)
         {
@@ -605,12 +607,13 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Displays a list of users that can be selected!
          *
+         * @param ???
+         * @param ???
+         *
          * @since 0.7
          *
          * @todo  Add pagination support for blogs with billions of users
          *
-         * @param ???
-         * @param ???
          */
         public function users_select_form($selected = null, $args = null)
         {
