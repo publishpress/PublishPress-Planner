@@ -680,12 +680,14 @@ if ( ! class_exists('PP_Module')) {
                         <?php endforeach; ?>
                     </optgroup>
                 <?php endif; ?>
-                <optgroup label="<?php echo __('Users', 'publishpress'); ?>">
-                    <?php foreach ($users as $user) : ?>
-                        <?php $attrSelected = (in_array($user->ID, $selected)) ? 'selected="selected"' : ''; ?>
-                        <option value="<?php echo esc_attr($user->ID); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
-                    <?php endforeach; ?>
-                </optgroup>
+                <?php if ( ! empty($users)) : ?>
+                    <optgroup label="<?php echo __('Users', 'publishpress'); ?>">
+                        <?php foreach ($users as $user) : ?>
+                            <?php $attrSelected = (in_array($user->ID, $selected)) ? 'selected="selected"' : ''; ?>
+                            <option value="<?php echo esc_attr($user->ID); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endif; ?>
                 <?php if ( ! empty($emails)) : ?>
                     <optgroup label="<?php echo __('E-mails', 'publishpress'); ?>">
                         <?php foreach ($emails as $email) : ?>
