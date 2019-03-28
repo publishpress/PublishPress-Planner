@@ -625,7 +625,7 @@ if ( ! class_exists('PP_Module')) {
             $parsed_args = wp_parse_args($args, $defaults);
             extract($parsed_args, EXTR_SKIP);
 
-            $args  = [
+            $args = [
                 'who'     => 'authors',
                 'fields'  => [
                     'ID',
@@ -634,8 +634,16 @@ if ( ! class_exists('PP_Module')) {
                 ],
                 'orderby' => 'display_name',
             ];
-            $args  = apply_filters('pp_users_select_form_get_users_args', $args);
-            $users = get_users($args);
+            $args = apply_filters('pp_users_select_form_get_users_args', $args);
+
+            /**
+             * Filters the list of users available for notification.
+             *
+             * @param array $users
+             * @param int   $post_id
+             */
+            $users = apply_filters('publishpress_notification_users_meta_box', get_users($args),
+                (int)$_GET['post']);
 
             if ( ! is_array($selected)) {
                 $selected = [];
@@ -657,7 +665,8 @@ if ( ! class_exists('PP_Module')) {
              * @param array $roles
              * @param int   $post_id
              */
-            $roles = apply_filters('publishpress_notification_roles', get_editable_roles(), (int)$_GET['post']);
+            $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(),
+                (int)$_GET['post']);
             ?>
 
             <?php if ( ! empty($users)) : ?>
