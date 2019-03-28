@@ -669,7 +669,7 @@ if ( ! class_exists('PP_Module')) {
                 (int)$_GET['post']);
             ?>
 
-            <?php if ( ! empty($users)) : ?>
+            <?php if ( ! empty($users) || ! empty($roles) || ! empty($emails)) : ?>
             <select class="chosen-select" name="to_notify[]" multiple>
                 <?php if ( ! empty($roles)) : ?>
                     <optgroup label="<?php echo esc_attr__('Roles', 'publishpress'); ?>">
@@ -695,7 +695,7 @@ if ( ! class_exists('PP_Module')) {
                     </optgroup>
                 <?php endif; ?>
             </select>
-        <?php endif; ?>
+            <?php endif; ?>
             <?php
         }
 
