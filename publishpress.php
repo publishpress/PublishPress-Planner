@@ -739,6 +739,7 @@ class publishpress
         $pluginsState = [
             'classic-editor' => is_plugin_active('classic-editor/classic-editor.php'),
             'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
+            'gutenberg-ramp'      => is_plugin_active('gutenberg-ramp/gutenberg-ramp.php'),
         ];
 
 
@@ -761,6 +762,7 @@ class publishpress
         // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
         $conditions[] = $this->isWp5()
                         && ! $pluginsState['classic-editor']
+                        && ! $pluginsState['gutenberg-ramp']
                         && apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX);
 
         $conditions[] = $this->isWp5()
@@ -776,7 +778,7 @@ class publishpress
         /**
          * < 5.0 but Gutenberg plugin is active.
          */
-        $conditions[] = ! $this->isWp5() && $pluginsState['gutenberg'];
+        $conditions[] = ! $this->isWp5() && ($pluginsState['gutenberg'] || $pluginsState['gutenberg-ramp']);
 
         // Returns true if at least one condition is true.
         return count(
