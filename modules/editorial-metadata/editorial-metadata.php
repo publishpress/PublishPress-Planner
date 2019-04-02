@@ -1573,7 +1573,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Load the chain of input-type handlers.
          *
-         * @since   @todo
+         * @since   1.20.0
          */
         public function load_input_handlers()
         {

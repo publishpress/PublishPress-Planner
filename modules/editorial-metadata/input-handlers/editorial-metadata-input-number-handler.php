@@ -9,7 +9,7 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
         /**
          * Class constructor that defines input type.
          *
-         * @since   @todo
+         * @since   1.20.0
          */
         public function __construct()
         {
@@ -20,7 +20,7 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
          * Render input-preview html.
          *
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   array   $inputOptions   Input options
          * @param   mixed   $value          Actual input value
@@ -59,7 +59,7 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
          * Get meta-input value html formatted.
          *
          * @static
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   mixed   $value  Actual input value
          *
