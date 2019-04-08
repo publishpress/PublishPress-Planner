@@ -7,7 +7,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
         /**
          * Register a new handle to the chain.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   Editorial_Metadata_Input_Handler_Contract $handler
          *
@@ -19,7 +19,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
          * Iterate through the chain until a node handles the action and render
          * the appropriated input based on $type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   array   $inputOptions   Input options
@@ -31,7 +31,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
          * Iterate through the chain until a node handles the action and render
          * the appropriated input-preview based on $type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   array   $inputOptions   Input options
@@ -43,7 +43,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
          * Iterate through the chain until a node handles the action and render
          * the appropriated meta-input raw value based on $type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   mixed   $value          Actual input value
@@ -53,7 +53,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
         /**
          * Get input-handler type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @return  string
          */

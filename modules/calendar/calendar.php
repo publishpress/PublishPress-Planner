@@ -2088,7 +2088,7 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Option that define either Posts publish times are displayed or not.
          *
-         * @since @todo
+         * @since 1.20.0
          */
         public function settings_show_posts_publish_time_option()
         {
@@ -2126,7 +2126,7 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Define the time format for Posts publish date.
          *
-         * @since @todo
+         * @since 1.20.0
          */
         public function settings_posts_publish_time_format_option()
         {
@@ -2731,7 +2731,7 @@ if ( ! class_exists('PP_Calendar')) {
          *
          * @access  private
          * @static
-         * @since   @todo
+         * @since   1.20.0
          *
          * @return  array
          */
