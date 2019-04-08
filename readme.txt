@@ -130,6 +130,16 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.20.0] - @todo =
+
+* Fix metadata not showing up on Content Overview;
+* Fix Content Overview Start Date filter not detecting current date;
+* Fix minor inconsistency on Content Overview datepicker filter output format;
+* Fix Custom Statuses table squeezing up content on settings page when a lot of custom post types are in use;
+* Add "new" to available statuses for notification workflow;
+* Add Author field on Calendar item pop up;
+* Add option to toggle posts/pages publish time on Calendar;
+
 = [1.19.4] - 2019-02-22 =
 
 * Fixed the list of notification receivers for not excluding emails with numeric chars;
