@@ -10,7 +10,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * Next node in the chain.
          *
          * @access  private
-         * @since   @todo
+         * @since   1.20.0
          *
          * @var     Editorial_Metadata_Input_Handler_Contract   $nextHandler
          */
@@ -20,7 +20,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * Input type.
          *
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @var     string  $type
          */
@@ -31,7 +31,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * might define its $type.
          *
          * @abstract
-         * @since   @todo
+         * @since   1.20.0
          */
         abstract public function __construct();
 
@@ -40,7 +40,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @abstract
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   array   $inputOptions   Input options
          * @param   mixed   $value          Actual input value
@@ -52,7 +52,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @abstract
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   array   $inputOptions   Input options
          * @param   mixed   $value          Actual input value
@@ -64,7 +64,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @abstract
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   mixed   $value  Actual input value
          *
@@ -76,7 +76,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * Check if the input can handle a given action based on $type.
          *
          * @final
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type   Input type
          *
@@ -91,7 +91,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * Register a new handler in the chain.
          *
          * @final
-         * @since   @todo
+         * @since   1.20.0
          *
          * @throws \TypeError
          *
@@ -115,7 +115,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * the appropriated input based on $type.
          *
          * @final
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   array   $inputOptions   Input options
@@ -137,7 +137,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * the appropriated input-preview based on $type.
          *
          * @final
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   array   $inputOptions   Input options
@@ -158,7 +158,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * Iterate through the chain until a node handles the action and render
          * the appropriated meta-input raw value based on $type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $type           Input type
          * @param   mixed   $value          Actual input value
@@ -177,7 +177,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
         /**
          * Get input-handler type.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @return  string
          */
@@ -188,7 +188,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
         /**
          * Return the input type in case the class is treated as string.
          *
-         * @since   @todo
+         * @since   1.20.0
          *
          * @return  string
          */
@@ -202,7 +202,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @static
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $content            Label content
          * @param   string  $related_input_id   Related input id
@@ -221,7 +221,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @static
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $description    The description content
          *
@@ -245,7 +245,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @static
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          *
          * @param   string  $description    The description content
          */
@@ -259,7 +259,7 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @static
          * @access  protected
-         * @since   @todo
+         * @since   1.20.0
          */
         protected static function renderValuePlaceholder()
         {
