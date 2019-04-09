@@ -52,13 +52,18 @@ class Post_Status extends Base implements Filter_Interface
         $options  = [];
 
         if ('from' === $group) {
-            // Add an status to represent new posts
+            // Add a status to represent new posts
             $options = [
                 [
-                    'value'    => 'auto-draft',
-                    'label'    => __('"New"', 'publishpress'),
-                    'selected' => in_array('auto-draft', $metadata[$group]),
+                    'value'    => 'new',
+                    'label'    => __('New', 'publishpress'),
+                    'selected' => in_array('new', $metadata[$group]),
                 ],
+                [
+                    'value'    => 'auto-draft',
+                    'label'    => __('Auto-draft', 'publishpress'),
+                    'selected' => in_array('auto-draft', $metadata[$group]),
+                ]
             ];
         }
 

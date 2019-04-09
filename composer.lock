@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6784616264897ba6ba11711ea63be8d0",
+    "content-hash": "c3e4739635768130338398e79fb4415d",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-builder",
@@ -65,16 +65,16 @@
         },
         {
             "name": "alledia/wordpress-plugin-framework",
-            "version": "dev-development",
+            "version": "0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/upstreamplugin/WordPress-Plugin-Framework.git",
-                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6"
+                "reference": "7ad87c3d5cae1be39fa45a078c2ca32b4711d55f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/e71bed761dcca3616be00e5a45ca6fc16a2637d6",
-                "reference": "e71bed761dcca3616be00e5a45ca6fc16a2637d6",
+                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/7ad87c3d5cae1be39fa45a078c2ca32b4711d55f",
+                "reference": "7ad87c3d5cae1be39fa45a078c2ca32b4711d55f",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-02-07T18:56:30+00:00"
+            "time": "2019-03-14T17:34:05+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -272,16 +272,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.37.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62"
+                "reference": "874adbd9222f928f6998732b25b01b41dff15b0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66be9366c76cbf23e82e7171d47cbfa54a057a62",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/874adbd9222f928f6998732b25b01b41dff15b0c",
+                "reference": "874adbd9222f928f6998732b25b01b41dff15b0c",
                 "shasum": ""
             },
             "require": {
@@ -296,7 +296,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.37-dev"
+                    "dev-master": "1.38-dev"
                 }
             },
             "autoload": {
@@ -334,14 +334,13 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T14:59:29+00:00"
+            "time": "2019-03-12T18:45:24+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "alledia/wordpress-plugin-framework": 20,
         "alledia/wordpress-plugin-builder": 20
     },
     "prefer-stable": true,

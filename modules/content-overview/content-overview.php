@@ -110,6 +110,13 @@ class PP_Content_Overview extends PP_Module
     public $user_filters;
 
     /**
+	 * Custom methods
+	 *
+     * @var Array
+     */
+    private $terms_options = [];
+
+    /**
      * Register the module with PublishPress but don't do anything else
      */
     public function __construct()
@@ -360,7 +367,39 @@ class PP_Content_Overview extends PP_Module
         ];
 
         $term_columns       = apply_filters('PP_Content_Overview_term_columns', $term_columns);
-        $this->term_columns = $term_columns;
+
+        if (class_exists('PP_Editorial_Metadata')) {
+            $additional_terms = get_terms([
+                    'taxonomy'   => PP_Editorial_Metadata::metadata_taxonomy,
+                    'orderby'    => 'name',
+                    'order'      => 'asc',
+                    'hide_empty' => 0,
+                    'parent'     => 0,
+                    'fields'     => 'all',
+                ]);
+
+            $additional_terms =
+                apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
+            foreach ($additional_terms as $term) {
+                if ($term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                    continue;
+                }
+
+                $term_options = $this->get_unencoded_description($term->description);
+
+                if (!isset($term_options['viewable']) ||
+                    (bool) $term_options['viewable'] === false ||
+                    isset($term_columns[ $term->slug ])) {
+                    continue;
+                }
+
+                $this->terms_options[ $term->slug ] = $term_options;
+
+                $term_columns[ $term->slug ] = $term->name;
+            }
+
+            $this->term_columns = $term_columns;
+        }
     }
 
     /**
@@ -371,11 +410,15 @@ class PP_Content_Overview extends PP_Module
     public function handle_form_date_range_change()
     {
         if (
-        ! isset(
-            $_POST['pp-content-overview-range-submit'],
-            $_POST['pp-content-overview-number-days'],
-            $_POST['pp-content-overview-start-date']
-        )
+            ! isset(
+                $_POST['pp-content-overview-number-days'],
+                $_POST['pp-content-overview-start-date_hidden'],
+                $_POST['pp-content-overview-range-use-today']
+            )
+            || (
+                ! isset($_POST['pp-content-overview-range-submit'])
+                && $_POST['pp-content-overview-range-use-today'] == '0'
+            )
         ) {
             return;
         }
@@ -387,7 +430,14 @@ class PP_Content_Overview extends PP_Module
         $current_user                = wp_get_current_user();
         $user_filters                = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters',
             true);
-        $user_filters['start_date']  = date('Y-m-d', strtotime($_POST['pp-content-overview-start-date']));
+
+        $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
+
+        $start_date_format = 'Y-m-d';
+        $user_filters['start_date'] = $use_today_as_start_date
+            ? current_time($start_date_format)
+            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
+
         $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
         if ($user_filters['number_days'] <= 1) {
@@ -440,8 +490,23 @@ class PP_Content_Overview extends PP_Module
             ];
             $terms = get_terms($this->taxonomy_used, $args);
         }
-        $this->terms = apply_filters('PP_Content_Overview_filter_terms',
-            $terms); // allow for reordering or any other filtering of terms
+
+        if (class_exists('PP_Editorial_Metadata')) {
+            $this->terms = array_filter(
+                // allow for reordering or any other filtering of terms
+                apply_filters('PP_Content_Overview_filter_terms', $terms), function ($term) {
+                if ($term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                    return true;
+                }
+
+                $term_options = $this->get_unencoded_description($term->description);
+
+                return isset($term_options['viewable']) && (bool) $term_options['viewable'];
+            });
+        } else {
+            // allow for reordering or any other filtering of terms
+            $this->terms = apply_filters('PP_Content_Overview_filter_terms', $terms);
+        }
 
         $description = sprintf('%s <span class="time-range">%s</span>', esc_html__('Content Overview', 'publishpress'),
             $this->content_overview_time_range());
@@ -549,12 +614,16 @@ class PP_Content_Overview extends PP_Module
     {
         $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
 
-        $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
-                            . ' size="10" class="date-pick" value="'
-                            . esc_attr(date_i18n(get_option('date_format'),
-                strtotime($this->user_filters['start_date']))) . '" /><span class="form-value">';
+        $date_format = get_option('date_format');
 
-        $start_date_value .= esc_html(date_i18n(get_option('date_format'),
+        $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
+                            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="'. pp_convert_date_format_to_jqueryui_datepicker('Y-m-d') .'" value="'
+                            . esc_attr(date_i18n($date_format,
+                strtotime($this->user_filters['start_date']))) . '" />';
+        $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" />';
+        $start_date_value .= '<span class="form-value">';
+
+        $start_date_value .= esc_html(date_i18n($date_format,
             strtotime($this->user_filters['start_date'])));
         $start_date_value .= '</span>';
 
@@ -570,6 +639,10 @@ class PP_Content_Overview extends PP_Module
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
         $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
+        $output .= '&nbsp;';
+        $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
+        $output .= ' class="button button-secondary hidden" value="' . __('Reset', 'publishpress') . '" />';
+        $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
         $output .= '<a class="change-date" href="#">' . __('Change', 'publishpress') . '</a>';
@@ -868,11 +941,20 @@ class PP_Content_Overview extends PP_Module
      */
     public function term_column_default($post, $column_name, $parent_term)
     {
-
         // Hook for other modules to get data into columns
         $column_value = null;
         $column_value = apply_filters('PP_Content_Overview_term_column_value', $column_name, $post, $parent_term);
         if ( ! is_null($column_value) && $column_value != $column_name) {
+            return $column_value;
+        }
+
+        if (strpos($column_name, '_pp_editorial_meta_') === 0) {
+            $column_value = get_post_meta($post->ID, $column_name, true);
+
+            if (empty($column_value)) {
+                return '<span>' . __('None', 'publishpress') . '</span>';
+            }
+
             return $column_value;
         }
 
@@ -906,6 +988,19 @@ class PP_Content_Overview extends PP_Module
             default:
                 break;
         }
+
+        $meta_options = isset($this->terms_options[$column_name])
+            ? $this->terms_options[$column_name]
+            : null;
+
+        if (is_null($meta_options)) {
+            return '';
+        }
+
+        $column_type = $meta_options['type'];
+        $column_value = get_post_meta($post->ID, "_pp_editorial_meta_{$column_type}_{$column_name}", true);
+
+        return apply_filters("pp_editorial_metadata_{$column_type}_render_value_html", $column_value);
     }
 
     /**

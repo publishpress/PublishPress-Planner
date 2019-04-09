@@ -189,7 +189,7 @@ table#pp-calendar-view .day-unit.ui-wrapper-highlight {
     background-color: #FFFFE0;
 }
 
-table#pp-calendar-view .day-unit.ui-wrapper-highlight ul li {
+table#pp-calendar-view .day-unit.ui-wrapper-highlight .post-list li {
     border-color: #FFFFE0;
 }
 
@@ -197,11 +197,11 @@ table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight {
     background-color: #FFFFE0;
 }
 
-table#pp-calendar-view .day-unit.weekend-day ul li.is-published:hover {
+table#pp-calendar-view .day-unit.weekend-day .post-list li.is-published:hover {
     border-color: #FBFBFB;
 }
 
-table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight ul li.sortable {
+table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight .post-list li.sortable {
 
 }
 
@@ -269,14 +269,14 @@ table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
     margin-bottom: 10px;
 }
 
-table#pp-calendar-view .day-unit ul {
+table#pp-calendar-view .day-unit .post-list {
     margin-top: 0;
     margin-bottom: 0;
     padding: 22px 0 0;
     min-height: 75px;
 }
 
-table#pp-calendar-view .day-unit ul li {
+table#pp-calendar-view .day-unit .post-list li {
     list-style-type: none;
     margin: 0;
     margin-bottom: 1px;
@@ -288,35 +288,35 @@ table#pp-calendar-view td.day-unit:last-of-type {
     border-right: none;
 }
 
-table#pp-calendar-view .day-unit.weekend-day ul li {
+table#pp-calendar-view .day-unit.weekend-day .post-list li {
     border-color: #FBFBFB;
 }
 
-table#pp-calendar-view .day-unit ul li:hover {
+table#pp-calendar-view .day-unit .post-list li:hover {
     border-color: #DDD;
 }
 
-table#pp-calendar-view .day-unit ul li:hover {
+table#pp-calendar-view .day-unit .post-list li:hover {
     border-color: #DDD;
 }
 
-table#pp-calendar-view .day-unit ul li .item-default-visible {
+table#pp-calendar-view .day-unit .post-list li .item-default-visible {
     cursor: move;
 }
 
-table#pp-calendar-view .day-unit ul li .item-default-visible b,
-table#pp-calendar-view .day-unit ul li .item-default-visible strong,
-table#pp-calendar-view .day-unit ul li.is-published .item-default-visible {
+table#pp-calendar-view .day-unit .post-list li .item-default-visible b,
+table#pp-calendar-view .day-unit .post-list li .item-default-visible strong,
+table#pp-calendar-view .day-unit .post-list li.is-published .item-default-visible {
     cursor: pointer;
 }
 
-table#pp-calendar-view .day-unit ul li.is-published .item-default-visible {
+table#pp-calendar-view .day-unit .post-list li.is-published .item-default-visible {
     background: #edeaf7;
     cursor: pointer;
     padding: 1px;
 }
 
-table#pp-calendar-view .day-unit ul li .item-status {
+table#pp-calendar-view .day-unit .post-list li .item-status {
     font-size: 11px;
     line-height: 13px;
     color: #999999;
@@ -328,14 +328,14 @@ table#pp-calendar-view .day-unit ul li .item-status {
     padding-top: 2px;
 }
 
-table#pp-calendar-view .day-unit ul li .inner {
+table#pp-calendar-view .day-unit .post-list li .inner {
     margin-right: 57px;
     width: 100%;
     box-sizing: border-box;
     padding: 3px;
 }
 
-table#pp-calendar-view .day-unit ul li .item-headline {
+table#pp-calendar-view .day-unit .post-list li .item-headline {
     font-size: 12px;
     line-height: 15px;
     margin-top: 0;
@@ -351,46 +351,50 @@ table#pp-calendar-view .day-unit ul li .item-headline {
     text-shadow: 0 0 1px #666;
 }
 
-table#pp-calendar-view .day-unit ul li .item-headline b {
+table#pp-calendar-view .day-unit .post-list li .item-headline .item-headline-time {
+    opacity: .75;
+}
+
+table#pp-calendar-view .day-unit .post-list li .item-headline b {
     cursor: pointer !important;
 }
 
-table#pp-calendar-view .day-unit ul li.is-published:hover {
+table#pp-calendar-view .day-unit .post-list li.is-published:hover {
     border-color: #FFF;
 }
 
-table#pp-calendar-view .day-unit ul li.sortable:hover {
+table#pp-calendar-view .day-unit .post-list li.sortable:hover {
     border-color: #21759B;
     background-color: #f3f3f3;
 }
 
-table#pp-calendar-view .day-unit ul li .item-headline:hover {
+table#pp-calendar-view .day-unit .post-list li .item-headline:hover {
 
 }
 
-table#pp-calendar-view .day-unit ul li.sortable.ui-sortable-helper {
+table#pp-calendar-view .day-unit .post-list li.sortable.ui-sortable-helper {
     border-color: #21759B;
     background-color: #F7F7F7;
 }
 
-table#pp-calendar-view .day-unit ul li .item-static .item-inner {
+table#pp-calendar-view .day-unit .post-list li .item-static .item-inner {
     display: none;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information {
+table#pp-calendar-view .day-unit .post-list li .item-information {
     margin-top: 5px;
     border-top: 1px solid #CCC;
     padding-top: 3px;
     width: 100%;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field {
     margin-top: 5px;
     margin-bottom: 5px;
     clear: left;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field .label {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field .label {
     vertical-align: top;
     max-width: 70px;
     text-align: right;
@@ -399,31 +403,31 @@ table#pp-calendar-view .day-unit ul li .item-information .item-field .label {
     padding-right: 5px;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field .value {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field .value {
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field .editable-value {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field .editable-value {
     cursor: pointer;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field .editable-value:hover {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field .editable-value:hover {
     text-decoration: underline;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field .spinner-calendar {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field .spinner-calendar {
     margin: 0px;
     float: none;
 }
 
-table#pp-calendar-view .day-unit ul li .item-information .item-field em.none {
+table#pp-calendar-view .day-unit .post-list li .item-information .item-field em.none {
     color: #999999;
 }
 
-table#pp-calendar-view .day-unit ul li.item-overlay-active {
+table#pp-calendar-view .day-unit .post-list li.item-overlay-active {
     position: relative;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay:not(.post-insert-overlay) {
+table#pp-calendar-view .day-unit .post-list li .item-overlay:not(.post-insert-overlay) {
     width: 270px;
     background-color: #FFF;
     padding: 12px;
@@ -436,7 +440,7 @@ table#pp-calendar-view .day-unit ul li .item-overlay:not(.post-insert-overlay) {
     box-shadow: 0px 0px 40px #888;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay:not(.post-insert-overlay):before {
+table#pp-calendar-view .day-unit .post-list li .item-overlay:not(.post-insert-overlay):before {
     content: '';
     height: 0;
     width: 0;
@@ -448,22 +452,22 @@ table#pp-calendar-view .day-unit ul li .item-overlay:not(.post-insert-overlay):b
     margin-left: -5px;
 }
 
-table#pp-calendar-view .day-unit.last-day ul li .item-overlay {
+table#pp-calendar-view .day-unit.last-day .post-list li .item-overlay {
     right: -5px;
     left: auto;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay .item-inner {
+table#pp-calendar-view .day-unit .post-list li .item-overlay .item-inner {
     display: block;
     min-width: 170px;
     max-width: 270px;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay .item-inner {
+table#pp-calendar-view .day-unit .post-list li .item-overlay .item-inner {
     cursor: default;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay .item-actions {
+table#pp-calendar-view .day-unit .post-list li .item-overlay .item-actions {
     padding-left: 3px;
     padding-right: 3px;
     border-top: 1px solid #CCC;
@@ -471,11 +475,11 @@ table#pp-calendar-view .day-unit ul li .item-overlay .item-actions {
     margin-top: 4px;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay .item-actions a {
+table#pp-calendar-view .day-unit .post-list li .item-overlay .item-actions a {
     text-decoration: none;
 }
 
-table#pp-calendar-view .day-unit ul li .item-overlay .item-actions span.trash a {
+table#pp-calendar-view .day-unit .post-list li .item-overlay .item-actions span.trash a {
     color: #BC0B0B;
 }
 

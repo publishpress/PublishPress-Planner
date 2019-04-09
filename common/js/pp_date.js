@@ -35,8 +35,20 @@ jQuery(document).ready(function ($) {
         controlType: 'select'
     });
 
-    $('.date-pick').datepicker({
-        dateFormat: objectL10ndate.date_format,
-        firstDay: pp_week_first_day
+    $('.date-pick').each(function() {
+        var self = $(this);
+
+        var datePickerOptions = {
+            dateFormat: objectL10ndate.date_format,
+            firstDay: pp_week_first_day,
+        };
+
+        var altFieldName = self.attr('data-alt-field');
+        if (altFieldName.length > 0) {
+            datePickerOptions.altField = 'input[name="'+ altFieldName +'"]';
+            datePickerOptions.altFormat = self.attr('data-alt-format');
+        }
+
+        self.datepicker(datePickerOptions);
     });
 });
