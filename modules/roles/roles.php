@@ -31,6 +31,7 @@
 use PublishPress\Core\Modules\AbstractModule;
 use PublishPress\Core\Modules\ModuleInterface;
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use Twig\TwigFunction;
 
 if ( ! class_exists('PP_Roles')) {
     if ( ! class_exists('PP_Roles_List_Table')) {
@@ -100,27 +101,27 @@ if ( ! class_exists('PP_Roles')) {
 
         protected function configureTwig()
         {
-            $function = new Twig_SimpleFunction('settings_fields', function () {
+            $function = new TwigFunction('settings_fields', function () {
                 return settings_fields($this->module->options_group_name);
             });
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('nonce_field', function ($context) {
+            $function = new TwigFunction('nonce_field', function ($context) {
                 return wp_nonce_field($context);
             });
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('submit_button', function () {
+            $function = new TwigFunction('submit_button', function () {
                 return submit_button();
             });
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('do_settings_sections', function ($section) {
+            $function = new TwigFunction('do_settings_sections', function ($section) {
                 return do_settings_sections($section);
             });
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('display_role_list_table', function () {
+            $function = new TwigFunction('display_role_list_table', function () {
                 $wp_list_table = new PP_Roles_List_Table($this->twig);
                 $wp_list_table->prepare_items();
 
