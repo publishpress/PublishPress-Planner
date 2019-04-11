@@ -783,8 +783,8 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Get the user's filters for calendar, either with $_GET or from saved
          *
-         * @uses get_user_meta()
          * @return array $filters All of the set or saved calendar filters
+         * @uses get_user_meta()
          */
         public function get_filters()
         {
@@ -1278,9 +1278,9 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Generates the HTML for a single post item in the calendar
          *
-         * @param  obj $post      The WordPress post in question
-         * @param  str $post_date The date of the post
-         * @param  int $num       The index of the post
+         * @param obj $post      The WordPress post in question
+         * @param str $post_date The date of the post
+         * @param int $num       The index of the post
          *
          * @return str HTML for a single post item
          */
@@ -1302,9 +1302,9 @@ if ( ! class_exists('PP_Calendar')) {
             $edit_post_link = get_edit_post_link($post_id);
 
             if ($show_posts_publish_time) {
-                $post_publish_datetime = get_the_date('c', $post);
+                $post_publish_datetime       = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
-                $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
+                $posts_publish_time_format   = is_null($this->module->options->posts_publish_time_format)
                     ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                     : $this->module->options->posts_publish_time_format;
             }
@@ -1350,11 +1350,12 @@ if ( ! class_exists('PP_Calendar')) {
 
                             <span class="item-headline post-title" title="<?php echo esc_attr($title); ?>">
                                 <?php if ($show_posts_publish_time): ?>
-                                <time
-                                    class="item-headline-time"
-                                    datetime="<?php echo $post_publish_datetime; ?>"
-                                    title="<?php echo date_i18n($this->default_date_time_format, $post_publish_date_timestamp); ?>"
-                                >
+                                    <time
+                                            class="item-headline-time"
+                                            datetime="<?php echo $post_publish_datetime; ?>"
+                                            title="<?php echo date_i18n($this->default_date_time_format,
+                                                $post_publish_date_timestamp); ?>"
+                                    >
                                     <?php echo date_i18n($posts_publish_time_format, $post_publish_date_timestamp); ?>
                                 </time>
                                 <?php endif; ?>
@@ -1435,9 +1436,9 @@ if ( ! class_exists('PP_Calendar')) {
          * has been separated out so various ajax functions can reload certain
          * parts of an inner html element.
          *
-         * @param  array   $pp_calendar_item_information_fields
-         * @param  WP_Post $post
-         * @param  array   $published_statuses
+         * @param array   $pp_calendar_item_information_fields
+         * @param WP_Post $post
+         * @param array   $published_statuses
          *
          * @since 0.8
          */
@@ -1569,11 +1570,11 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Get the information fields to be presented with each post popup
          *
-         * @since 0.8
-         *
          * @param obj $post Post to gather information fields for
          *
          * @return array $information_fields All of the information fields to be presented
+         * @since 0.8
+         *
          */
         public function get_post_information_fields($post)
         {
@@ -1958,11 +1959,11 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Check whether the current user should have the ability to modify the post
          *
-         * @since 0.7
-         *
          * @param object $post The post object we're checking
          *
          * @return bool $can Whether or not the current user can modify the post
+         * @since 0.7
+         *
          */
         public function current_user_can_modify_post($post)
         {
@@ -2093,7 +2094,7 @@ if ( ! class_exists('PP_Calendar')) {
          */
         public function settings_show_posts_publish_time_option()
         {
-            $VALUE_ON = 'on';
+            $VALUE_ON  = 'on';
             $VALUE_OFF = 'off';
 
             $options = [
@@ -2132,9 +2133,9 @@ if ( ! class_exists('PP_Calendar')) {
         public function settings_posts_publish_time_format_option()
         {
             $timeFormats = [
-                self::TIME_FORMAT_12H_WO_LEADING_ZEROES => '1-12 am/pm',
+                self::TIME_FORMAT_12H_WO_LEADING_ZEROES   => '1-12 am/pm',
                 self::TIME_FORMAT_12H_WITH_LEADING_ZEROES => '01-12 am/pm',
-                self::TIME_FORMAT_24H  => '00-24',
+                self::TIME_FORMAT_24H                     => '00-24',
             ];
 
             $posts_publish_time_format = is_null($this->module->options->posts_publish_time_format)
@@ -2275,9 +2276,12 @@ if ( ! class_exists('PP_Calendar')) {
             }
 
             // Sanitize post values
-            $post_title = apply_filters('pp_calendar_after_form_submission_sanitize_title', $_POST['pp_insert_title']);
-            $post_content = apply_filters('pp_calendar_after_form_submission_sanitize_content', $_POST['pp_insert_content']);
-            $post_author = apply_filters('pp_calendar_after_form_submission_sanitize_author', $_POST['pp_insert_author']);
+            $post_title   = apply_filters('pp_calendar_after_form_submission_sanitize_title',
+                $_POST['pp_insert_title']);
+            $post_content = apply_filters('pp_calendar_after_form_submission_sanitize_content',
+                $_POST['pp_insert_content']);
+            $post_author  = apply_filters('pp_calendar_after_form_submission_sanitize_author',
+                $_POST['pp_insert_author']);
 
             if ( ! $post_title) {
                 $post_title = __('Untitled', 'publishpress');
@@ -2294,7 +2298,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             if (empty($post_author)) {
                 $authorsPermissions = self::getAuthorPermissions();
-                $user = wp_get_current_user();
+                $user               = wp_get_current_user();
                 if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
                     $this->print_ajax_response(
                         'error',
@@ -2356,8 +2360,8 @@ if ( ! class_exists('PP_Calendar')) {
          * field is saved with the post_date value. That is a ptoblem when you save
          * a post with post_date to the future. For scheduled posts.
          *
-         * @param  array $data
-         * @param  array $postarr
+         * @param array $data
+         * @param array $postarr
          *
          * @return array
          */
@@ -2375,7 +2379,7 @@ if ( ! class_exists('PP_Calendar')) {
          * Returns the singular label for the posts that are
          * quick-created on the calendar
          *
-         * @param  mix $post_type_slug
+         * @param mix $post_type_slug
          *
          * @return str Singular label for a post-type
          */
@@ -2492,12 +2496,12 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Sanitize a $_GET or similar filter being used on the calendar
          *
-         * @since 0.8
-         *
          * @param string $key         Filter being sanitized
          * @param string $dirty_value Value to be sanitized
          *
          * @return string $sanitized_value Safe to use value
+         * @since 0.8
+         *
          */
         public function sanitize_filter($key, $dirty_value)
         {
@@ -2684,7 +2688,7 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Sanitizes a given string input.
          *
-         * @param   string $input_value
+         * @param string $input_value
          *
          * @return  string
          */
@@ -2696,7 +2700,7 @@ if ( ! class_exists('PP_Calendar')) {
         /**
          * Sanitizes a given author id.
          *
-         * @param   string  $author_id
+         * @param string $author_id
          *
          * @return  int
          */
@@ -2706,7 +2710,7 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
-         * @param   string      $post_author_id
+         * @param string $post_author_id
          *
          * @return  int|null
          *
@@ -2719,9 +2723,10 @@ if ( ! class_exists('PP_Calendar')) {
             }
 
             $authorsPermissions = self::getAuthorPermissions();
-            $user = get_user_by('id', $post_author_id);
+            $user               = get_user_by('id', $post_author_id);
             if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
-                throw new \Exception(__("The selected user doesn't have enough permissions to be set as the post author.", 'publishpress'));
+                throw new \Exception(__("The selected user doesn't have enough permissions to be set as the post author.",
+                    'publishpress'));
             }
 
             return (int)$user->ID;
@@ -2732,9 +2737,9 @@ if ( ! class_exists('PP_Calendar')) {
          *
          * @access  private
          * @static
+         * @return  array
          * @since   1.20.0
          *
-         * @return  array
          */
         private static function getAuthorPermissions()
         {
