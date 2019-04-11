@@ -162,10 +162,11 @@ if ( ! class_exists('PP_Calendar')) {
                 'slug'                  => 'calendar',
                 'post_type_support'     => 'pp_calendar',
                 'default_options'       => [
-                    'enabled'          => 'on',
-                    'post_types'       => $this->pre_select_all_post_types(),
-                    'ics_subscription' => 'on',
-                    'ics_secret_key'   => '',
+                    'enabled'                 => 'on',
+                    'post_types'              => $this->pre_select_all_post_types(),
+                    'ics_subscription'        => 'on',
+                    'ics_secret_key'          => '',
+                    'show_posts_publish_time' => false,
                 ],
                 'messages'              => [
                     'post-date-updated'   => __('Post date updated.', 'publishpress'),
