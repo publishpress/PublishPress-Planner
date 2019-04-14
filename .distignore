@@ -6,6 +6,7 @@
 .travis.yml
 .DS_Store
 .babelrc
+.editorconfig
 build.xml
 phpunit.xml
 Thumbs.db
