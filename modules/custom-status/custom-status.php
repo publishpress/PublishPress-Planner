@@ -40,6 +40,7 @@ if ( ! class_exists('PP_Custom_Status')) {
      */
     class PP_Custom_Status extends PP_Module
     {
+        const MODULE_NAME = 'custom_status';
         const SETTINGS_SLUG = 'pp-custom-status-settings';
 
         public $module;
@@ -97,7 +98,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                     'publishpress'),
                 'options_page'          => true,
             ];
-            $this->module = PublishPress()->register_module('custom_status', $args);
+            $this->module = PublishPress()->register_module(self::MODULE_NAME, $args);
         }
 
         /**
@@ -2303,6 +2304,62 @@ if ( ! class_exists('PP_Custom_Status')) {
             }
 
             return $data;
+        }
+
+        /**
+         * @since   @todo: release version
+         *
+         * @access  public
+         * @static
+         *
+         * @return  self|null
+         */
+        public static function getModuleInstance()
+        {
+            global $publishpress;
+
+            foreach ($publishpress->modules as $pp_module_name => $pp_module) {
+                if ($pp_module_name === PP_Custom_Status::MODULE_NAME) {
+                    return $pp_module;
+                }
+            }
+
+            return null;
+        }
+
+        /**
+         * @since   @todo: release version
+         *
+         * @access  public
+         * @static
+         *
+         * @return  bool
+         */
+        public static function isModuleEnabled()
+        {
+            $custom_status_module = self::getModuleInstance();
+
+            return !is_null($custom_status_module) && $custom_status_module->options->enabled === 'on';
+        }
+
+        /**
+         * @since   @todo: release version
+         *
+         * @access  public
+         * @static
+         *
+         * @return  array
+         */
+        public static function getCustomStatuses()
+        {
+            $is_module_enabled = self::isModuleEnabled();
+            if (!$is_module_enabled) {
+                return [];
+            }
+
+            global $publishpress;
+
+            return $publishpress->custom_status->get_custom_statuses();
         }
     }
 }
