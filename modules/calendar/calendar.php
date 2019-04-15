@@ -2765,7 +2765,7 @@ if ( ! class_exists('PP_Calendar')) {
          */
         private static function getStatusesEligibleToDisplayPublishTime() {
             return [
-                'published',
+                'publish',
             ];
         }
     }
