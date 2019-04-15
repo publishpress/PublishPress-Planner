@@ -43,6 +43,10 @@ if ( ! class_exists('PP_Custom_Status')) {
         const MODULE_NAME = 'custom_status';
         const SETTINGS_SLUG = 'pp-custom-status-settings';
 
+        const STATUS_PUBLISH = 'publish';
+        const STATUS_PRIVATE = 'private';
+        const STATUS_SCHEDULED = 'future';
+
         public $module;
 
         private $custom_statuses_cache = [];
@@ -827,7 +831,7 @@ if ( ! class_exists('PP_Custom_Status')) {
 
             // The some default statuses from WordPress
             $status = (object)[
-                'term_id'     => 'publish',
+                'term_id'     => self::STATUS_PUBLISH,
                 'name'        => __('Published', 'publishpress'),
                 'slug'        => 'publish',
                 'description' => '-',
@@ -844,7 +848,7 @@ if ( ! class_exists('PP_Custom_Status')) {
 
 
             $status = (object)[
-                'term_id'     => 'private',
+                'term_id'     => self::STATUS_PRIVATE,
                 'name'        => __('Privately Published', 'publishpress'),
                 'slug'        => 'private',
                 'description' => '-',
@@ -861,7 +865,7 @@ if ( ! class_exists('PP_Custom_Status')) {
 
 
             $status = (object)[
-                'term_id'     => 'future',
+                'term_id'     => self::STATUS_SCHEDULED,
                 'name'        => __('Scheduled', 'publishpress'),
                 'slug'        => 'future',
                 'description' => '-',
@@ -2309,7 +2313,6 @@ if ( ! class_exists('PP_Custom_Status')) {
         /**
          * @since   @todo: release version
          *
-         * @access  public
          * @static
          *
          * @return  self|null
@@ -2330,7 +2333,6 @@ if ( ! class_exists('PP_Custom_Status')) {
         /**
          * @since   @todo: release version
          *
-         * @access  public
          * @static
          *
          * @return  bool
@@ -2345,7 +2347,6 @@ if ( ! class_exists('PP_Custom_Status')) {
         /**
          * @since   @todo: release version
          *
-         * @access  public
          * @static
          *
          * @return  array

@@ -2764,9 +2764,18 @@ if ( ! class_exists('PP_Calendar')) {
          * @return  array
          */
         private static function getStatusesEligibleToDisplayPublishTime() {
-            return [
+            $statuses = [
                 'publish',
             ];
+
+            if (
+                class_exists('PP_Custom_Status')
+                && PP_Custom_Status::isModuleEnabled()
+            ) {
+                $statuses[] = PP_Custom_Status::STATUS_SCHEDULED;
+            }
+
+            return $statuses;
         }
     }
 }
