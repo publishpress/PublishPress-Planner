@@ -1302,6 +1302,10 @@ if ( ! class_exists('PP_Calendar')) {
             $edit_post_link = get_edit_post_link($post_id);
 
             if ($show_posts_publish_time) {
+                $show_posts_publish_time = in_array($post->post_status, self::getStatusesEligibleToDisplayPublishTime());
+            }
+
+            if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
                 $post_publish_date_timestamp = strtotime($post_publish_datetime);
                 $posts_publish_time_format   = is_null($this->module->options->posts_publish_time_format)
@@ -2749,6 +2753,29 @@ if ( ! class_exists('PP_Calendar')) {
                 'editor',
                 'contributor',
             ];
+        }
+
+        /**
+         * @since   @todo: release version
+         *
+         * @access  private
+         * @static
+         *
+         * @return  array
+         */
+        private static function getStatusesEligibleToDisplayPublishTime() {
+            $statuses = [
+                'publish',
+            ];
+
+            if (
+                class_exists('PP_Custom_Status')
+                && PP_Custom_Status::isModuleEnabled()
+            ) {
+                $statuses[] = PP_Custom_Status::STATUS_SCHEDULED;
+            }
+
+            return $statuses;
         }
     }
 }
