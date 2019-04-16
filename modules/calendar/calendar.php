@@ -166,7 +166,7 @@ if ( ! class_exists('PP_Calendar')) {
                     'post_types'              => $this->pre_select_all_post_types(),
                     'ics_subscription'        => 'on',
                     'ics_secret_key'          => '',
-                    'show_posts_publish_time' => false,
+                    'show_posts_publish_time' => 'on',
                 ],
                 'messages'              => [
                     'post-date-updated'   => __('Post date updated.', 'publishpress'),
@@ -2106,6 +2106,9 @@ if ( ! class_exists('PP_Calendar')) {
                 $VALUE_OFF => __('Hide them', 'publishpress'),
             ];
 
+            $show_posts_publish_time = $this->module->options->show_posts_publish_time;
+            $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
+
             echo '<div class="c-input-group">';
             foreach ($options as $optionValue => $optionLabel) {
                 printf('
@@ -2120,9 +2123,9 @@ if ( ! class_exists('PP_Calendar')) {
                             /> %s
                         </label>
                     </div>',
-                    esc_attr($this->module->options_group_name) . '[show_posts_publish_time]',
+                    $field_name,
                     $optionValue,
-                    $this->module->options->show_posts_publish_time === $optionValue ? 'checked' : '',
+                    $show_posts_publish_time === $optionValue ? 'checked' : '',
                     $optionLabel
                 );
             }
@@ -2688,6 +2691,30 @@ if ( ! class_exists('PP_Calendar')) {
 
             return $status;
         }
+
+        /**
+         * @since   @todo: release version
+         *
+         * @access  private
+         *
+         * @return  string
+         */
+        private function getShowPostsPublishTimeOptionValue()
+        {
+            $valid_options = ['on', 'off'];
+
+            $show_posts_publish_time = $this->module->options->show_posts_publish_time;
+
+            if (
+                empty($show_posts_publish_time)
+                || !isset($valid_options[$show_posts_publish_time])
+            ) {
+                return 'on';
+            }
+
+            return $show_posts_publish_time;
+        }
+
 
         /**
          * Sanitizes a given string input.
