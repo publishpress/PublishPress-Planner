@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 1.20.0
+Stable tag: 1.20.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,14 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.20.1] - 2019-04-16 =
+
+* Fix PHP warning regarding missing variable reference
+* Fix custom statuses not being available for Quick/Bulk post editing
+* Fix publish time being displayed on any post regardless of its status on Calendar
+* Fix missing default value for the Display Publish Time calendar option
+* Fix a performance issue caused by duplicated DB queries calls on Calendar
 
 = [1.20.0] - 2019-04-08 =
 
