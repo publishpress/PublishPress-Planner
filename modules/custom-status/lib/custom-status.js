@@ -120,6 +120,11 @@ jQuery(document).ready(function () {
             );
         }
 
+        var status_select_options_values = jQuery('option', jQuery(id))
+          .map(function getSelectOptionValue(option_index, option) { return option.value; })
+          .toArray()
+          .filter(function isSelectOptionUnique(option_value, option_value_index, self) { return self.indexOf(option_value) === option_value_index });
+
         // Add remaining statuses to dropdown. 'private' is always handled by a checkbox, and 'future' already exists if we need it
         jQuery.each(custom_statuses, function () {
             if (this.slug == 'private' || this.slug == 'future')
@@ -127,6 +132,8 @@ jQuery(document).ready(function () {
 
             if (current_status != 'publish' && this.slug == 'publish')
                 return;
+
+            if (status_select_options_values.indexOf(this.slug) >= 0) return;
 
             var $option = jQuery('<option></option>')
                 .text(this.name)
@@ -137,6 +144,8 @@ jQuery(document).ready(function () {
             if (current_status == this.slug) $option.attr('selected', 'selected');
 
             $option.appendTo(jQuery(id));
+
+            status_select_options_values.push(this.slug);
         });
     }
 

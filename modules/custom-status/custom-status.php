@@ -423,13 +423,19 @@ if ( ! class_exists('PP_Custom_Status')) {
 
             // Custom javascript to modify the post status dropdown where it shows up
             if ($this->is_whitelisted_page()) {
+                wp_enqueue_script(
+                    'publishpress-custom_status',
+                    $this->module_url . 'lib/custom-status.js',
+                    ['jquery', 'post'],
+                    PUBLISHPRESS_VERSION,
+                    true
+                );
+
                 if ($publishpress->isBlockEditorActive()) {
                     wp_enqueue_style('publishpress-custom_status-block',
                         $this->module_url . 'lib/custom-status-block-editor.css', false,
                         PUBLISHPRESS_VERSION, 'all');
                 } else {
-                    wp_enqueue_script('publishpress-custom_status', $this->module_url . 'lib/custom-status.js',
-                        ['jquery', 'post'], PUBLISHPRESS_VERSION, true);
                     wp_enqueue_style('publishpress-custom_status', $this->module_url . 'lib/custom-status.css', false,
                         PUBLISHPRESS_VERSION, 'all');
                 }
