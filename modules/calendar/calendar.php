@@ -2694,7 +2694,7 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
-         * @since   @todo: release version
+         * @since   1.20.1
          *
          * @access  private
          *
@@ -2784,7 +2784,7 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
-         * @since   @todo: release version
+         * @since   1.20.1
          *
          * @access  private
          * @static
