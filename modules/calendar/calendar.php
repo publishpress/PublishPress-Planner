@@ -941,6 +941,8 @@ if ( ! class_exists('PP_Calendar')) {
 
                 add_thickbox();
 
+                $authors = pp_get_users_with_author_permissions();
+
                 ob_start(); ?>
                 <div id="publishpress-calendar-ics-subs" style="display:none;">
                     <h3><?php echo __('PublishPress', 'publishpress'); ?>
@@ -1211,7 +1213,6 @@ if ( ! class_exists('PP_Calendar')) {
 
                                                     <label for="post-insert-dialog-post-author">
                                                         <?php echo __('Author', 'publishpress'); ?>
-                                                        <?php $authors = pp_get_users_with_author_permissions(); ?>
                                                         <select id="post-insert-dialog-post-author"
                                                                 name="post-insert-dialog-post-author"
                                                                 class="post-insert-dialog-post-author">
@@ -1221,7 +1222,7 @@ if ( ! class_exists('PP_Calendar')) {
                                                                 </option>
                                                             <?php endforeach; ?>
                                                         </select>
-                                                        <?php unset($author, $authors); ?>
+                                                        <?php unset($author); ?>
                                                     </label>
 
 
