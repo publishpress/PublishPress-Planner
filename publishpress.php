@@ -5,7 +5,7 @@
  * Description: The essential plugin for any WordPress site with multiple writers
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.20.0
+ * Version: 1.20.1
  *
  * Copyright (c) 2018 PublishPress
  *
@@ -748,6 +748,15 @@ class publishpress
 
         if ( ! isset($postType) || empty($postType)) {
             $postType = 'post';
+        }
+
+        /**
+         * If show_in_rest is not true for the post type, the block editor is not available.
+         */
+        if ($postTypeObject = get_post_type_object($postType)) {
+            if (empty($postTypeObject->show_in_rest)) {
+                return false;
+            }
         }
 
         $conditions = [];

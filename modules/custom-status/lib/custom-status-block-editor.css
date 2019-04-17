@@ -8,4 +8,9 @@
   flex-basis: 100%;
 }
 
+label[for^=post-author-selector-],
+select[id^=post-author-selector-] {
+  display: none !important;
+}
+
 /*# sourceMappingURL=custom-status-block-editor.css.map */
