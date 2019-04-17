@@ -2317,7 +2317,7 @@ if ( ! class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * @since   @todo: release version
+         * @since   1.20.1
          *
          * @static
          *
@@ -2337,7 +2337,7 @@ if ( ! class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * @since   @todo: release version
+         * @since   1.20.1
          *
          * @static
          *
@@ -2351,7 +2351,7 @@ if ( ! class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * @since   @todo: release version
+         * @since   1.20.1
          *
          * @static
          *
