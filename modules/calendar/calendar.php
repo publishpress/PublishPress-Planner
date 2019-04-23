@@ -143,7 +143,7 @@ if ( ! class_exists('PP_Calendar')) {
          *
          * @var string
          */
-        private $default_date_time_format = '';
+        private $default_date_time_format = 'ha';
 
         /**
          * Construct the PP_Calendar class
@@ -243,7 +243,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
 
-            if ($this->module->options->show_posts_publish_time === 'on') {
+            if ($this->showPostsPublishTime()) {
                 // Cache WordPress default date/time formats.
                 $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
             }
@@ -878,7 +878,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
-            $show_posts_publish_time = $this->module->options->show_posts_publish_time === 'on';
+            $show_posts_publish_time = $this->showPostsPublishTime();
 
             $dotw = [
                 'Sat',
@@ -2107,7 +2107,7 @@ if ( ! class_exists('PP_Calendar')) {
                 $VALUE_OFF => __('Hide them', 'publishpress'),
             ];
 
-            $show_posts_publish_time = $this->module->options->show_posts_publish_time;
+            $show_posts_publish_time = $this->getShowPostsPublishTimeOptionValue();
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
             echo '<div class="c-input-group">';
@@ -2350,7 +2350,7 @@ if ( ! class_exists('PP_Calendar')) {
 
                 $post = get_post($post_id);
 
-                $show_posts_publish_time = $this->module->options->show_posts_publish_time === 'on';
+                $show_posts_publish_time = $this->showPostsPublishTime();
 
                 // Generate the HTML for the post item so it can be injected
                 $post_li_html = $this->generate_post_li_html($post, $post_date, 0, $show_posts_publish_time);
@@ -2704,18 +2704,28 @@ if ( ! class_exists('PP_Calendar')) {
         {
             $valid_options = ['on', 'off'];
 
-            $show_posts_publish_time = $this->module->options->show_posts_publish_time;
-
             if (
-                empty($show_posts_publish_time)
-                || !isset($valid_options[$show_posts_publish_time])
+                !isset($this->module->options->show_posts_publish_time)
+                || empty($this->module->options->show_posts_publish_time)
+                || !in_array(mb_strtolower($this->module->options->show_posts_publish_time), $valid_options)
             ) {
                 return 'on';
             }
 
-            return $show_posts_publish_time;
+            return mb_strtolower($this->module->options->show_posts_publish_time);
         }
 
+        /**
+         * @since   @todo
+         *
+         * @access  private
+         *
+         * @return  bool
+         */
+        private function showPostsPublishTime()
+        {
+            return $this->getShowPostsPublishTimeOptionValue() === 'on';
+        }
 
         /**
          * Sanitizes a given string input.
