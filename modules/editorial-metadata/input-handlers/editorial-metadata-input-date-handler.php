@@ -31,7 +31,7 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
-            $value = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
+            $value_formatted = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
 
             self::renderLabel($input_label, $input_name);
 
@@ -46,9 +46,22 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                     name="%1$s"
                     value="%2$s"
                     class="date-time-pick"
+                    data-alt-field="%1$s_hidden"
+                    data-alt-format="%3$s"
                 />',
                 $input_name,
-                $value
+                $value_formatted,
+                pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')
+            );
+
+            printf(
+                '<input
+                    type="hidden"
+                    name="%s_hidden"
+                    value="%s"
+                />',
+                $input_name,
+                date('Y-m-d H:i', $value)
             );
         }
 
@@ -63,11 +76,13 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          */
         private static function show_date_or_datetime($current_date)
         {
+            $date_format = get_option('date_format');
+
             if (date('Hi', $current_date) == '0000') {
-                return date(__('M d Y', 'publishpress'), $current_date);
+                return date_i18n($date_format, $current_date);
             }
 
-            return date(__('M d Y H:i', 'publishpress'), $current_date);
+            return date_i18n("{$date_format} H:i", $current_date);
         }
 
         /**

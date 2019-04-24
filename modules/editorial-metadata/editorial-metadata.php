@@ -526,14 +526,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                     // TODO: Move this to a function
                     if ($type == 'date') {
-                        $date = DateTime::createFromFormat(__('M d Y', 'publishpress'), $new_metadata);
-
-                        // Check if the date is invalid. If it has specific time, we need another date format.
-                        if (false === $date) {
-                            // Try another format with time
-                            $date = DateTime::createFromFormat(__('M d Y H:i', 'publishpress'), $new_metadata);
-                        }
-
+                        $new_metadata = isset($_POST[$key . '_hidden']) ? $_POST[$key . '_hidden'] : '';
+                        $date = DateTime::createFromFormat('Y-m-d H:i', $new_metadata);
                         if (false !== $date) {
                             $new_metadata = $date->getTimestamp();
                         }
