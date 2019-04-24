@@ -28,27 +28,37 @@
  */
 
 jQuery(document).ready(function ($) {
-    $('.date-time-pick').datetimepicker({
+    function getOptions(self, custom_options) {
+      var default_options = {
         dateFormat: objectL10ndate.date_format,
         firstDay: pp_week_first_day,
+      };
+
+      var options = $.extend({}, default_options, custom_options);
+      var altFieldName = self.attr('data-alt-field');
+      if (altFieldName.length == 0) {
+        return options;
+      }
+
+      return $.extend({}, options, {
+        altField: 'input[name="'+ altFieldName +'"]',
+        altFormat: self.attr('data-alt-format'),
+      });
+    }
+
+    $('.date-time-pick').each(function() {
+      var self = $(this);
+      var options = getOptions(self, {
         alwaysSetTime: false,
-        controlType: 'select'
+        controlType: 'select',
+        altFieldTimeOnly: false,
+      });
+      self.datetimepicker(options);
     });
 
     $('.date-pick').each(function() {
         var self = $(this);
-
-        var datePickerOptions = {
-            dateFormat: objectL10ndate.date_format,
-            firstDay: pp_week_first_day,
-        };
-
-        var altFieldName = self.attr('data-alt-field');
-        if (altFieldName.length > 0) {
-            datePickerOptions.altField = 'input[name="'+ altFieldName +'"]';
-            datePickerOptions.altFormat = self.attr('data-alt-format');
-        }
-
-        self.datepicker(datePickerOptions);
+        var options = getOptions(self, {});
+        self.datepicker(options);
     });
 });
