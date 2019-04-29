@@ -665,7 +665,6 @@ if ( ! class_exists('PP_Module')) {
              * @param array $roles
              * @param int   $post_id
              */
-            $post_id = isset($_GET['post']) ? (int)$_GET['post'] : null;
             $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(), $post_id);
             ?>
 
