@@ -57,7 +57,29 @@ class Term extends Base implements Filter_Interface
      */
     protected function get_options()
     {
-        $terms = get_terms(['hide_empty' => false]);
+        $get_terms_to_exclude = '';
+
+        if (class_exists('\PP_Notifications')) {
+            $blacklisted_taxonomies = \PP_Notifications::getOption('blacklisted_taxonomies');
+            if (!empty($blacklisted_taxonomies)) {
+                $blacklisted_taxonomies = array_filter(explode(',', $blacklisted_taxonomies));
+                if (count($blacklisted_taxonomies) > 0) {
+                    $get_terms_to_exclude = get_terms([
+                        'fields'   => 'ids',
+                        'taxonomy' => $blacklisted_taxonomies,
+                    ]);
+
+                    if (is_wp_error($get_terms_to_exclude)) {
+                        $get_terms_to_exclude = '';
+                    }
+                }
+            }
+        }
+
+        $terms = get_terms([
+            'hide_empty' => false,
+            'exclude'    => $get_terms_to_exclude,
+        ]);
 
         $metadata = (array)$this->get_metadata(static::META_KEY_TERM);
 
