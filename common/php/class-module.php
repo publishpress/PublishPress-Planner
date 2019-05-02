@@ -784,5 +784,13 @@ if ( ! class_exists('PP_Module')) {
                 ]);
             }
         }
+
+        public static function isPublishPressModuleEnabled($module_slug)
+        {
+            global $publishpress;
+
+            return isset($publishpress->{$module_slug})
+                && $publishpress->{$module_slug}->module->options->enabled === 'on';
+        }
     }
 }// End if().
