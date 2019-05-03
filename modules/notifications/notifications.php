@@ -43,8 +43,8 @@ if ( ! class_exists('PP_Notifications')) {
     {
         use Dependency_Injector;
 
-        public const MODULE_NAME = 'notifications';
-        public const MENU_SLUG = 'pp-notifications';
+        const MODULE_NAME = 'notifications';
+        const MENU_SLUG = 'pp-notifications';
 
         // Taxonomy name used to store users which will be notified for changes in the posts.
         public $notify_user_taxonomy = 'pp_notify_user';
