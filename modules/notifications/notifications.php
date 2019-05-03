@@ -32,6 +32,8 @@ if ( ! defined('PP_NOTIFICATION_USE_CRON')) {
     define('PP_NOTIFICATION_USE_CRON', false);
 }
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if ( ! class_exists('PP_Notifications')) {
     /**
      * Class PP_Notifications
@@ -39,6 +41,11 @@ if ( ! class_exists('PP_Notifications')) {
      */
     class PP_Notifications extends PP_Module
     {
+        use Dependency_Injector;
+
+        public const MODULE_NAME = 'notifications';
+        public const MENU_SLUG = 'pp-notifications';
+
         // Taxonomy name used to store users which will be notified for changes in the posts.
         public $notify_user_taxonomy = 'pp_notify_user';
 
@@ -75,6 +82,7 @@ if ( ! class_exists('PP_Notifications')) {
                     ],
                     'notify_author_by_default'       => '1',
                     'notify_current_user_by_default' => '1',
+                    'blacklisted_taxonomies' => '',
                 ],
                 'configure_page_cb'     => 'print_configure_view',
                 'post_type_support'     => 'pp_notification',
@@ -1419,6 +1427,14 @@ if ( ! class_exists('PP_Notifications')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'blacklisted_taxonomies',
+                __('Blacklisted taxonomies for Notifications', 'publishpress'),
+                [$this, 'settings_blacklisted_taxonomies_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -1514,6 +1530,29 @@ if ( ! class_exists('PP_Notifications')) {
                     type="checkbox"
                     name="' . $this->module->options_group_name . '[notify_current_user_by_default]"
                     value="1" ' . $checked . '/>';
+        }
+
+        public function settings_blacklisted_taxonomies_option()
+        {
+            $blacklisted_taxonomies = isset($this->module->options->blacklisted_taxonomies)
+                ? $this->module->options->blacklisted_taxonomies
+                : '';
+            ?>
+            <div style="max-width: 300px;">
+                <input
+                    type="text"
+                    id="<?php echo $this->module->slug; ?>_blacklisted_taxonomies"
+                    name="<?php echo $this->module->options_group_name; ?>[blacklisted_taxonomies]"
+                    value="<?php echo $blacklisted_taxonomies; ?>"
+                    placeholder="<?php _e('slug1,slug2', 'publishpress'); ?>"
+                    style="width: 100%;"
+                />
+
+                <div style="margin-top: 5px;">
+                    <p><?php _e('Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.', 'publishpress'); ?></p>
+                </div>
+            </div>
+            <?php
         }
 
         /**
@@ -1848,6 +1887,23 @@ if ( ! class_exists('PP_Notifications')) {
             $body .= $this->get_notification_footer($args['post']);
 
             $this->send_email('comment', $args['post'], $subject, $body);
+        }
+
+        public static function getOption($option_name)
+        {
+            $is_module_enabled = PP_Module::isPublishPressModuleEnabled(self::MODULE_NAME);
+            if (!$is_module_enabled) {
+                return null;
+            }
+
+            global $publishpress;
+
+            $module_options = $publishpress->{self::MODULE_NAME}->module->options;
+            if (!isset($module_options->{$option_name})) {
+                return null;
+            }
+
+            return $module_options->{$option_name};
         }
     }
 }

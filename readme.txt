@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 1.20.1
+Stable tag: 1.20.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,16 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.20.2] - 2019-05-02 =
+
+* Partially adds support for Gutenberg-Ramp plugin
+* Fix PublishPress icon missing on admin sidebar in some envs
+* Fix PHP warnings on Calendar module
+* Fix issue on posts where MetaData date fields were losing their formats and values after saving
+* Fix Calendar date filter going back to 1970 if user edits filter value but doesn't change it
+* Fix PHP warnings on Notifications section on Posts form if WP_DEBUG is on
+* Add option to blacklist taxonomies-slugs on the taxonomies filter for adding New Notification Workflow
 
 = [1.20.1] - 2019-04-16 =
 

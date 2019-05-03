@@ -642,8 +642,8 @@ if ( ! class_exists('PP_Module')) {
              * @param array $users
              * @param int   $post_id
              */
-            $users = apply_filters('publishpress_notification_users_meta_box', get_users($args),
-                (int)$_GET['post']);
+            $post_id = isset($_GET['post']) ? (int)$_GET['post'] : null;
+            $users = apply_filters('publishpress_notification_users_meta_box', get_users($args), $post_id);
 
             if ( ! is_array($selected)) {
                 $selected = [];
@@ -665,8 +665,7 @@ if ( ! class_exists('PP_Module')) {
              * @param array $roles
              * @param int   $post_id
              */
-            $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(),
-                (int)$_GET['post']);
+            $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(), $post_id);
             ?>
 
             <?php if ( ! empty($users) || ! empty($roles) || ! empty($emails)) : ?>
@@ -784,6 +783,14 @@ if ( ! class_exists('PP_Module')) {
                     'description' => $new_description,
                 ]);
             }
+        }
+
+        public static function isPublishPressModuleEnabled($module_slug)
+        {
+            global $publishpress;
+
+            return isset($publishpress->{$module_slug})
+                && $publishpress->{$module_slug}->module->options->enabled === 'on';
         }
     }
 }// End if().
