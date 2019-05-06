@@ -236,7 +236,7 @@ if ( ! class_exists('PP_Dashboard')) {
 
             $newList = [];
             foreach ($statuses as $status) {
-                if ( ! in_array($status->term_id, ['publish', 'private'])) {
+                if ( ! in_array($status->slug, ['publish', 'private'])) {
                     $newList[] = $status;
                 }
             }
