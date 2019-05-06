@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 1.20.2
+Stable tag: 1.20.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.20.3] - 2019-05-03 =
+
+* Fix Fatal Error in Calendar module: "undefined function mb_strtolower()" on servers that don't have PHP multibyte string extension
+* Fix PHP notice in Unpublished Content dashboard metabox
 
 = [1.20.2] - 2019-05-02 =
 

@@ -2704,15 +2704,19 @@ if ( ! class_exists('PP_Calendar')) {
         {
             $valid_options = ['on', 'off'];
 
+            $publish_time = (function_exists('mb_strtolower')) 
+            ? mb_strtolower($this->module->options->show_posts_publish_time)
+            : strtolower($this->module->options->show_posts_publish_time);
+
             if (
                 !isset($this->module->options->show_posts_publish_time)
                 || empty($this->module->options->show_posts_publish_time)
-                || !in_array(mb_strtolower($this->module->options->show_posts_publish_time), $valid_options)
+                || !in_array($publish_time, $valid_options)
             ) {
                 return 'on';
             }
 
-            return mb_strtolower($this->module->options->show_posts_publish_time);
+            return $publish_time;
         }
 
         /**
