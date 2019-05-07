@@ -1308,7 +1308,7 @@ if ( ! class_exists('PP_Calendar')) {
 
             if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
-                $post_publish_date_timestamp = strtotime($post_publish_datetime);
+                $post_publish_date_timestamp = get_post_time('U', false, $post);
                 $posts_publish_time_format   = !isset($this->module->options->posts_publish_time_format) || is_null($this->module->options->posts_publish_time_format)
                     ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                     : $this->module->options->posts_publish_time_format;
