@@ -108,7 +108,7 @@ class Pimple_Container extends \Pimple\Container
             };
 
             $instance['PLUGIN_BASENAME'] = function ($c) {
-                return plugin_basename('publishpress/publishpress.php');
+                return PUBLISHPRESS_BASENAME;
             };
 
             /**
