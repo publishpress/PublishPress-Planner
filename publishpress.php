@@ -158,7 +158,7 @@ class publishpress
     {
         $this->deactivate_editflow();
 
-        load_plugin_textdomain('publishpress', null, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('publishpress', null, PUBLISHPRESS_BASE_PATH . '/languages/');
 
         $this->load_modules();
 
@@ -739,7 +739,7 @@ class publishpress
         $pluginsState = [
             'classic-editor' => is_plugin_active('classic-editor/classic-editor.php'),
             'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
-            'gutenberg-ramp'      => is_plugin_active('gutenberg-ramp/gutenberg-ramp.php'),
+            'gutenberg-ramp' => is_plugin_active('gutenberg-ramp/gutenberg-ramp.php'),
         ];
 
 
