@@ -404,7 +404,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 wp_enqueue_script('jquery-ui-sortable');
                 wp_enqueue_script('publishpress-custom-status-configure',
                     $this->module_url . 'lib/custom-status-configure.js',
-                    ['jquery', 'jquery-ui-sortable', 'publishpress-settings-js'], PUBLISHPRESS_VERSION, true);
+                    ['jquery', 'jquery-ui-sortable'], PUBLISHPRESS_VERSION, true);
 
                 wp_localize_script(
                     'publishpress-custom-status-configure',
