@@ -59,30 +59,30 @@ class Term extends Base implements Filter_Interface
     {
         $get_terms_to_exclude = [];
 
-        if ( class_exists( '\PP_Notifications' ) ) {
-            $blacklisted_taxonomies = \PP_Notifications::getOption( 'blacklisted_taxonomies' );
+        if (class_exists('\PP_Notifications')) {
+            $blacklisted_taxonomies = \PP_Notifications::getOption('blacklisted_taxonomies');
             if ( ! empty( $blacklisted_taxonomies ) ) {
-                $get_terms_to_exclude = array_filter( explode( ',', $blacklisted_taxonomies ) );
+                $get_terms_to_exclude = array_filter(explode(',', $blacklisted_taxonomies));
             }
         }
 
-        $terms = get_terms( [
+        $terms = get_terms([
             'hide_empty' => false,
-            'taxonomy'   => array_except( get_taxonomies(), $get_terms_to_exclude ),
-        ] );
+            'taxonomy'   => array_keys(array_except(get_taxonomies(), $get_terms_to_exclude),
+        ]);
 
-        $metadata = (array) $this->get_metadata( static::META_KEY_TERM );
+        $metadata = (array) $this->get_metadata(static::META_KEY_TERM);
 
         $options = [];
-        foreach ( $terms as $term ) {
+        foreach ($terms as $term) {
             $options[] = [
                 'value'    => $term->term_id,
                 'label'    => $term->taxonomy . '/' . $term->name,
-                'selected' => in_array( $term->term_id, $metadata ),
+                'selected' => in_array($term->term_id, $metadata),
             ];
         }
 
-        usort( $options, [ $this, 'sort_options' ] );
+        usort($options, [$this, 'sort_options']);
 
         return $options;
     }
