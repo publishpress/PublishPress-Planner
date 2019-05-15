@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress\n"
-"POT-Creation-Date: 2019-05-02 20:39-0300\n"
+"POT-Creation-Date: 2019-05-15 20:29-0300\n"
 "PO-Revision-Date: 2016-04-22 07:37+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -914,7 +914,7 @@ msgstr ""
 msgid "Publish on"
 msgstr ""
 
-#: modules/calendar/calendar.php:2770
+#: modules/calendar/calendar.php:2774
 msgid "The selected user doesn't have enough permissions to be set as the post author."
 msgstr ""
 
@@ -1833,7 +1833,7 @@ msgstr ""
 msgid "Undefined migration method"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:87 publishpress.php:970
+#: modules/improved-notifications/improved-notifications.php:87 publishpress.php:972
 msgid "Notification Workflows"
 msgstr ""
 
@@ -1983,7 +1983,7 @@ msgstr ""
 msgid "Notify me"
 msgstr ""
 
-#: modules/notifications/notifications.php:439 publishpress.php:975
+#: modules/notifications/notifications.php:439 publishpress.php:977
 msgid "Notifications"
 msgstr ""
 
@@ -2410,23 +2410,23 @@ msgstr ""
 msgid "Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first."
 msgstr ""
 
-#: publishpress.php:971 publishpress.php:976
+#: publishpress.php:973 publishpress.php:978
 msgid "Notification Workflow"
 msgstr ""
 
-#: publishpress.php:972
+#: publishpress.php:974
 msgid "Add New Notification Workflow"
 msgstr ""
 
-#: publishpress.php:973
+#: publishpress.php:975
 msgid "Edit Notification Workflow"
 msgstr ""
 
-#: publishpress.php:974
+#: publishpress.php:976
 msgid "Search Workflows"
 msgstr ""
 
-#: publishpress.php:977 publishpress.php:978
+#: publishpress.php:979 publishpress.php:980
 msgid "No Workflow found"
 msgstr ""
 
