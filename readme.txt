@@ -130,6 +130,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.20.5] - 2019-05-15 =
+* Fix blacklisting taxonomies causing WSOD in some envs containing a lot of Terms
+* Fix Calendar displaying times on wrong Timezones
+* Fix Custom Statuses listing on Settings page not being reordable anymore
+
 = [1.20.4] - 2019-05-03 =
 * Fix JS error in wp-admin (blocking other plugin JS) for sites running on localhost and Windows servers
 
