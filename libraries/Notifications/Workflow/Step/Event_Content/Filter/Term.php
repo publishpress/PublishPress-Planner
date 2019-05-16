@@ -68,7 +68,7 @@ class Term extends Base implements Filter_Interface
 
         $terms = get_terms([
             'hide_empty' => false,
-            'taxonomy'   => array_keys(array_except(get_taxonomies(), $get_terms_to_exclude),
+            'taxonomy'   => array_keys(array_except(get_taxonomies(), $get_terms_to_exclude)),
         ]);
 
         $metadata = (array) $this->get_metadata(static::META_KEY_TERM);
