@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.1
-Stable tag: 1.20.4
+Stable tag: 1.20.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.20.5] - 2019-05-15 =
+* Fix blacklisting taxonomies causing WSOD in some envs containing a lot of Terms
+* Fix Calendar displaying times on wrong Timezones
+* Fix Custom Statuses listing on Settings page not being reordable anymore
 
 = [1.20.4] - 2019-05-03 =
 * Fix JS error in wp-admin (blocking other plugin JS) for sites running on localhost and Windows servers
