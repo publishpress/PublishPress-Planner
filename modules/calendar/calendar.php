@@ -1226,7 +1226,7 @@ if ( ! class_exists('PP_Calendar')) {
                                                     </label>
 
                                                     <div>
-                                                        <label for="post-insert-dialog-post-publish-time">Publish Time</label>
+                                                        <label for="post-insert-dialog-post-publish-time"><?php _e('Publish Time', 'publishpress'); ?></label>
                                                         <input
                                                             type="time"
                                                             id="post-insert-dialog-post-publish-time"
