@@ -269,6 +269,10 @@ table#pp-calendar-view .day-unit .post-insert-dialog .post-type-dropdown {
     margin-bottom: 10px;
 }
 
+table#pp-calendar-view .day-unit .post-insert-dialog input[type="time"] {
+  border-radius: 5px
+}
+
 table#pp-calendar-view .day-unit .post-list {
     margin-top: 0;
     margin-bottom: 0;
