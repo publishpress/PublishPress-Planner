@@ -369,6 +369,7 @@ jQuery(document).ready(function ($) {
             EFQuickPublish.$post_title_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-title').focus();
             EFQuickPublish.$post_content_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-content');
             EFQuickPublish.$post_author_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-author');
+            EFQuickPublish.$post_publish_time = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-publish-time');
 
             // Setup the ajax mechanism for form submit
             EFQuickPublish.$new_post_form.on('submit', function (e) {
@@ -413,6 +414,7 @@ jQuery(document).ready(function ($) {
                         action: 'pp_insert_post',
                         pp_insert_type: EFQuickPublish.$post_type_input.val(),
                         pp_insert_date: EFQuickPublish.$new_post_form.find('input.post-insert-dialog-post-date').val(),
+                        pp_insert_publish_time: EFQuickPublish.$post_publish_time.val(),
                         pp_insert_title: EFQuickPublish.$post_title_input.val(),
                         pp_insert_content: EFQuickPublish.$post_content_input.val(),
                         pp_insert_author: EFQuickPublish.$post_author_input.val(),
