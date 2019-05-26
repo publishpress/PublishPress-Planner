@@ -164,11 +164,6 @@
 /* @TODO load this code through custom-status.css
 Status color box */
 
-.publishpress-admin table.statuses {
-    display: block;
-    overflow-x: auto;
-}
-
 .pp-status-color {
     width: 10px;
     height: 10px;

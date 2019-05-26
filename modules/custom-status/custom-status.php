@@ -1864,7 +1864,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 $wp_list_table->prepare_items(); ?>
 
                 <div id='col-right'>
-                    <div class='col-wrap'>
+                    <div class='col-wrap' style="overflow: auto;">
                         <?php $wp_list_table->display(); ?>
                         <?php wp_nonce_field('custom-status-sortable', 'custom-status-sortable'); ?>
                     </div>
@@ -2381,6 +2381,21 @@ class PP_Custom_Status_List_Table extends WP_List_Table
     public $callback_args;
 
     public $default_status;
+
+    public function get_table_classes()
+    {
+        $classes_list = parent::get_table_classes();
+        $class_to_remove = 'fixed';
+
+        $class_to_remove_index = array_search($class_to_remove, $classes_list);
+        if ($class_to_remove_index === false) {
+            return $classes_list;
+        }
+
+        unset($classes_list[$class_to_remove_index]);
+
+        return $classes_list;
+    }
 
     /**
      * Construct the extended class
