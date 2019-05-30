@@ -1064,6 +1064,8 @@ if ( ! class_exists('PP_Calendar')) {
                         <tbody>
 
                         <?php
+                        $default_post_status = $this->get_default_post_status();
+
                         $current_month        = date_i18n('F', strtotime($filters['start_date']));
                         for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) :
                             // We need to set the object variable for our posts_where filter
@@ -1225,6 +1227,23 @@ if ( ! class_exists('PP_Calendar')) {
                                                         <?php unset($author); ?>
                                                     </label>
 
+                                                    <div>
+                                                        <label for="post-insert-dialog-post-status"><?php _e('Status', 'publishpress'); ?></label>
+                                                        <select
+                                                            id="post-insert-dialog-post-status"
+                                                            name="post-insert-dialog-post-status"
+                                                            class="post-insert-dialog-post-status"
+                                                        >
+                                                            <?php foreach ($this->get_post_statuses() as $status): ?>
+                                                            <option
+                                                                value="<?php echo $status->slug; ?>"
+                                                                <?php echo $status->slug === $default_post_status ? 'selected' : ''; ?>
+                                                            >
+                                                                <?php echo $status->name; ?>
+                                                            </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
                                                     <div>
                                                         <label for="post-insert-dialog-post-publish-time"><?php _e('Publish Time', 'publishpress'); ?></label>
                                                         <input
@@ -2344,7 +2363,10 @@ if ( ! class_exists('PP_Calendar')) {
             }
             unset($post_publish_date_time_instance);
 
-            $post_status = $this->get_default_post_status();
+            $post_status = sanitize_text_field($_POST['pp_insert_status']);
+            if (!$this->isPostStatusValid($post_status)) {
+                $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
+            }
 
             // Set new post parameters
             $post_placeholder = [
@@ -2385,6 +2407,17 @@ if ( ! class_exists('PP_Calendar')) {
             } else {
                 $this->print_ajax_response('error', __('Post could not be created', 'publishpress'));
             }
+        }
+
+        private function isPostStatusValid($subject) {
+            foreach ($this->get_post_statuses() as $post_status) {
+                $is_status_valid = $subject === $post_status->slug;
+                if ($is_status_valid) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /**
