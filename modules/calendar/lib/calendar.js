@@ -370,6 +370,7 @@ jQuery(document).ready(function ($) {
             EFQuickPublish.$post_content_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-content');
             EFQuickPublish.$post_author_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-author');
             EFQuickPublish.$post_publish_time = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-publish-time');
+            EFQuickPublish.$post_status_input = EFQuickPublish.$new_post_form.find('.post-insert-dialog-post-status');
 
             // Setup the ajax mechanism for form submit
             EFQuickPublish.$new_post_form.on('submit', function (e) {
@@ -418,6 +419,7 @@ jQuery(document).ready(function ($) {
                         pp_insert_title: EFQuickPublish.$post_title_input.val(),
                         pp_insert_content: EFQuickPublish.$post_content_input.val(),
                         pp_insert_author: EFQuickPublish.$post_author_input.val(),
+                        pp_insert_status: EFQuickPublish.$post_status_input.val(),
                         nonce: $(document).find('#pp-calendar-modify').val()
                     },
                     success: function (response, textStatus, XMLHttpRequest) {
