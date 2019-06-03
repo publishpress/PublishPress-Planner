@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f193270a013d26ae5cafae92da2aff8b",
+    "content-hash": "1d640ffaffc5e5195891694ed84f0634",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-builder",
@@ -65,16 +65,16 @@
         },
         {
             "name": "alledia/wordpress-plugin-framework",
-            "version": "0.6.3",
+            "version": "0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/upstreamplugin/WordPress-Plugin-Framework.git",
-                "reference": "9f6c9a7efeb709c9e42ffcda50d3de141af46e4c"
+                "reference": "eeb6fb3125ce2a257a6ec6a6d0f7cf09493fc807"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/9f6c9a7efeb709c9e42ffcda50d3de141af46e4c",
-                "reference": "9f6c9a7efeb709c9e42ffcda50d3de141af46e4c",
+                "url": "https://api.github.com/repos/upstreamplugin/WordPress-Plugin-Framework/zipball/eeb6fb3125ce2a257a6ec6a6d0f7cf09493fc807",
+                "reference": "eeb6fb3125ce2a257a6ec6a6d0f7cf09493fc807",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-03-15T21:12:54+00:00"
+            "time": "2019-05-30T19:40:34+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -267,6 +267,65 @@
                 "ctype",
                 "polyfill",
                 "portable"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
             ],
             "time": "2019-02-06T07:57:58+00:00"
         },
