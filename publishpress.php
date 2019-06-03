@@ -108,7 +108,7 @@ class publishpress
         // Fix the order of the submenus
         add_filter('custom_menu_order', [$this, 'filter_custom_menu_order']);
 
-        do_action_ref_array('publishpress_after_setup_actions', [&$this]);
+        do_action_ref_array('publishpress_after_setup_actions', [$this]);
     }
 
     /**
@@ -492,7 +492,7 @@ class publishpress
         // auto-load it
         if ( ! empty($args['settings_help_tab'])) {
             add_action('load-publishpress_page_' . $args['settings_slug'],
-                [&$this->$name, 'action_settings_help_menu']);
+                [$this->$name, 'action_settings_help_menu']);
         }
 
         $this->modules->$name = (object)$args;
