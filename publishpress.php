@@ -579,8 +579,6 @@ class publishpress
             ['jquery'],
             PUBLISHPRESS_VERSION
         );
-        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', ['jquery', 'chosen'],
-            PUBLISHPRESS_VERSION);
 
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', ['jquery'],
             PUBLISHPRESS_VERSION, true);
@@ -593,6 +591,15 @@ class publishpress
         if ( ! isset($wp_scripts->registered['jquery-ui-datepicker'])) {
             wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js',
                 ['jquery', 'jquery-ui-core'], '1.8.16', true);
+        }
+
+
+        // Load on all admin pages to fix the menu, except the customize
+        global $pagenow;
+
+        if ($pagenow !== 'customize.php') {
+            wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery', 'chosen'],
+                PUBLISHPRESS_VERSION);
         }
     }
 
