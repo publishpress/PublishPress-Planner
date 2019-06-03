@@ -560,8 +560,8 @@ class publishpress
     {
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false,
             PUBLISHPRESS_VERSION, 'all');
-        wp_enqueue_style(
-            'multiple-authors-css',
+        wp_register_style(
+            'chosen',
             plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
             false,
             PUBLISHPRESS_VERSION,
@@ -571,15 +571,15 @@ class publishpress
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
             [], PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-            ['pressshack-admin-css', 'allex'], PUBLISHPRESS_VERSION, 'all');
+            ['pressshack-admin-css', 'allex', 'chosen'], PUBLISHPRESS_VERSION, 'all');
 
-        wp_enqueue_script(
-            'multiple-authors-chosen',
+        wp_register_script(
+            'chosen',
             plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
             ['jquery'],
             PUBLISHPRESS_VERSION
         );
-        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', ['jquery'],
+        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', ['jquery', 'chosen'],
             PUBLISHPRESS_VERSION);
 
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', ['jquery'],
