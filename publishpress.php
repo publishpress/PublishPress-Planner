@@ -61,6 +61,8 @@ class publishpress
 
     protected $menu_slug;
 
+    protected $modules_instances = [];
+
     /**
      * Main PublishPress Instance
      *
@@ -108,7 +110,7 @@ class publishpress
         // Fix the order of the submenus
         add_filter('custom_menu_order', [$this, 'filter_custom_menu_order']);
 
-        do_action_ref_array('publishpress_after_setup_actions', [&$this]);
+        do_action_ref_array('publishpress_after_setup_actions', [$this]);
     }
 
     /**
@@ -276,8 +278,21 @@ class publishpress
         // but make sure they exist too
         foreach ($class_names as $slug => $class_name) {
             if (class_exists($class_name)) {
-                $slug        = PublishPress\Legacy\Util::sanitize_module_name($slug);
-                $this->$slug = new $class_name();
+                $slug            = PublishPress\Legacy\Util::sanitize_module_name($slug);
+                $module_instance = new $class_name();
+
+                $this->$slug = $module_instance;
+
+                // If there's a Help Screen registered for the module, make sure we auto-load it
+                $args = null;
+                if (isset($this->modules->$slug)) {
+                    $args = $this->modules->$slug;
+                }
+
+                if ( ! is_null($args) && ! empty($args->settings_help_tab)) {
+                    add_action('load-publishpress_page_' . $args->settings_slug,
+                        [$module_instance, 'action_settings_help_menu']);
+                }
             }
         }
 
@@ -486,13 +501,6 @@ class publishpress
 
         if (empty($args['post_type_support'])) {
             $args['post_type_support'] = 'pp_' . $name;
-        }
-
-        // If there's a Help Screen registered for the module, make sure we
-        // auto-load it
-        if ( ! empty($args['settings_help_tab'])) {
-            add_action('load-publishpress_page_' . $args['settings_slug'],
-                [&$this->$name, 'action_settings_help_menu']);
         }
 
         $this->modules->$name = (object)$args;
