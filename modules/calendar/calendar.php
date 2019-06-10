@@ -1244,7 +1244,7 @@ if ( ! class_exists('PP_Calendar')) {
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
-                                                    <div>
+                                                    <div style="display: none;">
                                                         <label for="post-insert-dialog-post-publish-time"><?php _e('Publish Time', 'publishpress'); ?></label>
                                                         <input
                                                             type="time"
@@ -2348,16 +2348,20 @@ if ( ! class_exists('PP_Calendar')) {
             $post_date = sanitize_text_field($_POST['pp_insert_date']);
             $post_date_timestamp = strtotime($post_date);
 
-            $post_publish_time = sanitize_text_field($_POST['pp_insert_publish_time']);
-            $post_publish_date_time = sprintf(
-                '%s %s',
-                $post_date,
-                ((function_exists('mb_strlen') ? mb_strlen($post_publish_time) : strlen($post_publish_time)) === 5)
-                    ? "{$post_publish_time}:" . date('s', $post_date_timestamp)
-                    : date('H:i:s', $post_date_timestamp)
-            );
+            $post_publish_time = sanitize_text_field(trim($_POST['pp_insert_publish_time']));
+            if (!empty($post_publish_time)) {
+                $post_publish_date_time = sprintf(
+                    '%s %s',
+                    $post_date,
+                    ((function_exists('mb_strlen') ? mb_strlen($post_publish_time) : strlen($post_publish_time)) === 5)
+                        ? "{$post_publish_time}:" . date('s', $post_date_timestamp)
+                        : date('H:i:s', $post_date_timestamp)
+                );
+            } else {
+                $post_publish_time = '';
+            }
 
-            $post_publish_date_time_instance = new DateTime("{$post_date} {$post_publish_time}");
+            $post_publish_date_time_instance = new DateTime("{$post_date}{$post_publish_time}");
             if ($post_publish_date_time_instance === false) {
                 $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
             }
