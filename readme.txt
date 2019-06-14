@@ -131,6 +131,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.20.7] - 2019-06-14 =
+
+* Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library  
 * Fix alignment of stars on "please leave us a rating" footer
 * Fix redirect behavior on "Already reviewed" selection from "Please leave a review" notice
 

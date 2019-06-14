@@ -72,6 +72,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         protected $published_workflows;
 
         /**
+         * Flag to assist conditional loading
+         */
+        private $twig_configured = false;
+
+        /**
          * Construct the Notifications class
          */
         public function __construct()
@@ -106,12 +111,14 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             );
 
             parent::__construct();
-
-            $this->configure_twig();
         }
 
         protected function configure_twig()
         {
+            if ($this->twig_configured) {
+                return;
+            }
+
             $function = new Twig_SimpleFunction('settings_fields', function () {
                 return settings_fields($this->module->options_group_name);
             });
@@ -136,6 +143,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 return do_settings_sections($section);
             });
             $this->twig->addFunction($function);
+
+            $this->twig_configured = true;
         }
 
         /**
@@ -256,6 +265,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         protected function create_default_workflow_post_save()
         {
+            $this->configure_twig();
+
             $twig = $this->get_service('twig');
 
             // Get post statuses
@@ -298,6 +309,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function settings_default_channels_option()
         {
+            $this->configure_twig();
+
             $twig = $this->get_service('twig');
 
             /**
@@ -351,6 +364,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         protected function create_default_workflow_editorial_comment()
         {
+            $this->configure_twig();
+
             $twig = $this->get_service('twig');
 
             // Post Save
@@ -630,6 +645,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             // Adds the nonce field
             wp_nonce_field('publishpress_notif_save_metabox', 'publishpress_notif_metabox_events_nonce');
 
+            $this->configure_twig();
+
             $twig = $this->get_service('twig');
 
             $main_context = [];
@@ -709,6 +726,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'read_more'        => __('Click here to read more about shortcode options...', 'publishpress'),
                 ],
             ];
+
+            $this->configure_twig();
 
             $twig = $this->get_service('twig');
 
@@ -816,6 +835,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             if ( ! current_user_can('pp_set_notification_channel')) {
                 return;
             }
+
+            $this->configure_twig();
 
             $twig = $this->get_service('twig');
 
