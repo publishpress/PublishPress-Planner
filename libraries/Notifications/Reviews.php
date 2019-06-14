@@ -46,7 +46,7 @@ class Reviews
                 if (isset($submenu['pp-manage-roles'])) {
                     $redirectURL = $submenu['pp-manage-roles'][0][2];
                 } else {
-                    $redirectURL = 'admin.php?page=pp-calendar';
+                    $redirectURL = 'admin.php?page=pp-modules-settings';
                 }
             }
 

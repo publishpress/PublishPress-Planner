@@ -132,6 +132,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.20.7] - 2019-06-14 =
 * Fix alignment of stars on "please leave us a rating" footer
+* Fix redirect behavior on "Already reviewed" selection from "Please leave a review" notice
+
 = [1.20.6] - 2019-05-16 =
 * Fix fatal error on Edit Notification Workflow screen
 * Fix JS error in wp-admin (blocking other plugin JS) for sites running on localhost and Windows servers
