@@ -65,7 +65,7 @@
 /* Admin icon */
 #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
 #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before {
-    background-image: url(../../modules/settings/lib/menu-icon.png);
+    background-image: url(../../modules/settings/lib/new-menu-icon.png);
     background-repeat: no-repeat;
     background-position: 0 8px;
     background-size: 19px auto;
