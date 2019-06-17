@@ -116,7 +116,7 @@ You can install PublishPress through your WordPress admin area:
 = Where Can I Get Support? =
 
 You can ask for help via [the PublishPress contact form](https://publishpress.com/contact/).
-
+ph
 = Do I Need Coding Skills to Use PublishPress? =
 
 Not at all. You can set up everything your team needs without any coding knowledge. We made it super easy.
@@ -141,9 +141,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Add post status field on New Post popup within Calendar
 * Fix call-time passed-by-reference occurrences
 * Changed calendar to display or hide the publish time according to the post status
-* Fix alignment of stars on "please leave us a rating" footer
-* Fix redirect behavior on "Already reviewed" option on "Please leave a review" notice
-* Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library
 * Add new PublishPress icon to the Settings screen
 
 = [1.20.6] - 2019-05-16 =
