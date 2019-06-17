@@ -173,6 +173,15 @@ div.pp-icon img {
     height:48px;
 }
 
+.pressshack-admin-wrapper .logo-header {
+    display: inline-block;
+  margin-right: 5px;
+}
+
+.pressshack-admin-wrapper .logo-header img {
+    width: 50px;
+}
+
 /* @TODO load this code through custom-status.css
 Status color box */
 
