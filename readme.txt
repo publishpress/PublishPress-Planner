@@ -142,6 +142,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fix call-time passed-by-reference occurrences
 * Changed calendar to display or hide the publish time according to the post status
 * Add new PublishPress icon to the Settings screen
+* Update the menu icon
 
 = [1.20.6] - 2019-05-16 =
 * Fix fatal error on Edit Notification Workflow screen
