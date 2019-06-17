@@ -68,22 +68,6 @@
     -o-box-shadow: none;
 }
 
-.pressshack-admin-wrapper header .pressshack-title {
-    display: inline-block;
-    padding: 10px 0 10px 55px;
-    background-image: url(../../modules/settings/lib/icon-128x128.png);
-    background-size: 45px auto;
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-}
-
-.pressshack-admin-wrapper > header .pressshack-title {
-    margin: .67em 0 15px .15em;
-    font-weight: 600;
-    font-size: 2em;
-}
-
 .pressshack-admin-wrapper > header h1 a,
 .pressshack-admin-wrapper > header h1 a:hover,
 .pressshack-admin-wrapper > header h1 a:focus,
