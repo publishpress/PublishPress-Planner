@@ -130,11 +130,21 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.20.7] - 2019-06-14 =
+= [1.20.7] - 2019-06-17 =
 
-* Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library  
+* Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library
 * Fix alignment of stars on "please leave us a rating" footer
 * Fix redirect behavior on "Already reviewed" selection from "Please leave a review" notice
+* Fix PHP warning when a invalid taxonomy is loaded
+* Fix an empty space on the statuses screen
+* Add publish time field on New Post popup within Calendar
+* Add post status field on New Post popup within Calendar
+* Fix call-time passed-by-reference occurrences
+* Changed calendar to display or hide the publish time according to the post status
+* Fix alignment of stars on "please leave us a rating" footer
+* Fix redirect behavior on "Already reviewed" option on "Please leave a review" notice
+* Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library
+* Add new PublishPress icon to the Settings screen
 
 = [1.20.6] - 2019-05-16 =
 * Fix fatal error on Edit Notification Workflow screen
