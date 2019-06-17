@@ -95,8 +95,6 @@ if ( ! class_exists('PP_Roles')) {
             $this->module = PublishPress()->register_module($this->module_name, $args);
 
             parent::__construct();
-
-            $this->configureTwig();
         }
 
         protected function configureTwig()
@@ -857,6 +855,8 @@ if ( ! class_exists('PP_Roles')) {
                     }
                 }
             }
+            
+            $this->configureTwig();
 
             echo $this->twig->render(
                 'settings-tab-roles.twig.html',

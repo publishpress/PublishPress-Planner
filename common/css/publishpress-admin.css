@@ -161,13 +161,20 @@
     margin-bottom: 5px;
 }
 
+.publishpress-admin h1 {
+    margin-top:8px;
+}
+
+div.pp-icon {
+    float:left;
+    margin: 5px 10px 0 0;
+}
+div.pp-icon img {
+    height:48px;
+}
+
 /* @TODO load this code through custom-status.css
 Status color box */
-
-.publishpress-admin table.statuses {
-    display: block;
-    overflow-x: auto;
-}
 
 .pp-status-color {
     width: 10px;

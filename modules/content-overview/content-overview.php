@@ -381,7 +381,7 @@ class PP_Content_Overview extends PP_Module
             $additional_terms =
                 apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
             foreach ($additional_terms as $term) {
-                if ($term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                if (!is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
                     continue;
                 }
 
