@@ -212,6 +212,10 @@ if ( ! class_exists('PP_Settings')) {
 
 			<div class="publishpress-admin pressshack-admin-wrapper wrap">
 				<header>
+                    <div class="pp-icon">
+                    <img src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress.png';?>" alt="" />
+                    </div>
+
 					<h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
 					<?php echo !empty($display_text) ? $display_text : ''; ?>
