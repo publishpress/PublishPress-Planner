@@ -175,11 +175,8 @@ div.pp-icon img {
 
 .pressshack-admin-wrapper .logo-header {
     display: inline-block;
-  margin-right: 5px;
-}
-
-.pressshack-admin-wrapper .logo-header img {
-    width: 50px;
+    margin-right: 5px;
+    height: 50px;
 }
 
 /* @TODO load this code through custom-status.css
