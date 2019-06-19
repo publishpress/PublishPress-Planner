@@ -165,7 +165,7 @@ if ( ! class_exists('PP_Calendar')) {
                     'enabled'                 => 'on',
                     'post_types'              => $this->pre_select_all_post_types(),
                     'ics_subscription'        => 'on',
-                    'ics_secret_key'          => '',
+                    'ics_secret_key'          => wp_generate_password(),
                     'show_posts_publish_time' => 'on',
                 ],
                 'messages'              => [
