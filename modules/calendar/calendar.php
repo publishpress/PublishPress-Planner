@@ -921,6 +921,8 @@ if ( ! class_exists('PP_Calendar')) {
             $description = sprintf('%s <span class="time-range">%s</span>', __('Calendar', 'publishpress'),
                 $this->calendar_time_range());
 
+            $authors = pp_get_users_with_author_permissions();
+
             // Should we display the subscribe button?
             if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key) {
                 // Prepare the download link
@@ -940,8 +942,6 @@ if ( ! class_exists('PP_Calendar')) {
                 $description .= '<div class="calendar-subscribe">';
 
                 add_thickbox();
-
-                $authors = pp_get_users_with_author_permissions();
 
                 ob_start(); ?>
                 <div id="publishpress-calendar-ics-subs" style="display:none;">
