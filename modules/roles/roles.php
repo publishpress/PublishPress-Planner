@@ -576,7 +576,7 @@ if ( ! class_exists('PP_Roles')) {
                 // Settings page
                 wp_enqueue_script(
                     'publishpress-chosen-js',
-                    PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.jquery.js',
+                    PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.jquery.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -589,7 +589,7 @@ if ( ! class_exists('PP_Roles')) {
 
                 wp_enqueue_style(
                     'publishpress-chosen-css',
-                    PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.css',
+                    PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.css',
                     false,
                     PUBLISHPRESS_VERSION
                 );
@@ -607,7 +607,7 @@ if ( ! class_exists('PP_Roles')) {
                         // Check if we are on the user's profile page
                         wp_enqueue_script(
                             'publishpress-chosen-js',
-                            PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.jquery.js',
+                            PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.jquery.js',
                             ['jquery'],
                             PUBLISHPRESS_VERSION
                         );
@@ -620,7 +620,7 @@ if ( ! class_exists('PP_Roles')) {
 
                         wp_enqueue_style(
                             'publishpress-chosen-css',
-                            PUBLISHPRESS_URL . '/common/libs/chosen-v1.8.3/chosen.css',
+                            PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.css',
                             false,
                             PUBLISHPRESS_VERSION
                         );
@@ -855,7 +855,7 @@ if ( ! class_exists('PP_Roles')) {
                     }
                 }
             }
-            
+
             $this->configureTwig();
 
             echo $this->twig->render(

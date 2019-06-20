@@ -256,7 +256,7 @@ if ( ! class_exists('wsScreenOptions10')) :
 
             if ($got_autosave) {
                 // Enqueue the script itself
-                $url = PUBLISHPRESS_URL . '/common/js/screen-options.js';
+                $url = PUBLISHPRESS_URL . 'common/js/screen-options.js';
                 wp_enqueue_script('screen-options-custom-autosave', $url, ['jquery'], PUBLISHPRESS_VERSION);
             }
         }
