@@ -145,7 +145,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Update the menu icon
 * Fix calendar subscription after a fresh install, don't require saving the settings before it works
 * Fix the empty author list in the calendar popup
-* For PublishPress Reminders, support status selection in "Before Publication" workflow notifications 
+* For PublishPress Reminders, support status selection in "Before Publication" workflow notifications
+* Fix double slash on some assets URLs
 
 = [1.20.6] - 2019-05-16 =
 * Fix fatal error on Edit Notification Workflow screen
