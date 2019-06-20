@@ -212,9 +212,7 @@ if ( ! class_exists('PP_Settings')) {
 
 			<div class="publishpress-admin pressshack-admin-wrapper wrap">
 				<header>
-                    <div class="pp-icon">
-                    <img src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress.png';?>" alt="" />
-                    </div>
+                    <img src="<?php echo PUBLISHPRESS_URL . 'common/img/publishpress-logo-icon.png';?>" alt="" class="logo-header" />
 
 					<h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
@@ -328,10 +326,11 @@ if ( ! class_exists('PP_Settings')) {
         /**
          * Given a form field and a description, prints either the error associated with the field or the description.
          *
-         * @since 0.7
-         *
          * @param string $field The form field for which to check for an error
          * @param string $description Unlocalized string to display if there was no error with the given field
+         *
+         *@since 0.7
+         *
          */
         public function helper_print_error_or_description($field, $description)
         {

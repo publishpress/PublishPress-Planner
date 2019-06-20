@@ -23,7 +23,7 @@ class Workflow
      *
      * @var WP_Post
      */
-    protected $workflow_post;
+    public $workflow_post;
 
     /**
      * An array with arguments set by the action
@@ -258,14 +258,16 @@ class Workflow
      *
      * @return array
      */
-    public function get_related_posts()
+    public function get_related_posts($args = [])
     {
+        $post_status = (!empty($args['post_status'])) ? $args['post_status'] : 'future';
+
         $posts = [];
 
         // Build the query
         $query_args = [
             'nopaging'      => true,
-            'post_status'   => 'future',
+            'post_status'   => $post_status,
             'no_found_rows' => true,
             'cache_results' => true,
             'meta_query'    => [

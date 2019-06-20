@@ -196,6 +196,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
+
+            add_action('admin_head', [$this, 'show_icon_on_title']);
         }
 
         /**
@@ -937,11 +939,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Validate data entered by the user
          *
-         * @since 0.7
-         *
          * @param array $new_options New values that have been entered by the user
          *
          * @return array $new_options Form values after they've been sanitized
+         * @since 0.7
+         *
          */
         public function settings_validate($new_options)
         {
@@ -1115,6 +1117,27 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
 
             return $channel;
+        }
+
+        public function show_icon_on_title()
+        {
+            global $pagenow;
+
+            if ('edit.php' !== $pagenow || ! (isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $_GET['post_type'])) {
+                return;
+            }
+            ?>
+            <img
+                src="http://192.168.0.7:32772/wp-content/plugins/publishpress//common/img/publishpress-logo-icon.png"
+                alt="" class="logo-header"/>
+
+            <script>
+                // Move the logo to the correct place since we don't have other hook to add it inside the .wrap element.
+                jQuery(function ($) {
+                    $('.wp-heading-inline').before($('.logo-header'));
+                });
+            </script>
+            <?php
         }
     }
 }
