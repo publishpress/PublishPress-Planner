@@ -43,4 +43,4 @@ Before creating enhancement suggestions, please check our [issues list](https://
 - Create a **new branch for each issue** you are trying to solve. Make sure it starts off our `development` branch and is updated
 - Create **a pull request for each problem** you are fixing. You can mention multiple issues, but they have to be related somehow. Different problems have to be fixed on different pull requests
 - **Do not submit to the master branch**. Always submit pull requests to the `development` or other branch
-- Fill in the [required template](https://github.com/publishpress/PublishPress/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
+- Fill in the [required template](https://github.com/publishpress/PublishPress/blob/development/.github/PULL_REQUEST_TEMPLATE.md)
