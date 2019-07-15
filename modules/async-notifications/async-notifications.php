@@ -176,8 +176,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
          */
         protected function is_duplicated_notification($args)
         {
-            // Calculate unique ID to avoid repeated notifications.
-            $uid = md5(maybe_serialize(func_get_args()));
+            $uid = $this->calculateNotificationUID($args);
 
             $transientName = 'ppnotif_' . $uid;
 
@@ -205,6 +204,16 @@ if ( ! class_exists('PP_Async_Notifications')) {
             set_transient($transientName, 1, $timeout);
 
             return false;
+        }
+
+        /**
+         * @param array $args
+         *
+         * @return string
+         */
+        private function calculateNotificationUID($args)
+        {
+            return md5(maybe_serialize($args));
         }
 
         /**
