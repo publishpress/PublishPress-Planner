@@ -90,7 +90,20 @@ if ( ! class_exists('PP_Debug')) {
             // Admin menu.
             add_action('admin_menu', [$this, 'admin_menu']);
 
+            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+
             $this->initialized = true;
+        }
+
+        public function enqueue_admin_scripts()
+        {
+            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) {
+                wp_enqueue_style('publishpress-debug', PUBLISHPRESS_URL . 'modules/debug/assets/css/debug.css',
+                    [], PUBLISHPRESS_VERSION, 'screen');
+
+                wp_enqueue_script('publishpress-debug', PUBLISHPRESS_URL . 'modules/debug/assets/js/debug.js',
+                    [], PUBLISHPRESS_VERSION);
+            }
         }
 
         /**
