@@ -108,11 +108,10 @@ if ( ! class_exists('PP_Async_Notifications')) {
          */
         public function init()
         {
-            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
-
             add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 5);
-
             add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
+            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
+            add_filter('debug_information', [$this, 'filterDebugInformation']);
         }
 
         /**
@@ -273,6 +272,67 @@ if ( ! class_exists('PP_Async_Notifications')) {
                 $content,
                 $channel
             );
+        }
+
+        /**
+         * @param array $debugInfo
+         *
+         * @return array
+         */
+        public function filterDebugInformation($debugInfo)
+        {
+            $scheduledNotifications = [];
+
+            $cronTasks = _get_cron_array();
+
+            $expectedHooks = [
+                'publishpress_cron_notify',
+            ];
+
+            if ( ! empty($cronTasks)) {
+                foreach ( $cronTasks as $time => $cron ) {
+                    foreach ( $cron as $hook => $dings ) {
+                        if ( ! in_array($hook, $expectedHooks)) {
+                            continue;
+                        }
+
+                        foreach ( $dings as $sig => $data ) {
+                            $formattedDate = date('Y-m-d H:i:s', $time);
+
+                            $event = $data['args'][1];
+                            $postId = $data['args'][2];
+                            $channel = $data['args'][6];
+
+                            if ($channel === 'email') {
+
+                                $details = $data['args'][7];
+
+                                if (is_numeric($details)) {
+                                    $user = get_userdata($details);
+
+                                    $details .= ' - ' . $user->user_email;
+                                }
+
+                                $channel .= ' (' . $details . ')';
+                            }
+
+                            $scheduledNotifications["$hook-$sig-$time"] = [
+                                'label' => $formattedDate,
+                                'value' => sprintf(__('Event: %s, Post ID: %s, Channel: %s', 'publishpress'), $event, $postId, $channel),
+                            ];
+                        }
+                    }
+                }
+            }
+
+            $debugInfo['publishpress-scheduled-notifications'] = [
+                'label'       => 'PublishPress Scheduled Notifications',
+                'description' => '',
+                'show_count'  => true,
+                'fields'      => $scheduledNotifications,
+            ];
+
+            return $debugInfo;
         }
     }
 }
