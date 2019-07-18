@@ -130,6 +130,10 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= 1.20.8 =
+* Feature : Support post meta fields in notification body (also requires PublishPress Reminders 1.1.1)
+* Fixed : If Async Notifications enabled and more than one workflow notification applies to a post, the additional notifications were not sent (corresponding fix in PublishPress Reminders 1.1.1) 
+
 = [1.20.7] - 2019-06-17 =
 
 * Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library

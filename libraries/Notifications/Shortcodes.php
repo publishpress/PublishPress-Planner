@@ -413,6 +413,10 @@ class Shortcodes
                     break;
 
                 default:
+                    if ($custom = apply_filters('publishpress_notif_shortcode_post_data', false, $item, $post, $attrs)) {
+                        $info[] = $custom;
+                    }
+
                     break;
             }
         }
