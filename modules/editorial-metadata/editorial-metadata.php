@@ -442,7 +442,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                             [
                                 'name'  => $postmeta_key,
                                 'label' => $term->name,
-                                'description' => $term->description
+                                'description' => $term->description,
                             ],
                             $current_metadata
                         );
@@ -452,7 +452,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                             [
                                 'name'  => $postmeta_key,
                                 'label' => $term->name,
-                                'description' => $term->description
+                                'description' => $term->description,
                             ],
                             $current_metadata
                         );
@@ -531,8 +531,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         if (false !== $date) {
                             $new_metadata = $date->getTimestamp();
                         }
-                    }
-                    if ($type == 'number') {
+                    } elseif ($type == 'number') {
                         $new_metadata = (int)$new_metadata;
                     }
 
@@ -591,11 +590,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Get all of the editorial metadata terms as objects and sort by position
          *
-         * @todo Figure out what we should do with the filter...
-         *
          * @param array $filter_args Filter to specific arguments
          *
          * @return array $ordered_terms The terms as they should be ordered
+         *@todo Figure out what we should do with the filter...
+         *
          */
         public function get_editorial_metadata_terms($filter_args = [])
         {
@@ -691,11 +690,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * Register editorial metadata fields as columns in the manage posts view
          * Only adds columns for the currently active post types - logic controlled in $this->init()
          *
-         * @since 0.7
-         * @uses apply_filters('manage_posts_columns') in wp-admin/includes/class-wp-posts-list-table.php
-         *
          * @param array $posts_columns Existing post columns prepared by WP_List_Table
          * @param array $posts_columns Previous post columns with the new values
+         *
+         *@since 0.7
+         * @uses apply_filters('manage_posts_columns') in wp-admin/includes/class-wp-posts-list-table.php
+         *
          */
         public function filter_manage_posts_columns($posts_columns)
         {
@@ -715,11 +715,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Register any viewable date editorial metadata as a sortable column
          *
-         * @since 0.7.4
-         *
          * @param array $sortable_columns Any existing sortable columns (e.g. Title)
          *
          * @return array $sortable_columms Sortable columns with editorial metadata date fields added
+         *@since 0.7.4
+         *
          */
         public function filter_manage_posts_sortable_columns($sortable_columns)
         {
@@ -752,11 +752,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * Handle the output of an editorial metadata custom column
          * Logic for the post types this is called on is controlled in $this->init()
          *
-         * @since 0.7
-         * @uses do_action('manage_posts_custom_column') in wp-admin/includes/class-wp-posts-list-table.php
-         *
          * @param string $column_name Unique string for the column
          * @param int $post_id ID for the post of the row
+         *
+         *@since 0.7
+         * @uses do_action('manage_posts_custom_column') in wp-admin/includes/class-wp-posts-list-table.php
+         *
          */
         public function action_manage_posts_custom_column($column_name, $post_id)
         {
@@ -776,13 +777,13 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * If the PublishPress Calendar is enabled, add viewable Editorial Metadata terms
          *
-         * @since 0.7
-         * @uses apply_filters('pp_calendar_item_information_fields')
-         *
          * @param array $calendar_fields Additional data fields to include on the calendar
          * @param int $post_id Unique ID for the post data we're building
          *
          * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
+         *@uses apply_filters('pp_calendar_item_information_fields')
+         *
+         * @since 0.7
          */
         public function filter_calendar_item_fields($calendar_fields, $post_id)
         {
@@ -814,12 +815,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * If the PublishPress Content Overview is enabled, register our viewable terms as columns
          *
-         * @since 0.7
-         * @uses apply_filters('pp_story_budget_term_columns')
-         *
          * @param array $term_columns The existing columns on the content overview
          *
          * @return array $term_columns Term columns with viewable Editorial Metadata terms
+         *@since 0.7
+         * @uses apply_filters('pp_story_budget_term_columns')
+         *
          */
         public function filter_story_budget_term_columns($term_columns)
         {
@@ -837,12 +838,13 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * If the PublishPress Content Overview is enabled,
          *
-         * @since 0.7
-         * @uses apply_filters('pp_story_budget_term_column_value')
-         *
          * @param object $post The post we're displaying
          * @param string $column_name Name of the column, as registered with PP_Story_Budget::register_term_columns
          * @param object $parent_term The parent term for the term column
+         *
+         *@uses apply_filters('pp_story_budget_term_column_value')
+         *
+         * @since 0.7
          */
         public function filter_story_budget_term_column_values($column_name, $post, $parent_term)
         {
@@ -869,11 +871,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Generate the presentational output for an editorial metadata term
          *
-         * @since 0.8
-         *
          * @param object      $term    The editorial metadata term
          *
          * @return string     $html    How the term should be rendered
+         *@since 0.8
+         *
          */
         private function generate_editorial_metadata_term_output($term, $pm_value)
         {
@@ -886,12 +888,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Update an existing editorial metadata term if the term_id exists
          *
-         * @since 0.7
-         *
          * @param int $term_id The term's unique ID
          * @param array $args Any values that need to be updated for the term
          *
          * @return object|WP_Error $updated_term The updated term or a WP_Error object if something disastrous happened
+         *@since 0.7
+         *
          */
         public function update_editorial_metadata_term($term_id, $args)
         {
@@ -978,11 +980,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Delete an existing editorial metadata term
          *
-         * @since 0.7
-         *
          * @param int $term_id The term we want deleted
          *
          * @return bool $result Whether or not the term was deleted
+         *@since 0.7
+         *
          */
         public function delete_editorial_metadata_term($term_id)
         {
@@ -997,11 +999,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Generate a link to one of the editorial metadata actions
          *
-         * @since 0.7
-         *
          * @param array $args (optional) Action and any query args to add to the URL
          *
          * @return string $link Direct link to complete the action
+         *@since 0.7
+         *
          */
         public function get_link($args = [])
         {
@@ -1347,11 +1349,11 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * Validate data entered by the user
          *
-         * @since 0.7
-         *
          * @param array $new_options New values that have been entered by the user
          *
          * @return array $new_options Form values after they've been sanitized
+         *@since 0.7
+         *
          */
         public function settings_validate($new_options)
         {
@@ -1558,7 +1560,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 <?php endif; ?>
                     </div>
                     </div>
-                </div>
+                </div>;
 
                 <?php
             endif;
@@ -1662,10 +1664,11 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
     /**
      * Prepare a single row of Editorial Metadata
      *
-     * @since 0.7
-     *
      * @param object $term The current term we're displaying
      * @param int $level Level is always zero because it isn't a parent-child tax
+     *
+     *@since 0.7
+     *
      */
     public function single_row($term, $level = 0)
     {
@@ -1681,10 +1684,11 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
     /**
      * Handle the column output when there's no method for it
      *
-     * @since 0.7
-     *
      * @param object $item Editorial Metadata term as an object
      * @param string $column_name How the column was registered at birth
+     *
+     *@since 0.7
+     *
      */
     public function column_default($item, $column_name)
     {
@@ -1735,9 +1739,10 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
     /**
      * Column for displaying the term's name and associated actions
      *
-     * @since 0.7
-     *
      * @param object $item Editorial Metadata term as an object
+     *
+     *@since 0.7
+     *
      */
     public function column_name($item)
     {
