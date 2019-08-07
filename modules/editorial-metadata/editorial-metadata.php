@@ -617,7 +617,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             // Order the terms
             foreach ($terms as $key => $term) {
 
-                // Unencode and set all of our psuedo term meta because we need the position and viewable if they exists
+                // Unencode and set all of our pseudo term meta because we need the position and viewable if they exists
                 // First do an array_merge() on the term object to make sure the keys exist, then array_merge()
                 // any values that may already exist
                 $unencoded_description = $this->get_unencoded_description($term->description);
