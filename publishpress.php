@@ -393,10 +393,6 @@ class publishpress
                     'label' => __('PUBLISHPRESS_BASENAME'),
                     'value' => PUBLISHPRESS_BASENAME,
                 ],
-                'ABSPATH' => [
-                    'label' => __('ABSPATH'),
-                    'value' => ABSPATH,
-                ],
                 'WP_CONTENT_DIR' => [
                     'label' => __('WP_CONTENT_DIR'),
                     'value' => WP_CONTENT_DIR,
@@ -404,6 +400,10 @@ class publishpress
                 'WP_CONTENT_URL' => [
                     'label' => __('WP_CONTENT_URL'),
                     'value' => WP_CONTENT_URL,
+                ],
+                'php_uname()' => [
+                    'label' => __('php_uname()'),
+                    'value' => @php_uname(),
                 ],
                 'Framework::FRAMEWORK_BASE_PATH' => [
                     'label' => __('Framework::FRAMEWORK_BASE_PATH'),
@@ -424,10 +424,6 @@ class publishpress
                 'Framework::PLUGIN_TITLE' => [
                     'label' => __('Framework::PLUGIN_TITLE'),
                     'value' => $frameworkContainer['PLUGIN_TITLE'],
-                ],
-                'Container::PLUGIN_BASENAME' => [
-                    'label' => __('Container::PLUGIN_BASENAME'),
-                    'value' => $this->get_service('PLUGIN_BASENAME'),
                 ],
             ],
         ];
