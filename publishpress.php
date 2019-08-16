@@ -401,6 +401,26 @@ class publishpress
                     'label' => __('WP_CONTENT_URL'),
                     'value' => WP_CONTENT_URL,
                 ],
+                'option::date_format' => [
+                    'label' => __('WP Date Format'),
+                    'value' => get_option('date_format'),
+                ],
+                'option::time_format' => [
+                    'label' => __('WP Time Format'),
+                    'value' => get_option('time_format'),
+                ],
+                'option::timezone_string' => [
+                    'label' => __('WP Timezone String'),
+                    'value' => get_option('timezone_string'),
+                ],
+                'option::gmt_offset' => [
+                    'label' => __('WP GMT Offset'),
+                    'value' => get_option('gmt_offset'),
+                ],
+                'php::date_default_timezone_get' => [
+                    'label' => __('date_default_timezone_get'),
+                    'value' => date_default_timezone_get(),
+                ],
                 'Framework::FRAMEWORK_BASE_PATH' => [
                     'label' => __('Framework::FRAMEWORK_BASE_PATH'),
                     'value' => $frameworkContainer['FRAMEWORK_BASE_PATH'],
