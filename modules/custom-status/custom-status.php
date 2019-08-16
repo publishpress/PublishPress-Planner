@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if ( ! class_exists('PP_Custom_Status')) {
     /**
      * class PP_Custom_Status
@@ -40,6 +42,8 @@ if ( ! class_exists('PP_Custom_Status')) {
      */
     class PP_Custom_Status extends PP_Module
     {
+        use Dependency_Injector;
+
         const MODULE_NAME = 'custom_status';
         const SETTINGS_SLUG = 'pp-custom-status-settings';
 
