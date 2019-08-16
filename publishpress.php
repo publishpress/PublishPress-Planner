@@ -401,10 +401,6 @@ class publishpress
                     'label' => __('WP_CONTENT_URL'),
                     'value' => WP_CONTENT_URL,
                 ],
-                'php_uname()' => [
-                    'label' => __('php_uname()'),
-                    'value' => @php_uname(),
-                ],
                 'Framework::FRAMEWORK_BASE_PATH' => [
                     'label' => __('Framework::FRAMEWORK_BASE_PATH'),
                     'value' => $frameworkContainer['FRAMEWORK_BASE_PATH'],
