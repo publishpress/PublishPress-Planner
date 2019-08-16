@@ -356,6 +356,84 @@ class publishpress
      */
     public function filterDebugInformation($debugInfo)
     {
+        // Config
+        $framework = $this->get_service('framework');
+        $frameworkContainer = $framework->get_container();
+
+        $debugInfo['publishpress'] = [
+            'label' => 'PublishPress',
+            'description' => '',
+            'show_count' => false,
+            'fields' => [
+                'PUBLISHPRESS_VERSION' => [
+                    'label' => __('PUBLISHPRESS_VERSION'),
+                    'value' => PUBLISHPRESS_VERSION,
+                ],
+                'PUBLISHPRESS_BASE_PATH' => [
+                    'label' => __('PUBLISHPRESS_BASE_PATH'),
+                    'value' => PUBLISHPRESS_BASE_PATH,
+                ],
+                'PUBLISHPRESS_FILE_PATH' => [
+                    'label' => __('PUBLISHPRESS_FILE_PATH'),
+                    'value' => PUBLISHPRESS_FILE_PATH,
+                ],
+                'PUBLISHPRESS_URL' => [
+                    'label' => __('PUBLISHPRESS_URL'),
+                    'value' => PUBLISHPRESS_URL,
+                ],
+                'PUBLISHPRESS_SETTINGS_PAGE' => [
+                    'label' => __('PUBLISHPRESS_SETTINGS_PAGE'),
+                    'value' => PUBLISHPRESS_SETTINGS_PAGE,
+                ],
+                'PUBLISHPRESS_LIBRARIES_PATH' => [
+                    'label' => __('PUBLISHPRESS_LIBRARIES_PATH'),
+                    'value' => PUBLISHPRESS_LIBRARIES_PATH,
+                ],
+                'PUBLISHPRESS_BASENAME' => [
+                    'label' => __('PUBLISHPRESS_BASENAME'),
+                    'value' => PUBLISHPRESS_BASENAME,
+                ],
+                'ABSPATH' => [
+                    'label' => __('ABSPATH'),
+                    'value' => ABSPATH,
+                ],
+                'WP_CONTENT_DIR' => [
+                    'label' => __('WP_CONTENT_DIR'),
+                    'value' => WP_CONTENT_DIR,
+                ],
+                'WP_CONTENT_URL' => [
+                    'label' => __('WP_CONTENT_URL'),
+                    'value' => WP_CONTENT_URL,
+                ],
+                'Framework::FRAMEWORK_BASE_PATH' => [
+                    'label' => __('Framework::FRAMEWORK_BASE_PATH'),
+                    'value' => $frameworkContainer['FRAMEWORK_BASE_PATH'],
+                ],
+                'Framework::TWIG_PATH' => [
+                    'label' => __('Framework::TWIG_PATH'),
+                    'value' => $frameworkContainer['TWIG_PATH'],
+                ],
+                'Framework::ASSETS_BASE_URL' => [
+                    'label' => __('Framework::ASSETS_BASE_URL'),
+                    'value' => $frameworkContainer['ASSETS_BASE_URL'],
+                ],
+                'Framework::PLUGIN_NAME' => [
+                    'label' => __('Framework::PLUGIN_NAME'),
+                    'value' => $frameworkContainer['PLUGIN_NAME'],
+                ],
+                'Framework::PLUGIN_TITLE' => [
+                    'label' => __('Framework::PLUGIN_TITLE'),
+                    'value' => $frameworkContainer['PLUGIN_TITLE'],
+                ],
+                'Container::PLUGIN_BASENAME' => [
+                    'label' => __('Container::PLUGIN_BASENAME'),
+                    'value' => $this->get_service('PLUGIN_BASENAME'),
+                ],
+            ],
+        ];
+
+
+        // Modules
         $modules = [];
         $modulesDirs = $this->getModulesDirs();
 
