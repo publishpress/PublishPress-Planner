@@ -1,4 +1,4 @@
-=== PublishPress - Professional publishing tools for WordPress ===
+=== PublishPress Content Calendar and Notifications ===
 Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb, deenison
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com

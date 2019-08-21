@@ -3082,7 +3082,7 @@ msgstr "https://publishpress.com"
 #~ msgstr "Destacado"
 
 #~ msgid ""
-#~ "PublishPress is the essential plugin for any site with multiple writers."
+#~ "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 #~ msgstr ""
 #~ "PublishPress é o plugin essencial para qualquer site WordPress com "
 #~ "multiplos escritores."
