@@ -581,7 +581,9 @@ if ( ! class_exists('PP_Module')) {
             $since = $today - $original;
 
             if ($since > $chunks[2][0]) {
-                $print = date('M jS', $original);
+                $dateFormat = get_option('date_format', 'Y-m-d');
+
+                $print = date($dateFormat, $original);
 
                 if ($since > $chunks[0][0]) { // Seconds in a year
                     $print .= ', ' . date('Y', $original);

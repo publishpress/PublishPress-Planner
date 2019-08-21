@@ -2650,7 +2650,7 @@ msgstr ""
 #~ msgstr "Не удалось обновить группу пользователей: <strong>%s</strong>"
 
 #~ msgid ""
-#~ "PublishPress is the essential plugin for any site with multiple writers."
+#~ "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 #~ msgstr ""
 #~ "Плагин PublishPress позволяет по-новому организовать редакционно-"
 #~ "издательскую работу в WordPress."

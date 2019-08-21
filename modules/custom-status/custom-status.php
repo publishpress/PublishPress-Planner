@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if ( ! class_exists('PP_Custom_Status')) {
     /**
      * class PP_Custom_Status
@@ -40,6 +42,8 @@ if ( ! class_exists('PP_Custom_Status')) {
      */
     class PP_Custom_Status extends PP_Module
     {
+        use Dependency_Injector;
+
         const MODULE_NAME = 'custom_status';
         const SETTINGS_SLUG = 'pp-custom-status-settings';
 
@@ -2007,11 +2011,21 @@ if ( ! class_exists('PP_Custom_Status')) {
         {
             global $pagenow;
 
+
             if (is_int($post)) {
+                $postId = $post;
+                $this->get_service('debug')->write($postId, 'PP_Custom_Status::fix_preview_link_part_two $postId');
                 $post = get_post($post);
             }
 
             //Should we be doing anything at all?
+            if (!is_object($post)) {
+                $this->get_service('debug')->write($post, 'PP_Custom_Status::fix_preview_link_part_two $post');
+                $this->get_service('debug')->write($permalink, 'PP_Custom_Status::fix_preview_link_part_two $permalink');
+                $this->get_service('debug')->write($sample, 'PP_Custom_Status::fix_preview_link_part_two $sample');
+
+            }
+
             if ( ! in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
                 return $permalink;
             }

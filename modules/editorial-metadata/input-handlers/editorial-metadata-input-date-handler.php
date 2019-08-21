@@ -31,7 +31,7 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
-            $value_formatted = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
+            $value_formatted = !empty($value) ? self::show_date_or_datetime(intval($value)) : '';
 
             self::renderLabel($input_label, $input_name);
 
@@ -54,6 +54,8 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                 pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')
             );
 
+            $field_value = empty($value) ? '' : date('Y-m-d H:i', $value);
+
             printf(
                 '<input
                     type="hidden"
@@ -61,7 +63,7 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                     value="%s"
                 />',
                 $input_name,
-                date('Y-m-d H:i', $value)
+                $field_value
             );
         }
 

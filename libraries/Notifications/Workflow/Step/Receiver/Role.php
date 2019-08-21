@@ -9,11 +9,13 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
 class Role extends Simple_Checkbox implements Receiver_Interface
 {
     use PublishPress_Module;
+    use Dependency_Injector;
 
     const META_KEY = '_psppno_torole';
 

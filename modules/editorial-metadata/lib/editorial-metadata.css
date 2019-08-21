@@ -120,3 +120,7 @@ div#side-sortables .pp_editorial_meta_checkbox input {
 .pp_editorial_metadata_not_set {
     font-style: italic;
 }
+
+.block-editor-page .ui-datepicker {
+  z-index: 9999 !important;
+}

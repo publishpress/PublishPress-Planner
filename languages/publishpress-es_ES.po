@@ -2604,7 +2604,7 @@ msgstr ""
 #. Description of the plugin/theme
 #, fuzzy
 #| msgid ""
-#| "PublishPress is the essential plugin for any site with multiple writers."
+#| "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 msgid "The essential plugin for any WordPress site with multiple writers"
 msgstr "PublishPress redefine tu flujo de trabajo de publicación en WordPress."
 
@@ -3883,7 +3883,7 @@ msgstr ""
 #~ "No se ha podido actualizar el grupo de usuarios: <strong>%s</strong>"
 
 #~ msgid ""
-#~ "PublishPress is the essential plugin for any site with multiple writers."
+#~ "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 #~ msgstr ""
 #~ "PublishPress redefine tu flujo de trabajo de publicación en WordPress."
 
