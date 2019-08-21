@@ -137,6 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Feature: Added a list of installed modules to the Site Health page
 * Feature: Added a list of scheduled notifications ot the Site Health page
 * Changed: Convert debug panel to read only
+* Changed: symfony/polyfill-ctype library updated from 1.11.0 to 1.12.0
 * Fixed: If Async Notifications enabled and more than one workflow notification applies to a post, the additional notifications were not sent (corresponding fix in PublishPress Reminders 1.1.1)
 * Fixed: PHP warning "date() expects parameter 2 to be int, string given"
 * Fixed: Hidden calendar on datepicker fields in Gutenberg due to negative z-index
