@@ -2,10 +2,10 @@
 /**
  * Plugin Name: PublishPress
  * Plugin URI: https://publishpress.com/
- * Description: The essential plugin for any WordPress site with multiple writers
+ * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.20.8-dev
+ * Version: 1.20.8
  *
  * Copyright (c) 2019 PublishPress
  *

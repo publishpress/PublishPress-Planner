@@ -1,4 +1,4 @@
-=== PublishPress - Professional publishing tools for WordPress ===
+=== PublishPress Content Calendar and Notifications ===
 Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb, deenison
 Author: PublishPress, PressShack
 Author URI: https://publishpress.com
@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.2
-Stable tag: 1.20.7
+Stable tag: 1.20.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,9 +130,19 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= 1.20.8 =
-* Feature : Support post meta fields in notification body (also requires PublishPress Reminders 1.1.1)
-* Fixed : If Async Notifications enabled and more than one workflow notification applies to a post, the additional notifications were not sent (corresponding fix in PublishPress Reminders 1.1.1) 
+= [1.20.8] - 2019-08-19 =
+
+* Feature: Support post meta fields in notification body (also requires PublishPress Reminders 1.1.1)
+* Feature: Added general debug information and settings to the Site Health page
+* Feature: Added a list of installed modules to the Site Health page
+* Feature: Added a list of scheduled notifications ot the Site Health page
+* Changed: Convert debug panel to read only
+* Changed: symfony/polyfill-ctype library updated from 1.11.0 to 1.12.0
+* Fixed: If Async Notifications enabled and more than one workflow notification applies to a post, the additional notifications were not sent (corresponding fix in PublishPress Reminders 1.1.1)
+* Fixed: PHP warning "date() expects parameter 2 to be int, string given"
+* Fixed: Hidden calendar on datepicker fields in Gutenberg due to negative z-index
+* Fixed: The column "Last Updated" on content overview had a wrong date format
+* Fixed: Missed "use" statement for Dependency Injection on the custom status module
 
 = [1.20.7] - 2019-06-17 =
 

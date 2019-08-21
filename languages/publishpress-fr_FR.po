@@ -2720,7 +2720,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 #| msgid ""
-#| "PublishPress is the essential plugin for any site with multiple writers."
+#| "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 msgid "The essential plugin for any WordPress site with multiple writers"
 msgstr ""
 
@@ -2982,7 +2982,7 @@ msgstr ""
 #~ msgstr "Impossible de modifier le groupe : <strong>%s</strong>"
 
 #~ msgid ""
-#~ "PublishPress is the essential plugin for any site with multiple writers."
+#~ "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
 #~ msgstr "PublishPress redéfini votre processus de publication WordPress."
 
 #~ msgid "Calendar Options"
