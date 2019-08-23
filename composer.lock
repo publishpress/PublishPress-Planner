@@ -65,16 +65,16 @@
         },
         {
             "name": "alledia/wordpress-plugin-framework",
-            "version": "0.6.6",
+            "version": "0.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Plugin-Framework.git",
-                "reference": "1ac575867de1e4295b7cb7ceb712829f16b93fb7"
+                "reference": "d454be57aa700d06ee4be7bd7aedf563da4c191e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Framework/zipball/1ac575867de1e4295b7cb7ceb712829f16b93fb7",
-                "reference": "1ac575867de1e4295b7cb7ceb712829f16b93fb7",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Framework/zipball/d454be57aa700d06ee4be7bd7aedf563da4c191e",
+                "reference": "d454be57aa700d06ee4be7bd7aedf563da4c191e",
                 "shasum": ""
             },
             "require": {
@@ -94,15 +94,15 @@
             ],
             "authors": [
                 {
-                    "name": "Anderson Grudtner Martins",
-                    "email": "anderson@grudtner.me",
-                    "homepage": "http://anderson.grudtner.me",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Alledia",
                     "email": "help@alledia.com",
                     "homepage": "https://alledia.com"
+                },
+                {
+                    "name": "Anderson Grudtner Martins",
+                    "role": "Lead Developer",
+                    "email": "anderson@grudtner.me",
+                    "homepage": "http://anderson.grudtner.me"
                 }
             ],
             "description": "Alledia framework for creating WordPress plugins.",
@@ -111,7 +111,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-06-14T17:26:54+00:00"
+            "time": "2019-08-23T19:47:00+00:00"
         },
         {
             "name": "pimple/pimple",
