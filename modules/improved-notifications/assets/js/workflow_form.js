@@ -48,6 +48,18 @@
         setupFieldFilters('user');
         setupFieldFilters('role');
 
+        function getEditor() {
+            var editor = tinymce.activeEditor;
+
+            for (var editorIndex = 0; editorIndex < tinymce.editors.length; editorIndex++) {
+                if (tinymce.editors[editorIndex].id === 'input_id') {
+                  return tinymce.editors[editorIndex];
+                }
+            }
+
+            return editor;
+        }
+
         // List search
         $('.publishpress-filter-checkbox-list select').multipleSelect({
             filter: true
@@ -178,16 +190,18 @@
                 }
             }
 
+
+
             // Check the Content section
             if ($('#publishpress_notification_content_main_subject').val().trim() == ''
-                || tinymce.activeEditor.getContent().trim() === '') {
+                || getEditor().getContent().trim() === '') {
                 set_validation_status('content', false);
 
                 if ($('#publishpress_notification_content_main_subject').val().trim() == '') {
                     messages.push(workflowFormData.messages['setASubject']);
                 }
 
-                if (tinymce.activeEditor.getContent().trim() === '') {
+                if (getEditor().getContent().trim() === '') {
                     messages.push(workflowFormData.messages['setABody']);
                 }
             } else {
