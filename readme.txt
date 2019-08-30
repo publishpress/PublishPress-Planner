@@ -130,6 +130,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [1.20.9] - UNRELEASED =
+
+* Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin;
+* Fixed: JavaScript breaks when Alledia framework object is not found;
+* Fixed: Notification workflows are not saving when ACF is installed;
+* Fixed: Wrong help text for [psppno_post] shortcode in the notification workflows;
+
 = [1.20.8] - 2019-08-19 =
 
 * Feature: Support post meta fields in notification body (also requires PublishPress Reminders 1.1.1)
