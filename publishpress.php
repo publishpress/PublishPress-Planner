@@ -1125,7 +1125,7 @@ function publishPressRegisterCustomPostTypes()
                 'public'              => false,
                 'publicly_queryable'  => false,
                 'has_archive'         => false,
-                'rewrite'             => ['slug' => 'notification-workflows'],
+                'rewrite'             => false,
                 'show_ui'             => true,
                 'query_var'           => true,
                 'capability_type'     => 'post',

@@ -48,6 +48,15 @@ class PP_Dashboard_Notepad_Widget
             self::notepad_post_type,
             [
                 'label' => __('Dashboard Note', 'publishpress'),
+                'public'              => false,
+                'publicly_queryable'  => false,
+                'has_archive'         => false,
+                'rewrite'             => false,
+                'show_ui'             => false,
+                'query_var'           => false,
+                'hierarchical'        => false,
+                'can_export'          => true,
+                'exclude_from_search' => true,
             ]
         );
 
