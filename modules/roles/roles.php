@@ -30,6 +30,7 @@
 
 use PublishPress\Core\Modules\AbstractModule;
 use PublishPress\Core\Modules\ModuleInterface;
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use Twig\TwigFunction;
 
@@ -139,13 +140,15 @@ if ( ! class_exists('PP_Roles')) {
         {
             add_action('admin_init', [$this, 'register_settings']);
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestMethod = Util::getRequestMethod();
+
+            if ($requestMethod === 'POST') {
                 // Handle any adding, editing or saving
                 add_action('admin_init', [$this, 'handle_add_role']);
                 add_action('admin_init', [$this, 'handle_edit_role']);
             }
 
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            if ($requestMethod === 'GET') {
                 add_action('admin_init', [$this, 'handle_delete_role']);
             }
 
@@ -709,12 +712,12 @@ if ( ! class_exists('PP_Roles')) {
         /**
          * Generate a link to one of the routes actions
          *
-         * @since 0.7
-         *
          * @param string $action Action we want the user to take
          * @param array  $args   Any query args to add to the URL
          *
          * @return string $link Direct link to delete a route
+         * @since 0.7
+         *
          */
         public function getLink($args = [])
         {
