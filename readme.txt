@@ -132,10 +132,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [1.20.9] - UNRELEASED =
 
-* Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin;
+* Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin. Notifications were being sent for non supported post types;
 * Fixed: JavaScript breaks when Alledia framework object is not found;
 * Fixed: Notification workflows are not saving when ACF is installed;
 * Fixed: Wrong help text for [psppno_post] shortcode in the notification workflows;
+* Fixed: Missed rewrite rules for the post types: dashboard-note and psppnotif_workflow.
+* Fixed: Undefined index: REQUEST_METHOD for $_SERVER.
 
 = [1.20.8] - 2019-08-19 =
 
