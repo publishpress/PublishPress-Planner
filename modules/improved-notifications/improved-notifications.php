@@ -503,9 +503,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function action_transition_post_status($new_status, $old_status, $post)
         {
-
-            // Ignore if the post_type is an internal post_type
-            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type) {
+            if ( ! $this->is_supported_post_type($post->post_type)) {
                 return;
             }
 
@@ -531,6 +529,18 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
+         * @param $post_type
+         */
+        private function is_supported_post_type($post_type)
+        {
+            $publishpress = $this->get_service('publishpress');
+
+            $supportedPostTypes = $publishpress->improved_notifications->get_all_post_types();
+
+            return array_key_exists($post_type, $supportedPostTypes);
+        }
+
+        /**
          * Action called on editorial comments. Used to trigger the
          * controller of workflows to filter and execute them.
          *
@@ -540,6 +550,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         {
             // Go ahead and do the action to run workflows
             $post = get_post($comment->comment_post_ID);
+
+            if ( ! $this->is_supported_post_type($post->post_type)) {
+                return;
+            }
+
             $args = [
                 'action'     => 'editorial_comment',
                 'post'       => $post,
@@ -725,7 +740,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'format_text'      => __('On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".',
                         'publishpress'),
                     'available_fields' => __('Available fields', 'publishpress'),
-                    'meta_fields' => __('Meta fields', 'publishpress'),
+                    'meta_fields'      => __('Meta fields', 'publishpress'),
                     'read_more'        => __('Click here to read more about shortcode options...', 'publishpress'),
                 ],
             ];
@@ -1129,7 +1144,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
             ?>
             <img
-                src="http://192.168.0.7:32772/wp-content/plugins/publishpress//common/img/publishpress-logo-icon.png"
+                src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png' ?>"
                 alt="" class="logo-header"/>
 
             <script>

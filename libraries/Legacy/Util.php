@@ -91,7 +91,7 @@ class Util
      * Sanitizes the module name, making sure we always have only
      * valid chars, replacing - with _.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return string
      */
@@ -103,10 +103,11 @@ class Util
     /**
      * Adds an array of capabilities to a role.
      *
-     * @since 1.9.8
-     *
      * @param string $role A standard WP user role like 'administrator' or 'author'
      * @param array  $caps One or more user caps to add
+     *
+     * @since 1.9.8
+     *
      */
     public static function add_caps_to_role($role, $caps)
     {
@@ -158,5 +159,29 @@ class Util
         }
 
         return false;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public static function getRequestMethod()
+    {
+        if (isset($_SERVER) && isset($_SERVER['REQUEST_METHOD'])) {
+            return $_SERVER['REQUEST_METHOD'];
+        }
+
+        if (function_exists('getenv')) {
+            $method = strtoupper(getenv('REQUEST_METHOD'));
+
+            if ( ! empty($method)) {
+                return $method;
+            }
+        }
+
+        if (isset($_POST) && ! empty($_POST)) {
+            return 'POST';
+        }
+
+        return 'GET';
     }
 }

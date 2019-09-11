@@ -29,6 +29,11 @@
 
 jQuery(function ($) {
     // Highlight the extensions submenu.
-    var allex = new Allex('publishpress');
-    allex.highlight_submenu('admin.php?page=pp-addons');
+    // @todo: Maybe we can remove this when we refactor to PublishPress Pro.
+    if ("undefined" !== typeof Allex) {
+        var allex = new Allex('publishpress');
+        allex.highlight_submenu('admin.php?page=pp-addons');
+    } else {
+        console.log('[publishpress, admin.js] Allex is not defined.');
+    }
 });

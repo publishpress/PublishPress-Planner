@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 class Follower extends Simple_Checkbox implements Receiver_Interface
@@ -57,9 +58,9 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             $followers = [];
 
             // Check if we are saving the post and use that data instead of the stored taxonomies/metadata.
-            if ('POST' === $_SERVER['REQUEST_METHOD']
-                && (isset($_POST['action']) && 'editpost' === $_POST['action'])
-            ) {
+            $method = Util::getRequestMethod();
+
+            if ('POST' === $method && (isset($_POST['action']) && 'editpost' === $_POST['action'])) {
                 $toNotify = (array)$_POST['to_notify'];
 
 

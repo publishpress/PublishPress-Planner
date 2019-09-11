@@ -4,6 +4,7 @@ namespace PublishPress\Notifications;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
@@ -20,8 +21,10 @@ class Reviews
      */
     public function init()
     {
+        $method = Util::getRequestMethod();
+
         // We only check GET requests
-        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        if ($method !== 'GET') {
             return;
         }
 
