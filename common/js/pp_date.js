@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
 
       var options = $.extend({}, default_options, custom_options);
       var altFieldName = self.attr('data-alt-field');
-      if (altFieldName.length == 0) {
+      if (typeof altFieldName !== 'undefined' || altFieldName.length == 0) {
         return options;
       }
 

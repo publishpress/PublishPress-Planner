@@ -466,9 +466,9 @@ if ( ! class_exists('PP_Calendar')) {
          */
         public function enqueue_admin_scripts()
         {
-            $this->enqueue_datepicker_resources();
-
             if ($this->is_whitelisted_functional_view()) {
+                $this->enqueue_datepicker_resources();
+
                 $js_libraries = [
                     'jquery',
                     'jquery-ui-core',
