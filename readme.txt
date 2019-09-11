@@ -138,6 +138,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Wrong help text for [psppno_post] shortcode in the notification workflows;
 * Fixed: Missed rewrite rules for the post types: dashboard-note and psppnotif_workflow.
 * Fixed: Undefined index: REQUEST_METHOD for $_SERVER.
+* Fixed: The logo is missed on the Notification Workflows page.
 
 = [1.20.8] - 2019-08-19 =
 
