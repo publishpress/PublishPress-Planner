@@ -130,7 +130,7 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.20.9] - UNRELEASED =
+= [1.20.9] - 2019-09-11 =
 
 * Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin. Notifications were being sent for non supported post types;
 * Fixed: JavaScript breaks when Alledia framework object is not found;
