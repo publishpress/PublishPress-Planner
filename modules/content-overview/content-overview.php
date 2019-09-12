@@ -467,7 +467,7 @@ class PP_Content_Overview extends PP_Module
 
     /**
      * Create the content overview view. This calls lots of other methods to do its work. This will
-     * ouput any messages, create the table navigation, then print the columns based on
+     * output any messages, create the table navigation, then print the columns based on
      * get_num_columns(), which will in turn print the stories themselves.
      */
     public function render_admin_page()

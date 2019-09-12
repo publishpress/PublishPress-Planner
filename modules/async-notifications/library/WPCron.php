@@ -21,14 +21,14 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace PublishPress\AsyncNotifications\Queue;
+namespace PublishPress\AsyncNotifications;
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
  * Class DBAdapter
  *
- * @package PublishPress\AsyncNotifications\Queue
+ * @package PublishPress\AsyncNotifications
  */
 class WPCron implements QueueInterface
 {
@@ -87,7 +87,24 @@ class WPCron implements QueueInterface
                 // Receiver
                 $data[] = $receiver;
 
-                $this->scheduleEvent($data, $timestamp);
+                $deliveryResult = [
+                    $receiver => $this->scheduleEvent($data, $timestamp),
+                ];
+
+                $subject = isset($content['subject']) ? $content['subject'] : '';
+                $body    = isset($content['body']) ? $content['body'] : '';
+
+                /**
+                 * @param WP_Post $workflow_post
+                 * @param array   $action_args
+                 * @param string  $channel
+                 * @param string  $subject
+                 * @param string  $body
+                 * @param array   $deliveryResult
+                 */
+                $actionArgs['async'] = 1;
+                do_action('publishpress_notif_notification_sending', $workflowPost, $actionArgs, $channel, $subject, $body,
+                    $deliveryResult);
             }
 
             do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'],
@@ -101,11 +118,13 @@ class WPCron implements QueueInterface
      * @param $data
      * @param $timestamp
      *
+     * @return bool
      * @throws \Exception
+     *
      */
     protected function scheduleEvent($data, $timestamp)
     {
-        wp_schedule_single_event(
+        return wp_schedule_single_event(
             $timestamp,
             'publishpress_cron_notify',
             $data

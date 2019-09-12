@@ -60,13 +60,12 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             // Check if we are saving the post and use that data instead of the stored taxonomies/metadata.
             $method = Util::getRequestMethod();
 
+            $roles  = [];
+            $users  = [];
+            $emails = [];
+
             if ('POST' === $method && (isset($_POST['action']) && 'editpost' === $_POST['action'])) {
-                $toNotify = (array)$_POST['to_notify'];
-
-
-                $roles  = [];
-                $users  = [];
-                $emails = [];
+                $toNotify = isset($_POST['to_notify']) ? (array)$_POST['to_notify'] : false;
 
                 if ( ! empty($toNotify)) {
                     foreach ($toNotify as $item) {

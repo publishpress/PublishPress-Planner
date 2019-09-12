@@ -21,12 +21,12 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace PublishPress\AsyncNotifications\Queue;
+namespace PublishPress\AsyncNotifications;
 
 /**
  * Interface QueueInterface
  *
- * @package PublishPress\AsyncNotifications\Queue
+ * @package PublishPress\NotificationsLog
  */
 interface QueueInterface
 {

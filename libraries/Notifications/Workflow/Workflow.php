@@ -66,20 +66,27 @@ class Workflow
         $shortcodes = $this->get_service('shortcodes');
         $shortcodes->register($this->workflow_post, $this->action_args);
 
-        /**
-         * @param WP_Post $workflow_post
-         * @param array $action_args
-         */
-        do_action('publishpress_notif_before_run_workflow', $this->workflow_post, $this->action_args, $receivers);
-
         /*
          * What will the notification says?
          */
-        $base_content = $this->get_content();
+        $content_template = $this->get_content();
+
+        /**
+         * @param WP_Post $workflow_post
+         * @param array $action_args
+         * @param array $receivers
+         * @param array $contentTemplate
+         */
+        do_action('publishpress_notif_before_run_workflow', $this->workflow_post, $this->action_args, $receivers, $content_template);
 
         // Run the action to each receiver.
         foreach ($receivers as $channel => $channel_receivers) {
             foreach ($channel_receivers as $receiver) {
+                /**
+                 * Prepare the content replacing shortcodes.
+                 */
+                $content = $this->do_shortcodes_in_content($content_template, $receiver, $channel);
+
                 /**
                  * Filters the action to be executed. By default it will trigger the notification.
                  * But it can be changed to do another action. This allows to change the flow and
@@ -89,13 +96,8 @@ class Workflow
                  * @param Workflow $workflow
                  * @param string   $channel
                  */
-                $action = apply_filters('publishpress_notif_workflow_run_action',
+                $action = apply_filters('publishpress_notif_workflow_do_action',
                     'publishpress_notif_send_notification_' . $channel, $this, $channel);
-
-                /**
-                 * Prepare the content replacing shortcodes.
-                 */
-                $content = $this->do_shortcodes_in_content($base_content, $receiver, $channel);
 
                 /**
                  * Triggers the notification. This can be caught by notification channels.
@@ -261,7 +263,7 @@ class Workflow
     public function get_related_posts($args = [])
     {
         $workflow_meta_key = (!empty($args['meta_key_selected'])) ? $args['meta_key_selected'] : '_psppno_evtbeforepublishing';
-        
+
         // We need to set a distinct "notification sent" flag for each workflow and notification criteria
         if ('_psppno_evtbeforepublishing' == $workflow_meta_key) {
             $post_status = (!empty($args['post_status'])) ? $args['post_status'] : 'future';
