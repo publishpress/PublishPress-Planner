@@ -823,7 +823,9 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function get_workflows($meta_query = [])
         {
-            if (empty($this->workflows)) {
+            $hash = md5(maybe_serialize($meta_query));
+
+            if ( ! isset($this->workflows[$hash])) {
                 // Build the query
                 $query_args = [
                     'nopaging'      => true,
@@ -835,10 +837,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
                 $query = new \WP_Query($query_args);
 
-                $this->workflows = $query->posts;
+                $this->workflows[$hash] = $query->posts;
             }
 
-            return $this->workflows;
+            return $this->workflows[$hash];
         }
 
         /**
