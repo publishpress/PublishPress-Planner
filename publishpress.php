@@ -707,25 +707,12 @@ class publishpress
             ['pp-remodal'], PUBLISHPRESS_VERSION, 'all');
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false,
             PUBLISHPRESS_VERSION, 'all');
-        wp_enqueue_style(
-            'multiple-authors-css',
-            plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
-            false,
-            PUBLISHPRESS_VERSION,
-            'all'
-        );
 
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
             ['pp-remodal', 'pp-remodal-default-theme'], PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
             ['pressshack-admin-css', 'allex'], PUBLISHPRESS_VERSION, 'all');
 
-        wp_enqueue_script(
-            'multiple-authors-chosen',
-            plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
-            ['jquery'],
-            PUBLISHPRESS_VERSION
-        );
         wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', ['jquery'],
             PUBLISHPRESS_VERSION);
 
