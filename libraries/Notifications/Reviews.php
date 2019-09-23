@@ -72,6 +72,10 @@ class Reviews
      */
     protected function time_to_show_notice()
     {
+        if (get_option('publishpress_review_status') === 'done') {
+            return false;
+        }
+
         $date  = $this->get_state_last_time();
         $date  = strtotime($date . ' ' . self::REPEAT_INTERVAL);
         $today = strtotime(date('Y-m-d'));
