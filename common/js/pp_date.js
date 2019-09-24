@@ -28,15 +28,16 @@
  */
 
 jQuery(document).ready(function ($) {
-    function getOptions(self, custom_options) {
-      var default_options = {
-        dateFormat: objectL10ndate.date_format,
-        firstDay: pp_week_first_day,
-      };
+  function getOptions (self, custom_options) {
+    var default_options = {
+      dateFormat: objectL10ndate.date_format,
+      firstDay: pp_week_first_day
+    };
 
       var options = $.extend({}, default_options, custom_options);
       var altFieldName = self.attr('data-alt-field');
-      if (typeof altFieldName == 'undefined' || altFieldName.length == 0) {
+
+      if ((!altFieldName) || typeof altFieldName == 'undefined' || altFieldName.length == 0) {
         return options;
       }
 
@@ -46,19 +47,25 @@ jQuery(document).ready(function ($) {
       });
     }
 
-    $('.date-time-pick').each(function() {
-      var self = $(this);
-      var options = getOptions(self, {
-        alwaysSetTime: false,
-        controlType: 'select',
-        altFieldTimeOnly: false,
-      });
-      self.datetimepicker(options);
+    return $.extend({}, options, {
+      altField: 'input[name="' + altFieldName + '"]',
+      altFormat: self.attr('data-alt-format')
     });
+  }
 
-    $('.date-pick').each(function() {
-        var self = $(this);
-        var options = getOptions(self, {});
-        self.datepicker(options);
+  $('.date-time-pick').each(function () {
+    var self = $(this);
+    var options = getOptions(self, {
+      alwaysSetTime: false,
+      controlType: 'select',
+      altFieldTimeOnly: false
     });
+    self.datetimepicker(options);
+  });
+
+  $('.date-pick').each(function () {
+    var self = $(this);
+    var options = getOptions(self, {});
+    self.datepicker(options);
+  });
 });
