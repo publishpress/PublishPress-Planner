@@ -569,7 +569,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Enqueue scripts and stylesheets for the admin pages.
          *
-         * @TODO uncomment when admin.js is required
+         * @TODO uncomment when admin-menu.js is required
          *
          * @param string $hook_suffix
          */
