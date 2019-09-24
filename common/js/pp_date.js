@@ -34,22 +34,16 @@ jQuery(document).ready(function ($) {
       firstDay: pp_week_first_day
     };
 
-      var options = $.extend({}, default_options, custom_options);
-      var altFieldName = self.attr('data-alt-field');
+    var options = $.extend({}, default_options, custom_options);
+    var altFieldName = self.attr('data-alt-field');
 
-      if ((!altFieldName) || typeof altFieldName == 'undefined' || altFieldName.length == 0) {
-        return options;
-      }
-
-      return $.extend({}, options, {
-        altField: 'input[name="'+ altFieldName +'"]',
-        altFormat: self.attr('data-alt-format'),
-      });
+    if ((!altFieldName) || typeof altFieldName == 'undefined' || altFieldName.length == 0) {
+      return options;
     }
 
     return $.extend({}, options, {
-      altField: 'input[name="' + altFieldName + '"]',
-      altFormat: self.attr('data-alt-format')
+      altField: 'input[name="'+ altFieldName +'"]',
+      altFormat: self.attr('data-alt-format'),
     });
   }
 
