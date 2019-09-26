@@ -943,11 +943,12 @@ if ( ! class_exists('PP_Custom_Status')) {
 
                 // Load the custom statuses
                 foreach ($custom_statuses as $status) {
-                    $all_statuses[] = ['name'        => esc_js($this->get_status_property($status, 'name')),
-                                       'slug'        => esc_js($this->get_status_property($status, 'slug')),
-                                       'description' => esc_js($this->get_status_property($status, 'description')),
-                                       'color'       => esc_js($this->get_status_property($status, 'color')),
-                                       'icon'        => esc_js($this->get_status_property($status, 'icon')),
+                    $all_statuses[] = [
+                        'name'        => esc_js($this->get_status_property($status, 'name')),
+                        'slug'        => esc_js($this->get_status_property($status, 'slug')),
+                        'description' => esc_js($this->get_status_property($status, 'description')),
+                        'color'       => esc_js($this->get_status_property($status, 'color')),
+                        'icon'        => esc_js($this->get_status_property($status, 'icon')),
 
                     ];
                 }
