@@ -1452,7 +1452,7 @@ if ( ! class_exists('PP_Calendar')) {
             }
 
             // Color
-            $color = '#655997';
+            $color = PP_Custom_Status::DEFAULT_COLOR;
             if ( ! empty($term->color)) {
                 $color = $term->color;
             }

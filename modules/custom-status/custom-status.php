@@ -51,6 +51,8 @@ if ( ! class_exists('PP_Custom_Status')) {
         const STATUS_PRIVATE = 'private';
         const STATUS_SCHEDULED = 'future';
 
+        const DEFAULT_COLOR = '#655997';
+
         public $module;
 
         private $custom_statuses_cache = [];
@@ -522,7 +524,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             if ( ! empty($current_value)) {
                 $pp_color = $current_value;
             } else {
-                $pp_color = '#655997';
+                $pp_color = self::DEFAULT_COLOR;
             }
 
             $color_picker = '<input type="text" aria-required="true" size="7" maxlength="7" name="' . $fieldname . '" value="' . $pp_color . '" class="pp-color-picker" ' . $attributes . ' data-default-color="' . $pp_color . '" />';
@@ -850,7 +852,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             ];
 
             if ( ! $only_basic_data) {
-                $status->color = get_option('psppno_status_publish_color', '#006557');
+                $status->color = get_option('psppno_status_publish_color', self::DEFAULT_COLOR);
                 $status->icon  = get_option('psppno_status_publish_icon', 'dashicons-yes');
             }
 
@@ -884,7 +886,7 @@ if ( ! class_exists('PP_Custom_Status')) {
             ];
 
             if ( ! $only_basic_data) {
-                $status->color = get_option('psppno_status_future_color', '#655997');
+                $status->color = get_option('psppno_status_future_color', self::DEFAULT_COLOR);
                 $status->icon  = get_option('psppno_status_future_icon', 'dashicons-calendar-alt');
             }
 
@@ -941,12 +943,12 @@ if ( ! class_exists('PP_Custom_Status')) {
 
                 // Load the custom statuses
                 foreach ($custom_statuses as $status) {
-                    $all_statuses[] = [
-                        'name'        => esc_js($status->name),
-                        'slug'        => esc_js($status->slug),
-                        'description' => esc_js($status->description),
-                        'color'       => esc_js($status->color),
-                        'icon'        => esc_js($status->icon),
+                    $all_statuses[] = ['name'        => esc_js($this->get_status_property($status, 'name')),
+                                       'slug'        => esc_js($this->get_status_property($status, 'slug')),
+                                       'description' => esc_js($this->get_status_property($status, 'description')),
+                                       'color'       => esc_js($this->get_status_property($status, 'color')),
+                                       'icon'        => esc_js($this->get_status_property($status, 'icon')),
+
                     ];
                 }
 
@@ -955,7 +957,6 @@ if ( ! class_exists('PP_Custom_Status')) {
                 $always_show_dropdown = ($this->module->options->always_show_dropdown == 'on') ? 1 : 0;
 
                 // TODO: Move this to a script localization method. ?>
-
                 <script type="text/javascript">
                     var pp_text_no_change = '<?php echo esc_js(__("&mdash; No Change &mdash;")); ?>';
                     var label_save = '<?php echo __('Save'); ?>';
@@ -969,6 +970,21 @@ if ( ! class_exists('PP_Custom_Status')) {
                 </script>
                 <?php
             }
+        }
+
+        private function get_status_property($status, $property)
+        {
+            if ( ! isset($status->$property)) {
+                if ($property === 'color') {
+                    $value = self::DEFAULT_COLOR;
+                } else {
+                    $value = '';
+                }
+            } else {
+                $value = $status->$property;
+            }
+
+            return $value;
         }
 
         /**
@@ -1174,7 +1190,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                     if (array_key_exists($status->slug, $default_terms)) {
                         $status->color = $default_terms[$status->slug]['args']['color'];
                     } else {
-                        $status->color = '#655997';
+                        $status->color = self::DEFAULT_COLOR;
                     }
                 }
 
