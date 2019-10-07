@@ -517,6 +517,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
+            // Ignores if it is saved with the same status, avoiding multiple notifications on some situations.
+            if ($old_status === $new_status) {
+                return;
+            }
+
             // Go ahead and do the action to run workflows
             $args = [
                 'action'     => 'transition_post_status',
