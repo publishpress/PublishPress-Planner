@@ -29,6 +29,7 @@ class Editorial_Comment extends Base
 
         // Add filter to return the metakey representing if it is selected or not
         add_filter('psppno_events_metakeys', [$this, 'filter_events_metakeys']);
+        add_filter('publishpress_notif_workflow_actions', [$this, 'filter_workflow_actions']);
     }
 
     /**
@@ -42,6 +43,10 @@ class Editorial_Comment extends Base
      */
     public function filter_run_workflow_query_args($query_args, $action_args)
     {
+        if ($this->should_ignore_event_on_query($action_args)) {
+            return $query_args;
+        }
+
         if ('editorial_comment' === $action_args['action']) {
             $query_args['meta_query'][] = [
                 'key'     => static::META_KEY_SELECTED,
@@ -59,5 +64,16 @@ class Editorial_Comment extends Base
         }
 
         return $query_args;
+    }
+
+    public function filter_workflow_actions($actions)
+    {
+        if ( ! is_array($actions) || empty($actions)) {
+            $actions = [];
+        }
+
+        $actions[] = 'editorial_comment';
+
+        return $actions;
     }
 }

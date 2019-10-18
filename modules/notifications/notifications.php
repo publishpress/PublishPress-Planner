@@ -44,6 +44,7 @@ if ( ! class_exists('PP_Notifications')) {
         use Dependency_Injector;
 
         const MODULE_NAME = 'notifications';
+
         const MENU_SLUG = 'pp-notifications';
 
         // Taxonomy name used to store users which will be notified for changes in the posts.
@@ -68,7 +69,7 @@ if ( ! class_exists('PP_Notifications')) {
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = [
-                'title'                 => __('Default Notifications', 'publishpress'),
+                'title'                 => __('Notifications', 'publishpress'),
                 'short_description'     => false,
                 'extended_description'  => false,
                 'module_url'            => $this->module_url,
@@ -82,7 +83,7 @@ if ( ! class_exists('PP_Notifications')) {
                     ],
                     'notify_author_by_default'       => '1',
                     'notify_current_user_by_default' => '1',
-                    'blacklisted_taxonomies' => '',
+                    'blacklisted_taxonomies'         => '',
                 ],
                 'configure_page_cb'     => 'print_configure_view',
                 'post_type_support'     => 'pp_notification',
@@ -361,12 +362,12 @@ if ( ! class_exists('PP_Notifications')) {
         /**
          * Add a "Notify" link to supported post types Manage Posts view
          *
-         * @since 0.8
-         *
          * @param array      $actions Any existing item actions
          * @param int|object $post    Post id or object
          *
          * @return array     $actions   The follow link has been appended
+         * @since 0.8
+         *
          */
         public function filter_post_row_actions($actions, $post)
         {
@@ -445,6 +446,11 @@ if ( ! class_exists('PP_Notifications')) {
             }
         }
 
+        public function getPostID($post)
+        {
+            return $post->ID;
+        }
+
         /**
          * Outputs box used to subscribe users and roles to Posts
          *
@@ -454,7 +460,13 @@ if ( ! class_exists('PP_Notifications')) {
         {
             global $post;
 
-            $workflows = $this->get_workflows_related_to_followers();
+            $followersWorkflows = $this->get_workflows_related_to_followers();
+            $activeWorkflows    = $this->get_workflows_related_to_post($post);
+
+            $followersWorkflows = array_map([$this, 'getPostID'], $followersWorkflows);
+
+            $postType = get_post_type_object($post->post_type);
+
             ?>
             <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
@@ -463,7 +475,7 @@ if ( ! class_exists('PP_Notifications')) {
                     <?php _e(
                         'Enter any users, roles, or email address that should receive notifications from workflows.',
                         'publishpress'
-                    ); ?>
+                    ); ?><?php if ( ! empty($followersWorkflows)) : ?>&sup1;<?php endif; ?>
                 </p>
 
                 <div id="pp_post_notify_users_box">
@@ -481,22 +493,39 @@ if ( ! class_exists('PP_Notifications')) {
 
                 </div>
 
+                <?php if (empty($followersWorkflows)) : ?>
+                    <p class="no-workflows"><?php echo __('This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.',
+                            'publishpress'); ?></p>
+                <?php endif; ?>
+                <hr>
+
                 <div class="pp_post_notify_workflows">
-                    <h3><?php echo __('Active Notifications', 'publishpress'); ?></h3>
-                    <?php if ( ! empty($workflows)) : ?>
+                    <?php if ( ! empty($activeWorkflows)) : ?>
+                        <h3><?php echo __('Active Notifications', 'publishpress'); ?></h3>
+
                         <ul>
-                            <?php foreach ($workflows as $workflow) : ?>
+                            <?php foreach ($activeWorkflows as $workflow) : ?>
                                 <li>
-                                    <a href="<?php echo admin_url('post.php?post=' . $workflow->ID . '&action=edit&classic-editor'); ?>" target="_blank">
-                                        <?php echo $workflow->post_title; ?>
+                                    <a href="<?php echo admin_url('post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'); ?>"
+                                       target="_blank">
+                                        <?php echo $workflow->workflow_post->post_title; ?><?php if (in_array($workflow->workflow_post->ID,
+                                            $followersWorkflows)): ?>&sup1;<? endif; ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
-                    <?php else : ?>
-                        <p><?php echo __('This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.', 'publishpress'); ?></p>
+                    <?php else: ?>
+                        <p class="no-workflows"><?php echo sprintf(__('No active notifications found for this %s.',
+                                'publishpress'), $postType->labels->singular_name); ?></p>
                     <?php endif; ?>
                 </div>
+
+                <?php
+                /**
+                 * @param WP_Post $post
+                 */
+                do_action('publishpress_notif_post_metabox', $post);
+                ?>
 
                 <div class="clear"></div>
 
@@ -530,6 +559,34 @@ if ( ! class_exists('PP_Notifications')) {
             ];
 
             $workflows = $publishpress->improved_notifications->get_workflows($meta_query);
+
+            return $workflows;
+        }
+
+        /**
+         * Return workflows where the current post type is selected.
+         *
+         * @param $post
+         *
+         * @return mixed
+         *
+         * @throws Exception
+         */
+        protected function get_workflows_related_to_post($post)
+        {
+            $publishpress = PublishPress();
+
+
+            $workflow_controller = $this->get_service('workflow_controller');
+
+            $args      = [
+                'action'       => '',
+                'post'         => $post,
+                'new_status'   => $post->post_status,
+                'old_status'   => $post->post_status,
+                'ignore_event' => true,
+            ];
+            $workflows = $workflow_controller->get_filtered_workflows($args);
 
             return $workflows;
         }
@@ -825,9 +882,13 @@ if ( ! class_exists('PP_Notifications')) {
 
         /**
          * send_email()
+         *
+         * @return array
          */
         public function send_email($action, $post, $subject, $message, $message_headers = '', $recipients = null)
         {
+            $deliveryResult = [];
+
             if (is_null($recipients)) {
                 // Get list of email recipients -- set them CC
                 $recipients = $this->_get_notification_recipients($post, true);
@@ -850,9 +911,11 @@ if ( ! class_exists('PP_Notifications')) {
                 $this->schedule_emails($recipients, $subject, $message, $message_headers);
             } elseif ( ! empty($recipients)) {
                 foreach ($recipients as $recipient) {
-                    $this->send_single_email($recipient, $subject, $message, $message_headers);
+                    $deliveryResult[$recipient] = $this->send_single_email($recipient, $subject, $message, $message_headers);
                 }
             }
+
+            return $deliveryResult;
         }
 
         /**
@@ -887,10 +950,12 @@ if ( ! class_exists('PP_Notifications')) {
          * @param string $subject         Subject of the email
          * @param string $message         Body of the email
          * @param string $message_headers . (optional ) Message headers
+         *
+         * @return bool
          */
         public function send_single_email($to, $subject, $message, $message_headers = '')
         {
-            wp_mail($to, $subject, $message, $message_headers);
+            return wp_mail($to, $subject, $message, $message_headers);
         }
 
         /**
@@ -1549,7 +1614,8 @@ if ( ! class_exists('PP_Notifications')) {
                 />
 
                 <div style="margin-top: 5px;">
-                    <p><?php _e('Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.', 'publishpress'); ?></p>
+                    <p><?php _e('Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.',
+                            'publishpress'); ?></p>
                 </div>
             </div>
             <?php
@@ -1608,11 +1674,11 @@ if ( ! class_exists('PP_Notifications')) {
         /**
          * Gets a simple phrase containing the formatted date and time that the post is scheduled for.
          *
-         * @since 0.8
-         *
-         * @param  obj $post Post object
+         * @param obj $post Post object
          *
          * @return str    $scheduled_datetime The scheduled datetime in human-readable format
+         * @since 0.8
+         *
          */
         private function get_scheduled_datetime($post)
         {
@@ -1892,14 +1958,14 @@ if ( ! class_exists('PP_Notifications')) {
         public static function getOption($option_name)
         {
             $is_module_enabled = PP_Module::isPublishPressModuleEnabled(self::MODULE_NAME);
-            if (!$is_module_enabled) {
+            if ( ! $is_module_enabled) {
                 return null;
             }
 
             global $publishpress;
 
             $module_options = $publishpress->{self::MODULE_NAME}->module->options;
-            if (!isset($module_options->{$option_name})) {
+            if ( ! isset($module_options->{$option_name})) {
                 return null;
             }
 
