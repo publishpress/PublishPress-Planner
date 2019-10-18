@@ -553,7 +553,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
                     </tr>
 
                     <tr>
-                        <th><?php echo __('Async', 'publishpress'); ?>:</th>
+                        <th><?php echo __('Scheduled', 'publishpress'); ?>:</th>
                         <td><?php echo $comment->async ? __('Yes', 'publishpress') : __('No',
                                 'publishpress'); ?></td>
                     </tr>

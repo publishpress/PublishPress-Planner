@@ -182,7 +182,7 @@ class LogListTable extends \WP_List_Table
             'action'   => __('Action', 'publishpress'),
             'receiver' => __('Receiver', 'publishpress'),
             'channel'  => __('Channel', 'publishpress'),
-            'async'    => __('Async', 'publishpress'),
+            'async'    => __('Scheduled', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
 
