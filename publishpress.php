@@ -2,9 +2,10 @@
 /**
  * Plugin Name: PublishPress
  * Plugin URI: https://publishpress.com/
- * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar,
- * notifications, and custom statuses. Author: PublishPress Author URI: https://publishpress.com
- * Version: 1.21.0-beta.1
+ * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+ * Author: PublishPress
+ * Author URI: https://publishpress.com
+ * Version: 1.20.9-patch.499.2
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -636,6 +637,13 @@ class publishpress
             $args['post_type_support'] = 'pp_' . $name;
         }
 
+        // If there's a Help Screen registered for the module, make sure we
+        // auto-load it
+        if ( ! empty($args['settings_help_tab'])) {
+            add_action('load-publishpress_page_' . $args['settings_slug'],
+                [&$this->$name, 'action_settings_help_menu']);
+        }
+
         $this->modules->$name = (object)$args;
         do_action('pp_module_registered', $name);
 
@@ -699,10 +707,6 @@ class publishpress
      */
     public function register_scripts_and_styles($hook)
     {
-        wp_register_style('pp-remodal', PUBLISHPRESS_URL . 'common/css/remodal.css', false, PUBLISHPRESS_VERSION,
-            'all');
-        wp_register_style('pp-remodal-default-theme', PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css',
-            ['pp-remodal'], PUBLISHPRESS_VERSION, 'all');
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false,
             PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style(
@@ -714,9 +718,9 @@ class publishpress
         );
 
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
-            ['pp-remodal', 'pp-remodal-default-theme'], PUBLISHPRESS_VERSION, 'all');
+            [], PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-            ['pressshack-admin-css', 'allex'], PUBLISHPRESS_VERSION, 'all');
+            ['pressshack-admin-css', 'allex', 'chosen'], PUBLISHPRESS_VERSION, 'all');
 
         wp_enqueue_script(
             'publishpress-chosen',
@@ -724,11 +728,9 @@ class publishpress
             ['jquery'],
             PUBLISHPRESS_VERSION
         );
-        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin.js', ['jquery'],
+        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery'],
             PUBLISHPRESS_VERSION);
 
-        wp_register_script('pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', ['jquery'],
-            PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', ['jquery'],
             PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', ['jquery'],
@@ -740,6 +742,15 @@ class publishpress
         if ( ! isset($wp_scripts->registered['jquery-ui-datepicker'])) {
             wp_register_script('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js',
                 ['jquery', 'jquery-ui-core'], '1.8.16', true);
+        }
+
+
+        // Load on all admin pages to fix the menu, except the customize
+        global $pagenow;
+
+        if ($pagenow !== 'customize.php') {
+            wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery', 'chosen'],
+                PUBLISHPRESS_VERSION);
         }
     }
 

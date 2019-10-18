@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.2
-Stable tag: 1.20.8
+Stable tag: 1.20.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,12 +130,15 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.20.9] - UNRELEASED =
+= [1.20.9] - 2019-09-11 =
 
-* Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin;
+* Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin. Notifications were being sent for non supported post types;
 * Fixed: JavaScript breaks when Alledia framework object is not found;
 * Fixed: Notification workflows are not saving when ACF is installed;
 * Fixed: Wrong help text for [psppno_post] shortcode in the notification workflows;
+* Fixed: Missed rewrite rules for the post types: dashboard-note and psppnotif_workflow.
+* Fixed: Undefined index: REQUEST_METHOD for $_SERVER.
+* Fixed: The logo is missed on the Notification Workflows page.
 
 = [1.20.8] - 2019-08-19 =
 

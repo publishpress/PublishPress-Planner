@@ -583,7 +583,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Enqueue scripts and stylesheets for the admin pages.
          *
-         * @TODO uncomment when admin.js is required
+         * @TODO uncomment when admin-menu.js is required
          *
          * @param string $hook_suffix
          */
@@ -1160,7 +1160,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
             ?>
             <img
-                src="http://192.168.0.7:32772/wp-content/plugins/publishpress//common/img/publishpress-logo-icon.png"
+                src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png' ?>"
                 alt="" class="logo-header"/>
 
             <script>
