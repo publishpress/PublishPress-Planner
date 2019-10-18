@@ -509,7 +509,7 @@ if ( ! class_exists('PP_Notifications')) {
                                     <a href="<?php echo admin_url('post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'); ?>"
                                        target="_blank">
                                         <?php echo $workflow->workflow_post->post_title; ?><?php if (in_array($workflow->workflow_post->ID,
-                                            $followersWorkflows)): ?>&sup1;<? endif; ?>
+                                            $followersWorkflows)): ?>&sup1;<?php endif; ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
