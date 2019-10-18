@@ -115,18 +115,21 @@
     margin-bottom: 9px;
 }
 
-#pp_post_notify_box .pp_post_notify_workflows p {
+#pp_post_notify_box .no-workflows {
     font-style: italic;
-    color: gray;
+    color: #a3a3a3;
+    margin-top: 15px;
 }
 
-#pp_post_notify_box .pp_post_notify_workflows h3 {
+#pp_post_notify_box .pp_post_notify_workflows h3,
+#pp_post_notify_box .pp_post_notify_log h3 {
     font-size: 14px;
     background: transparent;
     padding-left: 0;
 }
 
-#pp_post_notify_box .pp_post_notify_workflows li {
+#pp_post_notify_box .pp_post_notify_workflows li,
+#pp_post_notify_box .pp_post_notify_log li {
     list-style-type: square;
     margin-left: 20px;
     font-style: italic;

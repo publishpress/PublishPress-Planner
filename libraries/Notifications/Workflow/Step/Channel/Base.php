@@ -55,6 +55,8 @@ class Base extends Base_Step
 
         // Check if we can hook to the psppno_save_user_profile action
         add_action('psppno_save_user_profile', [$this, 'action_save_user_profile']);
+
+        add_filter('publishpress_notification_channel', [$this, 'channelLabel']);
     }
 
     /**
@@ -151,18 +153,6 @@ class Base extends Base_Step
     }
 
     /**
-     * Returns the user's data, by the user id.
-     *
-     * @param int $user_id
-     *
-     * @return WP_User
-     */
-    protected function get_user_data($user_id)
-    {
-        return get_userdata($user_id);
-    }
-
-    /**
      * @param $workflow_post
      * @param $action_args
      * @param $receivers
@@ -172,6 +162,27 @@ class Base extends Base_Step
     public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
     {
         return;
+    }
+
+    public function channelLabel($channel)
+    {
+        if ($channel === $this->name) {
+            $channel = $this->label;
+        }
+
+        return $channel;
+    }
+
+    /**
+     * Returns the user's data, by the user id.
+     *
+     * @param int $user_id
+     *
+     * @return WP_User
+     */
+    protected function get_user_data($user_id)
+    {
+        return get_userdata($user_id);
     }
 
     /**

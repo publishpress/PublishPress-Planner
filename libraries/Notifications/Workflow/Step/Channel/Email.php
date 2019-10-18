@@ -15,6 +15,8 @@ class Email extends Base implements Channel_Interface
 {
     const META_KEY_EMAIL = '_psppno_chnemail';
 
+    private $emailFailures = [];
+
     /**
      * The constructor
      *
@@ -25,6 +27,9 @@ class Email extends Base implements Channel_Interface
         $this->name  = 'email';
         $this->label = __('Email', 'publishpress');
         $this->icon  = PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-email.png';
+
+        add_filter('publishpress_notif_error_log', [$this, 'filterErrorLog'], 10, 5);
+        add_action('wp_mail_failed', [$this, 'emailFailed']);
 
         parent::__construct();
     }
@@ -82,7 +87,7 @@ class Email extends Base implements Channel_Interface
 
             $this->get_service('debug')->write($email, 'Email::action_send_notification $email');
 
-            $this->get_service('publishpress')->notifications->send_email(
+            $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
                 $action,
                 $action_args,
                 $subject,
@@ -90,6 +95,17 @@ class Email extends Base implements Channel_Interface
                 '',
                 $email
             );
+
+            /**
+             * @param WP_Post $workflow_post
+             * @param array   $action_args
+             * @param string  $channel
+             * @param string  $subject
+             * @param string  $body
+             * @param array   $deliveryResult
+             */
+            do_action('publishpress_notif_notification_sending', $workflow_post, $action_args, $channel, $subject, $body,
+                $deliveryResult);
         }
 
         $controller->register_notification_signature($signature);
@@ -143,5 +159,53 @@ class Email extends Base implements Channel_Interface
     public function filter_receivers($receivers, $workflow_post, $action_args)
     {
         return $receivers;
+    }
+
+    /**
+     * @param $receiver
+     * @param $subject
+     * @param $body
+     *
+     * @return string
+     */
+    private function getEmailErrorHash($receiver, $subject, $body)
+    {
+        return md5(sprintf('%s:%s:%s', $receiver, $subject, $body));
+    }
+
+    /**
+     * @param \WP_Error $error
+     */
+    public function emailFailed($error)
+    {
+        if (isset($error->error_data['wp_mail_failed'])) {
+            $emailData  = $error->error_data['wp_mail_failed'];
+            $recipients = $emailData['to'];
+
+            foreach ($recipients as $email) {
+                $hash = $this->getEmailErrorHash($email, $emailData['subject'], $emailData['message']);
+
+                $this->emailFailures[$hash] = $error->get_error_message();
+            }
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $receiver
+     * @param $subject
+     * @param $body
+     *
+     * @return string
+     */
+    public function filterErrorLog($error, $result, $receiver, $subject, $body)
+    {
+        $hash = $this->getEmailErrorHash($receiver, $subject, $body);
+
+        if (isset($this->emailFailures[$hash])) {
+            $error = $this->emailFailures[$hash];
+        }
+
+        return $error;
     }
 }
