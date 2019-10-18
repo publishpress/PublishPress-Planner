@@ -247,7 +247,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
             $receivers    = [$receiver];
 
             // Decode the content
-            $content = base64_decode(maybe_unserialize($content));
+            $content = maybe_unserialize(base64_decode($content));
 
             /**
              * Triggers the notification. This can be caught by notification channels.
