@@ -166,8 +166,6 @@ jQuery(document).ready(function () {
                     var message = '<div class="is-dismissible notice notice-error"><p>' + retval.message + '</p></div>';
                 }
                 jQuery('.publishpress-admin header').after(message);
-                // Set a timeout to eventually remove it
-                setTimeout(publishpress_hide_message, 8000);
             });
         }
     });

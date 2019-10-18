@@ -45,10 +45,13 @@ if ( ! class_exists('PP_Custom_Status')) {
         use Dependency_Injector;
 
         const MODULE_NAME = 'custom_status';
+
         const SETTINGS_SLUG = 'pp-custom-status-settings';
 
         const STATUS_PUBLISH = 'publish';
+
         const STATUS_PRIVATE = 'private';
+
         const STATUS_SCHEDULED = 'future';
 
         const DEFAULT_COLOR = '#655997';
@@ -1075,7 +1078,12 @@ if ( ! class_exists('PP_Custom_Status')) {
             $args['description']           = $encoded_description;
 
             $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
-            $updated_status       = $this->get_custom_status_by('id', $updated_status_array['term_id']);
+
+            if (is_wp_error($updated_status_array)) {
+                return false;
+            }
+
+            $updated_status = $this->get_custom_status_by('id', $updated_status_array['term_id']);
 
             return $updated_status;
         }
@@ -2036,9 +2044,10 @@ if ( ! class_exists('PP_Custom_Status')) {
             }
 
             //Should we be doing anything at all?
-            if (!is_object($post)) {
+            if ( ! is_object($post)) {
                 $this->get_service('debug')->write($post, 'PP_Custom_Status::fix_preview_link_part_two $post');
-                $this->get_service('debug')->write($permalink, 'PP_Custom_Status::fix_preview_link_part_two $permalink');
+                $this->get_service('debug')->write($permalink,
+                    'PP_Custom_Status::fix_preview_link_part_two $permalink');
                 $this->get_service('debug')->write($sample, 'PP_Custom_Status::fix_preview_link_part_two $sample');
 
             }
@@ -2348,11 +2357,11 @@ if ( ! class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * @return  self|null
          * @since   1.20.1
          *
          * @static
          *
-         * @return  self|null
          */
         public static function getModuleInstance()
         {
@@ -2368,30 +2377,30 @@ if ( ! class_exists('PP_Custom_Status')) {
         }
 
         /**
+         * @return  bool
          * @since   1.20.1
          *
          * @static
          *
-         * @return  bool
          */
         public static function isModuleEnabled()
         {
             $custom_status_module = self::getModuleInstance();
 
-            return !is_null($custom_status_module) && $custom_status_module->options->enabled === 'on';
+            return ! is_null($custom_status_module) && $custom_status_module->options->enabled === 'on';
         }
 
         /**
+         * @return  array
          * @since   1.20.1
          *
          * @static
          *
-         * @return  array
          */
         public static function getCustomStatuses()
         {
             $is_module_enabled = self::isModuleEnabled();
-            if (!$is_module_enabled) {
+            if ( ! $is_module_enabled) {
                 return [];
             }
 
@@ -2413,21 +2422,6 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
     public $default_status;
 
-    public function get_table_classes()
-    {
-        $classes_list = parent::get_table_classes();
-        $class_to_remove = 'fixed';
-
-        $class_to_remove_index = array_search($class_to_remove, $classes_list);
-        if ($class_to_remove_index === false) {
-            return $classes_list;
-        }
-
-        unset($classes_list[$class_to_remove_index]);
-
-        return $classes_list;
-    }
-
     /**
      * Construct the extended class
      */
@@ -2438,6 +2432,21 @@ class PP_Custom_Status_List_Table extends WP_List_Table
             'singular' => 'status',
             'ajax'     => true,
         ]);
+    }
+
+    public function get_table_classes()
+    {
+        $classes_list    = parent::get_table_classes();
+        $class_to_remove = 'fixed';
+
+        $class_to_remove_index = array_search($class_to_remove, $classes_list);
+        if ($class_to_remove_index === false) {
+            return $classes_list;
+        }
+
+        unset($classes_list[$class_to_remove_index]);
+
+        return $classes_list;
     }
 
     /**
