@@ -724,7 +724,7 @@ class publishpress
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
             ['pp-remodal', 'pp-remodal-default-theme'], PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-            ['pressshack-admin-css', 'allex', 'chosen'], PUBLISHPRESS_VERSION, 'all');
+            ['pressshack-admin-css', 'allex', 'publishpress-chosen-css'], PUBLISHPRESS_VERSION, 'all');
 
         wp_enqueue_script(
             'publishpress-chosen',
