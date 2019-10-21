@@ -1401,7 +1401,7 @@ if ( ! class_exists('PP_Custom_Status')) {
                 $_REQUEST['form-errors']['name'] = __('Please enter a name for the status', 'publishpress');
             }
             // Check that the name isn't numeric
-            if ((int)$status_name != 0) {
+            if (is_numeric($status_name)) {
                 $_REQUEST['form-errors']['name'] = __('Please enter a valid, non-numeric name for the status.',
                     'publishpress');
             }
