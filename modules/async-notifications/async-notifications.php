@@ -42,12 +42,6 @@ if ( ! class_exists('PP_Async_Notifications')) {
 
         const SETTINGS_SLUG = 'pp-async-notifications-settings';
 
-        const POST_STATUS_QUEUED = 'queued';
-
-        const POST_STATUS_SENT = 'sent';
-
-        const POST_STATUS_FAILED = 'failed';
-
         const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 600;
 
         public $module_name = 'async-notifications';
@@ -108,9 +102,9 @@ if ( ! class_exists('PP_Async_Notifications')) {
          */
         public function init()
         {
-            add_action('publishpress_notif_queue', [$this, 'action_notif_queue'], 10, 5);
+            add_action('publishpress_notify_using_cron', [$this, 'action_notify_using_cron'], 10, 5);
             add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
-            add_filter('publishpress_notif_workflow_run_action', [$this, 'filter_workflow_run_action'], 10, 3);
+            add_filter('publishpress_notif_workflow_do_action', [$this, 'filter_workflow_do_action'], 10, 3);
             add_filter('debug_information', [$this, 'filterDebugInformation']);
         }
 
@@ -139,16 +133,16 @@ if ( ! class_exists('PP_Async_Notifications')) {
          *
          * @return string
          */
-        public function filter_workflow_run_action($action, $workflow, $channel)
+        public function filter_workflow_do_action($action, $workflow, $channel)
         {
-            // Change the action to send the notification to the queue, instead sending to receiver, directly.
-            $action = 'publishpress_notif_queue';
+            // Change the action to send the notification to the cron, instead of sending it to the receiver.
+            $action = 'publishpress_notify_using_cron';
 
             return $action;
         }
 
         /**
-         * Enqueue the notification inse
+         * Enqueue the notification
          *
          * @param $workflow_post
          * @param $action_args
@@ -158,7 +152,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
          *
          * @throws Exception;
          */
-        public function action_notif_queue($workflow_post, $action_args, $receiver, $content, $channel)
+        public function action_notify_using_cron($workflow_post, $action_args, $receiver, $content, $channel)
         {
             $queue = $this->get_service('notification_queue');
 
@@ -253,7 +247,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
             $receivers    = [$receiver];
 
             // Decode the content
-            $content = base64_decode(maybe_unserialize($content));
+            $content = maybe_unserialize(base64_decode($content));
 
             /**
              * Triggers the notification. This can be caught by notification channels.
@@ -290,17 +284,17 @@ if ( ! class_exists('PP_Async_Notifications')) {
             ];
 
             if ( ! empty($cronTasks)) {
-                foreach ( $cronTasks as $time => $cron ) {
-                    foreach ( $cron as $hook => $dings ) {
+                foreach ($cronTasks as $time => $cron) {
+                    foreach ($cron as $hook => $dings) {
                         if ( ! in_array($hook, $expectedHooks)) {
                             continue;
                         }
 
-                        foreach ( $dings as $sig => $data ) {
+                        foreach ($dings as $sig => $data) {
                             $formattedDate = date('Y-m-d H:i:s', $time);
 
-                            $event = $data['args'][1];
-                            $postId = $data['args'][2];
+                            $event   = $data['args'][1];
+                            $postId  = $data['args'][2];
                             $channel = $data['args'][6];
 
                             if ($channel === 'email') {
@@ -318,7 +312,8 @@ if ( ! class_exists('PP_Async_Notifications')) {
 
                             $scheduledNotifications["$hook-$sig-$time"] = [
                                 'label' => $formattedDate,
-                                'value' => sprintf(__('Event: %s, Post ID: %s, Channel: %s', 'publishpress'), $event, $postId, $channel),
+                                'value' => sprintf(__('Event: %s, Post ID: %s, Channel: %s', 'publishpress'), $event,
+                                    $postId, $channel),
                             ];
                         }
                     }
@@ -326,7 +321,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
             }
 
             $debugInfo['publishpress-scheduled-notifications'] = [
-                'label'       => 'PublishPress Scheduled Notifications',
+                'label'       => 'PublishPress Scheduled Notifications in the Cron',
                 'description' => '',
                 'show_count'  => true,
                 'fields'      => $scheduledNotifications,

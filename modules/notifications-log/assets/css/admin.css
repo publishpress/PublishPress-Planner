@@ -1,0 +1,67 @@
+.publishpress_page_pp-notif-log .column-async {
+  width: 65px
+}
+
+.publishpress_page_pp-notif-log .column-status .dashicons-yes-alt,
+.publishpress_page_pp-notif-log tr.success {
+  color: #7c9F63;
+}
+
+.publishpress_page_pp-notif-log .column-status .dashicons-no,
+.publishpress_page_pp-notif-log .column-status .error,
+.publishpress_page_pp-notif-log tr.error {
+  color: #ff2225;
+}
+
+.publishpress_page_pp-notif-log th.column-channel {
+  width: 60px;
+}
+
+.publishpress_page_pp-notif-log .filter-posts,
+.publishpress_page_pp-notif-log .filter-workflows {
+  width: 190px;
+}
+
+.publishpress_page_pp-notif-log .tablenav .select2-container {
+  margin-right: 7px;
+}
+
+
+.publishpress_page_pp-notif-log pre {
+  line-height: 14px;
+}
+
+.notif-log-modal table th {
+  vertical-align: top;
+  text-align: right;
+  border: 1px solid silver;
+  padding: 5px;
+  background: #eaeaea;
+  color: #2d2d2d;
+}
+
+.notif-log-modal table td {
+  border: 1px solid silver;
+  padding: 4px;
+}
+
+.publishpress_page_pp-notif-log .ui-dialog-titlebar {
+  background: #655997;
+  color: #fff;
+}
+
+.publishpress_page_pp-notif-log .ui-button.ui-dialog-titlebar-close {
+  color: #fff !important;
+}
+
+.filter-2nd-line {
+    display: inline-block;
+}
+
+.filter-2nd-line .filter-dates {
+  margin-right: 5px;
+}
+
+.publishpress_page_pp-notif-log .tablenav {
+  min-height: 70px;
+}

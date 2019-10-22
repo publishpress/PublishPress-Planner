@@ -122,4 +122,14 @@ class Base extends Base_Step
 
         return $metakeys;
     }
+
+    /**
+     * @param $action_args
+     *
+     * @return bool
+     */
+    protected function should_ignore_event_on_query($action_args)
+    {
+        return (isset($action_args['ignore_event']) && $action_args['ignore_event'] == true);
+    }
 }

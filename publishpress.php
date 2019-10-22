@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.20.9-patch.499.2
+ * Version: 1.21.0
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -292,20 +292,19 @@ class publishpress
             'modules-settings'       => PUBLISHPRESS_BASE_PATH,
             'calendar'               => PUBLISHPRESS_BASE_PATH,
             'editorial-metadata'     => PUBLISHPRESS_BASE_PATH,
-            'notifications'          => PUBLISHPRESS_BASE_PATH,
             'content-overview'       => PUBLISHPRESS_BASE_PATH,
             'custom-status'          => PUBLISHPRESS_BASE_PATH,
-            'roles'                  => PUBLISHPRESS_BASE_PATH,
+            'notifications'          => PUBLISHPRESS_BASE_PATH,
             'improved-notifications' => PUBLISHPRESS_BASE_PATH,
             'async-notifications'    => PUBLISHPRESS_BASE_PATH,
+            'notifications-log'      => PUBLISHPRESS_BASE_PATH,
+            'roles'                  => PUBLISHPRESS_BASE_PATH,
             'user-groups'            => PUBLISHPRESS_BASE_PATH,
-            'debug'                  => PUBLISHPRESS_BASE_PATH,
-
-            // @TODO: Move for settings, and remove after cleanup
             'dashboard'              => PUBLISHPRESS_BASE_PATH,
             'editorial-comments'     => PUBLISHPRESS_BASE_PATH,
             'settings'               => PUBLISHPRESS_BASE_PATH,
             'efmigration'            => PUBLISHPRESS_BASE_PATH,
+            'debug'                  => PUBLISHPRESS_BASE_PATH,
         ];
 
         // Add filters to extend the modules
@@ -357,63 +356,63 @@ class publishpress
     public function filterDebugInformation($debugInfo)
     {
         // Config
-        $framework = $this->get_service('framework');
+        $framework          = $this->get_service('framework');
         $frameworkContainer = $framework->get_container();
 
         $debugInfo['publishpress'] = [
-            'label' => 'PublishPress',
+            'label'       => 'PublishPress',
             'description' => '',
-            'show_count' => false,
-            'fields' => [
-                'PUBLISHPRESS_VERSION' => [
+            'show_count'  => false,
+            'fields'      => [
+                'PUBLISHPRESS_VERSION'           => [
                     'label' => __('PUBLISHPRESS_VERSION'),
                     'value' => PUBLISHPRESS_VERSION,
                 ],
-                'PUBLISHPRESS_BASE_PATH' => [
+                'PUBLISHPRESS_BASE_PATH'         => [
                     'label' => __('PUBLISHPRESS_BASE_PATH'),
                     'value' => PUBLISHPRESS_BASE_PATH,
                 ],
-                'PUBLISHPRESS_FILE_PATH' => [
+                'PUBLISHPRESS_FILE_PATH'         => [
                     'label' => __('PUBLISHPRESS_FILE_PATH'),
                     'value' => PUBLISHPRESS_FILE_PATH,
                 ],
-                'PUBLISHPRESS_URL' => [
+                'PUBLISHPRESS_URL'               => [
                     'label' => __('PUBLISHPRESS_URL'),
                     'value' => PUBLISHPRESS_URL,
                 ],
-                'PUBLISHPRESS_SETTINGS_PAGE' => [
+                'PUBLISHPRESS_SETTINGS_PAGE'     => [
                     'label' => __('PUBLISHPRESS_SETTINGS_PAGE'),
                     'value' => PUBLISHPRESS_SETTINGS_PAGE,
                 ],
-                'PUBLISHPRESS_LIBRARIES_PATH' => [
+                'PUBLISHPRESS_LIBRARIES_PATH'    => [
                     'label' => __('PUBLISHPRESS_LIBRARIES_PATH'),
                     'value' => PUBLISHPRESS_LIBRARIES_PATH,
                 ],
-                'PUBLISHPRESS_BASENAME' => [
+                'PUBLISHPRESS_BASENAME'          => [
                     'label' => __('PUBLISHPRESS_BASENAME'),
                     'value' => PUBLISHPRESS_BASENAME,
                 ],
-                'WP_CONTENT_DIR' => [
+                'WP_CONTENT_DIR'                 => [
                     'label' => __('WP_CONTENT_DIR'),
                     'value' => WP_CONTENT_DIR,
                 ],
-                'WP_CONTENT_URL' => [
+                'WP_CONTENT_URL'                 => [
                     'label' => __('WP_CONTENT_URL'),
                     'value' => WP_CONTENT_URL,
                 ],
-                'option::date_format' => [
+                'option::date_format'            => [
                     'label' => __('WP Date Format'),
                     'value' => get_option('date_format'),
                 ],
-                'option::time_format' => [
+                'option::time_format'            => [
                     'label' => __('WP Time Format'),
                     'value' => get_option('time_format'),
                 ],
-                'option::timezone_string' => [
+                'option::timezone_string'        => [
                     'label' => __('WP Timezone String'),
                     'value' => get_option('timezone_string'),
                 ],
-                'option::gmt_offset' => [
+                'option::gmt_offset'             => [
                     'label' => __('WP GMT Offset'),
                     'value' => get_option('gmt_offset'),
                 ],
@@ -425,19 +424,19 @@ class publishpress
                     'label' => __('Framework::FRAMEWORK_BASE_PATH'),
                     'value' => $frameworkContainer['FRAMEWORK_BASE_PATH'],
                 ],
-                'Framework::TWIG_PATH' => [
+                'Framework::TWIG_PATH'           => [
                     'label' => __('Framework::TWIG_PATH'),
                     'value' => $frameworkContainer['TWIG_PATH'],
                 ],
-                'Framework::ASSETS_BASE_URL' => [
+                'Framework::ASSETS_BASE_URL'     => [
                     'label' => __('Framework::ASSETS_BASE_URL'),
                     'value' => $frameworkContainer['ASSETS_BASE_URL'],
                 ],
-                'Framework::PLUGIN_NAME' => [
+                'Framework::PLUGIN_NAME'         => [
                     'label' => __('Framework::PLUGIN_NAME'),
                     'value' => $frameworkContainer['PLUGIN_NAME'],
                 ],
-                'Framework::PLUGIN_TITLE' => [
+                'Framework::PLUGIN_TITLE'        => [
                     'label' => __('Framework::PLUGIN_TITLE'),
                     'value' => $frameworkContainer['PLUGIN_TITLE'],
                 ],
@@ -446,7 +445,7 @@ class publishpress
 
 
         // Modules
-        $modules = [];
+        $modules     = [];
         $modulesDirs = $this->getModulesDirs();
 
         foreach ($this->loadedModules as $module) {
@@ -456,15 +455,15 @@ class publishpress
 
             $modules[$module] = [
                 'label' => $module,
-                'value' => $status . ' [' . $modulesDirs[$dashCaseModule] . '/modules/' . $module. ']',
+                'value' => $status . ' [' . $modulesDirs[$dashCaseModule] . '/modules/' . $module . ']',
             ];
         }
 
         $debugInfo['publishpress-modules'] = [
-            'label' => 'PublishPress Modules',
+            'label'       => 'PublishPress Modules',
             'description' => '',
-            'show_count' => true,
-            'fields' => $modules,
+            'show_count'  => true,
+            'fields'      => $modules,
         ];
 
         return $debugInfo;
@@ -708,10 +707,14 @@ class publishpress
      */
     public function register_scripts_and_styles($hook)
     {
+        wp_register_style('pp-remodal', PUBLISHPRESS_URL . 'common/css/remodal.css', false, PUBLISHPRESS_VERSION,
+            'all');
+        wp_register_style('pp-remodal-default-theme', PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css',
+            ['pp-remodal'], PUBLISHPRESS_VERSION, 'all');
         wp_register_style('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css', false,
             PUBLISHPRESS_VERSION, 'all');
-        wp_register_style(
-            'chosen',
+        wp_enqueue_style(
+            'publishpress-chosen-css',
             plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
             false,
             PUBLISHPRESS_VERSION,
@@ -719,13 +722,21 @@ class publishpress
         );
 
         wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
-            [], PUBLISHPRESS_VERSION, 'all');
+            ['pp-remodal', 'pp-remodal-default-theme'], PUBLISHPRESS_VERSION, 'all');
         wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-            ['pressshack-admin-css', 'allex', 'chosen'], PUBLISHPRESS_VERSION, 'all');
+            ['pressshack-admin-css', 'allex', 'publishpress-chosen-css'], PUBLISHPRESS_VERSION, 'all');
 
+        wp_enqueue_script(
+            'publishpress-chosen',
+            plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
+            ['jquery'],
+            PUBLISHPRESS_VERSION
+        );
         wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery'],
             PUBLISHPRESS_VERSION);
 
+        wp_register_script('pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', ['jquery'],
+            PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-listfilterizer', PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js', ['jquery'],
             PUBLISHPRESS_VERSION, true);
         wp_register_script('jquery-quicksearch', PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js', ['jquery'],
@@ -767,9 +778,9 @@ class publishpress
                 'pp-addons'                             => null,
                 'pp-manage-roles'                       => null,
                 'pp-manage-capabilities'                => null,
-                'edit-tags.php?taxonomy=author'         => null,
                 'pp-modules-settings'                   => null,
                 'edit.php?post_type=psppnotif_workflow' => null,
+                'pp-notif-log'                          => null,
             ];
 
             foreach ($submenu_pp as $index => $item) {
@@ -792,11 +803,17 @@ class publishpress
                 unset($submenu_pp[$relevantMenus['pp-content-overview']]);
             }
 
-            // Notifications
             if ( ! is_null($relevantMenus['edit.php?post_type=psppnotif_workflow'])) {
                 $new_submenu[] = $submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']];
 
                 unset($submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']]);
+            }
+
+            // Notifications
+            if ( ! is_null($relevantMenus['pp-notif-log'])) {
+                $new_submenu[] = $submenu_pp[$relevantMenus['pp-notif-log']];
+
+                unset($submenu_pp[$relevantMenus['pp-notif-log']]);
             }
 
             // Roles
@@ -811,13 +828,6 @@ class publishpress
                 $new_submenu[] = $submenu_pp[$relevantMenus['pp-manage-capabilities']];
 
                 unset($submenu_pp[$relevantMenus['pp-manage-capabilities']]);
-            }
-
-            // Authors
-            if ( ! is_null($relevantMenus['edit-tags.php?taxonomy=author'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['edit-tags.php?taxonomy=author']];
-
-                unset($submenu_pp[$relevantMenus['edit-tags.php?taxonomy=author']]);
             }
 
             // Check if we have other menu items, except settings and add-ons. They will be added to the end.
@@ -1094,7 +1104,7 @@ function PublishPress()
  *
  * @since 1.9.8
  */
-function publishPressRegisterCustomPostTypes()
+function publishPressRegisterImprovedNotificationsPostTypes()
 {
     global $publishpress;
 
@@ -1116,15 +1126,15 @@ function publishPressRegisterCustomPostTypes()
             PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
             [
                 'labels'              => [
-                    'name'               => __('Notification Workflows', 'publishpress'),
-                    'singular_name'      => __('Notification Workflow', 'publishpress'),
-                    'add_new_item'       => __('Add New Notification Workflow', 'publishpress'),
-                    'edit_item'          => __('Edit Notification Workflow', 'publishpress'),
-                    'search_items'       => __('Search Workflows', 'publishpress'),
+                    'name'               => __('Notifications', 'publishpress'),
+                    'singular_name'      => __('Notification', 'publishpress'),
+                    'add_new_item'       => __('Add New Notification', 'publishpress'),
+                    'edit_item'          => __('Edit Notification', 'publishpress'),
+                    'search_items'       => __('Search Notifications', 'publishpress'),
                     'menu_name'          => __('Notifications', 'publishpress'),
-                    'name_admin_bar'     => __('Notification Workflow', 'publishpress'),
-                    'not_found'          => __('No Workflow found', 'publishpress'),
-                    'not_found_in_trash' => __('No Workflow found', 'publishpress'),
+                    'name_admin_bar'     => __('Notification', 'publishpress'),
+                    'not_found'          => __('No notification found', 'publishpress'),
+                    'not_found_in_trash' => __('No notification found', 'publishpress'),
                 ],
                 'public'              => false,
                 'publicly_queryable'  => false,
@@ -1148,5 +1158,5 @@ function publishPressRegisterCustomPostTypes()
 }
 
 add_action('init', 'PublishPress');
-add_action('publishpress_admin_menu_page', 'publishPressRegisterCustomPostTypes', 1001);
+add_action('publishpress_admin_menu_page', 'publishPressRegisterImprovedNotificationsPostTypes', 1001);
 register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
