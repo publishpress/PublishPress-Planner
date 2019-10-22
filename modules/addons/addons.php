@@ -239,16 +239,6 @@ if ( ! class_exists('PP_Addons')) {
                     'icon_class'  => 'fa fa-shopping-cart',
                     'edd_id'      => 7000,
                 ],
-                'publishpress-multiple-authors'      => [
-                    'slug'        => 'publishpress-multiple-authors',
-                    'title'       => __('Multiple authors support', 'publishpress'),
-                    'description' => __(
-                        'Allows you choose multiple authors for a single post. This add-on is ideal for teams who write collaboratively.',
-                        'publishpress'
-                    ),
-                    'icon_class'  => 'fas fa-user-edit',
-                    'edd_id'      => 7203,
-                ],
                 'publishpress-reminders'             => [
                     'slug'        => 'publishpress-reminders',
                     'title'       => __('Reminders', 'publishpress'),
@@ -288,7 +278,6 @@ if ( ! class_exists('PP_Addons')) {
         {
             $options_map = [
                 'publishpress-content-checklist'     => 'publishpress_checklist_options',
-                'publishpress-multiple-authors'      => 'publishpress_multiple_authors_options',
                 'publishpress-woocommerce-checklist' => 'publishpress_woocommerce_checklist_options',
                 'publishpress-slack'                 => 'publishpress_slack_options',
                 'publishpress-permissions'           => 'publishpress_permissions_options',

@@ -487,6 +487,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          * Filters the enable_notifications on the Slack add-on to block it.
          *
          * @param bool $enable_notifications
+         *
+         * @return bool
          */
         public function filter_slack_enable_notifications($enable_notifications)
         {
@@ -500,6 +502,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          * @param string  $new_status
          * @param string  $old_status
          * @param WP_Post $post
+         *
+         * @throws Exception
          */
         public function action_transition_post_status($new_status, $old_status, $post)
         {
@@ -517,6 +521,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
+            // Ignores if it is saved with the same status, avoiding multiple notifications on some situations.
+            if ($old_status === $new_status) {
+                return;
+            }
+
             // Go ahead and do the action to run workflows
             $args = [
                 'action'     => 'transition_post_status',
@@ -530,6 +539,9 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
         /**
          * @param $post_type
+         *
+         * @return bool
+         * @throws Exception
          */
         private function is_supported_post_type($post_type)
         {
@@ -545,6 +557,8 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          * controller of workflows to filter and execute them.
          *
          * @param WP_Comment $comment
+         *
+         * @throws Exception
          */
         public function action_editorial_comment($comment)
         {
@@ -569,7 +583,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Enqueue scripts and stylesheets for the admin pages.
          *
-         * @TODO uncomment when admin.js is required
+         * @TODO uncomment when admin-menu.js is required
          *
          * @param string $hook_suffix
          */
@@ -823,7 +837,9 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function get_workflows($meta_query = [])
         {
-            if (empty($this->workflows)) {
+            $hash = md5(maybe_serialize($meta_query));
+
+            if ( ! isset($this->workflows[$hash])) {
                 // Build the query
                 $query_args = [
                     'nopaging'      => true,
@@ -835,10 +851,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
                 $query = new \WP_Query($query_args);
 
-                $this->workflows = $query->posts;
+                $this->workflows[$hash] = $query->posts;
             }
 
-            return $this->workflows;
+            return $this->workflows[$hash];
         }
 
         /**

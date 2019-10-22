@@ -10,7 +10,8 @@
 namespace PublishPress\Notifications;
 
 use Allex\Core;
-use PublishPress\AsyncNotifications\Queue\WPCron;
+use PublishPress\AsyncNotifications\WPCron;
+use PublishPress\AsyncNotifications\QueueInterface;
 
 class Pimple_Container extends \Pimple\Container
 {
@@ -91,10 +92,16 @@ class Pimple_Container extends \Pimple\Container
             /**
              * @param $c
              *
-             * @return WPCron
+             * @return QueueInterface
              */
             $instance['notification_queue'] = function ($c) {
-                return new WPCron();
+                $queue = apply_filters('publishpress_notification_queue', false, $c);
+
+                if (empty($queue)) {
+                    $queue = new WPCron();
+                }
+
+                return $queue;
             };
 
             $instance['framework'] = function ($c) {
