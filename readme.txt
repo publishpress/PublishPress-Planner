@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.2
-Stable tag: 1.20.9
+Stable tag: 1.21.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,7 +130,7 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [1.21.0] - UNRELEASED =
+= [1.21.0] - 2019-10-22 =
 
 * Feature: Implement a log for notifications, #500;
 * Feature: Implement support for pages in the content overview, #503
@@ -139,6 +139,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix error when there is no follower for a post, #509;
 * Fixed: Uncaught TypeError: Cannot read property 'length' of undefined, #499;
 * Fixed: Error "Can't read prop of null" in the pp_date.js file;
+* Fixed: Custom statuses was not accepting numbers in the name;
+* Fixed: Fixed message for async notifications when a post changes the status;
+* Fixed: Remove a PHP short tag;
 * Removed: Removed Multiple Authors from the add-ons list since the plugin is standalone now;
 * Removed: Removed leftovers from the Freemius integration;
 * Changed: Renamed the file common/js/admin.js to common/js/admin-menu.js;
