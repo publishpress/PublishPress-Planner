@@ -98,7 +98,6 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 * [Click here for full instructions on moving from Edit Flow to PublishPress](https://publishpress.com/docs/migrate/)
 
 = I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
-K_TCPDF_CALLS_IN_HTML
 Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/AllediaWordPress/PublishPress), and we welcome contributions from everyone.
 
 = FAQ =
