@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.21.0
+ * Version: 1.21.1
  *
  * Copyright (c) 2019 PublishPress
  *
