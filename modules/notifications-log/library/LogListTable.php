@@ -110,6 +110,8 @@ class LogListTable extends \WP_List_Table
                         $output .= '<span class="error"> - ' . $log->error . '</span>';
                     }
                 }
+                $output .= $log->async ? __(' (Scheduled in the cron)', 'publishpress') : '';
+
                 break;
 
             case 'async':
@@ -182,7 +184,6 @@ class LogListTable extends \WP_List_Table
             'action'   => __('Action', 'publishpress'),
             'receiver' => __('Receiver', 'publishpress'),
             'channel'  => __('Channel', 'publishpress'),
-            'async'    => __('Scheduled', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
 

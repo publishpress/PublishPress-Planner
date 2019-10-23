@@ -1,5 +1,5 @@
-.publishpress_page_pp-notif-log .column-async {
-  width: 65px
+.publishpress_page_pp-notif-log .column-status {
+  width: 180px;
 }
 
 .publishpress_page_pp-notif-log .column-status .dashicons-yes-alt,
@@ -11,10 +11,6 @@
 .publishpress_page_pp-notif-log .column-status .error,
 .publishpress_page_pp-notif-log tr.error {
   color: #ff2225;
-}
-
-.publishpress_page_pp-notif-log th.column-channel {
-  width: 60px;
 }
 
 .publishpress_page_pp-notif-log .filter-posts,

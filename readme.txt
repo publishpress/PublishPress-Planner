@@ -132,6 +132,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [1.21.1] - 2019-10-23 =
 
 * Fixed: Updated the Plugin Framework removing a debug statement;
+* Changed: Removed the Async column from the Notifications Log and added text to the Status column for async notifications;
 
 = [1.21.0] - 2019-10-22 =
 

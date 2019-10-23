@@ -534,7 +534,9 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
                     <tr>
                         <th><?php echo __('Channel', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->channel; ?></td>
+                        <td>
+                            <?php echo $comment->channel; ?>
+                        </td>
                     </tr>
 
                     <tr>
@@ -552,16 +554,16 @@ if ( ! class_exists('PP_Notifications_Log')) {
                         </td>
                     </tr>
 
-                    <tr>
-                        <th><?php echo __('Scheduled', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->async ? __('Yes', 'publishpress') : __('No',
-                                'publishpress'); ?></td>
-                    </tr>
-
                     <tr class="<?php echo $comment->success ? 'success' : 'error'; ?>">
                         <th><?php echo __('Result', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->success ? __('Success', 'publishpress') : __('Error',
-                                    'publishpress') . '<br>' . $comment->error; ?></td>
+                        <td>
+                            <?php echo $comment->success ? __('Success', 'publishpress') : __('Error',
+                                    'publishpress') . '<br>' . $comment->error; ?>
+
+                            <?php if ($comment->async) : ?>
+                                <?php echo __(' (Scheduled in the cron)', 'publishpress'); ?>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 </table>
                 <?php
