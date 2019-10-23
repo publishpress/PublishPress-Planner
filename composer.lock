@@ -35,23 +35,23 @@
             ],
             "authors": [
                 {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com",
+                    "homepage": "https://publishpress.com"
+                },
+                {
                     "name": "Alledia",
                     "email": "help@alledia.com"
+                },
+                {
+                    "name": "UpStream",
+                    "email": "help@upstream.com"
                 },
                 {
                     "name": "Anderson Grudtner Martins",
                     "email": "anderson@grudtner.me",
                     "homepage": "http://anderson.grudtner.me",
                     "role": "Lead Developer"
-                },
-                {
-                    "name": "PublishPress",
-                    "email": "help@publishpress.com",
-                    "homepage": "https://publishpress.com"
-                },
-                {
-                    "name": "UpStream",
-                    "email": "help@upstream.com"
                 }
             ],
             "description": "Base classes and Phing scripts for building WordPress plugins",
@@ -100,9 +100,9 @@
                 },
                 {
                     "name": "Anderson Grudtner Martins",
-                    "role": "Lead Developer",
                     "email": "anderson@grudtner.me",
-                    "homepage": "http://anderson.grudtner.me"
+                    "homepage": "http://anderson.grudtner.me",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Alledia framework for creating WordPress plugins.",
