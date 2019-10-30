@@ -92,7 +92,7 @@ if ( ! class_exists('PP_Debug')) {
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
-            add_action('publishpress_debug_write_log', [$this, 'write'], 10, 2);
+            add_action('publishpress_debug_write_log', [$this, 'write'], 10, 3);
 
             $this->initialized = true;
         }
@@ -153,8 +153,12 @@ if ( ! class_exists('PP_Debug')) {
          * Write the given message into the log file.
          *
          * @param $message
+         * @param $id
+         * @param $line
+         *
+         * @throws Exception
          */
-        public function write($message, $id = null)
+        public function write($message, $id = null, $line = 0)
         {
             if ( ! $this->get_service('DEBUGGING')) {
                 return;
@@ -171,6 +175,10 @@ if ( ! class_exists('PP_Debug')) {
 
             // Prepend the id, if set.
             if ( ! empty($id)) {
+                if (!empty($line)) {
+                    $id .= ':' . $line;
+                }
+
                 $message = $id . ' --> ' . $message;
             }
 
