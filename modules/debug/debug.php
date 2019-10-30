@@ -92,6 +92,8 @@ if ( ! class_exists('PP_Debug')) {
 
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
+            add_action('publishpress_debug_write_log', [$this, 'write'], 10, 2);
+
             $this->initialized = true;
         }
 
