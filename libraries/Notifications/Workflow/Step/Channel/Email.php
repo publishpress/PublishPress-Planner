@@ -183,6 +183,14 @@ class Email extends Base implements Channel_Interface
             $recipients = $emailData['to'];
 
             foreach ($recipients as $email) {
+                if (is_object($email) && method_exists($email, 'getEmail')) {
+                    $email = $email->getEmail();
+                } elseif (is_object($email) && isset($email->email)) {
+                    $email = $email->email;
+                } elseif (is_array($email) && isset($email['email'])) {
+                    $email = $email['email'];
+                }
+
                 $hash = $this->getEmailErrorHash($email, $emailData['subject'], $emailData['message']);
 
                 $this->emailFailures[$hash] = $error->get_error_message();
