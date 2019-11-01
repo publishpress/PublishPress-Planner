@@ -179,4 +179,9 @@ class LogModel
             }
         }
     }
+
+    public function receiverIsUser()
+    {
+        return is_numeric($this->receiver);
+    }
 }

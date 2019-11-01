@@ -542,10 +542,11 @@ if ( ! class_exists('PP_Notifications_Log')) {
                     <tr>
                         <th><?php echo __('Receiver', 'publishpress'); ?>:</th>
                         <td>
-                            <?php echo $log->receiver; ?>
                             <?php
-                            if ( ! empty($log->receiverName)) {
-                                echo '- ' . $log->receiverName;
+                            if ($log->receiverIsUser()) {
+                                echo $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                            } else {
+                                echo $log->receiver;
                             }
                             ?>
                         </td>
