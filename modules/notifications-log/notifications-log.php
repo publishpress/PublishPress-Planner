@@ -489,78 +489,85 @@ if ( ! class_exists('PP_Notifications_Log')) {
             $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
 
             if ( ! empty($id)) {
-                $comment = new LogModel($id);
+                $log = new LogModel($id);
                 ob_start();
                 ?>
                 <table>
                     <tr>
                         <th><?php echo __('ID', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->id; ?></td>
+                        <td><?php echo $log->id; ?></td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Date', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->date; ?></td>
+                        <td><?php echo $log->date; ?></td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Post', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->postTitle; ?></td>
+                        <td><?php echo $log->postTitle; ?></td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Workflow', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->workflowTitle; ?></td>
+                        <td><?php echo $log->workflowTitle; ?></td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Action', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->action; ?></td>
+                        <td><?php echo $log->action; ?></td>
                     </tr>
 
-                    <?php if ( ! empty($comment->oldStatus)) : ?>
+                    <?php if ( ! empty($log->oldStatus)) : ?>
                         <tr>
                             <th><?php echo __('Old Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $comment->oldStatus; ?></td>
+                            <td><?php echo $log->oldStatus; ?></td>
                         </tr>
                     <?php endif; ?>
 
-                    <?php if ( ! empty($comment->newStatus)) : ?>
+                    <?php if ( ! empty($log->newStatus)) : ?>
                         <tr>
                             <th><?php echo __('New Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $comment->newStatus; ?></td>
+                            <td><?php echo $log->newStatus; ?></td>
                         </tr>
                     <?php endif; ?>
 
                     <tr>
                         <th><?php echo __('Channel', 'publishpress'); ?>:</th>
                         <td>
-                            <?php echo $comment->channel; ?>
+                            <?php echo $log->channel; ?>
                         </td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Receiver', 'publishpress'); ?>:</th>
-                        <td><?php echo $comment->receiver; ?></td>
+                        <td>
+                            <?php echo $log->receiver; ?>
+                            <?php
+                            if ( ! empty($log->receiverName)) {
+                                echo '- ' . $log->receiverName;
+                            }
+                            ?>
+                        </td>
                     </tr>
 
                     <tr>
                         <th><?php echo __('Content', 'publishpress'); ?>:</th>
                         <td>
-                            <?php if (isset($comment->content['subject'])) : ?>
-                                <?php echo $comment->content['subject']; ?><br>
+                            <?php if (isset($log->content['subject'])) : ?>
+                                <?php echo $log->content['subject']; ?><br>
                             <?php endif; ?>
-                            <pre><?php echo $comment->content['body']; ?></pre>
+                            <pre><?php echo $log->content['body']; ?></pre>
                         </td>
                     </tr>
 
-                    <tr class="<?php echo $comment->success ? 'success' : 'error'; ?>">
+                    <tr class="<?php echo $log->success ? 'success' : 'error'; ?>">
                         <th><?php echo __('Result', 'publishpress'); ?>:</th>
                         <td>
-                            <?php echo $comment->success ? __('Success', 'publishpress') : __('Error',
-                                    'publishpress') . '<br>' . $comment->error; ?>
+                            <?php echo $log->success ? __('Success', 'publishpress') : __('Error',
+                                    'publishpress') . '<br>' . $log->error; ?>
 
-                            <?php if ($comment->async) : ?>
+                            <?php if ($log->async) : ?>
                                 <?php echo __(' (Scheduled in the cron)', 'publishpress'); ?>
                             <?php endif; ?>
                         </td>

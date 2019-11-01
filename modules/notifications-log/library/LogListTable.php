@@ -94,6 +94,10 @@ class LogListTable extends \WP_List_Table
 
             case 'receiver':
                 $output = $log->receiver;
+
+                if ( ! empty($log->receiverName)) {
+                    $output .= ' - ' . $log->receiverName;
+                }
                 break;
 
             case 'channel':
