@@ -129,9 +129,6 @@ class Base
      * The child class should call this constructor from its own constructor to override
      * the default $args.
      *
-     * @since  3.1.0
-     * @access public
-     *
      * @param array|string $args     {
      *                               Array or string of arguments.
      *
@@ -148,6 +145,9 @@ class Base
      *                            screen. If left null, the current screen will be automatically set.
      *                            Default null.
      * }
+     * @since  3.1.0
+     * @access public
+     *
      */
     public function __construct($args = [])
     {
@@ -187,12 +187,12 @@ class Base
     /**
      * Make private properties readable for backward compatibility.
      *
-     * @since  4.0.0
-     * @access public
-     *
      * @param string $name Property to get.
      *
      * @return mixed Property.
+     * @since  4.0.0
+     * @access public
+     *
      */
     public function __get($name)
     {
@@ -204,13 +204,13 @@ class Base
     /**
      * Make private properties settable for backward compatibility.
      *
-     * @since  4.0.0
-     * @access public
-     *
      * @param string $name  Property to check if set.
      * @param mixed  $value Property value.
      *
      * @return mixed Newly-set property.
+     * @since  4.0.0
+     * @access public
+     *
      */
     public function __set($name, $value)
     {
@@ -222,12 +222,12 @@ class Base
     /**
      * Make private properties checkable for backward compatibility.
      *
-     * @since  4.0.0
-     * @access public
-     *
      * @param string $name Property to check if set.
      *
      * @return bool Whether the property is set.
+     * @since  4.0.0
+     * @access public
+     *
      */
     public function __isset($name)
     {
@@ -239,10 +239,11 @@ class Base
     /**
      * Make private properties un-settable for backward compatibility.
      *
+     * @param string $name Property to unset.
+     *
      * @since  4.0.0
      * @access public
      *
-     * @param string $name Property to unset.
      */
     public function __unset($name)
     {
@@ -254,13 +255,13 @@ class Base
     /**
      * Make private/protected methods readable for backward compatibility.
      *
-     * @since  4.0.0
-     * @access public
-     *
      * @param callable $name      Method to call.
      * @param array    $arguments Arguments to pass when calling.
      *
      * @return mixed|bool Return value of the callback, false otherwise.
+     * @since  4.0.0
+     * @access public
+     *
      */
     public function __call($name, $arguments)
     {
@@ -286,13 +287,13 @@ class Base
     /**
      * Access the pagination args.
      *
-     * @since  3.1.0
-     * @access public
-     *
      * @param string $key Pagination argument to retrieve. Common values include 'total_items',
      *                    'total_pages', 'per_page', or 'infinite_scroll'.
      *
      * @return int Number of items that correspond to the given pagination argument.
+     * @since  3.1.0
+     * @access public
+     *
      */
     public function get_pagination_arg($key)
     {
@@ -306,13 +307,33 @@ class Base
     }
 
     /**
+     * Get the current page number
+     *
+     * @return int
+     * @since  3.1.0
+     * @access public
+     *
+     */
+    public function get_pagenum()
+    {
+        $pagenum = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 0;
+
+        if (isset($this->_pagination_args['total_pages']) && $pagenum > $this->_pagination_args['total_pages']) {
+            $pagenum = $this->_pagination_args['total_pages'];
+        }
+
+        return max(1, $pagenum);
+    }
+
+    /**
      * Displays the search box.
+     *
+     * @param string $text     The 'submit' button label.
+     * @param string $input_id ID attribute value for the search input field.
      *
      * @since  3.1.0
      * @access public
      *
-     * @param string $text     The 'submit' button label.
-     * @param string $input_id ID attribute value for the search input field.
      */
     public function search_box($text, $input_id)
     {
@@ -346,10 +367,10 @@ class Base
     /**
      * Whether the table has items to display or not
      *
+     * @return bool
      * @since  3.1.0
      * @access public
      *
-     * @return bool
      */
     public function has_items()
     {
@@ -371,9 +392,10 @@ class Base
          * The dynamic portion of the hook name, `$this->screen->id`, refers
          * to the ID of the current screen, usually a string.
          *
+         * @param array $views An array of available list table views.
+         *
          * @since 3.5.0
          *
-         * @param array $views An array of available list table views.
          */
         $views = apply_filters("views_{$this->screen->id}", $views);
 
@@ -395,10 +417,10 @@ class Base
      * Get an associative array ( id => link ) with the list
      * of views available on this table.
      *
+     * @return array
      * @since  3.1.0
      * @access protected
      *
-     * @return array
      */
     protected function get_views()
     {
@@ -408,10 +430,10 @@ class Base
     /**
      * Get the current action selected from the bulk actions dropdown.
      *
+     * @return string|false The action name or False if no action was selected
      * @since  3.1.0
      * @access public
      *
-     * @return string|false The action name or False if no action was selected
      */
     public function current_action()
     {
@@ -433,10 +455,10 @@ class Base
     /**
      * Public wrapper for Base::get_default_primary_column_name().
      *
+     * @return string Name of the default primary column.
      * @since  4.4.0
      * @access public
      *
-     * @return string Name of the default primary column.
      */
     public function get_primary_column()
     {
@@ -446,10 +468,10 @@ class Base
     /**
      * Gets the name of the primary column.
      *
+     * @return string The name of the primary column.
      * @since  4.3.0
      * @access protected
      *
-     * @return string The name of the primary column.
      */
     protected function get_primary_column_name()
     {
@@ -465,10 +487,11 @@ class Base
         /**
          * Filters the name of the primary column for the current list table.
          *
-         * @since 4.3.0
-         *
          * @param string $default Column name default for the specific list table, e.g. 'name'.
          * @param string $context Screen ID for specific list table, e.g. 'plugins'.
+         *
+         * @since 4.3.0
+         *
          */
         $column = apply_filters('list_table_primary_column', $default, $this->screen->id);
 
@@ -482,10 +505,10 @@ class Base
     /**
      * Gets the name of the default primary column.
      *
+     * @return string Name of the default primary column, in this case, an empty string.
      * @since  4.3.0
      * @access protected
      *
-     * @return string Name of the default primary column, in this case, an empty string.
      */
     protected function get_default_primary_column_name()
     {
@@ -514,11 +537,11 @@ class Base
      * Get a list of columns. The format is:
      * 'internal-name' => 'Title'
      *
+     * @return array
      * @since  3.1.0
      * @access public
      * @abstract
      *
-     * @return array
      */
     public function get_columns()
     {
@@ -566,10 +589,11 @@ class Base
     /**
      * Generate the table navigation above or below the table
      *
+     * @param string $which
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param string $which
      */
     protected function display_tablenav($which)
     {
@@ -580,8 +604,8 @@ class Base
 
             <?php if ($this->has_items()): ?>
                 <div class="alignleft actions bulkactions">
-			<?php $this->bulk_actions($which); ?>
-		</div>
+                    <?php $this->bulk_actions($which); ?>
+                </div>
             <?php endif;
             $this->extra_tablenav($which);
             $this->pagination($which); ?>
@@ -594,11 +618,12 @@ class Base
     /**
      * Display the bulk actions dropdown.
      *
+     * @param string $which The location of the bulk actions: 'top' or 'bottom'.
+     *                      This is designated as optional for backward compatibility.
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param string $which The location of the bulk actions: 'top' or 'bottom'.
-     *                      This is designated as optional for backward compatibility.
      */
     protected function bulk_actions($which = '')
     {
@@ -612,9 +637,10 @@ class Base
              *
              * This filter can currently only be used to remove bulk actions.
              *
+             * @param array $actions An array of the available bulk actions.
+             *
              * @since 3.5.0
              *
-             * @param array $actions An array of the available bulk actions.
              */
             $this->_actions = apply_filters("bulk_actions-{$this->screen->id}", $this->_actions);
             $two            = '';
@@ -646,10 +672,10 @@ class Base
      * Get an associative array ( option_name => option_title ) with the list
      * of bulk actions available on this table.
      *
+     * @return array
      * @since  3.1.0
      * @access protected
      *
-     * @return array
      */
     protected function get_bulk_actions()
     {
@@ -659,10 +685,11 @@ class Base
     /**
      * Extra controls to be displayed between bulk actions and pagination
      *
+     * @param string $which
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param string $which
      */
     protected function extra_tablenav($which)
     {
@@ -671,10 +698,11 @@ class Base
     /**
      * Display the pagination.
      *
+     * @param string $which
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param string $which
      */
     protected function pagination($which)
     {
@@ -699,7 +727,7 @@ class Base
         $current              = $this->get_pagenum();
         $removable_query_args = wp_removable_query_args();
 
-        $protocol = is_ssl() ? 'https' : 'http';
+        $protocol    = is_ssl() ? 'https' : 'http';
         $current_url = set_url_scheme($protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
         $current_url = remove_query_arg($removable_query_args, $current_url);
@@ -804,10 +832,10 @@ class Base
     /**
      * Get a list of CSS classes for the Base table tag.
      *
+     * @return array List of CSS classes for the table tag.
      * @since  3.1.0
      * @access protected
      *
-     * @return array List of CSS classes for the table tag.
      */
     protected function get_table_classes()
     {
@@ -817,18 +845,19 @@ class Base
     /**
      * Print column headers, accounting for hidden and sortable columns.
      *
+     * @param bool $with_id Whether to set the id attribute or not
+     *
      * @since     3.1.0
      * @access    public
      *
      * @staticvar int $cb_counter
      *
-     * @param bool $with_id Whether to set the id attribute or not
      */
     public function print_column_headers($with_id = true)
     {
         list($columns, $hidden, $sortable, $primary) = $this->get_column_info();
 
-        $protocol = is_ssl() ? 'https' : 'http';
+        $protocol    = is_ssl() ? 'https' : 'http';
         $current_url = set_url_scheme($protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
         $current_url = remove_query_arg('paged', $current_url);
 
@@ -898,6 +927,83 @@ class Base
     }
 
     /**
+     * Get a list of all, hidden and sortable columns, with filter applied
+     *
+     * @return array
+     * @since  3.1.0
+     * @access protected
+     *
+     */
+    protected function get_column_info()
+    {
+        // $_column_headers is already set / cached
+        if (isset($this->_column_headers) && is_array($this->_column_headers)) {
+            // Back-compat for list tables that have been manually setting $_column_headers for horse reasons.
+            // In 4.3, we added a fourth argument for primary column.
+            $column_headers = [[], [], [], $this->get_primary_column_name()];
+            foreach ($this->_column_headers as $key => $value) {
+                $column_headers[$key] = $value;
+            }
+
+            return $column_headers;
+        }
+
+        $columns = get_column_headers($this->screen);
+        $hidden  = get_hidden_columns($this->screen);
+
+        $sortable_columns = $this->get_sortable_columns();
+        /**
+         * Filters the list table sortable columns for a specific screen.
+         *
+         * The dynamic portion of the hook name, `$this->screen->id`, refers
+         * to the ID of the current screen, usually a string.
+         *
+         * @param array $sortable_columns An array of sortable columns.
+         *
+         * @since 3.5.0
+         *
+         */
+        $_sortable = apply_filters("manage_{$this->screen->id}_sortable_columns", $sortable_columns);
+
+        $sortable = [];
+        foreach ($_sortable as $id => $data) {
+            if (empty($data)) {
+                continue;
+            }
+
+            $data = (array)$data;
+            if ( ! isset($data[1])) {
+                $data[1] = false;
+            }
+
+            $sortable[$id] = $data;
+        }
+
+        $primary               = $this->get_primary_column_name();
+        $this->_column_headers = [$columns, $hidden, $sortable, $primary];
+
+        return $this->_column_headers;
+    }
+
+    /**
+     * Get a list of sortable columns. The format is:
+     * 'internal-name' => 'orderby'
+     * or
+     * 'internal-name' => array( 'orderby', true )
+     *
+     * The second format will make the initial sorting order be descending
+     *
+     * @return array
+     * @since  3.1.0
+     * @access protected
+     *
+     */
+    protected function get_sortable_columns()
+    {
+        return [];
+    }
+
+    /**
      * Generate the tbody element for the list table.
      *
      * @since  3.1.0
@@ -930,10 +1036,11 @@ class Base
     /**
      * Generates content for a single row of the table
      *
+     * @param object $item The current item
+     *
      * @since  3.1.0
      * @access public
      *
-     * @param object $item The current item
      */
     public function single_row($item)
     {
@@ -945,10 +1052,11 @@ class Base
     /**
      * Generates the columns for a single row of the table
      *
+     * @param object $item The current item
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param object $item The current item
      */
     protected function single_row_columns($item)
     {
@@ -1007,14 +1115,14 @@ class Base
     /**
      * Generates and display row actions links for the list table.
      *
-     * @since  4.3.0
-     * @access protected
-     *
      * @param object $item        The item being acted upon.
      * @param string $column_name Current column name.
      * @param string $primary     Primary column name.
      *
      * @return string The row actions HTML, or an empty string if the current column is the primary column.
+     * @since  4.3.0
+     * @access protected
+     *
      */
     protected function handle_row_actions($item, $column_name, $primary)
     {
@@ -1033,10 +1141,10 @@ class Base
     /**
      * Return number of visible columns
      *
+     * @return int
      * @since  3.1.0
      * @access public
      *
-     * @return int
      */
     public function get_column_count()
     {
@@ -1044,82 +1152,6 @@ class Base
         $hidden = array_intersect(array_keys($columns), array_filter($hidden));
 
         return count($columns) - count($hidden);
-    }
-
-    /**
-     * Get a list of all, hidden and sortable columns, with filter applied
-     *
-     * @since  3.1.0
-     * @access protected
-     *
-     * @return array
-     */
-    protected function get_column_info()
-    {
-        // $_column_headers is already set / cached
-        if (isset($this->_column_headers) && is_array($this->_column_headers)) {
-            // Back-compat for list tables that have been manually setting $_column_headers for horse reasons.
-            // In 4.3, we added a fourth argument for primary column.
-            $column_headers = [[], [], [], $this->get_primary_column_name()];
-            foreach ($this->_column_headers as $key => $value) {
-                $column_headers[$key] = $value;
-            }
-
-            return $column_headers;
-        }
-
-        $columns = get_column_headers($this->screen);
-        $hidden  = get_hidden_columns($this->screen);
-
-        $sortable_columns = $this->get_sortable_columns();
-        /**
-         * Filters the list table sortable columns for a specific screen.
-         *
-         * The dynamic portion of the hook name, `$this->screen->id`, refers
-         * to the ID of the current screen, usually a string.
-         *
-         * @since 3.5.0
-         *
-         * @param array $sortable_columns An array of sortable columns.
-         */
-        $_sortable = apply_filters("manage_{$this->screen->id}_sortable_columns", $sortable_columns);
-
-        $sortable = [];
-        foreach ($_sortable as $id => $data) {
-            if (empty($data)) {
-                continue;
-            }
-
-            $data = (array)$data;
-            if ( ! isset($data[1])) {
-                $data[1] = false;
-            }
-
-            $sortable[$id] = $data;
-        }
-
-        $primary               = $this->get_primary_column_name();
-        $this->_column_headers = [$columns, $hidden, $sortable, $primary];
-
-        return $this->_column_headers;
-    }
-
-    /**
-     * Get a list of sortable columns. The format is:
-     * 'internal-name' => 'orderby'
-     * or
-     * 'internal-name' => array( 'orderby', true )
-     *
-     * The second format will make the initial sorting order be descending
-     *
-     * @since  3.1.0
-     * @access protected
-     *
-     * @return array
-     */
-    protected function get_sortable_columns()
-    {
-        return [];
     }
 
     /**
@@ -1203,10 +1235,11 @@ class Base
     /**
      * An internal method that sets all the necessary pagination arguments
      *
+     * @param array|string $args Array or string of arguments with information about the pagination.
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param array|string $args Array or string of arguments with information about the pagination.
      */
     protected function set_pagination_args($args)
     {
@@ -1230,34 +1263,15 @@ class Base
     }
 
     /**
-     * Get the current page number
-     *
-     * @since  3.1.0
-     * @access public
-     *
-     * @return int
-     */
-    public function get_pagenum()
-    {
-        $pagenum = isset($_REQUEST['paged']) ? absint($_REQUEST['paged']) : 0;
-
-        if (isset($this->_pagination_args['total_pages']) && $pagenum > $this->_pagination_args['total_pages']) {
-            $pagenum = $this->_pagination_args['total_pages'];
-        }
-
-        return max(1, $pagenum);
-    }
-
-    /**
      * Generate row actions div
-     *
-     * @since  3.1.0
-     * @access protected
      *
      * @param array $actions        The list of actions
      * @param bool  $always_visible Whether the actions should be always visible
      *
      * @return string
+     * @since  3.1.0
+     * @access protected
+     *
      */
     protected function row_actions($actions, $always_visible = false)
     {
@@ -1284,19 +1298,20 @@ class Base
     /**
      * Display a view switcher
      *
+     * @param string $current_mode
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param string $current_mode
      */
     protected function view_switcher($current_mode)
     {
         ?>
         <input type="hidden" name="mode" value="<?php echo esc_attr($current_mode); ?>"/>
         <div class="view-switch">
-<?php
+            <?php
             foreach ($this->modes as $mode => $title) {
-                $classes = [ 'view-' . $mode ];
+                $classes = ['view-' . $mode];
                 if ($current_mode === $mode) {
                     $classes[] = 'current';
                 }
@@ -1307,18 +1322,19 @@ class Base
                     $title
                 );
             } ?>
-		</div>
+        </div>
         <?php
     }
 
     /**
      * Display a comment count bubble
      *
+     * @param int $post_id          The post ID.
+     * @param int $pending_comments Number of pending comments.
+     *
      * @since  3.1.0
      * @access protected
      *
-     * @param int $post_id          The post ID.
-     * @param int $pending_comments Number of pending comments.
      */
     protected function comments_bubble($post_id, $pending_comments)
     {
@@ -1376,13 +1392,13 @@ class Base
     /**
      * Get number of items to display on a single page
      *
-     * @since  3.1.0
-     * @access protected
-     *
      * @param string $option
      * @param int    $default
      *
      * @return int
+     * @since  3.1.0
+     * @access protected
+     *
      */
     protected function get_items_per_page($option, $default = 20)
     {
@@ -1400,9 +1416,10 @@ class Base
          * 'users_network_per_page', 'edit_post_per_page', 'edit_page_per_page',
          * 'edit_{$post_type}_per_page', etc.
          *
+         * @param int $per_page Number of items to be displayed. Default 20.
+         *
          * @since 2.9.0
          *
-         * @param int $per_page Number of items to be displayed. Default 20.
          */
         return (int)apply_filters("{$option}", $per_page);
     }
