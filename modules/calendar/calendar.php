@@ -1813,6 +1813,7 @@ if ( ! class_exists('PP_Calendar')) {
                 'author'         => null,
                 'post_type'      => $supported_post_types,
                 'posts_per_page' => -1,
+                'order'          => 'ASC',
             ];
 
             $args = array_merge($defaults, $args);
