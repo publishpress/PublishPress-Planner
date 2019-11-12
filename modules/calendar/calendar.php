@@ -1151,11 +1151,12 @@ if ( ! class_exists('PP_Calendar')) {
                                         id="<?php echo esc_attr($week_single_date); ?>">
                                         <div class="day-wrapper">
                                             <div class='schedule-new-post-label'>
-                                <?php echo __('Click to create', 'publishpress'); ?>
-                            </div>
+                                                <?php echo __('Click to create', 'publishpress'); ?>
+                                            </div>
                                             <?php $class = ($week_single_date == date('Y-m-d',
                                                     current_time('timestamp'))) ? 'calendar-today' : ''; ?>
-                                            <div class="day-unit-label <?php echo esc_attr($class); ?>"><?php echo esc_html(date('j',
+                                            <div
+                                                class="day-unit-label <?php echo esc_attr($class); ?>"><?php echo esc_html(date('j',
                                                     strtotime($week_single_date))); ?></div>
                                             <ul class="post-list">
                                                 <?php
@@ -1228,24 +1229,27 @@ if ( ! class_exists('PP_Calendar')) {
                                                     </label>
 
                                                     <div>
-                                                        <label for="post-insert-dialog-post-status"><?php _e('Status', 'publishpress'); ?></label>
+                                                        <label for="post-insert-dialog-post-status"><?php _e('Status',
+                                                                'publishpress'); ?></label>
                                                         <select
                                                             id="post-insert-dialog-post-status"
                                                             name="post-insert-dialog-post-status"
                                                             class="post-insert-dialog-post-status"
                                                         >
                                                             <?php foreach ($this->get_post_statuses() as $status): ?>
-                                                            <option
-                                                                value="<?php echo $status->slug; ?>"
-                                                                <?php echo $status->slug === $default_post_status ? 'selected' : ''; ?>
-                                                            >
-                                                                <?php echo $status->name; ?>
-                                                            </option>
+                                                                <option
+                                                                    value="<?php echo $status->slug; ?>"
+                                                                    <?php echo $status->slug === $default_post_status ? 'selected' : ''; ?>
+                                                                >
+                                                                    <?php echo $status->name; ?>
+                                                                </option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
                                                     <div style="display: none;">
-                                                        <label for="post-insert-dialog-post-publish-time"><?php _e('Publish Time', 'publishpress'); ?></label>
+                                                        <label
+                                                            for="post-insert-dialog-post-publish-time"><?php _e('Publish Time',
+                                                                'publishpress'); ?></label>
                                                         <input
                                                             type="time"
                                                             id="post-insert-dialog-post-publish-time"
@@ -1331,13 +1335,14 @@ if ( ! class_exists('PP_Calendar')) {
             $edit_post_link = get_edit_post_link($post_id);
 
             if ($show_posts_publish_time) {
-                $show_posts_publish_time = in_array($post->post_status, self::getStatusesEligibleToDisplayPublishTime());
+                $show_posts_publish_time = in_array($post->post_status,
+                    self::getStatusesEligibleToDisplayPublishTime());
             }
 
             if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
                 $post_publish_date_timestamp = get_post_time('U', false, $post);
-                $posts_publish_time_format   = !isset($this->module->options->posts_publish_time_format) || is_null($this->module->options->posts_publish_time_format)
+                $posts_publish_time_format   = ! isset($this->module->options->posts_publish_time_format) || is_null($this->module->options->posts_publish_time_format)
                     ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                     : $this->module->options->posts_publish_time_format;
             }
@@ -1371,8 +1376,8 @@ if ( ! class_exists('PP_Calendar')) {
             $post_classes = apply_filters('pp_calendar_table_td_li_classes', $post_classes, $post_date, $post->ID); ?>
 
             <li
-                    class="<?php echo esc_attr(implode(' ', $post_classes)); ?>"
-                    id="post-<?php echo esc_attr($post->ID); ?>">
+                class="<?php echo esc_attr(implode(' ', $post_classes)); ?>"
+                id="post-<?php echo esc_attr($post->ID); ?>">
 
                 <div style="clear:right;"></div>
                 <div class="item-static">
@@ -1384,10 +1389,10 @@ if ( ! class_exists('PP_Calendar')) {
                             <span class="item-headline post-title" title="<?php echo esc_attr($title); ?>">
                                 <?php if ($show_posts_publish_time): ?>
                                     <time
-                                            class="item-headline-time"
-                                            datetime="<?php echo $post_publish_datetime; ?>"
-                                            title="<?php echo date_i18n($this->default_date_time_format,
-                                                $post_publish_date_timestamp); ?>"
+                                        class="item-headline-time"
+                                        datetime="<?php echo $post_publish_datetime; ?>"
+                                        title="<?php echo date_i18n($this->default_date_time_format,
+                                            $post_publish_date_timestamp); ?>"
                                     >
                                     <?php echo date_i18n($posts_publish_time_format, $post_publish_date_timestamp); ?>
                                 </time>
@@ -2137,7 +2142,7 @@ if ( ! class_exists('PP_Calendar')) {
             ];
 
             $show_posts_publish_time = $this->getShowPostsPublishTimeOptionValue();
-            $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
+            $field_name              = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
             echo '<div class="c-input-group">';
             foreach ($options as $optionValue => $optionLabel) {
@@ -2175,7 +2180,7 @@ if ( ! class_exists('PP_Calendar')) {
                 self::TIME_FORMAT_24H                     => '00-24',
             ];
 
-            $posts_publish_time_format = !isset($this->module->options->posts_publish_time_format) || is_null($this->module->options->posts_publish_time_format)
+            $posts_publish_time_format = ! isset($this->module->options->posts_publish_time_format) || is_null($this->module->options->posts_publish_time_format)
                 ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
                 : $this->module->options->posts_publish_time_format;
 
@@ -2346,11 +2351,11 @@ if ( ! class_exists('PP_Calendar')) {
                 $post_author = $user->ID;
             }
 
-            $post_date = sanitize_text_field($_POST['pp_insert_date']);
+            $post_date           = sanitize_text_field($_POST['pp_insert_date']);
             $post_date_timestamp = strtotime($post_date);
 
             $post_publish_time = sanitize_text_field(trim($_POST['pp_insert_publish_time']));
-            if (!empty($post_publish_time)) {
+            if ( ! empty($post_publish_time)) {
                 $post_publish_date_time = sprintf(
                     '%s %s',
                     $post_date,
@@ -2369,7 +2374,7 @@ if ( ! class_exists('PP_Calendar')) {
             unset($post_publish_date_time_instance);
 
             $post_status = sanitize_text_field($_POST['pp_insert_status']);
-            if (!$this->isPostStatusValid($post_status)) {
+            if ( ! $this->isPostStatusValid($post_status)) {
                 $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
             }
 
@@ -2414,7 +2419,8 @@ if ( ! class_exists('PP_Calendar')) {
             }
         }
 
-        private function isPostStatusValid($subject) {
+        private function isPostStatusValid($subject)
+        {
             foreach ($this->get_post_statuses() as $post_status) {
                 $is_status_valid = $subject === $post_status->slug;
                 if ($is_status_valid) {
@@ -2757,24 +2763,24 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
+         * @return  string
          * @since   1.20.1
          *
          * @access  private
          *
-         * @return  string
          */
         private function getShowPostsPublishTimeOptionValue()
         {
             $valid_options = ['on', 'off'];
 
             $publish_time = (function_exists('mb_strtolower'))
-            ? mb_strtolower($this->module->options->show_posts_publish_time)
-            : strtolower($this->module->options->show_posts_publish_time);
+                ? mb_strtolower($this->module->options->show_posts_publish_time)
+                : strtolower($this->module->options->show_posts_publish_time);
 
             if (
-                !isset($this->module->options->show_posts_publish_time)
+                ! isset($this->module->options->show_posts_publish_time)
                 || empty($this->module->options->show_posts_publish_time)
-                || !in_array($publish_time, $valid_options)
+                || ! in_array($publish_time, $valid_options)
             ) {
                 return 'on';
             }
@@ -2783,11 +2789,11 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
+         * @return  bool
          * @since   @todo
          *
          * @access  private
          *
-         * @return  bool
          */
         private function showPostsPublishTime()
         {
@@ -2861,14 +2867,15 @@ if ( ! class_exists('PP_Calendar')) {
         }
 
         /**
+         * @return  array
          * @since   1.20.1
          *
          * @access  private
          * @static
          *
-         * @return  array
          */
-        private static function getStatusesEligibleToDisplayPublishTime() {
+        private static function getStatusesEligibleToDisplayPublishTime()
+        {
             $statuses = [
                 'publish',
             ];
