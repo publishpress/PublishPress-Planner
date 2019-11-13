@@ -626,9 +626,9 @@ if ( ! class_exists('PP_Calendar')) {
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
                         $start_date    = date('Ymd', strtotime($post->post_date)) . 'T' . date('His',
-                                strtotime($post->post_date)) . 'Z';
+                                strtotime($post->post_date));
                         $end_date      = date('Ymd', strtotime($post->post_date) + (5 * 60)) . 'T' . date('His',
-                                strtotime($post->post_date) + (5 * 60)) . 'Z';
+                                strtotime($post->post_date) + (5 * 60));
                         $last_modified = date('Ymd', strtotime($post->post_modified_gmt)) . 'T' . date('His',
                                 strtotime($post->post_modified_gmt)) . 'Z';
 
