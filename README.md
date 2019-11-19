@@ -25,7 +25,7 @@ Feel free to email us via [help@publishpress.com](mailto:help@publishpress.com).
 * Clone the repository
 * Create a new branch
 * Implement and commit the code
-* Create a Pull Request targetting the "development" branch adding details about your fix
+* Create a Pull Request targeting the "development" branch adding details about your fix
 
 We will review and contact you as soon as possible.
 
@@ -55,14 +55,6 @@ $ docker run -it --rm -v `pwd`:/app ostraining/node-babel:latest bash
 ```
 # babel -w src/modules/efmigration/lib/babel -d src/modules/efmigration/lib/js
 ```
-
-### Todo
-
-Here are some changes on the development workflow which we are thinking about:
-
-- [ ] Improve the development workflow and build script to allow deploy to the SVN repo and other stuff (the shell scripts needs to be merged)
-- [ ] Improve tests and move to Codeception
-- [ ] Maybe move to Phing instead of Robo files
 
 ## License
 
