@@ -47,7 +47,7 @@ $ docker run -it --rm -v `pwd`:/app ostraining/node-babel:latest bash
 **To compile one file**
 
 ```
-# babel src/modules/efmigration/lib/babel/efmigration.jsx --out-file src/modules/efmigration/lib/js/efmigration.js
+# babel src/modules/efmigration/lib/js/efmigration.jsx --out-file src/modules/efmigration/lib/js/efmigration.js
 ```
 
 **To watch a folder automatically compile changed files**
