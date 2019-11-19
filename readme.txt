@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.4
 Tested up to: 5.2
-Stable tag: 1.21.1
+Stable tag: 1.21.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,17 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [1.21.2] - 2019-11-19 =
+
+* Added: New action for writing a debug log message: publishpress_debug_write_log;
+* Added: Show receiver's data in the notifications log;
+* Fixed: Email errors in the log for the Post SMTP plugin;
+* Fixed: Wrong URL protocols in the Notifications\Table\Base class;
+* Fixed: Wrong ordering for items in the calendar;
+* Fixed: UTC time is always used in the exported ICS file. Now it is exporting time in the current timezone;
+* Fixed: The React library is being downgraded (overridden) in WP 5.3;
+* Changed: Removed not used methods from the Notifications\Table\Base class: hide_months_dropdown_filter and months_dropdown;
 
 = [1.21.1] - 2019-10-23 =
 

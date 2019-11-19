@@ -109,6 +109,11 @@ class LogModel
     /**
      * @var string
      */
+    public $receiverName;
+
+    /**
+     * @var string
+     */
     public $author;
 
     /**
@@ -140,27 +145,43 @@ class LogModel
     {
         $log = get_comment($log);
 
-        $this->id         = $log->comment_ID;
-        $this->postId     = $log->comment_post_ID;
-        $this->author     = self::COMMENT_AUTHOR;
-        $this->content    = maybe_unserialize($log->comment_content);
-        $this->date       = $log->comment_date;
-        $this->workflowId = get_comment_meta($log->comment_ID, self::META_NOTIF_WORKFLOW_ID, true);
-        $this->action     = get_comment_meta($log->comment_ID, self::META_NOTIF_ACTION, true);
-        $this->oldStatus  = get_comment_meta($log->comment_ID, self::META_NOTIF_OLD_STATUS, true);
-        $this->newStatus  = get_comment_meta($log->comment_ID, self::META_NOTIF_NEW_STATUS, true);
-        $this->channel    = get_comment_meta($log->comment_ID, self::META_NOTIF_CHANNEL, true);
-        $this->receiver   = get_comment_meta($log->comment_ID, self::META_NOTIF_RECEIVER, true);
-        $this->success    = get_comment_meta($log->comment_ID, self::META_NOTIF_SUCCESS, true);
-        $this->error      = get_comment_meta($log->comment_ID, self::META_NOTIF_ERROR, true);
-        $this->async      = get_comment_meta($log->comment_ID, self::META_NOTIF_ASYNC, true);
+        $this->id           = $log->comment_ID;
+        $this->postId       = $log->comment_post_ID;
+        $this->author       = self::COMMENT_AUTHOR;
+        $this->content      = maybe_unserialize($log->comment_content);
+        $this->date         = $log->comment_date;
+        $this->workflowId   = get_comment_meta($log->comment_ID, self::META_NOTIF_WORKFLOW_ID, true);
+        $this->action       = get_comment_meta($log->comment_ID, self::META_NOTIF_ACTION, true);
+        $this->oldStatus    = get_comment_meta($log->comment_ID, self::META_NOTIF_OLD_STATUS, true);
+        $this->newStatus    = get_comment_meta($log->comment_ID, self::META_NOTIF_NEW_STATUS, true);
+        $this->channel      = get_comment_meta($log->comment_ID, self::META_NOTIF_CHANNEL, true);
+        $this->receiver     = get_comment_meta($log->comment_ID, self::META_NOTIF_RECEIVER, true);
+        $this->receiverName = '';
+        $this->success      = get_comment_meta($log->comment_ID, self::META_NOTIF_SUCCESS, true);
+        $this->error        = get_comment_meta($log->comment_ID, self::META_NOTIF_ERROR, true);
+        $this->async        = get_comment_meta($log->comment_ID, self::META_NOTIF_ASYNC, true);
 
         $workflow = get_post($this->workflowId);
-        $this->workflowTitle = $workflow->post_title;
-        unset($workflow);
+        $post     = get_post($this->postId);
 
-        $post = get_post($this->postId);
-        $this->postTitle = $post->post_title;
-        unset($post);
+        $this->workflowTitle = $workflow->post_title;
+        $this->postTitle     = $post->post_title;
+
+        if (is_numeric($this->receiver)) {
+            $user = get_user_by('id', $this->receiver);
+
+            if ( ! empty($user)) {
+                if ( ! empty($user->first_name)) {
+                    $this->receiverName = $user->first_name . ' ' . $user->last_name;
+                } else {
+                    $this->receiverName = $user->nickname;
+                }
+            }
+        }
+    }
+
+    public function receiverIsUser()
+    {
+        return is_numeric($this->receiver);
     }
 }

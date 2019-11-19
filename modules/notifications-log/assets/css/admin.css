@@ -27,6 +27,10 @@
   line-height: 14px;
 }
 
+.publishpress_page_pp-notif-log .wp-list-table .user-id {
+  color: silver;
+}
+
 .notif-log-modal table th {
   vertical-align: top;
   text-align: right;

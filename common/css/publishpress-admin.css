@@ -58,10 +58,6 @@
     content: "\64";
 }
 
-#ui-datepicker-div {
-    margin-top: 30px;
-}
-
 /* Admin icon */
 #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
 #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before {

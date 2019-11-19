@@ -93,7 +93,11 @@ class LogListTable extends \WP_List_Table
                 break;
 
             case 'receiver':
-                $output = $log->receiver;
+                if ($log->receiverIsUser()) {
+                    $output = $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                } else {
+                    $output = $log->receiver;
+                }
                 break;
 
             case 'channel':

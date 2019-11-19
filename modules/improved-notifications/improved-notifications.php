@@ -191,8 +191,6 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             add_filter('pp_notification_send_email_message_headers', [$this, 'filter_send_email_message_headers'], 10,
                 3);
 
-            add_filter('months_dropdown_results', [$this, 'hide_months_dropdown_filter'], 10, 2);
-
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
@@ -1117,23 +1115,6 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $message_headers[] = sprintf('from: %s <%s>', $email_from['name'], $email_from['email']);
 
             return $message_headers;
-        }
-
-        /**
-         * Hide the filter for months in the Workflows list.
-         *
-         * @param array  $months
-         * @param string $post_type
-         *
-         * @return array
-         */
-        public function hide_months_dropdown_filter($months, $post_type)
-        {
-            if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post_type) {
-                $months = [];
-            }
-
-            return $months;
         }
 
         /**
