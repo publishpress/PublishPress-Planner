@@ -26,7 +26,6 @@ PublishPress can help you create great content in WordPress. Here’s an overvie
 
 Interested in finding out more about PublishPress?
 
-* [Click here to try a free demo](https://publishpress.com/demo/).
 * [Check out the premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
 
 = WHO SHOULD USE PUBLISHPRESS? =
