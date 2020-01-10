@@ -1051,23 +1051,27 @@ if ( ! class_exists('PP_Custom_Status')) {
             // Reset our internal object cache
             $this->custom_statuses_cache = [];
 
-            $args['slug'] = sanitize_title($args['slug']);
+            if (isset($args['slug'])) {
+                $args['slug'] = sanitize_title($args['slug']);
 
-            // If the slug is empty we need to defined one
-            if (empty($args['slug'])) {
-                $args['slug'] = sanitize_title($args['name']);
+                // If the slug is empty we need to defined one
+                if (empty($args['slug'])) {
+                    $args['slug'] = sanitize_title($args['name']);
+                }
             }
 
             // Reassign posts to new status slug if the slug changed and isn't restricted
             if (isset($args['slug']) && $args['slug'] != $old_status->slug && ! $this->is_restricted_status($old_status->slug)) {
-                $new_status = $args['slug'];
-                $this->reassign_post_status($old_status->slug, $new_status);
-
-                $default_status = $this->get_default_custom_status()->slug;
-                if ($old_status->slug == $default_status) {
-                    $publishpress->update_module_option($this->module->name, 'default_status', $new_status);
-                }
+                $this->reassign_post_status($old_status->slug, $args['slug']);
             }
+
+            $slug = isset($args['slug']) ? $args['slug'] : $old_status->slug;
+
+            $default_status = $this->get_default_custom_status()->slug;
+            if ($slug == $default_status) {
+                $publishpress->update_module_option($this->module->name, 'default_status', $slug);
+            }
+
             // We're encoding metadata that isn't supported by default in the term's description field
             $args_to_encode                = [];
             $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
