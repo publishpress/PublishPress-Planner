@@ -93,14 +93,14 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          * @final
          * @since   1.20.0
          *
-         * @throws \TypeError
+         * @throws \Exception
          *
          * @param   Editorial_Metadata_Input_Handler    $handler An input handler instance
          */
         final public function registerHandler($handler)
         {
             if (!($handler instanceof Editorial_Metadata_Input_Handler)) {
-                throw new \TypeError('Invalid type for handler parameter.');
+                throw new \Exception('Invalid type for handler parameter.');
             }
 
             if (!is_null($this->nextHandler)) {

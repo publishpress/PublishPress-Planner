@@ -4,7 +4,7 @@ Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
-Requires PHP: 5.4
+Requires PHP: 5.6
 Tested up to: 5.3
 Stable tag: 1.21.2
 License: GPLv2 or later
