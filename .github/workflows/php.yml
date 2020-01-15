@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Testing Actions
 
 on: [push]
 
