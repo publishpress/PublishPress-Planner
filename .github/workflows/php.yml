@@ -10,6 +10,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: Update the composer.lock file
+      run: composer update --lock 
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
