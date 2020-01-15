@@ -30,13 +30,14 @@
   "prefer-stable": true,
   "require": {
     "php": ">=5.6.20",
-    "phing/phing": "2.16",
+    "phing/phing": "^2",
     "twig/twig": "1.37.1",
     "pimple/pimple": "~3.0",
     "alledia/wordpress-plugin-framework": "~0.6",
     "alledia/wordpress-plugin-builder": "dev-development"
   },
   "require-dev": {
-    "bartlett/php-compatinfo": "^5.2"
+    "bartlett/php-compatinfo": "^5.2",
+    "overtrue/phplint": "^1"
   }
 }

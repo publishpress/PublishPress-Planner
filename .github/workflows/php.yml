@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Testing Actions
 
 on: [push]
 
@@ -15,7 +15,7 @@ jobs:
       uses: shivammathur/setup-php@v1
       with:
         php-version: '7.4'
-        extension-csv: intl
+        extensions: intl
 
     - name: Update the composer.lock file
       run: composer update --lock
@@ -27,7 +27,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Check syntax errors
-      run: find . -type f -name '*.php' -exec php -l {} \; |grep -v "No syntax errors detected"
+      run: ./vendor/bin/phplint ./ --exclude=vendor
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
