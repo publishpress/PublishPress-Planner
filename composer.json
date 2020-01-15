@@ -37,6 +37,7 @@
     "alledia/wordpress-plugin-builder": "dev-development"
   },
   "require-dev": {
-    "bartlett/php-compatinfo": "^5.2"
+    "bartlett/php-compatinfo": "^5.2",
+    "overtrue/phplint": "^1"
   }
 }
