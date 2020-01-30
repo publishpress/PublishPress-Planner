@@ -581,8 +581,6 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Enqueue scripts and stylesheets for the admin pages.
          *
-         * @TODO uncomment when admin-menu.js is required
-         *
          * @param string $hook_suffix
          */
         public function add_admin_scripts($hook_suffix)
