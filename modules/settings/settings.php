@@ -255,32 +255,26 @@ if ( ! class_exists('PP_Settings')) {
          */
         public function print_default_footer($current_module, $echo = true)
         {
-            // If we have any license key set, we check if the branding is disabled.
-            if (PublishPress\Legacy\Util::hasAnyValidLicenseKeySet()) {
-                global $publishpress;
+            if (apply_filters('publishpress_show_footer', true)) {
+                $html = $this->twig->render(
+                    'footer-base.twig',
+                    [
+                        'current_module' => $current_module,
+                        'plugin_name'    => __('PublishPress', 'publishpress'),
+                        'plugin_slug'    => 'publishpress',
+                        'plugin_url'     => PUBLISHPRESS_URL,
+                        'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
+                    ]
+                );
 
-                // Check if the branding is disabled.
-                if ($publishpress->modules->modules_settings->options->display_branding === 'off') {
-                    return;
+                if (! $echo) {
+                    return $html;
                 }
+
+                echo $html;
             }
 
-            $html = $this->twig->render(
-                'footer-base.twig',
-                [
-                    'current_module' => $current_module,
-                    'plugin_name'    => __('PublishPress', 'publishpress'),
-                    'plugin_slug'    => 'publishpress',
-                    'plugin_url'     => PUBLISHPRESS_URL,
-                    'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
-                ]
-            );
-
-            if (! $echo) {
-                return $html;
-            }
-
-            echo $html;
+            return '';
         }
 
         public function print_modules()

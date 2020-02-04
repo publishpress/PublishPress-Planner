@@ -464,8 +464,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             wp_enqueue_script(
                 'pp-custom-status-block',
-                plugins_url('/modules/custom-status/lib/custom-status-block.min.js',
-                    'publishpress/publishpress.php'),
+                $this->module_url . '/lib/custom-status-block.min.js',
                 ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-hooks'],
                 PUBLISHPRESS_VERSION,
                 true
