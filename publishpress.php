@@ -1125,7 +1125,7 @@ function publishPressRegisterImprovedNotificationsPostTypes()
                 'rewrite'             => false,
                 'show_ui'             => true,
                 'query_var'           => true,
-                'capability_type'     => 'post',
+                'capability_type'     => 'pp_notif_workflow',
                 'hierarchical'        => false,
                 'can_export'          => true,
                 'show_in_admin_bar'   => true,

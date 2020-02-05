@@ -322,7 +322,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 $publishpress->get_menu_slug(),
                 esc_html__('Notifications Log', 'publishpress'),
                 esc_html__('Notifications Log', 'publishpress'),
-                apply_filters('pp_view_notifications_cap', 'pp_view_calendar'),
+                apply_filters('pp_view_notifications_cap', 'read_pp_notif_workflow'),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page']
             );
