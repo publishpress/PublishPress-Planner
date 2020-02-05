@@ -153,6 +153,8 @@ class PP_Content_Overview extends PP_Module
      */
     public function init()
     {
+        $this->setDefaultCapabilities();
+
         $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
         if ( ! current_user_can($view_content_overview_cap)) {
             return;
@@ -456,8 +458,8 @@ class PP_Content_Overview extends PP_Module
                 $term_options = $this->get_unencoded_description($term->description);
 
                 if ( ! isset($term_options['viewable']) ||
-                     (bool)$term_options['viewable'] === false ||
-                     isset($term_columns[$term->slug])) {
+                    (bool)$term_options['viewable'] === false ||
+                    isset($term_columns[$term->slug])) {
                     continue;
                 }
 
@@ -699,8 +701,8 @@ class PP_Content_Overview extends PP_Module
         $date_format = get_option('date_format');
 
         $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
-                            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker('Y-m-d') . '" value="'
-                            . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
+            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker('Y-m-d') . '" value="'
+            . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
         $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
         $start_date_value .= '<span class="form-value">';
 
@@ -708,9 +710,9 @@ class PP_Content_Overview extends PP_Module
         $start_date_value .= '</span>';
 
         $number_days_value = '<input type="text" id="pp-content-overview-number-days" name="pp-content-overview-number-days"'
-                             . ' size="3" maxlength="3" value="'
-                             . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html($this->user_filters['number_days'])
-                             . '</span>';
+            . ' size="3" maxlength="3" value="'
+            . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html($this->user_filters['number_days'])
+            . '</span>';
 
         $output .= sprintf(_x('starting %1$s showing %2$s %3$s',
             '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'', 'publishpress'),
@@ -1195,5 +1197,17 @@ class PP_Content_Overview extends PP_Module
         }
 
         return $user_filters;
+    }
+
+    public function setDefaultCapabilities()
+    {
+        $role = get_role('administrator');
+
+        $view_content_overview_cap = 'pp_view_content_overview';
+        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', $view_content_overview_cap);
+
+        if (!$role->has_cap($view_content_overview_cap)) {
+            $role->add_cap($view_content_overview_cap);
+        }
     }
 }
