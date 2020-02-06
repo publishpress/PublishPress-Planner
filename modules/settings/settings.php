@@ -482,18 +482,6 @@ if ( ! class_exists('PP_Settings')) {
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
 
-            ob_start();
-            do_action('allex_upgrade_sidebar_ad', 'publishpress');
-            $sidebar_output = ob_get_clean();
-
-
-            /**
-             * Filter to return a boolean value to say if it should display or not a sidebar.
-             *
-             * @var bool
-             */
-            $show_sidebar = apply_filters('allex_upgrade_show_sidebar_ad', true, 'publishpress');
-
             echo $this->twig->render(
                 'settings.twig',
                 [
@@ -501,9 +489,9 @@ if ( ! class_exists('PP_Settings')) {
                     'settings_slug'  => $module_settings_slug,
                     'slug'           => PP_Modules_Settings::SETTINGS_SLUG,
                     'module_output'  => $module_output,
-                    'sidebar_output' => $sidebar_output,
+                    'sidebar_output' => '',
                     'text'           => $display_text,
-                    'show_sidebar'   => $show_sidebar,
+                    'show_sidebar'   => false,
                 ]
             );
 
