@@ -128,6 +128,17 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [2.0.0] - 2020-02-06 =
+
+* Fixed: Fixed the default status after sort statuses;
+* Fixed: Removed TypeError exception to keep backward compatibility with PHP 5.6;
+* Fixed: Fixed custom order for statuses;
+* Fixed: Fixed default capabilities for administrators adding pp_view_content_overview and pp_view_calendar;
+* Changed: Changed min PHP required version to 5.6.20;
+* Changed: Removed the Add-ons menu. They are now standalone plugins;
+* Changed: Removed the 20% discount banner;
+* Added: Added new capabilities for controlling the Notifications permissions: edit_pp_notif_workflow, read_pp_notif_workflow, etc.
+
 = [1.21.2] - 2019-11-19 =
 
 * Added: New action for writing a debug log message: publishpress_debug_write_log;
