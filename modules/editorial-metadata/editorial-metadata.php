@@ -1547,7 +1547,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                         </form>
                     <?php else: ?>
                         <?php /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
-                        <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"; method='post'>
+                        <form class='basic-settings'; action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" method='post'>
                             <br />
                             <p><?php echo __('Please note that checking a box will apply all metadata to that post type.', 'publishpress'); ?></p>
                             <?php settings_fields($this->module->options_group_name); ?>
@@ -1560,7 +1560,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 <?php endif; ?>
                     </div>
                     </div>
-                </div>;
+                </div>
 
                 <?php
             endif;

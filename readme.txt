@@ -4,9 +4,9 @@ Author: PublishPress, PressShack
 Author URI: https://publishpress.com
 Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
-Requires PHP: 5.4
-Tested up to: 5.2
-Stable tag: 1.21.2
+Requires PHP: 5.6
+Tested up to: 5.3
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,6 @@ PublishPress can help you create great content in WordPress. Here’s an overvie
 
 Interested in finding out more about PublishPress?
 
-* [Click here to try a free demo](https://publishpress.com/demo/).
 * [Check out the premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
 
 = WHO SHOULD USE PUBLISHPRESS? =
@@ -128,6 +127,17 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.0.0] - 2020-02-06 =
+
+* Fixed: Fixed the default status after sort statuses;
+* Fixed: Removed TypeError exception to keep backward compatibility with PHP 5.6;
+* Fixed: Fixed custom order for statuses;
+* Fixed: Fixed default capabilities for administrators adding pp_view_content_overview and pp_view_calendar;
+* Changed: Changed min PHP required version to 5.6.20;
+* Changed: Removed the Add-ons menu. They are now standalone plugins;
+* Changed: Removed the 20% discount banner;
+* Added: Added new capabilities for controlling the Notifications permissions: edit_pp_notif_workflow, read_pp_notif_workflow, etc.
 
 = [1.21.2] - 2019-11-19 =
 

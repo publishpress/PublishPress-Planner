@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 1.21.2
+ * Version: 2.0.0
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -309,9 +309,6 @@ class publishpress
 
         // Add filters to extend the modules
         $modulesDirs = apply_filters('pp_module_dirs', $defaultDirs);
-
-        // Add add-ons as the last tab
-        $modulesDirs['addons'] = PUBLISHPRESS_BASE_PATH;
 
         return $modulesDirs;
     }
@@ -732,8 +729,6 @@ class publishpress
             ['jquery'],
             PUBLISHPRESS_VERSION
         );
-        wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery'],
-            PUBLISHPRESS_VERSION);
 
         wp_register_script('pp-remodal', PUBLISHPRESS_URL . 'common/js/remodal.min.js', ['jquery'],
             PUBLISHPRESS_VERSION, true);
@@ -753,11 +748,6 @@ class publishpress
 
         // Load on all admin pages to fix the menu, except the customize
         global $pagenow;
-
-        if ($pagenow !== 'customize.php') {
-            wp_enqueue_script('publishpress-admin', PUBLISHPRESS_URL . 'common/js/admin-menu.js', ['jquery', 'chosen'],
-                PUBLISHPRESS_VERSION);
-        }
     }
 
     public function filter_custom_menu_order($menu_ord)
@@ -775,7 +765,7 @@ class publishpress
             $relevantMenus = [
                 'pp-calendar'                           => null,
                 'pp-content-overview'                   => null,
-                'pp-addons'                             => null,
+                'pp-manage-roles'                       => null,
                 'pp-manage-roles'                       => null,
                 'pp-manage-capabilities'                => null,
                 'pp-modules-settings'                   => null,
@@ -846,13 +836,6 @@ class publishpress
                 $new_submenu[] = $submenu_pp[$relevantMenus['pp-modules-settings']];
 
                 unset($submenu_pp[$relevantMenus['pp-modules-settings']]);
-            }
-
-            // Add-ons
-            if ( ! is_null($relevantMenus['pp-addons'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-addons']];
-
-                unset($submenu_pp[$relevantMenus['pp-addons']]);
             }
 
             $submenu[$menu_slug] = $new_submenu;
@@ -1142,7 +1125,7 @@ function publishPressRegisterImprovedNotificationsPostTypes()
                 'rewrite'             => false,
                 'show_ui'             => true,
                 'query_var'           => true,
-                'capability_type'     => 'post',
+                'capability_type'     => 'pp_notif_workflow',
                 'hierarchical'        => false,
                 'can_export'          => true,
                 'show_in_admin_bar'   => true,

@@ -255,32 +255,26 @@ if ( ! class_exists('PP_Settings')) {
          */
         public function print_default_footer($current_module, $echo = true)
         {
-            // If we have any license key set, we check if the branding is disabled.
-            if (PublishPress\Legacy\Util::hasAnyValidLicenseKeySet()) {
-                global $publishpress;
+            if (apply_filters('publishpress_show_footer', true)) {
+                $html = $this->twig->render(
+                    'footer-base.twig',
+                    [
+                        'current_module' => $current_module,
+                        'plugin_name'    => __('PublishPress', 'publishpress'),
+                        'plugin_slug'    => 'publishpress',
+                        'plugin_url'     => PUBLISHPRESS_URL,
+                        'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
+                    ]
+                );
 
-                // Check if the branding is disabled.
-                if ($publishpress->modules->modules_settings->options->display_branding === 'off') {
-                    return;
+                if (! $echo) {
+                    return $html;
                 }
+
+                echo $html;
             }
 
-            $html = $this->twig->render(
-                'footer-base.twig',
-                [
-                    'current_module' => $current_module,
-                    'plugin_name'    => __('PublishPress', 'publishpress'),
-                    'plugin_slug'    => 'publishpress',
-                    'plugin_url'     => PUBLISHPRESS_URL,
-                    'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
-                ]
-            );
-
-            if (! $echo) {
-                return $html;
-            }
-
-            echo $html;
+            return '';
         }
 
         public function print_modules()
@@ -488,18 +482,6 @@ if ( ! class_exists('PP_Settings')) {
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
 
-            ob_start();
-            do_action('allex_upgrade_sidebar_ad', 'publishpress');
-            $sidebar_output = ob_get_clean();
-
-
-            /**
-             * Filter to return a boolean value to say if it should display or not a sidebar.
-             *
-             * @var bool
-             */
-            $show_sidebar = apply_filters('allex_upgrade_show_sidebar_ad', true, 'publishpress');
-
             echo $this->twig->render(
                 'settings.twig',
                 [
@@ -507,9 +489,9 @@ if ( ! class_exists('PP_Settings')) {
                     'settings_slug'  => $module_settings_slug,
                     'slug'           => PP_Modules_Settings::SETTINGS_SLUG,
                     'module_output'  => $module_output,
-                    'sidebar_output' => $sidebar_output,
+                    'sidebar_output' => '',
                     'text'           => $display_text,
-                    'show_sidebar'   => $show_sidebar,
+                    'show_sidebar'   => false,
                 ]
             );
 
