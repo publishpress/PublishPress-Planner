@@ -25,7 +25,7 @@ namespace PublishPress\NotificationsLog;
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
-if ( ! class_exists('WP_List_Table')) {
+if (!class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
@@ -39,6 +39,10 @@ class LogListTable extends \WP_List_Table
     use Dependency_Injector;
 
     const POSTS_PER_PAGE = 20;
+
+    const BULK_ACTION_DELETE = 'delete';
+
+    const BULK_ACTION_DELETE_ALL = 'delete_all';
 
     /**
      * @var LogHandler
@@ -110,7 +114,7 @@ class LogListTable extends \WP_List_Table
                 } else {
                     $output = '<i class="dashicons dashicons-no"></i>';
 
-                    if ( ! empty($log->error)) {
+                    if (!empty($log->error)) {
                         $output .= '<span class="error"> - ' . $log->error . '</span>';
                     }
                 }
@@ -214,7 +218,8 @@ class LogListTable extends \WP_List_Table
     public function get_bulk_actions()
     {
         $actions = [
-            'delete' => 'Delete',
+            self::BULK_ACTION_DELETE     => 'Delete',
+            self::BULK_ACTION_DELETE_ALL => 'Delete All',
         ];
 
         return $actions;
@@ -235,12 +240,20 @@ class LogListTable extends \WP_List_Table
 
     public function process_bulk_action()
     {
-        if ('delete' === $this->current_action()) {
+        if (self::BULK_ACTION_DELETE === $this->current_action()) {
             $ids = isset($_GET['log']) ? (array)$_GET['log'] : [];
 
-            if ( ! empty($ids)) {
+            if (!empty($ids)) {
                 foreach ($ids as $id) {
-                    wp_delete_comment($id);
+                    wp_delete_comment($id, true);
+                }
+            }
+        } elseif (self::BULK_ACTION_DELETE_ALL === $this->current_action()) {
+            $notifications = $this->logHandler->getNotifications(null, 'comment_date', 'desc', false, [], null, null);
+
+            if (!empty($notifications)) {
+                foreach ($notifications as $notification) {
+                    wp_delete_comment($notification->comment_ID, true);
                 }
             }
         }
@@ -283,8 +296,8 @@ class LogListTable extends \WP_List_Table
             $postId = (int)$_REQUEST['post_id'];
         }
 
-        if (isset($_REQUEST['action'])) {
-            $filters['action'] = sanitize_text_field($_REQUEST['action']);
+        if (isset($_REQUEST['workflow_action'])) {
+            $filters['workflow_action'] = sanitize_text_field($_REQUEST['workflow_action']);
         }
 
         if (isset($_REQUEST['channel'])) {
@@ -302,8 +315,8 @@ class LogListTable extends \WP_List_Table
 
         $total_items = $this->logHandler->getNotifications($postId, null, null, true, $filters);
 
-        $orderBy = ( ! empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
-        $order   = ( ! empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
+        $orderBy = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
+        $order   = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
 
         $this->items = $this->logHandler->getNotifications($postId, $orderBy, $order, false, $filters, $per_page,
             $current_page);
@@ -332,7 +345,7 @@ class LogListTable extends \WP_List_Table
         // Post
         $postId         = isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
         $selectedOption = '';
-        if ( ! empty($postId)) {
+        if (!empty($postId)) {
             $post = get_post($postId);
 
             $selectedOption = '<option selected="selected" value="' . esc_attr($postId) . '">' . $post->post_title . '</option>';
@@ -343,7 +356,7 @@ class LogListTable extends \WP_List_Table
         // Workflow
         $workflowId     = isset($_GET['workflow_id']) ? (int)$_GET['workflow_id'] : 0;
         $selectedOption = '';
-        if ( ! empty($workflowId)) {
+        if (!empty($workflowId)) {
             $workflow = get_post($workflowId);
 
             $selectedOption = '<option selected="selected" value="' . esc_attr($workflowId) . '">' . $workflow->post_title . '</option>';
@@ -354,7 +367,7 @@ class LogListTable extends \WP_List_Table
         // Action
         $selectedAction = isset($_GET['action']) ? $_GET['action'] : '';
 
-        echo '<select class="filter-actions" name="action">';
+        echo '<select class="filter-actions" name="workflow_action">';
         $actions = apply_filters('publishpress_notif_workflow_actions', []);
 
         echo '<option value="">' . __('All actions', 'publishpress') . '</option>';
