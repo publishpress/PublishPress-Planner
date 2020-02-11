@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.3
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,11 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.0.1] - 2020-02-11 =
+
+* Fixed: Fixed the hidden publish status and notifications for published posts;
+* Fixed: Fixed the default order for custom statuses;
 
 = [2.0.0] - 2020-02-06 =
 
