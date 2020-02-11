@@ -1229,7 +1229,7 @@ if (!class_exists('PP_Custom_Status')) {
             // Add core statuses, custom properties saved on the config
             $coreStatusList = $this->get_core_statuses($only_basic_info);
             foreach ($coreStatusList as $coreStatus) {
-                $orderedStatusList[$coreStatus->position] = $coreStatus;
+                $this->addItemToArray($orderedStatusList, $coreStatus->position, $coreStatus);
             }
 
             // Sort the items numerically by key
@@ -1239,10 +1239,25 @@ if (!class_exists('PP_Custom_Status')) {
                 $orderedStatusList[] = $unpositioned_status;
             }
 
-
             $this->custom_statuses_cache[$arg_hash] = $orderedStatusList;
 
             return $orderedStatusList;
+        }
+
+        /**
+         * Add item to Array without overwrite any item, in case an item is already set for the position.
+         *
+         * @param $array
+         * @param $position
+         * @param $item
+         */
+        private function addItemToArray(&$array, $position, $item)
+        {
+            if (isset($array[$position])) {
+                $this->addItemToArray($array, $position + 1, $item);
+            } else {
+                $array[$position] = $item;
+            }
         }
 
         /**
