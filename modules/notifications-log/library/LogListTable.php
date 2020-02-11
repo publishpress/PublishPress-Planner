@@ -283,8 +283,8 @@ class LogListTable extends \WP_List_Table
             $postId = (int)$_REQUEST['post_id'];
         }
 
-        if (isset($_REQUEST['action'])) {
-            $filters['action'] = sanitize_text_field($_REQUEST['action']);
+        if (isset($_REQUEST['workflow_action'])) {
+            $filters['workflow_action'] = sanitize_text_field($_REQUEST['workflow_action']);
         }
 
         if (isset($_REQUEST['channel'])) {
@@ -354,7 +354,7 @@ class LogListTable extends \WP_List_Table
         // Action
         $selectedAction = isset($_GET['action']) ? $_GET['action'] : '';
 
-        echo '<select class="filter-actions" name="action">';
+        echo '<select class="filter-actions" name="workflow_action">';
         $actions = apply_filters('publishpress_notif_workflow_actions', []);
 
         echo '<option value="">' . __('All actions', 'publishpress') . '</option>';

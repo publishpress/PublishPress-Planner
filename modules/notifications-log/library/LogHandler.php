@@ -158,7 +158,7 @@ class LogHandler
             ];
         }
 
-        if (isset($filters['action']) && ! empty($filters['action'])) {
+        if (isset($filters['workflow_action']) && ! empty($filters['workflow_action'])) {
             $args['meta_query'] = [
                 [
                     'key'   => LogModel::META_NOTIF_ACTION,
