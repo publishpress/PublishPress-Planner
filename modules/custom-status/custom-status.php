@@ -851,13 +851,13 @@ if (!class_exists('PP_Custom_Status')) {
                 'description' => '-',
                 'color'       => '',
                 'icon'        => '',
-                'position'    => 0,
+                'position'    => 9,
             ];
 
             if (!$only_basic_data) {
                 $status->color    = get_option('psppno_status_publish_color', self::DEFAULT_COLOR);
                 $status->icon     = get_option('psppno_status_publish_icon', 'dashicons-yes');
-                $status->position = get_option('psppno_status_publish_position', 0);
+                $status->position = get_option('psppno_status_publish_position', 9);
             }
 
             $all_statuses[] = $status;
@@ -870,13 +870,13 @@ if (!class_exists('PP_Custom_Status')) {
                 'description' => '-',
                 'color'       => '',
                 'icon'        => '',
-                'position'    => 0,
+                'position'    => 8,
             ];
 
             if (!$only_basic_data) {
                 $status->color    = get_option('psppno_status_private_color', '#000000');
                 $status->icon     = get_option('psppno_status_private_icon', 'dashicons-lock');
-                $status->position = get_option('psppno_status_private_position', 0);
+                $status->position = get_option('psppno_status_private_position', 8);
             }
 
             $all_statuses[] = $status;
@@ -889,13 +889,13 @@ if (!class_exists('PP_Custom_Status')) {
                 'description' => '-',
                 'color'       => '',
                 'icon'        => '',
-                'position'    => 0,
+                'position'    => 7,
             ];
 
             if (!$only_basic_data) {
                 $status->color    = get_option('psppno_status_future_color', self::DEFAULT_COLOR);
                 $status->icon     = get_option('psppno_status_future_icon', 'dashicons-calendar-alt');
-                $status->position = get_option('psppno_status_future_position', 0);
+                $status->position = get_option('psppno_status_future_position', 7);
             }
 
             $all_statuses[] = $status;
@@ -1196,15 +1196,14 @@ if (!class_exists('PP_Custom_Status')) {
                 }
                 // We require the position key later on (e.g. management table)
                 if (!isset($status->position)) {
-                    $status->position = false;
+                    $slug = $status->slug === 'pending-review' ? 'pending':$status->slug;
+                    if (array_key_exists($slug, $default_terms)) {
+                        $status->position = $default_terms[$status->slug]['args']['position'];
+                    } else {
+                        $status->position = 99;
+                    }
                 }
-                // Only add the status to the ordered array if it has a set position and doesn't conflict with another key
-                // Otherwise, hold it for later
-                if ($status->position && !array_key_exists($status->position, $orderedStatusList)) {
-                    $orderedStatusList[(int)$status->position] = $status;
-                } else {
-                    $hold_to_end[] = $status;
-                }
+                $this->addItemToArray($orderedStatusList, (int)$status->position, $status);
 
                 // Check if we need to set default colors and icons for current status
                 if (!isset($status->color) || empty($status->color)) {
