@@ -510,6 +510,7 @@ class Shortcodes
 
         // No attributes? Set the default one.
         if (empty($attrs)) {
+            $attrs = [];
             $attrs[] = 'content';
         }
 
