@@ -132,6 +132,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed: Bulk actions in the notifications log page not working;
 * Fixed: Notifications sent to wrong roles on some cases. If the post has any user role set to be notified, and the notification workflow doesn't have that option selected, notifications were being sent to the followers - #571;
+* Fixed: If PublishPress\Notifications\Shortcodes::handle_psppno_edcomment is called with nullstring attrs a fatal error occurs;
 
 = [2.0.1] - 2020-02-11 =
 
