@@ -162,7 +162,7 @@ class LogHandler
             $args['meta_query'] = [
                 [
                     'key'   => LogModel::META_NOTIF_ACTION,
-                    'value' => $filters['action'],
+                    'value' => $filters['workflow_action'],
                 ],
             ];
         }

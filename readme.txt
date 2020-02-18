@@ -6,7 +6,7 @@ Tags: notifications, Editorial Calendar, workflow, statuses, permissions
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.3
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,13 @@ Not at all. You can set up everything your team needs without any coding knowled
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.0.2] - 2020-02-18 =
+
+* Fixed: Bulk actions in the notifications log page not working;
+* Fixed: Notifications sent to wrong roles on some cases. If the post has any user role set to be notified, and the notification workflow doesn't have that option selected, notifications were being sent to the followers - #571;
+* Fixed: If PublishPress\Notifications\Shortcodes::handle_psppno_edcomment is called with nullstring attrs a fatal error occurs;
+* Fixed: The Notifications Log text is bigger than the other h3 elements in the post editor metabox;
 
 = [2.0.1] - 2020-02-11 =
 

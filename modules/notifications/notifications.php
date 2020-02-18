@@ -596,9 +596,6 @@ if (!class_exists('PP_Notifications')) {
          */
         protected function get_workflows_related_to_post($post)
         {
-            $publishpress = PublishPress();
-
-
             $workflow_controller = $this->get_service('workflow_controller');
 
             $args      = [
@@ -608,9 +605,8 @@ if (!class_exists('PP_Notifications')) {
                 'old_status'   => $post->post_status,
                 'ignore_event' => true,
             ];
-            $workflows = $workflow_controller->get_filtered_workflows($args);
 
-            return $workflows;
+            return $workflow_controller->get_filtered_workflows($args);
         }
 
         public function action_save_post($postId)

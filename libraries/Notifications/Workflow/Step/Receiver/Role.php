@@ -105,13 +105,8 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     {
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
-            // Get the users selected in the workflow
+            // Get the users from the selected roles in the workflow
             $roles     = get_post_meta($workflow->ID, static::META_LIST_KEY);
-            $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
-
-            // Get the roles that should receive notification
-            $roles     = $this->get_service('publishpress')->notifications->get_roles_to_notify($args['post']->ID,
-                'slugs');
             $receivers = array_merge($receivers, $this->get_users_from_roles($roles));
 
             /**
