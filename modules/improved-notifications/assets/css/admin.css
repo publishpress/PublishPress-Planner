@@ -122,7 +122,8 @@
 }
 
 #pp_post_notify_box .pp_post_notify_workflows h3,
-#pp_post_notify_box .pp_post_notify_log h3 {
+#pp_post_notify_box .pp_post_notify_log h3,
+#pp_post_notify_box .pp_post_notify_queue h3 {
     font-size: 14px;
     background: transparent;
     padding-left: 0;
