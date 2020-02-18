@@ -287,12 +287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Plugin-Builder.git",
-                "reference": "19679b1e35ef4778cc4cb76f1de074096bb9984c"
+                "reference": "da97523122020232821c0798137be84cab0f2bca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Builder/zipball/19679b1e35ef4778cc4cb76f1de074096bb9984c",
-                "reference": "19679b1e35ef4778cc4cb76f1de074096bb9984c",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Builder/zipball/da97523122020232821c0798137be84cab0f2bca",
+                "reference": "da97523122020232821c0798137be84cab0f2bca",
                 "shasum": ""
             },
             "require": {
@@ -336,7 +336,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2020-01-06T21:55:40+00:00"
+            "time": "2020-02-18T17:05:49+00:00"
         },
         {
             "name": "bartlett/php-compatinfo",
