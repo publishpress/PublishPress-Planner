@@ -60,6 +60,19 @@
             return editor;
         }
 
+        function getEditorContent() {
+          var editor = getEditor();
+          var content = '';
+
+          if (editor !== null) {
+            content = editor.getContent();
+          } else {
+            content = $('#input_id').val();
+          }
+
+          return content.trim();
+        }
+
         // List search
         $('.publishpress-filter-checkbox-list select').multipleSelect({
             filter: true
@@ -194,14 +207,14 @@
 
             // Check the Content section
             if ($('#publishpress_notification_content_main_subject').val().trim() == ''
-                || getEditor().getContent().trim() === '') {
+                || getEditorContent() === '') {
                 set_validation_status('content', false);
 
                 if ($('#publishpress_notification_content_main_subject').val().trim() == '') {
                     messages.push(workflowFormData.messages['setASubject']);
                 }
 
-                if (getEditor().getContent().trim() === '') {
+                if (getEditorContent() === '') {
                     messages.push(workflowFormData.messages['setABody']);
                 }
             } else {
