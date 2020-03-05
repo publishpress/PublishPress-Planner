@@ -152,6 +152,11 @@ if ( ! class_exists('PP_Module')) {
 
             $postTypes = apply_filters('publishpress_supported_module_post_types', $postTypes);
 
+            // Hide notification workflows from the list
+            if (isset($postTypes['psppnotif_workflow'])) {
+                unset($postTypes['psppnotif_workflow']);
+            }
+
             return $postTypes;
         }
 
