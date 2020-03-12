@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44141b7d9c937e3371ba1248ee6e7ad4",
+    "content-hash": "e4490bbe65b5109b5630b579370f541f",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -156,17 +156,17 @@
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
-            "name": "publishpress/wordpress-pro-plugins-ads",
+            "name": "publishpress/wordpress-version-notices",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/publishpress/WordPress-Pro-Plugins-Ads.git",
-                "reference": "5972a8a8ef83bb3f40f83bc692c91748a8645a84"
+                "url": "https://github.com/publishpress/WordPress-Version-Notices.git",
+                "reference": "f80f30f5ecd8e143501a4d6ea359e94204b48307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Pro-Plugins-Ads/zipball/5972a8a8ef83bb3f40f83bc692c91748a8645a84",
-                "reference": "5972a8a8ef83bb3f40f83bc692c91748a8645a84",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/f80f30f5ecd8e143501a4d6ea359e94204b48307",
+                "reference": "f80f30f5ecd8e143501a4d6ea359e94204b48307",
                 "shasum": ""
             },
             "require": {
@@ -179,7 +179,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "PPProAds\\": "src/"
+                    "PPVersionNotices\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -194,8 +194,8 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Library for displaying ads for Pro plugins in WordPress.",
-            "time": "2020-03-12T14:58:59+00:00"
+            "description": "Library for displaying version notices for Pro plugins in WordPress.",
+            "time": "2020-03-12T20:03:50+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2218,7 +2218,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "publishpress/wordpress-pro-plugins-ads": 20,
+        "publishpress/wordpress-version-notices": 20,
         "alledia/wordpress-plugin-builder": 20
     },
     "prefer-stable": true,

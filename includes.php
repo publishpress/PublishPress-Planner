@@ -76,7 +76,29 @@ if (!defined('PP_LOADED')) {
         PUBLISHPRESS_LIBRARIES_PATH . DIRECTORY_SEPARATOR . 'Notifications');
 
     require_once PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'deprecated.php';
-    require_once PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'pro_ads.php';
+
+    if (is_admin()) {
+        require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'publishpress' . DIRECTORY_SEPARATOR
+            . 'wordpress-version-notices' . DIRECTORY_SEPARATOR . 'includes.php';
+
+        add_filter(\PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER, function ($settings) {
+            $settings['publishpress'] = [
+                'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                'link'    => 'https://publishpress.com/links/publishpress-banner',
+                'screens' => [
+                    ['base' => 'publishpress_page_pp-modules-settings',],
+                    ['base' => 'publishpress_page_pp-manage-roles',],
+                    ['base' => 'publishpress_page_pp-notif-log',],
+                    ['base' => 'edit', 'id' => 'edit-psppnotif_workflow',],
+                    ['base' => 'post', 'id' => 'psppnotif_workflow',],
+                    ['base' => 'publishpress_page_pp-content-overview',],
+                    ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar',],
+                ]
+            ];
+
+            return $settings;
+        });
+    }
 
     define('PP_LOADED', 1);
 }
