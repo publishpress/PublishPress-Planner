@@ -34,7 +34,7 @@ if (is_admin()) {
 
     add_filter(\PPProAds\Module\TopBanner\Module::SETTINGS_FILTER, function ($settings) {
         $settings['publishpress'] = [
-            'message' => 'You\'re using PublishPress Free. To unlock more features, consider %supgrading to Pro%s.',
+            'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
             'link'    => 'https://publishpress.com/links/publishpress-banner',
             'screens' => [
                 ['base' => 'publishpress_page_pp-modules-settings',],
@@ -49,6 +49,4 @@ if (is_admin()) {
 
         return $settings;
     });
-
-    do_action('pp_pro_ads_init');
 }

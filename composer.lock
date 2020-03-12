@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0e57b4191daecb38d96421fd542150c",
+    "content-hash": "44141b7d9c937e3371ba1248ee6e7ad4",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -157,16 +157,16 @@
         },
         {
             "name": "publishpress/wordpress-pro-plugins-ads",
-            "version": "dev-development",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Pro-Plugins-Ads.git",
-                "reference": "e33ded2702e64278a8b3d53a9cfd25c7f69745d7"
+                "reference": "5972a8a8ef83bb3f40f83bc692c91748a8645a84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Pro-Plugins-Ads/zipball/e33ded2702e64278a8b3d53a9cfd25c7f69745d7",
-                "reference": "e33ded2702e64278a8b3d53a9cfd25c7f69745d7",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Pro-Plugins-Ads/zipball/5972a8a8ef83bb3f40f83bc692c91748a8645a84",
+                "reference": "5972a8a8ef83bb3f40f83bc692c91748a8645a84",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "Library for displaying ads for Pro plugins in WordPress.",
-            "time": "2020-03-06T19:43:30+00:00"
+            "time": "2020-03-12T14:58:59+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
