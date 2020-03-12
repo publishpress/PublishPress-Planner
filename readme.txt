@@ -128,7 +128,7 @@ Not at all. You can set up everything your team needs without any coding knowled
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [2.0.3] - 2020-03-12 =
+= [2.0.3] - UNRELEASED =
 
 * Fixed: JS error related to undefined editor when subject or content is empty;
 * Fixed: Permalinks for scheduled posts removing the preview param;
