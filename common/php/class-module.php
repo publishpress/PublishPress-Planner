@@ -83,13 +83,18 @@ if ( ! class_exists('PP_Module')) {
          *
          * @return array post-type-slug => post-type-label
          */
-        public function get_all_post_types()
+        public function get_all_post_types($module = null)
         {
             $allowed_post_types = [
                 'post' => __('Post'),
                 'page' => __('Page'),
             ];
-            $custom_post_types  = $this->get_supported_post_types_for_module();
+
+            if (is_null($module)) {
+                $module = $this;
+            }
+
+            $custom_post_types  = $this->get_supported_post_types_for_module($module);
 
             foreach ($custom_post_types as $custom_post_type => $args) {
                 $allowed_post_types[$custom_post_type] = $args->label;
@@ -139,13 +144,18 @@ if ( ! class_exists('PP_Module')) {
         {
             $pt_args = [
                 '_builtin' => false,
-                'public'   => true,
+                'show_ui'  => true,
             ];
             $pt_args = apply_filters('publishpress_supported_module_post_types_args', $pt_args, $module);
 
             $postTypes = get_post_types($pt_args, 'objects');
 
             $postTypes = apply_filters('publishpress_supported_module_post_types', $postTypes);
+
+            // Hide notification workflows from the list
+            if (isset($postTypes['psppnotif_workflow'])) {
+                unset($postTypes['psppnotif_workflow']);
+            }
 
             return $postTypes;
         }

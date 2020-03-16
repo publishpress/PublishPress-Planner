@@ -352,7 +352,7 @@ if ( ! class_exists('PP_Settings')) {
                     'post' => __('Posts'),
                     'page' => __('Pages'),
                 ];
-                $custom_post_types = $this->get_supported_post_types_for_module();
+                $custom_post_types = $this->get_supported_post_types_for_module($module);
                 if (count($custom_post_types)) {
                     foreach ($custom_post_types as $custom_post_type => $args) {
                         $post_types[$custom_post_type] = $args->label;

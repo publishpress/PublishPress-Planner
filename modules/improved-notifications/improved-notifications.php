@@ -304,6 +304,15 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
         }
 
+        public function filterSupportedModulesPostTypesArgs($args, $module)
+        {
+            if (isset($module->slug) && $module->slug === 'notifications') {
+                $args = [];
+            }
+
+            return $args;
+        }
+
         /**
          *
          */

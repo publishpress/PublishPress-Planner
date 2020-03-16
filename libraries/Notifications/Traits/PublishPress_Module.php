@@ -89,6 +89,11 @@ trait PublishPress_Module
     {
         $publishpress = $this->get_service('publishpress');
 
-        return $publishpress->improved_notifications->get_all_post_types();
+        $module = null;
+        if (isset($publishpress->notifications)) {
+            $module = $publishpress->notifications->module;
+        }
+        
+        return $publishpress->improved_notifications->get_all_post_types($module);
     }
 }

@@ -2108,6 +2108,11 @@ if (!class_exists('PP_Custom_Status')) {
                 return $permalink;
             }
 
+            // If it's a scheduled post, we don't add the preview link
+            if ($post->post_status === 'future') {
+                return $permalink;
+            }
+
             return $this->get_preview_link($post);
         }
 
