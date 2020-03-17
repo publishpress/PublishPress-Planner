@@ -77,9 +77,13 @@ if (!defined('PP_LOADED')) {
 
     require_once PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'deprecated.php';
 
-    if (is_admin()) {
-        require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'publishpress' . DIRECTORY_SEPARATOR
+    if (is_admin() && !defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+        $includesFile = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'publishpress' . DIRECTORY_SEPARATOR
             . 'wordpress-version-notices' . DIRECTORY_SEPARATOR . 'includes.php';
+
+        if (file_exists($includesFile)) {
+            require_once $includesFile;
+        }
 
         add_filter(\PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER, function ($settings) {
             $settings['publishpress'] = [
@@ -97,7 +101,7 @@ if (!defined('PP_LOADED')) {
             ];
 
             return $settings;
-        });
+        } );
     }
 
     define('PP_LOADED', 1);
