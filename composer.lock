@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4490bbe65b5109b5630b579370f541f",
+    "content-hash": "27769679aa4a4e8b46d3cddc3adfbfaa",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -157,16 +157,16 @@
         },
         {
             "name": "publishpress/wordpress-version-notices",
-            "version": "dev-master",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Version-Notices.git",
-                "reference": "f80f30f5ecd8e143501a4d6ea359e94204b48307"
+                "reference": "8f359bd2d7f72f2ef27fca3758825b505e7e65dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/f80f30f5ecd8e143501a4d6ea359e94204b48307",
-                "reference": "f80f30f5ecd8e143501a4d6ea359e94204b48307",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/8f359bd2d7f72f2ef27fca3758825b505e7e65dd",
+                "reference": "8f359bd2d7f72f2ef27fca3758825b505e7e65dd",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "Library for displaying version notices for Pro plugins in WordPress.",
-            "time": "2020-03-12T20:03:50+00:00"
+            "time": "2020-03-16T22:13:50+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2218,7 +2218,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "publishpress/wordpress-version-notices": 20,
         "alledia/wordpress-plugin-builder": 20
     },
     "prefer-stable": true,
