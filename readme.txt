@@ -83,6 +83,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 = Join PublishPress and get the Pro plugins =
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
+
 Join PublishPress and you’ll get access to these 6 Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
