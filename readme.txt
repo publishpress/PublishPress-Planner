@@ -15,6 +15,7 @@ PublishPress has all the tools you need to manage WordPress content, including a
 == Description ==
 
 [PublishPress](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
+
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
 = Editorial Calendar =
@@ -26,6 +27,7 @@ The calendar gives you a powerful overview of your publishing schedule. Using th
 = Content Notifications =
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
+
 [Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
 
 = Content Overview =
@@ -37,7 +39,9 @@ The Content Overview screen is a companion to the Calendar screen. Whereas the C
 = Custom Statuses =
 
 This feature allows you to create custom post statuses such as “In Progress” or “Pending Review”. You can define statuses to match the stages of your team’s publishing workflow.
+
 By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress you’ll see a much wider range of options. When you first install PublishPress, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
+
 [Click here to read about the Custom Statuses](https://publishpress.com/knowledge-base/custom-statuses/).
 
 = Editorial Comments =
@@ -49,18 +53,20 @@ A very important feature in PublishPress is commenting. You can leave comments u
 = Editorial Metadata =
 
 Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress provides 4 examples of metadata, but you can add your own to meet your team’s needs.
+
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
 = User Roles =
 
 For larger organizations with many people involved in the publishing process, user roles help keep your team organized. PublishPress allows you to send custom notifications to each user role.
+
 [Click here to read about the User Roles](https://publishpress.com/knowledge-base/user-groups/).
 
 = Slack Notifications =
 
 This PublishPress Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
 
-[Click here to read about the Slack Notifications](https://publishpress.com/knowledge-base/slack/.
+[Click here to read about the Slack Notifications](https://publishpress.com/knowledge-base/slack/).
 
 = Reminder Notifications =
 
@@ -78,6 +84,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 Join PublishPress and you’ll get access to these 6 Pro plugins:
+
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
@@ -88,8 +95,11 @@ Join PublishPress and you’ll get access to these 6 Pro plugins:
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
 
 =  Bug Reports =
+
 Bug reports for PublishPress are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that aren’t properly qualified as bugs will be closed.
+
 = Follow the PublishPress team =
+
 Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitter](https://www.twitter.com/publishpresscom) and [YouTube](https://www.youtube.com/publishpress).
 
 == Screenshots ==
