@@ -160,6 +160,7 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('page_row_actions', [$this, 'fix_post_row_actions'], 10, 2);
 
             add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 10, 2);
+            add_action('publish_post', [$this, 'fix_publish_date_after_publish'], 10, 2);
         }
 
         /**
@@ -1185,7 +1186,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             // Expand and order the statuses
             $orderedStatusList = [];
-            $hold_to_end      = [];
+            $hold_to_end       = [];
             foreach ($statuses as $key => $status) {
                 // Unencode and set all of our psuedo term meta because we need the position if it exists
                 $unencoded_description = $this->get_unencoded_description($status->description);
@@ -1196,7 +1197,7 @@ if (!class_exists('PP_Custom_Status')) {
                 }
                 // We require the position key later on (e.g. management table)
                 if (!isset($status->position)) {
-                    $slug = $status->slug === 'pending-review' ? 'pending':$status->slug;
+                    $slug = $status->slug === 'pending-review' ? 'pending' : $status->slug;
                     if (array_key_exists($slug, $default_terms)) {
                         $status->position = $default_terms[$status->slug]['args']['position'];
                     } else {
@@ -2383,13 +2384,37 @@ if (!class_exists('PP_Custom_Status')) {
              */
             if (!in_array($data['post_status'], ['publish', 'future'])) {
                 // Check if the dates are the same, indicating they were auto-set.
-                if ($data['post_date'] === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
+                if (get_gmt_from_date($data['post_date']) === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
                     // Reset the date
                     $data['post_date_gmt'] = '0000-00-00 00:00:00';
                 }
             }
 
             return $data;
+        }
+
+        /**
+         * Fix the publish date for custom statuses. By default WP will set a publish date if the post has a status
+         * different from draft or pending review (not considering scheduled or publish). So if we set assigned, WP
+         * will set the current date as the publish date. So when we publish, the date will be outdated.
+         *
+         * @param int $id
+         * @param WP_Post $post
+         */
+        public function fix_publish_date_after_publish($id, $post)
+        {
+            $currentDateTime = current_datetime();
+            $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
+
+            if ($currentDateTime !== $post->post_date) {
+                $data = [
+                    'ID'            => $id,
+                    'post_date'     => $currentDateTime,
+                    'post_date_gmt' => get_gmt_from_date($currentDateTime),
+                ];
+
+                wp_update_post($data);
+            }
         }
 
         /**
