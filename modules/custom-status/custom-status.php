@@ -160,7 +160,7 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('page_row_actions', [$this, 'fix_post_row_actions'], 10, 2);
 
             add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 10, 2);
-            add_action('publish_post', [$this, 'fix_publish_date_after_publish'], 10, 2);
+            add_action('transition_post_status', [$this, 'fix_publish_date_after_publish'], 10, 3);
         }
 
         /**
@@ -2398,22 +2398,25 @@ if (!class_exists('PP_Custom_Status')) {
          * different from draft or pending review (not considering scheduled or publish). So if we set assigned, WP
          * will set the current date as the publish date. So when we publish, the date will be outdated.
          *
-         * @param int $id
+         * @param string $newStatus
+         * @param string $oldStatus
          * @param WP_Post $post
          */
-        public function fix_publish_date_after_publish($id, $post)
+        public function fix_publish_date_after_publish($newStatus, $oldStatus, $post)
         {
-            $currentDateTime = current_datetime();
-            $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
+            if ($oldStatus !== 'publish' && $newStatus === 'publish') {
+                $currentDateTime = current_datetime();
+                $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
-            if ($currentDateTime !== $post->post_date) {
-                $data = [
-                    'ID'            => $id,
-                    'post_date'     => $currentDateTime,
-                    'post_date_gmt' => get_gmt_from_date($currentDateTime),
-                ];
+                if ($currentDateTime !== $post->post_date) {
+                    $data = [
+                        'ID'            => $id,
+                        'post_date'     => $currentDateTime,
+                        'post_date_gmt' => get_gmt_from_date($currentDateTime),
+                    ];
 
-                wp_update_post($data);
+                    wp_update_post($data);
+                }
             }
         }
 
