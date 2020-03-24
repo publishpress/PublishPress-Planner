@@ -40,7 +40,7 @@ if (!defined('PP_LOADED')) {
     );
 
     // Define contants
-    define('PUBLISHPRESS_VERSION', '2.0.4-alpha.2');
+    define('PUBLISHPRESS_VERSION', '2.0.4-alpha.3');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
