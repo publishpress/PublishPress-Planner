@@ -42,10 +42,10 @@ if (!defined('PP_LOADED')) {
     // Define contants
     define('PUBLISHPRESS_VERSION', '2.0.4');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
-    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'publishpress.php');
+    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
     define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
-    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'libraries');
+    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
     define('PUBLISHPRESS_BASENAME', plugin_basename(PUBLISHPRESS_FILE_PATH));
 
     /**
@@ -61,25 +61,24 @@ if (!defined('PP_LOADED')) {
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
-    if (file_exists(PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
-        require_once PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+    if (file_exists(PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php')) {
+        require_once PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php';
     }
 
     // Register the autoloader
     if (!class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
-        require_once PUBLISHPRESS_LIBRARIES_PATH . DIRECTORY_SEPARATOR . 'Legacy' . DIRECTORY_SEPARATOR . 'Auto_loader.php';
+        require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
     }
 
     // Register the library
-    Auto_loader::register('\\PublishPress\\Legacy\\', PUBLISHPRESS_LIBRARIES_PATH . DIRECTORY_SEPARATOR . 'Legacy');
+    Auto_loader::register('\\PublishPress\\Legacy\\', PUBLISHPRESS_LIBRARIES_PATH . '/Legacy');
     Auto_loader::register('\\PublishPress\\Notifications\\',
-        PUBLISHPRESS_LIBRARIES_PATH . DIRECTORY_SEPARATOR . 'Notifications');
+        PUBLISHPRESS_LIBRARIES_PATH . '/Notifications');
 
-    require_once PUBLISHPRESS_BASE_PATH . DIRECTORY_SEPARATOR . 'deprecated.php';
+    require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
     if (is_admin() && !defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
-        $includesFile = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'publishpress' . DIRECTORY_SEPARATOR
-            . 'wordpress-version-notices' . DIRECTORY_SEPARATOR . 'includes.php';
+        $includesFile = __DIR__ . '/vendor/publishpress/wordpress-version-notices/includes.php';
 
         if (file_exists($includesFile)) {
             require_once $includesFile;
