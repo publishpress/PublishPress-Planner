@@ -1,132 +1,129 @@
-=== PublishPress Content Calendar and Notifications ===
-Contributors: publishpress, andergmartins, stevejburge, pressshack, kevinb, deenison
-Author: PublishPress, PressShack
+=== PublishPress: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
+Contributors: publishpress, kevinB, stevejburge, andergmartins
+Author: PublishPress
 Author URI: https://publishpress.com
-Tags: notifications, Editorial Calendar, workflow, statuses, permissions
+Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.3
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress is the plugin for professional publishers. Get an editorial calendar, flexible permissions and notifications.
+PublishPress has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
 == Description ==
 
-PublishPress can help you create great content in WordPress. Here’s an overview of the publishing tools you’ll find in PublishPress:
-
-
-* There’s a beautiful [Editorial Calendar](https://publishpress.com/docs/calendar/) to give a clear picture of all your planned and published content.
-* You can create [Notifications](https://publishpress.com/docs/notifications/) to keep your team up-to-date with what’s happening.
-* You can write [Editorial Comments](https://publishpress.com/docs/editorial-comments/) to leave feedback for your site’s authors.
-* There are [Custom Statuses](https://publishpress.com/docs/custom-statuses/) so you can see where content is in your publishing workflow.
-* The [Content Overview](https://publishpress.com/docs/calendar/) screen allows you to drill down and analyze your site’s content.
-* You can add [Metadata](https://publishpress.com/docs/editorial-metadata/) to give your team extra information about each post.
-
-Interested in finding out more about PublishPress?
-
-* [Check out the premium add-ons](https://publishpress.com/pricing/) for access to all the PublishPress features.
-
-= WHO SHOULD USE PUBLISHPRESS? =
+[PublishPress](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
-= PREMIUM ADD-ONS FOR PUBLISHPRESS =
+= Editorial Calendar =
 
-* [Content Checklist](https://publishpress.com/addons/content-checklist/): Set high standards for all your published content.
-* [Multiple Authors](https://publishpress.com/addons/multiple-authors-publishpress/): Easily assign multiple authors to one content item.
-* [Reminders](http://publishpress.com/addons/reminders): Automatically send notifications before or after content is published.
-* [Permissions](https://publishpress.com/addons/publishpress-permissions/): Control who gets to click the “Publish” button.
-* [WooCommerce Checklist](https://publishpress.com/addons/woocommerce-checklist/): Set high standards for all your WooCommerce products.
-* [Slack Notifications](https://publishpress.com/addons/publishpress-slack/): Get Slack updates for all content changes.
+The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
-= EDITORIAL CALENDAR =
+[Click here to read about the Editorial Calendar](https://publishpress.com/knowledge-base/calendar/).
 
-The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next six weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
-
-[Click here for more on the PublishPress Editorial Calendar](https://publishpress.com/docs/calendar/)
-
-
-= NOTIFICATION WORKFLOWS =
+= Content Notifications =
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
-* [Click here for more on PublishPress Notifications](https://publishpress.com/docs/notifications/)
+[Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
 
-= CONTENT OVERVIEW =
+= Content Overview =
 
 The Content Overview screen is a companion to the Calendar screen. Whereas the Calendar allows you to see content organized by dates, Content Overview allows you to drill down and see content organized by status, categories, or users. In the top-right corner is a “Print” button. Click this to get a printable overview of all your planned content.
 
-* [Click here for more on the PublishPress Content Overview](https://publishpress.com/docs/content-overview/)
+[Click here to read about the Content Overview](https://publishpress.com/knowledge-base/content-overview/).
 
-= CUSTOM STATUSES =
- tru
+= Custom Statuses =
+
 This feature allows you to create custom post statuses such as “In Progress” or “Pending Review”. You can define statuses to match the stages of your team’s publishing workflow.
 
 By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress you’ll see a much wider range of options. When you first install PublishPress, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
 
-* [Click here for more on the PublishPress Custom Statuses](https://publishpress.com/docs/custom-statuses/)
+[Click here to read about the Custom Statuses](https://publishpress.com/knowledge-base/custom-statuses/).
 
-= EDITORIAL COMMENTS =
+= Editorial Comments =
 
 A very important feature in PublishPress is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
 
-* [Click here for more on PublishPress Editorial Comments](https://publishpress.com/docs/editorial-comments/)
+[Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
 
-= METADATA =
+= Editorial Metadata =
 
-Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items.
+Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress provides 4 examples of metadata, but you can add your own to meet your team’s needs.
 
-By default, PublishPress provide 4 examples of metadata, but you can add your own to meet your team’s needs.
+[Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
-* [Click here for more on PublishPress Editorial Metadata](https://publishpress.com/docs/editorial-metadata/)
+= User Roles =
 
-= USER GROUPS =
+For larger organizations with many people involved in the publishing process, user roles help keep your team organized. PublishPress allows you to send custom notifications to each user role.
 
-For larger organizations with many people involved in the publishing process, user groups help keep your workflow organized and informed.
+[Click here to read about the User Roles](https://publishpress.com/knowledge-base/user-groups/).
 
-To find the user settings, go to the PublishPress link in your WordPress admin area, and click the “User Groups” tab. By default, PublishPress provides four user groups: Copy Editors, Photographers, Reporters and Section Editors.
+= Slack Notifications =
 
-* [Click here for more on PublishPress User Groups](https://publishpress.com/docs/user-groups/)
+This PublishPress Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
 
-= IMPORTING FROM EDITFLOW =
+[Click here to read about the Slack Notifications](https://publishpress.com/knowledge-base/slack/).
+
+= Reminder Notifications =
+
+This PublishPress Pro feature allows you to send notifications either before or after the publishing date for content. For example, before publication, you can send a reminder to editors, asking them to proof-read the post for publication. Or two or three days after publication, you can send a reminder to various team members, asking them to promote the post on social media.
+
+[Click here to read about the Reminder Notifications](https://publishpress.com/knowledge-base/reminders/).
+
+= Importing from Edit Flow =
 
 PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
 
-* [Click here for full instructions on moving from Edit Flow to PublishPress](https://publishpress.com/docs/migrate/)
+[Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
-= I FOUND A BUG, OR WANT TO CONTRIBUTE CODE =
-Great! We’d love to hear from you! PublishPress [is available on Github](https://github.com/AllediaWordPress/PublishPress), and we welcome contributions from everyone.
+= Join PublishPress and get the Pro plugins =
 
-= FAQ =
+The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-== Installation ==
+Join PublishPress and you’ll get access to these 6 Pro plugins:
 
-You can install PublishPress through your WordPress admin area:
+* [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
+* [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
+* [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
+* [PublishPress Permissions Pro](https://publishpress.com/presspermit) is the plugin for advanced WordPress permissions.
+* [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
+* [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
 
-1. Access the “Plugins” page.
-1. Click on the “Add New” button.
-1. Search for “PublishPress”.
-1. Install the PublishPress plugin.
-1. Activate the PublishPress plugin.
+Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
 
-= Where Can I Get Support? =
+=  Bug Reports =
 
-You can ask for help via [the PublishPress contact form](https://publishpress.com/contact/).
-ph
-= Do I Need Coding Skills to Use PublishPress? =
+Bug reports for PublishPress are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that aren’t properly qualified as bugs will be closed.
 
-Not at all. You can set up everything your team needs without any coding knowledge. We made it super easy.
+= Follow the PublishPress team =
+
+Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitter](https://www.twitter.com/publishpresscom) and [YouTube](https://www.youtube.com/publishpress).
 
 == Screenshots ==
 
-1. With Calendar you can see your posts over a customizable date range.
+1. Editorial Calendar
+2. Notifications
+3. Content Overview
+4. Custom Statuses
+5. Editorial Comments
+6. User Roles
+7. Slack Notifications - available in the Pro version
+8. Reminder Notifications - available in the Pro version
 
 == Changelog ==
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.0.4] - 2020-04-08 =
+
+* Fixed: Wrong publish date when using custom statuses - Now the publish date is always updated when the post is published;
+* Fixed: Fixed the error displayed on Windows servers when the constant DIRECTORY_SEPARATOR is not defined;
+* Added: Added link in the menu for upgrading to Pro;
 
 = [2.0.3] - 2020-03-16 =
 

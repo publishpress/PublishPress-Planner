@@ -324,7 +324,8 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 esc_html__('Notifications Log', 'publishpress'),
                 apply_filters('pp_view_notifications_cap', 'read_pp_notif_workflow'),
                 self::MENU_SLUG,
-                [$this, 'render_admin_page']
+                [$this, 'render_admin_page'],
+                40
             );
 
             add_action('load-' . $hook, [$this, 'addScreenOptions']);

@@ -1,13 +1,13 @@
 ---
-name: Release Add-on (team only)
-about: Describes default checklist for the plugin's add-on release process.
-title: Release [ADD-ON] version [VERSION]
+name: Release the Pro version (team only)
+about: Describes default checklist for releasing the Pro plugin;
+title: Release PublishPress Pro v[VERSION]
 labels: release
 assignees: ''
 
 ---
 
-To release the add-on plugin, please make sure to check all the checkboxes below.
+To release the Pro plugin please make sure to check all the checkboxes below.
 
 ### Pre-release Checklist
 

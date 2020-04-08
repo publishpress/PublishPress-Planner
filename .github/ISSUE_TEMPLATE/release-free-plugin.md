@@ -1,13 +1,13 @@
 ---
-name: Release PublishPress (team only)
+name: Release the Free version (team only)
 about: Describes default checklist for the plugin's release process.
-title: Release PublishPress version [VERSION]
+title: Release PublishPress v[VERSION]
 labels: release
 assignees: ''
 
 ---
 
-To release the plugin, please make sure to check all the checkboxes below.
+To release the Free plugin please make sure to check all the checkboxes below.
 
 ### Pre-release Checklist
 

@@ -790,7 +790,8 @@ if ( ! class_exists('PP_Roles')) {
                 esc_html__('Roles', 'publishpress'),
                 apply_filters('pp_manage_roles_cap', 'pp_manage_roles'),
                 self::MENU_SLUG,
-                [$this, 'render_admin_page']
+                [$this, 'render_admin_page'],
+                50
             );
         }
 

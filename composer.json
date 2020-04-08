@@ -33,7 +33,7 @@
     "twig/twig": "1.37.1",
     "pimple/pimple": "~3.0",
     "alledia/wordpress-plugin-framework": "~0.6",
-    "publishpress/wordpress-version-notices": "^1.0"
+    "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {
     "bartlett/php-compatinfo": "^5.2",

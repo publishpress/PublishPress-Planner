@@ -378,7 +378,8 @@ class PP_Content_Overview extends PP_Module
             esc_html__('Content Overview', 'publishpress'),
             apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
             self::MENU_SLUG,
-            [$this, 'render_admin_page']
+            [$this, 'render_admin_page'],
+            20
         );
     }
 
