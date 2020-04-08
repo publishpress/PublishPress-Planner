@@ -752,102 +752,114 @@ class publishpress
 
     public function filter_custom_menu_order($menu_ord)
     {
-        global $submenu;
-        global $publishpress;
+        global $submenu, $publishpress;
 
-        $menu_slug = $publishpress->get_menu_slug();
+        $parentMenuSlug = $publishpress->get_menu_slug();
 
-        if (isset($submenu[$menu_slug])) {
-            $submenu_pp  = $submenu[$menu_slug];
-            $new_submenu = [];
+        if (isset($submenu[$parentMenuSlug])) {
+            $currentSubmenu   = $submenu[$parentMenuSlug];
+            $newSubmenu       = [];
+            $upgradeMenuSlugs = [];
 
             // Get the index for the menus.
-            $relevantMenus = [
+            $itemsToSort = [
                 'pp-calendar'                           => null,
                 'pp-content-overview'                   => null,
-                'pp-manage-roles'                       => null,
-                'pp-manage-roles'                       => null,
-                'pp-manage-capabilities'                => null,
-                'pp-modules-settings'                   => null,
                 'edit.php?post_type=psppnotif_workflow' => null,
                 'pp-notif-log'                          => null,
+                'pp-manage-roles'                       => null,
+                'pp-modules-settings'                   => null,
             ];
 
-            foreach ($submenu_pp as $index => $item) {
-                if (array_key_exists($item[2], $relevantMenus)) {
-                    $relevantMenus[$item[2]] = $index;
+            if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+                $suffix = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
+                $upgradeMenuSlugs = [
+                    'pp-calendar' . $suffix                           => null,
+                    'pp-content-overview' . $suffix                   => null,
+                    'edit.php?post_type=psppnotif_workflow' . $suffix => null,
+                    'pp-notif-log' . $suffix                          => null,
+                    'pp-manage-roles' . $suffix                       => null,
+                    'pp-modules-settings' . $suffix                   => null,
+                ];
+
+                $itemsToSort = array_merge($itemsToSort, $upgradeMenuSlugs);
+            }
+
+            foreach ($currentSubmenu as $index => $item) {
+                if (array_key_exists($item[2], $itemsToSort)) {
+                    $itemsToSort[$item[2]] = $index;
                 }
             }
 
             // Calendar
-            if ( ! is_null($relevantMenus['pp-calendar'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-calendar']];
+            if (isset($itemsToSort['pp-calendar']) && !is_null($itemsToSort['pp-calendar'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-calendar']];
 
-                unset($submenu_pp[$relevantMenus['pp-calendar']]);
+                unset($currentSubmenu[$itemsToSort['pp-calendar']]);
             }
 
             // Content Overview
-            if ( ! is_null($relevantMenus['pp-content-overview'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-content-overview']];
+            if (isset($itemsToSort['pp-content-overview']) && !is_null($itemsToSort['pp-content-overview'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-content-overview']];
 
-                unset($submenu_pp[$relevantMenus['pp-content-overview']]);
-            }
-
-            if ( ! is_null($relevantMenus['edit.php?post_type=psppnotif_workflow'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']];
-
-                unset($submenu_pp[$relevantMenus['edit.php?post_type=psppnotif_workflow']]);
+                unset($currentSubmenu[$itemsToSort['pp-content-overview']]);
             }
 
             // Notifications
-            if ( ! is_null($relevantMenus['pp-notif-log'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-notif-log']];
+            if (isset($itemsToSort['edit.php?post_type=psppnotif_workflow']) && !is_null($itemsToSort['edit.php?post_type=psppnotif_workflow'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']];
 
-                unset($submenu_pp[$relevantMenus['pp-notif-log']]);
+                unset($currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']]);
+            }
+
+            // Notification logs
+            if (isset($itemsToSort['pp-notif-log']) && !is_null($itemsToSort['pp-notif-log'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-notif-log']];
+
+                unset($currentSubmenu[$itemsToSort['pp-notif-log']]);
             }
 
             // Roles
-            if ( ! is_null($relevantMenus['pp-manage-roles'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-manage-roles']];
+            if (isset($itemsToSort['pp-manage-roles']) && !is_null($itemsToSort['pp-manage-roles'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-manage-roles']];
 
-                unset($submenu_pp[$relevantMenus['pp-manage-roles']]);
+                unset($currentSubmenu[$itemsToSort['pp-manage-roles']]);
             }
 
-            // Permissions
-            if ( ! is_null($relevantMenus['pp-manage-capabilities'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-manage-capabilities']];
+            // Permissions - Role Capabilities
+            if (isset($itemsToSort['pp-manage-capabilities']) && !is_null($itemsToSort['pp-manage-capabilities'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-manage-capabilities']];
 
-                unset($submenu_pp[$relevantMenus['pp-manage-capabilities']]);
+                unset($itemsToSort[$itemsToSort['pp-manage-capabilities']]);
             }
 
-            $expectedMenuItems = defined('PUBLISHPRESS_SKIP_VERSION_NOTICES') ? 1 : 2;
-
-            // Check if we have other menu items, except settings and Upgrade To Pro. They will be added to the end.
-            if (count($submenu_pp) > $expectedMenuItems) {
                 // Add the additional items
-                foreach ($submenu_pp as $index => $item) {
-                    if ( ! in_array($index, $relevantMenus)) {
-                        $new_submenu[] = $item;
-                        unset($submenu_pp[$index]);
-                    }
+            foreach ($currentSubmenu as $index => $item) {
+                if (!in_array($index, $itemsToSort)) {
+                    $newSubmenu[] = $item;
+                    unset($currentSubmenu[$index]);
                 }
             }
 
             // Settings
-            if ( ! is_null($relevantMenus['pp-modules-settings'])) {
-                $new_submenu[] = $submenu_pp[$relevantMenus['pp-modules-settings']];
+            if (isset($itemsToSort['pp-modules-settings']) && !is_null($itemsToSort['pp-modules-settings'])) {
+                $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-modules-settings']];
 
-                unset($submenu_pp[$relevantMenus['pp-modules-settings']]);
+                unset($currentSubmenu[$itemsToSort['pp-modules-settings']]);
             }
 
-            if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
                 // Upgrade to Pro
-                $menuIndex = last(array_keys($submenu_pp));
+            if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+                $suffix = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
 
-                $new_submenu[] = $submenu_pp[$menuIndex];
+                foreach ($upgradeMenuSlugs as $index => $item) {
+                    if (!is_null($itemsToSort[$index])) {
+                        $newSubmenu[] = $currentSubmenu[$itemsToSort[$index]];
+                    }
+                }
             }
 
-            $submenu[$menu_slug] = $new_submenu;
+            $submenu[$parentMenuSlug] = $newSubmenu;
         }
 
         return $menu_ord;
@@ -1140,7 +1152,7 @@ function publishPressRegisterImprovedNotificationsPostTypes()
                 'show_in_admin_bar'   => true,
                 'exclude_from_search' => true,
                 'show_in_menu'        => $publishpress->get_menu_slug(),
-                'menu_position'       => '20',
+                'menu_position'       => '30',
                 'supports'            => [
                     'title',
                 ],

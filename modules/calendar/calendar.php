@@ -392,7 +392,8 @@ if (!class_exists('PP_Calendar')) {
                 esc_html__('Calendar', 'publishpress'),
                 apply_filters('pp_view_calendar_cap', 'pp_view_calendar'),
                 self::MENU_SLUG,
-                [$this, 'render_admin_page']
+                [$this, 'render_admin_page'],
+                5
             );
         }
 

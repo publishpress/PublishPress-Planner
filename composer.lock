@@ -157,16 +157,16 @@
         },
         {
             "name": "publishpress/wordpress-version-notices",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Version-Notices.git",
-                "reference": "ae80ea81e7fb22a38f83be84b5096baba5ce9758"
+                "reference": "ba2b8eba33577d8c9351a9437e09af0e8f601a2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/ae80ea81e7fb22a38f83be84b5096baba5ce9758",
-                "reference": "ae80ea81e7fb22a38f83be84b5096baba5ce9758",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/ba2b8eba33577d8c9351a9437e09af0e8f601a2c",
+                "reference": "ba2b8eba33577d8c9351a9437e09af0e8f601a2c",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "Library for displaying version notices for Pro plugins in WordPress.",
-            "time": "2020-04-08T13:09:31+00:00"
+            "time": "2020-04-08T13:59:35+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",

@@ -138,7 +138,8 @@ if ( ! class_exists('PP_Settings')) {
                 esc_html__('Settings', 'publishpress'),
                 apply_filters('pp_view_settings_cap', 'manage_options'),
                 self::MENU_SLUG,
-                [$this, 'options_page_controller']
+                [$this, 'options_page_controller'],
+                200
             );
         }
 

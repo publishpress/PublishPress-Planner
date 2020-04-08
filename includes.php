@@ -107,11 +107,13 @@ if (!defined('PP_LOADED')) {
                 'parent' => [
                     'pp-calendar',
                     'pp-content-overview',
+                    'edit.php?post_type=psppnotif_workflow',
+                    'pp-notif-log',
                     'pp-manage-roles',
                     'pp-modules-settings',
                 ],
                 'label'  => 'Upgrade to Pro',
-                'link'   => 'https://publishpress.com/links/publishpress-banner',
+                'link'   => 'https://publishpress.com/links/publishpress-menu',
             ];
 
             return $settings;
