@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 2.0.4-beta.1
+ * Version: 2.0.4-beta.2
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -833,7 +833,7 @@ class publishpress
                 unset($itemsToSort[$itemsToSort['pp-manage-capabilities']]);
             }
 
-                // Add the additional items
+            // Add the additional items
             foreach ($currentSubmenu as $index => $item) {
                 if (!in_array($index, $itemsToSort)) {
                     $newSubmenu[] = $item;
@@ -848,7 +848,7 @@ class publishpress
                 unset($currentSubmenu[$itemsToSort['pp-modules-settings']]);
             }
 
-                // Upgrade to Pro
+            // Upgrade to Pro
             if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
                 $suffix = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
 
