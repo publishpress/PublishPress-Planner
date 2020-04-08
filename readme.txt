@@ -119,9 +119,11 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [2.0.4] - 2020-04-02 =
+= [2.0.4] - UNRELEASED =
 
 * Fixed: Wrong publish date when using custom statuses - Now the publish date is always updated when the post is published;
+* Fixed: Fixed the error displayed on Windows servers when the constant DIRECTORY_SEPARATOR is not defined;
+* Added: Added link in the menu for upgrading to Pro;
 
 = [2.0.3] - 2020-03-16 =
 

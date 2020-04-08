@@ -101,6 +101,21 @@ if (!defined('PP_LOADED')) {
 
             return $settings;
         } );
+
+        add_filter(\PPVersionNotices\Module\MenuLink\Module::SETTINGS_FILTER, function ($settings) {
+            $settings['publishpress'] = [
+                'parent' => [
+                    'pp-calendar',
+                    'pp-content-overview',
+                    'pp-manage-roles',
+                    'pp-modules-settings',
+                ],
+                'label'  => 'Upgrade to Pro',
+                'link'   => 'https://publishpress.com/links/publishpress-banner',
+            ];
+
+            return $settings;
+        });
     }
 
     define('PP_LOADED', 1);

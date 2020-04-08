@@ -820,8 +820,10 @@ class publishpress
                 unset($submenu_pp[$relevantMenus['pp-manage-capabilities']]);
             }
 
-            // Check if we have other menu items, except settings and add-ons. They will be added to the end.
-            if (count($submenu_pp) > 2) {
+            $expectedMenuItems = defined('PUBLISHPRESS_SKIP_VERSION_NOTICES') ? 1 : 2;
+
+            // Check if we have other menu items, except settings and Upgrade To Pro. They will be added to the end.
+            if (count($submenu_pp) > $expectedMenuItems) {
                 // Add the additional items
                 foreach ($submenu_pp as $index => $item) {
                     if ( ! in_array($index, $relevantMenus)) {
@@ -836,6 +838,13 @@ class publishpress
                 $new_submenu[] = $submenu_pp[$relevantMenus['pp-modules-settings']];
 
                 unset($submenu_pp[$relevantMenus['pp-modules-settings']]);
+            }
+
+            if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+                // Upgrade to Pro
+                $menuIndex = last(array_keys($submenu_pp));
+
+                $new_submenu[] = $submenu_pp[$menuIndex];
             }
 
             $submenu[$menu_slug] = $new_submenu;
