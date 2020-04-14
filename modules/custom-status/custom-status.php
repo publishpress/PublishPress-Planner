@@ -2561,6 +2561,10 @@ if (!class_exists('PP_Custom_Status')) {
         public function fix_publish_date_after_publish($newStatus, $oldStatus, $post)
         {
             if ($oldStatus !== 'publish' && $newStatus === 'publish') {
+                if (!function_exists('current_datetime')) {
+                    include_once ABSPATH . '/wp-includes/functions.php';
+                }
+                
                 $currentDateTime = current_datetime();
                 $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
