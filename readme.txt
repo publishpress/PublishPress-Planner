@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.3
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,12 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.0.5] - 2020-04-15 =
+
+* Fixed: Fixed duplicated posts after publishing from custom post statuses, a bug introduced by the fix for #546;
+* Fixed: Fixes the metadata form in the settings to display the errors after a form submission; (#592)
+* Fixed: Updated the build script to remove test files from the built package to avoid false positive on security warnings issued by some hosts;
 
 = [2.0.4] - 2020-04-08 =
 
