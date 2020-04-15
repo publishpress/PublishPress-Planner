@@ -121,6 +121,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [2.0.5] - 2020-04-15 =
 
+* Fixed: Fixed duplicated posts after publishing from custom post statuses, a bug introduced by the fix for #546;
 * Fixed: Fixes the metadata form in the settings to display the errors after a form submission; (#592)
 * Fixed: Updated the build script to remove test files from the built package to avoid false positive on security warnings issued by some hosts;
 
