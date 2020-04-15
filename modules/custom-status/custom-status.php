@@ -2566,7 +2566,7 @@ if (!class_exists('PP_Custom_Status')) {
 
                 if ($currentDateTime !== $post->post_date) {
                     $data = [
-                        'ID'            => $id,
+                        'ID'            => $post->ID,
                         'post_date'     => $currentDateTime,
                         'post_date_gmt' => get_gmt_from_date($currentDateTime),
                     ];
