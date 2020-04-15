@@ -1099,7 +1099,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             // Kick out if there are any errors
-            if (count($_REQUEST['form-errors'])) {
+            if (!empty($_REQUEST['form-errors'])) {
                 $_REQUEST['error'] = 'form-error';
                 return;
             }
@@ -1113,6 +1113,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 'viewable'    => $term_viewable,
             ];
             $return = $this->insert_editorial_metadata_term($args);
+
             if (is_wp_error($return)) {
                 wp_die(__('Error adding term.', 'publishpress'));
             }
@@ -1157,6 +1158,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
              * - "description" can accept a limited amount of HTML, and is optional
              */
             $_REQUEST['form-errors'] = [];
+
             // Check if name field was filled in
             if (empty($new_name)) {
                 $_REQUEST['form-errors']['name'] = __('Please enter a name for the editorial metadata', 'publishpress');
@@ -1195,7 +1197,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             // Kick out if there are any errors
-            if (count($_REQUEST['form-errors'])) {
+            if (!empty($_REQUEST['form-errors'])) {
                 $_REQUEST['error'] = 'form-error';
                 return;
             }
@@ -1207,6 +1209,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 'viewable' => $new_viewable,
             ];
             $return = $this->update_editorial_metadata_term($existing_term->term_id, $args);
+
             if (is_wp_error($return)) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
@@ -1249,6 +1252,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
             }
 
             $return = $this->update_editorial_metadata_term($term_id, $args);
+
             if (is_wp_error($return)) {
                 wp_die(__('Error updating term.', 'publishpress'));
             }
@@ -1476,19 +1480,22 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                 <?php else: ?>
                 <?php /** If not in full-screen edit term mode, we can create new terms or change options **/ ?>
+                <?php
+                $showOptionsTab = (!isset($_GET['action']) || $_GET['action'] != 'add-new') && (!isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
+                ?>
                 <div id='col-left'>
                     <div class='col-wrap'>
                     <div class='form-wrap'>
                     <h3 class='nav-tab-wrapper'>
-                        <a href="<?php echo esc_url($this->get_link()); ?>"; class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'add-new') {
-                                    echo ' nav-tab-active';
-                                } ?>"><?php _e('Options', 'publishpress'); ?></a>
-                        <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>"; class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'add-new') {
-                                    echo ' nav-tab-active';
-                                } ?>"><?php _e('Add New', 'publishpress'); ?></a>
+                        <a href="<?php echo esc_url($this->get_link()); ?>" class="nav-tab<?php echo $showOptionsTab ? ' nav-tab-active' : ''; ?>">
+                            <?php _e('Options', 'publishpress'); ?>
+                        </a>
+                        <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>" class="nav-tab<?php echo !$showOptionsTab ? ' nav-tab-active' : ''; ?>">
+                            <?php _e('Add New', 'publishpress'); ?>
+                        </a>
                     </h3>
 
-                    <?php if (isset($_GET['action']) && $_GET['action'] == 'add-new'): ?>
+                    <?php if (!$showOptionsTab): ?>
                         <?php /** Custom form for adding a new Editorial Metadata term **/ ?>
                         <form class='add:the-list:'; action="<?php echo esc_url($this->get_link()); ?>"; method='post'; id='addmetadata'; name='addmetadata'>
                         <div class='form-field form-required'>
