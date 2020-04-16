@@ -119,6 +119,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [2.0.6] - 2020-04-15 =
+
+* Fixed: Fixed the duplicated posts after publishing using another algorithm due to new reports of a similar issue (#5546);
+
 = [2.0.5] - 2020-04-15 =
 
 * Fixed: Fixed duplicated posts after publishing from custom post statuses, a bug introduced by the fix for #546;
