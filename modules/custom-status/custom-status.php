@@ -2569,13 +2569,18 @@ if (!class_exists('PP_Custom_Status')) {
                 $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
 
                 if ($currentDateTime !== $post->post_date) {
+                    global $wpdb;
+
                     $data = [
-                        'ID'            => $post->ID,
                         'post_date'     => $currentDateTime,
                         'post_date_gmt' => get_gmt_from_date($currentDateTime),
                     ];
 
-                    wp_update_post($data);
+                    $where = [
+                        'ID' => $post->ID,
+                    ];
+
+                    $wpdb->update($wpdb->posts, $data, $where, ['%s', '%s'], ['%d']);
                 }
             }
         }
