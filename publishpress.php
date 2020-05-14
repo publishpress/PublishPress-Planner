@@ -806,10 +806,18 @@ class publishpress
             }
 
             // Notifications
-            if (isset($itemsToSort['edit.php?post_type=psppnotif_workflow']) && !is_null($itemsToSort['edit.php?post_type=psppnotif_workflow'])) {
-                $newSubmenu[] = $currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']];
+            // Check if we have the menu as a main menu
+            if (isset($submenu['edit.php?post_type=psppnotif_workflow'])) {
+                $newSubmenu[] = $submenu['edit.php?post_type=psppnotif_workflow'][array_key_first($submenu['edit.php?post_type=psppnotif_workflow'])];
 
-                unset($currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']]);
+                unset($submenu['edit.php?post_type=psppnotif_workflow']);
+                remove_menu_page('edit.php?post_type=psppnotif_workflow');
+            } else {
+                if (isset($itemsToSort['edit.php?post_type=psppnotif_workflow']) && !is_null($itemsToSort['edit.php?post_type=psppnotif_workflow'])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']];
+
+                    unset($currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']]);
+                }
             }
 
             // Notification logs
@@ -1162,5 +1170,5 @@ function publishPressRegisterImprovedNotificationsPostTypes()
 }
 
 add_action('init', 'PublishPress');
-add_action('publishpress_admin_menu_page', 'publishPressRegisterImprovedNotificationsPostTypes', 1001);
+add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
 register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
