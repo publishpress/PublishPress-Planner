@@ -545,7 +545,18 @@ if ( ! class_exists('PP_Notifications_Log')) {
                         <td>
                             <?php
                             if ($log->receiverIsUser()) {
-                                echo $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                                $output = '';
+                                if ($log->channel === 'email') {
+                                    $user = get_user_by('ID', $log->receiver);
+                                    $output .= sprintf('<div>%s</div>', $user->user_email);
+                                }
+                                $output .= sprintf(
+                                    '<div class="user">%s (id:%d)</div>',
+                                    $log->receiverName,
+                                    $log->receiver
+                                );
+
+                                echo $output;
                             } else {
                                 echo $log->receiver;
                             }
