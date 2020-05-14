@@ -98,7 +98,16 @@ class LogListTable extends \WP_List_Table
 
             case 'receiver':
                 if ($log->receiverIsUser()) {
-                    $output = $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                    $output = '';
+                    if ($log->channel === 'email') {
+                        $user = get_user_by('ID', $log->receiver);
+                        $output .= sprintf('<div>%s</div>', $user->user_email);
+                    }
+                    $output .= sprintf(
+                        '<div class="user">%s (id:%d)</div>',
+                        $log->receiverName,
+                        $log->receiver
+                    );
                 } else {
                     $output = $log->receiver;
                 }
