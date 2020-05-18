@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Roles_List_Table')) {
+if (!class_exists('PP_Roles_List_Table')) {
     /**
      * Roles uses WordPress' List Table API for generating the Role management table
      *
@@ -42,11 +42,13 @@ if ( ! class_exists('PP_Roles_List_Table')) {
 
         public function __construct($twig)
         {
-            parent::__construct([
-                'plural'   => 'roles',
-                'singular' => 'role',
-                'ajax'     => true,
-            ]);
+            parent::__construct(
+                [
+                    'plural'   => 'roles',
+                    'singular' => 'role',
+                    'ajax'     => true,
+                ]
+            );
 
             $this->twig = $twig;
         }
@@ -69,11 +71,13 @@ if ( ! class_exists('PP_Roles_List_Table')) {
             $this->items = [];
 
             foreach ($roles as $role => $data) {
-                $total = count(get_users(
-                    [
-                        'role' => $role,
-                    ]
-                ));
+                $total = count(
+                    get_users(
+                        [
+                            'role' => $role,
+                        ]
+                    )
+                );
 
                 $this->items[] = (object)[
                     'name'         => $role,
@@ -136,12 +140,16 @@ if ( ! class_exists('PP_Roles_List_Table')) {
             global $publishpress;
 
             $actions                   = [];
-            $actions['edit edit-role'] = sprintf('<a href="%1$s">' . __('Edit', 'publishpress') . '</a>',
-                esc_url($publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name])));
+            $actions['edit edit-role'] = sprintf(
+                '<a href="%1$s">' . __('Edit', 'publishpress') . '</a>',
+                esc_url($publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name]))
+            );
 
             if ('administrator' !== $role->name) {
-                $actions['delete delete-role'] = sprintf('<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
-                    esc_url($publishpress->roles->getLink(['action' => 'delete-role', 'role-id' => $role->name])));
+                $actions['delete delete-role'] = sprintf(
+                    '<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
+                    esc_url($publishpress->roles->getLink(['action' => 'delete-role', 'role-id' => $role->name]))
+                );
             }
 
             return $this->twig->render(

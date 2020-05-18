@@ -11,7 +11,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if ( ! defined('PUBLISHPRESS_NOTIF_LOADED')) {
+if (!defined('PUBLISHPRESS_NOTIF_LOADED')) {
     define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
     define('PUBLISHPRESS_NOTIF_TWIG_PATH', PUBLISHPRESS_BASE_PATH . '/twig');
     define('PUBLISHPRESS_NOTIF_LOADED', 1);

@@ -964,7 +964,7 @@ if (!class_exists('PP_Custom_Status')) {
                 $post_type_obj   = get_post_type_object($this->get_current_post_type());
                 $custom_statuses = $this->get_custom_statuses();
                 $selected        = $this->get_default_custom_status()->slug;
-                $selected_name   = $this->get_default_custom_status()->name;;
+                $selected_name   = $this->get_default_custom_status()->name;
 
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
 

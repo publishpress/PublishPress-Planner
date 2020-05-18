@@ -23,7 +23,7 @@ interface Filter_Interface
     /**
      * Function to save the metadata from the metabox
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post);

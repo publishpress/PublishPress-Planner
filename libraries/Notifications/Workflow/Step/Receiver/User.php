@@ -32,37 +32,17 @@ class User extends Simple_Checkbox implements Receiver_Interface
     }
 
     /**
-     * Method to return a list of fields to display in the filter area
-     *
-     * @param array
-     *
-     * @return array
-     */
-    protected function get_filters($filters = [])
-    {
-        if ( ! empty($this->cache_filters)) {
-            return $this->cache_filters;
-        }
-
-        $step_name = $this->attr_prefix . '_' . $this->name;
-
-        $filters[] = new Filter\User($step_name);
-
-        return parent::get_filters($filters);
-    }
-
-    /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
         parent::save_metabox_data($id, $post);
 
-        if ( ! isset($_POST['publishpress_notif'])
-             || ! isset($_POST['publishpress_notif']['receiver_user'])) {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif']['receiver_user'])) {
             // Assume it is disabled
             $values = [];
         } else {
@@ -115,9 +95,9 @@ class User extends Simple_Checkbox implements Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list of IDs.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */
@@ -130,16 +110,18 @@ class User extends Simple_Checkbox implements Receiver_Interface
             $receivers = array_merge($receivers, $users);
 
             // Get the users following the post
-            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify($args['post']->ID,
-                'id');
+            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify(
+                $args['post']->ID,
+                'id'
+            );
             $receivers = array_merge($receivers, $users);
 
             /**
              * Filters the list of receivers, but triggers only when the authors are selected.
              *
-             * @param array   $receivers
+             * @param array $receivers
              * @param WP_Post $workflow
-             * @param array   $args
+             * @param array $args
              */
             $receivers = apply_filters('publishpress_notif_workflow_receiver_user', $receivers, $workflow, $args);
         }
@@ -151,7 +133,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
      * Add the respective value to the column in the workflow list
      *
      * @param array $values
-     * @param int   $post_id
+     * @param int $post_id
      *
      * @return array
      */
@@ -160,7 +142,7 @@ class User extends Simple_Checkbox implements Receiver_Interface
         if ($this->is_selected($post_id)) {
             $items = get_post_meta($post_id, static::META_LIST_KEY);
 
-            if ( ! empty($items)) {
+            if (!empty($items)) {
                 $count = count($items);
 
                 $values[] = sprintf(
@@ -171,5 +153,25 @@ class User extends Simple_Checkbox implements Receiver_Interface
         }
 
         return $values;
+    }
+
+    /**
+     * Method to return a list of fields to display in the filter area
+     *
+     * @param array
+     *
+     * @return array
+     */
+    protected function get_filters($filters = [])
+    {
+        if (!empty($this->cache_filters)) {
+            return $this->cache_filters;
+        }
+
+        $step_name = $this->attr_prefix . '_' . $this->name;
+
+        $filters[] = new Filter\User($step_name);
+
+        return parent::get_filters($filters);
     }
 }

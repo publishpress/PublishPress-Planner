@@ -37,9 +37,9 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list of IDs.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */
@@ -67,7 +67,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             if ('POST' === $method && (isset($_POST['action']) && 'editpost' === $_POST['action'])) {
                 $toNotify = isset($_POST['to_notify']) ? (array)$_POST['to_notify'] : false;
 
-                if ( ! empty($toNotify)) {
+                if (!empty($toNotify)) {
                     foreach ($toNotify as $item) {
                         if (is_numeric($item)) {
                             $users[] = $item;
@@ -80,7 +80,10 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                         }
                     }
                 }
-                $this->get_service('debug')->write($toNotify, 'Follower::filter_workflow_receivers $toNotify:' . __LINE__);
+                $this->get_service('debug')->write(
+                    $toNotify,
+                    'Follower::filter_workflow_receivers $toNotify:' . __LINE__
+                );
             } else {
                 // Get following users and roles
                 $roles  = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
@@ -91,7 +94,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             $this->get_service('debug')->write($emails, 'Follower::filter_workflow_receivers $emails:' . __LINE__);
 
             // Extract users from roles
-            if ( ! empty($roles)) {
+            if (!empty($roles)) {
                 foreach ($roles as $role) {
                     $roleUsers = get_users(
                         [
@@ -99,7 +102,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                         ]
                     );
 
-                    if ( ! empty($roleUsers)) {
+                    if (!empty($roleUsers)) {
                         foreach ($roleUsers as $user) {
                             if (is_user_member_of_blog($user->ID)) {
                                 $followers[] = $user->ID;
@@ -114,7 +117,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             $notifyCurrentUser = apply_filters('publishpress_notify_current_user', false);
 
             // Process the recipients for this email to be sent
-            if ( ! empty($followers)) {
+            if (!empty($followers)) {
                 foreach ($followers as $key => $user) {
                     // Make sure we have only user objects in the list
                     if (is_numeric($user)) {
@@ -129,7 +132,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             }
 
             // Merge the emails.
-            if ( ! empty($emails)) {
+            if (!empty($emails)) {
                 foreach ($emails as $email) {
                     // Do we have a name?
                     $separatorPost = strpos($email, '/');
@@ -151,16 +154,23 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             /**
              * Filters the list of followers.
              *
-             * @param array   $followers
+             * @param array $followers
              * @param WP_Post $workflow
-             * @param array   $args
+             * @param array $args
              */
-            $followers = apply_filters('publishpress_notif_workflow_receiver_post_followers', $followers, $workflow,
-                $args);
-            $this->get_service('debug')->write($followers, 'Follower::filter_workflow_receivers $followers:' . __LINE__);
+            $followers = apply_filters(
+                'publishpress_notif_workflow_receiver_post_followers',
+                $followers,
+                $workflow,
+                $args
+            );
+            $this->get_service('debug')->write(
+                $followers,
+                'Follower::filter_workflow_receivers $followers:' . __LINE__
+            );
 
             // Add the user ids for the receivers list
-            if ( ! empty($followers)) {
+            if (!empty($followers)) {
                 foreach ($followers as $user) {
                     if (is_object($user)) {
                         $receivers[] = $user->ID;
@@ -178,7 +188,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
      * Add the respective value to the column in the workflow list
      *
      * @param array $values
-     * @param int   $post_id
+     * @param int $post_id
      *
      * @return array
      */

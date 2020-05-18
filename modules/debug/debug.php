@@ -28,13 +28,15 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Debug')) {
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
+if (!class_exists('PP_Debug')) {
     /**
      * Class PP_Debug
      */
     class PP_Debug extends PP_Module
     {
-        use \PublishPress\Notifications\Traits\Dependency_Injector;
+        use Dependency_Injector;
 
         const FILE = 'debug-publishpress.log';
 
@@ -100,11 +102,20 @@ if ( ! class_exists('PP_Debug')) {
         public function enqueue_admin_scripts()
         {
             if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) {
-                wp_enqueue_style('publishpress-debug', PUBLISHPRESS_URL . 'modules/debug/assets/css/debug.css',
-                    [], PUBLISHPRESS_VERSION, 'screen');
+                wp_enqueue_style(
+                    'publishpress-debug',
+                    PUBLISHPRESS_URL . 'modules/debug/assets/css/debug.css',
+                    [],
+                    PUBLISHPRESS_VERSION,
+                    'screen'
+                );
 
-                wp_enqueue_script('publishpress-debug', PUBLISHPRESS_URL . 'modules/debug/assets/js/debug.js',
-                    [], PUBLISHPRESS_VERSION);
+                wp_enqueue_script(
+                    'publishpress-debug',
+                    PUBLISHPRESS_URL . 'modules/debug/assets/js/debug.js',
+                    [],
+                    PUBLISHPRESS_VERSION
+                );
             }
         }
 
@@ -115,7 +126,6 @@ if ( ! class_exists('PP_Debug')) {
          */
         public function register_settings()
         {
-
         }
 
         /**
@@ -125,7 +135,6 @@ if ( ! class_exists('PP_Debug')) {
          */
         public function settings_validate($new_options)
         {
-
             // Follow whitelist validation for modules
             if (array_key_exists('post_status_widget', $new_options) && $new_options['post_status_widget'] != 'on') {
                 $new_options['post_status_widget'] = 'off';
@@ -160,12 +169,12 @@ if ( ! class_exists('PP_Debug')) {
          */
         public function write($message, $id = null, $line = 0)
         {
-            if ( ! $this->get_service('DEBUGGING')) {
+            if (!$this->get_service('DEBUGGING')) {
                 return;
             }
 
             // Make sure we have a string to write.
-            if ( ! is_string($message)) {
+            if (!is_string($message)) {
                 if (is_bool($message)) {
                     $message = $message ? 'true' : 'false';
                 } else {
@@ -174,7 +183,7 @@ if ( ! class_exists('PP_Debug')) {
             }
 
             // Prepend the id, if set.
-            if ( ! empty($id)) {
+            if (!empty($id)) {
                 if (!empty($line)) {
                     $id .= ':' . $line;
                 }
@@ -226,7 +235,9 @@ if ( ! class_exists('PP_Debug')) {
             $plugins     = get_plugins();
             $pluginsData = [];
             foreach ($plugins as $plugin => $data) {
-                $pluginsData[$plugin] = (is_plugin_active($plugin) ? 'ACTIVATED' : 'deactivated') . ' [' . $data['Version'] . ']';
+                $pluginsData[$plugin] = (is_plugin_active(
+                        $plugin
+                    ) ? 'ACTIVATED' : 'deactivated') . ' [' . $data['Version'] . ']';
             }
 
             $debug_data = [
@@ -297,26 +308,26 @@ if ( ! class_exists('PP_Debug')) {
         protected function handle_actions()
         {
             // Are we on the correct page?
-            if ( ! array_key_exists('page', $_GET) || $_GET['page'] !== self::PAGE_SLUG) {
+            if (!array_key_exists('page', $_GET) || $_GET['page'] !== self::PAGE_SLUG) {
                 return;
             }
 
             // Do we have an action?
-            if ( ! array_key_exists('action', $_GET) || empty($_GET['action'])) {
+            if (!array_key_exists('action', $_GET) || empty($_GET['action'])) {
                 return;
             }
 
             $action = preg_replace('/[^a-z0-9_\-]/i', '', $_GET['action']);
 
             // Do we have a nonce?
-            if ( ! array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
+            if (!array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
                 $this->messages[] = __('Action nonce not found.', 'publishpress');
 
                 return;
             }
 
             // Check the nonce.
-            if ( ! wp_verify_nonce($_GET['_wpnonce'], $action)) {
+            if (!wp_verify_nonce($_GET['_wpnonce'], $action)) {
                 $this->messages[] = __('Invalid action nonce.', 'publishpress');
 
                 return;

@@ -15,7 +15,7 @@ trait Metadata
      * Returns the metadata of the current post.
      *
      * @param string $meta_key
-     * @param bool   $single
+     * @param bool $single
      *
      * @return mixed
      */
@@ -29,17 +29,17 @@ trait Metadata
     /**
      * Updates the metadata for the current post using an array as input.
      *
-     * @param int    $post_id
+     * @param int $post_id
      * @param string $meta_key
-     * @param array  $meta_value
-     * @param bool   $all_if_empty
+     * @param array $meta_value
+     * @param bool $all_if_empty
      */
     public function update_metadata_array($post_id, $meta_key, $meta_value = [])
     {
         // Cleanup the metadata
         $this->delete_metadata($meta_key);
 
-        if ( ! empty($meta_value)) {
+        if (!empty($meta_value)) {
             foreach ($meta_value as $value) {
                 add_post_meta($post_id, $meta_key, $value);
             }
@@ -50,7 +50,7 @@ trait Metadata
      * Deletes the metadata for the current post. If not single, set the value.
      *
      * @param string $meta_key
-     * @param mixed  $meta_value
+     * @param mixed $meta_value
      *
      * @return mixed
      */

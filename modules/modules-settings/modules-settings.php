@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Modules_Settings')) {
+if (!class_exists('PP_Modules_Settings')) {
     /**
      * class PP_Modules_Settings
      * Threaded commenting in the admin for discussion between writers and editors
@@ -53,7 +53,7 @@ if ( ! class_exists('PP_Modules_Settings')) {
                 'icon_class'           => 'dashicons dashicons-admin-settings',
                 'slug'                 => 'modules-settings',
                 'default_options'      => [
-                    'enabled'          => 'on',
+                    'enabled' => 'on',
                 ],
                 'configure_page_cb'    => 'print_configure_view',
                 'autoload'             => false,
@@ -79,8 +79,13 @@ if ( ! class_exists('PP_Modules_Settings')) {
         {
             global $pagenow;
 
-            wp_enqueue_style('publishpress-modules-css', $this->module_url . 'lib/modules-settings.css', false,
-                PUBLISHPRESS_VERSION, 'all');
+            wp_enqueue_style(
+                'publishpress-modules-css',
+                $this->module_url . 'lib/modules-settings.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'all'
+            );
         }
 
         /**
@@ -99,7 +104,8 @@ if ( ! class_exists('PP_Modules_Settings')) {
                 $this->module->options_group_name
             );
 
-            do_action('publishpress_register_settings_before',
+            do_action(
+                'publishpress_register_settings_before',
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -108,11 +114,11 @@ if ( ! class_exists('PP_Modules_Settings')) {
         /**
          * Validate data entered by the user
          *
-         * @since 0.7
-         *
          * @param array $new_options New values that have been entered by the user
          *
          * @return array $new_options Form values after they've been sanitized
+         * @since 0.7
+         *
          */
         public function settings_validate($new_options)
         {
@@ -126,7 +132,7 @@ if ( ! class_exists('PP_Modules_Settings')) {
          */
         public function settings_save($new_options)
         {
-            if ( ! isset($_POST['publishpress_options'])) {
+            if (!isset($_POST['publishpress_options'])) {
                 return true;
             }
 
@@ -167,7 +173,7 @@ if ( ! class_exists('PP_Modules_Settings')) {
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
-                        || ! isset($mod_data->general_options)
+                        || !isset($mod_data->general_options)
                         || $mod_data->options->enabled != 'on') {
                         continue;
                     }
@@ -175,7 +181,9 @@ if ( ! class_exists('PP_Modules_Settings')) {
                     echo sprintf('<h3>%s</h3>', $mod_data->title);
                     echo sprintf('<p>%s</p>', $mod_data->short_description);
 
-                    echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($mod_data->name) . '" />';
+                    echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                            $mod_data->name
+                        ) . '" />';
 
                     $publishpress->$slug->print_configure_view();
                 } ?>
@@ -197,7 +205,9 @@ if ( ! class_exists('PP_Modules_Settings')) {
 
                                     <label for="feature-<?php echo esc_attr($mod_data->slug); ?>">
                                         <input id="feature-<?php echo esc_attr($mod_data->slug); ?>"
-                                               name="publishpress_options[features][<?php echo esc_attr($mod_data->slug); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
+                                               name="publishpress_options[features][<?php echo esc_attr(
+                                                   $mod_data->slug
+                                               ); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
                                         &nbsp;&nbsp;&nbsp;<?php echo $mod_data->title; ?>
                                     </label>
@@ -208,7 +218,9 @@ if ( ! class_exists('PP_Modules_Settings')) {
                         </tbody>
                     </table>
 
-                    <?php echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+                    <?php echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                            $this->module->name
+                        ) . '" />'; ?>
                 </div>
                 <?php
                 wp_nonce_field('edit-publishpress-settings');

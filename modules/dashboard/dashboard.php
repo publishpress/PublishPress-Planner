@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Dashboard')) {
+if (!class_exists('PP_Dashboard')) {
     /**
      * class PP_Dashboard
      * All of the code for the dashboard widgets from PublishPress
@@ -49,7 +49,6 @@ if ( ! class_exists('PP_Dashboard')) {
          */
         public function __construct()
         {
-
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = [
@@ -141,31 +140,44 @@ if ( ! class_exists('PP_Dashboard')) {
          */
         public function add_dashboard_widgets()
         {
-
             // Only show dashboard widgets for Contributor or higher
-            if ( ! current_user_can('edit_posts')) {
+            if (!current_user_can('edit_posts')) {
                 return;
             }
 
-            wp_enqueue_style('publishpress-dashboard-css', $this->module_url . 'lib/dashboard.css', false,
-                PUBLISHPRESS_VERSION, 'all');
+            wp_enqueue_style(
+                'publishpress-dashboard-css',
+                $this->module_url . 'lib/dashboard.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'all'
+            );
 
             // Set up Post Status widget but, first, check to see if it's enabled
             if ($this->module->options->post_status_widget == 'on') {
-                wp_add_dashboard_widget('post_status_widget', __('Unpublished Content', 'publishpress'),
-                    [$this, 'post_status_widget']);
+                wp_add_dashboard_widget(
+                    'post_status_widget',
+                    __('Unpublished Content', 'publishpress'),
+                    [$this, 'post_status_widget']
+                );
             }
 
             // Set up the Notepad widget if it's enabled
             if ('on' == $this->module->options->notepad_widget) {
-                wp_add_dashboard_widget('notepad_widget', __('Notepad', 'publishpress'),
-                    [$this->widgets->notepad_widget, 'notepad_widget']);
+                wp_add_dashboard_widget(
+                    'notepad_widget',
+                    __('Notepad', 'publishpress'),
+                    [$this->widgets->notepad_widget, 'notepad_widget']
+                );
             }
 
             // Add the MyPosts widget, if enabled
             if ($this->module->options->my_posts_widget == 'on' && $this->module_enabled('notifications')) {
-                wp_add_dashboard_widget('myposts_widget', __('My Content Notifications', 'publishpress'),
-                    [$this, 'myposts_widget']);
+                wp_add_dashboard_widget(
+                    'myposts_widget',
+                    __('My Content Notifications', 'publishpress'),
+                    [$this, 'myposts_widget']
+                );
             }
         }
 
@@ -184,8 +196,11 @@ if ( ! class_exists('PP_Dashboard')) {
 
             // If custom statuses are enabled, we'll output a link to edit the terms just below the post counts
             if ($this->module_enabled('custom_status')) {
-                $edit_custom_status_url = add_query_arg('page', 'pp-custom-status-settings',
-                    get_admin_url(null, 'admin.php'));
+                $edit_custom_status_url = add_query_arg(
+                    'page',
+                    'pp-custom-status-settings',
+                    get_admin_url(null, 'admin.php')
+                );
             } ?>
             <p class="sub"><?php _e('Posts at a Glance', 'publishpress') ?></p>
 
@@ -236,7 +251,7 @@ if ( ! class_exists('PP_Dashboard')) {
 
             $newList = [];
             foreach ($statuses as $status) {
-                if ( ! in_array($status->slug, ['publish', 'private'])) {
+                if (!in_array($status->slug, ['publish', 'private'])) {
                     $newList[] = $status;
                 }
             }
@@ -256,7 +271,7 @@ if ( ! class_exists('PP_Dashboard')) {
 
             $myposts = $publishpress->notifications->get_user_to_notify_posts(); ?>
             <div class="pp-myposts">
-                <?php if ( ! empty($myposts)) : ?>
+                <?php if (!empty($myposts)) : ?>
 
                     <?php foreach ($myposts as $post) : ?>
                         <?php
@@ -264,10 +279,16 @@ if ( ! class_exists('PP_Dashboard')) {
                         $title = esc_html($post->post_title); ?>
                         <li>
                             <h4><a href="<?php echo $url ?>"
-                                   title="<?php esc_attr(_e('Edit this post',
-                                       'publishpress')); ?>"><?php echo $title; ?></a></h4>
-                            <span class="pp-myposts-timestamp"><?php _e('This post was last updated on ',
-                                    'publishpress') ?><?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
+                                   title="<?php esc_attr(
+                                       _e(
+                                           'Edit this post',
+                                           'publishpress'
+                                       )
+                                   ); ?>"><?php echo $title; ?></a></h4>
+                            <span class="pp-myposts-timestamp"><?php _e(
+                                    'This post was last updated on ',
+                                    'publishpress'
+                                ) ?><?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
                         </li>
                     <?php endforeach; ?>
                 <?php else : ?>
@@ -285,17 +306,33 @@ if ( ! class_exists('PP_Dashboard')) {
          */
         public function register_settings()
         {
-            add_settings_section($this->module->options_group_name . '_general', false, '__return_false',
-                $this->module->options_group_name);
-            add_settings_field('post_status_widget', __('Post Status Widget', 'publishpress'),
-                [$this, 'settings_post_status_widget_option'], $this->module->options_group_name,
-                $this->module->options_group_name . '_general');
-            add_settings_field('my_posts_widget', __('My Content Notifications', 'publishpress'),
-                [$this, 'settings_my_posts_widget_option'], $this->module->options_group_name,
-                $this->module->options_group_name . '_general');
-            add_settings_field('notepad_widget', __('Notepad', 'publishpress'),
-                [$this, 'settings_notepad_widget_option'], $this->module->options_group_name,
-                $this->module->options_group_name . '_general');
+            add_settings_section(
+                $this->module->options_group_name . '_general',
+                false,
+                '__return_false',
+                $this->module->options_group_name
+            );
+            add_settings_field(
+                'post_status_widget',
+                __('Post Status Widget', 'publishpress'),
+                [$this, 'settings_post_status_widget_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+            add_settings_field(
+                'my_posts_widget',
+                __('My Content Notifications', 'publishpress'),
+                [$this, 'settings_my_posts_widget_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+            add_settings_field(
+                'notepad_widget',
+                __('Notepad', 'publishpress'),
+                [$this, 'settings_notepad_widget_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -309,7 +346,9 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="post_status_widget" name="' . esc_attr($this->module->options_group_name) . '[post_status_widget]">';
+            echo '<select id="post_status_widget" name="' . esc_attr(
+                    $this->module->options_group_name
+                ) . '[post_status_widget]">';
             foreach ($options as $value => $label) {
                 echo '<option value="' . esc_attr($value) . '"';
                 echo selected($this->module->options->post_status_widget, $value);
@@ -330,9 +369,11 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="my_posts_widget" name="' . esc_attr($this->module->options_group_name) . '[my_posts_widget]"';
+            echo '<select id="my_posts_widget" name="' . esc_attr(
+                    $this->module->options_group_name
+                ) . '[my_posts_widget]"';
             // Notifications module has to be enabled for the My Posts widget to work
-            if ( ! $this->module_enabled('notifications')) {
+            if (!$this->module_enabled('notifications')) {
                 echo ' disabled="disabled"';
                 $this->module->options->my_posts_widget = 'off';
             }
@@ -343,9 +384,11 @@ if ( ! class_exists('PP_Dashboard')) {
                 echo '>' . esc_html($label) . '</option>';
             }
             echo '</select>';
-            if ( ! $this->module_enabled('notifications')) {
-                echo '&nbsp;&nbsp;&nbsp;<span class="description">' . __('The notifications module will need to be enabled for this widget to display.',
-                        'publishpress');
+            if (!$this->module_enabled('notifications')) {
+                echo '&nbsp;&nbsp;&nbsp;<span class="description">' . __(
+                        'The notifications module will need to be enabled for this widget to display.',
+                        'publishpress'
+                    );
             }
         }
 
@@ -360,7 +403,9 @@ if ( ! class_exists('PP_Dashboard')) {
                 'off' => __('Disabled', 'publishpress'),
                 'on'  => __('Enabled', 'publishpress'),
             ];
-            echo '<select id="notepad_widget" name="' . esc_attr($this->module->options_group_name) . '[notepad_widget]">';
+            echo '<select id="notepad_widget" name="' . esc_attr(
+                    $this->module->options_group_name
+                ) . '[notepad_widget]">';
             foreach ($options as $value => $label) {
                 echo '<option value="' . esc_attr($value) . '"';
                 echo selected($this->module->options->notepad_widget, $value);
@@ -376,7 +421,6 @@ if ( ! class_exists('PP_Dashboard')) {
          */
         public function settings_validate($new_options)
         {
-
             // Follow whitelist validation for modules
             if (array_key_exists('post_status_widget', $new_options) && $new_options['post_status_widget'] != 'on') {
                 $new_options['post_status_widget'] = 'off';

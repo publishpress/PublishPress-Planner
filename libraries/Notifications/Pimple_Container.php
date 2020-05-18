@@ -10,10 +10,15 @@
 namespace PublishPress\Notifications;
 
 use Allex\Core;
-use PublishPress\AsyncNotifications\WPCron;
+use Pimple\Container;
+use PP_Debug;
 use PublishPress\AsyncNotifications\QueueInterface;
+use PublishPress\AsyncNotifications\WPCron;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+use Twig_SimpleFunction;
 
-class Pimple_Container extends \Pimple\Container
+class Pimple_Container extends Container
 {
     /**
      * Instance of the Pimple container
@@ -36,31 +41,37 @@ class Pimple_Container extends \Pimple\Container
             };
 
             $instance['twig_function_checked'] = function ($c) {
-                return new \Twig_SimpleFunction('checked', function ($checked, $current = true, $echo = true) {
+                return new Twig_SimpleFunction(
+                    'checked', function ($checked, $current = true, $echo = true) {
                     return checked($checked, $current, $echo);
-                });
+                }
+                );
             };
 
             $instance['twig_function_selected'] = function ($c) {
-                return new \Twig_SimpleFunction('selected', function ($selected, $current = true, $echo = true) {
+                return new Twig_SimpleFunction(
+                    'selected', function ($selected, $current = true, $echo = true) {
                     return selected($selected, $current, $echo);
-                });
+                }
+                );
             };
 
             $instance['twig_function_editor'] = function ($c) {
-                return new \Twig_SimpleFunction('editor', function ($content, $editor_id, $attrs = []) {
+                return new Twig_SimpleFunction(
+                    'editor', function ($content, $editor_id, $attrs = []) {
                     wp_editor($content, $editor_id, $attrs);
 
                     return '';
-                });
+                }
+                );
             };
 
             $instance['twig_loader_filesystem'] = function ($c) {
-                return new \Twig_Loader_Filesystem(PUBLISHPRESS_NOTIF_TWIG_PATH);
+                return new Twig_Loader_Filesystem(PUBLISHPRESS_NOTIF_TWIG_PATH);
             };
 
             $instance['twig'] = function ($c) {
-                $twig = new \Twig_Environment(
+                $twig = new Twig_Environment(
                     $c['twig_loader_filesystem'],
                     // array('debug' => true)
                     []
@@ -124,11 +135,11 @@ class Pimple_Container extends \Pimple\Container
              * @return bool
              */
             $instance['DEBUGGING'] = function ($c) {
-                if ( ! isset($c['publishpress']->modules->debug)) {
+                if (!isset($c['publishpress']->modules->debug)) {
                     return false;
                 }
 
-                if ( ! isset($c['publishpress']->modules->debug->options)) {
+                if (!isset($c['publishpress']->modules->debug->options)) {
                     return false;
                 }
 
@@ -138,7 +149,7 @@ class Pimple_Container extends \Pimple\Container
             /**
              * @param $c
              *
-             * @return \PP_Debug
+             * @return PP_Debug
              */
             $instance['debug'] = function ($c) {
                 return $c['publishpress']->debug;

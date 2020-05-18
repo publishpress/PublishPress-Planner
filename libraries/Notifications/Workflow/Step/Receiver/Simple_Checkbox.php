@@ -47,9 +47,9 @@ class Simple_Checkbox extends Base implements Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list of IDs.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */
@@ -61,13 +61,13 @@ class Simple_Checkbox extends Base implements Receiver_Interface
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
-        if ( ! isset($_POST['publishpress_notif'])
-             || ! isset($_POST['publishpress_notif'][$this->option_name])) {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif'][$this->option_name])) {
             // Assume it is disabled
             $this->set_selection($id, false);
         }
@@ -82,7 +82,7 @@ class Simple_Checkbox extends Base implements Receiver_Interface
     /**
      * Update the meta data to set the selection for the give workflow
      *
-     * @param int  $post_id
+     * @param int $post_id
      * @param bool $selected
      */
     protected function set_selection($post_id, $selected)

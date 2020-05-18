@@ -9,6 +9,8 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
+use Exception;
+use WP_Error;
 use WP_Post;
 
 class Email extends Base implements Channel_Interface
@@ -20,7 +22,7 @@ class Email extends Base implements Channel_Interface
     /**
      * The constructor
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -38,12 +40,12 @@ class Email extends Base implements Channel_Interface
      * Check if this channel is selected and triggers the notification.
      *
      * @param WP_Post $workflow_post
-     * @param array   $action_args
-     * @param array   $receivers
-     * @param array   $content
-     * @param string  $channel
+     * @param array $action_args
+     * @param array $receivers
+     * @param array $content
+     * @param string $channel
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
     {
@@ -98,14 +100,21 @@ class Email extends Base implements Channel_Interface
 
             /**
              * @param WP_Post $workflow_post
-             * @param array   $action_args
-             * @param string  $channel
-             * @param string  $subject
-             * @param string  $body
-             * @param array   $deliveryResult
+             * @param array $action_args
+             * @param string $channel
+             * @param string $subject
+             * @param string $body
+             * @param array $deliveryResult
              */
-            do_action('publishpress_notif_notification_sending', $workflow_post, $action_args, $channel, $subject, $body,
-                $deliveryResult);
+            do_action(
+                'publishpress_notif_notification_sending',
+                $workflow_post,
+                $action_args,
+                $channel,
+                $subject,
+                $body,
+                $deliveryResult
+            );
         }
 
         $controller->register_notification_signature($signature);
@@ -122,8 +131,8 @@ class Email extends Base implements Channel_Interface
     {
         $emails = [];
 
-        if ( ! empty($receivers)) {
-            if ( ! is_array($receivers)) {
+        if (!empty($receivers)) {
+            if (!is_array($receivers)) {
                 $receivers = [$receivers];
             }
 
@@ -150,9 +159,9 @@ class Email extends Base implements Channel_Interface
      * Filter the receivers organizing it by channel. Each channel get the list of receivers
      * and return
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow_post
-     * @param array   $action_args
+     * @param array $action_args
      *
      * @return array
      */
@@ -162,19 +171,7 @@ class Email extends Base implements Channel_Interface
     }
 
     /**
-     * @param $receiver
-     * @param $subject
-     * @param $body
-     *
-     * @return string
-     */
-    private function getEmailErrorHash($receiver, $subject, $body)
-    {
-        return md5(sprintf('%s:%s:%s', $receiver, $subject, $body));
-    }
-
-    /**
-     * @param \WP_Error $error
+     * @param WP_Error $error
      */
     public function emailFailed($error)
     {
@@ -196,6 +193,18 @@ class Email extends Base implements Channel_Interface
                 $this->emailFailures[$hash] = $error->get_error_message();
             }
         }
+    }
+
+    /**
+     * @param $receiver
+     * @param $subject
+     * @param $body
+     *
+     * @return string
+     */
+    private function getEmailErrorHash($receiver, $subject, $body)
+    {
+        return md5(sprintf('%s:%s:%s', $receiver, $subject, $body));
     }
 
     /**

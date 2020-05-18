@@ -156,7 +156,7 @@ class PP_Content_Overview extends PP_Module
         $this->setDefaultCapabilities();
 
         $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
-        if ( ! current_user_can($view_content_overview_cap)) {
+        if (!current_user_can($view_content_overview_cap)) {
             return;
         }
 
@@ -187,6 +187,18 @@ class PP_Content_Overview extends PP_Module
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
     }
 
+    public function setDefaultCapabilities()
+    {
+        $role = get_role('administrator');
+
+        $view_content_overview_cap = 'pp_view_content_overview';
+        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', $view_content_overview_cap);
+
+        if (!$role->has_cap($view_content_overview_cap)) {
+            $role->add_cap($view_content_overview_cap);
+        }
+    }
+
     /**
      * Get the number of columns to show on the content overview
      */
@@ -194,8 +206,11 @@ class PP_Content_Overview extends PP_Module
     {
         if (empty($this->num_columns)) {
             $current_user      = wp_get_current_user();
-            $this->num_columns = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'screen_columns',
-                true);
+            $this->num_columns = $this->get_user_meta(
+                $current_user->ID,
+                self::USERMETA_KEY_PREFIX . 'screen_columns',
+                true
+            );
             // If usermeta didn't have a value already, use a default value and insert into DB
             if (empty($this->num_columns)) {
                 $this->num_columns = self::DEFAULT_NUM_COLUMNS;
@@ -243,12 +258,20 @@ class PP_Content_Overview extends PP_Module
      */
     public function register_settings()
     {
-        add_settings_section($this->module->options_group_name . '_general', false, '__return_false',
-            $this->module->options_group_name);
+        add_settings_section(
+            $this->module->options_group_name . '_general',
+            false,
+            '__return_false',
+            $this->module->options_group_name
+        );
 
-        add_settings_field('post_types', __('Add to these post types:', 'publishpress'),
-            [$this, 'settings_post_types_option'], $this->module->options_group_name,
-            $this->module->options_group_name . '_general');
+        add_settings_field(
+            'post_types',
+            __('Add to these post types:', 'publishpress'),
+            [$this, 'settings_post_types_option'],
+            $this->module->options_group_name,
+            $this->module->options_group_name . '_general'
+        );
     }
 
     /**
@@ -259,8 +282,10 @@ class PP_Content_Overview extends PP_Module
     public function settings_post_types_option()
     {
         global $publishpress;
-        $publishpress->settings->helper_option_custom_post_type($this->module,
-            ['post' => __('Post'), 'page' => __('Pages')]);
+        $publishpress->settings->helper_option_custom_post_type(
+            $this->module,
+            ['post' => __('Post'), 'page' => __('Pages')]
+        );
     }
 
     /**
@@ -275,11 +300,13 @@ class PP_Content_Overview extends PP_Module
     public function settings_validate($new_options)
     {
         // Whitelist validation for the post type options
-        if ( ! isset($new_options['post_types'])) {
+        if (!isset($new_options['post_types'])) {
             $new_options['post_types'] = [];
         }
-        $new_options['post_types'] = $this->clean_post_type_options($new_options['post_types'],
-            $this->module->post_type_support);
+        $new_options['post_types'] = $this->clean_post_type_options(
+            $new_options['post_types'],
+            $this->module->post_type_support
+        );
 
         return $new_options;
     }
@@ -395,11 +422,18 @@ class PP_Content_Overview extends PP_Module
         // Only load calendar styles on the calendar page
         if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
             $num_columns = $this->get_num_columns();
-            echo '<script type="text/javascript"> var PP_Content_Overview_number_of_columns="' . esc_js($this->num_columns) . '";</script>';
+            echo '<script type="text/javascript"> var PP_Content_Overview_number_of_columns="' . esc_js(
+                    $this->num_columns
+                ) . '";</script>';
 
             $this->enqueue_datepicker_resources();
-            wp_enqueue_script('publishpress-content_overview', $this->module_url . 'lib/content-overview.js',
-                ['publishpress-date_picker'], PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script(
+                'publishpress-content_overview',
+                $this->module_url . 'lib/content-overview.js',
+                ['publishpress-date_picker'],
+                PUBLISHPRESS_VERSION,
+                true
+            );
         }
     }
 
@@ -412,12 +446,27 @@ class PP_Content_Overview extends PP_Module
 
         // Only load calendar styles on the calendar page
         if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
-            wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false,
-                PUBLISHPRESS_VERSION, 'screen');
-            wp_enqueue_style('publishpress-content_overview-styles', $this->module_url . 'lib/content-overview.css',
-                false, PUBLISHPRESS_VERSION, 'screen');
-            wp_enqueue_style('publishpress-content_overview-print-styles',
-                $this->module_url . 'lib/content-overview-print.css', false, PUBLISHPRESS_VERSION, 'print');
+            wp_enqueue_style(
+                'pp-admin-css',
+                PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'screen'
+            );
+            wp_enqueue_style(
+                'publishpress-content_overview-styles',
+                $this->module_url . 'lib/content-overview.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'screen'
+            );
+            wp_enqueue_style(
+                'publishpress-content_overview-print-styles',
+                $this->module_url . 'lib/content-overview-print.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'print'
+            );
         }
     }
 
@@ -440,25 +489,27 @@ class PP_Content_Overview extends PP_Module
         $term_columns = apply_filters('PP_Content_Overview_term_columns', $term_columns);
 
         if (class_exists('PP_Editorial_Metadata')) {
-            $additional_terms = get_terms([
-                'taxonomy'   => PP_Editorial_Metadata::metadata_taxonomy,
-                'orderby'    => 'name',
-                'order'      => 'asc',
-                'hide_empty' => 0,
-                'parent'     => 0,
-                'fields'     => 'all',
-            ]);
+            $additional_terms = get_terms(
+                [
+                    'taxonomy'   => PP_Editorial_Metadata::metadata_taxonomy,
+                    'orderby'    => 'name',
+                    'order'      => 'asc',
+                    'hide_empty' => 0,
+                    'parent'     => 0,
+                    'fields'     => 'all',
+                ]
+            );
 
             $additional_terms =
                 apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
             foreach ($additional_terms as $term) {
-                if ( ! is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                if (!is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
                     continue;
                 }
 
                 $term_options = $this->get_unencoded_description($term->description);
 
-                if ( ! isset($term_options['viewable']) ||
+                if (!isset($term_options['viewable']) ||
                     (bool)$term_options['viewable'] === false ||
                     isset($term_columns[$term->slug])) {
                     continue;
@@ -481,26 +532,29 @@ class PP_Content_Overview extends PP_Module
     public function handle_form_date_range_change()
     {
         if (
-            ! isset(
+            !isset(
                 $_POST['pp-content-overview-number-days'],
                 $_POST['pp-content-overview-start-date_hidden'],
                 $_POST['pp-content-overview-range-use-today']
             )
             || (
-                ! isset($_POST['pp-content-overview-range-submit'])
+                !isset($_POST['pp-content-overview-range-submit'])
                 && $_POST['pp-content-overview-range-use-today'] == '0'
             )
         ) {
             return;
         }
 
-        if ( ! wp_verify_nonce($_POST['nonce'], 'change-date')) {
+        if (!wp_verify_nonce($_POST['nonce'], 'change-date')) {
             wp_die($this->module->messages['nonce-failed']);
         }
 
         $current_user = wp_get_current_user();
-        $user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters',
-            true);
+        $user_filters = $this->get_user_meta(
+            $current_user->ID,
+            self::USERMETA_KEY_PREFIX . 'filters',
+            true
+        );
 
         $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
 
@@ -529,8 +583,13 @@ class PP_Content_Overview extends PP_Module
         $return_val = __('Number of Columns: ', 'publishpress');
 
         for ($i = 1; $i <= $this->max_num_columns; ++$i) {
-            $return_val .= "<label><input type='radio' name='" . esc_attr(self::USERMETA_KEY_PREFIX) . "screen_columns' value='" . esc_attr($i) . "' " . checked($this->get_num_columns(),
-                    $i, false) . " />&nbsp;" . esc_attr($i) . "</label>\n";
+            $return_val .= "<label><input type='radio' name='" . esc_attr(
+                    self::USERMETA_KEY_PREFIX
+                ) . "screen_columns' value='" . esc_attr($i) . "' " . checked(
+                    $this->get_num_columns(),
+                    $i,
+                    false
+                ) . " />&nbsp;" . esc_attr($i) . "</label>\n";
         }
 
         return $return_val;
@@ -548,7 +607,7 @@ class PP_Content_Overview extends PP_Module
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
 
-        if ( ! empty($this->user_filters['cat'])) {
+        if (!empty($this->user_filters['cat'])) {
             $terms   = [];
             $terms[] = get_term($this->user_filters['cat'], $this->taxonomy_used);
         } else {
@@ -565,22 +624,27 @@ class PP_Content_Overview extends PP_Module
         if (class_exists('PP_Editorial_Metadata')) {
             $this->terms = array_filter(
             // allow for reordering or any other filtering of terms
-                apply_filters('PP_Content_Overview_filter_terms', $terms), function ($term) {
-                if ($term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
-                    return true;
+                apply_filters('PP_Content_Overview_filter_terms', $terms),
+                function ($term) {
+                    if ($term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                        return true;
+                    }
+
+                    $term_options = $this->get_unencoded_description($term->description);
+
+                    return isset($term_options['viewable']) && (bool)$term_options['viewable'];
                 }
-
-                $term_options = $this->get_unencoded_description($term->description);
-
-                return isset($term_options['viewable']) && (bool)$term_options['viewable'];
-            });
+            );
         } else {
             // allow for reordering or any other filtering of terms
             $this->terms = apply_filters('PP_Content_Overview_filter_terms', $terms);
         }
 
-        $description = sprintf('%s <span class="time-range">%s</span>', esc_html__('Content Overview', 'publishpress'),
-            $this->content_overview_time_range());
+        $description = sprintf(
+            '%s <span class="time-range">%s</span>',
+            esc_html__('Content Overview', 'publishpress'),
+            $this->content_overview_time_range()
+        );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
         <div class="wrap" id="pp-content-overview-wrap">
             <?php $this->print_messages(); ?>
@@ -648,16 +712,16 @@ class PP_Content_Overview extends PP_Module
 
         // If any of the $_GET vars are missing, then use the current user filter
         foreach ($user_filters as $key => $value) {
-            if (is_null($value) && ! empty($current_user_filters[$key])) {
+            if (is_null($value) && !empty($current_user_filters[$key])) {
                 $user_filters[$key] = $current_user_filters[$key];
             }
         }
 
-        if ( ! $user_filters['start_date']) {
+        if (!$user_filters['start_date']) {
             $user_filters['start_date'] = date('Y-m-d');
         }
 
-        if ( ! $user_filters['number_days']) {
+        if (!$user_filters['number_days']) {
             $user_filters['number_days'] = 10;
         }
 
@@ -678,7 +742,7 @@ class PP_Content_Overview extends PP_Module
     public function filter_get_param($param)
     {
         // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if ( ! isset($_GET[$param])) {
+        if (!isset($_GET[$param])) {
             return null;
         } elseif (empty($_GET[$param])) {
             return '';
@@ -702,7 +766,9 @@ class PP_Content_Overview extends PP_Module
         $date_format = get_option('date_format');
 
         $start_date_value = '<input type="text" id="pp-content-overview-start-date" name="pp-content-overview-start-date"'
-            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker('Y-m-d') . '" value="'
+            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-start-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker(
+                'Y-m-d'
+            ) . '" value="'
             . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
         $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
         $start_date_value .= '<span class="form-value">';
@@ -712,13 +778,21 @@ class PP_Content_Overview extends PP_Module
 
         $number_days_value = '<input type="text" id="pp-content-overview-number-days" name="pp-content-overview-number-days"'
             . ' size="3" maxlength="3" value="'
-            . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html($this->user_filters['number_days'])
+            . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html(
+                $this->user_filters['number_days']
+            )
             . '</span>';
 
-        $output .= sprintf(_x('starting %1$s showing %2$s %3$s',
-            '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'', 'publishpress'),
-            $start_date_value, $number_days_value,
-            _n('day', 'days', $this->user_filters['number_days'], 'publishpress'));
+        $output .= sprintf(
+            _x(
+                'starting %1$s showing %2$s %3$s',
+                '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'',
+                'publishpress'
+            ),
+            $start_date_value,
+            $number_days_value,
+            _n('day', 'days', $this->user_filters['number_days'], 'publishpress')
+        );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
         $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
@@ -746,18 +820,29 @@ class PP_Content_Overview extends PP_Module
             // Following mostly stolen from edit.php
 
             if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                printf(_n('Item moved to the trash.', '%d items moved to the trash.', (int)$_GET['trashed']),
-                    number_format_i18n($_GET['trashed']));
+                printf(
+                    _n('Item moved to the trash.', '%d items moved to the trash.', (int)$_GET['trashed']),
+                    number_format_i18n($_GET['trashed'])
+                );
                 $ids = isset($_GET['ids']) ? $_GET['ids'] : 0;
-                echo ' <a href="' . esc_url(wp_nonce_url("edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
-                        "bulk-posts")) . '">' . __('Undo', 'publishpress') . '</a><br />';
+                echo ' <a href="' . esc_url(
+                        wp_nonce_url(
+                            "edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
+                            "bulk-posts"
+                        )
+                    ) . '">' . __('Undo', 'publishpress') . '</a><br />';
                 unset($_GET['trashed']);
             }
 
             if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                printf(_n('Item restored from the Trash.', '%d items restored from the Trash.',
-                    (int)$_GET['untrashed']),
-                    number_format_i18n($_GET['untrashed']));
+                printf(
+                    _n(
+                        'Item restored from the Trash.',
+                        '%d items restored from the Trash.',
+                        (int)$_GET['untrashed']
+                    ),
+                    number_format_i18n($_GET['untrashed'])
+                );
                 unset($_GET['undeleted']);
             }
 
@@ -831,8 +916,10 @@ class PP_Content_Overview extends PP_Module
                     <option value=""><?php _e('View all statuses', 'publishpress'); ?></option>
                     <?php
                     foreach ($post_statuses as $post_status) {
-                        echo "<option value='" . esc_attr($post_status->slug) . "' " . selected($post_status->slug,
-                                $filters['post_status']) . ">" . esc_html($post_status->name) . "</option>";
+                        echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
+                                $post_status->slug,
+                                $filters['post_status']
+                            ) . ">" . esc_html($post_status->name) . "</option>";
                     }
                     ?>
                 </select>
@@ -880,11 +967,11 @@ class PP_Content_Overview extends PP_Module
 
         $posts = $this->get_posts_for_term($term, $postType, $this->user_filters);
 
-        if ( ! empty($posts)) {
+        if (!empty($posts)) {
             // Don't display the message for $no_matching_posts
             $this->no_matching_posts = false;
         } ?>
-        <div class="postbox<?php echo ( ! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
+        <div class="postbox<?php echo (!empty($posts)) ? ' postbox-has-posts' : ''; ?>">
             <div class="handlediv" title="<?php esc_attr(_e('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
             <?php if ($postType === 'post') : ?>
@@ -893,13 +980,15 @@ class PP_Content_Overview extends PP_Module
                 <h3 class=\'hndle\'><span><?php echo __('Pages'); ?></span></h3>
             <?php endif; ?>
             <div class="inside">
-                <?php if ( ! empty($posts)) : ?>
+                <?php if (!empty($posts)) : ?>
                     <table class="widefat post fixed content-overview" cellspacing="0">
                         <thead>
                         <tr>
                             <?php foreach ((array)$this->term_columns as $key => $name): ?>
                                 <th scope="col" id="<?php echo esc_attr(sanitize_key($key)); ?>"
-                                    class="manage-column column-<?php echo esc_attr(sanitize_key($key)); ?>"><?php echo esc_html($name); ?>
+                                    class="manage-column column-<?php echo esc_attr(
+                                        sanitize_key($key)
+                                    ); ?>"><?php echo esc_html($name); ?>
                                 </th>
                             <?php endforeach; ?>
                         </tr>
@@ -914,8 +1003,10 @@ class PP_Content_Overview extends PP_Module
                     </table>
                 <?php else: ?>
                     <div class="message info">
-                        <p><?php _e('There are no posts for this term in the range or filter specified.',
-                                'publishpress'); ?></p>
+                        <p><?php _e(
+                                'There are no posts for this term in the range or filter specified.',
+                                'publishpress'
+                            ); ?></p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -928,7 +1019,7 @@ class PP_Content_Overview extends PP_Module
      *
      * @param object $term The term we're getting posts for
      * @param string $postType
-     * @param array  $args
+     * @param array $args
      *
      * @return array $term_posts An array of post objects for the term
      */
@@ -1004,7 +1095,7 @@ class PP_Content_Overview extends PP_Module
     /**
      * Prints a single post within a term in the content overview.
      *
-     * @param object $post        The post to print.
+     * @param object $post The post to print.
      * @param object $parent_term The top-level term to which this post belongs.
      */
     public function print_post($post, $parent_term)
@@ -1030,7 +1121,7 @@ class PP_Content_Overview extends PP_Module
      * Default callback for producing the HTML for a term column's single post value
      * Includes a filter other modules can hook into
      *
-     * @param object $post        The post we're displaying
+     * @param object $post The post we're displaying
      * @param string $column_name Name of the column, as registered with register_term_columns
      * @param object $parent_term The parent term for the term column
      *
@@ -1043,7 +1134,7 @@ class PP_Content_Overview extends PP_Module
         // Hook for other modules to get data into columns
         $column_value = null;
         $column_value = apply_filters('PP_Content_Overview_term_column_value', $column_name, $post, $parent_term);
-        if ( ! is_null($column_value) && $column_value != $column_name) {
+        if (!is_null($column_value) && $column_value != $column_name) {
             return $column_value;
         }
 
@@ -1116,8 +1207,11 @@ class PP_Content_Overview extends PP_Module
         $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date']));
         $end_day        = $this->user_filters['number_days'];
         $ending_date    = date("Y-m-d", strtotime("+" . $end_day . " days", strtotime($beginning_date)));
-        $where          = $where . $wpdb->prepare(" AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
-                $beginning_date, $ending_date);
+        $where          = $where . $wpdb->prepare(
+                " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
+                $beginning_date,
+                $ending_date
+            );
 
         return $where;
     }
@@ -1134,7 +1228,9 @@ class PP_Content_Overview extends PP_Module
         $post_type_object = get_post_type_object($post->post_type);
         $can_edit_post    = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
-            $output = '<strong><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html($post_title) . '</a></strong>';
+            $output = '<strong><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
+                    $post_title
+                ) . '</a></strong>';
         } else {
             $output = '<strong>' . esc_html($post_title) . '</strong>';
         }
@@ -1144,26 +1240,53 @@ class PP_Content_Overview extends PP_Module
         $item_actions = [];
 
         if ($can_edit_post) {
-            $item_actions['edit'] = '<a title="' . esc_attr(__('Edit this post',
-                    'publishpress')) . '" href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html__('Edit',
-                    'publishpress') . '</a>';
+            $item_actions['edit'] = '<a title="' . esc_attr(
+                    __(
+                        'Edit this post',
+                        'publishpress'
+                    )
+                ) . '" href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html__(
+                    'Edit',
+                    'publishpress'
+                ) . '</a>';
         }
 
         if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $post->ID)) {
-            $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(__('Move this item to the Trash',
-                    'publishpress')) . '" href="' . esc_url(get_delete_post_link($post->ID)) . '">' . esc_html__('Trash',
-                    'publishpress') . '</a>';
+            $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
+                    __(
+                        'Move this item to the Trash',
+                        'publishpress'
+                    )
+                ) . '" href="' . esc_url(get_delete_post_link($post->ID)) . '">' . esc_html__(
+                    'Trash',
+                    'publishpress'
+                ) . '</a>';
         }
 
         // Display a View or a Preview link depending on whether the post has been published or not
         if (in_array($post->post_status, ['publish'])) {
-            $item_actions['view'] = '<a href="' . esc_url(get_permalink($post->ID)) . '" title="' . esc_attr(sprintf(__('View &#8220;%s&#8221;',
-                    'publishpress'), $post_title)) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
+            $item_actions['view'] = '<a href="' . esc_url(get_permalink($post->ID)) . '" title="' . esc_attr(
+                    sprintf(
+                        __(
+                            'View &#8220;%s&#8221;',
+                            'publishpress'
+                        ),
+                        $post_title
+                    )
+                ) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
         } elseif ($can_edit_post) {
-            $item_actions['previewpost'] = '<a href="' . esc_url(apply_filters('preview_post_link',
-                    add_query_arg('preview', 'true', get_permalink($post->ID)),
-                    $post)) . '" title="' . esc_attr(sprintf(__('Preview &#8220;%s&#8221;', 'publishpress'),
-                    $post_title)) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
+            $item_actions['previewpost'] = '<a href="' . esc_url(
+                    apply_filters(
+                        'preview_post_link',
+                        add_query_arg('preview', 'true', get_permalink($post->ID)),
+                        $post
+                    )
+                ) . '" title="' . esc_attr(
+                    sprintf(
+                        __('Preview &#8220;%s&#8221;', 'publishpress'),
+                        $post_title
+                    )
+                ) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
         }
 
         $item_actions = apply_filters('PP_Content_Overview_item_actions', $item_actions, $post->ID);
@@ -1198,17 +1321,5 @@ class PP_Content_Overview extends PP_Module
         }
 
         return $user_filters;
-    }
-
-    public function setDefaultCapabilities()
-    {
-        $role = get_role('administrator');
-
-        $view_content_overview_cap = 'pp_view_content_overview';
-        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', $view_content_overview_cap);
-
-        if (!$role->has_cap($view_content_overview_cap)) {
-            $role->add_cap($view_content_overview_cap);
-        }
     }
 }

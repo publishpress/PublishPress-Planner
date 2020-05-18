@@ -129,19 +129,19 @@ class Base
      * The child class should call this constructor from its own constructor to override
      * the default $args.
      *
-     * @param array|string $args     {
+     * @param array|string $args {
      *                               Array or string of arguments.
      *
-     * @type string        $plural   Plural value used for labels and the objects being listed.
+     * @type string $plural Plural value used for labels and the objects being listed.
      *                            This affects things such as CSS class-names and nonces used
      *                            in the list table, e.g. 'posts'. Default empty.
-     * @type string        $singular Singular label for an object being listed, e.g. 'post'.
+     * @type string $singular Singular label for an object being listed, e.g. 'post'.
      *                            Default empty
-     * @type bool          $ajax     Whether the list table supports Ajax. This includes loading
+     * @type bool $ajax Whether the list table supports Ajax. This includes loading
      *                            and sorting data, for example. If true, the class will call
      *                            the _js_vars() method in the footer to provide variables
      *                            to any scripts handling Ajax events. Default false.
-     * @type string        $screen   String containing the hook name used to determine the current
+     * @type string $screen String containing the hook name used to determine the current
      *                            screen. If left null, the current screen will be automatically set.
      *                            Default null.
      * }
@@ -151,18 +151,21 @@ class Base
      */
     public function __construct($args = [])
     {
-        $args = wp_parse_args($args, [
-            'plural'   => '',
-            'singular' => '',
-            'ajax'     => false,
-            'screen'   => null,
-        ]);
+        $args = wp_parse_args(
+            $args,
+            [
+                'plural'   => '',
+                'singular' => '',
+                'ajax'     => false,
+                'screen'   => null,
+            ]
+        );
 
         $this->screen = convert_to_screen($args['screen']);
 
         add_filter("manage_{$this->screen->id}_columns", [$this, 'get_columns'], 0);
 
-        if ( ! $args['plural']) {
+        if (!$args['plural']) {
             $args['plural'] = $this->screen->base;
         }
 
@@ -204,8 +207,8 @@ class Base
     /**
      * Make private properties settable for backward compatibility.
      *
-     * @param string $name  Property to check if set.
-     * @param mixed  $value Property value.
+     * @param string $name Property to check if set.
+     * @param mixed $value Property value.
      *
      * @return mixed Newly-set property.
      * @since  4.0.0
@@ -255,8 +258,8 @@ class Base
     /**
      * Make private/protected methods readable for backward compatibility.
      *
-     * @param callable $name      Method to call.
-     * @param array    $arguments Arguments to pass when calling.
+     * @param callable $name Method to call.
+     * @param array $arguments Arguments to pass when calling.
      *
      * @return mixed|bool Return value of the callback, false otherwise.
      * @since  4.0.0
@@ -328,7 +331,7 @@ class Base
     /**
      * Displays the search box.
      *
-     * @param string $text     The 'submit' button label.
+     * @param string $text The 'submit' button label.
      * @param string $input_id ID attribute value for the search input field.
      *
      * @since  3.1.0
@@ -337,22 +340,22 @@ class Base
      */
     public function search_box($text, $input_id)
     {
-        if (empty($_REQUEST['s']) && ! $this->has_items()) {
+        if (empty($_REQUEST['s']) && !$this->has_items()) {
             return;
         }
 
         $input_id = $input_id . '-search-input';
 
-        if ( ! empty($_REQUEST['orderby'])) {
+        if (!empty($_REQUEST['orderby'])) {
             echo '<input type="hidden" name="orderby" value="' . esc_attr($_REQUEST['orderby']) . '" />';
         }
-        if ( ! empty($_REQUEST['order'])) {
+        if (!empty($_REQUEST['order'])) {
             echo '<input type="hidden" name="order" value="' . esc_attr($_REQUEST['order']) . '" />';
         }
-        if ( ! empty($_REQUEST['post_mime_type'])) {
+        if (!empty($_REQUEST['post_mime_type'])) {
             echo '<input type="hidden" name="post_mime_type" value="' . esc_attr($_REQUEST['post_mime_type']) . '" />';
         }
-        if ( ! empty($_REQUEST['detached'])) {
+        if (!empty($_REQUEST['detached'])) {
             echo '<input type="hidden" name="detached" value="' . esc_attr($_REQUEST['detached']) . '" />';
         } ?>
         <p class="search-box">
@@ -374,7 +377,7 @@ class Base
      */
     public function has_items()
     {
-        return ! empty($this->items);
+        return !empty($this->items);
     }
 
     /**
@@ -437,7 +440,7 @@ class Base
      */
     public function current_action()
     {
-        if (isset($_REQUEST['filter_action']) && ! empty($_REQUEST['filter_action'])) {
+        if (isset($_REQUEST['filter_action']) && !empty($_REQUEST['filter_action'])) {
             return false;
         }
 
@@ -480,7 +483,7 @@ class Base
 
         // If the primary column doesn't exist fall back to the
         // first non-checkbox column.
-        if ( ! isset($columns[$default])) {
+        if (!isset($columns[$default])) {
             $default = self::get_default_primary_column_name();
         }
 
@@ -495,7 +498,7 @@ class Base
          */
         $column = apply_filters('list_table_primary_column', $default, $this->screen->id);
 
-        if (empty($column) || ! isset($columns[$column])) {
+        if (empty($column) || !isset($columns[$column])) {
             $column = $default;
         }
 
@@ -652,14 +655,18 @@ class Base
             return;
         }
 
-        echo '<label for="bulk-action-selector-' . esc_attr($which) . '" class="screen-reader-text">' . __('Select bulk action') . '</label>';
+        echo '<label for="bulk-action-selector-' . esc_attr($which) . '" class="screen-reader-text">' . __(
+                'Select bulk action'
+            ) . '</label>';
         echo '<select name="action' . $two . '" id="bulk-action-selector-' . esc_attr($which) . "\">\n";
         echo '<option value="-1">' . __('Bulk Actions') . "</option>\n";
 
         foreach ($this->_actions as $name => $title) {
             $class = 'edit' === $name ? ' class="hide-if-no-js"' : '';
 
-            echo "\t" . '<option value="' . esc_attr($name) . '"' . esc_attr($class) . '>' . esc_html($title) . "</option>\n";
+            echo "\t" . '<option value="' . esc_attr($name) . '"' . esc_attr($class) . '>' . esc_html(
+                    $title
+                ) . "</option>\n";
         }
 
         echo "</select>\n";
@@ -721,8 +728,10 @@ class Base
             $this->screen->render_screen_reader_content('heading_pagination');
         }
 
-        $output = '<span class="displaying-num">' . sprintf(_n('%s item', '%s items', $total_items),
-                number_format_i18n($total_items)) . '</span>';
+        $output = '<span class="displaying-num">' . sprintf(
+                _n('%s item', '%s items', $total_items),
+                number_format_i18n($total_items)
+            ) . '</span>';
 
         $current              = $this->get_pagenum();
         $removable_query_args = wp_removable_query_args();
@@ -778,7 +787,9 @@ class Base
 
         if ('bottom' === $which) {
             $html_current_page  = $current;
-            $total_pages_before = '<span class="screen-reader-text">' . __('Current Page') . '</span><span id="table-paging" class="paging-input"><span class="tablenav-paging-text">';
+            $total_pages_before = '<span class="screen-reader-text">' . __(
+                    'Current Page'
+                ) . '</span><span id="table-paging" class="paging-input"><span class="tablenav-paging-text">';
         } else {
             $html_current_page = sprintf(
                 "%s<input class='current-page' id='current-page-selector' type='text' name='paged' value='%s' size='%d' aria-describedby='table-paging' /><span class='tablenav-paging-text'>",
@@ -788,8 +799,11 @@ class Base
             );
         }
         $html_total_pages = sprintf("<span class='total-pages'>%s</span>", number_format_i18n($total_pages));
-        $page_links[]     = $total_pages_before . sprintf(_x('%1$s of %2$s', 'paging'), $html_current_page,
-                $html_total_pages) . $total_pages_after;
+        $page_links[]     = $total_pages_before . sprintf(
+                _x('%1$s of %2$s', 'paging'),
+                $html_current_page,
+                $html_total_pages
+            ) . $total_pages_after;
 
         if ($disable_next) {
             $page_links[] = '<span class="tablenav-pages-navspan" aria-hidden="true">&rsaquo;</span>';
@@ -814,7 +828,7 @@ class Base
         }
 
         $pagination_links_class = 'pagination-links';
-        if ( ! empty($infinite_scroll)) {
+        if (!empty($infinite_scroll)) {
             $pagination_links_class = ' hide-if-js';
         }
         $output .= "\n<span class='" . esc_attr($pagination_links_class) . "'>" . join("\n", $page_links) . '</span>';
@@ -873,10 +887,12 @@ class Base
             $current_order = 'asc';
         }
 
-        if ( ! empty($columns['cb'])) {
+        if (!empty($columns['cb'])) {
             static $cb_counter = 1;
-            $columns['cb'] = '<label class="screen-reader-text" for="cb-select-all-' . esc_attr($cb_counter) . '">' . __('Select All') . '</label>'
-                             . '<input id="cb-select-all-' . esc_attr($cb_counter) . '" type="checkbox" />';
+            $columns['cb'] = '<label class="screen-reader-text" for="cb-select-all-' . esc_attr(
+                    $cb_counter
+                ) . '">' . __('Select All') . '</label>'
+                . '<input id="cb-select-all-' . esc_attr($cb_counter) . '" type="checkbox" />';
             $cb_counter++;
         }
 
@@ -910,15 +926,19 @@ class Base
                     $class[] = $desc_first ? 'asc' : 'desc';
                 }
 
-                $column_display_name = '<a href="' . esc_url(add_query_arg(compact('orderby', 'order'),
-                        $current_url)) . '"><span>' . $column_display_name . '</span><span class="sorting-indicator"></span></a>';
+                $column_display_name = '<a href="' . esc_url(
+                        add_query_arg(
+                            compact('orderby', 'order'),
+                            $current_url
+                        )
+                    ) . '"><span>' . $column_display_name . '</span><span class="sorting-indicator"></span></a>';
             }
 
             $tag   = ('cb' === $column_key) ? 'td' : 'th';
             $scope = ('th' === $tag) ? 'scope="col"' : '';
             $id    = $with_id ? "id='$column_key'" : '';
 
-            if ( ! empty($class)) {
+            if (!empty($class)) {
                 $class = "class='" . join(' ', $class) . "'";
             }
 
@@ -972,7 +992,7 @@ class Base
             }
 
             $data = (array)$data;
-            if ( ! isset($data[1])) {
+            if (!isset($data[1])) {
                 $data[1] = false;
             }
 
@@ -1014,7 +1034,9 @@ class Base
         if ($this->has_items()) {
             $this->display_rows();
         } else {
-            echo '<tr class="no-items"><td class="colspanchange" colspan="' . esc_attr($this->get_column_count()) . '">';
+            echo '<tr class="no-items"><td class="colspanchange" colspan="' . esc_attr(
+                    $this->get_column_count()
+                ) . '">';
             $this->no_items();
             echo '</td></tr>';
         }
@@ -1115,9 +1137,9 @@ class Base
     /**
      * Generates and display row actions links for the list table.
      *
-     * @param object $item        The item being acted upon.
+     * @param object $item The item being acted upon.
      * @param string $column_name Current column name.
-     * @param string $primary     Primary column name.
+     * @param string $primary Primary column name.
      *
      * @return string The row actions HTML, or an empty string if the current column is the primary column.
      * @since  4.3.0
@@ -1126,7 +1148,9 @@ class Base
      */
     protected function handle_row_actions($item, $column_name, $primary)
     {
-        return $column_name === $primary ? '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details') . '</span></button>' : '';
+        return $column_name === $primary ? '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __(
+                'Show more details'
+            ) . '</span></button>' : '';
     }
 
     /**
@@ -1176,7 +1200,7 @@ class Base
         $this->prepare_items();
 
         ob_start();
-        if ( ! empty($_REQUEST['no_placeholder'])) {
+        if (!empty($_REQUEST['no_placeholder'])) {
             $this->display_rows();
         } else {
             $this->display_rows_or_placeholder();
@@ -1243,18 +1267,22 @@ class Base
      */
     protected function set_pagination_args($args)
     {
-        $args = wp_parse_args($args, [
-            'total_items' => 0,
-            'total_pages' => 0,
-            'per_page'    => 0,
-        ]);
+        $args = wp_parse_args(
+            $args,
+            [
+                'total_items' => 0,
+                'total_pages' => 0,
+                'per_page'    => 0,
+            ]
+        );
 
-        if ( ! $args['total_pages'] && $args['per_page'] > 0) {
+        if (!$args['total_pages'] && $args['per_page'] > 0) {
             $args['total_pages'] = ceil($args['total_items'] / $args['per_page']);
         }
 
         // Redirect if page number is invalid and headers are not already sent.
-        if ( ! headers_sent() && ! wp_doing_ajax() && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages']) {
+        if (!headers_sent() && !wp_doing_ajax() && $args['total_pages'] > 0 && $this->get_pagenum(
+            ) > $args['total_pages']) {
             wp_redirect(add_query_arg('paged', $args['total_pages']));
             exit;
         }
@@ -1265,8 +1293,8 @@ class Base
     /**
      * Generate row actions div
      *
-     * @param array $actions        The list of actions
-     * @param bool  $always_visible Whether the actions should be always visible
+     * @param array $actions The list of actions
+     * @param bool $always_visible Whether the actions should be always visible
      *
      * @return string
      * @since  3.1.0
@@ -1278,7 +1306,7 @@ class Base
         $action_count = count($actions);
         $i            = 0;
 
-        if ( ! $action_count) {
+        if (!$action_count) {
             return '';
         }
 
@@ -1290,7 +1318,9 @@ class Base
         }
         $out .= '</div>';
 
-        $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details') . '</span></button>';
+        $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __(
+                'Show more details'
+            ) . '</span></button>';
 
         return $out;
     }
@@ -1329,7 +1359,7 @@ class Base
     /**
      * Display a comment count bubble
      *
-     * @param int $post_id          The post ID.
+     * @param int $post_id The post ID.
      * @param int $pending_comments Number of pending comments.
      *
      * @since  3.1.0
@@ -1344,13 +1374,17 @@ class Base
         $pending_comments_number  = number_format_i18n($pending_comments);
 
         $approved_only_phrase = sprintf(_n('%s comment', '%s comments', $approved_comments), $approved_comments_number);
-        $approved_phrase      = sprintf(_n('%s approved comment', '%s approved comments', $approved_comments),
-            $approved_comments_number);
-        $pending_phrase       = sprintf(_n('%s pending comment', '%s pending comments', $pending_comments),
-            $pending_comments_number);
+        $approved_phrase      = sprintf(
+            _n('%s approved comment', '%s approved comments', $approved_comments),
+            $approved_comments_number
+        );
+        $pending_phrase       = sprintf(
+            _n('%s pending comment', '%s pending comments', $pending_comments),
+            $pending_comments_number
+        );
 
         // No comments at all.
-        if ( ! $approved_comments && ! $pending_comments) {
+        if (!$approved_comments && !$pending_comments) {
             printf(
                 '<span aria-hidden="true">—</span><span class="screen-reader-text">%s</span>',
                 __('No comments')
@@ -1359,8 +1393,12 @@ class Base
         } elseif ($approved_comments) {
             printf(
                 '<a href="%s" class="post-com-count post-com-count-approved"><span class="comment-count-approved" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></a>',
-                esc_url(add_query_arg(['p' => $post_id, 'comment_status' => 'approved'],
-                    admin_url('edit-comments.php'))),
+                esc_url(
+                    add_query_arg(
+                        ['p' => $post_id, 'comment_status' => 'approved'],
+                        admin_url('edit-comments.php')
+                    )
+                ),
                 $approved_comments_number,
                 $pending_comments ? $approved_phrase : $approved_only_phrase
             );
@@ -1375,8 +1413,12 @@ class Base
         if ($pending_comments) {
             printf(
                 '<a href="%s" class="post-com-count post-com-count-pending"><span class="comment-count-pending" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></a>',
-                esc_url(add_query_arg(['p' => $post_id, 'comment_status' => 'moderated'],
-                    admin_url('edit-comments.php'))),
+                esc_url(
+                    add_query_arg(
+                        ['p' => $post_id, 'comment_status' => 'moderated'],
+                        admin_url('edit-comments.php')
+                    )
+                ),
                 $pending_comments_number,
                 $pending_phrase
             );
@@ -1393,7 +1435,7 @@ class Base
      * Get number of items to display on a single page
      *
      * @param string $option
-     * @param int    $default
+     * @param int $default
      *
      * @return int
      * @since  3.1.0

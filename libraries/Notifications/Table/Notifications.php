@@ -9,6 +9,8 @@
 
 namespace PublishPress\Notifications\Table;
 
+use WP_Query;
+
 class Notifications extends Base
 {
     /**
@@ -45,9 +47,9 @@ class Notifications extends Base
     /**
      * Handles the post date column output.
      *
+     * @param WP_Post $post The current WP_Post object.
      * @global string $mode List table view mode.
      *
-     * @param WP_Post $post The current WP_Post object.
      */
     public function column_post_date($post)
     {
@@ -75,48 +77,6 @@ class Notifications extends Base
     }
 
     /**
-     * Define the columns that are going to be used in the table
-     *
-     * @return array $columns, the array of columns to use with the table
-     */
-    public function get_columns()
-    {
-        return [
-            'cb'           => 'cb',
-            'post_title'   => __('Title', 'publishpress'),
-            'post_content' => __('Message', 'publishpress'),
-            'post_date'    => __('Date', 'publishpress'),
-            'ID'           => __('ID', 'publishpress'),
-        ];
-    }
-
-    /**
-     * Decide which columns to activate the sorting functionality on
-     *
-     * @return array $sortable, the array of columns that can be sorted by the user
-     */
-    public function get_sortable_columns()
-    {
-        return [
-            'ID'         => ['ID', true],
-            'post_title' => ['post_title', true],
-            'post_date'  => ['post_date', true],
-        ];
-    }
-
-    /**
-     * Decide which columns to hide
-     *
-     * @return array $hidden, the array of columns that will be hidden
-     */
-    public function get_hidden_columns()
-    {
-        return [
-            'ID',
-        ];
-    }
-
-    /**
      * Prepare the table with different parameters, pagination, columns and table elements
      */
     public function prepare_items()
@@ -131,8 +91,8 @@ class Notifications extends Base
 
         /* -- Ordering parameters -- */
         // Parameters that are going to be used to order the result
-        $orderby = ! empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
-        $order   = ! empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
+        $orderby = !empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
+        $order   = !empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
 
         $posts_per_page = 10;
 
@@ -154,16 +114,16 @@ class Notifications extends Base
             ],
         ];
 
-        $query = new \WP_Query($args);
+        $query = new WP_Query($args);
 
         /* -- Pagination parameters -- */
         $totalitems = $query->post_count;
 
         // Which page is this?
-        $paged = ! empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
+        $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
 
         // Page Number
-        if (empty($paged) || ! is_numeric($paged) || $paged <= 0) {
+        if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
             $paged = 1;
         }
 
@@ -185,10 +145,52 @@ class Notifications extends Base
     }
 
     /**
+     * Define the columns that are going to be used in the table
+     *
+     * @return array $columns, the array of columns to use with the table
+     */
+    public function get_columns()
+    {
+        return [
+            'cb'           => 'cb',
+            'post_title'   => __('Title', 'publishpress'),
+            'post_content' => __('Message', 'publishpress'),
+            'post_date'    => __('Date', 'publishpress'),
+            'ID'           => __('ID', 'publishpress'),
+        ];
+    }
+
+    /**
+     * Decide which columns to hide
+     *
+     * @return array $hidden, the array of columns that will be hidden
+     */
+    public function get_hidden_columns()
+    {
+        return [
+            'ID',
+        ];
+    }
+
+    /**
+     * Decide which columns to activate the sorting functionality on
+     *
+     * @return array $sortable, the array of columns that can be sorted by the user
+     */
+    public function get_sortable_columns()
+    {
+        return [
+            'ID'         => ['ID', true],
+            'post_title' => ['post_title', true],
+            'post_date'  => ['post_date', true],
+        ];
+    }
+
+    /**
      * Method to return the content of the columns
      *
      * @param WP_Post $item
-     * @param string  $column_name
+     * @param string $column_name
      *
      * @return string
      */
@@ -215,8 +217,10 @@ class Notifications extends Base
     {
         ?>
         <label class="screen-reader-text"
-               for="cb-select-<?php echo esc_attr($post->ID); ?>"><?php echo sprintf(__('Select %s'),
-                $post->post_title); ?></label>
+               for="cb-select-<?php echo esc_attr($post->ID); ?>"><?php echo sprintf(
+                __('Select %s'),
+                $post->post_title
+            ); ?></label>
         <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo esc_attr($post->ID); ?>"
                value="<?php echo esc_attr($post->ID); ?>"/>
         <?php

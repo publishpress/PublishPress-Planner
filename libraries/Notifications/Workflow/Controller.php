@@ -9,6 +9,8 @@
 
 namespace PublishPress\Notifications\Workflow;
 
+use WP_Query;
+
 class Controller
 {
     /**
@@ -91,9 +93,9 @@ class Controller
          */
         $query_args = apply_filters('publishpress_notif_run_workflow_meta_query', $query_args, $args);
 
-        $query = new \WP_Query($query_args);
+        $query = new WP_Query($query_args);
 
-        if ( ! empty($query->posts)) {
+        if (!empty($query->posts)) {
             foreach ($query->posts as $post) {
                 $workflows[] = new Workflow($post);
             }
@@ -130,8 +132,10 @@ class Controller
          *
          * @param array $classes The list of classes to be loaded
          */
-        $classes_event_content = apply_filters('publishpress_notif_workflow_steps_event_content',
-            $classes_event_content);
+        $classes_event_content = apply_filters(
+            'publishpress_notif_workflow_steps_event_content',
+            $classes_event_content
+        );
 
         // Who
         $classes_receiver = [
@@ -170,8 +174,13 @@ class Controller
          */
         $classes_content = apply_filters('publishpress_notif_workflow_steps_content', $classes_content);
 
-        $classes = array_merge($classes_event, $classes_event_content, $classes_receiver, $classes_channel,
-            $classes_content);
+        $classes = array_merge(
+            $classes_event,
+            $classes_event_content,
+            $classes_receiver,
+            $classes_channel,
+            $classes_content
+        );
 
         // Instantiate each class
         foreach ($classes as $class) {

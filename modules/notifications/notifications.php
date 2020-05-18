@@ -65,7 +65,6 @@ if (!class_exists('PP_Notifications')) {
          */
         public function __construct()
         {
-
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args             = [
@@ -110,7 +109,6 @@ if (!class_exists('PP_Notifications')) {
          */
         public function init()
         {
-
             // Register our taxonomies for managing relationships
             $this->register_taxonomies();
 
@@ -407,7 +405,9 @@ if (!class_exists('PP_Notifications')) {
             }
 
             $parts                     = $this->get_notify_action_parts($post);
-            $actions['pp_notify_link'] = '<a title="' . esc_attr($parts['title']) . '" href="' . esc_url($parts['link']) . '">' . $parts['text'] . '</a>';
+            $actions['pp_notify_link'] = '<a title="' . esc_attr($parts['title']) . '" href="' . esc_url(
+                    $parts['link']
+                ) . '">' . $parts['text'] . '</a>';
 
             return $actions;
         }
@@ -516,8 +516,10 @@ if (!class_exists('PP_Notifications')) {
                 </div>
 
                 <?php if (empty($followersWorkflows)) : ?>
-                    <p class="no-workflows"><?php echo __('This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.',
-                            'publishpress'); ?></p>
+                    <p class="no-workflows"><?php echo __(
+                            'This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.',
+                            'publishpress'
+                        ); ?></p>
                 <?php endif; ?>
                 <hr>
 
@@ -528,17 +530,26 @@ if (!class_exists('PP_Notifications')) {
                         <ul>
                             <?php foreach ($activeWorkflows as $workflow) : ?>
                                 <li>
-                                    <a href="<?php echo admin_url('post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'); ?>"
+                                    <a href="<?php echo admin_url(
+                                        'post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'
+                                    ); ?>"
                                        target="_blank">
-                                        <?php echo $workflow->workflow_post->post_title; ?><?php if (in_array($workflow->workflow_post->ID,
-                                            $followersWorkflows)): ?>&sup1;<?php endif; ?>
+                                        <?php echo $workflow->workflow_post->post_title; ?><?php if (in_array(
+                                            $workflow->workflow_post->ID,
+                                            $followersWorkflows
+                                        )): ?>&sup1;<?php endif; ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     <?php else: ?>
-                        <p class="no-workflows"><?php echo sprintf(__('No active notifications found for this %s.',
-                                'publishpress'), $postType->labels->singular_name); ?></p>
+                        <p class="no-workflows"><?php echo sprintf(
+                                __(
+                                    'No active notifications found for this %s.',
+                                    'publishpress'
+                                ),
+                                $postType->labels->singular_name
+                            ); ?></p>
                     <?php endif; ?>
                 </div>
 
@@ -598,7 +609,7 @@ if (!class_exists('PP_Notifications')) {
         {
             $workflow_controller = $this->get_service('workflow_controller');
 
-            $args      = [
+            $args = [
                 'action'       => '',
                 'post'         => $post,
                 'new_status'   => $post->post_status,
@@ -650,8 +661,6 @@ if (!class_exists('PP_Notifications')) {
             wp_remove_object_terms($postId, $emails, $this->notify_email_taxonomy);
 
             if (isset($_POST['to_notify'])) {
-
-
                 foreach ($_POST['to_notify'] as $id) {
                     if (is_numeric($id)) {
                         // User id
@@ -717,7 +726,7 @@ if (!class_exists('PP_Notifications')) {
                 return $default;
             }
 
-            return (booL)$this->module->options->notify_author_by_default;
+            return (bool)$this->module->options->notify_author_by_default;
         }
 
         /**
@@ -732,7 +741,7 @@ if (!class_exists('PP_Notifications')) {
                 return $default;
             }
 
-            return (booL)$this->module->options->notify_current_user_by_default;
+            return (bool)$this->module->options->notify_current_user_by_default;
         }
 
         /**
@@ -929,8 +938,12 @@ if (!class_exists('PP_Notifications')) {
                 $this->schedule_emails($recipients, $subject, $message, $message_headers);
             } elseif (!empty($recipients)) {
                 foreach ($recipients as $recipient) {
-                    $deliveryResult[$recipient] = $this->send_single_email($recipient, $subject, $message,
-                        $message_headers);
+                    $deliveryResult[$recipient] = $this->send_single_email(
+                        $recipient,
+                        $subject,
+                        $message,
+                        $message_headers
+                    );
                 }
             }
 
@@ -1171,7 +1184,6 @@ if (!class_exists('PP_Notifications')) {
                 $separatorPos = strpos($string, '/');
                 if ($separatorPos > 0) {
                     $email = trim(substr($string, $separatorPos + 1, strlen($string)));
-
                 } else {
                     $email = $string;
                 }
@@ -1633,8 +1645,10 @@ if (!class_exists('PP_Notifications')) {
                 />
 
                 <div style="margin-top: 5px;">
-                    <p><?php _e('Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.',
-                            'publishpress'); ?></p>
+                    <p><?php _e(
+                            'Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.',
+                            'publishpress'
+                        ); ?></p>
                 </div>
             </div>
             <?php
@@ -1647,7 +1661,6 @@ if (!class_exists('PP_Notifications')) {
          */
         public function settings_validate($new_options)
         {
-
             // Whitelist validation for the post type options
             if (!isset($new_options['post_types'])) {
                 $new_options['post_types'] = [];

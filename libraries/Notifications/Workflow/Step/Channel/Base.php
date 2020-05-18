@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
+use Exception;
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use WP_User;
 
@@ -24,7 +25,7 @@ class Base extends Base_Step
     /**
      * The constructor
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -37,11 +38,11 @@ class Base extends Base_Step
         }
 
         if (empty($this->name)) {
-            throw new \Exception("Channel name not defined");
+            throw new Exception("Channel name not defined");
         }
 
         if (empty($this->label)) {
-            throw new \Exception("Channel label not defined");
+            throw new Exception("Channel label not defined");
         }
 
         parent::__construct();

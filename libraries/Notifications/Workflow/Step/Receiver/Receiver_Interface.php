@@ -22,7 +22,7 @@ interface Receiver_Interface
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post);
@@ -30,9 +30,9 @@ interface Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */

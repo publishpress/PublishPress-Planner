@@ -30,6 +30,14 @@ class Plugin
     }
 
     /**
+     * Initialize the Allex framework.
+     */
+    public function init_framework()
+    {
+        $this->framework->init();
+    }
+
+    /**
      * The method which runs the plugin
      */
     public function init()
@@ -44,20 +52,12 @@ class Plugin
         do_action('allex_enable_module_upgrade', 'https://publishpress.com/pricing/');
     }
 
-    /**
-     * Initialize the Allex framework.
-     */
-    public function init_framework()
-    {
-        $this->framework->init();
-    }
-
     public function add_load_edit_hooks()
     {
         $post_type = 'psppnotif_workflow';
         $screen    = get_current_screen();
 
-        if ( ! isset($screen->id)) {
+        if (!isset($screen->id)) {
             return;
         }
 
@@ -90,7 +90,7 @@ class Plugin
             'receivers',
         ];
         // Ignore other columns
-        if ( ! in_array($column_name, $columns)) {
+        if (!in_array($column_name, $columns)) {
             return;
         }
 
@@ -124,8 +124,10 @@ class Plugin
         $messages['post'][6]  = __('Notification workflow published.', 'pulishpress');
         $messages['post'][7]  = __('Notification workflow saved.', 'pulishpress');
         $messages['post'][8]  = __('Notification workflow submitted.', 'pulishpress');
-        $messages['post'][9]  = sprintf(__('Notification workflow scheduled for: %s.'),
-            '<strong>' . $scheduled_date . '</strong>');
+        $messages['post'][9]  = sprintf(
+            __('Notification workflow scheduled for: %s.'),
+            '<strong>' . $scheduled_date . '</strong>'
+        );
         $messages['post'][10] = __('Notification workflow draft updated.', 'pulishpress');
 
         return $messages;
@@ -136,7 +138,7 @@ class Plugin
      * content is bulk edited.
      *
      * @param string $bulk_messages
-     * @param int    $bulk_contents
+     * @param int $bulk_contents
      *
      * @return array
      */
@@ -148,17 +150,34 @@ class Plugin
             return $bulk_messages;
         }
 
-        $bulk_messages['post']['updated']   = _n('%s notification workflow updated.',
-            '%s notification workflows updated.', $bulk_counts['updated']);
-        $bulk_messages['post']['locked']    = (1 == $bulk_counts['locked']) ? __('1 notification workflow not updated, somebody is editing it.') :
-            _n('%s notification workflow not updated, somebody is editing it.',
-                '%s notification workflows not updated, somebody is editing them.', $bulk_counts['locked']);
-        $bulk_messages['post']['deleted']   = _n('%s notification workflow permanently deleted.',
-            '%s notification workflows permanently deleted.', $bulk_counts['deleted']);
-        $bulk_messages['post']['trashed']   = _n('%s notification workflow moved to the Trash.',
-            '%s notification workflows moved to the Trash.', $bulk_counts['trashed']);
-        $bulk_messages['post']['untrashed'] = _n('%s notification workflow restored from the Trash.',
-            '%s notification workflows restored from the Trash.', $bulk_counts['untrashed']);
+        $bulk_messages['post']['updated']   = _n(
+            '%s notification workflow updated.',
+            '%s notification workflows updated.',
+            $bulk_counts['updated']
+        );
+        $bulk_messages['post']['locked']    = (1 == $bulk_counts['locked']) ? __(
+            '1 notification workflow not updated, somebody is editing it.'
+        ) :
+            _n(
+                '%s notification workflow not updated, somebody is editing it.',
+                '%s notification workflows not updated, somebody is editing them.',
+                $bulk_counts['locked']
+            );
+        $bulk_messages['post']['deleted']   = _n(
+            '%s notification workflow permanently deleted.',
+            '%s notification workflows permanently deleted.',
+            $bulk_counts['deleted']
+        );
+        $bulk_messages['post']['trashed']   = _n(
+            '%s notification workflow moved to the Trash.',
+            '%s notification workflows moved to the Trash.',
+            $bulk_counts['trashed']
+        );
+        $bulk_messages['post']['untrashed'] = _n(
+            '%s notification workflow restored from the Trash.',
+            '%s notification workflows restored from the Trash.',
+            $bulk_counts['untrashed']
+        );
 
         return $bulk_messages;
     }
@@ -187,8 +206,10 @@ class Plugin
         }
 
         if (empty($events)) {
-            echo '<span class="psppno_no_events_warning">' . __('Please select at least one event',
-                    'publishpress') . '</span>';
+            echo '<span class="psppno_no_events_warning">' . __(
+                    'Please select at least one event',
+                    'publishpress'
+                ) . '</span>';
         } else {
             echo implode(', ', $events);
         }
@@ -235,7 +256,7 @@ class Plugin
          * Get the values to display in the column
          *
          * @param array $values
-         * @param int   $post_id
+         * @param int $post_id
          */
         $values = apply_filters('psppno_receivers_column_value', [], $post_id);
 

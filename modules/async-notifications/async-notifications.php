@@ -32,7 +32,7 @@ use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
-if ( ! class_exists('PP_Async_Notifications')) {
+if (!class_exists('PP_Async_Notifications')) {
     /**
      * class PP_Async_Notifications. Depends on the Improved Notifications module.
      */
@@ -127,9 +127,9 @@ if ( ! class_exists('PP_Async_Notifications')) {
         }
 
         /**
-         * @param string                               $action
+         * @param string $action
          * @param PublishPress\Notifications\Workflow\ $workflow
-         * @param string                               $channel
+         * @param string $channel
          *
          * @return string
          */
@@ -182,7 +182,7 @@ if ( ! class_exists('PP_Async_Notifications')) {
             /**
              * Filters the value of the timeout to ignore duplicated notifications.
              *
-             * @param int    $timeout
+             * @param int $timeout
              * @param string $uid
              *
              * @return int
@@ -253,10 +253,10 @@ if ( ! class_exists('PP_Async_Notifications')) {
              * Triggers the notification. This can be caught by notification channels.
              *
              * @param WP_Post $workflow_post
-             * @param array   $action_args
-             * @param array   $receivers
-             * @param array   $content
-             * @param array   $channel
+             * @param array $action_args
+             * @param array $receivers
+             * @param array $content
+             * @param array $channel
              */
             do_action(
                 'publishpress_notif_send_notification_' . $channel,
@@ -283,10 +283,10 @@ if ( ! class_exists('PP_Async_Notifications')) {
                 'publishpress_cron_notify',
             ];
 
-            if ( ! empty($cronTasks)) {
+            if (!empty($cronTasks)) {
                 foreach ($cronTasks as $time => $cron) {
                     foreach ($cron as $hook => $dings) {
-                        if ( ! in_array($hook, $expectedHooks)) {
+                        if (!in_array($hook, $expectedHooks)) {
                             continue;
                         }
 
@@ -298,7 +298,6 @@ if ( ! class_exists('PP_Async_Notifications')) {
                             $channel = $data['args'][6];
 
                             if ($channel === 'email') {
-
                                 $details = $data['args'][7];
 
                                 if (is_numeric($details)) {
@@ -312,8 +311,12 @@ if ( ! class_exists('PP_Async_Notifications')) {
 
                             $scheduledNotifications["$hook-$sig-$time"] = [
                                 'label' => $formattedDate,
-                                'value' => sprintf(__('Event: %s, Post ID: %s, Channel: %s', 'publishpress'), $event,
-                                    $postId, $channel),
+                                'value' => sprintf(
+                                    __('Event: %s, Post ID: %s, Channel: %s', 'publishpress'),
+                                    $event,
+                                    $postId,
+                                    $channel
+                                ),
                             ];
                         }
                     }

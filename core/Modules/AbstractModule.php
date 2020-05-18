@@ -30,11 +30,13 @@
 
 namespace PublishPress\Core\Modules;
 
+use PP_Module;
+
 /**
  * Base class for building PublishPress modules.
  *
  * @package PublishPress\Core\Modules
  */
-abstract class AbstractModule extends \PP_Module
+abstract class AbstractModule extends PP_Module
 {
 }

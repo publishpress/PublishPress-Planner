@@ -66,13 +66,13 @@ class Base extends Base_Step
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
-        if ( ! isset($_POST['publishpress_notif'])
-             || ! isset($_POST['publishpress_notif'][$this->attr_prefix])) {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif'][$this->attr_prefix])) {
             // Assume it is disabled
             update_post_meta($id, static::META_KEY_SELECTED, false);
         }
@@ -88,7 +88,7 @@ class Base extends Base_Step
 
         // Process the filters
         $filters = $this->get_filters();
-        if ( ! empty($filters)) {
+        if (!empty($filters)) {
             foreach ($filters as $filter) {
                 $filter->save_metabox_data($id, $post);
             }

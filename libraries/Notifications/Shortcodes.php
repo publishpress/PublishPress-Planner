@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications;
 
+use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
@@ -48,7 +49,7 @@ class Shortcodes
      * Adds the shortcodes to replace text
      *
      * @param WP_Post $workflow_post
-     * @param array   $action_args
+     * @param array $action_args
      */
     public function register($workflow_post, $action_args)
     {
@@ -65,7 +66,7 @@ class Shortcodes
      * Set the instance properties
      *
      * @param WP_Post $workflow_post
-     * @param array   $action_args
+     * @param array $action_args
      */
     protected function set_properties($workflow_post, $action_args)
     {
@@ -88,6 +89,92 @@ class Shortcodes
         $user = $this->get_actor();
 
         return $this->get_user_data($user, $attrs);
+    }
+
+    /**
+     * Returns the current user, the actor of the action
+     *
+     * @return WP_User
+     */
+    protected function get_actor()
+    {
+        return wp_get_current_user();
+    }
+
+    /**
+     * Returns the user's info. You can specify which user's property should be
+     * printed passing that on the $attrs.
+     *
+     * If more than one attribute is given, we returns all the data
+     * separated by comma (default) or specified separator, in the order it was
+     * received.
+     *
+     * If no attribute is provided, we use display_name as default.
+     *
+     * Accepted attributes:
+     *   - id
+     *   - login
+     *   - url
+     *   - display_name
+     *   - email
+     *   - separator
+     *
+     * @param WP_User $user
+     * @param array $attrs
+     *
+     * @return string
+     */
+    protected function get_user_data($user, $attrs)
+    {
+        if (!is_array($attrs)) {
+            if (!empty($attrs)) {
+                $attrs[] = $attrs;
+            } else {
+                $attrs = [];
+            }
+        }
+
+        // No attributes? Set the default one.
+        if (empty($attrs)) {
+            $attrs[] = 'display_name';
+        }
+
+        // Set the separator
+        if (!isset($attrs['separator'])) {
+            $attrs['separator'] = ', ';
+        }
+
+        // Get the user's info
+        $info = [];
+
+        foreach ($attrs as $index => $item) {
+            switch ($item) {
+                case 'id':
+                    $info[] = $user->ID;
+                    break;
+
+                case 'login':
+                    $info[] = $user->user_login;
+                    break;
+
+                case 'url':
+                    $info[] = $user->user_url;
+                    break;
+
+                case 'display_name':
+                    $info[] = $user->display_name;
+                    break;
+
+                case 'email':
+                    $info[] = $user->user_email;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return implode($attrs['separator'], $info);
     }
 
     /**
@@ -176,7 +263,6 @@ class Shortcodes
                 // Do we have a name?
                 $separatorPos = strpos($receiver, '/');
                 if ($separatorPos > 0) {
-
                     if (in_array('name', $attrs)) {
                         $result = substr($receiver, 0, $separatorPos);
                     } else {
@@ -187,92 +273,6 @@ class Shortcodes
         }
 
         return $result;
-    }
-
-    /**
-     * Returns the current user, the actor of the action
-     *
-     * @return WP_User
-     */
-    protected function get_actor()
-    {
-        return wp_get_current_user();
-    }
-
-    /**
-     * Returns the user's info. You can specify which user's property should be
-     * printed passing that on the $attrs.
-     *
-     * If more than one attribute is given, we returns all the data
-     * separated by comma (default) or specified separator, in the order it was
-     * received.
-     *
-     * If no attribute is provided, we use display_name as default.
-     *
-     * Accepted attributes:
-     *   - id
-     *   - login
-     *   - url
-     *   - display_name
-     *   - email
-     *   - separator
-     *
-     * @param WP_User $user
-     * @param array   $attrs
-     *
-     * @return string
-     */
-    protected function get_user_data($user, $attrs)
-    {
-        if ( ! is_array($attrs)) {
-            if ( ! empty($attrs)) {
-                $attrs[] = $attrs;
-            } else {
-                $attrs = [];
-            }
-        }
-
-        // No attributes? Set the default one.
-        if (empty($attrs)) {
-            $attrs[] = 'display_name';
-        }
-
-        // Set the separator
-        if ( ! isset($attrs['separator'])) {
-            $attrs['separator'] = ', ';
-        }
-
-        // Get the user's info
-        $info = [];
-
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $user->ID;
-                    break;
-
-                case 'login':
-                    $info[] = $user->user_login;
-                    break;
-
-                case 'url':
-                    $info[] = $user->user_url;
-                    break;
-
-                case 'display_name':
-                    $info[] = $user->display_name;
-                    break;
-
-                case 'email':
-                    $info[] = $user->user_email;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        return implode($attrs['separator'], $info);
     }
 
     /**
@@ -331,11 +331,11 @@ class Shortcodes
      *   - edit_link
      *
      * @param WP_Post $post
-     * @param array   $attrs
-     *
-     * @throws \Exception
+     * @param array $attrs
      *
      * @return string
+     * @throws Exception
+     *
      */
     protected function get_post_data($post, $attrs)
     {
@@ -347,7 +347,7 @@ class Shortcodes
         }
 
         // Set the separator
-        if ( ! isset($attrs['separator'])) {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -413,7 +413,13 @@ class Shortcodes
                     break;
 
                 default:
-                    if ($custom = apply_filters('publishpress_notif_shortcode_post_data', false, $item, $post, $attrs)) {
+                    if ($custom = apply_filters(
+                        'publishpress_notif_shortcode_post_data',
+                        false,
+                        $item,
+                        $post,
+                        $attrs
+                    )) {
                         $info[] = $custom;
                     }
 
@@ -442,9 +448,9 @@ class Shortcodes
      */
     public function handle_psppno_workflow($attrs)
     {
-	    if (is_string( $attrs )) {
-		    $attrs = [ $attrs ];
-	    }
+        if (is_string($attrs)) {
+            $attrs = [$attrs];
+        }
 
         $post = $this->workflow_post;
 
@@ -454,7 +460,7 @@ class Shortcodes
         }
 
         // Set the separator
-        if ( ! isset($attrs['separator'])) {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -502,7 +508,7 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if ( ! isset($this->action_args['comment'])) {
+        if (!isset($this->action_args['comment'])) {
             return;
         }
 
@@ -510,12 +516,12 @@ class Shortcodes
 
         // No attributes? Set the default one.
         if (empty($attrs)) {
-            $attrs = [];
+            $attrs   = [];
             $attrs[] = 'content';
         }
 
         // Set the separator
-        if ( ! isset($attrs['separator'])) {
+        if (!isset($attrs['separator'])) {
             $attrs['separator'] = ', ';
         }
 
@@ -562,7 +568,7 @@ class Shortcodes
 
     /**
      * @param string $content
-     * @param mixed  $receiver
+     * @param mixed $receiver
      */
     public function setReceiverForShortcode($content, $receiver)
     {

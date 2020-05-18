@@ -68,7 +68,7 @@ class Editorial_Comment extends Base
 
     public function filter_workflow_actions($actions)
     {
-        if ( ! is_array($actions) || empty($actions)) {
+        if (!is_array($actions) || empty($actions)) {
             $actions = [];
         }
 

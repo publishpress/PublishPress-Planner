@@ -9,6 +9,8 @@
 
 namespace PublishPress\Legacy;
 
+use Exception;
+
 defined('ABSPATH') or die('No direct script access allowed.');
 
 class Auto_loader
@@ -37,10 +39,10 @@ class Auto_loader
     /**
      * Register a psr4 namespace
      *
-     * @param string $prefix   The namespace prefix.
-     * @param string $baseDir  A base directory for class files in the
+     * @param string $prefix The namespace prefix.
+     * @param string $baseDir A base directory for class files in the
      *                         namespace.
-     * @param bool   $prepend  If true, prepend the base directory to the stack
+     * @param bool $prepend If true, prepend the base directory to the stack
      *                         instead of appending it; this causes it to be searched first rather
      *                         than last.
      *
@@ -107,12 +109,12 @@ class Auto_loader
      * @param string $baseDir
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function registerCamelBase($prefix, $baseDir)
     {
-        if ( ! is_dir($baseDir)) {
-            throw new \Exception("Cannot register '{$prefix}'. The requested base directory does not exist!'");
+        if (!is_dir($baseDir)) {
+            throw new Exception("Cannot register '{$prefix}'. The requested base directory does not exist!'");
         }
 
         if (count(self::$camelPrefixes) == 0) {
@@ -153,7 +155,7 @@ class Auto_loader
     /**
      * Load the mapped file for a namespace prefix and class.
      *
-     * @param string $prefix    The namespace prefix.
+     * @param string $prefix The namespace prefix.
      * @param string $className The relative class name.
      *
      * @return bool|string false if no mapped file can be loaded | path that was loaded
@@ -189,7 +191,7 @@ class Auto_loader
      */
     protected function loadCamelClass($class)
     {
-        if ( ! class_exists($class)) {
+        if (!class_exists($class)) {
             foreach (self::$camelPrefixes as $prefix => $baseDir) {
                 if (strpos($class, $prefix) === 0) {
                     $parts = preg_split('/(?<=[a-z])(?=[A-Z])/x', substr($class, strlen($prefix)));
