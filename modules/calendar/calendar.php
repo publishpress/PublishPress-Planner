@@ -166,7 +166,7 @@ if (!class_exists('PP_Calendar')) {
                     'post_types'              => $this->pre_select_all_post_types(),
                     'ics_subscription'        => 'on',
                     'ics_secret_key'          => wp_generate_password(),
-                    'show_posts_publish_time' => 'on',
+                    'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                 ],
                 'messages'              => [
                     'post-date-updated'   => __('Post date updated.', 'publishpress'),
@@ -255,10 +255,8 @@ if (!class_exists('PP_Calendar')) {
 
             add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
 
-            if ($this->showPostsPublishTime()) {
-                // Cache WordPress default date/time formats.
-                $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
-            }
+            // Cache WordPress default date/time formats.
+            $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
 
             add_filter('pp_calendar_after_form_submission_sanitize_title', [$this, 'sanitize_text_input'], 10, 1);
             add_filter('pp_calendar_after_form_submission_sanitize_content', [$this, 'sanitize_text_input'], 10, 1);
@@ -930,8 +928,6 @@ if (!class_exists('PP_Calendar')) {
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
-            $show_posts_publish_time = $this->showPostsPublishTime();
-
             $dotw = [
                 'Sat',
                 'Sun',
@@ -1260,8 +1256,7 @@ if (!class_exists('PP_Calendar')) {
                                                         echo $this->generate_post_li_html(
                                                             $post,
                                                             $week_single_date,
-                                                            $num,
-                                                            $show_posts_publish_time
+                                                            $num
                                                         );
                                                     }
                                                 } ?>
@@ -1441,7 +1436,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @return str HTML for a single post item
          */
-        public function generate_post_li_html($post, $post_date, $num = 0, $show_posts_publish_time = false)
+        public function generate_post_li_html($post, $post_date, $num = 0)
         {
             $can_modify = ($this->current_user_can_modify_post($post)) ? 'can_modify' : 'read_only';
             $cache_key  = $post->ID . $can_modify;
@@ -1458,12 +1453,7 @@ if (!class_exists('PP_Calendar')) {
             $post_id        = $post->ID;
             $edit_post_link = get_edit_post_link($post_id);
 
-            if ($show_posts_publish_time) {
-                $show_posts_publish_time = in_array(
-                    $post->post_status,
-                    self::getStatusesEligibleToDisplayPublishTime()
-                );
-            }
+            $show_posts_publish_time = $this->showPostsPublishTime($post->post_status);
 
             if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
@@ -1551,7 +1541,7 @@ if (!class_exists('PP_Calendar')) {
             wp_cache_set($cache_key, $post_li_cache, self::$post_li_html_cache_key);
 
             return $post_li_html;
-        } // generate_post_li_html()
+        }
 
         /**
          * Returns the CSS class name and color for the given custom status.
@@ -1730,7 +1720,7 @@ if (!class_exists('PP_Calendar')) {
             } ?>
             <div style="clear:right;"></div>
             <?php
-        } // generate_post_li_html()
+        }
 
         public function get_editable_html($type, $value)
         {
@@ -2285,7 +2275,7 @@ if (!class_exists('PP_Calendar')) {
             );
             add_settings_field(
                 'show_posts_publish_time',
-                __('Display Posts publish time', 'publishpress'),
+                __('Statuses to display publish time', 'publishpress'),
                 [$this, 'settings_show_posts_publish_time_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
@@ -2379,39 +2369,47 @@ if (!class_exists('PP_Calendar')) {
          */
         public function settings_show_posts_publish_time_option()
         {
-            $VALUE_ON  = 'on';
-            $VALUE_OFF = 'off';
+            $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $options = [
-                $VALUE_ON  => __('Show publish times', 'publishpress'),
-                $VALUE_OFF => __('Hide them', 'publishpress'),
-            ];
+            $customStatuses = PP_Custom_Status::getCustomStatuses();
 
-            $show_posts_publish_time = $this->getShowPostsPublishTimeOptionValue();
-            $field_name              = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
+            if (empty($customStatuses)) {
+                $statuses = [
+                    'publish' => __('Publish'),
+                    'future'  => __('Scheduled'),
+                ];
+            } else {
+                $statuses = [];
 
-            echo '<div class="c-input-group">';
-            foreach ($options as $optionValue => $optionLabel) {
-                printf(
-                    '
-                    <div class="c-input-radio">
-                        <label class="c-input-radio__label">
-                            <input
-                                class="o-radio"
-                                type="radio"
-                                name="%s"
-                                value="%s"
-                                %s
-                            /> %s
-                        </label>
-                    </div>',
-                    $field_name,
-                    $optionValue,
-                    $show_posts_publish_time === $optionValue ? 'checked' : '',
-                    $optionLabel
-                );
+                foreach ($customStatuses as $status) {
+                    $statuses[$status->slug] = $status->name;
+                }
             }
-            echo '</div>';
+
+            // Add support to the legacy value for this setting, where "on" means post and page selected.
+            if ($this->module->options->show_posts_publish_time === 'on') {
+                $this->module->options->show_posts_publish_time = [
+                    'publish' => 'on',
+                    'future'  => 'on',
+                ];
+            }
+
+            foreach ($statuses as $status => $title) {
+                $id = esc_attr($status) . '-display-publish-time';
+
+                echo '<label for="' . $id . '">';
+                echo '<input id="' . $id . '" name="'
+                    . $field_name . '[' . esc_attr($status) . ']"';
+
+                if (isset($this->module->options->show_posts_publish_time[$status])) {
+                    checked($this->module->options->show_posts_publish_time[$status], 'on');
+                }
+
+                // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                disabled(post_type_supports($status, $this->module->post_type_support), true);
+                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
+                echo '<br />';
+            }
         }
 
         /**
@@ -2506,9 +2504,18 @@ if (!class_exists('PP_Calendar')) {
                 $options['ics_subscription'] = 'on';
             }
 
-            $options['show_posts_publish_time'] = isset($new_options['show_posts_publish_time']) && $new_options['show_posts_publish_time'] === 'on'
-                ? 'on'
-                : 'off';
+            if (isset($new_options['show_posts_publish_time'])) {
+                if ($new_options['show_posts_publish_time'] == 'on') {
+                    $options['show_posts_publish_time'] = [
+                        'publish' => 'on',
+                        'future'  => 'on',
+                    ];
+                } else {
+                    $options['show_posts_publish_time'] = $new_options['show_posts_publish_time'];
+                }
+            } else {
+                $options['show_posts_publish_time'] = [];
+            }
 
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
@@ -2575,26 +2582,26 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Sanitize post values
-            $post_title   = apply_filters(
+            $post_title = apply_filters(
                 'pp_calendar_after_form_submission_sanitize_title',
-                $_POST['pp_insert_title']
+                sanitize_title($_POST['pp_insert_title'])
             );
-            $post_content = apply_filters(
-                'pp_calendar_after_form_submission_sanitize_content',
-                $_POST['pp_insert_content']
-            );
-            $post_author  = apply_filters(
-                'pp_calendar_after_form_submission_sanitize_author',
-                $_POST['pp_insert_author']
-            );
-
-            if (!$post_title) {
+            if (empty($post_title)) {
                 $post_title = __('Untitled', 'publishpress');
             }
+
+            $post_content = apply_filters(
+                'pp_calendar_after_form_submission_sanitize_content',
+                wp_filter_post_kses($_POST['pp_insert_content'])
+            );
             if (!$post_content) {
                 $post_content = '';
             }
 
+            $post_author = apply_filters(
+                'pp_calendar_after_form_submission_sanitize_author',
+                (int)$_POST['pp_insert_author']
+            );
             try {
                 $post_author = apply_filters('pp_calendar_after_form_submission_validate_author', $post_author);
             } catch (Exception $e) {
@@ -2670,10 +2677,8 @@ if (!class_exists('PP_Calendar')) {
 
                 $post = get_post($post_id);
 
-                $show_posts_publish_time = $this->showPostsPublishTime();
-
                 // Generate the HTML for the post item so it can be injected
-                $post_li_html = $this->generate_post_li_html($post, $post_date, 0, $show_posts_publish_time);
+                $post_li_html = $this->generate_post_li_html($post, $post_date, 0);
 
                 // announce success and send back the html to inject
                 $this->print_ajax_response('success', $post_li_html);
@@ -3037,41 +3042,22 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
-         * @return  string
-         * @since   1.20.1
+         * @param $status
+         * @return  bool
          *
          * @access  private
-         *
          */
-        private function getShowPostsPublishTimeOptionValue()
+        private function showPostsPublishTime($status)
         {
-            $valid_options = ['on', 'off'];
-
-            $publish_time = (function_exists('mb_strtolower'))
-                ? mb_strtolower($this->module->options->show_posts_publish_time)
-                : strtolower($this->module->options->show_posts_publish_time);
-
-            if (
-                !isset($this->module->options->show_posts_publish_time)
-                || empty($this->module->options->show_posts_publish_time)
-                || !in_array($publish_time, $valid_options)
-            ) {
-                return 'on';
+            if ($this->module->options->show_posts_publish_time === 'on') {
+                $this->module->options->show_posts_publish_time = [
+                    'publish' => 'on',
+                    'future'  => 'on',
+                ];
             }
 
-            return $publish_time;
-        }
-
-        /**
-         * @return  bool
-         * @since   @todo
-         *
-         * @access  private
-         *
-         */
-        private function showPostsPublishTime()
-        {
-            return $this->getShowPostsPublishTimeOptionValue() === 'on';
+            return isset($this->module->options->show_posts_publish_time[$status])
+                && $this->module->options->show_posts_publish_time[$status] == 'on';
         }
 
         /**
@@ -3142,30 +3128,6 @@ if (!class_exists('PP_Calendar')) {
                 'editor',
                 'contributor',
             ];
-        }
-
-        /**
-         * @return  array
-         * @since   1.20.1
-         *
-         * @access  private
-         * @static
-         *
-         */
-        private static function getStatusesEligibleToDisplayPublishTime()
-        {
-            $statuses = [
-                'publish',
-            ];
-
-            if (
-                class_exists('PP_Custom_Status')
-                && PP_Custom_Status::isModuleEnabled()
-            ) {
-                $statuses[] = PP_Custom_Status::STATUS_SCHEDULED;
-            }
-
-            return $statuses;
         }
 
         public function setDefaultCapabilities()
