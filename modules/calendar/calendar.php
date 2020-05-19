@@ -1351,7 +1351,7 @@ if (!class_exists('PP_Calendar')) {
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
-                                                    <div style="display: none;">
+                                                    <div>
                                                         <label
                                                             for="post-insert-dialog-post-publish-time"><?php _e(
                                                                 'Publish Time',
@@ -1362,6 +1362,7 @@ if (!class_exists('PP_Calendar')) {
                                                             id="post-insert-dialog-post-publish-time"
                                                             name="post-insert-dialog-post-publish-time"
                                                             class="post-insert-dialog-post-publish-time"
+                                                            value="<?php echo isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : ''; ?>"
                                                         />
                                                     </div>
 
@@ -2259,6 +2260,7 @@ if (!class_exists('PP_Calendar')) {
                 '__return_false',
                 $this->module->options_group_name
             );
+
             add_settings_field(
                 'post_types',
                 __('Post types to show', 'publishpress'),
@@ -2266,6 +2268,7 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
             add_settings_field(
                 'ics_subscription',
                 __('Subscription in iCal or Google Calendar', 'publishpress'),
@@ -2273,6 +2276,7 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
             add_settings_field(
                 'show_posts_publish_time',
                 __('Statuses to display publish time', 'publishpress'),
@@ -2280,10 +2284,19 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
             add_settings_field(
                 'posts_publish_time_format',
                 __('Posts publish time format', 'publishpress'),
                 [$this, 'settings_posts_publish_time_format_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'default_publish_time',
+                __('Default publish time for items created in the calendar', 'publishpress'),
+                [$this, 'settings_default_publish_time_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2460,6 +2473,52 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
+         * @since 2.0.7
+         */
+        public function settings_default_publish_time_option()
+        {
+            echo '<div class="c-input-group">';
+
+            $option = $this->module->options->default_publish_time;
+            if (empty($option)) {
+                $option = '00:00';
+            } else {
+                $option = explode(':', $option);
+            }
+
+            echo sprintf(
+                '<select name="%s">',
+                esc_attr($this->module->options_group_name) . '[default_publish_time_hours]',
+            );
+
+            for ($i = 0; $i < 24; $i++) {
+                echo sprintf(
+                    '<option value="%02d" %s>%02d</option>',
+                    $i,
+                    selected($i, (int)$option[0]),
+                    $i
+                );
+            }
+
+            echo '</select>:';
+
+            echo sprintf(
+                '<select name="%s">',
+                esc_attr($this->module->options_group_name) . '[default_publish_time_minutes]'
+            );
+            for ($i = 0; $i < 60; $i++) {
+                echo sprintf(
+                    '<option value="%02d" %s>%02d</option>',
+                    $i,
+                    selected($i, (int)$option[1]),
+                    $i
+                );
+            }
+            echo '</select>';
+            echo '</div>';
+        }
+
+        /**
          * Validate the data submitted by the user in calendar settings
          *
          * @since 0.7
@@ -2520,6 +2579,19 @@ if (!class_exists('PP_Calendar')) {
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
                 : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
+
+            // Default publish time
+            $hours   = '00';
+            $minutes = '00';
+            if (isset($new_options['default_publish_time_hours'])) {
+                $hours = (int)$new_options['default_publish_time_hours'];
+            }
+
+            if (isset($new_options['default_publish_time_minutes'])) {
+                $minutes = (int)$new_options['default_publish_time_minutes'];
+            }
+
+            $options['default_publish_time'] = sprintf('%02d:%02d', $hours, $minutes);
 
             return $options;
         }
@@ -2634,10 +2706,10 @@ if (!class_exists('PP_Calendar')) {
                         : date('H:i:s', $post_date_timestamp)
                 );
             } else {
-                $post_publish_time = '';
+                $post_publish_time = $this->module->options->default_publish_time;
             }
 
-            $post_publish_date_time_instance = new DateTime("{$post_date}{$post_publish_time}");
+            $post_publish_date_time_instance = new DateTime("{$post_date} {$post_publish_time}");
             if ($post_publish_date_time_instance === false) {
                 $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
             }

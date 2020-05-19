@@ -384,20 +384,7 @@ jQuery(document).ready(function ($) {
                 EFQuickPublish.ajax_pp_create_post(true);
             });
 
-            $('select.post-insert-dialog-post-status', EFQuickPublish.$new_post_form).on('change', function(e) {
-              var selected_value = this.value;
-              var form = $(this).parents('form');
-              var publish_time_input_wrapper = $('input[name="post-insert-dialog-post-publish-time"]', form).parent();
-
-              if (['publish', 'private', 'future'].indexOf(selected_value) >= 0) {
-                publish_time_input_wrapper.show();
-              } else {
-                publish_time_input_wrapper.hide();
-              }
-            });
-
             return false; // prevent bubbling up
-
         },
 
         /**
