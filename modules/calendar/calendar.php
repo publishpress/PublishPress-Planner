@@ -1177,7 +1177,7 @@ if (!class_exists('PP_Calendar')) {
                             </tr>
                         <?php endif; ?>
 
-                            <tr class="week-unit">
+                            <tr class="week-unit noselect">
                                 <?php foreach ($week_dates as $day_num => $week_single_date) : ?>
                                     <?php
                                     // Somewhat ghetto way of sorting all of the day's posts by post status order
