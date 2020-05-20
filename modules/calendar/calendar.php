@@ -2479,42 +2479,12 @@ if (!class_exists('PP_Calendar')) {
         {
             echo '<div class="c-input-group">';
 
-            $option = $this->module->options->default_publish_time;
-            if (empty($option)) {
-                $option = '00:00';
-            } else {
-                $option = explode(':', $option);
-            }
-
             echo sprintf(
-                '<select name="%s">',
-                esc_attr($this->module->options_group_name) . '[default_publish_time_hours]',
+                '<input type="time" name="%s" value="%s">',
+                esc_attr($this->module->options_group_name) . '[default_publish_time]',
+                $this->module->options->default_publish_time
             );
 
-            for ($i = 0; $i < 24; $i++) {
-                echo sprintf(
-                    '<option value="%02d" %s>%02d</option>',
-                    $i,
-                    selected($i, (int)$option[0]),
-                    $i
-                );
-            }
-
-            echo '</select>:';
-
-            echo sprintf(
-                '<select name="%s">',
-                esc_attr($this->module->options_group_name) . '[default_publish_time_minutes]'
-            );
-            for ($i = 0; $i < 60; $i++) {
-                echo sprintf(
-                    '<option value="%02d" %s>%02d</option>',
-                    $i,
-                    selected($i, (int)$option[1]),
-                    $i
-                );
-            }
-            echo '</select>';
             echo '</div>';
         }
 
@@ -2581,17 +2551,9 @@ if (!class_exists('PP_Calendar')) {
                 : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
 
             // Default publish time
-            $hours   = '00';
-            $minutes = '00';
-            if (isset($new_options['default_publish_time_hours'])) {
-                $hours = (int)$new_options['default_publish_time_hours'];
+            if (isset($new_options['default_publish_time'])) {
+                $options['default_publish_time'] = sanitize_text_field($new_options['default_publish_time']);
             }
-
-            if (isset($new_options['default_publish_time_minutes'])) {
-                $minutes = (int)$new_options['default_publish_time_minutes'];
-            }
-
-            $options['default_publish_time'] = sprintf('%02d:%02d', $hours, $minutes);
 
             return $options;
         }
