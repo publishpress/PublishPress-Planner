@@ -2207,21 +2207,13 @@ if (!class_exists('PP_Custom_Status')) {
         {
             global $pagenow;
 
-
             if (is_int($post)) {
                 $postId = $post;
-                $this->get_service('debug')->write($postId, 'PP_Custom_Status::fix_preview_link_part_two $postId');
                 $post = get_post($post);
             }
 
-            //Should we be doing anything at all?
             if (!is_object($post)) {
-                $this->get_service('debug')->write($post, 'PP_Custom_Status::fix_preview_link_part_two $post');
-                $this->get_service('debug')->write(
-                    $permalink,
-                    'PP_Custom_Status::fix_preview_link_part_two $permalink'
-                );
-                $this->get_service('debug')->write($sample, 'PP_Custom_Status::fix_preview_link_part_two $sample');
+                //Should we be doing anything at all?
             }
 
             if (!in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
