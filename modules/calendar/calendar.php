@@ -1439,8 +1439,12 @@ if (!class_exists('PP_Calendar')) {
          */
         public function generate_post_li_html($post, $post_date, $num = 0)
         {
-            $can_modify = ($this->current_user_can_modify_post($post)) ? 'can_modify' : 'read_only';
-            $cache_key  = $post->ID . $can_modify;
+            $can_modify = $this->current_user_can_modify_post($post);
+            $cache_key  = sprintf(
+                '%s%s',
+                $post->ID,
+                $can_modify ? 'can_modify' : 'read_only'
+            );
             $cache_val  = wp_cache_get($cache_key, self::$post_li_html_cache_key);
             // Because $num is pertinent to the display of the post LI, need to make sure that's what's in cache
             if (is_array($cache_val) && $cache_val['num'] == $num) {
@@ -1459,11 +1463,11 @@ if (!class_exists('PP_Calendar')) {
             if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
                 $post_publish_date_timestamp = get_post_time('U', false, $post);
-                $posts_publish_time_format   = !isset($this->module->options->posts_publish_time_format) || is_null(
-                    $this->module->options->posts_publish_time_format
+                $posts_publish_time_format   = isset($this->module->options->posts_publish_time_format) && !empty(
+                $this->module->options->posts_publish_time_format
                 )
-                    ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
-                    : $this->module->options->posts_publish_time_format;
+                    ? $this->module->options->posts_publish_time_format
+                    : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
             }
 
             $post_classes = [
@@ -1476,8 +1480,10 @@ if (!class_exists('PP_Calendar')) {
             // Only allow the user to drag the post if they have permissions to
             // or if it's in an approved post status
             // This is checked on the ajax request too.
-            if ($this->current_user_can_modify_post($post)) {
+            if ($can_modify) {
                 $post_classes[] = 'sortable';
+            } else {
+                $post_classes[] = 'read-only';
             }
 
             if (in_array($post->post_status, $this->published_statuses)) {

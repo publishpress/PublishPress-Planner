@@ -205,6 +205,10 @@ table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight .post-list li.
 
 }
 
+table#pp-calendar-view .day-unit .post-list li.read-only {
+  font-style: italic;
+}
+
 table#pp-calendar-view .day-unit .post-insert-dialog {
     background-color: #FFF;
     -moz-box-shadow: 0px 0px 40px #888;
