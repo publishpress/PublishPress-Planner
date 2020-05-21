@@ -863,9 +863,8 @@ class publishpress
             // Notifications
             // Check if we have the menu as a main menu
             if (isset($submenu['edit.php?post_type=psppnotif_workflow'])) {
-                $newSubmenu[] = $submenu['edit.php?post_type=psppnotif_workflow'][array_key_first(
-                    $submenu['edit.php?post_type=psppnotif_workflow']
-                )];
+                $firstKey = array_keys($submenu['edit.php?post_type=psppnotif_workflow'])[0];
+                $newSubmenu[] = $submenu['edit.php?post_type=psppnotif_workflow'][$firstKey];
 
                 unset($submenu['edit.php?post_type=psppnotif_workflow']);
                 remove_menu_page('edit.php?post_type=psppnotif_workflow');
