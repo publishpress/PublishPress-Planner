@@ -1796,9 +1796,15 @@ if (!class_exists('PP_Calendar')) {
         {
             $information_fields = [];
             // Post author
+            $authorsNames = apply_filters(
+                'publishpress_post_authors_names',
+                [get_the_author_meta('display_name', $post->post_author)],
+                $post->ID
+            );
+
             $information_fields['author'] = [
-                'label' => __('Author', 'publishpress'),
-                'value' => get_the_author_meta('display_name', $post->post_author),
+                'label' => _n('Author', 'Authors', count($authorsNames), 'publishpress'),
+                'value' => implode(', ', $authorsNames),
                 'type'  => 'author',
             ];
 
