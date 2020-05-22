@@ -1533,6 +1533,11 @@ if (!class_exists('PP_Calendar')) {
                     <div class="item-inner">
                         <?php $this->get_inner_information($this->get_post_information_fields($post), $post); ?>
                     </div>
+                    <?php if (!$this->current_user_can_modify_post($post)) : ?>
+                        <div class="item-inner read-only-notice" title="<?php _e('You can\'t edit or move this post'); ?>">
+                            <?php _e('Read only'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </li>
             <?php
