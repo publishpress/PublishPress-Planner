@@ -2226,25 +2226,26 @@ if (!class_exists('PP_Calendar')) {
 
             $post_type_object = get_post_type_object($post->post_type);
 
-            // Editors and admins are fine
-            if (current_user_can($post_type_object->cap->edit_others_posts, $post->ID)) {
+            // Is the current user an author of the post?
+            $userId                  = (int)wp_get_current_user()->ID;
+            $isAuthor                = apply_filters(
+                'publishpress_is_author_of_post',
+                $userId === (int)$post->post_author,
+                $userId,
+                $post->ID
+            );
+            $isPublished             = in_array($post->post_status, $this->published_statuses);
+            $canPublish              = current_user_can($post_type_object->cap->publish_posts, $post->ID);
+            $passedPublishedPostRule = (!$isPublished || ($isPublished && $canPublish));
+
+            // Published posts only can be updated by those who can publish posts.
+            // Is the user an author for the content?
+            if ($isAuthor && $passedPublishedPostRule) {
                 return true;
             }
-            // Authors and contributors can move their own stuff if it's not published
-            if (current_user_can(
-                    $post_type_object->cap->edit_post,
-                    $post->ID
-                ) && wp_get_current_user()->ID == $post->post_author && !in_array(
-                    $post->post_status,
-                    $this->published_statuses
-                )) {
-                return true;
-            }
-            // Those who can publish posts can move any of their own stuff
-            if (current_user_can(
-                    $post_type_object->cap->publish_posts,
-                    $post->ID
-                ) && wp_get_current_user()->ID == $post->post_author) {
+
+            // If the user can edit others_posts he can edits the posts depending on the status.
+            if (current_user_can($post_type_object->cap->edit_others_posts, $post->ID) && $passedPublishedPostRule) {
                 return true;
             }
 
