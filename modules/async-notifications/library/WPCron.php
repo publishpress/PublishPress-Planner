@@ -79,7 +79,7 @@ class WPCron implements QueueInterface
 
             if (false === $timestamp) {
                 // Abort.
-                error_log('PublishPress aborted a notification. Invalid timestamp for workflow ' . $workflowPost->ID);
+                error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPost->ID);
 
                 return;
             }
