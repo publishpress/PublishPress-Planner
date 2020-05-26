@@ -18,8 +18,6 @@ class Workflow
 {
     use Dependency_Injector;
 
-    const NOTIFICATION_SCHEDULE_META_KEY = '_psppre_notification_scheduled';
-
     /**
      * The post of this workflow.
      *
@@ -272,74 +270,5 @@ class Workflow
         $content['body']    = do_shortcode($content['body']);
 
         return $content;
-    }
-
-    /**
-     * Get posts related to this workflow, applying the filters, in a reverse way, not founding a workflow related
-     * to the post. Used by add-ons like Reminders.
-     *
-     * @return array
-     */
-    public function get_related_posts($args = [])
-    {
-        $workflow_meta_key = (!empty($args['meta_key_selected'])) ? $args['meta_key_selected'] : '_psppno_evtbeforepublishing';
-
-        // We need to set a distinct "notification sent" flag for each workflow and notification criteria
-        if ('_psppno_evtbeforepublishing' == $workflow_meta_key) {
-            $post_status = (!empty($args['post_status'])) ? $args['post_status'] : 'future';
-
-            $notification_suffix = "_{$post_status}_{$this->workflow_post->ID}";
-        } elseif (!empty($args['post_status'])) {
-            $notification_suffix = "-{$workflow_meta_key}_" . $args['post_status'] . "_{$this->workflow_post->ID}";
-        } else {
-            // Other notification criteria may not specify a post status
-            $notification_suffix = "-{$workflow_meta_key}_{$this->workflow_post->ID}";
-        }
-
-        $posts = [];
-
-        // Build the query
-        $query_args = [
-            'nopaging'      => true,
-            'post_status'   => $post_status,
-            'no_found_rows' => true,
-            'cache_results' => true,
-            'meta_query'    => [
-                [
-                    'key'     => static::NOTIFICATION_SCHEDULE_META_KEY . $notification_suffix,
-                    'compare' => 'NOT EXISTS',
-                ],
-            ],
-        ];
-
-        // Check if the workflow filters by post type
-        $workflowPostTypes = get_post_meta(
-            $this->workflow_post->ID,
-            Step\Event_Content\Filter\Post_Type::META_KEY_POST_TYPE
-        );
-
-        if (!empty($workflowPostTypes)) {
-            $query_args['post_type'] = $workflowPostTypes;
-        }
-
-        // Check if the workflow filters by category
-        $workflowCategories = get_post_meta(
-            $this->workflow_post->ID,
-            Step\Event_Content\Filter\Category::META_KEY_CATEGORY
-        );
-
-        if (!empty($workflowCategories)) {
-            $query_args['category__in'] = $workflowCategories;
-        }
-
-        $query = new WP_Query($query_args);
-
-        if (!empty($query->posts)) {
-            foreach ($query->posts as $post) {
-                $posts[] = $post;
-            }
-        }
-
-        return $posts;
     }
 }
