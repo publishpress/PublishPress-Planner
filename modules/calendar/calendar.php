@@ -2636,7 +2636,7 @@ if (!class_exists('PP_Calendar')) {
             // Sanitize post values
             $post_title = apply_filters(
                 'pp_calendar_after_form_submission_sanitize_title',
-                sanitize_title($_POST['pp_insert_title'])
+                sanitize_text_field($_POST['pp_insert_title'])
             );
             if (empty($post_title)) {
                 $post_title = __('Untitled', 'publishpress');
