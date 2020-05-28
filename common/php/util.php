@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! function_exists('pp_draft_or_post_title')) {
+if (!function_exists('pp_draft_or_post_title')) {
     /**
      * Copy of core's _draft_or_post_title without the filters
      *
@@ -43,29 +43,29 @@ if ( ! function_exists('pp_draft_or_post_title')) {
     {
         $post = get_post($post_id);
 
-        return ! empty($post->post_title) ? $post->post_title : __('(no title)', 'publishpress');
+        return !empty($post->post_title) ? $post->post_title : __('(no title)', 'publishpress');
     }
 }
 
-if ( ! function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
+if (!function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
     /**
      * Converts a given WordPress date format to jQuery UI Datepicker format.
+     *
+     * @param string $date_format_original
+     *
+     * @return  string
+     * @throws  InvalidArgumentException
      *
      * @author  Denison Martins <contact@denison.me>
      *
      * @see     https://codex.wordpress.org/Formatting_Date_and_Time
      * @see     http://api.jqueryui.com/datepicker
      *
-     * @throws  InvalidArgumentException
-     *
-     * @param   string  $date_format_original
-     *
-     * @return  string
      */
     function pp_convert_date_format_to_jqueryui_datepicker($date_format_original)
     {
         if (!is_string($date_format_original)) {
-            throw new \InvalidArgumentException('The supplied parameter must be a string.');
+            throw new InvalidArgumentException('The supplied parameter must be a string.');
         }
 
         if (!preg_match_all('/([\w])/', $date_format_original, $current_date_format_terms)) {
@@ -85,7 +85,7 @@ if ( ! function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
 
         return array_reduce(
             array_unique($current_date_format_terms[0]),
-            function($new_format, $format_term_needle) use ($format_terms_map) {
+            function ($new_format, $format_term_needle) use ($format_terms_map) {
                 if (!isset($format_terms_map[$format_term_needle])) {
                     return $new_format;
                 }
@@ -97,7 +97,7 @@ if ( ! function_exists('pp_convert_date_format_to_jqueryui_datepicker')) {
     }
 }
 
-if ( ! function_exists('pp_get_users_with_author_permissions')) {
+if (!function_exists('pp_get_users_with_author_permissions')) {
     function pp_get_users_with_author_permissions()
     {
         $author_permissions = [
@@ -107,12 +107,14 @@ if ( ! function_exists('pp_get_users_with_author_permissions')) {
             'contributor',
         ];
 
-        $authors = (array)get_users([
-            'role__in' => $author_permissions,
-            'fields'   => ['ID', 'display_name'],
-            'orderby'  => 'display_name',
-            'order'    => 'ASC'
-        ]);
+        $authors = (array)get_users(
+            [
+                'role__in' => $author_permissions,
+                'fields'   => ['ID', 'display_name'],
+                'orderby'  => 'display_name',
+                'order'    => 'ASC'
+            ]
+        );
 
         return apply_filters('pp_get_users_eligible_to_be_authors', $authors);
     }

@@ -30,9 +30,9 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list of IDs.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */
@@ -45,9 +45,9 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
             /**
              * Filters the list of receivers, but triggers only when the authors are selected.
              *
-             * @param array   $receivers
+             * @param array $receivers
              * @param WP_Post $workflow
-             * @param array   $args
+             * @param array $args
              */
             $receivers = apply_filters('publishpress_notif_workflow_receiver_site_admin', $receivers, $workflow, $args);
         }
@@ -59,7 +59,7 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
      * Add the respective value to the column in the workflow list
      *
      * @param array $values
-     * @param int   $post_id
+     * @param int $post_id
      *
      * @return array
      */

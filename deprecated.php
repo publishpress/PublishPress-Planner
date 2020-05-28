@@ -40,7 +40,7 @@ namespace PublishPress;
  * @package PublishPress
  * @deprecated
  */
-class Util extends \PublishPress\Legacy\Util
+class Util extends Legacy\Util
 {
 }
 
@@ -50,6 +50,6 @@ class Util extends \PublishPress\Legacy\Util
  * @package PublishPress
  * @deprecated
  */
-class Auto_loader extends \PublishPress\Legacy\Auto_loader
+class Auto_loader extends Legacy\Auto_loader
 {
 }

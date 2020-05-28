@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Traits;
 
+use Exception;
 use PublishPress\Notifications\Pimple_Container;
 
 trait Dependency_Injector
@@ -26,7 +27,7 @@ trait Dependency_Injector
      *
      * @return mix
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function get_service($service_name)
     {
@@ -34,8 +35,8 @@ trait Dependency_Injector
             $this->init_pimple();
         }
 
-        if ( ! isset($this->container[$service_name])) {
-            throw new \Exception("Service \"{$service_name}\" not found in the container");
+        if (!isset($this->container[$service_name])) {
+            throw new Exception("Service \"{$service_name}\" not found in the container");
         }
 
         return $this->container[$service_name];

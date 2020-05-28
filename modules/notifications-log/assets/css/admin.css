@@ -27,7 +27,8 @@
   line-height: 14px;
 }
 
-.publishpress_page_pp-notif-log .wp-list-table .user-id {
+.notif-log-modal .user,
+.publishpress_page_pp-notif-log .wp-list-table .user {
   color: silver;
 }
 

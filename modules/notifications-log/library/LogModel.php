@@ -170,8 +170,8 @@ class LogModel
         if (is_numeric($this->receiver)) {
             $user = get_user_by('id', $this->receiver);
 
-            if ( ! empty($user)) {
-                if ( ! empty($user->first_name)) {
+            if (!empty($user)) {
+                if (!empty($user->first_name)) {
                     $this->receiverName = $user->first_name . ' ' . $user->last_name;
                 } else {
                     $this->receiverName = $user->nickname;

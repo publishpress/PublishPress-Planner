@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Module')) {
+if (!class_exists('PP_Module')) {
     /**
      * PP_Module
      */
@@ -50,11 +50,13 @@ if ( ! class_exists('PP_Module')) {
 
         public function __construct()
         {
-            if ( ! empty($this->twigPath)) {
+            if (!empty($this->twigPath)) {
                 $loader     = new Twig_Loader_Filesystem($this->twigPath);
-                $this->twig = new Twig_Environment($loader, [
+                $this->twig = new Twig_Environment(
+                    $loader, [
                     'debug' => $this->debug,
-                ]);
+                ]
+                );
 
                 if ($this->debug) {
                     $this->twig->addExtension(new Twig_Extension_Debug());
@@ -94,7 +96,7 @@ if ( ! class_exists('PP_Module')) {
                 $module = $this;
             }
 
-            $custom_post_types  = $this->get_supported_post_types_for_module($module);
+            $custom_post_types = $this->get_supported_post_types_for_module($module);
 
             foreach ($custom_post_types as $custom_post_type => $args) {
                 $allowed_post_types[$custom_post_type] = $args->label;
@@ -108,7 +110,7 @@ if ( ! class_exists('PP_Module')) {
          * For every post type that doesn't explicitly have the 'on' value, turn it 'off'
          * If add_post_type_support() has been used anywhere (legacy support), inherit the state
          *
-         * @param array  $module_post_types Current state of post type options for the module
+         * @param array $module_post_types Current state of post type options for the module
          * @param string $post_type_support What the feature is called for post_type_support (e.g. 'pp_calendar')
          *
          * @return array $normalized_post_type_options The setting for each post type, normalized based on rules
@@ -120,8 +122,10 @@ if ( ! class_exists('PP_Module')) {
             $normalized_post_type_options = [];
             $all_post_types               = array_keys($this->get_all_post_types());
             foreach ($all_post_types as $post_type) {
-                if ((isset($module_post_types[$post_type]) && $module_post_types[$post_type] == 'on') || post_type_supports($post_type,
-                        $post_type_support)) {
+                if ((isset($module_post_types[$post_type]) && $module_post_types[$post_type] == 'on') || post_type_supports(
+                        $post_type,
+                        $post_type_support
+                    )) {
                     $normalized_post_type_options[$post_type] = 'on';
                 } else {
                     $normalized_post_type_options[$post_type] = 'off';
@@ -232,7 +236,6 @@ if ( ! class_exists('PP_Module')) {
          */
         public function get_default_post_status()
         {
-
             // Check if custom status module is enabled
             $custom_status_module = PublishPress()->custom_status->module->options;
 
@@ -246,7 +249,7 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Filter to all posts with a given post status (can be a custom status or a built-in status) and optional custom post type.
          *
-         * @param string $slug      The slug for the post status to which to filter
+         * @param string $slug The slug for the post status to which to filter
          * @param string $post_type Optional post type to which to filter
          *
          * @return an edit.php link to all posts with the given post status and, optionally, the given post type
@@ -289,9 +292,9 @@ if ( ! class_exists('PP_Module')) {
 
             // Custom statuses only handles workflow statuses
             if ($this->module_enabled('custom_status')
-                && ! in_array($status, ['publish', 'future', 'private', 'trash'])) {
+                && !in_array($status, ['publish', 'future', 'private', 'trash'])) {
                 $status_object = $publishpress->custom_status->get_custom_status_by('slug', $status);
-                if ($status_object && ! is_wp_error($status_object)) {
+                if ($status_object && !is_wp_error($status_object)) {
                     $status_friendly_name = $status_object->name;
                 }
             } elseif (array_key_exists($status, $builtin_stati)) {
@@ -309,22 +312,44 @@ if ( ! class_exists('PP_Module')) {
         public function enqueue_datepicker_resources()
         {
             // Add the first day of the week as an available variable to wp_head
-            echo '<script type="text/javascript">var pp_week_first_day="' . esc_attr(get_option('start_of_week')) . '";</script>';
+            echo '<script type="text/javascript">var pp_week_first_day="' . esc_attr(
+                    get_option('start_of_week')
+                ) . '";</script>';
 
             // Datepicker is available WordPress 3.3. We have to register it ourselves for previous versions of WordPress
             wp_enqueue_script('jquery-ui-datepicker');
 
             // Timepicker needs to come after jquery-ui-datepicker and jquery
-            wp_enqueue_script('publishpress-timepicker', PUBLISHPRESS_URL . 'common/js/jquery-ui-timepicker-addon.js',
-                ['jquery', 'jquery-ui-datepicker'], PUBLISHPRESS_VERSION, true);
-            wp_enqueue_script('publishpress-date_picker', PUBLISHPRESS_URL . 'common/js/pp_date.js',
-                ['jquery', 'jquery-ui-datepicker', 'publishpress-timepicker'], PUBLISHPRESS_VERSION, true);
+            wp_enqueue_script(
+                'publishpress-timepicker',
+                PUBLISHPRESS_URL . 'common/js/jquery-ui-timepicker-addon.js',
+                ['jquery', 'jquery-ui-datepicker'],
+                PUBLISHPRESS_VERSION,
+                true
+            );
+            wp_enqueue_script(
+                'publishpress-date_picker',
+                PUBLISHPRESS_URL . 'common/js/pp_date.js',
+                ['jquery', 'jquery-ui-datepicker', 'publishpress-timepicker'],
+                PUBLISHPRESS_VERSION,
+                true
+            );
 
             // Now styles
-            wp_enqueue_style('jquery-ui-datepicker', PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css',
-                ['wp-jquery-ui-dialog'], PUBLISHPRESS_VERSION, 'screen');
-            wp_enqueue_style('jquery-ui-theme', PUBLISHPRESS_URL . 'common/css/jquery.ui.theme.css', false,
-                PUBLISHPRESS_VERSION, 'screen');
+            wp_enqueue_style(
+                'jquery-ui-datepicker',
+                PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css',
+                ['wp-jquery-ui-dialog'],
+                PUBLISHPRESS_VERSION,
+                'screen'
+            );
+            wp_enqueue_style(
+                'jquery-ui-theme',
+                PUBLISHPRESS_URL . 'common/css/jquery.ui.theme.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'screen'
+            );
 
             wp_localize_script(
                 'publishpress-date_picker',
@@ -349,9 +374,9 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Wrapper for the get_user_meta() function so we can replace it if we need to
          *
-         * @param int    $user_id Unique ID for the user
-         * @param string $key     Key to search against
-         * @param bool   $single  Whether or not to return just one value
+         * @param int $user_id Unique ID for the user
+         * @param string $key Key to search against
+         * @param bool $single Whether or not to return just one value
          *
          * @return string|bool|array $value Whatever the stored value was
          * @since 0.7
@@ -361,7 +386,7 @@ if ( ! class_exists('PP_Module')) {
         {
             $response = null;
             $response = apply_filters('pp_get_user_meta', $response, $user_id, $key, $string);
-            if ( ! is_null($response)) {
+            if (!is_null($response)) {
                 return $response;
             }
 
@@ -371,9 +396,9 @@ if ( ! class_exists('PP_Module')) {
         /**
          * Wrapper for the update_user_meta() function so we can replace it if we need to
          *
-         * @param int               $user_id  Unique ID for the user
-         * @param string            $key      Key to search against
-         * @param string|bool|array $value    Whether or not to return just one value
+         * @param int $user_id Unique ID for the user
+         * @param string $key Key to search against
+         * @param string|bool|array $value Whether or not to return just one value
          * @param string|bool|array $previous (optional) Previous value to replace
          *
          * @return bool $success Whether we were successful in saving
@@ -384,7 +409,7 @@ if ( ! class_exists('PP_Module')) {
         {
             $response = null;
             $response = apply_filters('pp_update_user_meta', $response, $user_id, $key, $value, $previous);
-            if ( ! is_null($response)) {
+            if (!is_null($response)) {
                 return $response;
             }
 
@@ -396,7 +421,7 @@ if ( ! class_exists('PP_Module')) {
          *
          * @param string $status Whether it was a 'success' or an 'error'
          * @param string $message
-         * @param array  $data
+         * @param array $data
          *
          * @since 0.7
          *
@@ -410,7 +435,7 @@ if ( ! class_exists('PP_Module')) {
                 'message' => $message,
             ];
 
-            if ( ! is_null($data)) {
+            if (!is_null($data)) {
                 $result['data'] = $data;
             }
 
@@ -451,7 +476,7 @@ if ( ! class_exists('PP_Module')) {
             global $pagenow, $publishpress;
 
             // All of the settings views are based on admin.php and a $_GET['page'] parameter
-            if ($pagenow != 'admin.php' || ! isset($_GET['page'])) {
+            if ($pagenow != 'admin.php' || !isset($_GET['page'])) {
                 return false;
             }
 
@@ -460,7 +485,7 @@ if ( ! class_exists('PP_Module')) {
                     return true;
                 }
 
-                if ( ! isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings') {
+                if (!isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings') {
                     if (in_array($module_name, ['editorial_comments', 'notifications', 'dashboard'])) {
                         return true;
                     }
@@ -483,8 +508,8 @@ if ( ! class_exists('PP_Module')) {
          * @author ericmann
          * @compat 3.3?
          *
-         * @param int|array    $object_ids The ID(s) of the object(s) to retrieve.
-         * @param int|array    $terms      The ids of the terms to remove.
+         * @param int|array $object_ids The ID(s) of the object(s) to retrieve.
+         * @param int|array $terms The ids of the terms to remove.
          * @param string|array $taxonomies The taxonomies to retrieve terms from.
          *
          * @return bool|WP_Error Affected Term IDs
@@ -493,15 +518,15 @@ if ( ! class_exists('PP_Module')) {
         {
             global $wpdb;
 
-            if ( ! taxonomy_exists($taxonomy)) {
+            if (!taxonomy_exists($taxonomy)) {
                 return new WP_Error('invalid_taxonomy', __('Invalid Taxonomy'));
             }
 
-            if ( ! is_array($object_id)) {
+            if (!is_array($object_id)) {
                 $object_id = [$object_id];
             }
 
-            if ( ! is_array($terms)) {
+            if (!is_array($terms)) {
                 $terms = [$terms];
             }
 
@@ -511,8 +536,12 @@ if ( ! class_exists('PP_Module')) {
             if ($delete_terms) {
                 $in_delete_terms   = "'" . implode("', '", $delete_terms) . "'";
                 $in_delete_objects = "'" . implode("', '", $delete_objects) . "'";
-                $return            = $wpdb->query($wpdb->prepare("DELETE FROM $wpdb->term_relationships WHERE object_id IN ($in_delete_objects) AND term_taxonomy_id IN ($in_delete_terms)",
-                    $object_id));
+                $return            = $wpdb->query(
+                    $wpdb->prepare(
+                        "DELETE FROM $wpdb->term_relationships WHERE object_id IN ($in_delete_objects) AND term_taxonomy_id IN ($in_delete_terms)",
+                        $object_id
+                    )
+                );
                 wp_update_term_count($delete_terms, $taxonomy);
 
                 return true;
@@ -652,18 +681,18 @@ if ( ! class_exists('PP_Module')) {
              * Filters the list of users available for notification.
              *
              * @param array $users
-             * @param int   $post_id
+             * @param int $post_id
              */
             $post_id = isset($_GET['post']) ? (int)$_GET['post'] : null;
-            $users = apply_filters('publishpress_notification_users_meta_box', get_users($args), $post_id);
+            $users   = apply_filters('publishpress_notification_users_meta_box', get_users($args), $post_id);
 
-            if ( ! is_array($selected)) {
+            if (!is_array($selected)) {
                 $selected = [];
             }
 
             // Extract emails from the selected list, if there is any.
             $emails = [];
-            if ( ! empty($selected)) {
+            if (!empty($selected)) {
                 foreach ($selected as $item) {
                     if (strpos($item, '@') > 0) {
                         $emails[] = $item;
@@ -675,40 +704,46 @@ if ( ! class_exists('PP_Module')) {
              * Filters the list of roles available for notification.
              *
              * @param array $roles
-             * @param int   $post_id
+             * @param int $post_id
              */
             $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(), $post_id);
             ?>
 
-            <?php if ( ! empty($users) || ! empty($roles) || ! empty($emails)) : ?>
+            <?php if (!empty($users) || !empty($roles) || !empty($emails)) : ?>
             <select class="chosen-select" name="to_notify[]" multiple>
-                <?php if ( ! empty($roles)) : ?>
+                <?php if (!empty($roles)) : ?>
                     <optgroup label="<?php echo esc_attr__('Roles', 'publishpress'); ?>">
                         <?php foreach ($roles as $role => $data) : ?>
                             <?php $attrSelected = (in_array($role, $selected)) ? 'selected="selected"' : ''; ?>
-                            <option value="<?php echo esc_attr($role); ?>" <?php echo $attrSelected; ?>><?php echo __('Role',
-                                    'publishpress'); ?>: <?php echo $data['name']; ?></option>
+                            <option value="<?php echo esc_attr($role); ?>" <?php echo $attrSelected; ?>><?php echo __(
+                                    'Role',
+                                    'publishpress'
+                                ); ?>: <?php echo $data['name']; ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 <?php endif; ?>
-                <?php if ( ! empty($users)) : ?>
+                <?php if (!empty($users)) : ?>
                     <optgroup label="<?php echo __('Users', 'publishpress'); ?>">
                         <?php foreach ($users as $user) : ?>
                             <?php $attrSelected = (in_array($user->ID, $selected)) ? 'selected="selected"' : ''; ?>
-                            <option value="<?php echo esc_attr($user->ID); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
+                            <option value="<?php echo esc_attr(
+                                $user->ID
+                            ); ?>" <?php echo $attrSelected; ?>><?php echo $user->display_name; ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 <?php endif; ?>
-                <?php if ( ! empty($emails)) : ?>
+                <?php if (!empty($emails)) : ?>
                     <optgroup label="<?php echo __('E-mails', 'publishpress'); ?>">
                         <?php foreach ($emails as $email) : ?>
                             <?php $attrSelected = (in_array($email, $selected)) ? 'selected="selected"' : ''; ?>
-                            <option value="<?php echo esc_attr($email); ?>" <?php echo $attrSelected; ?>><?php echo $email; ?></option>
+                            <option value="<?php echo esc_attr(
+                                $email
+                            ); ?>" <?php echo $attrSelected; ?>><?php echo $email; ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 <?php endif; ?>
             </select>
-            <?php endif; ?>
+        <?php endif; ?>
             <?php
         }
 
@@ -734,7 +769,7 @@ if ( ! class_exists('PP_Module')) {
         {
             $screen = get_current_screen();
 
-            if ( ! method_exists($screen, 'add_help_tab')) {
+            if (!method_exists($screen, 'add_help_tab')) {
                 return;
             }
 
@@ -779,7 +814,7 @@ if ( ! class_exists('PP_Module')) {
                     if (is_array($unencoded_array)) {
                         foreach ($unencoded_array as $key => $value) {
                             // html_entity_decode only works on strings but sometimes we store nested arrays
-                            if ( ! is_array($value)) {
+                            if (!is_array($value)) {
                                 $description_args[$key] = html_entity_decode($value, ENT_QUOTES);
                             } else {
                                 $description_args[$key] = $value;
@@ -791,9 +826,13 @@ if ( ! class_exists('PP_Module')) {
                 }
 
                 $new_description = $this->get_encoded_description($description_args);
-                wp_update_term($term->term_id, $taxonomy, [
-                    'description' => $new_description,
-                ]);
+                wp_update_term(
+                    $term->term_id,
+                    $taxonomy,
+                    [
+                        'description' => $new_description,
+                    ]
+                );
             }
         }
 

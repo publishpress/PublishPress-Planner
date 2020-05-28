@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Workflow\Step;
 
+use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\Metadata;
 
@@ -70,12 +71,12 @@ class Base
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function render_metabox_section($html)
     {
         if (empty($this->twig_template)) {
-            throw new \Exception('Undefined twig template for the workflow metabox: ' . $this->name);
+            throw new Exception('Undefined twig template for the workflow metabox: ' . $this->name);
         }
 
         $template_context = [
@@ -104,7 +105,7 @@ class Base
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $workflow
      */
     public function save_metabox_data($id, $workflow)
@@ -121,7 +122,7 @@ class Base
      */
     protected function get_filters($filters = [])
     {
-        if ( ! empty($this->cache_filters)) {
+        if (!empty($this->cache_filters)) {
             return $this->cache_filters;
         }
 

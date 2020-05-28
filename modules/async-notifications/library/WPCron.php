@@ -23,6 +23,7 @@
 
 namespace PublishPress\AsyncNotifications;
 
+use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -43,15 +44,15 @@ class WPCron implements QueueInterface
      * @param $content
      * @param $channel
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel)
     {
-        if ( ! is_array($receivers)) {
+        if (!is_array($receivers)) {
             $receivers = [$receivers];
         }
 
-        if ( ! empty($receivers)) {
+        if (!empty($receivers)) {
             $baseData = [
                 // workflow_post_id
                 $workflowPost->ID,
@@ -69,8 +70,12 @@ class WPCron implements QueueInterface
                 $channel,
             ];
 
-            $timestamp = apply_filters('publishpress_notif_async_timestamp', time(), $workflowPost->ID,
-                $actionArgs['post']->ID);
+            $timestamp = apply_filters(
+                'publishpress_notif_async_timestamp',
+                time(),
+                $workflowPost->ID,
+                $actionArgs['post']->ID
+            );
 
             if (false === $timestamp) {
                 // Abort.
@@ -96,19 +101,31 @@ class WPCron implements QueueInterface
 
                 /**
                  * @param WP_Post $workflow_post
-                 * @param array   $action_args
-                 * @param string  $channel
-                 * @param string  $subject
-                 * @param string  $body
-                 * @param array   $deliveryResult
+                 * @param array $action_args
+                 * @param string $channel
+                 * @param string $subject
+                 * @param string $body
+                 * @param array $deliveryResult
                  */
                 $actionArgs['async'] = 1;
-                do_action('publishpress_notif_notification_sending', $workflowPost, $actionArgs, $channel, $subject, $body,
-                    $deliveryResult);
+                do_action(
+                    'publishpress_notif_notification_sending',
+                    $workflowPost,
+                    $actionArgs,
+                    $channel,
+                    $subject,
+                    $body,
+                    $deliveryResult
+                );
             }
 
-            do_action('publishpress_enqueue_notification', $workflowPost->ID, $actionArgs['action'],
-                $actionArgs['post']->ID, $actionArgs);
+            do_action(
+                'publishpress_enqueue_notification',
+                $workflowPost->ID,
+                $actionArgs['action'],
+                $actionArgs['post']->ID,
+                $actionArgs
+            );
         }
     }
 
@@ -119,7 +136,7 @@ class WPCron implements QueueInterface
      * @param $timestamp
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      *
      */
     protected function scheduleEvent($data, $timestamp)

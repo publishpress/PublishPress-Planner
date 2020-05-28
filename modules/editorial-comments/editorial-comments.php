@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ( ! class_exists('PP_Editorial_Comments')) {
+if (!class_exists('PP_Editorial_Comments')) {
     /**
      * class PP_Editorial_Comments
      * Threaded commenting in the admin for discussion between writers and editors
@@ -64,11 +64,15 @@ if ( ! class_exists('PP_Editorial_Comments')) {
                 'settings_help_tab'     => [
                     'id'      => 'pp-editorial-comments-overview',
                     'title'   => __('Overview', 'publishpress'),
-                    'content' => __('<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>',
-                        'publishpress'),
+                    'content' => __(
+                        '<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>',
+                        'publishpress'
+                    ),
                 ],
-                'settings_help_sidebar' => __('<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>',
-                    'publishpress'),
+                'settings_help_sidebar' => __(
+                    '<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>',
+                    'publishpress'
+                ),
                 'general_options'       => true,
             ];
 
@@ -117,18 +121,28 @@ if ( ! class_exists('PP_Editorial_Comments')) {
 
             $post_type            = $this->get_current_post_type();
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            if ( ! in_array($post_type, $supported_post_types)) {
+            if (!in_array($post_type, $supported_post_types)) {
                 return;
             }
 
-            if ( ! in_array($pagenow, ['post.php', 'page.php', 'post-new.php', 'page-new.php'])) {
+            if (!in_array($pagenow, ['post.php', 'page.php', 'post-new.php', 'page-new.php'])) {
                 return;
             }
 
-            wp_enqueue_script('publishpress-editorial-comments', $this->module_url . 'lib/editorial-comments.js',
-                ['jquery', 'post'], PUBLISHPRESS_VERSION, true);
-            wp_enqueue_style('publishpress-editorial-comments-css', $this->module_url . 'lib/editorial-comments.css',
-                false, PUBLISHPRESS_VERSION, 'all');
+            wp_enqueue_script(
+                'publishpress-editorial-comments',
+                $this->module_url . 'lib/editorial-comments.js',
+                ['jquery', 'post'],
+                PUBLISHPRESS_VERSION,
+                true
+            );
+            wp_enqueue_style(
+                'publishpress-editorial-comments-css',
+                $this->module_url . 'lib/editorial-comments.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'all'
+            );
 
             $thread_comments = (int)get_option('thread_comments'); ?>
             <script type="text/javascript">
@@ -147,8 +161,14 @@ if ( ! class_exists('PP_Editorial_Comments')) {
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
             foreach ($supported_post_types as $post_type) {
-                add_meta_box('publishpress-editorial-comments', __('Editorial Comments', 'publishpress'),
-                    [$this, 'editorial_comments_meta_box'], $post_type, 'normal', 'high');
+                add_meta_box(
+                    'publishpress-editorial-comments',
+                    __('Editorial Comments', 'publishpress'),
+                    [$this, 'editorial_comments_meta_box'],
+                    $post_type,
+                    'normal',
+                    'high'
+                );
             }
         }
 
@@ -162,9 +182,14 @@ if ( ! class_exists('PP_Editorial_Comments')) {
         public function get_editorial_comment_count($id)
         {
             global $wpdb;
-            $comment_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_type = %s",
-                $id, self::comment_type));
-            if ( ! $comment_count) {
+            $comment_count = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_type = %s",
+                    $id,
+                    self::comment_type
+                )
+            );
+            if (!$comment_count) {
                 $comment_count = 0;
             }
 
@@ -179,7 +204,7 @@ if ( ! class_exists('PP_Editorial_Comments')) {
 
                 <?php
                 // Show comments only if not a new post
-                if ( ! in_array($post->post_status, ['new', 'auto-draft'])) :
+                if (!in_array($post->post_status, ['new', 'auto-draft'])) :
 
                     // Unused since switched to wp_list_comments
                     $editorial_comments = pp_get_comments_plus(
@@ -211,8 +236,10 @@ if ( ! class_exists('PP_Editorial_Comments')) {
                 <?php
                 else :
                     ?>
-                    <p><?php _e('You can add editorial comments to a post once you\'ve saved it for the first time.',
-                            'publishpress'); ?></p>
+                    <p><?php _e(
+                            'You can add editorial comments to a post once you\'ve saved it for the first time.',
+                            'publishpress'
+                        ); ?></p>
                 <?php
                 endif; ?>
                 <div class="clear"></div>
@@ -228,8 +255,10 @@ if ( ! class_exists('PP_Editorial_Comments')) {
         {
             global $post; ?>
             <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;"
-               class="button hide-if-no-js" title=" <?php _e('Add an editorial comment',
-                'publishpress'); ?>"><span><?php _e('Add an editorial comment', 'publishpress'); ?></span></a>
+               class="button hide-if-no-js" title=" <?php _e(
+                'Add an editorial comment',
+                'publishpress'
+            ); ?>"><span><?php _e('Add an editorial comment', 'publishpress'); ?></span></a>
 
             <!-- Reply form, hidden until reply clicked by user -->
             <div id="pp-replyrow" style="display: none;">
@@ -282,8 +311,10 @@ if ( ! class_exists('PP_Editorial_Comments')) {
             $actions_string = '';
             // Comments can only be added by users that can edit the post
             if (current_user_can('edit_post', $comment->comment_post_ID)) {
-                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . $comment->comment_ID . '\',\'' . $comment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . __('Reply to this comment',
-                        'publishpress') . '" href="#">' . __('Reply', 'publishpress') . '</a>';
+                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . $comment->comment_ID . '\',\'' . $comment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . __(
+                        'Reply to this comment',
+                        'publishpress'
+                    ) . '" href="#">' . __('Reply', 'publishpress') . '</a>';
 
                 $sep = ' ';
                 $i   = 0;
@@ -298,18 +329,22 @@ if ( ! class_exists('PP_Editorial_Comments')) {
                 }
             } ?>
 
-            <li id="comment-<?php echo esc_attr($comment->comment_ID); ?>" <?php comment_class([
-                'comment-item',
-                wp_get_comment_status($comment->comment_ID),
-            ]); ?>>
+            <li id="comment-<?php echo esc_attr($comment->comment_ID); ?>" <?php comment_class(
+                [
+                    'comment-item',
+                    wp_get_comment_status($comment->comment_ID),
+                ]
+            ); ?>>
 
                 <?php echo get_avatar($comment->comment_author_email, 50); ?>
 
                 <div class="post-comment-wrap">
                     <h5 class="comment-meta">
                         <?php printf(
-                            __('<span class="comment-author">%1$s</span><span class="meta"> said on %2$s at %3$s</span>',
-                                'publishpress'),
+                            __(
+                                '<span class="comment-author">%1$s</span><span class="meta"> said on %2$s at %3$s</span>',
+                                'publishpress'
+                            ),
                             comment_author_email_link($comment->comment_author),
                             get_comment_date(get_option('date_format')),
                             get_comment_time()
@@ -332,9 +367,13 @@ if ( ! class_exists('PP_Editorial_Comments')) {
             global $current_user, $user_ID, $wpdb;
 
             // Verify nonce
-            if ( ! wp_verify_nonce($_POST['_nonce'], 'comment')) {
-                die(__("Nonce check failed. Please ensure you're supposed to be adding editorial comments.",
-                    'publishpress'));
+            if (!wp_verify_nonce($_POST['_nonce'], 'comment')) {
+                die(
+                __(
+                    "Nonce check failed. Please ensure you're supposed to be adding editorial comments.",
+                    'publishpress'
+                )
+                );
             }
 
             // Get user info
@@ -346,20 +385,23 @@ if ( ! class_exists('PP_Editorial_Comments')) {
 
             // Only allow the comment if user can edit post
             // @TODO: allow contributers to add comments as well (?)
-            if ( ! current_user_can('edit_post', $post_id)) {
-                die(__('Sorry, you don\'t have the privileges to add editorial comments. Please talk to your Administrator.',
-                    'publishpress'));
+            if (!current_user_can('edit_post', $post_id)) {
+                die(
+                __(
+                    'Sorry, you don\'t have the privileges to add editorial comments. Please talk to your Administrator.',
+                    'publishpress'
+                )
+                );
             }
 
             // Verify that comment was actually entered
             $comment_content = trim($_POST['content']);
-            if ( ! $comment_content) {
+            if (!$comment_content) {
                 die(__("Please enter a comment.", 'publishpress'));
             }
 
             // Check that we have a post_id and user logged in
             if ($post_id && $current_user) {
-
                 // set current time
                 $time = current_time('mysql', $gmt = 0);
 
@@ -369,18 +411,21 @@ if ( ! class_exists('PP_Editorial_Comments')) {
                     'comment_author'       => esc_sql($current_user->display_name),
                     'comment_author_email' => esc_sql($current_user->user_email),
                     'comment_author_url'   => esc_sql($current_user->user_url),
-                    'comment_content'      => wp_kses($comment_content, [
-                        'a'          => ['href' => [], 'title' => []],
-                        'b'          => [],
-                        'i'          => [],
-                        'strong'     => [],
-                        'em'         => [],
-                        'u'          => [],
-                        'del'        => [],
-                        'blockquote' => [],
-                        'sub'        => [],
-                        'sup'        => [],
-                    ]),
+                    'comment_content'      => wp_kses(
+                        $comment_content,
+                        [
+                            'a'          => ['href' => [], 'title' => []],
+                            'b'          => [],
+                            'i'          => [],
+                            'strong'     => [],
+                            'em'         => [],
+                            'u'          => [],
+                            'del'        => [],
+                            'blockquote' => [],
+                            'sub'        => [],
+                            'sup'        => [],
+                        ]
+                    ),
                     'comment_type'         => self::comment_type,
                     'comment_parent'       => (int)$parent,
                     'user_id'              => (int)$user_ID,
@@ -411,12 +456,14 @@ if ( ! class_exists('PP_Editorial_Comments')) {
                 $comment_list_item = ob_get_contents();
                 ob_end_clean();
 
-                $response->add([
-                    'what'   => 'comment',
-                    'id'     => $comment_id,
-                    'data'   => $comment_list_item,
-                    'action' => ($parent) ? 'reply' : 'new',
-                ]);
+                $response->add(
+                    [
+                        'what'   => 'comment',
+                        'id'     => $comment_id,
+                        'data'   => $comment_list_item,
+                        'action' => ($parent) ? 'reply' : 'new',
+                    ]
+                );
 
                 $response->send();
             } else {
@@ -432,11 +479,19 @@ if ( ! class_exists('PP_Editorial_Comments')) {
          */
         public function register_settings()
         {
-            add_settings_section($this->module->options_group_name . '_general', false, '__return_false',
-                $this->module->options_group_name);
-            add_settings_field('post_types', __('Enable for these post types:', 'publishpress'),
-                [$this, 'settings_post_types_option'], $this->module->options_group_name,
-                $this->module->options_group_name . '_general');
+            add_settings_section(
+                $this->module->options_group_name . '_general',
+                false,
+                '__return_false',
+                $this->module->options_group_name
+            );
+            add_settings_field(
+                'post_types',
+                __('Enable for these post types:', 'publishpress'),
+                [$this, 'settings_post_types_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -457,13 +512,14 @@ if ( ! class_exists('PP_Editorial_Comments')) {
          */
         public function settings_validate($new_options)
         {
-
             // Whitelist validation for the post type options
-            if ( ! isset($new_options['post_types'])) {
+            if (!isset($new_options['post_types'])) {
                 $new_options['post_types'] = [];
             }
-            $new_options['post_types'] = $this->clean_post_type_options($new_options['post_types'],
-                $this->module->post_type_support);
+            $new_options['post_types'] = $this->clean_post_type_options(
+                $new_options['post_types'],
+                $this->module->post_type_support
+            );
 
             return $new_options;
         }
@@ -482,18 +538,18 @@ if ( ! class_exists('PP_Editorial_Comments')) {
         /**
          * If the PublishPress Calendar is enabled, add the editorial comment count to the post overlay.
          *
-         * @since 0.7
-         * @uses  apply_filters('pp_calendar_item_information_fields')
-         *
          * @param array $calendar_fields Additional data fields to include on the calendar
-         * @param int   $post_id         Unique ID for the post data we're building
+         * @param int $post_id Unique ID for the post data we're building
          *
          * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
+         * @uses  apply_filters('pp_calendar_item_information_fields')
+         *
+         * @since 0.7
          */
         public function filter_calendar_item_fields($calendar_fields, $post_id)
         {
             // Make sure we respect which post type we're on
-            if ( ! in_array(get_post_type($post_id), $this->get_post_types_for_module($this->module))) {
+            if (!in_array(get_post_type($post_id), $this->get_post_types_for_module($this->module))) {
                 return $calendar_fields;
             }
 
@@ -543,7 +599,7 @@ function pp_get_comments_plus($args = '')
     // $args can be whatever, only use the args defined in defaults to compute the key
     $key          = md5(serialize(compact(array_keys($defaults))));
     $last_changed = wp_cache_get('last_changed', 'comment');
-    if ( ! $last_changed) {
+    if (!$last_changed) {
         $last_changed = time();
         wp_cache_set('last_changed', $last_changed, 'comment');
     }
@@ -561,7 +617,7 @@ function pp_get_comments_plus($args = '')
         $approved = "comment_approved = '1'";
     } elseif ('spam' == $status) {
         $approved = "comment_approved = 'spam'";
-    } elseif ( ! empty($status)) {
+    } elseif (!empty($status)) {
         $approved = $wpdb->prepare("comment_approved = %s", $status);
     } else {
         $approved = "(comment_approved = '0' OR comment_approved = '1')";
@@ -569,7 +625,7 @@ function pp_get_comments_plus($args = '')
 
     $order = ('ASC' == $order) ? 'ASC' : 'DESC';
 
-    if ( ! empty($orderby)) {
+    if (!empty($orderby)) {
         $ordersby = is_array($orderby) ? $orderby : preg_split('/[,\s]/', $orderby);
         $ordersby = array_intersect(
             $ordersby,
@@ -599,7 +655,7 @@ function pp_get_comments_plus($args = '')
     $number = absint($number);
     $offset = absint($offset);
 
-    if ( ! empty($number)) {
+    if (!empty($number)) {
         if ($offset) {
             $number = 'LIMIT ' . $offset . ',' . $number;
         } else {
@@ -611,7 +667,7 @@ function pp_get_comments_plus($args = '')
 
     $post_where = '';
 
-    if ( ! empty($post_id)) {
+    if (!empty($post_id)) {
         $post_where .= $wpdb->prepare('comment_post_ID = %d AND ', $post_id);
     }
     if ('' !== $author_email) {
@@ -622,7 +678,7 @@ function pp_get_comments_plus($args = '')
     }
     if ('comment' == $type) {
         $post_where .= "comment_type = '' AND ";
-    } elseif ( ! empty($type)) {
+    } elseif (!empty($type)) {
         $post_where .= $wpdb->prepare('comment_type = %s AND ', $type);
     }
     if ('' !== $parent) {
@@ -632,7 +688,9 @@ function pp_get_comments_plus($args = '')
         $post_where .= $wpdb->prepare('user_id = %d AND ', $user_id);
     }
 
-    $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE $post_where $approved ORDER BY $orderby $order $number");
+    $comments = $wpdb->get_results(
+        "SELECT * FROM $wpdb->comments WHERE $post_where $approved ORDER BY $orderby $order $number"
+    );
     wp_cache_add($cache_key, $comments, 'comment');
 
     return $comments;

@@ -28,15 +28,14 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\NotificationsLog\Log;
 use PublishPress\Legacy\Auto_loader;
+use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\NotificationsLog\Log;
 use PublishPress\NotificationsLog\LogHandler;
 use PublishPress\NotificationsLog\LogListTable;
-use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\NotificationsLog\LogModel;
 
-if ( ! class_exists('PP_Notifications_Log')) {
-
+if (!class_exists('PP_Notifications_Log')) {
     /**
      * class PP_Notifications_Log
      */
@@ -83,10 +82,14 @@ if ( ! class_exists('PP_Notifications_Log')) {
             ];
 
             // Apply a filter to the default options
-            $args['default_options'] = apply_filters('pp_notifications_queue_default_options',
-                $args['default_options']);
-            $args['default_options'] = apply_filters('pp_notifications_queue_default_options',
-                $args['default_options']);
+            $args['default_options'] = apply_filters(
+                'pp_notifications_queue_default_options',
+                $args['default_options']
+            );
+            $args['default_options'] = apply_filters(
+                'pp_notifications_queue_default_options',
+                $args['default_options']
+            );
             $this->module            = $publishpress->register_module(
                 PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
                 $args
@@ -105,29 +108,39 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 return;
             }
 
-            $function = new Twig_SimpleFunction('settings_fields', function () {
+            $function = new Twig_SimpleFunction(
+                'settings_fields', function () {
                 return settings_fields($this->module->options_group_name);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('nonce_field', function ($context) {
+            $function = new Twig_SimpleFunction(
+                'nonce_field', function ($context) {
                 return wp_nonce_field($context);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('submit_button', function () {
+            $function = new Twig_SimpleFunction(
+                'submit_button', function () {
                 return submit_button();
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('__', function ($id) {
+            $function = new Twig_SimpleFunction(
+                '__', function ($id) {
                 return __($id, 'publishpress');
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('do_settings_sections', function ($section) {
+            $function = new Twig_SimpleFunction(
+                'do_settings_sections', function ($section) {
                 return do_settings_sections($section);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
             $this->twig_configured = true;
@@ -155,7 +168,6 @@ if ( ! class_exists('PP_Notifications_Log')) {
          */
         public function print_configure_view()
         {
-
         }
 
         /**
@@ -171,11 +183,21 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 wp_enqueue_script('jquery-ui-dialog');
                 wp_enqueue_style('wp-jquery-ui-dialog');
 
-                wp_enqueue_style('pressshack-admin-css', PUBLISHPRESS_URL . 'common/css/pressshack-admin.css', false,
-                    PUBLISHPRESS_VERSION, 'screen');
+                wp_enqueue_style(
+                    'pressshack-admin-css',
+                    PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
+                    false,
+                    PUBLISHPRESS_VERSION,
+                    'screen'
+                );
 
-                wp_enqueue_style('pp-admin-css', PUBLISHPRESS_URL . 'common/css/publishpress-admin.css', false,
-                    PUBLISHPRESS_VERSION, 'screen');
+                wp_enqueue_style(
+                    'pp-admin-css',
+                    PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
+                    false,
+                    PUBLISHPRESS_VERSION,
+                    'screen'
+                );
 
                 wp_enqueue_script(
                     'publishpress-notifications-log',
@@ -225,8 +247,6 @@ if ( ! class_exists('PP_Notifications_Log')) {
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-
-
             }
         }
 
@@ -256,8 +276,15 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
                 <?php if ($logCount > 0) : ?>
                     <a href="/wp-admin/admin.php?page=pp-notif-log&orderby=date&order=desc&post_id=<?php echo $post->ID; ?>"
-                       class="view_log"><?php printf(_n('%s notification found.', '%s notifications found.',
-                            $logCount, 'publishpress'), $logCount); ?></a>
+                       class="view_log"><?php printf(
+                            _n(
+                                '%s notification found.',
+                                '%s notifications found.',
+                                $logCount,
+                                'publishpress'
+                            ),
+                            $logCount
+                        ); ?></a>
                 <?php else: ?>
                     <p class="no-workflows"><?php echo __('No notifications found.', 'publishpress'); ?></p>
                 <?php endif; ?>
@@ -281,31 +308,39 @@ if ( ! class_exists('PP_Notifications_Log')) {
             $body,
             $deliveryResult
         ) {
-            if ( ! empty($deliveryResult)) {
+            if (!empty($deliveryResult)) {
                 $post = $actionArgs['post'];
                 foreach ($deliveryResult as $receiver => $result) {
                     $error = '';
 
                     if (true !== $result) {
-                        $error = apply_filters('publishpress_notif_error_log', $error, $result, $receiver, $subject,
-                            $body);
+                        $error = apply_filters(
+                            'publishpress_notif_error_log',
+                            $error,
+                            $result,
+                            $receiver,
+                            $subject,
+                            $body
+                        );
                     }
 
                     $async = isset($actionArgs['async']) ? (bool)$actionArgs['async'] : false;
 
-                    $this->logHandler->register([
-                        'post_id'     => $post->ID,
-                        'content'     => maybe_serialize(['subject' => $subject, 'body' => $body]),
-                        'workflow_id' => $workflowPost->ID,
-                        'action'      => $actionArgs['action'],
-                        'old_status'  => $actionArgs['old_status'],
-                        'new_status'  => $actionArgs['new_status'],
-                        'channel'     => $channel,
-                        'receiver'    => $receiver,
-                        'success'     => $result,
-                        'error'       => $error,
-                        'async'       => $async,
-                    ]);
+                    $this->logHandler->register(
+                        [
+                            'post_id'     => $post->ID,
+                            'content'     => maybe_serialize(['subject' => $subject, 'body' => $body]),
+                            'workflow_id' => $workflowPost->ID,
+                            'action'      => $actionArgs['action'],
+                            'old_status'  => $actionArgs['old_status'],
+                            'new_status'  => $actionArgs['new_status'],
+                            'channel'     => $channel,
+                            'receiver'    => $receiver,
+                            'success'     => $result,
+                            'error'       => $error,
+                            'async'       => $async,
+                        ]
+                    );
                 }
             }
         }
@@ -383,7 +418,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
         public function ajaxSearchPost()
         {
-            if ( ! wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
+            if (!wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
                 echo '401';
 
                 die();
@@ -412,7 +447,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 'results' => [],
             ];
 
-            if ( ! empty($posts)) {
+            if (!empty($posts)) {
                 foreach ($posts as $post) {
                     $output['results'][] = [
                         'id'   => $post->ID,
@@ -431,7 +466,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
         public function ajaxSearchWorkflow()
         {
-            if ( ! wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
+            if (!wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
                 echo '401';
 
                 die();
@@ -460,7 +495,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 'results' => [],
             ];
 
-            if ( ! empty($posts)) {
+            if (!empty($posts)) {
                 foreach ($posts as $post) {
                     $output['results'][] = [
                         'id'   => $post->ID,
@@ -479,7 +514,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
         public function ajaxViewNotification()
         {
-            if ( ! wp_verify_nonce($_REQUEST['nonce'], 'notifications-log-admin')) {
+            if (!wp_verify_nonce($_REQUEST['nonce'], 'notifications-log-admin')) {
                 echo '401';
 
                 die();
@@ -489,7 +524,7 @@ if ( ! class_exists('PP_Notifications_Log')) {
 
             $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
 
-            if ( ! empty($id)) {
+            if (!empty($id)) {
                 $log = new LogModel($id);
                 ob_start();
                 ?>
@@ -519,14 +554,14 @@ if ( ! class_exists('PP_Notifications_Log')) {
                         <td><?php echo $log->action; ?></td>
                     </tr>
 
-                    <?php if ( ! empty($log->oldStatus)) : ?>
+                    <?php if (!empty($log->oldStatus)) : ?>
                         <tr>
                             <th><?php echo __('Old Status', 'publishpress'); ?>:</th>
                             <td><?php echo $log->oldStatus; ?></td>
                         </tr>
                     <?php endif; ?>
 
-                    <?php if ( ! empty($log->newStatus)) : ?>
+                    <?php if (!empty($log->newStatus)) : ?>
                         <tr>
                             <th><?php echo __('New Status', 'publishpress'); ?>:</th>
                             <td><?php echo $log->newStatus; ?></td>
@@ -545,7 +580,18 @@ if ( ! class_exists('PP_Notifications_Log')) {
                         <td>
                             <?php
                             if ($log->receiverIsUser()) {
-                                echo $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                                $output = '';
+                                if ($log->channel === 'email') {
+                                    $user   = get_user_by('ID', $log->receiver);
+                                    $output .= sprintf('<div>%s</div>', $user->user_email);
+                                }
+                                $output .= sprintf(
+                                    '<div class="user">%s (id:%d)</div>',
+                                    $log->receiverName,
+                                    $log->receiver
+                                );
+
+                                echo $output;
                             } else {
                                 echo $log->receiver;
                             }
@@ -566,8 +612,10 @@ if ( ! class_exists('PP_Notifications_Log')) {
                     <tr class="<?php echo $log->success ? 'success' : 'error'; ?>">
                         <th><?php echo __('Result', 'publishpress'); ?>:</th>
                         <td>
-                            <?php echo $log->success ? __('Success', 'publishpress') : __('Error',
-                                    'publishpress') . '<br>' . $log->error; ?>
+                            <?php echo $log->success ? __('Success', 'publishpress') : __(
+                                    'Error',
+                                    'publishpress'
+                                ) . '<br>' . $log->error; ?>
 
                             <?php if ($log->async) : ?>
                                 <?php echo __(' (Scheduled in the cron)', 'publishpress'); ?>
@@ -578,8 +626,10 @@ if ( ! class_exists('PP_Notifications_Log')) {
                 <?php
                 $output = ob_get_clean();
             } else {
-                $output = '<p><div class="notice notice-error">' . __('Notification log not found.',
-                        'publishpress') . '</div></p>';
+                $output = '<p><div class="notice notice-error">' . __(
+                        'Notification log not found.',
+                        'publishpress'
+                    ) . '</div></p>';
             }
 
             echo $output;

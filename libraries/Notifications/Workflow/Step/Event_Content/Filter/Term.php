@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event_Content\Filter;
 
+use PP_Notifications;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Filter_Interface;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Taxonomy as Step_Taxonomy;
 
@@ -38,19 +39,6 @@ class Term extends Base implements Filter_Interface
     }
 
     /**
-     * @param $a
-     * @param $b
-     */
-    protected function sort_options($a, $b)
-    {
-        if ($a['label'] == $b['label']) {
-            return 0;
-        }
-
-        return ($a['label'] < $b['label']) ? -1 : 1;
-    }
-
-    /**
      * Returns a list of post types in the options format
      *
      * @return array
@@ -60,18 +48,20 @@ class Term extends Base implements Filter_Interface
         $get_terms_to_exclude = [];
 
         if (class_exists('\PP_Notifications')) {
-            $blacklisted_taxonomies = \PP_Notifications::getOption('blacklisted_taxonomies');
-            if ( ! empty( $blacklisted_taxonomies ) ) {
+            $blacklisted_taxonomies = PP_Notifications::getOption('blacklisted_taxonomies');
+            if (!empty($blacklisted_taxonomies)) {
                 $get_terms_to_exclude = array_filter(explode(',', $blacklisted_taxonomies));
             }
         }
 
-        $terms = get_terms([
-            'hide_empty' => false,
-            'taxonomy'   => array_keys(array_diff(get_taxonomies(), $get_terms_to_exclude)),
-        ]);
+        $terms = get_terms(
+            [
+                'hide_empty' => false,
+                'taxonomy'   => array_keys(array_diff(get_taxonomies(), $get_terms_to_exclude)),
+            ]
+        );
 
-        $metadata = (array) $this->get_metadata(static::META_KEY_TERM);
+        $metadata = (array)$this->get_metadata(static::META_KEY_TERM);
 
         $options = [];
         foreach ($terms as $term) {
@@ -90,12 +80,12 @@ class Term extends Base implements Filter_Interface
     /**
      * Function to save the metadata from the metabox
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
-        if ( ! isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term'])) {
+        if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term'])) {
             $values = [];
         } else {
             $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['term'];
@@ -116,7 +106,7 @@ class Term extends Base implements Filter_Interface
     public function get_run_workflow_query_args($query_args, $action_args)
     {
         // If post is not set, we ignore.
-        if ( ! isset($action_args['post']) || ! is_object($action_args['post'])) {
+        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
             return parent::get_run_workflow_query_args($query_args, $action_args);
         }
 
@@ -125,7 +115,7 @@ class Term extends Base implements Filter_Interface
         $terms    = wp_get_post_terms($action_args['post']->ID, $taxonomies);
         $term_ids = [];
 
-        if ( ! empty($terms)) {
+        if (!empty($terms)) {
             foreach ($terms as $term) {
                 $term_ids[] = $term->term_id;
             }
@@ -167,5 +157,18 @@ class Term extends Base implements Filter_Interface
         ];
 
         return parent::get_run_workflow_query_args($query_args, $action_args);
+    }
+
+    /**
+     * @param $a
+     * @param $b
+     */
+    protected function sort_options($a, $b)
+    {
+        if ($a['label'] == $b['label']) {
+            return 0;
+        }
+
+        return ($a['label'] < $b['label']) ? -1 : 1;
     }
 }

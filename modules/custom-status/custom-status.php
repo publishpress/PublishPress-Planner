@@ -964,7 +964,7 @@ if (!class_exists('PP_Custom_Status')) {
                 $post_type_obj   = get_post_type_object($this->get_current_post_type());
                 $custom_statuses = $this->get_custom_statuses();
                 $selected        = $this->get_default_custom_status()->slug;
-                $selected_name   = $this->get_default_custom_status()->name;;
+                $selected_name   = $this->get_default_custom_status()->name;
 
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
 
@@ -2207,21 +2207,13 @@ if (!class_exists('PP_Custom_Status')) {
         {
             global $pagenow;
 
-
             if (is_int($post)) {
                 $postId = $post;
-                $this->get_service('debug')->write($postId, 'PP_Custom_Status::fix_preview_link_part_two $postId');
                 $post = get_post($post);
             }
 
-            //Should we be doing anything at all?
             if (!is_object($post)) {
-                $this->get_service('debug')->write($post, 'PP_Custom_Status::fix_preview_link_part_two $post');
-                $this->get_service('debug')->write(
-                    $permalink,
-                    'PP_Custom_Status::fix_preview_link_part_two $permalink'
-                );
-                $this->get_service('debug')->write($sample, 'PP_Custom_Status::fix_preview_link_part_two $sample');
+                //Should we be doing anything at all?
             }
 
             if (!in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
@@ -2560,24 +2552,65 @@ if (!class_exists('PP_Custom_Status')) {
          */
         public function fix_publish_date_after_publish($newStatus, $oldStatus, $post)
         {
-            if ($oldStatus !== 'publish' && $newStatus === 'publish') {
-                $currentDateTime = current_datetime();
-                $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
+            try {
+                if ($oldStatus !== 'publish' && $newStatus === 'publish') {
+                    if (!function_exists('current_datetime')) {
+                        include_once ABSPATH . '/wp-includes/functions.php';
+                    }
 
-                if ($currentDateTime !== $post->post_date) {
-                    global $wpdb;
+                    if (function_exists('current_datetime')) {
+                        $currentDateTime = current_datetime();
+                    } else {
+                        // Workaround for when wp_timezone_string is not defined
+                        $timezone_string = get_option('timezone_string');
 
-                    $data = [
-                        'post_date'     => $currentDateTime,
-                        'post_date_gmt' => get_gmt_from_date($currentDateTime),
-                    ];
+                        if ($timezone_string) {
+                            return $timezone_string;
+                        }
 
-                    $where = [
-                        'ID' => $post->ID,
-                    ];
+                        $offset  = (float)get_option('gmt_offset');
+                        $hours   = (int)$offset;
+                        $minutes = ($offset - $hours);
 
-                    $wpdb->update($wpdb->posts, $data, $where, ['%s', '%s'], ['%d']);
+                        $sign      = ($offset < 0) ? '-' : '+';
+                        $abs_hour  = abs($hours);
+                        $abs_mins  = abs($minutes * 60);
+                        $tz_offset = sprintf('%s%02d:%02d', $sign, $abs_hour, $abs_mins);
+
+                        $timeZoneString = $tz_offset;
+
+                        // Workaround for when wp_timezone is not defined
+                        $timeZone = new DateTimeZone($timeZoneString);
+
+                        // Workaround for when current_datetime is not defined
+                        $currentDateTime = new DateTimeImmutable('now', $timeZone);
+                    }
+
+                    $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
+
+                    if ($currentDateTime !== $post->post_date) {
+                        global $wpdb;
+
+                        $data = [
+                            'post_date'     => $currentDateTime,
+                            'post_date_gmt' => get_gmt_from_date($currentDateTime),
+                        ];
+
+                        $where = [
+                            'ID' => $post->ID,
+                        ];
+
+                        $wpdb->update($wpdb->posts, $data, $where, ['%s', '%s'], ['%d']);
+                    }
                 }
+            } catch (Exception $e) {
+                error_log(
+                    sprintf(
+                        '[PublishPress] Exception %s: %s',
+                        __METHOD__,
+                        $e->getMessage()
+                    )
+                );
             }
         }
 

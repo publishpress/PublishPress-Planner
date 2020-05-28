@@ -9,8 +9,10 @@
 
 namespace PublishPress\Notifications\Workflow;
 
+use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_Post;
+use WP_Query;
 
 class Workflow
 {
@@ -48,7 +50,7 @@ class Workflow
      *
      * @param array $args
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function run($args)
     {
@@ -77,7 +79,13 @@ class Workflow
          * @param array $receivers
          * @param array $contentTemplate
          */
-        do_action('publishpress_notif_before_run_workflow', $this->workflow_post, $this->action_args, $receivers, $content_template);
+        do_action(
+            'publishpress_notif_before_run_workflow',
+            $this->workflow_post,
+            $this->action_args,
+            $receivers,
+            $content_template
+        );
 
         // Run the action to each receiver.
         foreach ($receivers as $channel => $channel_receivers) {
@@ -92,12 +100,16 @@ class Workflow
                  * But it can be changed to do another action. This allows to change the flow and
                  * catch the params to cache or queue for async notifications.
                  *
-                 * @param string   $action
+                 * @param string $action
                  * @param Workflow $workflow
-                 * @param string   $channel
+                 * @param string $channel
                  */
-                $action = apply_filters('publishpress_notif_workflow_do_action',
-                    'publishpress_notif_send_notification_' . $channel, $this, $channel);
+                $action = apply_filters(
+                    'publishpress_notif_workflow_do_action',
+                    'publishpress_notif_send_notification_' . $channel,
+                    $this,
+                    $channel
+                );
 
                 /**
                  * Triggers the notification. This can be caught by notification channels.
@@ -105,10 +117,10 @@ class Workflow
                  * workflow.
                  *
                  * @param WP_Post $workflow_post
-                 * @param array   $action_args
-                 * @param array   $receiver
-                 * @param array   $content
-                 * @param string  $channel
+                 * @param array $action_args
+                 * @param array $receiver
+                 * @param array $content
+                 * @param string $channel
                  */
                 do_action($action, $this->workflow_post, $this->action_args, $receiver, $content, $channel);
             }
@@ -133,12 +145,16 @@ class Workflow
          * Filters the list of receivers for the notification workflow.
          *
          * @param WP_Post $workflow
-         * @param array   $args
+         * @param array $args
          */
-        $receivers = apply_filters('publishpress_notif_run_workflow_receivers', [], $this->workflow_post,
-            $this->action_args);
+        $receivers = apply_filters(
+            'publishpress_notif_run_workflow_receivers',
+            [],
+            $this->workflow_post,
+            $this->action_args
+        );
 
-        if ( ! empty($receivers)) {
+        if (!empty($receivers)) {
             // Remove duplicate receivers
             $receivers = array_unique($receivers, SORT_STRING);
 
@@ -148,10 +164,10 @@ class Workflow
                 if (is_numeric($receiver) || is_object($receiver)) {
                     // Try to extract the ID from the object
                     if (is_object($receiver)) {
-                        if (isset($receiver->ID) && ! empty($receiver->ID)) {
+                        if (isset($receiver->ID) && !empty($receiver->ID)) {
                             $receiver = $receiver->ID;
                         } else {
-                            if (isset($receiver->id) && ! empty($receiver->id)) {
+                            if (isset($receiver->id) && !empty($receiver->id)) {
                                 $receiver = $receiver->id;
                             } else {
                                 // If the object doesn't have an ID, we ignore it.
@@ -173,7 +189,7 @@ class Workflow
                     }
 
                     // Make sure the array for the channel is initialized.
-                    if ( ! isset($filtered_receivers[$channel])) {
+                    if (!isset($filtered_receivers[$channel])) {
                         $filtered_receivers[$channel] = [];
                     }
 
@@ -182,7 +198,7 @@ class Workflow
                 } elseif (is_string($receiver)) {
                     // Check if it is an explicit email address.
                     if (preg_match('/^email:/', $receiver)) {
-                        if ( ! isset($filtered_receivers['email'])) {
+                        if (!isset($filtered_receivers['email'])) {
                             $filtered_receivers['email'] = [];
                         }
 
@@ -204,7 +220,7 @@ class Workflow
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function get_content()
     {
@@ -213,16 +229,20 @@ class Workflow
          * Filters the content for the notification workflow.
          *
          * @param WP_Post $workflow
-         * @param array   $args
+         * @param array $args
          */
-        $content = apply_filters('publishpress_notif_run_workflow_content', $content, $this->workflow_post,
-            $this->action_args);
+        $content = apply_filters(
+            'publishpress_notif_run_workflow_content',
+            $content,
+            $this->workflow_post,
+            $this->action_args
+        );
 
-        if ( ! array_key_exists('subject', $content)) {
+        if (!array_key_exists('subject', $content)) {
             $content['subject'] = '';
         }
 
-        if ( ! array_key_exists('body', $content)) {
+        if (!array_key_exists('body', $content)) {
             $content['body'] = '';
         }
 
@@ -231,7 +251,7 @@ class Workflow
 
     /**
      * @param string $content
-     * @param mixed  $receiver
+     * @param mixed $receiver
      * @param string $channel
      *
      * @return string
@@ -242,7 +262,7 @@ class Workflow
          * Action triggered before do shortcodes in the content.
          *
          * @param string $content
-         * @param mixed  $receiver
+         * @param mixed $receiver
          * @param string $channel
          */
         do_action('publishpress_workflow_do_shortcode_in_content', $content, $receiver, $channel);
@@ -269,12 +289,11 @@ class Workflow
             $post_status = (!empty($args['post_status'])) ? $args['post_status'] : 'future';
 
             $notification_suffix = "_{$post_status}_{$this->workflow_post->ID}";
-
         } elseif (!empty($args['post_status'])) {
             $notification_suffix = "-{$workflow_meta_key}_" . $args['post_status'] . "_{$this->workflow_post->ID}";
         } else {
             // Other notification criteria may not specify a post status
-            $notification_suffix ="-{$workflow_meta_key}_{$this->workflow_post->ID}";
+            $notification_suffix = "-{$workflow_meta_key}_{$this->workflow_post->ID}";
         }
 
         $posts = [];
@@ -299,7 +318,7 @@ class Workflow
             Step\Event_Content\Filter\Post_Type::META_KEY_POST_TYPE
         );
 
-        if ( ! empty($workflowPostTypes)) {
+        if (!empty($workflowPostTypes)) {
             $query_args['post_type'] = $workflowPostTypes;
         }
 
@@ -309,13 +328,13 @@ class Workflow
             Step\Event_Content\Filter\Category::META_KEY_CATEGORY
         );
 
-        if ( ! empty($workflowCategories)) {
+        if (!empty($workflowCategories)) {
             $query_args['category__in'] = $workflowCategories;
         }
 
-        $query = new \WP_Query($query_args);
+        $query = new WP_Query($query_args);
 
-        if ( ! empty($query->posts)) {
+        if (!empty($query->posts)) {
             foreach ($query->posts as $post) {
                 $posts[] = $post;
             }

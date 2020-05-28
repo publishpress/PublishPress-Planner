@@ -24,6 +24,7 @@
 namespace PublishPress\NotificationsLog;
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use WP_List_Table;
 
 if (!class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
@@ -34,7 +35,7 @@ if (!class_exists('WP_List_Table')) {
  *
  * @package PublishPress\NotificationsLog
  */
-class LogListTable extends \WP_List_Table
+class LogListTable extends WP_List_Table
 {
     use Dependency_Injector;
 
@@ -59,11 +60,13 @@ class LogListTable extends \WP_List_Table
         global $status, $page;
 
         //Set parent defaults
-        parent::__construct([
-            'singular' => 'log',     //singular name of the listed records
-            'plural'   => 'log',    //plural name of the listed records
-            'ajax'     => false        //does this table support ajax?
-        ]);
+        parent::__construct(
+            [
+                'singular' => 'log',     //singular name of the listed records
+                'plural'   => 'log',    //plural name of the listed records
+                'ajax'     => false        //does this table support ajax?
+            ]
+        );
 
         $this->logHandler = $logHandler;
     }
@@ -98,7 +101,16 @@ class LogListTable extends \WP_List_Table
 
             case 'receiver':
                 if ($log->receiverIsUser()) {
-                    $output = $log->receiverName . '&nbsp;<span class="user-id">(id:' . $log->receiver . ')</span>';
+                    $output = '';
+                    if ($log->channel === 'email') {
+                        $user   = get_user_by('ID', $log->receiver);
+                        $output .= sprintf('<div>%s</div>', $user->user_email);
+                    }
+                    $output .= sprintf(
+                        '<div class="user">%s (id:%d)</div>',
+                        $log->receiverName,
+                        $log->receiver
+                    );
                 } else {
                     $output = $log->receiver;
                 }
@@ -156,61 +168,33 @@ class LogListTable extends \WP_List_Table
     {
         //Build row actions
         $actions = [
-            'view'   => sprintf('<a href="#" class="view-log" data-id="%s">%s</a>',
+            'view'   => sprintf(
+                '<a href="#" class="view-log" data-id="%s">%s</a>',
                 $item->comment_ID,
                 __('View', 'publishpress')
             ),
-            'delete' => sprintf('<a href="%s">%s</a>',
+            'delete' => sprintf(
+                '<a href="%s">%s</a>',
                 esc_url(
-                    add_query_arg([
-                        'action'                        => 'delete',
-                        $this->_args['singular'] . '[]' => $item->comment_ID,
-                    ])
+                    add_query_arg(
+                        [
+                            'action'                        => 'delete',
+                            $this->_args['singular'] . '[]' => $item->comment_ID,
+                        ]
+                    )
                 ),
                 __('Delete', 'publishpress')
             ),
         ];
 
         //Return the title contents
-        return sprintf('%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
+        return sprintf(
+            '%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
             $item->comment_date,
             $item->comment_ID,
             $this->row_actions($actions)
         );
     }
-
-    /**
-     * @return array
-     */
-    public function get_columns()
-    {
-        $columns = [
-            'cb'       => '<input type="checkbox" />',
-            'date'     => __('Date', 'publishpress'),
-            'post'     => __('Post', 'publishpress'),
-            'workflow' => __('Workflow', 'publishpress'),
-            'action'   => __('Action', 'publishpress'),
-            'receiver' => __('Receiver', 'publishpress'),
-            'channel'  => __('Channel', 'publishpress'),
-            'status'   => __('Status', 'publishpress'),
-        ];
-
-        return $columns;
-    }
-
-
-    /**
-     * @return array
-     */
-    public function get_sortable_columns()
-    {
-        $sortable_columns = [
-            'date' => ['date', true],
-        ];
-
-        return $sortable_columns;
-    }
-
 
     /**
      * @return array
@@ -224,41 +208,6 @@ class LogListTable extends \WP_List_Table
 
         return $actions;
     }
-
-    protected function get_views()
-    {
-        return [
-            'all'     => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __('All',
-                    'publishpress') . '</a>',
-            'success' => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __('Success',
-                    'publishpress') . '</a>',
-            'error'   => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __('Errors',
-                    'publishpress') . '</a>',
-        ];
-    }
-
-
-    public function process_bulk_action()
-    {
-        if (self::BULK_ACTION_DELETE === $this->current_action()) {
-            $ids = isset($_GET['log']) ? (array)$_GET['log'] : [];
-
-            if (!empty($ids)) {
-                foreach ($ids as $id) {
-                    wp_delete_comment($id, true);
-                }
-            }
-        } elseif (self::BULK_ACTION_DELETE_ALL === $this->current_action()) {
-            $notifications = $this->logHandler->getNotifications(null, 'comment_date', 'desc', false, [], null, null);
-
-            if (!empty($notifications)) {
-                foreach ($notifications as $notification) {
-                    wp_delete_comment($notification->comment_ID, true);
-                }
-            }
-        }
-    }
-
 
     public function prepare_items()
     {
@@ -318,14 +267,93 @@ class LogListTable extends \WP_List_Table
         $orderBy = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
         $order   = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
 
-        $this->items = $this->logHandler->getNotifications($postId, $orderBy, $order, false, $filters, $per_page,
-            $current_page);
+        $this->items = $this->logHandler->getNotifications(
+            $postId,
+            $orderBy,
+            $order,
+            false,
+            $filters,
+            $per_page,
+            $current_page
+        );
 
-        $this->set_pagination_args([
-            'total_items' => $total_items,
-            'per_page'    => $per_page,
-            'total_pages' => ceil($total_items / $per_page),
-        ]);
+        $this->set_pagination_args(
+            [
+                'total_items' => $total_items,
+                'per_page'    => $per_page,
+                'total_pages' => ceil($total_items / $per_page),
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function get_columns()
+    {
+        $columns = [
+            'cb'       => '<input type="checkbox" />',
+            'date'     => __('Date', 'publishpress'),
+            'post'     => __('Post', 'publishpress'),
+            'workflow' => __('Workflow', 'publishpress'),
+            'action'   => __('Action', 'publishpress'),
+            'receiver' => __('Receiver', 'publishpress'),
+            'channel'  => __('Channel', 'publishpress'),
+            'status'   => __('Status', 'publishpress'),
+        ];
+
+        return $columns;
+    }
+
+    /**
+     * @return array
+     */
+    public function get_sortable_columns()
+    {
+        $sortable_columns = [
+            'date' => ['date', true],
+        ];
+
+        return $sortable_columns;
+    }
+
+    public function process_bulk_action()
+    {
+        if (self::BULK_ACTION_DELETE === $this->current_action()) {
+            $ids = isset($_GET['log']) ? (array)$_GET['log'] : [];
+
+            if (!empty($ids)) {
+                foreach ($ids as $id) {
+                    wp_delete_comment($id, true);
+                }
+            }
+        } elseif (self::BULK_ACTION_DELETE_ALL === $this->current_action()) {
+            $notifications = $this->logHandler->getNotifications(null, 'comment_date', 'desc', false, [], null, null);
+
+            if (!empty($notifications)) {
+                foreach ($notifications as $notification) {
+                    wp_delete_comment($notification->comment_ID, true);
+                }
+            }
+        }
+    }
+
+    protected function get_views()
+    {
+        return [
+            'all'     => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
+                    'All',
+                    'publishpress'
+                ) . '</a>',
+            'success' => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __(
+                    'Success',
+                    'publishpress'
+                ) . '</a>',
+            'error'   => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
+                    'Errors',
+                    'publishpress'
+                ) . '</a>',
+        ];
     }
 
     /**
@@ -348,7 +376,9 @@ class LogListTable extends \WP_List_Table
         if (!empty($postId)) {
             $post = get_post($postId);
 
-            $selectedOption = '<option selected="selected" value="' . esc_attr($postId) . '">' . $post->post_title . '</option>';
+            $selectedOption = '<option selected="selected" value="' . esc_attr(
+                    $postId
+                ) . '">' . $post->post_title . '</option>';
         }
 
         echo '<select class="filter-posts" name="post_id">' . $selectedOption . '</select>';
@@ -359,7 +389,9 @@ class LogListTable extends \WP_List_Table
         if (!empty($workflowId)) {
             $workflow = get_post($workflowId);
 
-            $selectedOption = '<option selected="selected" value="' . esc_attr($workflowId) . '">' . $workflow->post_title . '</option>';
+            $selectedOption = '<option selected="selected" value="' . esc_attr(
+                    $workflowId
+                ) . '">' . $workflow->post_title . '</option>';
         }
 
         echo '<select class="filter-workflows" name="workflow_id">' . $selectedOption . '</select>';
@@ -373,8 +405,10 @@ class LogListTable extends \WP_List_Table
         echo '<option value="">' . __('All actions', 'publishpress') . '</option>';
 
         foreach ($actions as $action) {
-            echo '<option ' . selected($action,
-                    $selectedAction) . ' value="' . esc_attr($action) . '">' . $action . '</option>';
+            echo '<option ' . selected(
+                    $action,
+                    $selectedAction
+                ) . ' value="' . esc_attr($action) . '">' . $action . '</option>';
         }
         echo '</select>';
 
@@ -387,8 +421,10 @@ class LogListTable extends \WP_List_Table
         echo '<option value="">' . __('All channels', 'publishpress') . '</option>';
 
         foreach ($channels as $channel) {
-            echo '<option ' . selected($channel->name,
-                    $selectedChannel) . ' value="' . esc_attr($channel->name) . '">' . $channel->label . '</option>';
+            echo '<option ' . selected(
+                    $channel->name,
+                    $selectedChannel
+                ) . ' value="' . esc_attr($channel->name) . '">' . $channel->label . '</option>';
         }
         echo '</select>';
 
@@ -399,16 +435,26 @@ class LogListTable extends \WP_List_Table
 
         echo '<div class="filter-2nd-line">';
         echo '<span class="filter-dates">';
-        echo '<input type="text" class="filter-date-begin" name="date_begin" value="' . esc_attr($dateBegin) . '" placeholder="' . __('From date',
-                'publishpress') . '" />&nbsp;';
-        echo '&nbsp;<input type="text" class="filter-date-end" name="date_end" value="' . esc_attr($dateEnd) . '" placeholder="' . __('To date',
-                'publishpress') . '" />&nbsp;';
+        echo '<input type="text" class="filter-date-begin" name="date_begin" value="' . esc_attr(
+                $dateBegin
+            ) . '" placeholder="' . __(
+                'From date',
+                'publishpress'
+            ) . '" />&nbsp;';
+        echo '&nbsp;<input type="text" class="filter-date-end" name="date_end" value="' . esc_attr(
+                $dateEnd
+            ) . '" placeholder="' . __(
+                'To date',
+                'publishpress'
+            ) . '" />&nbsp;';
         echo '</span>';
 
         // Receiver
         $receiver = isset($_GET['receiver']) ? sanitize_text_field($_GET['receiver']) : '';
-        echo '<input type="text" placeholder="' . __('All Receivers',
-                'publishpress') . '" name="receiver" value="' . esc_attr($receiver) . '" />';
+        echo '<input type="text" placeholder="' . __(
+                'All Receivers',
+                'publishpress'
+            ) . '" name="receiver" value="' . esc_attr($receiver) . '" />';
 
 
         echo submit_button(__('Filter', 'publishpress'), 'secondary', 'submit', false);

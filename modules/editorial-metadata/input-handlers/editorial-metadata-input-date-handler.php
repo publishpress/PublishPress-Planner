@@ -1,4 +1,5 @@
 <?php
+
 defined('ABSPATH') or die('No direct script access allowed.');
 
 if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
@@ -20,15 +21,15 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          * Render input html.
          *
          * @access  protected
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
          * @since   1.20.0
          *
-         * @param   array   $inputOptions   Input options
-         * @param   mixed   $value          Actual input value
          */
         protected function renderInput($inputOptions = array(), $value = null)
         {
-            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             $value_formatted = !empty($value) ? self::show_date_or_datetime(intval($value)) : '';
@@ -70,11 +71,11 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
         /**
          * Show date or datetime.
          *
-         * @since   1.20.0
-         *
-         * @param   int     $current_date
+         * @param int $current_date
          *
          * @return  string
+         * @since   1.20.0
+         *
          */
         private static function show_date_or_datetime($current_date)
         {
@@ -91,17 +92,17 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          * Render input-preview html.
          *
          * @access  protected
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
          * @since   1.20.0
          *
-         * @param   array   $inputOptions   Input options
-         * @param   mixed   $value          Actual input value
          */
         protected function renderInputPreview($inputOptions = array(), $value = null)
         {
-            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
-            $value = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
+            $value             = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
 
             self::renderLabel(
                 $input_label . self::generateDescriptionHtml($input_description),
@@ -133,11 +134,11 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          * Get meta-input value html formatted.
          *
          * @static
-         * @since   1.20.0
-         *
-         * @param   mixed   $value  Actual input value
+         * @param mixed $value Actual input value
          *
          * @return  string
+         * @since   1.20.0
+         *
          */
         public static function getMetaValueHtml($value = null)
         {

@@ -23,12 +23,16 @@
 
 namespace PublishPress\NotificationsLog;
 
+use Countable;
+use Iterator;
+use WP_Comment;
+
 /**
  * Class LogIterator
  *
  * @package PublishPress\NotificationsLog
  */
-class LogIterator implements \Iterator, \Countable
+class LogIterator implements Iterator, Countable
 {
     private $list = [];
 
@@ -54,6 +58,16 @@ class LogIterator implements \Iterator, \Countable
         $item = current($this->list);
 
         return $this->returnItem($item);
+    }
+
+    /**
+     * @param WP_Comment $item
+     *
+     * @return LogModel
+     */
+    private function returnItem($item)
+    {
+        return new LogModel($item);
     }
 
     /**
@@ -118,15 +132,5 @@ class LogIterator implements \Iterator, \Countable
     public function count()
     {
         return count($this->list);
-    }
-
-    /**
-     * @param \WP_Comment $item
-     *
-     * @return LogModel
-     */
-    private function returnItem($item)
-    {
-        return new LogModel($item);
     }
 }

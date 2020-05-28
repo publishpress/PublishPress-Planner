@@ -62,13 +62,13 @@ class Main extends Base_Step
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
-        if ( ! isset($_POST['publishpress_notif'])
-             || ! isset($_POST['publishpress_notif']['content_main'])) {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif']['content_main'])) {
             // Assume it is disabled
             update_post_meta($id, static::META_KEY_SUBJECT, false);
             update_post_meta($id, static::META_KEY_BODY, false);
@@ -88,9 +88,9 @@ class Main extends Base_Step
      * Filters the content for the workflow. Returns an associative array with
      * the subject and body.
      *
-     * @param array   $content
+     * @param array $content
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */

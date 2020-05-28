@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.3
-Stable tag: 2.0.5
+Tested up to: 5.4
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,20 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.1.0] - 2020-05-28 =
+
+* Added: Added support to PublishPress Authors (requires at least 3.3.1), #610, #614;
+* Added: Added the user email to the notifications log entries and details popup, #602;
+* Added: Added option to choose which statuses can show the time in the calendar, #607;
+* Added: Added option to select custom publish time in the calendar for all post statuses, #554;
+* Added: Added "read only" label to calendar items you can't edit, #608, #615;
+* Changed: Removed debug statements from the Custom Status module;
+* Fixed: PHP error related to the undefined "current_datetime" function;
+* Fixed: Ajax calls are saying the Notification Workflow post type is not registered, #601;
+* Fixed: Removed the selection from the calendar to avoid messing up with the drag-and-drop;
+* Fixed: Added visual feedback and error messages when errors happens while dragging and dropping items in the calendar, #609;
+* Fixed: Fixed compatibility with PHP < 7.3 removing the call to the function "array_key_first";
 
 = [2.0.6] - 2020-04-15 =
 

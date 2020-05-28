@@ -36,7 +36,7 @@ use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_
 use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
 
-if ( ! class_exists('PP_Improved_Notifications')) {
+if (!class_exists('PP_Improved_Notifications')) {
     /**
      * class Notifications
      */
@@ -119,29 +119,39 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            $function = new Twig_SimpleFunction('settings_fields', function () {
+            $function = new Twig_SimpleFunction(
+                'settings_fields', function () {
                 return settings_fields($this->module->options_group_name);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('nonce_field', function ($context) {
+            $function = new Twig_SimpleFunction(
+                'nonce_field', function ($context) {
                 return wp_nonce_field($context);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('submit_button', function () {
+            $function = new Twig_SimpleFunction(
+                'submit_button', function () {
                 return submit_button();
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('__', function ($id) {
+            $function = new Twig_SimpleFunction(
+                '__', function ($id) {
                 return __($id, 'publishpress');
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
-            $function = new Twig_SimpleFunction('do_settings_sections', function ($section) {
+            $function = new Twig_SimpleFunction(
+                'do_settings_sections', function ($section) {
                 return do_settings_sections($section);
-            });
+            }
+            );
             $this->twig->addFunction($function);
 
             $this->twig_configured = true;
@@ -159,8 +169,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             // Workflow form
             add_filter('get_sample_permalink_html', [$this, 'filter_get_sample_permalink_html_workflow'], 9, 5);
             add_filter('post_row_actions', [$this, 'filter_row_actions'], 10, 2);
-            add_action('add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
-                [$this, 'action_meta_boxes_workflow']);
+            add_action(
+                'add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+                [$this, 'action_meta_boxes_workflow']
+            );
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
 
             // Cancel the PublishPress and PublishPress Slack Notifications, since they will be sent by the cron task.
@@ -188,8 +200,12 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             // Inject the PublishPress footer
             add_filter('admin_footer_text', [$this, 'update_footer_admin']);
 
-            add_filter('pp_notification_send_email_message_headers', [$this, 'filter_send_email_message_headers'], 10,
-                3);
+            add_filter(
+                'pp_notification_send_email_message_headers',
+                [$this, 'filter_send_email_message_headers'],
+                10,
+                3
+            );
 
             add_action('pp_init', [$this, 'action_after_init']);
 
@@ -288,15 +304,17 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     Event_Post_save::META_KEY_SELECTED          => '1',
                     Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish',
                     Content_Main::META_KEY_SUBJECT              => '&quot;[psppno_post title]&quot; was published',
-                    Content_Main::META_KEY_BODY                 => $twig->render('workflow_default_content_post_save.twig',
-                        []),
+                    Content_Main::META_KEY_BODY                 => $twig->render(
+                        'workflow_default_content_post_save.twig',
+                        []
+                    ),
                     Receiver_Site_Admin::META_KEY               => 1,
                 ],
             ];
 
             $post_id = wp_insert_post($workflow);
 
-            if (is_int($post_id) && ! empty($post_id)) {
+            if (is_int($post_id) && !empty($post_id)) {
                 // Add each status to the "From" filter, except the "publish" state
                 foreach ($statuses as $status) {
                     add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
@@ -345,7 +363,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $selected_channels = isset($this->module->options->default_channels) ? (array)$this->module->options->default_channels : [];
 
             foreach ($workflows as $workflow) {
-                if ( ! isset($selected_channels[$workflow->ID])) {
+                if (!isset($selected_channels[$workflow->ID])) {
                     $selected_channels[$workflow->ID] = $default_channel;
                 }
             }
@@ -353,8 +371,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $context = [
                 'labels'            => [
                     'title'       => __('Editorial Notifications', 'publishpress'),
-                    'description' => __('Choose the channels where each workflow will send notifications to:',
-                        'publishpress'),
+                    'description' => __(
+                        'Choose the channels where each workflow will send notifications to:',
+                        'publishpress'
+                    ),
                     'mute'        => __('Muted', 'publishpress'),
                     'workflows'   => __('Workflows', 'publishpress'),
                     'channels'    => __('Channels', 'publishpress'),
@@ -386,15 +406,17 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     static::META_KEY_IS_DEFAULT_WORKFLOW       => '1',
                     Event_Editorial_Comment::META_KEY_SELECTED => '1',
                     Content_Main::META_KEY_SUBJECT             => 'New editorial comment to &quot;[psppno_post title]&quot;',
-                    Content_Main::META_KEY_BODY                => $twig->render('workflow_default_content_editorial_comment.twig',
-                        []),
+                    Content_Main::META_KEY_BODY                => $twig->render(
+                        'workflow_default_content_editorial_comment.twig',
+                        []
+                    ),
                     Receiver_Site_Admin::META_KEY              => 1,
                 ],
             ];
 
             $post_id = wp_insert_post($workflow);
 
-            if (is_int($post_id) && ! empty($post_id)) {
+            if (is_int($post_id) && !empty($post_id)) {
                 // Get post statuses
                 $statuses = $this->get_post_statuses();
                 // Add each status to the "From" filter, except the "publish" state
@@ -424,7 +446,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
             $query = new WP_Query($query_args);
 
-            if ( ! $query->have_posts()) {
+            if (!$query->have_posts()) {
                 return false;
             }
 
@@ -442,11 +464,11 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                 // Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
                 $workflows = $this->get_workflows();
 
-                if ( ! empty($workflows)) {
+                if (!empty($workflows)) {
                     foreach ($workflows as $workflow) {
                         // Get the user list
                         $meta = get_post_meta($workflow->ID, '_psppno_touser');
-                        if ( ! empty($meta)) {
+                        if (!empty($meta)) {
                             delete_post_meta($workflow->ID, '_psppno_touserlist');
 
                             foreach ($meta as $data) {
@@ -459,7 +481,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
                         // Get the user group list
                         $meta = get_post_meta($workflow->ID, '_psppno_togroup');
-                        if ( ! empty($meta)) {
+                        if (!empty($meta)) {
                             delete_post_meta($workflow->ID, '_psppno_togrouplist');
 
                             foreach ($meta as $data) {
@@ -506,15 +528,15 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          * Action called on transitioning a post. Used to trigger the
          * controller of workflows to filter and execute them.
          *
-         * @param string  $new_status
-         * @param string  $old_status
+         * @param string $new_status
+         * @param string $old_status
          * @param WP_Post $post
          *
          * @throws Exception
          */
         public function action_transition_post_status($new_status, $old_status, $post)
         {
-            if ( ! $this->is_supported_post_type($post->post_type)) {
+            if (!$this->is_supported_post_type($post->post_type)) {
                 return;
             }
 
@@ -572,7 +594,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $post = get_post($comment->comment_post_ID);
 
-            if ( ! $this->is_supported_post_type($post->post_type)) {
+            if (!$this->is_supported_post_type($post->post_type)) {
                 return;
             }
 
@@ -595,19 +617,34 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         public function add_admin_scripts($hook_suffix)
         {
             if (in_array($hook_suffix, ['profile.php', 'user-edit.php'])) {
-                wp_enqueue_script('psppno-user-profile-notifications',
-                    plugin_dir_url(__FILE__) . 'assets/js/user_profile.js', [], PUBLISHPRESS_VERSION);
+                wp_enqueue_script(
+                    'psppno-user-profile-notifications',
+                    plugin_dir_url(__FILE__) . 'assets/js/user_profile.js',
+                    [],
+                    PUBLISHPRESS_VERSION
+                );
             }
 
             if (in_array($hook_suffix, ['post.php', 'post-new.php'])) {
                 if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === get_post_type()) {
-                    wp_enqueue_script('psppno-multiple-select',
-                        plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js', ['jquery'], PUBLISHPRESS_VERSION);
-                    wp_enqueue_script('psppno-workflow-tooltip',
-                        plugin_dir_url(__FILE__) . 'libs/opentip/downloads/opentip-jquery.js', ['jquery'],
-                        PUBLISHPRESS_VERSION);
-                    wp_enqueue_script('psppno-workflow-form', plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js',
-                        ['jquery', 'psppno-workflow-tooltip', 'psppno-multiple-select'], PUBLISHPRESS_VERSION);
+                    wp_enqueue_script(
+                        'psppno-multiple-select',
+                        plugin_dir_url(__FILE__) . 'assets/js/multiple-select.js',
+                        ['jquery'],
+                        PUBLISHPRESS_VERSION
+                    );
+                    wp_enqueue_script(
+                        'psppno-workflow-tooltip',
+                        plugin_dir_url(__FILE__) . 'libs/opentip/downloads/opentip-jquery.js',
+                        ['jquery'],
+                        PUBLISHPRESS_VERSION
+                    );
+                    wp_enqueue_script(
+                        'psppno-workflow-form',
+                        plugin_dir_url(__FILE__) . 'assets/js/workflow_form.js',
+                        ['jquery', 'psppno-workflow-tooltip', 'psppno-multiple-select'],
+                        PUBLISHPRESS_VERSION
+                    );
 
                     wp_localize_script(
                         'psppno-workflow-form',
@@ -746,8 +783,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $context = [
                 'labels' => [
                     'validation_help'  => __('Select at least one option for each section.', 'publishpress'),
-                    'pre_text'         => __('You can add dynamic information to the Subject or Body text using the following shortcodes:',
-                        'publishpress'),
+                    'pre_text'         => __(
+                        'You can add dynamic information to the Subject or Body text using the following shortcodes:',
+                        'publishpress'
+                    ),
                     'content'          => __('Content', 'publishpress'),
                     'edcomment'        => __('Editorial Comment', 'publishpress'),
                     'actor'            => __('User making changes or comments', 'publishpress'),
@@ -756,8 +795,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'receiver'         => __('Receiver', 'publishpress'),
                     'shortcode'        => __('shortcode', 'publishpress'),
                     'field'            => __('field', 'publishpress'),
-                    'format_text'      => __('On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".',
-                        'publishpress'),
+                    'format_text'      => __(
+                        'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".',
+                        'publishpress'
+                    ),
                     'available_fields' => __('Available fields', 'publishpress'),
                     'meta_fields'      => __('Meta fields', 'publishpress'),
                     'read_more'        => __('Click here to read more about shortcode options...', 'publishpress'),
@@ -776,7 +817,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          * action for the workflow steps to be able to save their specific
          * metadata from the metaboxes.
          *
-         * @param int     $id   Unique ID for the post being saved
+         * @param int $id Unique ID for the post being saved
          * @param WP_Post $post Post object
          *
          * @return int|null
@@ -787,7 +828,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
 
             if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type) {
                 // Authentication checks. Make sure the data came from the metabox
-                if ( ! (
+                if (!(
                     isset($_POST['publishpress_notif_metabox_events_nonce'])
                     && wp_verify_nonce(
                         $_POST['publishpress_notif_metabox_events_nonce'],
@@ -825,7 +866,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'meta_query'    => [],
                 ];
 
-                $query = new \WP_Query($query_args);
+                $query = new WP_Query($query_args);
 
                 $this->published_workflows = $query->posts;
             }
@@ -844,7 +885,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         {
             $hash = md5(maybe_serialize($meta_query));
 
-            if ( ! isset($this->workflows[$hash])) {
+            if (!isset($this->workflows[$hash])) {
                 // Build the query
                 $query_args = [
                     'nopaging'      => true,
@@ -854,7 +895,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                     'meta_query'    => $meta_query,
                 ];
 
-                $query = new \WP_Query($query_args);
+                $query = new WP_Query($query_args);
 
                 $this->workflows[$hash] = $query->posts;
             }
@@ -871,7 +912,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         public function user_profile_fields($user)
         {
             // Check if the user has permission to see this field. If not, do nothing.
-            if ( ! current_user_can('pp_set_notification_channel')) {
+            if (!current_user_can('pp_set_notification_channel')) {
                 return;
             }
 
@@ -913,8 +954,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $context = [
                 'labels'            => [
                     'title'       => __('Editorial Notifications', 'publishpress'),
-                    'description' => __('Choose the channels where each workflow will send notifications to:',
-                        'publishpress'),
+                    'description' => __(
+                        'Choose the channels where each workflow will send notifications to:',
+                        'publishpress'
+                    ),
                     'mute'        => __('Muted', 'publishpress'),
                     'workflows'   => __('Workflows', 'publishpress'),
                     'channels'    => __('Channels', 'publishpress'),
@@ -984,7 +1027,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function settings_validate($new_options)
         {
-            if (isset($new_options['channel_options']) && ! empty($new_options['channel_options'])) {
+            if (isset($new_options['channel_options']) && !empty($new_options['channel_options'])) {
                 foreach ($new_options['channel_options'] as &$item) {
                     $item = sanitize_text_field($item);
                 }
@@ -1011,13 +1054,17 @@ if ( ! class_exists('PP_Improved_Notifications')) {
                  * Filters the options for the channel in the workflow
                  *
                  * @param array $options
-                 * @param int   $user_id
-                 * @param int   $workflow_id
+                 * @param int $user_id
+                 * @param int $workflow_id
                  *
                  * @return array
                  */
-                $channels_options       = apply_filters('psppno_filter_workflow_channel_options', [], $user->ID,
-                    $workflow->ID);
+                $channels_options       = apply_filters(
+                    'psppno_filter_workflow_channel_options',
+                    [],
+                    $user->ID,
+                    $workflow->ID
+                );
                 $options[$workflow->ID] = $channels_options;
             }
 
@@ -1031,12 +1078,12 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function save_user_profile_fields($user_id)
         {
-            if ( ! current_user_can('edit_user', $user_id)) {
+            if (!current_user_can('edit_user', $user_id)) {
                 return false;
             }
 
             // Check the nonce field
-            if ( ! (
+            if (!(
                 isset($_POST['psppno_user_profile_nonce'])
                 && wp_verify_nonce(
                     $_POST['psppno_user_profile_nonce'],
@@ -1047,7 +1094,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             }
 
             // Workflow Channels
-            if (isset($_POST['psppno_workflow_channel']) && ! empty($_POST['psppno_workflow_channel'])) {
+            if (isset($_POST['psppno_workflow_channel']) && !empty($_POST['psppno_workflow_channel'])) {
                 foreach ($_POST['psppno_workflow_channel'] as $workflow_id => $channel) {
                     update_user_meta($user_id, 'psppno_workflow_channel_' . $workflow_id, $channel);
                 }
@@ -1066,8 +1113,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             wp_enqueue_style('psppno-admin-css', plugin_dir_url(__FILE__) . 'assets/css/admin.css');
             wp_enqueue_style('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/css/multiple-select.css');
             wp_enqueue_style('psppno-grid', plugin_dir_url(__FILE__) . 'assets/css/grids-min.css');
-            wp_enqueue_style('psppno-grid-responsive',
-                plugin_dir_url(__FILE__) . 'assets/css/grids-responsive-min.css');
+            wp_enqueue_style(
+                'psppno-grid-responsive',
+                plugin_dir_url(__FILE__) . 'assets/css/grids-responsive-min.css'
+            );
             wp_enqueue_style('psppno-user-profile', plugin_dir_url(__FILE__) . 'assets/css/user_profile.css');
         }
 
@@ -1085,8 +1134,10 @@ if ( ! class_exists('PP_Improved_Notifications')) {
             $publishpress = $this->get_service('publishpress');
 
             $html = '<div class="pressshack-admin-wrapper">';
-            $html .= $publishpress->settings->print_default_footer($publishpress->modules->improved_notifications,
-                false);
+            $html .= $publishpress->settings->print_default_footer(
+                $publishpress->modules->improved_notifications,
+                false
+            );
             // We do not close the div by purpose. The footer contains it.
 
             // Add the wordpress footer
@@ -1098,19 +1149,19 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         /**
          * Filters the email message headers, to enable HTML emails
          *
-         * @param array   $message_headers
-         * @param string  $action
+         * @param array $message_headers
+         * @param string $action
          * @param WP_Post $post
          *
          * @return array
          */
         public function filter_send_email_message_headers($message_headers, $action, $post)
         {
-            if (is_string($message_headers) && ! empty($message_headers)) {
+            if (is_string($message_headers) && !empty($message_headers)) {
                 $message_headers = [$message_headers];
             }
 
-            if ( ! is_array($message_headers)) {
+            if (!is_array($message_headers)) {
                 $message_headers = [];
             }
 
@@ -1132,7 +1183,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
          */
         public function filter_default_channel($channel, $workflowId = 0)
         {
-            if ( ! empty($workflowId)) {
+            if (!empty($workflowId)) {
                 $channel = $this->get_workflow_default_channel($workflowId);
             }
 
@@ -1143,7 +1194,7 @@ if ( ! class_exists('PP_Improved_Notifications')) {
         {
             global $pagenow;
 
-            if ('edit.php' !== $pagenow || ! (isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $_GET['post_type'])) {
+            if ('edit.php' !== $pagenow || !(isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $_GET['post_type'])) {
                 return;
             }
             ?>

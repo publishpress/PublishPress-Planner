@@ -1,4 +1,5 @@
 <?php
+
 defined('ABSPATH') or die('No direct script access allowed.');
 
 if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
@@ -20,15 +21,15 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          * Render input html.
          *
          * @access  protected
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
          * @since   1.20.0
          *
-         * @param   array   $inputOptions   Input options
-         * @param   mixed   $value          Actual input value
          */
         protected function renderInput($inputOptions = array(), $value = null)
         {
-            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel($input_label, $input_name);
@@ -55,15 +56,15 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          * Render input-preview html.
          *
          * @access  protected
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
          * @since   1.20.0
          *
-         * @param   array   $inputOptions   Input options
-         * @param   mixed   $value          Actual input value
          */
         protected function renderInputPreview($inputOptions = array(), $value = null)
         {
-            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
@@ -99,11 +100,11 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          * Get meta-input value html formatted.
          *
          * @static
-         * @since   1.20.0
-         *
-         * @param   mixed   $value  Actual input value
+         * @param mixed $value Actual input value
          *
          * @return  string
+         * @since   1.20.0
+         *
          */
         public static function getMetaValueHtml($value = null)
         {

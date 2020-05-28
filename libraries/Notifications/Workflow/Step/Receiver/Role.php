@@ -40,15 +40,15 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     /**
      * Method called when a notification workflow is saved.
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)
     {
         parent::save_metabox_data($id, $post);
 
-        if ( ! isset($_POST['publishpress_notif'])
-             || ! isset($_POST['publishpress_notif']['receiver_role'])) {
+        if (!isset($_POST['publishpress_notif'])
+            || !isset($_POST['publishpress_notif']['receiver_role'])) {
             // Assume it is disabled
             $values = [];
         } else {
@@ -95,9 +95,9 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     /**
      * Filters the list of receivers for the workflow. Returns the list of IDs.
      *
-     * @param array   $receivers
+     * @param array $receivers
      * @param WP_Post $workflow
-     * @param array   $args
+     * @param array $args
      *
      * @return array
      */
@@ -112,9 +112,9 @@ class Role extends Simple_Checkbox implements Receiver_Interface
             /**
              * Filters the list of receivers, but triggers only when the authors are selected.
              *
-             * @param array   $receivers
+             * @param array $receivers
              * @param WP_Post $workflow
-             * @param array   $args
+             * @param array $args
              */
             $receivers = apply_filters('publishpress_notif_workflow_receiver_role', $receivers, $workflow, $args);
         }
@@ -133,7 +133,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
     {
         $users = [];
 
-        if ( ! empty($roles)) {
+        if (!empty($roles)) {
             foreach ((array)$roles as $role_name) {
                 $role_users = get_users(
                     [
@@ -141,7 +141,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
                     ]
                 );
 
-                if ( ! empty($role_users)) {
+                if (!empty($role_users)) {
                     foreach ($role_users as $user) {
                         $users[] = (int)$user->ID;
                     }
@@ -156,7 +156,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
      * Add the respective value to the column in the workflow list
      *
      * @param array $values
-     * @param int   $post_id
+     * @param int $post_id
      *
      * @return array
      */
@@ -165,7 +165,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
         if ($this->is_selected($post_id)) {
             $items = get_post_meta($post_id, static::META_LIST_KEY);
 
-            if ( ! empty($items)) {
+            if (!empty($items)) {
                 $count = count($items);
 
                 $values[] = sprintf(

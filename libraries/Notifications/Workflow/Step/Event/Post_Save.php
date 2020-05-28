@@ -33,26 +33,6 @@ class Post_Save extends Base
     }
 
     /**
-     * Method to return a list of fields to display in the filter area
-     *
-     * @param array
-     *
-     * @return array
-     */
-    protected function get_filters($filters = [])
-    {
-        if ( ! empty($this->cache_filters)) {
-            return $this->cache_filters;
-        }
-
-        $step_name = $this->attr_prefix . '_' . $this->name;
-
-        $filters[] = new Filter\Post_Status($step_name);
-
-        return parent::get_filters($filters);
-    }
-
-    /**
      * Filters and returns the arguments for the query which locates
      * workflows that should be executed.
      *
@@ -86,9 +66,29 @@ class Post_Save extends Base
         return $query_args;
     }
 
+    /**
+     * Method to return a list of fields to display in the filter area
+     *
+     * @param array
+     *
+     * @return array
+     */
+    protected function get_filters($filters = [])
+    {
+        if (!empty($this->cache_filters)) {
+            return $this->cache_filters;
+        }
+
+        $step_name = $this->attr_prefix . '_' . $this->name;
+
+        $filters[] = new Filter\Post_Status($step_name);
+
+        return parent::get_filters($filters);
+    }
+
     public function filter_workflow_actions($actions)
     {
-        if ( ! is_array($actions) || empty($actions)) {
+        if (!is_array($actions) || empty($actions)) {
             $actions = [];
         }
 

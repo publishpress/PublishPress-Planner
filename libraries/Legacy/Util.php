@@ -48,13 +48,13 @@ class Util
             $post_type = $post->post_type;
         } elseif ($typenow) {
             $post_type = $typenow;
-        } elseif ($current_screen && ! empty($current_screen->post_type)) {
+        } elseif ($current_screen && !empty($current_screen->post_type)) {
             $post_type = $current_screen->post_type;
         } elseif (isset($_REQUEST['post_type'])) {
             $post_type = sanitize_key($_REQUEST['post_type']);
         } elseif ('post.php' == $pagenow
-                  && $post_id
-                  && ! empty(get_post($post_id)->post_type)) {
+            && $post_id
+            && !empty(get_post($post_id)->post_type)) {
             $post_type = get_post($post_id)->post_type;
         } elseif ('edit.php' == $pagenow && empty($_REQUEST['post_type'])) {
             $post_type = 'post';
@@ -104,7 +104,7 @@ class Util
      * Adds an array of capabilities to a role.
      *
      * @param string $role A standard WP user role like 'administrator' or 'author'
-     * @param array  $caps One or more user caps to add
+     * @param array $caps One or more user caps to add
      *
      * @since 1.9.8
      *
@@ -135,7 +135,7 @@ class Util
         $isEnabled = defined('GUTENBERG_VERSION');
 
         // Is WordPress 5?
-        if ( ! $isEnabled) {
+        if (!$isEnabled) {
             $wpVersion = get_bloginfo('version');
 
             $isEnabled = version_compare($wpVersion, '5.0', '>=');
@@ -153,7 +153,7 @@ class Util
         }
 
         foreach ($addons as $addon) {
-            if ( ! empty($addon['license_key']) && $addon['license_status'] === 'valid') {
+            if (!empty($addon['license_key']) && $addon['license_status'] === 'valid') {
                 return true;
             }
         }
@@ -173,12 +173,12 @@ class Util
         if (function_exists('getenv')) {
             $method = strtoupper(getenv('REQUEST_METHOD'));
 
-            if ( ! empty($method)) {
+            if (!empty($method)) {
                 return $method;
             }
         }
 
-        if (isset($_POST) && ! empty($_POST)) {
+        if (isset($_POST) && !empty($_POST)) {
             return 'POST';
         }
 

@@ -93,7 +93,7 @@ trait PublishPress_Module
         if (isset($publishpress->notifications)) {
             $module = $publishpress->notifications->module;
         }
-        
+
         return $publishpress->improved_notifications->get_all_post_types($module);
     }
 }

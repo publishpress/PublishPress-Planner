@@ -232,9 +232,17 @@ jQuery(document).ready(function ($) {
                     next_date: next_date,
                     nonce: nonce
                 };
+                var self = this;
                 jQuery.post(ajaxurl, params,
                     function (response) {
                         $('li.ajax-actions .waiting').hide();
+
+                        if (response.status == 'error') {
+                            $('header').append($('<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>'));
+                            setTimeout(publishpress_calendar_hide_message, 10000);
+                            $(self).sortable("cancel");
+                            return;
+                        }
 
                         // Update the icon in case it switched between publish and future
                         var data = response.data,
@@ -251,12 +259,6 @@ jQuery(document).ready(function ($) {
                             }
                         }
 
-                        var html = '';
-                        if (response.status == 'error') {
-                            html = '<div class="is-dismissible notice notice-error"><p>' + response.message + '</p></div>';
-                        }
-                        $('header h2').after(html);
-                        setTimeout(publishpress_calendar_hide_message, 10000);
                     }
                 );
             }
@@ -384,20 +386,7 @@ jQuery(document).ready(function ($) {
                 EFQuickPublish.ajax_pp_create_post(true);
             });
 
-            $('select.post-insert-dialog-post-status', EFQuickPublish.$new_post_form).on('change', function(e) {
-              var selected_value = this.value;
-              var form = $(this).parents('form');
-              var publish_time_input_wrapper = $('input[name="post-insert-dialog-post-publish-time"]', form).parent();
-
-              if (['publish', 'private', 'future'].indexOf(selected_value) >= 0) {
-                publish_time_input_wrapper.show();
-              } else {
-                publish_time_input_wrapper.hide();
-              }
-            });
-
             return false; // prevent bubbling up
-
         },
 
         /**

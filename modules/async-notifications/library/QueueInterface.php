@@ -23,6 +23,8 @@
 
 namespace PublishPress\AsyncNotifications;
 
+use Exception;
+
 /**
  * Interface QueueInterface
  *
@@ -39,7 +41,7 @@ interface QueueInterface
      * @param $content
      * @param $channel
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel);
 }

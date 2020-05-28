@@ -23,6 +23,8 @@
 
 namespace PublishPress\NotificationsLog;
 
+use Exception;
+
 /**
  * Class LogHandler
  *
@@ -45,7 +47,7 @@ class LogHandler
      * @param $data
      *
      * @return false|int
-     * @throws \Exception
+     * @throws Exception
      */
     public function register($data = [])
     {
@@ -103,10 +105,10 @@ class LogHandler
      *
      * @param string $orderBy
      * @param string $order
-     * @param bool   $returnTotal
-     * @param array  $filters
-     * @param int    $perPage
-     * @param int    $currentPage
+     * @param bool $returnTotal
+     * @param array $filters
+     * @param int $perPage
+     * @param int $currentPage
      *
      * @return array
      */
@@ -127,15 +129,15 @@ class LogHandler
             'status'  => LogModel::COMMENT_APPROVED,
         ];
 
-        if ( ! empty($postID)) {
+        if (!empty($postID)) {
             $args['post_id'] = $postID;
         }
 
-        if ( ! empty($perPage)) {
+        if (!empty($perPage)) {
             $args['number'] = (int)$perPage;
         }
 
-        if ( ! empty($currentPage)) {
+        if (!empty($currentPage)) {
             $args['offset'] = ($currentPage - 1) * $perPage;
         }
 
@@ -158,7 +160,7 @@ class LogHandler
             ];
         }
 
-        if (isset($filters['workflow_action']) && ! empty($filters['workflow_action'])) {
+        if (isset($filters['workflow_action']) && !empty($filters['workflow_action'])) {
             $args['meta_query'] = [
                 [
                     'key'   => LogModel::META_NOTIF_ACTION,
@@ -167,7 +169,7 @@ class LogHandler
             ];
         }
 
-        if (isset($filters['channel']) && ! empty($filters['channel'])) {
+        if (isset($filters['channel']) && !empty($filters['channel'])) {
             $args['meta_query'] = [
                 [
                     'key'   => LogModel::META_NOTIF_CHANNEL,
@@ -176,7 +178,7 @@ class LogHandler
             ];
         }
 
-        if (isset($filters['receiver']) && ! empty($filters['receiver'])) {
+        if (isset($filters['receiver']) && !empty($filters['receiver'])) {
             $args['meta_query'] = [
                 [
                     'key'     => LogModel::META_NOTIF_RECEIVER,
@@ -186,7 +188,7 @@ class LogHandler
             ];
         }
 
-        if (isset($filters['date_begin']) && ! empty($filters['date_begin'])) {
+        if (isset($filters['date_begin']) && !empty($filters['date_begin'])) {
             $args['date_query'] = [
                 'after'     => $filters['date_begin'],
                 'before'    => $filters['date_end'],

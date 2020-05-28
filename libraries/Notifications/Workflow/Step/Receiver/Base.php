@@ -41,7 +41,7 @@ class Base extends Base_Step
      * Add the respective value to the column in the workflow list
      *
      * @param array $values
-     * @param int   $post_id
+     * @param int $post_id
      *
      * @return array
      */

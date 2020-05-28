@@ -9,6 +9,7 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event\Filter;
 
+use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\Metadata;
 use PublishPress\Notifications\Traits\PublishPress_Module;
@@ -41,17 +42,17 @@ class Base implements Filter_Interface
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function render()
     {
-        throw new \Exception('The method ' . __CLASS__ . '::render have to be defined in the child class');
+        throw new Exception('The method ' . __CLASS__ . '::render have to be defined in the child class');
     }
 
     /**
      * Function to save the metadata from the metabox
      *
-     * @param int     $id
+     * @param int $id
      * @param WP_Post $post
      */
     public function save_metabox_data($id, $post)

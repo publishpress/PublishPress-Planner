@@ -1,3 +1,13 @@
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 header h2 span:not(.time-range) {
     color: #999999;
 }
@@ -203,6 +213,15 @@ table#pp-calendar-view .day-unit.weekend-day .post-list li.is-published:hover {
 
 table#pp-calendar-view .day-unit.weekend-day.ui-wrapper-highlight .post-list li.sortable {
 
+}
+
+table#pp-calendar-view .day-unit .post-list li.read-only {
+  font-style: italic;
+}
+
+table#pp-calendar-view .day-unit .post-list li.read-only .item-default-visible,
+table#pp-calendar-view .day-unit .post-list li.read-only .item-headline {
+  cursor: pointer !important;
 }
 
 table#pp-calendar-view .day-unit .post-insert-dialog {
@@ -626,4 +645,14 @@ table#pp-calendar-view .day-unit .post-list li .item-overlay .item-actions span.
 #publishpress-ics-download .dashicons {
     margin-top: 4px;
     margin-right: 2px;
+}
+
+#pp-calendar-wrap .read-only-notice {
+    padding-left: 3px;
+    padding-right: 3px;
+    border-top: 1px solid #CCC;
+    padding-top: 3px;
+    margin-top: 4px;
+    color: silver;
+    cursor: help !important;
 }
