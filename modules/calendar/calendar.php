@@ -2629,7 +2629,7 @@ if (!class_exists('PP_Calendar')) {
             if (!in_array($post_type, $this->get_post_types_for_module($this->module))) {
                 $this->print_ajax_response(
                     'error',
-                    __('Please change Quick Create to use a post type viewable on the calendar.', 'publishpress')
+                    __('Please change Quick Create to  use a post type viewable on the calendar.', 'publishpress')
                 );
             }
 
