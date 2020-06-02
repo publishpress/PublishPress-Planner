@@ -92,8 +92,8 @@ class Pimple_Container extends Container
                 return $publishpress;
             };
 
-            $instance['workflow_controller'] = function ($c) {
-                return new Workflow\Controller;
+            $instance['workflows_controller'] = function ($c) {
+                return new Workflow\WorkflowsController;
             };
 
             $instance['shortcodes'] = function ($c) {

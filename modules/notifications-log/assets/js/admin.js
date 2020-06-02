@@ -107,4 +107,9 @@ jQuery(function ($) {
 
   $('.filter-date-begin').datepicker();
   $('.filter-date-end').datepicker();
+
+  $('.publishpress_page_pp-notif-log .slide-closed-text').click(function() {
+    $(this).next().slideDown();
+    $(this).remove();
+  });
 });

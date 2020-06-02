@@ -30,7 +30,7 @@ class Shortcodes
      *
      * @var array
      */
-    protected $action_args;
+    protected $event_args;
 
     /**
      * @var mixed
@@ -49,11 +49,11 @@ class Shortcodes
      * Adds the shortcodes to replace text
      *
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      */
-    public function register($workflow_post, $action_args)
+    public function register($workflow_post, $event_args)
     {
-        $this->set_properties($workflow_post, $action_args);
+        $this->set_properties($workflow_post, $event_args);
 
         add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
         add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
@@ -66,12 +66,12 @@ class Shortcodes
      * Set the instance properties
      *
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      */
-    protected function set_properties($workflow_post, $action_args)
+    protected function set_properties($workflow_post, $event_args)
     {
         $this->workflow_post = $workflow_post;
-        $this->action_args   = $action_args;
+        $this->event_args   = $event_args;
     }
 
     /**
@@ -306,7 +306,7 @@ class Shortcodes
      */
     protected function get_post()
     {
-        return $this->action_args['post'];
+        return $this->event_args['post'];
     }
 
     /**
@@ -380,7 +380,7 @@ class Shortcodes
                 case 'new_status':
                     $status = $publishpress->custom_status->get_custom_status_by(
                         'slug',
-                        $this->action_args[$item]
+                        $this->event_args[$item]
                     );
 
                     if (empty($status) || 'WP_Error' === get_class($status)) {
@@ -508,11 +508,11 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if (!isset($this->action_args['comment'])) {
+        if (!isset($this->event_args['comment'])) {
             return;
         }
 
-        $comment = $this->action_args['comment'];
+        $comment = $this->event_args['comment'];
 
         // No attributes? Set the default one.
         if (empty($attrs)) {
@@ -595,6 +595,6 @@ class Shortcodes
     protected function cleanup()
     {
         $this->workflow_post = null;
-        $this->action_args   = null;
+        $this->event_args   = null;
     }
 }

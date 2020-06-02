@@ -31,11 +31,11 @@ if (!class_exists('WP_List_Table')) {
 }
 
 /**
- * Class LogListTable
+ * Class NotificationsLogTable
  *
  * @package PublishPress\NotificationsLog
  */
-class LogListTable extends WP_List_Table
+class NotificationsLogTable extends WP_List_Table
 {
     use Dependency_Injector;
 
@@ -46,12 +46,12 @@ class LogListTable extends WP_List_Table
     const BULK_ACTION_DELETE_ALL = 'delete_all';
 
     /**
-     * @var LogHandler
+     * @var NotificationsLogHandler
      */
     private $logHandler;
 
     /**
-     * LogListTable constructor.
+     * NotificationsLogTable constructor.
      *
      * @param $logHandler
      */
@@ -62,8 +62,8 @@ class LogListTable extends WP_List_Table
         //Set parent defaults
         parent::__construct(
             [
-                'singular' => 'log',     //singular name of the listed records
-                'plural'   => 'log',    //plural name of the listed records
+                'singular' => 'notification_log',     //singular name of the listed records
+                'plural'   => 'notifications_log',    //plural name of the listed records
                 'ajax'     => false        //does this table support ajax?
             ]
         );
@@ -80,62 +80,118 @@ class LogListTable extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
-        $log = new LogModel($item);
+        $log = new NotificationsLogModel($item);
 
         switch ($column_name) {
-            case 'date':
-                $output = $log->date;
-                break;
-
             case 'action':
-                $output = $log->action;
+                $output = $log->event;
                 break;
 
-            case 'post':
-                $output = $log->postTitle;
-                break;
+            case 'content':
+                $output = sprintf(
+                    '%s<div class="muted">(id:%d)</div><div class="muted">(%s:%s)</div>',
+                    $log->postTitle,
+                    $log->postId,
+                    __('workflow', 'publishpress'),
+                    $log->workflowTitle
+                );
 
-            case 'workflow':
-                $output = $log->workflowTitle;
                 break;
 
             case 'receiver':
-                if ($log->receiverIsUser()) {
-                    $output = '';
-                    if ($log->channel === 'email') {
-                        $user   = get_user_by('ID', $log->receiver);
-                        $output .= sprintf('<div>%s</div>', $user->user_email);
-                    }
-                    $output .= sprintf(
-                        '<div class="user">%s (id:%d)</div>',
-                        $log->receiverName,
-                        $log->receiver
-                    );
-                } else {
-                    $output = $log->receiver;
-                }
-                break;
+                $receivers = $log->getReceiversByGroup();
+                $receiversCount = 0;
 
-            case 'channel':
-                $output = $log->channel;
+                $output = '<ul class="publishpress-notifications-receivers">';
+                foreach ($receivers as $group => $groupReceivers) {
+                    $output .= sprintf(
+                        '<li class="receiver-title">%s:</li>',
+                        apply_filters('publishpress_notifications_receiver_group_label', $group)
+                    );
+
+                    $lastSubgroup = null;
+
+                    foreach ($groupReceivers as $receiverData) {
+                        $receiver = $receiverData['receiver'];
+
+                        if (isset($receiverData['subgroup'])) {
+                            // Do not repeat the same subgroup
+                            if ($receiverData['subgroup'] !== $lastSubgroup) {
+                                $output .= sprintf(
+                                    '<li class="receiver-subgroup"><span>%s</span></li>',
+                                    $receiverData['subgroup']
+                                );
+
+                                $lastSubgroup = $receiverData['subgroup'];
+                            }
+                        }
+
+                        $output .= sprintf(
+                            '<li><i class="channel-icon %s"></i>',
+                            apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
+                        );
+
+                        if (is_numeric($receiver)) {
+                            $user   = get_user_by('ID', $receiver);
+                            $output .= $user->user_nicename;
+
+                            $output .= sprintf(
+                                '<span class="user-details muted">(user_id:%d, email:%s)</span>',
+                                $user->ID,
+                                $user->user_email
+                            );
+                        } else {
+                            $output .= $receiver;
+                        }
+
+                        $output .= '</li>';
+
+                        $receiversCount++;
+                    }
+                }
+                $output .= '</ul>';
+
+                // Add the slide effect for scheduled notifications
+                if ($receiversCount > 4 && $log->status === 'scheduled') {
+                    $output = sprintf(
+                        '<a href="#" class="slide-closed-text">%s <i class="dashicons dashicons-arrow-down-alt2"></i></a><div class="slide">%s</div>',
+                        sprintf(
+                            __('Scheduled for %d receivers. Click here to display them.', 'publishpress'),
+                            $receiversCount
+                        ),
+                        $output
+                    );
+                }
+
                 break;
 
             case 'status':
-                if ($log->success) {
-                    $output = '<i class="dashicons dashicons-yes-alt"></i>';
-                } else {
-                    $output = '<i class="dashicons dashicons-no"></i>';
+                $output = sprintf(
+                    '<div class="publishpress-notifications-status %s">',
+                    esc_attr($log->status)
+                );
 
-                    if (!empty($log->error)) {
-                        $output .= '<span class="error"> - ' . $log->error . '</span>';
+                if ($log->status === 'scheduled') {
+                    $output .= '<i class="dashicons dashicons-clock"></i> ' . __(' Scheduled', 'publishpress');
+                } else {
+                    if ($log->success) {
+                        $output .= '<i class="dashicons dashicons-yes-alt"></i>';
+                    } else {
+                        $output .= '<i class="dashicons dashicons-no"></i>';
+
+                        if (!empty($log->error)) {
+                            $output .= '<span class="error"> - ' . $log->error . '</span>';
+                        }
                     }
                 }
-                $output .= $log->async ? __(' (Scheduled in the cron)', 'publishpress') : '';
 
-                break;
+                $output .= sprintf(
+                    '<div class="muted">(%s)</div>',
+                    $log->async ? __('asynchronously', 'publishpress') : __('synchronously', 'publishpress')
+                );
 
-            case 'async':
-                $output = $log->async ? __('Yes', 'publishpress') : __('No', 'publishpress');
+                $output .= '</div>';
+
                 break;
 
             default:
@@ -262,12 +318,12 @@ class LogListTable extends WP_List_Table
             $filters['receiver'] = sanitize_text_field($_REQUEST['receiver']);
         }
 
-        $total_items = $this->logHandler->getNotifications($postId, null, null, true, $filters);
+        $total_items = $this->logHandler->getNotificationLogEntries($postId, null, null, true, $filters);
 
         $orderBy = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
         $order   = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
 
-        $this->items = $this->logHandler->getNotifications(
+        $this->items = $this->logHandler->getNotificationLogEntries(
             $postId,
             $orderBy,
             $order,
@@ -291,18 +347,14 @@ class LogListTable extends WP_List_Table
      */
     public function get_columns()
     {
-        $columns = [
+        return [
             'cb'       => '<input type="checkbox" />',
             'date'     => __('Date', 'publishpress'),
-            'post'     => __('Post', 'publishpress'),
-            'workflow' => __('Workflow', 'publishpress'),
+            'content'  => __('Content', 'publishpress'),
             'action'   => __('Action', 'publishpress'),
             'receiver' => __('Receiver', 'publishpress'),
-            'channel'  => __('Channel', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
-
-        return $columns;
     }
 
     /**
@@ -310,11 +362,9 @@ class LogListTable extends WP_List_Table
      */
     public function get_sortable_columns()
     {
-        $sortable_columns = [
+        return [
             'date' => ['date', true],
         ];
-
-        return $sortable_columns;
     }
 
     public function process_bulk_action()
@@ -328,7 +378,15 @@ class LogListTable extends WP_List_Table
                 }
             }
         } elseif (self::BULK_ACTION_DELETE_ALL === $this->current_action()) {
-            $notifications = $this->logHandler->getNotifications(null, 'comment_date', 'desc', false, [], null, null);
+            $notifications = $this->logHandler->getNotificationLogEntries(
+                null,
+                'comment_date',
+                'desc',
+                false,
+                [],
+                null,
+                null
+            );
 
             if (!empty($notifications)) {
                 foreach ($notifications as $notification) {
@@ -341,16 +399,20 @@ class LogListTable extends WP_List_Table
     protected function get_views()
     {
         return [
-            'all'     => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
+            'all'       => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
                     'All',
                     'publishpress'
                 ) . '</a>',
-            'success' => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __(
+            'success'   => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __(
                     'Success',
                     'publishpress'
                 ) . '</a>',
-            'error'   => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
+            'error'     => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
                     'Errors',
+                    'publishpress'
+                ) . '</a>',
+            'scheduled' => '<a href="' . esc_url(add_query_arg('status', 'scheduled')) . '">' . __(
+                    'Scheduled',
                     'publishpress'
                 ) . '</a>',
         ];

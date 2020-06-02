@@ -11,7 +11,7 @@ namespace PublishPress\Notifications\Workflow;
 
 use WP_Query;
 
-class Controller
+class WorkflowsController
 {
     /**
      * Store the signatures of sent notifications, usually to avoid duplicated notifications
@@ -22,38 +22,48 @@ class Controller
     protected $sent_notification_signatures = [];
 
     /**
-     * List of receivers by channel
-     *
-     * @var array
-     */
-    protected $receivers_by_channel = [];
-
-    /**
      * The constructor
      */
     public function __construct()
     {
-        add_action('publishpress_notif_run_workflows', [$this, 'run_workflows'], 10);
+        add_action('publishpress_notifications_trigger_workflows', [$this, 'trigger_workflows']);
     }
 
     /**
      * Look for enabled workflows, filtering and running according to each settings.
      *
-     * $args = [
-     *     'action',
-     *     'post',
-     *     'new_status',
-     *     'old_status',
+     * $params = [
+     *     'event',
+     *      'params' = [
+     *          'post',
+     *          'new_status',
+     *          'old_status',
+     *          'comment_id',
+     *      ]
      * ]
      *
-     * @param array $args
+     * @param string $event
+     * @param array $params
      */
-    public function run_workflows($args)
+    public function trigger_workflows($params)
     {
-        $workflows = $this->get_filtered_workflows($args);
+        try {
+            $query = $this->get_workflows_filter_query($params);
 
-        foreach ($workflows as $workflow) {
-            $workflow->run($args);
+            if (!empty($query->posts)) {
+                foreach ($query->posts as $workflowPost) {
+                    $workflow = new Workflow($workflowPost);
+                    $workflow->run($params);
+                }
+            }
+        } catch (\Exception $e) {
+            error_log(
+                sprintf(
+                    '[PublishPress Notifications] Exception: %s, %s',
+                    $e->getMessage(),
+                    __METHOD__
+                )
+            );
         }
     }
 
@@ -66,14 +76,12 @@ class Controller
      *     'old_status',
      * ]
      *
-     * @param array $args
+     * @param array $params
      *
-     * @return array
+     * @return WP_Query
      */
-    public function get_filtered_workflows($args)
+    public function get_workflows_filter_query($params)
     {
-        $workflows = [];
-
         // Build the query
         $query_args = [
             'nopaging'      => true,
@@ -89,19 +97,11 @@ class Controller
          * each step's filters.
          *
          * @param array $query_args
-         * @param array $args
+         * @param array $params
          */
-        $query_args = apply_filters('publishpress_notif_run_workflow_meta_query', $query_args, $args);
+        $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $params);
 
-        $query = new WP_Query($query_args);
-
-        if (!empty($query->posts)) {
-            foreach ($query->posts as $post) {
-                $workflows[] = new Workflow($post);
-            }
-        }
-
-        return $workflows;
+        return new WP_Query($query_args);
     }
 
     /**
@@ -174,12 +174,24 @@ class Controller
          */
         $classes_content = apply_filters('publishpress_notif_workflow_steps_content', $classes_content);
 
+        // Actions
+        $classes_action = [
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Action\\Notification',
+        ];
+        /**
+         * Filters the list of classes to define workflow "action" steps.
+         *
+         * @param array $classes The list of classes to be loaded
+         */
+        $classes_action = apply_filters('publishpress_notif_workflow_steps_action', $classes_action);
+
         $classes = array_merge(
             $classes_event,
             $classes_event_content,
             $classes_receiver,
             $classes_channel,
-            $classes_content
+            $classes_content,
+            $classes_action
         );
 
         // Instantiate each class
@@ -208,5 +220,39 @@ class Controller
         $found = array_key_exists($signature, $this->sent_notification_signatures);
 
         return $found;
+    }
+
+    public function get_filtered_workflows($args)
+    {
+        $workflows = [];
+
+        // Build the query
+        $query_args = [
+            'nopaging'      => true,
+            'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+            'post_status'   => 'publish',
+            'no_found_rows' => true,
+            'cache_results' => true,
+            'meta_query'    => [],
+        ];
+
+        /**
+         * Filters the arguments sent to the query to get workflows and
+         * each step's filters.
+         *
+         * @param array $query_args
+         * @param array $args
+         */
+        $query_args = apply_filters('publishpress_notif_run_workflow_meta_query', $query_args, $args);
+
+        $query = new WP_Query($query_args);
+
+        if (!empty($query->posts)) {
+            foreach ($query->posts as $post) {
+                $workflows[] = new Workflow($post);
+            }
+        }
+
+        return $workflows;
     }
 }

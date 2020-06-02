@@ -102,10 +102,10 @@ if (!class_exists('PP_Async_Notifications')) {
          */
         public function init()
         {
-            add_action('publishpress_notify_using_cron', [$this, 'action_notify_using_cron'], 10, 5);
-            add_action('publishpress_cron_notify', [$this, 'action_cron_notify'], 10, 8);
-            add_filter('publishpress_notif_workflow_do_action', [$this, 'filter_workflow_do_action'], 10, 3);
+            add_action('publishpress_notifications_running_for_post', [$this, 'schedule_notifications'], 7);
+            add_action('publishpress_notifications_send_from_cron', [$this, 'send_from_cron'], 10, 8);
             add_filter('debug_information', [$this, 'filterDebugInformation']);
+            add_filter('publishpress_notifications_stop_sync_notifications', '__return_true');
         }
 
         /**
@@ -124,39 +124,6 @@ if (!class_exists('PP_Async_Notifications')) {
          */
         public function upgrade($previous_version)
         {
-        }
-
-        /**
-         * @param string $action
-         * @param PublishPress\Notifications\Workflow\ $workflow
-         * @param string $channel
-         *
-         * @return string
-         */
-        public function filter_workflow_do_action($action, $workflow, $channel)
-        {
-            // Change the action to send the notification to the cron, instead of sending it to the receiver.
-            $action = 'publishpress_notify_using_cron';
-
-            return $action;
-        }
-
-        /**
-         * Enqueue the notification
-         *
-         * @param $workflow_post
-         * @param $action_args
-         * @param $receiver
-         * @param $content
-         * @param $channel
-         *
-         * @throws Exception;
-         */
-        public function action_notify_using_cron($workflow_post, $action_args, $receiver, $content, $channel)
-        {
-            $queue = $this->get_service('notification_queue');
-
-            $queue->enqueueNotification($workflow_post, $action_args, $receiver, $content, $channel);
         }
 
         /**
@@ -210,25 +177,10 @@ if (!class_exists('PP_Async_Notifications')) {
         }
 
         /**
-         * @param $workflowPostId
-         * @param $action
-         * @param $postId
-         * @param $content
-         * @param $oldStatus
-         * @param $newStatus
-         * @param $channel
-         * @param $receiver
+         * @param array $params
          */
-        public function action_cron_notify(
-            $workflowPostId,
-            $action,
-            $postId,
-            $content,
-            $oldStatus,
-            $newStatus,
-            $channel,
-            $receiver
-        ) {
+        public function send_from_cron($params)
+        {
             // Check if this is a duplicated notification and skip it.
             // I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
             // by the same cron task.
@@ -238,8 +190,8 @@ if (!class_exists('PP_Async_Notifications')) {
 
             // Work the notification
             $workflowPost = get_post($workflowPostId);
-            $actionArgs   = [
-                'action'     => $action,
+            $eventArgs    = [
+                'event'      => $event,
                 'post'       => get_post($postId),
                 'new_status' => $newStatus,
                 'old_status' => $oldStatus,
@@ -253,7 +205,7 @@ if (!class_exists('PP_Async_Notifications')) {
              * Triggers the notification. This can be caught by notification channels.
              *
              * @param WP_Post $workflow_post
-             * @param array $action_args
+             * @param array $event_args
              * @param array $receivers
              * @param array $content
              * @param array $channel
@@ -261,7 +213,7 @@ if (!class_exists('PP_Async_Notifications')) {
             do_action(
                 'publishpress_notif_send_notification_' . $channel,
                 $workflowPost,
-                $actionArgs,
+                $eventArgs,
                 $receivers,
                 $content,
                 $channel
@@ -280,7 +232,8 @@ if (!class_exists('PP_Async_Notifications')) {
             $cronTasks = _get_cron_array();
 
             $expectedHooks = [
-                'publishpress_cron_notify',
+                'publishpress_notifications_send_from_cron',
+                'publishpress_cron_notify', // @deprecated
             ];
 
             if (!empty($cronTasks)) {
@@ -293,29 +246,14 @@ if (!class_exists('PP_Async_Notifications')) {
                         foreach ($dings as $sig => $data) {
                             $formattedDate = date('Y-m-d H:i:s', $time);
 
-                            $event   = $data['args'][1];
-                            $postId  = $data['args'][2];
-                            $channel = $data['args'][6];
-
-                            if ($channel === 'email') {
-                                $details = $data['args'][7];
-
-                                if (is_numeric($details)) {
-                                    $user = get_userdata($details);
-
-                                    $details .= ' - ' . $user->user_email;
-                                }
-
-                                $channel .= ' (' . $details . ')';
-                            }
-
                             $scheduledNotifications["$hook-$sig-$time"] = [
                                 'label' => $formattedDate,
                                 'value' => sprintf(
-                                    __('Event: %s, Post ID: %s, Channel: %s', 'publishpress'),
-                                    $event,
-                                    $postId,
-                                    $channel
+                                    __('Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s', 'publishpress'),
+                                    $data['args']['event'],
+                                    $data['args']['workflowId'],
+                                    $data['args']['postId'],
+                                    $data['args']['userId'],
                                 ),
                             ];
                         }
@@ -331,6 +269,13 @@ if (!class_exists('PP_Async_Notifications')) {
             ];
 
             return $debugInfo;
+        }
+
+        public function schedule_notifications($workflow)
+        {
+            $queue = $this->get_service('notification_queue');
+
+            $queue->enqueueNotification($workflow->workflow_post->ID, $workflow->event_args);
         }
     }
 }

@@ -155,12 +155,12 @@ class Base extends Base_Step
 
     /**
      * @param $workflow_post
-     * @param $action_args
+     * @param $event_args
      * @param $receivers
      * @param $content
      * @param $channel
      */
-    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
+    public function action_send_notification($workflow_post, $event_args, $receivers, $content, $channel)
     {
         return;
     }

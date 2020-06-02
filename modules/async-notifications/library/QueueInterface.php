@@ -35,13 +35,10 @@ interface QueueInterface
     /**
      * Enqueue the notification for async processing.
      *
-     * @param $workflowPost
-     * @param $actionArgs
-     * @param $receivers
-     * @param $content
-     * @param $channel
+     * @param $workflowPostId
+     * @param $eventArgs
      *
      * @throws Exception
      */
-    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel);
+    public function enqueueNotification($workflowPostId, $eventArgs);
 }

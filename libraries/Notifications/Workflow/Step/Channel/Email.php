@@ -33,6 +33,8 @@ class Email extends Base implements Channel_Interface
         add_filter('publishpress_notif_error_log', [$this, 'filterErrorLog'], 10, 5);
         add_action('wp_mail_failed', [$this, 'emailFailed']);
 
+        add_filter('publishpress_notifications_channel_icon_class', [$this, 'filterChannelIconClass']);
+
         parent::__construct();
     }
 
@@ -40,14 +42,14 @@ class Email extends Base implements Channel_Interface
      * Check if this channel is selected and triggers the notification.
      *
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      * @param array $receivers
      * @param array $content
      * @param string $channel
      *
      * @throws Exception
      */
-    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
+    public function action_send_notification($workflow_post, $event_args, $receivers, $content, $channel)
     {
         $this->get_service('debug')->write($receivers, 'Email::action_send_notification $receivers');
 
@@ -61,7 +63,7 @@ class Email extends Base implements Channel_Interface
         }
 
         $signature  = $this->get_notification_signature($content, $channel . ':' . serialize($receivers));
-        $controller = $this->get_service('workflow_controller');
+        $controller = $this->get_service('workflows_controller');
 
         // Check if the notification was already sent
         if ($controller->is_notification_signature_registered($signature)) {
@@ -70,7 +72,7 @@ class Email extends Base implements Channel_Interface
 
         // Send the emails
         $emails = $this->get_receivers_emails($receivers);
-        $action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
+        $action = 'transition_post_status' === $event_args['event'] ? 'status-change' : 'comment';
 
         $this->get_service('debug')->write($emails, 'Email::action_send_notification $emails');
 
@@ -91,7 +93,7 @@ class Email extends Base implements Channel_Interface
 
             $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
                 $action,
-                $action_args,
+                $event_args,
                 $subject,
                 $body,
                 '',
@@ -100,7 +102,7 @@ class Email extends Base implements Channel_Interface
 
             /**
              * @param WP_Post $workflow_post
-             * @param array $action_args
+             * @param array $event_args
              * @param string $channel
              * @param string $subject
              * @param string $body
@@ -109,7 +111,7 @@ class Email extends Base implements Channel_Interface
             do_action(
                 'publishpress_notif_notification_sending',
                 $workflow_post,
-                $action_args,
+                $event_args,
                 $channel,
                 $subject,
                 $body,
@@ -161,11 +163,11 @@ class Email extends Base implements Channel_Interface
      *
      * @param array $receivers
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function filter_receivers($receivers, $workflow_post, $action_args)
+    public function filter_receivers($receivers, $workflow_post, $event_args)
     {
         return $receivers;
     }
@@ -224,5 +226,14 @@ class Email extends Base implements Channel_Interface
         }
 
         return $error;
+    }
+
+    public function filterChannelIconClass($channel)
+    {
+        if ($channel === 'email') {
+            return 'dashicons dashicons-email';
+        }
+
+        return $channel;
     }
 }

@@ -38,95 +38,54 @@ class WPCron implements QueueInterface
     /**
      * Enqueue the notification for async processing.
      *
-     * @param $workflowPost
-     * @param $actionArgs
-     * @param $receivers
-     * @param $content
-     * @param $channel
+     * @param $workflowPostId
+     * @param $eventArgs
      *
      * @throws Exception
      */
-    public function enqueueNotification($workflowPost, $actionArgs, $receivers, $content, $channel)
+    public function enqueueNotification($workflowPostId, $eventArgs)
     {
-        if (!is_array($receivers)) {
-            $receivers = [$receivers];
+        $data = [
+            'workflowId' => $workflowPostId,
+            'event'      => $eventArgs['event'],
+            'postId'     => (int)$eventArgs['params']['post']->ID,
+            'userId'     => get_current_user_id(),
+        ];
+
+        if (isset($eventArgs['params']['comment'])) {
+            $data['commentId'] = (int)$eventArgs['params']['comment']->comment_ID;
         }
 
-        if (!empty($receivers)) {
-            $baseData = [
-                // workflow_post_id
-                $workflowPost->ID,
-                // action
-                $actionArgs['action'],
-                // post_id
-                $actionArgs['post']->ID,
-                // content
-                base64_encode(maybe_serialize($content)),
-                // old_status
-                isset($actionArgs['old_status']) ? $actionArgs['old_status'] : null,
-                // new_status
-                isset($actionArgs['new_status']) ? $actionArgs['new_status'] : null,
-                // channel
-                $channel,
-            ];
-
-            $timestamp = apply_filters(
-                'publishpress_notif_async_timestamp',
-                time(),
-                $workflowPost->ID,
-                $actionArgs['post']->ID
-            );
-
-            if (false === $timestamp) {
-                // Abort.
-                error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPost->ID);
-
-                return;
-            }
-
-            // Create one notification for each receiver in the queue
-            foreach ($receivers as $receiver) {
-                // Base data
-                $data = $baseData;
-
-                // Receiver
-                $data[] = $receiver;
-
-                $deliveryResult = [
-                    $receiver => $this->scheduleEvent($data, $timestamp),
-                ];
-
-                $subject = isset($content['subject']) ? $content['subject'] : '';
-                $body    = isset($content['body']) ? $content['body'] : '';
-
-                /**
-                 * @param WP_Post $workflow_post
-                 * @param array $action_args
-                 * @param string $channel
-                 * @param string $subject
-                 * @param string $body
-                 * @param array $deliveryResult
-                 */
-                $actionArgs['async'] = 1;
-                do_action(
-                    'publishpress_notif_notification_sending',
-                    $workflowPost,
-                    $actionArgs,
-                    $channel,
-                    $subject,
-                    $body,
-                    $deliveryResult
-                );
-            }
-
-            do_action(
-                'publishpress_enqueue_notification',
-                $workflowPost->ID,
-                $actionArgs['action'],
-                $actionArgs['post']->ID,
-                $actionArgs
-            );
+        if (isset($eventArgs['params']['old_status'])) {
+            $data['oldStatus'] = $eventArgs['params']['old_status'];
+            $data['newStatus'] = $eventArgs['params']['new_status'];
         }
+
+        /**
+         * @param array $data
+         */
+        $data = apply_filters('publishpress_notifications_queue_data', $data);
+
+        $timestamp = apply_filters(
+            'publishpress_notifications_scheduled_time_for_notification',
+            time(),
+            $workflowPostId,
+            $eventArgs['params']['post']->ID
+        );
+
+        if (false === $timestamp) {
+            // Abort.
+            error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPostId);
+
+            return;
+        }
+
+        $data['result'] = $this->scheduleEvent($data, $timestamp);
+
+        /**
+         * @param array $data
+         */
+        do_action('publishpress_notifications_enqueued_notification', $data);
     }
 
     /**
@@ -143,7 +102,7 @@ class WPCron implements QueueInterface
     {
         return wp_schedule_single_event(
             $timestamp,
-            'publishpress_cron_notify',
+            'publishpress_notifications_send_from_cron',
             $data
         );
     }

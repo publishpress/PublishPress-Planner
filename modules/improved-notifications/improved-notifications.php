@@ -235,8 +235,8 @@ if (!class_exists('PP_Improved_Notifications')) {
         public function action_after_init()
         {
             // Instantiate the controller of workflow's
-            $workflow_controller = $this->get_service('workflow_controller');
-            $workflow_controller->load_workflow_steps();
+            $workflows_controller = $this->get_service('workflows_controller');
+            $workflows_controller->load_workflow_steps();
 
             do_action('publishpress_workflow_steps_loaded');
         }
@@ -556,14 +556,16 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
 
             // Go ahead and do the action to run workflows
-            $args = [
-                'action'     => 'transition_post_status',
-                'post'       => $post,
-                'new_status' => $new_status,
-                'old_status' => $old_status,
+            $params = [
+                'event'  => 'transition_post_status',
+                'params' => [
+                    'posts'      => $post,
+                    'new_status' => $new_status,
+                    'old_status' => $old_status,
+                ],
             ];
 
-            do_action('publishpress_notif_run_workflows', $args);
+            do_action('publishpress_notifications_trigger_workflows', $params);
         }
 
         /**
@@ -598,15 +600,15 @@ if (!class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            $args = [
-                'action'     => 'editorial_comment',
-                'post'       => $post,
-                'new_status' => $post->post_status,
-                'old_status' => $post->post_status,
-                'comment'    => $comment,
+            $params = [
+                'event'  => 'editorial_comment',
+                'params' => [
+                    'post'    => $post,
+                    'comment' => $comment,
+                ],
             ];
 
-            do_action('publishpress_notif_run_workflows', $args);
+            do_action('publishpress_notifications_trigger_workflows', $params);
         }
 
         /**

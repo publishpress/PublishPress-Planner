@@ -26,30 +26,21 @@ namespace PublishPress\NotificationsLog;
 use Exception;
 
 /**
- * Class LogHandler
+ * Class NotificationsLogHandler
  *
  * @package PublishPress\NotificationsLog
  */
-class LogHandler
+class NotificationsLogHandler
 {
-    const META_NOTIF_ACTION = '_ppnotif_action';
-
     /**
      * Register the notification log for the post.
-     *
-     *      $data = [
-     *          post_id,
-     *          content
-     *          workflow_id
-     *
-     *      ];
      *
      * @param $data
      *
      * @return false|int
      * @throws Exception
      */
-    public function register($data = [])
+    public function registerLog($data = [])
     {
         $user = wp_get_current_user();
 
@@ -57,42 +48,47 @@ class LogHandler
             'post_id'     => 0,
             'content'     => '',
             'workflow_id' => 0,
-            'action'      => '',
+            'event'       => '',
             'old_status'  => '',
             'new_status'  => '',
             'channel'     => '',
             'receiver'    => '',
+            'status'      => '',
             'success'     => false,
             'error'       => null,
             'async'       => false,
+            'eventArgs'   => [],
         ];
 
         $data = array_merge($defaultData, $data);
 
-        $data = [
+        $commentData = [
             'comment_post_ID'      => $data['post_id'],
-            'comment_author'       => LogModel::COMMENT_AUTHOR,
+            'comment_author'       => NotificationsLogModel::COMMENT_AUTHOR,
             'comment_author_email' => '',
             'comment_content'      => $data['content'],
-            'comment_type'         => LogModel::COMMENT_TYPE,
+            'comment_type'         => NotificationsLogModel::COMMENT_TYPE,
             'comment_parent'       => 0,
             'user_id'              => $user->ID,
-            'comment_agent'        => LogModel::COMMENT_USER_AGENT,
-            'comment_approved'     => LogModel::COMMENT_APPROVED,
+            'comment_agent'        => NotificationsLogModel::COMMENT_USER_AGENT,
+            'comment_approved'     => NotificationsLogModel::COMMENT_APPROVED,
             'comment_meta'         => [
-                LogModel::META_NOTIF_WORKFLOW_ID => $data['workflow_id'],
-                LogModel::META_NOTIF_ACTION      => $data['action'],
-                LogModel::META_NOTIF_OLD_STATUS  => $data['old_status'],
-                LogModel::META_NOTIF_NEW_STATUS  => $data['new_status'],
-                LogModel::META_NOTIF_CHANNEL     => $data['channel'],
-                LogModel::META_NOTIF_RECEIVER    => $data['receiver'],
-                LogModel::META_NOTIF_SUCCESS     => $data['success'],
-                LogModel::META_NOTIF_ERROR       => $data['error'],
-                LogModel::META_NOTIF_ASYNC       => $data['async'],
+                NotificationsLogModel::META_NOTIF_WORKFLOW_ID => $data['workflow_id'],
+                NotificationsLogModel::META_NOTIF_EVENT       => $data['event'],
+                NotificationsLogModel::META_NOTIF_OLD_STATUS  => $data['old_status'],
+                NotificationsLogModel::META_NOTIF_NEW_STATUS  => $data['new_status'],
+                NotificationsLogModel::META_NOTIF_CHANNEL     => $data['channel'],
+                NotificationsLogModel::META_NOTIF_RECEIVER    => $data['receiver'],
+                NotificationsLogModel::META_NOTIF_STATUS      => $data['status'],
+                NotificationsLogModel::META_NOTIF_SUCCESS     => $data['success'],
+                NotificationsLogModel::META_NOTIF_ERROR       => $data['error'],
+                NotificationsLogModel::META_NOTIF_ASYNC       => $data['async'],
+                NotificationsLogModel::META_NOTIF_COMMENT_ID  => $data['comment_id'],
+                NotificationsLogModel::META_NOTIF_EVENT_ARGS  => $data['event_args'],
             ],
         ];
 
-        $result = wp_insert_comment($data);
+        $result = wp_insert_comment($commentData);
 
         $last_changed = microtime();
         wp_cache_set('last_changed', $last_changed, 'comment');
@@ -112,7 +108,7 @@ class LogHandler
      *
      * @return array
      */
-    public function getNotifications(
+    public function getNotificationLogEntries(
         $postID = null,
         $orderBy = 'comment_date',
         $order = 'desc',
@@ -122,11 +118,11 @@ class LogHandler
         $currentPage = null
     ) {
         $args = [
-            'type'    => LogModel::COMMENT_TYPE,
+            'type'    => NotificationsLogModel::COMMENT_TYPE,
             'orderby' => $orderBy,
             'order'   => $order,
             'count'   => (bool)$returnTotal,
-            'status'  => LogModel::COMMENT_APPROVED,
+            'status'  => NotificationsLogModel::COMMENT_APPROVED,
         ];
 
         if (!empty($postID)) {
@@ -142,11 +138,14 @@ class LogHandler
         }
 
         if (isset($filters['status'])) {
-            if ($filters['status'] === 'success') {
-                $args['meta_key']   = LogModel::META_NOTIF_SUCCESS;
+            if ($filters['status'] === 'scheduled') {
+                $args['meta_key']   = NotificationsLogModel::META_NOTIF_STATUS;
+                $args['meta_value'] = 'scheduled';
+            } elseif ($filters['status'] === 'success') {
+                $args['meta_key']   = NotificationsLogModel::META_NOTIF_SUCCESS;
                 $args['meta_value'] = true;
             } elseif ($filters['status'] === 'error') {
-                $args['meta_key']   = LogModel::META_NOTIF_SUCCESS;
+                $args['meta_key']   = NotificationsLogModel::META_NOTIF_SUCCESS;
                 $args['meta_value'] = false;
             }
         }
@@ -154,7 +153,7 @@ class LogHandler
         if (isset($filters['workflow_id'])) {
             $args['meta_query'] = [
                 [
-                    'key'   => LogModel::META_NOTIF_WORKFLOW_ID,
+                    'key'   => NotificationsLogModel::META_NOTIF_WORKFLOW_ID,
                     'value' => (int)$filters['workflow_id'],
                 ],
             ];
@@ -163,7 +162,7 @@ class LogHandler
         if (isset($filters['workflow_action']) && !empty($filters['workflow_action'])) {
             $args['meta_query'] = [
                 [
-                    'key'   => LogModel::META_NOTIF_ACTION,
+                    'key'   => NotificationsLogModel::META_NOTIF_ACTION,
                     'value' => $filters['workflow_action'],
                 ],
             ];
@@ -172,7 +171,7 @@ class LogHandler
         if (isset($filters['channel']) && !empty($filters['channel'])) {
             $args['meta_query'] = [
                 [
-                    'key'   => LogModel::META_NOTIF_CHANNEL,
+                    'key'   => NotificationsLogModel::META_NOTIF_CHANNEL,
                     'value' => $filters['channel'],
                 ],
             ];
@@ -181,7 +180,7 @@ class LogHandler
         if (isset($filters['receiver']) && !empty($filters['receiver'])) {
             $args['meta_query'] = [
                 [
-                    'key'     => LogModel::META_NOTIF_RECEIVER,
+                    'key'     => NotificationsLogModel::META_NOTIF_RECEIVER,
                     'value'   => $filters['receiver'],
                     'compare' => 'LIKE',
                 ],

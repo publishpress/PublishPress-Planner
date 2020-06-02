@@ -12,7 +12,6 @@ namespace PublishPress\Notifications\Workflow;
 use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_Post;
-use WP_Query;
 
 class Workflow
 {
@@ -30,7 +29,7 @@ class Workflow
      *
      * @var array
      */
-    protected $action_args;
+    public $event_args;
 
     /**
      * The constructor
@@ -42,92 +41,42 @@ class Workflow
         $this->workflow_post = $workflow_post;
     }
 
+    public static function load_by_id($workflowId)
+    {
+        $post = get_post((int)$workflowId);
+
+        return new self($post);
+    }
+
     /**
      * Runs this workflow without applying any filter. We assume it was
      * already filtered in the query.
      *
-     * @param array $args
+     * @param array $event_args
      *
      * @throws Exception
      */
-    public function run($args)
+    public function run($event_args)
     {
-        $this->action_args = $args;
+        $this->event_args = $event_args;
 
-        // Who will receive the notification?
-        $receivers = $this->get_receivers();
+        do_action('publishpress_notifications_running_for_post', $this);
+    }
 
-        // If we don't have receivers, abort the workflow.
-        if (empty($receivers)) {
-            return;
-        }
-
-        // Prepare the shortcodes.
-        $shortcodes = $this->get_service('shortcodes');
-        $shortcodes->register($this->workflow_post, $this->action_args);
-
-        /*
-         * What will the notification says?
-         */
-        $content_template = $this->get_content();
-
+    private function get_receivers()
+    {
         /**
-         * @param WP_Post $workflow_post
-         * @param array $action_args
-         * @param array $receivers
-         * @param array $contentTemplate
+         * Filters the list of receivers for the notification workflow.
+         *
+         * @param WP_Post $workflow
+         * @param array $args
          */
-        do_action(
-            'publishpress_notif_before_run_workflow',
+        return apply_filters(
+            'publishpress_notif_run_workflow_receivers',
+            [],
             $this->workflow_post,
-            $this->action_args,
-            $receivers,
-            $content_template
+            $this->event_args
         );
-
-        // Run the action to each receiver.
-        foreach ($receivers as $channel => $channel_receivers) {
-            foreach ($channel_receivers as $receiver) {
-                /**
-                 * Prepare the content replacing shortcodes.
-                 */
-                $content = $this->do_shortcodes_in_content($content_template, $receiver, $channel);
-
-                /**
-                 * Filters the action to be executed. By default it will trigger the notification.
-                 * But it can be changed to do another action. This allows to change the flow and
-                 * catch the params to cache or queue for async notifications.
-                 *
-                 * @param string $action
-                 * @param Workflow $workflow
-                 * @param string $channel
-                 */
-                $action = apply_filters(
-                    'publishpress_notif_workflow_do_action',
-                    'publishpress_notif_send_notification_' . $channel,
-                    $this,
-                    $channel
-                );
-
-                /**
-                 * Triggers the notification. This can be caught by notification channels.
-                 * But can be intercepted by other plugins (cache, async, etc) to change the
-                 * workflow.
-                 *
-                 * @param WP_Post $workflow_post
-                 * @param array $action_args
-                 * @param array $receiver
-                 * @param array $content
-                 * @param string $channel
-                 */
-                do_action($action, $this->workflow_post, $this->action_args, $receiver, $content, $channel);
-            }
-        }
-
-        // Remove the shortcodes.
-        $shortcodes->unregister();
-
-        do_action('publishpress_notif_after_run_workflow');
     }
 
     /**
@@ -135,29 +84,17 @@ class Workflow
      *
      * @return array
      */
-    protected function get_receivers()
+    public function get_receivers_by_channel()
     {
+        $receivers = $this->get_receivers();
+
         $filtered_receivers = [];
 
-        /**
-         * Filters the list of receivers for the notification workflow.
-         *
-         * @param WP_Post $workflow
-         * @param array $args
-         */
-        $receivers = apply_filters(
-            'publishpress_notif_run_workflow_receivers',
-            [],
-            $this->workflow_post,
-            $this->action_args
-        );
-
         if (!empty($receivers)) {
-            // Remove duplicate receivers
-            $receivers = array_unique($receivers, SORT_STRING);
-
             // Classify receivers per channel, ignoring who has muted the channel.
-            foreach ($receivers as $index => $receiver) {
+            foreach ($receivers as $receiverData) {
+                $receiver = $receiverData['receiver'];
+
                 // Is an user (identified by the id)?
                 if (is_numeric($receiver) || is_object($receiver)) {
                     // Try to extract the ID from the object
@@ -192,17 +129,83 @@ class Workflow
                     }
 
                     // Add to the channel's list.
-                    $filtered_receivers[$channel][] = $receiver;
-                } elseif (is_string($receiver)) {
+                    $filtered_receivers[$channel][] = $receiverData;
+                } else {
                     // Check if it is an explicit email address.
-                    if (preg_match('/^email:/', $receiver)) {
-                        if (!isset($filtered_receivers['email'])) {
-                            $filtered_receivers['email'] = [];
+                    if (isset($receiverData['channel'])) {
+                        if (!isset($filtered_receivers[$receiverData['channel']])) {
+                            $filtered_receivers[$receiverData['channel']] = [];
                         }
 
                         // Add to the email channel, without the "email:" prefix.
-                        $filtered_receivers['email'][] = str_replace('email:', '', $receiver);
+                        $filtered_receivers[$receiverData['channel']][] = $receiverData;
                     }
+                }
+            }
+        }
+
+        return $filtered_receivers;
+    }
+
+    /**
+     * Returns a list of receivers ids for this workflow
+     *
+     * @return array
+     */
+    public function get_receivers_by_group()
+    {
+        $receivers = $this->get_receivers();
+
+        $filtered_receivers = [];
+
+        if (!empty($receivers)) {
+            // Classify receivers per channel, ignoring who has muted the channel.
+            foreach ($receivers as $receiverData) {
+                $receiver = $receiverData['receiver'];
+
+                // Is an user (identified by the id)?
+                if (is_numeric($receiver) || is_object($receiver)) {
+                    // Try to extract the ID from the object
+                    if (is_object($receiver)) {
+                        if (isset($receiver->ID) && !empty($receiver->ID)) {
+                            $receiver = $receiver->ID;
+                        } else {
+                            if (isset($receiver->id) && !empty($receiver->id)) {
+                                $receiver = $receiver->id;
+                            } else {
+                                // If the object doesn't have an ID, we ignore it.
+                                continue;
+                            }
+                        }
+                    }
+
+                    $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
+
+                    // If channel is empty, we set a default channel.
+                    if (empty($channel)) {
+                        $channel = apply_filters('psppno_default_channel', 'email', $this->workflow_post->ID);
+                    }
+
+                    // If the channel is "mute", we ignore this receiver.
+                    if ('mute' === $channel) {
+                        continue;
+                    }
+
+                    $receiverData['channel'] = $channel;
+
+                    // Make sure the array for the channel is initialized.
+                    if (!isset($filtered_receivers[$receiverData['group']])) {
+                        $filtered_receivers[$receiverData['group']] = [];
+                    }
+
+                    // Add to the group's list.
+                    $filtered_receivers[$receiverData['group']][] = $receiverData;
+                } else {
+                    if (!isset($filtered_receivers[$receiverData['group']])) {
+                        $filtered_receivers[$receiverData['group']] = [];
+                    }
+
+                    $filtered_receivers[$receiverData['group']][] = $receiverData;
                 }
             }
         }
@@ -220,7 +223,7 @@ class Workflow
      *
      * @throws Exception
      */
-    protected function get_content()
+    public function get_content()
     {
         $content = ['subject' => '', 'body' => ''];
         /**
@@ -233,7 +236,7 @@ class Workflow
             'publishpress_notif_run_workflow_content',
             $content,
             $this->workflow_post,
-            $this->action_args
+            $this->event_args
         );
 
         if (!array_key_exists('subject', $content)) {
@@ -254,7 +257,7 @@ class Workflow
      *
      * @return string
      */
-    protected function do_shortcodes_in_content($content, $receiver, $channel)
+    public function do_shortcodes_in_content($content, $receiver, $channel)
     {
         /**
          * Action triggered before do shortcodes in the content.

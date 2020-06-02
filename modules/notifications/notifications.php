@@ -607,17 +607,17 @@ if (!class_exists('PP_Notifications')) {
          */
         protected function get_workflows_related_to_post($post)
         {
-            $workflow_controller = $this->get_service('workflow_controller');
+            $workflows_controller = $this->get_service('workflows_controller');
 
             $args = [
-                'action'       => '',
+                'event'        => '',
                 'post'         => $post,
                 'new_status'   => $post->post_status,
                 'old_status'   => $post->post_status,
                 'ignore_event' => true,
             ];
 
-            return $workflow_controller->get_filtered_workflows($args);
+            return $workflows_controller->get_filtered_workflows($args);
         }
 
         public function action_save_post($postId)
