@@ -51,6 +51,11 @@ class NotificationsLogTable extends WP_List_Table
     private $logHandler;
 
     /**
+     * @var array
+     */
+    private $cronTasks;
+
+    /**
      * NotificationsLogTable constructor.
      *
      * @param $logHandler
@@ -83,7 +88,7 @@ class NotificationsLogTable extends WP_List_Table
         $log = new NotificationsLogModel($item);
 
         switch ($column_name) {
-            case 'action':
+            case 'event':
                 $user         = get_user_by('id', $log->userId);
                 $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
                 $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
@@ -182,12 +187,36 @@ class NotificationsLogTable extends WP_List_Table
                 );
 
                 if ($log->status === 'scheduled') {
-                    $output .= '<i class="dashicons dashicons-clock"></i> ' . __(' Scheduled', 'publishpress');
+                    $cronTaskTime = $this->getCronTaskTimeRelatedToTheLog($log);
+                    if (is_numeric($cronTaskTime)) {
+                        $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
+
+                        $output .= sprintf(
+                            '<i class="dashicons dashicons-clock"></i> %s',
+                            sprintf(
+                                __(' Scheduled to %s', 'publishpress'),
+                                date_i18n(
+                                    'Y-m-d H:i:s',
+                                    $cronTaskTime + $offset
+                                )
+                            )
+                        );
+                    } else {
+                        $output .= sprintf(
+                            '<span class="error"><i class="dashicons dashicons-no"></i> %s</span>',
+                            __('Failed', 'publishpress')
+                        );
+
+                        $output .= sprintf(
+                            '<div class="muted">%s</div>',
+                            __('The notification was set as "Scheduled" but the cron task is not found', 'publishpress')
+                        );
+                    }
                 } else {
                     if ($log->success) {
-                        $output .= '<i class="dashicons dashicons-yes-alt"></i>';
+                        $output .= '<i class="dashicons dashicons-yes-alt"></i> Sent';
                     } else {
-                        $output .= '<i class="dashicons dashicons-no"></i>';
+                        $output .= '<i class="dashicons dashicons-no"></i> Failed';
 
                         if (!empty($log->error)) {
                             $output .= '<span class="error"> - ' . $log->error . '</span>';
@@ -197,7 +226,7 @@ class NotificationsLogTable extends WP_List_Table
 
                 $output .= sprintf(
                     '<div class="muted">(%s)</div>',
-                    $log->async ? __('asynchronously', 'publishpress') : __('synchronously', 'publishpress')
+                    $log->async ? __('asynchronous', 'publishpress') : __('synchronous', 'publishpress')
                 );
 
                 $output .= '</div>';
@@ -361,7 +390,7 @@ class NotificationsLogTable extends WP_List_Table
             'cb'       => '<input type="checkbox" />',
             'date'     => __('Date', 'publishpress'),
             'content'  => __('Content', 'publishpress'),
-            'action'   => __('Action', 'publishpress'),
+            'event'    => __('Event', 'publishpress'),
             'receiver' => __('Receiver', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
@@ -533,5 +562,37 @@ class NotificationsLogTable extends WP_List_Table
 
         echo '</div>';
         echo '<br>';
+    }
+
+    /**
+     * @param NotificationsLogModel $log
+     *
+     * @return int|false
+     */
+    private function getCronTaskTimeRelatedToTheLog(NotificationsLogModel $log)
+    {
+        if (empty($this->cronTasks)) {
+            $this->cronTasks = _get_cron_array();
+        }
+
+        $expectedHooks = ['publishpress_notifications_send_from_cron',];
+
+        if (!empty($this->cronTasks)) {
+            foreach ($this->cronTasks as $time => $cron) {
+                foreach ($cron as $hook => $dings) {
+                    if (!in_array($hook, $expectedHooks)) {
+                        continue;
+                    }
+
+                    foreach ($dings as $sig => $data) {
+                        if (isset($data['args']['logId']) && $data['args']['logId'] === $log->id) {
+                            return $time;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

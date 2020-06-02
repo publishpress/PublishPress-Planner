@@ -174,13 +174,13 @@ class NotificationsLogModel
      */
     public function __construct(WP_Comment $log)
     {
-        $this->id         = $log->comment_ID;
-        $this->postId     = $log->comment_post_ID;
+        $this->id         = (int)$log->comment_ID;
+        $this->postId     = (int)$log->comment_post_ID;
         $this->author     = self::COMMENT_AUTHOR;
         $this->content    = maybe_unserialize($log->comment_content);
         $this->date       = $log->comment_date;
-        $this->workflowId = $this->get_meta(self::META_NOTIF_WORKFLOW_ID);
-        $this->userId     = $this->get_meta(self::META_NOTIF_USER_ID);
+        $this->workflowId = (int)$this->get_meta(self::META_NOTIF_WORKFLOW_ID);
+        $this->userId     = (int)$this->get_meta(self::META_NOTIF_USER_ID);
         $this->event      = $this->get_meta(self::META_NOTIF_EVENT);
         $this->oldStatus  = $this->get_meta(self::META_NOTIF_OLD_STATUS);
         $this->newStatus  = $this->get_meta(self::META_NOTIF_NEW_STATUS);
@@ -190,7 +190,7 @@ class NotificationsLogModel
         $this->success    = $this->get_meta(self::META_NOTIF_SUCCESS);
         $this->error      = $this->get_meta(self::META_NOTIF_ERROR);
         $this->async      = $this->get_meta(self::META_NOTIF_ASYNC);
-        $this->commentId  = $this->get_meta(self::META_NOTIF_COMMENT_ID);
+        $this->commentId  = (int)$this->get_meta(self::META_NOTIF_COMMENT_ID);
         $this->eventArgs  = $this->get_meta(self::META_NOTIF_EVENT_ARGS);
 
         if (!empty($this->eventArgs) && isset($this->eventArgs['postId'])) {
