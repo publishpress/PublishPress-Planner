@@ -48,6 +48,7 @@ class NotificationsLogHandler
             'post_id'     => 0,
             'content'     => '',
             'workflow_id' => 0,
+            'user_id'     => 0,
             'event'       => '',
             'old_status'  => '',
             'new_status'  => '',
@@ -74,6 +75,7 @@ class NotificationsLogHandler
             'comment_approved'     => NotificationsLogModel::COMMENT_APPROVED,
             'comment_meta'         => [
                 NotificationsLogModel::META_NOTIF_WORKFLOW_ID => $data['workflow_id'],
+                NotificationsLogModel::META_NOTIF_USER_ID     => $data['user_id'],
                 NotificationsLogModel::META_NOTIF_EVENT       => $data['event'],
                 NotificationsLogModel::META_NOTIF_OLD_STATUS  => $data['old_status'],
                 NotificationsLogModel::META_NOTIF_NEW_STATUS  => $data['new_status'],

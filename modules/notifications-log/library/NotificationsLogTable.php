@@ -84,7 +84,14 @@ class NotificationsLogTable extends WP_List_Table
 
         switch ($column_name) {
             case 'action':
-                $output = $log->event;
+                $user         = get_user_by('id', $log->userId);
+                $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
+                $output       = sprintf(
+                    '%s<div class="muted">(user:%s, user_id:%d)</div>',
+                    $log->event,
+                    $userNicename,
+                    $log->userId
+                );
                 break;
 
             case 'content':
@@ -99,7 +106,7 @@ class NotificationsLogTable extends WP_List_Table
                 break;
 
             case 'receiver':
-                $receivers = $log->getReceiversByGroup();
+                $receivers      = $log->getReceiversByGroup();
                 $receiversCount = 0;
 
                 $output = '<ul class="publishpress-notifications-receivers">';

@@ -65,6 +65,8 @@ class NotificationsLogModel
 
     const META_NOTIF_EVENT_ARGS = '_ppnotif_event_args';
 
+    const META_NOTIF_USER_ID = '_ppnotif_user_id';
+
     /**
      * @var int
      */
@@ -161,6 +163,11 @@ class NotificationsLogModel
     public $eventArgs;
 
     /**
+     * @var int
+     */
+    public $userId;
+
+    /**
      * NotificationsLogModel constructor.
      *
      * @param WP_Comment $log
@@ -173,6 +180,7 @@ class NotificationsLogModel
         $this->content    = maybe_unserialize($log->comment_content);
         $this->date       = $log->comment_date;
         $this->workflowId = $this->get_meta(self::META_NOTIF_WORKFLOW_ID);
+        $this->userId     = $this->get_meta(self::META_NOTIF_USER_ID);
         $this->event      = $this->get_meta(self::META_NOTIF_EVENT);
         $this->oldStatus  = $this->get_meta(self::META_NOTIF_OLD_STATUS);
         $this->newStatus  = $this->get_meta(self::META_NOTIF_NEW_STATUS);

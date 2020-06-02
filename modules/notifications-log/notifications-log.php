@@ -306,6 +306,7 @@ if (!class_exists('PP_Notifications_Log')) {
                     'event'       => $data['event'],
                     'post_id'     => $data['postId'],
                     'workflow_id' => $data['workflowId'],
+                    'user_id'     => $data['userId'],
                     'content'     => null,
                     'old_status'  => isset($data['oldStatus']) ? $data['oldStatus'] : null,
                     'new_status'  => isset($data['newStatus']) ? $data['newStatus'] : null,
@@ -316,7 +317,7 @@ if (!class_exists('PP_Notifications_Log')) {
                     'receiver'    => null,
                     'success'     => null,
                     'error'       => null,
-                    'event_args'   => $data,
+                    'event_args'  => $data,
                 ]
             );
 
