@@ -86,11 +86,14 @@ class NotificationsLogTable extends WP_List_Table
             case 'action':
                 $user         = get_user_by('id', $log->userId);
                 $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
-                $output       = sprintf(
-                    '%s<div class="muted">(user:%s, user_id:%d)</div>',
+                $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
+
+                $output = sprintf(
+                    '%s<div class="muted">(user:%s, user_id:%d%s)</div>',
                     $log->event,
                     $userNicename,
-                    $log->userId
+                    $log->userId,
+                    $actionParams
                 );
                 break;
 
