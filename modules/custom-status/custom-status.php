@@ -2196,6 +2196,10 @@ if (!class_exists('PP_Custom_Status')) {
         /**
          * Another temporary fix until core better supports custom statuses
          *
+         * @param $permalink
+         * @param $post
+         * @param bool $sample
+         * @return string
          * @since 0.7.4
          *
          * The preview link for an unpublished post should always be ?p=
@@ -2203,7 +2207,7 @@ if (!class_exists('PP_Custom_Status')) {
          * So we can't do a targeted filter. Instead, we can even more hackily filter get_permalink
          * @see   http://core.trac.wordpress.org/ticket/19378
          */
-        public function fix_preview_link_part_two($permalink, $post, $sample)
+        public function fix_preview_link_part_two($permalink, $post, $sample = false)
         {
             global $pagenow;
 
@@ -2236,13 +2240,13 @@ if (!class_exists('PP_Custom_Status')) {
                 return $permalink;
             }
 
-            //If it's a sample permalink, not a preview
-            if ($sample) {
+            // If it's a scheduled post, we don't add the preview link
+            if ($post->post_status === 'future') {
                 return $permalink;
             }
 
-            // If it's a scheduled post, we don't add the preview link
-            if ($post->post_status === 'future') {
+            //If it's a sample permalink, not a preview
+            if ($sample) {
                 return $permalink;
             }
 
