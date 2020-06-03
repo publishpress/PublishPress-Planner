@@ -93,25 +93,37 @@ class NotificationsLogTable extends WP_List_Table
                 $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
                 $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
 
-                $output = sprintf(
-                    '%s<div class="muted">(workflow:%s, user:%s, user_id:%d)</div>',
-                    apply_filters('publishpress_notifications_event_label', $log->event, $log->event),
-                    $log->workflowTitle,
-                    $userNicename,
-                    $log->userId
-                );
+                $output = apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
+                $output .= '<div class="muted">';
+                $output .= '<div>' . sprintf(__('Workflow: %s', 'publishpress'), $log->workflowTitle) . '</div>';
+
+                if (!empty($actionParams)) {
+                    $output .= '<div>' . $actionParams . '</div>';
+                }
+
+                $output .= '<div>' . sprintf(
+                        __('User: %s (%d)', 'publishpress'),
+                        $userNicename,
+                        $log->userId
+                    ) . '</div>';
+
+
+                $output .= '</div>';
                 break;
 
             case 'content':
                 $post           = get_post($log->postId);
                 $postTypeLabels = get_post_type_labels($post);
 
-                $output = sprintf(
-                    '%s<div class="muted">(post_type:%s, id:%d)</div>',
-                    $log->postTitle,
-                    $postTypeLabels->singular_name,
-                    $log->postId
-                );
+                $output = $log->postTitle;
+
+                $output .= '<div class="muted">';
+                $output .= '<div>' . sprintf(
+                        __('Post type: %s', 'publishpress'),
+                        $postTypeLabels->singular_name
+                    ) . '</div>';
+                $output .= '<div>' . sprintf(__('ID: %d', 'publishpress'), $log->postId) . '</div>';
+                $output .= '</div>';
 
                 break;
 
@@ -286,7 +298,7 @@ class NotificationsLogTable extends WP_List_Table
 
         //Return the title contents
         return sprintf(
-            '%1$s <span style="color:silver">(id:%2$s)</span>%3$s',
+            '%1$s <div class="muted">ID: %2$s</div>%3$s',
             $item->comment_date,
             $item->comment_ID,
             $this->row_actions($actions)

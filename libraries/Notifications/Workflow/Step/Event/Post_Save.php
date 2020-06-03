@@ -101,11 +101,8 @@ class Post_Save extends Base
     public function filter_action_params_for_log($paramsString, $log)
     {
         if ($log->event === self::META_VALUE_SELECTED) {
-            $paramsString = sprintf(
-                ', status:%s->%s',
-                $log->oldStatus,
-                $log->newStatus
-            );
+            $paramsString = '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $log->oldStatus) . '</div>';
+            $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $log->newStatus) . '</div>';
         }
 
         return $paramsString;

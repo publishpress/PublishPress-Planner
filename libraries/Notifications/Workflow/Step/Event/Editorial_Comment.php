@@ -82,7 +82,7 @@ class Editorial_Comment extends Base
     {
         if ($log->event === self::META_VALUE_SELECTED) {
             $paramsString = sprintf(
-                ', comment_id:%d',
+                __('Comment: %d', 'publishpress'),
                 $log->commentId
             );
         }
