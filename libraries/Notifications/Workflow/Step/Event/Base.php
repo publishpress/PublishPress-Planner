@@ -46,6 +46,8 @@ class Base extends Base_Step
             10,
             2
         );
+
+        add_filter('publishpress_notifications_event_label', [$this, 'filter_event_label'], 10, 2);
     }
 
     /**
@@ -55,8 +57,8 @@ class Base extends Base_Step
      */
     public function filter_workflow_metabox_context($template_context)
     {
-        $template_context['name'] = esc_attr("publishpress_notif[{$this->attr_prefix}][]");
-        $template_context['id'] = esc_attr("publishpress_notif_{$this->attr_prefix}_{$this->name}");
+        $template_context['name']          = esc_attr("publishpress_notif[{$this->attr_prefix}][]");
+        $template_context['id']            = esc_attr("publishpress_notif_{$this->attr_prefix}_{$this->name}");
         $template_context['event_filters'] = $this->get_filters();
 
         $meta = (int)$this->get_metadata(static::META_KEY_SELECTED, true);
@@ -136,5 +138,19 @@ class Base extends Base_Step
     protected function should_ignore_event_on_query($event_args)
     {
         return (isset($event_args['params']['ignore_event']) && $event_args['params']['ignore_event'] == true);
+    }
+
+    /**
+     * @param string $label
+     * @param string $event
+     * @return string|void
+     */
+    public function filter_event_label($label, $event)
+    {
+        if ($event === $this->name) {
+            $label = $this->label;
+        }
+
+        return $label;
     }
 }

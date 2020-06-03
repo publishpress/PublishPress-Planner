@@ -95,7 +95,7 @@ class NotificationsLogTable extends WP_List_Table
 
                 $output = sprintf(
                     '%s<div class="muted">(user:%s, user_id:%d%s)</div>',
-                    $log->event,
+                    apply_filters('publishpress_notifications_event_label', $log->event, $log->event),
                     $userNicename,
                     $log->userId,
                     $actionParams
@@ -103,11 +103,14 @@ class NotificationsLogTable extends WP_List_Table
                 break;
 
             case 'content':
+                $post           = get_post($log->postId);
+                $postTypeLabels = get_post_type_labels($post);
+
                 $output = sprintf(
-                    '%s<div class="muted">(id:%d)</div><div class="muted">(%s:%s)</div>',
+                    '%s<div class="muted">(id:%d, post_type:%s, workflow:%s)</div>',
                     $log->postTitle,
                     $log->postId,
-                    __('workflow', 'publishpress'),
+                    $postTypeLabels->singular_name,
                     $log->workflowTitle
                 );
 
@@ -208,7 +211,7 @@ class NotificationsLogTable extends WP_List_Table
                         );
 
                         $output .= sprintf(
-                            '<div class="muted">%s</div>',
+                            '<div class="muted">(%s)</div>',
                             __('The notification was set as "Scheduled" but the cron task is not found', 'publishpress')
                         );
                     }
@@ -389,9 +392,9 @@ class NotificationsLogTable extends WP_List_Table
         return [
             'cb'       => '<input type="checkbox" />',
             'date'     => __('Date', 'publishpress'),
-            'content'  => __('Content', 'publishpress'),
-            'event'    => __('Event', 'publishpress'),
-            'receiver' => __('Receiver', 'publishpress'),
+            'content'  => __('For which content?', 'publishpress'),
+            'event'    => __('When to notify?', 'publishpress'),
+            'receiver' => __('Who to notify?', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
     }
@@ -578,8 +581,8 @@ class NotificationsLogTable extends WP_List_Table
         $expectedHooks = ['publishpress_notifications_send_from_cron',];
 
         if (!empty($this->cronTasks)) {
-            foreach ($this->cronTasks as $time => $cron) {
-                foreach ($cron as $hook => $dings) {
+            foreach ($this->cronTasks as $time => $cronTasks) {
+                foreach ($cronTasks as $hook => $dings) {
                     if (!in_array($hook, $expectedHooks)) {
                         continue;
                     }
