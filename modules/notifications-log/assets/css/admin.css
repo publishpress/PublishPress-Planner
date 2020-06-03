@@ -64,7 +64,7 @@
 }
 
 .filter-2nd-line {
-    display: inline-block;
+  display: inline-block;
 }
 
 .filter-2nd-line .filter-dates {
@@ -115,9 +115,16 @@
 }
 
 .publishpress_page_pp-notif-log .publishpress-notifications-receivers .channel-icon {
-  color: rgba(143, 133, 224, 0.65);
+  color: rgba(101, 88, 151, 0.40);
   font-size: 18px;
   margin-right: 5px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .view-log {
+  color: rgb(101, 88, 151);
+  font-size: 18px;
+  margin-right: 3px;
+  cursor: pointer;
 }
 
 .publishpress_page_pp-notif-log .slide-closed-text {

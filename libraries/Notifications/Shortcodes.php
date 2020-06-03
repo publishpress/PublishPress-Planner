@@ -12,6 +12,7 @@ namespace PublishPress\Notifications;
 use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
+use WP_Post;
 
 class Shortcodes
 {
@@ -71,7 +72,7 @@ class Shortcodes
     protected function set_properties($workflow_post, $event_args)
     {
         $this->workflow_post = $workflow_post;
-        $this->event_args   = $event_args;
+        $this->event_args    = $event_args;
     }
 
     /**
@@ -227,10 +228,6 @@ class Shortcodes
                     $result = $user->display_name;
                     break;
 
-                case 'email':
-                    $result = $user->user_email;
-                    break;
-
                 case 'first_name':
                     $result = $user->first_name;
                     break;
@@ -306,7 +303,7 @@ class Shortcodes
      */
     protected function get_post()
     {
-        return $this->event_args['post'];
+        return get_post($this->event_args['postId']);
     }
 
     /**
@@ -508,11 +505,12 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if (!isset($this->event_args['comment'])) {
+
+        if (!isset($this->event_args['commentId'])) {
             return;
         }
 
-        $comment = $this->event_args['comment'];
+        $comment = get_comment($this->event_args['commentId']);
 
         // No attributes? Set the default one.
         if (empty($attrs)) {
@@ -595,6 +593,6 @@ class Shortcodes
     protected function cleanup()
     {
         $this->workflow_post = null;
-        $this->event_args   = null;
+        $this->event_args    = null;
     }
 }

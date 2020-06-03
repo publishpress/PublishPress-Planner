@@ -63,13 +63,18 @@ jQuery(function ($) {
     event.preventDefault();
     var $dialog = $('<div class="notif-log-modal">Test!</div>');
     var notificationId = $(event.target).data('id');
+    var receiver = $(event.target).data('receiver');
+    var receiverText = $(event.target).data('receiver-text');
+    var channel = $(event.target).data('channel');
+
+
 
     $('body').append($dialog);
 
     $dialog.text(ppNotifLog.text.loading);
 
     $dialog.dialog({
-      title: ppNotifLog.text.dialogTitle + ': ' + notificationId,
+      title: ppNotifLog.text.dialogTitle + ': ' + notificationId + ' (' + receiverText + ', ' + channel + ')',
       dialogClass: 'wp-dialog',
       autoOpen: false,
       draggable: true,
@@ -99,7 +104,9 @@ jQuery(function ($) {
     $dialog.load(ajaxurl, {
       nonce: ppNotifLog.nonce,
       action: 'publishpress_view_notification',
-      id: notificationId
+      id: notificationId,
+      receiver: receiver,
+      channel: channel
     }, function() {
       $dialog.dialog("option", "position", {my: "center", at: "center", of: window});
     });

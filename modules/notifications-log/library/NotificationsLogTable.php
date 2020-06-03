@@ -76,6 +76,16 @@ class NotificationsLogTable extends WP_List_Table
         $this->logHandler = $logHandler;
     }
 
+    private function wrapInALink($text, $url, $blankTarget = true)
+    {
+        return sprintf(
+            '<a target="%s" href="%s">%s</a>',
+            $blankTarget ? '_blank' : '',
+            $url,
+            $text
+        );
+    }
+
 
     /**
      * @param object $item
@@ -97,9 +107,10 @@ class NotificationsLogTable extends WP_List_Table
                 $output .= '<div class="muted">';
                 $output .= '<div>' . sprintf(
                         __('Workflow: %s', 'publishpress'),
-                        '<a target="_blank" href="' . admin_url(
-                            'post.php?post=' . esc_attr($log->workflowId) . '&action=edit'
-                        ) . '">' . $log->workflowTitle . '</a>'
+                        $this->wrapInALink(
+                            $log->workflowTitle,
+                            admin_url('post.php?post=' . esc_attr($log->workflowId) . '&action=edit')
+                        )
                     ) . '</div>';
 
                 if (!empty($actionParams)) {
@@ -108,7 +119,10 @@ class NotificationsLogTable extends WP_List_Table
 
                 $output .= '<div>' . sprintf(
                         __('User: %s (%d)', 'publishpress'),
-                        $userNicename,
+                        $this->wrapInALink(
+                            $userNicename,
+                            admin_url('user-edit.php?user_id=' . $log->userId)
+                        ),
                         $log->userId
                     ) . '</div>';
 
@@ -120,9 +134,10 @@ class NotificationsLogTable extends WP_List_Table
                 $post           = get_post($log->postId);
                 $postTypeLabels = get_post_type_labels($post);
 
-                $output = '<a target="_blank" href="' . admin_url(
-                        'post.php?post=' . esc_attr($log->postId) . '&action=edit'
-                    ) . '">' . $log->postTitle . '</a>';
+                $output = $this->wrapInALink(
+                    $log->postTitle,
+                    admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit')
+                );
 
                 $output .= '<div class="muted">';
                 $output .= '<div>' . sprintf(
@@ -162,24 +177,31 @@ class NotificationsLogTable extends WP_List_Table
                             }
                         }
 
-                        $output .= sprintf(
-                            '<li><i class="channel-icon %s"></i>',
-                            apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
-                        );
-
                         if (is_numeric($receiver)) {
-                            $user   = get_user_by('ID', $receiver);
-                            $output .= $user->user_nicename;
+                            $user              = get_user_by('ID', $receiver);
+                            $receiverPopupText = $user->user_nicename;
 
-                            $output .= sprintf(
+                            $receiverText = $user->user_nicename;
+                            $receiverText .= sprintf(
                                 '<span class="user-details muted">(user_id:%d, email:%s)</span>',
                                 $user->ID,
                                 $user->user_email
                             );
                         } else {
-                            $output .= $receiver;
+                            $receiverText      = $receiver;
+                            $receiverPopupText = $receiver;
                         }
 
+                        $output .= sprintf(
+                            '<li><i class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
+                            $log->id,
+                            esc_attr($receiverPopupText),
+                            esc_attr($receiverData['receiver']),
+                            esc_attr($receiverData['channel']),
+                            apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
+                        );
+
+                        $output .= $receiverText;
                         $output .= '</li>';
 
                         $receiversCount++;
@@ -230,7 +252,8 @@ class NotificationsLogTable extends WP_List_Table
                         );
 
                         $output .= sprintf(
-                            '<div class="muted">(%s)</div>',
+                            '<div class="muted">%s: %s</div>',
+                            __('Error', 'publishpress'),
                             __('The notification was set as "Scheduled" but the cron task is not found', 'publishpress')
                         );
                     }
@@ -285,11 +308,6 @@ class NotificationsLogTable extends WP_List_Table
     {
         //Build row actions
         $actions = [
-            'view'   => sprintf(
-                '<a href="#" class="view-log" data-id="%s">%s</a>',
-                $item->comment_ID,
-                __('View', 'publishpress')
-            ),
             'delete' => sprintf(
                 '<a href="%s">%s</a>',
                 esc_url(

@@ -30,13 +30,11 @@
 
 use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Workflow\Workflow;
 use PublishPress\NotificationsLog\CliHandler;
-use PublishPress\NotificationsLog\Log;
 use PublishPress\NotificationsLog\NotificationsLogHandler;
 use PublishPress\NotificationsLog\NotificationsLogModel;
 use PublishPress\NotificationsLog\NotificationsLogTable;
-use PublishPress\NotificationsLog\SchedulesLogHandler;
-use PublishPress\NotificationsLog\SchedulesLogTable;
 
 if (!class_exists('PP_Notifications_Log')) {
     /**
@@ -555,8 +553,7 @@ if (!class_exists('PP_Notifications_Log')) {
             die;
         }
 
-        public
-        function ajaxViewNotification()
+        public function ajaxViewNotification()
         {
             if (!wp_verify_nonce($_REQUEST['nonce'], 'notifications-log-admin')) {
                 echo '401';
@@ -566,119 +563,60 @@ if (!class_exists('PP_Notifications_Log')) {
 
             $output = '';
 
-            $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
+            $id       = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
+            $receiver = isset($_REQUEST['receiver']) ? sanitize_text_field($_REQUEST['receiver']) : '';
+            $channel  = isset($_REQUEST['channel']) ? sanitize_text_field($_REQUEST['channel']) : '';
+
+            if (empty($receiver)) {
+                echo $this->get_error_markup(__('Invalid receiver', 'publishpress'));
+                exit();
+            }
+
+            if (empty($channel)) {
+                echo $this->get_error_markup(__('Invalid channel', 'publishpress'));
+                exit();
+            }
 
             if (!empty($id)) {
                 $comment = get_comment($id);
                 $log     = new NotificationsLogModel($comment);
                 ob_start();
                 ?>
-                <table>
-                    <tr>
-                        <th><?php echo __('ID', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->id; ?></td>
-                    </tr>
+                <div class="preview-notification">
+                    <?php if ($log->status === 'scheduled') : ?>
+                        <?php
+                        $workflow = Workflow::load_by_id($log->workflowId);
 
-                    <tr>
-                        <th><?php echo __('Date', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->date; ?></td>
-                    </tr>
+                        $workflow->event_args = $log->eventArgs;
 
-                    <tr>
-                        <th><?php echo __('Post', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->postTitle; ?></td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Workflow', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->workflowTitle; ?></td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Event', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->event; ?></td>
-                    </tr>
-
-                    <?php if (!empty($log->oldStatus)) : ?>
-                        <tr>
-                            <th><?php echo __('Old Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $log->oldStatus; ?></td>
-                        </tr>
-                    <?php endif; ?>
-
-                    <?php if (!empty($log->newStatus)) : ?>
-                        <tr>
-                            <th><?php echo __('New Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $log->newStatus; ?></td>
-                        </tr>
-                    <?php endif; ?>
-
-                    <tr>
-                        <th><?php echo __('Channel', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php echo $log->channel; ?>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Receiver', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php
-                            if ($log->receiverIsUser()) {
-                                $output = '';
-                                if ($log->channel === 'email') {
-                                    $user   = get_user_by('ID', $log->receiver);
-                                    $output .= sprintf('<div>%s</div>', $user->user_email);
-                                }
-                                $output .= sprintf(
-                                    '<div class="user">%s (id:%d)</div>',
-                                    $log->receiverName,
-                                    $log->receiver
-                                );
-
-                                echo $output;
-                            } else {
-                                echo $log->receiver;
-                            }
-                            ?>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Content', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php if (isset($log->content['subject'])) : ?>
-                                <?php echo $log->content['subject']; ?><br>
-                            <?php endif; ?>
-                            <pre><?php echo $log->content['body']; ?></pre>
-                        </td>
-                    </tr>
-
-                    <tr class="<?php echo $log->success ? 'success' : 'error'; ?>">
-                        <th><?php echo __('Result', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php echo $log->success ? __('Success', 'publishpress') : __(
-                                    'Error',
+                        $content_template = $workflow->get_content();
+                        $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
+                        ?>
+                        <div class="subject"><span><?php _e(
+                                    'Subject: ',
                                     'publishpress'
-                                ) . '<br>' . $log->error; ?>
-
-                            <?php if ($log->async) : ?>
-                                <?php echo __(' (Scheduled in the cron)', 'publishpress'); ?>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                </table>
+                                ); ?></span><?php echo $content['subject']; ?></div>
+                        <pre class="content"><?php echo $content['body']; ?></pre>
+                    <?php else: ?>
+                        <?php if (isset($log->content['subject'])) : ?>
+                            <?php echo $log->content['subject']; ?><br>
+                        <?php endif; ?>
+                        <pre><?php echo $log->content['body']; ?></pre>
+                    <?php endif; ?>
+                </div>
                 <?php
                 $output = ob_get_clean();
             } else {
-                $output = '<p><div class="notice notice-error">' . __(
-                        'Notification log not found.',
-                        'publishpress'
-                    ) . '</div></p>';
+                $output = $this->get_error_markup(__('Notification log not found.', 'publishpress'));
             }
 
             echo $output;
-            die;
+            exit();
+        }
+
+        private function get_error_markup($message)
+        {
+            return '<p><div class="notice notice-error">' . $message . '</div></p>';
         }
     }
 }

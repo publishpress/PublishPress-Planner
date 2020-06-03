@@ -10,6 +10,7 @@
 namespace PublishPress\Notifications\Workflow;
 
 use Exception;
+use PublishPress\Notifications\Shortcodes;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_Post;
 
@@ -30,6 +31,11 @@ class Workflow
      * @var array
      */
     public $event_args;
+
+    /**
+     * @var Shortcodes
+     */
+    private $shortcodesHandler;
 
     /**
      * The constructor
@@ -226,6 +232,7 @@ class Workflow
     public function get_content()
     {
         $content = ['subject' => '', 'body' => ''];
+
         /**
          * Filters the content for the notification workflow.
          *
@@ -259,6 +266,11 @@ class Workflow
      */
     public function do_shortcodes_in_content($content, $receiver, $channel)
     {
+        if (empty($this->shortcodesHandler)) {
+            $this->shortcodesHandler = $this->get_service('shortcodes');
+            $this->shortcodesHandler->register($this->workflow_post, $this->event_args);
+        }
+
         /**
          * Action triggered before do shortcodes in the content.
          *
@@ -273,5 +285,11 @@ class Workflow
         $content['body']    = do_shortcode($content['body']);
 
         return $content;
+    }
+
+    public function unregister_shortcodes()
+    {
+        $this->shortcodesHandler->unregister();
+        $this->shortcodesHandler = null;
     }
 }

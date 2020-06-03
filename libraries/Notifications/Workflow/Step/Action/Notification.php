@@ -43,10 +43,6 @@ class Notification
          */
         $content_template = $this->get_content();
 
-        // Prepare the shortcodes.
-        $shortcodes = $this->get_service('shortcodes');
-        $shortcodes->register($workflow->workflow_post, $workflow->event_args);
-
         // Run the action to each receiver.
         foreach ($receivers as $channel => $channel_receivers) {
             foreach ($channel_receivers as $receiver) {
@@ -87,6 +83,6 @@ class Notification
         }
 
         // Remove the shortcodes.
-        $shortcodes->unregister();
+        $workflow->unregister_shortcodes();
     }
 }
