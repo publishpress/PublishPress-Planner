@@ -267,10 +267,8 @@ class NotificationsLogTable extends WP_List_Table
      *
      * @return string|void
      */
-    public
-    function column_cb(
-        $item
-    ) {
+    public function column_cb($item)
+    {
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
             $this->_args['singular'],
@@ -283,10 +281,8 @@ class NotificationsLogTable extends WP_List_Table
      *
      * @return string
      */
-    public
-    function column_date(
-        $item
-    ) {
+    public function column_date($item)
+    {
         //Build row actions
         $actions = [
             'view'   => sprintf(
@@ -320,8 +316,7 @@ class NotificationsLogTable extends WP_List_Table
     /**
      * @return array
      */
-    public
-    function get_bulk_actions()
+    public function get_bulk_actions()
     {
         $actions = [
             self::BULK_ACTION_DELETE     => 'Delete',
@@ -331,8 +326,7 @@ class NotificationsLogTable extends WP_List_Table
         return $actions;
     }
 
-    public
-    function prepare_items()
+    public function prepare_items()
     {
         $currentUserId = get_current_user_id();
         $per_page      = get_user_meta($currentUserId, 'logs_per_page', true);
@@ -412,8 +406,7 @@ class NotificationsLogTable extends WP_List_Table
     /**
      * @return array
      */
-    public
-    function get_columns()
+    public function get_columns()
     {
         return [
             'cb'       => '<input type="checkbox" />',
@@ -428,16 +421,14 @@ class NotificationsLogTable extends WP_List_Table
     /**
      * @return array
      */
-    public
-    function get_sortable_columns()
+    public function get_sortable_columns()
     {
         return [
             'date' => ['date', true],
         ];
     }
 
-    public
-    function process_bulk_action()
+    public function process_bulk_action()
     {
         if (self::BULK_ACTION_DELETE === $this->current_action()) {
             $ids = isset($_GET['log']) ? (array)$_GET['log'] : [];
@@ -466,8 +457,7 @@ class NotificationsLogTable extends WP_List_Table
         }
     }
 
-    protected
-    function get_views()
+    protected function get_views()
     {
         return [
             'all'       => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
@@ -497,10 +487,8 @@ class NotificationsLogTable extends WP_List_Table
      * @since 3.1.0
      *
      */
-    protected
-    function extra_tablenav(
-        $which
-    ) {
+    protected function extra_tablenav($which)
+    {
         if ('top' !== $which) {
             return;
         }
@@ -603,10 +591,8 @@ class NotificationsLogTable extends WP_List_Table
      *
      * @return int|false
      */
-    private
-    function getCronTaskTimeRelatedToTheLog(
-        NotificationsLogModel $log
-    ) {
+    private function getCronTaskTimeRelatedToTheLog(NotificationsLogModel $log)
+    {
         if (empty($this->cronTasks)) {
             $this->cronTasks = _get_cron_array();
         }
