@@ -94,11 +94,11 @@ class NotificationsLogTable extends WP_List_Table
                 $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
 
                 $output = sprintf(
-                    '%s<div class="muted">(user:%s, user_id:%d%s)</div>',
+                    '%s<div class="muted">(workflow:%s, user:%s, user_id:%d)</div>',
                     apply_filters('publishpress_notifications_event_label', $log->event, $log->event),
+                    $log->workflowTitle,
                     $userNicename,
-                    $log->userId,
-                    $actionParams
+                    $log->userId
                 );
                 break;
 
@@ -107,11 +107,10 @@ class NotificationsLogTable extends WP_List_Table
                 $postTypeLabels = get_post_type_labels($post);
 
                 $output = sprintf(
-                    '%s<div class="muted">(id:%d, post_type:%s, workflow:%s)</div>',
+                    '%s<div class="muted">(post_type:%s, id:%d)</div>',
                     $log->postTitle,
-                    $log->postId,
                     $postTypeLabels->singular_name,
-                    $log->workflowTitle
+                    $log->postId
                 );
 
                 break;
@@ -392,8 +391,8 @@ class NotificationsLogTable extends WP_List_Table
         return [
             'cb'       => '<input type="checkbox" />',
             'date'     => __('Date', 'publishpress'),
-            'content'  => __('For which content?', 'publishpress'),
             'event'    => __('When to notify?', 'publishpress'),
+            'content'  => __('For which content?', 'publishpress'),
             'receiver' => __('Who to notify?', 'publishpress'),
             'status'   => __('Status', 'publishpress'),
         ];
