@@ -82,8 +82,8 @@ class Editorial_Comment extends Base
     {
         if ($log->event === self::META_VALUE_SELECTED) {
             $paramsString = sprintf(
-                __('Comment: %d', 'publishpress'),
-                $log->commentId
+                __('Comment ID: %s', 'publishpress'),
+                '<a target="_blank" href="' . admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit#comment-' . $log->commentId) . '">' . $log->commentId . '</a>'
             );
         }
 

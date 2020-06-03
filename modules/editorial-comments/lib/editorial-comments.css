@@ -1,4 +1,20 @@
 /** Comments **/
+
+#pp-comments li:target {
+  border: 1px solid #ffd400 !important;
+  border-left: 5px solid #ffd400 !important;
+  border-right: 5px solid #ffd400 !important;
+  background: #f7eaff;
+}
+
+#pp-comments li:target:before {
+  display: block;
+  content: " ";
+  margin-top: -75px;
+  height: 75px;
+  visibility: hidden;
+}
+
 #pp-comments_wrapper {
   padding: 0;
 }
@@ -124,28 +140,35 @@ body.gutenberg-editor-page #pp-comments li {
   padding: 0 4px 0 0;
   margin-bottom: 5px;
 }
+
 body.gutenberg-editor-page #pp-comments img.avatar {
   width: 30px;
   margin-left: 0;
   margin-right: 6px;
 }
+
 body.gutenberg-editor-page #pp-comments h5 {
   margin-top: 1px;
   margin-bottom: 4px;
 }
+
 body.gutenberg-editor-page #pp-comments ul.children {
   margin-left: 14px;
   margin-bottom: 7px;
 }
+
 body.gutenberg-editor-page #pp-comments .comment-content {
   margin-left: 0;
 }
+
 body.gutenberg-editor-page #pp-comments {
   background: none;
 }
+
 body.gutenberg-editor-page #pp-comments .comment-content p {
   margin: 0;
 }
+
 body.gutenberg-editor-page #pp-comments li p.row-actions {
   margin: 4px 0;
 }
