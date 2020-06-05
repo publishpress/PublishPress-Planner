@@ -26,7 +26,9 @@ let getStatusLabel = slug => {
     return item.name;
   }
 
-  return '';
+  let draft = window.PPCustomStatuses.find(s => s.slug === 'draft');
+
+  return draft.name;
 };
 
 // Remove the Published statuses and Pending Review from the list.
