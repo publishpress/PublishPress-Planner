@@ -54,6 +54,10 @@ if (!class_exists('PP_Custom_Status')) {
 
         const STATUS_SCHEDULED = 'future';
 
+        const STATUS_PENDING = 'pending';
+
+        const STATUS_DRAFT = 'draft';
+
         const DEFAULT_COLOR = '#655997';
 
         public $module;
@@ -174,7 +178,7 @@ if (!class_exists('PP_Custom_Status')) {
          */
         protected function get_default_terms()
         {
-            $terms = [
+            return [
                 'pitch'       => [
                     'term' => __('Pitch', 'publishpress'),
                     'args' => [
@@ -204,30 +208,8 @@ if (!class_exists('PP_Custom_Status')) {
                         'color'       => '#ccc500',
                         'icon'        => 'dashicons-format-status',
                     ],
-                ],
-                'draft'       => [
-                    'term' => __('Draft', 'publishpress'),
-                    'args' => [
-                        'slug'        => 'draft',
-                        'description' => __('Post is a draft; not ready for review or publication.', 'publishpress'),
-                        'position'    => 4,
-                        'color'       => '#f91d84',
-                        'icon'        => 'dashicons-media-default',
-                    ],
-                ],
-                'pending'     => [
-                    'term' => __('Pending Review'),
-                    'args' => [
-                        'slug'        => 'pending',
-                        'description' => __('Post needs to be reviewed by an editor.', 'publishpress'),
-                        'position'    => 5,
-                        'color'       => '#d87200',
-                        'icon'        => 'dashicons-clock',
-                    ],
-                ],
+                ]
             ];
-
-            return $terms;
         }
 
         /**
@@ -885,26 +867,64 @@ if (!class_exists('PP_Custom_Status')) {
         {
             $all_statuses = [];
 
-            // The some default statuses from WordPress
+            // Draft
             $status = (object)[
-                'term_id'     => self::STATUS_PUBLISH,
-                'name'        => __('Published', 'publishpress'),
-                'slug'        => 'publish',
+                'term_id'     => self::STATUS_DRAFT,
+                'name'        => __('Draft', 'publishpress'),
+                'slug'        => 'draft',
                 'description' => '-',
                 'color'       => '',
                 'icon'        => '',
-                'position'    => 9,
+                'position'    => 4,
             ];
 
             if (!$only_basic_data) {
-                $status->color    = get_option('psppno_status_publish_color', self::DEFAULT_COLOR);
-                $status->icon     = get_option('psppno_status_publish_icon', 'dashicons-yes');
-                $status->position = get_option('psppno_status_publish_position', 9);
+                $status->color    = get_option('psppno_status_draft_color', '#f91d84');
+                $status->icon     = get_option('psppno_status_draft_icon', 'dashicons-media-default');
+                $status->position = get_option('psppno_status_draft_position', 4);
             }
 
             $all_statuses[] = $status;
 
+            // Pending Review
+            $status = (object)[
+                'term_id'     => self::STATUS_PENDING,
+                'name'        => __('Pending review', 'publishpress'),
+                'slug'        => 'pending',
+                'description' => '-',
+                'color'       => '',
+                'icon'        => '',
+                'position'    => 5,
+            ];
 
+            if (!$only_basic_data) {
+                $status->color    = get_option('psppno_status_pending_color', '#d87200');
+                $status->icon     = get_option('psppno_status_pending_icon', 'dashicons-clock');
+                $status->position = get_option('psppno_status_pending_position', 5);
+            }
+
+            $all_statuses[] = $status;
+
+            // Scheduled
+            $status = (object)[
+                'term_id'     => self::STATUS_SCHEDULED,
+                'name'        => __('Scheduled', 'publishpress'),
+                'slug'        => 'future',
+                'description' => '-',
+                'color'       => '',
+                'icon'        => '',
+                'position'    => 7,
+            ];
+
+            if (!$only_basic_data) {
+                $status->color    = get_option('psppno_status_future_color', self::DEFAULT_COLOR);
+                $status->icon     = get_option('psppno_status_future_icon', 'dashicons-calendar-alt');
+                $status->position = get_option('psppno_status_future_position', 7);
+            }
+
+            $all_statuses[] = $status;
+
+            // Privately Published
             $status = (object)[
                 'term_id'     => self::STATUS_PRIVATE,
                 'name'        => __('Privately Published', 'publishpress'),
@@ -923,21 +943,21 @@ if (!class_exists('PP_Custom_Status')) {
 
             $all_statuses[] = $status;
 
-
+            // Published
             $status = (object)[
-                'term_id'     => self::STATUS_SCHEDULED,
-                'name'        => __('Scheduled', 'publishpress'),
-                'slug'        => 'future',
+                'term_id'     => self::STATUS_PUBLISH,
+                'name'        => __('Published', 'publishpress'),
+                'slug'        => 'publish',
                 'description' => '-',
                 'color'       => '',
                 'icon'        => '',
-                'position'    => 7,
+                'position'    => 9,
             ];
 
             if (!$only_basic_data) {
-                $status->color    = get_option('psppno_status_future_color', self::DEFAULT_COLOR);
-                $status->icon     = get_option('psppno_status_future_icon', 'dashicons-calendar-alt');
-                $status->position = get_option('psppno_status_future_position', 7);
+                $status->color    = get_option('psppno_status_publish_color', self::DEFAULT_COLOR);
+                $status->icon     = get_option('psppno_status_publish_icon', 'dashicons-yes');
+                $status->position = get_option('psppno_status_publish_position', 9);
             }
 
             $all_statuses[] = $status;
@@ -1259,6 +1279,12 @@ if (!class_exists('PP_Custom_Status')) {
                         $status->position = 99;
                     }
                 }
+
+                // Remove legacy custom statuses that were stored as custom statuses
+                if (in_array($status->slug, ['pending', 'draft'])) {
+                    continue;
+                }
+
                 $this->addItemToArray($orderedStatusList, (int)$status->position, $status);
 
                 // Check if we need to set default colors and icons for current status
@@ -1441,6 +1467,8 @@ if (!class_exists('PP_Custom_Status')) {
                 case 'publish':
                 case 'private':
                 case 'future':
+                case 'pending':
+                case 'draft':
                 case 'new':
                 case 'inherit':
                 case 'auto-draft':
@@ -2213,7 +2241,7 @@ if (!class_exists('PP_Custom_Status')) {
 
             if (is_int($post)) {
                 $postId = $post;
-                $post = get_post($post);
+                $post   = get_post($post);
             }
 
             if (!is_object($post)) {
