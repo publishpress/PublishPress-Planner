@@ -2629,14 +2629,14 @@ if (!class_exists('PP_Calendar')) {
             if (!in_array($post_type, $this->get_post_types_for_module($this->module))) {
                 $this->print_ajax_response(
                     'error',
-                    __('Please change Quick Create to use a post type viewable on the calendar.', 'publishpress')
+                    __('Please change Quick Create to  use a post type viewable on the calendar.', 'publishpress')
                 );
             }
 
             // Sanitize post values
             $post_title = apply_filters(
                 'pp_calendar_after_form_submission_sanitize_title',
-                sanitize_title($_POST['pp_insert_title'])
+                sanitize_text_field($_POST['pp_insert_title'])
             );
             if (empty($post_title)) {
                 $post_title = __('Untitled', 'publishpress');
