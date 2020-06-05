@@ -67,6 +67,10 @@ class NotificationsLogModel
 
     const META_NOTIF_USER_ID = '_ppnotif_user_id';
 
+    const META_NOTIF_POST_ID = '_ppnotif_post_id';
+
+    const META_NOTIF_CRON_ID = '_ppnotif_cron_id';
+
     /**
      * @var int
      */
@@ -168,6 +172,11 @@ class NotificationsLogModel
     public $userId;
 
     /**
+     * @var string
+     */
+    public $cronId;
+
+    /**
      * NotificationsLogModel constructor.
      *
      * @param WP_Comment $log
@@ -192,6 +201,7 @@ class NotificationsLogModel
         $this->async      = $this->get_meta(self::META_NOTIF_ASYNC);
         $this->commentId  = (int)$this->get_meta(self::META_NOTIF_COMMENT_ID);
         $this->eventArgs  = $this->get_meta(self::META_NOTIF_EVENT_ARGS);
+        $this->cronId     = $this->get_meta(self::META_NOTIF_CRON_ID);
 
         if (!empty($this->eventArgs) && isset($this->eventArgs['postId'])) {
             $this->eventArgs['post'] = get_post((int)$this->eventArgs['postId']);
@@ -232,5 +242,48 @@ class NotificationsLogModel
     private function get_meta($meta_key, $single = true)
     {
         return get_comment_meta($this->id, $meta_key, $single);
+    }
+
+    public function delete()
+    {
+        $cronTask = $this->getCronTask();
+
+        if (empty($cronTask)) {
+            return;
+        }
+
+        wp_clear_scheduled_hook('publishpress_notifications_send_from_cron', $cronTask['args']);
+
+        wp_delete_comment($this->id, true);
+    }
+
+    public function getCronTask()
+    {
+        $cronArray = _get_cron_array();
+
+        $expectedHooks = ['publishpress_notifications_send_from_cron',];
+
+        if (!empty($cronArray)) {
+            foreach ($cronArray as $time => $cronTasks) {
+                foreach ($cronTasks as $hook => $dings) {
+                    if (!in_array($hook, $expectedHooks)) {
+                        continue;
+                    }
+
+                    if (array_key_exists($this->cronId, $dings)) {
+                        $data = $dings[$this->cronId];
+
+                        return [
+                            'cronId' => $this->cronId,
+                            'time'   => $time,
+                            'hook'   => $hook,
+                            'args'   => $data['args'],
+                        ];
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

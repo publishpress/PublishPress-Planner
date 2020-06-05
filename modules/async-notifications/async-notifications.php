@@ -29,6 +29,7 @@
  */
 
 use PublishPress\Legacy\Auto_loader;
+use PublishPress\Notifications\Pimple_Container;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 

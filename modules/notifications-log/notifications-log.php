@@ -152,6 +152,7 @@ if (!class_exists('PP_Notifications_Log')) {
             add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
             add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 6);
             add_filter('publishpress_notifications_queue_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
+            add_action('publishpress_notifications_scheduled_cron', [$this, 'registerCronIdToLog'], 10, 2);
             add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
             add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);
             add_action('wp_ajax_publishpress_search_post', [$this, 'ajaxSearchPost']);
@@ -299,27 +300,31 @@ if (!class_exists('PP_Notifications_Log')) {
         {
             $logHandler = new NotificationsLogHandler();
 
-            $data['logId'] = $logHandler->registerLog(
-                [
-                    'event'       => $data['event'],
-                    'post_id'     => $data['postId'],
-                    'workflow_id' => $data['workflowId'],
-                    'user_id'     => $data['userId'],
-                    'content'     => null,
-                    'old_status'  => isset($data['oldStatus']) ? $data['oldStatus'] : null,
-                    'new_status'  => isset($data['newStatus']) ? $data['newStatus'] : null,
-                    'comment_id'  => isset($data['commentId']) ? (int)$data['commentId'] : null,
-                    'async'       => true,
-                    'status'      => 'scheduled',
-                    'channel'     => null,
-                    'receiver'    => null,
-                    'success'     => null,
-                    'error'       => null,
-                    'event_args'  => $data,
-                ]
-            );
+            $logData = [
+                'event'       => $data['event_args']['event'],
+                'user_id'     => $data['event_args']['user_id'],
+                'workflow_id' => $data['workflow_id'],
+                'old_status'  => isset($data['event_args']['params']['old_status']) ? $data['event_args']['params']['old_status'] : null,
+                'new_status'  => isset($data['event_args']['params']['new_status']) ? $data['event_args']['params']['new_status'] : null,
+                'post_id'     => isset($data['event_args']['params']['post_id']) ? $data['event_args']['params']['post_id'] : null,
+                'comment_id'  => isset($data['event_args']['params']['comment_id']) ? $data['event_args']['params']['comment_id'] : null,
+                'async'       => true,
+                'status'      => 'scheduled',
+                'channel'     => isset($data['channel']) ? $data['channel'] : null,
+                'receiver'    => isset($data['receiver']) ? $data['receiver'] : null,
+                'success'     => isset($data['success']) ? $data['success'] : null,
+                'error'       => isset($data['error']) ? $data['error'] : null,
+                'event_args'  => $data['event_args'],
+            ];
+
+            $data['log_id'] = $logHandler->registerLog($logData);
 
             return $data;
+        }
+
+        public function registerCronIdToLog($data, $cronId)
+        {
+            update_comment_meta($data['log_id'], NotificationsLogModel::META_NOTIF_CRON_ID, $cronId);
         }
 
         /**
@@ -330,8 +335,7 @@ if (!class_exists('PP_Notifications_Log')) {
          * @param $body
          * @param $deliveryResult
          */
-        public
-        function actionNotificationSending(
+        public function actionNotificationSending(
             $workflowPost,
             $eventArgs,
             $channel,
@@ -381,8 +385,7 @@ if (!class_exists('PP_Notifications_Log')) {
         /**
          * Add necessary things to the admin menu
          */
-        public
-        function action_admin_submenu()
+        public function action_admin_submenu()
         {
             $publishpress = $this->get_service('publishpress');
 
@@ -400,8 +403,7 @@ if (!class_exists('PP_Notifications_Log')) {
             add_action('load-' . $hook, [$this, 'addScreenOptions']);
         }
 
-        public
-        function addScreenOptions()
+        public function addScreenOptions()
         {
             $option = 'per_page';
             $args   = [
@@ -412,8 +414,7 @@ if (!class_exists('PP_Notifications_Log')) {
             add_screen_option($option, $args);
         }
 
-        public
-        function tableSetOptions(
+        public function tableSetOptions(
             $status,
             $option,
             $value
@@ -426,8 +427,7 @@ if (!class_exists('PP_Notifications_Log')) {
          * output any messages, create the table navigation, then print the columns based on
          * get_num_columns(), which will in turn print the stories themselves.
          */
-        public
-        function render_admin_page()
+        public function render_admin_page()
         {
             $publishpress = $this->get_service('publishpress');
             $publishpress->settings->print_default_header($publishpress->modules->notifications_log);
@@ -455,8 +455,7 @@ if (!class_exists('PP_Notifications_Log')) {
             $publishpress->settings->print_default_footer($publishpress->modules->notifications_log);
         }
 
-        public
-        function ajaxSearchPost()
+        public function ajaxSearchPost()
         {
             if (!wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
                 echo '401';
@@ -504,8 +503,7 @@ if (!class_exists('PP_Notifications_Log')) {
             die;
         }
 
-        public
-        function ajaxSearchWorkflow()
+        public function ajaxSearchWorkflow()
         {
             if (!wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
                 echo '401';

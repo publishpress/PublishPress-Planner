@@ -46,20 +46,9 @@ class WPCron implements QueueInterface
     public function enqueueNotification($workflowPostId, $eventArgs)
     {
         $data = [
-            'workflowId' => $workflowPostId,
-            'event'      => $eventArgs['event'],
-            'postId'     => (int)$eventArgs['params']['post']->ID,
-            'userId'     => get_current_user_id(),
+            'workflow_id' => $workflowPostId,
+            'event_args'  => $eventArgs,
         ];
-
-        if (isset($eventArgs['params']['comment'])) {
-            $data['commentId'] = (int)$eventArgs['params']['comment']->comment_ID;
-        }
-
-        if (isset($eventArgs['params']['old_status'])) {
-            $data['oldStatus'] = $eventArgs['params']['old_status'];
-            $data['newStatus'] = $eventArgs['params']['new_status'];
-        }
 
         /**
          * @param array $data
@@ -70,7 +59,7 @@ class WPCron implements QueueInterface
             'publishpress_notifications_scheduled_time_for_notification',
             time(),
             $workflowPostId,
-            $eventArgs['params']['post']->ID
+            $eventArgs['params']['post_id']
         );
 
         if (false === $timestamp) {
@@ -80,6 +69,9 @@ class WPCron implements QueueInterface
             return;
         }
 
+        $cronId = $this->getCronId($data);
+        do_action('publishpress_notifications_scheduled_cron', $data, $cronId);
+
         $data['result'] = $this->scheduleEvent($data, $timestamp);
 
         /**
@@ -88,22 +80,27 @@ class WPCron implements QueueInterface
         do_action('publishpress_notifications_enqueued_notification', $data);
     }
 
+    private function getCronId($args)
+    {
+        return md5(serialize($args));
+    }
+
     /**
      * Schedule the notification event.
      *
-     * @param $data
+     * @param $args
      * @param $timestamp
      *
      * @return bool
      * @throws Exception
      *
      */
-    protected function scheduleEvent($data, $timestamp)
+    protected function scheduleEvent($args, $timestamp)
     {
         return wp_schedule_single_event(
             $timestamp,
             'publishpress_notifications_send_from_cron',
-            $data
+            $args
         );
     }
 }

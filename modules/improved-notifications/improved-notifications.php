@@ -557,10 +557,10 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             // Go ahead and do the action to run workflows
             $params = [
-                'event'  => 'transition_post_status',
-                'user'   => get_current_user_id(),
-                'params' => [
-                    'posts'      => $post,
+                'event'   => 'transition_post_status',
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$post->ID,
                     'new_status' => $new_status,
                     'old_status' => $old_status,
                 ],
@@ -603,10 +603,10 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             $params = [
                 'event'  => 'editorial_comment',
-                'user'   => get_current_user_id(),
+                'user_id'   => get_current_user_id(),
                 'params' => [
-                    'post'    => $post,
-                    'comment' => $comment,
+                    'post_id'    => (int)$post->ID,
+                    'comment_id' => (int)$comment->comment_ID,
                 ],
             ];
 

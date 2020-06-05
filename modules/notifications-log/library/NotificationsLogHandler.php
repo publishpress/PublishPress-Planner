@@ -42,23 +42,20 @@ class NotificationsLogHandler
      */
     public function registerLog($data = [])
     {
-        $user = wp_get_current_user();
-
         $defaultData = [
-            'post_id'     => 0,
-            'content'     => '',
-            'workflow_id' => 0,
-            'user_id'     => 0,
-            'event'       => '',
-            'old_status'  => '',
-            'new_status'  => '',
-            'channel'     => '',
-            'receiver'    => '',
-            'status'      => '',
-            'success'     => false,
+            'event'       => null,
+            'user_id'     => null,
+            'workflow_id' => null,
+            'old_status'  => null,
+            'new_status'  => null,
+            'comment_id'  => null,
+            'async'       => null,
+            'status'      => null,
+            'channel'     => null,
+            'receiver'    => null,
+            'success'     => null,
             'error'       => null,
-            'async'       => false,
-            'eventArgs'   => [],
+            'event_args'  => null,
         ];
 
         $data = array_merge($defaultData, $data);
@@ -67,35 +64,35 @@ class NotificationsLogHandler
             'comment_post_ID'      => $data['post_id'],
             'comment_author'       => NotificationsLogModel::COMMENT_AUTHOR,
             'comment_author_email' => '',
-            'comment_content'      => $data['content'],
+            'comment_content'      => null,
             'comment_type'         => NotificationsLogModel::COMMENT_TYPE,
             'comment_parent'       => 0,
-            'user_id'              => $user->ID,
+            'user_id'              => $data['user_id'],
             'comment_agent'        => NotificationsLogModel::COMMENT_USER_AGENT,
             'comment_approved'     => NotificationsLogModel::COMMENT_APPROVED,
             'comment_meta'         => [
-                NotificationsLogModel::META_NOTIF_WORKFLOW_ID => $data['workflow_id'],
-                NotificationsLogModel::META_NOTIF_USER_ID     => $data['user_id'],
                 NotificationsLogModel::META_NOTIF_EVENT       => $data['event'],
+                NotificationsLogModel::META_NOTIF_USER_ID     => $data['user_id'],
+                NotificationsLogModel::META_NOTIF_WORKFLOW_ID => $data['workflow_id'],
                 NotificationsLogModel::META_NOTIF_OLD_STATUS  => $data['old_status'],
                 NotificationsLogModel::META_NOTIF_NEW_STATUS  => $data['new_status'],
+                NotificationsLogModel::META_NOTIF_COMMENT_ID  => $data['comment_id'],
+                NotificationsLogModel::META_NOTIF_ASYNC       => $data['async'],
+                NotificationsLogModel::META_NOTIF_STATUS      => $data['status'],
                 NotificationsLogModel::META_NOTIF_CHANNEL     => $data['channel'],
                 NotificationsLogModel::META_NOTIF_RECEIVER    => $data['receiver'],
-                NotificationsLogModel::META_NOTIF_STATUS      => $data['status'],
                 NotificationsLogModel::META_NOTIF_SUCCESS     => $data['success'],
                 NotificationsLogModel::META_NOTIF_ERROR       => $data['error'],
-                NotificationsLogModel::META_NOTIF_ASYNC       => $data['async'],
-                NotificationsLogModel::META_NOTIF_COMMENT_ID  => $data['comment_id'],
                 NotificationsLogModel::META_NOTIF_EVENT_ARGS  => $data['event_args'],
             ],
         ];
 
-        $result = wp_insert_comment($commentData);
+        $logId = wp_insert_comment($commentData);
 
         $last_changed = microtime();
         wp_cache_set('last_changed', $last_changed, 'comment');
 
-        return $result;
+        return $logId;
     }
 
     /**

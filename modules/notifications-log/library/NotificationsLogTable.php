@@ -23,7 +23,9 @@
 
 namespace PublishPress\NotificationsLog;
 
+use PublishPress\Notifications\Pimple_Container;
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Workflow\Workflow;
 use WP_List_Table;
 
 if (!class_exists('WP_List_Table')) {
@@ -44,6 +46,8 @@ class NotificationsLogTable extends WP_List_Table
     const BULK_ACTION_DELETE = 'delete';
 
     const BULK_ACTION_DELETE_ALL = 'delete_all';
+
+    const BULK_ACTION_TRY_AGAIN = 'try_again';
 
     /**
      * @var NotificationsLogHandler
@@ -232,8 +236,9 @@ class NotificationsLogTable extends WP_List_Table
                 );
 
                 if ($log->status === 'scheduled') {
-                    $cronTaskTime = $this->getCronTaskTimeRelatedToTheLog($log);
-                    if (is_numeric($cronTaskTime)) {
+                    $cronTask = $log->getCronTask();
+
+                    if (false !== $cronTask) {
                         $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
 
                         $output .= sprintf(
@@ -242,7 +247,7 @@ class NotificationsLogTable extends WP_List_Table
                                 __(' Scheduled to %s', 'publishpress'),
                                 date_i18n(
                                     'Y-m-d H:i:s',
-                                    $cronTaskTime + $offset
+                                    $cronTask['time'] + $offset
                                 )
                             )
                         );
@@ -307,21 +312,39 @@ class NotificationsLogTable extends WP_List_Table
      */
     public function column_date($item)
     {
-        //Build row actions
-        $actions = [
-            'delete' => sprintf(
-                '<a href="%s">%s</a>',
-                esc_url(
-                    add_query_arg(
-                        [
-                            'action'                        => 'delete',
-                            $this->_args['singular'] . '[]' => $item->comment_ID,
-                        ]
-                    )
-                ),
-                __('Delete', 'publishpress')
+        $actions = [];
+        $log     = new NotificationsLogModel($item);
+
+        if ('scheduled' === $log->status) {
+            $cronTask = $log->getCronTask();
+            if (false === $cronTask) {
+                $actions['try_again'] = sprintf(
+                    '<a href="%s">%s</a>',
+                    esc_url(
+                        add_query_arg(
+                            [
+                                'action'                 => 'try_again',
+                                $this->_args['singular'] => $log->id,
+                            ]
+                        )
+                    ),
+                    __('Try again', 'publishpress')
+                );
+            }
+        }
+
+        $actions['delete'] = sprintf(
+            '<a href="%s">%s</a>',
+            esc_url(
+                add_query_arg(
+                    [
+                        'action'                 => 'delete',
+                        $this->_args['singular'] => $log->id,
+                    ]
+                )
             ),
-        ];
+            __('Delete', 'publishpress')
+        );
 
         //Return the title contents
         return sprintf(
@@ -337,12 +360,11 @@ class NotificationsLogTable extends WP_List_Table
      */
     public function get_bulk_actions()
     {
-        $actions = [
+        return [
+            self::BULK_ACTION_TRY_AGAIN  => 'Try again',
             self::BULK_ACTION_DELETE     => 'Delete',
             self::BULK_ACTION_DELETE_ALL => 'Delete All',
         ];
-
-        return $actions;
     }
 
     public function prepare_items()
@@ -449,15 +471,22 @@ class NotificationsLogTable extends WP_List_Table
 
     public function process_bulk_action()
     {
-        if (self::BULK_ACTION_DELETE === $this->current_action()) {
-            $ids = isset($_GET['log']) ? (array)$_GET['log'] : [];
+        $currentAction = $this->current_action();
+
+        if (self::BULK_ACTION_DELETE === $currentAction) {
+            $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
 
             if (!empty($ids)) {
                 foreach ($ids as $id) {
-                    wp_delete_comment($id, true);
+                    $logComment = get_comment($id);
+
+                    if (!empty($logComment)) {
+                        $log = new NotificationsLogModel($logComment);
+                        $log->delete();
+                    }
                 }
             }
-        } elseif (self::BULK_ACTION_DELETE_ALL === $this->current_action()) {
+        } elseif (self::BULK_ACTION_DELETE_ALL === $currentAction) {
             $notifications = $this->logHandler->getNotificationLogEntries(
                 null,
                 'comment_date',
@@ -471,6 +500,25 @@ class NotificationsLogTable extends WP_List_Table
             if (!empty($notifications)) {
                 foreach ($notifications as $notification) {
                     wp_delete_comment($notification->comment_ID, true);
+                }
+            }
+        } elseif (self::BULK_ACTION_TRY_AGAIN === $currentAction) {
+            $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
+
+            if (!empty($ids)) {
+                foreach ($ids as $id) {
+                    $logComment = get_comment($id);
+
+                    if (!empty($logComment)) {
+                        $log      = new NotificationsLogModel($logComment);
+                        $workflow = new Workflow(get_post($log->workflowId));
+
+                        $queue = Pimple_Container::get_instance()['notification_queue'];
+                        $workflow->event_args = $log->eventArgs;
+                        $queue->enqueueNotification($workflow->workflow_post->ID, $workflow->event_args);
+
+                        $log->delete();
+                    }
                 }
             }
         }
@@ -603,37 +651,5 @@ class NotificationsLogTable extends WP_List_Table
 
         echo '</div>';
         echo '<br>';
-    }
-
-    /**
-     * @param NotificationsLogModel $log
-     *
-     * @return int|false
-     */
-    private function getCronTaskTimeRelatedToTheLog(NotificationsLogModel $log)
-    {
-        if (empty($this->cronTasks)) {
-            $this->cronTasks = _get_cron_array();
-        }
-
-        $expectedHooks = ['publishpress_notifications_send_from_cron',];
-
-        if (!empty($this->cronTasks)) {
-            foreach ($this->cronTasks as $time => $cronTasks) {
-                foreach ($cronTasks as $hook => $dings) {
-                    if (!in_array($hook, $expectedHooks)) {
-                        continue;
-                    }
-
-                    foreach ($dings as $sig => $data) {
-                        if (isset($data['args']['logId']) && $data['args']['logId'] === $log->id) {
-                            return $time;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 }
