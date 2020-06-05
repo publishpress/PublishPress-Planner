@@ -57,13 +57,16 @@ let updateTheSaveAsButtonText = (status) => {
     }
 
     let label;
-    if (publishedStatuses.includes(wp.data.select('core/editor').getCurrentPost().status)) {
-      label = getStatusLabel('draft');
+    let currentStatus = wp.data.select('core/editor').getCurrentPost().status;
+    if (publishedStatuses.includes(currentStatus)) {
+      if ('future' === currentStatus) {
+        label = __('Unschedule and Save as %s', 'publishpress').replace('%s', getStatusLabel('draft'));
+      } else {
+        label = __('Unpublish and Save as %s', 'publishpress').replace('%s', getStatusLabel('draft'));
+      }
     } else {
-      label = getStatusLabel(status);
+      label = __('Save as %s', 'publishpress').replace('%s', getStatusLabel(status));
     }
-
-    label = __('Save as', 'publishpress') + ' ' + label;
 
     if (label !== node.innerText) {
       node.innerText = label;
@@ -112,12 +115,12 @@ let PPCustomPostStatusInfo = ({onUpdate, status}) => {
   } else if ([originalStatus, status].includes('future')) {
     statusControl = <div className={"publishpress-static-post-status"}>{__('Scheduled', 'publishpress')}</div>;
     noteElement = <small className="publishpress-extended-post-status-note">
-      {__('To select a custom status, please unpublish the content first.', 'publishpress')}
+      {__('To select a custom status, please unschedule the content first.', 'publishpress')}
     </small>;
   } else if ('pending' === status) {
     statusControl = <div className={"publishpress-static-post-status"}>{__('Pending review', 'publishpress')}</div>;
     noteElement = <small className="publishpress-extended-post-status-note">
-      {__('To select a custom status, please uncheck the Pending Review checkbox first.', 'publishpress')}
+      {__('To select a custom status, please uncheck the "Pending Review" checkbox first.', 'publishpress')}
     </small>;
   } else if ([originalStatus, status].includes('private')) {
     statusControl =
