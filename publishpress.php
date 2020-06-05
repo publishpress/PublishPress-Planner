@@ -162,7 +162,7 @@ class publishpress
     {
         $this->deactivate_editflow();
 
-        load_plugin_textdomain('publishpress', null, PUBLISHPRESS_BASE_PATH . '/languages/');
+        load_plugin_textdomain('publishpress', null, plugin_basename(PUBLISHPRESS_BASE_PATH) . '/languages/');
 
         $this->load_modules();
 
