@@ -193,7 +193,8 @@ class NotificationsLogTable extends WP_List_Table
                         }
 
                         $output .= sprintf(
-                            '<li><i class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
+                            '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
+                            $log->status === 'scheduled' ? __('Preview the message') : __('View the message'),
                             $log->id,
                             esc_attr($receiverPopupText),
                             esc_attr($receiverData['receiver']),

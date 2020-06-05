@@ -1,4 +1,6 @@
 jQuery(function ($) {
+  var __ = wp.i18n.__;
+
   $('.filter-posts').pp_select2({
     placeholder: ppNotifLog.text.allPosts,
     allowClear: true,
@@ -74,11 +76,11 @@ jQuery(function ($) {
     $dialog.text(ppNotifLog.text.loading);
 
     $dialog.dialog({
-      title: ppNotifLog.text.dialogTitle + ': ' + notificationId + ' (' + receiverText + ', ' + channel + ')',
+      title: ppNotifLog.text.dialogTitle + ': ' + notificationId + ' ' + __('for', 'publishpress') + ' ' + receiverText + ' ' + __('by', 'publishpress') + ' ' + channel ,
       dialogClass: 'wp-dialog',
       autoOpen: false,
       draggable: true,
-      width: 'auto',
+      width: '70%',
       modal: true,
       resizable: false,
       closeOnEscape: true,

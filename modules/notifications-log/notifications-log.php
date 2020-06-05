@@ -582,27 +582,38 @@ if (!class_exists('PP_Notifications_Log')) {
                 $log     = new NotificationsLogModel($comment);
                 ob_start();
                 ?>
-                <div class="preview-notification">
-                    <?php if ($log->status === 'scheduled') : ?>
-                        <?php
-                        $workflow = Workflow::load_by_id($log->workflowId);
+                <em class="preview-notification">
+                <?php if ($log->status === 'scheduled') : ?>
+                    <?php
+                    $workflow = Workflow::load_by_id($log->workflowId);
 
-                        $workflow->event_args = $log->eventArgs;
+                    $workflow->event_args = $log->eventArgs;
 
-                        $content_template = $workflow->get_content();
-                        $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
-                        ?>
-                        <div class="subject"><span><?php _e(
-                                    'Subject: ',
-                                    'publishpress'
-                                ); ?></span><?php echo $content['subject']; ?></div>
-                        <pre class="content"><?php echo $content['body']; ?></pre>
-                    <?php else: ?>
-                        <?php if (isset($log->content['subject'])) : ?>
-                            <?php echo $log->content['subject']; ?><br>
-                        <?php endif; ?>
-                        <pre><?php echo $log->content['body']; ?></pre>
+                    $content_template = $workflow->get_content();
+                    $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
+                    ?>
+                    <div class="subject"><label><?php _e(
+                                'Subject:',
+                                'publishpress'
+                            ); ?></label><?php echo esc_html($content['subject']); ?></div>
+                    <div class="content">
+                        <label>
+                            <?php _e('Content:', 'publishpress'); ?>
+                        </label>
+                        <?php echo wpautop($content['body']); ?>
+                    </div>
+                <?php else: ?>
+                    <?php if (isset($log->content['subject'])) : ?>
+                        <?php echo $log->content['subject']; ?><br>
                     <?php endif; ?>
+                    <pre><?php echo $log->content['body']; ?></pre>
+                <?php endif; ?>
+                <?php if ($log->status === 'scheduled') : ?>
+                    <em><?php echo __(
+                            'This is a preview of the scheduled message. The content can still change until the notification is sent.',
+                            'publishpress'
+                        ); ?></em>
+                <?php endif; ?>
                 </div>
                 <?php
                 $output = ob_get_clean();

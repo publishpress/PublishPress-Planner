@@ -146,3 +146,18 @@
   color: #c0c0c0;
   font-weight: normal;
 }
+
+.preview-notification .subject,
+.preview-notification .content {
+  background: #f1f1f1;
+  padding: 11px;
+  margin-bottom: 15px;
+}
+
+
+.preview-notification label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid silver;
+}
