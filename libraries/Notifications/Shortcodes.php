@@ -95,11 +95,11 @@ class Shortcodes
     /**
      * Returns the current user, the actor of the action
      *
-     * @return WP_User
+     * @return bool|WP_User
      */
     protected function get_actor()
     {
-        return wp_get_current_user();
+        return get_user_by('ID', $this->event_args['user_id']);
     }
 
     /**
@@ -303,7 +303,7 @@ class Shortcodes
      */
     protected function get_post()
     {
-        return get_post($this->event_args['postId']);
+        return get_post($this->event_args['params']['post_id']);
     }
 
     /**
