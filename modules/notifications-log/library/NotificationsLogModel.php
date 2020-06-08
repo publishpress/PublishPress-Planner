@@ -248,11 +248,9 @@ class NotificationsLogModel
     {
         $cronTask = $this->getCronTask();
 
-        if (empty($cronTask)) {
-            return;
+        if (!empty($cronTask)) {
+            wp_clear_scheduled_hook('publishpress_notifications_send_from_cron', $cronTask['args']);
         }
-
-        wp_clear_scheduled_hook('publishpress_notifications_send_from_cron', $cronTask['args']);
 
         wp_delete_comment($this->id, true);
     }

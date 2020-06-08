@@ -25,7 +25,6 @@ namespace PublishPress\NotificationsLog;
 
 use PublishPress\Notifications\Pimple_Container;
 use PublishPress\Notifications\Traits\Dependency_Injector;
-use PublishPress\Notifications\Workflow\Workflow;
 use WP_List_Table;
 
 if (!class_exists('WP_List_Table')) {
@@ -77,6 +76,7 @@ class NotificationsLogTable extends WP_List_Table
             ]
         );
 
+        $this->logHandler = $logHandler;
         $this->logHandler = $logHandler;
     }
 
@@ -316,21 +316,18 @@ class NotificationsLogTable extends WP_List_Table
         $log     = new NotificationsLogModel($item);
 
         if ('scheduled' === $log->status) {
-            $cronTask = $log->getCronTask();
-            if (false === $cronTask) {
-                $actions['try_again'] = sprintf(
-                    '<a href="%s">%s</a>',
-                    esc_url(
-                        add_query_arg(
-                            [
-                                'action'                 => 'try_again',
-                                $this->_args['singular'] => $log->id,
-                            ]
-                        )
-                    ),
-                    __('Try again', 'publishpress')
-                );
-            }
+            $actions['try_again'] = sprintf(
+                '<a href="%s">%s</a>',
+                esc_url(
+                    add_query_arg(
+                        [
+                            'action'                 => 'try_again',
+                            $this->_args['singular'] => $log->id,
+                        ]
+                    )
+                ),
+                __('Reschedule', 'publishpress')
+            );
         }
 
         $actions['delete'] = sprintf(
@@ -361,14 +358,16 @@ class NotificationsLogTable extends WP_List_Table
     public function get_bulk_actions()
     {
         return [
-            self::BULK_ACTION_TRY_AGAIN  => 'Try again',
-            self::BULK_ACTION_DELETE     => 'Delete',
-            self::BULK_ACTION_DELETE_ALL => 'Delete All',
+            self::BULK_ACTION_TRY_AGAIN  => __('Reschedule', 'publishpress'),
+            self::BULK_ACTION_DELETE     => __('Delete', 'publishpress'),
+            self::BULK_ACTION_DELETE_ALL => __('Delete All', 'publishpress'),
         ];
     }
 
     public function prepare_items()
     {
+        $this->process_bulk_action();
+
         $currentUserId = get_current_user_id();
         $per_page      = get_user_meta($currentUserId, 'logs_per_page', true);
         if (empty($per_page)) {
@@ -380,8 +379,6 @@ class NotificationsLogTable extends WP_List_Table
         $sortable = $this->get_sortable_columns();
 
         $this->_column_headers = [$columns, $hidden, $sortable];
-
-        $this->process_bulk_action();
 
         $current_page = $this->get_pagenum();
 
@@ -471,7 +468,8 @@ class NotificationsLogTable extends WP_List_Table
 
     public function process_bulk_action()
     {
-        $currentAction = $this->current_action();
+        $currentAction  = $this->current_action();
+        $shouldRedirect = false;
 
         if (self::BULK_ACTION_DELETE === $currentAction) {
             $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
@@ -486,6 +484,8 @@ class NotificationsLogTable extends WP_List_Table
                     }
                 }
             }
+
+            $shouldRedirect = true;
         } elseif (self::BULK_ACTION_DELETE_ALL === $currentAction) {
             $notifications = $this->logHandler->getNotificationLogEntries(
                 null,
@@ -498,10 +498,15 @@ class NotificationsLogTable extends WP_List_Table
             );
 
             if (!empty($notifications)) {
-                foreach ($notifications as $notification) {
-                    wp_delete_comment($notification->comment_ID, true);
+                foreach ($notifications as $logComment) {
+                    if (!empty($logComment)) {
+                        $log = new NotificationsLogModel($logComment);
+                        $log->delete();
+                    }
                 }
             }
+
+            $shouldRedirect = true;
         } elseif (self::BULK_ACTION_TRY_AGAIN === $currentAction) {
             $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
 
@@ -510,17 +515,21 @@ class NotificationsLogTable extends WP_List_Table
                     $logComment = get_comment($id);
 
                     if (!empty($logComment)) {
-                        $log      = new NotificationsLogModel($logComment);
-                        $workflow = new Workflow(get_post($log->workflowId));
+                        $log = new NotificationsLogModel($logComment);
 
                         $queue = Pimple_Container::get_instance()['notification_queue'];
-                        $workflow->event_args = $log->eventArgs;
-                        $queue->enqueueNotification($workflow->workflow_post->ID, $workflow->event_args);
+                        $queue->enqueueNotification($log->workflowId, $log->eventArgs);
 
                         $log->delete();
                     }
                 }
             }
+
+            $shouldRedirect = true;
+        }
+
+        if ($shouldRedirect) {
+            wp_redirect(admin_url('admin.php?page=pp-notif-log'));
         }
     }
 
