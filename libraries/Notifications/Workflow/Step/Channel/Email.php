@@ -10,6 +10,7 @@
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
 use Exception;
+use PublishPress\Notifications\Workflow\Workflow;
 use WP_Error;
 use WP_Post;
 
@@ -41,19 +42,17 @@ class Email extends Base implements Channel_Interface
     /**
      * Check if this channel is selected and triggers the notification.
      *
-     * @param WP_Post $workflow_post
-     * @param array $event_args
-     * @param array $receivers
+     * @param Workflow $workflow
+     * @param array $receiverData
      * @param array $content
      * @param string $channel
+     * @param bool $async
      *
      * @throws Exception
      */
-    public function action_send_notification($workflow_post, $event_args, $receivers, $content, $channel)
+    public function action_send_notification($workflow, $receiverData, $content, $channel, $async)
     {
-        $this->get_service('debug')->write($receivers, 'Email::action_send_notification $receivers');
-
-        if (empty($receivers)) {
+        if (empty($receiverData['receiver'])) {
             return;
         }
 
@@ -62,7 +61,10 @@ class Email extends Base implements Channel_Interface
             $content = maybe_unserialize($content);
         }
 
-        $signature  = $this->get_notification_signature($content, $channel . ':' . serialize($receivers));
+        $signature  = $this->get_notification_signature(
+            $content,
+            $channel . ':' . serialize($receiverData['receiver'])
+        );
         $controller = $this->get_service('workflows_controller');
 
         // Check if the notification was already sent
@@ -71,53 +73,52 @@ class Email extends Base implements Channel_Interface
         }
 
         // Send the emails
-        $emails = $this->get_receivers_emails($receivers);
-        $action = 'transition_post_status' === $event_args['event'] ? 'status-change' : 'comment';
-
-        $this->get_service('debug')->write($emails, 'Email::action_send_notification $emails');
+        $emailAddress = $this->get_receiver_email($receiverData['receiver']);
+        $action       = 'transition_post_status' === $workflow->event_args['event'] ? 'status-change' : 'comment';
 
         $subject = html_entity_decode($content['subject']);
 
-        $body = apply_filters('the_content', $content['body']);
+        $body = wpautop($content['body']);
+        $body = apply_filters('the_content', $body);
         $body = str_replace(']]>', ']]&gt;', $body);
 
         // Call the legacy notification module
-        foreach ($emails as $email) {
-            // Split the name and email, if set.
-            $separatorPos = strpos($email, '/');
-            if ($separatorPos > 0) {
-                $email = substr($email, $separatorPos + 1, strlen($email));
-            }
-
-            $this->get_service('debug')->write($email, 'Email::action_send_notification $email');
-
-            $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
-                $action,
-                $event_args,
-                $subject,
-                $body,
-                '',
-                $email
-            );
-
-            /**
-             * @param WP_Post $workflow_post
-             * @param array $event_args
-             * @param string $channel
-             * @param string $subject
-             * @param string $body
-             * @param array $deliveryResult
-             */
-            do_action(
-                'publishpress_notif_notification_sending',
-                $workflow_post,
-                $event_args,
-                $channel,
-                $subject,
-                $body,
-                $deliveryResult
-            );
+        // Split the name and email, if set.
+        $separatorPos = strpos($emailAddress, '/');
+        if ($separatorPos > 0) {
+            $emailAddress = substr($emailAddress, $separatorPos + 1, strlen($emailAddress));
         }
+
+        $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
+            $action,
+            $workflow->event_args,
+            $subject,
+            $body,
+            '',
+            $emailAddress
+        );
+
+        /**
+         * @param Workflow $workflow
+         * @param string $channel
+         * @param array $receiverData
+         * @param string $subject
+         * @param string $body
+         * @param bool $deliveryResult
+         * @param bool $async
+         * @param int $logId
+         */
+        do_action(
+            'publishpress_notif_notification_sending',
+            $workflow,
+            $channel,
+            $receiverData,
+            $subject,
+            $body,
+            $deliveryResult[$emailAddress],
+            $async,
+            $logId
+        );
 
         $controller->register_notification_signature($signature);
     }
@@ -125,36 +126,21 @@ class Email extends Base implements Channel_Interface
     /**
      * Returns a list of the receivers' emails
      *
-     * @param array $receivers
+     * @param array $receiver
      *
-     * @return array
+     * @return string
      */
-    protected function get_receivers_emails($receivers)
+    protected function get_receiver_email($receiver)
     {
-        $emails = [];
-
-        if (!empty($receivers)) {
-            if (!is_array($receivers)) {
-                $receivers = [$receivers];
-            }
-
-            foreach ($receivers as $receiver) {
-                // Check if we have the user ID or an email address
-                if (is_numeric($receiver)) {
-                    $data     = $this->get_user_data($receiver);
-                    $emails[] = $data->user_email;
-                    continue;
-                }
-
-                // Is it a valid email address?
-                $emails[] = sanitize_email($receiver);
+        if (!empty($receiver)) {
+            // Check if we have the user ID or an email address
+            if (is_numeric($receiver)) {
+                $data     = $this->get_user_data($receiver);
+                $receiver = $data->user_email;
             }
         }
 
-        // Remove duplicated
-        $emails = array_unique($emails);
-
-        return $emails;
+        return sanitize_email($receiver);
     }
 
     /**

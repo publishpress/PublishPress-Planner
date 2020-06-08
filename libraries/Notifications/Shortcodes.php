@@ -452,7 +452,7 @@ class Shortcodes
         $post = $this->workflow_post;
 
         // No attributes? Set the default one.
-        if (empty($attrs)) {
+        if (empty($attrs) || empty($attrs[0])) {
             $attrs[] = 'title';
         }
 
@@ -505,12 +505,11 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-
-        if (!isset($this->event_args['commentId'])) {
+        if (!isset($this->event_args['params']['comment_id'])) {
             return;
         }
 
-        $comment = get_comment($this->event_args['commentId']);
+        $comment = get_comment($this->event_args['params']['comment_id']);
 
         // No attributes? Set the default one.
         if (empty($attrs)) {

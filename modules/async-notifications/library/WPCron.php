@@ -35,6 +35,8 @@ class WPCron implements QueueInterface
 {
     use Dependency_Injector;
 
+    const SEND_NOTIFICATION_HOOK = 'publishpress_notifications_send_notification';
+
     /**
      * Enqueue the notification for async processing.
      *
@@ -82,7 +84,7 @@ class WPCron implements QueueInterface
 
     private function getCronId($args)
     {
-        return md5(serialize($args));
+        return md5(serialize([$args]));
     }
 
     /**
@@ -99,8 +101,8 @@ class WPCron implements QueueInterface
     {
         return wp_schedule_single_event(
             $timestamp,
-            'publishpress_notifications_send_from_cron',
-            $args
+            self::SEND_NOTIFICATION_HOOK,
+            [$args]
         );
     }
 }

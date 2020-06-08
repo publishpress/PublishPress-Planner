@@ -106,13 +106,7 @@ class Pimple_Container extends Container
              * @return QueueInterface
              */
             $instance['notification_queue'] = function ($c) {
-                $queue = apply_filters('publishpress_notification_queue', false, $c);
-
-                if (empty($queue)) {
-                    $queue = new WPCron();
-                }
-
-                return $queue;
+                return apply_filters('publishpress_notifications_notification_queue', new WPCron(), $c);
             };
 
             $instance['framework'] = function ($c) {
