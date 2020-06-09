@@ -239,9 +239,9 @@ class NotificationsLogTable extends WP_List_Table
                     $cronTask = $log->getCronTask();
 
                     if (false !== $cronTask) {
-                        $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
+                        $offset        = (int)get_option('gmt_offset', 0) * 60 * 60;
                         $scheduledTime = $cronTask['time'] + $offset;
-                        $currentTime = current_time('timestamp');
+                        $currentTime   = current_time('timestamp');
 
                         if ($scheduledTime < $currentTime) {
                             $label = __(' Scheduled, but late', 'publishpress');
@@ -415,8 +415,8 @@ class NotificationsLogTable extends WP_List_Table
             $postId = (int)$_REQUEST['post_id'];
         }
 
-        if (isset($_REQUEST['workflow_action'])) {
-            $filters['workflow_action'] = sanitize_text_field($_REQUEST['workflow_action']);
+        if (isset($_REQUEST['event'])) {
+            $filters['event'] = sanitize_text_field($_REQUEST['event']);
         }
 
         if (isset($_REQUEST['channel'])) {
@@ -492,12 +492,16 @@ class NotificationsLogTable extends WP_List_Table
                     'Success',
                     'publishpress'
                 ) . '</a>',
-            'error'     => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
-                    'Errors',
+            'skipped'   => '<a href="' . esc_url(add_query_arg('status', 'skipped')) . '">' . __(
+                    'Skipped',
                     'publishpress'
                 ) . '</a>',
             'scheduled' => '<a href="' . esc_url(add_query_arg('status', 'scheduled')) . '">' . __(
                     'Scheduled',
+                    'publishpress'
+                ) . '</a>',
+            'error'     => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
+                    'Error',
                     'publishpress'
                 ) . '</a>',
         ];
@@ -543,19 +547,20 @@ class NotificationsLogTable extends WP_List_Table
 
         echo '<select class="filter-workflows" name="workflow_id">' . $selectedOption . '</select>';
 
-        // Action
-        $selectedAction = isset($_GET['action']) ? $_GET['action'] : '';
+        // Event
+        $selectedAction = isset($_GET['event']) ? $_GET['event'] : '';
 
-        echo '<select class="filter-actions" name="workflow_action">';
-        $actions = apply_filters('publishpress_notif_workflow_actions', []);
+        echo '<select class="filter-actions" name="event">';
+        $events = apply_filters('publishpress_notifications_workflow_events', []);
 
-        echo '<option value="">' . __('All actions', 'publishpress') . '</option>';
+        echo '<option value="">' . __('All events', 'publishpress') . '</option>';
 
-        foreach ($actions as $action) {
+        foreach ($events as $event) {
+            $actionLabel = apply_filters('publishpress_notifications_event_label', $event, $event);
             echo '<option ' . selected(
-                    $action,
+                    $event,
                     $selectedAction
-                ) . ' value="' . esc_attr($action) . '">' . $action . '</option>';
+                ) . ' value="' . esc_attr($event) . '">' . $actionLabel . '</option>';
         }
         echo '</select>';
 

@@ -61,7 +61,7 @@ class CliHandler
 
     private function listActions($assocArgs)
     {
-        $actions = apply_filters('publishpress_notif_workflow_actions', []);
+        $actions = apply_filters('publishpress_notifications_workflow_events', []);
 
         foreach ($actions as $action) {
             WP_CLI::line($action);

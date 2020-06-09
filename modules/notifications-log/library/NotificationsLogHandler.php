@@ -141,55 +141,76 @@ class NotificationsLogHandler
             $args['offset'] = ($currentPage - 1) * $perPage;
         }
 
+        $metaQuery = [];
+
         if (isset($filters['status'])) {
             if ($filters['status'] === 'scheduled') {
-                $args['meta_key']   = NotificationsLogModel::META_NOTIF_STATUS;
-                $args['meta_value'] = 'scheduled';
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_STATUS,
+                    'value' => 'scheduled',
+                ];
+            } elseif ($filters['status'] === 'skipped') {
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_STATUS,
+                    'value' => 'skipped',
+                ];
             } elseif ($filters['status'] === 'success') {
-                $args['meta_key']   = NotificationsLogModel::META_NOTIF_SUCCESS;
-                $args['meta_value'] = true;
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_SUCCESS,
+                    'value' => true,
+                ];
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_STATUS,
+                    'value' => 'skipped',
+                    'compare'    => '!=',
+                ];
             } elseif ($filters['status'] === 'error') {
-                $args['meta_key']   = NotificationsLogModel::META_NOTIF_SUCCESS;
-                $args['meta_value'] = false;
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_SUCCESS,
+                    'value' => 'false',
+                ];
+                $metaQuery[] = [
+                    'key'   => NotificationsLogModel::META_NOTIF_STATUS,
+                    'value' => 'skipped',
+                    'compare'    => '!=',
+                ];
             }
         }
 
         if (isset($filters['workflow_id'])) {
-            $args['meta_query'] = [
-                [
-                    'key'   => NotificationsLogModel::META_NOTIF_WORKFLOW_ID,
-                    'value' => (int)$filters['workflow_id'],
-                ],
+            $metaQuery[] = [
+                'key'   => NotificationsLogModel::META_NOTIF_WORKFLOW_ID,
+                'value' => (int)$filters['workflow_id'],
             ];
         }
 
-        if (isset($filters['workflow_action']) && !empty($filters['workflow_action'])) {
-            $args['meta_query'] = [
-                [
-                    'key'   => NotificationsLogModel::META_NOTIF_ACTION,
-                    'value' => $filters['workflow_action'],
-                ],
+        if (isset($filters['event']) && !empty($filters['event'])) {
+            $metaQuery[] = [
+                'key'   => NotificationsLogModel::META_NOTIF_EVENT,
+                'value' => $filters['event'],
             ];
         }
 
         if (isset($filters['channel']) && !empty($filters['channel'])) {
-            $args['meta_query'] = [
-                [
-                    'key'   => NotificationsLogModel::META_NOTIF_CHANNEL,
-                    'value' => $filters['channel'],
-                ],
+            $metaQuery[] = [
+                'key'   => NotificationsLogModel::META_NOTIF_CHANNEL,
+                'value' => $filters['channel'],
             ];
         }
 
         if (isset($filters['receiver']) && !empty($filters['receiver'])) {
-            $args['meta_query'] = [
-                [
-                    'key'     => NotificationsLogModel::META_NOTIF_RECEIVER,
-                    'value'   => $filters['receiver'],
-                    'compare' => 'LIKE',
-                ],
+            $metaQuery[] = [
+                'key'     => NotificationsLogModel::META_NOTIF_RECEIVER,
+                'value'   => $filters['receiver'],
+                'compare' => 'LIKE',
             ];
         }
+
+        if (!empty($metaQuery)) {
+            $metaQuery['relation'] = 'AND';
+        }
+
+        $args['meta_query'] = $metaQuery;
 
         if (isset($filters['date_begin']) && !empty($filters['date_begin'])) {
             $args['date_query'] = [
@@ -199,8 +220,6 @@ class NotificationsLogHandler
             ];
         }
 
-        $list = get_comments($args);
-
-        return $list;
+        return get_comments($args);
     }
 }

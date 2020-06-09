@@ -46,8 +46,6 @@ class Base extends Base_Step
             10,
             2
         );
-
-        add_filter('publishpress_notifications_event_label', [$this, 'filter_event_label'], 10, 2);
     }
 
     /**
@@ -138,19 +136,5 @@ class Base extends Base_Step
     protected function should_ignore_event_on_query($event_args)
     {
         return (isset($event_args['params']['ignore_event']) && $event_args['params']['ignore_event'] == true);
-    }
-
-    /**
-     * @param string $label
-     * @param string $event
-     * @return string|void
-     */
-    public function filter_event_label($label, $event)
-    {
-        if ($event === $this->name) {
-            $label = $this->label;
-        }
-
-        return $label;
     }
 }

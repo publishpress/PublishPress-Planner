@@ -29,8 +29,9 @@ class Post_Save extends Base
 
         // Add filter to return the metakey representing if it is selected or not
         add_filter('psppno_events_metakeys', [$this, 'filter_events_metakeys']);
-        add_filter('publishpress_notif_workflow_actions', [$this, 'filter_workflow_actions']);
+        add_filter('publishpress_notifications_workflow_events', [$this, 'filter_workflow_actions']);
         add_filter('publishpress_notifications_action_params_for_log', [$this, 'filter_action_params_for_log'], 10, 2);
+        add_filter('publishpress_notifications_event_label', [$this, 'filter_event_label'], 10, 2);
     }
 
     /**
@@ -106,5 +107,19 @@ class Post_Save extends Base
         }
 
         return $paramsString;
+    }
+
+    /**
+     * @param string $label
+     * @param string $event
+     * @return string|void
+     */
+    public function filter_event_label($label, $event)
+    {
+        if ($event === 'transition_post_status') {
+            $label = $this->label;
+        }
+
+        return $label;
     }
 }
