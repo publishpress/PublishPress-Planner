@@ -136,7 +136,7 @@ class Notification
                         $content,
                         $channel,
                         $async,
-                        DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT
+                        self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT
                     );
                     continue;
                 }

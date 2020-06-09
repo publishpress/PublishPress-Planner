@@ -240,13 +240,22 @@ class NotificationsLogTable extends WP_List_Table
 
                     if (false !== $cronTask) {
                         $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
+                        $scheduledTime = $cronTask['time'] + $offset;
+                        $currentTime = current_time('timestamp');
+
+                        if ($scheduledTime < $currentTime) {
+                            $label = __(' Scheduled, but late', 'publishpress');
+                        } else {
+                            $label = __(' Scheduled', 'publishpress');
+                        }
+
 
                         $output .= sprintf(
                             '<i class="dashicons dashicons-clock"></i> %s - %s',
-                            __(' Scheduled', 'publishpress'),
+                            $label,
                             date_i18n(
                                 'Y-m-d H:i:s',
-                                $cronTask['time'] + $offset
+                                $scheduledTime
                             )
                         );
                     } else {

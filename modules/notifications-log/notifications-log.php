@@ -447,7 +447,7 @@ if (!class_exists('PP_Notifications_Log')) {
                 'success'        => false,
                 'error'          => sprintf(
                     __(
-                        'This notification is very similar to another one sent about %d minutes ago for the same receiver',
+                        'This notification is very similar to another one sent less than %d minutes ago for the same receiver',
                         'publishpress'
                     ),
                     $timeout / 60
