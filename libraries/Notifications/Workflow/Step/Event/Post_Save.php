@@ -101,9 +101,14 @@ class Post_Save extends Base
 
     public function filter_action_params_for_log($paramsString, $log)
     {
-        if ($log->event === self::META_VALUE_SELECTED) {
-            $paramsString = '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $log->oldStatus) . '</div>';
-            $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $log->newStatus) . '</div>';
+        if ($log->event === 'transition_post_status') {
+            global $publishpress;
+
+            $oldStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->oldStatus);
+            $newStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->newStatus);
+
+            $paramsString = '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
+            $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
         }
 
         return $paramsString;
