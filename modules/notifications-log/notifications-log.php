@@ -150,7 +150,8 @@ if (!class_exists('PP_Notifications_Log')) {
         {
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
             add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
-            add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 8);
+            add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 7);
+            add_action('publishpress_notifications_skipped_duplicated', [$this, 'actionNotificationSkippedDueToDuplication'], 10, 8);
             add_filter('publishpress_notifications_queue_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
             add_action('publishpress_notifications_scheduled_cron', [$this, 'registerCronIdToLog'], 10, 2);
             add_action('publishpress_notifications_async_notification_sent', [$this, 'removeAsyncNotificationLog']);
@@ -349,7 +350,6 @@ if (!class_exists('PP_Notifications_Log')) {
          * @param $body
          * @param $deliveryResult
          * @param $async
-         * @param $logId
          */
         public function actionNotificationSending(
             $workflow,
@@ -358,8 +358,7 @@ if (!class_exists('PP_Notifications_Log')) {
             $subject,
             $body,
             $deliveryResult,
-            $async,
-            $logId
+            $async
         ) {
             $logHandler = new NotificationsLogHandler();
 
@@ -389,6 +388,70 @@ if (!class_exists('PP_Notifications_Log')) {
                 'receiver_group' => $receiver['group'],
                 'success'        => $deliveryResult,
                 'error'          => $error,
+                'async'          => $async,
+                'event_args'     => $eventArgs,
+            ];
+
+            if (isset($receiver['subgroup'])) {
+                $logData['receiver_subgroup'] = $receiver['subgroup'];
+            }
+
+            if (isset($eventArgs['params']['old_status'])) {
+                $logData['old_status'] = $eventArgs['params']['old_status'];
+            }
+
+            if (isset($eventArgs['params']['new_status'])) {
+                $logData['new_status'] = $eventArgs['params']['new_status'];
+            }
+
+            if (isset($eventArgs['params']['comment_id'])) {
+                $logData['comment_id'] = $eventArgs['params']['comment_id'];
+            }
+
+            if (isset($eventArgs['params']['post_id'])) {
+                $logData['post_id'] = $eventArgs['params']['post_id'];
+            }
+
+            $logHandler->registerLog($logData);
+        }
+
+        /**
+         * @param Workflow $workflow
+         * @param $receiver
+         * @param $content
+         * @param $channel
+         * @param $async
+         * @param $timeout
+         */
+        public function actionNotificationSkippedDueToDuplication(
+            $workflow,
+            $receiver,
+            $content,
+            $channel,
+            $async,
+            $timeout
+        ) {
+            $logHandler = new NotificationsLogHandler();
+
+            $eventArgs = $workflow->event_args;
+
+            $logData = [
+                'event'          => $eventArgs['event'],
+                'user_id'        => $eventArgs['user_id'],
+                'workflow_id'    => $workflow->workflow_post->ID,
+                'content'        => maybe_serialize($content),
+                'status'         => 'skipped',
+                'channel'        => $channel,
+                'receiver'       => $receiver['receiver'],
+                'receiver_group' => $receiver['group'],
+                'success'        => false,
+                'error'          => sprintf(
+                    __(
+                        'This notification is very similar to another one sent about %d minutes ago for the same receiver',
+                        'publishpress'
+                    ),
+                    $timeout / 60
+                ),
                 'async'          => $async,
                 'event_args'     => $eventArgs,
             ];

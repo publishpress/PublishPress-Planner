@@ -35,6 +35,7 @@ class Email extends Base implements Channel_Interface
         add_action('wp_mail_failed', [$this, 'emailFailed']);
 
         add_filter('publishpress_notifications_channel_icon_class', [$this, 'filterChannelIconClass']);
+        add_filter('publishpress_notifications_receiver_address', [$this, 'filterReceiverAddress'], 10, 2);
 
         parent::__construct();
     }
@@ -106,7 +107,6 @@ class Email extends Base implements Channel_Interface
          * @param string $body
          * @param bool $deliveryResult
          * @param bool $async
-         * @param int $logId
          */
         do_action(
             'publishpress_notif_notification_sending',
@@ -116,8 +116,7 @@ class Email extends Base implements Channel_Interface
             $subject,
             $body,
             $deliveryResult[$emailAddress],
-            $async,
-            $logId
+            $async
         );
 
         $controller->register_notification_signature($signature);
@@ -221,5 +220,14 @@ class Email extends Base implements Channel_Interface
         }
 
         return $channel;
+    }
+
+    public function filterReceiverAddress($receiverAddress, $channel)
+    {
+        if ('email' === $channel) {
+            $receiverAddress = $this->get_receiver_email($receiverAddress);
+        }
+
+        return $receiverAddress;
     }
 }

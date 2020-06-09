@@ -14,6 +14,8 @@ use PublishPress\Notifications\Workflow\Workflow;
 
 class Notification
 {
+    const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 600;
+
     public function __construct()
     {
         add_action('publishpress_notifications_running_for_post', [$this, 'send_sync_notifications']);
@@ -30,6 +32,60 @@ class Notification
         }
 
         $this->send_notifications($workflow);
+    }
+
+    /**
+     * Check if the notification was just sent, to avoid duplicated notifications when
+     * multiple requests try to run the same job.
+     *
+     * @param array $content
+     * @param string $receiver
+     * @param string $channel
+     *
+     * @return bool
+     */
+    private function is_duplicated_notification($content, $receiver, $channel)
+    {
+        $uid = $this->calculateNotificationUID($content, $receiver, $channel);
+
+        $transientName = 'ppnotif_' . $uid;
+
+        // Check if we already have the transient.
+        if (get_transient($transientName)) {
+            // Yes, duplicated notification.
+            return true;
+        }
+
+        /**
+         * Filters the value of the timeout to ignore duplicated notifications.
+         *
+         * @param int $timeout
+         * @param string $uid
+         *
+         * @return int
+         */
+        $timeout = (int)apply_filters(
+            'pp_duplicated_notification_timeout',
+            self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT,
+            $uid
+        );
+
+        // Set the flag and return as non-duplicated.
+        set_transient($transientName, 1, $timeout);
+
+        return false;
+    }
+
+    /**
+     * @param array $content
+     * @param string $receiver
+     * @param string $channel
+     *
+     * @return string
+     */
+    private function calculateNotificationUID($content, $receiver, $channel)
+    {
+        return md5(maybe_serialize([$content, $receiver, $channel]));
     }
 
     /**
@@ -59,6 +115,31 @@ class Notification
                  * Prepare the content replacing shortcodes.
                  */
                 $content = $workflow->do_shortcodes_in_content($content_template, $receiver['receiver'], $channel);
+
+                /**
+                 * @param
+                 */
+                $receiverAddress = apply_filters(
+                    'publishpress_notifications_receiver_address',
+                    $receiver['receiver'],
+                    $channel
+                );
+
+                // Check if this is a duplicated notification and skip it.
+                // I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
+                // by the same cron task.
+                if ($this->is_duplicated_notification($content, $receiverAddress, $channel)) {
+                    do_action(
+                        'publishpress_notifications_skipped_duplicated',
+                        $workflow,
+                        $receiver,
+                        $content,
+                        $channel,
+                        $async,
+                        DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT
+                    );
+                    continue;
+                }
 
                 /**
                  * Triggers the notification. This can be caught by notification channels.

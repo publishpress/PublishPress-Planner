@@ -44,8 +44,6 @@ if (!class_exists('PP_Async_Notifications')) {
 
         const SETTINGS_SLUG = 'pp-async-notifications-settings';
 
-        const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 600;
-
         public $module_name = 'async-notifications';
 
         public $module_url;
@@ -129,67 +127,10 @@ if (!class_exists('PP_Async_Notifications')) {
         }
 
         /**
-         * Check if the notification was just sent, to avoid duplicated notifications when
-         * multiple requests try to run the same job.
-         *
-         * @param $args
-         *
-         * @return bool
-         */
-        protected function is_duplicated_notification($args)
-        {
-            $uid = $this->calculateNotificationUID($args);
-
-            $transientName = 'ppnotif_' . $uid;
-
-            // Check if we already have the transient.
-            if (get_transient($transientName)) {
-                // Yes, duplicated notification.
-                return true;
-            }
-
-            /**
-             * Filters the value of the timeout to ignore duplicated notifications.
-             *
-             * @param int $timeout
-             * @param string $uid
-             *
-             * @return int
-             */
-            $timeout = (int)apply_filters(
-                'pp_duplicated_notification_timeout',
-                self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT,
-                $uid
-            );
-
-            // Set the flag and return as non-duplicated.
-            set_transient($transientName, 1, $timeout);
-
-            return false;
-        }
-
-        /**
-         * @param array $args
-         *
-         * @return string
-         */
-        private function calculateNotificationUID($args)
-        {
-            return md5(maybe_serialize($args));
-        }
-
-        /**
          * @param array $params
          */
         public function send_notification($params)
         {
-            // Check if this is a duplicated notification and skip it.
-            // I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
-            // by the same cron task.
-            if ($this->is_duplicated_notification(func_get_args())) {
-                return;
-            }
-
             // Work the notification
             $workflow             = Workflow::load_by_id((int)$params['workflow_id']);
             $workflow->event_args = $params['event_args'];

@@ -23,7 +23,6 @@
 
 namespace PublishPress\NotificationsLog;
 
-use PublishPress\Notifications\Pimple_Container;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_List_Table;
 
@@ -99,7 +98,8 @@ class NotificationsLogTable extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
-        $log = new NotificationsLogModel($item);
+        $log    = new NotificationsLogModel($item);
+        $output = '';
 
         switch ($column_name) {
             case 'event':
@@ -107,7 +107,7 @@ class NotificationsLogTable extends WP_List_Table
                 $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
                 $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
 
-                $output = apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
+                $output .= apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
                 $output .= '<div class="muted">';
                 $output .= '<div>' . sprintf(
                         __('Workflow: %s', 'publishpress'),
@@ -138,7 +138,7 @@ class NotificationsLogTable extends WP_List_Table
                 $post           = get_post($log->postId);
                 $postTypeLabels = get_post_type_labels($post);
 
-                $output = $this->wrapInALink(
+                $output .= $this->wrapInALink(
                     $log->postTitle,
                     admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit')
                 );
@@ -157,7 +157,7 @@ class NotificationsLogTable extends WP_List_Table
                 $receivers      = $log->getReceiversByGroup();
                 $receiversCount = 0;
 
-                $output = '<ul class="publishpress-notifications-receivers">';
+                $output .= '<ul class="publishpress-notifications-receivers">';
                 foreach ($receivers as $group => $groupReceivers) {
                     $output .= sprintf(
                         '<li class="receiver-title">%s:</li>',
@@ -216,7 +216,7 @@ class NotificationsLogTable extends WP_List_Table
 
                 // Add the slide effect for scheduled notifications
                 if ($receiversCount > 4 && $log->status === 'scheduled') {
-                    $output = sprintf(
+                    $output .= sprintf(
                         '<a href="#" class="slide-closed-text">%s <i class="dashicons dashicons-arrow-down-alt2"></i></a><div class="slide">%s</div>',
                         sprintf(
                             __('Scheduled for %d receivers. Click here to display them.', 'publishpress'),
@@ -230,7 +230,7 @@ class NotificationsLogTable extends WP_List_Table
 
             case
             'status':
-                $output = sprintf(
+                $output .= sprintf(
                     '<div class="publishpress-notifications-status %s">',
                     esc_attr($log->status)
                 );
@@ -242,13 +242,11 @@ class NotificationsLogTable extends WP_List_Table
                         $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
 
                         $output .= sprintf(
-                            '<i class="dashicons dashicons-clock"></i> %s',
-                            sprintf(
-                                __(' Scheduled to %s', 'publishpress'),
-                                date_i18n(
-                                    'Y-m-d H:i:s',
-                                    $cronTask['time'] + $offset
-                                )
+                            '<i class="dashicons dashicons-clock"></i> %s - %s',
+                            __(' Scheduled', 'publishpress'),
+                            date_i18n(
+                                'Y-m-d H:i:s',
+                                $cronTask['time'] + $offset
                             )
                         );
                     } else {
@@ -265,9 +263,13 @@ class NotificationsLogTable extends WP_List_Table
                     }
                 } else {
                     if ($log->success) {
-                        $output .= '<i class="dashicons dashicons-yes-alt"></i> Sent';
+                        $output .= '<i class="dashicons dashicons-yes-alt"></i> ' . __('Sent', 'publishpress');
                     } else {
-                        $output .= '<i class="dashicons dashicons-no"></i> Failed';
+                        if ('skipped' == $log->status) {
+                            $output .= '<i class="dashicons dashicons-warning"></i> ' . __('Skipped', 'publishpress');
+                        } else {
+                            $output .= '<i class="dashicons dashicons-no"></i> ' . __('Failed', 'publishpress');
+                        }
 
                         if (!empty($log->error)) {
                             $output .= '<span class="error"> - ' . $log->error . '</span>';
@@ -286,6 +288,10 @@ class NotificationsLogTable extends WP_List_Table
 
             default:
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
+        }
+
+        if ('scheduled' === $log->status) {
+            $output = '<div class="scheduled-wrapper">' . $output . '</div>';
         }
 
         return $output;

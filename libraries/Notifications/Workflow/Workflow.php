@@ -258,11 +258,11 @@ class Workflow
     }
 
     /**
-     * @param string $content
+     * @param array $content
      * @param mixed $receiver
      * @param string $channel
      *
-     * @return string
+     * @return array
      */
     public function do_shortcodes_in_content($content, $receiver, $channel)
     {
