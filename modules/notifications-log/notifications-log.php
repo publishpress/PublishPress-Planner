@@ -421,7 +421,7 @@ if (!class_exists('PP_Notifications_Log')) {
          * @param $content
          * @param $channel
          * @param $async
-         * @param $timeout
+         * @param $threshold
          */
         public function actionNotificationSkippedDueToDuplication(
             $workflow,
@@ -429,7 +429,7 @@ if (!class_exists('PP_Notifications_Log')) {
             $content,
             $channel,
             $async,
-            $timeout
+            $threshold
         ) {
             $logHandler = new NotificationsLogHandler();
 
@@ -450,7 +450,7 @@ if (!class_exists('PP_Notifications_Log')) {
                         'This notification is very similar to another one sent less than %d minutes ago for the same receiver',
                         'publishpress'
                     ),
-                    $timeout / 60
+                    $threshold / 60
                 ),
                 'async'          => $async,
                 'event_args'     => $eventArgs,

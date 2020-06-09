@@ -14,7 +14,7 @@ use PublishPress\Notifications\Workflow\Workflow;
 
 class Notification
 {
-    const DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT = 600;
+    const DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD = 600;
 
     public function __construct()
     {
@@ -56,6 +56,13 @@ class Notification
             return true;
         }
 
+        global $publishpress;
+        if ($publishpress->improved_notifications->module->options->duplicated_notification_threshold) {
+            $threshold = (int)$publishpress->improved_notifications->module->options->duplicated_notification_threshold;
+        } else {
+            $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+        }
+
         /**
          * Filters the value of the timeout to ignore duplicated notifications.
          *
@@ -66,7 +73,7 @@ class Notification
          */
         $timeout = (int)apply_filters(
             'pp_duplicated_notification_timeout',
-            self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT,
+            $threshold,
             $uid
         );
 
@@ -125,6 +132,13 @@ class Notification
                     $channel
                 );
 
+                global $publishpress;
+                if ($publishpress->improved_notifications->module->options->duplicated_notification_threshold) {
+                    $threshold = $publishpress->improved_notifications->module->options->duplicated_notification_threshold;
+                } else {
+                    $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+                }
+
                 // Check if this is a duplicated notification and skip it.
                 // I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
                 // by the same cron task.
@@ -136,7 +150,7 @@ class Notification
                         $content,
                         $channel,
                         $async,
-                        self::DEFAULT_DUPLICATED_NOTIFICATION_TIMEOUT
+                        $threshold
                     );
                     continue;
                 }

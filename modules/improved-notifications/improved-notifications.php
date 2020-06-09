@@ -30,6 +30,7 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
+use PublishPress\Notifications\Workflow\Step\Action\Notification as Notification;
 use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
@@ -257,6 +258,14 @@ if (!class_exists('PP_Improved_Notifications')) {
             );
 
             add_settings_field(
+                'duplicate_notification_threshold',
+                __('Duplicated notification threshold:', 'publishpress'),
+                [$this, 'settings_duplicated_notification_threshold_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
                 'default_channels',
                 __('Default notification channels:', 'publishpress'),
                 [$this, 'settings_default_channels_option'],
@@ -329,6 +338,17 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
 
             return $args;
+        }
+
+        public function settings_duplicated_notification_threshold_option()
+        {
+            $value = isset($this->module->options->duplicated_notification_threshold) ? (int)$this->module->options->duplicated_notification_threshold : Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+
+            echo '<input
+                    id="' . $this->module->slug . '_duplicated_notification_threshold"
+                    type="text"
+                    name="' . $this->module->options_group_name . '[duplicated_notification_threshold]"
+                    value="' . $value . '"/> ' . __('seconds', 'publishpress');
         }
 
         /**
@@ -602,9 +622,9 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
 
             $params = [
-                'event'  => 'editorial_comment',
-                'user_id'   => get_current_user_id(),
-                'params' => [
+                'event'   => 'editorial_comment',
+                'user_id' => get_current_user_id(),
+                'params'  => [
                     'post_id'    => (int)$post->ID,
                     'comment_id' => (int)$comment->comment_ID,
                 ],
@@ -1035,6 +1055,12 @@ if (!class_exists('PP_Improved_Notifications')) {
                 foreach ($new_options['channel_options'] as &$item) {
                     $item = sanitize_text_field($item);
                 }
+            }
+
+            if (isset($new_options['duplicated_notification_threshold'])) {
+                $new_options['duplicated_notification_threshold'] = (int)$new_options['duplicated_notification_threshold'];
+            } else {
+                $new_options['duplicated_notification_threshold'] = Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
             }
 
             return $new_options;
