@@ -346,7 +346,7 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             echo '<input
                     id="' . $this->module->slug . '_duplicated_notification_threshold"
-                    type="text"
+                    type="integer"
                     name="' . $this->module->options_group_name . '[duplicated_notification_threshold]"
                     value="' . $value . '"/> ' . __('seconds', 'publishpress');
         }
