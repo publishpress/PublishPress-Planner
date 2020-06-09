@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PublishPress\AsyncNotifications\WPCron;
+use PublishPress\AsyncNotifications\WPCronAdapter;
 use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
@@ -103,7 +103,7 @@ if (!class_exists('PP_Async_Notifications')) {
         public function init()
         {
             add_action('publishpress_notifications_running_for_post', [$this, 'schedule_notifications'], 7);
-            add_action(WPCron::SEND_NOTIFICATION_HOOK, [$this, 'send_notification'], 10, 8);
+            add_action(WPCronAdapter::SEND_NOTIFICATION_HOOK, [$this, 'send_notification'], 10, 8);
             add_filter('debug_information', [$this, 'filterDebugInformation']);
             add_filter('publishpress_notifications_stop_sync_notifications', '__return_true');
         }
@@ -152,7 +152,7 @@ if (!class_exists('PP_Async_Notifications')) {
             $cronTasks = _get_cron_array();
 
             $expectedHooks = [
-                WPCron::SEND_NOTIFICATION_HOOK,
+                WPCronAdapter::SEND_NOTIFICATION_HOOK,
                 'publishpress_cron_notify', // @deprecated
             ];
 
@@ -193,9 +193,9 @@ if (!class_exists('PP_Async_Notifications')) {
 
         public function schedule_notifications($workflow)
         {
-            $queue = $this->get_service('notification_queue');
+            $scheduler = $this->get_service('notification_scheduler');
 
-            $queue->enqueueNotification($workflow->workflow_post->ID, $workflow->event_args);
+            $scheduler->scheduleNotification($workflow->workflow_post->ID, $workflow->event_args);
         }
     }
 }

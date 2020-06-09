@@ -23,7 +23,7 @@
 
 namespace PublishPress\NotificationsLog;
 
-use PublishPress\AsyncNotifications\WPCron;
+use PublishPress\AsyncNotifications\WPCronAdapter;
 use PublishPress\Notifications\Workflow\Workflow;
 use WP_Comment;
 
@@ -273,7 +273,7 @@ class NotificationsLogModel
         $cronTask = $this->getCronTask();
 
         if (!empty($cronTask)) {
-            wp_clear_scheduled_hook(WPCron::SEND_NOTIFICATION_HOOK, $cronTask['args']);
+            wp_clear_scheduled_hook(WPCronAdapter::SEND_NOTIFICATION_HOOK, $cronTask['args']);
         }
 
         wp_delete_comment($this->id, true);
@@ -283,7 +283,7 @@ class NotificationsLogModel
     {
         $cronArray = _get_cron_array();
 
-        $expectedHooks = [WPCron::SEND_NOTIFICATION_HOOK,];
+        $expectedHooks = [WPCronAdapter::SEND_NOTIFICATION_HOOK,];
 
         if (!empty($cronArray)) {
             foreach ($cronArray as $time => $cronTasks) {

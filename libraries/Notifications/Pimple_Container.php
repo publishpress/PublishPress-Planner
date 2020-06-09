@@ -12,8 +12,8 @@ namespace PublishPress\Notifications;
 use Allex\Core;
 use Pimple\Container;
 use PP_Debug;
-use PublishPress\AsyncNotifications\QueueInterface;
-use PublishPress\AsyncNotifications\WPCron;
+use PublishPress\AsyncNotifications\SchedulerInterface;
+use PublishPress\AsyncNotifications\WPCronAdapter;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Twig_SimpleFunction;
@@ -103,10 +103,10 @@ class Pimple_Container extends Container
             /**
              * @param $c
              *
-             * @return QueueInterface
+             * @return SchedulerInterface
              */
-            $instance['notification_queue'] = function ($c) {
-                return apply_filters('publishpress_notifications_notification_queue', new WPCron(), $c);
+            $instance['notification_scheduler'] = function ($c) {
+                return apply_filters('publishpress_notifications_notification_scheduler', new WPCronAdapter(), $c);
             };
 
             $instance['framework'] = function ($c) {

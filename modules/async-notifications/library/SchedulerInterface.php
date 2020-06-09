@@ -30,7 +30,7 @@ use Exception;
  *
  * @package PublishPress\NotificationsLog
  */
-interface QueueInterface
+interface SchedulerInterface
 {
     /**
      * Enqueue the notification for async processing.
@@ -40,5 +40,5 @@ interface QueueInterface
      *
      * @throws Exception
      */
-    public function enqueueNotification($workflowPostId, $eventArgs);
+    public function scheduleNotification($workflowPostId, $eventArgs);
 }

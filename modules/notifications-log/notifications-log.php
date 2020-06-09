@@ -151,9 +151,14 @@ if (!class_exists('PP_Notifications_Log')) {
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
             add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
             add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 7);
-            add_action('publishpress_notifications_skipped_duplicated', [$this, 'actionNotificationSkippedDueToDuplication'], 10, 8);
-            add_filter('publishpress_notifications_queue_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
-            add_action('publishpress_notifications_scheduled_cron', [$this, 'registerCronIdToLog'], 10, 2);
+            add_action(
+                'publishpress_notifications_skipped_duplicated',
+                [$this, 'actionNotificationSkippedDueToDuplication'],
+                10,
+                8
+            );
+            add_filter('publishpress_notifications_scheduled_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
+            add_action('publishpress_notifications_scheduled_cron_task', [$this, 'registerCronIdToLog'], 10, 2);
             add_action('publishpress_notifications_async_notification_sent', [$this, 'removeAsyncNotificationLog']);
             add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
             add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);
@@ -278,7 +283,7 @@ if (!class_exists('PP_Notifications_Log')) {
             $logHandler = new NotificationsLogHandler();
             $logCount   = $logHandler->getNotificationLogEntries($post->ID, null, null, true);
             ?>
-            <div class="pp_post_notify_queue">
+            <div class="publishpress_notifications_log">
                 <h3><?php echo __('Notifications Log', 'publishpress'); ?></h3>
 
                 <?php if ($logCount > 0) : ?>
@@ -710,8 +715,8 @@ if (!class_exists('PP_Notifications_Log')) {
                         if (!empty($logComment)) {
                             $log = new NotificationsLogModel($logComment);
 
-                            $queue = $this->get_service('notification_queue');
-                            $queue->enqueueNotification($log->workflowId, $log->eventArgs);
+                            $scheduler = $this->get_service('notification_scheduler');
+                            $scheduler->scheduleNotification($log->workflowId, $log->eventArgs);
 
                             $log->delete();
                         }

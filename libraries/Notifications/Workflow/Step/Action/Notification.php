@@ -19,7 +19,7 @@ class Notification
     public function __construct()
     {
         add_action('publishpress_notifications_running_for_post', [$this, 'send_sync_notifications']);
-        add_action('publishpress_notifications_send_notifications_action', [$this, 'send_notifications'], 10);
+        add_action('publishpress_notifications_send_notifications_action', [$this, 'send_notifications'], 10, 2);
     }
 
     public function send_sync_notifications($workflow)

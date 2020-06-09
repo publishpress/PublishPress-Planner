@@ -31,21 +31,21 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
  *
  * @package PublishPress\AsyncNotifications
  */
-class WPCron implements QueueInterface
+class WPCronAdapter implements SchedulerInterface
 {
     use Dependency_Injector;
 
     const SEND_NOTIFICATION_HOOK = 'publishpress_notifications_send_notification';
 
     /**
-     * Enqueue the notification for async processing.
+     * Schedule the notification for async processing.
      *
      * @param $workflowPostId
      * @param $eventArgs
      *
      * @throws Exception
      */
-    public function enqueueNotification($workflowPostId, $eventArgs)
+    public function scheduleNotification($workflowPostId, $eventArgs)
     {
         $data = [
             'workflow_id' => $workflowPostId,
@@ -55,7 +55,7 @@ class WPCron implements QueueInterface
         /**
          * @param array $data
          */
-        $data = apply_filters('publishpress_notifications_queue_data', $data);
+        $data = apply_filters('publishpress_notifications_scheduled_data', $data);
 
         $timestamp = apply_filters(
             'publishpress_notifications_scheduled_time_for_notification',
@@ -72,14 +72,14 @@ class WPCron implements QueueInterface
         }
 
         $cronId = $this->getCronId($data);
-        do_action('publishpress_notifications_scheduled_cron', $data, $cronId);
+        do_action('publishpress_notifications_scheduled_cron_task', $data, $cronId);
 
-        $data['result'] = $this->scheduleEvent($data, $timestamp);
+        $data['result'] = $this->scheduleEventInTheCron($data, $timestamp);
 
         /**
          * @param array $data
          */
-        do_action('publishpress_notifications_enqueued_notification', $data);
+        do_action('publishpress_notifications_scheduled_notification', $data);
     }
 
     private function getCronId($args)
@@ -97,7 +97,7 @@ class WPCron implements QueueInterface
      * @throws Exception
      *
      */
-    protected function scheduleEvent($args, $timestamp)
+    private function scheduleEventInTheCron($args, $timestamp)
     {
         return wp_schedule_single_event(
             $timestamp,
