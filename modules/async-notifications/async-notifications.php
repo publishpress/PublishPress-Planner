@@ -173,7 +173,7 @@ if (!class_exists('PP_Async_Notifications')) {
                                     $data['args']['event'],
                                     $data['args']['workflowId'],
                                     $data['args']['postId'],
-                                    $data['args']['userId'],
+                                    $data['args']['userId']
                                 ),
                             ];
                         }
