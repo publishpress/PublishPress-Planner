@@ -24,6 +24,7 @@
 namespace PublishPress\NotificationsLog;
 
 use Exception;
+use PublishPress\Notifications\Workflow\Step\Action\Notification;
 
 /**
  * Class NotificationsLogHandler
@@ -72,7 +73,7 @@ class NotificationsLogHandler
             'comment_parent'       => 0,
             'user_id'              => $data['user_id'],
             'comment_agent'        => NotificationsLogModel::COMMENT_USER_AGENT,
-            'comment_approved'     => NotificationsLogModel::COMMENT_APPROVED,
+            'comment_approved'     => NotificationsLogModel::COMMENT_ACTIVE,
             'comment_meta'         => [
                 NotificationsLogModel::META_NOTIF_EVENT             => $data['event'],
                 NotificationsLogModel::META_NOTIF_USER_ID           => $data['user_id'],
@@ -126,7 +127,7 @@ class NotificationsLogHandler
             'orderby' => $orderBy,
             'order'   => $order,
             'count'   => (bool)$returnTotal,
-            'status'  => NotificationsLogModel::COMMENT_APPROVED,
+            'status'  => NotificationsLogModel::COMMENT_ACTIVE,
         ];
 
         if (!empty($postID)) {

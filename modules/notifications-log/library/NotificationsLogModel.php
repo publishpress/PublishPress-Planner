@@ -36,7 +36,9 @@ class NotificationsLogModel
 {
     const COMMENT_TYPE = 'notification';
 
-    const COMMENT_APPROVED = 'notification-log';
+    const COMMENT_ACTIVE = 'active';
+
+    const COMMENT_ARCHIVED = 'archived';
 
     const COMMENT_USER_AGENT = 'PublishPress/NotificationsLog';
 
@@ -277,6 +279,16 @@ class NotificationsLogModel
         }
 
         wp_delete_comment($this->id, true);
+    }
+
+    public function archive()
+    {
+        wp_update_comment(
+            [
+                'comment_ID'       => $this->id,
+                'comment_approved' => self::COMMENT_ARCHIVED,
+            ]
+        );
     }
 
     public function getCronTask()

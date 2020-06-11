@@ -342,7 +342,7 @@ if (!class_exists('PP_Notifications_Log')) {
                 $log     = new NotificationsLogModel($comment);
 
                 if (is_object($log)) {
-                    $log->delete();
+                    $log->archive();
                 }
             }
         }
@@ -757,41 +757,41 @@ if (!class_exists('PP_Notifications_Log')) {
 
             if (!empty($id)) {
                 $comment = get_comment($id);
-                $log     = new NotificationsLogModel($comment);
+                    $log = new NotificationsLogModel($comment);
 
-                if ($log->status === 'scheduled') {
-                    $workflow = Workflow::load_by_id($log->workflowId);
+                    if ($log->status === 'scheduled') {
+                        $workflow = Workflow::load_by_id($log->workflowId);
 
-                    $workflow->event_args = $log->eventArgs;
+                        $workflow->event_args = $log->eventArgs;
 
-                    $content_template = $workflow->get_content();
-                    $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
-                } else {
-                    $content = $log->content;
-                }
+                        $content_template = $workflow->get_content();
+                        $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
+                    } else {
+                        $content = $log->content;
+                    }
 
-                ob_start();
-                ?>
-                <div class="preview-notification">
-                    <div class="subject"><label><?php _e(
-                                'Subject:',
-                                'publishpress'
-                            ); ?></label><?php echo esc_html($content['subject']); ?></div>
-                    <div class="content">
-                        <label>
-                            <?php _e('Content:', 'publishpress'); ?>
-                        </label>
-                        <?php echo wpautop($content['body']); ?>
+                    ob_start();
+                    ?>
+                    <div class="preview-notification">
+                        <div class="subject"><label><?php _e(
+                                    'Subject:',
+                                    'publishpress'
+                                ); ?></label><?php echo esc_html($content['subject']); ?></div>
+                        <div class="content">
+                            <label>
+                                <?php _e('Content:', 'publishpress'); ?>
+                            </label>
+                            <?php echo wpautop($content['body']); ?>
+                        </div>
+                        <?php if ($log->status === 'scheduled') : ?>
+                            <em><?php echo __(
+                                    'This is a preview of the scheduled message. The content can still change until the notification is sent.',
+                                    'publishpress'
+                                ); ?></em>
+                        <?php endif; ?>
                     </div>
-                    <?php if ($log->status === 'scheduled') : ?>
-                        <em><?php echo __(
-                                'This is a preview of the scheduled message. The content can still change until the notification is sent.',
-                                'publishpress'
-                            ); ?></em>
-                    <?php endif; ?>
-                </div>
-                <?php
-                $output = ob_get_clean();
+                    <?php
+                    $output = ob_get_clean();
             } else {
                 $output = $this->get_error_markup(__('Notification log not found.', 'publishpress'));
             }
