@@ -410,14 +410,29 @@ class Shortcodes
                     break;
 
                 default:
-                    if ($custom = apply_filters(
-                        'publishpress_notif_shortcode_post_data',
-                        false,
-                        $item,
-                        $post,
-                        $attrs
-                    )) {
-                        $info[] = $custom;
+                    // Meta data attribute
+                    if (0 === strpos($item, 'meta')) {
+                        $arr = explode(':', $item);
+                        if (!empty($arr[1])) {
+                            $meta = get_post_meta($post->ID, $arr[1], true);
+                            if ($meta && is_scalar($meta)) {
+                                if ('meta-date' == $arr[0]) {
+                                    $info[] = date_i18n(get_option('date_format'), $meta);
+                                } else {
+                                    $info[] = $meta;
+                                }
+                            }
+                        }
+                    } else {
+                        if ($custom = apply_filters(
+                            'publishpress_notif_shortcode_post_data',
+                            false,
+                            $item,
+                            $post,
+                            $attrs
+                        )) {
+                            $info[] = $custom;
+                        }
                     }
 
                     break;
