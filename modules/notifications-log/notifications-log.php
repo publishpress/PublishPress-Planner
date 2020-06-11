@@ -757,6 +757,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
             if (!empty($id)) {
                 $comment = get_comment($id);
+                if (is_object($comment)) {
                     $log = new NotificationsLogModel($comment);
 
                     if ($log->status === 'scheduled') {
@@ -792,6 +793,9 @@ if (!class_exists('PP_Notifications_Log')) {
                     </div>
                     <?php
                     $output = ob_get_clean();
+                } else {
+                    echo $this->get_error_markup(__('Notification log not found', 'publishpress'));
+                }
             } else {
                 $output = $this->get_error_markup(__('Notification log not found.', 'publishpress'));
             }
