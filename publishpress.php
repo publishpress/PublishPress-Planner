@@ -916,8 +916,6 @@ class publishpress
 
             // Upgrade to Pro
             if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
-                $suffix = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
-
                 foreach ($upgradeMenuSlugs as $index => $item) {
                     if (!is_null($itemsToSort[$index])) {
                         $newSubmenu[] = $currentSubmenu[$itemsToSort[$index]];
