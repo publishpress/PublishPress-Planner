@@ -229,24 +229,6 @@ if (!class_exists('PP_Module')) {
         }
 
         /**
-         * Gets the name of the default custom status. If custom statuses are disabled,
-         * returns 'draft'.
-         *
-         * @return str Name of the status
-         */
-        public function get_default_post_status()
-        {
-            // Check if custom status module is enabled
-            $custom_status_module = PublishPress()->custom_status->module->options;
-
-            if ($custom_status_module->enabled == 'on') {
-                return $custom_status_module->default_status;
-            } else {
-                return 'draft';
-            }
-        }
-
-        /**
          * Filter to all posts with a given post status (can be a custom status or a built-in status) and optional custom post type.
          *
          * @param string $slug The slug for the post status to which to filter
