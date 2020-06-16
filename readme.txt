@@ -122,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [2.2.0] - UNRELEASED =
 
 * Removed: Fixed conflict with Gutenberg and other plugins keeping draft as the default status, always. Removed the option to set another status as default, #621;
+* Removed: Removed the notice asking for reviews after a few weeks of usage, #637;
 * Fixed: Load languages from the relative path, #626;
 * Fixed: Protect against edition the WordPress post statuses: Pending and Draft;
 * Fixed: Fix the "Save as" button when the current status doesn't exist;
