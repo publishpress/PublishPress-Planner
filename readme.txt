@@ -123,12 +123,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Removed: Fixed conflict with Gutenberg and other plugins keeping draft as the default status, always. Removed the option to set another status as default, #621;
 * Removed: Removed the notice asking for reviews after a few weeks of usage, #637;
-* Fixed: Load languages from the relative path, #626;
-* Fixed: Protect against edition the WordPress post statuses: Pending and Draft;
+* Fixed: Protect the WordPress post statuses "Pending" and "Draft", blocking edition of those statuses;
+* Fixed: Fix the post status selection and the "Save as" link for Gutenberg for posts in published statuses. For changing the status you have to unpublish the post first;
 * Fixed: Fix the "Save as" button when the current status doesn't exist;
-* Fixed: Fix the status selection and the "Save as" link for Gutenberg for posts in published statuses. For changing the status you have to unpublish it first;
 * Fixed: Fix compatibility with the Nested Page plugin, #623;
 * Fixed: Fix the title of Editorial Meta meta box in the options panel for Gutenberg, #631;
+* Fixed: Load languages from the relative path, #626;
 
 = [2.1.0] - 2020-05-28 =
 
