@@ -128,6 +128,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix the "Save as" button when the current status doesn't exist;
 * Fixed: Fix the status selection and the "Save as" link for Gutenberg for posts in published statuses. For changing the status you have to unpublish it first;
 * Fixed: Fix compatibility with the Nested Page plugin, #623;
+* Fixed: Fix the title of Editorial Meta meta box in the options panel for Gutenberg, #631;
 
 = [2.1.0] - 2020-05-28 =
 
