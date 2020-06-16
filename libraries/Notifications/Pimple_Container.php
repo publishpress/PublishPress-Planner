@@ -121,10 +121,6 @@ class Pimple_Container extends Container
                 return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'], '');
             };
 
-            $instance['reviews'] = function ($c) {
-                return new Reviews();
-            };
-
             $instance['PLUGIN_BASENAME'] = function ($c) {
                 return PUBLISHPRESS_BASENAME;
             };
