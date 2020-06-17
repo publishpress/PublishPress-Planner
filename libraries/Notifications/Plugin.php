@@ -44,8 +44,6 @@ class Plugin
     {
         add_action('load-edit.php', [$this, 'add_load_edit_hooks']);
 
-        add_action('admin_init', [$this->get_service('reviews'), 'init']);
-
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
 
