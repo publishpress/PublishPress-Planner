@@ -2,10 +2,11 @@
   flex-flow: row wrap;
 }
 .publishpress-extended-post-status > * {
-  flex-basis: 45%;
+  flex-basis: 48%;
 }
 .publishpress-extended-post-status .publishpress-extended-post-status-note {
   flex-basis: 100%;
+  color: #545454;
 }
 
 /*# sourceMappingURL=custom-status-block-editor.css.map */

@@ -10,28 +10,36 @@
 let {__} = wp.i18n;
 let {PluginPostStatusInfo} = wp.editPost;
 let {registerPlugin} = wp.plugins;
-let {withSelect, withDispatch} = wp.data;
+let {withSelect, withDispatch, subscribe} = wp.data;
 let {compose} = wp.compose;
 let {SelectControl} = wp.components;
+
+const publishedStatuses = ['publish', 'future', 'private'];
 
 /**
  * Map Custom Statuses as options for SelectControl
  */
-let statuses = window.PPCustomStatuses.map(s => ({label: s.name, value: s.slug}));
 let getStatusLabel = slug => {
-    let item = statuses.find(s => s.value === slug);
+  let item = window.PPCustomStatuses.find(s => s.slug === slug);
 
-    if (item) {
-        return item.label;
-    }
+  if (item) {
+    return item.name;
+  }
 
-    return '';
+  let draft = window.PPCustomStatuses.find(s => s.slug === 'draft');
+
+  return draft.name;
 };
 
-// Remove the Published status from the list.
-statuses = statuses.filter((item) => {
-    return item.value !== 'publish';
-});
+// Remove the Published statuses and Pending Review from the list.
+let getStatuses = () => {
+  let statuses = window.PPCustomStatuses.map(s => ({label: s.name, value: s.slug}));
+  statuses = statuses.filter((item) => {
+    return !publishedStatuses.includes(item.value) && 'pending' != item.value;
+  });
+
+  return statuses;
+};
 
 /**
  * Hack :(
@@ -40,90 +48,129 @@ statuses = statuses.filter((item) => {
  *
  * @param status
  */
-let sideEffectL10nManipulation = status => {
+let updateTheSaveAsButtonText = (status) => {
+  setTimeout(() => {
+    let node = document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft');
 
-    if (status === 'publish') {
-        return;
+    if (!node) {
+      return;
     }
 
-    let statusLabel = getStatusLabel(status);
+    let label;
+    let currentStatus = wp.data.select('core/editor').getCurrentPost().status;
+    if (publishedStatuses.includes(currentStatus)) {
+      if ('future' === currentStatus) {
+        label = __('Unschedule and Save as %s', 'publishpress').replace('%s', getStatusLabel('draft'));
+      } else {
+        label = __('Unpublish and Save as %s', 'publishpress').replace('%s', getStatusLabel('draft'));
+      }
+    } else {
+      label = __('Save as %s', 'publishpress').replace('%s', getStatusLabel(status));
+    }
 
-    setTimeout(() => {
-        let node = document.querySelector('.editor-post-save-draft');
-
-        if (!node) {
-            node = document.querySelector('.editor-post-switch-to-draft');
-        }
-
-        if (node) {
-            document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
-            node.dataset.ppInnerTextUpdated = true;
-        }
-    }, 100);
+    if (label !== node.innerText) {
+      node.innerText = label;
+    }
+  }, 100);
 };
 
 /**
  * Hack :(
  * We need an interval because the DOM element is removed by autosave and rendered back after finishing.
  *
- * @see https://github.com/WordPress/gutenberg/issues/3144
+ * @see
  */
+var lastStatus = wp.data.select('core/editor').getCurrentPost().status;
 setInterval(() => {
-    let status = wp.data.select('core/editor').getEditedPostAttribute('status');
+  let currentStatus = wp.data.select('core/editor').getCurrentPost().status;
+  let editedStatus = wp.data.select('core/editor').getEditedPostAttribute('status');
 
-    if (status === 'publish') {
-        return;
-    }
+  updateTheSaveAsButtonText(editedStatus);
 
-    let statusLabel = getStatusLabel(status);
-    let node = document.querySelector('.editor-post-save-draft');
+  if (lastStatus !== editedStatus) {
 
-    if (!node) {
-        node = document.querySelector('.editor-post-switch-to-draft');
-    }
+    // Force to render after a post status change
+    wp.data.dispatch('core/editor').editPost({status: '!'});
+    wp.data.dispatch('core/editor').editPost({status: editedStatus});
 
-    if (node && !node.dataset.ppInnerTextUpdated) {
-        document.querySelector('.editor-post-save-draft, .editor-post-switch-to-draft').innerText = `${__('Save as')} ${statusLabel}`;
-        node.dataset.ppInnerTextUpdated = true;
-    }
-}, 250);
+    lastStatus = editedStatus;
+  }
+}, 100);
+
 
 /**
  * Custom status component
  * @param object props
  */
-let PPCustomPostStatusInfo = ({onUpdate, status}) => (
+let PPCustomPostStatusInfo = ({onUpdate, status}) => {
+  let statusControl;
+  let originalStatus = wp.data.select('core/editor').getCurrentPost().status;
+  let noteElement;
+
+  if ([originalStatus, status].includes('publish')) {
+    statusControl = <div className={"publishpress-static-post-status"}>{__('Published', 'publishpress')}</div>;
+    noteElement = <small className="publishpress-extended-post-status-note">
+      {__('To select a custom status, please unpublish the content first.', 'publishpress')}
+    </small>;
+  } else if ([originalStatus, status].includes('future')) {
+    statusControl = <div className={"publishpress-static-post-status"}>{__('Scheduled', 'publishpress')}</div>;
+    noteElement = <small className="publishpress-extended-post-status-note">
+      {__('To select a custom status, please unschedule the content first.', 'publishpress')}
+    </small>;
+  } else if ('pending' === status) {
+    statusControl = <div className={"publishpress-static-post-status"}>{__('Pending review', 'publishpress')}</div>;
+    noteElement = <small className="publishpress-extended-post-status-note">
+      {__('To select a custom status, please uncheck the "Pending Review" checkbox first.', 'publishpress')}
+    </small>;
+  } else if ([originalStatus, status].includes('private')) {
+    statusControl =
+      <div className={"publishpress-static-post-status"}>{__('Privately Published', 'publishpress')}</div>;
+    noteElement = <small className="publishpress-extended-post-status-note">
+      {__('To select a custom status, please unpublish the content first.', 'publishpress')}
+    </small>;
+  } else {
+    statusControl = <SelectControl
+      label=""
+      value={status}
+      options={getStatuses()}
+      onChange={onUpdate}
+    />;
+  }
+
+  return (
     <PluginPostStatusInfo
-        className={`publishpress-extended-post-status publishpress-extended-post-status-${status}`}
+      className={`publishpress-extended-post-status publishpress-extended-post-status-${status}`}
     >
-        <h4>{__('Post Status', 'publishpress')}</h4>
-
-        {status !== 'publish' ? <SelectControl
-            label=""
-            value={status}
-            options={statuses}
-            onChange={onUpdate}
-        /> : <div>{__('Published', 'publishpress')}</div>}
-
-        <small className="publishpress-extended-post-status-note">
-            {status !== 'publish' ? __(`Note: this will override all status settings above.`, 'publishpress') : __('To select a custom status, please unpublish the content first.', 'publishpress')}
-        </small>
+      <h4>{__('Post Status', 'publishpress')}</h4>
+      {statusControl}
+      {noteElement}
     </PluginPostStatusInfo>
-);
+  );
+};
+
+let getCurrentPostStatus = function() {
+  let currentPostStatus = wp.data.select('core/editor').getEditedPostAttribute('status');
+
+  if (currentPostStatus === 'auto-draft') {
+    currentPostStatus = 'draft';
+  }
+
+  return currentPostStatus;
+};
 
 let plugin = compose(
-    withSelect((select) => ({
-        status: select('core/editor').getEditedPostAttribute('status')
-    })),
-    withDispatch((dispatch) => ({
-        onUpdate (status) {
-            dispatch('core/editor').editPost({status});
-            sideEffectL10nManipulation(status);
-        }
-    }))
+  withSelect((select) => ({
+    status: getCurrentPostStatus()
+  })),
+  withDispatch((dispatch) => ({
+    onUpdate(status) {
+      wp.data.dispatch('core/editor').editPost({status});
+      updateTheSaveAsButtonText(status);
+    }
+  }))
 )(PPCustomPostStatusInfo);
 
 registerPlugin('publishpress-custom-status-block', {
-    icon: 'admin-site',
-    render: plugin
+  icon: 'admin-site',
+  render: plugin
 });

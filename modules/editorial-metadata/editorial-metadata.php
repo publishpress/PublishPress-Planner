@@ -386,12 +386,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
         public function handle_post_metaboxes()
         {
             $title = __('Metadata', 'publishpress');
-            if (current_user_can('manage_options')) {
-                // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
-                $url = $this->get_link();
-
-                $title .= ' <span class="postbox-title-action"><a href="' . esc_url($url) . '" class="edit-box open-box">' . __('Configure') . '</a></span>';
-            }
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
             foreach ($supported_post_types as $post_type) {
@@ -462,6 +456,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     echo "<div class='clear'></div>";
                 } // Done iterating through metadata terms
             }
+
+            if (current_user_can('manage_options')) {
+                // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
+                echo '<span class="postbox-title-action"><a href="' . esc_url($this->get_link()) . '">' . __('Configure') . '</a></span>';
+            }
+
             echo "</div>";
         }
 
