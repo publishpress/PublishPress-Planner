@@ -129,6 +129,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix compatibility with the Nested Page plugin, #623;
 * Fixed: Fix the title of Editorial Meta meta box in the options panel for Gutenberg, #631;
 * Fixed: Load languages from the relative path, #626;
+* Fixed: Updated the PT-BR translation strings;
 
 = [2.1.0] - 2020-05-28 =
 
