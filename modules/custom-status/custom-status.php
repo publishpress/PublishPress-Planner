@@ -327,18 +327,19 @@ if (!class_exists('PP_Custom_Status')) {
                         continue;
                     }
 
-                    register_post_status(
-                        $status->slug,
-                        [
-                            'label'       => $status->name,
-                            'protected'   => true,
-                            '_builtin'    => false,
-                            'label_count' => _n_noop(
-                                "{$status->name} <span class='count'>(%s)</span>",
-                                "{$status->name} <span class='count'>(%s)</span>"
-                            ),
-                        ]
-                    );
+                    $postStatusArgs = [
+                        'label'       => $status->name,
+                        'protected'   => true,
+                        '_builtin'    => false,
+                        'label_count' => _n_noop(
+                            "{$status->name} <span class='count'>(%s)</span>",
+                            "{$status->name} <span class='count'>(%s)</span>"
+                        ),
+                    ];
+
+                    $postStatusArgs = apply_filters('publishpress_new_custom_status_args', $postStatusArgs, $status);
+
+                    register_post_status($status->slug, $postStatusArgs);
                 }
             }
         }
