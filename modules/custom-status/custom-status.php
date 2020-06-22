@@ -1253,11 +1253,11 @@ if (!class_exists('PP_Custom_Status')) {
             $orderedStatusList = [];
             $hold_to_end       = [];
             foreach ($statuses as $key => $status) {
-                // Unencode and set all of our psuedo term meta because we need the position if it exists
+                // Unencode and set all of our pseudo term meta because we need the position if it exists
                 $unencoded_description = $this->get_unencoded_description($status->description);
                 if (is_array($unencoded_description)) {
-                    foreach ($unencoded_description as $key => $value) {
-                        $status->$key = $value;
+                    foreach ($unencoded_description as $descriptionKey => $value) {
+                        $status->$descriptionKey = $value;
                     }
                 }
                 // We require the position key later on (e.g. management table)
