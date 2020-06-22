@@ -36,9 +36,7 @@
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {
-    "bartlett/php-compatinfo": "^5.2",
-    "overtrue/phplint": "^1",
-    "phing/phing": "^2",
-    "alledia/wordpress-plugin-builder": "dev-development"
+    "publishpress/wordpress-plugin-builder": "dev-master",
+    "bartlett/php-compatinfo": "^5.2"
   }
 }
