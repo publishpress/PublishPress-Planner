@@ -5,14 +5,12 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 2.2.0
- *
- * Copyright (c) 2019 PublishPress
+ * Version: 2.2.0-feature.640
+ * Text Domain: publishpress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
- * Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, and
- * others
+ * Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, and others
  * Copyright (c) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
  * ------------------------------------------------------------------------------
  *
@@ -34,7 +32,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2019 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2020 PublishPress. All rights reserved.
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
