@@ -23,4 +23,10 @@
 
 class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setVersionConstantName('PUBLISHPRESS_VERSION');
+    }
 }

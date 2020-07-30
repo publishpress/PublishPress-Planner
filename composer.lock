@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f1d40f74ec8a8410dedb647ce8150b4",
+    "content-hash": "8600f5adda7a1cace8da65d25eb4477a",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -2121,16 +2121,16 @@
         },
         {
             "name": "publishpress/publishpress-plugin-builder",
-            "version": "dev-development",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Plugin-Builder.git",
-                "reference": "af37358086efeaebd319635dacff2afbc305ee1e"
+                "reference": "9aa447c74f576c1f687121838beac1ab8cfad883"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/af37358086efeaebd319635dacff2afbc305ee1e",
-                "reference": "af37358086efeaebd319635dacff2afbc305ee1e",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/9aa447c74f576c1f687121838beac1ab8cfad883",
+                "reference": "9aa447c74f576c1f687121838beac1ab8cfad883",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2163,7 @@
                 }
             ],
             "description": "Robo tasks for building WordPress plugins",
-            "time": "2020-07-30T18:34:10+00:00"
+            "time": "2020-07-30T22:34:18+00:00"
         },
         {
             "name": "sebastian/version",
@@ -3360,9 +3360,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-plugin-builder": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

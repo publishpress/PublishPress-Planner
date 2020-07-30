@@ -36,7 +36,7 @@
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {
-    "publishpress/publishpress-plugin-builder": "dev-development",
+    "publishpress/publishpress-plugin-builder": "^1.2",
     "bartlett/php-compatinfo": "^5.2"
   }
 }
