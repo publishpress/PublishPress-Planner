@@ -21,16 +21,6 @@
  * @copyright   Copyright (C) 2020 PublishPress. All rights reserved.
  */
 
-class RoboFile extends \PublishPressBuilder\Tasks
+class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-//        $this->appendToFileToIgnore(
-//            [
-//
-//            ]
-//        );
-    }
 }
