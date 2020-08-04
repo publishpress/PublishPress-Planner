@@ -215,6 +215,7 @@ if (!class_exists('PP_Notifications_Log')) {
                     $this->module_url . 'assets/js/admin.js',
                     [
                         'jquery-ui-dialog',
+                        'wp-i18n'
                     ],
                     PUBLISHPRESS_VERSION,
                     true
