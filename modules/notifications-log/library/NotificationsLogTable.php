@@ -216,7 +216,7 @@ class NotificationsLogTable extends WP_List_Table
 
                 // Add the slide effect for scheduled notifications
                 if ($receiversCount > 4 && $log->status === 'scheduled') {
-                    $output .= sprintf(
+                    $output = sprintf(
                         '<a href="#" class="slide-closed-text">%s <i class="dashicons dashicons-arrow-down-alt2"></i></a><div class="slide">%s</div>',
                         sprintf(
                             __('Scheduled for %d receivers. Click here to display them.', 'publishpress'),
