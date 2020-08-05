@@ -148,9 +148,19 @@ let PPCustomPostStatusInfo = ({onUpdate, status}) => {
   );
 };
 
+let getCurrentPostStatus = function() {
+  let currentPostStatus = wp.data.select('core/editor').getEditedPostAttribute('status');
+
+  if (currentPostStatus === 'auto-draft') {
+    currentPostStatus = 'draft';
+  }
+
+  return currentPostStatus;
+};
+
 let plugin = compose(
   withSelect((select) => ({
-    status: select('core/editor').getEditedPostAttribute('status')
+    status: getCurrentPostStatus()
   })),
   withDispatch((dispatch) => ({
     onUpdate(status) {

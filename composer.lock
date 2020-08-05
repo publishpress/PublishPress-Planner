@@ -2316,14 +2316,18 @@
         },
         {
             "name": "publishpress/publishpress-plugin-builder",
+            "version": "1.2.0",
             "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Plugin-Builder.git",
+                "reference": "9aa447c74f576c1f687121838beac1ab8cfad883"
                 "reference": "59bd814a0a78215772223881f78fbb676668033e"
             },
             "dist": {
                 "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/9aa447c74f576c1f687121838beac1ab8cfad883",
+                "reference": "9aa447c74f576c1f687121838beac1ab8cfad883",
                 "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/59bd814a0a78215772223881f78fbb676668033e",
                 "reference": "59bd814a0a78215772223881f78fbb676668033e",
                 "shasum": ""
@@ -2358,6 +2362,7 @@
                 }
             ],
             "description": "Robo tasks for building WordPress plugins",
+            "time": "2020-07-30T22:34:18+00:00"
             "time": "2020-07-30T22:42:05+00:00"
         },
         {
@@ -2506,6 +2511,9 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
                 "psr-4": {
                     "Symfony\\Component\\Console\\": ""
                 },

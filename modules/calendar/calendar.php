@@ -1129,7 +1129,7 @@ if (!class_exists('PP_Calendar')) {
                         <tbody>
 
                         <?php
-                        $default_post_status = $this->get_default_post_status();
+                        $default_post_status = PP_Custom_Status::DEFAULT_STATUS;
 
                         $current_month        = date_i18n('F', strtotime($filters['start_date']));
                         for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) :
@@ -1534,7 +1534,8 @@ if (!class_exists('PP_Calendar')) {
                         <?php $this->get_inner_information($this->get_post_information_fields($post), $post); ?>
                     </div>
                     <?php if (!$this->current_user_can_modify_post($post)) : ?>
-                        <div class="item-inner read-only-notice" title="<?php _e('You can\'t edit or move this post'); ?>">
+                        <div class="item-inner read-only-notice"
+                             title="<?php _e('You can\'t edit or move this post'); ?>">
                             <?php _e('Read only'); ?>
                         </div>
                     <?php endif; ?>

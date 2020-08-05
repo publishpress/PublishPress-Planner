@@ -60,6 +60,8 @@ if (!class_exists('PP_Custom_Status')) {
 
         const DEFAULT_COLOR = '#655997';
 
+        const DEFAULT_STATUS = 'draft';
+
         public $module;
 
         private $custom_statuses_cache = [];
@@ -85,7 +87,6 @@ if (!class_exists('PP_Custom_Status')) {
                 'slug'                  => 'custom-status',
                 'default_options'       => [
                     'enabled'              => 'on',
-                    'default_status'       => 'pitch',
                     'always_show_dropdown' => 'on',
                     'post_types'           => [
                         'post' => 'on',
@@ -144,7 +145,6 @@ if (!class_exists('PP_Custom_Status')) {
             // Methods for handling the actions of creating, making default, and deleting post stati
             add_action('admin_init', [$this, 'handle_add_custom_status']);
             add_action('admin_init', [$this, 'handle_edit_custom_status']);
-            add_action('admin_init', [$this, 'handle_make_default_custom_status']);
             add_action('admin_init', [$this, 'handle_delete_custom_status']);
             add_action('wp_ajax_update_status_positions', [$this, 'handle_ajax_update_status_positions']);
 
@@ -265,11 +265,6 @@ if (!class_exists('PP_Custom_Status')) {
                 }
                 $publishpress->update_module_option($this->module->name, 'always_show_dropdown', $dropdown_visible);
                 delete_option('publishpress_status_dropdown_visible');
-                // Migrate default status option
-                if ($default_status = get_option('publishpress_custom_status_default_status')) {
-                    $publishpress->update_module_option($this->module->name, 'default_status', $default_status);
-                }
-                delete_option('publishpress_custom_status_default_status');
 
                 // Technically we've run this code before so we don't want to auto-install new data
                 $publishpress->update_module_option($this->module->name, 'loaded_once', true);
@@ -332,18 +327,19 @@ if (!class_exists('PP_Custom_Status')) {
                         continue;
                     }
 
-                    register_post_status(
-                        $status->slug,
-                        [
-                            'label'       => $status->name,
-                            'protected'   => true,
-                            '_builtin'    => false,
-                            'label_count' => _n_noop(
-                                "{$status->name} <span class='count'>(%s)</span>",
-                                "{$status->name} <span class='count'>(%s)</span>"
-                            ),
-                        ]
-                    );
+                    $postStatusArgs = [
+                        'label'       => $status->name,
+                        'protected'   => true,
+                        '_builtin'    => false,
+                        'label_count' => _n_noop(
+                            "{$status->name} <span class='count'>(%s)</span>",
+                            "{$status->name} <span class='count'>(%s)</span>"
+                        ),
+                    ];
+
+                    $postStatusArgs = apply_filters('publishpress_new_custom_status_args', $postStatusArgs, $status);
+
+                    register_post_status($status->slug, $postStatusArgs);
                 }
             }
         }
@@ -983,8 +979,8 @@ if (!class_exists('PP_Custom_Status')) {
             if ($this->is_whitelisted_page()) {
                 $post_type_obj   = get_post_type_object($this->get_current_post_type());
                 $custom_statuses = $this->get_custom_statuses();
-                $selected        = $this->get_default_custom_status()->slug;
-                $selected_name   = $this->get_default_custom_status()->name;
+                $selected        = self::DEFAULT_STATUS;
+                $selected_name   = __('Draft', 'publishpress');
 
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
 
@@ -993,7 +989,7 @@ if (!class_exists('PP_Custom_Status')) {
                     // Get the status of the current post
                     if ($post->ID == 0 || $post->post_status == 'auto-draft' || $pagenow == 'edit.php') {
                         // TODO: check to make sure that the default exists
-                        $selected = $this->get_default_custom_status()->slug;
+                        $selected = self::DEFAULT_STATUS;
                     } else {
                         $selected = $post->post_status;
                     }
@@ -1027,7 +1023,7 @@ if (!class_exists('PP_Custom_Status')) {
                 <script type="text/javascript">
                     var pp_text_no_change = '<?php echo esc_js(__("&mdash; No Change &mdash;")); ?>';
                     var label_save = '<?php echo __('Save'); ?>';
-                    var pp_default_custom_status = '<?php echo esc_js($this->get_default_custom_status()->slug); ?>';
+                    var pp_default_custom_status = '<?php echo esc_js(self::DEFAULT_STATUS); ?>';
                     var current_status = '<?php echo esc_js($selected); ?>';
                     var current_status_name = '<?php echo esc_js($selected_name); ?>';
                     var custom_statuses = <?php echo json_encode($all_statuses); ?>;
@@ -1139,11 +1135,6 @@ if (!class_exists('PP_Custom_Status')) {
 
             $slug = isset($args['slug']) ? $args['slug'] : $old_status->slug;
 
-            $default_status = $this->get_default_custom_status()->slug;
-            if ($slug == $default_status) {
-                $publishpress->update_module_option($this->module->name, 'default_status', $slug);
-            }
-
             if (is_numeric($status_id)) {
                 // We're encoding metadata that isn't supported by default in the term's description field
                 $args_to_encode                = [];
@@ -1193,7 +1184,7 @@ if (!class_exists('PP_Custom_Status')) {
             $this->custom_statuses_cache = [];
 
             if (!$this->is_restricted_status($old_status)) {
-                $default_status = $this->get_default_custom_status()->slug;
+                $default_status = self::DEFAULT_STATUS;
                 // If new status in $reassign, use that for all posts of the old_status
                 if (!empty($reassign)) {
                     $new_status = $this->get_custom_status_by('id', $reassign)->slug;
@@ -1263,11 +1254,11 @@ if (!class_exists('PP_Custom_Status')) {
             $orderedStatusList = [];
             $hold_to_end       = [];
             foreach ($statuses as $key => $status) {
-                // Unencode and set all of our psuedo term meta because we need the position if it exists
+                // Unencode and set all of our pseudo term meta because we need the position if it exists
                 $unencoded_description = $this->get_unencoded_description($status->description);
                 if (is_array($unencoded_description)) {
-                    foreach ($unencoded_description as $key => $value) {
-                        $status->$key = $value;
+                    foreach ($unencoded_description as $descriptionKey => $value) {
+                        $status->$descriptionKey = $value;
                     }
                 }
                 // We require the position key later on (e.g. management table)
@@ -1369,22 +1360,6 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Get the term object for the default custom post status
-         *
-         * @return object $default_status Default post status object
-         */
-        public function get_default_custom_status()
-        {
-            $default_status = $this->get_custom_status_by('slug', $this->module->options->default_status);
-            if (!$default_status) {
-                $custom_statuses = $this->get_custom_statuses();
-                $default_status  = array_shift($custom_statuses);
-            }
-
-            return $default_status;
-        }
-
-        /**
          * Assign new statuses to posts using value provided or the default
          *
          * @param string $old_status Slug for the old status
@@ -1395,7 +1370,7 @@ if (!class_exists('PP_Custom_Status')) {
             global $wpdb;
 
             if (empty($new_status)) {
-                $new_status = $this->get_default_custom_status()->slug;
+                $new_status = self::DEFAULT_STATUS;
             }
 
             // Make the database call
@@ -1699,44 +1674,6 @@ if (!class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Handles a GET request to make the identified status default
-         *
-         * @since 0.7
-         */
-        public function handle_make_default_custom_status()
-        {
-            global $publishpress;
-
-            // Check that the current GET request is our GET request
-            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'make-default') {
-                return;
-            }
-
-            // Check for proper nonce
-            if (!wp_verify_nonce($_GET['nonce'], 'make-default')) {
-                wp_die(__('Invalid nonce for submission.', 'publishpress'));
-            }
-
-            // Only allow users with the proper caps
-            if (!current_user_can('manage_options')) {
-                wp_die(__('Sorry, you do not have permission to edit custom statuses.', 'publishpress'));
-            }
-
-            $term_id = (int)$_GET['term-id'];
-            $term    = $this->get_custom_status_by('id', $term_id);
-            if (is_object($term)) {
-                $publishpress->update_module_option($this->module->name, 'default_status', $term->slug);
-                // @todo How do we want to handle users who click the link from "Add New Status"
-                $redirect_url = $this->get_link(['message' => 'default-status-changed', 'action' => 'add-new']);
-                wp_redirect($redirect_url);
-                exit;
-            } else {
-                wp_die(__('Status doesn&#39;t exist.', 'publishpress'));
-            }
-        }
-
-        /**
          * Handles a GET request to delete a specific term
          *
          * @since 0.7
@@ -1764,11 +1701,6 @@ if (!class_exists('PP_Custom_Status')) {
             $term    = $this->get_custom_status_by('id', $term_id);
             if (!$term) {
                 wp_die(__('Status does not exist.', 'publishpress'));
-            }
-
-            // Don't allow deletion of default status
-            if ($term->slug == $this->get_default_custom_status()->slug) {
-                wp_die(__('Cannot delete default status.', 'publishpress'));
             }
 
             $return = $this->delete_custom_status($term_id);
@@ -1804,7 +1736,6 @@ if (!class_exists('PP_Custom_Status')) {
 
             // Add other things we may need depending on the action
             switch ($args['action']) {
-                case 'make-default':
                 case 'delete-status':
                     $args['nonce'] = wp_create_nonce($args['action']);
                     break;
@@ -2759,7 +2690,7 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
         $this->items          = $publishpress->custom_status->get_custom_statuses();
         $total_items          = count($this->items);
-        $this->default_status = $publishpress->custom_status->get_default_custom_status()->slug;
+        $this->default_status = PP_Custom_Status::DEFAULT_STATUS;
 
         $this->set_pagination_args(
             [
@@ -2927,14 +2858,8 @@ class PP_Custom_Status_List_Table extends WP_List_Table
 
         $actions         = [];
         $actions['edit'] = "<a href='$item_edit_link'>" . __('Edit', 'publishpress') . "</a>";
-        if ($item->slug != $this->default_status && is_numeric($item->term_id)) {
-            $actions['make_default'] = sprintf(
-                '<a href="%1$s">' . __('Make&nbsp;Default', 'publishpress') . '</a>',
-                $publishpress->custom_status->get_link(['action' => 'make-default', 'term-id' => $item->term_id])
-            );
-        }
 
-        if ($item->slug != $this->default_status && is_numeric($item->term_id)) {
+        if (is_numeric($item->term_id)) {
             $actions['delete delete-status'] = sprintf(
                 '<a href="%1$s">' . __('Delete', 'publishpress') . '</a>',
                 $publishpress->custom_status->get_link(['action' => 'delete-status', 'term-id' => $item->term_id])

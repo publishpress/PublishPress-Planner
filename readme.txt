@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,19 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.2.0] - 2020-06-17 =
+
+* Removed: Fixed conflict with Gutenberg and other plugins keeping draft as the default status, always. Removed the option to set another status as default, #621;
+* Removed: Removed the notice asking for reviews after a few weeks of usage, #637;
+* Removed: Removed the following statuses from the Status dropdown on posts - on Gutenberg: Pending Review, Privately published, Scheduled. To set them, use the respective Gutenberg's UI;
+* Fixed: Protect the WordPress post statuses "Pending" and "Draft", blocking edition of those statuses;
+* Fixed: Fix the post status selection and the "Save as" link for Gutenberg for posts in published statuses. For changing the status you have to unpublish the post first;
+* Fixed: Fix the "Save as" button when the current status doesn't exist;
+* Fixed: Fix compatibility with the Nested Page plugin, #623;
+* Fixed: Fix the title of Editorial Meta meta box in the options panel for Gutenberg, #631;
+* Fixed: Load languages from the relative path, #626;
+* Fixed: Updated the PT-BR translation strings;
 
 = [2.1.0] - 2020-05-28 =
 

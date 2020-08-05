@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project name="The Builder" default="build">
-    <property name="version.constant" value="PUBLISHPRESS_VERSION"/>
-
-    <import file="${env.ALLEDIA_BUILDER_PATH}/build.xml"/>
-</project>
