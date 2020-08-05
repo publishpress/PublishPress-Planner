@@ -50,7 +50,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
 
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
-            $post_id = $args['post']->ID;
+            $post_id = $args['params']['post_id'];
 
             if (empty($post_id)) {
                 return $receivers;
