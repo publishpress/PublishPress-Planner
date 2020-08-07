@@ -23,7 +23,9 @@
   ],
   "autoload": {
     "psr-4": {
-      "PublishPress\\Core\\": "core/"
+      "PublishPress\\Core\\": "core/",
+      "PublishPress\\Legacy\\": "libraries/Legacy",
+      "PublishPress\\Notifications\\": "libraries/Notifications"
     }
   },
   "minimum-stability": "dev",

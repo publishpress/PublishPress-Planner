@@ -38,17 +38,10 @@ if (!defined('PP_LOADED')) {
         require_once PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php';
     }
 
-    // Register the autoloader
+    // Register the legacy autoloader
     if (!class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
         require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
     }
-
-    // Register the library
-    Auto_loader::register('\\PublishPress\\Legacy\\', PUBLISHPRESS_LIBRARIES_PATH . '/Legacy');
-    Auto_loader::register(
-        '\\PublishPress\\Notifications\\',
-        PUBLISHPRESS_LIBRARIES_PATH . '/Notifications'
-    );
 
     require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
