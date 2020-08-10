@@ -1619,7 +1619,7 @@ if (!class_exists('PP_Calendar')) {
         {
             ?>
             <table class="item-information">
-                <?php foreach ($this->get_post_information_fields($post) as $field => $values) : ?>
+                <?php foreach ($pp_calendar_item_information_fields as $field => $values) : ?>
                     <tr class="item-field item-information-<?php echo esc_attr($field); ?>">
                         <th class="label"><?php echo esc_html($values['label']); ?>:</th>
                         <?php if ($values['value'] && isset($values['type'])) : ?>
@@ -1886,6 +1886,7 @@ if (!class_exists('PP_Calendar')) {
             }// End foreach().
 
             $information_fields = apply_filters('pp_calendar_item_information_fields', $information_fields, $post->ID);
+
             foreach ($information_fields as $field => $values) {
                 // Allow filters to hide empty fields or to hide any given individual field. Hide empty fields by default.
                 if ((apply_filters(
