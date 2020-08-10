@@ -490,7 +490,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function save_meta_box($id, $post)
         {
-
             // Authentication checks: make sure data came from our meta box and that the current user is allowed to edit the post
             // TODO: switch to using check_admin_referrer? See core (e.g. edit.php) for usage
             if (! isset($_POST[self::metadata_taxonomy . "_nonce"])
@@ -787,8 +786,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function filter_calendar_item_fields($calendar_fields, $post_id)
         {
-
-
             // Make sure we respect which post type we're on
             if (!in_array(get_post_type($post_id), $this->get_post_types_for_module($this->module))) {
                 return $calendar_fields;
