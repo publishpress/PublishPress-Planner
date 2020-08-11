@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94e76b9580f1c8a3e7c2f7fe94892058",
+    "content-hash": "2c703fe42c6e3665798946ebe8167808",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
-            "version": "0.6.8",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/WordPress-Plugin-Framework.git",
-                "reference": "d92bdbda933412f8d04f7088b758c81f1eb4fba0"
+                "reference": "3fdd944a5561fcb1634483622debccb9060db266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Framework/zipball/d92bdbda933412f8d04f7088b758c81f1eb4fba0",
-                "reference": "d92bdbda933412f8d04f7088b758c81f1eb4fba0",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Framework/zipball/3fdd944a5561fcb1634483622debccb9060db266",
+                "reference": "3fdd944a5561fcb1634483622debccb9060db266",
                 "shasum": ""
             },
             "require": {
@@ -37,15 +37,9 @@
             ],
             "authors": [
                 {
-                    "name": "Alledia",
-                    "email": "help@alledia.com",
-                    "homepage": "https://alledia.com"
-                },
-                {
-                    "name": "Anderson Grudtner Martins",
-                    "email": "anderson@grudtner.me",
-                    "homepage": "http://anderson.grudtner.me",
-                    "role": "Lead Developer"
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com",
+                    "homepage": "https://publishpress.com"
                 }
             ],
             "description": "Alledia framework for creating WordPress plugins.",
@@ -54,7 +48,7 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2019-11-19T16:38:51+00:00"
+            "time": "2020-08-11T17:24:46+00:00"
         },
         {
             "name": "pimple/pimple",
