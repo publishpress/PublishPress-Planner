@@ -1,4 +1,5 @@
 (function ($) {
+
     inlineEditCustomStatus = {
 
         init: function () {
@@ -6,8 +7,9 @@
 
             t.what = '#term-';
 
-            $('.editinline').live('click', function () {
+            $(document).on('click', '.editinline', function () {
                 inlineEditCustomStatus.edit(this);
+
                 return false;
             });
 
