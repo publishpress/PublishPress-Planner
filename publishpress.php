@@ -1159,8 +1159,6 @@ class publishpress
 function PublishPress()
 {
     if (!defined('PUBLISHPRESS_NOTIF_LOADED')) {
-        require __DIR__ . '/includes_notifications.php';
-
         // Load the improved notifications
         if (defined('PUBLISHPRESS_NOTIF_LOADED')) {
             $plugin = new PublishPress\Notifications\Plugin();

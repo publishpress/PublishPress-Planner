@@ -62,5 +62,10 @@ if (!defined('PP_LOADED')) {
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
+    define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
+    define('PUBLISHPRESS_NOTIF_TWIG_PATH', PUBLISHPRESS_BASE_PATH . '/twig');
+    define('PUBLISHPRESS_NOTIF_LOADED', 1);
+    define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
+
     define('PP_LOADED', 1);
 }
