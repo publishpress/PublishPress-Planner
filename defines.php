@@ -28,9 +28,6 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use PPVersionNotices\Module\MenuLink\Module;
-use PublishPress\Legacy\Auto_loader;
-
 if (!defined('PP_LOADED')) {
     $settingsPage = add_query_arg(
         [
@@ -41,7 +38,7 @@ if (!defined('PP_LOADED')) {
     );
 
     // Define constants
-    define('PUBLISHPRESS_VERSION', '2.2.0-hotfix-652');
+    define('PUBLISHPRESS_VERSION', '2.2.1-alpha.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
