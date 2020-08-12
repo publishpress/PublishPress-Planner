@@ -43,6 +43,10 @@ if (!defined('PP_LOADED')) {
         require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
     }
 
+    Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
+    Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/libraries/Legacy');
+    Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/libraries/Notifications');
+
     require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
     if (is_admin() && !defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
