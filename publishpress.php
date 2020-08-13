@@ -1158,12 +1158,6 @@ class publishpress
 
 function PublishPress()
 {
-    // Load the improved notifications
-    if (defined('PUBLISHPRESS_NOTIF_LOADED')) {
-        $plugin = new PublishPress\Notifications\Plugin();
-        $plugin->init();
-    }
-
     return publishpress::instance();
 }
 
