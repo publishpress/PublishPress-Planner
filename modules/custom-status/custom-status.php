@@ -327,18 +327,19 @@ if (!class_exists('PP_Custom_Status')) {
                         continue;
                     }
 
-                    register_post_status(
-                        $status->slug,
-                        [
-                            'label'       => $status->name,
-                            'protected'   => true,
-                            '_builtin'    => false,
-                            'label_count' => _n_noop(
-                                "{$status->name} <span class='count'>(%s)</span>",
-                                "{$status->name} <span class='count'>(%s)</span>"
-                            ),
-                        ]
-                    );
+                    $postStatusArgs = [
+                        'label'       => $status->name,
+                        'protected'   => true,
+                        '_builtin'    => false,
+                        'label_count' => _n_noop(
+                            "{$status->name} <span class='count'>(%s)</span>",
+                            "{$status->name} <span class='count'>(%s)</span>"
+                        ),
+                    ];
+
+                    $postStatusArgs = apply_filters('publishpress_new_custom_status_args', $postStatusArgs, $status);
+
+                    register_post_status($status->slug, $postStatusArgs);
                 }
             }
         }
@@ -1253,11 +1254,11 @@ if (!class_exists('PP_Custom_Status')) {
             $orderedStatusList = [];
             $hold_to_end       = [];
             foreach ($statuses as $key => $status) {
-                // Unencode and set all of our psuedo term meta because we need the position if it exists
+                // Unencode and set all of our pseudo term meta because we need the position if it exists
                 $unencoded_description = $this->get_unencoded_description($status->description);
                 if (is_array($unencoded_description)) {
-                    foreach ($unencoded_description as $key => $value) {
-                        $status->$key = $value;
+                    foreach ($unencoded_description as $descriptionKey => $value) {
+                        $status->$descriptionKey = $value;
                     }
                 }
                 // We require the position key later on (e.g. management table)

@@ -11,17 +11,19 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 ### Pre-release Checklist
 
-- [ ] Run `composer update --no-dev` and check if there is any relevant update. Check if you need to lock the current version for any dependency.
-- [ ] Commit changes to the `development` branch
-- [ ] Update the changelog - make sure all the changes are there with a user-friendly description
-- [ ] Update the version number to the next stable version. Use `$ phing set-version`
-- [ ] Pull to the `development` branch
-- [ ] Build the zip using `$ phing build`
+- [ ] Create the release branch as `release-<version>` based on the development branch
+- [ ] Make sure to directly merge or use Pull Requests to merge hotfixes or features branches into the release branch
+- [ ] Run `composer update` and check if there is any relevant update. Check if you need to lock the current version for any dependency. The `--no-dev` argument is optional here, since the build script will make sure to run the build with that argument.
+- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct
+- [ ] Update the version number to the next stable version. Use `$ vendor/bin/robo version <version-number>`
+- [ ] Commit the changes to the release branch
+- [ ] Build the zip package using `$ vendor/bin/robo build`. It should create a package in the `./dist` dir.
 - [ ] Send to the team for testing
 
 ### Release Checklist
 
-- [ ] Create a Pull Request and merge it into the `master` branch
+- [ ] Create a Pull Request and merge the release branch it into the `master` branch
+- [ ] Merge the `master` branch into the `development` branch
 - [ ] Create the Github release (make sure it is based on the `master` branch and correct tag)
 
 #### SVN Repo

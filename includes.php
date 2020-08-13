@@ -40,8 +40,8 @@ if (!defined('PP_LOADED')) {
         get_admin_url(null, 'admin.php')
     );
 
-    // Define contants
-    define('PUBLISHPRESS_VERSION', '2.2.0');
+    // Define constants
+    define('PUBLISHPRESS_VERSION', '2.2.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
@@ -62,23 +62,32 @@ if (!defined('PP_LOADED')) {
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
+    define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
+
     if (file_exists(PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php')) {
         require_once PUBLISHPRESS_BASE_PATH . '/vendor/autoload.php';
     }
 
-    // Register the autoloader
+    // Register the legacy autoloader
     if (!class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
         require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
     }
 
-    // Register the library
-    Auto_loader::register('\\PublishPress\\Legacy\\', PUBLISHPRESS_LIBRARIES_PATH . '/Legacy');
-    Auto_loader::register(
-        '\\PublishPress\\Notifications\\',
-        PUBLISHPRESS_LIBRARIES_PATH . '/Notifications'
-    );
+
+    Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
+    Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/libraries/Legacy');
+    Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/libraries/Notifications');
 
     require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
+
+
+    define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
+    define('PUBLISHPRESS_NOTIF_TWIG_PATH', PUBLISHPRESS_BASE_PATH . '/twig');
+    define('PUBLISHPRESS_NOTIF_LOADED', 1);
+
+    // Load the improved notifications
+    $plugin = new PublishPress\Notifications\Plugin();
+    $plugin->init();
 
     if (is_admin() && !defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
         $includesFile = __DIR__ . '/vendor/publishpress/wordpress-version-notices/includes.php';
