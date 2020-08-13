@@ -8,17 +8,6 @@
     {
       "name": "PublishPress",
       "email": "help@publishpress.com"
-    },
-    {
-      "name": "Alledia",
-      "email": "help@alledia.com",
-      "homepage": "https://alledia.com"
-    },
-    {
-      "name": "Anderson Grudtner Martins",
-      "email": "anderson@grudtner.me",
-      "homepage": "http://anderson.grudtner.me",
-      "role": "Lead Developer"
     }
   ],
   "minimum-stability": "dev",
