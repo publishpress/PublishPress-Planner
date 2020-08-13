@@ -88,6 +88,10 @@ header h2 a.change-date-cancel {
     float: left;
 }
 
+#pp-content-overview-wrap .handlediv {
+    height: 6px;
+}
+
 @media (max-width: 782px) {
 
     #post-query-clear {

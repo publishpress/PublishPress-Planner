@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.4
-Stable tag: 2.2.0
+Tested up to: 5.5
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,17 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [2.2.1] - 2020-08-13 =
+
+* Fixed: Fixed PHP warning about variable $key being used outside and inside the context;
+* Added: Added new filter "publishpress_new_custom_status_args" to customize the post status arguments, #640;
+* Fixed: Fixed a PHP Fatal error: Trait Dependency_Injector not found, #652;
+* Fixed: Fixed PHP warning: Invalid argument supplied for foreadh in TopNotice/Module.php;
+* Fixed: Fixed warnings about mixed content when the site uses HTTPS;
+* Fixed: Fixed JS error related to jQuery "live" function being deprecated and not found;
+* Fixed: Fixed DOM errors in the browser related to multiple elements using the same ID, #660;
+* Fixed: Compatibility with WP 5.5;
 
 = [2.2.0] - 2020-06-17 =
 

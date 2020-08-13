@@ -1285,7 +1285,7 @@ if (!class_exists('PP_Calendar')) {
                                                                 $this->get_quick_create_post_type_name($post_types),
                                                                 $date_formatted
                                                             ); ?>
-                                                            <input type="hidden" id="post-insert-dialog-post-type"
+                                                            <input type="hidden" id="post-insert-dialog-post-type-<?php echo $week_single_date; ?>"
                                                                    name="post-insert-dialog-post-type"
                                                                    class="post-insert-dialog-post-type"
                                                                    value="<?php echo esc_attr($post_types[0]); ?>"/>
@@ -1302,7 +1302,7 @@ if (!class_exists('PP_Calendar')) {
                                                         </h1>
                                                         <label for="post-insert-dialog-post-type">
                                                             <?php echo __('Type', 'publishpress'); ?>
-                                                            <select id="post-insert-dialog-post-type"
+                                                            <select id="post-insert-dialog-post-type-<?php echo $week_single_date; ?>"
                                                                     name="post-insert-dialog-post-type"
                                                                     class="post-insert-dialog-post-type">
                                                                 <?php foreach ($post_types as $type) : ?>
@@ -1319,7 +1319,7 @@ if (!class_exists('PP_Calendar')) {
 
                                                     <label for="post-insert-dialog-post-author">
                                                         <?php echo __('Author', 'publishpress'); ?>
-                                                        <select id="post-insert-dialog-post-author"
+                                                        <select id="post-insert-dialog-post-author-<?php echo $week_single_date; ?>"
                                                                 name="post-insert-dialog-post-author"
                                                                 class="post-insert-dialog-post-author">
                                                             <?php foreach ($authors as $author): ?>
@@ -1337,7 +1337,7 @@ if (!class_exists('PP_Calendar')) {
                                                                 'publishpress'
                                                             ); ?></label>
                                                         <select
-                                                            id="post-insert-dialog-post-status"
+                                                            id="post-insert-dialog-post-status-<?php echo $week_single_date; ?>"
                                                             name="post-insert-dialog-post-status"
                                                             class="post-insert-dialog-post-status"
                                                         >
@@ -1359,7 +1359,7 @@ if (!class_exists('PP_Calendar')) {
                                                             ); ?></label>
                                                         <input
                                                             type="time"
-                                                            id="post-insert-dialog-post-publish-time"
+                                                            id="post-insert-dialog-post-publish-time-<?php echo $week_single_date; ?>"
                                                             name="post-insert-dialog-post-publish-time"
                                                             class="post-insert-dialog-post-publish-time"
                                                             value="<?php echo isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : ''; ?>"
