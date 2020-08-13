@@ -2115,16 +2115,16 @@
         },
         {
             "name": "publishpress/publishpress-plugin-builder",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Plugin-Builder.git",
-                "reference": "d018ef9eecaced098d1e5ce60a91c78f4ce398ea"
+                "reference": "2dee88930e6a3a2991d48e99074bd9e1ee984601"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/d018ef9eecaced098d1e5ce60a91c78f4ce398ea",
-                "reference": "d018ef9eecaced098d1e5ce60a91c78f4ce398ea",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/2dee88930e6a3a2991d48e99074bd9e1ee984601",
+                "reference": "2dee88930e6a3a2991d48e99074bd9e1ee984601",
                 "shasum": ""
             },
             "require": {
@@ -2157,7 +2157,7 @@
                 }
             ],
             "description": "Robo tasks for building WordPress plugins",
-            "time": "2020-08-11T03:08:03+00:00"
+            "time": "2020-08-13T20:06:35+00:00"
         },
         {
             "name": "sebastian/version",
