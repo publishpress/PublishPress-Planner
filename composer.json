@@ -8,31 +8,15 @@
     {
       "name": "PublishPress",
       "email": "help@publishpress.com"
-    },
-    {
-      "name": "Alledia",
-      "email": "help@alledia.com",
-      "homepage": "https://alledia.com"
-    },
-    {
-      "name": "Anderson Grudtner Martins",
-      "email": "anderson@grudtner.me",
-      "homepage": "http://anderson.grudtner.me",
-      "role": "Lead Developer"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "PublishPress\\Core\\": "core/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": ">=5.6.20",
     "twig/twig": "1.37.1",
     "pimple/pimple": "~3.0",
-    "alledia/wordpress-plugin-framework": "~0.6",
+    "alledia/wordpress-plugin-framework": "^1.0",
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {

@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 2.2.0-alpha.2
+ * Version: 2.2.1
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -42,8 +42,8 @@ use PublishPress\Notifications\Traits\PublishPress_Module;
 
 require_once 'includes.php';
 
+// Core class
 if (!class_exists('publishpress')) {
-    // Core class
     class publishpress
     {
         use Dependency_Injector, PublishPress_Module;
@@ -1097,10 +1097,8 @@ if (!class_exists('publishpress')) {
          *
          * @return bool
          */
-        protected
-        function postTypeRequiresClassicEditor(
-            $postType
-        ) {
+        protected function postTypeRequiresClassicEditor($postType)
+        {
             $specialPostTypes = $this->getPostTypesWhichRequiresClassicEditor();
 
             return in_array($postType, $specialPostTypes);
@@ -1109,8 +1107,7 @@ if (!class_exists('publishpress')) {
         /**
          * @return array
          */
-        protected
-        function getPostTypesWhichRequiresClassicEditor()
+        protected function getPostTypesWhichRequiresClassicEditor()
         {
             global $publishpress;
 
@@ -1149,10 +1146,8 @@ if (!class_exists('publishpress')) {
          *
          * @return bool
          */
-        public function canUseBlockEditorForPostType(
-            $useBlockEditor,
-            $postType
-        ) {
+        public function canUseBlockEditorForPostType($useBlockEditor, $postType)
+        {
             // Short-circuit in case any other plugin disabled the block editor.
             if (!$useBlockEditor) {
                 return false;
@@ -1164,33 +1159,19 @@ if (!class_exists('publishpress')) {
 }
 
 if (!function_exists('PublishPress')) {
-    add_action('init', 'PublishPress');
-
     function PublishPress()
     {
-        if (!defined('PUBLISHPRESS_NOTIF_LOADED')) {
-            require __DIR__ . '/includes_notifications.php';
-
-            // Load the improved notifications
-            if (defined('PUBLISHPRESS_NOTIF_LOADED')) {
-                $plugin = new PublishPress\Notifications\Plugin();
-                $plugin->init();
-            }
-        }
-
         return publishpress::instance();
     }
 }
 
+/**
+ * Registered here so the Notifications submenu is displayed right after the
+ * plugin is activate.
+ *
+ * @since 1.9.8
+ */
 if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
-    add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
-
-    /**
-     * Registered here so the Notifications submenu is displayed right after the
-     * plugin is activate.
-     *
-     * @since 1.9.8
-     */
     function publishPressRegisterImprovedNotificationsPostTypes()
     {
         global $publishpress;
@@ -1245,4 +1226,10 @@ if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     }
 }
 
-register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
+if (!defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
+    add_action('init', 'PublishPress');
+    add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
+    register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
+
+    define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
+}

@@ -12,3 +12,5 @@ node_modules
 /vendor
 .idea
 /dist
+builder.yml
+.editorconfig
