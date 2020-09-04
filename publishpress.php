@@ -6,6 +6,8 @@
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Version: 2.2.1
+ * Text Domain: publishpress
+ * Domain Path: /languages
  *
  * Copyright (c) 2019 PublishPress
  *
