@@ -282,11 +282,22 @@ class PP_Content_Overview extends PP_Module
     public function settings_post_types_option()
     {
         global $publishpress;
-        $publishpress->settings->helper_option_custom_post_type(
-            $this->module,
-            ['post' => __('Post'), 'page' => __('Pages')]
-        );
+        $publishpress->settings->helper_option_custom_post_type($this->module);
     }
+
+    /**
+     * Get the post types for editorial metadata
+     *
+     * @return array $post_types All existing post types
+     *
+     * @since 0.7
+     */
+    public function get_settings_post_types()
+    {
+        global $publishpress;
+        return $publishpress->settings->get_supported_post_types_for_module($this->module);
+    }
+
 
     /**
      * Validate data entered by the user
@@ -682,6 +693,16 @@ class PP_Content_Overview extends PP_Module
                         echo '</div>';
                     }
                 }
+
+                foreach ($this->get_selected_post_types($this->module->options->post_types) as $post_type ){
+                    if (isset($this->module->options->post_types[$post_type]) && $this->module->options->post_types[$post_type] == 'on') {
+                        for ($i = 1; $i <= $this->num_columns; $i++) {
+                            echo '<div class="postbox-container" style="width:' . (100 / $this->num_columns) . '%;">';
+                            $this->print_term(null, $post_type);
+                            echo '</div>';
+                        }
+                    }
+                }
                 ?>
             </div>
         </div>
@@ -689,6 +710,17 @@ class PP_Content_Overview extends PP_Module
         <?php
 
         $publishpress->settings->print_default_footer($publishpress->modules->content_overview);
+    }
+
+    public function get_selected_post_types($selection_from_options)
+    {
+        $enabled_post_types = [];
+        foreach ($selection_from_options as $post_type => $on_off) {
+            if ($on_off == 'on' && !in_array($post_type, $enabled_post_types) && $post_type != 'post' && $post_type != 'page') {
+                array_push($enabled_post_types, $post_type);
+            }
+        }
+        return $enabled_post_types;
     }
 
     /**
@@ -966,6 +998,7 @@ class PP_Content_Overview extends PP_Module
         global $wpdb;
 
         $posts = $this->get_posts_for_term($term, $postType, $this->user_filters);
+        $post_types = $this->get_settings_post_types();
 
         if (!empty($posts)) {
             // Don't display the message for $no_matching_posts
@@ -975,9 +1008,15 @@ class PP_Content_Overview extends PP_Module
             <div class="handlediv" title="<?php esc_attr(_e('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
             <?php if ($postType === 'post') : ?>
-                <h3 class='hndle'><span><?php echo esc_html($term->name); ?></span></h3>
+                <h3 class='hndle'><span>
+                        <?php if (is_object($term) && property_exists($term, 'name')) {
+                            echo esc_html($term->name);
+                        } ?>
+                    </span></h3>
             <?php elseif ($postType === 'page') : ?>
                 <h3 class=\'hndle\'><span><?php echo __('Pages'); ?></span></h3>
+            <?php else : ?>
+                <h3 class=\'hndle\'><span><?php echo $post_types[$postType]->label; ?></span></h3>
             <?php endif; ?>
             <div class="inside">
                 <?php if (!empty($posts)) : ?>
@@ -1038,7 +1077,10 @@ class PP_Content_Overview extends PP_Module
                 $term->term_id,
             ];
 
-            $arg_terms         = array_merge($arg_terms, get_term_children($term->term_id, $this->taxonomy_used));
+            if (is_object($term) && property_exists($term, 'term_id')) {
+                $arg_terms = array_merge($arg_terms, get_term_children($term->term_id, $this->taxonomy_used));
+            }
+
             $args['tax_query'] = [
                 [
                     'taxonomy' => $this->taxonomy_used,
