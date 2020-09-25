@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 2.2.1
+ * Version: 2.2.1-feature-676-edcomments-status-notifications
  *
  * Copyright (c) 2019 PublishPress
  *
