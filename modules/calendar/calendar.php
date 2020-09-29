@@ -247,6 +247,10 @@ if (!class_exists('PP_Calendar')) {
             // Update metadata
             add_action('wp_ajax_pp_calendar_update_metadata', [$this, 'handle_ajax_update_metadata']);
 
+            add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
+            add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
+            add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
+
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
 
@@ -456,8 +460,16 @@ if (!class_exists('PP_Calendar')) {
                 wp_enqueue_style(
                     'publishpress-calendar-css',
                     $this->module_url . 'lib/calendar.css',
-                    false,
+                    ['publishpress-select2'],
                     PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_style(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
+                    false,
+                    PUBLISHPRESS_VERSION,
+                    'screen'
                 );
             }
         }
@@ -494,6 +506,7 @@ if (!class_exists('PP_Calendar')) {
                     'jquery-ui-draggable',
                     'jquery-ui-droppable',
                     'clipboard-js',
+                    'publishpress-select2'
                 ];
                 foreach ($js_libraries as $js_library) {
                     wp_enqueue_script($js_library);
@@ -513,8 +526,16 @@ if (!class_exists('PP_Calendar')) {
                     true
                 );
 
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
                 $pp_cal_js_params = [
                     'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false',
+                    'nonce' => wp_create_nonce('calendar_filter_nonce'),
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
             }
@@ -2893,6 +2914,94 @@ if (!class_exists('PP_Calendar')) {
             return apply_filters('pp_calendar_filter_names', $select_filter_names);
         }
 
+        public function searchAuthors()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+            if (empty($queryText)) {
+                $queryResult = [];
+            } else {
+                global $wpdb;
+
+                $queryResult = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
+                    FROM {$wpdb->posts} as p
+                    INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
+                    WHERE u.display_name LIKE %s",
+                        '%' . $wpdb->esc_like($queryText) . '%'
+                    )
+                );
+
+            }
+
+            echo json_encode($queryResult);
+            exit;
+        }
+
+        public function searchCategories()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+            if (empty($queryText)) {
+                $queryResult = [];
+            } else {
+                global $wpdb;
+
+                $queryResult = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT DISTINCT t.term_id AS id, t.name AS text
+                    FROM {$wpdb->term_taxonomy} as tt
+                    INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                    WHERE taxonomy = 'category' AND t.name LIKE %s",
+                        '%' . $wpdb->esc_like($queryText) . '%'
+                    )
+                );
+            }
+
+            echo json_encode($queryResult);
+            exit;
+        }
+
+        public function searchTags()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+            if (empty($queryText)) {
+                $queryResult = [];
+            } else {
+                global $wpdb;
+
+                $queryResult = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT DISTINCT t.term_id AS id, t.name AS text
+                    FROM {$wpdb->term_taxonomy} as tt
+                    INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                    WHERE taxonomy = 'post_tag' AND t.name LIKE %s",
+                        '%' . $wpdb->esc_like($queryText) . '%'
+                    )
+                );
+            }
+
+            echo json_encode($queryResult);
+            exit;
+        }
+
         /**
          * Sanitize a $_GET or similar filter being used on the calendar
          *
@@ -2967,43 +3076,49 @@ if (!class_exists('PP_Calendar')) {
                     <?php
                     break;
                 case 'cat':
-                    // Filter by categories, borrowed from wp-admin/edit.php
-                    if (taxonomy_exists('category')) {
-                        $category_dropdown_args = [
-                            'show_option_all' => __('All categories', 'publishpress'),
-                            'hide_empty'      => 0,
-                            'hierarchical'    => 1,
-                            'show_count'      => 0,
-                            'orderby'         => 'name',
-                            'selected'        => $filters['cat'],
-                        ];
-                        wp_dropdown_categories($category_dropdown_args);
-                    }
+                    $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
+                    ?>
+                    <select id="filter_category" name="cat">
+                        <option value=""><?php _e('View all categories', 'publishpress'); ?></option>
+                        <?php
+                        if (!empty($categoryId)) {
+                            $category = get_term($categoryId, 'category');
+
+                            echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html($category->name) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'tag':
-                    if (taxonomy_exists('post_tag')) {
-                        $tag_dropdown_args = [
-                            'show_option_all' => __('All tags', 'publishpress'),
-                            'hide_empty'      => 0,
-                            'hierarchical'    => 0,
-                            'show_count'      => 0,
-                            'orderby'         => 'name',
-                            'selected'        => $filters['tag'],
-                            'taxonomy'        => 'post_tag',
-                            'name'            => 'tag',
-                        ];
-                        wp_dropdown_categories($tag_dropdown_args);
-                    }
+                    $tagId = isset($filters['tag']) ? (int)$filters['tag'] : 0;
+                    ?>
+                    <select id="filter_tag" name="tag">
+                        <option value=""><?php _e('All tags', 'publishpress'); ?></option>
+                        <?php
+                        if (!empty($tagId)) {
+                            $tag = get_term($tagId, 'post_tag');
+
+                            echo "<option value='" . esc_attr($tagId) . "' selected='selected'>" . esc_html($tag->name) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'author':
-                    $users_dropdown_args = [
-                        'show_option_all' => __('All users', 'publishpress'),
-                        'name'            => 'author',
-                        'selected'        => $filters['author'],
-                        'who'             => 'authors',
-                    ];
-                    $users_dropdown_args = apply_filters('pp_calendar_users_dropdown_args', $users_dropdown_args);
-                    wp_dropdown_users($users_dropdown_args);
+                    $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                    ?>
+                    <select id="filter_author" name="author">
+                        <option value=""><?php _e('All authors', 'publishpress'); ?></option>
+                        <?php
+                        if (!empty($authorId)) {
+                            $author = get_user_by('id', $authorId);
+
+                            echo "<option value='" . esc_attr($authorId) . "' selected='selected'>" . esc_html($author->display_name) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'type':
                     $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -3028,7 +3143,7 @@ if (!class_exists('PP_Calendar')) {
                         $filters['weeks'] = self::DEFAULT_NUM_WEEKS;
                     }
 
-                    $output = '<select name="weeks">';
+                    $output = '<select id="weeks" name="weeks">';
                     for ($i = 1; $i <= 12; $i++) {
                         $output .= '<option value="' . esc_attr($i) . '" ' . selected(
                                 $i,

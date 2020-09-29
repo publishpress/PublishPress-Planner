@@ -489,6 +489,76 @@ jQuery(document).ready(function ($) {
         $('select#tag').hide();
     }
 
+    $('#calendar-filter select#post_status').pp_select2();
+    $('#calendar-filter select#type').pp_select2();
+    $('#calendar-filter select#weeks').pp_select2();
+
+    $('#calendar-filter select#filter_category').pp_select2({
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 0,
+            data: function (params) {
+                return {
+                    action: 'publishpress_calendar_search_categories',
+                    nonce: pp_calendar_params.nonce,
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: false
+        },
+        minimumInputLength: 2
+    });
+
+    $('#calendar-filter select#filter_tag').pp_select2({
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 0,
+            data: function (params) {
+                return {
+                    action: 'publishpress_calendar_search_tags',
+                    nonce: pp_calendar_params.nonce,
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: false
+        },
+        minimumInputLength: 2
+    });
+
+    $('#calendar-filter select#filter_author').pp_select2({
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 0,
+            data: function (params) {
+                return {
+                    action: 'publishpress_calendar_search_authors',
+                    nonce: pp_calendar_params.nonce,
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: false
+        },
+        minimumInputLength: 2
+    });
+
     function updateParam (url, paramToUpdate, newValue) {
         var parts = url.split('?'),
             query,
