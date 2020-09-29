@@ -386,6 +386,29 @@ jQuery(document).ready(function ($) {
                 EFQuickPublish.ajax_pp_create_post(true);
             });
 
+            $('select.post-insert-dialog-post-type', $this).pp_select2();
+            $('select.post-insert-dialog-post-status', $this).pp_select2();
+
+            $('select.post-insert-dialog-post-author', $this).pp_select2({
+                ajax: {
+                    url: ajaxurl,
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            action: 'publishpress_calendar_search_authors',
+                            nonce: pp_calendar_params.nonce,
+                            q: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: false
+                }
+            });
+
             return false; // prevent bubbling up
         },
 
@@ -511,8 +534,7 @@ jQuery(document).ready(function ($) {
                 };
             },
             cache: false
-        },
-        minimumInputLength: 2
+        }
     });
 
     $('#calendar-filter select#filter_tag').pp_select2({
@@ -533,8 +555,7 @@ jQuery(document).ready(function ($) {
                 };
             },
             cache: false
-        },
-        minimumInputLength: 2
+        }
     });
 
     $('#calendar-filter select#filter_author').pp_select2({
@@ -555,8 +576,7 @@ jQuery(document).ready(function ($) {
                 };
             },
             cache: false
-        },
-        minimumInputLength: 2
+        }
     });
 
     function updateParam (url, paramToUpdate, newValue) {

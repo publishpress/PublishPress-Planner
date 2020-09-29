@@ -1343,13 +1343,8 @@ if (!class_exists('PP_Calendar')) {
                                                         <select id="post-insert-dialog-post-author-<?php echo $week_single_date; ?>"
                                                                 name="post-insert-dialog-post-author"
                                                                 class="post-insert-dialog-post-author">
-                                                            <?php foreach ($authors as $author): ?>
-                                                                <option value="<?php echo $author->ID; ?>">
-                                                                    <?php echo $author->display_name; ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
+                                                            <option value=""></option>
                                                         </select>
-                                                        <?php unset($author); ?>
                                                     </label>
 
                                                     <div>
@@ -2922,25 +2917,26 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
-            if (empty($queryText)) {
-                $queryResult = [];
-            } else {
-                global $wpdb;
+            $user_args = [
+                'number'   => 20,
+                'orderby' => 'display_name',
+            ];
 
-                $queryResult = $wpdb->get_results(
-                    $wpdb->prepare(
-                        "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
-                    FROM {$wpdb->posts} as p
-                    INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
-                    WHERE u.display_name LIKE %s",
-                        '%' . $wpdb->esc_like($queryText) . '%'
-                    )
-                );
-
+            if (!empty($_GET['q'])) {
+                $user_args['search'] = sanitize_text_field('*' . $_GET['q'] . '*');
             }
 
-            echo json_encode($queryResult);
+            $users = get_users($user_args);
+
+            $results = [];
+            foreach ($users as $user) {
+                $results[] = [
+                    'id'   => $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
+            echo wp_json_encode($results);
+
             exit;
         }
 
@@ -2953,23 +2949,21 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $queryText = sanitize_text_field($_GET['q']);
-            if (empty($queryText)) {
-                $queryResult = [];
-            } else {
-                global $wpdb;
+            global $wpdb;
 
-                $queryResult = $wpdb->get_results(
-                    $wpdb->prepare(
-                        "SELECT DISTINCT t.term_id AS id, t.name AS text
-                    FROM {$wpdb->term_taxonomy} as tt
-                    INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                    WHERE taxonomy = 'category' AND t.name LIKE %s",
-                        '%' . $wpdb->esc_like($queryText) . '%'
-                    )
-                );
-            }
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                FROM {$wpdb->term_taxonomy} as tt
+                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                WHERE taxonomy = 'category' AND t.name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
 
-            echo json_encode($queryResult);
+            echo wp_json_encode($queryResult);
             exit;
         }
 
@@ -2982,23 +2976,21 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $queryText = sanitize_text_field($_GET['q']);
-            if (empty($queryText)) {
-                $queryResult = [];
-            } else {
-                global $wpdb;
+            global $wpdb;
 
-                $queryResult = $wpdb->get_results(
-                    $wpdb->prepare(
-                        "SELECT DISTINCT t.term_id AS id, t.name AS text
-                    FROM {$wpdb->term_taxonomy} as tt
-                    INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                    WHERE taxonomy = 'post_tag' AND t.name LIKE %s",
-                        '%' . $wpdb->esc_like($queryText) . '%'
-                    )
-                );
-            }
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                FROM {$wpdb->term_taxonomy} as tt
+                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                WHERE taxonomy = 'post_tag' AND t.name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
 
-            echo json_encode($queryResult);
+            echo wp_json_encode($queryResult);
             exit;
         }
 
