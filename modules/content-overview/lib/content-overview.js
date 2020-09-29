@@ -86,8 +86,7 @@ jQuery(document).ready(function ($) {
                 };
             },
             cache: false
-        },
-        minimumInputLength: 2
+        }
     });
 
     $('#pp-content-filters select#filter_category').pp_select2({
@@ -108,8 +107,7 @@ jQuery(document).ready(function ($) {
                 };
             },
             cache: false
-        },
-        minimumInputLength: 2
+        }
     });
 
     $('#pp-content-filters select#post_status').pp_select2();
