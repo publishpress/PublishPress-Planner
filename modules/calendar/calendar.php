@@ -2678,16 +2678,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             if (empty($post_author)) {
-                $authorsPermissions = self::getAuthorPermissions();
-                $user               = wp_get_current_user();
-                if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
-                    $this->print_ajax_response(
-                        'error',
-                        __('You do not have necessary permissions to complete this action.', 'publishpress')
-                    );
-                }
-
-                $post_author = $user->ID;
+                $post_author = apply_filters('publishpress_calendar_default_author', get_current_user_id());
             }
 
             $post_date           = sanitize_text_field($_POST['pp_insert_date']);
@@ -2741,6 +2732,7 @@ if (!class_exists('PP_Calendar')) {
             $post_id = wp_insert_post($post_placeholder);
             remove_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
 
+            do_action('publishpress_calendar_after_create_post', $post_id, $post_author);
 
             if ($post_id) { // success!
 
@@ -2917,18 +2909,30 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
+            $queryText = sanitize_text_field($_GET['q']);
+
+            /**
+             * @param array $results
+             * @param string $searchText
+             */
+            $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+
+            if (!empty($results)) {
+                echo wp_json_encode($results);
+                exit;
+            }
+
             $user_args = [
                 'number'   => 20,
                 'orderby' => 'display_name',
             ];
 
             if (!empty($_GET['q'])) {
-                $user_args['search'] = sanitize_text_field('*' . $_GET['q'] . '*');
+                $user_args['search'] = '*' . $queryText . '*';
             }
 
             $users = get_users($user_args);
 
-            $results = [];
             foreach ($users as $user) {
                 $results[] = [
                     'id'   => $user->ID,
@@ -3099,14 +3103,24 @@ if (!class_exists('PP_Calendar')) {
                     break;
                 case 'author':
                     $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                    $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
                     ?>
                     <select id="filter_author" name="author">
-                        <option value=""><?php _e('All authors', 'publishpress'); ?></option>
+                        <option value="" <?php echo $selectedOptionAll; ?>>
+                            <?php _e('All authors', 'publishpress'); ?>
+                        </option>
                         <?php
                         if (!empty($authorId)) {
                             $author = get_user_by('id', $authorId);
+                            $option = '';
 
-                            echo "<option value='" . esc_attr($authorId) . "' selected='selected'>" . esc_html($author->display_name) . "</option>";
+                            if (!empty($author)) {
+                                $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html($author->display_name) . '</option>';
+                            }
+
+                            $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                            echo $option;
                         }
                         ?>
                     </select>
@@ -3257,37 +3271,23 @@ if (!class_exists('PP_Calendar')) {
                 return null;
             }
 
-            $authorsPermissions = self::getAuthorPermissions();
-            $user               = get_user_by('id', $post_author_id);
-            if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
-                throw new Exception(
-                    __(
-                        "The selected user doesn't have enough permissions to be set as the post author.",
-                        'publishpress'
-                    )
-                );
+            $user = get_user_by('id', $post_author_id);
+
+            if (empty($user) || !$user->can('edit_posts')) {
+
+                $isValid = apply_filters('publishpress_author_can_edit_posts', false, $post_author_id);
+
+                if (!$isValid) {
+                    throw new Exception(
+                        __(
+                            "The selected user doesn't have enough permissions to be set as the post author.",
+                            'publishpress'
+                        )
+                    );
+                }
             }
 
-            return (int)$user->ID;
-        }
-
-        /**
-         * Retrieve a set of permissions that an Author user might have.
-         *
-         * @access  private
-         * @static
-         * @return  array
-         * @since   1.20.0
-         *
-         */
-        private static function getAuthorPermissions()
-        {
-            return [
-                'administrator',
-                'author',
-                'editor',
-                'contributor',
-            ];
+            return (int)$post_author_id;
         }
 
         public function setDefaultCapabilities()

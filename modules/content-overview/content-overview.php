@@ -1002,14 +1002,24 @@ class PP_Content_Overview extends PP_Module
 
             case 'author':
                 $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
                 ?>
                 <select id="filter_author" name="author">
-                    <option value=""><?php _e('View all authors', 'publishpress'); ?></option>
+                    <option value="" <?php echo $selectedOptionAll; ?>>
+                        <?php _e('All authors', 'publishpress'); ?>
+                    </option>
                     <?php
                     if (!empty($authorId)) {
                         $author = get_user_by('id', $authorId);
+                        $option = '';
 
-                        echo "<option value='" . esc_attr($authorId) . "' selected='selected'>" . esc_html($author->display_name) . "</option>";
+                        if (!empty($author)) {
+                            $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html($author->display_name) . '</option>';
+                        }
+
+                        $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                        echo $option;
                     }
                     ?>
                 </select>
@@ -1166,6 +1176,8 @@ class PP_Content_Overview extends PP_Module
             $term_posts[] = $post;
         }
 
+
+
         return $term_posts;
     }
 
@@ -1233,11 +1245,10 @@ class PP_Content_Overview extends PP_Module
                 break;
             case 'author':
                 $post_author = get_userdata($post->post_author);
-
                 $author_name = is_object($post_author) ? $post_author->display_name : '';
-
-                // @todo: Make this compatible with Multiple Authors
                 $author_name = apply_filters('the_author', $author_name);
+
+                $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
 
                 return $author_name;
                 break;
@@ -1409,6 +1420,18 @@ class PP_Content_Overview extends PP_Module
         }
 
         $queryText = sanitize_text_field($_GET['q']);
+
+        /**
+         * @param array $results
+         * @param string $searchText
+         */
+        $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+
+        if (!empty($results)) {
+            echo wp_json_encode($results);
+            exit;
+        }
+
         global $wpdb;
 
         $queryResult = $wpdb->get_results(
