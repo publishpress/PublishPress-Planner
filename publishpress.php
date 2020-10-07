@@ -6,6 +6,8 @@
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Version: 2.2.1-hotfix-439-statuses-cyrillic-chars
+ * Text Domain: publishpress
+ * Domain Path: /languages
  *
  * Copyright (c) 2019 PublishPress
  *
@@ -716,29 +718,8 @@ if (!class_exists('publishpress')) {
         public function register_scripts_and_styles($hook)
         {
             wp_register_style(
-                'pp-remodal',
-                PUBLISHPRESS_URL . 'common/css/remodal.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
-            wp_register_style(
-                'pp-remodal-default-theme',
-                PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css',
-                ['pp-remodal'],
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
-            wp_register_style(
                 'jquery-listfilterizer',
                 PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
-            wp_enqueue_style(
-                'publishpress-chosen-css',
-                plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
                 false,
                 PUBLISHPRESS_VERSION,
                 'all'
@@ -747,32 +728,19 @@ if (!class_exists('publishpress')) {
             wp_enqueue_style(
                 'pressshack-admin-css',
                 PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
-                ['pp-remodal', 'pp-remodal-default-theme'],
+                [],
                 PUBLISHPRESS_VERSION,
                 'all'
             );
+
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                ['pressshack-admin-css', 'allex', 'publishpress-chosen-css'],
+                ['pressshack-admin-css', 'allex'],
                 PUBLISHPRESS_VERSION,
                 'all'
             );
 
-            wp_enqueue_script(
-                'publishpress-chosen',
-                plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
-
-            wp_register_script(
-                'pp-remodal',
-                PUBLISHPRESS_URL . 'common/js/remodal.min.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION,
-                true
-            );
             wp_register_script(
                 'jquery-listfilterizer',
                 PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js',
@@ -780,6 +748,7 @@ if (!class_exists('publishpress')) {
                 PUBLISHPRESS_VERSION,
                 true
             );
+
             wp_register_script(
                 'jquery-quicksearch',
                 PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js',
