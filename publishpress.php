@@ -6,6 +6,8 @@
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Version: 2.2.1-hotfix-674-ajax-filters-2
+ * Text Domain: publishpress
+ * Domain Path: /languages
  *
  * Copyright (c) 2019 PublishPress
  *
