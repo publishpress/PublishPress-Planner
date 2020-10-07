@@ -718,20 +718,6 @@ if (!class_exists('publishpress')) {
         public function register_scripts_and_styles($hook)
         {
             wp_register_style(
-                'pp-remodal',
-                PUBLISHPRESS_URL . 'common/css/remodal.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
-            wp_register_style(
-                'pp-remodal-default-theme',
-                PUBLISHPRESS_URL . 'common/css/remodal-default-theme.css',
-                ['pp-remodal'],
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
-            wp_register_style(
                 'jquery-listfilterizer',
                 PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css',
                 false,
@@ -749,7 +735,7 @@ if (!class_exists('publishpress')) {
             wp_enqueue_style(
                 'pressshack-admin-css',
                 PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
-                ['pp-remodal', 'pp-remodal-default-theme'],
+                [],
                 PUBLISHPRESS_VERSION,
                 'all'
             );
@@ -766,14 +752,6 @@ if (!class_exists('publishpress')) {
                 plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
                 ['jquery'],
                 PUBLISHPRESS_VERSION
-            );
-
-            wp_register_script(
-                'pp-remodal',
-                PUBLISHPRESS_URL . 'common/js/remodal.min.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION,
-                true
             );
             wp_register_script(
                 'jquery-listfilterizer',
