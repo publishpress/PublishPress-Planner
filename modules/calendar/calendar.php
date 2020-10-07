@@ -247,6 +247,10 @@ if (!class_exists('PP_Calendar')) {
             // Update metadata
             add_action('wp_ajax_pp_calendar_update_metadata', [$this, 'handle_ajax_update_metadata']);
 
+            add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
+            add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
+            add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
+
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
 
@@ -456,8 +460,16 @@ if (!class_exists('PP_Calendar')) {
                 wp_enqueue_style(
                     'publishpress-calendar-css',
                     $this->module_url . 'lib/calendar.css',
-                    false,
+                    ['publishpress-select2'],
                     PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_style(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
+                    false,
+                    PUBLISHPRESS_VERSION,
+                    'screen'
                 );
             }
         }
@@ -494,6 +506,7 @@ if (!class_exists('PP_Calendar')) {
                     'jquery-ui-draggable',
                     'jquery-ui-droppable',
                     'clipboard-js',
+                    'publishpress-select2'
                 ];
                 foreach ($js_libraries as $js_library) {
                     wp_enqueue_script($js_library);
@@ -513,8 +526,16 @@ if (!class_exists('PP_Calendar')) {
                     true
                 );
 
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
                 $pp_cal_js_params = [
                     'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false',
+                    'nonce' => wp_create_nonce('calendar_filter_nonce'),
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
             }
@@ -1322,13 +1343,8 @@ if (!class_exists('PP_Calendar')) {
                                                         <select id="post-insert-dialog-post-author-<?php echo $week_single_date; ?>"
                                                                 name="post-insert-dialog-post-author"
                                                                 class="post-insert-dialog-post-author">
-                                                            <?php foreach ($authors as $author): ?>
-                                                                <option value="<?php echo $author->ID; ?>">
-                                                                    <?php echo $author->display_name; ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
+                                                            <option value=""></option>
                                                         </select>
-                                                        <?php unset($author); ?>
                                                     </label>
 
                                                     <div>
@@ -2662,16 +2678,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             if (empty($post_author)) {
-                $authorsPermissions = self::getAuthorPermissions();
-                $user               = wp_get_current_user();
-                if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
-                    $this->print_ajax_response(
-                        'error',
-                        __('You do not have necessary permissions to complete this action.', 'publishpress')
-                    );
-                }
-
-                $post_author = $user->ID;
+                $post_author = apply_filters('publishpress_calendar_default_author', get_current_user_id());
             }
 
             $post_date           = sanitize_text_field($_POST['pp_insert_date']);
@@ -2725,6 +2732,7 @@ if (!class_exists('PP_Calendar')) {
             $post_id = wp_insert_post($post_placeholder);
             remove_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
 
+            do_action('publishpress_calendar_after_create_post', $post_id, $post_author);
 
             if ($post_id) { // success!
 
@@ -2893,6 +2901,103 @@ if (!class_exists('PP_Calendar')) {
             return apply_filters('pp_calendar_filter_names', $select_filter_names);
         }
 
+        public function searchAuthors()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+
+            /**
+             * @param array $results
+             * @param string $searchText
+             */
+            $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+
+            if (!empty($results)) {
+                echo wp_json_encode($results);
+                exit;
+            }
+
+            $user_args = [
+                'number'   => 20,
+                'orderby' => 'display_name',
+            ];
+
+            if (!empty($_GET['q'])) {
+                $user_args['search'] = '*' . $queryText . '*';
+            }
+
+            $users = get_users($user_args);
+
+            foreach ($users as $user) {
+                $results[] = [
+                    'id'   => $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
+            echo wp_json_encode($results);
+
+            exit;
+        }
+
+        public function searchCategories()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+            global $wpdb;
+
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                FROM {$wpdb->term_taxonomy} as tt
+                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                WHERE taxonomy = 'category' AND t.name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
+
+            echo wp_json_encode($queryResult);
+            exit;
+        }
+
+        public function searchTags()
+        {
+            header('Content-type: application/json;');
+
+            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+                return '[]';
+            }
+
+            $queryText = sanitize_text_field($_GET['q']);
+            global $wpdb;
+
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                FROM {$wpdb->term_taxonomy} as tt
+                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                WHERE taxonomy = 'post_tag' AND t.name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
+
+            echo wp_json_encode($queryResult);
+            exit;
+        }
+
         /**
          * Sanitize a $_GET or similar filter being used on the calendar
          *
@@ -2967,43 +3072,59 @@ if (!class_exists('PP_Calendar')) {
                     <?php
                     break;
                 case 'cat':
-                    // Filter by categories, borrowed from wp-admin/edit.php
-                    if (taxonomy_exists('category')) {
-                        $category_dropdown_args = [
-                            'show_option_all' => __('All categories', 'publishpress'),
-                            'hide_empty'      => 0,
-                            'hierarchical'    => 1,
-                            'show_count'      => 0,
-                            'orderby'         => 'name',
-                            'selected'        => $filters['cat'],
-                        ];
-                        wp_dropdown_categories($category_dropdown_args);
-                    }
+                    $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
+                    ?>
+                    <select id="filter_category" name="cat">
+                        <option value=""><?php _e('View all categories', 'publishpress'); ?></option>
+                        <?php
+                        if (!empty($categoryId)) {
+                            $category = get_term($categoryId, 'category');
+
+                            echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html($category->name) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'tag':
-                    if (taxonomy_exists('post_tag')) {
-                        $tag_dropdown_args = [
-                            'show_option_all' => __('All tags', 'publishpress'),
-                            'hide_empty'      => 0,
-                            'hierarchical'    => 0,
-                            'show_count'      => 0,
-                            'orderby'         => 'name',
-                            'selected'        => $filters['tag'],
-                            'taxonomy'        => 'post_tag',
-                            'name'            => 'tag',
-                        ];
-                        wp_dropdown_categories($tag_dropdown_args);
-                    }
+                    $tagId = isset($filters['tag']) ? (int)$filters['tag'] : 0;
+                    ?>
+                    <select id="filter_tag" name="tag">
+                        <option value=""><?php _e('All tags', 'publishpress'); ?></option>
+                        <?php
+                        if (!empty($tagId)) {
+                            $tag = get_term($tagId, 'post_tag');
+
+                            echo "<option value='" . esc_attr($tagId) . "' selected='selected'>" . esc_html($tag->name) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'author':
-                    $users_dropdown_args = [
-                        'show_option_all' => __('All users', 'publishpress'),
-                        'name'            => 'author',
-                        'selected'        => $filters['author'],
-                        'who'             => 'authors',
-                    ];
-                    $users_dropdown_args = apply_filters('pp_calendar_users_dropdown_args', $users_dropdown_args);
-                    wp_dropdown_users($users_dropdown_args);
+                    $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                    $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
+                    ?>
+                    <select id="filter_author" name="author">
+                        <option value="" <?php echo $selectedOptionAll; ?>>
+                            <?php _e('All authors', 'publishpress'); ?>
+                        </option>
+                        <?php
+                        if (!empty($authorId)) {
+                            $author = get_user_by('id', $authorId);
+                            $option = '';
+
+                            if (!empty($author)) {
+                                $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html($author->display_name) . '</option>';
+                            }
+
+                            $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                            echo $option;
+                        }
+                        ?>
+                    </select>
+                    <?php
                     break;
                 case 'type':
                     $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -3028,7 +3149,7 @@ if (!class_exists('PP_Calendar')) {
                         $filters['weeks'] = self::DEFAULT_NUM_WEEKS;
                     }
 
-                    $output = '<select name="weeks">';
+                    $output = '<select id="weeks" name="weeks">';
                     for ($i = 1; $i <= 12; $i++) {
                         $output .= '<option value="' . esc_attr($i) . '" ' . selected(
                                 $i,
@@ -3150,37 +3271,23 @@ if (!class_exists('PP_Calendar')) {
                 return null;
             }
 
-            $authorsPermissions = self::getAuthorPermissions();
-            $user               = get_user_by('id', $post_author_id);
-            if (count(array_intersect($authorsPermissions, $user->roles)) === 0) {
-                throw new Exception(
-                    __(
-                        "The selected user doesn't have enough permissions to be set as the post author.",
-                        'publishpress'
-                    )
-                );
+            $user = get_user_by('id', $post_author_id);
+
+            if (empty($user) || !$user->can('edit_posts')) {
+
+                $isValid = apply_filters('publishpress_author_can_edit_posts', false, $post_author_id);
+
+                if (!$isValid) {
+                    throw new Exception(
+                        __(
+                            "The selected user doesn't have enough permissions to be set as the post author.",
+                            'publishpress'
+                        )
+                    );
+                }
             }
 
-            return (int)$user->ID;
-        }
-
-        /**
-         * Retrieve a set of permissions that an Author user might have.
-         *
-         * @access  private
-         * @static
-         * @return  array
-         * @since   1.20.0
-         *
-         */
-        private static function getAuthorPermissions()
-        {
-            return [
-                'administrator',
-                'author',
-                'editor',
-                'contributor',
-            ];
+            return (int)$post_author_id;
         }
 
         public function setDefaultCapabilities()
