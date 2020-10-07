@@ -724,13 +724,6 @@ if (!class_exists('publishpress')) {
                 PUBLISHPRESS_VERSION,
                 'all'
             );
-            wp_enqueue_style(
-                'publishpress-chosen-css',
-                plugins_url('common/libs/chosen-v1.8.3/chosen.min.css', __FILE__),
-                false,
-                PUBLISHPRESS_VERSION,
-                'all'
-            );
 
             wp_enqueue_style(
                 'pressshack-admin-css',
@@ -739,10 +732,11 @@ if (!class_exists('publishpress')) {
                 PUBLISHPRESS_VERSION,
                 'all'
             );
+
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                ['pressshack-admin-css', 'allex', 'publishpress-chosen-css'],
+                ['pressshack-admin-css', 'allex'],
                 PUBLISHPRESS_VERSION,
                 'all'
             );
@@ -753,6 +747,7 @@ if (!class_exists('publishpress')) {
                 ['jquery'],
                 PUBLISHPRESS_VERSION
             );
+
             wp_register_script(
                 'jquery-listfilterizer',
                 PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js',
@@ -760,6 +755,7 @@ if (!class_exists('publishpress')) {
                 PUBLISHPRESS_VERSION,
                 true
             );
+
             wp_register_script(
                 'jquery-quicksearch',
                 PUBLISHPRESS_URL . 'common/js/jquery.quicksearch.js',
