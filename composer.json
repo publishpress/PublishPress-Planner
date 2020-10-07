@@ -21,6 +21,7 @@
   },
   "require-dev": {
     "publishpress/publishpress-plugin-builder": "^1.2",
-    "bartlett/php-compatinfo": "^5.2"
+    "bartlett/php-compatinfo": "^5.2",
+    "overtrue/phplint": "^2.1"
   }
 }
