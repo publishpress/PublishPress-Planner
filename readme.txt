@@ -124,6 +124,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed performance and memory issue for the calendar and content overview pages adding filters with asynchronous data search, removing the bloat of rendering all the users/tags in fields for each calendar cell, and content overview filters, #674;
 * Fixed: Fixed language domain loading and updated the POT file, #670;
 * Fixed: Removed a not used JS library: remodal, #517;
+* Fixed: Stop loading the Chosen JS library where it is not used, #330;
 
 = [2.2.1] - 2020-08-13 =
 
