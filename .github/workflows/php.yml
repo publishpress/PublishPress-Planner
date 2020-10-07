@@ -27,7 +27,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Check syntax errors
-      run: ./vendor/bin/phplint ./ --exclude=vendor
+      run: ./vendor/bin/phplint
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
