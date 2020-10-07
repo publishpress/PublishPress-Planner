@@ -1,13 +1,4 @@
 /** Content Overview **/
-#pp-content-overview-tablenav {
-    height: auto;
-    overflow: hidden;
-}
-
-#pp-content-overview-tablenav select {
-    max-width: 300px;
-}
-
 #post-query-clear {
     margin-top: -2px;
     margin-left: 4px;
