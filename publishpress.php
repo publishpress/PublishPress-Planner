@@ -741,13 +741,6 @@ if (!class_exists('publishpress')) {
                 'all'
             );
 
-            wp_enqueue_script(
-                'publishpress-chosen',
-                plugins_url('common/libs/chosen-v1.8.3/chosen.jquery.min.js', __FILE__),
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
-
             wp_register_script(
                 'jquery-listfilterizer',
                 PUBLISHPRESS_URL . 'common/js/jquery.listfilterizer.js',
