@@ -119,13 +119,16 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [2.3.0] - 2020-10-07 =
 
 * Fixed: Fixed performance and memory issue for the calendar and content overview pages adding filters with asynchronous data search, removing the bloat of rendering all the users/tags in fields for each calendar cell, and content overview filters, #674;
 * Fixed: Fixed language domain loading and updated the POT file, #670;
 * Fixed: Removed a not used JS library: remodal, #517;
 * Fixed: Stop loading the Chosen JS library where it is not used, #330;
+* Fixed: Fixed support to Cyrillic chars on post status, #439;
 * Added: Added support for displaying editorial comments in post status transition notifications, #676;
+* Changed: Updated the Select2 JS library to version 4.0.13. The library instance was refactored to pp_select2;
+* Changed: Converted the select field for notifications in the post edit page from Chosen to Select2;
 
 = [2.2.1] - 2020-08-13 =
 
