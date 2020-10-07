@@ -41,7 +41,7 @@ if (!defined('PP_LOADED')) {
     );
 
     // Define constants
-    define('PUBLISHPRESS_VERSION', '2.2.1-feature-676-edcomments-status-notifications');
+    define('PUBLISHPRESS_VERSION', '2.2.1-hotfix-439-statuses-cyrillic-chars');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
