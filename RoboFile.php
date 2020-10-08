@@ -28,5 +28,10 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
         parent::__construct();
 
         $this->setVersionConstantName('PUBLISHPRESS_VERSION');
+        $this->appendToFileToIgnore(
+            [
+                '.phplint.yml',
+            ]
+        );
     }
 }

@@ -1,9 +1,9 @@
-name: Testing Actions
+name: PHPLint
 
 on: [push]
 
 jobs:
-  build:
+  phplint:
 
     runs-on: ubuntu-latest
 
@@ -28,9 +28,3 @@ jobs:
 
     - name: Check syntax errors
       run: ./vendor/bin/phplint
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
