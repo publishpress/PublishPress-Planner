@@ -508,12 +508,6 @@ class Shortcodes
      */
     public function handle_psppno_edcomment($attrs)
     {
-        if (!isset($this->action_args['comment'])) {
-            return;
-        }
-
-        $comment = $this->action_args['comment'];
-
         // No attributes? Set the default one.
         if (empty($attrs)) {
             $attrs   = [];
@@ -525,6 +519,46 @@ class Shortcodes
             $attrs['separator'] = ', ';
         }
 
+        // Set the number of comments to return
+        if (!isset($attrs['number'])) {
+            $attrs['number'] = 1;
+        } else {
+            $attrs['number'] = (int)$attrs['number'];
+        }
+
+        if (empty($attrs['number'])) {
+            $attrs['number'] = 1;
+        }
+
+        if (isset($this->action_args['comment']) && !empty($this->action_args['comment'])) {
+            $comment = $this->action_args['comment'];
+            return $this->parse_comment($comment, $attrs);
+        } elseif ($post = $this->get_post()) {
+            if ($comments = get_comments(
+                [
+                    'post_id' => $post->ID,
+                    'status'  => 'editorial-comment',
+                    'number'  => $attrs['number'],
+                    'orderby' => 'comment_post_ID',
+                    'order'   => 'DESC',
+                ]
+            )) {
+                $retvals = [];
+
+                foreach ($comments as $comment) {
+                    $retvals[] = $this->parse_comment($comment, $attrs);
+                }
+
+                $retvals = array_reverse($retvals);
+
+                return implode('<br /><br />', $retvals);
+            }
+        }
+
+        return '';
+    }
+
+    private function parse_comment($comment, $attrs) {
         // Get the post's info
         $info = [];
 
