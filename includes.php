@@ -41,7 +41,7 @@ if (!defined('PP_LOADED')) {
     );
 
     // Define constants
-    define('PUBLISHPRESS_VERSION', '2.3.0');
+    define('PUBLISHPRESS_VERSION', '2.3.1-hotfix-692-visual-composer');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
