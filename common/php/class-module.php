@@ -438,7 +438,6 @@ if (!class_exists('PP_Module')) {
          */
         public function is_whitelisted_functional_view($module_name = null)
         {
-            // @todo complete this method
             return true;
         }
 
@@ -692,7 +691,7 @@ if (!class_exists('PP_Module')) {
             ?>
 
             <?php if (!empty($users) || !empty($roles) || !empty($emails)) : ?>
-            <select class="chosen-select" name="to_notify[]" multiple>
+            <select id="to_notify" class="chosen-select" name="to_notify[]" multiple="multiple">
                 <?php if (!empty($roles)) : ?>
                     <optgroup label="<?php echo esc_attr__('Roles', 'publishpress'); ?>">
                         <?php foreach ($roles as $role => $data) : ?>

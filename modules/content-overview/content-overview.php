@@ -177,6 +177,9 @@ class PP_Content_Overview extends PP_Module
         // so other PublishPress modules can register their filters if needed
         add_action('admin_init', [$this, 'register_term_columns']);
 
+        add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'searchAuthors']);
+        add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'searchCategories']);
+
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
         add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 20);
@@ -441,9 +444,24 @@ class PP_Content_Overview extends PP_Module
             wp_enqueue_script(
                 'publishpress-content_overview',
                 $this->module_url . 'lib/content-overview.js',
-                ['publishpress-date_picker'],
+                ['publishpress-date_picker', 'publishpress-select2'],
                 PUBLISHPRESS_VERSION,
                 true
+            );
+
+            wp_enqueue_script(
+                'publishpress-select2',
+                PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
+
+            wp_localize_script(
+                'publishpress-content_overview',
+                'PPContentOverview',
+                [
+                    'nonce' => wp_create_nonce('content_overview_filter_nonce'),
+                ]
             );
         }
     }
@@ -460,7 +478,7 @@ class PP_Content_Overview extends PP_Module
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                false,
+                ['publishpress-select2'],
                 PUBLISHPRESS_VERSION,
                 'screen'
             );
@@ -477,6 +495,14 @@ class PP_Content_Overview extends PP_Module
                 false,
                 PUBLISHPRESS_VERSION,
                 'print'
+            );
+
+            wp_enqueue_style(
+                'publishpress-select2',
+                PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
+                false,
+                PUBLISHPRESS_VERSION,
+                'screen'
             );
         }
     }
@@ -957,30 +983,49 @@ class PP_Content_Overview extends PP_Module
                 </select>
                 <?php
                 break;
+
             case 'cat':
-                // Borrowed from wp-admin/edit.php
-                if (taxonomy_exists('category')) {
-                    $category_dropdown_args = [
-                        'show_option_all' => __('View all categories', 'publishpress'),
-                        'hide_empty'      => 0,
-                        'hierarchical'    => 1,
-                        'show_count'      => 0,
-                        'orderby'         => 'name',
-                        'selected'        => $this->user_filters['cat'],
-                    ];
-                    wp_dropdown_categories($category_dropdown_args);
-                }
+                $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
+                ?>
+                <select id="filter_category" name="cat">
+                    <option value=""><?php _e('View all categories', 'publishpress'); ?></option>
+                    <?php
+                    if (!empty($categoryId)) {
+                        $category = get_term($categoryId, 'category');
+
+                        echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html($category->name) . "</option>";
+                    }
+                    ?>
+                </select>
+                <?php
                 break;
+
             case 'author':
-                $users_dropdown_args = [
-                    'show_option_all' => __('View all users', 'publishpress'),
-                    'name'            => 'author',
-                    'selected'        => $this->user_filters['author'],
-                    'who'             => 'authors',
-                ];
-                $users_dropdown_args = apply_filters('PP_Content_Overview_users_dropdown_args', $users_dropdown_args);
-                wp_dropdown_users($users_dropdown_args);
+                $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
+                ?>
+                <select id="filter_author" name="author">
+                    <option value="" <?php echo $selectedOptionAll; ?>>
+                        <?php _e('All authors', 'publishpress'); ?>
+                    </option>
+                    <?php
+                    if (!empty($authorId)) {
+                        $author = get_user_by('id', $authorId);
+                        $option = '';
+
+                        if (!empty($author)) {
+                            $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html($author->display_name) . '</option>';
+                        }
+
+                        $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                        echo $option;
+                    }
+                    ?>
+                </select>
+                <?php
                 break;
+
             default:
                 do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
                 break;
@@ -1131,6 +1176,8 @@ class PP_Content_Overview extends PP_Module
             $term_posts[] = $post;
         }
 
+
+
         return $term_posts;
     }
 
@@ -1198,11 +1245,10 @@ class PP_Content_Overview extends PP_Module
                 break;
             case 'author':
                 $post_author = get_userdata($post->post_author);
-
                 $author_name = is_object($post_author) ? $post_author->display_name : '';
-
-                // @todo: Make this compatible with Multiple Authors
                 $author_name = apply_filters('the_author', $author_name);
+
+                $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
 
                 return $author_name;
                 break;
@@ -1363,5 +1409,71 @@ class PP_Content_Overview extends PP_Module
         }
 
         return $user_filters;
+    }
+
+    public function searchAuthors()
+    {
+        header('Content-type: application/json;');
+
+        if (!wp_verify_nonce($_GET['nonce'], 'content_overview_filter_nonce')) {
+            return '[]';
+        }
+
+        $queryText = sanitize_text_field($_GET['q']);
+
+        /**
+         * @param array $results
+         * @param string $searchText
+         */
+        $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+
+        if (!empty($results)) {
+            echo wp_json_encode($results);
+            exit;
+        }
+
+        global $wpdb;
+
+        $queryResult = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
+                FROM {$wpdb->posts} as p
+                INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
+                WHERE u.display_name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                '%' . $wpdb->esc_like($queryText) . '%'
+            )
+        );
+
+        echo json_encode($queryResult);
+        exit;
+    }
+
+    public function searchCategories()
+    {
+        header('Content-type: application/json;');
+
+        if (!wp_verify_nonce($_GET['nonce'], 'content_overview_filter_nonce')) {
+            return '[]';
+        }
+
+        $queryText = sanitize_text_field($_GET['q']);
+        global $wpdb;
+
+        $queryResult = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT DISTINCT t.term_id AS id, t.name AS text
+                FROM {$wpdb->term_taxonomy} as tt
+                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
+                WHERE taxonomy = 'category' AND t.name LIKE %s
+                ORDER BY 2
+                LIMIT 20",
+                '%' . $wpdb->esc_like($queryText) . '%'
+            )
+        );
+
+        echo json_encode($queryResult);
+        exit;
     }
 }
