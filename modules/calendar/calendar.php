@@ -122,7 +122,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @var integer
          */
-        public $max_visible_posts_per_date = 4;
+        public $default_max_visible_posts_per_date = 4;
 
         /**
          * [$post_date_cache description]
@@ -1509,9 +1509,16 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Hide posts over a certain number to prevent clutter, unless user is only viewing 1 or 2 weeks
+            $max_visible_posts_option = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
+                (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
+
+            if ($max_visible_posts_option < 0) {
+                $max_visible_posts_option = 9999;
+            }
+
             $max_visible_posts = apply_filters(
                 'pp_calendar_max_visible_posts_per_date',
-                $this->max_visible_posts_per_date
+                $max_visible_posts_option
             );
 
             if ($num >= $max_visible_posts && $this->total_weeks > 2) {
@@ -2341,7 +2348,15 @@ if (!class_exists('PP_Calendar')) {
             add_settings_field(
                 'sort_by',
                 __('Field used for sorting the calendar items in a day cell', 'publishpress'),
-                [$this, 'settings_default_sort_by_option'],
+                [$this, 'settings_sort_by_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'max_visible_posts_per_date',
+                __('Max visible posts per date', 'publishpress'),
+                [$this, 'settings_max_visible_posts_per_date'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2533,7 +2548,7 @@ if (!class_exists('PP_Calendar')) {
             echo '</div>';
         }
 
-        public function settings_default_sort_by_option()
+        public function settings_sort_by_option()
         {
             $fields = [
                 'time'   => __('Publishing Time', 'publishpress'),
@@ -2571,6 +2586,39 @@ if (!class_exists('PP_Calendar')) {
             }
 
             echo '</div>';
+        }
+
+        public function settings_max_visible_posts_per_date()
+        {
+            $maxVisiblePostsPerDate = !isset($this->module->options->max_visible_posts_per_date) || is_null(
+                $this->module->options->max_visible_posts_per_date
+            )
+                ? (int)$this->default_max_visible_posts_per_date
+                : (int)$this->module->options->max_visible_posts_per_date;
+
+            echo '<div class="c-input-group c-pp-calendar-options-max_visible_posts_per_date">';
+
+            echo sprintf(
+                    '<select name="%s" id="%d">',
+                    esc_attr($this->module->options_group_name) . '[max_visible_posts_per_date]',
+                    'max_visible_posts_per_date'
+            );
+
+            echo sprintf(
+                    '<option value="-1" %s>%s</option>',
+                    selected($maxVisiblePostsPerDate, -1, false),
+                    __('All posts', 'publishpress')
+            );
+
+            for ($i = 4; $i <= 30; $i++) {
+                echo sprintf(
+                    '<option value="%2$d" %s>%2$d</option>',
+                    selected($maxVisiblePostsPerDate, $i, false),
+                    $i
+                );
+            }
+
+            echo '</select></div>';
         }
 
         /**
@@ -2644,6 +2692,11 @@ if (!class_exists('PP_Calendar')) {
             $options['sort_by'] = isset($new_options['sort_by'])
                 ? sanitize_text_field($new_options['sort_by'])
                 : 'time';
+
+            // Max visible posts per date
+            $options['max_visible_posts_per_date'] = isset($new_options['max_visible_posts_per_date'])
+                ? (int)$new_options['max_visible_posts_per_date']
+                : $this->default_max_visible_posts_per_date;
 
             return $options;
         }
