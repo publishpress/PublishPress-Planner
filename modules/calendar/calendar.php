@@ -2909,7 +2909,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
 
             /**
              * @param array $results
@@ -2927,7 +2927,7 @@ if (!class_exists('PP_Calendar')) {
                 'orderby' => 'display_name',
             ];
 
-            if (!empty($_GET['q'])) {
+            if (!empty($queryText)) {
                 $user_args['search'] = '*' . $queryText . '*';
             }
 
@@ -2952,7 +2952,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(
@@ -2979,7 +2979,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(
