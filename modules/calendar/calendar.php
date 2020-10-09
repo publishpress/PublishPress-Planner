@@ -1202,22 +1202,24 @@ if (!class_exists('PP_Calendar')) {
                                 <?php foreach ($week_dates as $day_num => $week_single_date) : ?>
                                     <?php
                                     // Somewhat ghetto way of sorting all of the day's posts by post status order
-                                    if (!empty($week_posts[$week_single_date])) {
-                                        $week_posts_by_status = [];
-                                        foreach ($post_statuses as $post_status) {
-                                            $week_posts_by_status[$post_status->slug] = [];
-                                        }
-                                        // These statuses aren't handled by custom statuses or post statuses
-                                        $week_posts_by_status['private'] = [];
-                                        $week_posts_by_status['publish'] = [];
-                                        $week_posts_by_status['future']  = [];
-                                        foreach ($week_posts[$week_single_date] as $num => $post) {
-                                            $week_posts_by_status[$post->post_status][$num] = $post;
-                                        }
-                                        unset($week_posts[$week_single_date]);
-                                        foreach ($week_posts_by_status as $status) {
-                                            foreach ($status as $num => $post) {
-                                                $week_posts[$week_single_date][] = $post;
+                                    if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
+                                        if (!empty($week_posts[$week_single_date])) {
+                                            $week_posts_by_status = [];
+                                            foreach ($post_statuses as $post_status) {
+                                                $week_posts_by_status[$post_status->slug] = [];
+                                            }
+                                            // These statuses aren't handled by custom statuses or post statuses
+                                            $week_posts_by_status['private'] = [];
+                                            $week_posts_by_status['publish'] = [];
+                                            $week_posts_by_status['future']  = [];
+                                            foreach ($week_posts[$week_single_date] as $num => $post) {
+                                                $week_posts_by_status[$post->post_status][$num] = $post;
+                                            }
+                                            unset($week_posts[$week_single_date]);
+                                            foreach ($week_posts_by_status as $status) {
+                                                foreach ($status as $num => $post) {
+                                                    $week_posts[$week_single_date][] = $post;
+                                                }
                                             }
                                         }
                                     }
@@ -2335,6 +2337,14 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'sort_by',
+                __('Field used for sorting the calendar items in a day cell', 'publishpress'),
+                [$this, 'settings_default_sort_by_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -2523,6 +2533,46 @@ if (!class_exists('PP_Calendar')) {
             echo '</div>';
         }
 
+        public function settings_default_sort_by_option()
+        {
+            $fields = [
+                'time'   => __('Publishing Time', 'publishpress'),
+                'status' => __('Post Status', 'publishpress'),
+            ];
+
+            $sortByOptionValue = !isset($this->module->options->sort_by) || is_null(
+                $this->module->options->sort_by
+            )
+                ? 'time'
+                : $this->module->options->sort_by;
+
+            echo '<div class="c-input-group c-pp-calendar-options-sort_by">';
+
+            foreach ($fields as $key => $label) {
+                printf(
+                    '
+                    <div style="max-width: 175px; display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
+                        <label>
+                            <input
+                                class="o-radio"
+                                type="radio"
+                                name="%s"
+                                value="%s"
+                                %s
+                            />
+                            <span>%s</span>
+                        </label>
+                    </div>',
+                    esc_attr($this->module->options_group_name) . '[sort_by]',
+                    $key,
+                    $key === $sortByOptionValue ? 'checked' : '',
+                    $label
+                );
+            }
+
+            echo '</div>';
+        }
+
         /**
          * Validate the data submitted by the user in calendar settings
          *
@@ -2589,6 +2639,11 @@ if (!class_exists('PP_Calendar')) {
             if (isset($new_options['default_publish_time'])) {
                 $options['default_publish_time'] = sanitize_text_field($new_options['default_publish_time']);
             }
+
+            // Sort by
+            $options['sort_by'] = isset($new_options['sort_by'])
+                ? sanitize_text_field($new_options['sort_by'])
+                : 'time';
 
             return $options;
         }
