@@ -124,6 +124,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix PHP notice on Ajax call after clicking a filter without typing anything in the calendar or content overview, #693;
 * Added: Added option to sort calendar items by publishing date, #457;
 * Added: Added option to show all posts, or specific number of posts, on a date in the calendar, #675;
+* Changed: Updated the Twig library to 1.42.5;
 
 = [2.3.0] - 2020-10-07 =
 
