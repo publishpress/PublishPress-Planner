@@ -171,7 +171,7 @@ class NotificationsLogTable extends WP_List_Table
 
                         if (isset($receiverData['subgroup'])) {
                             // Do not repeat the same subgroup
-                            if ($receiverData['subgroup'] !== $lastSubgroup) {
+                            if ($receiverData['subgroup'] !== $lastSubgroup && !empty($receiverData['subgroup'])) {
                                 $output .= sprintf(
                                     '<li class="receiver-subgroup"><span>%s</span></li>',
                                     $receiverData['subgroup']
