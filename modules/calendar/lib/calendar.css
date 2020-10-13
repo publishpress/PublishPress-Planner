@@ -656,3 +656,7 @@ table#pp-calendar-view .day-unit .post-list li .item-overlay .item-actions span.
     color: silver;
     cursor: help !important;
 }
+
+#pp-calendar-view select.post-insert-dialog-post-author {
+    min-width: 80%;
+}

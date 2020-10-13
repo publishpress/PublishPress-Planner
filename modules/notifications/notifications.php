@@ -293,22 +293,44 @@ if (!class_exists('PP_Notifications')) {
         {
             if ($this->is_whitelisted_functional_view()) {
                 wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/select2.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
                     'publishpress-notifications-js',
                     $this->module_url . 'assets/notifications.js',
                     [
                         'jquery',
+                        'publishpress-select2'
                     ],
                     PUBLISHPRESS_VERSION,
                     true
                 );
-
-                wp_enqueue_script(
-                    'publishpress-chosen-js',
-                    PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.jquery.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
             }
+        }
+
+        /**
+         * Whether or not the current page is a user-facing PublishPress View
+         *
+         * @param string $module_name (Optional) Module name to check against
+         *
+         * @since 0.7
+         *
+         * @todo  Think of a creative way to make this work
+         *
+         */
+        public function is_whitelisted_functional_view($module_name = null)
+        {
+            global $current_screen;
+
+            if (!is_object($current_screen)) {
+                return false;
+            }
+
+            return $current_screen->base === 'post';
         }
 
         /**
@@ -330,8 +352,8 @@ if (!class_exists('PP_Notifications')) {
                 );
 
                 wp_enqueue_style(
-                    'publishpress-chosen-css',
-                    PUBLISHPRESS_URL . 'common/libs/chosen-v1.8.3/chosen.css',
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
                     false,
                     PUBLISHPRESS_VERSION
                 );

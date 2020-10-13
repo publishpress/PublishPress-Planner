@@ -20,9 +20,8 @@
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {
+    "publishpress/publishpress-plugin-builder": "^1.2",
     "bartlett/php-compatinfo": "^5.2",
-    "overtrue/phplint": "^1",
-    "phing/phing": "^2",
-    "publishpress/publishpress-plugin-builder": "^1.2"
+    "overtrue/phplint": "^2.1"
   }
 }
