@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf93e051210786b5549c6644bbd8893e",
+    "content-hash": "9547fddd3b4621d5bf6a83d25b6dcaa4",
     "packages": [
         {
             "name": "alledia/wordpress-plugin-framework",
@@ -255,31 +255,30 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.37.1",
+            "version": "v1.42.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62"
+                "reference": "87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66be9366c76cbf23e82e7171d47cbfa54a057a62",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e",
+                "reference": "87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0",
+                "php": ">=5.5.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "^2.7",
-                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
+                "symfony/phpunit-bridge": "^4.4|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.37-dev"
+                    "dev-master": "1.42-dev"
                 }
             },
             "autoload": {
@@ -302,14 +301,13 @@
                     "role": "Lead Developer"
                 },
                 {
+                    "name": "Twig Team",
+                    "role": "Contributors"
+                },
+                {
                     "name": "Armin Ronacher",
                     "email": "armin.ronacher@active-4.com",
                     "role": "Project Founder"
-                },
-                {
-                    "name": "Twig Team",
-                    "homepage": "https://twig.symfony.com/contributors",
-                    "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",
@@ -317,7 +315,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T14:59:29+00:00"
+            "time": "2020-02-11T05:59:23+00:00"
         }
     ],
     "packages-dev": [
@@ -2158,16 +2156,16 @@
         },
         {
             "name": "publishpress/publishpress-plugin-builder",
-            "version": "1.2.5",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Plugin-Builder.git",
-                "reference": "9a9377a67d6a1a109476de0a0dbdf4c3bde134a7"
+                "reference": "0d17a7381f0b3847c597e23ee125863f81a87378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/9a9377a67d6a1a109476de0a0dbdf4c3bde134a7",
-                "reference": "9a9377a67d6a1a109476de0a0dbdf4c3bde134a7",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Plugin-Builder/zipball/0d17a7381f0b3847c597e23ee125863f81a87378",
+                "reference": "0d17a7381f0b3847c597e23ee125863f81a87378",
                 "shasum": ""
             },
             "require": {
@@ -2200,7 +2198,7 @@
                 }
             ],
             "description": "Robo tasks for building WordPress plugins",
-            "time": "2020-09-15T14:49:34+00:00"
+            "time": "2020-10-12T16:51:04+00:00"
         },
         {
             "name": "ramsey/collection",

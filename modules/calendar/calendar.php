@@ -122,7 +122,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @var integer
          */
-        public $max_visible_posts_per_date = 4;
+        public $default_max_visible_posts_per_date = 4;
 
         /**
          * [$post_date_cache description]
@@ -1202,22 +1202,24 @@ if (!class_exists('PP_Calendar')) {
                                 <?php foreach ($week_dates as $day_num => $week_single_date) : ?>
                                     <?php
                                     // Somewhat ghetto way of sorting all of the day's posts by post status order
-                                    if (!empty($week_posts[$week_single_date])) {
-                                        $week_posts_by_status = [];
-                                        foreach ($post_statuses as $post_status) {
-                                            $week_posts_by_status[$post_status->slug] = [];
-                                        }
-                                        // These statuses aren't handled by custom statuses or post statuses
-                                        $week_posts_by_status['private'] = [];
-                                        $week_posts_by_status['publish'] = [];
-                                        $week_posts_by_status['future']  = [];
-                                        foreach ($week_posts[$week_single_date] as $num => $post) {
-                                            $week_posts_by_status[$post->post_status][$num] = $post;
-                                        }
-                                        unset($week_posts[$week_single_date]);
-                                        foreach ($week_posts_by_status as $status) {
-                                            foreach ($status as $num => $post) {
-                                                $week_posts[$week_single_date][] = $post;
+                                    if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
+                                        if (!empty($week_posts[$week_single_date])) {
+                                            $week_posts_by_status = [];
+                                            foreach ($post_statuses as $post_status) {
+                                                $week_posts_by_status[$post_status->slug] = [];
+                                            }
+                                            // These statuses aren't handled by custom statuses or post statuses
+                                            $week_posts_by_status['private'] = [];
+                                            $week_posts_by_status['publish'] = [];
+                                            $week_posts_by_status['future']  = [];
+                                            foreach ($week_posts[$week_single_date] as $num => $post) {
+                                                $week_posts_by_status[$post->post_status][$num] = $post;
+                                            }
+                                            unset($week_posts[$week_single_date]);
+                                            foreach ($week_posts_by_status as $status) {
+                                                foreach ($status as $num => $post) {
+                                                    $week_posts[$week_single_date][] = $post;
+                                                }
                                             }
                                         }
                                     }
@@ -1507,9 +1509,16 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Hide posts over a certain number to prevent clutter, unless user is only viewing 1 or 2 weeks
+            $max_visible_posts_option = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
+                (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
+
+            if ($max_visible_posts_option < 0) {
+                $max_visible_posts_option = 9999;
+            }
+
             $max_visible_posts = apply_filters(
                 'pp_calendar_max_visible_posts_per_date',
-                $this->max_visible_posts_per_date
+                $max_visible_posts_option
             );
 
             if ($num >= $max_visible_posts && $this->total_weeks > 2) {
@@ -2335,6 +2344,22 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'sort_by',
+                __('Field used for sorting the calendar items in a day cell', 'publishpress'),
+                [$this, 'settings_sort_by_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'max_visible_posts_per_date',
+                __('Max visible posts per date', 'publishpress'),
+                [$this, 'settings_max_visible_posts_per_date'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -2523,6 +2548,79 @@ if (!class_exists('PP_Calendar')) {
             echo '</div>';
         }
 
+        public function settings_sort_by_option()
+        {
+            $fields = [
+                'time'   => __('Publishing Time', 'publishpress'),
+                'status' => __('Post Status', 'publishpress'),
+            ];
+
+            $sortByOptionValue = !isset($this->module->options->sort_by) || is_null(
+                $this->module->options->sort_by
+            )
+                ? 'time'
+                : $this->module->options->sort_by;
+
+            echo '<div class="c-input-group c-pp-calendar-options-sort_by">';
+
+            foreach ($fields as $key => $label) {
+                printf(
+                    '
+                    <div style="max-width: 175px; display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
+                        <label>
+                            <input
+                                class="o-radio"
+                                type="radio"
+                                name="%s"
+                                value="%s"
+                                %s
+                            />
+                            <span>%s</span>
+                        </label>
+                    </div>',
+                    esc_attr($this->module->options_group_name) . '[sort_by]',
+                    $key,
+                    $key === $sortByOptionValue ? 'checked' : '',
+                    $label
+                );
+            }
+
+            echo '</div>';
+        }
+
+        public function settings_max_visible_posts_per_date()
+        {
+            $maxVisiblePostsPerDate = !isset($this->module->options->max_visible_posts_per_date) || is_null(
+                $this->module->options->max_visible_posts_per_date
+            )
+                ? (int)$this->default_max_visible_posts_per_date
+                : (int)$this->module->options->max_visible_posts_per_date;
+
+            echo '<div class="c-input-group c-pp-calendar-options-max_visible_posts_per_date">';
+
+            echo sprintf(
+                    '<select name="%s" id="%d">',
+                    esc_attr($this->module->options_group_name) . '[max_visible_posts_per_date]',
+                    'max_visible_posts_per_date'
+            );
+
+            echo sprintf(
+                    '<option value="-1" %s>%s</option>',
+                    selected($maxVisiblePostsPerDate, -1, false),
+                    __('All posts', 'publishpress')
+            );
+
+            for ($i = 4; $i <= 30; $i++) {
+                echo sprintf(
+                    '<option value="%2$d" %s>%2$d</option>',
+                    selected($maxVisiblePostsPerDate, $i, false),
+                    $i
+                );
+            }
+
+            echo '</select></div>';
+        }
+
         /**
          * Validate the data submitted by the user in calendar settings
          *
@@ -2589,6 +2687,16 @@ if (!class_exists('PP_Calendar')) {
             if (isset($new_options['default_publish_time'])) {
                 $options['default_publish_time'] = sanitize_text_field($new_options['default_publish_time']);
             }
+
+            // Sort by
+            $options['sort_by'] = isset($new_options['sort_by'])
+                ? sanitize_text_field($new_options['sort_by'])
+                : 'time';
+
+            // Max visible posts per date
+            $options['max_visible_posts_per_date'] = isset($new_options['max_visible_posts_per_date'])
+                ? (int)$new_options['max_visible_posts_per_date']
+                : $this->default_max_visible_posts_per_date;
 
             return $options;
         }
@@ -2909,7 +3017,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
 
             /**
              * @param array $results
@@ -2927,7 +3035,7 @@ if (!class_exists('PP_Calendar')) {
                 'orderby' => 'display_name',
             ];
 
-            if (!empty($_GET['q'])) {
+            if (!empty($queryText)) {
                 $user_args['search'] = '*' . $queryText . '*';
             }
 
@@ -2952,7 +3060,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(
@@ -2979,7 +3087,7 @@ if (!class_exists('PP_Calendar')) {
                 return '[]';
             }
 
-            $queryText = sanitize_text_field($_GET['q']);
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(

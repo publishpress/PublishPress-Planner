@@ -14,7 +14,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=5.6.20",
-    "twig/twig": "1.37.1",
+    "twig/twig": "1.42.5",
     "pimple/pimple": "~3.0",
     "alledia/wordpress-plugin-framework": "^1.0",
     "publishpress/wordpress-version-notices": "^1"

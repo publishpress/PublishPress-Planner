@@ -1419,7 +1419,7 @@ class PP_Content_Overview extends PP_Module
             return '[]';
         }
 
-        $queryText = sanitize_text_field($_GET['q']);
+        $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
 
         /**
          * @param array $results
@@ -1458,7 +1458,7 @@ class PP_Content_Overview extends PP_Module
             return '[]';
         }
 
-        $queryText = sanitize_text_field($_GET['q']);
+        $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
         global $wpdb;
 
         $queryResult = $wpdb->get_results(

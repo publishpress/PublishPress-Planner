@@ -4,7 +4,6 @@ jQuery(function ($) {
   $('.filter-posts').pp_select2({
     placeholder: ppNotifLog.text.allPosts,
     allowClear: true,
-    containerCssClass: 'filter-posts',
     ajax: {
       url: ajaxurl,
       dataType: 'json',
@@ -25,7 +24,6 @@ jQuery(function ($) {
   $('.filter-workflows').pp_select2({
     placeholder: ppNotifLog.text.allWorkflows,
     allowClear: true,
-    containerCssClass: 'filter-workflows',
     ajax: {
       url: ajaxurl,
       dataType: 'json',
@@ -45,20 +43,17 @@ jQuery(function ($) {
 
   $('.filter-actions').pp_select2({
     placeholder: ppNotifLog.text.allActions,
-    allowClear: true,
-    containerCssClass: 'filter-actions'
+    allowClear: true
   });
 
   $('.filter-channels').pp_select2({
     placeholder: ppNotifLog.text.allChannels,
-    allowClear: true,
-    containerCssClass: 'filter-channels'
+    allowClear: true
   });
 
   $('.filter-statuses').pp_select2({
     placeholder: ppNotifLog.text.allStatuses,
-    allowClear: true,
-    containerCssClass: 'filter-statuses'
+    allowClear: true
   });
 
   $('.view-log').click(function (event) {
