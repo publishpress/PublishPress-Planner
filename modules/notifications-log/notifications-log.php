@@ -793,10 +793,10 @@ if (!class_exists('PP_Notifications_Log')) {
                             <?php echo wpautop($content['body']); ?>
                         </div>
                         <?php if ($log->status === 'scheduled') : ?>
-                            <em><?php echo __(
+                            <div class="notice notice-warning"><?php echo __(
                                     'This is a preview of the scheduled message. The content can still change until the notification is sent.',
                                     'publishpress'
-                                ); ?></em>
+                                ); ?></div>
                         <?php endif; ?>
                     </div>
                     <?php
