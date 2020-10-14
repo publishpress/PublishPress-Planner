@@ -107,8 +107,14 @@ class Post_Save extends Base
             $oldStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->oldStatus);
             $newStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->newStatus);
 
-            $paramsString = '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
-            $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
+            $paramsString = '';
+            if (is_object($oldStatus)) {
+                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
+            }
+
+            if (is_object($newStatus)) {
+                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
+            }
         }
 
         return $paramsString;
