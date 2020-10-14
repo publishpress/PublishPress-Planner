@@ -187,7 +187,7 @@ class NotificationsLogTable extends WP_List_Table
                             '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
                             $log->status === 'scheduled' ? __('Preview the message') : __('View the message'),
                             $log->id,
-                            esc_attr($receiverText),
+                            esc_attr(wp_strip_all_tags($receiverText)),
                             esc_attr($receiverData['receiver']),
                             esc_attr($receiverData['channel']),
                             apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
