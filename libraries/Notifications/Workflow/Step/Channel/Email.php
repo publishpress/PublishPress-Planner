@@ -36,6 +36,7 @@ class Email extends Base implements Channel_Interface
 
         add_filter('publishpress_notifications_channel_icon_class', [$this, 'filterChannelIconClass']);
         add_filter('publishpress_notifications_receiver_address', [$this, 'filterReceiverAddress'], 10, 2);
+        add_filter('publishpress_notifications_log_receiver_text', [$this, 'filterLogReceiverText'], 10, 2);
 
         parent::__construct();
     }
@@ -229,5 +230,29 @@ class Email extends Base implements Channel_Interface
         }
 
         return $receiverAddress;
+    }
+
+    public function filterLogReceiverText($receiverText, $receiverData)
+    {
+        if (!isset($receiverData['channel']) || $receiverData['channel'] !== $this->name || !isset($receiverData['receiver'])) {
+            return $receiverText;
+        }
+
+        if (is_numeric($receiverData['receiver'])) {
+            $user = get_user_by('ID', $receiverData['receiver']);
+
+            if (!is_object($user)) {
+                return $receiverText;
+            }
+
+            $receiverText = $user->user_nicename;
+            $receiverText .= sprintf(
+                '<span class="user-details muted">(user_id:%d, email:%s)</span>',
+                $user->ID,
+                $user->user_email
+            );
+        }
+
+        return $receiverText;
     }
 }

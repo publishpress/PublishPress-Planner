@@ -181,26 +181,13 @@ class NotificationsLogTable extends WP_List_Table
                             }
                         }
 
-                        if (is_numeric($receiver)) {
-                            $user              = get_user_by('ID', $receiver);
-                            $receiverPopupText = $user->user_nicename;
-
-                            $receiverText = $user->user_nicename;
-                            $receiverText .= sprintf(
-                                '<span class="user-details muted">(user_id:%d, email:%s)</span>',
-                                $user->ID,
-                                $user->user_email
-                            );
-                        } else {
-                            $receiverText      = $receiver;
-                            $receiverPopupText = $receiver;
-                        }
+                        $receiverText = apply_filters('publishpress_notifications_log_receiver_text', $receiver, $receiverData, $log->workflowId);
 
                         $output .= sprintf(
                             '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
                             $log->status === 'scheduled' ? __('Preview the message') : __('View the message'),
                             $log->id,
-                            esc_attr($receiverPopupText),
+                            esc_attr($receiverText),
                             esc_attr($receiverData['receiver']),
                             esc_attr($receiverData['channel']),
                             apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])

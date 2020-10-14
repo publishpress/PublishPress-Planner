@@ -82,9 +82,18 @@ class Editorial_Comment extends Base
     public function filter_action_params_for_log($paramsString, $log)
     {
         if ($log->event === self::META_VALUE_SELECTED) {
+            $comment = get_comment($log->commentId);
+
+            $commentText = trim($comment->comment_content);
+
+            if (function_exists('mb_strimwidth')) {
+                $commentText = mb_strimwidth($commentText, 0, 30, '...');
+            }
+
             $paramsString = sprintf(
-                __('Comment ID: %s', 'publishpress'),
-                '<a target="_blank" href="' . admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit#comment-' . $log->commentId) . '">' . $log->commentId . '</a>'
+                __('Comment: %s (%d)', 'publishpress'),
+                '<a target="_blank" href="' . admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit#comment-' . $log->commentId) . '">' . $commentText . '</a>',
+                $log->commentId
             );
         }
 
