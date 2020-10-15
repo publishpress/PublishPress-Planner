@@ -1,7 +1,5 @@
 <?php
 /**
- * File responsible for defining basic addon class
- *
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
  * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.

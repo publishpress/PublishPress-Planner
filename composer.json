@@ -21,7 +21,6 @@
     "php": ">=5.6.20",
     "twig/twig": "1.37.1",
     "pimple/pimple": "~3.0",
-    "alledia/wordpress-plugin-framework": "^1.0",
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {
