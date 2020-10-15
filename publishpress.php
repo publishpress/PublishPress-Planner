@@ -708,7 +708,7 @@ if (!class_exists('publishpress')) {
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                ['pressshack-admin-css', 'allex'],
+                ['pressshack-admin-css'],
                 PUBLISHPRESS_VERSION,
                 'all'
             );
