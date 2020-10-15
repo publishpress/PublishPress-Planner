@@ -167,6 +167,7 @@ if (!class_exists('PP_Calendar')) {
                     'ics_subscription'        => 'on',
                     'ics_secret_key'          => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
+                    'default_publish_time'    => '',
                 ],
                 'messages'              => [
                     'post-date-updated'   => __('Post date updated.', 'publishpress'),
