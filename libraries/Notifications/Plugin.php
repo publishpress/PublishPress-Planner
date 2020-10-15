@@ -20,23 +20,6 @@ class Plugin
 {
     use Dependency_Injector, PublishPress_Module;
 
-    protected $framework;
-
-    public function __construct()
-    {
-        $this->framework = $this->get_service('framework');
-
-        $this->init_framework();
-    }
-
-    /**
-     * Initialize the Allex framework.
-     */
-    public function init_framework()
-    {
-        $this->framework->init();
-    }
-
     /**
      * The method which runs the plugin
      */

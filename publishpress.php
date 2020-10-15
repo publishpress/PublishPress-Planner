@@ -359,10 +359,6 @@ if (!class_exists('publishpress')) {
          */
         public function filterDebugInformation($debugInfo)
         {
-            // Config
-            $framework          = $this->get_service('framework');
-            $frameworkContainer = $framework->get_container();
-
             $debugInfo['publishpress'] = [
                 'label'       => 'PublishPress',
                 'description' => '',
@@ -423,26 +419,6 @@ if (!class_exists('publishpress')) {
                     'php::date_default_timezone_get' => [
                         'label' => __('date_default_timezone_get'),
                         'value' => date_default_timezone_get(),
-                    ],
-                    'Framework::FRAMEWORK_BASE_PATH' => [
-                        'label' => __('Framework::FRAMEWORK_BASE_PATH'),
-                        'value' => $frameworkContainer['FRAMEWORK_BASE_PATH'],
-                    ],
-                    'Framework::TWIG_PATH'           => [
-                        'label' => __('Framework::TWIG_PATH'),
-                        'value' => $frameworkContainer['TWIG_PATH'],
-                    ],
-                    'Framework::ASSETS_BASE_URL'     => [
-                        'label' => __('Framework::ASSETS_BASE_URL'),
-                        'value' => $frameworkContainer['ASSETS_BASE_URL'],
-                    ],
-                    'Framework::PLUGIN_NAME'         => [
-                        'label' => __('Framework::PLUGIN_NAME'),
-                        'value' => $frameworkContainer['PLUGIN_NAME'],
-                    ],
-                    'Framework::PLUGIN_TITLE'        => [
-                        'label' => __('Framework::PLUGIN_TITLE'),
-                        'value' => $frameworkContainer['PLUGIN_TITLE'],
                     ],
                 ],
             ];
