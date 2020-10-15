@@ -39,9 +39,10 @@ if (!defined('PP_LOADED')) {
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
 
     $relativePath = PUBLISHPRESS_BASE_PATH;
-    if (defined('WP_CONTENT_DIR')) {
-        $relativePath = str_replace(WP_CONTENT_DIR, '', $relativePath);
-        define('PUBLISHPRESS_URL', WP_CONTENT_URL . $relativePath . '/');
+
+    if (defined('PUBLISHPRESS_CUSTOM_VENDOR_PATH') && defined('PUBLISHPRESS_CUSTOM_VENDOR_URL')) {
+        $relativePath = str_replace(PUBLISHPRESS_CUSTOM_VENDOR_PATH, '', $relativePath);
+        define('PUBLISHPRESS_URL', PUBLISHPRESS_CUSTOM_VENDOR_URL . $relativePath . '/');
     } else {
         define('PUBLISHPRESS_URL', plugins_url('/', 'publishpress/publishpress.php'));
     }
