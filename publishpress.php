@@ -388,10 +388,6 @@ if (!class_exists('publishpress')) {
                         'label' => __('PUBLISHPRESS_LIBRARIES_PATH'),
                         'value' => PUBLISHPRESS_LIBRARIES_PATH,
                     ],
-                    'PUBLISHPRESS_BASENAME'          => [
-                        'label' => __('PUBLISHPRESS_BASENAME'),
-                        'value' => PUBLISHPRESS_BASENAME,
-                    ],
                     'WP_CONTENT_DIR'                 => [
                         'label' => __('WP_CONTENT_DIR'),
                         'value' => WP_CONTENT_DIR,

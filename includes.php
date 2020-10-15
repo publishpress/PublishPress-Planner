@@ -32,6 +32,20 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Legacy\Auto_loader;
 
 if (!defined('PP_LOADED')) {
+    // Define constants
+    define('PUBLISHPRESS_VERSION', '2.3.0');
+    define('PUBLISHPRESS_BASE_PATH', __DIR__);
+    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
+    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
+
+    $relativePath = PUBLISHPRESS_BASE_PATH;
+    if (defined('WP_CONTENT_DIR')) {
+        $relativePath = str_replace(WP_CONTENT_DIR, '', $relativePath);
+        define('PUBLISHPRESS_URL', WP_CONTENT_URL . $relativePath . '/');
+    } else {
+        define('PUBLISHPRESS_URL', plugins_url('/', 'publishpress/publishpress.php'));
+    }
+
     $settingsPage = add_query_arg(
         [
             'page'   => 'pp-modules-settings',
@@ -39,15 +53,7 @@ if (!defined('PP_LOADED')) {
         ],
         get_admin_url(null, 'admin.php')
     );
-
-    // Define constants
-    define('PUBLISHPRESS_VERSION', '2.3.0');
-    define('PUBLISHPRESS_BASE_PATH', __DIR__);
-    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
-    define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
     define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
-    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
-    define('PUBLISHPRESS_BASENAME', plugin_basename(PUBLISHPRESS_FILE_PATH));
 
     /**
      * Use PUBLISHPRESS_BASE_PATH instead.

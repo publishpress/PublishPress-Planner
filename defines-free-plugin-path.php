@@ -31,7 +31,9 @@
 if (!defined('PUBLISHPRESS_FREE_PLUGIN_PATH')) {
     /*
      * This constant is used by the Pro plugin to know where the Free plugin is installed.
-     * This file should be automatically loaded by Composer.
+     * This file should be automatically loaded by Composer. We use this file instead of
+     * the includes.php file because we want to avoid loading all that file before it is
+     * really needed.
      */
     define('PUBLISHPRESS_FREE_PLUGIN_PATH', __DIR__);
 }
