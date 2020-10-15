@@ -1,6 +1,6 @@
 {
   "name": "publishpress/publishpress",
-  "type": "wordpress-plugin",
+  "type": "library",
   "license": "GPL-2.0+",
   "description": "WordPress plugin to accelerate your publishing workflow.",
   "homepage": "http://publishpress.com/",
