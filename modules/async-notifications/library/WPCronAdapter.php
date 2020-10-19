@@ -56,7 +56,7 @@ class WPCronAdapter implements SchedulerInterface
          * @param array $data
          */
         $data  = apply_filters('publishpress_notifications_scheduled_data', $data);
-        $delay = apply_filters('publishpress_notifications_schedule_delay_in_seconds', 10);
+        $delay = apply_filters('publishpress_notifications_schedule_delay_in_seconds', 5);
 
         $timestamp = apply_filters(
             'publishpress_notifications_scheduled_time_for_notification',
