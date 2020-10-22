@@ -44,7 +44,7 @@ if (!defined('PP_LOADED')) {
         $relativePath = str_replace(PUBLISHPRESS_CUSTOM_VENDOR_PATH, '', $relativePath);
         define('PUBLISHPRESS_URL', PUBLISHPRESS_CUSTOM_VENDOR_URL . $relativePath . '/');
     } else {
-        define('PUBLISHPRESS_URL', plugins_url('/', 'publishpress/publishpress.php'));
+        define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
     }
 
     $settingsPage = add_query_arg(
