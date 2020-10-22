@@ -294,7 +294,7 @@ if (!class_exists('PP_Notifications')) {
             if ($this->is_whitelisted_functional_view()) {
                 wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/select2.min.js',
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );

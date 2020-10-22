@@ -1,6 +1,6 @@
 {
   "name": "publishpress/publishpress",
-  "type": "wordpress-plugin",
+  "type": "library",
   "license": "GPL-2.0+",
   "description": "WordPress plugin to accelerate your publishing workflow.",
   "homepage": "http://publishpress.com/",
@@ -12,11 +12,15 @@
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "autoload": {
+    "files": [
+      "defines-free-plugin-path.php"
+    ]
+  },
   "require": {
     "php": ">=5.6.20",
-    "twig/twig": "1.37.1",
+    "twig/twig": "1.42.5",
     "pimple/pimple": "~3.0",
-    "alledia/wordpress-plugin-framework": "^1.0",
     "publishpress/wordpress-version-notices": "^1"
   },
   "require-dev": {

@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,9 +95,9 @@ Join PublishPress and you’ll get access to these 6 Pro plugins:
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
 
-=  Bug Reports =
+= Bug Reports =
 
-Bug reports for PublishPress are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that aren’t properly qualified as bugs will be closed.
+Bug reports for PublishPress are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that are not properly qualified as bugs will be closed.
 
 = Follow the PublishPress team =
 
@@ -119,6 +119,18 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [2.4.0] - 2020-10-22 =
+
+* Fixed: Fix PHP notice on Ajax call after clicking a filter without typing anything in the calendar or content overview, #693;
+* Fixed: Fix JS error: No select2/compat/containerCss, #695;
+* Fixed: Fix JS error: Failed to load resource: the server responded with a status of 404 () - select2.min.js, #696;
+* Fixed: Fix JS error: notifications.js:2 Uncaught TypeError: $(...).pp_select2 is not a function, #696;
+* Fixed: Fix PHP error: undefined property $default_pulish_time, #698;
+* Fixed: Fixed assets loading when installed as dependency of the Pro plugin, #697;
+* Added: Added option to sort calendar items by publishing date, #457;
+* Added: Added option to show all posts, or specific number of posts, on a date in the calendar, #675;
+* Changed: Updated the Twig library to 1.42.5;
+
 = [2.3.0] - 2020-10-07 =
 
 * Fixed: Fixed performance and memory issue for the calendar and content overview pages adding filters with asynchronous data search, removing the bloat of rendering all the users/tags in fields for each calendar cell, and content overview filters, #674;
@@ -135,7 +147,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed PHP warning about variable $key being used outside and inside the context;
 * Added: Added new filter "publishpress_new_custom_status_args" to customize the post status arguments, #640;
 * Fixed: Fixed a PHP Fatal error: Trait Dependency_Injector not found, #652;
-* Fixed: Fixed PHP warning: Invalid argument supplied for foreadh in TopNotice/Module.php;
+* Fixed: Fixed PHP warning: Invalid argument supplied for foreach in TopNotice/Module.php;
 * Fixed: Fixed warnings about mixed content when the site uses HTTPS;
 * Fixed: Fixed JS error related to jQuery "live" function being deprecated and not found;
 * Fixed: Fixed DOM errors in the browser related to multiple elements using the same ID, #660;
@@ -195,7 +207,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed: Bulk actions in the notifications log page not working;
 * Fixed: Notifications sent to wrong roles on some cases. If the post has any user role set to be notified, and the notification workflow doesn't have that option selected, notifications were being sent to the followers - #571;
-* Fixed: If PublishPress\Notifications\Shortcodes::handle_psppno_edcomment is called with nullstring attrs a fatal error occurs;
+* Fixed: If PublishPress\Notifications\Shortcodes::handle_psppno_edcomment is called with null string attrs a fatal error occurs;
 * Fixed: The Notifications Log text is bigger than the other h3 elements in the post editor metabox;
 
 = [2.0.1] - 2020-02-11 =
@@ -863,7 +875,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 *Fixed:*
 
-* Fixed thge pt-BR translations
+* Fixed the pt-BR translations
 * Fixed datetime format in metadata fields for non-english languages
 * Fixed the metadata editing on the calendar
 * Fixed PHP warning after save options
@@ -982,7 +994,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 *Changed:*
 
 * Better style for the calendar
-* Click anywhere on the calendar cell to create content, intead show a button
+* Click anywhere on the calendar cell to create content, instead show a button
 * Extends the drag-and-drop feature to custom statuses
 * Minor improvements on the code
 
