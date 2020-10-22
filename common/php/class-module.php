@@ -54,8 +54,8 @@ if (!class_exists('PP_Module')) {
                 $loader     = new Twig_Loader_Filesystem($this->twigPath);
                 $this->twig = new Twig_Environment(
                     $loader, [
-                    'debug' => $this->debug,
-                ]
+                               'debug' => $this->debug,
+                           ]
                 );
 
                 if ($this->debug) {
@@ -572,7 +572,8 @@ if (!class_exists('PP_Module')) {
          */
         public function get_module_url($file)
         {
-            $module_url = plugins_url('/', $file);
+            $file = str_replace(PUBLISHPRESS_BASE_PATH, '', dirname($file));
+            $module_url = untrailingslashit(PUBLISHPRESS_URL) . $file;
 
             return trailingslashit($module_url);
         }

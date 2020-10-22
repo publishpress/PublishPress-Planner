@@ -1,26 +1,18 @@
-<div class="wrap publishpress-admin {{ show_sidebar ? 'allex_container_with_sidebar publishpress_with_sidebar container' : '' }}">
-    <div class="allex-row">
-        <div class="{{ show_sidebar ? 'allex-col-3-4' : 'allex-col-1' }}">
-            <h2 class="nav-tab-wrapper">
-                {% for module in modules %}
-                    {% if not module.options_page is empty and module.options.enabled == 'on' %}
-                        <a
-                                href="?page={{ slug }}&module={{ module.settings_slug }}"
-                                class="nav-tab {% if settings_slug == module.settings_slug %} nav-tab-active{% endif %}">
+<div class="wrap publishpress-admin">
+    <div>
+        <h2 class="nav-tab-wrapper">
+            {% for module in modules %}
+                {% if not module.options_page is empty and module.options.enabled == 'on' %}
+                    <a
+                            href="?page={{ slug }}&module={{ module.settings_slug }}"
+                            class="nav-tab {% if settings_slug == module.settings_slug %} nav-tab-active{% endif %}">
 
-                            {{ module.title }}
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </h2>
+                        {{ module.title }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </h2>
 
-            <div class="pp-module-settings">{{ module_output|raw }}</div>
-        </div>
-
-        {% if show_sidebar %}
-            <div class="allex-col-1-4">
-                {{ sidebar_output|raw }}
-            </div>
-        {% endif %}
+        <div class="pp-module-settings">{{ module_output|raw }}</div>
     </div>
 </div>
