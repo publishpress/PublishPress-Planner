@@ -119,6 +119,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [2.4.1] - UNRELEASED  =
+
+* Fixed: Fix the assets URL when the plugin is not installed in a standard folder;
+
 = [2.4.0] - 2020-10-22 =
 
 * Fixed: Fix PHP notice on Ajax call after clicking a filter without typing anything in the calendar or content overview, #693;
