@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (!defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '2.4.0');
+    define('PUBLISHPRESS_VERSION', '2.4.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
@@ -44,7 +44,7 @@ if (!defined('PP_LOADED')) {
         $relativePath = str_replace(PUBLISHPRESS_CUSTOM_VENDOR_PATH, '', $relativePath);
         define('PUBLISHPRESS_URL', PUBLISHPRESS_CUSTOM_VENDOR_URL . $relativePath . '/');
     } else {
-        define('PUBLISHPRESS_URL', plugins_url('/', 'publishpress/publishpress.php'));
+        define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
     }
 
     $settingsPage = add_query_arg(
