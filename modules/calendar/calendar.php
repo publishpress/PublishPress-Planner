@@ -3382,18 +3382,15 @@ if (!class_exists('PP_Calendar')) {
 
             $user = get_user_by('id', $post_author_id);
 
-            if (empty($user) || !$user->can('edit_posts')) {
+            $is_valid = (is_object($user) && !is_wp_error($user)) ? $user->has_cap('edit_posts') : false;
 
-                $isValid = apply_filters('publishpress_author_can_edit_posts', false, $post_author_id);
-
-                if (!$isValid) {
-                    throw new Exception(
-                        __(
-                            "The selected user doesn't have enough permissions to be set as the post author.",
-                            'publishpress'
-                        )
-                    );
-                }
+            if (!apply_filters('publishpress_author_can_edit_posts', $is_valid, $post_author_id)) {
+                throw new Exception(
+                    __(
+                        "The selected user doesn't have enough permissions to be set as the post author.",
+                        'publishpress'
+                    )
+                );
             }
 
             return (int)$post_author_id;
