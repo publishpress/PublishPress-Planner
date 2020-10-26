@@ -9,7 +9,6 @@
 
 namespace PublishPress\Notifications;
 
-use Allex\Core;
 use Pimple\Container;
 use PP_Debug;
 use PublishPress\AsyncNotifications\SchedulerInterface;
@@ -31,14 +30,6 @@ class Pimple_Container extends Container
             $instance = new self;
 
             // Define the services
-
-            $instance['EDD_API_URL'] = function ($c) {
-                return 'https://publishpress.com';
-            };
-
-            $instance['PLUGIN_AUTHOR'] = function ($c) {
-                return 'PublishPress';
-            };
 
             $instance['twig_function_checked'] = function ($c) {
                 return new Twig_SimpleFunction(
@@ -107,16 +98,6 @@ class Pimple_Container extends Container
              */
             $instance['notification_scheduler'] = function ($c) {
                 return apply_filters('publishpress_notifications_notification_scheduler', new WPCronAdapter(), $c);
-            };
-
-            $instance['framework'] = function ($c) {
-                // The 4th param is there just for backward compatibility with older versions of the Allex framework
-                // packed in UpStream.
-                return new Core($c['PLUGIN_BASENAME'], $c['EDD_API_URL'], $c['PLUGIN_AUTHOR'], '');
-            };
-
-            $instance['PLUGIN_BASENAME'] = function ($c) {
-                return PUBLISHPRESS_BASENAME;
             };
 
             /**

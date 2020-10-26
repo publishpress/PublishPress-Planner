@@ -4,52 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9547fddd3b4621d5bf6a83d25b6dcaa4",
+    "content-hash": "1581bcabf7cf5d515c42539ff5009f4c",
     "packages": [
-        {
-            "name": "alledia/wordpress-plugin-framework",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/publishpress/WordPress-Plugin-Framework.git",
-                "reference": "3fdd944a5561fcb1634483622debccb9060db266"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/WordPress-Plugin-Framework/zipball/3fdd944a5561fcb1634483622debccb9060db266",
-                "reference": "3fdd944a5561fcb1634483622debccb9060db266",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6",
-                "pimple/pimple": "~3.0",
-                "twig/twig": "~1.20"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Allex\\": "src/library"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "PublishPress",
-                    "email": "help@publishpress.com",
-                    "homepage": "https://publishpress.com"
-                }
-            ],
-            "description": "Alledia framework for creating WordPress plugins.",
-            "keywords": [
-                "framework",
-                "plugin",
-                "wordpress"
-            ],
-            "time": "2020-08-11T17:24:46+00:00"
-        },
         {
             "name": "pimple/pimple",
             "version": "v3.3.0",
@@ -628,16 +584,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "ebb714493b3a54f1dbbec6b15ab7bc9b3440e17b"
+                "reference": "4089fddb67bcf6bf860d91b979e95be303835002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/ebb714493b3a54f1dbbec6b15ab7bc9b3440e17b",
-                "reference": "ebb714493b3a54f1dbbec6b15ab7bc9b3440e17b",
+                "url": "https://api.github.com/repos/composer/semver/zipball/4089fddb67bcf6bf860d91b979e95be303835002",
+                "reference": "4089fddb67bcf6bf860d91b979e95be303835002",
                 "shasum": ""
             },
             "require": {
@@ -686,7 +642,21 @@
                 "validation",
                 "versioning"
             ],
-            "time": "2020-09-27T13:14:03+00:00"
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-14T08:51:15+00:00"
         },
         {
             "name": "consolidation/annotated-command",
@@ -1822,20 +1792,20 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v9.99.99",
+            "version": "v9.99.100",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95"
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
-                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
                 "shasum": ""
             },
             "require": {
-                "php": "^7"
+                "php": ">= 7"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.*|5.*",
@@ -1863,7 +1833,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-07-02T15:55:56+00:00"
+            "time": "2020-10-15T08:29:30+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3695,5 +3665,6 @@
     "platform": {
         "php": ">=5.6.20"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

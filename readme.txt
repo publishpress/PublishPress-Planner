@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.3.0
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,12 +119,18 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [2.4.0] - UNRELEASED =
+= [2.4.1] - 2020-10-22  =
+
+* Fixed: Fix the assets URL when the plugin is not installed in a standard folder;
+
+= [2.4.0] - 2020-10-22 =
 
 * Fixed: Fix PHP notice on Ajax call after clicking a filter without typing anything in the calendar or content overview, #693;
 * Fixed: Fix JS error: No select2/compat/containerCss, #695;
 * Fixed: Fix JS error: Failed to load resource: the server responded with a status of 404 () - select2.min.js, #696;
 * Fixed: Fix JS error: notifications.js:2 Uncaught TypeError: $(...).pp_select2 is not a function, #696;
+* Fixed: Fix PHP error: undefined property $default_pulish_time, #698;
+* Fixed: Fixed assets loading when installed as dependency of the Pro plugin, #697;
 * Added: Added option to sort calendar items by publishing date, #457;
 * Added: Added option to show all posts, or specific number of posts, on a date in the calendar, #675;
 * Changed: Updated the Twig library to 1.42.5;

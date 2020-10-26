@@ -1,6 +1,6 @@
 <?php
 /**
- * File responsible for defining basic addon class
+ * File responsible for defining basic plugin class
  *
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
@@ -20,23 +20,6 @@ class Plugin
 {
     use Dependency_Injector, PublishPress_Module;
 
-    protected $framework;
-
-    public function __construct()
-    {
-        $this->framework = $this->get_service('framework');
-
-        $this->init_framework();
-    }
-
-    /**
-     * Initialize the Allex framework.
-     */
-    public function init_framework()
-    {
-        $this->framework->init();
-    }
-
     /**
      * The method which runs the plugin
      */
@@ -46,8 +29,6 @@ class Plugin
 
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
-
-        do_action('allex_enable_module_upgrade', 'https://publishpress.com/pricing/');
     }
 
     public function add_load_edit_hooks()
