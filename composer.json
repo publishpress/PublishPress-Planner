@@ -26,6 +26,8 @@
   "require-dev": {
     "publishpress/publishpress-plugin-builder": "^1.2",
     "bartlett/php-compatinfo": "^5.2",
-    "overtrue/phplint": "^2.1"
+    "overtrue/phplint": "^2.1",
+    "automattic/vipwpcs": "^2.2",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0"
   }
 }
