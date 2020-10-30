@@ -13,6 +13,7 @@ use Pimple\Container;
 use PP_Debug;
 use PublishPress\AsyncNotifications\QueueInterface;
 use PublishPress\AsyncNotifications\WPCron;
+use PublishPress\Notifications\Workflow\Controller;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Twig_SimpleFunction;
@@ -84,7 +85,7 @@ class Pimple_Container extends Container
             };
 
             $instance['workflow_controller'] = function ($c) {
-                return new Workflow\Controller;
+                return new Controller();
             };
 
             $instance['shortcodes'] = function ($c) {
