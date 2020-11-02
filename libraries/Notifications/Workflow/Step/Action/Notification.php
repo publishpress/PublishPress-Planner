@@ -14,7 +14,7 @@ use PublishPress\Notifications\Workflow\Workflow;
 
 class Notification
 {
-    const DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD = 600;
+    const DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD = 10;
 
     public function __construct()
     {
@@ -73,7 +73,7 @@ class Notification
          */
         $timeout = (int)apply_filters(
             'pp_duplicated_notification_timeout',
-            $threshold,
+            $threshold * 60,
             $uid
         );
 

@@ -155,7 +155,7 @@ if (!class_exists('PP_Notifications_Log')) {
                 'publishpress_notifications_skipped_duplicated',
                 [$this, 'actionNotificationSkippedDueToDuplication'],
                 10,
-                8
+                6
             );
             add_filter('publishpress_notifications_scheduled_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
             add_action('publishpress_notifications_scheduled_cron_task', [$this, 'registerCronIdToLog'], 10, 2);
@@ -463,7 +463,7 @@ if (!class_exists('PP_Notifications_Log')) {
                         'This notification is very similar to another one sent less than %d minutes ago for the same receiver',
                         'publishpress'
                     ),
-                    $threshold / 60
+                    $threshold
                 ),
                 'async'          => $async,
                 'event_args'     => $eventArgs,
