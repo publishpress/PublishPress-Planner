@@ -153,7 +153,7 @@ if (!class_exists('PP_Async_Notifications')) {
 
             $expectedHooks = [
                 WPCronAdapter::SEND_NOTIFICATION_HOOK,
-                'publishpress_cron_notify', // @deprecated
+                'publishpress_notifications_send_notification',
             ];
 
             if (!empty($cronTasks)) {
