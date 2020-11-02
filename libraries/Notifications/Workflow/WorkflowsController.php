@@ -243,7 +243,7 @@ class WorkflowsController
          * @param array $query_args
          * @param array $args
          */
-        $query_args = apply_filters('publishpress_notif_run_workflow_meta_query', $query_args, $args);
+        $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $args);
 
         $query = new WP_Query($query_args);
 
