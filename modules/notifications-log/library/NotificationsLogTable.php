@@ -328,7 +328,7 @@ class NotificationsLogTable extends WP_List_Table
                         ]
                     )
                 ),
-                __('Reschedule', 'publishpress')
+                __('Try again', 'publishpress')
             );
         }
 
@@ -360,7 +360,7 @@ class NotificationsLogTable extends WP_List_Table
     public function get_bulk_actions()
     {
         return [
-            self::BULK_ACTION_TRY_AGAIN  => __('Reschedule', 'publishpress'),
+            self::BULK_ACTION_TRY_AGAIN  => __('Try again', 'publishpress'),
             self::BULK_ACTION_DELETE     => __('Delete', 'publishpress'),
             self::BULK_ACTION_DELETE_ALL => __('Delete All', 'publishpress'),
         ];
