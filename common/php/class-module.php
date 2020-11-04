@@ -561,6 +561,29 @@ if (!class_exists('PP_Module')) {
             return maybe_unserialize(base64_decode($string_to_unencode));
         }
 
+        public function get_path_base()
+        {
+            return PUBLISHPRESS_BASE_PATH;
+        }
+
+        public function get_publishpress_url()
+        {
+            return PUBLISHPRESS_URL;
+        }
+
+        /**
+         * This method looks redundant but it is just an abstraction needed to make it possible to
+         * test Windows paths on a *unix machine. If not used and overridden in stubs on the tests
+         * it always return "." because Windows paths are not valid on *unix machines.
+         *
+         * @param $file
+         * @return string
+         */
+        public function dirname($file)
+        {
+            return dirname($file);
+        }
+
         /**
          * Get the publicly accessible URL for the module based on the filename
          *
@@ -572,10 +595,10 @@ if (!class_exists('PP_Module')) {
          */
         public function get_module_url($file)
         {
-            $file = str_replace(PUBLISHPRESS_BASE_PATH, '', dirname($file));
-            $module_url = untrailingslashit(PUBLISHPRESS_URL) . $file;
+            $file = str_replace($this->get_path_base(), '', $this->dirname($file));
+            $module_url = untrailingslashit($this->get_publishpress_url()) . $file;
 
-            return trailingslashit($module_url);
+            return str_replace('\\', '/', trailingslashit($module_url));
         }
 
         /**
