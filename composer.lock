@@ -2256,7 +2256,7 @@
             "version": "v1.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/publishpress/PublishPress-Plugin-Builder",
+                "url": "https://github.com/publishpress/PublishPress-Plugin-Builder.git",
                 "reference": "0d17a7381f0b3847c597e23ee125863f81a87378"
             },
             "dist": {
