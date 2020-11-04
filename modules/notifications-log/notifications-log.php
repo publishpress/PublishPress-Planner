@@ -200,10 +200,18 @@ if (!class_exists('PP_Notifications_Log')) {
                 );
 
                 wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
                     'publishpress-notifications-log',
                     $this->module_url . 'assets/js/admin.js',
                     [
                         'jquery-ui-dialog',
+                        'publishpress-select2',
                     ],
                     PUBLISHPRESS_VERSION,
                     true

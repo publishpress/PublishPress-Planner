@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: PublishPress\n"
-"POT-Creation-Date: 2020-10-07 11:37-0300\n"
+"POT-Creation-Date: 2020-10-15 16:56-0300\n"
 "PO-Revision-Date: 2019-08-21 09:51-0300\n"
 "Last-Translator: Anderson Grudtner Martins <anderson@alledia.com>\n"
 "Language-Team: Anderson Grudtner Martins <anderson@alledia.com>\n"
@@ -66,28 +66,28 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: common/php/class-module.php:504
+#: common/php/class-module.php:503
 msgid "Invalid Taxonomy"
 msgstr ""
 
-#: common/php/class-module.php:697
+#: common/php/class-module.php:696
 #: libraries/Notifications/Workflow/Step/Receiver/Role.php:32
 #: modules/roles/roles.php:81 modules/roles/roles.php:786
 #: modules/roles/roles.php:803 modules/roles/roles.php:804
 msgid "Roles"
 msgstr ""
 
-#: common/php/class-module.php:701
+#: common/php/class-module.php:700
 msgid "Role"
 msgstr ""
 
-#: common/php/class-module.php:708
+#: common/php/class-module.php:707
 #: libraries/Notifications/Workflow/Step/Receiver/User.php:26
 #: modules/roles/roles.php:896
 msgid "Users"
 msgstr ""
 
-#: common/php/class-module.php:718
+#: common/php/class-module.php:717
 msgid "E-mails"
 msgstr ""
 
@@ -95,198 +95,198 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:76
+#: libraries/Notifications/Plugin.php:57
 #: modules/improved-notifications/improved-notifications.php:730
 msgid "When to notify?"
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:77
+#: libraries/Notifications/Plugin.php:58
 msgid "Filter the content?"
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:78
+#: libraries/Notifications/Plugin.php:59
 #: modules/improved-notifications/improved-notifications.php:750
 msgid "Who to notify?"
 msgstr ""
 
 #. translators: Publish box date format, see https://secure.php.net/date
-#: libraries/Notifications/Plugin.php:118
+#: libraries/Notifications/Plugin.php:99
 msgid "M j, Y @ H:i"
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:120
-#: libraries/Notifications/Plugin.php:121
+#: libraries/Notifications/Plugin.php:101
+#: libraries/Notifications/Plugin.php:102
 msgid "Notification workflow updated."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:122
+#: libraries/Notifications/Plugin.php:103
 msgid "Notification workflow published."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:123
+#: libraries/Notifications/Plugin.php:104
 msgid "Notification workflow saved."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:124
+#: libraries/Notifications/Plugin.php:105
 msgid "Notification workflow submitted."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:126
+#: libraries/Notifications/Plugin.php:107
 #, php-format
 msgid "Notification workflow scheduled for: %s."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:129
+#: libraries/Notifications/Plugin.php:110
 msgid "Notification workflow draft updated."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:152
+#: libraries/Notifications/Plugin.php:133
 #, php-format
 msgid "%s notification workflow updated."
 msgid_plural "%s notification workflows updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Plugin.php:157
+#: libraries/Notifications/Plugin.php:138
 msgid "1 notification workflow not updated, somebody is editing it."
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:160
+#: libraries/Notifications/Plugin.php:141
 #, php-format
 msgid "%s notification workflow not updated, somebody is editing it."
 msgid_plural "%s notification workflows not updated, somebody is editing them."
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Plugin.php:165
+#: libraries/Notifications/Plugin.php:146
 #, php-format
 msgid "%s notification workflow permanently deleted."
 msgid_plural "%s notification workflows permanently deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Plugin.php:170
+#: libraries/Notifications/Plugin.php:151
 #, php-format
 msgid "%s notification workflow moved to the Trash."
 msgid_plural "%s notification workflows moved to the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Plugin.php:175
+#: libraries/Notifications/Plugin.php:156
 #, php-format
 msgid "%s notification workflow restored from the Trash."
 msgid_plural "%s notification workflows restored from the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Plugin.php:208
+#: libraries/Notifications/Plugin.php:189
 msgid "Please select at least one event"
 msgstr ""
 
-#: libraries/Notifications/Plugin.php:240
+#: libraries/Notifications/Plugin.php:221
 msgid "Not filtered"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:184
+#: libraries/Notifications/Table/Base.php:182
 msgid "List View"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:185
+#: libraries/Notifications/Table/Base.php:183
 msgid "Excerpt View"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:659
+#: libraries/Notifications/Table/Base.php:657
 msgid "Select bulk action"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:662
+#: libraries/Notifications/Table/Base.php:660
 msgid "Bulk Actions"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:674
+#: libraries/Notifications/Table/Base.php:672
 msgid "Apply"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:732
-#: libraries/Notifications/Table/Base.php:1215
+#: libraries/Notifications/Table/Base.php:730
+#: libraries/Notifications/Table/Base.php:1213
 #, php-format
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Table/Base.php:772
+#: libraries/Notifications/Table/Base.php:770
 msgid "First page"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:783
+#: libraries/Notifications/Table/Base.php:781
 msgid "Previous page"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:791
-#: libraries/Notifications/Table/Base.php:796
+#: libraries/Notifications/Table/Base.php:789
+#: libraries/Notifications/Table/Base.php:794
 msgid "Current Page"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:803
+#: libraries/Notifications/Table/Base.php:801
 #, php-format
 msgctxt "paging"
 msgid "%1$s of %2$s"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:814
+#: libraries/Notifications/Table/Base.php:812
 msgid "Next page"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:825
+#: libraries/Notifications/Table/Base.php:823
 msgid "Last page"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:894
+#: libraries/Notifications/Table/Base.php:892
 msgid "Select All"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:1152
-#: libraries/Notifications/Table/Base.php:1322
+#: libraries/Notifications/Table/Base.php:1150
+#: libraries/Notifications/Table/Base.php:1320
 msgid "Show more details"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:1189
+#: libraries/Notifications/Table/Base.php:1187
 msgid "No items found."
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:1376
+#: libraries/Notifications/Table/Base.php:1374
 #, php-format
 msgid "%s comment"
 msgid_plural "%s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Table/Base.php:1378
+#: libraries/Notifications/Table/Base.php:1376
 #, php-format
 msgid "%s approved comment"
 msgid_plural "%s approved comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Table/Base.php:1382
+#: libraries/Notifications/Table/Base.php:1380
 #, php-format
 msgid "%s pending comment"
 msgid_plural "%s pending comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Table/Base.php:1390
-#: libraries/Notifications/Table/Base.php:1409
-#: libraries/Notifications/Table/Base.php:1429
+#: libraries/Notifications/Table/Base.php:1388
+#: libraries/Notifications/Table/Base.php:1407
+#: libraries/Notifications/Table/Base.php:1427
 msgid "No comments"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:1409
+#: libraries/Notifications/Table/Base.php:1407
 msgid "No approved comments"
 msgstr ""
 
-#: libraries/Notifications/Table/Base.php:1429
+#: libraries/Notifications/Table/Base.php:1427
 msgid "No pending comments"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 #. Plugin Name of the plugin/theme
 #. Author of the plugin/theme
 #: modules/calendar/calendar.php:1020 modules/settings/settings.php:59
-#: modules/settings/settings.php:264 publishpress.php:537
+#: modules/settings/settings.php:264 publishpress.php:513
 msgid "PublishPress"
 msgstr ""
 
@@ -693,8 +693,8 @@ msgid "Schedule content for %1$s"
 msgstr ""
 
 #: modules/calendar/calendar.php:1325
-#: modules/editorial-metadata/editorial-metadata.php:1451
-#: modules/editorial-metadata/editorial-metadata.php:1523
+#: modules/editorial-metadata/editorial-metadata.php:1458
+#: modules/editorial-metadata/editorial-metadata.php:1530
 msgid "Type"
 msgstr ""
 
@@ -722,9 +722,9 @@ msgstr ""
 
 #: modules/calendar/calendar.php:1417 modules/calendar/calendar.php:1688
 #: modules/content-overview/content-overview.php:1337
-#: modules/custom-status/custom-status.php:2384
-#: modules/custom-status/custom-status.php:2860
-#: modules/editorial-metadata/editorial-metadata.php:1763
+#: modules/custom-status/custom-status.php:2405
+#: modules/custom-status/custom-status.php:2881
+#: modules/editorial-metadata/editorial-metadata.php:1770
 #: modules/roles/lib/list_table.php:144 modules/user-groups/user-groups.php:773
 msgid "Edit"
 msgstr ""
@@ -752,14 +752,14 @@ msgstr ""
 
 #: modules/calendar/calendar.php:1708
 #: modules/content-overview/content-overview.php:1374
-#: modules/custom-status/custom-status.php:2465
+#: modules/custom-status/custom-status.php:2486
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr ""
 
 #: modules/calendar/calendar.php:1711
 #: modules/content-overview/content-overview.php:1377
-#: modules/custom-status/custom-status.php:2468
+#: modules/custom-status/custom-status.php:2489
 msgid "Preview"
 msgstr ""
 
@@ -874,14 +874,14 @@ msgid ""
 msgstr ""
 
 #: modules/calendar/calendar.php:2383
-#: modules/custom-status/custom-status.php:1830
+#: modules/custom-status/custom-status.php:1851
 #: modules/dashboard/dashboard.php:346 modules/dashboard/dashboard.php:369
 #: modules/dashboard/dashboard.php:403
 msgid "Disabled"
 msgstr ""
 
 #: modules/calendar/calendar.php:2384
-#: modules/custom-status/custom-status.php:1831
+#: modules/custom-status/custom-status.php:1852
 #: modules/dashboard/dashboard.php:347 modules/dashboard/dashboard.php:370
 #: modules/dashboard/dashboard.php:404
 msgid "Enabled"
@@ -984,7 +984,7 @@ msgid "Screen Layout"
 msgstr ""
 
 #: modules/content-overview/content-overview.php:273
-#: modules/editorial-metadata/editorial-metadata.php:1339
+#: modules/editorial-metadata/editorial-metadata.php:1346
 #: modules/user-groups/user-groups.php:259
 msgid "Add to these post types:"
 msgstr ""
@@ -1020,9 +1020,9 @@ msgid "Change"
 msgstr ""
 
 #: modules/content-overview/content-overview.php:862
-#: modules/custom-status/custom-status.php:1993
+#: modules/custom-status/custom-status.php:2014
 #: modules/editorial-comments/editorial-comments.php:274
-#: modules/editorial-metadata/editorial-metadata.php:1477
+#: modules/editorial-metadata/editorial-metadata.php:1484
 msgid "Cancel"
 msgstr ""
 
@@ -1187,190 +1187,190 @@ msgid "Restricted status "
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1494
-#: modules/custom-status/custom-status.php:1595
+#: modules/custom-status/custom-status.php:1606
 msgid "Please enter a name for the status"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:1499
-#: modules/custom-status/custom-status.php:1600
+#: modules/custom-status/custom-status.php:1611
 msgid "Please enter a valid, non-numeric name for the status."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1506
-#: modules/custom-status/custom-status.php:1607
+#: modules/custom-status/custom-status.php:1516
+#: modules/custom-status/custom-status.php:1628
 msgid "Status name cannot exceed 20 characters. Please try a shorter name."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1513
-#: modules/custom-status/custom-status.php:1621
+#: modules/custom-status/custom-status.php:1524
+#: modules/custom-status/custom-status.php:1642
 msgid "Status name conflicts with existing term. Please choose another."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1520
-#: modules/custom-status/custom-status.php:1637
+#: modules/custom-status/custom-status.php:1531
+#: modules/custom-status/custom-status.php:1658
 msgid "Status name is restricted. Please choose another name."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1541
+#: modules/custom-status/custom-status.php:1552
 msgid "Could not add status: "
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1630
+#: modules/custom-status/custom-status.php:1651
 msgid "Status name conflicts with existing status. Please choose another."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1659
+#: modules/custom-status/custom-status.php:1680
 msgid "Error updating post status."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1691
+#: modules/custom-status/custom-status.php:1712
 msgid "Invalid nonce for submission."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1696
+#: modules/custom-status/custom-status.php:1717
 msgid "Sorry, you do not have permission to edit custom statuses."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1703
+#: modules/custom-status/custom-status.php:1724
 msgid "Status does not exist."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1708
+#: modules/custom-status/custom-status.php:1729
 msgid "Could not delete the status: "
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1765
-#: modules/editorial-metadata/editorial-metadata.php:1282
+#: modules/custom-status/custom-status.php:1786
+#: modules/editorial-metadata/editorial-metadata.php:1289
 msgid "Terms not set."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1797
+#: modules/custom-status/custom-status.php:1818
 msgid "Use on these post types:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1804
+#: modules/custom-status/custom-status.php:1825
 msgid "Show the status dropdown menu on the post editing screen:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1905
+#: modules/custom-status/custom-status.php:1926
 msgid "Custom Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1914
-#: modules/custom-status/custom-status.php:2034
+#: modules/custom-status/custom-status.php:1935
+#: modules/custom-status/custom-status.php:2055
 msgid "The name is used to identify the status. (Max: 20 characters)"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1921
-#: modules/editorial-metadata/editorial-metadata.php:1437
-#: modules/editorial-metadata/editorial-metadata.php:1509
+#: modules/custom-status/custom-status.php:1942
+#: modules/editorial-metadata/editorial-metadata.php:1444
+#: modules/editorial-metadata/editorial-metadata.php:1516
 msgid "Slug"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1931
+#: modules/custom-status/custom-status.php:1952
 msgid ""
 "The slug is the unique ID for the status and is changed when the name is "
 "changed."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1939
-#: modules/custom-status/custom-status.php:2041
-#: modules/custom-status/custom-status.php:2718
-#: modules/editorial-metadata/editorial-metadata.php:1444
-#: modules/editorial-metadata/editorial-metadata.php:1516
-#: modules/editorial-metadata/editorial-metadata.php:1664
+#: modules/custom-status/custom-status.php:1960
+#: modules/custom-status/custom-status.php:2062
+#: modules/custom-status/custom-status.php:2739
+#: modules/editorial-metadata/editorial-metadata.php:1451
+#: modules/editorial-metadata/editorial-metadata.php:1523
+#: modules/editorial-metadata/editorial-metadata.php:1671
 #: modules/user-groups/user-groups.php:735
 msgid "Description"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1949
-#: modules/custom-status/custom-status.php:2051
+#: modules/custom-status/custom-status.php:1970
+#: modules/custom-status/custom-status.php:2072
 msgid ""
 "The description is primarily for administrative use, to give you some "
 "context on what the custom status is to be used for."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1957
-#: modules/custom-status/custom-status.php:2057
+#: modules/custom-status/custom-status.php:1978
+#: modules/custom-status/custom-status.php:2078
 msgid "Color"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1966
-#: modules/custom-status/custom-status.php:2065
+#: modules/custom-status/custom-status.php:1987
+#: modules/custom-status/custom-status.php:2086
 msgid "The color is used to identify the status."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1971
-#: modules/custom-status/custom-status.php:2069
-#: modules/custom-status/custom-status.php:2719
+#: modules/custom-status/custom-status.php:1992
+#: modules/custom-status/custom-status.php:2090
+#: modules/custom-status/custom-status.php:2740
 msgid "Icon"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1985
-#: modules/custom-status/custom-status.php:2085
+#: modules/custom-status/custom-status.php:2006
+#: modules/custom-status/custom-status.php:2106
 msgid "The icon is used to visually represent the status."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1991
+#: modules/custom-status/custom-status.php:2012
 msgid "Update Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2014
-#: modules/editorial-metadata/editorial-metadata.php:1491
+#: modules/custom-status/custom-status.php:2035
+#: modules/editorial-metadata/editorial-metadata.php:1498
 msgid "Options"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2018
-#: modules/editorial-metadata/editorial-metadata.php:1494
+#: modules/custom-status/custom-status.php:2039
+#: modules/editorial-metadata/editorial-metadata.php:1501
 msgid "Add New"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2025
-#: modules/custom-status/custom-status.php:2717
-#: modules/editorial-metadata/editorial-metadata.php:1432
-#: modules/editorial-metadata/editorial-metadata.php:1502
-#: modules/editorial-metadata/editorial-metadata.php:1662
+#: modules/custom-status/custom-status.php:2046
+#: modules/custom-status/custom-status.php:2738
+#: modules/editorial-metadata/editorial-metadata.php:1439
+#: modules/editorial-metadata/editorial-metadata.php:1509
+#: modules/editorial-metadata/editorial-metadata.php:1669
 #: modules/user-groups/user-groups.php:734
 msgid "Name"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2093
+#: modules/custom-status/custom-status.php:2114
 msgid "Add New Status"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2105
+#: modules/custom-status/custom-status.php:2126
 msgid ""
 "Please note that checking a box will apply all statuses to that post type."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2340
-#: modules/custom-status/custom-status.php:2377
+#: modules/custom-status/custom-status.php:2361
+#: modules/custom-status/custom-status.php:2398
 msgid "Permalink:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2356
+#: modules/custom-status/custom-status.php:2377
 msgid "Change Permalinks"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2383
+#: modules/custom-status/custom-status.php:2404
 msgid "Edit permalink"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2716
-#: modules/editorial-metadata/editorial-metadata.php:1661
+#: modules/custom-status/custom-status.php:2737
+#: modules/editorial-metadata/editorial-metadata.php:1668
 msgid "Position"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2741
+#: modules/custom-status/custom-status.php:2762
 msgid "No custom statuses found."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2847
+#: modules/custom-status/custom-status.php:2868
 msgid "Default"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2864
-#: modules/editorial-metadata/editorial-metadata.php:1769
+#: modules/custom-status/custom-status.php:2885
+#: modules/editorial-metadata/editorial-metadata.php:1776
 #: modules/notifications-log/library/LogListTable.php:186
 #: modules/roles/lib/list_table.php:150 modules/user-groups/user-groups.php:784
 msgid "Delete"
@@ -1738,7 +1738,7 @@ msgid ""
 "adding editorial metadata."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:462 publishpress.php:618
+#: modules/editorial-metadata/editorial-metadata.php:462 publishpress.php:594
 msgid "Configure"
 msgstr ""
 
@@ -1763,7 +1763,7 @@ msgid "Name conflicts with existing term. Please choose another."
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:1079
-#: modules/editorial-metadata/editorial-metadata.php:1181
+#: modules/editorial-metadata/editorial-metadata.php:1188
 #: modules/roles/roles.php:952
 msgid "Name already in use. Please choose another."
 msgstr ""
@@ -1772,142 +1772,143 @@ msgstr ""
 msgid "Slug already in use. Please choose another."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1088
-#: modules/editorial-metadata/editorial-metadata.php:1191
+#: modules/editorial-metadata/editorial-metadata.php:1089
+#: modules/editorial-metadata/editorial-metadata.php:1093
+#: modules/editorial-metadata/editorial-metadata.php:1198
 msgid "Name cannot exceed 200 characters. Please try a shorter name."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1093
+#: modules/editorial-metadata/editorial-metadata.php:1100
 msgid "Please select a valid metadata type."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1118
+#: modules/editorial-metadata/editorial-metadata.php:1125
 msgid "Error adding term."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1164
+#: modules/editorial-metadata/editorial-metadata.php:1171
 msgid "Please enter a name for the editorial metadata"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1169
+#: modules/editorial-metadata/editorial-metadata.php:1176
 msgid "Please enter a valid, non-numeric name for the editorial metadata."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1175
+#: modules/editorial-metadata/editorial-metadata.php:1182
 msgid "Metadata name conflicts with existing term. Please choose another."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1186
+#: modules/editorial-metadata/editorial-metadata.php:1193
 msgid ""
 "Name conflicts with slug for another term. Please choose something else."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1214
-#: modules/editorial-metadata/editorial-metadata.php:1257
+#: modules/editorial-metadata/editorial-metadata.php:1221
+#: modules/editorial-metadata/editorial-metadata.php:1264
 msgid "Error updating term."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1321
+#: modules/editorial-metadata/editorial-metadata.php:1328
 msgid "Error deleting term."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1434
-#: modules/editorial-metadata/editorial-metadata.php:1506
+#: modules/editorial-metadata/editorial-metadata.php:1441
+#: modules/editorial-metadata/editorial-metadata.php:1513
 msgid "The name is for labeling the metadata field."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1440
+#: modules/editorial-metadata/editorial-metadata.php:1447
 msgid "The slug cannot be changed once the term has been created."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1447
-#: modules/editorial-metadata/editorial-metadata.php:1520
+#: modules/editorial-metadata/editorial-metadata.php:1454
+#: modules/editorial-metadata/editorial-metadata.php:1527
 msgid ""
 "The description can be used to communicate with your team about what the "
 "metadata is for."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1454
+#: modules/editorial-metadata/editorial-metadata.php:1461
 msgid "The metadata type cannot be changed once created."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1458
-#: modules/editorial-metadata/editorial-metadata.php:1536
-#: modules/editorial-metadata/editorial-metadata.php:1665
+#: modules/editorial-metadata/editorial-metadata.php:1465
+#: modules/editorial-metadata/editorial-metadata.php:1543
+#: modules/editorial-metadata/editorial-metadata.php:1672
 msgid "Viewable"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1462
-#: modules/editorial-metadata/editorial-metadata.php:1539
-#: modules/editorial-metadata/editorial-metadata.php:1712
+#: modules/editorial-metadata/editorial-metadata.php:1469
+#: modules/editorial-metadata/editorial-metadata.php:1546
+#: modules/editorial-metadata/editorial-metadata.php:1719
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:79
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:113
 #: modules/notifications-log/library/LogListTable.php:138
 msgid "No"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1463
-#: modules/editorial-metadata/editorial-metadata.php:1540
-#: modules/editorial-metadata/editorial-metadata.php:1710
+#: modules/editorial-metadata/editorial-metadata.php:1470
+#: modules/editorial-metadata/editorial-metadata.php:1547
+#: modules/editorial-metadata/editorial-metadata.php:1717
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:80
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:112
 #: modules/notifications-log/library/LogListTable.php:138
 msgid "Yes"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1470
-#: modules/editorial-metadata/editorial-metadata.php:1548
-#: modules/editorial-metadata/editorial-metadata.php:1767
+#: modules/editorial-metadata/editorial-metadata.php:1477
+#: modules/editorial-metadata/editorial-metadata.php:1555
+#: modules/editorial-metadata/editorial-metadata.php:1774
 msgid ""
 "When viewable, metadata can be seen on views other than the edit post view "
 "(e.g. calendar, manage posts, content overview, etc.)"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1476
+#: modules/editorial-metadata/editorial-metadata.php:1483
 msgid "Update Metadata Term"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1513
+#: modules/editorial-metadata/editorial-metadata.php:1520
 msgid ""
 "The \"slug\" is the URL-friendly version of the name. It is usually all "
 "lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1533
+#: modules/editorial-metadata/editorial-metadata.php:1540
 msgid "Indicate the type of editorial metadata."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1553
+#: modules/editorial-metadata/editorial-metadata.php:1560
 msgid "Add New Metadata Term"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1559
+#: modules/editorial-metadata/editorial-metadata.php:1566
 msgid ""
 "Please note that checking a box will apply all metadata to that post type."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1663
+#: modules/editorial-metadata/editorial-metadata.php:1670
 msgid "Metadata Type"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1743
+#: modules/editorial-metadata/editorial-metadata.php:1750
 msgid "No editorial metadata found."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1765
+#: modules/editorial-metadata/editorial-metadata.php:1772
 msgid "Hidden metadata can only be viewed on the edit post view."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1765
+#: modules/editorial-metadata/editorial-metadata.php:1772
 msgid "Make Hidden"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:1767
+#: modules/editorial-metadata/editorial-metadata.php:1774
 msgid "Make Viewable"
 msgstr ""
 
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:155
-#: modules/notifications/notifications.php:1722
+#: modules/notifications/notifications.php:1744
 #, php-format
 msgid "%1$s at %2$s"
 msgstr ""
@@ -2218,8 +2219,8 @@ msgstr ""
 msgid "All Statuses"
 msgstr ""
 
-#: modules/notifications-log/notifications-log.php:223 publishpress.php:1200
-#: publishpress.php:1205
+#: modules/notifications-log/notifications-log.php:223 publishpress.php:1143
+#: publishpress.php:1148
 msgid "Notification"
 msgstr ""
 
@@ -2255,8 +2256,8 @@ msgid "Notification log not found."
 msgstr ""
 
 #: modules/notifications/notifications.php:71
-#: modules/notifications/notifications.php:462 publishpress.php:1199
-#: publishpress.php:1204
+#: modules/notifications/notifications.php:484 publishpress.php:1142
+#: publishpress.php:1147
 msgid "Notifications"
 msgstr ""
 
@@ -2277,229 +2278,229 @@ msgid ""
 "Github</a></p>"
 msgstr ""
 
-#: modules/notifications/notifications.php:431
+#: modules/notifications/notifications.php:453
 msgid "Click to stop being notified on updates for this post"
 msgstr ""
 
-#: modules/notifications/notifications.php:432
+#: modules/notifications/notifications.php:454
 msgid "Stop notifying me"
 msgstr ""
 
-#: modules/notifications/notifications.php:435
+#: modules/notifications/notifications.php:457
 msgid "Click to start being notified on updates for this post"
 msgstr ""
 
-#: modules/notifications/notifications.php:436
+#: modules/notifications/notifications.php:458
 msgid "Notify me"
 msgstr ""
 
-#: modules/notifications/notifications.php:498
+#: modules/notifications/notifications.php:520
 msgid ""
 "Enter any users, roles, or email address that should receive notifications "
 "from workflows."
 msgstr ""
 
-#: modules/notifications/notifications.php:520
+#: modules/notifications/notifications.php:542
 msgid ""
 "This won't have any effect unless you have at least one workflow targeting "
 "the \"Notify me\" box."
 msgstr ""
 
-#: modules/notifications/notifications.php:528
+#: modules/notifications/notifications.php:550
 msgid "Active Notifications"
 msgstr ""
 
-#: modules/notifications/notifications.php:548
+#: modules/notifications/notifications.php:570
 #, php-format
 msgid "No active notifications found for this %s."
 msgstr ""
 
-#: modules/notifications/notifications.php:899
+#: modules/notifications/notifications.php:921
 #, php-format
 msgid "You are receiving this email because you are subscribed to \"%s\"."
 msgstr ""
 
-#: modules/notifications/notifications.php:903
+#: modules/notifications/notifications.php:925
 #, php-format
 msgid "This email was sent %s."
 msgstr ""
 
-#: modules/notifications/notifications.php:1497
+#: modules/notifications/notifications.php:1519
 msgid ""
 "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1505
+#: modules/notifications/notifications.php:1527
 msgid "Email from:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1513
+#: modules/notifications/notifications.php:1535
 msgid "Always notify the author of the content:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1521
+#: modules/notifications/notifications.php:1543
 msgid "Always notify users who have edited the content:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1529
+#: modules/notifications/notifications.php:1551
 msgid "Blacklisted taxonomies for Notifications"
 msgstr ""
 
-#: modules/notifications/notifications.php:1643
+#: modules/notifications/notifications.php:1665
 msgid "slug1,slug2"
 msgstr ""
 
-#: modules/notifications/notifications.php:1649
+#: modules/notifications/notifications.php:1671
 msgid ""
 "Add a list of taxonomy-slugs separated by comma that should not be loaded by "
 "the Taxonomy content filter when adding a new Notification Workflow."
 msgstr ""
 
-#: modules/notifications/notifications.php:1749
+#: modules/notifications/notifications.php:1771
 msgid "WordPress Scheduler"
 msgstr ""
 
-#: modules/notifications/notifications.php:1758
+#: modules/notifications/notifications.php:1780
 #, php-format
 msgid "[%1$s] New %2$s Created: \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1765
+#: modules/notifications/notifications.php:1787
 #, php-format
 msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1775
+#: modules/notifications/notifications.php:1797
 #, php-format
 msgid "[%1$s] %2$s Trashed: \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1782
+#: modules/notifications/notifications.php:1804
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1792
+#: modules/notifications/notifications.php:1814
 #, php-format
 msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1799
+#: modules/notifications/notifications.php:1821
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
 msgstr ""
 
 #. translators: 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:1808
+#: modules/notifications/notifications.php:1830
 #, php-format
 msgid "[%1$s] %2$s Scheduled: \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1811
+#: modules/notifications/notifications.php:1833
 #, php-format
 msgid ""
 "%1$s #%2$s \"%3$s\" was scheduled by %4$s %5$s.  It will be published on %6$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1822
+#: modules/notifications/notifications.php:1844
 #, php-format
 msgid "[%1$s] %2$s Published: \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1829
+#: modules/notifications/notifications.php:1851
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1839
+#: modules/notifications/notifications.php:1861
 #, php-format
 msgid "[%1$s] %2$s Unpublished: \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1846
+#: modules/notifications/notifications.php:1868
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1856
+#: modules/notifications/notifications.php:1878
 #, php-format
 msgid "[%1$s] %2$s Status Changed for \"%3$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1863
+#: modules/notifications/notifications.php:1885
 #, php-format
 msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1874
+#: modules/notifications/notifications.php:1896
 #, php-format
 msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1887
+#: modules/notifications/notifications.php:1909
 #, php-format
 msgid "%1$s => %2$s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1895
+#: modules/notifications/notifications.php:1917
 #, php-format
 msgid "== %s Details =="
 msgstr ""
 
-#: modules/notifications/notifications.php:1896
+#: modules/notifications/notifications.php:1918
 #, php-format
 msgid "Title: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1900
+#: modules/notifications/notifications.php:1922
 #, php-format
 msgid "Author: %1$s (%2$s )"
 msgstr ""
 
-#: modules/notifications/notifications.php:1914
-#: modules/notifications/notifications.php:1967
+#: modules/notifications/notifications.php:1936
+#: modules/notifications/notifications.php:1989
 msgid "== Actions =="
 msgstr ""
 
-#: modules/notifications/notifications.php:1916
-#: modules/notifications/notifications.php:1973
+#: modules/notifications/notifications.php:1938
+#: modules/notifications/notifications.php:1995
 #, php-format
 msgid "Add editorial comment: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1919
-#: modules/notifications/notifications.php:1976
+#: modules/notifications/notifications.php:1941
+#: modules/notifications/notifications.php:1998
 #, php-format
 msgid "Edit: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1920
-#: modules/notifications/notifications.php:1977
+#: modules/notifications/notifications.php:1942
+#: modules/notifications/notifications.php:1999
 #, php-format
 msgid "View: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1931
+#: modules/notifications/notifications.php:1953
 #, php-format
 msgid "[%1$s] New Editorial Comment: \"%2$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1938
+#: modules/notifications/notifications.php:1960
 #, php-format
 msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
 msgstr ""
 
-#: modules/notifications/notifications.php:1945
+#: modules/notifications/notifications.php:1967
 #, php-format
 msgid "%1$s (%2$s ) said on %3$s at %4$s:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1969
+#: modules/notifications/notifications.php:1991
 #, php-format
 msgid "Reply: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:1980
+#: modules/notifications/notifications.php:2002
 #, php-format
 msgid "You can see all editorial comments on this %s here: "
 msgstr ""
@@ -2637,7 +2638,7 @@ msgid ""
 "loaded file."
 msgstr ""
 
-#: modules/settings/settings.php:400 publishpress.php:622
+#: modules/settings/settings.php:400 publishpress.php:598
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
@@ -2839,113 +2840,93 @@ msgstr ""
 msgid "Did you mean %s?"
 msgstr ""
 
-#: publishpress.php:372
+#: publishpress.php:368
 msgid "PUBLISHPRESS_VERSION"
 msgstr ""
 
-#: publishpress.php:376
+#: publishpress.php:372
 msgid "PUBLISHPRESS_BASE_PATH"
 msgstr ""
 
-#: publishpress.php:380
+#: publishpress.php:376
 msgid "PUBLISHPRESS_FILE_PATH"
 msgstr ""
 
-#: publishpress.php:384
+#: publishpress.php:380
 msgid "PUBLISHPRESS_URL"
 msgstr ""
 
-#: publishpress.php:388
+#: publishpress.php:384
 msgid "PUBLISHPRESS_SETTINGS_PAGE"
 msgstr ""
 
-#: publishpress.php:392
+#: publishpress.php:388
 msgid "PUBLISHPRESS_LIBRARIES_PATH"
 msgstr ""
 
-#: publishpress.php:396
+#: publishpress.php:392
 msgid "PUBLISHPRESS_BASENAME"
 msgstr ""
 
-#: publishpress.php:400
+#: publishpress.php:396
 msgid "WP_CONTENT_DIR"
 msgstr ""
 
-#: publishpress.php:404
+#: publishpress.php:400
 msgid "WP_CONTENT_URL"
 msgstr ""
 
-#: publishpress.php:408
+#: publishpress.php:404
 msgid "WP Date Format"
 msgstr ""
 
-#: publishpress.php:412
+#: publishpress.php:408
 msgid "WP Time Format"
 msgstr ""
 
-#: publishpress.php:416
+#: publishpress.php:412
 msgid "WP Timezone String"
 msgstr ""
 
-#: publishpress.php:420
+#: publishpress.php:416
 msgid "WP GMT Offset"
 msgstr ""
 
-#: publishpress.php:424
+#: publishpress.php:420
 msgid "date_default_timezone_get"
 msgstr ""
 
-#: publishpress.php:428
-msgid "Framework::FRAMEWORK_BASE_PATH"
-msgstr ""
-
-#: publishpress.php:432
-msgid "Framework::TWIG_PATH"
-msgstr ""
-
-#: publishpress.php:436
-msgid "Framework::ASSETS_BASE_URL"
-msgstr ""
-
-#: publishpress.php:440
-msgid "Framework::PLUGIN_NAME"
-msgstr ""
-
-#: publishpress.php:444
-msgid "Framework::PLUGIN_TITLE"
-msgstr ""
-
-#: publishpress.php:621
+#: publishpress.php:597
 msgid "Please correct your form errors below and try again."
 msgstr ""
 
-#: publishpress.php:624
+#: publishpress.php:600
 msgid "You do not have necessary permissions to complete this action."
 msgstr ""
 
-#: publishpress.php:627
+#: publishpress.php:603
 msgid "Post does not exist"
 msgstr ""
 
-#: publishpress.php:940
+#: publishpress.php:883
 msgid ""
 "Edit Flow was deactivated by PublishPress. If you want to activate it, "
 "deactive PublishPress first."
 msgstr ""
 
-#: publishpress.php:1201
+#: publishpress.php:1144
 msgid "Add New Notification"
 msgstr ""
 
-#: publishpress.php:1202
+#: publishpress.php:1145
 msgid "Edit Notification"
 msgstr ""
 
-#: publishpress.php:1203
+#: publishpress.php:1146
 msgid "Search Notifications"
 msgstr ""
 
-#: publishpress.php:1206 publishpress.php:1207
+#: publishpress.php:1149 publishpress.php:1150
 msgid "No notification found"
 msgstr ""
 

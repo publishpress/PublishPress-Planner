@@ -1,27 +1,49 @@
 {
-  "name": "publishpress/publishpress",
-  "type": "wordpress-plugin",
-  "license": "GPL-2.0+",
-  "description": "WordPress plugin to accelerate your publishing workflow.",
-  "homepage": "http://publishpress.com/",
-  "authors": [
-    {
-      "name": "PublishPress",
-      "email": "help@publishpress.com"
+    "name": "publishpress/publishpress",
+    "type": "library",
+    "license": "GPL-2.0+",
+    "description": "WordPress plugin to accelerate your publishing workflow.",
+    "homepage": "http://publishpress.com/",
+    "authors": [
+        {
+            "name": "PublishPress",
+            "email": "help@publishpress.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "files": [
+            "defines-free-plugin-path.php"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/publishpress/wp-browser"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.20",
+        "twig/twig": "1.42.5",
+        "pimple/pimple": "~3.0",
+        "publishpress/wordpress-version-notices": "^1"
+    },
+    "require-dev": {
+        "publishpress/publishpress-plugin-builder": "^1.2",
+        "bartlett/php-compatinfo": "^5.2",
+        "overtrue/phplint": "^2.1",
+        "publishpress/wp-browser": "2.6.5.2",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-webdriver": "^1.0",
+        "codeception/module-db": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-cli": "^1.0",
+        "codeception/util-universalframework": "^1.0"
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "require": {
-    "php": ">=5.6.20",
-    "twig/twig": "1.37.1",
-    "pimple/pimple": "~3.0",
-    "alledia/wordpress-plugin-framework": "^1.0",
-    "publishpress/wordpress-version-notices": "^1"
-  },
-  "require-dev": {
-    "publishpress/publishpress-plugin-builder": "^1.2",
-    "bartlett/php-compatinfo": "^5.2",
-    "overtrue/phplint": "^2.1"
-  }
 }

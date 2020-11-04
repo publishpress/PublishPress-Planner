@@ -1110,14 +1110,14 @@ if (!class_exists('PP_Improved_Notifications')) {
          */
         public function add_admin_styles()
         {
-            wp_enqueue_style('psppno-admin-css', plugin_dir_url(__FILE__) . 'assets/css/admin.css');
-            wp_enqueue_style('psppno-multiple-select', plugin_dir_url(__FILE__) . 'assets/css/multiple-select.css');
-            wp_enqueue_style('psppno-grid', plugin_dir_url(__FILE__) . 'assets/css/grids-min.css');
+            wp_enqueue_style('psppno-admin-css', $this->module_url . 'assets/css/admin.css');
+            wp_enqueue_style('psppno-multiple-select', $this->module_url . 'assets/css/multiple-select.css');
+            wp_enqueue_style('psppno-grid', $this->module_url . 'assets/css/grids-min.css');
             wp_enqueue_style(
                 'psppno-grid-responsive',
-                plugin_dir_url(__FILE__) . 'assets/css/grids-responsive-min.css'
+                $this->module_url . 'assets/css/grids-responsive-min.css'
             );
-            wp_enqueue_style('psppno-user-profile', plugin_dir_url(__FILE__) . 'assets/css/user_profile.css');
+            wp_enqueue_style('psppno-user-profile', $this->module_url . 'assets/css/user_profile.css');
         }
 
         /**
@@ -1199,8 +1199,8 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
             ?>
             <img
-                src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png' ?>"
-                alt="" class="logo-header"/>
+                    src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png' ?>"
+                    alt="" class="logo-header"/>
 
             <script>
                 // Move the logo to the correct place since we don't have other hook to add it inside the .wrap element.
