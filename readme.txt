@@ -125,6 +125,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed error in the calendar: Error: selected user doesn't have enough permissions to be set as the post author, #704;
 * Fixed: Fixed conflict with the plugin Visual Composer: pagenow is undefined, #692;
 * Fixed: Method get_inner_information was ignoring the passed information fields to the first argument, #654;
+* Fixed: Updated the .POT file;
 
 = [2.4.1] - 2020-10-22  =
 
