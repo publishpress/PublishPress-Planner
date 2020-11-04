@@ -119,6 +119,13 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [2.4.2] - UNRELEASED  =
+
+* Fixed: Invalid assets paths for modules on Windows servers, #712;
+* Fixed: Fixed error in the calendar: Error: selected user doesn't have enough permissions to be set as the post author, #704;
+* Fixed: Fixed conflict with the plugin Visual Composer: pagenow is undefined, #692;
+* Fixed: Method get_inner_information was ignoring the passed information fields to the first argument, #654;
+
 = [2.4.1] - 2020-10-22  =
 
 * Fixed: Fix the assets URL when the plugin is not installed in a standard folder;

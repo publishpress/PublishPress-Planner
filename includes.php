@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (!defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '2.4.1-hotfix-704-calendar-post-permission');
+    define('PUBLISHPRESS_VERSION', '2.4.2-beta.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
