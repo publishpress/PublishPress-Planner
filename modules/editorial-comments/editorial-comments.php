@@ -129,6 +129,11 @@ if (!class_exists('PP_Editorial_Comments')) {
                 return;
             }
 
+            // Disable the scripts for the post page if the plugin Visual Composer is enabled.
+            if (isset($_GET['vcv-action']) && $_GET['vcv-action'] === 'frontend') {
+                return false;
+            }
+
             wp_enqueue_script(
                 'publishpress-editorial-comments',
                 $this->module_url . 'lib/editorial-comments.js',

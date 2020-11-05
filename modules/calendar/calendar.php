@@ -1645,7 +1645,7 @@ if (!class_exists('PP_Calendar')) {
         {
             ?>
             <table class="item-information">
-                <?php foreach ($this->get_post_information_fields($post) as $field => $values) : ?>
+                <?php foreach ($pp_calendar_item_information_fields as $field => $values) : ?>
                     <tr class="item-field item-information-<?php echo esc_attr($field); ?>">
                         <th class="label"><?php echo esc_html($values['label']); ?>:</th>
                         <?php if ($values['value'] && isset($values['type'])) : ?>
@@ -1912,6 +1912,7 @@ if (!class_exists('PP_Calendar')) {
             }// End foreach().
 
             $information_fields = apply_filters('pp_calendar_item_information_fields', $information_fields, $post->ID);
+
             foreach ($information_fields as $field => $values) {
                 // Allow filters to hide empty fields or to hide any given individual field. Hide empty fields by default.
                 if ((apply_filters(
@@ -3382,18 +3383,15 @@ if (!class_exists('PP_Calendar')) {
 
             $user = get_user_by('id', $post_author_id);
 
-            if (empty($user) || !$user->can('edit_posts')) {
+            $is_valid = (is_object($user) && !is_wp_error($user)) ? $user->has_cap('edit_posts') : false;
 
-                $isValid = apply_filters('publishpress_author_can_edit_posts', false, $post_author_id);
-
-                if (!$isValid) {
-                    throw new Exception(
-                        __(
-                            "The selected user doesn't have enough permissions to be set as the post author.",
-                            'publishpress'
-                        )
-                    );
-                }
+            if (!apply_filters('publishpress_author_can_edit_posts', $is_valid, $post_author_id)) {
+                throw new Exception(
+                    __(
+                        "The selected user doesn't have enough permissions to be set as the post author.",
+                        'publishpress'
+                    )
+                );
             }
 
             return (int)$post_author_id;

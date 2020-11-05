@@ -389,6 +389,7 @@ if (!class_exists('PP_Custom_Status')) {
         {
             global $publishpress;
 
+
             if ($this->disable_custom_statuses_for_post_type()) {
                 return;
             }
@@ -841,6 +842,11 @@ if (!class_exists('PP_Custom_Status')) {
             $post_type_obj = get_post_type_object($this->get_current_post_type());
 
             if (!current_user_can($post_type_obj->cap->edit_posts)) {
+                return false;
+            }
+
+            // Disable the scripts for the post page if the plugin Visual Composer is enabled.
+            if (isset($_GET['vcv-action']) && $_GET['vcv-action'] === 'frontend') {
                 return false;
             }
 
