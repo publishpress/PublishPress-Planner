@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,7 +119,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [2.4.2] - UNRELEASED  =
+= [2.4.2] - 2020-11-05  =
 
 * Fixed: Invalid assets paths for modules on Windows servers, #712;
 * Fixed: Fixed error in the calendar: Error: selected user doesn't have enough permissions to be set as the post author, #704;
