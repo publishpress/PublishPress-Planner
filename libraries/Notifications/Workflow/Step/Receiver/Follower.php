@@ -14,8 +14,6 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
 
 class Follower extends Simple_Checkbox implements Receiver_Interface
 {
-    use Dependency_Injector;
-
     const META_KEY = '_psppno_tofollower';
 
     const META_VALUE = 'follower';
