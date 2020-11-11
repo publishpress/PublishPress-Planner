@@ -29,6 +29,7 @@ header h2 a.change-date-cancel {
 .postbox-container {
     float: left;
     padding-right: 0;
+    width: 100%;
 }
 
 .postbox {

@@ -689,45 +689,11 @@ class PP_Content_Overview extends PP_Module
 
             <div class="metabox-holder">
                 <?php
-                if (isset($this->module->options->post_types['post']) && $this->module->options->post_types['post'] == 'on') {
-                    // Handle the calculation of terms to postbox-containers
-                    $terms_per_container = ceil(count($terms) / $this->num_columns);
-                    $term_index          = 0;
-
-                    // Show just one column if we've filtered to one term
-                    if (count($this->terms) == 1) {
-                        $this->num_columns = 1;
-                    }
-
-                    for ($i = 1; $i <= $this->num_columns; $i++) {
-                        echo '<div class="postbox-container" style="width:' . (100 / $this->num_columns) . '%;">';
-                        for ($j = 0; $j < $terms_per_container; $j++) {
-                            if (isset($this->terms[$term_index])) {
-                                $this->print_term($this->terms[$term_index], 'post');
-                            }
-                            $term_index++;
-                        }
-
-                        echo '</div>';
-                    }
-                }
-
-                if (isset($this->module->options->post_types['page']) && $this->module->options->post_types['page'] == 'on') {
-                    for ($i = 1; $i <= $this->num_columns; $i++) {
-                        echo '<div class="postbox-container" style="width:' . (100 / $this->num_columns) . '%;">';
-                        $this->print_term(null, 'page');
-                        echo '</div>';
-                    }
-                }
-
-                foreach ($this->get_selected_post_types($this->module->options->post_types) as $post_type ){
-                    if (isset($this->module->options->post_types[$post_type]) && $this->module->options->post_types[$post_type] == 'on') {
-                        for ($i = 1; $i <= $this->num_columns; $i++) {
-                            echo '<div class="postbox-container" style="width:' . (100 / $this->num_columns) . '%;">';
-                            $this->print_term(null, $post_type);
-                            echo '</div>';
-                        }
-                    }
+                $selectedPostTypes = $this->get_selected_post_types();
+                foreach ($selectedPostTypes as $postType) {
+                    echo '<div class="postbox-container">';
+                    $this->printPostForPostType(null, $postType);
+                    echo '</div>';
                 }
                 ?>
             </div>
@@ -738,15 +704,19 @@ class PP_Content_Overview extends PP_Module
         $publishpress->settings->print_default_footer($publishpress->modules->content_overview);
     }
 
-    public function get_selected_post_types($selection_from_options)
+    public function get_selected_post_types()
     {
-        $enabled_post_types = [];
-        foreach ($selection_from_options as $post_type => $on_off) {
-            if ($on_off == 'on' && !in_array($post_type, $enabled_post_types) && $post_type != 'post' && $post_type != 'page') {
-                array_push($enabled_post_types, $post_type);
+        $postTypesOption = $this->module->options->post_types;
+
+        $enabledPostTypes = [];
+        foreach ($postTypesOption as $postType => $status) {
+            if ('on' === $status
+                && !in_array($postType, $enabledPostTypes)) {
+                $enabledPostTypes[] = $postType;
             }
         }
-        return $enabled_post_types;
+
+        return $enabledPostTypes;
     }
 
     /**
@@ -1038,31 +1008,21 @@ class PP_Content_Overview extends PP_Module
      * @param object $term The term to print.
      * @param string $postType
      */
-    public function print_term($term, $postType)
+    public function printPostForPostType($term, $postType)
     {
-        global $wpdb;
-
-        $posts = $this->get_posts_for_term($term, $postType, $this->user_filters);
-        $post_types = $this->get_settings_post_types();
+        $posts          = $this->getPostsForPostType($term, $postType, $this->user_filters);
+        $postTypes      = $this->get_settings_post_types();
+        $postTypeObject = get_post_type_object($postType);
 
         if (!empty($posts)) {
             // Don't display the message for $no_matching_posts
             $this->no_matching_posts = false;
         } ?>
+
         <div class="postbox<?php echo (!empty($posts)) ? ' postbox-has-posts' : ''; ?>">
             <div class="handlediv" title="<?php esc_attr(_e('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
-            <?php if ($postType === 'post') : ?>
-                <h3 class='hndle'><span>
-                        <?php if (is_object($term) && property_exists($term, 'name')) {
-                            echo esc_html($term->name);
-                        } ?>
-                    </span></h3>
-            <?php elseif ($postType === 'page') : ?>
-                <h3 class=\'hndle\'><span><?php echo __('Pages'); ?></span></h3>
-            <?php else : ?>
-                <h3 class=\'hndle\'><span><?php echo $post_types[$postType]->label; ?></span></h3>
-            <?php endif; ?>
+            <h3 class=\'hndle\'><span><?php echo $postTypeObject->label; ?></span></h3>
             <div class="inside">
                 <?php if (!empty($posts)) : ?>
                     <table class="widefat post fixed content-overview" cellspacing="0">
@@ -1107,16 +1067,17 @@ class PP_Content_Overview extends PP_Module
      *
      * @return array $term_posts An array of post objects for the term
      */
-    public function get_posts_for_term($term, $postType, $args = null)
+    public function getPostsForPostType($term, $postType, $args = null)
     {
         $defaults = [
             'post_status'    => null,
             'author'         => null,
             'posts_per_page' => apply_filters('PP_Content_Overview_max_query', 200),
         ];
-        $args     = array_merge($defaults, $args);
 
-        if ($postType === 'post') {
+        $args = array_merge($defaults, $args);
+
+        if ($postType === 'post' && !empty($term)) {
             // Filter to the term and any children if it's hierarchical
             $arg_terms = [
                 $term->term_id,
@@ -1159,6 +1120,10 @@ class PP_Content_Overview extends PP_Module
         if ($args['author'] === '0') {
             unset($args['author']);
         }
+
+        // Order the post list by publishing date.
+        $args['orderby'] = 'post_date';
+        $args['order']   = 'ASC';
 
         // Filter for an end user to implement any of their own query args
         $args = apply_filters('PP_Content_Overview_posts_query_args', $args);
