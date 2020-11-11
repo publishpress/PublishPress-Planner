@@ -1047,7 +1047,7 @@ class PP_Content_Overview extends PP_Module
             <h3 class=\'hndle\'><span><?php echo $postTypeObject->label; ?></span></h3>
             <div class="inside">
                 <?php if (!empty($posts)) : ?>
-                    <table class="widefat post fixed content-overview" cellspacing="0">
+                    <table class="widefat post fixed content-overview striped" cellspacing="0">
                         <thead>
                         <tr>
                             <?php foreach ((array)$this->term_columns as $key => $name): ?>
@@ -1177,7 +1177,7 @@ class PP_Content_Overview extends PP_Module
     public function print_post($post, $parent_term)
     {
         ?>
-        <tr id='post-<?php echo esc_attr($post->ID); ?>' class='alternate' valign="top">
+        <tr id='post-<?php echo esc_attr($post->ID); ?>' valign="top">
             <?php foreach ((array)$this->term_columns as $key => $name) {
                 echo '<td>';
                 if (method_exists($this, 'term_column_' . $key)) {
