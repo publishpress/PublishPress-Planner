@@ -689,7 +689,12 @@ class PP_Content_Overview extends PP_Module
 
             <div class="metabox-holder">
                 <?php
-                $selectedPostTypes = $this->get_selected_post_types();
+                if (isset($_GET['ptype']) && !empty($_GET['ptype'])) {
+                    $selectedPostTypes = [sanitize_text_field($_GET['ptype'])];
+                } else {
+                    $selectedPostTypes = $this->get_selected_post_types();
+                }
+
                 foreach ($selectedPostTypes as $postType) {
                     echo '<div class="postbox-container">';
                     $this->printPostForPostType(null, $postType);
@@ -733,6 +738,7 @@ class PP_Content_Overview extends PP_Module
             'author'      => $this->filter_get_param('author'),
             'start_date'  => $this->filter_get_param('start_date'),
             'number_days' => $this->filter_get_param('number_days'),
+            'ptype'       => $this->filter_get_param('ptype'),
         ];
 
         $current_user_filters = [];
@@ -930,6 +936,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         $select_filter_names['author'] = 'author';
+        $select_filter_names['ptype']  = 'ptype';
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
@@ -996,6 +1003,22 @@ class PP_Content_Overview extends PP_Module
                 <?php
                 break;
 
+            case 'ptype':
+                $selectedPostType = isset($filters['ptype']) ? sanitize_text_field($filters['ptype']) : '';
+                ?>
+                <select id="filter_post_type" name="ptype">
+                    <option value=""><?php _e('View all post types', 'publishpress'); ?></option>
+                    <?php
+                    $postTypes = $this->get_selected_post_types();
+                    foreach ($postTypes as $postType) {
+                        $postTypeObject = get_post_type_object($postType);
+                        echo '<option value="' . esc_attr($postType) . '" ' . selected($selectedPostType, $postType) . '>' . esc_html($postTypeObject->label) . '</option>';
+                    }
+                    ?>
+                </select>
+                <?php
+                break;
+
             default:
                 do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
                 break;
@@ -1011,7 +1034,6 @@ class PP_Content_Overview extends PP_Module
     public function printPostForPostType($term, $postType)
     {
         $posts          = $this->getPostsForPostType($term, $postType, $this->user_filters);
-        $postTypes      = $this->get_settings_post_types();
         $postTypeObject = get_post_type_object($postType);
 
         if (!empty($posts)) {
