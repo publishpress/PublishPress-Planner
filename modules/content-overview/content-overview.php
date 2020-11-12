@@ -519,9 +519,9 @@ class PP_Content_Overview extends PP_Module
     public function register_columns()
     {
         $columns = [
-            'title'         => __('Title', 'publishpress'),
-            'status'        => __('Status', 'publishpress'),
-            'author'        => __('Author', 'publishpress'),
+            'post_title'         => __('Title', 'publishpress'),
+            'post_status'        => __('Status', 'publishpress'),
+            'post_author'        => __('Author', 'publishpress'),
             'post_date'     => __('Post Date', 'publishpress'),
             'post_modified' => __('Last Modified', 'publishpress'),
         ];
@@ -920,6 +920,8 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="post_status" value=""/>
                     <input type="hidden" name="cat" value=""/>
                     <input type="hidden" name="author" value=""/>
+                    <input type="hidden" name="orderby" value="<?php echo (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date'; ?>"/>
+                    <input type="hidden" name="order" value="<?php echo (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'ASC'; ?>"/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
@@ -1048,8 +1050,15 @@ class PP_Content_Overview extends PP_Module
      */
     public function printPostForPostType($term, $postType)
     {
-        $posts          = $this->getPostsForPostType($term, $postType, $this->user_filters);
-        $postTypeObject = get_post_type_object($postType);
+        $order           = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'ASC';
+        $orderBy         = (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date';
+
+        $this->user_filters['orderby'] = sanitize_key($orderBy);
+        $this->user_filters['order']   = sanitize_key($order);
+
+        $posts           = $this->getPostsForPostType($term, $postType, $this->user_filters);
+        $postTypeObject  = get_post_type_object($postType);
+        $sortableColumns = $this->getSortableColumns();
 
         if (!empty($posts)) {
             // Don't display the message for $no_matching_posts
@@ -1066,10 +1075,27 @@ class PP_Content_Overview extends PP_Module
                         <thead>
                         <tr>
                             <?php foreach ((array)$this->columns as $key => $name): ?>
+                                <?php
+                                $newOrder = 'ASC';
+                                if ($key === $orderBy) :
+                                    $newOrder = ($order === 'ASC') ? 'DESC' : 'ASC';
+                                endif;
+                                ?>
                                 <th scope="col" id="<?php echo esc_attr(sanitize_key($key)); ?>"
                                     class="manage-column column-<?php echo esc_attr(
                                         sanitize_key($key)
-                                    ); ?>"><?php echo esc_html($name); ?>
+                                    ); ?>">
+                                    <?php if (in_array($key, $sortableColumns)) : ?>
+                                        <a href="<?php echo add_query_arg(['orderby' => esc_attr(sanitize_key($key)), 'order' => esc_attr($newOrder)]); ?>">
+                                            <?php echo esc_html($name); ?>
+                                            <?php if ($orderBy === $key) : ?>
+                                                <?php $orderIconClass = $order === 'DESC' ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2'; ?>
+                                                <i class="dashicons <?php echo esc_attr($orderIconClass); ?>"></i>
+                                            <?php endif; ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <?php echo esc_html($name); ?>
+                                    <?php endif; ?>
                                 </th>
                             <?php endforeach; ?>
                         </tr>
@@ -1093,6 +1119,17 @@ class PP_Content_Overview extends PP_Module
             </div>
         </div>
         <?php
+    }
+
+    private function getSortableColumns()
+    {
+        $sortableColumns = [
+            'post_title',
+            'post_date',
+            'post_modified',
+        ];
+
+        return apply_filters('publishpress_content_overview_sortable_columns', $sortableColumns);
     }
 
     /**
@@ -1159,8 +1196,10 @@ class PP_Content_Overview extends PP_Module
         }
 
         // Order the post list by publishing date.
-        $args['orderby'] = 'post_date';
-        $args['order']   = 'ASC';
+        if (!isset($args['orderby'])) {
+            $args['orderby'] = 'post_date';
+            $args['order']   = 'ASC';
+        }
 
         // Filter for an end user to implement any of their own query args
         $args = apply_filters('PP_Content_Overview_posts_query_args', $args);
@@ -1253,12 +1292,12 @@ class PP_Content_Overview extends PP_Module
         }
 
         switch ($column_name) {
-            case 'status':
+            case 'post_status':
                 $status_name = $this->get_post_status_friendly_name($post->post_status);
 
                 return $status_name;
                 break;
-            case 'author':
+            case 'post_author':
                 $post_author = get_userdata($post->post_author);
                 $author_name = is_object($post_author) ? $post_author->display_name : '';
                 $author_name = apply_filters('the_author', $author_name);
@@ -1324,7 +1363,7 @@ class PP_Content_Overview extends PP_Module
      *
      * @since 0.7
      */
-    public function column_title($post, $parent_term)
+    public function column_post_title($post, $parent_term)
     {
         $post_title = _draft_or_post_title($post->ID);
 
