@@ -103,6 +103,11 @@ class PP_Content_Overview extends PP_Module
     public $terms = [];
 
     /**
+     * @var array
+     */
+    public $columns;
+
+    /**
      * [$user_filters description]
      *
      * @var [type]
@@ -173,9 +178,7 @@ class PP_Content_Overview extends PP_Module
         // Register our settings
         add_action('admin_init', [$this, 'register_settings']);
 
-        // Register the columns of data appearing on every term. This is hooked into admin_init
-        // so other PublishPress modules can register their filters if needed
-        add_action('admin_init', [$this, 'register_term_columns']);
+        add_action('admin_init', [$this, 'register_columns']);
 
         add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'searchAuthors']);
         add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'searchCategories']);
@@ -513,9 +516,9 @@ class PP_Content_Overview extends PP_Module
      *
      * @since 0.7
      */
-    public function register_term_columns()
+    public function register_columns()
     {
-        $term_columns = [
+        $columns = [
             'title'         => __('Title', 'publishpress'),
             'status'        => __('Status', 'publishpress'),
             'author'        => __('Author', 'publishpress'),
@@ -523,7 +526,20 @@ class PP_Content_Overview extends PP_Module
             'post_modified' => __('Last Modified', 'publishpress'),
         ];
 
-        $term_columns = apply_filters('PP_Content_Overview_term_columns', $term_columns);
+        /**
+         * @param array $columns
+         *
+         * @deprecated Use publishpress_content_overview_columns
+         * @return array
+         */
+        $columns = apply_filters('PP_Content_Overview_term_columns', $columns);
+
+        /**
+         * @param array $columns
+         *
+         * @return array
+         */
+        $columns = apply_filters('publishpress_content_overview_columns', $columns);
 
         if (class_exists('PP_Editorial_Metadata')) {
             $additional_terms = get_terms(
@@ -537,8 +553,7 @@ class PP_Content_Overview extends PP_Module
                 ]
             );
 
-            $additional_terms =
-                apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
+            $additional_terms = apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
             foreach ($additional_terms as $term) {
                 if (!is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
                     continue;
@@ -548,16 +563,16 @@ class PP_Content_Overview extends PP_Module
 
                 if (!isset($term_options['viewable']) ||
                     (bool)$term_options['viewable'] === false ||
-                    isset($term_columns[$term->slug])) {
+                    isset($columns[$term->slug])) {
                     continue;
                 }
 
                 $this->terms_options[$term->slug] = $term_options;
 
-                $term_columns[$term->slug] = $term->name;
+                $columns[$term->slug] = $term->name;
             }
 
-            $this->term_columns = $term_columns;
+            $this->columns = $columns;
         }
     }
 
@@ -1050,7 +1065,7 @@ class PP_Content_Overview extends PP_Module
                     <table class="widefat post fixed content-overview striped" cellspacing="0">
                         <thead>
                         <tr>
-                            <?php foreach ((array)$this->term_columns as $key => $name): ?>
+                            <?php foreach ((array)$this->columns as $key => $name): ?>
                                 <th scope="col" id="<?php echo esc_attr(sanitize_key($key)); ?>"
                                     class="manage-column column-<?php echo esc_attr(
                                         sanitize_key($key)
@@ -1070,7 +1085,7 @@ class PP_Content_Overview extends PP_Module
                 <?php else: ?>
                     <div class="message info">
                         <p><?php _e(
-                                'There are no posts for this term in the range or filter specified.',
+                                'There are no posts in the range or filter specified.',
                                 'publishpress'
                             ); ?></p>
                     </div>
@@ -1178,13 +1193,13 @@ class PP_Content_Overview extends PP_Module
     {
         ?>
         <tr id='post-<?php echo esc_attr($post->ID); ?>' valign="top">
-            <?php foreach ((array)$this->term_columns as $key => $name) {
+            <?php foreach ((array)$this->columns as $key => $name) {
                 echo '<td>';
-                if (method_exists($this, 'term_column_' . $key)) {
-                    $method = 'term_column_' . $key;
+                if (method_exists($this, 'column_' . $key)) {
+                    $method = 'column_' . $key;
                     echo $this->$method($post, $parent_term);
                 } else {
-                    echo $this->term_column_default($post, $key, $parent_term);
+                    echo $this->column_default($post, $key, $parent_term);
                 }
 
                 echo '</td>';
@@ -1198,18 +1213,31 @@ class PP_Content_Overview extends PP_Module
      * Includes a filter other modules can hook into
      *
      * @param object $post The post we're displaying
-     * @param string $column_name Name of the column, as registered with register_term_columns
+     * @param string $column_name Name of the column, as registered with register_columns
      * @param object $parent_term The parent term for the term column
      *
      * @return string $output Output value for the term column
      * @since 0.7
      *
      */
-    public function term_column_default($post, $column_name, $parent_term)
+    public function column_default($post, $column_name)
     {
         // Hook for other modules to get data into columns
         $column_value = null;
-        $column_value = apply_filters('PP_Content_Overview_term_column_value', $column_name, $post, $parent_term);
+
+        /**
+         * @deprecated
+         */
+        $column_value = apply_filters('PP_Content_Overview_term_column_value', $column_name, $post, null);
+
+        /**
+         * @param string $column_name
+         * @param WP_Post $post
+         *
+         * @return string
+         */
+        $column_value = apply_filters('publishpress_content_overview_column_value', $column_name, $post);
+
         if (!is_null($column_value) && $column_value != $column_name) {
             return $column_value;
         }
@@ -1296,7 +1324,7 @@ class PP_Content_Overview extends PP_Module
      *
      * @since 0.7
      */
-    public function term_column_title($post, $parent_term)
+    public function column_title($post, $parent_term)
     {
         $post_title = _draft_or_post_title($post->ID);
 

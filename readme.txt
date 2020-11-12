@@ -119,6 +119,11 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Changed: Deprecated the filter "PP_Content_Overview_term_columns" and added a new one "publishpress_content_overview_columns";
+* Changed: Deprecated the filter "PP_Content_Overview_term_column_value" and added a new one "publishpress_content_overview_column_value";
+
 = [2.4.2] - 2020-11-05  =
 
 * Fixed: Invalid assets paths for modules on Windows servers, #712;
