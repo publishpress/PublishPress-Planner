@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 2.4.2
+ * Version: 2.4.2-feature-727-post-type-filter-content-overview.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
