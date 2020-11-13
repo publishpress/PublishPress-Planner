@@ -42,21 +42,30 @@ class Author extends Simple_Checkbox implements Receiver_Interface
     {
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
-            $receivers[] = (int)$args['post']->post_author;
+            $post = get_post($args['params']['post_id']);
 
             /**
-             * Filters the list of receivers, but triggers only when the authors are selected.
+             * @param int $post_author
+             * @param int $post_id
              *
-             * @param array $receivers
-             * @param WP_Post $workflow
-             * @param array $args
+             * @return int|array
              */
-            $receivers = apply_filters(
-                'publishpress_notif_workflow_receiver_post_authors',
-                $receivers,
-                $workflow,
-                $args
+            $post_authors = apply_filters(
+                'publishpress_notifications_receiver_post_authors',
+                $post->post_author,
+                $post->ID
             );
+
+            if (!is_array($post_authors)) {
+                $post_authors = [$post_authors];
+            }
+
+            foreach ($post_authors as $post_author) {
+                $receivers[] = [
+                    'receiver' => $post_author,
+                    'group'    => self::META_VALUE
+                ];
+            }
         }
 
         return $receivers;

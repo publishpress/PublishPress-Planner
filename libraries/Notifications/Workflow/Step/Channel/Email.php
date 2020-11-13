@@ -10,6 +10,7 @@
 namespace PublishPress\Notifications\Workflow\Step\Channel;
 
 use Exception;
+use PublishPress\Notifications\Workflow\Workflow;
 use WP_Error;
 use WP_Post;
 
@@ -33,25 +34,27 @@ class Email extends Base implements Channel_Interface
         add_filter('publishpress_notif_error_log', [$this, 'filterErrorLog'], 10, 5);
         add_action('wp_mail_failed', [$this, 'emailFailed']);
 
+        add_filter('publishpress_notifications_channel_icon_class', [$this, 'filterChannelIconClass']);
+        add_filter('publishpress_notifications_receiver_address', [$this, 'filterReceiverAddress'], 10, 2);
+        add_filter('publishpress_notifications_log_receiver_text', [$this, 'filterLogReceiverText'], 10, 2);
+
         parent::__construct();
     }
 
     /**
      * Check if this channel is selected and triggers the notification.
      *
-     * @param WP_Post $workflow_post
-     * @param array $action_args
-     * @param array $receivers
+     * @param Workflow $workflow
+     * @param array $receiverData
      * @param array $content
      * @param string $channel
+     * @param bool $async
      *
      * @throws Exception
      */
-    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
+    public function action_send_notification($workflow, $receiverData, $content, $channel, $async)
     {
-        $this->get_service('debug')->write($receivers, 'Email::action_send_notification $receivers');
-
-        if (empty($receivers)) {
+        if (empty($receiverData['receiver'])) {
             return;
         }
 
@@ -60,8 +63,11 @@ class Email extends Base implements Channel_Interface
             $content = maybe_unserialize($content);
         }
 
-        $signature  = $this->get_notification_signature($content, $channel . ':' . serialize($receivers));
-        $controller = $this->get_service('workflow_controller');
+        $signature  = $this->get_notification_signature(
+            $content,
+            $channel . ':' . serialize($receiverData['receiver'])
+        );
+        $controller = $this->get_service('workflows_controller');
 
         // Check if the notification was already sent
         if ($controller->is_notification_signature_registered($signature)) {
@@ -69,53 +75,50 @@ class Email extends Base implements Channel_Interface
         }
 
         // Send the emails
-        $emails = $this->get_receivers_emails($receivers);
-        $action = 'transition_post_status' === $action_args['action'] ? 'status-change' : 'comment';
-
-        $this->get_service('debug')->write($emails, 'Email::action_send_notification $emails');
+        $emailAddress = $this->get_receiver_email($receiverData['receiver']);
+        $action       = 'transition_post_status' === $workflow->event_args['event'] ? 'status-change' : 'comment';
 
         $subject = html_entity_decode($content['subject']);
 
-        $body = apply_filters('the_content', $content['body']);
+        $body = wpautop($content['body']);
+        $body = apply_filters('the_content', $body);
         $body = str_replace(']]>', ']]&gt;', $body);
 
         // Call the legacy notification module
-        foreach ($emails as $email) {
-            // Split the name and email, if set.
-            $separatorPos = strpos($email, '/');
-            if ($separatorPos > 0) {
-                $email = substr($email, $separatorPos + 1, strlen($email));
-            }
-
-            $this->get_service('debug')->write($email, 'Email::action_send_notification $email');
-
-            $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
-                $action,
-                $action_args,
-                $subject,
-                $body,
-                '',
-                $email
-            );
-
-            /**
-             * @param WP_Post $workflow_post
-             * @param array $action_args
-             * @param string $channel
-             * @param string $subject
-             * @param string $body
-             * @param array $deliveryResult
-             */
-            do_action(
-                'publishpress_notif_notification_sending',
-                $workflow_post,
-                $action_args,
-                $channel,
-                $subject,
-                $body,
-                $deliveryResult
-            );
+        // Split the name and email, if set.
+        $separatorPos = strpos($emailAddress, '/');
+        if ($separatorPos > 0) {
+            $emailAddress = substr($emailAddress, $separatorPos + 1, strlen($emailAddress));
         }
+
+        $deliveryResult = $this->get_service('publishpress')->notifications->send_email(
+            $action,
+            $workflow->event_args,
+            $subject,
+            $body,
+            '',
+            $emailAddress
+        );
+
+        /**
+         * @param Workflow $workflow
+         * @param string $channel
+         * @param array $receiverData
+         * @param string $subject
+         * @param string $body
+         * @param bool $deliveryResult
+         * @param bool $async
+         */
+        do_action(
+            'publishpress_notif_notification_sending',
+            $workflow,
+            $channel,
+            $receiverData,
+            $subject,
+            $body,
+            $deliveryResult[$emailAddress],
+            $async
+        );
 
         $controller->register_notification_signature($signature);
     }
@@ -123,36 +126,21 @@ class Email extends Base implements Channel_Interface
     /**
      * Returns a list of the receivers' emails
      *
-     * @param array $receivers
+     * @param array $receiver
      *
-     * @return array
+     * @return string
      */
-    protected function get_receivers_emails($receivers)
+    protected function get_receiver_email($receiver)
     {
-        $emails = [];
-
-        if (!empty($receivers)) {
-            if (!is_array($receivers)) {
-                $receivers = [$receivers];
-            }
-
-            foreach ($receivers as $receiver) {
-                // Check if we have the user ID or an email address
-                if (is_numeric($receiver)) {
-                    $data     = $this->get_user_data($receiver);
-                    $emails[] = $data->user_email;
-                    continue;
-                }
-
-                // Is it a valid email address?
-                $emails[] = sanitize_email($receiver);
+        if (!empty($receiver)) {
+            // Check if we have the user ID or an email address
+            if (is_numeric($receiver)) {
+                $data     = $this->get_user_data($receiver);
+                $receiver = $data->user_email;
             }
         }
 
-        // Remove duplicated
-        $emails = array_unique($emails);
-
-        return $emails;
+        return sanitize_email($receiver);
     }
 
     /**
@@ -161,11 +149,11 @@ class Email extends Base implements Channel_Interface
      *
      * @param array $receivers
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function filter_receivers($receivers, $workflow_post, $action_args)
+    public function filter_receivers($receivers, $workflow_post, $event_args)
     {
         return $receivers;
     }
@@ -224,5 +212,47 @@ class Email extends Base implements Channel_Interface
         }
 
         return $error;
+    }
+
+    public function filterChannelIconClass($channel)
+    {
+        if ($channel === 'email') {
+            return 'dashicons dashicons-email';
+        }
+
+        return $channel;
+    }
+
+    public function filterReceiverAddress($receiverAddress, $channel)
+    {
+        if ('email' === $channel) {
+            $receiverAddress = $this->get_receiver_email($receiverAddress);
+        }
+
+        return $receiverAddress;
+    }
+
+    public function filterLogReceiverText($receiverText, $receiverData)
+    {
+        if (!isset($receiverData['channel']) || $receiverData['channel'] !== $this->name || !isset($receiverData['receiver'])) {
+            return $receiverText;
+        }
+
+        if (is_numeric($receiverData['receiver'])) {
+            $user = get_user_by('ID', $receiverData['receiver']);
+
+            if (!is_object($user)) {
+                return $receiverText;
+            }
+
+            $receiverText = $user->user_nicename;
+            $receiverText .= sprintf(
+                '<span class="user-details muted">(user_id:%d, email:%s)</span>',
+                $user->ID,
+                $user->user_email
+            );
+        }
+
+        return $receiverText;
     }
 }

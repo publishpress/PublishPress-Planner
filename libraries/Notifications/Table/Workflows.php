@@ -93,8 +93,6 @@ class Workflows extends Base
 
         $posts_per_page = 10;
 
-        $user_id = get_current_user_id();
-
         $args = [
             'post_type'      => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
             'posts_per_page' => $posts_per_page,
