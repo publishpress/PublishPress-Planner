@@ -119,6 +119,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.0.0] - UNRELEASED =
+
+* Fixed: Fixed default notifications adding the "new" and "auto-draft" to the previous status field, and "post" to the Post Type field, #721;
+
 = [2.4.2] - 2020-11-05  =
 
 * Fixed: Invalid assets paths for modules on Windows servers, #712;
