@@ -111,4 +111,5 @@ jQuery(document).ready(function ($) {
     });
 
     $('#pp-content-filters select#post_status').pp_select2();
+    $('#pp-content-filters select#filter_post_type').pp_select2();
 });

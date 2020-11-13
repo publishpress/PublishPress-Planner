@@ -121,6 +121,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [3.0.0] - UNRELEASED =
 
+* Added: Added sortable columns to the Content Overview post list, #709;
+* Added: Added post type filter to the Content Overview page, #727;
 * Added: Added new filter "publishpress_notifications_schedule_delay_in_seconds", #650;
 * Added: Added new filter "publishpress_notifications_scheduled_data", #650
 * Added: Added to each notification log the source of the receiver (why is the user being notified? What group does he belongs to?), #650
@@ -131,6 +133,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added: Display in the log the duplicated notifications that were skipped, #650
 * Added: Added a settings field to configure the duplicated notification time threshold, in minutes, #650
 * Added: Added to the log the icon for the channel used in the notification, #650
+* Fixed: Minor fix to the style of the Content Overview post list, #709;
 * Fixed: Fixed default notifications adding the "new" and "auto-draft" to the previous status field, and "post" to the Post Type field, #721;
 * Fixed: Fixed support for multiple authors in the notifications, #650
 * Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Role, #726;
@@ -144,6 +147,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: The notification's content is only fixed right before sending the message. Scheduled notifications now have dynamic preview for the content, #650
 * Changed: The notification's list of receivers is only fixed right before sending the message. Scheduled notifications have dynamic receivers list, #650
 * Changed: The popup now displays only the content of the notification, #650
+* Changed: Refactored the Content Overview screen grouping posts by post type instead of by taxonomy, #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_columns" and added a new one "publishpress_content_overview_columns", #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_column_value" and added a new one "publishpress_content_overview_column_value", #709;
 * Removed: Removed the action "publishpress_notif_before_run_workflow", #650
 * Removed: Removed the filter "publishpress_notif_workflow_receiver_post_authors", #650
 
