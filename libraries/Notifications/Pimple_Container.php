@@ -11,9 +11,8 @@ namespace PublishPress\Notifications;
 
 use Pimple\Container;
 use PP_Debug;
-use PublishPress\AsyncNotifications\QueueInterface;
-use PublishPress\AsyncNotifications\WPCron;
-use PublishPress\Notifications\Workflow\Controller;
+use PublishPress\AsyncNotifications\SchedulerInterface;
+use PublishPress\AsyncNotifications\WPCronAdapter;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Twig_SimpleFunction;
@@ -84,8 +83,8 @@ class Pimple_Container extends Container
                 return $publishpress;
             };
 
-            $instance['workflow_controller'] = function ($c) {
-                return new Controller();
+            $instance['workflows_controller'] = function ($c) {
+                return new Workflow\WorkflowsController;
             };
 
             $instance['shortcodes'] = function ($c) {
@@ -95,16 +94,10 @@ class Pimple_Container extends Container
             /**
              * @param $c
              *
-             * @return QueueInterface
+             * @return SchedulerInterface
              */
-            $instance['notification_queue'] = function ($c) {
-                $queue = apply_filters('publishpress_notification_queue', false, $c);
-
-                if (empty($queue)) {
-                    $queue = new WPCron();
-                }
-
-                return $queue;
+            $instance['notification_scheduler'] = function ($c) {
+                return apply_filters('publishpress_notifications_notification_scheduler', new WPCronAdapter(), $c);
             };
 
             /**

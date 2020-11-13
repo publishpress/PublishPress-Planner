@@ -1,16 +1,24 @@
-.publishpress_page_pp-notif-log .column-status {
-  width: 180px;
+.publishpress_page_pp-notif-log .column-post {
+  max-width: 180px;
+}
+
+.publishpress_page_pp-notif-log .column-action {
+  width: 150px;
 }
 
 .publishpress_page_pp-notif-log .column-status .dashicons-yes-alt,
 .publishpress_page_pp-notif-log tr.success {
-  color: #7c9F63;
+  color: #789a55;
 }
 
 .publishpress_page_pp-notif-log .column-status .dashicons-no,
 .publishpress_page_pp-notif-log .column-status .error,
 .publishpress_page_pp-notif-log tr.error {
-  color: #ff2225;
+  color: #d0393b;
+}
+
+.publishpress_page_pp-notif-log .column-status .dashicons-warning {
+  color: #f1a23b;
 }
 
 .publishpress_page_pp-notif-log .filter-posts,
@@ -56,7 +64,7 @@
 }
 
 .filter-2nd-line {
-    display: inline-block;
+  display: inline-block;
 }
 
 .filter-2nd-line .filter-dates {
@@ -65,4 +73,98 @@
 
 .publishpress_page_pp-notif-log .tablenav {
   min-height: 70px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers {
+  margin: 0;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers li {
+  list-style: none;
+  margin-left: 9px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .user-details {
+  margin-left: 5px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title {
+  list-style: none;
+  margin-left: 0;
+  border-top: 1px solid silver;
+  padding-top: 5px;
+  font-weight: bold;
+  color: gray;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title:nth-child(1) {
+  border-top: none;
+  padding-top: 0;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup {
+  list-style: none;
+  margin-left: 10px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup span {
+  padding: 5px 6px;
+  background: rgba(143, 133, 224, 0.25);
+  border-radius: 4px;
+  color: gray;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .channel-icon {
+  color: rgba(101, 88, 151, 0.40);
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.publishpress_page_pp-notif-log .publishpress-notifications-receivers .view-log {
+  color: rgb(101, 88, 151);
+  font-size: 18px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+
+.publishpress_page_pp-notif-log .slide-closed-text {
+  color: rgba(143, 133, 224, 0.65);
+  font-style: italic;
+}
+
+.publishpress_page_pp-notif-log .slide {
+  display: none;
+}
+
+.publishpress_page_pp-notif-log .dashicons-clock {
+  color: #0094ff;
+}
+
+.publishpress_page_pp-notif-log .muted {
+  color: #c0c0c0;
+  font-weight: normal;
+}
+
+.publishpress_page_pp-notif-log .scheduled-wrapper,
+.publishpress_page_pp-notif-log .scheduled-wrapper * {
+  font-style: italic !important;
+}
+
+.publishpress_page_pp-notif-log .scheduled-wrapper i {
+  font-style: normal !important;
+}
+
+.preview-notification .subject,
+.preview-notification .content {
+  background: #f1f1f1;
+  padding: 11px;
+  margin-bottom: 15px;
+}
+
+
+.preview-notification label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid silver;
 }

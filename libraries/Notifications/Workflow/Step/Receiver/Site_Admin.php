@@ -40,10 +40,14 @@ class Site_Admin extends Simple_Checkbox implements Receiver_Interface
     {
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
-            $receivers[] = 'email:' . get_option('admin_email');
+            $receivers[] = [
+                'receiver' => get_option('admin_email'),
+                'channel'  => 'email',
+                'group'    => self::META_VALUE
+            ];
 
             /**
-             * Filters the list of receivers, but triggers only when the authors are selected.
+             * Filters the list of receivers, but triggers only when the site admin is selected.
              *
              * @param array $receivers
              * @param WP_Post $workflow

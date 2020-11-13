@@ -81,15 +81,15 @@ class Post_Type extends Base implements Filter_Interface
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function get_run_workflow_query_args($query_args, $action_args)
+    public function get_run_workflow_query_args($query_args, $event_args)
     {
         // If post is not set, we ignore.
-        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
-            return parent::get_run_workflow_query_args($query_args, $action_args);
+        if (!isset($event_args['params']['post']) || !is_object($event_args['params']['post'])) {
+            return parent::get_run_workflow_query_args($query_args, $event_args);
         }
 
         // Add the filters
@@ -122,12 +122,12 @@ class Post_Type extends Base implements Filter_Interface
             // The filter validates the value
             [
                 'key'     => static::META_KEY_POST_TYPE,
-                'value'   => $action_args['post']->post_type,
+                'value'   => $event_args['params']['post']->post_type,
                 'type'    => 'CHAR',
                 'compare' => '=',
             ],
         ];
 
-        return parent::get_run_workflow_query_args($query_args, $action_args);
+        return parent::get_run_workflow_query_args($query_args, $event_args);
     }
 }

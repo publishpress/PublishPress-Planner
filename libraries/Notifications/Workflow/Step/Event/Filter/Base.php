@@ -65,11 +65,11 @@ class Base implements Filter_Interface
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function get_run_workflow_query_args($query_args, $action_args)
+    public function get_run_workflow_query_args($query_args, $event_args)
     {
         return $query_args;
     }
