@@ -132,6 +132,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added: Added a settings field to configure the duplicated notification time threshold, in minutes, #650
 * Added: Added to the log the icon for the channel used in the notification, #650
 * Fixed: Fixed support for multiple authors in the notifications, #650
+* Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Role, #726;
+* Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Follower, #726;
 * Changed: Improved error messages for failed notifications adding more descriptive error messages, #650
 * Changed: Refactored the filter "publishpress_notif_run_workflow_meta_query" to "publishpress_notifications_running_workflow_meta_query", #650
 * Changed: Refactored the filter publishpress_notif_async_timestamp => publishpress_notifications_scheduled_time_for_notification, #650

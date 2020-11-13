@@ -13,8 +13,6 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
 
 class Post_Status extends Base implements Filter_Interface
 {
-    use Dependency_Injector;
-
     const META_KEY_POST_STATUS_FROM = '_psppno_poststatfrom';
 
     const META_KEY_POST_STATUS_TO = '_psppno_poststatto';

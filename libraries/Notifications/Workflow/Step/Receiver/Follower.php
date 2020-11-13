@@ -15,8 +15,6 @@ use WP_Post;
 
 class Follower extends Simple_Checkbox implements Receiver_Interface
 {
-    use Dependency_Injector;
-
     const META_KEY = '_psppno_tofollower';
 
     const META_VALUE = 'follower';
