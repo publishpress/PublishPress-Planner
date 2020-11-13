@@ -131,6 +131,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added: Display in the log the duplicated notifications that were skipped, #650
 * Added: Added a settings field to configure the duplicated notification time threshold, in minutes, #650
 * Added: Added to the log the icon for the channel used in the notification, #650
+* Fixed: Fixed default notifications adding the "new" and "auto-draft" to the previous status field, and "post" to the Post Type field, #721;
 * Fixed: Fixed support for multiple authors in the notifications, #650
 * Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Role, #726;
 * Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Follower, #726;
