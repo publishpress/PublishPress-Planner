@@ -121,12 +121,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [3.0.0] - UNRELEASED =
 
-* Added: Added sortable columns to the Content Overview post list, #727;
+* Added: Added sortable columns to the Content Overview post list, #709;
 * Added: Added post type filter to the Content Overview page, #727;
-* Fixed: Minor fix to the style of the Content Overview post list, #727;
-* Changed: Refactored the Content Overview screen grouping posts by post type instead of by taxonomy, #727;
-* Changed: Deprecated the filter "PP_Content_Overview_term_columns" and added a new one "publishpress_content_overview_columns", #727;
-* Changed: Deprecated the filter "PP_Content_Overview_term_column_value" and added a new one "publishpress_content_overview_column_value", #727;
+* Fixed: Minor fix to the style of the Content Overview post list, #709;
+* Changed: Refactored the Content Overview screen grouping posts by post type instead of by taxonomy, #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_columns" and added a new one "publishpress_content_overview_columns", #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_column_value" and added a new one "publishpress_content_overview_column_value", #709;
 
 = [2.4.2] - 2020-11-05  =
 
