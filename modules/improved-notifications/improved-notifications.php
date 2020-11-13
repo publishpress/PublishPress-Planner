@@ -30,6 +30,7 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
+use PublishPress\Notifications\Workflow\Step\Action\Notification as Notification;
 use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
@@ -235,8 +236,8 @@ if (!class_exists('PP_Improved_Notifications')) {
         public function action_after_init()
         {
             // Instantiate the controller of workflow's
-            $workflow_controller = $this->get_service('workflow_controller');
-            $workflow_controller->load_workflow_steps();
+            $workflows_controller = $this->get_service('workflows_controller');
+            $workflows_controller->load_workflow_steps();
 
             do_action('publishpress_workflow_steps_loaded');
         }
@@ -254,6 +255,14 @@ if (!class_exists('PP_Improved_Notifications')) {
                 false,
                 '__return_false',
                 $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'duplicate_notification_threshold',
+                __('Duplicated notification threshold:', 'publishpress'),
+                [$this, 'settings_duplicated_notification_threshold_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
             );
 
             add_settings_field(
@@ -329,6 +338,19 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
 
             return $args;
+        }
+
+        public function settings_duplicated_notification_threshold_option()
+        {
+            $value = isset($this->module->options->duplicated_notification_threshold) ? (int)$this->module->options->duplicated_notification_threshold : Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+
+            echo '<input
+                    id="' . $this->module->slug . '_duplicated_notification_threshold"
+                    type="number"
+                    min="1"
+                    step="1"
+                    name="' . $this->module->options_group_name . '[duplicated_notification_threshold]"
+                    value="' . $value . '"/> ' . __('minutes', 'publishpress');
         }
 
         /**
@@ -556,14 +578,17 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
 
             // Go ahead and do the action to run workflows
-            $args = [
-                'action'     => 'transition_post_status',
-                'post'       => $post,
-                'new_status' => $new_status,
-                'old_status' => $old_status,
+            $params = [
+                'event'   => 'transition_post_status',
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$post->ID,
+                    'new_status' => $new_status,
+                    'old_status' => $old_status,
+                ],
             ];
 
-            do_action('publishpress_notif_run_workflows', $args);
+            do_action('publishpress_notifications_trigger_workflows', $params);
         }
 
         /**
@@ -598,15 +623,16 @@ if (!class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            $args = [
-                'action'     => 'editorial_comment',
-                'post'       => $post,
-                'new_status' => $post->post_status,
-                'old_status' => $post->post_status,
-                'comment'    => $comment,
+            $params = [
+                'event'   => 'editorial_comment',
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$post->ID,
+                    'comment_id' => (int)$comment->comment_ID,
+                ],
             ];
 
-            do_action('publishpress_notif_run_workflows', $args);
+            do_action('publishpress_notifications_trigger_workflows', $params);
         }
 
         /**
@@ -1031,6 +1057,12 @@ if (!class_exists('PP_Improved_Notifications')) {
                 foreach ($new_options['channel_options'] as &$item) {
                     $item = sanitize_text_field($item);
                 }
+            }
+
+            if (isset($new_options['duplicated_notification_threshold'])) {
+                $new_options['duplicated_notification_threshold'] = (int)$new_options['duplicated_notification_threshold'];
+            } else {
+                $new_options['duplicated_notification_threshold'] = Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
             }
 
             return $new_options;

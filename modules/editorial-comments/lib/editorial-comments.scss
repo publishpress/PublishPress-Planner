@@ -1,5 +1,20 @@
 /** Comments **/
 
+#pp-comments li:target {
+  border: 1px solid #ffd400 !important;
+  border-left: 5px solid #ffd400 !important;
+  border-right: 5px solid #ffd400 !important;
+  background: #f7eaff;
+}
+
+#pp-comments li:target:before {
+  display: block;
+  content: " ";
+  margin-top: -75px;
+  height: 75px;
+  visibility: hidden;
+}
+
 #pp-comments_wrapper {
   padding: 0;
 }

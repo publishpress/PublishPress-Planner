@@ -1,0 +1,109 @@
+<?php
+/**
+ * @package PublishPress
+ * @author  PublishPress
+ *
+ * Copyright (c) 2018 PublishPress
+ *
+ * This file is part of PublishPress
+ *
+ * PublishPress is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PublishPress is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace PublishPress\AsyncNotifications;
+
+use Exception;
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
+/**
+ * Class DBAdapter
+ *
+ * @package PublishPress\AsyncNotifications
+ */
+class WPCronAdapter implements SchedulerInterface
+{
+    use Dependency_Injector;
+
+    const SEND_NOTIFICATION_HOOK = 'publishpress_notifications_send_notification';
+
+    /**
+     * Schedule the notification for async processing.
+     *
+     * @param $workflowPostId
+     * @param $eventArgs
+     *
+     * @throws Exception
+     */
+    public function scheduleNotification($workflowPostId, $eventArgs)
+    {
+        $data = [
+            'workflow_id' => $workflowPostId,
+            'event_args'  => $eventArgs,
+        ];
+
+        /**
+         * @param array $data
+         */
+        $data  = apply_filters('publishpress_notifications_scheduled_data', $data);
+        $delay = apply_filters('publishpress_notifications_schedule_delay_in_seconds', 5);
+
+        $timestamp = apply_filters(
+            'publishpress_notifications_scheduled_time_for_notification',
+            time() + $delay,
+            $workflowPostId,
+            $eventArgs['params']['post_id']
+        );
+
+        if (false === $timestamp) {
+            // Abort.
+            error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPostId);
+
+            return;
+        }
+
+        $cronId = $this->getCronId($data);
+        do_action('publishpress_notifications_scheduled_cron_task', $data, $cronId);
+
+        $data['result'] = $this->scheduleEventInTheCron($data, $timestamp);
+
+        /**
+         * @param array $data
+         */
+        do_action('publishpress_notifications_scheduled_notification', $data);
+    }
+
+    private function getCronId($args)
+    {
+        return md5(serialize([$args]));
+    }
+
+    /**
+     * Schedule the notification event.
+     *
+     * @param $args
+     * @param $timestamp
+     *
+     * @return bool
+     * @throws Exception
+     *
+     */
+    private function scheduleEventInTheCron($args, $timestamp)
+    {
+        return wp_schedule_single_event(
+            $timestamp,
+            self::SEND_NOTIFICATION_HOOK,
+            [$args]
+        );
+    }
+}

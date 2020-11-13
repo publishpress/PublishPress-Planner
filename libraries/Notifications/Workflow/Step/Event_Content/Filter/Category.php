@@ -89,18 +89,18 @@ class Category extends Base implements Filter_Interface
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function get_run_workflow_query_args($query_args, $action_args)
+    public function get_run_workflow_query_args($query_args, $event_args)
     {
         // If post is not set, we ignore.
-        if (!isset($action_args['post']) || !is_object($action_args['post'])) {
-            return parent::get_run_workflow_query_args($query_args, $action_args);
+        if (!isset($event_args['params']['post']) || !is_object($event_args['params']['post'])) {
+            return parent::get_run_workflow_query_args($query_args, $event_args);
         }
 
-        $categories   = wp_get_post_terms($action_args['post']->ID, 'category');
+        $categories   = wp_get_post_terms($event_args['params']['post']->ID, 'category');
         $category_ids = [];
 
         if (!empty($categories)) {
@@ -144,6 +144,6 @@ class Category extends Base implements Filter_Interface
             ],
         ];
 
-        return parent::get_run_workflow_query_args($query_args, $action_args);
+        return parent::get_run_workflow_query_args($query_args, $event_args);
     }
 }

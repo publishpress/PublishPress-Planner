@@ -31,17 +31,17 @@ class Taxonomy extends Base
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function filter_run_workflow_query_args($query_args, $action_args)
+    public function filter_running_workflow_query_args($query_args, $event_args)
     {
         // Check the filters
         $filters = $this->get_filters();
 
         foreach ($filters as $filter) {
-            $query_args = $filter->get_run_workflow_query_args($query_args, $action_args);
+            $query_args = $filter->get_run_workflow_query_args($query_args, $event_args);
         }
 
         return $query_args;
