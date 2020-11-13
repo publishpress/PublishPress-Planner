@@ -11,11 +11,10 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 
 use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use WP_Post;
 
 class Follower extends Simple_Checkbox implements Receiver_Interface
 {
-    use Dependency_Injector;
-
     const META_KEY = '_psppno_tofollower';
 
     const META_VALUE = 'follower';
@@ -49,7 +48,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
 
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
-            $post_id = $args['post']->ID;
+            $post_id = $args['params']['post_id'];
 
             if (empty($post_id)) {
                 return $receivers;
@@ -80,54 +79,47 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                         }
                     }
                 }
-                $this->get_service('debug')->write(
-                    $toNotify,
-                    'Follower::filter_workflow_receivers $toNotify:' . __LINE__
-                );
             } else {
-                // Get following users and roles
+                // Get following users and roles.
                 $roles  = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
                 $users  = $publishpress->notifications->get_users_to_notify($post_id, 'id');
                 $emails = $publishpress->notifications->get_emails_to_notify($post_id);
             }
 
-            $this->get_service('debug')->write($emails, 'Follower::filter_workflow_receivers $emails:' . __LINE__);
-
-            // Extract users from roles
+            // Extract users from roles.
             if (!empty($roles)) {
                 foreach ($roles as $role) {
-                    $roleUsers = get_users(
-                        [
-                            'role' => $role,
-                        ]
-                    );
+                    $roleUsers = get_users(['role' => $role,]);
 
                     if (!empty($roleUsers)) {
                         foreach ($roleUsers as $user) {
                             if (is_user_member_of_blog($user->ID)) {
-                                $followers[] = $user->ID;
+                                $followers[] = [
+                                    'receiver' => $user->ID,
+                                    'group'    => self::META_VALUE,
+                                    'subgroup' => sprintf(
+                                        __('role:%s', 'publishpress'),
+                                        $role
+                                    )
+                                ];
                             }
                         }
                     }
                 }
             }
 
-            // Merge roles' users and users
-            $followers         = array_merge($followers, $users);
-            $notifyCurrentUser = apply_filters('publishpress_notify_current_user', false);
-
-            // Process the recipients for this email to be sent
-            if (!empty($followers)) {
-                foreach ($followers as $key => $user) {
-                    // Make sure we have only user objects in the list
-                    if (is_numeric($user)) {
-                        $user = get_user_by('ID', $user);
+            // Process the selected users.
+            if (!empty($users)) {
+                foreach ($users as $user) {
+                    if (is_object($user)) {
+                        $user = $user->ID;
                     }
 
-                    // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                    if (false === $notifyCurrentUser && wp_get_current_user()->user_email == $user->user_email) {
-                        unset($followers[$key]);
-                    }
+                    $followers[] = [
+                        'receiver' => $user,
+                        'group'    => self::META_VALUE,
+                        'subgroup' => __('user', 'publishpress')
+                    ];
                 }
             }
 
@@ -135,19 +127,20 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             if (!empty($emails)) {
                 foreach ($emails as $email) {
                     // Do we have a name?
-                    $separatorPost = strpos($email, '/');
-                    if ($separatorPost > 0) {
-                        $emailAddr = substr($email, strpos($email, '/') + 1, strlen($email));
-                    } else {
-                        $emailAddr = $email;
+                    $emailFragments = explode('/', $email);
+
+                    $item = [
+                        'receiver' => preg_replace('/^email:/', '', $emailFragments[0]),
+                        'channel'  => 'email',
+                        'group'    => self::META_VALUE,
+                        'subgroup' => __('email', 'publishpress')
+                    ];
+
+                    if (isset($emailFragments[1])) {
+                        $item['name'] = $emailFragments[1];
                     }
 
-                    // Don't send the email to the current user unless we've explicitly indicated they should receive it
-                    if (false === $notifyCurrentUser && wp_get_current_user()->user_email == $emailAddr) {
-                        continue;
-                    }
-
-                    $followers[] = 'email:' . $email;
+                    $followers[] = $item;
                 }
             }
 
@@ -164,21 +157,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 $workflow,
                 $args
             );
-            $this->get_service('debug')->write(
-                $followers,
-                'Follower::filter_workflow_receivers $followers:' . __LINE__
-            );
 
-            // Add the user ids for the receivers list
-            if (!empty($followers)) {
-                foreach ($followers as $user) {
-                    if (is_object($user)) {
-                        $receivers[] = $user->ID;
-                    } else {
-                        $receivers[] = $user;
-                    }
-                }
-            }
+            $receivers = array_merge($receivers, $followers);
         }
 
         return $receivers;

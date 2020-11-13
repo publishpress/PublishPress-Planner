@@ -28,52 +28,6 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
         protected $type = null;
 
         /**
-         * Obligates derived classes to have their own constructors where they
-         * might define its $type.
-         *
-         * @abstract
-         * @since   1.20.0
-         */
-        abstract public function __construct();
-
-        /**
-         * Render input html.
-         *
-         * @abstract
-         * @access  protected
-         * @param array $inputOptions Input options
-         * @param mixed $value Actual input value
-         * @since   1.20.0
-         *
-         */
-        abstract protected function renderInput($inputOptions = array(), $value = null);
-
-        /**
-         * Render input-preview html.
-         *
-         * @abstract
-         * @access  protected
-         * @param array $inputOptions Input options
-         * @param mixed $value Actual input value
-         * @since   1.20.0
-         *
-         */
-        abstract protected function renderInputPreview($inputOptions = array(), $value = null);
-
-        /**
-         * Get meta-input value html formatted.
-         *
-         * @abstract
-         * @access  protected
-         * @param mixed $value Actual input value
-         *
-         * @return  string
-         * @since   1.20.0
-         *
-         */
-        abstract public static function getMetaValueHtml($value = null);
-
-        /**
          * Check if the input can handle a given action based on $type.
          *
          * @final

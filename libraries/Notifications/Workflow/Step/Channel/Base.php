@@ -154,13 +154,17 @@ class Base extends Base_Step
     }
 
     /**
-     * @param $workflow_post
-     * @param $action_args
-     * @param $receivers
-     * @param $content
-     * @param $channel
+     * Check if this channel is selected and triggers the notification.
+     *
+     * @param Workflow $workflow
+     * @param array $receiverData
+     * @param array $content
+     * @param string $channel
+     * @param bool $async
+     *
+     * @throws Exception
      */
-    public function action_send_notification($workflow_post, $action_args, $receivers, $content, $channel)
+    public function action_send_notification($workflow, $receiverData, $content, $channel, $async)
     {
         return;
     }
