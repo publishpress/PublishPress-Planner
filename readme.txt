@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: The popup now displays only the content of the notification, #650
 * Removed: Removed the action "publishpress_notif_before_run_workflow", #650
 * Removed: Removed the filter "publishpress_notif_workflow_receiver_post_authors", #650
+
+= [2.4.2] - 2020-11-05  =
+
+* Fixed: Invalid assets paths for modules on Windows servers, #712;
+* Fixed: Fixed error in the calendar: Error: selected user doesn't have enough permissions to be set as the post author, #704;
+* Fixed: Fixed conflict with the plugin Visual Composer: pagenow is undefined, #692;
+* Fixed: Method get_inner_information was ignoring the passed information fields to the first argument, #654;
+* Fixed: Updated the .POT file;
 
 = [2.4.1] - 2020-10-22  =
 
