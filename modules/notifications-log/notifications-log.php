@@ -30,10 +30,11 @@
 
 use PublishPress\Legacy\Auto_loader;
 use PublishPress\Notifications\Traits\Dependency_Injector;
-use PublishPress\NotificationsLog\Log;
-use PublishPress\NotificationsLog\LogHandler;
-use PublishPress\NotificationsLog\LogListTable;
-use PublishPress\NotificationsLog\LogModel;
+use PublishPress\Notifications\Workflow\Workflow;
+use PublishPress\NotificationsLog\CliHandler;
+use PublishPress\NotificationsLog\NotificationsLogHandler;
+use PublishPress\NotificationsLog\NotificationsLogModel;
+use PublishPress\NotificationsLog\NotificationsLogTable;
 
 if (!class_exists('PP_Notifications_Log')) {
     /**
@@ -48,8 +49,6 @@ if (!class_exists('PP_Notifications_Log')) {
         public $module_name = 'notifications-log';
 
         public $module_url = '';
-
-        public $logHandler;
 
         /**
          * @var string
@@ -96,8 +95,6 @@ if (!class_exists('PP_Notifications_Log')) {
             );
 
             Auto_loader::register('\\PublishPress\\NotificationsLog\\', __DIR__ . '/library');
-
-            $this->logHandler = new LogHandler();
 
             parent::__construct();
         }
@@ -153,12 +150,26 @@ if (!class_exists('PP_Notifications_Log')) {
         {
             add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
             add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
-            add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 6);
+            add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 7);
+            add_action(
+                'publishpress_notifications_skipped_duplicated',
+                [$this, 'actionNotificationSkippedDueToDuplication'],
+                10,
+                6
+            );
+            add_filter('publishpress_notifications_scheduled_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
+            add_action('publishpress_notifications_scheduled_cron_task', [$this, 'registerCronIdToLog'], 10, 2);
+            add_action('publishpress_notifications_async_notification_sent', [$this, 'removeAsyncNotificationLog']);
             add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
             add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);
             add_action('wp_ajax_publishpress_search_post', [$this, 'ajaxSearchPost']);
             add_action('wp_ajax_publishpress_search_workflow', [$this, 'ajaxSearchWorkflow']);
             add_action('wp_ajax_publishpress_view_notification', [$this, 'ajaxViewNotification']);
+            add_action('admin_init', [$this, 'processLogTableActions']);
+
+            if (class_exists('WP_Cli')) {
+                new CliHandler();
+            }
         }
 
         /**
@@ -277,9 +288,10 @@ if (!class_exists('PP_Notifications_Log')) {
          */
         public function postNotificationMetaBox($post)
         {
-            $logCount = $this->logHandler->getNotifications($post->ID, null, null, true);
+            $logHandler = new NotificationsLogHandler();
+            $logCount   = $logHandler->getNotificationLogEntries($post->ID, null, null, true);
             ?>
-            <div class="pp_post_notify_queue">
+            <div class="publishpress_notifications_log">
                 <h3><?php echo __('Notifications Log', 'publishpress'); ?></h3>
 
                 <?php if ($logCount > 0) : ?>
@@ -300,57 +312,184 @@ if (!class_exists('PP_Notifications_Log')) {
             <?php
         }
 
+        public function registerAsyncNotificationLogAndAddLogId($data)
+        {
+            $logHandler = new NotificationsLogHandler();
+
+            $logData = [
+                'event'       => $data['event_args']['event'],
+                'user_id'     => $data['event_args']['user_id'],
+                'workflow_id' => $data['workflow_id'],
+                'old_status'  => isset($data['event_args']['params']['old_status']) ? $data['event_args']['params']['old_status'] : null,
+                'new_status'  => isset($data['event_args']['params']['new_status']) ? $data['event_args']['params']['new_status'] : null,
+                'post_id'     => isset($data['event_args']['params']['post_id']) ? $data['event_args']['params']['post_id'] : null,
+                'comment_id'  => isset($data['event_args']['params']['comment_id']) ? $data['event_args']['params']['comment_id'] : null,
+                'async'       => true,
+                'status'      => 'scheduled',
+                'channel'     => isset($data['channel']) ? $data['channel'] : null,
+                'receiver'    => isset($data['receiver']) ? $data['receiver'] : null,
+                'success'     => isset($data['success']) ? $data['success'] : null,
+                'error'       => isset($data['error']) ? $data['error'] : null,
+                'event_args'  => $data['event_args'],
+            ];
+
+            $data['log_id'] = $logHandler->registerLog($logData);
+
+            return $data;
+        }
+
+        public function registerCronIdToLog($data, $cronId)
+        {
+            update_comment_meta($data['log_id'], NotificationsLogModel::META_NOTIF_CRON_ID, $cronId);
+        }
+
+        public function removeAsyncNotificationLog($params)
+        {
+            if (isset($params['log_id'])) {
+                $comment = get_comment($params['log_id']);
+                $log     = new NotificationsLogModel($comment);
+
+                if (is_object($log)) {
+                    $log->archive();
+                }
+            }
+        }
+
         /**
-         * @param $workflowPost
-         * @param $actionArgs
+         * @param Workflow $workflow
          * @param $channel
+         * @param $receiver
          * @param $subject
          * @param $body
          * @param $deliveryResult
+         * @param $async
          */
         public function actionNotificationSending(
-            $workflowPost,
-            $actionArgs,
+            $workflow,
             $channel,
+            $receiver,
             $subject,
             $body,
-            $deliveryResult
+            $deliveryResult,
+            $async
         ) {
-            if (!empty($deliveryResult)) {
-                $post = $actionArgs['post'];
-                foreach ($deliveryResult as $receiver => $result) {
-                    $error = '';
+            $logHandler = new NotificationsLogHandler();
 
-                    if (true !== $result) {
-                        $error = apply_filters(
-                            'publishpress_notif_error_log',
-                            $error,
-                            $result,
-                            $receiver,
-                            $subject,
-                            $body
-                        );
-                    }
+            $error = '';
 
-                    $async = isset($actionArgs['async']) ? (bool)$actionArgs['async'] : false;
-
-                    $this->logHandler->register(
-                        [
-                            'post_id'     => $post->ID,
-                            'content'     => maybe_serialize(['subject' => $subject, 'body' => $body]),
-                            'workflow_id' => $workflowPost->ID,
-                            'action'      => $actionArgs['action'],
-                            'old_status'  => $actionArgs['old_status'],
-                            'new_status'  => $actionArgs['new_status'],
-                            'channel'     => $channel,
-                            'receiver'    => $receiver,
-                            'success'     => $result,
-                            'error'       => $error,
-                            'async'       => $async,
-                        ]
-                    );
-                }
+            if (true !== $deliveryResult) {
+                $error = apply_filters(
+                    'publishpress_notif_error_log',
+                    $error,
+                    $deliveryResult,
+                    $receiver,
+                    $subject,
+                    $body
+                );
             }
+
+            $eventArgs = $workflow->event_args;
+
+            $logData = [
+                'event'          => $eventArgs['event'],
+                'user_id'        => $eventArgs['user_id'],
+                'workflow_id'    => $workflow->workflow_post->ID,
+                'content'        => maybe_serialize(['subject' => $subject, 'body' => $body]),
+                'status'         => 'sent',
+                'channel'        => $channel,
+                'receiver'       => $receiver['receiver'],
+                'receiver_group' => $receiver['group'],
+                'success'        => $deliveryResult,
+                'error'          => $error,
+                'async'          => $async,
+                'event_args'     => $eventArgs,
+            ];
+
+            if (isset($receiver['subgroup'])) {
+                $logData['receiver_subgroup'] = $receiver['subgroup'];
+            }
+
+            if (isset($eventArgs['params']['old_status'])) {
+                $logData['old_status'] = $eventArgs['params']['old_status'];
+            }
+
+            if (isset($eventArgs['params']['new_status'])) {
+                $logData['new_status'] = $eventArgs['params']['new_status'];
+            }
+
+            if (isset($eventArgs['params']['comment_id'])) {
+                $logData['comment_id'] = $eventArgs['params']['comment_id'];
+            }
+
+            if (isset($eventArgs['params']['post_id'])) {
+                $logData['post_id'] = $eventArgs['params']['post_id'];
+            }
+
+            $logHandler->registerLog($logData);
+        }
+
+        /**
+         * @param Workflow $workflow
+         * @param $receiver
+         * @param $content
+         * @param $channel
+         * @param $async
+         * @param $threshold
+         */
+        public function actionNotificationSkippedDueToDuplication(
+            $workflow,
+            $receiver,
+            $content,
+            $channel,
+            $async,
+            $threshold
+        ) {
+            $logHandler = new NotificationsLogHandler();
+
+            $eventArgs = $workflow->event_args;
+
+            $logData = [
+                'event'          => $eventArgs['event'],
+                'user_id'        => $eventArgs['user_id'],
+                'workflow_id'    => $workflow->workflow_post->ID,
+                'content'        => maybe_serialize($content),
+                'status'         => 'skipped',
+                'channel'        => $channel,
+                'receiver'       => $receiver['receiver'],
+                'receiver_group' => $receiver['group'],
+                'success'        => false,
+                'error'          => sprintf(
+                    __(
+                        'This notification is very similar to another one sent less than %d minutes ago for the same receiver',
+                        'publishpress'
+                    ),
+                    $threshold
+                ),
+                'async'          => $async,
+                'event_args'     => $eventArgs,
+            ];
+
+            if (isset($receiver['subgroup'])) {
+                $logData['receiver_subgroup'] = $receiver['subgroup'];
+            }
+
+            if (isset($eventArgs['params']['old_status'])) {
+                $logData['old_status'] = $eventArgs['params']['old_status'];
+            }
+
+            if (isset($eventArgs['params']['new_status'])) {
+                $logData['new_status'] = $eventArgs['params']['new_status'];
+            }
+
+            if (isset($eventArgs['params']['comment_id'])) {
+                $logData['comment_id'] = $eventArgs['params']['comment_id'];
+            }
+
+            if (isset($eventArgs['params']['post_id'])) {
+                $logData['post_id'] = $eventArgs['params']['post_id'];
+            }
+
+            $logHandler->registerLog($logData);
         }
 
         /**
@@ -379,14 +518,17 @@ if (!class_exists('PP_Notifications_Log')) {
             $option = 'per_page';
             $args   = [
                 'label'   => 'Logs',
-                'default' => LogListTable::POSTS_PER_PAGE,
+                'default' => NotificationsLogTable::POSTS_PER_PAGE,
                 'option'  => 'logs_per_page',
             ];
             add_screen_option($option, $args);
         }
 
-        public function tableSetOptions($status, $option, $value)
-        {
+        public function tableSetOptions(
+            $status,
+            $option,
+            $value
+        ) {
             return $value;
         }
 
@@ -400,9 +542,7 @@ if (!class_exists('PP_Notifications_Log')) {
             $publishpress = $this->get_service('publishpress');
             $publishpress->settings->print_default_header($publishpress->modules->notifications_log);
 
-            //Create an instance of our package class...
-            $logTable = new LogListTable($this->logHandler);
-
+            $logTable = new NotificationsLogTable(new NotificationsLogHandler());
             $logTable->views();
 
             //Fetch, prepare, sort, and filter our data...
@@ -414,6 +554,7 @@ if (!class_exists('PP_Notifications_Log')) {
                 <form id="log-filter" method="get">
                     <!-- For plugins, we also need to ensure that the form posts back to our current page -->
                     <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+
                     <!-- Now we can render the completed list table -->
                     <?php $logTable->display() ?>
                 </form>
@@ -434,7 +575,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
             global $wpdb;
 
-            $commentType = LogModel::COMMENT_TYPE;
+            $commentType = NotificationsLogModel::COMMENT_TYPE;
             $search      = isset($_GET['search']) ? $wpdb->esc_like($_GET['search']) : '';
             $search      = '%' . $search . '%';
 
@@ -482,7 +623,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
             global $wpdb;
 
-            $metaKeyWorkflow = LogModel::META_NOTIF_WORKFLOW_ID;
+            $metaKeyWorkflow = NotificationsLogModel::META_NOTIF_WORKFLOW_ID;
             $search          = isset($_GET['search']) ? $wpdb->esc_like($_GET['search']) : '';
             $search          = '%' . $search . '%';
 
@@ -520,6 +661,84 @@ if (!class_exists('PP_Notifications_Log')) {
             die;
         }
 
+        public function processLogTableActions()
+        {
+            $currentAction = null;
+            if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
+                $currentAction = $_REQUEST['action'];
+            }
+
+            if (empty($currentAction)) {
+                return;
+            }
+
+            $shouldRedirect = false;
+
+            if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
+                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
+
+                if (!empty($ids)) {
+                    foreach ($ids as $id) {
+                        $id = (int)$id;
+
+                        $logComment = get_comment($id);
+
+                        if (!empty($logComment)) {
+                            $log = new NotificationsLogModel($logComment);
+                            $log->delete();
+                        }
+                    }
+                }
+
+                $shouldRedirect = true;
+            } elseif (NotificationsLogTable::BULK_ACTION_DELETE_ALL === $currentAction) {
+                $logHandler    = new NotificationsLogHandler();
+                $notifications = $logHandler->getNotificationLogEntries(
+                    null,
+                    'comment_date',
+                    'desc',
+                    false,
+                    [],
+                    null,
+                    null
+                );
+
+                if (!empty($notifications)) {
+                    foreach ($notifications as $logComment) {
+                        if (!empty($logComment)) {
+                            $log = new NotificationsLogModel($logComment);
+                            $log->delete();
+                        }
+                    }
+                }
+
+                $shouldRedirect = true;
+            } elseif (NotificationsLogTable::BULK_ACTION_TRY_AGAIN === $currentAction) {
+                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
+
+                if (!empty($ids)) {
+                    foreach ($ids as $id) {
+                        $logComment = get_comment($id);
+
+                        if (!empty($logComment)) {
+                            $log = new NotificationsLogModel($logComment);
+
+                            $scheduler = $this->get_service('notification_scheduler');
+                            $scheduler->scheduleNotification($log->workflowId, $log->eventArgs);
+
+                            $log->delete();
+                        }
+                    }
+                }
+
+                $shouldRedirect = true;
+            }
+
+            if ($shouldRedirect) {
+                wp_redirect(admin_url('admin.php?page=pp-notif-log'));
+            }
+        }
+
         public function ajaxViewNotification()
         {
             if (!wp_verify_nonce($_REQUEST['nonce'], 'notifications-log-admin')) {
@@ -530,118 +749,72 @@ if (!class_exists('PP_Notifications_Log')) {
 
             $output = '';
 
-            $id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
+            $id       = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
+            $receiver = isset($_REQUEST['receiver']) ? sanitize_text_field($_REQUEST['receiver']) : '';
+            $channel  = isset($_REQUEST['channel']) ? sanitize_text_field($_REQUEST['channel']) : '';
+
+            if (empty($receiver)) {
+                echo $this->get_error_markup(__('Invalid receiver', 'publishpress'));
+                exit();
+            }
+
+            if (empty($channel)) {
+                echo $this->get_error_markup(__('Invalid channel', 'publishpress'));
+                exit();
+            }
 
             if (!empty($id)) {
-                $log = new LogModel($id);
-                ob_start();
-                ?>
-                <table>
-                    <tr>
-                        <th><?php echo __('ID', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->id; ?></td>
-                    </tr>
+                $comment = get_comment($id);
+                if (is_object($comment)) {
+                    $log = new NotificationsLogModel($comment);
 
-                    <tr>
-                        <th><?php echo __('Date', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->date; ?></td>
-                    </tr>
+                    if ($log->status === 'scheduled') {
+                        $workflow = Workflow::load_by_id($log->workflowId);
 
-                    <tr>
-                        <th><?php echo __('Post', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->postTitle; ?></td>
-                    </tr>
+                        $workflow->event_args = $log->eventArgs;
 
-                    <tr>
-                        <th><?php echo __('Workflow', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->workflowTitle; ?></td>
-                    </tr>
+                        $content_template = $workflow->get_content();
+                        $content          = $workflow->do_shortcodes_in_content($content_template, $receiver, $channel);
+                    } else {
+                        $content = $log->content;
+                    }
 
-                    <tr>
-                        <th><?php echo __('Action', 'publishpress'); ?>:</th>
-                        <td><?php echo $log->action; ?></td>
-                    </tr>
-
-                    <?php if (!empty($log->oldStatus)) : ?>
-                        <tr>
-                            <th><?php echo __('Old Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $log->oldStatus; ?></td>
-                        </tr>
-                    <?php endif; ?>
-
-                    <?php if (!empty($log->newStatus)) : ?>
-                        <tr>
-                            <th><?php echo __('New Status', 'publishpress'); ?>:</th>
-                            <td><?php echo $log->newStatus; ?></td>
-                        </tr>
-                    <?php endif; ?>
-
-                    <tr>
-                        <th><?php echo __('Channel', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php echo $log->channel; ?>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Receiver', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php
-                            if ($log->receiverIsUser()) {
-                                $output = '';
-                                if ($log->channel === 'email') {
-                                    $user   = get_user_by('ID', $log->receiver);
-                                    $output .= sprintf('<div>%s</div>', $user->user_email);
-                                }
-                                $output .= sprintf(
-                                    '<div class="user">%s (id:%d)</div>',
-                                    $log->receiverName,
-                                    $log->receiver
-                                );
-
-                                echo $output;
-                            } else {
-                                echo $log->receiver;
-                            }
-                            ?>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><?php echo __('Content', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php if (isset($log->content['subject'])) : ?>
-                                <?php echo $log->content['subject']; ?><br>
-                            <?php endif; ?>
-                            <pre><?php echo $log->content['body']; ?></pre>
-                        </td>
-                    </tr>
-
-                    <tr class="<?php echo $log->success ? 'success' : 'error'; ?>">
-                        <th><?php echo __('Result', 'publishpress'); ?>:</th>
-                        <td>
-                            <?php echo $log->success ? __('Success', 'publishpress') : __(
-                                    'Error',
+                    ob_start();
+                    ?>
+                    <div class="preview-notification">
+                        <div class="subject"><label><?php _e(
+                                    'Subject:',
                                     'publishpress'
-                                ) . '<br>' . $log->error; ?>
-
-                            <?php if ($log->async) : ?>
-                                <?php echo __(' (Scheduled in the cron)', 'publishpress'); ?>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                </table>
-                <?php
-                $output = ob_get_clean();
+                                ); ?></label><?php echo esc_html($content['subject']); ?></div>
+                        <div class="content">
+                            <label>
+                                <?php _e('Content:', 'publishpress'); ?>
+                            </label>
+                            <?php echo wpautop($content['body']); ?>
+                        </div>
+                        <?php if ($log->status === 'scheduled') : ?>
+                            <div class="notice notice-warning"><?php echo __(
+                                    'This is a preview of the scheduled message. The content can still change until the notification is sent.',
+                                    'publishpress'
+                                ); ?></div>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                    $output = ob_get_clean();
+                } else {
+                    echo $this->get_error_markup(__('Notification log not found', 'publishpress'));
+                }
             } else {
-                $output = '<p><div class="notice notice-error">' . __(
-                        'Notification log not found.',
-                        'publishpress'
-                    ) . '</div></p>';
+                $output = $this->get_error_markup(__('Notification log not found.', 'publishpress'));
             }
 
             echo $output;
-            die;
+            exit();
+        }
+
+        private function get_error_markup($message)
+        {
+            return '<p><div class="notice notice-error">' . $message . '</div></p>';
         }
     }
 }

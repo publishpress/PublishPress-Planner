@@ -40,7 +40,12 @@ class Base extends Base_Step
         );
 
         // Add the fitler to the run workflow query args
-        add_filter('publishpress_notif_run_workflow_meta_query', [$this, 'filter_run_workflow_query_args'], 10, 2);
+        add_filter(
+            'publishpress_notifications_running_workflow_meta_query',
+            [$this, 'filter_running_workflow_query_args'],
+            10,
+            2
+        );
     }
 
     /**
@@ -100,11 +105,11 @@ class Base extends Base_Step
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function filter_run_workflow_query_args($query_args, $action_args)
+    public function filter_running_workflow_query_args($query_args, $event_args)
     {
         return $query_args;
     }
@@ -124,12 +129,12 @@ class Base extends Base_Step
     }
 
     /**
-     * @param $action_args
+     * @param $event_args
      *
      * @return bool
      */
-    protected function should_ignore_event_on_query($action_args)
+    protected function should_ignore_event_on_query($event_args)
     {
-        return (isset($action_args['ignore_event']) && $action_args['ignore_event'] == true);
+        return (isset($event_args['params']['ignore_event']) && $event_args['params']['ignore_event'] == true);
     }
 }

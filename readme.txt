@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.4.2
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,7 +80,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 [Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
-= Join PublishPress and get the Pro plugins =
+= Join PublishPress and you’ll get access to Pro plugins and support =
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
@@ -92,6 +92,7 @@ Join PublishPress and you’ll get access to these 6 Pro plugins:
 * [PublishPress Permissions Pro](https://publishpress.com/presspermit) is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
+* [Advanced Gutenberg](https://publishpress.com/advanced-gutenberg) has everything you need to build professional websites with the Gutenberg editor.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
 
@@ -118,6 +119,40 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.0.0] - 2020-11-16 =
+
+* Added: Added sortable columns to the Content Overview post list, #709;
+* Added: Added post type filter to the Content Overview page, #727;
+* Added: Added new filter "publishpress_notifications_schedule_delay_in_seconds", #650;
+* Added: Added new filter "publishpress_notifications_scheduled_data", #650
+* Added: Added to each notification log the source of the receiver (why is the user being notified? What group does he belongs to?), #650
+* Added: Added info to the log about the current user when the notification was triggered, #650
+* Added: Show the scheduled time of notifications in the log, #650
+* Added: Added information about the cron task status of each scheduled notification. If not exists, show a failure message, #650
+* Added: Added option to try again failed notifications. Add action "Try again" (Reschedule), and bulk option, #650
+* Added: Display in the log the duplicated notifications that were skipped, #650
+* Added: Added a settings field to configure the duplicated notification time threshold, in minutes, #650
+* Added: Added to the log the icon for the channel used in the notification, #650
+* Fixed: Minor fix to the style of the Content Overview post list, #709;
+* Fixed: Fixed default notifications adding the "new" and "auto-draft" to the previous status field, and "post" to the Post Type field, #721;
+* Fixed: Fixed support for multiple authors in the notifications, #650
+* Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Role, #726;
+* Fixed: Fixed Strict Standards notice: ..\Dependency_Injector define the same property ($container) in the composition of ..\Follower, #726;
+* Changed: Improved error messages for failed notifications adding more descriptive error messages, #650
+* Changed: Refactored the filter "publishpress_notif_run_workflow_meta_query" to "publishpress_notifications_running_workflow_meta_query", #650
+* Changed: Refactored the filter publishpress_notif_async_timestamp => publishpress_notifications_scheduled_time_for_notification, #650
+* Changed: Refactored the action publishpress_enqueue_notification => publishpress_notifications_scheduled_notification, #650
+* Changed: Refactored the action publishpress_cron_notify => publishpress_notifications_send_notification, #650
+* Changed: Refactored the filter publishpress_notif_workflow_actions => publishpress_notifications_workflow_events, #650
+* Changed: The notification's content is only fixed right before sending the message. Scheduled notifications now have dynamic preview for the content, #650
+* Changed: The notification's list of receivers is only fixed right before sending the message. Scheduled notifications have dynamic receivers list, #650
+* Changed: The popup now displays only the content of the notification, #650
+* Changed: Refactored the Content Overview screen grouping posts by post type instead of by taxonomy, #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_columns" and added a new one "publishpress_content_overview_columns", #709;
+* Changed: Deprecated the filter "PP_Content_Overview_term_column_value" and added a new one "publishpress_content_overview_column_value", #709;
+* Removed: Removed the action "publishpress_notif_before_run_workflow", #650
+* Removed: Removed the filter "publishpress_notif_workflow_receiver_post_authors", #650
 
 = [2.4.2] - 2020-11-05  =
 
