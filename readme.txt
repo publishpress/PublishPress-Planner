@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 2.4.2
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,7 +80,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 [Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
-= Join PublishPress and get the Pro plugins =
+= Join PublishPress and you’ll get access to Pro plugins and support =
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
@@ -92,6 +92,7 @@ Join PublishPress and you’ll get access to these 6 Pro plugins:
 * [PublishPress Permissions Pro](https://publishpress.com/presspermit) is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
+* [Advanced Gutenberg](https://publishpress.com/advanced-gutenberg) has everything you need to build professional websites with the Gutenberg editor.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
 
@@ -119,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.0.0] - UNRELEASED =
+= [3.0.0] - 2020-11-16 =
 
 * Added: Added sortable columns to the Content Overview post list, #709;
 * Added: Added post type filter to the Content Overview page, #727;
