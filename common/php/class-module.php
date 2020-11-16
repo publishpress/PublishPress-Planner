@@ -624,7 +624,7 @@ if (!class_exists('PP_Module')) {
             $today = time(); /* Current unix time  */
             $since = $today - $original;
 
-            if ($since > $chunks[2][0]) {
+            if ($since > $chunks[2][0] || $original > $today) {
                 $dateFormat = get_option('date_format', 'Y-m-d');
 
                 $print = date($dateFormat, $original);

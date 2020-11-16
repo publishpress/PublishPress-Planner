@@ -13,8 +13,6 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
 
 class Post_Status extends Base implements Filter_Interface
 {
-    use Dependency_Injector;
-
     const META_KEY_POST_STATUS_FROM = '_psppno_poststatfrom';
 
     const META_KEY_POST_STATUS_TO = '_psppno_poststatto';
@@ -129,17 +127,17 @@ class Post_Status extends Base implements Filter_Interface
      * workflows that should be executed.
      *
      * @param array $query_args
-     * @param array $action_args
+     * @param array $event_args
      *
      * @return array
      */
-    public function get_run_workflow_query_args($query_args, $action_args)
+    public function get_run_workflow_query_args($query_args, $event_args)
     {
         // From
         $query_args['meta_query'][] = [
             [
                 'key'     => static::META_KEY_POST_STATUS_FROM,
-                'value'   => $action_args['old_status'],
+                'value'   => $event_args['params']['old_status'],
                 'type'    => 'CHAR',
                 'compare' => '=',
             ],
@@ -149,12 +147,12 @@ class Post_Status extends Base implements Filter_Interface
         $query_args['meta_query'][] = [
             [
                 'key'     => static::META_KEY_POST_STATUS_TO,
-                'value'   => $action_args['new_status'],
+                'value'   => $event_args['params']['new_status'],
                 'type'    => 'CHAR',
                 'compare' => '=',
             ],
         ];
 
-        return parent::get_run_workflow_query_args($query_args, $action_args);
+        return parent::get_run_workflow_query_args($query_args, $event_args);
     }
 }

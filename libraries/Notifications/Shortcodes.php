@@ -12,6 +12,7 @@ namespace PublishPress\Notifications;
 use Exception;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
+use WP_Post;
 
 class Shortcodes
 {
@@ -30,7 +31,7 @@ class Shortcodes
      *
      * @var array
      */
-    protected $action_args;
+    protected $event_args;
 
     /**
      * @var mixed
@@ -49,11 +50,11 @@ class Shortcodes
      * Adds the shortcodes to replace text
      *
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      */
-    public function register($workflow_post, $action_args)
+    public function register($workflow_post, $event_args)
     {
-        $this->set_properties($workflow_post, $action_args);
+        $this->set_properties($workflow_post, $event_args);
 
         add_shortcode('psppno_actor', [$this, 'handle_psppno_actor']);
         add_shortcode('psppno_post', [$this, 'handle_psppno_post']);
@@ -66,12 +67,12 @@ class Shortcodes
      * Set the instance properties
      *
      * @param WP_Post $workflow_post
-     * @param array $action_args
+     * @param array $event_args
      */
-    protected function set_properties($workflow_post, $action_args)
+    protected function set_properties($workflow_post, $event_args)
     {
         $this->workflow_post = $workflow_post;
-        $this->action_args   = $action_args;
+        $this->event_args    = $event_args;
     }
 
     /**
@@ -94,11 +95,11 @@ class Shortcodes
     /**
      * Returns the current user, the actor of the action
      *
-     * @return WP_User
+     * @return bool|WP_User
      */
     protected function get_actor()
     {
-        return wp_get_current_user();
+        return get_user_by('ID', $this->event_args['user_id']);
     }
 
     /**
@@ -227,10 +228,6 @@ class Shortcodes
                     $result = $user->display_name;
                     break;
 
-                case 'email':
-                    $result = $user->user_email;
-                    break;
-
                 case 'first_name':
                     $result = $user->first_name;
                     break;
@@ -306,7 +303,7 @@ class Shortcodes
      */
     protected function get_post()
     {
-        return $this->action_args['post'];
+        return get_post($this->event_args['params']['post_id']);
     }
 
     /**
@@ -380,7 +377,7 @@ class Shortcodes
                 case 'new_status':
                     $status = $publishpress->custom_status->get_custom_status_by(
                         'slug',
-                        $this->action_args[$item]
+                        $this->event_args[$item]
                     );
 
                     if (empty($status) || 'WP_Error' === get_class($status)) {
@@ -413,14 +410,29 @@ class Shortcodes
                     break;
 
                 default:
-                    if ($custom = apply_filters(
-                        'publishpress_notif_shortcode_post_data',
-                        false,
-                        $item,
-                        $post,
-                        $attrs
-                    )) {
-                        $info[] = $custom;
+                    // Meta data attribute
+                    if (0 === strpos($item, 'meta')) {
+                        $arr = explode(':', $item);
+                        if (!empty($arr[1])) {
+                            $meta = get_post_meta($post->ID, $arr[1], true);
+                            if ($meta && is_scalar($meta)) {
+                                if ('meta-date' == $arr[0]) {
+                                    $info[] = date_i18n(get_option('date_format'), $meta);
+                                } else {
+                                    $info[] = $meta;
+                                }
+                            }
+                        }
+                    } else {
+                        if ($custom = apply_filters(
+                            'publishpress_notif_shortcode_post_data',
+                            false,
+                            $item,
+                            $post,
+                            $attrs
+                        )) {
+                            $info[] = $custom;
+                        }
                     }
 
                     break;
@@ -455,7 +467,7 @@ class Shortcodes
         $post = $this->workflow_post;
 
         // No attributes? Set the default one.
-        if (empty($attrs)) {
+        if (empty($attrs) || empty($attrs[0])) {
             $attrs[] = 'title';
         }
 
@@ -629,6 +641,6 @@ class Shortcodes
     protected function cleanup()
     {
         $this->workflow_post = null;
-        $this->action_args   = null;
+        $this->event_args    = null;
     }
 }

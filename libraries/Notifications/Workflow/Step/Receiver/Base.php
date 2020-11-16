@@ -35,6 +35,8 @@ class Base extends Base_Step
 
         // Add filter to return the value for the column in the workflow list
         add_filter('psppno_receivers_column_value', [$this, 'filter_receivers_column_value'], 10, 2);
+
+        add_filter('publishpress_notifications_receiver_group_label', [$this, 'filter_receiver_group_label']);
     }
 
     /**
@@ -48,5 +50,14 @@ class Base extends Base_Step
     public function filter_receivers_column_value($values, $post_id)
     {
         return $values;
+    }
+
+    public function filter_receiver_group_label($group_name)
+    {
+        if ($group_name === static::META_VALUE) {
+            $group_name = $this->label;
+        }
+
+        return $group_name;
     }
 }

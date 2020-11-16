@@ -28,16 +28,16 @@ use Iterator;
 use WP_Comment;
 
 /**
- * Class LogIterator
+ * Class NotificationsLogIterator
  *
  * @package PublishPress\NotificationsLog
  */
-class LogIterator implements Iterator, Countable
+class NotificationsLogIterator implements Iterator, Countable
 {
     private $list = [];
 
     /**
-     * LogIterator constructor.
+     * NotificationsLogIterator constructor.
      *
      * @param array $list
      */
@@ -63,11 +63,11 @@ class LogIterator implements Iterator, Countable
     /**
      * @param WP_Comment $item
      *
-     * @return LogModel
+     * @return NotificationsLogModel
      */
     private function returnItem($item)
     {
-        return new LogModel($item);
+        return new NotificationsLogModel($item);
     }
 
     /**

@@ -15,7 +15,6 @@ use PublishPress\Notifications\Traits\PublishPress_Module;
 class Role extends Simple_Checkbox implements Receiver_Interface
 {
     use PublishPress_Module;
-    use Dependency_Injector;
 
     const META_KEY = '_psppno_torole';
 
@@ -143,7 +142,14 @@ class Role extends Simple_Checkbox implements Receiver_Interface
 
                 if (!empty($role_users)) {
                     foreach ($role_users as $user) {
-                        $users[] = (int)$user->ID;
+                        $users[] = [
+                            'receiver' => $user->ID,
+                            'group'    => self::META_VALUE,
+                            'subgroup' => sprintf(
+                                __('role:%s', 'publishpress'),
+                                $role_name
+                            )
+                        ];
                     }
                 }
             }

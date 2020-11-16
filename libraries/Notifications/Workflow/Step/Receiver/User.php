@@ -106,18 +106,19 @@ class User extends Simple_Checkbox implements Receiver_Interface
         // If checked, add the authors to the list of receivers
         if ($this->is_selected($workflow->ID)) {
             // Get the users selected in the workflow
-            $users     = get_post_meta($workflow->ID, static::META_LIST_KEY);
-            $receivers = array_merge($receivers, $users);
+            $users = get_post_meta($workflow->ID, static::META_LIST_KEY);
 
-            // Get the users following the post
-            $users     = $this->get_service('publishpress')->notifications->get_users_to_notify(
-                $args['post']->ID,
-                'id'
-            );
-            $receivers = array_merge($receivers, $users);
+            if (!empty($users)) {
+                foreach ($users as $user) {
+                    $receivers[] = [
+                        'receiver' => (int)$user,
+                        'group'    => self::META_VALUE
+                    ];
+                }
+            }
 
             /**
-             * Filters the list of receivers, but triggers only when the authors are selected.
+             * Filters the list of receivers, but triggers only when users are selected.
              *
              * @param array $receivers
              * @param WP_Post $workflow
