@@ -664,11 +664,20 @@ if (!class_exists('PP_Notifications_Log')) {
         public function processLogTableActions()
         {
             $currentAction = null;
+
+            if (wp_doing_ajax() || wp_doing_cron()) {
+                return false;
+            }
+
             if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
                 $currentAction = $_REQUEST['action'];
             }
 
             if (empty($currentAction)) {
+                return;
+            }
+
+            if (!isset($_GET['page']) || $_GET['page'] !== 'pp-notif-log') {
                 return;
             }
 
