@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.0.1] - 2020-11-19 =
+
+* Fixed: Can't delete users because the plugin redirects to the Notifications Log page, #737;
+
 = [3.0.0] - 2020-11-16 =
 
 * Added: Added sortable columns to the Content Overview post list, #709;
