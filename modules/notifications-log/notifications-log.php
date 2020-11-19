@@ -435,6 +435,7 @@ if (!class_exists('PP_Notifications_Log')) {
          * @param $channel
          * @param $async
          * @param $threshold
+         * @throws Exception
          */
         public function actionNotificationSkippedDueToDuplication(
             $workflow,

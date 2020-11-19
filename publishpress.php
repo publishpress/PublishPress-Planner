@@ -196,15 +196,23 @@ if (!class_exists('publishpress')) {
 
                 // Check if Edit Flow is installed. The folder changes sometimes.
                 foreach ($all_plugins as $pluginFile => $data) {
-                    if (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain']) {
+                    if (
+                        (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain'])
+                        && is_plugin_active($pluginFile)
+                    ) {
                         // Is it activated?
-                        if (is_plugin_active($pluginFile)) {
-                            deactivate_plugins($pluginFile);
-                            add_action('admin_notices', [$this, 'notice_editflow_deactivated']);
-                        }
+                        deactivate_plugins($pluginFile);
+                        add_action('admin_notices', [$this, 'notice_editflow_deactivated']);
                     }
                 }
             } catch (Exception $e) {
+                error_log(
+                    sprintf(
+                        '%s: %s',
+                        __FUNCTION__,
+                        $e->getMessage()
+                    )
+                );
             }
         }
 
@@ -292,7 +300,6 @@ if (!class_exists('publishpress')) {
         private function getModulesDirs()
         {
             // Scan the modules directory and include any modules that exist there
-            // $module_dirs = scandir(PUBLISHPRESS_BASE_PATH . '/modules/');
             $defaultDirs = [
                 'modules-settings'       => PUBLISHPRESS_BASE_PATH,
                 'calendar'               => PUBLISHPRESS_BASE_PATH,
@@ -313,9 +320,7 @@ if (!class_exists('publishpress')) {
             ];
 
             // Add filters to extend the modules
-            $modulesDirs = apply_filters('pp_module_dirs', $defaultDirs);
-
-            return $modulesDirs;
+            return apply_filters('pp_module_dirs', $defaultDirs);
         }
 
         /**
@@ -687,7 +692,7 @@ if (!class_exists('publishpress')) {
          *
          * @var  string $hook
          */
-        public function register_scripts_and_styles($hook)
+        public function register_scripts_and_styles()
         {
             wp_register_style(
                 'jquery-listfilterizer',
@@ -758,25 +763,32 @@ if (!class_exists('publishpress')) {
                 $newSubmenu       = [];
                 $upgradeMenuSlugs = [];
 
+                $menuItemCalendar         = 'pp-calendar';
+                $menuItemContentOverview  = 'pp-content-overview';
+                $menuItemNotifications    = 'edit.php?post_type=psppnotif_workflow';
+                $menuItemNotificationsLog = 'pp-notif-log';
+                $menuItemRoles            = 'pp-manage-roles';
+                $menuItemSettings         = 'pp-modules-settings';
+
                 // Get the index for the menus.
                 $itemsToSort = [
-                    'pp-calendar'                           => null,
-                    'pp-content-overview'                   => null,
-                    'edit.php?post_type=psppnotif_workflow' => null,
-                    'pp-notif-log'                          => null,
-                    'pp-manage-roles'                       => null,
-                    'pp-modules-settings'                   => null,
+                    $menuItemCalendar         => null,
+                    $menuItemContentOverview  => null,
+                    $menuItemNotifications    => null,
+                    $menuItemNotificationsLog => null,
+                    $menuItemRoles            => null,
+                    $menuItemSettings         => null,
                 ];
 
                 if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
                     $suffix           = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
                     $upgradeMenuSlugs = [
-                        'pp-calendar' . $suffix                           => null,
-                        'pp-content-overview' . $suffix                   => null,
-                        'edit.php?post_type=psppnotif_workflow' . $suffix => null,
-                        'pp-notif-log' . $suffix                          => null,
-                        'pp-manage-roles' . $suffix                       => null,
-                        'pp-modules-settings' . $suffix                   => null,
+                        $menuItemCalendar . $suffix         => null,
+                        $menuItemContentOverview . $suffix  => null,
+                        $menuItemNotifications . $suffix    => null,
+                        $menuItemNotificationsLog . $suffix => null,
+                        $menuItemRoles . $suffix            => null,
+                        $menuItemSettings . $suffix         => null,
                     ];
 
                     $itemsToSort = array_merge($itemsToSort, $upgradeMenuSlugs);
@@ -789,49 +801,51 @@ if (!class_exists('publishpress')) {
                 }
 
                 // Calendar
-                if (isset($itemsToSort['pp-calendar']) && !is_null($itemsToSort['pp-calendar'])) {
-                    $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-calendar']];
+                if (isset($itemsToSort[$menuItemCalendar]) && !is_null($itemsToSort[$menuItemCalendar])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemCalendar]];
 
-                    unset($currentSubmenu[$itemsToSort['pp-calendar']]);
+                    unset($currentSubmenu[$itemsToSort[$menuItemCalendar]]);
                 }
 
                 // Content Overview
-                if (isset($itemsToSort['pp-content-overview']) && !is_null($itemsToSort['pp-content-overview'])) {
-                    $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-content-overview']];
+                if (isset($itemsToSort[$menuItemContentOverview]) && !is_null($itemsToSort[$menuItemContentOverview])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemContentOverview]];
 
-                    unset($currentSubmenu[$itemsToSort['pp-content-overview']]);
+                    unset($currentSubmenu[$itemsToSort[$menuItemContentOverview]]);
                 }
 
                 // Notifications
                 // Check if we have the menu as a main menu
-                if (isset($submenu['edit.php?post_type=psppnotif_workflow'])) {
-                    $firstKey     = array_keys($submenu['edit.php?post_type=psppnotif_workflow'])[0];
-                    $newSubmenu[] = $submenu['edit.php?post_type=psppnotif_workflow'][$firstKey];
+                if (isset($submenu[$menuItemNotifications])) {
+                    $firstKey     = array_keys($submenu[$menuItemNotifications])[0];
+                    $newSubmenu[] = $submenu[$menuItemNotifications][$firstKey];
 
-                    unset($submenu['edit.php?post_type=psppnotif_workflow']);
-                    remove_menu_page('edit.php?post_type=psppnotif_workflow');
+                    unset($submenu[$menuItemNotifications]);
+                    remove_menu_page($menuItemNotifications);
                 } else {
-                    if (isset($itemsToSort['edit.php?post_type=psppnotif_workflow']) && !is_null(
-                            $itemsToSort['edit.php?post_type=psppnotif_workflow']
+                    if (isset($itemsToSort[$menuItemNotifications]) && !is_null(
+                            $itemsToSort[$menuItemNotifications]
                         )) {
-                        $newSubmenu[] = $currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']];
+                        $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemNotifications]];
 
-                        unset($currentSubmenu[$itemsToSort['edit.php?post_type=psppnotif_workflow']]);
+                        unset($currentSubmenu[$itemsToSort[$menuItemNotifications]]);
                     }
                 }
 
                 // Notification logs
-                if (isset($itemsToSort['pp-notif-log']) && !is_null($itemsToSort['pp-notif-log'])) {
-                    $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-notif-log']];
+                if (isset($itemsToSort[$menuItemNotificationsLog]) && !is_null(
+                        $itemsToSort[$menuItemNotificationsLog]
+                    )) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemNotificationsLog]];
 
-                    unset($currentSubmenu[$itemsToSort['pp-notif-log']]);
+                    unset($currentSubmenu[$itemsToSort[$menuItemNotificationsLog]]);
                 }
 
                 // Roles
-                if (isset($itemsToSort['pp-manage-roles']) && !is_null($itemsToSort['pp-manage-roles'])) {
-                    $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-manage-roles']];
+                if (isset($itemsToSort[$menuItemRoles]) && !is_null($itemsToSort[$menuItemRoles])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemRoles]];
 
-                    unset($currentSubmenu[$itemsToSort['pp-manage-roles']]);
+                    unset($currentSubmenu[$itemsToSort[$menuItemRoles]]);
                 }
 
                 // Permissions - Role Capabilities
@@ -850,10 +864,10 @@ if (!class_exists('publishpress')) {
                 }
 
                 // Settings
-                if (isset($itemsToSort['pp-modules-settings']) && !is_null($itemsToSort['pp-modules-settings'])) {
-                    $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-modules-settings']];
+                if (isset($itemsToSort[$menuItemSettings]) && !is_null($itemsToSort[$menuItemSettings])) {
+                    $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemSettings]];
 
-                    unset($currentSubmenu[$itemsToSort['pp-modules-settings']]);
+                    unset($currentSubmenu[$itemsToSort[$menuItemSettings]]);
                 }
 
                 // Upgrade to Pro
@@ -923,10 +937,11 @@ if (!class_exists('publishpress')) {
             /**
              * If show_in_rest is not true for the post type, the block editor is not available.
              */
-            if ($postTypeObject = get_post_type_object($postType)) {
-                if (empty($postTypeObject->show_in_rest)) {
-                    return false;
-                }
+            if (
+                ($postTypeObject = get_post_type_object($postType))
+                && empty($postTypeObject->show_in_rest)
+            ) {
+                return false;
             }
 
             $conditions = [];
