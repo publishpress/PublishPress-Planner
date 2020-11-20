@@ -377,7 +377,7 @@ class Shortcodes
                 case 'new_status':
                     $status = $publishpress->custom_status->get_custom_status_by(
                         'slug',
-                        $this->event_args[$item]
+                        $this->event_args['params'][$item]
                     );
 
                     if (empty($status) || 'WP_Error' === get_class($status)) {
