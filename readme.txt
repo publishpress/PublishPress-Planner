@@ -123,6 +123,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [3.0.1] - 2020-11-19 =
 
 * Fixed: Can't delete users because the plugin redirects to the Notifications Log page, #737;
+* Fixed: Fixed the arguments "old_status" and "new_status" for the shortcode "psppno_post", #713;
 
 = [3.0.0] - 2020-11-16 =
 
