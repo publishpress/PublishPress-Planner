@@ -125,7 +125,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Can't delete users because the plugin redirects to the Notifications Log page, #737;
 * Fixed: Fixed the arguments "old_status" and "new_status" for the shortcode "psppno_post", #713;
 * Fixed: Fixed the argument "author_ip" for the shortcode "psppno_edcomment", #713;
-* Fixed: Fixed the option to always notify useres who edited the content, #742;
+* Fixed: Fixed the option to always notify users who edited the content, #742;
 
 = [3.0.0] - 2020-11-16 =
 
