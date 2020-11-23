@@ -127,6 +127,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed the argument "author_ip" for the shortcode "psppno_edcomment", #713;
 * Fixed: Fixed the option to always notify users who edited the content, #742;
 * Fixed: Fixed bug in the notification filters that was triggering notifications for unselected post types, #743;
+* Fixed: Updated the Italian language files;
 
 = [3.0.0] - 2020-11-16 =
 
