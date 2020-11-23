@@ -88,9 +88,11 @@ class Post_Type extends Base implements Filter_Interface
     public function get_run_workflow_query_args($query_args, $event_args)
     {
         // If post is not set, we ignore.
-        if (!isset($event_args['params']['post']) || !is_object($event_args['params']['post'])) {
+        if (!isset($event_args['params']['post_id']) || !is_numeric($event_args['params']['post_id'])) {
             return parent::get_run_workflow_query_args($query_args, $event_args);
         }
+
+        $post = get_post($event_args['params']['post_id']);
 
         // Add the filters
         $query_args['meta_query'][] = [
@@ -122,7 +124,7 @@ class Post_Type extends Base implements Filter_Interface
             // The filter validates the value
             [
                 'key'     => static::META_KEY_POST_TYPE,
-                'value'   => $event_args['params']['post']->post_type,
+                'value'   => $post->post_type,
                 'type'    => 'CHAR',
                 'compare' => '=',
             ],
