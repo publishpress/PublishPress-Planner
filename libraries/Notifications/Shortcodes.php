@@ -377,7 +377,7 @@ class Shortcodes
                 case 'new_status':
                     $status = $publishpress->custom_status->get_custom_status_by(
                         'slug',
-                        $this->event_args[$item]
+                        $this->event_args['params'][$item]
                     );
 
                     if (empty($status) || 'WP_Error' === get_class($status)) {
@@ -542,11 +542,10 @@ class Shortcodes
             $attrs['number'] = 1;
         }
 
-        if (isset($this->action_args['comment']) && !empty($this->action_args['comment'])) {
-            $comment = $this->action_args['comment'];
-            return $this->parse_comment($comment, $attrs);
-        } elseif ($post = $this->get_post()) {
-            if ($comments = get_comments(
+        $post = $this->get_post();
+
+        if (!empty($post) && !is_wp_error($post)) {
+            $comments = get_comments(
                 [
                     'post_id' => $post->ID,
                     'status'  => 'editorial-comment',
@@ -554,16 +553,18 @@ class Shortcodes
                     'orderby' => 'comment_post_ID',
                     'order'   => 'DESC',
                 ]
-            )) {
-                $retvals = [];
+            );
+
+            if (!empty($comments) && !is_wp_error($comments)) {
+                $commentIds = [];
 
                 foreach ($comments as $comment) {
-                    $retvals[] = $this->parse_comment($comment, $attrs);
+                    $commentIds[] = $this->parse_comment($comment, $attrs);
                 }
 
-                $retvals = array_reverse($retvals);
+                $commentIds = array_reverse($commentIds);
 
-                return implode('<br /><br />', $retvals);
+                return implode('<br /><br />', $commentIds);
             }
         }
 
@@ -597,7 +598,12 @@ class Shortcodes
                     break;
 
                 case 'author_ip':
-                    $info[] = $comment->comment_author_ip;
+                    if (isset($comment->comment_author_ip)) {
+                        $info[] = $comment->comment_author_ip;
+                    } else {
+                        $info[] = $comment->comment_author_IP;
+                    }
+
                     break;
 
                 case 'date':

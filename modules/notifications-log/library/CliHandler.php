@@ -47,7 +47,7 @@ class CliHandler
     {
         switch ($args[0]) {
             case 'list-actions':
-                $this->listActions($assocArgs);
+                $this->listActions();
                 break;
 
             case 'notify':
@@ -59,7 +59,7 @@ class CliHandler
         }
     }
 
-    private function listActions($assocArgs)
+    private function listActions()
     {
         $actions = apply_filters('publishpress_notifications_workflow_events', []);
 

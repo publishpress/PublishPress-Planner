@@ -53,11 +53,6 @@ class NotificationsLogTable extends WP_List_Table
     private $logHandler;
 
     /**
-     * @var array
-     */
-    private $cronTasks;
-
-    /**
      * NotificationsLogTable constructor.
      *
      * @param $logHandler
@@ -169,16 +164,18 @@ class NotificationsLogTable extends WP_List_Table
                     foreach ($groupReceivers as $receiverData) {
                         $receiver = $receiverData['receiver'];
 
-                        if (isset($receiverData['subgroup'])) {
-                            // Do not repeat the same subgroup
-                            if ($receiverData['subgroup'] !== $lastSubgroup && !empty($receiverData['subgroup'])) {
-                                $output .= sprintf(
-                                    '<li class="receiver-subgroup"><span>%s</span></li>',
-                                    $receiverData['subgroup']
-                                );
+                        // Do not repeat the same subgroup
+                        if (
+                            isset($receiverData['subgroup'])
+                            && $receiverData['subgroup'] !== $lastSubgroup
+                            && !empty($receiverData['subgroup'])
+                        ) {
+                            $output .= sprintf(
+                                '<li class="receiver-subgroup"><span>%s</span></li>',
+                                $receiverData['subgroup']
+                            );
 
-                                $lastSubgroup = $receiverData['subgroup'];
-                            }
+                            $lastSubgroup = $receiverData['subgroup'];
                         }
 
                         $receiverText = apply_filters('publishpress_notifications_log_receiver_text', $receiver, $receiverData, $log->workflowId);
