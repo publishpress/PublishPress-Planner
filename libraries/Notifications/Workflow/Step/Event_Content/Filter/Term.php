@@ -106,13 +106,13 @@ class Term extends Base implements Filter_Interface
     public function get_run_workflow_query_args($query_args, $event_args)
     {
         // If post is not set, we ignore.
-        if (!isset($event_args['params']['post']) || !is_object($event_args['params']['post'])) {
+        if (!isset($event_args['params']['post_id']) || !is_numeric($event_args['params']['post_id'])) {
             return parent::get_run_workflow_query_args($query_args, $event_args);
         }
 
         $taxonomies = array_values(get_taxonomies());
 
-        $terms    = wp_get_post_terms($event_args['params']['post']->ID, $taxonomies);
+        $terms    = wp_get_post_terms($event_args['params']['post_id'], $taxonomies);
         $term_ids = [];
 
         if (!empty($terms)) {
