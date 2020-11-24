@@ -168,7 +168,6 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('page_row_actions', [$this, 'fix_post_row_actions'], 10, 2);
 
             add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 10, 2);
-            add_action('transition_post_status', [$this, 'fix_publish_date_after_publish'], 10, 3);
         }
 
         /**
@@ -328,10 +327,11 @@ if (!class_exists('PP_Custom_Status')) {
                     }
 
                     $postStatusArgs = [
-                        'label'       => $status->name,
-                        'protected'   => true,
-                        '_builtin'    => false,
-                        'label_count' => _n_noop(
+                        'label'         => $status->name,
+                        'protected'     => true,
+                        'date_floating' => true,
+                        '_builtin'      => false,
+                        'label_count'   => _n_noop(
                             "{$status->name} <span class='count'>(%s)</span>",
                             "{$status->name} <span class='count'>(%s)</span>"
                         ),
@@ -2517,91 +2517,23 @@ if (!class_exists('PP_Custom_Status')) {
              * set the post_date_gmt to the current date time, like it was being published. But since
              * we provide other post statuses, this produces wrong date for posts not published yet.
              * They should have the post_date_gmt empty, so they are kept as "publish immediately".
+             *
+             * As of WordPress 5.3, we can opt out of the date setting by setting date_floating on
+             * custom statuses instead.
              */
-            if (!in_array($data['post_status'], ['publish', 'future'])) {
-                // Check if the dates are the same, indicating they were auto-set.
-                if (get_gmt_from_date(
-                        $data['post_date']
-                    ) === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
-                    // Reset the date
-                    $data['post_date_gmt'] = '0000-00-00 00:00:00';
+            if (version_compare(get_bloginfo('version'), '5.3', '<')) {
+                if (!in_array($data['post_status'], ['publish', 'future'])) {
+                    // Check if the dates are the same, indicating they were auto-set.
+                    if (get_gmt_from_date(
+                            $data['post_date']
+                        ) === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
+                        // Reset the date
+                        $data['post_date_gmt'] = '0000-00-00 00:00:00';
+                    }
                 }
             }
 
             return $data;
-        }
-
-        /**
-         * Fix the publish date for custom statuses. By default WP will set a publish date if the post has a status
-         * different from draft or pending review (not considering scheduled or publish). So if we set assigned, WP
-         * will set the current date as the publish date. So when we publish, the date will be outdated.
-         *
-         * @param string $newStatus
-         * @param string $oldStatus
-         * @param WP_Post $post
-         */
-        public function fix_publish_date_after_publish($newStatus, $oldStatus, $post)
-        {
-            try {
-                if ($oldStatus !== 'publish' && $newStatus === 'publish') {
-                    if (!function_exists('current_datetime')) {
-                        include_once ABSPATH . '/wp-includes/functions.php';
-                    }
-
-                    if (function_exists('current_datetime')) {
-                        $currentDateTime = current_datetime();
-                    } else {
-                        // Workaround for when wp_timezone_string is not defined
-                        $timezone_string = get_option('timezone_string');
-
-                        if ($timezone_string) {
-                            return $timezone_string;
-                        }
-
-                        $offset  = (float)get_option('gmt_offset');
-                        $hours   = (int)$offset;
-                        $minutes = ($offset - $hours);
-
-                        $sign      = ($offset < 0) ? '-' : '+';
-                        $abs_hour  = abs($hours);
-                        $abs_mins  = abs($minutes * 60);
-                        $tz_offset = sprintf('%s%02d:%02d', $sign, $abs_hour, $abs_mins);
-
-                        $timeZoneString = $tz_offset;
-
-                        // Workaround for when wp_timezone is not defined
-                        $timeZone = new DateTimeZone($timeZoneString);
-
-                        // Workaround for when current_datetime is not defined
-                        $currentDateTime = new DateTimeImmutable('now', $timeZone);
-                    }
-
-                    $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
-
-                    if ($currentDateTime !== $post->post_date) {
-                        global $wpdb;
-
-                        $data = [
-                            'post_date'     => $currentDateTime,
-                            'post_date_gmt' => get_gmt_from_date($currentDateTime),
-                        ];
-
-                        $where = [
-                            'ID' => $post->ID,
-                        ];
-
-                        $wpdb->update($wpdb->posts, $data, $where, ['%s', '%s'], ['%d']);
-                    }
-                }
-            } catch (Exception $e) {
-                error_log(
-                    sprintf(
-                        '[PublishPress] Exception %s: %s',
-                        __METHOD__,
-                        $e->getMessage()
-                    )
-                );
-            }
         }
 
         /**
