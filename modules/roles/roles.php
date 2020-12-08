@@ -854,26 +854,6 @@ if (!class_exists('PP_Roles')) {
                 }
             }
 
-            // Get a list of users to display in the select field.
-            $users = get_users();
-
-            // Get selected users, if any role is being edited.
-            $role_users = [];
-
-            if (!empty($role->name)) {
-                $users_in_the_role = get_users(
-                    [
-                        'role' => $role->name,
-                    ]
-                );
-
-                if (!empty($users_in_the_role)) {
-                    foreach ($users_in_the_role as $user) {
-                        $role_users[] = $user->ID;
-                    }
-                }
-            }
-
             $this->configureTwig();
 
             echo $this->twig->render(
@@ -897,8 +877,6 @@ if (!class_exists('PP_Roles')) {
                         'users_description'        => __("Add users to this role.", 'publishpress'),
                     ],
                     'role'               => $role,
-                    'users'              => $users,
-                    'role_users'         => $role_users,
                     'nonce'              => wp_nonce_field('manage-role'),
                     'errors'             => isset($_REQUEST['form-errors']) ? $_REQUEST['form-errors'] : [],
                 ]
