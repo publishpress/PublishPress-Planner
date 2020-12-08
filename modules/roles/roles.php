@@ -816,6 +816,7 @@ if (!class_exists('PP_Roles')) {
         {
             global $publishpress;
 
+
             $publishpress->settings->print_default_header($publishpress->modules->roles);
 
             echo '<div class="wrap">';
@@ -964,14 +965,6 @@ if (!class_exists('PP_Roles')) {
                 wp_die(__('Error adding role.', 'publishpress'));
             }
 
-            // Check if we have to add users to this role.
-            if (!empty($users)) {
-                foreach ($users as $user_id) {
-                    $user = get_user_by('ID', (int)$user_id);
-                    $user->add_role($name);
-                }
-            }
-
             $args         = [
                 'action'  => 'edit-role',
                 'role-id' => $role->name,
@@ -1048,34 +1041,6 @@ if (!class_exists('PP_Roles')) {
             $roles[$name]['name'] = $display_name;
 
             update_option($wpdb->prefix . 'user_roles', $roles);
-
-            // Check if we have to remove users from this role.
-            $users_in_the_role = get_users(
-                [
-                    'role' => $name,
-                ]
-            );
-
-            if (!empty($users_in_the_role)) {
-                foreach ($users_in_the_role as $user) {
-                    // Check if you not are trying to remove yourself from administrator, and block if so.
-                    if ('administrator' === $name && $user->ID === get_current_user_id()) {
-                        continue;
-                    }
-
-                    if (!in_array($user->ID, $users)) {
-                        $user->remove_role($name);
-                    }
-                }
-            }
-
-            // Check if we have to add users to this role.
-            if (!empty($users)) {
-                foreach ($users as $user_id) {
-                    $user = get_user_by('ID', (int)$user_id);
-                    $user->add_role($name);
-                }
-            }
 
             $args         = [
                 'action'  => 'edit-role',
