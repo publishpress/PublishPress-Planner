@@ -71,19 +71,10 @@ if (!class_exists('PP_Roles_List_Table')) {
             $this->items = [];
 
             foreach ($roles as $role => $data) {
-                $total = count(
-                    get_users(
-                        [
-                            'role' => $role,
-                        ]
-                    )
-                );
-
                 $this->items[] = (object)[
                     'name'         => $role,
                     'display_name' => $data['name'],
                     'capabilities' => $data['capabilities'],
-                    'users_count'  => $total,
                 ];
             }
 
@@ -114,7 +105,6 @@ if (!class_exists('PP_Roles_List_Table')) {
         {
             $columns = [
                 'display_name' => __('Display Name', 'publishpress'),
-                'users'        => __('Users in this role', 'publishpress'),
             ];
 
             return $columns;
@@ -158,22 +148,6 @@ if (!class_exists('PP_Roles_List_Table')) {
                     'actions' => $this->row_actions($actions, false),
                     'role'    => $role,
                     'link'    => $publishpress->roles->getLink(['action' => 'edit-role', 'role-id' => $role->name]),
-                ]
-            );
-        }
-
-        /**
-         * Show the "Total Users" in a given role
-         *
-         * @since 0.7
-         */
-        public function column_users($role)
-        {
-            return $this->twig->render(
-                'roles-list-table-column-users.twig.html',
-                [
-                    'role' => $role,
-                    'link' => '/wp-admin/users.php?role=' . $role->name,
                 ]
             );
         }
