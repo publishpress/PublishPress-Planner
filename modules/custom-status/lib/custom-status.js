@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
             jQuery('.edit-post-status').hide();
 
             // set the current status as the selected one
-            var $option = jQuery('<option></option>').text(current_status_name).attr('value', current_status).attr('selected', 'selected');
+            var $option = jQuery('<option></option>').text(current_status_name).attr('value', current_status).prop('selected', true);
 
             $option.appendTo('select[name="post_status"]');
         }
@@ -90,7 +90,7 @@ jQuery(document).ready(function () {
         });
         // Clean up the bulk edit selector because it's non-standard
         jQuery('#bulk-edit').find('select[name="_status"]').prepend('<option value="">' + pp_text_no_change + '</option>');
-        jQuery('#bulk-edit').find('select[name="_status"] option').removeAttr('selected');
+        jQuery('#bulk-edit').find('select[name="_status"] option').prop('selected', false);
         jQuery('#bulk-edit').find('select[name="_status"] option[value="future"]').remove();
     } else {
 
@@ -141,7 +141,9 @@ jQuery(document).ready(function () {
                 .attr('title', (this.description) ? this.description : '')
             ;
 
-            if (current_status == this.slug) $option.attr('selected', 'selected');
+            if (current_status == this.slug) {
+                $option.prop('selected', true);
+            }
 
             $option.appendTo(jQuery(id));
 
