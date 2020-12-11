@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
 
         // Add "Published" status to quick-edit for users that can publish
         if (id == 'select[name="_status"]' && current_user_can_publish_posts) {
-            jQuery(id).append(jQuery('<option></option')
+            jQuery(id).append(jQuery('<option></option>')
                 .attr('value', 'publish')
                 .text('Published')
             );
