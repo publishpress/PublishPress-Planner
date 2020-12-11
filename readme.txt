@@ -120,6 +120,12 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed: Fix JS warning: $(html) HTML text after last tag is ignored in the custom-status.js file, #754;
+* Fixed: Fix JS warning: jQuery.fn.attr(‘selected’) might use property instead of attribute on custom-status.js, #753;
+* Fixed: Fix JS warning: jQuery.fn.attr(‘multiple’) might use property instead of attribute on custom-status.js, #753;
+
 = [3.0.1] - 2020-11-24 =
 
 * Fixed: Can't delete users because the plugin redirects to the Notifications Log page, #737;
