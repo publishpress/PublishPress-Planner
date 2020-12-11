@@ -632,11 +632,13 @@ if (!class_exists('PP_Notifications')) {
             $workflows_controller = $this->get_service('workflows_controller');
 
             $args = [
-                'event'        => '',
-                'post'         => $post,
-                'new_status'   => $post->post_status,
-                'old_status'   => $post->post_status,
-                'ignore_event' => true,
+                'event'  => '',
+                'params' => [
+                    'post_id'      => $post->ID,
+                    'new_status'   => $post->post_status,
+                    'old_status'   => $post->post_status,
+                    'ignore_event' => true,
+                ],
             ];
 
             return $workflows_controller->get_filtered_workflows($args);
