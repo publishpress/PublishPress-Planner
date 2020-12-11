@@ -68,7 +68,7 @@ jQuery(document).ready(function ($) {
             $editable_el.find('option')
                 .each(function () {
                     if ($(this).text() == $(t).text()) {
-                        $(this).attr('selected', 'selected');
+                        $(this).prop('selected', true);
                     }
                 });
         }
