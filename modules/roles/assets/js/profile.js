@@ -13,7 +13,7 @@ jQuery(function ($) {
     $field.hide();
 
     // Convert the roles field into multiselect
-    $newField.attr('multiple', 'multiple');
+    $newField.prop('multiple', true);
 
     // $newField.attr('name', 'role[]');
 
@@ -23,7 +23,7 @@ jQuery(function ($) {
 
         $.each(publishpressProfileData.selected_roles, function (i, role) {
             if ($option.val() === role) {
-                $option.attr('selected', 'selected');
+                $option.prop('selected', true);
             }
         });
     });
