@@ -141,11 +141,12 @@ if (!class_exists('PP_Editorial_Metadata')) {
                 add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
                 add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
 
-                add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
                 add_action('save_post', [$this, 'save_meta_box'], 10, 2);
             }
 
             if ($this->checkEditCapability() || $this->checkViewCapability()) {
+                add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
+
                 // Add Editorial Metadata columns to the Manage Posts view
                 $supported_post_types = $this->get_post_types_for_module($this->module);
                 foreach ($supported_post_types as $post_type) {
@@ -436,7 +437,10 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
         public function checkEditCapability()
         {
-            return current_user_can($this->getEditCapability());
+            /**
+             * The capability "pp_editorial_metadata_user_can_edit" is deprecated in favor of "pp_edit_editorial_metadata".
+             */
+            return current_user_can($this->getEditCapability()) || current_user_can('pp_editorial_metadata_user_can_edit');
         }
 
         protected function echo_not_set_span()
@@ -474,7 +478,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(self::metadata_taxonomy) . "_$term->type'>";
 
                     // Check if the user can edit the metadata
-                    $can_edit = apply_filters('pp_editorial_metadata_user_can_edit', true);
+                    $can_edit = $this->checkEditCapability();
 
                     if ($can_edit) {
                         $this->editorial_metadata_input_handler->handleHtmlRendering(
