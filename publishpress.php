@@ -9,7 +9,7 @@
  * Text Domain: publishpress
  * Domain Path: /languages
  *
- * Copyright (c) 2019 PublishPress
+ * Copyright (c) 2021 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,7 +36,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2019 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2021 PublishPress. All rights reserved.
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
