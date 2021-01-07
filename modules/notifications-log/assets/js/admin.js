@@ -56,7 +56,7 @@ jQuery(function ($) {
     allowClear: true
   });
 
-  $('.view-log').click(function (event) {
+  $('.view-log').on('click', function (event) {
     event.preventDefault();
     var $dialog = $('<div class="notif-log-modal">Test!</div>');
     var notificationId = $(event.target).data('id');
@@ -112,7 +112,7 @@ jQuery(function ($) {
   $('.filter-date-begin').datepicker();
   $('.filter-date-end').datepicker();
 
-  $('.publishpress_page_pp-notif-log .slide-closed-text').click(function() {
+  $('.publishpress_page_pp-notif-log .slide-closed-text').on('click', function() {
     $(this).next().slideDown();
     $(this).remove();
   });

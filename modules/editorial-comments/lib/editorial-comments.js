@@ -27,10 +27,10 @@ editorialCommentReply = {
     var row = jQuery('#pp-replyrow');
 
     // Bind click events to cancel and submit buttons
-    jQuery('a.pp-replycancel', row).click(function () {
+    jQuery('a.pp-replycancel', row).on('click', function () {
       return editorialCommentReply.revert();
     });
-    jQuery('a.pp-replysave', row).click(function () {
+    jQuery('a.pp-replysave', row).on('click', function () {
       return editorialCommentReply.send();
     });
   },
