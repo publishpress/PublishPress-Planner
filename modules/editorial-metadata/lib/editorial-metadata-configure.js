@@ -1,6 +1,6 @@
 (function ($) {
     $(function () {
-        $('.delete-status a').click(function () {
+        $('.delete-status a').on('click', function () {
             if (!confirm(objectL10nMetadata.pp_confirm_delete_term_string)) {
                 return false;
             }

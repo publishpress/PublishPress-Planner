@@ -1,13 +1,13 @@
 jQuery(document).ready(function ($) {
 
-    $('a.show-more').click(function () {
+    $('a.show-more').on('click', function () {
         var parent = $(this).closest('td.day-unit');
         $('ul li', parent).removeClass('hidden');
         $(this).hide();
         return false;
     });
 
-    $(document).click(function (event) {
+    $(document).on('click', function (event) {
         // Did we click on a list item? How do we figure that out?
         // First let's see if we directly clicked on a .day-item
         var target = $(event.target);
@@ -68,7 +68,7 @@ jQuery(document).ready(function ($) {
             $editable_el.find('option')
                 .each(function () {
                     if ($(this).text() == $(t).text()) {
-                        $(this).attr('selected', 'selected');
+                        $(this).prop('selected', true);
                     }
                 });
         }
@@ -156,7 +156,7 @@ jQuery(document).ready(function ($) {
 
     // Close out all of the overlays with your escape key,
     // or by clicking anywhere other than inside an existing overlay
-    $(document).keydown(function (event) {
+    $(document).on('keydown', function (event) {
         if (event.keyCode == '27') {
             publishpress_calendar_close_overlays();
         }
@@ -182,7 +182,7 @@ jQuery(document).ready(function ($) {
         overlay.addClass('item-overlay');
     }
 
-    $('.day-item').click(publishpress_calendar_day_item_click);
+    $('.day-item').on('click', publishpress_calendar_day_item_click);
 
     function publishpress_calendar_close_overlays () {
         reset_editorial_metadata();
@@ -280,8 +280,8 @@ jQuery(document).ready(function ($) {
             // Bind the click on the calendar square
             $day_units.on('click.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
             $day_units.on('dblclick.publishPress.quickPublish', EFQuickPublish.open_quickpost_dialogue);
-            $day_units.mouseover(EFQuickPublish.show_quickpost_label);
-            $day_units.mouseout(EFQuickPublish.hide_quickpost_label);
+            $day_units.on('mouseover', EFQuickPublish.show_quickpost_label);
+            $day_units.on('mouseout', EFQuickPublish.hide_quickpost_label);
             // $day_units.find('li.day-item').on('mouseenter', EFQuickPublish.hide_quickpost_label);
         }, // init
 
@@ -464,7 +464,7 @@ jQuery(document).ready(function ($) {
                             }
 
                             // Add the event to display the quick post form
-                            $('.day-item').click(publishpress_calendar_day_item_click);
+                            $('.day-item').on('click', publishpress_calendar_day_item_click);
                         } else {
                             EFQuickPublish.display_errors(EFQuickPublish.$new_post_form, response.message);
                         }
@@ -503,7 +503,7 @@ jQuery(document).ready(function ($) {
         EFQuickPublish.init();
     }
 
-    $('#pp-calendar-filters select').change(function () {
+    $('#pp-calendar-filters select').on('change', function () {
         $(this).closest('form').trigger('submit');
     });
 
@@ -630,7 +630,7 @@ jQuery(document).ready(function ($) {
         return newUrl;
     }
 
-    $('#publishpress-calendar-ics-subs #publishpress-start-date').change(function () {
+    $('#publishpress-calendar-ics-subs #publishpress-start-date').on('change', function () {
         var buttonDownload = document.getElementById('publishpress-ics-download'),
             buttonCopy = document.getElementById('publishpress-ics-copy');
 
@@ -643,7 +643,7 @@ jQuery(document).ready(function ($) {
         buttonCopy.dataset.clipboardText = url;
     });
 
-    $('#publishpress-calendar-ics-subs #publishpress-end-date').change(function () {
+    $('#publishpress-calendar-ics-subs #publishpress-end-date').on('change', function () {
         var buttonDownload = document.getElementById('publishpress-ics-download'),
             buttonCopy = document.getElementById('publishpress-ics-copy');
 

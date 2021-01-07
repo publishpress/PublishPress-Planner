@@ -212,7 +212,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
                 wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -254,7 +254,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
                 wp_enqueue_style(
                     'publishpress-select2-css',
-                    plugins_url('common/libs/select2/css/select2.min.css', PUBLISHPRESS_FILE_PATH),
+                    plugins_url('common/libs/select2-v4.0.13.1/css/select2.min.css', PUBLISHPRESS_FILE_PATH),
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
@@ -262,7 +262,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
                 wp_enqueue_script(
                     'publishpress-select2',
-                    plugins_url('common/libs/select2/js/select2.full.min.js', PUBLISHPRESS_FILE_PATH),
+                    plugins_url('common/libs/select2-v4.0.13.1/js/select2.full.min.js', PUBLISHPRESS_FILE_PATH),
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );

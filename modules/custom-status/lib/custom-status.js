@@ -24,17 +24,17 @@ jQuery(document).ready(function () {
                 jQuery('.edit-post-status').show();
             }
 
-            jQuery('.edit-post-status').click(function () {
+            jQuery('.edit-post-status').on('click', function () {
                 jQuery('#post-status-select').slideDown();
                 jQuery('.edit-post-status').hide();
                 return false;
             });
-            jQuery('.cancel-post-status, .save-post-status').click(function () {
+            jQuery('.cancel-post-status, .save-post-status').on('click', function () {
                 jQuery('#post-status-select').slideUp();
                 jQuery('.edit-post-status').show();
                 return false;
             });
-            jQuery('.save-post-status').click(function () {
+            jQuery('.save-post-status').on('click', function () {
                 jQuery('#post-status-display').text(jQuery('select[name="post_status"] :selected').text());
                 return false;
             });
@@ -55,7 +55,7 @@ jQuery(document).ready(function () {
         pp_update_save_button('Save');
 
         // Bind event when OK button is clicked
-        jQuery('.save-post-status').bind('click', function () {
+        jQuery('.save-post-status').on('click', function () {
             pp_update_save_button();
         });
 
@@ -74,7 +74,7 @@ jQuery(document).ready(function () {
             jQuery('.edit-post-status').hide();
 
             // set the current status as the selected one
-            var $option = jQuery('<option></option>').text(current_status_name).attr('value', current_status).attr('selected', 'selected');
+            var $option = jQuery('<option></option>').text(current_status_name).attr('value', current_status).prop('selected', true);
 
             $option.appendTo('select[name="post_status"]');
         }
@@ -85,12 +85,12 @@ jQuery(document).ready(function () {
     } else if (jQuery('select[name="_status"]').length > 0) {
         pp_append_to_dropdown('select[name="_status"]');
         // Refresh the custom status dropdowns everytime Quick Edit is loaded
-        jQuery('#the-list a.editinline').bind('click', function () {
+        jQuery('#the-list a.editinline').on('click', function () {
             pp_append_to_dropdown('#the-list select[name="_status"]');
         });
         // Clean up the bulk edit selector because it's non-standard
         jQuery('#bulk-edit').find('select[name="_status"]').prepend('<option value="">' + pp_text_no_change + '</option>');
-        jQuery('#bulk-edit').find('select[name="_status"] option').removeAttr('selected');
+        jQuery('#bulk-edit').find('select[name="_status"] option').prop('selected', false);
         jQuery('#bulk-edit').find('select[name="_status"] option[value="future"]').remove();
     } else {
 
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
 
         // Add "Published" status to quick-edit for users that can publish
         if (id == 'select[name="_status"]' && current_user_can_publish_posts) {
-            jQuery(id).append(jQuery('<option></option')
+            jQuery(id).append(jQuery('<option></option>')
                 .attr('value', 'publish')
                 .text('Published')
             );
@@ -141,7 +141,9 @@ jQuery(document).ready(function () {
                 .attr('title', (this.description) ? this.description : '')
             ;
 
-            if (current_status == this.slug) $option.attr('selected', 'selected');
+            if (current_status == this.slug) {
+                $option.prop('selected', true);
+            }
 
             $option.appendTo(jQuery(id));
 

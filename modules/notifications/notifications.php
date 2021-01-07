@@ -294,7 +294,7 @@ if (!class_exists('PP_Notifications')) {
             if ($this->is_whitelisted_functional_view()) {
                 wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -353,7 +353,7 @@ if (!class_exists('PP_Notifications')) {
 
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
                     false,
                     PUBLISHPRESS_VERSION
                 );
@@ -632,11 +632,13 @@ if (!class_exists('PP_Notifications')) {
             $workflows_controller = $this->get_service('workflows_controller');
 
             $args = [
-                'event'        => '',
-                'post'         => $post,
-                'new_status'   => $post->post_status,
-                'old_status'   => $post->post_status,
-                'ignore_event' => true,
+                'event'  => '',
+                'params' => [
+                    'post_id'      => $post->ID,
+                    'new_status'   => $post->post_status,
+                    'old_status'   => $post->post_status,
+                    'ignore_event' => true,
+                ],
             ];
 
             return $workflows_controller->get_filtered_workflows($args);

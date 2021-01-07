@@ -1,6 +1,6 @@
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
- * @version 1.2.1
+ * @version 1.2.1.1
  *
  * http://wenzhixin.net.cn/p/multiple-select/
  * Fork: https://github.com/Acceptd/multiple-select
@@ -274,7 +274,7 @@
         this.selectItemName = 'data-name="selectItem' + name + '"';
 
         if (!this.options.keepOpen) {
-            $(document).click(function (e) {
+            $(document).on('click', function (e) {
                 if ($(e.target)[0] === that.$choice[0] ||
                     $(e.target).parents('.ms-choice')[0] === that.$choice[0]) {
                     return;

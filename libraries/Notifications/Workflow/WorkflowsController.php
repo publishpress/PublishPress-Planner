@@ -35,7 +35,7 @@ class WorkflowsController
      * $params = [
      *     'event',
      *      'params' = [
-     *          'post',
+     *          'post_id',
      *          'new_status',
      *          'old_status',
      *          'comment_id',
