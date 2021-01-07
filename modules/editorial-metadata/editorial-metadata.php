@@ -55,12 +55,18 @@ if (!class_exists('PP_Editorial_Metadata')) {
          * The name of the taxonomy we're going to register for editorial metadata.
          */
         const metadata_taxonomy     = 'pp_editorial_meta';
+
         const metadata_postmeta_key = "_pp_editorial_meta";
+
         const SETTINGS_SLUG         = 'pp-editorial-metadata-settings';
 
         public $module_name = 'editorial_metadata';
 
         private $editorial_metadata_terms_cache = [];
+
+        const CAP_VIEW_METADATA = 'pp_view_editorial_metadata';
+
+        const CAP_EDIT_METADATA = 'pp_edit_editorial_metadata';
 
         /**
          * Stores a chain of input-type handlers.
@@ -115,7 +121,6 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function init()
         {
-
             // Register the taxonomy we use for Editorial Metadata with WordPress core
             $this->register_taxonomy();
 
@@ -128,33 +133,38 @@ if (!class_exists('PP_Editorial_Metadata')) {
             // Register our settings
             add_action('admin_init', [$this, 'register_settings']);
 
-            // Actions relevant to the configuration view (adding, editing, or sorting existing Editorial Metadata)
-            add_action('admin_init', [$this, 'handle_add_editorial_metadata']);
-            add_action('admin_init', [$this, 'handle_edit_editorial_metadata']);
-            add_action('admin_init', [$this, 'handle_change_editorial_metadata_visibility']);
-            add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
-            add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
+            if ($this->checkEditCapability()) {
+                // Actions relevant to the configuration view (adding, editing, or sorting existing Editorial Metadata)
+                add_action('admin_init', [$this, 'handle_add_editorial_metadata']);
+                add_action('admin_init', [$this, 'handle_edit_editorial_metadata']);
+                add_action('admin_init', [$this, 'handle_change_editorial_metadata_visibility']);
+                add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
+                add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
 
-            add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
-            add_action('save_post', [$this, 'save_meta_box'], 10, 2);
-
-            // Add Editorial Metadata columns to the Manage Posts view
-            $supported_post_types = $this->get_post_types_for_module($this->module);
-            foreach ($supported_post_types as $post_type) {
-                add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
-                add_action("manage_{$post_type}_posts_custom_column", [$this, 'action_manage_posts_custom_column'], 10, 2);
+                add_action('save_post', [$this, 'save_meta_box'], 10, 2);
             }
 
-            // Add Editorial Metadata to the calendar if the calendar is activated
-            if ($this->module_enabled('calendar')) {
-                add_filter('pp_calendar_item_information_fields', [$this, 'filter_calendar_item_fields'], 10, 2);
-            }
+            if ($this->checkEditCapability() || $this->checkViewCapability()) {
+                add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
 
-            // Add Editorial Metadata columns to the Content Overview if it exists
-            if ($this->module_enabled('story_budget')) {
-                add_filter('pp_story_budget_term_columns', [$this, 'filter_story_budget_term_columns']);
-                // Register an action to handle this data later
-                add_filter('pp_story_budget_term_column_value', [$this, 'filter_story_budget_term_column_values'], 10, 3);
+                // Add Editorial Metadata columns to the Manage Posts view
+                $supported_post_types = $this->get_post_types_for_module($this->module);
+                foreach ($supported_post_types as $post_type) {
+                    add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
+                    add_action("manage_{$post_type}_posts_custom_column", [$this, 'action_manage_posts_custom_column'], 10, 2);
+                }
+
+                // Add Editorial Metadata to the calendar if the calendar is activated
+                if ($this->module_enabled('calendar')) {
+                    add_filter('pp_calendar_item_information_fields', [$this, 'filter_calendar_item_fields'], 10, 2);
+                }
+
+                // Add Editorial Metadata columns to the Content Overview if it exists
+                if ($this->module_enabled('story_budget')) {
+                    add_filter('pp_story_budget_term_columns', [$this, 'filter_story_budget_term_columns']);
+                    // Register an action to handle this data later
+                    add_filter('pp_story_budget_term_column_value', [$this, 'filter_story_budget_term_column_values'], 10, 3);
+                }
             }
 
             // Load necessary scripts and stylesheets
@@ -189,6 +199,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     $this->insert_editorial_metadata_term($args);
                 }
             }
+
+            $this->setDefaultCapabilities();
         }
 
         /**
@@ -196,19 +208,23 @@ if (!class_exists('PP_Editorial_Metadata')) {
          *
          * @since 0.7
          */
-        public function upgrade($previous_version)
+        public function upgrade($previousVersion)
         {
             global $publishpress;
 
             // Upgrade path to v0.7
-            if (version_compare($previous_version, '0.7', '<')) {
+            if (version_compare($previousVersion, '0.7', '<')) {
                 // Technically we've run this code before so we don't want to auto-install new data
                 $publishpress->update_module_option($this->module->name, 'loaded_once', true);
             }
             // Upgrade path to v0.7.4
-            if (version_compare($previous_version, '0.7.4', '<')) {
+            if (version_compare($previousVersion, '0.7.4', '<')) {
                 // Editorial metadata descriptions become base64_encoded, instead of maybe json_encoded.
                 $this->upgrade_074_term_descriptions(self::metadata_taxonomy);
+            }
+
+            if (version_compare($previousVersion, '3.0.1', '<=')) {
+                $this->setDefaultCapabilities();
             }
         }
 
@@ -376,9 +392,30 @@ if (!class_exists('PP_Editorial_Metadata')) {
            );
         }
 
-        /*****************************************************
-         * Post meta box generation and processing
-         ****************************************************/
+        public function getViewCapability()
+        {
+            return apply_filters('publishpress_view_editorial_metadata_cap', self::CAP_VIEW_METADATA);
+        }
+
+        public function getEditCapability()
+        {
+            return apply_filters('publishpress_edit_editorial_metadata_cap', self::CAP_EDIT_METADATA);
+        }
+
+        public function setDefaultCapabilities()
+        {
+            $roles = ['administrator', 'editor', 'author'];
+
+            $viewCap = $this->getViewCapability();
+            $editCap = $this->getEditCapability();
+
+            foreach ($roles as $role) {
+                $role = get_role($role);
+
+                $role->add_cap($viewCap);
+                $role->add_cap($editCap);
+            }
+        }
 
         /**
          * Load the post metaboxes for all of the post types that are supported
@@ -391,6 +428,19 @@ if (!class_exists('PP_Editorial_Metadata')) {
             foreach ($supported_post_types as $post_type) {
                 add_meta_box(self::metadata_taxonomy, $title, [$this, 'display_meta_box'], $post_type, 'side');
             }
+        }
+
+        public function checkViewCapability()
+        {
+            return current_user_can($this->getViewCapability());
+        }
+
+        public function checkEditCapability()
+        {
+            /**
+             * The capability "pp_editorial_metadata_user_can_edit" is deprecated in favor of "pp_edit_editorial_metadata".
+             */
+            return current_user_can($this->getEditCapability()) || current_user_can('pp_editorial_metadata_user_can_edit');
         }
 
         protected function echo_not_set_span()
@@ -428,7 +478,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
                     echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(self::metadata_taxonomy) . "_$term->type'>";
 
                     // Check if the user can edit the metadata
-                    $can_edit = apply_filters('pp_editorial_metadata_user_can_edit', true);
+                    $can_edit = $this->checkEditCapability();
 
                     if ($can_edit) {
                         $this->editorial_metadata_input_handler->handleHtmlRendering(

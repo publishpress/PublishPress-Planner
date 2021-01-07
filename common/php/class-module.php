@@ -304,11 +304,12 @@ if (!class_exists('PP_Module')) {
             // Timepicker needs to come after jquery-ui-datepicker and jquery
             wp_enqueue_script(
                 'publishpress-timepicker',
-                PUBLISHPRESS_URL . 'common/js/jquery-ui-timepicker-addon.js',
+                PUBLISHPRESS_URL . 'common/libs/timepicker-v1.6.3.1/jquery-ui-timepicker-addon.min.js',
                 ['jquery', 'jquery-ui-datepicker'],
                 PUBLISHPRESS_VERSION,
                 true
             );
+
             wp_enqueue_script(
                 'publishpress-date_picker',
                 PUBLISHPRESS_URL . 'common/js/pp_date.js',
@@ -318,6 +319,13 @@ if (!class_exists('PP_Module')) {
             );
 
             // Now styles
+            wp_enqueue_style(
+                'publishpress-timepicker',
+                PUBLISHPRESS_URL . 'common/libs/timepicker-v1.6.3.1/jquery-ui-timepicker-addon.min.css',
+                ['wp-jquery-ui-dialog'],
+                PUBLISHPRESS_VERSION,
+                'screen'
+            );
             wp_enqueue_style(
                 'jquery-ui-datepicker',
                 PUBLISHPRESS_URL . 'common/css/jquery.ui.datepicker.css',

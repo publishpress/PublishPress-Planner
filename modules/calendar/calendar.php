@@ -467,7 +467,7 @@ if (!class_exists('PP_Calendar')) {
 
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'screen'
@@ -529,7 +529,7 @@ if (!class_exists('PP_Calendar')) {
 
                 wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2.min.js',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );

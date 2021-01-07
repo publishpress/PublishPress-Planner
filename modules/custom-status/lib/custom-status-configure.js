@@ -14,21 +14,21 @@
             });
 
             // prepare the edit row
-            row.keyup(function (e) {
+            row.on('keyup', function (e) {
                 if (e.which == 27) return inlineEditCustomStatus.revert();
             });
 
-            $('a.cancel', row).click(function () {
+            $('a.cancel', row).on('click', function () {
                 return inlineEditCustomStatus.revert();
             });
-            $('a.save', row).click(function () {
+            $('a.save', row).on('click', function () {
                 return inlineEditCustomStatus.save(this);
             });
-            $('input, select', row).keydown(function (e) {
+            $('input, select', row).on('keydown', function (e) {
                 if (e.which == 13) return inlineEditCustomStatus.save(this);
             });
 
-            $('#posts-filter input[type="submit"]').mousedown(function (e) {
+            $('#posts-filter input[type="submit"]').on('mousedown', function (e) {
                 t.revert();
             });
         },
@@ -125,7 +125,7 @@
     $(document).ready(function () {
         inlineEditCustomStatus.init();
 
-        $('.delete-status a').click(function () {
+        $('.delete-status a').on('click', function () {
             if (!confirm(objectL10ncustomstatus.pp_confirm_delete_status_string))
                 return false;
         });
