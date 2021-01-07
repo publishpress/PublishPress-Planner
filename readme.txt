@@ -126,6 +126,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix JS warning: jQuery.fn.attr(‘selected’) might use property instead of attribute on custom-status.js, #753;
 * Fixed: Fix JS warning: jQuery.fn.attr(‘multiple’) might use property instead of attribute on custom-status.js, #753;
 * Fixed: Fix the post_id passed to the method "get_workflows_related_to_post" that lists the notification workflows related to the post being edited;
+* Changed: Removed the user field in the Roles page to avoid break big sites, #750;
 * Added: Add capability to control who can access the editorial metadata, #758;
 
 = [3.0.1] - 2020-11-24 =
