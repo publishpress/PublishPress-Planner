@@ -215,7 +215,7 @@ class NotificationsLogTable extends WP_List_Table
             case
             'status':
                 $output .= sprintf(
-                    '<div class="publishpress-notifications-status %s">',
+                    '<div class="publishpress-notifications-status status-%s">',
                     esc_attr($log->status)
                 );
 
