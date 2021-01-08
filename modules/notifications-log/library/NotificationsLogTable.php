@@ -153,6 +153,10 @@ class NotificationsLogTable extends WP_List_Table
                         ) . '</div>';
                     $output .= '<div>' . sprintf(__('Post ID: %d', 'publishpress'), $log->postId) . '</div>';
 
+                    if ($log->isFromAnotherBlog()) {
+                        $output .= '<div>' . sprintf(__('Blog ID: %d', 'publishpress'), $log->blogId) . '</div>';
+                    }
+
                     $output .= '</div>';
                 } else {
                     $output .= '-';
@@ -247,7 +251,6 @@ class NotificationsLogTable extends WP_List_Table
                         } else {
                             $label = __(' Scheduled', 'publishpress');
                         }
-
 
                         $output .= sprintf(
                             '<i class="dashicons dashicons-clock"></i> %s - %s',
