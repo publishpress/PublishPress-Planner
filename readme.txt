@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.0.3] - 2021-01-11 =
+
+* Fixed: Update the list of capabilities in the PublishPress Capabilities plugin;
+
 = [3.0.2] - 2021-01-07 =
 
 * Fixed: Fix JS warning: $(html) HTML text after last tag is ignored in the custom-status.js file, #754;
