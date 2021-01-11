@@ -122,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [3.0.3] - 2021-01-11 =
 
+* Fixed: Fix fatal error when "editor" or "author" user roles are missed in the site, #767;
 * Fixed: Update the list of capabilities in the PublishPress Capabilities plugin;
 
 = [3.0.2] - 2021-01-07 =
