@@ -5,11 +5,11 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.0.2
+ * Version: 3.0.3
  * Text Domain: publishpress
  * Domain Path: /languages
  *
- * Copyright (c) 2019 PublishPress
+ * Copyright (c) 2021 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,7 +36,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2019 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2021 PublishPress. All rights reserved.
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
@@ -116,6 +116,8 @@ if (!class_exists('publishpress')) {
             do_action_ref_array('publishpress_after_setup_actions', [$this]);
 
             add_filter('debug_information', [$this, 'filterDebugInformation']);
+
+            add_filter('cme_publishpress_capabilities', [$this, 'filterCapabilities']);
         }
 
         /**
@@ -1110,6 +1112,39 @@ if (!class_exists('publishpress')) {
             }
 
             return $this->postTypeRequiresClassicEditor($postType) ? false : $useBlockEditor;
+        }
+
+        /**
+         * @param array $capabilities
+         *
+         * @return array
+         */
+        public function filterCapabilities($capabilities)
+        {
+            $deprecatedCapabilities = [
+                'edit_metadata',
+                'ppma_edit_orphan_post',
+                'pp_editorial_metadata_user_can_edit',
+            ];
+
+            foreach ($deprecatedCapabilities as $capability) {
+                $key = array_search($capability, $capabilities, true);
+
+                if (false !== $key) {
+                    unset($capabilities[$key]);
+                }
+            }
+
+            $newCapabilities = [
+                'pp_edit_editorial_metadata',
+                'pp_view_editorial_metadata',
+            ];
+
+            foreach ($newCapabilities as $capability) {
+                $capabilities[] = $capability;
+            }
+
+            return $capabilities;
         }
     }
 }
