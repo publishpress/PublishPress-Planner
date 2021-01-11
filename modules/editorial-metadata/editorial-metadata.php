@@ -412,8 +412,10 @@ if (!class_exists('PP_Editorial_Metadata')) {
             foreach ($roles as $role) {
                 $role = get_role($role);
 
-                $role->add_cap($viewCap);
-                $role->add_cap($editCap);
+                if (is_object($role) && !is_wp_error($role)) {
+                    $role->add_cap($viewCap);
+                    $role->add_cap($editCap);
+                }
             }
         }
 
