@@ -22,3 +22,4 @@ modules:
             plugins: [ 'publishpress/publishpress.php' ]
             activatePlugins: [ 'publishpress/publishpress.php' ]
             isolatedInstall: true
+bootstrap: _bootstrap.php
