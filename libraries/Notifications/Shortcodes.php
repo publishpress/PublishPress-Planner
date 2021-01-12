@@ -361,6 +361,14 @@ class Shortcodes
                     $info[] = $post->post_title;
                     break;
 
+                case 'post_type':
+                    $postType = get_post_type_object($post->post_type);
+
+                    if (!empty($postType) && !is_wp_error($postType)) {
+                        $info[] = $postType->labels->singular_name;
+                    }
+                    break;
+
                 case 'permalink':
                     $info[] = get_permalink($post->ID);
                     break;
@@ -385,6 +393,14 @@ class Shortcodes
                     }
 
                     $info[] = $status->name;
+                    break;
+
+                case 'content':
+                    $info[] = $post->post_content;
+                    break;
+
+                case 'excerpt':
+                    $info[] = $post->post_excerpt;
                     break;
 
                 case 'edit_link':
