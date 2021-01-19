@@ -84,7 +84,7 @@ if (!class_exists('PP_Debug')) {
             // Register our settings
             add_action('admin_init', [$this, 'register_settings']);
 
-            $this->path = str_replace('//', '/', WP_CONTENT_DIR . '/' . self::FILE);
+            $this->path = wp_get_upload_dir() . '/' . self::FILE);
 
             // Admin bar.
             add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);
@@ -323,7 +323,7 @@ if (!class_exists('PP_Debug')) {
                 return;
             }
 
-            $action = preg_replace('/[^a-z0-9_\-]/i', '', $_GET['action']);
+            $action = preg_replace('/[^a-z0-9_\-]/i', '', sanitize_text_field($_GET['action']));
 
             // Do we have a nonce?
             if (!array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
@@ -333,7 +333,7 @@ if (!class_exists('PP_Debug')) {
             }
 
             // Check the nonce.
-            if (!wp_verify_nonce($_GET['_wpnonce'], $action)) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), $action)) {
                 $this->messages[] = __('Invalid action nonce.', 'publishpress');
 
                 return;
@@ -341,7 +341,9 @@ if (!class_exists('PP_Debug')) {
 
             if ($action === self::ACTION_DELETE_LOG) {
                 if (file_exists($this->path)) {
+                    // phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
                     unlink($this->path);
+                    // phpcs:enable
                 }
             }
 
