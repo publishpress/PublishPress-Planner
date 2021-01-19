@@ -84,7 +84,6 @@ class Base extends Base_Step
 
         $params = $_POST['publishpress_notif'];
 
-
         if (isset($params[$this->attr_prefix])) {
             // Is selected in the events?
             $selected = in_array(static::META_VALUE_SELECTED, $params[$this->attr_prefix]);
