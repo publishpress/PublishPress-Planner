@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="7"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <file name="RoboFile.php" />
+        <file name="publishpress.php" />
+        <file name="defines-free-plugin-path.php" />
+        <file name="includes.php" />
+        <file name="deprecated.php" />
+        <directory name="core" />
+        <directory name="libraries" />
+        <directory name="common" />
+        <directory name="modules" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
