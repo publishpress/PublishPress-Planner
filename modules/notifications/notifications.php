@@ -251,8 +251,12 @@ if (!class_exists('PP_Notifications')) {
             global $wpdb;
 
             // Migrate Following Users
-            $query = "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = '{$this->notify_user_taxonomy}' WHERE taxonomy = 'following_users'";
-            $wpdb->query($query);
+            $wpdb->query(
+                    $wpdb->prepare(
+                        "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = %s WHERE taxonomy = following_users",
+                            $this->notify_user_taxonomy
+                    )
+            );
         }
 
         /**
@@ -516,7 +520,7 @@ if (!class_exists('PP_Notifications')) {
                 <a name="subscriptions"></a>
 
                 <p>
-                    <?php _e(
+                    <?php esc_html_e(
                         'Enter any users, roles, or email address that should receive notifications from workflows.',
                         'publishpress'
                     ); ?><?php if (!empty($followersWorkflows)) : ?>&sup1;<?php endif; ?>
@@ -538,7 +542,7 @@ if (!class_exists('PP_Notifications')) {
                 </div>
 
                 <?php if (empty($followersWorkflows)) : ?>
-                    <p class="no-workflows"><?php echo __(
+                    <p class="no-workflows"><?php echo esc_html__(
                             'This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.',
                             'publishpress'
                         ); ?></p>
@@ -547,16 +551,16 @@ if (!class_exists('PP_Notifications')) {
 
                 <div class="pp_post_notify_workflows">
                     <?php if (!empty($activeWorkflows)) : ?>
-                        <h3><?php echo __('Active Notifications', 'publishpress'); ?></h3>
+                        <h3><?php echo esc_html__('Active Notifications', 'publishpress'); ?></h3>
 
                         <ul>
                             <?php foreach ($activeWorkflows as $workflow) : ?>
                                 <li>
-                                    <a href="<?php echo admin_url(
+                                    <a href="<?php echo esc_url(admin_url(
                                         'post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'
-                                    ); ?>"
+                                    )); ?>"
                                        target="_blank">
-                                        <?php echo $workflow->workflow_post->post_title; ?><?php if (in_array(
+                                        <?php echo esc_html($workflow->workflow_post->post_title); ?><?php if (in_array(
                                             $workflow->workflow_post->ID,
                                             $followersWorkflows
                                         )): ?>&sup1;<?php endif; ?>
@@ -566,11 +570,11 @@ if (!class_exists('PP_Notifications')) {
                         </ul>
                     <?php else: ?>
                         <p class="no-workflows"><?php echo sprintf(
-                                __(
+                                esc_html__(
                                     'No active notifications found for this %s.',
                                     'publishpress'
                                 ),
-                                $postType->labels->singular_name
+                                esc_html($postType->labels->singular_name)
                             ); ?></p>
                     <?php endif; ?>
                 </div>
@@ -720,15 +724,21 @@ if (!class_exists('PP_Notifications')) {
          */
         public function handle_user_post_subscription()
         {
-            if (!wp_verify_nonce($_GET['_wpnonce'], 'pp_notifications_user_post_subscription')) {
+            if (!isset($_GET['_wpnonce'])
+                || !wp_verify_nonce($_GET['_wpnonce'], 'pp_notifications_user_post_subscription')
+            ) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
-            if (!current_user_can($this->edit_post_subscriptions_cap)) {
+            if (!isset($_GET['method']) || !current_user_can($this->edit_post_subscriptions_cap)) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
             }
 
-            $post = get_post(($post_id = $_GET['post_id']));
+            if (!isset($_GET['post_id']) || empty((int)$_GET['post_id'])) {
+                $this->print_ajax_response('error', $this->module->messages['missing-post']);
+            }
+
+            $post = get_post((int)$_GET['post_id']);
 
             if (!$post) {
                 $this->print_ajax_response('error', $this->module->messages['missing-post']);
@@ -922,7 +932,9 @@ if (!class_exists('PP_Notifications')) {
                 pp_draft_or_post_title($post->ID)
             );
             $body .= "\r\n";
+            // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
             $body .= sprintf(__('This email was sent %s.', 'publishpress'), date('r'));
+            // phpcs:enable
             $body .= "\r\n \r\n";
             $body .= get_option('blogname') . " | " . get_bloginfo('url') . " | " . admin_url('/') . "\r\n";
 
@@ -1594,21 +1606,21 @@ if (!class_exists('PP_Notifications')) {
             $email_from = $this->get_email_from();
 
             echo '<input
-                    id="' . $this->module->slug . '_email_from_name"
+                    id="' . esc_attr($this->module->slug) . '_email_from_name"
                     type="text"
                     style="min-width: 300px"
-                    placeholder="' . get_bloginfo('name') . '"
-                    name="' . $this->module->options_group_name . '[email_from_name]"
-                    value="' . $email_from['name'] . '" />
+                    placeholder="' . esc_attr(get_bloginfo('name')) . '"
+                    name="' . esc_attr($this->module->options_group_name) . '[email_from_name]"
+                    value="' . esc_attr($email_from['name']) . '" />
                 </label>';
             echo '<br />';
             echo '<input
-                    id="' . $this->module->slug . '_email_from"
+                    id="' . esc_attr($this->module->slug) . '_email_from"
                     type="email"
                     style="min-width: 300px"
-                    placeholder="' . get_bloginfo('admin_email') . '"
-                    name="' . $this->module->options_group_name . '[email_from]"
-                    value="' . $email_from['email'] . '" />
+                    placeholder="' . esc_attr(get_bloginfo('admin_email')) . '"
+                    name="' . esc_attr($this->module->options_group_name) . '[email_from]"
+                    value="' . esc_attr($email_from['email']) . '" />
                 </label>';
         }
 
@@ -1622,13 +1634,11 @@ if (!class_exists('PP_Notifications')) {
                 $checked = $this->module->options->notify_author_by_default;
             }
 
-            $checked = (bool)$checked ? 'checked="checked"' : '';
-
             echo '<input
-                    id="' . $this->module->slug . '_notify_author_by_default"
+                    id="' . esc_attr($this->module->slug) . '_notify_author_by_default"
                     type="checkbox"
-                    name="' . $this->module->options_group_name . '[notify_author_by_default]"
-                    value="1" ' . $checked . '/>';
+                    name="' . esc_attr($this->module->options_group_name) . '[notify_author_by_default]"
+                    value="1" ' . ((bool)$checked ? 'checked="checked"' : '') . '/>';
         }
 
         /**
@@ -1641,13 +1651,11 @@ if (!class_exists('PP_Notifications')) {
                 $checked = $this->module->options->notify_current_user_by_default;
             }
 
-            $checked = (bool)$checked ? 'checked="checked"' : '';
-
             echo '<input
-                    id="' . $this->module->slug . '_notify_current_user_by_default"
+                    id="' . esc_attr($this->module->slug) . '_notify_current_user_by_default"
                     type="checkbox"
-                    name="' . $this->module->options_group_name . '[notify_current_user_by_default]"
-                    value="1" ' . $checked . '/>';
+                    name="' . esc_attr($this->module->options_group_name) . '[notify_current_user_by_default]"
+                    value="1" ' . ((bool)$checked ? 'checked="checked"' : '') . '/>';
         }
 
         public function settings_blacklisted_taxonomies_option()
@@ -1659,15 +1667,15 @@ if (!class_exists('PP_Notifications')) {
             <div style="max-width: 300px;">
                 <input
                     type="text"
-                    id="<?php echo $this->module->slug; ?>_blacklisted_taxonomies"
-                    name="<?php echo $this->module->options_group_name; ?>[blacklisted_taxonomies]"
-                    value="<?php echo $blacklisted_taxonomies; ?>"
-                    placeholder="<?php _e('slug1,slug2', 'publishpress'); ?>"
+                    id="<?php echo esc_attr($this->module->slug); ?>_blacklisted_taxonomies"
+                    name="<?php echo esc_attr($this->module->options_group_name); ?>[blacklisted_taxonomies]"
+                    value="<?php echo esc_attr($blacklisted_taxonomies); ?>"
+                    placeholder="<?php esc_html_e('slug1,slug2', 'publishpress'); ?>"
                     style="width: 100%;"
                 />
 
                 <div style="margin-top: 5px;">
-                    <p><?php _e(
+                    <p><?php esc_html_e(
                             'Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow.',
                             'publishpress'
                         ); ?></p>
