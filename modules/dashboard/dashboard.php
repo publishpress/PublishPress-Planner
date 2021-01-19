@@ -442,4 +442,4 @@ if (!class_exists('PP_Dashboard')) {
             do_settings_sections($this->module->options_group_name);
         }
     }
-} // END - !class_exists('PP_Dashboard')
+}

@@ -642,12 +642,12 @@ if (!class_exists('PP_Calendar')) {
             // Only do .ics subscriptions when the option is active
             if ('on' != $this->module->options->ics_subscription) {
                 die();
-            } // End if().
+            }
 
             // Confirm all of the arguments are present
             if (!isset($_GET['user'], $_GET['user_key'])) {
                 die();
-            } // End if().
+            }
 
             // Confirm this is a valid request
             $user           = sanitize_user($_GET['user']);
@@ -734,8 +734,8 @@ if (!class_exists('PP_Calendar')) {
                         // @todo auto format any field longer than 75 bytes
                         $formatted_posts[] = $formatted_post;
                     }
-                }// End foreach().
-            }// End for().
+                }
+            }
 
             // Other template data
             $header = [
@@ -1812,7 +1812,7 @@ if (!class_exists('PP_Calendar')) {
                         ]
                     );
                     break;
-            }// End switch().
+            }
         }
 
         /**
@@ -1909,7 +1909,7 @@ if (!class_exists('PP_Calendar')) {
                 if (current_user_can($ed_cap, $post->ID)) {
                     $information_fields[$key]['editable'] = true;
                 }
-            }// End foreach().
+            }
 
             $information_fields = apply_filters('pp_calendar_item_information_fields', $information_fields, $post->ID);
 
@@ -3159,7 +3159,7 @@ if (!class_exists('PP_Calendar')) {
                 default:
                     return false;
                     break;
-            }// End switch().
+            }
         }
 
         public function calendar_filter_options($select_id, $select_name, $filters)
@@ -3276,7 +3276,7 @@ if (!class_exists('PP_Calendar')) {
                 default:
                     do_action('pp_calendar_filter_display', $select_id, $select_name, $filters);
                     break;
-            }// End switch().
+            }
         }
 
         /**
