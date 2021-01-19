@@ -9,6 +9,7 @@
     <ini name="memory_limit" value="256M"/>
     <arg name="basepath" value="./"/>
     <arg name="parallel" value="20"/>
+    <arg name="severity" value="5"/>
     <arg value="ps"/>
 
     <file>.</file>
