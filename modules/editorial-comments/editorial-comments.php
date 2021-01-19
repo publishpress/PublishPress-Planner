@@ -297,12 +297,17 @@ if (!class_exists('PP_Editorial_Comments')) {
         /**
          * Displays a single comment
          */
-        public function the_comment($comment, $args, $depth)
+        public function the_comment($theComment, $args, $depth)
         {
-            global $current_user, $userdata;
+            global $current_user, $userdata, $comment;
 
             // Get current user
             wp_get_current_user();
+
+            // Update the global var for the comment.
+            // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+            $comment = $theComment;
+            // phpcs:enable
 
             // Deleting editorial comments is not enabled for now for the sake of transparency. However, we could consider
             // EF comment edits (with history, if possible). P2 already allows for edits without history, so even that might work.
@@ -313,8 +318,8 @@ if (!class_exists('PP_Editorial_Comments')) {
 
             $actions_string_escaped = '';
             // Comments can only be added by users that can edit the post
-            if (current_user_can('edit_post', $comment->comment_post_ID)) {
-                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . (int)$comment->comment_ID . '\',\'' . (int)$comment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . esc_html__(
+            if (current_user_can('edit_post', $theComment->comment_post_ID)) {
+                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . (int)$theComment->comment_ID . '\',\'' . (int)$theComment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . esc_html__(
                         'Reply to this comment',
                         'publishpress'
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
@@ -331,18 +336,18 @@ if (!class_exists('PP_Editorial_Comments')) {
                 }
             } ?>
 
-            <li id="comment-<?php echo esc_attr($comment->comment_ID); ?>" <?php comment_class(
+            <li id="comment-<?php echo esc_attr($theComment->comment_ID); ?>" <?php comment_class(
                 [
                     'comment-item',
-                    wp_get_comment_status($comment->comment_ID),
+                    wp_get_comment_status($theComment->comment_ID),
                 ]
             ); ?>>
 
-                <?php echo get_avatar($comment->comment_author_email, 50); ?>
+                <?php echo get_avatar($theComment->comment_author_email, 50); ?>
 
                 <div class="post-comment-wrap">
                     <h5 class="comment-meta">
-                        <span class="comment-author"><?php comment_author_email_link($comment->comment_author); ?></span>
+                        <span class="comment-author"><?php comment_author_email_link($theComment->comment_author); ?></span>
                         <span class="meta">
                             <?php esc_html_e(sprintf(
                                 __('said on %1$s at %2$s', 'publishpress'),
