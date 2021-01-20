@@ -54,6 +54,14 @@
   padding: 4px;
 }
 
+.notif-log-modal .content ul {
+  list-style-type: disc;
+}
+
+.notif-log-modal .content ul li {
+  margin-left: 25px;
+}
+
 .publishpress_page_pp-notif-log .ui-dialog-titlebar {
   background: #655997;
   color: #fff;

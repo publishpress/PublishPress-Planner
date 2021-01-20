@@ -72,6 +72,14 @@
     -o-transition: none;
 }
 
+/* Fix Admin icon for Aquila Admin Theme */
+body.aquila #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
+body.aquila #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before {
+    font-size: 26px;
+    margin-left: 18px;
+    background-position: 0 11px;
+}
+
 /* Admin icon customized per admin theme, excluding the default and light */
 .admin-color-blue #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
 .admin-color-coffee #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
@@ -103,6 +111,11 @@
 #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
 #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before {
     background-position: 0 -26px;
+}
+
+body.aquila #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
+body.aquila #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before {
+    background-position: 0 -23px;
 }
 
 /* Customize the icon for "Light" admin theme's hover and active states */
