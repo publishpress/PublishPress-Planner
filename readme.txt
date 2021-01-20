@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.1.0] - 2021-01-21 =
+= [3.1.0] - 2021-01-20 =
 
 * Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288
 * Fixed: Fixed support to PHP 5.6, #772;
