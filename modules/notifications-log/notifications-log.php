@@ -577,7 +577,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
         public function ajaxSearchPost()
         {
-            if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
+            if (!isset($_GET['nonce']) || !wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'notifications-log-admin')) {
                 echo '401';
 
                 wp_die(esc_html__('Invalid nonce.', 'publishpress'));
@@ -586,7 +586,7 @@ if (!class_exists('PP_Notifications_Log')) {
             global $wpdb;
 
             $commentType = NotificationsLogModel::COMMENT_TYPE;
-            $search      = isset($_GET['search']) ? $wpdb->esc_like($_GET['search']) : '';
+            $search      = isset($_GET['search']) ? $wpdb->esc_like(sanitize_text_field($_GET['search'])) : '';
             $search      = '%' . $search . '%';
 
             $posts = $wpdb->get_results(
@@ -626,7 +626,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
         public function ajaxSearchWorkflow()
         {
-            if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'notifications-log-admin')) {
+            if (!isset($_GET['nonce']) || !wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'notifications-log-admin')) {
                 echo '401';
 
                 wp_die(esc_html__('Invalid nonce.', 'publishpress'));
@@ -635,7 +635,7 @@ if (!class_exists('PP_Notifications_Log')) {
             global $wpdb;
 
             $metaKeyWorkflow = NotificationsLogModel::META_NOTIF_WORKFLOW_ID;
-            $search          = isset($_GET['search']) ? $wpdb->esc_like($_GET['search']) : '';
+            $search          = isset($_GET['search']) ? $wpdb->esc_like(sanitize_text_field($_GET['search'])) : '';
             $search          = '%' . $search . '%';
 
             $posts = $wpdb->get_results(
@@ -682,7 +682,7 @@ if (!class_exists('PP_Notifications_Log')) {
             }
 
             if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
-                $currentAction = $_REQUEST['action'];
+                $currentAction = sanitize_text_field($_REQUEST['action']);
             }
 
             if (empty($currentAction)) {
@@ -696,7 +696,9 @@ if (!class_exists('PP_Notifications_Log')) {
             $shouldRedirect = false;
 
             if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
+                // phpcs:enable
 
                 if (!empty($ids)) {
                     foreach ($ids as $id) {
@@ -735,7 +737,9 @@ if (!class_exists('PP_Notifications_Log')) {
 
                 $shouldRedirect = true;
             } elseif (NotificationsLogTable::BULK_ACTION_TRY_AGAIN === $currentAction) {
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
+                // phpcs:enable
 
                 if (!empty($ids)) {
                     foreach ($ids as $id) {
@@ -763,7 +767,7 @@ if (!class_exists('PP_Notifications_Log')) {
 
         public function ajaxViewNotification()
         {
-            if (!isset($_REQUEST['nonce']) || !wp_verify_nonce($_REQUEST['nonce'], 'notifications-log-admin')) {
+            if (!isset($_REQUEST['nonce']) || !wp_verify_nonce(sanitize_text_field($_REQUEST['nonce']), 'notifications-log-admin')) {
                 echo '401';
 
                 wp_die(esc_html__('Invalid nonce.', 'publishpress'));

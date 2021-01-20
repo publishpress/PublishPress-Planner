@@ -1150,9 +1150,15 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             // Workflow Channels
             if (isset($_POST['psppno_workflow_channel']) && !empty($_POST['psppno_workflow_channel'])) {
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 foreach ($_POST['psppno_workflow_channel'] as $workflow_id => $channel) {
-                    update_user_meta($user_id, 'psppno_workflow_channel_' . $workflow_id, $channel);
+                    update_user_meta(
+                        $user_id,
+                        'psppno_workflow_channel_' . (int)$workflow_id,
+                        sanitize_key($channel)
+                    );
                 }
+                // phpcs:enable
             }
 
             do_action('psppno_save_user_profile', $user_id);
