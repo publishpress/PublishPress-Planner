@@ -172,6 +172,11 @@
     border: 1px solid #5b7782;
 }
 
+.psppno_workflow_metabox_option_description {
+    color: silver;
+    margin-left: 23px;
+}
+
 /* Hide the Visibility option in the Workflow publishing metabox */
 body.wp-admin.post-type-psppnotif_workflow .misc-pub-visibility {
     display: none;

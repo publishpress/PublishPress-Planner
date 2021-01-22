@@ -742,6 +742,15 @@ if (!class_exists('PP_Improved_Notifications')) {
             );
 
             add_meta_box(
+                'publishpress_notif_workflow_options_div',
+                __('Options', 'publishpress-notifications'),
+                [$this, 'publishpress_notif_workflow_options_metabox'],
+                null,
+                'side',
+                'high'
+            );
+
+            add_meta_box(
                 'publishpress_notif_workflow_help_div',
                 __('Help', 'publishpress-notifications'),
                 [$this, 'publishpress_notif_workflow_help_metabox'],
@@ -811,6 +820,20 @@ if (!class_exists('PP_Improved_Notifications')) {
             $main_context['section_channel'] = $twig->render('workflow_metabox_section.twig', $context);
 
             echo $twig->render('workflow_metabox.twig', $main_context);
+        }
+
+        public function publishpress_notif_workflow_options_metabox()
+        {
+            $post = get_post();
+
+            $this->configure_twig();
+            $twig = $this->get_service('twig');
+
+            $context = [
+                'options' => apply_filters('publishpress_notif_workflow_options', [], $post, $twig),
+            ];
+
+            echo $twig->render('workflow_metabox_options.twig', $context);
         }
 
         /**
