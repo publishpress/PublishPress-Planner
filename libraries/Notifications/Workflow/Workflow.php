@@ -176,6 +176,8 @@ class Workflow
 
         $filtered_receivers = [];
 
+        $optionSkipUser = (bool)$this->get_option('skip_user');
+
         if (!empty($receivers)) {
             // Classify receivers per channel, ignoring who has muted the channel.
             foreach ($receivers as $receiverData) {
@@ -195,6 +197,11 @@ class Workflow
                                 continue;
                             }
                         }
+                    }
+
+                    // Doesn't send the notification for the same user that triggered it if the option to skip is set.
+                    if ($optionSkipUser && $receiver == $this->event_args['user_id']) {
+                        continue;
                     }
 
                     $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
