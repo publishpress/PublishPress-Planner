@@ -639,6 +639,14 @@ if (!class_exists('PP_Calendar')) {
             if (empty($timezoneString)) {
                 $offset = get_option('gmt_offset');
 
+                if ($offset > 0) {
+                    $offset = '+' . $offset;
+                }
+
+                if (2 === strlen($offset)) {
+                    $offset .= ':00';
+                }
+
                 $timezoneString = new DateTimeZone($offset);
                 $timezoneString = $timezoneString->getName();
             }
