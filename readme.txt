@@ -122,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
+* Added: Added option to the notification workflow for avoiding notifying the user who triggered the action, #778;
 * Added: Add the name of blog in the notification log content column, if in a multisite network;
 * Added: Add shortcodes for the post content, excerpt and post type in the email notifications, #288;
 * Fixed: Fix styling for the error messages in the notifications log. The error lines were moved to the top of the screen due the "error" CSS class, #765;
