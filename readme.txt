@@ -120,6 +120,11 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed: Fix styling for the error messages in the notifications log. The error lines were moved to the top of the screen due the "error" CSS class, #765;
+* Added: Add the name of blog in the notification log content column, if in a multisite network;
+
 = [3.0.2] - 2021-01-07 =
 
 * Fixed: Fix JS warning: $(html) HTML text after last tag is ignored in the custom-status.js file, #754;
