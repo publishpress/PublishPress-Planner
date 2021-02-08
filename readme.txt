@@ -122,7 +122,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
-* Added: Add shortcodes for the post content, excerpt and post type in the email notifications, #288
+* Added: Add shortcodes for the post content, excerpt and post type in the email notifications, #288;
+* Fixed: Add sanitization and escape variables in some variables, increasing compatibility with WP VIP and more security, #773;
 
 = [3.0.3] - 2021-01-11 =
 
