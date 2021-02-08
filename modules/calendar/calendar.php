@@ -632,6 +632,151 @@ if (!class_exists('PP_Calendar')) {
             exit;
         }
 
+        private function getTimezoneString()
+        {
+            $timezoneString = get_option('timezone_string');
+
+            if (empty($timezoneString)) {
+                $offset = get_option('gmt_offset');
+
+                if ($offset > 0) {
+                    $offset = '+' . $offset;
+                }
+
+                if (2 === strlen($offset)) {
+                    $offset .= ':00';
+                }
+
+                $timezoneString = new DateTimeZone($offset);
+                $timezoneString = $timezoneString->getName();
+            }
+
+            return $timezoneString;
+        }
+
+        /**
+         * Returns a VTIMEZONE component for a Olson timezone identifier
+         * with daylight transitions covering the given date range.
+         *
+         * @param string Timezone ID as used in PHP's Date functions
+         * @param integer Unix timestamp with first date/time in this timezone
+         * @param integer Unix timestap with last date/time in this timezone
+         *
+         * @return mixed A Sabre\VObject\Component object representing a VTIMEZONE definition
+         *               or false if no timezone information is available
+         */
+        private function generateVTimeZone(&$calendar, $tzid, $from = 0, $to = 0)
+        {
+            if (!$from) {
+                $from = time();
+            }
+            if (!$to) {
+                $to = $from;
+            }
+
+            try {
+                $tz = new DateTimeZone($tzid);
+            } catch (Exception $e) {
+                return false;
+            }
+
+            // get all transitions for one year back/ahead
+            $year        = 86400 * 360;
+            $transitions = $tz->getTransitions($from - $year, $to + $year);
+
+            $vTimeZone = $calendar->add(
+                'VTIMEZONE',
+                [
+                    'TZID' => $tz->getName(),
+                ]
+            );
+
+            $standard = null;
+            $daylight = null;
+            $t_std    = null;
+            $t_dst    = null;
+
+            foreach ($transitions as $i => $trans) {
+                $cmp = null;
+
+                // daylight saving time definition
+                if ($trans['isdst']) {
+                    $t_dst = $trans['ts'];
+                    $dt     = new DateTime($trans['time']);
+                    $offset = $trans['offset'] / 3600;
+
+                    $daylight = $vTimeZone->add(
+                        'DAYLIGHTe',
+                        [
+                            'DTSTART' =>$dt->format('Ymd\THis'),
+                            'TZOFFSETFROM' => sprintf(
+                                '%s%02d%02d',
+                                $tzfrom >= 0 ? '+' : '',
+                                floor($tzfrom),
+                                ($tzfrom - floor($tzfrom)) * 60
+                            ),
+                            'TZOFFSETTO' => sprintf(
+                                '%s%02d%02d',
+                                $offset >= 0 ? '+' : '',
+                                floor($offset),
+                                ($offset - floor($offset)) * 60
+                            ),
+                        ]
+                    );
+
+                    // add abbreviated timezone name if available
+                    if (!empty($trans['abbr'])) {
+                        $daylight->add('TZNAME', [$trans['abbr']]);
+                    }
+
+                    $tzfrom = $offset;
+                } else {
+                    $t_std = $trans['ts'];
+                    $dt     = new DateTime($trans['time']);
+                    $offset = $trans['offset'] / 3600;
+
+                    $standard = $vTimeZone->add(
+                        'STANDARD',
+                        [
+                            'DTSTART' =>$dt->format('Ymd\THis'),
+                            'TZOFFSETFROM' => sprintf(
+                                '%s%02d%02d',
+                                $tzfrom >= 0 ? '+' : '',
+                                floor($tzfrom),
+                                ($tzfrom - floor($tzfrom)) * 60
+                            ),
+                            'TZOFFSETTO' => sprintf(
+                                '%s%02d%02d',
+                                $offset >= 0 ? '+' : '',
+                                floor($offset),
+                                ($offset - floor($offset)) * 60
+                            ),
+                        ]
+                    );
+
+                    // add abbreviated timezone name if available
+                    if (!empty($trans['abbr'])) {
+                        $standard->add('TZNAME', [$trans['abbr']]);
+                    }
+
+                    $tzfrom = $offset;
+                }
+
+                // we covered the entire date range
+                if ($standard && $daylight && min($t_std, $t_dst) < $from && max($t_std, $t_dst) > $to) {
+                    break;
+                }
+            }
+
+            // add X-MICROSOFT-CDO-TZID if available
+            $microsoftExchangeMap = array_flip(Sabre\VObject\TimeZoneUtil::$microsoftExchangeMap);
+            if (array_key_exists($tz->getName(), $microsoftExchangeMap)) {
+                $vTimeZone->add('X-MICROSOFT-CDO-TZID', $microsoftExchangeMap[$tz->getName()]);
+            }
+
+            return $vTimeZone;
+        }
+
         /**
          * After checking that the request is valid, do an .ics file
          *
@@ -642,12 +787,12 @@ if (!class_exists('PP_Calendar')) {
             // Only do .ics subscriptions when the option is active
             if ('on' != $this->module->options->ics_subscription) {
                 die();
-            } // End if().
+            }
 
             // Confirm all of the arguments are present
             if (!isset($_GET['user'], $_GET['user_key'])) {
                 die();
-            } // End if().
+            }
 
             // Confirm this is a valid request
             $user           = sanitize_user($_GET['user']);
@@ -679,122 +824,75 @@ if (!class_exists('PP_Calendar')) {
                 'ics_subscription'
             );
 
+            $vCalendar = new Sabre\VObject\Component\VCalendar(
+                [
+                    'PRODID'  => '-//PublishPress//PublishPress ' . PUBLISHPRESS_VERSION . '//EN',
+                ]
+            );
 
-            $formatted_posts = [];
+            $timezoneString = $this->getTimezoneString();
+
+            $this->generateVtimezone(
+                $vCalendar,
+                $timezoneString,
+                strtotime($this->start_date),
+                (int)(strtotime($this->start_date) + ($this->total_weeks * 7 * 24 * 60 * 60))
+            );
+
+            $timeZone = new DateTimeZone($timezoneString);
+
             for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) {
                 // We need to set the object variable for our posts_where filter
                 $this->current_week = $current_week;
                 $week_posts         = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
-                        $start_date    = date('Ymd', strtotime($post->post_date)) . 'T' . date(
-                                'His',
-                                strtotime($post->post_date)
-                            );
-                        $end_date      = date('Ymd', strtotime($post->post_date) + (5 * 60)) . 'T' . date(
-                                'His',
-                                strtotime($post->post_date) + (5 * 60)
-                            );
-                        $last_modified = date('Ymd', strtotime($post->post_modified_gmt)) . 'T' . date(
-                                'His',
-                                strtotime($post->post_modified_gmt)
-                            ) . 'Z';
+                        $start_date    = new DateTime($post->post_date_gmt);
+                        $start_date->setTimezone($timeZone);
+
+                        $end_date      = new DateTime(date('Y-m-d H:i:s', strtotime($post->post_date_gmt) + (5 * 60)));
+                        $end_date->setTimezone($timeZone);
+
+                        $last_modified = new DateTime($post->post_modified_gmt);
+                        $last_modified->setTimezone($timeZone);
 
                         // Remove the convert chars and wptexturize filters from the title
                         remove_filter('the_title', 'convert_chars');
                         remove_filter('the_title', 'wptexturize');
 
-                        $formatted_post = [
-                            'BEGIN'         => 'VEVENT',
-                            'UID'           => $post->guid,
-                            'SUMMARY'       => $this->do_ics_escaping(
-                                    apply_filters(
-                                        'the_title',
-                                        $post->post_title
-                                    )
-                                ) . ' - ' . $this->get_post_status_friendly_name(get_post_status($post->ID)),
-                            'DTSTART'       => $start_date,
-                            'DTEND'         => $end_date,
-                            'LAST-MODIFIED' => $last_modified,
-                            'URL'           => get_post_permalink($post->ID),
-                        ];
-
                         // Description should include everything visible in the calendar popup
                         $information_fields            = $this->get_post_information_fields($post);
-                        $formatted_post['DESCRIPTION'] = '';
+                        $eventDescription = '';
                         if (!empty($information_fields)) {
                             foreach ($information_fields as $key => $values) {
-                                $formatted_post['DESCRIPTION'] .= $values['label'] . ': ' . $values['value'] . '\n';
+                                $eventDescription .= $values['label'] . ': ' . $values['value'] . "\n";
                             }
-                            $formatted_post['DESCRIPTION'] = rtrim($formatted_post['DESCRIPTION']);
+                            $eventDescription = rtrim($eventDescription);
                         }
 
-                        $formatted_post['END'] = 'VEVENT';
-
-                        // @todo auto format any field longer than 75 bytes
-                        $formatted_posts[] = $formatted_post;
+                        $vCalendar->add(
+                            'VEVENT',
+                            [
+                                'UID'           => $post->guid,
+                                'SUMMARY'       => $this->do_ics_escaping(apply_filters('the_title', $post->post_title))
+                                    . ' - ' . $this->get_post_status_friendly_name(get_post_status($post->ID)),
+                                'DTSTART'       => $start_date,
+                                'DTEND'         => $end_date,
+                                'LAST-MODIFIED' => $last_modified,
+                                'URL'           => get_post_permalink($post->ID),
+                                'DESCRIPTION'   => $eventDescription,
+                            ]
+                        );
                     }
-                }// End foreach().
-            }// End for().
-
-            // Other template data
-            $header = [
-                'BEGIN'   => 'VCALENDAR',
-                'VERSION' => '2.0',
-                'PRODID'  => '-//PublishPress//PublishPress ' . PUBLISHPRESS_VERSION . '//EN',
-            ];
-
-            $footer = [
-                'END' => 'VCALENDAR',
-            ];
+                }
+            }
 
             // Render the .ics template and set the content type
             header('Content-type: text/calendar; charset=utf-8');
             header('Content-Disposition: inline; filename=calendar.ics');
-
-            foreach ([$header, $formatted_posts, $footer] as $section) {
-                foreach ($section as $key => $value) {
-                    if (is_string($value)) {
-                        echo $this->do_ics_line_folding($key . ':' . $value);
-                    } else {
-                        foreach ($value as $k => $v) {
-                            echo $this->do_ics_line_folding($k . ':' . $v);
-                        }
-                    }
-                }
-            }
+            echo $vCalendar->serialize();
 
             die();
-        }
-
-        /**
-         * Perform line folding according to RFC 5545.
-         *
-         * @param string $line The line without trailing CRLF
-         *
-         * @return string The line after line-folding with all necessary CRLF.
-         */
-        public function do_ics_line_folding($line)
-        {
-            $len = mb_strlen($line);
-            if ($len <= 75) {
-                return $line . "\r\n";
-            }
-
-            $chunks = [];
-            $start  = 0;
-            while (true) {
-                $chunk    = mb_substr($line, $start, 75);
-                $chunkLen = mb_strlen($chunk);
-                $start    += $chunkLen;
-                if ($start < $len) {
-                    $chunks[] = $chunk . "\r\n ";
-                } else {
-                    $chunks[] = $chunk . "\r\n";
-
-                    return implode('', $chunks);
-                }
-            }
         }
 
         /**
