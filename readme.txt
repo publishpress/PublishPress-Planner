@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [3.2.0] - UNRELEASED =
 
 * Added: Add option to rescheduled failed notifications in the notifications log. We only had that option for scheduled notifications, #786;
 * Added: Added option to the notification workflow for avoiding notifying the user who triggered the action, #778;
@@ -130,6 +130,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Add sanitization and escape variables in some variables, increasing compatibility with WP VIP and more security, #773;
 * Fixed: Fix PHP warning "Creating default object from empty value in publishpress-authors.php:772", correctly assigning the filter "pp_pre_insert_editorial_comment". (Allows PublishPress Revisions integration), #231;
 * Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
+* Fixed: Fixed role selection when adding a new user in a multisite, #788;
 
 = [3.1.0] - 2021-01-20 =
 
