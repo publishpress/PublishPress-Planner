@@ -120,6 +120,15 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Added: Add the name of blog in the notification log content column, if in a multisite network;
+* Added: Add shortcodes for the post content, excerpt and post type in the email notifications, #288;
+* Fixed: Fix styling for the error messages in the notifications log. The error lines were moved to the top of the screen due the "error" CSS class, #765;
+* Fixed: Add sanitization and escape variables in some variables, increasing compatibility with WP VIP and more security, #773;
+* Fixed: Fix PHP warning "Creating default object from empty value in publishpress-authors.php:772", correctly assigning the filter "pp_pre_insert_editorial_comment". (Allows PublishPress Revisions integration), #231;
+* Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
+
 = [3.1.0] - 2021-01-20 =
 
 * Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288

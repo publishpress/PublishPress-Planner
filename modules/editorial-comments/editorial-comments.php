@@ -277,7 +277,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     </a>
                     <a class="pp-replycancel button-secondary alignright"
                        href="#comments-form"><?php _e('Cancel', 'publishpress'); ?></a>
-                    <img alt="Sending comment..." src="<?php echo admin_url('/images/wpspin_light.gif') ?>"
+                    <img alt="Sending comment..." src="<?php echo esc_url(admin_url('/images/wpspin_light.gif')); ?>"
                          class="alignright" style="display: none;" id="pp-comment_loading"/>
                     <br class="clear" style="margin-bottom:35px;"/>
                     <span style="display: none;" class="error"></span>
@@ -297,14 +297,17 @@ if (!class_exists('PP_Editorial_Comments')) {
         /**
          * Displays a single comment
          */
-        public function the_comment($comment, $args, $depth)
+        public function the_comment($theComment, $args, $depth)
         {
-            global $current_user, $userdata;
+            global $current_user, $userdata, $comment;
 
             // Get current user
             wp_get_current_user();
 
-            $GLOBALS['comment'] = $comment;
+            // Update the global var for the comment.
+            // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+            $comment = $theComment;
+            // phpcs:enable
 
             // Deleting editorial comments is not enabled for now for the sake of transparency. However, we could consider
             // EF comment edits (with history, if possible). P2 already allows for edits without history, so even that might work.
@@ -313,16 +316,15 @@ if (!class_exists('PP_Editorial_Comments')) {
 
             $actions = [];
 
-            $actions_string = '';
+            $actions_string_escaped = '';
             // Comments can only be added by users that can edit the post
-            if (current_user_can('edit_post', $comment->comment_post_ID)) {
-                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . $comment->comment_ID . '\',\'' . $comment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . __(
+            if (current_user_can('edit_post', $theComment->comment_post_ID)) {
+                $actions['reply'] = '<a onclick="editorialCommentReply.open(\'' . (int)$theComment->comment_ID . '\',\'' . (int)$theComment->comment_post_ID . '\');return false;" class="vim-r hide-if-no-js" title="' . esc_html__(
                         'Reply to this comment',
                         'publishpress'
-                    ) . '" href="#">' . __('Reply', 'publishpress') . '</a>';
+                    ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
-                $sep = ' ';
-                $i   = 0;
+                $i = 0;
                 foreach ($actions as $action => $link) {
                     ++$i;
                     // Reply and quickedit need a hide-if-no-js span
@@ -330,34 +332,35 @@ if (!class_exists('PP_Editorial_Comments')) {
                         $action .= ' hide-if-no-js';
                     }
 
-                    $actions_string .= "<span class='$action'>$sep$link</span>";
+                    $actions_string_escaped .= "&nbsp;<span class='". esc_attr($action) . "'>$link</span>";
                 }
             } ?>
 
-            <li id="comment-<?php echo esc_attr($comment->comment_ID); ?>" <?php comment_class(
+            <li id="comment-<?php echo esc_attr($theComment->comment_ID); ?>" <?php comment_class(
                 [
                     'comment-item',
-                    wp_get_comment_status($comment->comment_ID),
+                    wp_get_comment_status($theComment->comment_ID),
                 ]
             ); ?>>
 
-                <?php echo get_avatar($comment->comment_author_email, 50); ?>
+                <?php echo get_avatar($theComment->comment_author_email, 50); ?>
 
                 <div class="post-comment-wrap">
                     <h5 class="comment-meta">
-                        <?php printf(
-                            __(
-                                '<span class="comment-author">%1$s</span><span class="meta"> said on %2$s at %3$s</span>',
-                                'publishpress'
-                            ),
-                            comment_author_email_link($comment->comment_author),
-                            get_comment_date(get_option('date_format')),
-                            get_comment_time()
-                        ); ?>
+                        <span class="comment-author"><?php comment_author_email_link($theComment->comment_author); ?></span>
+                        <span class="meta">
+                            <?php esc_html_e(sprintf(
+                                __('said on %1$s at %2$s', 'publishpress'),
+                                get_comment_date(get_option('date_format')),
+                                get_comment_time()
+                            )); ?>
+                        </span>
                     </h5>
 
                     <div class="comment-content"><?php comment_text(); ?></div>
-                    <p class="row-actions"><?php echo $actions_string; ?></p>
+                    <?php // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    <p class="row-actions"><?php echo $actions_string_escaped; ?></p>
+                    <?php // phpcs:enable ?>
 
                 </div>
             </li>
@@ -369,46 +372,62 @@ if (!class_exists('PP_Editorial_Comments')) {
          */
         public function ajax_insert_comment()
         {
-            global $current_user, $user_ID, $wpdb;
+            global $current_user, $user_ID;
 
             // Verify nonce
-            if (!wp_verify_nonce($_POST['_nonce'], 'comment')) {
-                die(
-                __(
-                    "Nonce check failed. Please ensure you're supposed to be adding editorial comments.",
-                    'publishpress'
-                )
+            if (!isset($_POST['_nonce'])
+                || !wp_verify_nonce($_POST['_nonce'], 'comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        "Nonce check failed. Please ensure you're supposed to be adding editorial comments.",
+                        'publishpress'
+                    )
                 );
             }
 
-            // Get user info
+            if (!isset($_POST['post_id']) || !isset($_POST['parent']) || !isset($_POST['content'])) {
+                wp_die(esc_html__('Invalid comment data', 'publishpress'));
+            }
+
             wp_get_current_user();
 
-            // Set up comment data
             $post_id = absint($_POST['post_id']);
             $parent  = absint($_POST['parent']);
 
             // Only allow the comment if user can edit post
-            // @TODO: allow contributers to add comments as well (?)
+            // @TODO: allow contributors to add comments as well (?)
             if (!current_user_can('edit_post', $post_id)) {
-                die(
-                __(
-                    'Sorry, you don\'t have the privileges to add editorial comments. Please talk to your Administrator.',
-                    'publishpress'
-                )
+                wp_die(
+                esc_html__(
+                        'Sorry, you don\'t have the privileges to add editorial comments. Please talk to your Administrator.',
+                        'publishpress'
+                    )
                 );
             }
 
             // Verify that comment was actually entered
-            $comment_content = trim($_POST['content']);
+            $comment_content = esc_html(trim($_POST['content']));
             if (!$comment_content) {
-                die(__("Please enter a comment.", 'publishpress'));
+                wp_die(esc_html__("Please enter a comment.", 'publishpress'));
             }
 
             // Check that we have a post_id and user logged in
             if ($post_id && $current_user) {
                 // set current time
                 $time = current_time('mysql', $gmt = 0);
+
+                // phpcs:disable WordPressVIPMinimum.Variables.ServerVariables.UserControlledHeaders,WordPressVIPMinimum.Variables.RestrictedVariables.cache_constraints___SERVER__HTTP_USER_AGENT__
+                $author_ip = '';
+                if (isset($_SERVER['REMOTE_ADDR'])) {
+                    $author_ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+                }
+
+                $author_agent = '';
+                if (isset($_SERVER['HTTP_USER_AGENT'])) {
+                    $author_agent = sanitize_text_field($_SERVER['HTTP_USER_AGENT'], FILTER_VALIDATE_IP);
+                }
+                // phpcs:enable
 
                 // Set comment data
                 $data = [
@@ -431,18 +450,18 @@ if (!class_exists('PP_Editorial_Comments')) {
                             'sup'        => [],
                         ]
                     ),
-                    'comment_type'         => self::comment_type,
+                    'comment_type'         => esc_sql(self::comment_type),
                     'comment_parent'       => (int)$parent,
                     'user_id'              => (int)$user_ID,
-                    'comment_author_IP'    => esc_sql($_SERVER['REMOTE_ADDR']),
-                    'comment_agent'        => esc_sql($_SERVER['HTTP_USER_AGENT']),
-                    'comment_date'         => $time,
-                    'comment_date_gmt'     => $time,
+                    'comment_author_IP'    => esc_sql($author_ip),
+                    'comment_agent'        => esc_sql($author_agent),
+                    'comment_date'         => esc_sql($time),
+                    'comment_date_gmt'     => esc_sql($time),
                     // Set to -1?
-                    'comment_approved'     => self::comment_type,
+                    'comment_approved'     => esc_sql(self::comment_type),
                 ];
 
-                apply_filters('pp_pre_insert_editorial_comment', $data);
+                $data = apply_filters('pp_pre_insert_editorial_comment', $data);
 
                 // Insert Comment
                 $comment_id = wp_insert_comment($data);
@@ -472,7 +491,12 @@ if (!class_exists('PP_Editorial_Comments')) {
 
                 $response->send();
             } else {
-                die(__('There was a problem of some sort. Try again or contact your administrator.', 'publishpress'));
+                wp_die(
+                    esc_html__(
+                        'There was a problem of some sort. Try again or contact your administrator.',
+                        'publishpress'
+                    )
+                );
             }
         }
 
@@ -693,9 +717,11 @@ function pp_get_comments_plus($args = '')
         $post_where .= $wpdb->prepare('user_id = %d AND ', $user_id);
     }
 
+    // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     $comments = $wpdb->get_results(
         "SELECT * FROM $wpdb->comments WHERE $post_where $approved ORDER BY $orderby $order $number"
     );
+    // phpcs:enable
     wp_cache_add($cache_key, $comments, 'comment');
 
     return $comments;
