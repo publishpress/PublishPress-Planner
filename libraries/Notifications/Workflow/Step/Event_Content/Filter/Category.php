@@ -27,8 +27,8 @@ class Category extends Base implements Filter_Interface
         echo $this->get_service('twig')->render(
             'workflow_filter_multiple_select.twig',
             [
-                'name'    => "publishpress_notif[{$this->step_name}_filters][category]",
-                'id'      => "publishpress_notif_{$this->step_name}_filters_category",
+                'name'    => esc_attr("publishpress_notif[{$this->step_name}_filters][category]"),
+                'id'      => esc_attr("publishpress_notif_{$this->step_name}_filters_category"),
                 'options' => $this->get_options(),
                 'labels'  => [
                     'label' => esc_html__('Categories', 'publishpress'),

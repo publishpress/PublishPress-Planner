@@ -857,4 +857,4 @@ if (!class_exists('PP_Module')) {
                 && $publishpress->{$module_slug}->module->options->enabled === 'on';
         }
     }
-}// End if().
+}

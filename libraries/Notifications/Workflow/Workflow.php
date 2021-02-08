@@ -85,6 +85,11 @@ class Workflow
         );
     }
 
+    public function get_option($option)
+    {
+        return apply_filters('publishpress_notif_workflow_option', null, $option, $this);
+    }
+
     /**
      * Returns a list of receivers ids for this workflow
      *
@@ -95,6 +100,8 @@ class Workflow
         $receivers = $this->get_receivers();
 
         $filtered_receivers = [];
+
+        $optionSkipUser = (bool)$this->get_option('skip_user');
 
         if (!empty($receivers)) {
             // Classify receivers per channel, ignoring who has muted the channel.
@@ -115,6 +122,11 @@ class Workflow
                                 continue;
                             }
                         }
+                    }
+
+                    // Doesn't send the notification for the same user that triggered it if the option to skip is set.
+                    if ($optionSkipUser && $receiver == $this->event_args['user_id']) {
+                        continue;
                     }
 
                     $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
@@ -164,6 +176,8 @@ class Workflow
 
         $filtered_receivers = [];
 
+        $optionSkipUser = (bool)$this->get_option('skip_user');
+
         if (!empty($receivers)) {
             // Classify receivers per channel, ignoring who has muted the channel.
             foreach ($receivers as $receiverData) {
@@ -183,6 +197,11 @@ class Workflow
                                 continue;
                             }
                         }
+                    }
+
+                    // Doesn't send the notification for the same user that triggered it if the option to skip is set.
+                    if ($optionSkipUser && $receiver == $this->event_args['user_id']) {
+                        continue;
                     }
 
                     $channel = get_user_meta($receiver, 'psppno_workflow_channel_' . $this->workflow_post->ID, true);
