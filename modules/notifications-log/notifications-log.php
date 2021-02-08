@@ -796,6 +796,8 @@ if (!class_exists('PP_Notifications_Log')) {
                 if (is_object($comment)) {
                     $log = new NotificationsLogModel($comment);
 
+                    $log->switchToTheBlog();
+
                     if ($log->status === 'scheduled') {
                         $workflow = Workflow::load_by_id($log->workflowId);
 
@@ -831,6 +833,8 @@ if (!class_exists('PP_Notifications_Log')) {
                     </div>
                     <?php
                     $output = ob_get_clean();
+
+                    $log->restoreCurrentBlog();
                 } else {
                     // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $this->get_error_markup(esc_html__('Notification log not found', 'publishpress'));
