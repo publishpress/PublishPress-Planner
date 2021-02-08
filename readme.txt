@@ -122,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
+* Fixed: Fix PHP warning "Creating default object from empty value in publishpress-authors.php:772", correctly assigning the filter "pp_pre_insert_editorial_comment". (Allows PublishPress Revisions integration), #231;
 * Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
 
 = [3.1.0] - 2021-01-20 =
