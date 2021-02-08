@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
+
 = [3.1.0] - 2021-01-20 =
 
 * Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288
