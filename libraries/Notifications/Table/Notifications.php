@@ -73,7 +73,7 @@ class Notifications extends Base
         }
 
         /** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
-        echo '<abbr title="' . esc_attr($t_time) . '">' . $h_time . '</abbr>';
+        echo '<abbr title="' . esc_attr($t_time) . '">' . esc_html($h_time) . '</abbr>';
     }
 
     /**
@@ -91,8 +91,8 @@ class Notifications extends Base
 
         /* -- Ordering parameters -- */
         // Parameters that are going to be used to order the result
-        $orderby = !empty($_GET["orderby"]) ? $wpdb->_real_escape($_GET["orderby"]) : '';
-        $order   = !empty($_GET["order"]) ? $wpdb->_real_escape($_GET["order"]) : 'DESC';
+        $orderby = !empty($_GET["orderby"]) ? $wpdb->_real_escape(sanitize_key($_GET["orderby"])) : '';
+        $order   = !empty($_GET["order"]) ? $wpdb->_real_escape(sanitize_key($_GET["order"])) : 'DESC';
 
         $posts_per_page = 10;
 
@@ -120,7 +120,7 @@ class Notifications extends Base
         $totalitems = $query->post_count;
 
         // Which page is this?
-        $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape($_GET["paged"]) : '';
+        $paged = !empty($_GET["paged"]) ? $wpdb->_real_escape((int)$_GET["paged"]) : '';
 
         // Page Number
         if (empty($paged) || !is_numeric($paged) || $paged <= 0) {
@@ -218,8 +218,8 @@ class Notifications extends Base
         ?>
         <label class="screen-reader-text"
                for="cb-select-<?php echo esc_attr($post->ID); ?>"><?php echo sprintf(
-                __('Select %s'),
-                $post->post_title
+                esc_html__('Select %s'),
+                esc_html($post->post_title)
             ); ?></label>
         <input type="checkbox" name="linkcheck[]" id="cb-select-<?php echo esc_attr($post->ID); ?>"
                value="<?php echo esc_attr($post->ID); ?>"/>
@@ -232,6 +232,6 @@ class Notifications extends Base
      */
     public function no_items()
     {
-        _e('You don\'t have any notifications', 'publishpress');
+        esc_html_e('You don\'t have any notifications', 'publishpress');
     }
 }

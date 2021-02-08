@@ -108,7 +108,7 @@ class CliHandler
 
         $comment_content = 'This is a fake comment added by the cli script for tests purpose';
 
-        // Set comment data
+        // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
         $data = [
             'comment_post_ID'      => (int)$assocArgs['post_id'],
             'comment_author'       => esc_sql($current_user->display_name),
@@ -125,6 +125,7 @@ class CliHandler
             // Set to -1?
             'comment_approved'     => \PP_Editorial_Comments::comment_type,
         ];
+        // phpcs:enable
 
         // Insert Comment
         $comment_id = wp_insert_comment($data);

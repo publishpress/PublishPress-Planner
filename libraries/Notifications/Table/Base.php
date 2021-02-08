@@ -345,22 +345,22 @@ class Base
         $input_id = $input_id . '-search-input';
 
         if (!empty($_REQUEST['orderby'])) {
-            echo '<input type="hidden" name="orderby" value="' . esc_attr($_REQUEST['orderby']) . '" />';
+            echo '<input type="hidden" name="orderby" value="' . esc_attr(sanitize_text_field($_REQUEST['orderby'])) . '" />';
         }
         if (!empty($_REQUEST['order'])) {
-            echo '<input type="hidden" name="order" value="' . esc_attr($_REQUEST['order']) . '" />';
+            echo '<input type="hidden" name="order" value="' . esc_attr(sanitize_key($_REQUEST['order'])) . '" />';
         }
         if (!empty($_REQUEST['post_mime_type'])) {
-            echo '<input type="hidden" name="post_mime_type" value="' . esc_attr($_REQUEST['post_mime_type']) . '" />';
+            echo '<input type="hidden" name="post_mime_type" value="' . esc_attr(sanitize_text_field($_REQUEST['post_mime_type'])) . '" />';
         }
         if (!empty($_REQUEST['detached'])) {
-            echo '<input type="hidden" name="detached" value="' . esc_attr($_REQUEST['detached']) . '" />';
+            echo '<input type="hidden" name="detached" value="' . esc_attr(sanitize_text_field($_REQUEST['detached'])) . '" />';
         } ?>
         <p class="search-box">
-            <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo $text; ?>:</label>
+            <label class="screen-reader-text" for="<?php echo esc_attr($input_id); ?>"><?php echo esc_html($text); ?>:</label>
             <input type="search" id="<?php echo esc_attr($input_id); ?>" name="s"
                    value="<?php _admin_search_query(); ?>"/>
-            <?php submit_button($text, '', '', false, ['id' => 'search-submit']); ?>
+            <?php submit_button(esc_html($text), '', '', false, ['id' => 'search-submit']); ?>
         </p>
         <?php
     }
@@ -443,11 +443,11 @@ class Base
         }
 
         if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
-            return $_REQUEST['action'];
+            return sanitize_key($_REQUEST['action']);
         }
 
         if (isset($_REQUEST['action2']) && -1 != $_REQUEST['action2']) {
-            return $_REQUEST['action2'];
+            return sanitize_key($_REQUEST['action2']);
         }
 
         return false;
@@ -546,7 +546,7 @@ class Base
      */
     public function get_columns()
     {
-        die('function Base::get_columns() must be over-ridden in a sub-class.');
+        return [];
     }
 
     /**
@@ -571,7 +571,7 @@ class Base
 
             <tbody id="the-list"<?php
             if ($singular) {
-                echo " data-wp-lists='list:$singular'";
+                echo ' data-wp-lists="list:' . esc_attr($singular) . '"';
             } ?>>
             <?php $this->display_rows_or_placeholder(); ?>
             </tbody>
@@ -653,11 +653,11 @@ class Base
             return;
         }
 
-        echo '<label for="bulk-action-selector-' . esc_attr($which) . '" class="screen-reader-text">' . __(
+        echo '<label for="bulk-action-selector-' . esc_attr($which) . '" class="screen-reader-text">' . esc_html__(
                 'Select bulk action'
             ) . '</label>';
-        echo '<select name="action' . $two . '" id="bulk-action-selector-' . esc_attr($which) . "\">\n";
-        echo '<option value="-1">' . __('Bulk Actions') . "</option>\n";
+        echo '<select name="action' . esc_attr($two) . '" id="bulk-action-selector-' . esc_attr($which) . "\">\n";
+        echo '<option value="-1">' . esc_html__('Bulk Actions') . "</option>\n";
 
         foreach ($this->_actions as $name => $title) {
             $class = 'edit' === $name ? ' class="hide-if-no-js"' : '';
@@ -735,7 +735,10 @@ class Base
         $removable_query_args = wp_removable_query_args();
 
         $protocol    = is_ssl() ? 'https' : 'http';
-        $current_url = set_url_scheme($protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        $host        = isset($_SERVER['HTTP_HOST']) ? esc_url_raw($_SERVER['HTTP_HOST']) : '';
+        $request_uri = isset($_SERVER['REQUEST_URI']) ? esc_url_raw($_SERVER['REQUEST_URI']) : '';
+
+        $current_url = set_url_scheme($protocol . '://' . $host . $request_uri);
 
         $current_url = remove_query_arg($removable_query_args, $current_url);
 
@@ -870,11 +873,13 @@ class Base
         list($columns, $hidden, $sortable, $primary) = $this->get_column_info();
 
         $protocol    = is_ssl() ? 'https' : 'http';
-        $current_url = set_url_scheme($protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        $host        = isset($_SERVER['HTTP_HOST']) ? esc_url_raw($_SERVER['HTTP_HOST']) : '';
+        $request_uri = isset($_SERVER['REQUEST_URI']) ? esc_url_raw($_SERVER['REQUEST_URI']) : '';
+        $current_url = set_url_scheme($protocol . '://' . $host . $request_uri);
         $current_url = remove_query_arg('paged', $current_url);
 
         if (isset($_GET['orderby'])) {
-            $current_orderby = $_GET['orderby'];
+            $current_orderby = sanitize_key($_GET['orderby']);
         } else {
             $current_orderby = '';
         }
@@ -940,7 +945,14 @@ class Base
                 $class = "class='" . join(' ', $class) . "'";
             }
 
-            echo "<$tag $scope $id $class>$column_display_name</$tag>";
+            echo sprintf(
+                '<%s %s %s %s>%s<%1$s>',
+                esc_html($tag),
+                esc_html($scope),
+                esc_html($id),
+                esc_html($class),
+                esc_html($column_display_name)
+            );
         }
     }
 
@@ -1344,10 +1356,11 @@ class Base
                     $classes[] = 'current';
                 }
                 printf(
-                    "<a href='%s' class='%s' id='view-switch-$mode'><span class='screen-reader-text'>%s</span></a>\n",
+                    "<a href='%s' class='%s' id='view-switch-%s'><span class='screen-reader-text'>%s</span></a>\n",
                     esc_url(add_query_arg('mode', $mode)),
                     esc_attr(implode(' ', $classes)),
-                    $title
+                    esc_attr($mode),
+                    esc_html($title)
                 );
             } ?>
         </div>
@@ -1385,7 +1398,7 @@ class Base
         if (!$approved_comments && !$pending_comments) {
             printf(
                 '<span aria-hidden="true">—</span><span class="screen-reader-text">%s</span>',
-                __('No comments')
+                esc_html__('No comments')
             );
             // Approved comments have different display depending on some conditions.
         } elseif ($approved_comments) {
@@ -1397,14 +1410,14 @@ class Base
                         admin_url('edit-comments.php')
                     )
                 ),
-                $approved_comments_number,
-                $pending_comments ? $approved_phrase : $approved_only_phrase
+                esc_html($approved_comments_number),
+                $pending_comments ? esc_html($approved_phrase) : esc_html($approved_only_phrase)
             );
         } else {
             printf(
                 '<span class="post-com-count post-com-count-no-comments"><span class="comment-count comment-count-no-comments" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
-                $approved_comments_number,
-                $pending_comments ? __('No approved comments') : __('No comments')
+                esc_html($approved_comments_number),
+                $pending_comments ? esc_html__('No approved comments') : esc_html__('No comments')
             );
         }
 
@@ -1417,14 +1430,14 @@ class Base
                         admin_url('edit-comments.php')
                     )
                 ),
-                $pending_comments_number,
-                $pending_phrase
+                esc_html($approved_comments_number),
+                esc_html($pending_phrase)
             );
         } else {
             printf(
                 '<span class="post-com-count post-com-count-pending post-com-count-no-pending"><span class="comment-count comment-count-no-pending" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
-                $pending_comments_number,
-                $approved_comments ? __('No pending comments') : __('No comments')
+                esc_html($approved_comments_number),
+                $approved_comments ? esc_html__('No pending comments') : esc_html__('No comments')
             );
         }
     }
