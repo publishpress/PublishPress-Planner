@@ -32,7 +32,8 @@
         "pimple/pimple": "3.2.3.*",
         "twig/twig": "1.42.5.*",
         "symfony/polyfill-ctype": "1.19.*",
-        "publishpress/wordpress-version-notices": "^1"
+        "publishpress/wordpress-version-notices": "^1",
+        "sabre/vobject": "^3.4"
     },
     "require-dev": {
         "publishpress/publishpress-plugin-builder": "^1.2",
