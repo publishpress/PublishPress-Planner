@@ -55,6 +55,7 @@ class Main extends Base_Step
 
         $template_context['subject'] = esc_attr($this->get_metadata(static::META_KEY_SUBJECT, true));
         $template_context['body']    = $this->get_metadata(static::META_KEY_BODY, true);
+        $template_context['nonce']   = wp_create_nonce('publishpress_notification_content');
 
         return $template_context;
     }
@@ -74,11 +75,13 @@ class Main extends Base_Step
             update_post_meta($id, static::META_KEY_BODY, false);
         }
 
-        $params = $_POST['publishpress_notif']['content_main'];
-
         // Sanitize the data
-        $subject = sanitize_text_field($params['subject'], '');
-        $body    = wp_kses_post($params['body']);
+        $subject = isset($_POST['publishpress_notif']['content_main']['subject']) ? sanitize_text_field(
+            $_POST['publishpress_notif']['content_main']['subject']
+        ) : '';
+        $body    = isset($_POST['publishpress_notif']['content_main']['body']) ? wp_kses_post(
+            $_POST['publishpress_notif']['content_main']['body']
+        ) : '';
 
         update_post_meta($id, static::META_KEY_SUBJECT, $subject);
         update_post_meta($id, static::META_KEY_BODY, $body);

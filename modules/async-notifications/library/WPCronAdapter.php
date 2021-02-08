@@ -66,8 +66,11 @@ class WPCronAdapter implements SchedulerInterface
         );
 
         if (false === $timestamp) {
-            // Abort.
-            error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPostId);
+            if (defined('WP_DEBUG') && WP_DEBUG === true) {
+                // phpcs:disable WordPress.PHP.DevelopmentFunctions
+                error_log('PublishPress aborted a notification. Invalid timestamp for the workflow ' . $workflowPostId);
+                // phpcs:enable
+            }
 
             return;
         }
@@ -85,7 +88,7 @@ class WPCronAdapter implements SchedulerInterface
 
     private function getCronId($args)
     {
-        return md5(serialize([$args]));
+        return md5(maybe_serialize([$args]));
     }
 
     /**

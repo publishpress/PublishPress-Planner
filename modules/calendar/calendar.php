@@ -316,7 +316,7 @@ if (!class_exists('PP_Calendar')) {
             if (!isset($_GET['end'])) {
                 $end = 'm2';
             } else {
-                $end = preg_replace('/[^wm0-9]/', '', $_GET['end']);
+                $end = preg_replace('/[^wm0-9]/', '', sanitize_text_field($_GET['end']));
             }
 
             if (preg_match('/m[0-9]*/', $end)) {
@@ -556,8 +556,9 @@ if (!class_exists('PP_Calendar')) {
         {
             global $wpdb;
 
-            // Nonce check!
-            if (!wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
+            if (!isset($_POST['nonce'])
+                || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')
+            ) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
@@ -574,11 +575,11 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Check that the new date passed is a valid one
-            $next_date_full = strtotime($_POST['next_date']);
+            $next_date_full = strtotime(sanitize_text_field($_POST['next_date']));
             if (!$next_date_full) {
                 $this->print_ajax_response(
                     'error',
-                    __('Something is wrong with the format for the new date.', 'publishpress')
+                    esc_html__('Something is wrong with the format for the new date.', 'publishpress')
                 );
             }
 
@@ -806,7 +807,7 @@ if (!class_exists('PP_Calendar')) {
             $post_query_args  = [];
             $calendar_filters = $this->calendar_filters();
             foreach ($calendar_filters as $filter) {
-                if (isset($_GET[$filter]) && false !== ($value = $this->sanitize_filter($filter, $_GET[$filter]))) {
+                if (isset($_GET[$filter]) && false !== ($value = $this->sanitize_filter($filter, sanitize_text_field($_GET[$filter])))) {
                     $post_query_args[$filter] = $value;
                 }
             }
@@ -928,7 +929,9 @@ if (!class_exists('PP_Calendar')) {
                 wp_die($this->module->messages['invalid-permissions']);
             }
 
-            if (!isset($_GET['_wpnonce']) || !wp_verify_nonce($_GET['_wpnonce'], 'pp-regenerate-ics-key')) {
+            if (!isset($_GET['_wpnonce'])
+                || !wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), 'pp-regenerate-ics-key')
+            ) {
                 wp_die($this->module->messages['nonce-failed']);
             }
 
@@ -975,7 +978,7 @@ if (!class_exists('PP_Calendar')) {
 
             // Sanitize and validate any newly added filters
             foreach ($old_filters as $key => $old_value) {
-                if (isset($_GET[$key]) && false !== ($new_value = $this->sanitize_filter($key, $_GET[$key]))) {
+                if (isset($_GET[$key]) && false !== ($new_value = $this->sanitize_filter($key, sanitize_text_field($_GET[$key])))) {
                     $filters[$key] = $new_value;
                 } else {
                     $filters[$key] = $old_value;
@@ -1088,8 +1091,8 @@ if (!class_exists('PP_Calendar')) {
             // Get the custom description for this page
             $description = sprintf(
                 '%s <span class="time-range">%s</span>',
-                __('Calendar', 'publishpress'),
-                $this->calendar_time_range()
+                esc_html__('Calendar', 'publishpress'),
+                esc_html__($this->calendar_time_range())
             );
 
             $authors = pp_get_users_with_author_permissions();
@@ -1102,7 +1105,6 @@ if (!class_exists('PP_Calendar')) {
                     'user'     => wp_get_current_user()->user_login,
                     'user_key' => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
                 ];
-                //                $download_link = add_query_arg($args, admin_url('admin-ajax.php'));
 
                 // Prepare the subscribe link for the feed
                 unset($args['action']);
@@ -1116,48 +1118,48 @@ if (!class_exists('PP_Calendar')) {
 
                 ob_start(); ?>
                 <div id="publishpress-calendar-ics-subs" style="display:none;">
-                    <h3><?php echo __('PublishPress', 'publishpress'); ?>
-                        - <?php echo __('Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    <h3><?php echo esc_html__('PublishPress', 'publishpress'); ?>
+                        - <?php echo esc_html__('Subscribe in iCal or Google Calendar', 'publishpress'); ?>
                     </h3>
 
                     <div>
-                        <h4><?php echo __('Start date', 'publishpress'); ?></h4>
+                        <h4><?php echo esc_html__('Start date', 'publishpress'); ?></h4>
                         <select id="publishpress-start-date">
                             <option value="0"
-                                    selected="selected"><?php echo __('Current week', 'publishpress'); ?></option>
-                            <option value="1"><?php echo __('One month ago', 'publishpress'); ?></option>
-                            <option value="2"><?php echo __('Two months ago', 'publishpress'); ?></option>
-                            <option value="3"><?php echo __('Three months ago', 'publishpress'); ?></option>
-                            <option value="4"><?php echo __('Four months ago', 'publishpress'); ?></option>
-                            <option value="5"><?php echo __('Five months ago', 'publishpress'); ?></option>
-                            <option value="6"><?php echo __('Six months ago', 'publishpress'); ?></option>
+                                    selected="selected"><?php echo esc_html__('Current week', 'publishpress'); ?></option>
+                            <option value="1"><?php echo esc_html__('One month ago', 'publishpress'); ?></option>
+                            <option value="2"><?php echo esc_html__('Two months ago', 'publishpress'); ?></option>
+                            <option value="3"><?php echo esc_html__('Three months ago', 'publishpress'); ?></option>
+                            <option value="4"><?php echo esc_html__('Four months ago', 'publishpress'); ?></option>
+                            <option value="5"><?php echo esc_html__('Five months ago', 'publishpress'); ?></option>
+                            <option value="6"><?php echo esc_html__('Six months ago', 'publishpress'); ?></option>
                         </select>
 
                         <br/>
 
-                        <h4><?php echo __('End date', 'publishpress'); ?></h4>
+                        <h4><?php echo esc_html__('End date', 'publishpress'); ?></h4>
                         <select id="publishpress-end-date">
-                            <optgroup label="<?php echo __('Weeks'); ?>">
-                                <option value="w1"><?php echo __('One week', 'publishpress'); ?></option>
-                                <option value="w2"><?php echo __('Two weeks', 'publishpress'); ?></option>
-                                <option value="w3"><?php echo __('Three weeks', 'publishpress'); ?></option>
-                                <option value="w4"><?php echo __('Four weeks', 'publishpress'); ?></option>
+                            <optgroup label="<?php echo esc_attr__('Weeks'); ?>">
+                                <option value="w1"><?php echo esc_html__('One week', 'publishpress'); ?></option>
+                                <option value="w2"><?php echo esc_html__('Two weeks', 'publishpress'); ?></option>
+                                <option value="w3"><?php echo esc_html__('Three weeks', 'publishpress'); ?></option>
+                                <option value="w4"><?php echo esc_html__('Four weeks', 'publishpress'); ?></option>
                             </optgroup>
 
-                            <optgroup label="<?php echo __('Months'); ?>">
-                                <option value="m1"><?php echo __('One month', 'publishpress'); ?></option>
+                            <optgroup label="<?php echo esc_attr__('Months'); ?>">
+                                <option value="m1"><?php echo esc_html__('One month', 'publishpress'); ?></option>
                                 <option value="m2"
-                                        selected="selected"><?php echo __('Two months', 'publishpress'); ?></option>
-                                <option value="m3"><?php echo __('Three months', 'publishpress'); ?></option>
-                                <option value="m4"><?php echo __('Four months', 'publishpress'); ?></option>
-                                <option value="m5"><?php echo __('Five months', 'publishpress'); ?></option>
-                                <option value="m6"><?php echo __('Six months', 'publishpress'); ?></option>
-                                <option value="m7"><?php echo __('Seven months', 'publishpress'); ?></option>
-                                <option value="m8"><?php echo __('Eight months', 'publishpress'); ?></option>
-                                <option value="m9"><?php echo __('Nine months', 'publishpress'); ?></option>
-                                <option value="m10"><?php echo __('Ten months', 'publishpress'); ?></option>
-                                <option value="m11"><?php echo __('Eleven months', 'publishpress'); ?></option>
-                                <option value="m12"><?php echo __('Twelve months', 'publishpress'); ?></option>
+                                        selected="selected"><?php echo esc_html__('Two months', 'publishpress'); ?></option>
+                                <option value="m3"><?php echo esc_html__('Three months', 'publishpress'); ?></option>
+                                <option value="m4"><?php echo esc_html__('Four months', 'publishpress'); ?></option>
+                                <option value="m5"><?php echo esc_html__('Five months', 'publishpress'); ?></option>
+                                <option value="m6"><?php echo esc_html__('Six months', 'publishpress'); ?></option>
+                                <option value="m7"><?php echo esc_html__('Seven months', 'publishpress'); ?></option>
+                                <option value="m8"><?php echo esc_html__('Eight months', 'publishpress'); ?></option>
+                                <option value="m9"><?php echo esc_html__('Nine months', 'publishpress'); ?></option>
+                                <option value="m10"><?php echo esc_html__('Ten months', 'publishpress'); ?></option>
+                                <option value="m11"><?php echo esc_html__('Eleven months', 'publishpress'); ?></option>
+                                <option value="m12"><?php echo esc_html__('Twelve months', 'publishpress'); ?></option>
                             </optgroup>
                         </select>
                     </div>
@@ -1167,17 +1169,17 @@ if (!class_exists('PP_Calendar')) {
                     <a href="<?php echo esc_url($subscription_link); ?>" id="publishpress-ics-download"
                        style="margin-right: 20px;" class="button">
                         <span class="dashicons dashicons-download" style="text-decoration: none"></span>
-                        <?php echo __('Download .ics file'); ?></a>
+                        <?php echo esc_html__('Download .ics file'); ?></a>
 
                     <button data-clipboard-text="<?php echo esc_attr($subscription_link); ?>" id="publishpress-ics-copy"
                             class="button-primary">
                         <span class="dashicons dashicons-clipboard" style="text-decoration: none"></span>
-                        <?php echo __('Copy to the clipboard'); ?>
+                        <?php echo esc_html__('Copy to the clipboard'); ?>
                     </button>
                 </div>
 
                 <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
-                    <?php echo __('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    <?php echo esc_html__('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
                 </a>
                 <?php
                 $description .= ob_get_clean();
@@ -1193,31 +1195,37 @@ if (!class_exists('PP_Calendar')) {
                     echo '<div id="trashed-message" class="updated"><p>';
                     if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
                         printf(
-                            _n('Post moved to the trash.', '%d posts moved to the trash.', (int)$_GET['trashed']),
-                            number_format_i18n($_GET['trashed'])
+                            _n(
+                                'Post moved to the trash.',
+                                '%d posts moved to the trash.',
+                                (int)$_GET['trashed']
+                            ),
+                            number_format_i18n((int)$_GET['trashed'])
                         );
-                        $ids       = isset($_GET['ids']) ? $_GET['ids'] : 0;
+                        $ids       = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                         $pid       = explode(',', $ids);
                         $post_type = get_post_type($pid[0]);
                         echo ' <a href="' . esc_url(
                                 wp_nonce_url(
-                                    "edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids",
+                                    esc_url_raw("edit.php?post_type=$post_type&doaction=undo&action=untrash&ids=$ids"),
                                     'bulk-posts'
                                 )
-                            ) . '">' . __(
+                            ) . '">' . esc_html__(
                                 'Undo',
                                 'publishpress'
                             ) . ' <span class="dashicons dashicons-undo"></span></a><br />';
                         unset($_GET['trashed']);
                     }
-                    if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
+
+                    $untrashed = (int)$_GET['untrashed'];
+                    if (isset($_GET['untrashed']) && $untrashed) {
                         printf(
                             _n(
                                 'Post restored from the Trash.',
                                 '%d posts restored from the Trash.',
-                                (int)$_GET['untrashed']
+                                $untrashed
                             ),
-                            number_format_i18n($_GET['untrashed'])
+                            number_format_i18n($untrashed)
                         );
                         unset($_GET['undeleted']);
                     }
@@ -1350,7 +1358,7 @@ if (!class_exists('PP_Calendar')) {
                                         id="<?php echo esc_attr($week_single_date); ?>">
                                         <div class="day-wrapper">
                                             <div class='schedule-new-post-label'>
-                                                <?php echo __('Click to create', 'publishpress'); ?>
+                                                <?php echo esc_html__('Click to create', 'publishpress'); ?>
                                             </div>
                                             <?php $class = ($week_single_date == date(
                                                     'Y-m-d',
@@ -1386,7 +1394,7 @@ if (!class_exists('PP_Calendar')) {
                                             <?php if ($this->hidden) : ?>
                                                 <a class="show-more"
                                                    href="#"><?php printf(
-                                                        __('Show %d more', 'publishpress'),
+                                                        esc_html__('Show %d more', 'publishpress'),
                                                         $this->hidden
                                                     ); ?></a>
                                             <?php endif; ?>
@@ -1400,14 +1408,14 @@ if (!class_exists('PP_Calendar')) {
                                                     <?php if (count($post_types) === 1) : ?>
                                                         <h1>
                                                             <?php echo sprintf(
-                                                                __(
+                                                                esc_html__(
                                                                     'Schedule a %1$s for %2$s',
                                                                     'publishpress'
                                                                 ),
                                                                 $this->get_quick_create_post_type_name($post_types),
                                                                 $date_formatted
                                                             ); ?>
-                                                            <input type="hidden" id="post-insert-dialog-post-type-<?php echo $week_single_date; ?>"
+                                                            <input type="hidden" id="post-insert-dialog-post-type-<?php echo esc_attr($week_single_date); ?>"
                                                                    name="post-insert-dialog-post-type"
                                                                    class="post-insert-dialog-post-type"
                                                                    value="<?php echo esc_attr($post_types[0]); ?>"/>
@@ -1415,7 +1423,7 @@ if (!class_exists('PP_Calendar')) {
                                                     <?php else : ?>
                                                         <h1>
                                                             <?php echo sprintf(
-                                                                __(
+                                                                esc_html__(
                                                                     'Schedule content for %1$s',
                                                                     'publishpress'
                                                                 ),
@@ -1424,7 +1432,7 @@ if (!class_exists('PP_Calendar')) {
                                                         </h1>
                                                         <label for="post-insert-dialog-post-type">
                                                             <?php echo __('Type', 'publishpress'); ?>
-                                                            <select id="post-insert-dialog-post-type-<?php echo $week_single_date; ?>"
+                                                            <select id="post-insert-dialog-post-type-<?php echo esc_attr($week_single_date); ?>"
                                                                     name="post-insert-dialog-post-type"
                                                                     class="post-insert-dialog-post-type">
                                                                 <?php foreach ($post_types as $type) : ?>
@@ -1441,7 +1449,7 @@ if (!class_exists('PP_Calendar')) {
 
                                                     <label for="post-insert-dialog-post-author">
                                                         <?php echo __('Author', 'publishpress'); ?>
-                                                        <select id="post-insert-dialog-post-author-<?php echo $week_single_date; ?>"
+                                                        <select id="post-insert-dialog-post-author-<?php echo esc_attr($week_single_date); ?>"
                                                                 name="post-insert-dialog-post-author"
                                                                 class="post-insert-dialog-post-author">
                                                             <option value=""></option>
@@ -1449,28 +1457,28 @@ if (!class_exists('PP_Calendar')) {
                                                     </label>
 
                                                     <div>
-                                                        <label for="post-insert-dialog-post-status"><?php _e(
+                                                        <label for="post-insert-dialog-post-status"><?php esc_html_e(
                                                                 'Status',
                                                                 'publishpress'
                                                             ); ?></label>
                                                         <select
-                                                            id="post-insert-dialog-post-status-<?php echo $week_single_date; ?>"
+                                                            id="post-insert-dialog-post-status-<?php echo esc_attr($week_single_date); ?>"
                                                             name="post-insert-dialog-post-status"
                                                             class="post-insert-dialog-post-status"
                                                         >
                                                             <?php foreach ($this->get_post_statuses() as $status): ?>
                                                                 <option
-                                                                    value="<?php echo $status->slug; ?>"
+                                                                    value="<?php echo esc_attr($status->slug); ?>"
                                                                     <?php echo $status->slug === $default_post_status ? 'selected' : ''; ?>
                                                                 >
-                                                                    <?php echo $status->name; ?>
+                                                                    <?php echo esc_html($status->name); ?>
                                                                 </option>
                                                             <?php endforeach; ?>
                                                         </select>
                                                     </div>
                                                     <div>
                                                         <label
-                                                            for="post-insert-dialog-post-publish-time"><?php _e(
+                                                            for="post-insert-dialog-post-publish-time"><?php esc_html_e(
                                                                 'Publish Time',
                                                                 'publishpress'
                                                             ); ?></label>
@@ -1479,7 +1487,7 @@ if (!class_exists('PP_Calendar')) {
                                                             id="post-insert-dialog-post-publish-time-<?php echo $week_single_date; ?>"
                                                             name="post-insert-dialog-post-publish-time"
                                                             class="post-insert-dialog-post-publish-time"
-                                                            value="<?php echo isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : ''; ?>"
+                                                            value="<?php echo isset($this->module->options->default_publish_time) ? esc_attr($this->module->options->default_publish_time) : ''; ?>"
                                                         />
                                                     </div>
 
@@ -1577,6 +1585,7 @@ if (!class_exists('PP_Calendar')) {
 
             $show_posts_publish_time = $this->showPostsPublishTime($post->post_status);
 
+            $post_publish_date_time = '';
             if ($show_posts_publish_time) {
                 $post_publish_datetime       = get_the_date('c', $post);
                 $post_publish_date_timestamp = get_post_time('U', false, $post);
@@ -1641,13 +1650,13 @@ if (!class_exists('PP_Calendar')) {
                                 <?php if ($show_posts_publish_time): ?>
                                     <time
                                         class="item-headline-time"
-                                        datetime="<?php echo $post_publish_datetime; ?>"
-                                        title="<?php echo date_i18n(
+                                        datetime="<?php echo esc_attr($post_publish_datetime); ?>"
+                                        title="<?php echo esc_attr(date_i18n(
                                             $this->default_date_time_format,
                                             $post_publish_date_timestamp
-                                        ); ?>"
+                                        )); ?>"
                                     >
-                                    <?php echo date_i18n($posts_publish_time_format, $post_publish_date_timestamp); ?>
+                                    <?php echo esc_html(date_i18n($posts_publish_time_format, $post_publish_date_timestamp)); ?>
                                 </time>
                                 <?php endif; ?>
                                 <strong><?php echo $title; ?></strong>
@@ -1659,8 +1668,8 @@ if (!class_exists('PP_Calendar')) {
                     </div>
                     <?php if (!$this->current_user_can_modify_post($post)) : ?>
                         <div class="item-inner read-only-notice"
-                             title="<?php _e('You can\'t edit or move this post'); ?>">
-                            <?php _e('Read only'); ?>
+                             title="<?php esc_attr_e('You can\'t edit or move this post'); ?>">
+                            <?php esc_html_e('Read only'); ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -1775,7 +1784,7 @@ if (!class_exists('PP_Calendar')) {
                             <td class="value"><?php echo esc_html($values['value']); ?></td>
                         <?php else : ?>
                             <td class="value">
-                                <em class="none"><?php echo _e('None', 'publishpress'); ?></em>
+                                <em class="none"><?php echo esc_html_e('None', 'publishpress'); ?></em>
                             </td>
                         <?php endif; ?>
                     </tr>
@@ -1832,7 +1841,7 @@ if (!class_exists('PP_Calendar')) {
                         ) . '</a>';
                 }
                 // Save metadata
-                $item_actions['save hidden'] = '<a href="#savemetadata" id="save-editorial-metadata" class="post-' . $post->ID . '" title="' . esc_attr(
+                $item_actions['save hidden'] = '<a href="#savemetadata" id="save-editorial-metadata" class="post-' . esc_attr($post->ID) . '" title="' . esc_attr(
                         sprintf(
                             __(
                                 'Save &#8220;%s&#8221;',
@@ -1865,7 +1874,7 @@ if (!class_exists('PP_Calendar')) {
                 case 'text':
                 case 'location':
                 case 'number':
-                    return '<input type="text" class="metadata-edit-' . esc_attr($type) . '" value="' . $value . '"/>';
+                    return '<input type="text" class="metadata-edit-' . esc_attr($type) . '" value="' . esc_html($value) . '"/>';
                     break;
                 case 'paragraph':
                     return '<textarea type="text" class="metadata-edit-' . esc_attr(
@@ -1910,7 +1919,7 @@ if (!class_exists('PP_Calendar')) {
                         ]
                     );
                     break;
-            }// End switch().
+            }
         }
 
         /**
@@ -2007,7 +2016,7 @@ if (!class_exists('PP_Calendar')) {
                 if (current_user_can($ed_cap, $post->ID)) {
                     $information_fields[$key]['editable'] = true;
                 }
-            }// End foreach().
+            }
 
             $information_fields = apply_filters('pp_calendar_item_information_fields', $information_fields, $post->ID);
 
@@ -2054,23 +2063,23 @@ if (!class_exists('PP_Calendar')) {
                         <input type="hidden" name="start_date" value="<?php echo esc_attr($filters['start_date']); ?>"/>
                         <?php
                         foreach ($this->calendar_filters() as $select_id => $select_name) {
-                            echo '<input type="hidden" name="' . $select_name . '" value="" />';
+                            echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                         } ?>
                         <input type="submit" id="post-query-clear" class="button-secondary button"
-                               value="<?php _e('Reset', 'publishpress'); ?>"/>
+                               value="<?php esc_html_e('Reset', 'publishpress'); ?>"/>
                     </form>
                 </li>
 
                 <?php /** Previous and next navigation items (translatable so they can be increased if needed)**/ ?>
                 <li class="date-change next-week">
-                    <a title="<?php esc_attr(printf(__('Forward 1 week', 'publishpress'))); ?>"
+                    <a title="<?php esc_attr(sprintf(__('Forward 1 week', 'publishpress'))); ?>"
                        href="<?php echo esc_url(
                            $this->get_pagination_link(
                                'next',
                                $filters,
                                1
                            )
-                       ); ?>"><?php _e('&rsaquo;', 'publishpress'); ?></a>
+                       ); ?>"><?php esc_html_e('&rsaquo;', 'publishpress'); ?></a>
                     <?php if ($this->total_weeks > 1) : ?>
                         <a title="<?php esc_attr(
                             printf(
@@ -2083,7 +2092,7 @@ if (!class_exists('PP_Calendar')) {
                                    'next',
                                    $filters
                                )
-                           ); ?>"><?php _e('&raquo;', 'publishpress'); ?></a>
+                           ); ?>"><?php esc_html_e('&raquo;', 'publishpress'); ?></a>
                     <?php endif; ?>
                 </li>
                 <li class="date-change today">
@@ -2093,29 +2102,29 @@ if (!class_exists('PP_Calendar')) {
                             date(get_option('date_format'), current_time('timestamp'))
                         )
                     ); ?>"
-                       href="<?php echo esc_url($this->get_pagination_link('next', $filters, 0)); ?>"><?php _e(
+                       href="<?php echo esc_url($this->get_pagination_link('next', $filters, 0)); ?>"><?php esc_html_e(
                             'Today',
                             'publishpress'
                         ); ?></a>
                 </li>
                 <li class="date-change previous-week">
                     <?php if ($this->total_weeks > 1) : ?>
-                        <a title="<?php esc_attr(printf(__('Back %d weeks', 'publishpress'), $this->total_weeks)); ?>"
+                        <a title="<?php esc_attr(sprintf(__('Back %d weeks', 'publishpress'), $this->total_weeks)); ?>"
                            href="<?php echo esc_url(
                                $this->get_pagination_link(
                                    'previous',
                                    $filters
                                )
-                           ); ?>"><?php _e('&laquo;', 'publishpress'); ?></a>
+                           ); ?>"><?php esc_html_e('&laquo;', 'publishpress'); ?></a>
                     <?php endif; ?>
-                    <a title="<?php esc_attr(printf(__('Back 1 week', 'publishpress'))); ?>"
+                    <a title="<?php esc_attr(sprintf(__('Back 1 week', 'publishpress'))); ?>"
                        href="<?php echo esc_url(
                            $this->get_pagination_link(
                                'previous',
                                $filters,
                                1
                            )
-                       ); ?>"><?php _e('&lsaquo;', 'publishpress'); ?></a>
+                       ); ?>"><?php esc_html_e('&lsaquo;', 'publishpress'); ?></a>
                 </li>
                 <li class="ajax-actions">
                     <img class="waiting" style="display:none;"
@@ -2832,7 +2841,7 @@ if (!class_exists('PP_Calendar')) {
         public function handle_ajax_insert_post()
         {
             // Nonce check!
-            if (!wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
@@ -2892,7 +2901,8 @@ if (!class_exists('PP_Calendar')) {
             $post_date           = sanitize_text_field($_POST['pp_insert_date']);
             $post_date_timestamp = strtotime($post_date);
 
-            $post_publish_time = sanitize_text_field(trim($_POST['pp_insert_publish_time']));
+            $post_publish_time = trim(sanitize_text_field($_POST['pp_insert_publish_time']));
+            $post_publish_date_time = '';
             if (!empty($post_publish_time)) {
                 $post_publish_date_time = sprintf(
                     '%s %s',
@@ -3020,7 +3030,7 @@ if (!class_exists('PP_Calendar')) {
         {
             global $wpdb;
 
-            if (!wp_verify_nonce($_POST['nonce'], 'pp-calendar-modify')) {
+            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
@@ -3079,7 +3089,7 @@ if (!class_exists('PP_Calendar')) {
                 switch ($_POST['metadata_type']) {
                     case 'taxonomy':
                     case 'taxonomy hierarchical':
-                        $response = wp_set_post_terms($post->ID, $_POST['metadata_value'], $_POST['metadata_term']);
+                        $response = wp_set_post_terms($post->ID, sanitize_text_field($_POST['metadata_value']), sanitize_text_field($_POST['metadata_term']));
                         break;
                     default:
                         $response = new WP_Error('invalid-type', __('Invalid metadata type', 'publishpress'));
@@ -3089,9 +3099,9 @@ if (!class_exists('PP_Calendar')) {
 
             // Assuming we've got to this point, just regurgitate the value
             if (!is_wp_error($response)) {
-                $this->print_ajax_response('success', $_POST['metadata_value']);
+                $this->print_ajax_response('success', sanitize_text_field($_POST['metadata_value']));
             } else {
-                $this->print_ajax_response('error', __('Metadata could not be updated.', 'publishpress'));
+                $this->print_ajax_response('error', esc_html__('Metadata could not be updated.', 'publishpress'));
             }
         }
 
@@ -3113,7 +3123,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
                 return '[]';
             }
 
@@ -3156,7 +3166,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
                 return '[]';
             }
 
@@ -3183,7 +3193,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce($_GET['nonce'], 'calendar_filter_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
                 return '[]';
             }
 
@@ -3257,7 +3267,7 @@ if (!class_exists('PP_Calendar')) {
                 default:
                     return false;
                     break;
-            }// End switch().
+            }
         }
 
         public function calendar_filter_options($select_id, $select_name, $filters)
@@ -3267,7 +3277,7 @@ if (!class_exists('PP_Calendar')) {
                     $post_statuses = $this->get_post_statuses();
                     ?>
                     <select id="<?php echo esc_attr($select_id); ?>" name="<?php echo esc_attr($select_name); ?>">
-                        <option value=""><?php _e('All statuses', 'publishpress'); ?></option>
+                        <option value=""><?php esc_html_e('All statuses', 'publishpress'); ?></option>
                         <?php
                         foreach ($post_statuses as $post_status) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
@@ -3283,7 +3293,7 @@ if (!class_exists('PP_Calendar')) {
                     $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
                     ?>
                     <select id="filter_category" name="cat">
-                        <option value=""><?php _e('View all categories', 'publishpress'); ?></option>
+                        <option value=""><?php esc_html_e('View all categories', 'publishpress'); ?></option>
                         <?php
                         if (!empty($categoryId)) {
                             $category = get_term($categoryId, 'category');
@@ -3298,7 +3308,7 @@ if (!class_exists('PP_Calendar')) {
                     $tagId = isset($filters['tag']) ? (int)$filters['tag'] : 0;
                     ?>
                     <select id="filter_tag" name="tag">
-                        <option value=""><?php _e('All tags', 'publishpress'); ?></option>
+                        <option value=""><?php esc_html_e('All tags', 'publishpress'); ?></option>
                         <?php
                         if (!empty($tagId)) {
                             $tag = get_term($tagId, 'post_tag');
@@ -3315,7 +3325,7 @@ if (!class_exists('PP_Calendar')) {
                     ?>
                     <select id="filter_author" name="author">
                         <option value="" <?php echo $selectedOptionAll; ?>>
-                            <?php _e('All authors', 'publishpress'); ?>
+                            <?php esc_html_e('All authors', 'publishpress'); ?>
                         </option>
                         <?php
                         if (!empty($authorId)) {
@@ -3339,7 +3349,7 @@ if (!class_exists('PP_Calendar')) {
                     if (count($supported_post_types) > 1) {
                         ?>
                         <select id="type" name="cpt">
-                            <option value=""><?php _e('All types', 'publishpress'); ?></option>
+                            <option value=""><?php esc_html_e('All types', 'publishpress'); ?></option>
                             <?php
                             foreach ($supported_post_types as $key => $post_type_name) {
                                 $all_post_types = get_post_types(null, 'objects');
@@ -3364,7 +3374,7 @@ if (!class_exists('PP_Calendar')) {
                                 $filters['weeks'],
                                 false
                             ) . '>' . sprintf(
-                                _n('%s week', '%s weeks', $i, 'publishpress'),
+                                esc_html(_n('%s week', '%s weeks', $i, 'publishpress')),
                                 esc_attr($i)
                             ) . '</option>';
                     }
@@ -3374,7 +3384,7 @@ if (!class_exists('PP_Calendar')) {
                 default:
                     do_action('pp_calendar_filter_display', $select_id, $select_name, $filters);
                     break;
-            }// End switch().
+            }
         }
 
         /**
@@ -3407,17 +3417,17 @@ if (!class_exists('PP_Calendar')) {
 
                 if ('future' === $post->post_status) {
                     if ($time_diff > 0) {
-                        return '<strong class="error-message">' . __('Missed schedule') . '</strong>';
+                        return '<strong class="error-message">' . esc_html__('Missed schedule') . '</strong>';
                     } else {
-                        return __('Scheduled');
+                        return esc_html__('Scheduled');
                     }
                 }
 
                 if ('publish' === $post->post_status) {
-                    return __('Published');
+                    return esc_html__('Published');
                 }
 
-                return __('Publish on');
+                return esc_html__('Publish on');
             }
 
             return $status;
@@ -3485,7 +3495,7 @@ if (!class_exists('PP_Calendar')) {
 
             if (!apply_filters('publishpress_author_can_edit_posts', $is_valid, $post_author_id)) {
                 throw new Exception(
-                    __(
+                    esc_html__(
                         "The selected user doesn't have enough permissions to be set as the post author.",
                         'publishpress'
                     )

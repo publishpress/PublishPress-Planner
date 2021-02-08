@@ -132,13 +132,26 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function settings_save($new_options)
         {
+            if (!isset($_POST['_wpnonce'])
+                || !wp_verify_nonce(
+                    sanitize_text_field($_POST['_wpnonce']),
+                    'edit-publishpress-settings'
+                )
+            ) {
+                return true;
+            }
+
             if (!isset($_POST['publishpress_options'])) {
                 return true;
             }
 
             global $publishpress;
 
-            $enabledFeatures = $_POST['publishpress_options']['features'];
+            if (isset($_POST['publishpress_options']['features'])) {
+                $enabledFeatures = (array)$_POST['publishpress_options']['features'];
+            } else {
+                $enabledFeatures = [];
+            }
 
             // Run through all the modules updating their statuses
             foreach ($publishpress->modules as $mod_data) {
@@ -178,8 +191,8 @@ if (!class_exists('PP_Modules_Settings')) {
                         continue;
                     }
 
-                    echo sprintf('<h3>%s</h3>', $mod_data->title);
-                    echo sprintf('<p>%s</p>', $mod_data->short_description);
+                    echo sprintf('<h3>%s</h3>', esc_html($mod_data->title));
+                    echo sprintf('<p>%s</p>', esc_html($mod_data->short_description));
 
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
                             $mod_data->name
@@ -189,13 +202,13 @@ if (!class_exists('PP_Modules_Settings')) {
                 } ?>
 
                 <div id="modules-wrapper">
-                    <h3><?php echo __('Features', 'publishpress'); ?></h3>
-                    <p><?php echo __('Feel free to select only the features you need.', 'publishpress'); ?></p>
+                    <h3><?php echo esc_html_e('Features', 'publishpress'); ?></h3>
+                    <p><?php echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
                     <table class="form-table">
                         <tbody>
                         <tr>
-                            <th scope="row"><?php echo __('Enabled features', 'publishpress'); ?></th>
+                            <th scope="row"><?php echo esc_html_e('Enabled features', 'publishpress'); ?></th>
                             <td>
                                 <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
@@ -209,7 +222,7 @@ if (!class_exists('PP_Modules_Settings')) {
                                                    $mod_data->slug
                                                ); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
-                                        &nbsp;&nbsp;&nbsp;<?php echo $mod_data->title; ?>
+                                        &nbsp;&nbsp;&nbsp;<?php echo esc_html($mod_data->title); ?>
                                     </label>
                                     <br>
                                 <?php endforeach; ?>

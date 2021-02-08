@@ -487,8 +487,8 @@
 								textAlign: 'center',
 								overflow: 'hidden'
 							});
-					} // end if grid > 0
-				} // end for loop
+					}
+				}
 
 				// Add timezone options
 				this.timezone_select = $tp.find('.ui_tpicker_timezone').append('<select></select>').find("select");
@@ -515,7 +515,6 @@
 					tp_inst._onSelectHandler();
 					tp_inst._afterInject();
 				});
-				// End timezone options
 
 				// inject timepicker into datepicker
 				var $buttonPanel = $dp.find('.ui-datepicker-buttonpane');
@@ -574,7 +573,6 @@
 						}
 					}, 10);
 				}
-				// end slideAccess integration
 
 				tp_inst._limitMinMaxDateTime(this.inst, true);
 			}
@@ -1116,7 +1114,7 @@
 					return $t.val();
 				}
 			}
-		} // end _controls
+		}
 
 	});
 
@@ -1307,7 +1305,7 @@
 				return resTime;
 			}
 			return false;
-		};// end strictParse
+		};
 
 		// First try JS Date, if that fails, use strictParse
 		var looseParse = function (f, s, o) {
@@ -1341,7 +1339,7 @@
 				}
 			}
 			return false;
-		}; // end looseParse
+		};
 
 		if (typeof o.parse === "function") {
 			return o.parse(timeFormat, timeString, o);
