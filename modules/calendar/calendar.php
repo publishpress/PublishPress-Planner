@@ -2898,33 +2898,35 @@ if (!class_exists('PP_Calendar')) {
                 $post_author = apply_filters('publishpress_calendar_default_author', get_current_user_id());
             }
 
+            $post_status = sanitize_text_field($_POST['pp_insert_status']);
+            if (!$this->isPostStatusValid($post_status)) {
+                $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
+            }
+
             $post_date           = sanitize_text_field($_POST['pp_insert_date']);
             $post_date_timestamp = strtotime($post_date);
 
             $post_publish_time = trim(sanitize_text_field($_POST['pp_insert_publish_time']));
-            $post_publish_date_time = '';
+
+            if (empty($post_publish_time)) {
+                $post_publish_time = $this->module->options->default_publish_time;
+            }
+
             if (!empty($post_publish_time)) {
-                $post_publish_date_time = sprintf(
+                $post_date = sprintf(
                     '%s %s',
                     $post_date,
                     ((function_exists('mb_strlen') ? mb_strlen($post_publish_time) : strlen($post_publish_time)) === 5)
                         ? "{$post_publish_time}:" . date('s', $post_date_timestamp)
                         : date('H:i:s', $post_date_timestamp)
                 );
-            } else {
-                $post_publish_time = $this->module->options->default_publish_time;
             }
 
-            $post_publish_date_time_instance = new DateTime("{$post_date} {$post_publish_time}");
+            $post_publish_date_time_instance = new DateTime($post_date);
             if ($post_publish_date_time_instance === false) {
                 $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
             }
             unset($post_publish_date_time_instance);
-
-            $post_status = sanitize_text_field($_POST['pp_insert_status']);
-            if (!$this->isPostStatusValid($post_status)) {
-                $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
-            }
 
             // Set new post parameters
             $post_placeholder = [
@@ -2933,16 +2935,21 @@ if (!class_exists('PP_Calendar')) {
                 'post_content'      => $post_content,
                 'post_type'         => $post_type,
                 'post_status'       => $post_status,
-                'post_date'         => $post_publish_date_time,
+                'post_date'         => $post_date,
                 'post_modified'     => current_time('mysql'),
                 'post_modified_gmt' => current_time('mysql', 1),
             ];
 
-            // By default, adding a post to the calendar will set the timestamp.
-            // If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
-            // With how WordPress works internally, setting 'post_date_gmt' will set the timestamp
+            /*
+             * By default, adding a post to the calendar will set the timestamp.
+             * If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
+             * With how WordPress works internally, setting 'post_date_gmt' will set the timestamp.
+             * But check the Custom Status module and the hook to "wp_insert_post_data". It will reset the date if not
+             * publishing or scheduling.
+             */
+
             if (apply_filters('pp_calendar_allow_ajax_to_set_timestamp', true)) {
-                $post_placeholder['post_date_gmt'] = date('Y-m-d H:i:s', $post_date_timestamp);
+                $post_placeholder['post_date_gmt'] = get_gmt_from_date($post_date);
             }
 
             // Create the post
@@ -2952,8 +2959,7 @@ if (!class_exists('PP_Calendar')) {
 
             do_action('publishpress_calendar_after_create_post', $post_id, $post_author);
 
-            if ($post_id) { // success!
-
+            if ($post_id) {
                 $post = get_post($post_id);
 
                 // Generate the HTML for the post item so it can be injected
