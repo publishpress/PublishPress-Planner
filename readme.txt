@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable tag: 3.0.3
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added: Add shortcodes for the post content, excerpt and post type in the email notifications, #288;
 * Fixed: Add sanitization and escape variables in some variables, increasing compatibility with WP VIP and more security, #773;
+* Fixed: Fix PHP warning "Creating default object from empty value in publishpress-authors.php:772", correctly assigning the filter "pp_pre_insert_editorial_comment". (Allows PublishPress Revisions integration), #231;
+* Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
+
+= [3.1.0] - 2021-01-20 =
+
+* Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288
+* Fixed: Fixed support to PHP 5.6, #772;
 
 = [3.0.3] - 2021-01-11 =
 

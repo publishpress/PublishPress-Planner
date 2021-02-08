@@ -461,7 +461,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     'comment_approved'     => esc_sql(self::comment_type),
                 ];
 
-                apply_filters('pp_pre_insert_editorial_comment', $data);
+                $data = apply_filters('pp_pre_insert_editorial_comment', $data);
 
                 // Insert Comment
                 $comment_id = wp_insert_comment($data);
