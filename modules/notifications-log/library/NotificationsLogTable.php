@@ -334,7 +334,7 @@ class NotificationsLogTable extends WP_List_Table
         $actions = [];
         $log     = new NotificationsLogModel($item);
 
-        if ('scheduled' === $log->status) {
+        if ('scheduled' === $log->status || 'error' === $log->status) {
             $actions['try_again'] = sprintf(
                 '<a href="%s">%s</a>',
                 esc_url(
