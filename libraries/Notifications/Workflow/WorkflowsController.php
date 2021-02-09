@@ -204,7 +204,7 @@ class WorkflowsController
             $classes_receiver,
             $classes_channel,
             $classes_content,
-            $classes_action,
+            $classes_action
         );
 
         // Instantiate each class
