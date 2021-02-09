@@ -76,6 +76,10 @@ class NotificationsLogModel
 
     const META_NOTIF_CRON_ID = '_ppnotif_cron_id';
 
+    const META_NOTIF_BLOG_ID = '_ppnotif_blog_id';
+
+    const META_NOTIF_PARENT_ID = '_ppnotif_parent_id';
+
     /**
      * @var int
      */
@@ -192,6 +196,21 @@ class NotificationsLogModel
     public $cronId;
 
     /**
+     * @var int
+     */
+    public $blogId;
+
+    /**
+     * @var int
+     */
+    public $parentId;
+
+    /**
+     * @var bool
+     */
+    private $isFromAnotherBlogCache = null;
+
+    /**
      * NotificationsLogModel constructor.
      *
      * @param WP_Comment $log
@@ -199,36 +218,115 @@ class NotificationsLogModel
     public function __construct(WP_Comment $log)
     {
         $this->id               = (int)$log->comment_ID;
+        $this->blogId           = (int)get_comment_meta($this->id, self::META_NOTIF_BLOG_ID, true);
+        $this->parentId         = (int)get_comment_meta($this->id, self::META_NOTIF_PARENT_ID, true);
+
+        if ($this->isFromAnotherBlog()) {
+            $this->switchToTheBlog();
+
+            $log = $this->getParentLog();
+        }
+
         $this->postId           = (int)$log->comment_post_ID;
         $this->author           = self::COMMENT_AUTHOR;
         $this->content          = maybe_unserialize($log->comment_content);
         $this->date             = $log->comment_date;
-        $this->workflowId       = (int)$this->get_meta(self::META_NOTIF_WORKFLOW_ID);
-        $this->userId           = (int)$this->get_meta(self::META_NOTIF_USER_ID);
-        $this->event            = $this->get_meta(self::META_NOTIF_EVENT);
-        $this->oldStatus        = $this->get_meta(self::META_NOTIF_OLD_STATUS);
-        $this->newStatus        = $this->get_meta(self::META_NOTIF_NEW_STATUS);
-        $this->channel          = $this->get_meta(self::META_NOTIF_CHANNEL);
-        $this->receiver         = $this->get_meta(self::META_NOTIF_RECEIVER);
-        $this->receiverGroup    = $this->get_meta(self::META_NOTIF_RECEIVER_GROUP);
-        $this->receiverSubgroup = $this->get_meta(self::META_NOTIF_RECEIVER_SUBGROUP);
-        $this->status           = $this->get_meta(self::META_NOTIF_STATUS);
-        $this->success          = $this->get_meta(self::META_NOTIF_SUCCESS);
-        $this->error            = $this->get_meta(self::META_NOTIF_ERROR);
-        $this->async            = $this->get_meta(self::META_NOTIF_ASYNC);
-        $this->commentId        = (int)$this->get_meta(self::META_NOTIF_COMMENT_ID);
-        $this->eventArgs        = $this->get_meta(self::META_NOTIF_EVENT_ARGS);
-        $this->cronId           = $this->get_meta(self::META_NOTIF_CRON_ID);
 
-        if (!empty($this->eventArgs) && isset($this->eventArgs['postId'])) {
-            $this->eventArgs['post'] = get_post((int)$this->eventArgs['postId']);
+        if ($log !== null) {
+            $this->workflowId       = (int)$this->getMeta(self::META_NOTIF_WORKFLOW_ID);
+            $this->userId           = (int)$this->getMeta(self::META_NOTIF_USER_ID);
+            $this->event            = $this->getMeta(self::META_NOTIF_EVENT);
+            $this->oldStatus        = $this->getMeta(self::META_NOTIF_OLD_STATUS);
+            $this->newStatus        = $this->getMeta(self::META_NOTIF_NEW_STATUS);
+            $this->channel          = $this->getMeta(self::META_NOTIF_CHANNEL);
+            $this->receiver         = $this->getMeta(self::META_NOTIF_RECEIVER);
+            $this->receiverGroup    = $this->getMeta(self::META_NOTIF_RECEIVER_GROUP);
+            $this->receiverSubgroup = $this->getMeta(self::META_NOTIF_RECEIVER_SUBGROUP);
+            $this->status           = $this->getMeta(self::META_NOTIF_STATUS);
+            $this->success          = $this->getMeta(self::META_NOTIF_SUCCESS);
+            $this->error            = $this->getMeta(self::META_NOTIF_ERROR);
+            $this->async            = $this->getMeta(self::META_NOTIF_ASYNC);
+            $this->commentId        = (int)$this->getMeta(self::META_NOTIF_COMMENT_ID);
+            $this->eventArgs        = $this->getMeta(self::META_NOTIF_EVENT_ARGS);
+            $this->cronId           = $this->getMeta(self::META_NOTIF_CRON_ID);
+        } else {
+            $this->workflowId       = null;
+            $this->userId           = null;
+            $this->event            = null;
+            $this->oldStatus        = null;
+            $this->newStatus        = null;
+            $this->channel          = null;
+            $this->receiver         = null;
+            $this->receiverGroup    = null;
+            $this->receiverSubgroup = null;
+            $this->status           = 'error';
+            $this->success          = 0;
+            $this->error            = __('The parent log was deleted or probably rescheduled', 'publishpress');
+            $this->async            = null;
+            $this->commentId        = null;
+            $this->eventArgs        = null;
+            $this->cronId           = null;
         }
 
-        $workflow = get_post($this->workflowId);
-        $post     = get_post($this->postId);
+        if (!empty($this->eventArgs) && isset($this->eventArgs['postId'])) {
+            $this->eventArgs['post'] = $this->getEventPost();
+        }
 
-        $this->workflowTitle = $workflow->post_title;
-        $this->postTitle     = $post->post_title;
+        $this->workflowTitle = $this->getWorkflowPostTitle();
+        $this->postTitle     = $this->getPostTitle();
+
+        if ($this->isFromAnotherBlog()) {
+            $this->restoreCurrentBlog();
+        }
+    }
+
+    public function isFromAnotherBlog()
+    {
+        if (is_null($this->isFromAnotherBlogCache)) {
+            $this->isFromAnotherBlogCache = $this->blogId > 0 && $this->blogId !== get_current_blog_id();
+        }
+
+        return $this->isFromAnotherBlogCache;
+    }
+
+    public function switchToTheBlog()
+    {
+        if ($this->isFromAnotherBlog()) {
+            switch_to_blog($this->blogId);
+        }
+    }
+
+    public function restoreCurrentBlog()
+    {
+        if ($this->isFromAnotherBlog()) {
+            restore_current_blog();
+        }
+    }
+
+    private function getParentLog()
+    {
+        return get_comment($this->parentId);
+    }
+
+    private function getEventPost()
+    {
+        $post = get_post((int)$this->eventArgs['postId']);
+
+        return $post;
+    }
+
+    private function getWorkflowPostTitle()
+    {
+        $workflow = get_post($this->workflowId);
+
+        return $workflow->post_title;
+    }
+
+    private function getPostTitle()
+    {
+        $post = get_post($this->postId);
+
+        return $post->post_title;
     }
 
     private function getWorkflow()
@@ -265,8 +363,12 @@ class NotificationsLogModel
      * @param bool $single
      * @return mixed
      */
-    private function get_meta($meta_key, $single = true)
+    private function getMeta($meta_key, $single = true)
     {
+        if ($this->isFromAnotherBlog()) {
+            return get_comment_meta($this->parentId, $meta_key, $single);
+        }
+
         return get_comment_meta($this->id, $meta_key, $single);
     }
 

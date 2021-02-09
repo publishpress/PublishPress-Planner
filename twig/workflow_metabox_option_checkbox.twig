@@ -1,0 +1,7 @@
+<input type="checkbox" id="{{ name }}" name="{{ name }}"
+       value="1" {{ value == 1 ? 'checked="checked"' : '' }}/>
+
+<label for="{{ name }}">{{ label }}</label>
+{% if description %}
+    <div class="psppno_workflow_metabox_option_description">{{ description }}</div>
+{% endif %}

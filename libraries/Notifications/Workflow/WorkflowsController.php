@@ -109,6 +109,17 @@ class WorkflowsController
      */
     public function load_workflow_steps()
     {
+        // Options
+        $classes_options = [
+            '\\PublishPress\\Notifications\\Workflow\\Option\\SkipUser',
+        ];
+        /**
+         * Filters the list of classes to define workflow "options"
+         *
+         * @param array $classes The list of classes to be loaded
+         */
+        $classes_options = apply_filters('publishpress_notif_workflow_options_classes', $classes_options);
+
         // When
         $classes_event = [
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Editorial_Comment',
@@ -185,7 +196,9 @@ class WorkflowsController
          */
         $classes_action = apply_filters('publishpress_notif_workflow_steps_action', $classes_action);
 
+
         $classes = array_merge(
+            $classes_options,
             $classes_event,
             $classes_event_content,
             $classes_receiver,

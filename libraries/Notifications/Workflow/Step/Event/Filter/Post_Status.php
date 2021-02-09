@@ -9,8 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event\Filter;
 
-use PublishPress\Notifications\Traits\Dependency_Injector;
-
 class Post_Status extends Base implements Filter_Interface
 {
     const META_KEY_POST_STATUS_FROM = '_psppno_poststatfrom';
@@ -28,8 +26,8 @@ class Post_Status extends Base implements Filter_Interface
         echo $this->get_service('twig')->render(
             'workflow_filter_post_status.twig',
             [
-                'name'         => "publishpress_notif[{$this->step_name}_filters][post_status]",
-                'id'           => "publishpress_notif_{$this->step_name}_filters_post_status",
+                'name'         => esc_attr("publishpress_notif[{$this->step_name}_filters][post_status]"),
+                'id'           => esc_attr("publishpress_notif_{$this->step_name}_filters_post_status"),
                 'options_from' => $this->get_options('from'),
                 'options_to'   => $this->get_options('to'),
                 'labels'       => [
@@ -108,8 +106,13 @@ class Post_Status extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'])) {
             $from = [];
         } else {
-            $from = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
+            $from = (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
+
+            foreach ($from as &$status) {
+                $status = sanitize_key($status);
+            }
         }
+
 
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_FROM, $from);
 
@@ -117,7 +120,11 @@ class Post_Status extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'])) {
             $to = [];
         } else {
-            $to = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
+            $to = (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
+
+            foreach ($to as &$status) {
+                $status = sanitize_key($status);
+            }
         }
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_TO, $to);
     }

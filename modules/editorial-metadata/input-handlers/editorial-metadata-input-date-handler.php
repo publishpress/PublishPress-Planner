@@ -50,12 +50,12 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                     data-alt-field="%1$s_hidden"
                     data-alt-format="%3$s"
                 />',
-                $input_name,
-                $value_formatted,
-                pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')
+                esc_attr($input_name),
+                esc_attr($value_formatted),
+                esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d'))
             );
 
-            $field_value = empty($value) ? '' : date('Y-m-d H:i', $value);
+            $field_value = empty($value) ? '' : gmdate('Y-m-d H:i', $value);
 
             printf(
                 '<input
@@ -63,8 +63,8 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                     name="%s_hidden"
                     value="%s"
                 />',
-                $input_name,
-                $field_value
+                esc_attr($input_name),
+                esc_attr($field_value)
             );
         }
 
@@ -81,7 +81,7 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
         {
             $date_format = get_option('date_format');
 
-            if (date('Hi', $current_date) == '0000') {
+            if (gmdate('Hi', $current_date) == '0000') {
                 return date_i18n($date_format, $current_date);
             }
 
@@ -112,7 +112,7 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
             if (!empty($value)) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
-                    $value
+                    esc_html($value)
                 );
             } else {
                 self::renderValuePlaceholder();
@@ -125,8 +125,8 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
                     name="%1$s"
                     value="%2$s"
                 />',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_attr($value)
             );
         }
 
@@ -147,10 +147,10 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
             }
 
             // All day vs. day and time
-            $date = date(get_option('date_format'), $value);
-            $time = date(get_option('time_format'), $value);
+            $date = gmdate(get_option('date_format'), $value);
+            $time = gmdate(get_option('time_format'), $value);
 
-            $output = date('Hi', $value) === '0000'
+            $output = gmdate('Hi', $value) === '0000'
                 ? $date
                 : sprintf(__('%1$s at %2$s', 'publishpress'), $date, $time);
 
