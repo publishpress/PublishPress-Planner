@@ -404,8 +404,11 @@ class Shortcodes
                     break;
 
                 case 'edit_link':
-                    $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
-                    $info[]     = htmlspecialchars_decode(admin_url($admin_path));
+                    $info[] = apply_filters(
+                        'publishpress_notification_post_edit_link',
+                        htmlspecialchars_decode(admin_url('post.php?post=' . $post->ID . '&action=edit')),
+                        $post->ID
+                    );
                     break;
 
                 case 'author_display_name':
