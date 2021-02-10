@@ -275,24 +275,22 @@ if (!class_exists('PP_Dashboard')) {
 
                     <?php foreach ($myposts as $post) : ?>
                         <?php
-                        $url   = esc_url(get_edit_post_link($post->ID));
-                        $title = esc_html($post->post_title); ?>
+                        $url   = get_edit_post_link($post->ID);
+                        ?>
                         <li>
-                            <h4><a href="<?php echo $url ?>"
-                                   title="<?php esc_attr(
-                                       _e(
+                            <h4><a href="<?php echo esc_url($url) ?>"
+                                   title="<?php esc_attr_e(
                                            'Edit this post',
                                            'publishpress'
-                                       )
-                                   ); ?>"><?php echo $title; ?></a></h4>
-                            <span class="pp-myposts-timestamp"><?php _e(
+                                   ); ?>"><?php echo esc_html($post->post_title); ?></a></h4>
+                            <span class="pp-myposts-timestamp"><?php esc_html_e(
                                     'This post was last updated on ',
                                     'publishpress'
-                                ) ?><?php echo get_the_time('F j, Y \\a\\t g:i a', $post) ?></span>
+                                ) ?><?php echo esc_html(get_the_time('F j, Y \\a\\t g:i a', $post)); ?></span>
                         </li>
                     <?php endforeach; ?>
                 <?php else : ?>
-                    <p><?php _e('Sorry! You\'re not subscribed to any posts!', 'publishpress') ?></p>
+                    <p><?php esc_html_e('Sorry! You\'re not subscribed to any posts!', 'publishpress'); ?></p>
                 <?php endif; ?>
             </div>
             <?php
@@ -385,7 +383,7 @@ if (!class_exists('PP_Dashboard')) {
             }
             echo '</select>';
             if (!$this->module_enabled('notifications')) {
-                echo '&nbsp;&nbsp;&nbsp;<span class="description">' . __(
+                echo '&nbsp;&nbsp;&nbsp;<span class="description">' . esc_html__(
                         'The notifications module will need to be enabled for this widget to display.',
                         'publishpress'
                     );
@@ -444,4 +442,4 @@ if (!class_exists('PP_Dashboard')) {
             do_settings_sections($this->module->options_group_name);
         }
     }
-} // END - !class_exists('PP_Dashboard')
+}
