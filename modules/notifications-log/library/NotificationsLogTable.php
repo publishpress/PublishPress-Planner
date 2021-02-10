@@ -84,7 +84,6 @@ class NotificationsLogTable extends WP_List_Table
         );
     }
 
-
     /**
      * @param object $item
      * @param string $column_name
@@ -96,118 +95,138 @@ class NotificationsLogTable extends WP_List_Table
         $log    = new NotificationsLogModel($item);
         $output = '';
 
+        $log->switchToTheBlog();
+
         switch ($column_name) {
             case 'event':
-                $user         = get_user_by('id', $log->userId);
-                $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
-                $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
+                if ($log->workflowId !== null) {
+                    $user         = get_user_by('id', $log->userId);
+                    $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
+                    $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
 
-                $output .= apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
-                $output .= '<div class="muted">';
-                $output .= '<div>' . sprintf(
-                        __('Workflow: %s', 'publishpress'),
-                        $this->wrapInALink(
-                            $log->workflowTitle,
-                            admin_url('post.php?post=' . esc_attr($log->workflowId) . '&action=edit')
-                        )
-                    ) . '</div>';
+                    $output .= apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
+                    $output .= '<div class="muted">';
+                    $output .= '<div>' . sprintf(
+                            __('Workflow: %s', 'publishpress'),
+                            $this->wrapInALink(
+                                $log->workflowTitle,
+                                admin_url('post.php?post=' . esc_attr($log->workflowId) . '&action=edit')
+                            )
+                        ) . '</div>';
 
-                if (!empty($actionParams)) {
-                    $output .= '<div>' . $actionParams . '</div>';
+                    if (!empty($actionParams)) {
+                        $output .= '<div>' . $actionParams . '</div>';
+                    }
+
+                    $output .= '<div>' . sprintf(
+                            __('User: %s (%d)', 'publishpress'),
+                            $this->wrapInALink(
+                                $userNicename,
+                                admin_url('user-edit.php?user_id=' . $log->userId)
+                            ),
+                            $log->userId
+                        ) . '</div>';
+
+
+                    $output .= '</div>';
+                } else {
+                    $output .= '-';
                 }
 
-                $output .= '<div>' . sprintf(
-                        __('User: %s (%d)', 'publishpress'),
-                        $this->wrapInALink(
-                            $userNicename,
-                            admin_url('user-edit.php?user_id=' . $log->userId)
-                        ),
-                        $log->userId
-                    ) . '</div>';
-
-
-                $output .= '</div>';
                 break;
 
             case 'content':
-                $post           = get_post($log->postId);
-                $postTypeLabels = get_post_type_labels($post);
+                if ($log->workflowId !== null) {
+                    $post           = get_post($log->postId);
+                    $postType       = get_post_type_object($post->post_type);
+                    $postTypeLabels = get_post_type_labels($postType);
 
-                $output .= $this->wrapInALink(
-                    $log->postTitle,
-                    admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit')
-                );
+                    $output .= $this->wrapInALink(
+                        $log->postTitle,
+                        admin_url('post.php?post=' . esc_attr($log->postId) . '&action=edit')
+                    );
 
-                $output .= '<div class="muted">';
-                $output .= '<div>' . sprintf(
-                        __('Post type: %s', 'publishpress'),
-                        $postTypeLabels->singular_name
-                    ) . '</div>';
-                $output .= '<div>' . sprintf(__('Post ID: %d', 'publishpress'), $log->postId) . '</div>';
-                $output .= '</div>';
+                    $output .= '<div class="muted">';
+                    $output .= '<div>' . sprintf(
+                            __('Post type: %s', 'publishpress'),
+                            $postTypeLabels->singular_name
+                        ) . '</div>';
+                    $output .= '<div>' . sprintf(__('Post ID: %d', 'publishpress'), $log->postId) . '</div>';
 
+                    if ($log->isFromAnotherBlog()) {
+                        $output .= '<div>' . sprintf(__('Blog ID: %d', 'publishpress'), $log->blogId) . '</div>';
+                    }
+
+                    $output .= '</div>';
+                } else {
+                    $output .= '-';
+                }
                 break;
 
             case 'receiver':
-                $receivers      = $log->getReceiversByGroup();
-                $receiversCount = 0;
+                if ($log->workflowId !== null) {
+                    $receivers      = $log->getReceiversByGroup();
+                    $receiversCount = 0;
 
-                $output .= '<ul class="publishpress-notifications-receivers">';
-                foreach ($receivers as $group => $groupReceivers) {
-                    $output .= sprintf(
-                        '<li class="receiver-title">%s:</li>',
-                        apply_filters('publishpress_notifications_receiver_group_label', $group)
-                    );
-
-                    $lastSubgroup = null;
-
-                    foreach ($groupReceivers as $receiverData) {
-                        $receiver = $receiverData['receiver'];
-
-                        // Do not repeat the same subgroup
-                        if (
-                            isset($receiverData['subgroup'])
-                            && $receiverData['subgroup'] !== $lastSubgroup
-                            && !empty($receiverData['subgroup'])
-                        ) {
-                            $output .= sprintf(
-                                '<li class="receiver-subgroup"><span>%s</span></li>',
-                                $receiverData['subgroup']
-                            );
-
-                            $lastSubgroup = $receiverData['subgroup'];
-                        }
-
-                        $receiverText = apply_filters('publishpress_notifications_log_receiver_text', $receiver, $receiverData, $log->workflowId);
-
+                    $output .= '<ul class="publishpress-notifications-receivers">';
+                    foreach ($receivers as $group => $groupReceivers) {
                         $output .= sprintf(
-                            '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
-                            $log->status === 'scheduled' ? __('Preview the message') : __('View the message'),
-                            $log->id,
-                            esc_attr(wp_strip_all_tags($receiverText)),
-                            esc_attr($receiverData['receiver']),
-                            esc_attr($receiverData['channel']),
-                            apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
+                            '<li class="receiver-title">%s:</li>',
+                            apply_filters('publishpress_notifications_receiver_group_label', $group)
                         );
 
-                        $output .= $receiverText;
-                        $output .= '</li>';
+                        $lastSubgroup = null;
 
-                        $receiversCount++;
+                        foreach ($groupReceivers as $receiverData) {
+                            $receiver = $receiverData['receiver'];
+
+                            // Do not repeat the same subgroup
+                            if (
+                                isset($receiverData['subgroup'])
+                                && $receiverData['subgroup'] !== $lastSubgroup
+                                && !empty($receiverData['subgroup'])
+                            ) {
+                                $output .= sprintf(
+                                    '<li class="receiver-subgroup"><span>%s</span></li>',
+                                    $receiverData['subgroup']
+                                );
+
+                                $lastSubgroup = $receiverData['subgroup'];
+                            }
+
+                            $receiverText = apply_filters('publishpress_notifications_log_receiver_text', $receiver, $receiverData, $log->workflowId);
+
+                            $output .= sprintf(
+                                '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
+                                $log->status === 'scheduled' ? __('Preview the message') : __('View the message'),
+                                $log->id,
+                                esc_attr(wp_strip_all_tags($receiverText)),
+                                esc_attr($receiverData['receiver']),
+                                esc_attr($receiverData['channel']),
+                                apply_filters('publishpress_notifications_channel_icon_class', $receiverData['channel'])
+                            );
+
+                            $output .= $receiverText;
+                            $output .= '</li>';
+
+                            $receiversCount++;
+                        }
                     }
-                }
-                $output .= '</ul>';
+                    $output .= '</ul>';
 
-                // Add the slide effect for scheduled notifications
-                if ($receiversCount > 4 && $log->status === 'scheduled') {
-                    $output = sprintf(
-                        '<a href="#" class="slide-closed-text">%s <i class="dashicons dashicons-arrow-down-alt2"></i></a><div class="slide">%s</div>',
-                        sprintf(
-                            __('Scheduled for %d receivers. Click here to display them.', 'publishpress'),
-                            $receiversCount
-                        ),
-                        $output
-                    );
+                    // Add the slide effect for scheduled notifications
+                    if ($receiversCount > 4 && $log->status === 'scheduled') {
+                        $output = sprintf(
+                            '<a href="#" class="slide-closed-text">%s <i class="dashicons dashicons-arrow-down-alt2"></i></a><div class="slide">%s</div>',
+                            sprintf(
+                                __('Scheduled for %d receivers. Click here to display them.', 'publishpress'),
+                                $receiversCount
+                            ),
+                            $output
+                        );
+                    }
+                } else {
+                    $output .= '-';
                 }
 
                 break;
@@ -215,7 +234,7 @@ class NotificationsLogTable extends WP_List_Table
             case
             'status':
                 $output .= sprintf(
-                    '<div class="publishpress-notifications-status %s">',
+                    '<div class="publishpress-notifications-status status-%s">',
                     esc_attr($log->status)
                 );
 
@@ -232,7 +251,6 @@ class NotificationsLogTable extends WP_List_Table
                         } else {
                             $label = __(' Scheduled', 'publishpress');
                         }
-
 
                         $output .= sprintf(
                             '<i class="dashicons dashicons-clock"></i> %s - %s',
@@ -287,6 +305,8 @@ class NotificationsLogTable extends WP_List_Table
             $output = '<div class="scheduled-wrapper">' . $output . '</div>';
         }
 
+        $log->restoreCurrentBlog();
+
         return $output;
     }
 
@@ -314,7 +334,7 @@ class NotificationsLogTable extends WP_List_Table
         $actions = [];
         $log     = new NotificationsLogModel($item);
 
-        if ('scheduled' === $log->status) {
+        if ('scheduled' === $log->status || 'error' === $log->status) {
             $actions['try_again'] = sprintf(
                 '<a href="%s">%s</a>',
                 esc_url(
@@ -342,12 +362,21 @@ class NotificationsLogTable extends WP_List_Table
             __('Delete', 'publishpress')
         );
 
+        $additionalText = '';
+        if ($log->isFromAnotherBlog()) {
+            $log->switchToTheBlog();
+            $blog = get_blog_details($log->blogId);
+            $additionalText .= '<div class="muted">' . __('Blog: ', 'publishpress') . $log->blogId . ' - ' . $blog->blogname . '</div>';
+            $log->restoreCurrentBlog();
+        }
+
         //Return the title contents
         return sprintf(
-            '%1$s <div class="muted">ID: %2$s</div>%3$s',
+            '%1$s <div class="muted">ID: %2$s</div>%4$s%3$s',
             $item->comment_date,
             $item->comment_ID,
-            $this->row_actions($actions)
+            $this->row_actions($actions),
+            $additionalText
         );
     }
 
@@ -507,60 +536,64 @@ class NotificationsLogTable extends WP_List_Table
 
         // Post
         $postId         = isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
-        $selectedOption = '';
+        $selectedOptionEscaped = '';
         if (!empty($postId)) {
             $post = get_post($postId);
 
-            $selectedOption = '<option selected="selected" value="' . esc_attr(
+            $selectedOptionEscaped = '<option selected="selected" value="' . esc_attr(
                     $postId
-                ) . '">' . $post->post_title . '</option>';
+                ) . '">' . esc_html($post->post_title) . '</option>';
         }
 
-        echo '<select class="filter-posts" name="post_id">' . $selectedOption . '</select>';
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<select class="filter-posts" name="post_id">' . $selectedOptionEscaped . '</select>';
+        // phpcs:enable
 
         // Workflow
         $workflowId     = isset($_GET['workflow_id']) ? (int)$_GET['workflow_id'] : 0;
-        $selectedOption = '';
+        $selectedOptionEscaped = '';
         if (!empty($workflowId)) {
             $workflow = get_post($workflowId);
 
-            $selectedOption = '<option selected="selected" value="' . esc_attr(
+            $selectedOptionEscaped = '<option selected="selected" value="' . esc_attr(
                     $workflowId
-                ) . '">' . $workflow->post_title . '</option>';
+                ) . '">' . esc_html($workflow->post_title) . '</option>';
         }
 
-        echo '<select class="filter-workflows" name="workflow_id">' . $selectedOption . '</select>';
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<select class="filter-workflows" name="workflow_id">' . $selectedOptionEscaped . '</select>';
+        // phpcs:enable
 
         // Event
-        $selectedAction = isset($_GET['event']) ? $_GET['event'] : '';
+        $selectedAction = isset($_GET['event']) ? sanitize_text_field($_GET['event']) : '';
 
         echo '<select class="filter-actions" name="event">';
         $events = apply_filters('publishpress_notifications_workflow_events', []);
 
-        echo '<option value="">' . __('All events', 'publishpress') . '</option>';
+        echo '<option value="">' . esc_html__('All events', 'publishpress') . '</option>';
 
         foreach ($events as $event) {
             $actionLabel = apply_filters('publishpress_notifications_event_label', $event, $event);
             echo '<option ' . selected(
                     $event,
                     $selectedAction
-                ) . ' value="' . esc_attr($event) . '">' . $actionLabel . '</option>';
+                ) . ' value="' . esc_attr($event) . '">' . esc_html($actionLabel) . '</option>';
         }
         echo '</select>';
 
         // Channel
-        $selectedChannel = isset($_GET['channel']) ? $_GET['channel'] : '';
+        $selectedChannel = isset($_GET['channel']) ? sanitize_text_field($_GET['channel']) : '';
 
         echo '<select class="filter-channels" name="channel">';
         $channels = apply_filters('psppno_filter_channels', []);
 
-        echo '<option value="">' . __('All channels', 'publishpress') . '</option>';
+        echo '<option value="">' . esc_html__('All channels', 'publishpress') . '</option>';
 
         foreach ($channels as $channel) {
             echo '<option ' . selected(
                     $channel->name,
                     $selectedChannel
-                ) . ' value="' . esc_attr($channel->name) . '">' . $channel->label . '</option>';
+                ) . ' value="' . esc_attr($channel->name) . '">' . esc_html($channel->label) . '</option>';
         }
         echo '</select>';
 
@@ -573,13 +606,13 @@ class NotificationsLogTable extends WP_List_Table
         echo '<span class="filter-dates">';
         echo '<input type="text" class="filter-date-begin" name="date_begin" value="' . esc_attr(
                 $dateBegin
-            ) . '" placeholder="' . __(
+            ) . '" placeholder="' . esc_html__(
                 'From date',
                 'publishpress'
             ) . '" />&nbsp;';
         echo '&nbsp;<input type="text" class="filter-date-end" name="date_end" value="' . esc_attr(
                 $dateEnd
-            ) . '" placeholder="' . __(
+            ) . '" placeholder="' . esc_html__(
                 'To date',
                 'publishpress'
             ) . '" />&nbsp;';
@@ -587,13 +620,17 @@ class NotificationsLogTable extends WP_List_Table
 
         // Receiver
         $receiver = isset($_GET['receiver']) ? sanitize_text_field($_GET['receiver']) : '';
-        echo '<input type="text" placeholder="' . __(
+        echo '<input type="text" placeholder="' . esc_html__(
                 'All Receivers',
                 'publishpress'
             ) . '" name="receiver" value="' . esc_attr($receiver) . '" />';
 
-
-        echo submit_button(__('Filter', 'publishpress'), 'secondary', 'submit', false);
+        echo wp_kses(
+            submit_button(esc_html__('Filter', 'publishpress'), 'secondary', 'submit', false),
+        [
+            'input' => "type"
+            ]
+        );
 
         echo '</div>';
         echo '<br>';

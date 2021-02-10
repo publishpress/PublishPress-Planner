@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (!defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.1.0');
+    define('PUBLISHPRESS_VERSION', '3.2.0');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');

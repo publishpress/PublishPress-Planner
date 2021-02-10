@@ -150,7 +150,7 @@ class Util
     public static function getRequestMethod()
     {
         if (isset($_SERVER) && isset($_SERVER['REQUEST_METHOD'])) {
-            return $_SERVER['REQUEST_METHOD'];
+            return sanitize_key($_SERVER['REQUEST_METHOD']);
         }
 
         if (function_exists('getenv')) {

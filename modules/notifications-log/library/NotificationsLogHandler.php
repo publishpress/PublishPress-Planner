@@ -24,7 +24,6 @@
 namespace PublishPress\NotificationsLog;
 
 use Exception;
-use PublishPress\Notifications\Workflow\Step\Action\Notification;
 
 /**
  * Class NotificationsLogHandler
@@ -43,6 +42,8 @@ class NotificationsLogHandler
      */
     public function registerLog($data = [])
     {
+        $currentBlogId = get_current_blog_id();
+
         $defaultData = [
             'event'             => null,
             'user_id'           => null,
@@ -90,6 +91,7 @@ class NotificationsLogHandler
                 NotificationsLogModel::META_NOTIF_SUCCESS           => $data['success'],
                 NotificationsLogModel::META_NOTIF_ERROR             => $data['error'],
                 NotificationsLogModel::META_NOTIF_EVENT_ARGS        => $data['event_args'],
+                NotificationsLogModel::META_NOTIF_BLOG_ID           => $currentBlogId,
             ],
         ];
 
@@ -97,6 +99,8 @@ class NotificationsLogHandler
 
         $last_changed = microtime();
         wp_cache_set('last_changed', $last_changed, 'comment');
+
+        do_action('publishpress_notifications_log_registered', $logId, $commentData);
 
         return $logId;
     }
