@@ -84,7 +84,7 @@ if (!class_exists('PP_Debug')) {
             // Register our settings
             add_action('admin_init', [$this, 'register_settings']);
 
-            $this->path = str_replace('//', '/', WP_CONTENT_DIR . '/' . self::FILE);
+            $this->path = wp_get_upload_dir() . '/' . self::FILE;
 
             // Admin bar.
             add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);
@@ -192,9 +192,11 @@ if (!class_exists('PP_Debug')) {
             }
 
             // Add the timestamp to the message.
-            $message = sprintf('[%s] %s', date('Y-m-d H:i:s T O'), $message) . "\n";
+            $message = sprintf('[%s] %s', gmdate('Y-m-d H:i:s T O'), $message) . "\n";
 
+            // phpcs:disable WordPress.PHP.DevelopmentFunctions
             error_log($message, 3, $this->path);
+            // phpcs:enable
         }
 
         public function admin_bar_menu()
@@ -240,6 +242,7 @@ if (!class_exists('PP_Debug')) {
                     ) ? 'ACTIVATED' : 'deactivated') . ' [' . $data['Version'] . ']';
             }
 
+            // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
             $debug_data = [
                 'php'       => [
                     'version'                   => PHP_VERSION,
@@ -257,27 +260,28 @@ if (!class_exists('PP_Debug')) {
                     'plugins'         => $pluginsData,
                 ],
             ];
+            // phpcs:enable
 
             $context = [
                 'label'         => [
-                    'title'             => __('PublishPress Debug Log', 'publishpress'),
-                    'file_info'         => __('File info', 'publishpress'),
-                    'path'              => __('Path', 'publishpress'),
-                    'log_content'       => __('Log content', 'publishpress'),
-                    'size'              => __('Size', 'publishpress'),
-                    'creation_time'     => __('Created on', 'publishpress'),
-                    'modification_time' => __('Modified on', 'publishpress'),
-                    'delete_file'       => __('Delete file', 'publishpress'),
-                    'debug_data'        => __('Debug data', 'publishpress'),
-                    'log_file'          => __('Log File', 'publishpress'),
+                    'title'             => esc_html__('PublishPress Debug Log', 'publishpress'),
+                    'file_info'         => esc_html__('File info', 'publishpress'),
+                    'path'              => esc_html__('Path', 'publishpress'),
+                    'log_content'       => esc_html__('Log content', 'publishpress'),
+                    'size'              => esc_html__('Size', 'publishpress'),
+                    'creation_time'     => esc_html__('Created on', 'publishpress'),
+                    'modification_time' => esc_html__('Modified on', 'publishpress'),
+                    'delete_file'       => esc_html__('Delete file', 'publishpress'),
+                    'debug_data'        => esc_html__('Debug data', 'publishpress'),
+                    'log_file'          => esc_html__('Log File', 'publishpress'),
                 ],
                 'message'       => [
-                    'log_not_found'       => __('Log file not found.', 'publishpress'),
-                    'contact_support_tip' => __(
+                    'log_not_found'       => esc_html__('Log file not found.', 'publishpress'),
+                    'contact_support_tip' => esc_html__(
                         'If you see any error or look for information regarding PublishPress, please don\'t hesitate to contact the support team. E-mail us:',
                         'publishpress'
                     ),
-                    'click_to_delete'     => __(
+                    'click_to_delete'     => esc_html__(
                         'Click to delete the log file. Be careful, this operation can not be undone. ',
                         'publishpress'
                     ),
@@ -295,14 +299,16 @@ if (!class_exists('PP_Debug')) {
                 'file'          => [
                     'path'              => $this->path,
                     'size'              => $is_log_found ? round(filesize($this->path) / 1024, 2) : 0,
-                    'modification_time' => $is_log_found ? date('Y-m-d H:i:s T O', filemtime($this->path)) : '',
+                    'modification_time' => $is_log_found ? gmdate('Y-m-d H:i:s T O', filemtime($this->path)) : '',
                     'content'           => $is_log_found ? file_get_contents($this->path) : '',
                 ],
                 'debug_data'    => print_r($debug_data, true),
                 'messages'      => $this->messages,
             ];
 
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $this->twig->render('view_log.twig', $context);
+            // phpcs:enable
         }
 
         protected function handle_actions()
@@ -317,7 +323,7 @@ if (!class_exists('PP_Debug')) {
                 return;
             }
 
-            $action = preg_replace('/[^a-z0-9_\-]/i', '', $_GET['action']);
+            $action = preg_replace('/[^a-z0-9_\-]/i', '', sanitize_text_field($_GET['action']));
 
             // Do we have a nonce?
             if (!array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
@@ -327,7 +333,7 @@ if (!class_exists('PP_Debug')) {
             }
 
             // Check the nonce.
-            if (!wp_verify_nonce($_GET['_wpnonce'], $action)) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), $action)) {
                 $this->messages[] = __('Invalid action nonce.', 'publishpress');
 
                 return;
@@ -335,11 +341,14 @@ if (!class_exists('PP_Debug')) {
 
             if ($action === self::ACTION_DELETE_LOG) {
                 if (file_exists($this->path)) {
+                    // phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
                     unlink($this->path);
+                    // phpcs:enable
                 }
             }
 
             wp_redirect(admin_url('admin.php?page=' . self::PAGE_SLUG));
+            exit;
         }
     }
-} // END - !class_exists('PP_Debug')
+}

@@ -396,12 +396,12 @@ if (!class_exists('PP_Improved_Notifications')) {
             $value = isset($this->module->options->duplicated_notification_threshold) ? (int)$this->module->options->duplicated_notification_threshold : Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
 
             echo '<input
-                    id="' . $this->module->slug . '_duplicated_notification_threshold"
+                    id="' . esc_attr($this->module->slug) . '_duplicated_notification_threshold"
                     type="number"
                     min="1"
                     step="1"
-                    name="' . $this->module->options_group_name . '[duplicated_notification_threshold]"
-                    value="' . $value . '"/> ' . __('minutes', 'publishpress');
+                    name="' . esc_attr($this->module->options_group_name) . '[duplicated_notification_threshold]"
+                    value="' . esc_attr($value) . '"/> ' . esc_html__('minutes', 'publishpress');
         }
 
         /**
@@ -443,14 +443,14 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             $context = [
                 'labels'            => [
-                    'title'       => __('Editorial Notifications', 'publishpress'),
-                    'description' => __(
+                    'title'       => esc_html__('Editorial Notifications', 'publishpress'),
+                    'description' => esc_html__(
                         'Choose the channels where each workflow will send notifications to:',
                         'publishpress'
                     ),
-                    'mute'        => __('Muted', 'publishpress'),
-                    'workflows'   => __('Workflows', 'publishpress'),
-                    'channels'    => __('Channels', 'publishpress'),
+                    'mute'        => esc_html__('Muted', 'publishpress'),
+                    'workflows'   => esc_html__('Workflows', 'publishpress'),
+                    'channels'    => esc_html__('Channels', 'publishpress'),
                 ],
                 'workflows'         => $workflows,
                 'channels'          => $channels,
@@ -458,7 +458,9 @@ if (!class_exists('PP_Improved_Notifications')) {
                 'channels_options'  => $channels_options,
             ];
 
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $twig->render('settings_notification_channels.twig', $context);
+            // phpcs:enable
         }
 
         /**
@@ -538,10 +540,10 @@ if (!class_exists('PP_Improved_Notifications')) {
         {
             global $wpdb;
 
-            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torole' WHERE meta_key = '_psppno_togroup'";
+            $query = "UPDATE {$wpdb->postmeta} SET meta_key = '_psppno_torole' WHERE meta_key = '_psppno_togroup'";
             $wpdb->query($query);
 
-            $query = "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_psppno_torolelist' WHERE meta_key = '_psppno_togrouplist'";
+            $query = "UPDATE {$wpdb->postmeta} SET meta_key = '_psppno_torolelist' WHERE meta_key = '_psppno_togrouplist'";
             $wpdb->query($query);
         }
 
@@ -742,6 +744,15 @@ if (!class_exists('PP_Improved_Notifications')) {
             );
 
             add_meta_box(
+                'publishpress_notif_workflow_options_div',
+                __('Options', 'publishpress-notifications'),
+                [$this, 'publishpress_notif_workflow_options_metabox'],
+                null,
+                'side',
+                'high'
+            );
+
+            add_meta_box(
                 'publishpress_notif_workflow_help_div',
                 __('Help', 'publishpress-notifications'),
                 [$this, 'publishpress_notif_workflow_help_metabox'],
@@ -813,6 +824,20 @@ if (!class_exists('PP_Improved_Notifications')) {
             echo $twig->render('workflow_metabox.twig', $main_context);
         }
 
+        public function publishpress_notif_workflow_options_metabox()
+        {
+            $post = get_post();
+
+            $this->configure_twig();
+            $twig = $this->get_service('twig');
+
+            $context = [
+                'options' => apply_filters('publishpress_notif_workflow_options', [], $post, $twig),
+            ];
+
+            echo $twig->render('workflow_metabox_options.twig', $context);
+        }
+
         /**
          * Add the metabox for the help text
          */
@@ -820,26 +845,26 @@ if (!class_exists('PP_Improved_Notifications')) {
         {
             $context = [
                 'labels' => [
-                    'validation_help'  => __('Select at least one option for each section.', 'publishpress'),
-                    'pre_text'         => __(
+                    'validation_help'  => esc_html__('Select at least one option for each section.', 'publishpress'),
+                    'pre_text'         => esc_html__(
                         'You can add dynamic information to the Subject or Body text using the following shortcodes:',
                         'publishpress'
                     ),
-                    'content'          => __('Content', 'publishpress'),
-                    'edcomment'        => __('Editorial Comment', 'publishpress'),
-                    'actor'            => __('User making changes or comments', 'publishpress'),
-                    'workflow'         => __('Workflow', 'publishpress'),
-                    'format'           => __('Format', 'publishpress'),
-                    'receiver'         => __('Receiver', 'publishpress'),
-                    'shortcode'        => __('shortcode', 'publishpress'),
-                    'field'            => __('field', 'publishpress'),
-                    'format_text'      => __(
+                    'content'          => esc_html__('Content', 'publishpress'),
+                    'edcomment'        => esc_html__('Editorial Comment', 'publishpress'),
+                    'actor'            => esc_html__('User making changes or comments', 'publishpress'),
+                    'workflow'         => esc_html__('Workflow', 'publishpress'),
+                    'format'           => esc_html__('Format', 'publishpress'),
+                    'receiver'         => esc_html__('Receiver', 'publishpress'),
+                    'shortcode'        => esc_html__('shortcode', 'publishpress'),
+                    'field'            => esc_html__('field', 'publishpress'),
+                    'format_text'      => esc_html__(
                         'On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by ", ".',
                         'publishpress'
                     ),
-                    'available_fields' => __('Available fields', 'publishpress'),
-                    'meta_fields'      => __('Meta fields', 'publishpress'),
-                    'read_more'        => __('Click here to read more about shortcode options...', 'publishpress'),
+                    'available_fields' => esc_html__('Available fields', 'publishpress'),
+                    'meta_fields'      => esc_html__('Meta fields', 'publishpress'),
+                    'read_more'        => esc_html__('Click here to read more about shortcode options...', 'publishpress'),
                 ],
             ];
 
@@ -869,7 +894,7 @@ if (!class_exists('PP_Improved_Notifications')) {
                 if (!(
                     isset($_POST['publishpress_notif_metabox_events_nonce'])
                     && wp_verify_nonce(
-                        $_POST['publishpress_notif_metabox_events_nonce'],
+                        sanitize_text_field($_POST['publishpress_notif_metabox_events_nonce']),
                         'publishpress_notif_save_metabox'
                     )
                 )) {
@@ -886,6 +911,11 @@ if (!class_exists('PP_Improved_Notifications')) {
             }
         }
 
+        private function isWPVIPEnvironment()
+        {
+            return function_exists('vip_powered_wpcom');
+        }
+
         /**
          * Returns a list of published workflows.
          *
@@ -894,9 +924,11 @@ if (!class_exists('PP_Improved_Notifications')) {
         protected function get_published_workflows()
         {
             if (empty($this->published_workflows)) {
+               $postsPerPage = $this->isWPVIPEnvironment() ? 100 : -1;
+
                 // Build the query
                 $query_args = [
-                    'nopaging'      => true,
+                    'posts_per_page'=> $postsPerPage,
                     'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
                     'post_status'   => 'publish',
                     'no_found_rows' => true,
@@ -924,9 +956,11 @@ if (!class_exists('PP_Improved_Notifications')) {
             $hash = md5(maybe_serialize($meta_query));
 
             if (!isset($this->workflows[$hash])) {
+                $postsPerPage = $this->isWPVIPEnvironment() ? 100 : -1;
+
                 // Build the query
                 $query_args = [
-                    'nopaging'      => true,
+                    'posts_per_page'=> $postsPerPage,
                     'post_type'     => PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
                     'no_found_rows' => true,
                     'cache_results' => true,
@@ -979,7 +1013,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             $default_channels = [
                 [
                     'name'    => 'mute',
-                    'label'   => __('Muted', 'publishpress'),
+                    'label'   => esc_html__('Muted', 'publishpress'),
                     'options' => [],
                     'icon'    => PUBLISHPRESS_URL . 'modules/improved-notifications/assets/img/icon-mute.png',
                 ],
@@ -991,14 +1025,14 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             $context = [
                 'labels'            => [
-                    'title'       => __('Editorial Notifications', 'publishpress'),
-                    'description' => __(
+                    'title'       => esc_html__('Editorial Notifications', 'publishpress'),
+                    'description' => esc_html__(
                         'Choose the channels where each workflow will send notifications to:',
                         'publishpress'
                     ),
-                    'mute'        => __('Muted', 'publishpress'),
-                    'workflows'   => __('Workflows', 'publishpress'),
-                    'channels'    => __('Channels', 'publishpress'),
+                    'mute'        => esc_html__('Muted', 'publishpress'),
+                    'workflows'   => esc_html__('Workflows', 'publishpress'),
+                    'channels'    => esc_html__('Channels', 'publishpress'),
                 ],
                 'workflows'         => $this->get_published_workflows(),
                 'channels'          => $channels,
@@ -1130,7 +1164,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             if (!(
                 isset($_POST['psppno_user_profile_nonce'])
                 && wp_verify_nonce(
-                    $_POST['psppno_user_profile_nonce'],
+                    sanitize_text_field($_POST['psppno_user_profile_nonce']),
                     'psppno_user_profile'
                 )
             )) {
@@ -1139,9 +1173,15 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             // Workflow Channels
             if (isset($_POST['psppno_workflow_channel']) && !empty($_POST['psppno_workflow_channel'])) {
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 foreach ($_POST['psppno_workflow_channel'] as $workflow_id => $channel) {
-                    update_user_meta($user_id, 'psppno_workflow_channel_' . $workflow_id, $channel);
+                    update_user_meta(
+                        $user_id,
+                        'psppno_workflow_channel_' . (int)$workflow_id,
+                        sanitize_key($channel)
+                    );
                 }
+                // phpcs:enable
             }
 
             do_action('psppno_save_user_profile', $user_id);
@@ -1238,12 +1278,12 @@ if (!class_exists('PP_Improved_Notifications')) {
         {
             global $pagenow;
 
-            if ('edit.php' !== $pagenow || !(isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $_GET['post_type'])) {
+            if ('edit.php' !== $pagenow || !(isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === sanitize_key($_GET['post_type']))) {
                 return;
             }
             ?>
             <img
-                    src="<?php echo PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png' ?>"
+                    src="<?php echo esc_url(PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png') ?>"
                     alt="" class="logo-header"/>
 
             <script>
