@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable tag: 3.1.0
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.2.0] - UNRELEASED =
+= [3.2.0] - 2021-02-10 =
 
 * Added: Add option to rescheduled failed notifications in the notifications log. We only had that option for scheduled notifications, #786;
 * Added: Added option to the notification workflow for avoiding notifying the user who triggered the action, #778;
