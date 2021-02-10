@@ -838,14 +838,97 @@ if (!class_exists('PP_Improved_Notifications')) {
             echo $twig->render('workflow_metabox_options.twig', $context);
         }
 
+        private function getShortcodePostFields()
+        {
+            return apply_filters(
+                'publishpress_notifications_shortcode_post_fields',
+                [
+                    'id',
+                    'title',
+                    'permalink',
+                    'date',
+                    'time',
+                    'old_status',
+                    'new_status',
+                    'content',
+                    'excerpt',
+                    'post_type',
+                    'edit_link',
+                    'author_display_name',
+                    'author_email',
+                    'author_login',
+                ]
+            );
+        }
+
+        private function getShortcodeActorFields()
+        {
+            return apply_filters(
+                'publishpress_notifications_shortcode_actor_fields',
+                [
+                    'id',
+                    'login',
+                    'url',
+                    'display_name',
+                    'email',
+                ]
+            );
+        }
+
+        private function getShortcodeWorkflowFields()
+        {
+            return apply_filters(
+                'publishpress_notifications_shortcode_workflow_fields',
+                [
+                    'id',
+                    'title',
+                ]
+            );
+        }
+
+        private function getShortcodeEdCommentsFields()
+        {
+            return apply_filters(
+                'publishpress_notifications_shortcode_edcomments_fields',
+                [
+                    'id',
+                    'content',
+                    'author',
+                    'author_email',
+                    'author_url',
+                    'author_ip',
+                    'date',
+                    'number',
+                ]
+            );
+        }
+
+        private function getShortcodeReceiverFields()
+        {
+            return apply_filters(
+                'publishpress_notifications_shortcode_receiver_fields',
+                [
+                    'name',
+                    'email',
+                    'first_name',
+                    'last_name',
+                    'login',
+                    'nickname',
+                ]
+            );
+        }
+
         /**
          * Add the metabox for the help text
          */
         public function publishpress_notif_workflow_help_metabox()
         {
             $context = [
-                'labels' => [
-                    'validation_help'  => esc_html__('Select at least one option for each section.', 'publishpress'),
+                'labels'                       => [
+                    'validation_help'  => esc_html__(
+                        'Select at least one option for each section.',
+                        'publishpress'
+                    ),
                     'pre_text'         => esc_html__(
                         'You can add dynamic information to the Subject or Body text using the following shortcodes:',
                         'publishpress'
@@ -864,8 +947,16 @@ if (!class_exists('PP_Improved_Notifications')) {
                     ),
                     'available_fields' => esc_html__('Available fields', 'publishpress'),
                     'meta_fields'      => esc_html__('Meta fields', 'publishpress'),
-                    'read_more'        => esc_html__('Click here to read more about shortcode options...', 'publishpress'),
+                    'read_more'        => esc_html__(
+                        'Click here to read more about shortcode options...',
+                        'publishpress'
+                    ),
                 ],
+                'psppno_post_fields_list'      => esc_html(implode(', ', $this->getShortcodePostFields())),
+                'psppno_actor_fields_list'     => esc_html(implode(', ', $this->getShortcodeActorFields())),
+                'psppno_workflow_fields_list'  => esc_html(implode(', ', $this->getShortcodeWorkflowFields())),
+                'psppno_edcomment_fields_list' => esc_html(implode(', ', $this->getShortcodeEdCommentsFields())),
+                'psppno_receiver_fields_list'  => esc_html(implode(', ', $this->getShortcodeReceiverFields())),
             ];
 
             $this->configure_twig();
