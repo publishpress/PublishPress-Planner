@@ -517,7 +517,7 @@ if (!class_exists('publishpress')) {
                 $capability,
                 $menu_slug,
                 $function,
-                '',
+                'dashicons-calendar-alt',
                 26
             );
 
@@ -588,7 +588,7 @@ if (!class_exists('publishpress')) {
                 'title'                => '',
                 'short_description'    => '',
                 'extended_description' => '',
-                'icon_class'           => 'dashicons dashicons-admin-generic',
+                'icon_class'           => 'dashicons dashicons-calendar-alt',
                 'slug'                 => '',
                 'post_type_support'    => '',
                 'default_options'      => [],
