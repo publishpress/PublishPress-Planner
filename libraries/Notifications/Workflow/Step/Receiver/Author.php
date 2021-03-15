@@ -53,7 +53,8 @@ class Author extends Simple_Checkbox implements Receiver_Interface
             $post_authors = apply_filters(
                 'publishpress_notifications_receiver_post_authors',
                 $post->post_author,
-                $post->ID
+                $post->ID,
+                $args
             );
 
             if (!is_array($post_authors)) {
