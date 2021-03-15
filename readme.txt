@@ -123,6 +123,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Fixed: Fixed the admin menu icon restoring the calendar dashicon, #802;
+* Fixed: Fixed bug on WP 5.7 that breaks the toggle button on accordion of metaboxes, #816;
 
 = [3.2.0] - 2021-02-10 =
 
