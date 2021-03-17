@@ -123,6 +123,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
+* Fixed: Fix the value of the notification channel for authors identified by the email, #793;
 * Fixed: Fixed the admin menu icon restoring the calendar dashicon, #802;
 * Fixed: Fixed PHP Fatal error Uncaught ArgumentCountError: Too few arguments to function MA_Multiple_Authors::filter_workflow_receiver_post_authors, #814;
 * Fixed: Fixed bug on WP 5.7 that breaks the toggle button on accordion of metaboxes, #816;
