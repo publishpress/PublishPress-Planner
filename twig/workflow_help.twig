@@ -4,24 +4,24 @@
 
 <h4>{{ labels.content }}</h4>
 <pre>[psppno_post]</pre>
-<p>{{ labels.available_fields }}: <em>id, title, permalink, date, time, old_status, new_status, content, excerpt, post_type, edit_link, author_display_name, author_email, author_login</em></p>
+<p>{{ labels.available_fields }}: <em>{{ psppno_post_fields_list }}</em></p>
 <p>{{ labels.meta_fields }}: <em>meta:meta_key, <br />meta-date:meta_key</em></p>
 
 <h4>{{ labels.actor }}</h4>
 <pre>[psppno_actor]</pre>
-<p>{{ labels.available_fields }}: <em>id, login, url, display_name, email</em></p>
+<p>{{ labels.available_fields }}: <em>{{ psppno_actor_fields_list }}</em></p>
 
 <h4>{{ labels.workflow }}</h4>
 <pre>[psppno_workflow]</pre>
-<p>{{ labels.available_fields }}: <em>id, title</em></p>
+<p>{{ labels.available_fields }}: <em>{{ psppno_workflow_fields_list }}</em></p>
 
 <h4>{{ labels.edcomment }}</h4>
 <pre>[psppno_edcomment]</pre>
-<p>{{ labels.available_fields }}: <em>id, content, author, author_email, author_url, author_ip, date, number</em></p>
+<p>{{ labels.available_fields }}: <em>{{ psppno_edcomment_fields_list }}</em></p>
 
 <h4>{{ labels.receiver }}</h4>
 <pre>[psppno_receiver]</pre>
-<p>{{ labels.available_fields }}: <em>name, email, first_name, last_name, login, nickname</em></p>
+<p>{{ labels.available_fields }}: <em>{{ psppno_receiver_fields_list }}</em></p>
 
 <hr>
 <a href="https://publishpress.com/docs/the-notification-workflows/">{{ labels.read_more }}</a>
