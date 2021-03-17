@@ -122,8 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
-* Added: Added support to Elementor edit links in the shortcode "[psppno_post edit_link]", #794;
-
+* Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
 
 = [3.2.0] - 2021-02-10 =
 
