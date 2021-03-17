@@ -430,7 +430,7 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_enqueue_script(
                     'publishpress-custom_status',
                     $this->module_url . 'lib/custom-status.js',
-                    ['jquery', 'post'],
+                    ['jquery'],
                     PUBLISHPRESS_VERSION,
                     true
                 );

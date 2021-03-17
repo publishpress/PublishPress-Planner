@@ -1095,8 +1095,6 @@ if (!class_exists('PP_Calendar')) {
                 esc_html__($this->calendar_time_range())
             );
 
-            $authors = pp_get_users_with_author_permissions();
-
             // Should we display the subscribe button?
             if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key) {
                 // Prepare the download link

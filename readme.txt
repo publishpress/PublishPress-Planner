@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -123,6 +123,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
+* Fixed: Fixed the admin menu icon restoring the calendar dashicon, #802;
+* Fixed: Fixed PHP Fatal error Uncaught ArgumentCountError: Too few arguments to function MA_Multiple_Authors::filter_workflow_receiver_post_authors, #814;
+* Fixed: Fixed bug on WP 5.7 that breaks the toggle button on accordion of metaboxes, #816;
 
 = [3.2.0] - 2021-02-10 =
 

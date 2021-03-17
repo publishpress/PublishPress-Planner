@@ -33,7 +33,8 @@
         "twig/twig": "1.42.5.*",
         "symfony/polyfill-ctype": "1.19.*",
         "publishpress/wordpress-version-notices": "^1",
-        "sabre/vobject": "^3.4"
+        "sabre/vobject": "^3.4",
+        "psr/container": "1.0.0"
     },
     "require-dev": {
         "publishpress/publishpress-plugin-builder": "^1.2",
