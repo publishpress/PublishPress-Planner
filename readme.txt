@@ -120,6 +120,11 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Added: Added support to Elementor edit links in the shortcode "[psppno_post edit_link]", #794;
+
+
 = [3.2.0] - 2021-02-10 =
 
 * Added: Add option to rescheduled failed notifications in the notifications log. We only had that option for scheduled notifications, #786;
