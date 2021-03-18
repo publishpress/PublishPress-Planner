@@ -52,8 +52,9 @@ class Author extends Simple_Checkbox implements Receiver_Interface
              */
             $post_authors = apply_filters(
                 'publishpress_notifications_receiver_post_authors',
-                $post->post_author,
-                $post->ID
+                [$post->post_author],
+                $workflow->ID,
+                $args
             );
 
             if (!is_array($post_authors)) {
@@ -61,10 +62,16 @@ class Author extends Simple_Checkbox implements Receiver_Interface
             }
 
             foreach ($post_authors as $post_author) {
-                $receivers[] = [
+                $receiverData = [
                     'receiver' => $post_author,
                     'group'    => self::META_VALUE
                 ];
+
+                if (!is_numeric($post_author) && substr_count($post_author, '@') > 0) {
+                    $receiverData['channel'] = 'email';
+                }
+
+                $receivers[] = $receiverData;
             }
         }
 

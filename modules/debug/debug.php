@@ -84,7 +84,12 @@ if (!class_exists('PP_Debug')) {
             // Register our settings
             add_action('admin_init', [$this, 'register_settings']);
 
-            $this->path = wp_get_upload_dir() . '/' . self::FILE;
+            $uploadDir = wp_get_upload_dir();
+            if (is_array($uploadDir) && isset($uploadDir['path'])) {
+                $uploadDir = $uploadDir['path'];
+            }
+
+            $this->path = $uploadDir . '/' . self::FILE;
 
             // Admin bar.
             add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);

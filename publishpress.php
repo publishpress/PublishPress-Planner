@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.2.0
+ * Version: 3.3.0
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -517,7 +517,7 @@ if (!class_exists('publishpress')) {
                 $capability,
                 $menu_slug,
                 $function,
-                '',
+                'dashicons-calendar-alt',
                 26
             );
 
@@ -588,7 +588,7 @@ if (!class_exists('publishpress')) {
                 'title'                => '',
                 'short_description'    => '',
                 'extended_description' => '',
-                'icon_class'           => 'dashicons dashicons-admin-generic',
+                'icon_class'           => 'dashicons dashicons-calendar-alt',
                 'slug'                 => '',
                 'post_type_support'    => '',
                 'default_options'      => [],
