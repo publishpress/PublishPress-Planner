@@ -128,6 +128,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed PHP Fatal error Uncaught ArgumentCountError: Too few arguments to function MA_Multiple_Authors::filter_workflow_receiver_post_authors, #814;
 * Fixed: Fixed bug on WP 5.7 that breaks the toggle button on accordion of metaboxes, #816;
 * Fixed: Fixed PHP notice: array to string conversion in debug.php:87, #813;
+* Fixed: Fixed The Upgrade to Pro banner and menu item to show only for the users who can install plugins, #599;
 
 = [3.2.0] - 2021-02-10 =
 
