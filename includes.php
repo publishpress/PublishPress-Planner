@@ -103,44 +103,51 @@ if (!defined('PP_LOADED')) {
             require_once $includesFile;
         }
 
-        add_filter(
-            \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
-            function ($settings) {
-                $settings['publishpress'] = [
-                    'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
-                    'link'    => 'https://publishpress.com/links/publishpress-banner',
-                    'screens' => [
-                        ['base' => 'publishpress_page_pp-modules-settings',],
-                        ['base' => 'publishpress_page_pp-manage-roles',],
-                        ['base' => 'publishpress_page_pp-notif-log',],
-                        ['base' => 'edit', 'id' => 'edit-psppnotif_workflow',],
-                        ['base' => 'post', 'id' => 'psppnotif_workflow',],
-                        ['base' => 'publishpress_page_pp-content-overview',],
-                        ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar',],
-                    ]
-                ];
+        add_action(
+            'plugins_loaded',
+            function () {
+                if (current_user_can('install_plugins')) {
+                    add_filter(
+                        \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
+                        function ($settings) {
+                            $settings['publishpress'] = [
+                                'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                                'link'    => 'https://publishpress.com/links/publishpress-banner',
+                                'screens' => [
+                                    ['base' => 'publishpress_page_pp-modules-settings',],
+                                    ['base' => 'publishpress_page_pp-manage-roles',],
+                                    ['base' => 'publishpress_page_pp-notif-log',],
+                                    ['base' => 'edit', 'id' => 'edit-psppnotif_workflow',],
+                                    ['base' => 'post', 'id' => 'psppnotif_workflow',],
+                                    ['base' => 'publishpress_page_pp-content-overview',],
+                                    ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar',],
+                                ]
+                            ];
 
-                return $settings;
-            }
-        );
+                            return $settings;
+                        }
+                    );
 
-        add_filter(
-            Module::SETTINGS_FILTER,
-            function ($settings) {
-                $settings['publishpress'] = [
-                    'parent' => [
-                        'pp-calendar',
-                        'pp-content-overview',
-                        'edit.php?post_type=psppnotif_workflow',
-                        'pp-notif-log',
-                        'pp-manage-roles',
-                        'pp-modules-settings',
-                    ],
-                    'label'  => 'Upgrade to Pro',
-                    'link'   => 'https://publishpress.com/links/publishpress-menu',
-                ];
+                    add_filter(
+                        Module::SETTINGS_FILTER,
+                        function ($settings) {
+                            $settings['publishpress'] = [
+                                'parent' => [
+                                    'pp-calendar',
+                                    'pp-content-overview',
+                                    'edit.php?post_type=psppnotif_workflow',
+                                    'pp-notif-log',
+                                    'pp-manage-roles',
+                                    'pp-modules-settings',
+                                ],
+                                'label'  => 'Upgrade to Pro',
+                                'link'   => 'https://publishpress.com/links/publishpress-menu',
+                            ];
 
-                return $settings;
+                            return $settings;
+                        }
+                    );
+                }
             }
         );
     }
