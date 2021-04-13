@@ -1215,15 +1215,15 @@ if (!class_exists('PP_Calendar')) {
                         unset($_GET['trashed']);
                     }
 
-                    $untrashed = (int)$_GET['untrashed'];
-                    if (isset($_GET['untrashed']) && $untrashed) {
+
+                    if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
                         printf(
                             _n(
                                 'Post restored from the Trash.',
                                 '%d posts restored from the Trash.',
-                                $untrashed
+                                (int)$_GET['untrashed']
                             ),
-                            number_format_i18n($untrashed)
+                            number_format_i18n((int)$_GET['untrashed'])
                         );
                         unset($_GET['undeleted']);
                     }
