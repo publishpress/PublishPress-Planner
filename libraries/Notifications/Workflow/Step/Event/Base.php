@@ -39,7 +39,7 @@ class Base extends Base_Step
             [$this, 'filter_workflow_metabox_context']
         );
 
-        // Add the fitler to the run workflow query args
+        // Add the filter to the run workflow query args
         add_filter(
             'publishpress_notifications_running_workflow_meta_query',
             [$this, 'filter_running_workflow_query_args'],
