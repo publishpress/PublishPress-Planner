@@ -125,6 +125,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: Check capability "edit_pp_notif_workflows" before displaying the Active Notifications data in the notifications metabox;
 * Fixed: Fixed editorial comments not working for non-admins, #827;
 
+= [3.3.1] - 2021-04-14 =
+
+* Fixed: Fix the editorial comments for non-admins, #827;
+* Fixed: Check capability "edit_pp_notif_workflows" before displaying the "Active Notifications" list in the post edit page, not displaying it for those who can't edit notifications;
+* Fixed: Fix PHP warning about undefined index "untrashed" after trashing a scheduled post, #831;
+
 = [3.3.0] - 2021-03-18 =
 
 * Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
