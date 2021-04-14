@@ -120,11 +120,6 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
-
-* Changed: Check capability "edit_pp_notif_workflows" before displaying the Active Notifications data in the notifications metabox;
-* Fixed: Fixed editorial comments not working for non-admins, #827;
-
 = [3.3.1] - 2021-04-14 =
 
 * Fixed: Fix the editorial comments for non-admins, #827;
