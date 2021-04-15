@@ -137,7 +137,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             wp_enqueue_script(
                 'publishpress-editorial-comments',
                 $this->module_url . 'lib/editorial-comments.js',
-                ['jquery'],
+                ['jquery', 'wp-ajax-response'],
                 PUBLISHPRESS_VERSION,
                 true
             );
