@@ -258,7 +258,14 @@ class WorkflowsController
          */
         $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $args);
 
-        do_action('publishpress_debug_write_log', $query_args);
+        $user      = wp_get_current_user();
+        $debugData = [
+            'function'          => 'get_filtered_workflows',
+            'user:display_name' => $user->display_name,
+            'roles'             => $user->roles,
+            'query_args'        => $query_args,
+        ];
+        do_action('publishpress_debug_write_log', $debugData);
 
         $query = new WP_Query($query_args);
 
