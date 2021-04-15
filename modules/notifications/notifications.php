@@ -549,7 +549,6 @@ if (!class_exists('PP_Notifications')) {
                 <?php endif; ?>
                 <hr>
 
-                <?php
                 <div class="pp_post_notify_workflows">
                     <?php if (!empty($activeWorkflows)) : ?>
                         <h3><?php echo esc_html__('Active Notifications', 'publishpress'); ?></h3>
