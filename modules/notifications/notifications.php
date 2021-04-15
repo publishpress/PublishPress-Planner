@@ -550,38 +550,35 @@ if (!class_exists('PP_Notifications')) {
                 <hr>
 
                 <?php
-                if (current_user_can('edit_pp_notif_workflows')) : ?>
-                    <div class="pp_post_notify_workflows">
-                        <?php if (!empty($activeWorkflows)) : ?>
-                            <h3><?php echo esc_html__('Active Notifications', 'publishpress'); ?></h3>
+                <div class="pp_post_notify_workflows">
+                    <?php if (!empty($activeWorkflows)) : ?>
+                        <h3><?php echo esc_html__('Active Notifications', 'publishpress'); ?></h3>
 
-                            <ul>
-                                <?php foreach ($activeWorkflows as $workflow) : ?>
-                                    <li>
-                                        <a href="<?php echo esc_url(admin_url(
-                                            'post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'
-                                        )); ?>"
-                                           target="_blank">
-                                            <?php echo esc_html($workflow->workflow_post->post_title); ?><?php if (in_array(
-                                                $workflow->workflow_post->ID,
-                                                $followersWorkflows
-                                            )): ?>&sup1;<?php endif; ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php else: ?>
-                            <p class="no-workflows"><?php echo sprintf(
-                                    esc_html__(
-                                        'No active notifications found for this %s.',
-                                        'publishpress'
-                                    ),
-                                    esc_html($postType->labels->singular_name)
-                                ); ?></p>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
+                        <ul>
+                            <?php foreach ($activeWorkflows as $workflow) : ?>
+                                <li>
+                                    <a href="<?php echo esc_url(admin_url(
+                                        'post.php?post=' . $workflow->workflow_post->ID . '&action=edit&classic-editor'
+                                    )); ?>"
+                                       target="_blank">
+                                        <?php echo esc_html($workflow->workflow_post->post_title); ?><?php if (in_array(
+                                            $workflow->workflow_post->ID,
+                                            $followersWorkflows
+                                        )): ?>&sup1;<?php endif; ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p class="no-workflows"><?php echo sprintf(
+                                esc_html__(
+                                    'No active notifications found for this %s.',
+                                    'publishpress'
+                                ),
+                                esc_html($postType->labels->singular_name)
+                            ); ?></p>
+                    <?php endif; ?>
+                </div>
                 <?php
                 /**
                  * @param WP_Post $post
