@@ -258,6 +258,8 @@ class WorkflowsController
          */
         $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $args);
 
+        do_action('publishpress_debug_write_log', $query_args);
+
         $query = new WP_Query($query_args);
 
         if (!empty($query->posts)) {
