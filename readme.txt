@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.3.1] - 2021-04-14 =
+= [3.3.1] - 2021-04-15 =
 
 * Fixed: Fix the editorial comments for non-admins, #827;
 * Fixed: Check capability "edit_pp_notif_workflows" before displaying the "Active Notifications" list in the post edit page, not displaying it for those who can't edit notifications;
