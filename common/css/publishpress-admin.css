@@ -140,3 +140,10 @@ Status color box */
     font-style: italic;
     color: #9c9c9c;
 }
+
+#wp-admin-bar-publishpress_debug {
+    background: #635A93 !important;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0 2px !important;
+}
