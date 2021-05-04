@@ -1,4 +1,4 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate} from "../calendar-functions";
+import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate} from "../calendar-functions";
 
 /*
  * getBeginDateOfWeekByWeekNumber, sunday as first day of week
@@ -124,4 +124,58 @@ test('getWeekNumberByDate for 2021-11-7 when sunday is the first day of week', (
     expect(
         getWeekNumberByDate(new Date(2021, 10, 7), false)
     ).toStrictEqual([2021, 44]);
+})
+
+/*
+ * getBeginDateOfWeekByAnyDate, sunday as first day of week
+ */
+test('getBeginDateOfWeekByAnyDate for 2021-5-12 when sunday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 4, 12), true)
+    ).toStrictEqual(new Date(2021, 4, 9));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2021-5-9 when sunday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 4, 9), true)
+    ).toStrictEqual(new Date(2021, 4, 9));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2021-10-11 when sunday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 9, 11), true)
+    ).toStrictEqual(new Date(2021, 9, 10));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2022-9-18 when sunday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2022, 8, 18), true)
+    ).toStrictEqual(new Date(2022, 8, 18));
+})
+
+/*
+ * getBeginDateOfWeekByAnyDate, monday as first day of week
+ */
+test('getBeginDateOfWeekByAnyDate for 2021-5-12 when monday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 4, 12), false)
+    ).toStrictEqual(new Date(2021, 4, 10));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2021-5-9 when monday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 4, 9), false)
+    ).toStrictEqual(new Date(2021, 4, 3));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2021-10-11 when monday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 9, 11), false)
+    ).toStrictEqual(new Date(2021, 9, 11));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2022-9-18 when monday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2022, 8, 18), false)
+    ).toStrictEqual(new Date(2022, 8, 12));
 })

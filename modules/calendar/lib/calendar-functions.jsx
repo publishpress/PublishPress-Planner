@@ -58,3 +58,9 @@ export function getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek = true) {
     // Return array of year and week number
     return [theDate.getUTCFullYear(), weekNo];
 }
+
+export function getBeginDateOfWeekByDate(theDate, sundayIsFirstDayOfWeek = true) {
+    let weekNumber = getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek);
+
+    return getBeginDateOfWeekByWeekNumber(weekNumber[1], weekNumber[0], sundayIsFirstDayOfWeek);
+}
