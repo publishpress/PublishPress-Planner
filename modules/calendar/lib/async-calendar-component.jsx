@@ -14,13 +14,13 @@ class PublishPressAsyncCalendar extends React.Component {
 
     _getWeekDaysItems() {
         let weekDayLabel = [
-            __('Sunday', 'publishpress'),
-            __('Monday', 'publishpress'),
-            __('Tuesday', 'publishpress'),
-            __('Wednesday', 'publishpress'),
-            __('Thursday', 'publishpress'),
-            __('Friday', 'publishpress'),
-            __('Saturday', 'publishpress'),
+            __('Sun', 'publishpress'),
+            __('Mon', 'publishpress'),
+            __('Tue', 'publishpress'),
+            __('Wed', 'publishpress'),
+            __('Thu', 'publishpress'),
+            __('Fri', 'publishpress'),
+            __('Sat', 'publishpress'),
         ]
 
         let weekDaysItems = [];
