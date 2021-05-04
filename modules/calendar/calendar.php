@@ -1566,7 +1566,11 @@ if (!class_exists('PP_Calendar')) {
 
             </div>
 
-            <div id="publishpress-async-calendar-wrapper"></div>
+            <div id="publishpress-async-calendar-wrapper">
+                <div class="publishpress-async-calendar-loader">
+                    <?php echo __('Please, wait until the calendar is loaded...', 'publishpress'); ?>
+                </div>
+            </div>
             <?php
             $publishpress->settings->print_default_footer($publishpress->modules->calendar);
         }
