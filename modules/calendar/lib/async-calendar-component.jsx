@@ -4,6 +4,12 @@ let {__} = wp.i18n;
 
 
 class PublishPressAsyncCalendar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.props.todayDate.setHours(0, 0, 0);
+    }
+
     static defaultProps = {
         todayDate: new Date(),
         numberOfWeeksToDisplay: 5,
@@ -42,9 +48,18 @@ class PublishPressAsyncCalendar extends React.Component {
         return weekDaysItems;
     }
 
+    _getDayItemClassName(dayDate) {
+        const businessDays = [1, 2, 3, 4, 5];
+
+        let dayItemClassName = businessDays.indexOf(dayDate.getDay()) >= 0 ? 'business-day' : 'weekend-day'
+
+        return 'publishpress-calendar-' + dayItemClassName;
+    }
+
     _getDaysItems() {
         const firstDayOfTheFirstWeek = getBeginDateOfWeekByDate(this.props.firstDateToDisplay, this.props.sundayIsFirstDayOfWeek);
         const numberOfDaysToDisplay = this.props.numberOfWeeksToDisplay * 7;
+
 
         let daysItems = [];
         let dayDate;
@@ -54,7 +69,7 @@ class PublishPressAsyncCalendar extends React.Component {
             dayDate.setDate(dayDate.getDate() + i);
 
             daysItems.push(
-                <li>{dayDate.getDate()}</li>
+                <li className={this._getDayItemClassName(dayDate)}>{dayDate.getDate()}</li>
             );
         }
 
@@ -73,12 +88,9 @@ class PublishPressAsyncCalendar extends React.Component {
 }
 
 jQuery(function ($) {
-    let todayDate = new Date();
-    todayDate.setHours(0, 0, 0);
-
     ReactDOM.render(
         <PublishPressAsyncCalendar
-            firstDateToDisplay={todayDate}
+            firstDateToDisplay={new Date()}
             sundayIsFirstDayOfWeek={true}
             numberOfWeeksToDisplay={5}
             theme={'light'}/>,

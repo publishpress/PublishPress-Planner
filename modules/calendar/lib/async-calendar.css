@@ -7,11 +7,17 @@
     width: 100%;
 }
 
+.publishpress-async-calendar * {
+    user-select: none;
+}
+
 .publishpress-async-calendar-week-days li,
 .publishpress-async-calendar-days li {
     display: inline-block;
     width: 14.28%;
     box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #ededed;
 }
 
 .publishpress-async-calendar-theme-light .publishpress-async-calendar-week-days li {
@@ -20,16 +26,33 @@
     color: #333333;
 }
 
+.publishpress-async-calendar-week-days,
+.publishpress-async-calendar-days {
+    margin: 0;
+}
+
+.publishpress-async-calendar-week-days li,
+.publishpress-async-calendar-days li {
+    font-size: 13px;
+    padding-left: 6px;
+    padding-top: 6px;
+}
+
 .publishpress-async-calendar-week-days li {
     height: 36px;
-    font-size: 13px;
     font-weight: bold;
     text-align: left;
     line-height: 1.3em;
-    padding-left: 8px;
-    padding-top: 8px;
 }
 
 .publishpress-async-calendar-days li {
     min-height: 120px;
+}
+
+.publishpress-async-calendar-theme-light .publishpress-calendar-business-day {
+    background: #fff;
+}
+
+.publishpress-async-calendar-theme-light .publishpress-calendar-weekend-day {
+    background: #f9f9f9;
 }
