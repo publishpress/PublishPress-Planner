@@ -87,6 +87,12 @@ test('getWeekNumberByDate for 2021-05-03 when sunday is the first day of week', 
     ).toStrictEqual([2021, 18]);
 })
 
+test('getWeekNumberByDate for 2021-05-04 when sunday is the first day of week', () => {
+    expect(
+        getWeekNumberByDate(new Date(2021, 4, 4), true)
+    ).toStrictEqual([2021, 18]);
+})
+
 test('getWeekNumberByDate for 2021-10-12 when sunday is the first day of week', () => {
     expect(
         getWeekNumberByDate(new Date(2021, 9, 12), true)
@@ -151,6 +157,12 @@ test('getBeginDateOfWeekByAnyDate for 2022-9-18 when sunday is the first day of 
     expect(
         getBeginDateOfWeekByDate(new Date(2022, 8, 18), true)
     ).toStrictEqual(new Date(2022, 8, 18));
+})
+
+test('getBeginDateOfWeekByAnyDate for 2021-5-4 when sunday is the first day of week', () => {
+    expect(
+        getBeginDateOfWeekByDate(new Date(2021, 4, 4), true)
+    ).toStrictEqual(new Date(2021, 4, 2));
 })
 
 /*

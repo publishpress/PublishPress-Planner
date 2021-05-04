@@ -1,32 +1,35 @@
-.publishpress-async-calendar-loader {
-
+.publishpress-async-calendar-theme-light .publishpress-async-calendar-loader {
+    background: #fff;
 }
 
-.publishpress-async-calendar-wrap {
+.publishpress-async-calendar {
     display: block;
     width: 100%;
 }
 
 .publishpress-async-calendar-week-days li,
-.publishpress-async-calendar-cell {
+.publishpress-async-calendar-days li {
     display: inline-block;
     width: 14.28%;
     box-sizing: border-box;
 }
 
+.publishpress-async-calendar-theme-light .publishpress-async-calendar-week-days li {
+    background: #fff;
+    border-bottom: 3px solid #655997;
+    color: #333333;
+}
+
 .publishpress-async-calendar-week-days li {
     height: 36px;
-    background: #fff;
-    color: #333333;
     font-size: 13px;
     font-weight: bold;
     text-align: left;
-    border-bottom: 3px solid #655997;
     line-height: 1.3em;
     padding-left: 8px;
     padding-top: 8px;
 }
 
-.publishpress-async-calendar-cell {
+.publishpress-async-calendar-days li {
     min-height: 120px;
 }

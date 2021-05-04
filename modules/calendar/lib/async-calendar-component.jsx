@@ -1,13 +1,18 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate} from "./calendar-functions";
+import {getBeginDateOfWeekByDate} from "./calendar-functions";
 
 let {__} = wp.i18n;
 
-class PublishPressCalendarWeekDaysNames extends React.Component {
+
+class PublishPressAsyncCalendar extends React.Component {
     static defaultProps = {
-        sundayIsFirstDayOfWeek: true
+        todayDate: new Date(),
+        numberOfWeeksToDisplay: 5,
+        sundayIsFirstDayOfWeek: true,
+        firstDateToDisplay: new Date(),
+        theme: 'light'
     }
 
-    render() {
+    _getWeekDaysItems() {
         let weekDayLabel = [
             __('Sunday', 'publishpress'),
             __('Monday', 'publishpress'),
@@ -34,52 +39,50 @@ class PublishPressCalendarWeekDaysNames extends React.Component {
             );
         }
 
-        return (
-            <ul className="publishpress-async-calendar-week-days">{weekDaysItems}</ul>
-        )
-    }
-}
-
-class PublishPressAsyncCalendarDays extends React.Component {
-    static defaultProps = {
-        sundayIsFirstDayOfWeek: true,
-        numberOfWeeksToDisplay: 5,
-        firstDateToDisplay: new Date()
+        return weekDaysItems;
     }
 
-    render() {
-        let a = getBeginDateOfWeekByWeekNumber(18, 2021, this.props.sundayIsFirstDayOfWeek);
+    _getDaysItems() {
+        const firstDayOfTheFirstWeek = getBeginDateOfWeekByDate(this.props.firstDateToDisplay, this.props.sundayIsFirstDayOfWeek);
+        const numberOfDaysToDisplay = this.props.numberOfWeeksToDisplay * 7;
 
-        return (
-            <ul><li>{a.toString()}</li></ul>
-        )
-    }
-}
+        let daysItems = [];
+        let dayDate;
 
-class PublishPressAsyncCalendar extends React.Component {
-    static defaultProps = {
-        todayDate: new Date(),
-        numberOfWeeksToDisplay: 5,
-        sundayIsFirstDayOfWeek: true,
-        firstDateToDisplay: new Date()
+        for (let i = 0; i < numberOfDaysToDisplay; i++) {
+            dayDate = new Date(firstDayOfTheFirstWeek);
+            dayDate.setDate(dayDate.getDate() + i);
+
+            daysItems.push(
+                <li>{dayDate.getDate()}</li>
+            );
+        }
+
+        return daysItems;
     }
 
     render() {
         return (
-            <div className="publishpress-async-calendar-wrap">
-                <PublishPressCalendarWeekDaysNames sundayIsFirstDayOfWeek={this.props.sundayIsFirstDayOfWeek}/>
-                <PublishPressAsyncCalendarDays
-                    sundayIsFirstDayOfWeek={this.props.sundayIsFirstDayOfWeek}
-                    numberOfWeeksToDisplay={this.props.numberOfWeeksToDisplay}
-                    firstDateToDisplay={this.props.firstDateToDisplay}/>
+            <div className={'publishpress-async-calendar publishpress-async-calendar-theme-' + this.props.theme}>
+
+                <ul className="publishpress-async-calendar-week-days">{this._getWeekDaysItems()}</ul>
+                <ul className="publishpress-async-calendar-days">{this._getDaysItems()}</ul>
             </div>
         )
     }
 }
 
 jQuery(function ($) {
+    let todayDate = new Date();
+    todayDate.setHours(0, 0, 0);
+
     ReactDOM.render(
-        <PublishPressAsyncCalendar sundayIsFirstDayOfWeek={true} numberOfWeeksToDisplay={5}/>,
-        document.getElementById('publishpress-async-calendar-wrapper')
+        <PublishPressAsyncCalendar
+            firstDateToDisplay={todayDate}
+            sundayIsFirstDayOfWeek={true}
+            numberOfWeeksToDisplay={5}
+            theme={'light'}/>,
+
+        document.getElementById('publishpress-async-calendar-wrap')
     );
 });

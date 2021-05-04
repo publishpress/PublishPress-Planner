@@ -7,6 +7,7 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, sundayIsFirstDa
     let dayOfWeek = simpleDate.getDay();
     let weekStartISO = simpleDate;
 
+
     if (dayOfWeek <= 4) {
         weekStartISO.setDate(simpleDate.getDate() - simpleDate.getDay() + 1);
     } else {
@@ -39,24 +40,25 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, sundayIsFirstDa
 export function getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek = true) {
 
     // Copy date so don't modify original
-    theDate = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate(), theDate.getHours(), theDate.getMinutes(), theDate.getSeconds(), theDate.getMilliseconds());
+    let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate(), theDate.getHours(), theDate.getMinutes(), theDate.getSeconds(), theDate.getMilliseconds());
 
-    let dayOfWeek = theDate.getDay();
+    let dayOfWeek = theDateCopy.getDay();
 
     // Set to nearest Thursday: current date + 4 - current day number
     // Make Sunday's day number 7
-    theDate.setUTCDate(theDate.getUTCDate() + 4 - (theDate.getUTCDay() || 7));
+    theDateCopy.setDate(theDateCopy.getDate() + 4 - (theDateCopy.getDay() || 7));
+
     // Get first day of year
-    let yearStart = new Date(theDate.getUTCFullYear(), 0, 1);
+    let yearStart = new Date(theDateCopy.getFullYear(), 0, 1);
     // Calculate full weeks to nearest Thursday
-    let weekNo = Math.ceil((((theDate - yearStart) / 86400000) + 1) / 7);
+    let weekNo = Math.round((((theDateCopy - yearStart) / 86400000) + 1) / 7);
 
     if (sundayIsFirstDayOfWeek && dayOfWeek === 0) {
         weekNo++;
     }
 
     // Return array of year and week number
-    return [theDate.getUTCFullYear(), weekNo];
+    return [theDateCopy.getFullYear(), weekNo];
 }
 
 export function getBeginDateOfWeekByDate(theDate, sundayIsFirstDayOfWeek = true) {
