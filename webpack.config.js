@@ -4,10 +4,13 @@ var path = require('path');
 
 module.exports = {
     mode: NODE_ENV,
-    entry: './modules/custom-status/lib/custom-status-block.jsx',
+    entry: {
+        'modules/custom-status/lib/custom-status-block': './modules/custom-status/lib/custom-status-block.jsx',
+        'modules/calendar/lib/async-calendar-component': './modules/calendar/lib/async-calendar-component.jsx'
+    },
     output: {
-        path: path.join(__dirname, 'modules/custom-status/lib'),
-        filename: 'custom-status-block.min.js'
+        path: __dirname,
+        filename: '[name].min.js'
     },
     module: {
         rules: [
@@ -15,7 +18,15 @@ module.exports = {
                 test: /.jsx$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
+            },
+            {
+                test: /.scss/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             }
         ]
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     }
 };

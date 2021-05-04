@@ -1,0 +1,28 @@
+.publishpress-async-calendar-wrap {
+    display: block;
+    width: 100%;
+}
+
+.publishpress-async-calendar-week-days li,
+.publishpress-async-calendar-cell {
+    display: inline-block;
+    width: 14.28%;
+    box-sizing: border-box;
+}
+
+.publishpress-async-calendar-week-days li {
+    height: 36px;
+    background: #fff;
+    color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 3px solid #655997;
+    line-height: 1.3em;
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+.publishpress-async-calendar-cell {
+    min-height: 120px;
+}

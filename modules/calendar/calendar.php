@@ -466,6 +466,13 @@ if (!class_exists('PP_Calendar')) {
                 );
 
                 wp_enqueue_style(
+                    'publishpress-async-calendar-css',
+                    $this->module_url . 'lib/async-calendar.css',
+                    [],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_style(
                     'publishpress-select2',
                     PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
                     false,
@@ -523,6 +530,18 @@ if (!class_exists('PP_Calendar')) {
                     'publishpress-calendar-js',
                     $this->module_url . 'lib/calendar.js',
                     $js_libraries,
+                    PUBLISHPRESS_VERSION,
+                    true
+                );
+                wp_enqueue_script(
+                    'publishpress-async-calendar-js',
+                    $this->module_url . 'lib/async-calendar-component.min.js',
+                    [
+                        'react',
+                        'react-dom',
+                        'jquery',
+                        'wp-i18n',
+                    ],
                     PUBLISHPRESS_VERSION,
                     true
                 );
@@ -1547,6 +1566,7 @@ if (!class_exists('PP_Calendar')) {
 
             </div>
 
+            <div id="publishpress-async-calendar-wrapper"></div>
             <?php
             $publishpress->settings->print_default_footer($publishpress->modules->calendar);
         }
@@ -2222,6 +2242,7 @@ if (!class_exists('PP_Calendar')) {
                 $post_results->the_post();
                 global $post;
                 $key_date           = date('Y-m-d', strtotime($post->post_date));
+//                $key_date = date('Y-m-d',(int)get_post_meta($post->ID, '_pp_editorial_meta_date_first-draft-date', true));
                 $posts[$key_date][] = $post;
             }
 
