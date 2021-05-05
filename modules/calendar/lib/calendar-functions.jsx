@@ -66,3 +66,29 @@ export function getBeginDateOfWeekByDate(theDate, sundayIsFirstDayOfWeek = true)
 
     return getBeginDateOfWeekByWeekNumber(weekNumber[1], weekNumber[0], sundayIsFirstDayOfWeek);
 }
+
+export function getHourStringOnFormat(timestamp, timeFormat = 'g:i a') {
+    let hours = timestamp.getHours();
+
+    if (timeFormat === 'g:i a' || timeFormat === 'g:i A') {
+        if (hours === 0) {
+            hours = '12am';
+        } else if (hours < 12) {
+            hours += 'am';
+        } else {
+            if (hours > 12) {
+                hours -= 12;
+            }
+
+            hours += 'pm';
+        }
+
+        if (timeFormat === 'g:i A') {
+            hours = hours.toUpperCase();
+        }
+    } else {
+        hours = hours.toString().padStart(2, '0') + 'h';
+    }
+
+    return hours;
+}

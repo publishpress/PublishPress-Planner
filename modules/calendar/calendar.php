@@ -556,13 +556,14 @@ if (!class_exists('PP_Calendar')) {
                 $pp_cal_js_params = [
                     'can_add_posts'    => current_user_can($this->create_post_cap) ? 'true' : 'false',
                     'nonce'            => wp_create_nonce('calendar_filter_nonce'),
-                    'calendar_filters' => [
+                    'calendarParams' => [
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) ? (int)$_GET['weeks'] : 5,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00',
                         'theme'                  => 'light',
-                        'sundayIsFirstDayOfWeek' => get_option('start_of_week') == 0,
-                        'timezoneOffset'         => get_option('gmt_offset'),
+                        'sundayIsFirstDayOfWeek' => get_option('start_of_week', 0) == 0,
+                        'timezoneOffset'         => get_option('gmt_offset', '0'),
                         'todayDate'              => date('Y-m-d'),
+                        'timeFormat'             => get_option('time_format', 'g:i a'),
                     ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);

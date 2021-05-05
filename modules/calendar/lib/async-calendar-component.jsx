@@ -25,7 +25,8 @@ class PublishPressAsyncCalendar extends React.Component {
         timezoneOffset: 0,
         firstDateToDisplay: new Date(),
         theme: 'light',
-        getDataCallback: null
+        getDataCallback: null,
+        timeFormat: 'g:i a',
     }
 
     _getData() {
@@ -127,7 +128,6 @@ class PublishPressAsyncCalendar extends React.Component {
         let itemsList = [];
         let dateString = this._getDateAsStringInWpFormat(dayDate);
         let dayItems = this.state.data[dateString] ? this.state.data[dateString] : null;
-        console.log(dayDate, dayItems);
 
         if (null === dayItems) {
             return [];
@@ -137,7 +137,10 @@ class PublishPressAsyncCalendar extends React.Component {
             itemsList.push(
                 <PublishPressAsyncCalendarItem icon={dayItems[i].icon}
                                                time={dayItems[i].time}
-                                               label={dayItems[i].label}/>
+                                               label={dayItems[i].label}
+                                               id={dayItems[i].id}
+                                               timestamp={dayItems[i].timestamp}
+                                               timeFormat={this.props.timeFormat}/>
             );
         }
 
@@ -201,12 +204,13 @@ class PublishPressAsyncCalendar extends React.Component {
 jQuery(function ($) {
     ReactDOM.render(
         <PublishPressAsyncCalendar
-            firstDateToDisplay={new Date(Date.parse(pp_calendar_params.calendar_filters.firstDateToDisplay))}
-            sundayIsFirstDayOfWeek={pp_calendar_params.calendar_filters.sundayIsFirstDayOfWeek}
-            numberOfWeeksToDisplay={pp_calendar_params.calendar_filters.numberOfWeeksToDisplay}
-            todayDate={new Date(Date.parse(pp_calendar_params.calendar_filters.todayDate))}
-            timezoneOffset={pp_calendar_params.calendar_filters.timezoneOffset}
-            theme={pp_calendar_params.calendar_filters.theme}
+            firstDateToDisplay={new Date(Date.parse(pp_calendar_params.calendarParams.firstDateToDisplay))}
+            sundayIsFirstDayOfWeek={pp_calendar_params.calendarParams.sundayIsFirstDayOfWeek}
+            numberOfWeeksToDisplay={pp_calendar_params.calendarParams.numberOfWeeksToDisplay}
+            todayDate={new Date(Date.parse(pp_calendar_params.calendarParams.todayDate))}
+            timezoneOffset={pp_calendar_params.calendarParams.timezoneOffset}
+            timeFormat={pp_calendar_params.calendarParams.timeFormat}
+            theme={pp_calendar_params.calendarParams.theme}
             getDataCallback={publishpressAsyncCalendarGetData}/>,
 
         document.getElementById('publishpress-calendar-wrap')
@@ -218,20 +222,23 @@ function publishpressAsyncCalendarGetData(numberOfWeeksToDisplay, firstDateToDis
         '2021-05-04': [
             {
                 icon: 'calendar',
-                time: '7pm',
-                label: '1Lorem ipsum dolor text 1'
+                label: '1Lorem ipsum dolor text 1',
+                id: 310,
+                timestamp: '2021-05-04 19:20:00'
             },
             {
                 icon: 'yes',
-                time: '2pm',
-                label: '2Lorem ipsum dolor text 2'
+                label: '2Lorem ipsum dolor text 2',
+                id: 25,
+                timestamp: '2021-05-04 14:32:30'
             },
         ],
         '2021-05-26': [
             {
                 icon: 'no',
-                time: null,
-                label: '3Lorem ipsum dolor text 3'
+                label: '3Lorem ipsum dolor text 3',
+                id: 130,
+                timestamp: '2021-05-26 00:00:00'
             },
         ]
     };
