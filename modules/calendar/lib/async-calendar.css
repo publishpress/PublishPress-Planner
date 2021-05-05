@@ -35,7 +35,7 @@
 .publishpress-async-calendar-days li {
     font-size: 13px;
     padding-left: 6px;
-    padding-top: 6px;
+    padding-top: 4px;
 }
 
 .publishpress-async-calendar-week-days li {
@@ -55,4 +55,22 @@
 
 .publishpress-async-calendar-theme-light .publishpress-calendar-weekend-day {
     background: #f9f9f9;
+}
+
+.publishpress-async-calendar-theme-light .publishpress-calendar-today {
+    background: #e8e6f0;
+    border: 1px solid #465984;
+}
+
+.publishpress-async-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
+    background: #655997;
+    margin-top: -8px;
+    margin-left: -6px;
+    padding: 4px 8px;
+    display: inline-block;
+    color: #fff;
+}
+
+.publishpress-async-calendar-theme-light .publishpress-calendar-month-name {
+    margin-right: 3px;
 }

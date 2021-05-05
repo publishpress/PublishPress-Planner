@@ -48,12 +48,42 @@ class PublishPressAsyncCalendar extends React.Component {
         return weekDaysItems;
     }
 
+    _getTodayDate() {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        return today;
+    }
+
     _getDayItemClassName(dayDate) {
         const businessDays = [1, 2, 3, 4, 5];
 
         let dayItemClassName = businessDays.indexOf(dayDate.getDay()) >= 0 ? 'business-day' : 'weekend-day'
 
+        if (this._getTodayDate().getTime() === dayDate.getTime()) {
+            dayItemClassName += ' publishpress-calendar-today';
+        }
+
         return 'publishpress-calendar-' + dayItemClassName;
+    }
+
+    _getMonthName(month) {
+        const monthNames = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ];
+
+        return monthNames[month];
     }
 
     _getDaysItems() {
@@ -63,14 +93,32 @@ class PublishPressAsyncCalendar extends React.Component {
 
         let daysItems = [];
         let dayDate;
+        let lastMonthDisplayed = firstDayOfTheFirstWeek.getMonth();
+        let shouldDisplayMonthName;
 
         for (let i = 0; i < numberOfDaysToDisplay; i++) {
             dayDate = new Date(firstDayOfTheFirstWeek);
             dayDate.setDate(dayDate.getDate() + i);
 
+            shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || i === 0;
+
             daysItems.push(
-                <li className={this._getDayItemClassName(dayDate)}>{dayDate.getDate()}</li>
+                <li
+                    className={this._getDayItemClassName(dayDate)}
+                    data-year={dayDate.getFullYear()}
+                    data-month={dayDate.getMonth() + 1}
+                    data-day={dayDate.getDate()}>
+                    <div className="publishpress-calendar-date">
+                        {shouldDisplayMonthName &&
+                            <span className="publishpress-calendar-month-name">{this._getMonthName(dayDate.getMonth())}</span>
+                        }
+                        {dayDate.getDate()}
+                    </div>
+                    <ul className="publishpress-calendar-day-items"></ul>
+                </li>
             );
+
+            lastMonthDisplayed = dayDate.getMonth();
         }
 
         return daysItems;
