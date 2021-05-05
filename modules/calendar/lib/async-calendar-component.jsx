@@ -126,10 +126,10 @@ class PublishPressAsyncCalendar extends React.Component {
 
     render() {
         return (
-            <div className={'publishpress-async-calendar publishpress-async-calendar-theme-' + this.props.theme}>
+            <div className={'publishpress-calendar publishpress-calendar-theme-' + this.props.theme}>
 
-                <ul className="publishpress-async-calendar-week-days">{this._getWeekDaysItems()}</ul>
-                <ul className="publishpress-async-calendar-days">{this._getDaysItems()}</ul>
+                <ul className="publishpress-calendar-week-days">{this._getWeekDaysItems()}</ul>
+                <ul className="publishpress-calendar-days">{this._getDaysItems()}</ul>
             </div>
         )
     }
@@ -145,6 +145,6 @@ jQuery(function ($) {
             timezoneOffset={pp_calendar_params.calendar_filters.timezoneOffset}
             theme={pp_calendar_params.calendar_filters.theme}/>,
 
-        document.getElementById('publishpress-async-calendar-wrap')
+        document.getElementById('publishpress-calendar-wrap')
     );
 });
