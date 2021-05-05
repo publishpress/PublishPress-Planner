@@ -14,8 +14,14 @@ class PublishPressAsyncCalendar extends React.Component {
         this.props.firstDateToDisplay = this._getFirstDayOfWeek(this.props.firstDateToDisplay);
 
         this.state = {
-            data: this._getData()
+            error: null,
+            isLoaded: false,
+            items: []
         };
+    }
+
+    componentDidMount() {
+        this.refresh();
     }
 
     static defaultProps = {
@@ -29,15 +35,16 @@ class PublishPressAsyncCalendar extends React.Component {
         timeFormat: 'g:i a',
     }
 
-    _getData() {
+    refresh() {
         if (typeof this.props.getDataCallback !== 'function') {
             return [];
         }
 
-        return this.props.getDataCallback({
-            numberOfWeeksToDisplay: this.props.numberOfWeeksToDisplay,
-            firstDateToDisplay: this.props.firstDateToDisplay
-        });
+        return this.props.getDataCallback(
+            this.props.numberOfWeeksToDisplay,
+            this.props.firstDateToDisplay,
+            this
+        );
     }
 
     _getWeekDaysCells() {
@@ -127,7 +134,7 @@ class PublishPressAsyncCalendar extends React.Component {
 
         let itemsList = [];
         let dateString = this._getDateAsStringInWpFormat(dayDate);
-        let dayItems = this.state.data[dateString] ? this.state.data[dateString] : null;
+        let dayItems = this.state.items[dateString] ? this.state.items[dateString] : null;
 
         if (null === dayItems) {
             return [];
@@ -217,29 +224,22 @@ jQuery(function ($) {
     );
 });
 
-function publishpressAsyncCalendarGetData(numberOfWeeksToDisplay, firstDateToDisplay) {
-    return {
-        '2021-05-04': [
-            {
-                icon: 'calendar',
-                label: '1Lorem ipsum dolor text 1',
-                id: 310,
-                timestamp: '2021-05-04 19:20:00'
-            },
-            {
-                icon: 'yes',
-                label: '2Lorem ipsum dolor text 2',
-                id: 25,
-                timestamp: '2021-05-04 14:32:30'
-            },
-        ],
-        '2021-05-26': [
-            {
-                icon: 'no',
-                label: '3Lorem ipsum dolor text 3',
-                id: 130,
-                timestamp: '2021-05-26 00:00:00'
-            },
-        ]
-    };
+function publishpressAsyncCalendarGetData(numberOfWeeksToDisplay, firstDateToDisplay, calendarInstance) {
+    fetch(pp_calendar_params.calendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + pp_calendar_params.calendarParams.nonce)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log(result);
+                calendarInstance.setState({
+                    isLoaded: true,
+                    items: result
+                }),
+                (error) => {
+                    calendarInstance.setState({
+                        isLoaded: true,
+                        error: true
+                    });
+                }
+            }
+        );
 }

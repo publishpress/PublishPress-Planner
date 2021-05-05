@@ -251,6 +251,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
             add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
             add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
+            add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'calendarGetData']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -564,6 +565,8 @@ if (!class_exists('PP_Calendar')) {
                         'timezoneOffset'         => get_option('gmt_offset', '0'),
                         'todayDate'              => date('Y-m-d H:i:s'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
+                        'ajaxUrl'                => admin_url('admin-ajax.php'),
+                        'nonce'                  => wp_create_nonce('publishpress-calendar-get-data')
                     ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
@@ -3258,6 +3261,48 @@ if (!class_exists('PP_Calendar')) {
 
             echo wp_json_encode($queryResult);
             exit;
+        }
+
+        public function calendarGetData()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([], 403);
+            }
+
+            $data = [
+                '2021-05-04' => [
+                    [
+                        'icon'      => 'calendar',
+                        'label'     => '1Lorem ipsum dolor text 1',
+                        'id'        => 310,
+                        'timestamp' => '2021-05-04 19:20:00'
+                    ],
+                    [
+                        'icon'      => 'yes',
+                        'label'     => '2Lorem ipsum dolor text 2',
+                        'id'        => 25,
+                        'timestamp' => '2021-05-04 14:32:30'
+                    ],
+                ],
+                '2021-05-26' => [
+                    [
+                        'icon'      => 'no',
+                        'label'     => '3Lorem ipsum dolor text 3',
+                        'id'        => 130,
+                        'timestamp' => '2021-05-26 00:00:00'
+                    ],
+                ],
+                '2021-05-27' => [
+                    [
+                        'icon'      => 'calendar-alt',
+                        'label'     => '4Lorem ipsum dolor text 4',
+                        'id'        => 134,
+                        'timestamp' => '2021-05-27 17:20:42'
+                    ],
+                ]
+            ];
+
+            wp_send_json($data, 200);
         }
 
         /**
