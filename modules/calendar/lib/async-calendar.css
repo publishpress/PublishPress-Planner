@@ -62,6 +62,10 @@
     border: 1px solid #465984;
 }
 
+.publishpress-async-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-date {
+    color: #999999;
+}
+
 .publishpress-async-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
     background: #655997;
     margin-top: -8px;
