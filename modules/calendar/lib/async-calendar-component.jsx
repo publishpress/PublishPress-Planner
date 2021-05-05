@@ -7,13 +7,17 @@ class PublishPressAsyncCalendar extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.todayDate.setHours(0, 0, 0);
+        // Compensate the timezone in the browser with the server's timezone
+        const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(this.props.timezoneOffset);
+
+        this.props.todayDate.setHours(this.props.todayDate.getHours() + timezoneOffset);
     }
 
     static defaultProps = {
         todayDate: new Date(),
         numberOfWeeksToDisplay: 5,
         sundayIsFirstDayOfWeek: true,
+        timezoneOffset: 0,
         firstDateToDisplay: new Date(),
         theme: 'light'
     }
@@ -48,19 +52,15 @@ class PublishPressAsyncCalendar extends React.Component {
         return weekDaysItems;
     }
 
-    _getTodayDate() {
-        let today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        return today;
-    }
-
     _getDayItemClassName(dayDate) {
         const businessDays = [1, 2, 3, 4, 5];
 
         let dayItemClassName = businessDays.indexOf(dayDate.getDay()) >= 0 ? 'business-day' : 'weekend-day'
 
-        if (this._getTodayDate().getTime() === dayDate.getTime()) {
+        if (this.props.todayDate.getFullYear() === dayDate.getFullYear()
+            && this.props.todayDate.getMonth() === dayDate.getMonth()
+            && this.props.todayDate.getDate() === dayDate.getDate()
+        ) {
             dayItemClassName += ' publishpress-calendar-today';
         }
 
@@ -141,6 +141,8 @@ jQuery(function ($) {
             firstDateToDisplay={new Date(Date.parse(pp_calendar_params.calendar_filters.firstDateToDisplay))}
             sundayIsFirstDayOfWeek={pp_calendar_params.calendar_filters.sundayIsFirstDayOfWeek}
             numberOfWeeksToDisplay={pp_calendar_params.calendar_filters.numberOfWeeksToDisplay}
+            todayDate={new Date(Date.parse(pp_calendar_params.calendar_filters.todayDate))}
+            timezoneOffset={pp_calendar_params.calendar_filters.timezoneOffset}
             theme={pp_calendar_params.calendar_filters.theme}/>,
 
         document.getElementById('publishpress-async-calendar-wrap')

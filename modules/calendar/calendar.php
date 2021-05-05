@@ -561,6 +561,8 @@ if (!class_exists('PP_Calendar')) {
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00',
                         'theme'                  => 'light',
                         'sundayIsFirstDayOfWeek' => get_option('start_of_week') == 0,
+                        'timezoneOffset'         => get_option('gmt_offset'),
+                        'todayDate'              => date('Y-m-d'),
                     ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
