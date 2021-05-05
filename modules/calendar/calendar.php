@@ -70,7 +70,7 @@ if (!class_exists('PP_Calendar')) {
         /**
          * Time 12h-format without leading zeroes.
          */
-        const TIME_FORMAT_12H_WO_LEADING_ZEROES = 'ga';
+        const TIME_FORMAT_12H_NO_LEADING_ZEROES = 'ga';
 
         /**
          * Time 12h-format with leading zeroes.
@@ -563,7 +563,7 @@ if (!class_exists('PP_Calendar')) {
                         'sundayIsFirstDayOfWeek' => get_option('start_of_week', 0) == 0,
                         'timezoneOffset'         => get_option('gmt_offset', '0'),
                         'todayDate'              => date('Y-m-d'),
-                        'timeFormat'             => get_option('time_format', 'g:i a'),
+                        'timeFormat'             => $this->getCalendarTimeFormat(),
                     ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
@@ -1625,7 +1625,7 @@ if (!class_exists('PP_Calendar')) {
                 $this->module->options->posts_publish_time_format
                 )
                     ? $this->module->options->posts_publish_time_format
-                    : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
+                    : self::TIME_FORMAT_12H_NO_LEADING_ZEROES;
             }
 
             $post_classes = [
@@ -2627,6 +2627,15 @@ if (!class_exists('PP_Calendar')) {
             }
         }
 
+        private function getCalendarTimeFormat()
+        {
+            return !isset($this->module->options->posts_publish_time_format) || is_null(
+                $this->module->options->posts_publish_time_format
+            )
+                ? self::TIME_FORMAT_12H_NO_LEADING_ZEROES
+                : $this->module->options->posts_publish_time_format;
+        }
+
         /**
          * Define the time format for Posts publish date.
          *
@@ -2635,16 +2644,12 @@ if (!class_exists('PP_Calendar')) {
         public function settings_posts_publish_time_format_option()
         {
             $timeFormats = [
-                self::TIME_FORMAT_12H_WO_LEADING_ZEROES   => '1-12 am/pm',
+                self::TIME_FORMAT_12H_NO_LEADING_ZEROES   => '1-12 am/pm',
                 self::TIME_FORMAT_12H_WITH_LEADING_ZEROES => '01-12 am/pm',
-                self::TIME_FORMAT_24H                     => '00-24',
+                self::TIME_FORMAT_24H                     => '00-23',
             ];
 
-            $posts_publish_time_format = !isset($this->module->options->posts_publish_time_format) || is_null(
-                $this->module->options->posts_publish_time_format
-            )
-                ? self::TIME_FORMAT_12H_WO_LEADING_ZEROES
-                : $this->module->options->posts_publish_time_format;
+            $posts_publish_time_format = $this->getCalendarTimeFormat();
 
             echo '<div class="c-input-group c-pp-calendar-options-posts_publish_time_format">';
 
@@ -2823,7 +2828,7 @@ if (!class_exists('PP_Calendar')) {
 
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
-                : self::TIME_FORMAT_12H_WO_LEADING_ZEROES;
+                : self::TIME_FORMAT_12H_NO_LEADING_ZEROES;
 
             // Default publish time
             if (isset($new_options['default_publish_time'])) {

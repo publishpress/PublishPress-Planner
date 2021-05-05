@@ -193,76 +193,76 @@ test('getBeginDateOfWeekByAnyDate for 2022-9-18 when monday is the first day of 
 })
 
 /*
- * getHourStringOnFormat, format g:i a
+ * getHourStringOnFormat, format ga
  */
-test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format g:i a', () => {
+test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format ga', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'g:i a')
-    ).toStrictEqual('12 am');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'ga')
+    ).toStrictEqual('12am');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 03:32:00 and format g:i a', () => {
+test('getHourStringOnFormat, for time 2021-05-12 03:32:00 and format ga', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 03:32:00')), 'g:i a')
-    ).toStrictEqual('3 am');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 03:32:00')), 'ga')
+    ).toStrictEqual('3am');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 12:32:00 and format g:i a', () => {
+test('getHourStringOnFormat, for time 2021-05-12 12:32:00 and format ga', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 12:32:00')), 'g:i a')
-    ).toStrictEqual('12 pm');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 12:32:00')), 'ga')
+    ).toStrictEqual('12pm');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 14:32:00 and format g:i a', () => {
+test('getHourStringOnFormat, for time 2021-05-12 14:32:00 and format ga', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 14:32:00')), 'g:i a')
-    ).toStrictEqual('2 pm');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 14:32:00')), 'ga')
+    ).toStrictEqual('2pm');
 })
 
 /*
- * getHourStringOnFormat, format g:i A
+ * getHourStringOnFormat, format ha
  */
-test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format g:i A', () => {
+test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format ha', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'g:i A')
-    ).toStrictEqual('12 AM');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'ha')
+    ).toStrictEqual('12am');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 04:32:00 and format g:i A', () => {
+test('getHourStringOnFormat, for time 2021-05-12 04:32:00 and format ha', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 04:32:00')), 'g:i A')
-    ).toStrictEqual('4 AM');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 04:32:00')), 'ha')
+    ).toStrictEqual('04am');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 15:32:00 and format g:i A', () => {
+test('getHourStringOnFormat, for time 2021-05-12 15:32:00 and format ha', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 15:32:00')), 'g:i A')
-    ).toStrictEqual('3 PM');
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 15:32:00')), 'ha')
+    ).toStrictEqual('03pm');
 })
 
 /*
- * getHourStringOnFormat, format H:i
+ * getHourStringOnFormat, format H
  */
-test('getHourStringOnFormat, for time 2021-05-12 15:32:00 and format H:i', () => {
+test('getHourStringOnFormat, for time 2021-05-12 15:32:00 and format H', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 15:32:00')), 'H:i')
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 15:32:00')), 'H')
     ).toStrictEqual('15');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format H:i', () => {
+test('getHourStringOnFormat, for time 2021-05-12 00:32:00 and format H', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'H:i')
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 00:32:00')), 'H')
     ).toStrictEqual('00');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 09:32:00 and format H:i', () => {
+test('getHourStringOnFormat, for time 2021-05-12 09:32:00 and format H', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 09:32:00')), 'H:i')
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 09:32:00')), 'H')
     ).toStrictEqual('09');
 })
 
-test('getHourStringOnFormat, for time 2021-05-12 23:32:00 and format H:i', () => {
+test('getHourStringOnFormat, for time 2021-05-12 23:32:00 and format H', () => {
     expect(
-        getHourStringOnFormat(new Date(Date.parse('2021-05-12 23:32:00')), 'H:i')
+        getHourStringOnFormat(new Date(Date.parse('2021-05-12 23:32:00')), 'H')
     ).toStrictEqual('23');
 })
