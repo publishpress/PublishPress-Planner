@@ -560,7 +560,7 @@ if (!class_exists('PP_Calendar')) {
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) ? (int)$_GET['weeks'] : 5,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00',
                         'theme'                  => 'light',
-                        'sundayIsFirstDayOfWeek' => true,
+                        'sundayIsFirstDayOfWeek' => get_option('start_of_week') == 0,
                     ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
