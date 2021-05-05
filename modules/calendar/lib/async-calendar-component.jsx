@@ -1,7 +1,7 @@
 import {getBeginDateOfWeekByDate} from "./calendar-functions";
+import {PublishPressAsyncCalendarItem} from "./async-calendar-item";
 
 let {__} = wp.i18n;
-
 
 class PublishPressAsyncCalendar extends React.Component {
     constructor(props) {
@@ -11,6 +11,11 @@ class PublishPressAsyncCalendar extends React.Component {
         const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(this.props.timezoneOffset);
 
         this.props.todayDate.setHours(this.props.todayDate.getHours() + timezoneOffset);
+        this.setState({
+            data: this._getData()
+        });
+
+        this.props.firstDateToDisplay = this._getFirstDayOfWeek(this.props.firstDateToDisplay);
     }
 
     static defaultProps = {
@@ -19,10 +24,22 @@ class PublishPressAsyncCalendar extends React.Component {
         sundayIsFirstDayOfWeek: true,
         timezoneOffset: 0,
         firstDateToDisplay: new Date(),
-        theme: 'light'
+        theme: 'light',
+        getDataCallback: null
     }
 
-    _getWeekDaysItems() {
+    _getData() {
+        if (typeof this.props.getDataCallback !== 'function') {
+            return [];
+        }
+
+        return this.props.getDataCallback({
+            numberOfWeeksToDisplay: this.props.numberOfWeeksToDisplay,
+            firstDateToDisplay: this.props.firstDateToDisplay
+        });
+    }
+
+    _getWeekDaysCells() {
         let weekDayLabel = [
             __('Sun', 'publishpress'),
             __('Mon', 'publishpress'),
@@ -31,9 +48,9 @@ class PublishPressAsyncCalendar extends React.Component {
             __('Thu', 'publishpress'),
             __('Fri', 'publishpress'),
             __('Sat', 'publishpress'),
-        ]
+        ];
 
-        let weekDaysItems = [];
+        let weekDaysCells = [];
         let firstIndexOfWeekDay = this.props.sundayIsFirstDayOfWeek ? 0 : 1;
         let currentDayOfWeek = firstIndexOfWeekDay - 1;
 
@@ -44,12 +61,12 @@ class PublishPressAsyncCalendar extends React.Component {
                 currentDayOfWeek = 0;
             }
 
-            weekDaysItems.push(
+            weekDaysCells.push(
                 <li data-week-day={currentDayOfWeek}>{weekDayLabel[currentDayOfWeek]}</li>
             );
         }
 
-        return weekDaysItems;
+        return weekDaysCells;
     }
 
     _getDayItemClassName(dayDate) {
@@ -86,12 +103,26 @@ class PublishPressAsyncCalendar extends React.Component {
         return monthNames[month];
     }
 
-    _getDaysItems() {
-        const firstDayOfTheFirstWeek = getBeginDateOfWeekByDate(this.props.firstDateToDisplay, this.props.sundayIsFirstDayOfWeek);
+    _getDayItems() {
+        let items = [];
+
+        items.push(<PublishPressAsyncCalendarItem/>);
+        items.push(<PublishPressAsyncCalendarItem/>);
+
+        return items;
+    }
+
+    _getFirstDayOfWeek(theDate) {
+        return getBeginDateOfWeekByDate(theDate, this.props.sundayIsFirstDayOfWeek);
+    }
+
+    _getDaysCells() {
+        const firstDayOfTheFirstWeek = this._getFirstDayOfWeek(this.props.firstDateToDisplay);
         const numberOfDaysToDisplay = this.props.numberOfWeeksToDisplay * 7;
 
 
-        let daysItems = [];
+        let daysCells = [];
+        let dayItems = [];
         let dayDate;
         let lastMonthDisplayed = firstDayOfTheFirstWeek.getMonth();
         let shouldDisplayMonthName;
@@ -102,7 +133,7 @@ class PublishPressAsyncCalendar extends React.Component {
 
             shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || i === 0;
 
-            daysItems.push(
+            daysCells.push(
                 <li
                     className={this._getDayItemClassName(dayDate)}
                     data-year={dayDate.getFullYear()}
@@ -110,26 +141,27 @@ class PublishPressAsyncCalendar extends React.Component {
                     data-day={dayDate.getDate()}>
                     <div className="publishpress-calendar-date">
                         {shouldDisplayMonthName &&
-                            <span className="publishpress-calendar-month-name">{this._getMonthName(dayDate.getMonth())}</span>
+                        <span
+                            className="publishpress-calendar-month-name">{this._getMonthName(dayDate.getMonth())}</span>
                         }
                         {dayDate.getDate()}
                     </div>
-                    <ul className="publishpress-calendar-day-items"></ul>
+                    <ul className="publishpress-calendar-day-items">{this._getDayItems()}</ul>
                 </li>
             );
 
             lastMonthDisplayed = dayDate.getMonth();
         }
 
-        return daysItems;
+        return daysCells;
     }
 
     render() {
         return (
             <div className={'publishpress-calendar publishpress-calendar-theme-' + this.props.theme}>
 
-                <ul className="publishpress-calendar-week-days">{this._getWeekDaysItems()}</ul>
-                <ul className="publishpress-calendar-days">{this._getDaysItems()}</ul>
+                <ul className="publishpress-calendar-week-days">{this._getWeekDaysCells()}</ul>
+                <ul className="publishpress-calendar-days">{this._getDaysCells()}</ul>
             </div>
         )
     }
@@ -143,8 +175,13 @@ jQuery(function ($) {
             numberOfWeeksToDisplay={pp_calendar_params.calendar_filters.numberOfWeeksToDisplay}
             todayDate={new Date(Date.parse(pp_calendar_params.calendar_filters.todayDate))}
             timezoneOffset={pp_calendar_params.calendar_filters.timezoneOffset}
-            theme={pp_calendar_params.calendar_filters.theme}/>,
+            theme={pp_calendar_params.calendar_filters.theme}
+            getDataCallback={publishpressAsyncCalendarGetData}/>,
 
         document.getElementById('publishpress-calendar-wrap')
     );
 });
+
+function publishpressAsyncCalendarGetData(numberOfWeeksToDisplay, firstDateToDisplay) {
+    return [];
+}

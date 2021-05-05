@@ -11,8 +11,8 @@
     user-select: none;
 }
 
-.publishpress-calendar-week-days li,
-.publishpress-calendar-days li {
+.publishpress-calendar-week-days > li,
+.publishpress-calendar-days > li {
     display: inline-block;
     width: 14.28%;
     box-sizing: border-box;
@@ -20,7 +20,7 @@
     border: 1px solid #ededed;
 }
 
-.publishpress-calendar-theme-light .publishpress-calendar-week-days li {
+.publishpress-calendar-theme-light .publishpress-calendar-week-days > li {
     background: #fff;
     border-bottom: 3px solid #655997;
     color: #333333;
@@ -31,21 +31,21 @@
     margin: 0;
 }
 
-.publishpress-calendar-week-days li,
-.publishpress-calendar-days li {
+.publishpress-calendar-week-days > li,
+.publishpress-calendar-days > li {
     font-size: 13px;
-    padding-left: 6px;
+    padding-left: 2px;
     padding-top: 4px;
 }
 
-.publishpress-calendar-week-days li {
+.publishpress-calendar-week-days > li {
     height: 36px;
     font-weight: bold;
     text-align: left;
     line-height: 1.3em;
 }
 
-.publishpress-calendar-days li {
+.publishpress-calendar-theme-light .publishpress-calendar-days > li {
     min-height: 120px;
 }
 
@@ -61,6 +61,11 @@
     background: #e8e6f0;
     border: 1px solid #465984;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-date {
+    margin: -2px 0 2px;
+    padding: 4px 8px;
+    display: inline-block;
+}
 
 .publishpress-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-date {
     color: #999999;
@@ -68,13 +73,21 @@
 
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
     background: #655997;
-    margin-top: -8px;
-    margin-left: -6px;
-    padding: 4px 8px;
-    display: inline-block;
     color: #fff;
 }
 
 .publishpress-calendar-theme-light .publishpress-calendar-month-name {
     margin-right: 3px;
+}
+
+.publishpress-calendar-theme-light .publishpress-calendar-item {
+    display: block;
+    height: 19px;
+    width: 100%;
+    background: #707ec4;
+    line-height: 18px;
+    box-sizing: border-box;
+    padding: 1px 3px;
+    color: #fff;
+    margin: 0 0 2px 0;
 }
