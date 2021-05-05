@@ -562,7 +562,7 @@ if (!class_exists('PP_Calendar')) {
                         'theme'                  => 'light',
                         'sundayIsFirstDayOfWeek' => get_option('start_of_week', 0) == 0,
                         'timezoneOffset'         => get_option('gmt_offset', '0'),
-                        'todayDate'              => date('Y-m-d'),
+                        'todayDate'              => date('Y-m-d H:i:s'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
                     ]
                 ];
