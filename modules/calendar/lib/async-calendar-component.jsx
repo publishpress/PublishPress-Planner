@@ -138,10 +138,10 @@ class PublishPressAsyncCalendar extends React.Component {
 jQuery(function ($) {
     ReactDOM.render(
         <PublishPressAsyncCalendar
-            firstDateToDisplay={new Date()}
-            sundayIsFirstDayOfWeek={true}
-            numberOfWeeksToDisplay={5}
-            theme={'light'}/>,
+            firstDateToDisplay={new Date(Date.parse(pp_calendar_params.calendar_filters.firstDateToDisplay))}
+            sundayIsFirstDayOfWeek={pp_calendar_params.calendar_filters.sundayIsFirstDayOfWeek}
+            numberOfWeeksToDisplay={pp_calendar_params.calendar_filters.numberOfWeeksToDisplay}
+            theme={pp_calendar_params.calendar_filters.theme}/>,
 
         document.getElementById('publishpress-async-calendar-wrap')
     );

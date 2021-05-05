@@ -554,8 +554,14 @@ if (!class_exists('PP_Calendar')) {
                 );
 
                 $pp_cal_js_params = [
-                    'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false',
-                    'nonce' => wp_create_nonce('calendar_filter_nonce'),
+                    'can_add_posts'    => current_user_can($this->create_post_cap) ? 'true' : 'false',
+                    'nonce'            => wp_create_nonce('calendar_filter_nonce'),
+                    'calendar_filters' => [
+                        'numberOfWeeksToDisplay' => isset($_GET['weeks']) ? (int)$_GET['weeks'] : 5,
+                        'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00',
+                        'theme'                  => 'light',
+                        'sundayIsFirstDayOfWeek' => true,
+                    ]
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
             }
