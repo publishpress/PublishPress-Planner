@@ -34,8 +34,6 @@
 .publishpress-calendar-week-days > li,
 .publishpress-calendar-days > li {
     font-size: 13px;
-    padding-left: 2px;
-    padding-top: 4px;
 }
 
 .publishpress-calendar-week-days > li {
@@ -47,6 +45,7 @@
 
 .publishpress-calendar-theme-light .publishpress-calendar-days > li {
     min-height: 120px;
+    position: relative;
 }
 
 .publishpress-calendar-theme-light .publishpress-calendar-business-day {
@@ -61,6 +60,7 @@
     background: #e8e6f0;
     border: 1px solid #465984;
 }
+
 .publishpress-calendar-theme-light .publishpress-calendar-date {
     margin: -2px 0 2px;
     padding: 4px 8px;
@@ -80,14 +80,35 @@
     margin-right: 3px;
 }
 
+.publishpress-calendar-theme-light .publishpress-calendar-day-items {
+    position: absolute;
+    width: 100%;
+}
+
 .publishpress-calendar-theme-light .publishpress-calendar-item {
     display: block;
-    height: 19px;
-    width: 100%;
+    height: 20px;
+    max-height: 20px;
     background: #707ec4;
     line-height: 18px;
     box-sizing: border-box;
     padding: 1px 3px;
     color: #fff;
-    margin: 0 0 2px 0;
+    margin: 0 0 1px 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}
+
+.publishpress-calendar-item .dashicons {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-right: 2px;
+}
+
+.publishpress-calendar-item .publishpress-calendar-item-time {
+    margin-right: 2px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
 }
