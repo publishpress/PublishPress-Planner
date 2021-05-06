@@ -1,0 +1,80 @@
+@backgroundColor: #fff;
+@borderColor: #ededed;
+
+@weekDaysSeparatorColor: #655997;
+@weekDaysColor: #333333;
+
+@itemBackground: #707ec4;
+@itemColor: #fff;
+@itemIconColor: rgba(255, 255, 255, 0.8);
+@itemTimeColor: rgba(255, 255, 255, 0.6);
+
+@todayBackground: #e8e6f0;
+@todayBorderColor: #465984;
+@todayDateBackground: #655997;
+@todayDateColor: #fff;
+
+@weekendCellBackground: #f9f9f9;
+@weekendDateColor: #999;
+
+.publishpress-calendar-theme-light {
+    .publishpress-calendar-loader {
+        background: @backgroundColor;
+    }
+
+    .publishpress-calendar-week-days > li,
+    .publishpress-calendar-days > li {
+        border: 1px solid @borderColor;
+    }
+
+    .publishpress-calendar-week-days > li {
+        background: @backgroundColor;
+        border-bottom: 3px solid @weekDaysSeparatorColor;
+        color: @weekDaysColor;
+    }
+
+    .publishpress-calendar-week-days > li,
+    .publishpress-calendar-days > li {
+        font-size: 13px;
+    }
+
+    .publishpress-calendar-business-day {
+        background: @backgroundColor;
+    }
+
+    .publishpress-calendar-weekend-day {
+        background: @weekendCellBackground;
+    }
+
+    .publishpress-calendar-today {
+        background: @todayBackground;
+        border: 1px solid @todayBorderColor;
+    }
+
+    .publishpress-calendar-weekend-day .publishpress-calendar-date {
+        color: @weekendDateColor;
+    }
+
+    .publishpress-calendar-today .publishpress-calendar-date {
+        background: @todayDateBackground;
+        color: @todayDateColor;
+    }
+
+    .publishpress-calendar-item {
+        background: @itemBackground;
+        color: @itemColor;
+
+    }
+
+    .publishpress-calendar-item .dashicons {
+        font-size: 16px;
+        color: @itemIconColor;
+        margin-right: 2px;
+    }
+
+    .publishpress-calendar-item .publishpress-calendar-item-time {
+        margin-right: 2px;
+        color: @itemTimeColor;
+        font-size: 10px;
+    }
+}
