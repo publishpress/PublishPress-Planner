@@ -2,7 +2,7 @@
  * Base on :
  *     https://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
  */
-export function getBeginDateOfWeekByWeekNumber(weekNumber, year, sundayIsFirstDayOfWeek = true) {
+export function getBeginDateOfWeekByWeekNumber(weekNumber, year, weekStartsOnSunday = true) {
     let simpleDate = new Date(year, 0, 1 + (weekNumber - 1) * 7);
     let dayOfWeek = simpleDate.getDay();
     let weekStartISO = simpleDate;
@@ -14,7 +14,7 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, sundayIsFirstDa
         weekStartISO.setDate(simpleDate.getDate() + 8 - simpleDate.getDay());
     }
 
-    if (sundayIsFirstDayOfWeek) {
+    if (weekStartsOnSunday) {
         weekStartISO.setDate(weekStartISO.getDate() - 1);
     }
 
@@ -37,7 +37,7 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, sundayIsFirstDa
  * e.g. 2014/12/29 is Monday in week  1 of 2015
  *      2012/1/1   is Sunday in week 52 of 2011
  */
-export function getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek = true) {
+export function getWeekNumberByDate(theDate, weekStartsOnSunday = true) {
 
     // Copy date so don't modify original
     let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate(), theDate.getHours(), theDate.getMinutes(), theDate.getSeconds(), theDate.getMilliseconds());
@@ -53,7 +53,7 @@ export function getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek = true) {
     // Calculate full weeks to nearest Thursday
     let weekNo = Math.round((((theDateCopy - yearStart) / 86400000) + 1) / 7);
 
-    if (sundayIsFirstDayOfWeek && dayOfWeek === 0) {
+    if (weekStartsOnSunday && dayOfWeek === 0) {
         weekNo++;
     }
 
@@ -61,10 +61,10 @@ export function getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek = true) {
     return [theDateCopy.getFullYear(), weekNo];
 }
 
-export function getBeginDateOfWeekByDate(theDate, sundayIsFirstDayOfWeek = true) {
-    let weekNumber = getWeekNumberByDate(theDate, sundayIsFirstDayOfWeek);
+export function getBeginDateOfWeekByDate(theDate, weekStartsOnSunday = true) {
+    let weekNumber = getWeekNumberByDate(theDate, weekStartsOnSunday);
 
-    return getBeginDateOfWeekByWeekNumber(weekNumber[1], weekNumber[0], sundayIsFirstDayOfWeek);
+    return getBeginDateOfWeekByWeekNumber(weekNumber[1], weekNumber[0], weekStartsOnSunday);
 }
 
 export function getHourStringOnFormat(timestamp, timeFormat = 'ga') {

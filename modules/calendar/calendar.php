@@ -541,9 +541,10 @@ if (!class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION,
                     true
                 );
+
                 wp_enqueue_script(
                     'publishpress-async-calendar-js',
-                    $this->module_url . 'lib/async-calendar/async-calendar-component.min.js',
+                    $this->module_url . 'lib/async-calendar/js/index.min.js',
                     [
                         'react',
                         'react-dom',
@@ -568,7 +569,7 @@ if (!class_exists('PP_Calendar')) {
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) ? (int)$_GET['weeks'] : 5,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00',
                         'theme'                  => 'light',
-                        'sundayIsFirstDayOfWeek' => get_option('start_of_week', 0) == 0,
+                        'weekStartsOnSunday'     => get_option('start_of_week', 0) == 0,
                         'timezoneOffset'         => get_option('gmt_offset', '0'),
                         'todayDate'              => date('Y-m-d H:i:s'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
