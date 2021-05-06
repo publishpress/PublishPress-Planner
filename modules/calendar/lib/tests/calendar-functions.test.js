@@ -1,4 +1,4 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat} from "../calendar-functions";
+import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat} from "../async-calendar/calendar-functions";
 
 /*
  * getBeginDateOfWeekByWeekNumber, sunday as first day of week

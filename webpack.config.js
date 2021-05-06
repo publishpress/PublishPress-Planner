@@ -6,7 +6,7 @@ module.exports = {
     mode: NODE_ENV,
     entry: {
         'modules/custom-status/lib/custom-status-block': './modules/custom-status/lib/custom-status-block.jsx',
-        'modules/calendar/lib/async-calendar-component': './modules/calendar/lib/async-calendar-component.jsx'
+        'modules/calendar/lib/async-calendar/async-calendar-component': './modules/calendar/lib/async-calendar/async-calendar-component.jsx'
     },
     output: {
         path: __dirname,

@@ -1,5 +1,6 @@
 import {getBeginDateOfWeekByDate} from "./calendar-functions";
 import {PublishPressAsyncCalendarItem} from "./async-calendar-item";
+import {PublishPressAsyncCalendarNavigationBar} from "./async-calendar-navigation-bar";
 
 let {__} = wp.i18n;
 
@@ -200,6 +201,7 @@ class PublishPressAsyncCalendar extends React.Component {
     render() {
         return (
             <div className={'publishpress-calendar publishpress-calendar-theme-' + this.props.theme}>
+                <PublishPressAsyncCalendarNavigationBar/>
 
                 <ul className="publishpress-calendar-week-days">{this._getWeekDaysCells()}</ul>
                 <ul className="publishpress-calendar-days">{this._getDaysCells()}</ul>

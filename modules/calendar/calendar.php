@@ -468,7 +468,7 @@ if (!class_exists('PP_Calendar')) {
 
                 wp_enqueue_style(
                     'publishpress-async-calendar-css',
-                    $this->module_url . 'lib/async-calendar.css',
+                    $this->module_url . 'lib/async-calendar/async-calendar.css',
                     [],
                     PUBLISHPRESS_VERSION
                 );
@@ -536,7 +536,7 @@ if (!class_exists('PP_Calendar')) {
                 );
                 wp_enqueue_script(
                     'publishpress-async-calendar-js',
-                    $this->module_url . 'lib/async-calendar-component.min.js',
+                    $this->module_url . 'lib/async-calendar/async-calendar-component.min.js',
                     [
                         'react',
                         'react-dom',
