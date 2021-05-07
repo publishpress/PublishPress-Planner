@@ -2204,10 +2204,107 @@ if (!class_exists('PP_Calendar')) {
          *
          * @return array $posts All of the posts as an array sorted by date
          */
-        public function get_calendar_posts_for_week($args = [], $context = 'dashboard')
+        public function get_calendar_posts_for_multiple_weeks($args = [], $context = 'dashboard')
+        {
+            $supported_post_types = $this->get_post_types_for_module($this->module);
+            $defaults             = [
+                'post_status'    => null,
+                'cat'            => null,
+                'tag'            => null,
+                'author'         => null,
+                'post_type'      => $supported_post_types,
+                'posts_per_page' => -1,
+                'order'          => 'ASC',
+            ];
+
+            $args = array_merge($defaults, $args);
+
+            // Unpublished as a status is just an array of everything but 'publish'
+            if ($args['post_status'] == 'unpublish') {
+                $args['post_status'] = '';
+                $post_statuses       = $this->get_post_statuses();
+                foreach ($post_statuses as $post_status) {
+                    $args['post_status'] .= $post_status->slug . ', ';
+                }
+                $args['post_status'] = rtrim($args['post_status'], ', ');
+                // Optional filter to include scheduled content as unpublished
+                if (apply_filters('pp_show_scheduled_as_unpublished', false)) {
+                    $args['post_status'] .= ', future';
+                }
+            }
+            // The WP functions for printing the category and author assign a value of 0 to the default
+            // options, but passing this to the query is bad (trashed and auto-draft posts appear!), so
+            // unset those arguments.
+            if ($args['cat'] === '0') {
+                unset($args['cat']);
+            }
+            if ($args['tag'] === '0') {
+                unset($args['tag']);
+            } else {
+                $args['tag_id'] = $args['tag'];
+                unset($args['tag']);
+            }
+
+            if ($args['author'] === '0') {
+                unset($args['author']);
+            }
+
+            if (empty($args['post_type']) || !in_array($args['post_type'], $supported_post_types)) {
+                $args['post_type'] = $supported_post_types;
+            }
+
+            // Filter for an end user to implement any of their own query args
+            $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
+
+            add_filter('posts_where', [$this, 'posts_where_multiple_weeks_range']);
+            $post_results = new WP_Query($args);
+            remove_filter('posts_where', [$this, 'posts_where_multiple_weeks_range']);
+
+            $posts = [];
+            while ($post_results->have_posts()) {
+                $post_results->the_post();
+                global $post;
+                $key_date           = date('Y-m-d', strtotime($post->post_date));
+                $posts[$key_date][] = $post;
+            }
+
+            return $posts;
+        }
+
+        /**
+         * Filter the WP_Query so we can get a week range of posts
+         *
+         * @param string $where The original WHERE SQL query string
+         *
+         * @return string $where Our modified WHERE query string
+         */
+        public function posts_where_multiple_weeks_range($where = '')
         {
             global $wpdb;
 
+            $beginning_date = $this->get_beginning_of_week($this->start_date, 'Y-m-d', 1);
+            $ending_date    = $this->get_ending_of_week($this->start_date, 'Y-m-d', $this->current_week);
+            // Adjust the ending date to account for the entire day of the last day of the week
+            $ending_date = date('Y-m-d', strtotime('+1 day', strtotime($ending_date)));
+            $where       = $where . $wpdb->prepare(
+                    " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
+                    $beginning_date,
+                    $ending_date
+                );
+
+            return $where;
+        }
+
+        /**
+         * Query to get all of the calendar posts for a given day
+         *
+         * @param array $args Any filter arguments we want to pass
+         * @param string $request_context Where the query is coming from, to distinguish dashboard and subscriptions
+         *
+         * @return array $posts All of the posts as an array sorted by date
+         */
+        public function get_calendar_posts_for_week($args = [], $context = 'dashboard')
+        {
             $supported_post_types = $this->get_post_types_for_module($this->module);
             $defaults             = [
                 'post_status'    => null,
@@ -2267,7 +2364,6 @@ if (!class_exists('PP_Calendar')) {
                 $post_results->the_post();
                 global $post;
                 $key_date           = date('Y-m-d', strtotime($post->post_date));
-//                $key_date = date('Y-m-d',(int)get_post_meta($post->ID, '_pp_editorial_meta_date_first-draft-date', true));
                 $posts[$key_date][] = $post;
             }
 
@@ -3277,38 +3373,33 @@ if (!class_exists('PP_Calendar')) {
                 wp_send_json([], 403);
             }
 
-            $data = [
-                '2021-05-04' => [
-                    [
-                        'icon'      => 'calendar',
-                        'label'     => '1Lorem ipsum dolor text 1',
-                        'id'        => 310,
-                        'timestamp' => '2021-05-04 19:20:00'
-                    ],
-                    [
-                        'icon'      => 'yes',
-                        'label'     => '2Lorem ipsum dolor text 2',
-                        'id'        => 25,
-                        'timestamp' => '2021-05-04 14:32:30'
-                    ],
-                ],
-                '2021-05-26' => [
-                    [
-                        'icon'      => 'no',
-                        'label'     => '3Lorem ipsum dolor text 3',
-                        'id'        => 130,
-                        'timestamp' => '2021-05-26 00:00:00'
-                    ],
-                ],
-                '2021-05-27' => [
-                    [
-                        'icon'      => 'calendar-alt',
-                        'label'     => '4Lorem ipsum dolor text 4',
-                        'id'        => 134,
-                        'timestamp' => '2021-05-27 17:20:42'
-                    ],
-                ]
+            $post_query_args  = [
+                'post_status' => null,
+                'post_type'   => null,
+                'cat'         => null,
+                'tag'         => null,
+                'author'      => null,
             ];
+
+            $this->start_date = sanitize_text_field($_GET['start_date']);
+            $this->current_week = (int)$_GET['number_of_weeks'];
+            $postsList = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
+
+            $data = [];
+
+            foreach ($postsList as $date => $posts) {
+                if (!isset($data[$date])) {
+                    $data[$date] = [];
+                }
+                foreach ($posts as $post) {
+                    $data[$date][] = [
+                        'icon'      => 'calendar',
+                        'label'     => $post->post_title,
+                        'id'        => $post->ID,
+                        'timestamp' => $post->post_date,
+                    ];
+                }
+            }
 
             wp_send_json($data, 200);
         }

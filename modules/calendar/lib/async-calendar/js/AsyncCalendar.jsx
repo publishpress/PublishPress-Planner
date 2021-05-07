@@ -1,42 +1,24 @@
 import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import CalendarBody from "./CalendarBody";
+import {getDateAsStringInWpFormat} from "./Functions";
 
 const useState = React.useState;
 const useEffect = React.useEffect;
-
-// const useFetch = dataUrl => {
-//     const [data, setData] = useState([]);
-//
-//     useEffect(async () => {
-//         const response = await fetch(dataUrl);
-//         const responseJson = await response.json();
-//
-//         setData(responseJson);
-//     }, []);
-//
-//     return data;
-// };
 
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
     const [items, setItems] = useState([]);
 
-    async function _loadData() {
-        const response = await fetch(props.dataUrl);
+    async function _fetchData() {
+        const response = await fetch(props.dataUrl + '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
         const responseJson = await response.json();
 
         setItems(responseJson);
     }
 
-    useEffect(_loadData, []);
-
-    // function fetchData() {
-    //     const items = useFetch(props.dataUrl);
-    //
-    //     setItems(items);
-    // }
+    useEffect(_fetchData, []);
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>

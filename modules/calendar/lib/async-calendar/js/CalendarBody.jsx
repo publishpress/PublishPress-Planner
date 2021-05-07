@@ -1,4 +1,4 @@
-import {getBeginDateOfWeekByDate} from './Functions';
+import {getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from './Functions';
 import CalendarItem from "./CalendarItem";
 
 const useState = React.useState;
@@ -10,17 +10,6 @@ export default function CalendarBody(props) {
     props.todayDate.setHours(props.todayDate.getHours() + timezoneOffset);
     props.firstDateToDisplay = _getFirstDayOfWeek(props.firstDateToDisplay);
 
-    // static defaultProps = {
-    //     todayDate: new Date(),
-    //     numberOfWeeksToDisplay: 5,
-    //     weekStartsOnSunday: true,
-    //     timezoneOffset: 0,
-    //     firstDateToDisplay: new Date(),
-    //     theme: 'light',
-    //     getDataCallback: null,
-    //     timeFormat: 'g:i a',
-    // }
-
     function _getFirstDayOfWeek(theDate) {
         return getBeginDateOfWeekByDate(theDate, props.weekStartsOnSunday);
     }
@@ -31,12 +20,6 @@ export default function CalendarBody(props) {
 
     function _getDateFromString(theDate) {
         return new Date(Date.parse(theDate));
-    }
-
-    function _getDateAsStringInWpFormat(theDate) {
-        return theDate.getFullYear() + '-'
-            + (theDate.getMonth() + 1).toString().padStart(2, '0') + '-'
-            + theDate.getDate().toString().padStart(2, '0');
     }
 
     function _getMonthName(month) {
@@ -108,7 +91,7 @@ export default function CalendarBody(props) {
                 let dayItemsElements = [];
 
                 if (_isValidDate(dayDate.date)) {
-                    const dateString = _getDateAsStringInWpFormat(dayDate.date);
+                    const dateString = getDateAsStringInWpFormat(dayDate.date);
                     const dayItems = props.items[dateString] ? props.items[dateString] : null;
 
                     if (dayItems) {

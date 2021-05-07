@@ -95,3 +95,9 @@ export function getHourStringOnFormat(timestamp, timeFormat = 'ga') {
 
     return hours;
 }
+
+export function getDateAsStringInWpFormat(theDate) {
+    return theDate.getFullYear() + '-'
+        + (theDate.getMonth() + 1).toString().padStart(2, '0') + '-'
+        + theDate.getDate().toString().padStart(2, '0');
+}
