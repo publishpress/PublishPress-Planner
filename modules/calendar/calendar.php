@@ -3584,6 +3584,10 @@ if (!class_exists('PP_Calendar')) {
                 'author'      => null,
             ];
 
+            if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
+                $post_query_args['orderby'] = ['post_status'];
+            }
+
             $this->start_date   = sanitize_text_field($_GET['start_date']);
             $this->current_week = (int)$_GET['number_of_weeks'];
             $postsList          = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
@@ -3594,6 +3598,7 @@ if (!class_exists('PP_Calendar')) {
                 if (!isset($data[$date])) {
                     $data[$date] = [];
                 }
+
                 foreach ($posts as $post) {
                     $data[$date][] = $this->extractPostDataForTheCalendar($post);
                 }
