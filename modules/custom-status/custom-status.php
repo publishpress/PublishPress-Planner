@@ -419,6 +419,14 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_enqueue_style(
                     'publishpress-icon-preview',
                     $this->module_url . 'lib/icon-picker.css',
+                    ['dashicons'],
+                    PUBLISHPRESS_VERSION,
+                    'all'
+                );
+
+                wp_enqueue_style(
+                    'publishpress-custom_status-admin',
+                    $this->module_url . 'lib/custom-status-admin.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
@@ -1996,10 +2004,11 @@ if (!class_exists('PP_Custom_Status')) {
                                        value="<?php if (isset($icon)) {
                                            echo esc_attr($icon);
                                        } ?>"/>
-                                <div id="preview_icon_picker_example_icon" data-target="#status_icon"
-                                     class="button icon-picker dashicons <?php if (isset($icon)) {
-                                         echo esc_attr($icon);
-                                     } ?>"></div>
+
+                                <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                    <span id="icon_picker_preview" class="dashicons <?php echo isset($icon) ? esc_attr($icon) : ''; ?>"></span>
+                                    <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                </div>
 
                                 <?php $publishpress->settings->helper_print_error_or_description(
                                     'status_icon',
@@ -2095,10 +2104,11 @@ if (!class_exists('PP_Custom_Status')) {
                                                value="<?php if (isset($status_icon)) {
                                                    echo 'dashicons ' . esc_attr($status_icon);
                                                } ?>"/>
-                                        <div id='preview_icon_picker_example_icon' data-target='#status_icon'
-                                             class="button icon-picker dashicons <?php if (isset($status_icon)) {
-                                                 echo esc_attr($status_icon);
-                                             } ?>"></div>
+
+                                        <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                            <span id="icon_picker_preview" class="dashicons <?php echo isset($status_icon) ? esc_attr($status_icon) : ''; ?>"></span>
+                                            <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                        </div>
 
                                         <?php $publishpress->settings->helper_print_error_or_description(
                                             'status_icon',
