@@ -1,6 +1,6 @@
 import {getHourStringOnFormat} from './Functions';
 
-const __ = wp.i18n;
+const {__} = wp.i18n;
 
 export default function CalendarItem(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
@@ -8,7 +8,7 @@ export default function CalendarItem(props) {
     const DEFAULT_LABEL = __('Untitled', 'publishpress');
 
     function _getHourString() {
-        let timestampDate = new Date(Date.parse(itemTimestamp));
+        let timestampDate = new Date(Date.parse(props.timestamp));
 
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
@@ -26,4 +26,7 @@ export default function CalendarItem(props) {
             data-id={props.id}
             data-datetime={props.timestamp}>{iconElement}{timeElement}{props.label || DEFAULT_LABEL}</li>
     )
+    // return (
+    //     <li> </li>
+    // )
 }

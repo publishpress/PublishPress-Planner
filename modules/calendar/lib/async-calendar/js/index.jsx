@@ -2,6 +2,7 @@ import AsyncCalendar from "./AsyncCalendar";
 
 jQuery(function () {
     const calendarParams = pp_calendar_params.calendarParams;
+    const dataURL = pp_calendar_params.calendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + pp_calendar_params.calendarParams.nonce;
 
     ReactDOM.render(
         <AsyncCalendar
@@ -12,28 +13,8 @@ jQuery(function () {
             timezoneOffset={calendarParams.timezoneOffset}
             timeFormat={calendarParams.timeFormat}
             theme={calendarParams.theme}
-            getDataCallback={publishpressAsyncCalendarGetData}/>,
+            dataUrl={dataURL}/>,
 
         document.getElementById('publishpress-calendar-wrap')
     );
 });
-
-function publishpressAsyncCalendarGetData(numberOfWeeksToDisplay, firstDateToDisplay, calendarInstance) {
-    fetch(pp_calendar_params.calendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + pp_calendar_params.calendarParams.nonce)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result);
-                calendarInstance.setState({
-                    isLoaded: true,
-                    items: result
-                }),
-                    (error) => {
-                        calendarInstance.setState({
-                            isLoaded: true,
-                            error: true
-                        });
-                    }
-            }
-        );
-}

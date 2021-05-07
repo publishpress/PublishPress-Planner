@@ -1,17 +1,14 @@
 import {getBeginDateOfWeekByDate} from './Functions';
+import CalendarItem from "./CalendarItem";
+
+const useState = React.useState;
 
 export default function CalendarBody(props) {
     // Compensate the timezone in the browser with the server's timezone
-    // const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(props.timezoneOffset);
-    //
-    // props.todayDate.setHours(props.todayDate.getHours() + timezoneOffset);
-    // props.firstDateToDisplay = this._getFirstDayOfWeek(props.firstDateToDisplay);
+    const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(props.timezoneOffset);
 
-    // this.state = {
-    //     error: null,
-    //     isLoaded: false,
-    //     items: []
-    // };
+    props.todayDate.setHours(props.todayDate.getHours() + timezoneOffset);
+    props.firstDateToDisplay = _getFirstDayOfWeek(props.firstDateToDisplay);
 
     // static defaultProps = {
     //     todayDate: new Date(),
@@ -24,25 +21,23 @@ export default function CalendarBody(props) {
     //     timeFormat: 'g:i a',
     // }
 
-    console.log(props);
-
     function _getFirstDayOfWeek(theDate) {
         return getBeginDateOfWeekByDate(theDate, props.weekStartsOnSunday);
     }
 
-    // function _isValidDate(theDate) {
-    //     return Object.prototype.toString.call(theDate) === '[object Date]';
-    // }
-    //
-    // function _getDateFromString(theDate) {
-    //     return new Date(Date.parse(theDate));
-    // }
-    //
-    // function _getDateAsStringInWpFormat(theDate) {
-    //     return theDate.getFullYear() + '-'
-    //         + (theDate.getMonth() + 1).toString().padStart(2, '0') + '-'
-    //         + theDate.getDate().toString().padStart(2, '0');
-    // }
+    function _isValidDate(theDate) {
+        return Object.prototype.toString.call(theDate) === '[object Date]';
+    }
+
+    function _getDateFromString(theDate) {
+        return new Date(Date.parse(theDate));
+    }
+
+    function _getDateAsStringInWpFormat(theDate) {
+        return theDate.getFullYear() + '-'
+            + (theDate.getMonth() + 1).toString().padStart(2, '0') + '-'
+            + theDate.getDate().toString().padStart(2, '0');
+    }
 
     function _getMonthName(month) {
         const monthNames = [
@@ -110,6 +105,26 @@ export default function CalendarBody(props) {
     return (
         <ul className={'publishpress-calendar-days'}>
             {daysCells.map((dayDate) => {
+                let dayItemsElements = [];
+
+                if (_isValidDate(dayDate.date)) {
+                    const dateString = _getDateAsStringInWpFormat(dayDate.date);
+                    const dayItems = props.items[dateString] ? props.items[dateString] : null;
+
+                    if (dayItems) {
+                        for (let i = 0; i < dayItems.length; i++) {
+                            dayItemsElements.push(
+                                <CalendarItem icon={dayItems[i].icon}
+                                              time={dayItems[i].time}
+                                              label={dayItems[i].label}
+                                              id={dayItems[i].id}
+                                              timestamp={dayItems[i].timestamp}
+                                              timeFormat={props.timeFormat}/>
+                            );
+                        }
+                    }
+                }
+
                 return (
                     <li
                         key={dayDate.date.toString()}
@@ -125,6 +140,8 @@ export default function CalendarBody(props) {
                             }
                             {dayDate.date.getDate()}
                         </div>
+
+                        <ul className="publishpress-calendar-day-items">{dayItemsElements}</ul>
                     </li>
                 )
             })}
