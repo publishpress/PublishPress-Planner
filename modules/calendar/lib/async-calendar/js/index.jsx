@@ -1,18 +1,17 @@
 import AsyncCalendar from "./AsyncCalendar";
 
 jQuery(function () {
-    const calendarParams = pp_calendar_params.calendarParams;
-    const dataURL = pp_calendar_params.calendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + pp_calendar_params.calendarParams.nonce;
+    const dataURL = publishpressCalendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + publishpressCalendarParams.nonce;
 
     ReactDOM.render(
         <AsyncCalendar
-            firstDateToDisplay={new Date(Date.parse(calendarParams.firstDateToDisplay))}
-            weekStartsOnSunday={calendarParams.weekStartsOnSunday}
-            numberOfWeeksToDisplay={calendarParams.numberOfWeeksToDisplay}
-            todayDate={new Date(Date.parse(calendarParams.todayDate))}
-            timezoneOffset={calendarParams.timezoneOffset}
-            timeFormat={calendarParams.timeFormat}
-            theme={calendarParams.theme}
+            firstDateToDisplay={new Date(Date.parse(publishpressCalendarParams.firstDateToDisplay))}
+            weekStartsOnSunday={publishpressCalendarParams.weekStartsOnSunday}
+            numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
+            todayDate={new Date(Date.parse(publishpressCalendarParams.todayDate))}
+            timezoneOffset={publishpressCalendarParams.timezoneOffset}
+            timeFormat={publishpressCalendarParams.timeFormat}
+            theme={publishpressCalendarParams.theme}
             dataUrl={dataURL}/>,
 
         document.getElementById('publishpress-calendar-wrap')

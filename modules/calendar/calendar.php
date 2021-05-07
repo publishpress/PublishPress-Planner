@@ -543,19 +543,6 @@ if (!class_exists('PP_Calendar')) {
                 );
 
                 wp_enqueue_script(
-                    'publishpress-async-calendar-js',
-                    $this->module_url . 'lib/async-calendar/js/index.min.js',
-                    [
-                        'react',
-                        'react-dom',
-                        'jquery',
-                        'wp-i18n',
-                    ],
-                    PUBLISHPRESS_VERSION,
-                    true
-                );
-
-                wp_enqueue_script(
                     'publishpress-select2',
                     PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
                     ['jquery'],
@@ -565,7 +552,24 @@ if (!class_exists('PP_Calendar')) {
                 $pp_cal_js_params = [
                     'can_add_posts'  => current_user_can($this->create_post_cap) ? 'true' : 'false',
                     'nonce'          => wp_create_nonce('calendar_filter_nonce'),
-                    'calendarParams' => [
+                ];
+                wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
+
+                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') {
+                    wp_enqueue_script(
+                        'publishpress-async-calendar-js',
+                        $this->module_url . 'lib/async-calendar/js/index.min.js',
+                        [
+                            'react',
+                            'react-dom',
+                            'jquery',
+                            'wp-i18n',
+                        ],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    $params = [
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) ? (int)$_GET['weeks'] : 5,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
                                 'Y-m-d'
@@ -577,9 +581,9 @@ if (!class_exists('PP_Calendar')) {
                         'timeFormat'             => $this->getCalendarTimeFormat(),
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data')
-                    ]
-                ];
-                wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
+                    ];
+                    wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
+                }
             }
         }
 
