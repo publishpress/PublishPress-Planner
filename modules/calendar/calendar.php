@@ -251,7 +251,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
             add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
             add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
-            add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'calendarGetData']);
+            add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -3367,7 +3367,7 @@ if (!class_exists('PP_Calendar')) {
             exit;
         }
 
-        public function calendarGetData()
+        public function fetchCalendarDataJson()
         {
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
