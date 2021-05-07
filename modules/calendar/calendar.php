@@ -3555,8 +3555,10 @@ if (!class_exists('PP_Calendar')) {
 
         private function extractPostDataForTheCalendar($post)
         {
+            $postTypeOptions = $this->get_post_status_options($post->post_status);
+
             return [
-                'icon'      => 'dashicons-clock',
+                'icon'      => $postTypeOptions['icon'],
                 'label'     => $post->post_title,
                 'id'        => $post->ID,
                 'timestamp' => $post->post_date,
