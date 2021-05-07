@@ -3367,6 +3367,17 @@ if (!class_exists('PP_Calendar')) {
             exit;
         }
 
+        private function extractPostDataForTheCalendar($post)
+        {
+            return [
+                'icon'      => 'calendar',
+                'label'     => $post->post_title,
+                'id'        => $post->ID,
+                'timestamp' => $post->post_date,
+
+            ];
+        }
+
         public function fetchCalendarDataJson()
         {
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
@@ -3392,12 +3403,7 @@ if (!class_exists('PP_Calendar')) {
                     $data[$date] = [];
                 }
                 foreach ($posts as $post) {
-                    $data[$date][] = [
-                        'icon'      => 'calendar',
-                        'label'     => $post->post_title,
-                        'id'        => $post->ID,
-                        'timestamp' => $post->post_date,
-                    ];
+                    $data[$date][] = $this->extractPostDataForTheCalendar($post);
                 }
             }
 
