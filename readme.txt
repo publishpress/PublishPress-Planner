@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.4.0] - UNRELEASED =
+
+* Fixed: Fix the icons for statuses, #841;
+
 = [3.3.1] - 2021-04-15 =
 
 * Fixed: Fix the editorial comments for non-admins, #827;
