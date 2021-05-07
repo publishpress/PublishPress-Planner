@@ -14,7 +14,7 @@ export default function CalendarItem(props) {
     }
 
     const iconElement = (props.showIcon || true) && props.icon ?
-        <span className={'dashicons dashicons-' + props.icon}> </span> : null;
+        <span className={'dashicons ' + props.icon}> </span> : null;
 
     const timeElement = (props.showTime || true) ?
         <time className="publishpress-calendar-item-time"

@@ -3370,7 +3370,7 @@ if (!class_exists('PP_Calendar')) {
         private function extractPostDataForTheCalendar($post)
         {
             return [
-                'icon'      => 'calendar',
+                'icon'      => 'dashicons-clock',
                 'label'     => $post->post_title,
                 'id'        => $post->ID,
                 'timestamp' => $post->post_date,
