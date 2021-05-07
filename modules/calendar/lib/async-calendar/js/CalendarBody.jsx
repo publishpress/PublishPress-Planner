@@ -98,6 +98,7 @@ export default function CalendarBody(props) {
                         for (let i = 0; i < dayItems.length; i++) {
                             dayItemsElements.push(
                                 <CalendarItem icon={dayItems[i].icon}
+                                              color={dayItems[i].color}
                                               time={dayItems[i].time}
                                               label={dayItems[i].label}
                                               id={dayItems[i].id}

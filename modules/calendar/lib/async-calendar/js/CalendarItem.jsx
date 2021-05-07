@@ -23,10 +23,8 @@ export default function CalendarItem(props) {
 
     return (
         <li className="publishpress-calendar-item"
+            style={{backgroundColor: props.color}}
             data-id={props.id}
             data-datetime={props.timestamp}>{iconElement}{timeElement}{props.label || DEFAULT_LABEL}</li>
     )
-    // return (
-    //     <li> </li>
-    // )
 }

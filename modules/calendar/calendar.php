@@ -3558,11 +3558,11 @@ if (!class_exists('PP_Calendar')) {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
 
             return [
-                'icon'      => $postTypeOptions['icon'],
                 'label'     => $post->post_title,
                 'id'        => $post->ID,
                 'timestamp' => $post->post_date,
-
+                'icon'      => $postTypeOptions['icon'],
+                'color'     => $postTypeOptions['color'],
             ];
         }
 
