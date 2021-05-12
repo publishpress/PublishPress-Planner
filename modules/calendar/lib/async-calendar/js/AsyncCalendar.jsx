@@ -11,13 +11,14 @@ const {__} = wp.i18n;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState();
 
     async function _fetchData() {
         setIsLoading(true);
-        setMessage(__('Fetching items...', 'publishpress'));
+        setItems({});
+        setMessage(__('Loading...', 'publishpress'));
 
         const response = await fetch(props.dataUrl + '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
         const responseJson = await response.json();
@@ -27,11 +28,17 @@ export default function AsyncCalendar(props) {
         setMessage(null);
     }
 
+    function _handleRefreshClick(e) {
+        e.preventDefault();
+
+        _fetchData();
+    }
+
     useEffect(_fetchData, []);
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
-            <NavigationBar/>
+            <NavigationBar refreshFunction={_handleRefreshClick}/>
 
             <MessageBar showSpinner={isLoading} message={message}/>
 
