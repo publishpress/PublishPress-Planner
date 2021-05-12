@@ -44,37 +44,55 @@
 
     .publishpress-calendar-weekend-day {
         background: @weekendCellBackground;
+
+        .publishpress-calendar-date {
+            color: @weekendDateColor;
+        }
     }
 
     .publishpress-calendar-today {
         background: @todayBackground;
         border: 1px solid @todayBorderColor;
-    }
 
-    .publishpress-calendar-weekend-day .publishpress-calendar-date {
-        color: @weekendDateColor;
-    }
-
-    .publishpress-calendar-today .publishpress-calendar-date {
-        background: @todayDateBackground;
-        color: @todayDateColor;
+        .publishpress-calendar-date {
+            background: @todayDateBackground;
+            color: @todayDateColor;
+        }
     }
 
     .publishpress-calendar-item {
         background: @itemBackground;
         color: @itemColor;
 
+        .dashicons {
+            font-size: 16px;
+            color: @itemIconColor;
+            margin-right: 2px;
+        }
+
+        .publishpress-calendar-item-time {
+            margin-right: 2px;
+            color: @itemTimeColor;
+            font-size: 10px;
+        }
     }
 
-    .publishpress-calendar-item .dashicons {
-        font-size: 16px;
-        color: @itemIconColor;
-        margin-right: 2px;
-    }
+    .publishpress-calendar-message-bar {
+        padding: 5px 5px;
+        height: 20px;
+        background: #dadada;
+        margin: 8px 0;
 
-    .publishpress-calendar-item .publishpress-calendar-item-time {
-        margin-right: 2px;
-        color: @itemTimeColor;
-        font-size: 10px;
+        .sk-cube-grid {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        span {
+            line-height: 20px;
+        }
     }
 }
