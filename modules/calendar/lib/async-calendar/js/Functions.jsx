@@ -101,3 +101,7 @@ export function getDateAsStringInWpFormat(theDate) {
         + (theDate.getMonth() + 1).toString().padStart(2, '0') + '-'
         + theDate.getDate().toString().padStart(2, '0');
 }
+
+export function calculateWeeksInMilliseconds(weeks) {
+    return weeks * 7 * 24 * 60 * 60 * 1000;
+}
