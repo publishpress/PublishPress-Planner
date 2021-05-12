@@ -468,14 +468,14 @@ if (!class_exists('PP_Calendar')) {
 
                 wp_enqueue_style(
                     'publishpress-async-calendar-theme-light-css',
-                    $this->module_url . 'lib/async-calendar/styles/themes/theme-light.min.css',
+                    $this->module_url . 'lib/async-calendar/styles/themes/theme-light.css',
                     [],
                     PUBLISHPRESS_VERSION
                 );
 
                 wp_enqueue_style(
                     'publishpress-async-calendar-css',
-                    $this->module_url . 'lib/async-calendar/styles/async-calendar.min.css',
+                    $this->module_url . 'lib/async-calendar/styles/async-calendar.css',
                     ['publishpress-async-calendar-theme-light-css'],
                     PUBLISHPRESS_VERSION
                 );
