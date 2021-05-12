@@ -1319,6 +1319,15 @@ if (!class_exists('PP_Calendar')) {
                     echo '</p></div>';
                 } ?>
 
+
+                <div id="publishpress-calendar-wrap">
+                    <div class="publishpress-calendar-loader">
+                        <?php
+                        echo __('Please, wait until the calendar is loaded...', 'publishpress'); ?>
+                    </div>
+                </div>
+                <hr>
+
                 <div id="pp-calendar-wrap"><!-- Calendar Wrapper -->
 
                     <?php
@@ -1693,13 +1702,6 @@ if (!class_exists('PP_Calendar')) {
 
             </div>
 
-            <hr>
-            <div id="publishpress-calendar-wrap">
-                <div class="publishpress-calendar-loader">
-                    <?php
-                    echo __('Please, wait until the calendar is loaded...', 'publishpress'); ?>
-                </div>
-            </div>
             <?php
             $publishpress->settings->print_default_footer($publishpress->modules->calendar);
         }
