@@ -580,7 +580,7 @@ if (!class_exists('PP_Calendar')) {
                         'todayDate'              => date('Y-m-d H:i:s'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
-                        'nonce'                  => wp_create_nonce('publishpress-calendar-get-data')
+                        'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
                 }
@@ -3583,6 +3583,7 @@ if (!class_exists('PP_Calendar')) {
                 'timestamp' => $post->post_date,
                 'icon'      => $postTypeOptions['icon'],
                 'color'     => $postTypeOptions['color'],
+                'showTime'  => $this->showPostsPublishTime($post->post_status),
             ];
         }
 

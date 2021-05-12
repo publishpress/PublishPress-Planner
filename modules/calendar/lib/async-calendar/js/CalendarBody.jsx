@@ -82,7 +82,6 @@ export default function CalendarBody(props) {
         return calendarDays;
     }
 
-
     const daysCells = _getCalendarDays();
 
     return (
@@ -103,7 +102,9 @@ export default function CalendarBody(props) {
                                               label={dayItems[i].label}
                                               id={dayItems[i].id}
                                               timestamp={dayItems[i].timestamp}
-                                              timeFormat={props.timeFormat}/>
+                                              timeFormat={props.timeFormat}
+                                              showTime={dayItems[i].showTime}
+                                              showIcon={true}/>
                             );
                         }
                     }

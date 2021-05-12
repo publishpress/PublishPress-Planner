@@ -12,6 +12,7 @@ jQuery(function () {
             timezoneOffset={publishpressCalendarParams.timezoneOffset}
             timeFormat={publishpressCalendarParams.timeFormat}
             theme={publishpressCalendarParams.theme}
+            statusesToDisplayTime={publishpressCalendarParams.statusesToDisplayTime}
             dataUrl={dataURL}/>,
 
         document.getElementById('publishpress-calendar-wrap')

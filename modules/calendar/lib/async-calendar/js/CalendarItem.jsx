@@ -4,7 +4,6 @@ const {__} = wp.i18n;
 
 export default function CalendarItem(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
-    const DEFAULT_ICON = 'yes';
     const DEFAULT_LABEL = __('Untitled', 'publishpress');
 
     function _getHourString() {
@@ -13,10 +12,10 @@ export default function CalendarItem(props) {
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
 
-    const iconElement = (props.showIcon || true) && props.icon ?
+    const iconElement = props.showIcon && props.icon ?
         <span className={'dashicons ' + props.icon}> </span> : null;
 
-    const timeElement = (props.showTime || true) ?
+    const timeElement = props.showTime ?
         <time className="publishpress-calendar-item-time"
               dateTime={props.timestamp}
               title={props.timestamp}>{_getHourString()}</time> : null;
