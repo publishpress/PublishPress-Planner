@@ -555,7 +555,7 @@ if (!class_exists('PP_Calendar')) {
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
 
-                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') {
+                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
                     wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
@@ -1337,7 +1337,7 @@ if (!class_exists('PP_Calendar')) {
                             <p><?php echo __('Loading the calendar...', 'publishpress'); ?></p>
                         </div>
                         <div class="publishpress-calendar-loader-tip">
-                            <?php echo __('It seems like it is taking too long. Please, check the browser console and contact our support team if there is any error message.', 'publishpress'); ?>
+                            <?php echo __('It seems like it is taking too long. Please, try reloading the page again and check the browser console looking for errors.', 'publishpress'); ?>
                         </div>
                     </div>
                 </div>
