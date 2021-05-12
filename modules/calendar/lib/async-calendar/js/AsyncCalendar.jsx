@@ -28,20 +28,20 @@ export default function AsyncCalendar(props) {
         setMessage(null);
     }
 
-    function handleRefreshOnClick(e) {
-        e.preventDefault();
-
-        setItems({});
-
-        fetchData();
-    }
-
     function navigate(offset) {
         const newDate = new Date(
             firstDateToDisplay.getTime() + offset
         );
 
         setFirstDateToDisplay(newDate);
+
+        fetchData();
+    }
+
+    function handleRefreshOnClick(e) {
+        e.preventDefault();
+
+        setItems({});
 
         fetchData();
     }
