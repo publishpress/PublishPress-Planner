@@ -1320,10 +1320,25 @@ if (!class_exists('PP_Calendar')) {
                 } ?>
 
 
-                <div id="publishpress-calendar-wrap">
+                <div id="publishpress-calendar-wrap" class="publishpress-calendar-wrap">
                     <div class="publishpress-calendar-loader">
-                        <?php
-                        echo __('Please, wait until the calendar is loaded...', 'publishpress'); ?>
+                        <div class="publishpress-calendar-loader-message">
+                            <div class="sk-cube-grid">
+                                <div class="sk-cube sk-cube1"></div>
+                                <div class="sk-cube sk-cube2"></div>
+                                <div class="sk-cube sk-cube3"></div>
+                                <div class="sk-cube sk-cube4"></div>
+                                <div class="sk-cube sk-cube5"></div>
+                                <div class="sk-cube sk-cube6"></div>
+                                <div class="sk-cube sk-cube7"></div>
+                                <div class="sk-cube sk-cube8"></div>
+                                <div class="sk-cube sk-cube9"></div>
+                            </div>
+                            <p><?php echo __('Loading the calendar...', 'publishpress'); ?></p>
+                        </div>
+                        <div class="publishpress-calendar-loader-tip">
+                            <?php echo __('It seems like it is taking too long. Please, check the browser console and contact our support team if there is any error message.', 'publishpress'); ?>
+                        </div>
                     </div>
                 </div>
                 <hr>

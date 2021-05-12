@@ -1,0 +1,32 @@
+.publishpress-calendar-wrap {
+    @loaderHeight: 500px;
+
+    .publishpress-calendar-loader {
+        display: block;
+        height: @loaderHeight;
+        width: 100%;
+        text-align: center;
+        padding-top: (@loaderHeight / 2) - 100px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .publishpress-calendar-loader-message {
+    }
+
+    .publishpress-calendar-loader-tip {
+        color: #a9a9a9;
+        width: 50%;
+        padding-left: 50%;
+        margin-left: -25%;
+        animation: countdown_message 0s 10s forwards;
+        visibility: hidden;
+    }
+
+    @keyframes countdown_message {
+        to {
+            visibility: visible;
+        }
+    }
+}
+
