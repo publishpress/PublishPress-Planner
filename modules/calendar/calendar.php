@@ -550,8 +550,8 @@ if (!class_exists('PP_Calendar')) {
                 );
 
                 $pp_cal_js_params = [
-                    'can_add_posts'  => current_user_can($this->create_post_cap) ? 'true' : 'false',
-                    'nonce'          => wp_create_nonce('calendar_filter_nonce'),
+                    'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false',
+                    'nonce'         => wp_create_nonce('calendar_filter_nonce'),
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
 
