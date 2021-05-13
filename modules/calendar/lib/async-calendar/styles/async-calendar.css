@@ -132,6 +132,7 @@
 .publishpress-calendar-theme-light .publishpress-calendar-day-items {
   position: absolute;
   width: 100%;
+  min-height: 100%;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-item {
   display: block;

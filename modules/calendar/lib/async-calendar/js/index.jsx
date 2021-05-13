@@ -1,8 +1,6 @@
 import AsyncCalendar from "./AsyncCalendar";
 
 jQuery(function () {
-    const dataURL = publishpressCalendarParams.ajaxUrl + '?action=publishpress_calendar_get_data&nonce=' + publishpressCalendarParams.nonce;
-
     ReactDOM.render(
         <AsyncCalendar
             firstDateToDisplay={new Date(Date.parse(publishpressCalendarParams.firstDateToDisplay))}
@@ -13,7 +11,10 @@ jQuery(function () {
             timeFormat={publishpressCalendarParams.timeFormat}
             theme={publishpressCalendarParams.theme}
             statusesToDisplayTime={publishpressCalendarParams.statusesToDisplayTime}
-            dataUrl={dataURL}/>,
+            ajaxUrl={publishpressCalendarParams.ajaxUrl}
+            actionGetData={'publishpress_calendar_get_data'}
+            actionMoveItem={'publishpress_calendar_move_item'}
+            nonce={publishpressCalendarParams.nonce}/>,
 
         document.getElementById('publishpress-calendar-wrap')
     );

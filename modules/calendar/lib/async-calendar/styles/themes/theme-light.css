@@ -61,4 +61,9 @@
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar span {
   line-height: 20px;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-drop-placeholder {
+  background: #b3b3df;
+  height: 20px;
+  margin: 0;
+}
 /*# sourceMappingURL=theme-light.css.map */

@@ -82,10 +82,29 @@ export default function CalendarBody(props) {
         return calendarDays;
     }
 
+    // jQuery(function ($) {
+    //     let selector = '.publishpress-calendar-day-items';
+    //     $(selector).sortable({
+    //         placeholder: "publishpress-calendar-drop-placeholder",
+    //         connectWith: ".publishpress-calendar-day-items",
+    //         start: function (event, ui) {
+    //
+    //         },
+    //         sort: function (event, ui) {
+    //
+    //         },
+    //         stop: function (event, ui) {
+    //             let index = $(ui.item).data('index');
+    //             let datetime = $(ui.item).data('datetime');
+    //             console.log(ui, event);
+    //         }
+    //     });
+    // });
+
     const daysCells = _getCalendarDays();
 
     return (
-        <ul className={'publishpress-calendar-days'}>
+        <ul className="publishpress-calendar-days">
             {daysCells.map((dayDate) => {
                 let dayItemsElements = [];
 
@@ -96,15 +115,17 @@ export default function CalendarBody(props) {
                     if (dayItems) {
                         for (let i = 0; i < dayItems.length; i++) {
                             dayItemsElements.push(
-                                <CalendarItem icon={dayItems[i].icon}
-                                              color={dayItems[i].color}
-                                              time={dayItems[i].time}
-                                              label={dayItems[i].label}
-                                              id={dayItems[i].id}
-                                              timestamp={dayItems[i].timestamp}
-                                              timeFormat={props.timeFormat}
-                                              showTime={dayItems[i].showTime}
-                                              showIcon={true}/>
+                                <CalendarItem
+                                    key={dayItems[i].id + '-' + dayDate.date.getTime()}
+                                    icon={dayItems[i].icon}
+                                    color={dayItems[i].color}
+                                    label={dayItems[i].label}
+                                    id={dayItems[i].id}
+                                    timestamp={dayItems[i].timestamp}
+                                    timeFormat={props.timeFormat}
+                                    showTime={dayItems[i].showTime}
+                                    showIcon={true}
+                                    index={i}/>
                             );
                         }
                     }

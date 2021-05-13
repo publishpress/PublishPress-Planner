@@ -2452,9 +2452,7 @@ if (!class_exists('PP_Calendar')) {
             // Filter for an end user to implement any of their own query args
             $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
 
-            add_filter('posts_where', [$this, 'posts_where_multiple_weeks_range']);
             $post_results = new WP_Query($args);
-            remove_filter('posts_where', [$this, 'posts_where_multiple_weeks_range']);
 
             $posts = [];
             while ($post_results->have_posts()) {
@@ -2465,30 +2463,6 @@ if (!class_exists('PP_Calendar')) {
             }
 
             return $posts;
-        }
-
-        /**
-         * Filter the WP_Query so we can get a week range of posts
-         *
-         * @param string $where The original WHERE SQL query string
-         *
-         * @return string $where Our modified WHERE query string
-         */
-        public function posts_where_multiple_weeks_range($where = '')
-        {
-            global $wpdb;
-
-            $beginning_date = $this->get_beginning_of_week($this->start_date, 'Y-m-d', 1);
-            $ending_date    = $this->get_ending_of_week($this->start_date, 'Y-m-d', $this->current_week);
-            // Adjust the ending date to account for the entire day of the last day of the week
-            $ending_date = date('Y-m-d', strtotime('+1 day', strtotime($ending_date)));
-            $where       = $where . $wpdb->prepare(
-                    " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
-                    $beginning_date,
-                    $ending_date
-                );
-
-            return $where;
         }
 
         /**
@@ -3593,21 +3567,37 @@ if (!class_exists('PP_Calendar')) {
                 wp_send_json([], 403);
             }
 
+            $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
+            $endingDate    = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
+
+            wp_send_json(
+                $this->getCalendarData($beginningDate, $endingDate),
+                200
+            );
+        }
+
+        private function getCalendarData($beginningDate, $endingDate)
+        {
             $post_query_args = [
                 'post_status' => null,
                 'post_type'   => null,
                 'cat'         => null,
                 'tag'         => null,
                 'author'      => null,
+                'date_query'  => [
+                    'column' => 'post_date',
+                    'after' => $beginningDate,
+                    'before' => $endingDate,
+                    'inclusive' => true,
+                ]
             ];
 
             if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
                 $post_query_args['orderby'] = ['post_status'];
             }
 
-            $this->start_date   = sanitize_text_field($_GET['start_date']);
-            $this->current_week = (int)$_GET['number_of_weeks'];
-            $postsList          = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
+
+            $postsList = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
 
             $data = [];
 
@@ -3621,7 +3611,7 @@ if (!class_exists('PP_Calendar')) {
                 }
             }
 
-            wp_send_json($data, 200);
+            return $data;
         }
 
         /**

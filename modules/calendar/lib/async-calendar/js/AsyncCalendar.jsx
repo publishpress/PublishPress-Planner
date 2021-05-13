@@ -16,11 +16,21 @@ export default function AsyncCalendar(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState();
 
+    function getUrl(action, query) {
+        if (!query) {
+            query = '';
+        }
+
+        return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
+    }
+
     async function fetchData() {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        const response = await fetch(props.dataUrl + '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
+        const dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
+
+        const response = await fetch(dataUrl);
         const responseJson = await response.json();
 
         setItems(responseJson);
@@ -40,8 +50,6 @@ export default function AsyncCalendar(props) {
 
     function handleRefreshOnClick(e) {
         e.preventDefault();
-
-        setItems({});
 
         fetchData();
     }
