@@ -1,8 +1,6 @@
 import {getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from './Functions';
 import CalendarItem from "./CalendarItem";
 
-const useState = React.useState;
-
 export default function CalendarBody(props) {
     // Compensate the timezone in the browser with the server's timezone
     const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(props.timezoneOffset);
