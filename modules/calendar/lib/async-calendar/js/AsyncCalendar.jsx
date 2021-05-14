@@ -15,6 +15,7 @@ export default function AsyncCalendar(props) {
     const [items, setItems] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState();
+    const [, setForceUpdate] = useState(Date.now());
 
     function getUrl(action, query) {
         if (!query) {
@@ -117,9 +118,7 @@ export default function AsyncCalendar(props) {
                     $dayCell.data('year'),
                     $dayCell.data('month'),
                     $dayCell.data('day')
-                ).then(() => {
-                    console.log(1);
-                });
+                );
             }
         });
     }
@@ -146,14 +145,8 @@ export default function AsyncCalendar(props) {
             method: 'POST',
             body: formData
         });
-        const responseJson = await response.json();
 
-        const dateIndex = newYear + '-' + newMonth.toString().padStart(2, '0') + '-' + newDay;
-
-        newItemsList[dateIndex] = responseJson[dateIndex];
-        newItemsList[itemDate].splice(itemIndex, 1);
-
-        setItems(newItemsList);
+        fetchData();
 
         setIsLoading(false);
         setMessage(null);

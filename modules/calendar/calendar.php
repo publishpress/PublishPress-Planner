@@ -3609,11 +3609,8 @@ if (!class_exists('PP_Calendar')) {
                 ]
             );
 
-            $postDate = new DateTime($newDate);
-            $postDate = $postDate->format('Y-m-d');
-
             wp_send_json(
-                $this->getCalendarData($postDate, $postDate),
+                true,
                 200
             );
         }
