@@ -2,7 +2,7 @@ import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import CalendarBody from "./CalendarBody";
 import MessageBar from "./MessageBar";
-import {calculateWeeksInMilliseconds, getDateAsStringInWpFormat, getBeginDateOfWeekByDate} from "./Functions";
+import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
 
 const useState = React.useState;
 const useEffect = React.useEffect;
@@ -86,7 +86,78 @@ export default function AsyncCalendar(props) {
         fetchData();
     }
 
+    function initDraggable() {
+        $ = jQuery;
+        $('.publishpress-calendar-day-items li').draggable({
+            zIndex: 99999,
+            helper: 'clone',
+            opacity: 0.40,
+            containment: '.publishpress-calendar-days',
+            cursor: 'move',
+            classes: {
+                'ui-draggable': 'publishpress-calendar-draggable',
+                'ui-draggable-handle': 'publishpress-calendar-draggable-handle',
+                'ui-draggable-dragging': 'publishpress-calendar-draggable-dragging',
+            }
+        });
+
+        $('.publishpress-calendar-day-items').droppable({
+            addClasses: false,
+            classes: {
+                'ui-droppable-hover': 'publishpress-calendar-state-active',
+            },
+            drop: (event, ui) => {
+                const $dayCell = $(event.target).parent();
+                const $item = $(ui.draggable[0]);
+                const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
+
+                moveItemToNewDate(
+                    dateTime,
+                    $item.data('index'),
+                    $dayCell.data('year'),
+                    $dayCell.data('month'),
+                    $dayCell.data('day')
+                ).then(() => {
+                    console.log(1);
+                });
+            }
+        });
+    }
+
     useEffect(fetchData, []);
+    useEffect(initDraggable);
+
+    async function moveItemToNewDate(itemDate, itemIndex, newYear, newMonth, newDay) {
+        let newItemsList = JSON.parse(JSON.stringify(items));
+        let item = newItemsList[itemDate][itemIndex];
+
+        setIsLoading(true);
+        setMessage(__('Moving item...', 'publishpress'));
+
+        const dataUrl = getUrl(props.actionMoveItem);
+
+        const formData = new FormData();
+        formData.append('id', item.id);
+        formData.append('year', newYear);
+        formData.append('month', newMonth);
+        formData.append('day', newDay);
+
+        const response = await fetch(dataUrl, {
+            method: 'POST',
+            body: formData
+        });
+        const responseJson = await response.json();
+
+        const dateIndex = newYear + '-' + newMonth.toString().padStart(2, '0') + '-' + newDay;
+
+        newItemsList[dateIndex] = responseJson[dateIndex];
+        newItemsList[itemDate].splice(itemIndex, 1);
+
+        setItems(newItemsList);
+
+        setIsLoading(false);
+        setMessage(null);
+    }
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>

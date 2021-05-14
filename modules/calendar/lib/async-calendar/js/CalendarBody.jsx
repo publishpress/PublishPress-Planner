@@ -82,25 +82,6 @@ export default function CalendarBody(props) {
         return calendarDays;
     }
 
-    // jQuery(function ($) {
-    //     let selector = '.publishpress-calendar-day-items';
-    //     $(selector).sortable({
-    //         placeholder: "publishpress-calendar-drop-placeholder",
-    //         connectWith: ".publishpress-calendar-day-items",
-    //         start: function (event, ui) {
-    //
-    //         },
-    //         sort: function (event, ui) {
-    //
-    //         },
-    //         stop: function (event, ui) {
-    //             let index = $(ui.item).data('index');
-    //             let datetime = $(ui.item).data('datetime');
-    //             console.log(ui, event);
-    //         }
-    //     });
-    // });
-
     const daysCells = _getCalendarDays();
 
     return (

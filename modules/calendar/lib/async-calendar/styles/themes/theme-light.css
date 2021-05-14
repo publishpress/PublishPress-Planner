@@ -61,9 +61,16 @@
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar span {
   line-height: 20px;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-drop-placeholder {
-  background: #b3b3df;
-  height: 20px;
-  margin: 0;
+.publishpress-calendar-theme-light .publishpress-calendar-state-active {
+  background: #fff;
+  background: linear-gradient(180deg, #fff 0%, #f9f9e1 50%);
+}
+.publishpress-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-state-active {
+  background: #f9f9f9;
+  background: linear-gradient(180deg, #f9f9f9 0%, #f9f9e1 50%);
+}
+.publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-state-active {
+  background: #e8e6f0;
+  background: linear-gradient(180deg, #e8e6f0 0%, #f9f9e1 50%);
 }
 /*# sourceMappingURL=theme-light.css.map */

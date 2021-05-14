@@ -252,6 +252,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
             add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
             add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
+            add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -563,6 +564,10 @@ if (!class_exists('PP_Calendar')) {
                             'react',
                             'react-dom',
                             'jquery',
+                            'jquery-ui-core',
+                            'jquery-ui-sortable',
+                            'jquery-ui-draggable',
+                            'jquery-ui-droppable',
                             'wp-i18n',
                         ],
                         PUBLISHPRESS_VERSION,
@@ -3559,6 +3564,58 @@ if (!class_exists('PP_Calendar')) {
                 'color'     => $postTypeOptions['color'],
                 'showTime'  => $this->showPostsPublishTime($post->post_status),
             ];
+        }
+
+        public function moveCalendarItemToNewDate()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json(['error' => __('Invalid nonce', 'publishpress')], 403);
+            }
+
+            $postId   = isset($_POST['id']) ? (int)$_POST['id'] : null;
+            $newYear  = isset($_POST['year']) ? (int)$_POST['year'] : null;
+            $newMonth = isset($_POST['month']) ? (int)$_POST['month'] : null;
+            $newDay   = isset($_POST['day']) ? (int)$_POST['day'] : null;
+
+            if (empty($postId) || empty($newYear) || empty($newMonth) || empty($newDay)) {
+                wp_send_json(['error' => __('Invalid input', 'publishpress')], 400);
+            }
+
+            $post = get_post($postId);
+
+            if (empty($post) || is_wp_error($post)) {
+                wp_send_json(['error' => __('Post not found', 'publishpress')], 404);
+            }
+
+            $postDate = null;
+            try {
+                $postDate = new DateTime($post->post_date);
+                $postDate->setDate($newYear, $newMonth, $newDay);
+            } catch (Exception $e) {
+                wp_send_json(['error' => __('Invalid date', 'publishpress')], 400);
+            }
+
+            $newDate = $postDate->format('Y-m-d H:i:s');
+
+            global $wpdb;
+
+            $wpdb->update(
+                $wpdb->posts,
+                [
+                    'post_date' => $newDate
+                ],
+                [
+                    'ID' => $postId
+                ]
+            );
+
+            $postDate = new DateTime($newDate);
+            $postDate = $postDate->format('Y-m-d');
+
+            wp_send_json(
+                $this->getCalendarData($postDate, $postDate),
+                200
+            );
         }
 
         public function fetchCalendarDataJson()
