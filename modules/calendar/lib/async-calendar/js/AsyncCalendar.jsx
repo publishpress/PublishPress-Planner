@@ -102,6 +102,8 @@ export default function AsyncCalendar(props) {
             }
         });
 
+        let $lastHoveredCell;
+
         $('.publishpress-calendar-day-items').droppable({
             addClasses: false,
             classes: {
@@ -111,6 +113,9 @@ export default function AsyncCalendar(props) {
                 const $dayCell = $(event.target).parent();
                 const $item = $(ui.draggable[0]);
                 const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
+                const $dayParent = $(event.target).parents('li');
+
+                $dayParent.addClass('publishpress-calendar-day-loading');
 
                 moveItemToNewDate(
                     dateTime,
@@ -119,12 +124,19 @@ export default function AsyncCalendar(props) {
                     $dayCell.data('month'),
                     $dayCell.data('day')
                 ).then(() => {
-                    $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
+                    $dayParent.removeClass('publishpress-calendar-day-hover');
+                    $dayParent.removeClass('publishpress-calendar-day-loading');
                 });
             },
             over: (event, ui) => {
-                $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
-                $(event.target).parents('li').addClass('publishpress-calendar-day-hover');
+                if ($lastHoveredCell) {
+                    $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
+                }
+
+                const $dayParent = $(event.target).parents('li');
+                $dayParent.addClass('publishpress-calendar-day-hover');
+
+                $lastHoveredCell = $dayParent;
             }
         });
     }

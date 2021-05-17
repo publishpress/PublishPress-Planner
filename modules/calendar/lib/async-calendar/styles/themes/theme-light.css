@@ -71,4 +71,30 @@
   color: #604100;
   z-index: 200;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-day-hover .publishpress-calendar-date::before {
+  font-family: dashicons, serif;
+  content: "\f345";
+  font-size: 11px;
+  font-weight: bold;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-day-loading .publishpress-calendar-date::after {
+  font-family: dashicons, serif;
+  content: "\f531";
+  font-size: 11px;
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+  animation-name: spin;
+  animation-duration: 800ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
 /*# sourceMappingURL=theme-light.css.map */
