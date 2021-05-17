@@ -41,10 +41,10 @@ export default function AsyncCalendar(props) {
 
     function navigate(offsetInWeeks) {
         const offset = calculateWeeksInMilliseconds(offsetInWeeks);
+
         const newDate = new Date(
             firstDateToDisplay.getTime() + offset
         );
-
         setFirstDateToDisplay(newDate);
 
         fetchData();
@@ -194,7 +194,6 @@ export default function AsyncCalendar(props) {
                     theme={theme}
                     todayDate={props.todayDate}
                     weekStartsOnSunday={props.weekStartsOnSunday}
-                    timezoneOffset={props.timezoneOffset}
                     timeFormat={props.timeFormat}
                     items={items}/>
             </div>

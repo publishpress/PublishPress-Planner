@@ -7,7 +7,6 @@ jQuery(function () {
             weekStartsOnSunday={publishpressCalendarParams.weekStartsOnSunday}
             numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
             todayDate={new Date(Date.parse(publishpressCalendarParams.todayDate))}
-            timezoneOffset={publishpressCalendarParams.timezoneOffset}
             timeFormat={publishpressCalendarParams.timeFormat}
             theme={publishpressCalendarParams.theme}
             statusesToDisplayTime={publishpressCalendarParams.statusesToDisplayTime}

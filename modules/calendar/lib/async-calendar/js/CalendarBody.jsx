@@ -3,10 +3,6 @@ import CalendarItem from "./CalendarItem";
 import CalendarCell from "./CalendarCell";
 
 export default function CalendarBody(props) {
-    // Compensate the timezone in the browser with the server's timezone
-    const timezoneOffset = (new Date().getTimezoneOffset() / 60) + parseInt(props.timezoneOffset);
-
-    props.todayDate.setHours(props.todayDate.getHours() + timezoneOffset);
     props.firstDateToDisplay = _getFirstDayOfWeek(props.firstDateToDisplay);
 
     function _getFirstDayOfWeek(theDate) {
