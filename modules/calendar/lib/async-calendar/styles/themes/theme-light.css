@@ -76,25 +76,22 @@
   content: "\f345";
   font-size: 11px;
   font-weight: bold;
+  margin-right: 1px;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-day-loading .publishpress-calendar-date::after {
+.publishpress-calendar-theme-light .publishpress-calendar-day-loading .publishpress-calendar-date::before {
   font-family: dashicons, serif;
   content: "\f531";
   font-size: 11px;
   font-weight: bold;
-  position: absolute;
-  right: 5px;
-  animation-name: spin;
-  animation-duration: 800ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  margin-right: 1px;
+  animation: rotation 1s infinite linear !important;
 }
-@keyframes spin {
+@keyframes rotation {
   from {
-    transform: rotate(360deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: rotate(0deg);
+    transform: rotate(359deg);
   }
 }
 /*# sourceMappingURL=theme-light.css.map */
