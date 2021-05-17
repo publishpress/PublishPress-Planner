@@ -25,7 +25,7 @@
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today {
   background: #e8e6f0;
-  border: 1px solid #465984;
+  border: 1px solid #465984 !important;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
   background: #655997;
