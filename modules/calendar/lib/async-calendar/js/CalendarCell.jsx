@@ -18,7 +18,6 @@ export default function CalendarCell(props) {
 
     return (
         <li
-            key={props.date.toString()}
             className={getDayItemClassName(props.date, props.todayDate)}
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}

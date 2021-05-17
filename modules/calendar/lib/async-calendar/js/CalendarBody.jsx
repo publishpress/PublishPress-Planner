@@ -54,7 +54,7 @@ export default function CalendarBody(props) {
                         for (let i = 0; i < dayItems.length; i++) {
                             dayItemsElements.push(
                                 <CalendarItem
-                                    key={dayItems[i].id + '-' + dayDate.date.getTime()}
+                                    key={'item-' + dayItems[i].id + '-' + dayDate.date.getTime()}
                                     icon={dayItems[i].icon}
                                     color={dayItems[i].color}
                                     label={dayItems[i].label}
@@ -71,6 +71,7 @@ export default function CalendarBody(props) {
 
                 return (
                     <CalendarCell
+                        key={'day-' + dayDate.date.getTime()}
                         date={dayDate.date}
                         shouldDisplayMonthName={dayDate.shouldDisplayMonthName}
                         todayDate={props.todayDate}
