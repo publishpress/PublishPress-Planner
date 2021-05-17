@@ -1,4 +1,4 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat, getDateAsStringInWpFormat} from "../async-calendar/js/Functions";
+import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat, getDateAsStringInWpFormat, calculateWeeksInMilliseconds} from "../async-calendar/js/Functions";
 
 /*
  * getBeginDateOfWeekByWeekNumber, sunday as first day of week
@@ -281,4 +281,25 @@ test('getDateAsStringInWpFormat, for date 2022-06-05', () => {
     expect(
         getDateAsStringInWpFormat(new Date(Date.parse('2022-06-05 13:30:20')))
     ).toStrictEqual('2022-06-05');
+})
+
+/*
+ * calculateWeeksInMilliseconds
+ */
+test('calculateWeeksInMilliseconds, for 1 week', () => {
+    expect(
+        calculateWeeksInMilliseconds(1)
+    ).toStrictEqual(604800000);
+})
+
+test('calculateWeeksInMilliseconds, for 2 weeks', () => {
+    expect(
+        calculateWeeksInMilliseconds(2)
+    ).toStrictEqual(1209600000);
+})
+
+test('calculateWeeksInMilliseconds, for 3 weeks', () => {
+    expect(
+        calculateWeeksInMilliseconds(3)
+    ).toStrictEqual(1814400000);
 })
