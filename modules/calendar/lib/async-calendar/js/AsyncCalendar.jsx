@@ -118,7 +118,13 @@ export default function AsyncCalendar(props) {
                     $dayCell.data('year'),
                     $dayCell.data('month'),
                     $dayCell.data('day')
-                );
+                ).then(() => {
+                    $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
+                });
+            },
+            over: (event, ui) => {
+                $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
+                $(event.target).parents('li').addClass('publishpress-calendar-day-hover');
             }
         });
     }

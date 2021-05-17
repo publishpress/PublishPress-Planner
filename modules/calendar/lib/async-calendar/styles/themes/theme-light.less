@@ -99,18 +99,19 @@
         }
     }
 
-    .publishpress-calendar-state-active {
-        background: @backgroundColor;
-        background: linear-gradient(180deg, @backgroundColor 0%, @droppableBackground 50%);
+    .publishpress-calendar-day-hover {
+        background-color: @droppableBackground !important;
+        box-sizing: border-box;
+        border: 1px dashed orange !important;
     }
 
-    .publishpress-calendar-weekend-day .publishpress-calendar-state-active {
-        background: @weekendCellBackground;
-        background: linear-gradient(180deg, @weekendCellBackground 0%, @droppableBackground 50%);
+    .publishpress-calendar-day-hover .publishpress-calendar-date {
+        font-weight: bold;
+        color: #604100;
+        z-index: 200;
     }
 
-    .publishpress-calendar-today .publishpress-calendar-state-active {
-        background: @todayBackground;
-        background: linear-gradient(180deg, @todayBackground 0%, @droppableBackground 50%);
+    .publishpress-calendar-day-hover .publishpress-calendar-state-active {
+
     }
 }
