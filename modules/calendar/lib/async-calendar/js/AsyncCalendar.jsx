@@ -87,6 +87,10 @@ export default function AsyncCalendar(props) {
         fetchData();
     }
 
+    function getItemByDateAndIndex(date, index) {
+        return items[date][index];
+    }
+
     function initDraggable() {
         $ = jQuery;
         $('.publishpress-calendar-day-items li').draggable({
@@ -142,8 +146,7 @@ export default function AsyncCalendar(props) {
     }
 
     async function moveItemToNewDate(itemDate, itemIndex, newYear, newMonth, newDay) {
-        let newItemsList = JSON.parse(JSON.stringify(items));
-        let item = newItemsList[itemDate][itemIndex];
+        let item = getItemByDateAndIndex(itemDate, itemIndex);
 
         setIsLoading(true);
         setMessage(__('Moving item...', 'publishpress'));
