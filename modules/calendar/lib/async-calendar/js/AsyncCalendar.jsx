@@ -39,7 +39,8 @@ export default function AsyncCalendar(props) {
         setMessage(null);
     }
 
-    function navigate(offset) {
+    function navigate(offsetInWeeks) {
+        const offset = calculateWeeksInMilliseconds(offsetInWeeks);
         const newDate = new Date(
             firstDateToDisplay.getTime() + offset
         );
@@ -58,25 +59,25 @@ export default function AsyncCalendar(props) {
     function handleBackPageOnClick(e) {
         e.preventDefault();
 
-        navigate(calculateWeeksInMilliseconds(props.numberOfWeeksToDisplay) * -1);
+        navigate(props.numberOfWeeksToDisplay * -1);
     }
 
     function handleBackOnClick(e) {
         e.preventDefault();
 
-        navigate(calculateWeeksInMilliseconds(1) * -1);
+        navigate(-1);
     }
 
     function handleForwardOnClick(e) {
         e.preventDefault();
 
-        navigate(calculateWeeksInMilliseconds(1));
+        navigate(1);
     }
 
     function handleForwardPageOnClick(e) {
         e.preventDefault();
 
-        navigate(calculateWeeksInMilliseconds(props.numberOfWeeksToDisplay));
+        navigate(props.numberOfWeeksToDisplay);
     }
 
     function handleTodayOnClick(e) {
