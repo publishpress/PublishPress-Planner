@@ -1,5 +1,6 @@
 import {getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from './Functions';
 import CalendarItem from "./CalendarItem";
+import CalendarCell from "./CalendarCell";
 
 export default function CalendarBody(props) {
     // Compensate the timezone in the browser with the server's timezone
@@ -14,44 +15,6 @@ export default function CalendarBody(props) {
 
     function _isValidDate(theDate) {
         return Object.prototype.toString.call(theDate) === '[object Date]';
-    }
-
-    function _getDateFromString(theDate) {
-        return new Date(Date.parse(theDate));
-    }
-
-    function _getMonthName(month) {
-        const monthNames = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-        ];
-
-        return monthNames[month];
-    }
-
-    function _getDayItemClassName(dayDate) {
-        const businessDays = [1, 2, 3, 4, 5];
-
-        let dayItemClassName = businessDays.indexOf(dayDate.getDay()) >= 0 ? 'business-day' : 'weekend-day'
-
-        if (props.todayDate.getFullYear() === dayDate.getFullYear()
-            && props.todayDate.getMonth() === dayDate.getMonth()
-            && props.todayDate.getDate() === dayDate.getDate()
-        ) {
-            dayItemClassName += ' publishpress-calendar-today';
-        }
-
-        return 'publishpress-calendar-' + dayItemClassName;
     }
 
     function _getCalendarDays() {
@@ -111,23 +74,11 @@ export default function CalendarBody(props) {
                 }
 
                 return (
-                    <li
-                        key={dayDate.date.toString()}
-                        className={_getDayItemClassName(dayDate.date)}
-                        data-year={dayDate.date.getFullYear()}
-                        data-month={dayDate.date.getMonth() + 1}
-                        data-day={dayDate.date.getDate()}>
-
-                        <div className="publishpress-calendar-date">
-                            {dayDate.shouldDisplayMonthName &&
-                            <span
-                                className="publishpress-calendar-month-name">{_getMonthName(dayDate.date.getMonth())}</span>
-                            }
-                            {dayDate.date.getDate()}
-                        </div>
-
-                        <ul className="publishpress-calendar-day-items">{dayItemsElements}</ul>
-                    </li>
+                    <CalendarCell
+                        date={dayDate.date}
+                        shouldDisplayMonthName={dayDate.shouldDisplayMonthName}
+                        todayDate={props.todayDate}
+                        items={dayItemsElements}/>
                 )
             })}
         </ul>

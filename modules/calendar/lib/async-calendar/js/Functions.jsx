@@ -105,3 +105,22 @@ export function getDateAsStringInWpFormat(theDate) {
 export function calculateWeeksInMilliseconds(weeks) {
     return weeks * 7 * 24 * 60 * 60 * 1000;
 }
+
+export function getMonthNameByMonthIndex(month) {
+    const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+    ];
+
+    return monthNames[month];
+}
