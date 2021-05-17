@@ -141,9 +141,6 @@ export default function AsyncCalendar(props) {
         });
     }
 
-    useEffect(fetchData, []);
-    useEffect(initDraggable);
-
     async function moveItemToNewDate(itemDate, itemIndex, newYear, newMonth, newDay) {
         let newItemsList = JSON.parse(JSON.stringify(items));
         let item = newItemsList[itemDate][itemIndex];
@@ -169,6 +166,9 @@ export default function AsyncCalendar(props) {
         setIsLoading(false);
         setMessage(null);
     }
+
+    useEffect(fetchData, []);
+    useEffect(initDraggable);
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
