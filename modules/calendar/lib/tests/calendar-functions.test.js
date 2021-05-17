@@ -1,4 +1,4 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat, getDateAsStringInWpFormat, calculateWeeksInMilliseconds} from "../async-calendar/js/Functions";
+import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat, getDateAsStringInWpFormat, calculateWeeksInMilliseconds, getMonthNameByMonthIndex} from "../async-calendar/js/Functions";
 
 /*
  * getBeginDateOfWeekByWeekNumber, sunday as first day of week
@@ -302,4 +302,79 @@ test('calculateWeeksInMilliseconds, for 3 weeks', () => {
     expect(
         calculateWeeksInMilliseconds(3)
     ).toStrictEqual(1814400000);
+})
+
+/*
+ * getMonthNameByMonthIndex
+ */
+test('getMonthNameByMonthIndex, for Jan', () => {
+    expect(
+        getMonthNameByMonthIndex(0)
+    ).toStrictEqual('Jan');
+})
+
+test('getMonthNameByMonthIndex, for Feb', () => {
+    expect(
+        getMonthNameByMonthIndex(1)
+    ).toStrictEqual('Feb');
+})
+
+test('getMonthNameByMonthIndex, for Mar', () => {
+    expect(
+        getMonthNameByMonthIndex(2)
+    ).toStrictEqual('Mar');
+})
+
+test('getMonthNameByMonthIndex, for Apr', () => {
+    expect(
+        getMonthNameByMonthIndex(3)
+    ).toStrictEqual('Apr');
+})
+
+test('getMonthNameByMonthIndex, for May', () => {
+    expect(
+        getMonthNameByMonthIndex(4)
+    ).toStrictEqual('May');
+})
+
+test('getMonthNameByMonthIndex, for Jun', () => {
+    expect(
+        getMonthNameByMonthIndex(5)
+    ).toStrictEqual('Jun');
+})
+
+test('getMonthNameByMonthIndex, for Jul', () => {
+    expect(
+        getMonthNameByMonthIndex(6)
+    ).toStrictEqual('Jul');
+})
+
+test('getMonthNameByMonthIndex, for Aug', () => {
+    expect(
+        getMonthNameByMonthIndex(7)
+    ).toStrictEqual('Aug');
+})
+
+test('getMonthNameByMonthIndex, for Sep', () => {
+    expect(
+        getMonthNameByMonthIndex(8)
+    ).toStrictEqual('Sep');
+})
+
+test('getMonthNameByMonthIndex, for Oct', () => {
+    expect(
+        getMonthNameByMonthIndex(9)
+    ).toStrictEqual('Oct');
+})
+
+test('getMonthNameByMonthIndex, for Nov', () => {
+    expect(
+        getMonthNameByMonthIndex(10)
+    ).toStrictEqual('Nov');
+})
+
+test('getMonthNameByMonthIndex, for Dec', () => {
+    expect(
+        getMonthNameByMonthIndex(11)
+    ).toStrictEqual('Dec');
 })

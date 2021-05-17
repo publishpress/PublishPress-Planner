@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@wordpress/babel-preset-default": "^3.0.2",
+    "@wordpress/i18n": "^4.0.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.0.5",
     "babel-minify-webpack-plugin": "^0.3.1",
@@ -37,5 +38,7 @@
     "build-dev": "cross-env NODE_ENV=development webpack",
     "build": "cross-env NODE_ENV=production webpack",
     "test": "jest"
+  },
+  "dependencies": {
   }
 }
