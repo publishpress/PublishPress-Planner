@@ -29,10 +29,10 @@ export default function WeekDays(props) {
     }
 
     return (
-        <ul className={'publishpress-calendar-week-days'}>
+        <>
             {weekDays.map((item) =>
-                <li key={item.key.toString()}>{item.label}</li>
+                <th key={item.key.toString()}>{item.label}</th>
             )}
-        </ul>
+        </>
     )
 }

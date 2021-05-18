@@ -30,31 +30,30 @@
 @buttonActiveBackground: #e6e6e6;
 
 .publishpress-calendar-theme-light {
-    position: relative;
-    padding-top: 42px;
-
-    .publishpress-calendar-days {
+    table  {
         border: 1px solid @outerBorderColor;
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        > thead > tr > th,
+        > tbody > tr > td {
+            border: 1px solid @borderColor;
+        }
+
+        > thead > tr > th {
+            background: @backgroundColor;
+            border-bottom: 3px solid @weekDaysSeparatorColor;
+            color: @weekDaysColor;
+            height: 25px;
+        }
+
+        > tbody > tr > td {
+            vertical-align: top;
+        }
     }
 
     .publishpress-calendar-loader {
         background: @backgroundColor;
-    }
-
-    .publishpress-calendar-week-days > li,
-    .publishpress-calendar-days > li {
-        border: 1px solid @borderColor;
-    }
-
-    .publishpress-calendar-week-days > li {
-        background: @backgroundColor;
-        border-bottom: 3px solid @weekDaysSeparatorColor;
-        color: @weekDaysColor;
-    }
-
-    .publishpress-calendar-week-days > li,
-    .publishpress-calendar-days > li {
-        font-size: 13px;
     }
 
     .publishpress-calendar-business-day {
@@ -64,6 +63,7 @@
     .publishpress-calendar-weekend-day {
         background: @weekendCellBackground;
 
+        .publishpress-calendar-month-name,
         .publishpress-calendar-date {
             color: @weekendDateColor;
         }
@@ -73,6 +73,7 @@
         background: @todayBackground;
         border: 1px solid @todayBorderColor !important;
 
+        .publishpress-calendar-month-name,
         .publishpress-calendar-date {
             background: @todayDateBackground;
             color: @todayDateColor;
@@ -96,9 +97,6 @@
     }
 
     .publishpress-calendar-message-bar {
-        position: absolute;
-        left: 0;
-        top: 0;
         padding: 5px 5px;
         height: 20px;
         margin: 8px 0;
@@ -141,12 +139,6 @@
         font-weight: bold;
         margin-right: 1px;
         animation: publishpress-spinner-animation 0.6s infinite reverse;
-    }
-
-    .publishpress-calendar-navigation-bar {
-        position: absolute;
-        right: 0;
-        top: 0;
     }
 
     .publishpress-calendar-navigation-bar a {

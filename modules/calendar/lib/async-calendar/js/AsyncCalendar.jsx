@@ -190,17 +190,22 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-day-items li').draggable({
             zIndex: 99999,
             helper: 'clone',
-            opacity: 0.40,
-            containment: '.publishpress-calendar-days',
+            containment: '.publishpress-calendar table',
             cursor: 'move',
             classes: {
                 'ui-draggable': 'publishpress-calendar-draggable',
                 'ui-draggable-handle': 'publishpress-calendar-draggable-handle',
                 'ui-draggable-dragging': 'publishpress-calendar-draggable-dragging',
+            },
+            start: (event, ui) => {
+                $(event.target).addClass('publishpress-calendar-draggable-target');
+            },
+            stop: (event, ui) => {
+                $('.publishpress-calendar-draggable-target').removeClass('publishpress-calendar-draggable-target');
             }
         });
 
-        $('.publishpress-calendar-days > li').droppable({
+        $('.publishpress-calendar tbody > tr > td').droppable({
             addClasses: false,
             classes: {
                 'ui-droppable-hover': 'publishpress-calendar-state-active',
@@ -210,14 +215,20 @@ export default function AsyncCalendar(props) {
         });
     };
 
-    const calendarBodyCells = () => {
-        let bodyCells = [];
+    const calendarBodyRows = () => {
+        let rows = [];
+        let rowCells;
         let cell;
+        let dayIndex = 0;
 
         for (const date in cells) {
+            if (dayIndex === 0) {
+                rowCells = [];
+            }
+
             cell = cells[date];
 
-            bodyCells.push(
+            rowCells.push(
                 <CalendarCell
                     key={'day-' + cell.date.getTime()}
                     date={cell.date}
@@ -227,9 +238,18 @@ export default function AsyncCalendar(props) {
                     items={cell.items}
                     timeFormat={props.timeFormat}/>
             );
+
+            dayIndex++;
+
+            if (dayIndex === 7) {
+                dayIndex = 0;
+                rows.push(
+                    <tr>{rowCells}</tr>
+                );
+            }
         }
 
-        return bodyCells;
+        return rows;
     };
 
     React.useEffect(prepareCells, []);
@@ -247,10 +267,16 @@ export default function AsyncCalendar(props) {
 
             <MessageBar showSpinner={isLoading} message={message}/>
 
-            <div className="publishpress-calendar-section">
-                <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
-                <ul className="publishpress-calendar-days">{calendarBodyCells()}</ul>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
+                    </tr>
+                </thead>
+                <tbody>
+                    {calendarBodyRows()}
+                </tbody>
+            </table>
         </div>
     )
 }

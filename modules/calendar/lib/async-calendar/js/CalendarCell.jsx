@@ -26,18 +26,18 @@ export default function CalendarCell(props) {
     }
 
     return (
-        <li
+        <td
             ref={calendarCell}
             className={getDayItemClassName(props.date, props.todayDate)}
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}
             data-day={props.date.getDate()}>
-            <div className="publishpress-calendar-date">
+            <div className="publishpress-calendar-cell-header">
                 {props.shouldDisplayMonthName &&
                 <span
                     className="publishpress-calendar-month-name">{getMonthNameByMonthIndex(props.date.getMonth())}</span>
                 }
-                {props.date.getDate()}
+                <span className="publishpress-calendar-date">{props.date.getDate()}</span>
             </div>
 
             <ul className="publishpress-calendar-day-items">
@@ -61,6 +61,6 @@ export default function CalendarCell(props) {
             {props.items.length > numberOfItemsToDisplay &&
                 <span className="publishpress-calendar-show-more">Show {props.items.length - numberOfItemsToDisplay} more</span>
             }
-        </li>
+        </td>
     )
 }

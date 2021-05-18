@@ -5,57 +5,54 @@
 .publishpress-calendar {
     display: block;
     width: 100%;
-    overflow: hidden;
 
-    .publishpress-calendar-section * {
-        user-select: none;
-    }
-}
+    > table {
+        table-layout: fixed;
+        width: 100%;
 
-.publishpress-calendar-theme-light {
-    .publishpress-calendar-week-days > li,
-    .publishpress-calendar-days > li {
-        display: inline-block;
-        width: 14.28%;
-        box-sizing: border-box;
-        margin: 0;
-    }
+        * {
+            user-select: none;
+        }
 
-    .publishpress-calendar-week-days,
-    .publishpress-calendar-days {
-        margin: 0;
+        > thead > th {
+            text-align: center;
+        }
+
+        > tbody > td {
+            height: 110px;
+        }
     }
 
-    .publishpress-calendar-week-days > li {
-        height: 36px;
-        font-weight: bold;
-        text-align: left;
-        line-height: 1.3em;
-    }
-
-    .publishpress-calendar-days > li {
-        height: 120px;
-        position: relative;
-    }
-
-    .publishpress-calendar-date {
-        margin: -2px 0 2px;
-        padding: 4px 8px;
-        display: inline-block;
-    }
-
-    .publishpress-calendar-month-name {
-        margin-right: 3px;
+    .publishpress-calendar-cell-header {
+        display: block;
+        width: 100%;
+        height: 23px;
+        text-align: center;
+        padding-top: 3px;
     }
 
     .publishpress-calendar-day-items {
-        position: absolute;
-        width: 100%;
-        height: 120px;
-        top: 0;
-        padding-top: 22px;
-        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
+
+    .publishpress-calendar-date {
+        padding: 4px;
+    }
+
+    .publishpress-calendar-today .publishpress-calendar-date {
+        border-radius: 50%;
+    }
+
+    .publishpress-calendar-draggable-dragging {
+        width: 250px !important;
+        display: block !important;
+    }
+
+    .publishpress-calendar-draggable-target {
+        opacity: 50%;
+    }
+
 
     .publishpress-calendar-item {
         display: block;
@@ -87,5 +84,13 @@
 
     .publishpress-calendar-navigation-bar a .dashicons {
         line-height: 30px;
+    }
+
+    .publishpress-calendar-show-more {
+        position: absolute;
+        bottom: 0;
+        left: 4px;
+        color: gray;
+        font-size: 11px;
     }
 }
