@@ -2,14 +2,10 @@ import {getDateAsStringInWpFormat} from './Functions';
 import CalendarItem from "./CalendarItem";
 import CalendarCell from "./CalendarCell";
 
+const $ = jQuery;
+
 export default function CalendarBody(props) {
-    function isValidDate(theDate) {
-        return Object.prototype.toString.call(theDate) === '[object Date]';
-    }
-
     function initDraggable() {
-        const $ = jQuery;
-
         $('.publishpress-calendar-day-items li').draggable({
             zIndex: 99999,
             helper: 'clone',
@@ -23,86 +19,35 @@ export default function CalendarBody(props) {
             }
         });
 
-        let $lastHoveredCell;
-
         $('.publishpress-calendar-day-items').droppable({
             addClasses: false,
             classes: {
                 'ui-droppable-hover': 'publishpress-calendar-state-active',
             },
-            drop: (event, ui) => {
-                const $dayCell = $(event.target).parent();
-                const $item = $(ui.draggable[0]);
-                const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
-                const $dayParent = $(event.target).parents('li');
-
-                // $dayParent.addClass('publishpress-calendar-day-loading');
-
-                props.moveItemToANewDateCallback(
-                    dateTime,
-                    $item.data('index'),
-                    $dayCell.data('year'),
-                    $dayCell.data('month'),
-                    $dayCell.data('day')
-                ).then(() => {
-                    $dayParent.removeClass('publishpress-calendar-day-hover');
-                    // $dayParent.removeClass('publishpress-calendar-day-loading');
-                });
-            },
-            over: (event, ui) => {
-                if ($lastHoveredCell) {
-                    $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
-                }
-
-                const $dayParent = $(event.target).parents('li');
-                $dayParent.addClass('publishpress-calendar-day-hover');
-
-                $lastHoveredCell = $dayParent;
-            }
+            drop: props.handleOnDropItemCallback,
+            over: props.handleOnHoverCellCallback
         });
     }
 
     React.useEffect(initDraggable);
 
-    return (
-        <ul className="publishpress-calendar-days">
-            {props.cells.map((dayCell) => {
-                let cellItems = [];
+    let cells = [];
+    let cell;
 
-                if (isValidDate(dayCell.date)) {
-                    const dateString = getDateAsStringInWpFormat(dayCell.date);
-                    const dayItems = props.items[dateString] ? props.items[dateString] : null;
+    for (const date in props.cells) {
+        cell = props.cells[date];
 
-                    if (dayItems) {
-                        for (let i = 0; i < dayItems.length; i++) {
-                            cellItems.push(
-                                <CalendarItem
-                                    key={'item-' + dayItems[i].id + '-' + dayCell.date.getTime()}
-                                    icon={dayItems[i].icon}
-                                    color={dayItems[i].color}
-                                    label={dayItems[i].label}
-                                    id={dayItems[i].id}
-                                    timestamp={dayItems[i].timestamp}
-                                    timeFormat={props.timeFormat}
-                                    showTime={dayItems[i].showTime}
-                                    showIcon={true}
-                                    index={i}/>
-                            );
-                        }
-                    }
-                }
+        cells.push(
+            <CalendarCell
+                key={'day-' + cell.date.getTime()}
+                date={cell.date}
+                shouldDisplayMonthName={cell.shouldDisplayMonthName}
+                todayDate={props.todayDate}
+                isLoading={cell.isLoading}
+                items={cell.items}
+                timeFormat={props.timeFormat}/>
+        );
+    }
 
-                return (
-                    <CalendarCell
-                        key={'day-' + dayCell.date.getTime()}
-                        date={dayCell.date}
-                        shouldDisplayMonthName={dayCell.shouldDisplayMonthName}
-                        todayDate={props.todayDate}
-                        isLoading={dayCell.isLoading}
-                        items={cellItems}/>
-
-                )
-            })}
-        </ul>
-    )
+    return (<ul className="publishpress-calendar-days">{cells}</ul>)
 }

@@ -72,6 +72,9 @@
   color: #363e08;
   z-index: 200;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
+  color: #fff;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover .publishpress-calendar-date::before {
   font-family: dashicons, serif;
   content: "\f345";

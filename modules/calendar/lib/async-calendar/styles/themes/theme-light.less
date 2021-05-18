@@ -116,6 +116,10 @@
         z-index: 200;
     }
 
+    .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
+        color: @todayDateColor;
+    }
+
     .publishpress-calendar-day-hover .publishpress-calendar-date::before {
         font-family: dashicons, serif;
         content: "\f345";
@@ -132,7 +136,6 @@
         margin-right: 1px;
         animation: rotation 1s infinite linear !important;
     }
-
 }
 
 @keyframes rotation {

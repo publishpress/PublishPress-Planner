@@ -1,7 +1,9 @@
 import {getMonthNameByMonthIndex} from "./Functions";
+import CalendarItem from "./CalendarItem";
 
 export default function CalendarCell(props) {
     const calendarCell = React.useRef(null);
+    let itemIndex = 0;
 
     function getDayItemClassName(dayDate, todayDate) {
         const businessDays = [1, 2, 3, 4, 5];
@@ -38,7 +40,23 @@ export default function CalendarCell(props) {
                 {props.date.getDate()}
             </div>
 
-            <ul className="publishpress-calendar-day-items">{props.items}</ul>
+            <ul className="publishpress-calendar-day-items">
+                {props.items.map((item) => {
+                    return (
+                        <CalendarItem
+                            key={'item-' + item.id + '-' + props.date.getTime()}
+                            icon={item.icon}
+                            color={item.color}
+                            label={item.label}
+                            id={item.id}
+                            timestamp={item.timestamp}
+                            timeFormat={props.timeFormat}
+                            showTime={item.showTime}
+                            showIcon={true}
+                            index={itemIndex++}/>
+                    )
+                })}
+            </ul>
         </li>
     )
 }
