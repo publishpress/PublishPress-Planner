@@ -145,11 +145,11 @@
 .publishpress-calendar .publishpress-calendar-today .publishpress-calendar-date {
   border-radius: 50%;
 }
-.publishpress-calendar .publishpress-calendar-draggable-dragging {
+.publishpress-calendar .ui-draggable-dragging {
   width: 250px !important;
   display: block !important;
 }
-.publishpress-calendar .publishpress-calendar-draggable-target {
+.publishpress-calendar .ui-draggable-target {
   opacity: 50%;
 }
 .publishpress-calendar .publishpress-calendar-item {

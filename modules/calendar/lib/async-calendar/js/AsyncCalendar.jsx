@@ -192,24 +192,15 @@ export default function AsyncCalendar(props) {
             helper: 'clone',
             containment: '.publishpress-calendar table',
             cursor: 'move',
-            classes: {
-                'ui-draggable': 'publishpress-calendar-draggable',
-                'ui-draggable-handle': 'publishpress-calendar-draggable-handle',
-                'ui-draggable-dragging': 'publishpress-calendar-draggable-dragging',
-            },
             start: (event, ui) => {
-                $(event.target).addClass('publishpress-calendar-draggable-target');
+                $(event.target).addClass('ui-draggable-target');
             },
             stop: (event, ui) => {
-                $('.publishpress-calendar-draggable-target').removeClass('publishpress-calendar-draggable-target');
+                $('.ui-draggable-target').removeClass('ui-draggable-target');
             }
         });
 
         $('.publishpress-calendar tbody > tr > td').droppable({
-            addClasses: false,
-            classes: {
-                'ui-droppable-hover': 'publishpress-calendar-state-active',
-            },
             drop: handleOnDropItemCallback,
             over: handleOnHoverCellCallback
         });
