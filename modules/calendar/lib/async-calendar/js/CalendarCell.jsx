@@ -15,6 +15,10 @@ export default function CalendarCell(props) {
             dayItemClassName += ' publishpress-calendar-today';
         }
 
+        if (props.isLoading) {
+            dayItemClassName += ' publishpress-calendar-day-loading';
+        }
+
         return 'publishpress-calendar-' + dayItemClassName;
     }
 

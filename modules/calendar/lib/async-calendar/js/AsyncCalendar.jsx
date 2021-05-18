@@ -11,6 +11,7 @@ export default function AsyncCalendar(props) {
 
     const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(props.firstDateToDisplay);
     const [items, setItems] = React.useState({});
+    const [cells, setCells] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
 
@@ -20,6 +21,42 @@ export default function AsyncCalendar(props) {
         }
 
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
+    }
+
+    function init() {
+        initCells();
+        fetchData();
+    }
+
+    function initCells() {
+        const firstDayOfTheFirstWeek = getFirstDayOfWeek(props.firstDateToDisplay);
+        const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
+
+        let newCells = [];
+        let dayDate;
+        let lastMonthDisplayed = firstDayOfTheFirstWeek.getMonth();
+        let shouldDisplayMonthName;
+
+        for (let i = 0; i < numberOfDaysToDisplay; i++) {
+            dayDate = new Date(firstDayOfTheFirstWeek);
+            dayDate.setDate(dayDate.getDate() + i);
+
+            shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || i === 0;
+
+            newCells.push({
+                date: dayDate,
+                shouldDisplayMonthName: shouldDisplayMonthName,
+                isLoading: false
+            });
+
+            lastMonthDisplayed = dayDate.getMonth();
+        }
+
+        setCells(newCells);
+    }
+
+    function getFirstDayOfWeek(theDate) {
+        return getBeginDateOfWeekByDate(theDate, props.weekStartsOnSunday);
     }
 
     async function fetchData() {
@@ -114,8 +151,7 @@ export default function AsyncCalendar(props) {
         setMessage(null);
     }
 
-    React.useEffect(fetchData, []);
-
+    React.useEffect(init, []);
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
@@ -132,13 +168,14 @@ export default function AsyncCalendar(props) {
             <div className="publishpress-calendar-section">
                 <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
                 <CalendarBody
-                    firstDateToDisplay={firstDateToDisplay}
+                    firstDateToDisplay={getFirstDayOfWeek(props.firstDateToDisplay)}
                     numberOfWeeksToDisplay={props.numberOfWeeksToDisplay}
                     theme={theme}
                     todayDate={props.todayDate}
                     weekStartsOnSunday={props.weekStartsOnSunday}
                     timeFormat={props.timeFormat}
                     items={items}
+                    cells={cells}
                     moveItemToANewDateCallback={moveItemToNewDate}/>
             </div>
         </div>

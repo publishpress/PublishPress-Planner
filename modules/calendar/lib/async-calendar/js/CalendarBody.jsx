@@ -1,42 +1,10 @@
-import {getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from './Functions';
+import {getDateAsStringInWpFormat} from './Functions';
 import CalendarItem from "./CalendarItem";
 import CalendarCell from "./CalendarCell";
 
 export default function CalendarBody(props) {
-    props.firstDateToDisplay = getFirstDayOfWeek(props.firstDateToDisplay);
-
-    function getFirstDayOfWeek(theDate) {
-        return getBeginDateOfWeekByDate(theDate, props.weekStartsOnSunday);
-    }
-
     function isValidDate(theDate) {
         return Object.prototype.toString.call(theDate) === '[object Date]';
-    }
-
-    function getCalendarDays() {
-        const firstDayOfTheFirstWeek = getFirstDayOfWeek(props.firstDateToDisplay);
-        const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
-
-        let calendarDays = [];
-        let dayDate;
-        let lastMonthDisplayed = firstDayOfTheFirstWeek.getMonth();
-        let shouldDisplayMonthName;
-
-        for (let i = 0; i < numberOfDaysToDisplay; i++) {
-            dayDate = new Date(firstDayOfTheFirstWeek);
-            dayDate.setDate(dayDate.getDate() + i);
-
-            shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || i === 0;
-
-            calendarDays.push({
-                date: dayDate,
-                shouldDisplayMonthName: shouldDisplayMonthName
-            });
-
-            lastMonthDisplayed = dayDate.getMonth();
-        }
-
-        return calendarDays;
     }
 
     function initDraggable() {
@@ -68,7 +36,7 @@ export default function CalendarBody(props) {
                 const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
                 const $dayParent = $(event.target).parents('li');
 
-                $dayParent.addClass('publishpress-calendar-day-loading');
+                // $dayParent.addClass('publishpress-calendar-day-loading');
 
                 props.moveItemToANewDateCallback(
                     dateTime,
@@ -78,7 +46,7 @@ export default function CalendarBody(props) {
                     $dayCell.data('day')
                 ).then(() => {
                     $dayParent.removeClass('publishpress-calendar-day-hover');
-                    $dayParent.removeClass('publishpress-calendar-day-loading');
+                    // $dayParent.removeClass('publishpress-calendar-day-loading');
                 });
             },
             over: (event, ui) => {
@@ -96,22 +64,20 @@ export default function CalendarBody(props) {
 
     React.useEffect(initDraggable);
 
-    const daysCells = getCalendarDays();
-
     return (
         <ul className="publishpress-calendar-days">
-            {daysCells.map((dayDate) => {
-                let dayItemsElements = [];
+            {props.cells.map((dayCell) => {
+                let cellItems = [];
 
-                if (isValidDate(dayDate.date)) {
-                    const dateString = getDateAsStringInWpFormat(dayDate.date);
+                if (isValidDate(dayCell.date)) {
+                    const dateString = getDateAsStringInWpFormat(dayCell.date);
                     const dayItems = props.items[dateString] ? props.items[dateString] : null;
 
                     if (dayItems) {
                         for (let i = 0; i < dayItems.length; i++) {
-                            dayItemsElements.push(
+                            cellItems.push(
                                 <CalendarItem
-                                    key={'item-' + dayItems[i].id + '-' + dayDate.date.getTime()}
+                                    key={'item-' + dayItems[i].id + '-' + dayCell.date.getTime()}
                                     icon={dayItems[i].icon}
                                     color={dayItems[i].color}
                                     label={dayItems[i].label}
@@ -128,11 +94,13 @@ export default function CalendarBody(props) {
 
                 return (
                     <CalendarCell
-                        key={'day-' + dayDate.date.getTime()}
-                        date={dayDate.date}
-                        shouldDisplayMonthName={dayDate.shouldDisplayMonthName}
+                        key={'day-' + dayCell.date.getTime()}
+                        date={dayCell.date}
+                        shouldDisplayMonthName={dayCell.shouldDisplayMonthName}
                         todayDate={props.todayDate}
-                        items={dayItemsElements}/>
+                        isLoading={dayCell.isLoading}
+                        items={cellItems}/>
+
                 )
             })}
         </ul>
