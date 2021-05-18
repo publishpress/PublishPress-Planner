@@ -4,6 +4,7 @@ import CalendarItem from "./CalendarItem";
 export default function CalendarCell(props) {
     const calendarCell = React.useRef(null);
     let itemIndex = 0;
+    const numberOfItemsToDisplay = 4;
 
     const getDayItemClassName = (dayDate, todayDate) => {
         const businessDays = [1, 2, 3, 4, 5];
@@ -31,7 +32,6 @@ export default function CalendarCell(props) {
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}
             data-day={props.date.getDate()}>
-
             <div className="publishpress-calendar-date">
                 {props.shouldDisplayMonthName &&
                 <span
@@ -57,6 +57,10 @@ export default function CalendarCell(props) {
                     )
                 })}
             </ul>
+
+            {props.items.length > numberOfItemsToDisplay &&
+                <span className="publishpress-calendar-show-more">Show {props.items.length - numberOfItemsToDisplay} more</span>
+            }
         </li>
     )
 }

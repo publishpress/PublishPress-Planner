@@ -157,12 +157,11 @@ export default function AsyncCalendar(props) {
     }
 
     const handleOnDropItemCallback = (event, ui) => {
-        const $dayCell = $(event.target).parent();
+        const $dayCell = $(event.target);
         const $item = $(ui.draggable[0]);
         const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
-        const $dayParent = $(event.target).parents('li');
 
-        $dayParent.addClass('publishpress-calendar-day-loading');
+        $dayCell.addClass('publishpress-calendar-day-loading');
 
         moveItemToNewDate(
             dateTime,
@@ -171,8 +170,8 @@ export default function AsyncCalendar(props) {
             $dayCell.data('month'),
             $dayCell.data('day')
         ).then(() => {
-            $dayParent.removeClass('publishpress-calendar-day-hover');
-            $dayParent.removeClass('publishpress-calendar-day-loading');
+            $dayCell.removeClass('publishpress-calendar-day-hover');
+            $dayCell.removeClass('publishpress-calendar-day-loading');
         });
     };
 
@@ -181,7 +180,7 @@ export default function AsyncCalendar(props) {
             $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
         }
 
-        const $dayParent = $(event.target).parents('li');
+        const $dayParent = $(event.target);
         $dayParent.addClass('publishpress-calendar-day-hover');
 
         $lastHoveredCell = $dayParent;
@@ -201,7 +200,7 @@ export default function AsyncCalendar(props) {
             }
         });
 
-        $('.publishpress-calendar-day-items').droppable({
+        $('.publishpress-calendar-days > li').droppable({
             addClasses: false,
             classes: {
                 'ui-droppable-hover': 'publishpress-calendar-state-active',
