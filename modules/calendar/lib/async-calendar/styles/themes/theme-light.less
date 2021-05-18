@@ -18,7 +18,7 @@
 @weekendCellBackground: #f8f8f8;
 @weekendDateColor: #888;
 
-@messageBarBackground: #dadada;
+@messageColor: #3d3d3d;
 @droppableBackground: #e3e9c2;
 @droppableBorderColor: #8ea029;
 @droppableColor: #363e08;
@@ -103,13 +103,7 @@
         height: 20px;
         margin: 8px 0;
         min-width: 100px;
-
-        .sk-cube-grid {
-            width: 20px;
-            height: 20px;
-            margin: 0 10px 0 0;
-            display: inline-block;
-        }
+        color: @messageColor;
 
         span {
             line-height: 20px;
@@ -146,7 +140,7 @@
         font-size: 11px;
         font-weight: bold;
         margin-right: 1px;
-        animation: rotation 1s infinite linear !important;
+        animation: publishpress-spinner-animation 0.6s infinite reverse;
     }
 
     .publishpress-calendar-navigation-bar {
@@ -167,14 +161,5 @@
 
     .publishpress-calendar-navigation-bar a:active {
         background: @buttonActiveBackground;
-    }
-}
-
-@keyframes rotation {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(359deg);
     }
 }
