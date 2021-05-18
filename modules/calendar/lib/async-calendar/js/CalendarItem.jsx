@@ -14,6 +14,16 @@ export default function CalendarItem(props) {
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
 
+    const getClassName = () => {
+        let className = 'publishpress-calendar-item';
+
+        if (props.collapse) {
+            className += ' publishpress-calendar-item-collapse';
+        }
+
+        return className;
+    }
+
     const iconElement = props.showIcon && props.icon ?
         <span className={'dashicons ' + props.icon}> </span> : null;
 
@@ -25,7 +35,7 @@ export default function CalendarItem(props) {
     return (
         <li
             ref={calendarItem}
-            className="publishpress-calendar-item"
+            className={getClassName()}
             style={{backgroundColor: props.color}}
             data-index={props.index}
             data-id={props.id}

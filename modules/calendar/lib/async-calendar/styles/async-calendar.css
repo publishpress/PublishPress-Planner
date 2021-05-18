@@ -152,6 +152,12 @@
 .publishpress-calendar .ui-draggable-target {
   opacity: 50%;
 }
+.publishpress-calendar .publishpress-calendar-item-collapse {
+  display: none !important;
+}
+.publishpress-calendar .publishpress-calendar-uncollapse .publishpress-calendar-item-collapse {
+  display: block !important;
+}
 .publishpress-calendar .publishpress-calendar-item {
   display: block;
   height: 20px;
@@ -181,11 +187,15 @@
 .publishpress-calendar .publishpress-calendar-navigation-bar a .dashicons {
   line-height: 30px;
 }
+.publishpress-calendar .publishpress-calendar-hide-items,
 .publishpress-calendar .publishpress-calendar-show-more {
-  position: absolute;
-  bottom: 0;
-  left: 4px;
+  padding-left: 3px;
   color: gray;
   font-size: 11px;
+  cursor: pointer;
+}
+.publishpress-calendar .publishpress-calendar-hide-items:hover,
+.publishpress-calendar .publishpress-calendar-show-more:hover {
+  color: #acacac;
 }
 /*# sourceMappingURL=async-calendar.css.map */

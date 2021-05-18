@@ -53,6 +53,13 @@
         opacity: 50%;
     }
 
+    .publishpress-calendar-item-collapse {
+        display: none !important;
+    }
+
+    .publishpress-calendar-uncollapse .publishpress-calendar-item-collapse {
+        display: block !important;
+    }
 
     .publishpress-calendar-item {
         display: block;
@@ -86,11 +93,16 @@
         line-height: 30px;
     }
 
+    .publishpress-calendar-hide-items,
     .publishpress-calendar-show-more {
-        position: absolute;
-        bottom: 0;
-        left: 4px;
+        padding-left: 3px;
         color: gray;
         font-size: 11px;
+        cursor: pointer;
+    }
+
+    .publishpress-calendar-hide-items:hover,
+    .publishpress-calendar-show-more:hover {
+        color: #acacac;
     }
 }

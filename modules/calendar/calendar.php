@@ -574,6 +574,9 @@ if (!class_exists('PP_Calendar')) {
                         true
                     );
 
+                    $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
+                        (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
+
                     $params = [
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : 4,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
@@ -583,6 +586,7 @@ if (!class_exists('PP_Calendar')) {
                         'weekStartsOnSunday'     => get_option('start_of_week', 0) == 0,
                         'todayDate'              => date('Y-m-d 00:00:00'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
+                        'maxVisibleItems'        => $maxVisibleItemsOption,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
                     ];

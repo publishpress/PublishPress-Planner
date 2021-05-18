@@ -2,9 +2,9 @@ import {getMonthNameByMonthIndex} from "./Functions";
 import CalendarItem from "./CalendarItem";
 
 export default function CalendarCell(props) {
-    const calendarCell = React.useRef(null);
+    const [uncollapseItems, setUncollapseItems] = React.useState(false);
+
     let itemIndex = 0;
-    const numberOfItemsToDisplay = 4;
 
     const getDayItemClassName = (dayDate, todayDate) => {
         const businessDays = [1, 2, 3, 4, 5];
@@ -22,12 +22,37 @@ export default function CalendarCell(props) {
             dayItemClassName += ' publishpress-calendar-day-loading';
         }
 
+        if (uncollapseItems) {
+            dayItemClassName += ' publishpress-calendar-uncollapse';
+        }
+
         return 'publishpress-calendar-' + dayItemClassName;
+    };
+
+    const toggleUncollapseItems = () => {
+        setUncollapseItems(!uncollapseItems);
+    };
+
+    const uncollapseButton = () => {
+        if (props.items.length > props.maxVisibleItems) {
+            const numberOfExtraItems = props.items.length - props.maxVisibleItems;
+
+            let label = uncollapseItems ? 'Hide the ' + numberOfExtraItems + ' last items' : 'Show ' + numberOfExtraItems + ' more';
+            let className = uncollapseItems ? 'publishpress-calendar-hide-items' : 'publishpress-calendar-show-more';
+
+            return (
+                <a
+                href="javascript:void(0);"
+                className={className}
+                onClick={toggleUncollapseItems}>{label}</a>
+            );
+        }
+
+        return (<></>);
     }
 
     return (
         <td
-            ref={calendarCell}
             className={getDayItemClassName(props.date, props.todayDate)}
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}
@@ -53,14 +78,13 @@ export default function CalendarCell(props) {
                             timeFormat={props.timeFormat}
                             showTime={item.showTime}
                             showIcon={true}
+                            collapse={item.collapse}
                             index={itemIndex++}/>
                     )
                 })}
             </ul>
 
-            {props.items.length > numberOfItemsToDisplay &&
-                <span className="publishpress-calendar-show-more">Show {props.items.length - numberOfItemsToDisplay} more</span>
-            }
+            {uncollapseButton()}
         </td>
     )
 }

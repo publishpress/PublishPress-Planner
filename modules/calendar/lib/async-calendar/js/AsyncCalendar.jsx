@@ -25,12 +25,12 @@ export default function AsyncCalendar(props) {
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
     };
 
-    const prepareCells = (newDate) => {
+    const prepareDataByDate = (newDate) => {
         const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
         const firstDate = (newDate) ? newDate : firstDateToDisplay;
 
-        let newCells = {};
-        let cell;
+        let newDataList = {};
+        let newCell;
         let dayDate;
         let dateString;
         let lastMonthDisplayed = firstDate.getMonth();
@@ -39,31 +39,35 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        fetchData().then((data) => {
-            for (let i = 0; i < numberOfDaysToDisplay; i++) {
+        fetchData().then((fetchedData) => {
+            for (let dataIndex = 0; dataIndex < numberOfDaysToDisplay; dataIndex++) {
                 dayDate = new Date(firstDate);
-                dayDate.setDate(dayDate.getDate() + i);
+                dayDate.setDate(dayDate.getDate() + dataIndex);
                 dateString = getDateAsStringInWpFormat(dayDate);
 
-                shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || i === 0;
+                shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0;
 
-                cell = {
+                newCell = {
                     date: dayDate,
                     shouldDisplayMonthName: shouldDisplayMonthName,
                     isLoading: false,
                     items: []
                 };
 
-                if (data[dateString]) {
-                    cell.items = data[dateString];
+                if (fetchedData[dateString]) {
+                    newCell.items = fetchedData[dateString];
+
+                    for (let itemIndex = 0; itemIndex < newCell.items.length; itemIndex++) {
+                        newCell.items[itemIndex].collapse = itemIndex >= props.maxVisibleItems;
+                    }
                 }
 
-                newCells[getDateAsStringInWpFormat(dayDate)] = cell;
+                newDataList[getDateAsStringInWpFormat(dayDate)] = newCell;
 
                 lastMonthDisplayed = dayDate.getMonth();
             }
 
-            setCells(newCells);
+            setCells(newDataList);
 
             setIsLoading(false);
             setMessage(null);
@@ -86,13 +90,13 @@ export default function AsyncCalendar(props) {
 
         setFirstDateToDisplay(newDate);
 
-        prepareCells(newDate);
+        prepareDataByDate(newDate);
     };
 
     const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
-        prepareCells();
+        prepareDataByDate();
     };
 
     const handleBackPageOnClick = (e) => {
@@ -125,7 +129,7 @@ export default function AsyncCalendar(props) {
         const newDate = getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday);
         setFirstDateToDisplay(newDate);
 
-        prepareCells(newDate);
+        prepareDataByDate(newDate);
     };
 
     const getItemByDateAndIndex = (date, index) => {
@@ -152,7 +156,7 @@ export default function AsyncCalendar(props) {
         });
 
         response.json().then(() => {
-            prepareCells();
+            prepareDataByDate();
         });
     }
 
@@ -227,6 +231,7 @@ export default function AsyncCalendar(props) {
                     todayDate={props.todayDate}
                     isLoading={cell.isLoading}
                     items={cell.items}
+                    maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}/>
             );
 
@@ -243,7 +248,7 @@ export default function AsyncCalendar(props) {
         return rows;
     };
 
-    React.useEffect(prepareCells, []);
+    React.useEffect(prepareDataByDate, []);
     React.useEffect(initDraggable);
 
     return (

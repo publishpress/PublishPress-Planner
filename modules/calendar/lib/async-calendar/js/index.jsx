@@ -10,6 +10,7 @@ jQuery(() => {
             timeFormat={publishpressCalendarParams.timeFormat}
             theme={publishpressCalendarParams.theme}
             statusesToDisplayTime={publishpressCalendarParams.statusesToDisplayTime}
+            maxVisibleItems={publishpressCalendarParams.maxVisibleItems}
             ajaxUrl={publishpressCalendarParams.ajaxUrl}
             actionGetData={'publishpress_calendar_get_data'}
             actionMoveItem={'publishpress_calendar_move_item'}
