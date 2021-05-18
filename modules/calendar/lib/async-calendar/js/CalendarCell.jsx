@@ -19,7 +19,7 @@ export default function CalendarCell(props) {
         }
 
         if (props.isLoading) {
-            dayItemClassName += ' publishpress-calendar-day-loading';
+            dayItemClassName += ' publishpress-calendar-loading';
         }
 
         if (uncollapseItems) {

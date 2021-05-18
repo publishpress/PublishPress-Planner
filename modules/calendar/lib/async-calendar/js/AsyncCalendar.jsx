@@ -165,7 +165,7 @@ export default function AsyncCalendar(props) {
         const $item = $(ui.draggable[0]);
         const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
 
-        $dayCell.addClass('publishpress-calendar-day-loading');
+        $dayCell.addClass('publishpress-calendar-loading');
 
         moveItemToNewDate(
             dateTime,
@@ -175,7 +175,7 @@ export default function AsyncCalendar(props) {
             $dayCell.data('day')
         ).then(() => {
             $dayCell.removeClass('publishpress-calendar-day-hover');
-            $dayCell.removeClass('publishpress-calendar-day-loading');
+            $dayCell.removeClass('publishpress-calendar-loading');
         });
     };
 

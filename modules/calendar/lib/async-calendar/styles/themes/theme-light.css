@@ -31,7 +31,6 @@
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today {
   background: #d6e3f8;
-  border: 1px solid #465984 !important;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-month-name,
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
@@ -73,21 +72,6 @@
 }
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
   color: #fff;
-}
-.publishpress-calendar-theme-light .publishpress-calendar-day-hover .publishpress-calendar-date::before {
-  font-family: dashicons, serif;
-  content: "\f345";
-  font-size: 11px;
-  font-weight: bold;
-  margin-right: 1px;
-}
-.publishpress-calendar-theme-light .publishpress-calendar-day-loading .publishpress-calendar-date::before {
-  font-family: dashicons, serif;
-  content: "\f113";
-  font-size: 11px;
-  font-weight: bold;
-  margin-right: 1px;
-  animation: publishpress-spinner-animation 0.6s infinite reverse;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a {
   border: 1px solid #ccc;

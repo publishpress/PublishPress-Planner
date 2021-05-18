@@ -11,7 +11,6 @@
 @itemTimeColor: rgba(255, 255, 255, 0.6);
 
 @todayBackground: #d6e3f8;
-@todayBorderColor: #465984;
 @todayDateBackground: #655997;
 @todayDateColor: #fff;
 
@@ -71,7 +70,6 @@
 
     .publishpress-calendar-today {
         background: @todayBackground;
-        border: 1px solid @todayBorderColor !important;
 
         .publishpress-calendar-month-name,
         .publishpress-calendar-date {
@@ -122,23 +120,6 @@
 
     .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
         color: @todayDateColor;
-    }
-
-    .publishpress-calendar-day-hover .publishpress-calendar-date::before {
-        font-family: dashicons, serif;
-        content: "\f345";
-        font-size: 11px;
-        font-weight: bold;
-        margin-right: 1px;
-    }
-
-    .publishpress-calendar-day-loading .publishpress-calendar-date::before {
-        font-family: dashicons, serif;
-        content: "\f113";
-        font-size: 11px;
-        font-weight: bold;
-        margin-right: 1px;
-        animation: publishpress-spinner-animation 0.6s infinite reverse;
     }
 
     .publishpress-calendar-navigation-bar a {
