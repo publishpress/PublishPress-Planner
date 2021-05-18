@@ -152,7 +152,7 @@ export default function AsyncCalendar(props) {
         });
 
         response.json().then(() => {
-            prepareCells()
+            prepareCells();
         });
     }
 
