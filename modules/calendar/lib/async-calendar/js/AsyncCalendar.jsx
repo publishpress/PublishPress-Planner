@@ -4,18 +4,15 @@ import CalendarBody from "./CalendarBody";
 import MessageBar from "./MessageBar";
 import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
 
-const useState = React.useState;
-const useEffect = React.useEffect;
 const {__} = wp.i18n;
 
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-    const [firstDateToDisplay, setFirstDateToDisplay] = useState(props.firstDateToDisplay);
-    const [items, setItems] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState();
-    const [, setForceUpdate] = useState(Date.now());
+    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(props.firstDateToDisplay);
+    const [items, setItems] = React.useState({});
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [message, setMessage] = React.useState();
 
     function getUrl(action, query) {
         if (!query) {
@@ -92,60 +89,6 @@ export default function AsyncCalendar(props) {
         return items[date][index];
     }
 
-    function initDraggable() {
-        $ = jQuery;
-        $('.publishpress-calendar-day-items li').draggable({
-            zIndex: 99999,
-            helper: 'clone',
-            opacity: 0.40,
-            containment: '.publishpress-calendar-days',
-            cursor: 'move',
-            classes: {
-                'ui-draggable': 'publishpress-calendar-draggable',
-                'ui-draggable-handle': 'publishpress-calendar-draggable-handle',
-                'ui-draggable-dragging': 'publishpress-calendar-draggable-dragging',
-            }
-        });
-
-        let $lastHoveredCell;
-
-        $('.publishpress-calendar-day-items').droppable({
-            addClasses: false,
-            classes: {
-                'ui-droppable-hover': 'publishpress-calendar-state-active',
-            },
-            drop: (event, ui) => {
-                const $dayCell = $(event.target).parent();
-                const $item = $(ui.draggable[0]);
-                const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
-                const $dayParent = $(event.target).parents('li');
-
-                $dayParent.addClass('publishpress-calendar-day-loading');
-
-                moveItemToNewDate(
-                    dateTime,
-                    $item.data('index'),
-                    $dayCell.data('year'),
-                    $dayCell.data('month'),
-                    $dayCell.data('day')
-                ).then(() => {
-                    $dayParent.removeClass('publishpress-calendar-day-hover');
-                    $dayParent.removeClass('publishpress-calendar-day-loading');
-                });
-            },
-            over: (event, ui) => {
-                if ($lastHoveredCell) {
-                    $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
-                }
-
-                const $dayParent = $(event.target).parents('li');
-                $dayParent.addClass('publishpress-calendar-day-hover');
-
-                $lastHoveredCell = $dayParent;
-            }
-        });
-    }
-
     async function moveItemToNewDate(itemDate, itemIndex, newYear, newMonth, newDay) {
         let item = getItemByDateAndIndex(itemDate, itemIndex);
 
@@ -171,8 +114,8 @@ export default function AsyncCalendar(props) {
         setMessage(null);
     }
 
-    useEffect(fetchData, []);
-    useEffect(initDraggable);
+    React.useEffect(fetchData, []);
+
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
@@ -195,7 +138,8 @@ export default function AsyncCalendar(props) {
                     todayDate={props.todayDate}
                     weekStartsOnSunday={props.weekStartsOnSunday}
                     timeFormat={props.timeFormat}
-                    items={items}/>
+                    items={items}
+                    moveItemToANewDateCallback={moveItemToNewDate}/>
             </div>
         </div>
     )
