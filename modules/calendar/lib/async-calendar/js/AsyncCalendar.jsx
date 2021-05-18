@@ -151,7 +151,9 @@ export default function AsyncCalendar(props) {
             body: formData
         });
 
-        prepareCells();
+        response.json().then(() => {
+            prepareCells()
+        });
     }
 
     function handleOnDropItemCallback(event, ui) {
@@ -190,12 +192,12 @@ export default function AsyncCalendar(props) {
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
             <NavigationBar
-                refreshOnClick={handleRefreshOnClick}
-                backPageOnClick={handleBackPageOnClick}
-                backOnClick={handleBackOnClick}
-                forwardOnClick={handleForwardOnClick}
-                forwardPageOnClick={handleForwardPageOnClick}
-                todayOnClick={handleTodayOnClick}/>
+                refreshOnClickCallback={handleRefreshOnClick}
+                backPageOnClickCallback={handleBackPageOnClick}
+                backOnClickCallback={handleBackOnClick}
+                forwardOnClickCallback={handleForwardOnClick}
+                forwardPageOnClickCallback={handleForwardPageOnClick}
+                todayOnClickCallback={handleTodayOnClick}/>
 
             <MessageBar showSpinner={isLoading} message={message}/>
 
