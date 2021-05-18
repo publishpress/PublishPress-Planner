@@ -1,6 +1,8 @@
 import {getMonthNameByMonthIndex} from "./Functions";
 
 export default function CalendarCell(props) {
+    const calendarCell = React.useRef(null);
+
     function getDayItemClassName(dayDate, todayDate) {
         const businessDays = [1, 2, 3, 4, 5];
 
@@ -18,6 +20,7 @@ export default function CalendarCell(props) {
 
     return (
         <li
+            ref={calendarCell}
             className={getDayItemClassName(props.date, props.todayDate)}
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}

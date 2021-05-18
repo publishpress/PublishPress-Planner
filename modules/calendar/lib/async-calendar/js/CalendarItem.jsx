@@ -6,6 +6,8 @@ export default function CalendarItem(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
     const DEFAULT_LABEL = __('Untitled', 'publishpress');
 
+    const calendarItem = React.useRef(null);
+
     function _getHourString() {
         let timestampDate = new Date(Date.parse(props.timestamp));
 
@@ -21,7 +23,9 @@ export default function CalendarItem(props) {
               title={props.timestamp}>{_getHourString()}</time> : null;
 
     return (
-        <li className="publishpress-calendar-item"
+        <li
+            ref={calendarItem}
+            className="publishpress-calendar-item"
             style={{backgroundColor: props.color}}
             data-index={props.index}
             data-id={props.id}
