@@ -122,10 +122,10 @@
 .publishpress-calendar > table * {
   user-select: none;
 }
-.publishpress-calendar > table > thead > th {
+.publishpress-calendar > table > thead > tr > th {
   text-align: center;
 }
-.publishpress-calendar > table > tbody > td {
+.publishpress-calendar > table > tbody > tr > td {
   height: 110px;
 }
 .publishpress-calendar .publishpress-calendar-cell-header {
