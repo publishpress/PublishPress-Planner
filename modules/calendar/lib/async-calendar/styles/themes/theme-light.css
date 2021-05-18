@@ -1,3 +1,6 @@
+.publishpress-calendar-theme-light .publishpress-calendar-days {
+  border: 1px solid #ededed;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-loader {
   background: #fff;
 }
@@ -18,13 +21,13 @@
   background: #fff;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-weekend-day {
-  background: #f9f9f9;
+  background: #f8f8f8;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-date {
-  color: #999;
+  color: #888;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today {
-  background: #e8e6f0;
+  background: #d6e3f8;
   border: 1px solid #465984 !important;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
@@ -38,12 +41,11 @@
 .publishpress-calendar-theme-light .publishpress-calendar-item .dashicons {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
-  margin-right: 2px;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-item .publishpress-calendar-item-time {
   margin-right: 2px;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 10px;
+  font-size: 11px;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar {
   padding: 5px 5px;
@@ -54,21 +56,20 @@
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar .sk-cube-grid {
   width: 20px;
   height: 20px;
-  margin: 0;
-  margin-right: 10px;
+  margin: 0 10px 0 0;
   display: inline-block;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar span {
   line-height: 20px;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover {
-  background-color: #f9f9e1 !important;
+  background-color: #e3e9c2 !important;
   box-sizing: border-box;
-  border: 1px dashed orange !important;
+  border: 1px dashed #8ea029 !important;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover .publishpress-calendar-date {
   font-weight: bold;
-  color: #604100;
+  color: #363e08;
   z-index: 200;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover .publishpress-calendar-date::before {

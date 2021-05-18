@@ -1,5 +1,6 @@
 @backgroundColor: #fff;
 @borderColor: #ededed;
+@outerBorderColor: #ededed;
 
 @weekDaysSeparatorColor: #655997;
 @weekDaysColor: #333333;
@@ -9,18 +10,24 @@
 @itemIconColor: rgba(255, 255, 255, 0.8);
 @itemTimeColor: rgba(255, 255, 255, 0.6);
 
-@todayBackground: #e8e6f0;
+@todayBackground: #d6e3f8;
 @todayBorderColor: #465984;
 @todayDateBackground: #655997;
 @todayDateColor: #fff;
 
-@weekendCellBackground: #f9f9f9;
-@weekendDateColor: #999;
+@weekendCellBackground: #f8f8f8;
+@weekendDateColor: #888;
 
 @messageBarBackground: #dadada;
-@droppableBackground: #f9f9e1;
+@droppableBackground: #e3e9c2;
+@droppableBorderColor: #8ea029;
+@droppableColor: #363e08;
 
 .publishpress-calendar-theme-light {
+    .publishpress-calendar-days {
+        border: 1px solid @outerBorderColor;
+    }
+
     .publishpress-calendar-loader {
         background: @backgroundColor;
     }
@@ -70,13 +77,12 @@
         .dashicons {
             font-size: 16px;
             color: @itemIconColor;
-            margin-right: 2px;
         }
 
         .publishpress-calendar-item-time {
             margin-right: 2px;
             color: @itemTimeColor;
-            font-size: 10px;
+            font-size: 11px;
         }
     }
 
@@ -89,8 +95,7 @@
         .sk-cube-grid {
             width: 20px;
             height: 20px;
-            margin: 0;
-            margin-right: 10px;
+            margin: 0 10px 0 0;
             display: inline-block;
         }
 
@@ -102,12 +107,12 @@
     .publishpress-calendar-day-hover {
         background-color: @droppableBackground !important;
         box-sizing: border-box;
-        border: 1px dashed orange !important;
+        border: 1px dashed @droppableBorderColor !important;
     }
 
     .publishpress-calendar-day-hover .publishpress-calendar-date {
         font-weight: bold;
-        color: #604100;
+        color: @droppableColor;
         z-index: 200;
     }
 
