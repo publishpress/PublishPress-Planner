@@ -1,7 +1,7 @@
 import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
-import CalendarBody from "./CalendarBody";
 import MessageBar from "./MessageBar";
+import CalendarCell from "./CalendarCell";
 import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
 
 const {__} = wp.i18n;
@@ -187,7 +187,54 @@ export default function AsyncCalendar(props) {
         $lastHoveredCell = $dayParent;
     }
 
+    function initDraggable() {
+        $('.publishpress-calendar-day-items li').draggable({
+            zIndex: 99999,
+            helper: 'clone',
+            opacity: 0.40,
+            containment: '.publishpress-calendar-days',
+            cursor: 'move',
+            classes: {
+                'ui-draggable': 'publishpress-calendar-draggable',
+                'ui-draggable-handle': 'publishpress-calendar-draggable-handle',
+                'ui-draggable-dragging': 'publishpress-calendar-draggable-dragging',
+            }
+        });
+
+        $('.publishpress-calendar-day-items').droppable({
+            addClasses: false,
+            classes: {
+                'ui-droppable-hover': 'publishpress-calendar-state-active',
+            },
+            drop: handleOnDropItemCallback,
+            over: handleOnHoverCellCallback
+        });
+    }
+
+    const calendarBodyCells = () => {
+        let bodyCells = [];
+        let cell;
+
+        for (const date in cells) {
+            cell = cells[date];
+
+            bodyCells.push(
+                <CalendarCell
+                    key={'day-' + cell.date.getTime()}
+                    date={cell.date}
+                    shouldDisplayMonthName={cell.shouldDisplayMonthName}
+                    todayDate={props.todayDate}
+                    isLoading={cell.isLoading}
+                    items={cell.items}
+                    timeFormat={props.timeFormat}/>
+            );
+        }
+
+        return bodyCells;
+    }
+
     React.useEffect(prepareCells, []);
+    React.useEffect(initDraggable);
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
@@ -203,16 +250,7 @@ export default function AsyncCalendar(props) {
 
             <div className="publishpress-calendar-section">
                 <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
-                <CalendarBody
-                    firstDateToDisplay={props.firstDateToDisplay}
-                    numberOfWeeksToDisplay={props.numberOfWeeksToDisplay}
-                    theme={theme}
-                    todayDate={props.todayDate}
-                    weekStartsOnSunday={props.weekStartsOnSunday}
-                    timeFormat={props.timeFormat}
-                    cells={cells}
-                    handleOnDropItemCallback={handleOnDropItemCallback}
-                    handleOnHoverCellCallback={handleOnHoverCellCallback}/>
+                <ul className="publishpress-calendar-days">{calendarBodyCells()}</ul>
             </div>
         </div>
     )
