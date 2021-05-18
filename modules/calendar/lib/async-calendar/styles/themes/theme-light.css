@@ -1,3 +1,7 @@
+.publishpress-calendar-theme-light {
+  position: relative;
+  padding-top: 42px;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-days {
   border: 1px solid #ededed;
 }
@@ -48,10 +52,13 @@
   font-size: 11px;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
   padding: 5px 5px;
   height: 20px;
-  background: #dadada;
   margin: 8px 0;
+  min-width: 100px;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar .sk-cube-grid {
   width: 20px;
@@ -84,11 +91,27 @@
 }
 .publishpress-calendar-theme-light .publishpress-calendar-day-loading .publishpress-calendar-date::before {
   font-family: dashicons, serif;
-  content: "\f531";
+  content: "\f113";
   font-size: 11px;
   font-weight: bold;
   margin-right: 1px;
   animation: rotation 1s infinite linear !important;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a {
+  border: 1px solid #ccc;
+  color: #3e3e3e;
+  background: #f7f7f7;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a:hover {
+  background: #fcfcfc;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a:active {
+  background: #e6e6e6;
 }
 @keyframes rotation {
   from {

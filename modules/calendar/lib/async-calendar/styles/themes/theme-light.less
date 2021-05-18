@@ -23,7 +23,16 @@
 @droppableBorderColor: #8ea029;
 @droppableColor: #363e08;
 
+@buttonColor: #3e3e3e;
+@buttonBackground: #f7f7f7;
+@buttonBorder: #ccc;
+@buttonHoverBackground: #fcfcfc;
+@buttonActiveBackground: #e6e6e6;
+
 .publishpress-calendar-theme-light {
+    position: relative;
+    padding-top: 42px;
+
     .publishpress-calendar-days {
         border: 1px solid @outerBorderColor;
     }
@@ -87,10 +96,13 @@
     }
 
     .publishpress-calendar-message-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
         padding: 5px 5px;
         height: 20px;
-        background: @messageBarBackground;
         margin: 8px 0;
+        min-width: 100px;
 
         .sk-cube-grid {
             width: 20px;
@@ -130,11 +142,31 @@
 
     .publishpress-calendar-day-loading .publishpress-calendar-date::before {
         font-family: dashicons, serif;
-        content: "\f531";
+        content: "\f113";
         font-size: 11px;
         font-weight: bold;
         margin-right: 1px;
         animation: rotation 1s infinite linear !important;
+    }
+
+    .publishpress-calendar-navigation-bar {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .publishpress-calendar-navigation-bar a {
+        border: 1px solid @buttonBorder;
+        color: @buttonColor;
+        background: @buttonBackground;
+    }
+
+    .publishpress-calendar-navigation-bar a:hover {
+        background: @buttonHoverBackground;
+    }
+
+    .publishpress-calendar-navigation-bar a:active {
+        background: @buttonActiveBackground;
     }
 }
 
