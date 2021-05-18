@@ -17,15 +17,15 @@ export default function AsyncCalendar(props) {
 
     let $lastHoveredCell;
 
-    function getUrl(action, query) {
+    const getUrl = (action, query) => {
         if (!query) {
             query = '';
         }
 
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
-    }
+    };
 
-    function prepareCells(newDate) {
+    const prepareCells = (newDate) => {
         const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
         const firstDate = (newDate) ? newDate : firstDateToDisplay;
 
@@ -68,16 +68,16 @@ export default function AsyncCalendar(props) {
             setIsLoading(false);
             setMessage(null);
         });
-    }
+    };
 
-    async function fetchData() {
+    const fetchData = async () => {
         const dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
 
         const response = await fetch(dataUrl);
         return await response.json();
     }
 
-    function navigateByOffsetInWeeks(offsetInWeeks) {
+    const navigateByOffsetInWeeks = (offsetInWeeks) => {
         const offsetInMilliseconds = calculateWeeksInMilliseconds(offsetInWeeks);
 
         const newDate = new Date(
@@ -87,52 +87,52 @@ export default function AsyncCalendar(props) {
         setFirstDateToDisplay(newDate);
 
         prepareCells(newDate);
-    }
+    };
 
-    function handleRefreshOnClick(e) {
+    const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
         prepareCells();
-    }
+    };
 
-    function handleBackPageOnClick(e) {
+    const handleBackPageOnClick = (e) => {
         e.preventDefault();
 
         navigateByOffsetInWeeks(props.numberOfWeeksToDisplay * -1);
-    }
+    };
 
-    function handleBackOnClick(e) {
+    const handleBackOnClick = (e) => {
         e.preventDefault();
 
         navigateByOffsetInWeeks(-1);
-    }
+    };
 
-    function handleForwardOnClick(e) {
+    const handleForwardOnClick = (e) => {
         e.preventDefault();
 
         navigateByOffsetInWeeks(1);
     }
 
-    function handleForwardPageOnClick(e) {
+    const handleForwardPageOnClick = (e) => {
         e.preventDefault();
 
         navigateByOffsetInWeeks(props.numberOfWeeksToDisplay);
-    }
+    };
 
-    function handleTodayOnClick(e) {
+    const handleTodayOnClick = (e) => {
         e.preventDefault();
 
         const newDate = getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday);
         setFirstDateToDisplay(newDate);
 
         prepareCells(newDate);
-    }
+    };
 
-    function getItemByDateAndIndex(date, index) {
+    const getItemByDateAndIndex = (date, index) => {
         return cells[date].items[index];
-    }
+    };
 
-    async function moveItemToNewDate(itemDate, itemIndex, newYear, newMonth, newDay) {
+    const moveItemToNewDate = async (itemDate, itemIndex, newYear, newMonth, newDay) => {
         let item = getItemByDateAndIndex(itemDate, itemIndex);
 
         setIsLoading(true);
@@ -156,7 +156,7 @@ export default function AsyncCalendar(props) {
         });
     }
 
-    function handleOnDropItemCallback(event, ui) {
+    const handleOnDropItemCallback = (event, ui) => {
         const $dayCell = $(event.target).parent();
         const $item = $(ui.draggable[0]);
         const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
@@ -174,9 +174,9 @@ export default function AsyncCalendar(props) {
             $dayParent.removeClass('publishpress-calendar-day-hover');
             $dayParent.removeClass('publishpress-calendar-day-loading');
         });
-    }
+    };
 
-    function handleOnHoverCellCallback(event, ui) {
+    const handleOnHoverCellCallback = (event, ui) => {
         if ($lastHoveredCell) {
             $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
         }
@@ -185,9 +185,9 @@ export default function AsyncCalendar(props) {
         $dayParent.addClass('publishpress-calendar-day-hover');
 
         $lastHoveredCell = $dayParent;
-    }
+    };
 
-    function initDraggable() {
+    const initDraggable = () => {
         $('.publishpress-calendar-day-items li').draggable({
             zIndex: 99999,
             helper: 'clone',
@@ -209,7 +209,7 @@ export default function AsyncCalendar(props) {
             drop: handleOnDropItemCallback,
             over: handleOnHoverCellCallback
         });
-    }
+    };
 
     const calendarBodyCells = () => {
         let bodyCells = [];
@@ -231,7 +231,7 @@ export default function AsyncCalendar(props) {
         }
 
         return bodyCells;
-    }
+    };
 
     React.useEffect(prepareCells, []);
     React.useEffect(initDraggable);

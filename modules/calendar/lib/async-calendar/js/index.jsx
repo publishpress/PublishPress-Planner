@@ -1,6 +1,6 @@
 import AsyncCalendar from "./AsyncCalendar";
 
-jQuery(function () {
+jQuery(() => {
     ReactDOM.render(
         <AsyncCalendar
             firstDateToDisplay={new Date(Date.parse(publishpressCalendarParams.firstDateToDisplay))}
@@ -14,7 +14,6 @@ jQuery(function () {
             actionGetData={'publishpress_calendar_get_data'}
             actionMoveItem={'publishpress_calendar_move_item'}
             nonce={publishpressCalendarParams.nonce}/>,
-
         document.getElementById('publishpress-calendar-wrap')
     );
 });

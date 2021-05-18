@@ -8,7 +8,7 @@ export default function CalendarItem(props) {
 
     const calendarItem = React.useRef(null);
 
-    function _getHourString() {
+    const getHourString = () => {
         let timestampDate = new Date(Date.parse(props.timestamp));
 
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
@@ -20,7 +20,7 @@ export default function CalendarItem(props) {
     const timeElement = props.showTime ?
         <time className="publishpress-calendar-item-time"
               dateTime={props.timestamp}
-              title={props.timestamp}>{_getHourString()}</time> : null;
+              title={props.timestamp}>{getHourString()}</time> : null;
 
     return (
         <li

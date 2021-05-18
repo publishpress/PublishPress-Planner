@@ -5,7 +5,7 @@ export default function CalendarCell(props) {
     const calendarCell = React.useRef(null);
     let itemIndex = 0;
 
-    function getDayItemClassName(dayDate, todayDate) {
+    const getDayItemClassName = (dayDate, todayDate) => {
         const businessDays = [1, 2, 3, 4, 5];
 
         let dayItemClassName = businessDays.indexOf(dayDate.getDay()) >= 0 ? 'business-day' : 'weekend-day'
