@@ -1,4 +1,5 @@
 import AsyncCalendar from "./AsyncCalendar";
+import Filters from "./Filters";
 
 jQuery(() => {
     ReactDOM.render(
@@ -16,5 +17,12 @@ jQuery(() => {
             actionMoveItem={'publishpress_calendar_move_item'}
             nonce={publishpressCalendarParams.nonce}/>,
         document.getElementById('publishpress-calendar-wrap')
+    );
+
+    ReactDOM.render(
+        <Filters
+            statuses={publishpressCalendarParams.statuses}
+        />,
+        document.getElementById('publishpress-calendar-filters-wrap')
     );
 });

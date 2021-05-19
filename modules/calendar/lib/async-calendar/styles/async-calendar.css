@@ -108,6 +108,9 @@
     transform: rotate(359deg);
   }
 }
+#publishpress-calendar-filters-wrap {
+  margin-bottom: 10px;
+}
 .publishpress-calendar {
   display: block;
   width: 100%;

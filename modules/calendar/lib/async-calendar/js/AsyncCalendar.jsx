@@ -15,6 +15,10 @@ export default function AsyncCalendar(props) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
 
+    let filters = {
+        status: null
+    };
+
     let $lastHoveredCell;
 
     const getUrl = (action, query) => {
@@ -23,6 +27,16 @@ export default function AsyncCalendar(props) {
         }
 
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
+    };
+
+    const didMount = () => {
+        prepareDataByDate();
+
+        window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
+
+        return () => {
+            window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
+        }
     };
 
     const prepareDataByDate = (newDate) => {
@@ -82,7 +96,12 @@ export default function AsyncCalendar(props) {
     };
 
     const fetchData = async () => {
-        const dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
+
+        console.log(filters.status);
+        if (filters.status) {
+            dataUrl += '&post_status=' + filters.status;
+        }
 
         const response = await fetch(dataUrl);
         return await response.json();
@@ -214,6 +233,16 @@ export default function AsyncCalendar(props) {
         });
     };
 
+    const onFilterEventCallback = (e) => {
+        switch (e.detail.filter) {
+            case 'status':
+                filters.status = e.detail.value[0].id;
+                break;
+        }
+
+        prepareDataByDate();
+    }
+
     const calendarBodyRows = () => {
         let rows = [];
         let rowCells;
@@ -252,7 +281,7 @@ export default function AsyncCalendar(props) {
         return rows;
     };
 
-    React.useEffect(prepareDataByDate, []);
+    React.useEffect(didMount, []);
     React.useEffect(initDraggable);
 
     return (

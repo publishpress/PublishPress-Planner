@@ -577,6 +577,14 @@ if (!class_exists('PP_Calendar')) {
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
+                    $postStatuses = [];
+                    foreach ($this->get_post_statuses() as $status) {
+                        $postStatuses[] = [
+                                'slug' => $status->slug,
+                                'name' => $status->name,
+                        ];
+                    }
+
                     $params = [
                         'numberOfWeeksToDisplay' => isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : 4,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
@@ -587,6 +595,7 @@ if (!class_exists('PP_Calendar')) {
                         'todayDate'              => date('Y-m-d 00:00:00'),
                         'timeFormat'             => $this->getCalendarTimeFormat(),
                         'maxVisibleItems'        => $maxVisibleItemsOption,
+                        'statuses'               => $postStatuses,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
                     ];
@@ -1148,9 +1157,6 @@ if (!class_exists('PP_Calendar')) {
                 $heading_date = date('Y-m-d', strtotime('+1 day', strtotime($heading_date)));
             }
 
-            // we sort by post statuses....... eventually
-            $post_statuses = $this->get_post_statuses();
-
             // Get the custom description for this page
             $description = '';
 
@@ -1322,6 +1328,8 @@ if (!class_exists('PP_Calendar')) {
                     }
                     echo '</p></div>';
                 } ?>
+
+                <div id="publishpress-calendar-filters-wrap"></div>
 
                 <div id="publishpress-calendar-wrap" class="publishpress-calendar-wrap">
                     <div class="publishpress-calendar-loader">
@@ -3232,13 +3240,23 @@ if (!class_exists('PP_Calendar')) {
             $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
             $endingDate    = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
 
+            $args = [];
+
+            if (isset($_GET['post_status'])) {
+                $postStatus = sanitize_text_field($_GET['post_status']);
+
+                if (!empty($postStatus)) {
+                    $args['post_status'] = $postStatus;
+                }
+            }
+
             wp_send_json(
-                $this->getCalendarData($beginningDate, $endingDate),
+                $this->getCalendarData($beginningDate, $endingDate, $args),
                 200
             );
         }
 
-        private function getCalendarData($beginningDate, $endingDate)
+        private function getCalendarData($beginningDate, $endingDate, $args = [])
         {
             $post_query_args = [
                 'post_status' => null,
@@ -3254,10 +3272,11 @@ if (!class_exists('PP_Calendar')) {
                 ]
             ];
 
+            $post_query_args = wp_parse_args($args, $post_query_args);
+
             if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
                 $post_query_args['orderby'] = ['post_status'];
             }
-
 
             $postsList = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
 
