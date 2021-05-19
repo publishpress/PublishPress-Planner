@@ -32,7 +32,9 @@
 .publishpress-calendar-theme-light .publishpress-calendar-today {
   background: #d6e3f8;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-month-name,
+.publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-month-name {
+  margin-right: 2px;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-today .publishpress-calendar-date {
   background: #655997;
   color: #fff;
