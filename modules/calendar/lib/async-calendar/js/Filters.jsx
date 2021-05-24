@@ -5,7 +5,7 @@ const $ = jQuery;
 export default function Filters(props) {
     const statusesOptions = props.statuses.map((item) => {
         return {
-            value: item.slug,s
+            value: item.slug,
             text: item.name
         };
     });

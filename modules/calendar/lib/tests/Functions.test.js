@@ -1,4 +1,12 @@
-import {getBeginDateOfWeekByWeekNumber, getWeekNumberByDate, getBeginDateOfWeekByDate, getHourStringOnFormat, getDateAsStringInWpFormat, calculateWeeksInMilliseconds, getMonthNameByMonthIndex} from "../async-calendar/js/Functions";
+import {
+    calculateWeeksInMilliseconds,
+    getBeginDateOfWeekByDate,
+    getBeginDateOfWeekByWeekNumber,
+    getDateAsStringInWpFormat,
+    getHourStringOnFormat,
+    getMonthNameByMonthIndex,
+    getWeekNumberByDate
+} from "../async-calendar/js/Functions";
 
 /*
  * getBeginDateOfWeekByWeekNumber, sunday as first day of week

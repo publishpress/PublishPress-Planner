@@ -14,10 +14,7 @@ export default function AsyncCalendar(props) {
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-
-    let filters = {
-        status: null
-    };
+    const [filters, setFilters] = React.useState({status:null});
 
     let $lastHoveredCell;
 
@@ -39,7 +36,7 @@ export default function AsyncCalendar(props) {
         }
     };
 
-    const prepareDataByDate = (newDate) => {
+    const prepareDataByDate = (newDate, theFilters) => {
         const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
         const firstDate = (newDate) ? newDate : firstDateToDisplay;
 
@@ -53,7 +50,7 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        fetchData().then((fetchedData) => {
+        fetchData(theFilters).then((fetchedData) => {
             for (let dataIndex = 0; dataIndex < numberOfDaysToDisplay; dataIndex++) {
                 dayDate = new Date(firstDate);
                 dayDate.setDate(dayDate.getDate() + dataIndex);
@@ -95,12 +92,13 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
-    const fetchData = async () => {
+    const fetchData = async (theFilters) => {
         let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
 
-        console.log(filters.status);
-        if (filters.status) {
-            dataUrl += '&post_status=' + filters.status;
+        const filtersToUse = theFilters ? theFilters : filters;
+
+        if (filtersToUse && filtersToUse.status) {
+            dataUrl += '&post_status=' + filtersToUse.status;
         }
 
         const response = await fetch(dataUrl);
@@ -234,13 +232,17 @@ export default function AsyncCalendar(props) {
     };
 
     const onFilterEventCallback = (e) => {
+        let theFilters;
+
         switch (e.detail.filter) {
             case 'status':
-                filters.status = e.detail.value[0].id;
+                theFilters = {...filters}
+                theFilters.status = e.detail.value[0].id;
+                setFilters(theFilters);
                 break;
         }
 
-        prepareDataByDate();
+        prepareDataByDate(firstDateToDisplay, theFilters);
     }
 
     const calendarBodyRows = () => {
