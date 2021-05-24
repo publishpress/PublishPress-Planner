@@ -10,18 +10,26 @@ export default function Filters(props) {
         };
     });
 
-    const handleStatusChange = (e, element, value) => {
+    const dispatchFilterEvent = (filterName, value) => {
         window.dispatchEvent(
             new CustomEvent(
                 'PublishpressCalendar:filter',
                 {
                     detail: {
-                        filter: 'status',
-                        value: $(element).pp_select2('data')
+                        filter: filterName,
+                        value: value
                     }
                 }
             )
         );
+    }
+
+    const handleStatusChange = (e, element, value) => {
+        dispatchFilterEvent('status', value);
+    }
+
+    const handleCategoriesChange = (e, element, value) => {
+        dispatchFilterEvent('category', value);
     }
 
     return (
@@ -32,6 +40,13 @@ export default function Filters(props) {
                 onSelect={handleStatusChange}
                 onClear={handleStatusChange}
                 />
+
+            {/*<Select*/}
+            {/*    blankOptionText={"All categories"}*/}
+            {/*    fetchUrl={props.categoriesFetchUrl}*/}
+            {/*    onSelect={handleCategoriesChange}*/}
+            {/*    onClear={handleCategoriesChange}*/}
+            {/*/>*/}
         </>
     )
 }

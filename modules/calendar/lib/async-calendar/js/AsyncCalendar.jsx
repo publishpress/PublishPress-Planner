@@ -38,7 +38,7 @@ export default function AsyncCalendar(props) {
 
     const prepareDataByDate = (newDate, theFilters) => {
         const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
-        const firstDate = (newDate) ? newDate : firstDateToDisplay;
+        const firstDate = getBeginDateOfWeekByDate((newDate) ? newDate : firstDateToDisplay);
 
         let newDataList = {};
         let newCell;
@@ -236,8 +236,13 @@ export default function AsyncCalendar(props) {
 
         switch (e.detail.filter) {
             case 'status':
+            case 'category':
                 theFilters = {...filters}
-                theFilters.status = e.detail.value[0].id;
+
+                if (e.detail.value) {
+                    theFilters[e.detail.filter] = e.detail.value[0].id;
+                }
+
                 setFilters(theFilters);
                 break;
         }

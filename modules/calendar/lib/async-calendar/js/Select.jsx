@@ -10,7 +10,7 @@ export default function Select(props) {
             allowClear: true
         })
             .on('select2:select', (e) => {
-                props.onSelect(e, selectRef.current);
+                props.onSelect(e, selectRef.current, $(selectRef.current).pp_select2('data'));
             })
             .on('select2:clear', (e) => {
                 props.onClear(e, selectRef.current);
