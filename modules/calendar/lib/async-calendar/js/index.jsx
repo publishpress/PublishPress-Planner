@@ -22,6 +22,8 @@ jQuery(() => {
     ReactDOM.render(
         <Filters
             statuses={publishpressCalendarParams.statuses}
+            ajaxurl={publishpressCalendarParams.ajaxUrl}
+            nonce={publishpressCalendarParams.nonce}
         />,
         document.getElementById('publishpress-calendar-filters-wrap')
     );

@@ -41,12 +41,14 @@ export default function Filters(props) {
                 onClear={handleStatusChange}
                 />
 
-            {/*<Select*/}
-            {/*    blankOptionText={"All categories"}*/}
-            {/*    fetchUrl={props.categoriesFetchUrl}*/}
-            {/*    onSelect={handleCategoriesChange}*/}
-            {/*    onClear={handleCategoriesChange}*/}
-            {/*/>*/}
+            <Select
+                blankOptionText={"All categories"}
+                ajaxurl={props.ajaxurl}
+                nonce={props.nonce}
+                ajaxAction={'publishpress_calendar_search_categories'}
+                onSelect={handleCategoriesChange}
+                onClear={handleCategoriesChange}
+            />
         </>
     )
 }

@@ -14,7 +14,7 @@ export default function AsyncCalendar(props) {
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({status:null});
+    const [filters, setFilters] = React.useState({status: null, category: null});
 
     let $lastHoveredCell;
 
@@ -36,7 +36,7 @@ export default function AsyncCalendar(props) {
         }
     };
 
-    const prepareDataByDate = (newDate, theFilters) => {
+    const prepareDataByDate = (newDate, filtersOverride) => {
         const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
         const firstDate = getBeginDateOfWeekByDate((newDate) ? newDate : firstDateToDisplay);
 
@@ -50,7 +50,7 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        fetchData(theFilters).then((fetchedData) => {
+        fetchData(filtersOverride).then((fetchedData) => {
             for (let dataIndex = 0; dataIndex < numberOfDaysToDisplay; dataIndex++) {
                 dayDate = new Date(firstDate);
                 dayDate.setDate(dayDate.getDate() + dataIndex);
@@ -92,13 +92,19 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
-    const fetchData = async (theFilters) => {
+    const fetchData = async (filtersOverride) => {
         let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
 
-        const filtersToUse = theFilters ? theFilters : filters;
+        const filtersToUse = filtersOverride ? filtersOverride : filters;
 
-        if (filtersToUse && filtersToUse.status) {
-            dataUrl += '&post_status=' + filtersToUse.status;
+        if (filtersToUse) {
+            if (filtersToUse.status) {
+                dataUrl += '&post_status=' + filtersToUse.status;
+            }
+
+            if (filtersToUse.category) {
+                dataUrl += '&category=' + filtersToUse.category;
+            }
         }
 
         const response = await fetch(dataUrl);
@@ -232,22 +238,24 @@ export default function AsyncCalendar(props) {
     };
 
     const onFilterEventCallback = (e) => {
-        let theFilters;
+        let currentFilters;
 
         switch (e.detail.filter) {
             case 'status':
             case 'category':
-                theFilters = {...filters}
-
                 if (e.detail.value) {
-                    theFilters[e.detail.filter] = e.detail.value[0].id;
+                    filters[e.detail.filter] = e.detail.value[0].id;
+                } else {
+                    filters[e.detail.filter] = null;
                 }
 
-                setFilters(theFilters);
+                currentFilters = filters;
+                setFilters({...filters});
+
                 break;
         }
 
-        prepareDataByDate(firstDateToDisplay, theFilters);
+        prepareDataByDate(firstDateToDisplay, currentFilters);
     }
 
     const calendarBodyRows = () => {
@@ -305,12 +313,12 @@ export default function AsyncCalendar(props) {
 
             <table>
                 <thead>
-                    <tr>
-                        <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
-                    </tr>
+                <tr>
+                    <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
+                </tr>
                 </thead>
                 <tbody>
-                    {calendarBodyRows()}
+                {calendarBodyRows()}
                 </tbody>
             </table>
         </div>

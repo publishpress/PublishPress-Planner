@@ -3118,7 +3118,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 return '[]';
             }
 
@@ -3127,7 +3127,7 @@ if (!class_exists('PP_Calendar')) {
 
             $queryResult = $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                    "SELECT DISTINCT t.slug AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
                 WHERE taxonomy = 'category' AND t.name LIKE %s
@@ -3242,11 +3242,28 @@ if (!class_exists('PP_Calendar')) {
 
             $args = [];
 
+            /*
+             * Filters
+             */
             if (isset($_GET['post_status'])) {
                 $postStatus = sanitize_text_field($_GET['post_status']);
 
                 if (!empty($postStatus)) {
                     $args['post_status'] = $postStatus;
+                }
+            }
+
+            if (isset($_GET['category'])) {
+                $category = sanitize_key($_GET['category']);
+
+                if (!empty($category)) {
+                    $args['tax_query'] = [
+                        [
+                            'taxonomy' => 'category',
+                            'field'    => 'slug',
+                            'terms'    => $category
+                        ]
+                    ];
                 }
             }
 
