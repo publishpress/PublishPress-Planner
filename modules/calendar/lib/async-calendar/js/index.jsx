@@ -23,6 +23,7 @@ jQuery(() => {
         <Filters
             statuses={publishpressCalendarParams.statuses}
             postTypes={publishpressCalendarParams.postTypes}
+            numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
             ajaxurl={publishpressCalendarParams.ajaxUrl}
             nonce={publishpressCalendarParams.nonce}
         />,

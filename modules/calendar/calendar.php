@@ -597,7 +597,7 @@ if (!class_exists('PP_Calendar')) {
                     }
 
                     $params = [
-                        'numberOfWeeksToDisplay' => isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : 4,
+                        'numberOfWeeksToDisplay' => isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS,
                         'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
                                 'Y-m-d'
                             )) . ' 00:00:00',

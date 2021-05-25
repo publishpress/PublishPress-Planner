@@ -5,7 +5,7 @@ export default function Select(props) {
 
     const initSelect2 = () => {
         let params = {
-            placeholder: props.blankOptionText || false,
+            placeholder: props.placeholder || false,
             tags: true,
             allowClear: true
         };
@@ -51,8 +51,8 @@ export default function Select(props) {
     };
 
     const blankOption = () => {
-        if (props.blankOptionText) {
-            return <option value="">{props.blankOptionText}</option>
+        if (props.placeholder) {
+            return <option value="">{props.placeholder}</option>
         }
 
         return <></>;

@@ -40,14 +40,14 @@ export default function Filters(props) {
     return (
         <>
             <Select
-                blankOptionText={"All statuses"}
+                placeholder={"All statuses"}
                 options={props.statuses}
                 onSelect={handleStatusChange}
                 onClear={handleStatusChange}
             />
 
             <Select
-                blankOptionText={"All categories"}
+                placeholder={"All categories"}
                 ajaxurl={props.ajaxurl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_categories'}
@@ -56,7 +56,7 @@ export default function Filters(props) {
             />
 
             <Select
-                blankOptionText={"All tags"}
+                placeholder={"All tags"}
                 ajaxurl={props.ajaxurl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_tags'}
@@ -65,7 +65,7 @@ export default function Filters(props) {
             />
 
             <Select
-                blankOptionText={"All authors"}
+                placeholder={"All authors"}
                 ajaxurl={props.ajaxurl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_authors'}
@@ -74,7 +74,7 @@ export default function Filters(props) {
             />
 
             <Select
-                blankOptionText={"All types"}
+                placeholder={"All types"}
                 options={props.postTypes}
                 onSelect={handlePostTypeChange}
                 onClear={handlePostTypeChange}
