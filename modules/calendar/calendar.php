@@ -581,8 +581,18 @@ if (!class_exists('PP_Calendar')) {
                     $postStatuses = [];
                     foreach ($this->get_post_statuses() as $status) {
                         $postStatuses[] = [
-                            'slug' => $status->slug,
-                            'name' => $status->name,
+                            'value' => $status->slug,
+                            'text' => $status->name,
+                        ];
+                    }
+
+                    $postTypes = [];
+                    foreach ($this->get_selected_post_types() as $postTypeName) {
+                        $postType = get_post_type_object($postTypeName);
+
+                        $postTypes[] = [
+                            'value' => $postTypeName,
+                            'text'  => $postType->label
                         ];
                     }
 
@@ -597,6 +607,7 @@ if (!class_exists('PP_Calendar')) {
                         'timeFormat'             => $this->getCalendarTimeFormat(),
                         'maxVisibleItems'        => $maxVisibleItemsOption,
                         'statuses'               => $postStatuses,
+                        'postTypes'              => $postTypes,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
                     ];
@@ -3291,6 +3302,14 @@ if (!class_exists('PP_Calendar')) {
 
                 if (!empty($postAuthor)) {
                     $args['author'] = $postAuthor;
+                }
+            }
+
+            if (isset($_GET['post_type'])) {
+                $postType = sanitize_key($_GET['post_type']);
+
+                if (!empty($postType)) {
+                    $args['post_type'] = $postType;
                 }
             }
 

@@ -14,7 +14,7 @@ export default function AsyncCalendar(props) {
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({status: null, category: null, tag: null, author: null});
+    const [filters, setFilters] = React.useState({status: null, category: null, tag: null, author: null, postType: null});
 
     let $lastHoveredCell;
 
@@ -112,6 +112,10 @@ export default function AsyncCalendar(props) {
 
             if (filtersToUse.author) {
                 dataUrl += '&post_author=' + filtersToUse.author;
+            }
+
+            if (filtersToUse.postType) {
+                dataUrl += '&post_type=' + filtersToUse.postType;
             }
         }
 
@@ -253,6 +257,7 @@ export default function AsyncCalendar(props) {
             case 'category':
             case 'tag':
             case 'author':
+            case 'postType':
                 if (e.detail.value) {
                     filters[e.detail.filter] = e.detail.value[0].id;
                 } else {

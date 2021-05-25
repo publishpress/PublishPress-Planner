@@ -22,6 +22,7 @@ jQuery(() => {
     ReactDOM.render(
         <Filters
             statuses={publishpressCalendarParams.statuses}
+            postTypes={publishpressCalendarParams.postTypes}
             ajaxurl={publishpressCalendarParams.ajaxUrl}
             nonce={publishpressCalendarParams.nonce}
         />,
