@@ -556,7 +556,8 @@ if (!class_exists('PP_Calendar')) {
                 ];
                 wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
 
-                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
+                if (is_admin(
+                    ) && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
                     wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
@@ -580,8 +581,8 @@ if (!class_exists('PP_Calendar')) {
                     $postStatuses = [];
                     foreach ($this->get_post_statuses() as $status) {
                         $postStatuses[] = [
-                                'slug' => $status->slug,
-                                'name' => $status->name,
+                            'slug' => $status->slug,
+                            'name' => $status->name,
                         ];
                     }
 
@@ -1345,10 +1346,15 @@ if (!class_exists('PP_Calendar')) {
                                 <div class="sk-cube sk-cube8"></div>
                                 <div class="sk-cube sk-cube9"></div>
                             </div>
-                            <p><?php echo __('Loading the calendar...', 'publishpress'); ?></p>
+                            <p><?php
+                                echo __('Loading the calendar...', 'publishpress'); ?></p>
                         </div>
                         <div class="publishpress-calendar-loader-tip">
-                            <?php echo __('It seems like it is taking too long. Please, try reloading the page again and check the browser console looking for errors.', 'publishpress'); ?>
+                            <?php
+                            echo __(
+                                'It seems like it is taking too long. Please, try reloading the page again and check the browser console looking for errors.',
+                                'publishpress'
+                            ); ?>
                         </div>
                     </div>
                 </div>
@@ -3075,8 +3081,8 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
-                return '[]';
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([]);
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -3117,7 +3123,7 @@ if (!class_exists('PP_Calendar')) {
             header('Content-type: application/json;');
 
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
-                return '[]';
+                wp_send_json([]);
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -3143,7 +3149,7 @@ if (!class_exists('PP_Calendar')) {
             header('Content-type: application/json;');
 
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
-                return '[]';
+                wp_send_json([]);
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -3234,9 +3240,9 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $args['tax_query'][] = [
-                    'taxonomy' => $taxonomy,
-                    'field'    => 'slug',
-                    'terms'    => $termSlug
+                'taxonomy' => $taxonomy,
+                'field'    => 'slug',
+                'terms'    => $termSlug
             ];
 
             return $args;
@@ -3273,10 +3279,18 @@ if (!class_exists('PP_Calendar')) {
             }
 
             if (isset($_GET['post_tag'])) {
-                $post_tag = sanitize_key($_GET['post_tag']);
+                $postTag = sanitize_key($_GET['post_tag']);
 
-                if (!empty($post_tag)) {
-                    $args = $this->addTaxQueryToArgs('post_tag', $post_tag, $args);
+                if (!empty($postTag)) {
+                    $args = $this->addTaxQueryToArgs('post_tag', $postTag, $args);
+                }
+            }
+
+            if (isset($_GET['post_author'])) {
+                $postAuthor = (int)$_GET['post_author'];
+
+                if (!empty($postAuthor)) {
+                    $args['author'] = $postAuthor;
                 }
             }
 
@@ -3295,9 +3309,9 @@ if (!class_exists('PP_Calendar')) {
                 'tag'         => null,
                 'author'      => null,
                 'date_query'  => [
-                    'column' => 'post_date',
-                    'after' => $beginningDate,
-                    'before' => $endingDate,
+                    'column'    => 'post_date',
+                    'after'     => $beginningDate,
+                    'before'    => $endingDate,
                     'inclusive' => true,
                 ]
             ];

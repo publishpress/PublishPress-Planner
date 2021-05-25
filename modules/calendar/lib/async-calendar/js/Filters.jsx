@@ -36,6 +36,10 @@ export default function Filters(props) {
         dispatchFilterEvent('tag', value);
     }
 
+    const handleAuthorsChange = (e, element, value) => {
+        dispatchFilterEvent('author', value);
+    }
+
     return (
         <>
             <Select
@@ -61,6 +65,15 @@ export default function Filters(props) {
                 ajaxAction={'publishpress_calendar_search_tags'}
                 onSelect={handleTagsChange}
                 onClear={handleTagsChange}
+            />
+
+            <Select
+                blankOptionText={"All authors"}
+                ajaxurl={props.ajaxurl}
+                nonce={props.nonce}
+                ajaxAction={'publishpress_calendar_search_authors'}
+                onSelect={handleAuthorsChange}
+                onClear={handleAuthorsChange}
             />
         </>
     )
