@@ -14,7 +14,7 @@ export default function AsyncCalendar(props) {
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({status: null, category: null});
+    const [filters, setFilters] = React.useState({status: null, category: null, tag: null});
 
     let $lastHoveredCell;
 
@@ -104,6 +104,10 @@ export default function AsyncCalendar(props) {
 
             if (filtersToUse.category) {
                 dataUrl += '&category=' + filtersToUse.category;
+            }
+
+            if (filtersToUse.tag) {
+                dataUrl += '&post_tag=' + filtersToUse.tag;
             }
         }
 
@@ -243,6 +247,7 @@ export default function AsyncCalendar(props) {
         switch (e.detail.filter) {
             case 'status':
             case 'category':
+            case 'tag':
                 if (e.detail.value) {
                     filters[e.detail.filter] = e.detail.value[0].id;
                 } else {
@@ -252,10 +257,9 @@ export default function AsyncCalendar(props) {
                 currentFilters = filters;
                 setFilters({...filters});
 
+                prepareDataByDate(firstDateToDisplay, currentFilters);
                 break;
         }
-
-        prepareDataByDate(firstDateToDisplay, currentFilters);
     }
 
     const calendarBodyRows = () => {

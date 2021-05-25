@@ -3145,7 +3145,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'calendar_filter_nonce')) {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 return '[]';
             }
 
@@ -3154,7 +3154,7 @@ if (!class_exists('PP_Calendar')) {
 
             $queryResult = $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                    "SELECT DISTINCT t.slug AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
                 WHERE taxonomy = 'post_tag' AND t.name LIKE %s
@@ -3231,6 +3231,21 @@ if (!class_exists('PP_Calendar')) {
             );
         }
 
+        private function addTaxQueryToArgs($taxonomy, $termSlug, $args)
+        {
+            if (!isset($args['tax_query'])) {
+                $args['tax_query'] = [];
+            }
+
+            $args['tax_query'][] = [
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'slug',
+                    'terms'    => $termSlug
+            ];
+
+            return $args;
+        }
+
         public function fetchCalendarDataJson()
         {
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
@@ -3257,13 +3272,15 @@ if (!class_exists('PP_Calendar')) {
                 $category = sanitize_key($_GET['category']);
 
                 if (!empty($category)) {
-                    $args['tax_query'] = [
-                        [
-                            'taxonomy' => 'category',
-                            'field'    => 'slug',
-                            'terms'    => $category
-                        ]
-                    ];
+                    $args = $this->addTaxQueryToArgs('category', $category, $args);
+                }
+            }
+
+            if (isset($_GET['post_tag'])) {
+                $post_tag = sanitize_key($_GET['post_tag']);
+
+                if (!empty($post_tag)) {
+                    $args = $this->addTaxQueryToArgs('post_tag', $post_tag, $args);
                 }
             }
 

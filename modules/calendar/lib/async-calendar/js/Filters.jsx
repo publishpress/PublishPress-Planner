@@ -32,6 +32,10 @@ export default function Filters(props) {
         dispatchFilterEvent('category', value);
     }
 
+    const handleTagsChange = (e, element, value) => {
+        dispatchFilterEvent('tag', value);
+    }
+
     return (
         <>
             <Select
@@ -48,6 +52,15 @@ export default function Filters(props) {
                 ajaxAction={'publishpress_calendar_search_categories'}
                 onSelect={handleCategoriesChange}
                 onClear={handleCategoriesChange}
+            />
+
+            <Select
+                blankOptionText={"All tags"}
+                ajaxurl={props.ajaxurl}
+                nonce={props.nonce}
+                ajaxAction={'publishpress_calendar_search_tags'}
+                onSelect={handleTagsChange}
+                onClear={handleTagsChange}
             />
         </>
     )
