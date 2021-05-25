@@ -3088,8 +3088,7 @@ if (!class_exists('PP_Calendar')) {
             $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
 
             if (!empty($results)) {
-                echo wp_json_encode($results);
-                exit;
+                wp_send_json($results);
             }
 
             $user_args = [
@@ -3109,9 +3108,8 @@ if (!class_exists('PP_Calendar')) {
                     'text' => $user->display_name,
                 ];
             }
-            echo wp_json_encode($results);
 
-            exit;
+            wp_send_json($results);
         }
 
         public function searchCategories()
@@ -3137,8 +3135,7 @@ if (!class_exists('PP_Calendar')) {
                 )
             );
 
-            echo wp_json_encode($queryResult);
-            exit;
+            wp_send_json($queryResult);
         }
 
         public function searchTags()
@@ -3164,8 +3161,7 @@ if (!class_exists('PP_Calendar')) {
                 )
             );
 
-            echo wp_json_encode($queryResult);
-            exit;
+            wp_send_json($queryResult);
         }
 
         private function extractPostDataForTheCalendar($post)
