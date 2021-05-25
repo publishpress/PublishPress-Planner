@@ -6,6 +6,6 @@ export default function Button(props) {
     }
 
     return (
-        <a href={props.href || '#'} className="" onClick={props.onClick}>{icon}{props.label}</a>
+        <a href={props.href || '#'} className={props.className} onClick={props.onClick}>{icon}{props.label}</a>
     )
 }
