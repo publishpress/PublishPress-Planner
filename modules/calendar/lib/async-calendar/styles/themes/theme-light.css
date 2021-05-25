@@ -16,6 +16,9 @@
 .publishpress-calendar-theme-light table > tbody > tr > td {
   vertical-align: top;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-month-name {
+  color: #655997;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-loader {
   background: #fff;
 }
@@ -25,7 +28,6 @@
 .publishpress-calendar-theme-light .publishpress-calendar-weekend-day {
   background: #f8f8f8;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-month-name,
 .publishpress-calendar-theme-light .publishpress-calendar-weekend-day .publishpress-calendar-date {
   color: #888;
 }

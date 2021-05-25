@@ -1,6 +1,7 @@
 import Select from "./Select";
 
 const $ = jQuery;
+const _n = wp.i18n._n;
 
 export default function Filters(props) {
     const dispatchFilterEvent = (filterName, value) => {
@@ -35,6 +36,25 @@ export default function Filters(props) {
 
     const handlePostTypeChange = (e, element, value) => {
         dispatchFilterEvent('postType', value);
+    }
+
+    const handleWeeksChange = (e, element, value) => {
+        dispatchFilterEvent('weeks', value);
+    }
+
+    const getWeeksFilterLabel = (numberOfWeeks) => {
+        return _n('%d week', '%d weeks', numberOfWeeks, 'publishpress')
+            .replace('%d', numberOfWeeks);
+    }
+
+    const weeksFilterPlaceholder = getWeeksFilterLabel(props.numberOfWeeksToDisplay);
+
+    let weeksOptions = [];
+    for (let i = 1; i <= 12; i++) {
+        weeksOptions.push({
+            value: i,
+            text: getWeeksFilterLabel(i)
+        });
     }
 
     return (
@@ -78,6 +98,13 @@ export default function Filters(props) {
                 options={props.postTypes}
                 onSelect={handlePostTypeChange}
                 onClear={handlePostTypeChange}
+            />
+
+            <Select
+                placeholder={weeksFilterPlaceholder}
+                options={weeksOptions}
+                onSelect={handleWeeksChange}
+                onClear={handleWeeksChange}
             />
         </>
     )

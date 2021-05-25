@@ -11,10 +11,11 @@ export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
     const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(props.firstDateToDisplay);
+    const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({status: null, category: null, tag: null, author: null, postType: null});
+    const [filters, setFilters] = React.useState({status: null, category: null, tag: null, author: null, postType: null, weeks: null});
 
     let $lastHoveredCell;
 
@@ -37,7 +38,9 @@ export default function AsyncCalendar(props) {
     };
 
     const prepareDataByDate = (newDate, filtersOverride) => {
-        const numberOfDaysToDisplay = props.numberOfWeeksToDisplay * 7;
+        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
+
+        const numberOfDaysToDisplay = numberOfWeeksToDisplayOverride * 7;
         const firstDate = getBeginDateOfWeekByDate((newDate) ? newDate : firstDateToDisplay);
 
         let newDataList = {};
@@ -93,7 +96,9 @@ export default function AsyncCalendar(props) {
     };
 
     const fetchData = async (filtersOverride) => {
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + props.numberOfWeeksToDisplay);
+        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
+
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
 
         const filtersToUse = filtersOverride ? filtersOverride : filters;
 
@@ -116,6 +121,10 @@ export default function AsyncCalendar(props) {
 
             if (filtersToUse.postType) {
                 dataUrl += '&post_type=' + filtersToUse.postType;
+            }
+
+            if (filtersToUse.weeks) {
+                setNumberOfWeeksToDisplay(filtersToUse.weeks);
             }
         }
 
@@ -144,7 +153,7 @@ export default function AsyncCalendar(props) {
     const handleBackPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(props.numberOfWeeksToDisplay * -1);
+        navigateByOffsetInWeeks(numberOfWeeksToDisplay * -1);
     };
 
     const handleBackOnClick = (e) => {
@@ -162,7 +171,7 @@ export default function AsyncCalendar(props) {
     const handleForwardPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(props.numberOfWeeksToDisplay);
+        navigateByOffsetInWeeks(numberOfWeeksToDisplay);
     };
 
     const handleTodayOnClick = (e) => {
@@ -258,6 +267,7 @@ export default function AsyncCalendar(props) {
             case 'tag':
             case 'author':
             case 'postType':
+            case 'weeks':
                 if (e.detail.value) {
                     filters[e.detail.filter] = e.detail.value[0].id;
                 } else {

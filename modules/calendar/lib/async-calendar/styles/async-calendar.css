@@ -172,6 +172,11 @@
   overflow: hidden;
   width: 100%;
 }
+.publishpress-calendar .publishpress-calendar-month-name {
+  margin-right: 2px;
+  font-weight: bold;
+  font-style: italic;
+}
 .publishpress-calendar .publishpress-calendar-navigation-bar a {
   text-decoration: none;
   -moz-border-radius: 5px;

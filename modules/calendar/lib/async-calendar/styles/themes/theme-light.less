@@ -29,7 +29,7 @@
 @buttonActiveBackground: #e6e6e6;
 
 .publishpress-calendar-theme-light {
-    table  {
+    table {
         border: 1px solid @outerBorderColor;
         border-spacing: 0;
         border-collapse: collapse;
@@ -51,6 +51,10 @@
         }
     }
 
+    .publishpress-calendar-month-name {
+        color: @todayDateBackground;
+    }
+
     .publishpress-calendar-loader {
         background: @backgroundColor;
     }
@@ -62,7 +66,6 @@
     .publishpress-calendar-weekend-day {
         background: @weekendCellBackground;
 
-        .publishpress-calendar-month-name,
         .publishpress-calendar-date {
             color: @weekendDateColor;
         }
