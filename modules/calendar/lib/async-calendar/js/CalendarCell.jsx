@@ -26,6 +26,10 @@ export default function CalendarCell(props) {
             dayItemClassName += ' publishpress-calendar-uncollapse';
         }
 
+        if (dayDate.getDate() === 1) {
+            dayItemClassName += ' publishpress-calendar-first-day-of-month';
+        }
+
         return 'publishpress-calendar-' + dayItemClassName;
     };
 
