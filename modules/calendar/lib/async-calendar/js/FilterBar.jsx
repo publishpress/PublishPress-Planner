@@ -3,7 +3,7 @@ import Select from "./Select";
 const $ = jQuery;
 const _n = wp.i18n._n;
 
-export default function Filters(props) {
+export default function FilterBar(props) {
     const dispatchFilterEvent = (filterName, value) => {
         window.dispatchEvent(
             new CustomEvent(

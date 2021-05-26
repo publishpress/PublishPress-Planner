@@ -1,5 +1,5 @@
 import AsyncCalendar from "./AsyncCalendar";
-import Filters from "./Filters";
+import FilterBar from "./FilterBar";
 
 jQuery(() => {
     ReactDOM.render(
@@ -20,7 +20,7 @@ jQuery(() => {
     );
 
     ReactDOM.render(
-        <Filters
+        <FilterBar
             statuses={publishpressCalendarParams.statuses}
             postTypes={publishpressCalendarParams.postTypes}
             numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
