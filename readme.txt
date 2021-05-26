@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.4.0] - 2021-05-27 =
+= [3.3.2] - 2021-05-27 =
 
 * Fixed: Fix the icons for statuses, #841;
 * Fixed: Fix HTML syntax error in the custom status module for the admin pages;
