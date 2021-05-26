@@ -86,6 +86,9 @@
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
   color: #fff;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-day-hover.publishpress-calendar-first-day-of-month {
+  background-image: linear-gradient(to right, #c7cba6, 20%, #e3e9c2);
+}
 .publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a {
   border: 1px solid #ccc;
   color: #3e3e3e;

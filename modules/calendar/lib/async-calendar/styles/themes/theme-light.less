@@ -24,6 +24,7 @@
 @droppableBackground: #e3e9c2;
 @droppableBorderColor: #8ea029;
 @droppableColor: #363e08;
+@firstDayOfMonthStartBackgroundOnDroppable: #c7cba6;
 
 @buttonColor: #3e3e3e;
 @buttonBackground: #f7f7f7;
@@ -143,6 +144,10 @@
 
     .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
         color: @todayDateColor;
+    }
+
+    .publishpress-calendar-day-hover.publishpress-calendar-first-day-of-month {
+        background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnDroppable, 20%, @droppableBackground);
     }
 
     .publishpress-calendar-navigation-bar a {
