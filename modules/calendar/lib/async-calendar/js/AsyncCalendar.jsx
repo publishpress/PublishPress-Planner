@@ -333,8 +333,6 @@ export default function AsyncCalendar(props) {
                 forwardPageOnClickCallback={handleForwardPageOnClick}
                 todayOnClickCallback={handleTodayOnClick}/>
 
-            <MessageBar showSpinner={isLoading} message={message}/>
-
             <table>
                 <thead>
                 <tr>
@@ -345,6 +343,7 @@ export default function AsyncCalendar(props) {
                 {calendarBodyRows()}
                 </tbody>
             </table>
+            <MessageBar showSpinner={isLoading} message={message}/>
         </div>
     )
 }
