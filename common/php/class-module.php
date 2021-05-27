@@ -62,6 +62,12 @@ if (!class_exists('PP_Module')) {
                     $this->twig->addExtension(new Twig_Extension_Debug());
                 }
             }
+
+            foreach(get_post_stati(['public' => true, 'private' => true], 'names', 'OR') as $status) {
+                if (!in_array($status, $this->published_statuses)) {
+                    $this->published_statuses []= $status;
+                }
+            }
         }
 
         /**
