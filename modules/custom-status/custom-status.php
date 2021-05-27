@@ -419,6 +419,14 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_enqueue_style(
                     'publishpress-icon-preview',
                     $this->module_url . 'lib/icon-picker.css',
+                    ['dashicons'],
+                    PUBLISHPRESS_VERSION,
+                    'all'
+                );
+
+                wp_enqueue_style(
+                    'publishpress-custom_status-admin',
+                    $this->module_url . 'lib/custom-status-admin.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
@@ -1996,10 +2004,11 @@ if (!class_exists('PP_Custom_Status')) {
                                        value="<?php if (isset($icon)) {
                                            echo esc_attr($icon);
                                        } ?>"/>
-                                <div id="preview_icon_picker_example_icon" data-target="#status_icon"
-                                     class="button icon-picker dashicons <?php if (isset($icon)) {
-                                         echo esc_attr($icon);
-                                     } ?>"></div>
+
+                                <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                    <span id="icon_picker_preview" class="dashicons <?php echo isset($icon) ? esc_attr($icon) : ''; ?>"></span>
+                                    <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                </div>
 
                                 <?php $publishpress->settings->helper_print_error_or_description(
                                     'status_icon',
@@ -2029,23 +2038,23 @@ if (!class_exists('PP_Custom_Status')) {
                     <div class='col-wrap'>
                         <div class='form-wrap'>
                             <h3 class='nav-tab-wrapper'>
-                                <a href="<?php echo esc_url($this->get_link()); ?>" ;
+                                <a href="<?php echo esc_url($this->get_link()); ?>"
                                    class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'add-new') {
                                        echo ' nav-tab-active';
                                    } ?>"><?php _e('Options', 'publishpress'); ?></a>
-                                <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>" ;
+                                <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>"
                                    class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'add-new') {
                                        echo ' nav-tab-active';
                                    } ?>"><?php _e('Add New', 'publishpress'); ?></a>
                             </h3>
                             <?php if (isset($_GET['action']) && $_GET['action'] == 'add-new'): ?>
                                 <?php /** Custom form for adding a new Custom Status term **/ ?>
-                                <form class='add:the-list:' ; action="<?php echo esc_url($this->get_link()); ?>" ;
-                                      method='post' ; id='addstatus' ; name='addstatus'>
+                                <form class='add:the-list:' action="<?php echo esc_url($this->get_link()); ?>"
+                                      method='post' id='addstatus' name='addstatus'>
                                     <div class='form-field form-required'>
                                         <label for='status_name'><?php _e('Name', 'publishpress'); ?></label>
-                                        <input type="text" ; aria-required='true' ; size='20' ; maxlength='20' ;
-                                               id='status_name' ; name='status_name' ;
+                                        <input type="text" aria-required='true' size='20' maxlength='20'
+                                               id='status_name' name='status_name'
                                                value="<?php if (!empty($_POST['status_name'])) {
                                                    echo esc_attr($_POST['status_name']);
                                                } ?>"/>
@@ -2062,7 +2071,7 @@ if (!class_exists('PP_Custom_Status')) {
                                                 'Description',
                                                 'publishpress'
                                             ); ?></label>
-                                        <textarea cols="40" ; rows='5' ; id='status_description' ;
+                                        <textarea cols="40" rows='5' id='status_description'
                                                   name='status_description'><?php if (!empty($_POST['status_description'])) {
                                                 echo esc_textarea($_POST['status_description']);
                                             } ?></textarea>
@@ -2087,18 +2096,19 @@ if (!class_exists('PP_Custom_Status')) {
                                         ); ?>
                                     </div>
                                     <div class='form-field'>
-                                        <label for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
+                                        <label for="status_icon"><?php _e('Icon', 'publishpress'); ?></label>
 
                                         <?php
                                         $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
-                                        <input class='regular-text' ; type='hidden' ; id='status_icon' ; name='icon' ;
+                                        <input class='regular-text' type='hidden' id='status_icon' name='icon'
                                                value="<?php if (isset($status_icon)) {
                                                    echo 'dashicons ' . esc_attr($status_icon);
                                                } ?>"/>
-                                        <div id='preview_icon_picker_example_icon' ; data-target='#status_icon' ;
-                                             class="button icon-picker dashicons <?php if (isset($status_icon)) {
-                                                 echo esc_attr($status_icon);
-                                             } ?>"></div>
+
+                                        <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                            <span id="icon_picker_preview" class="dashicons <?php echo isset($status_icon) ? esc_attr($status_icon) : ''; ?>"></span>
+                                            <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                        </div>
 
                                         <?php $publishpress->settings->helper_print_error_or_description(
                                             'status_icon',
@@ -2118,8 +2128,8 @@ if (!class_exists('PP_Custom_Status')) {
                                         ); ?>&nbsp;</p>
                                 </form>
                             <?php else: ?>
-                                <form class='basic-settings' ;
-                                      action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" ;
+                                <form class='basic-settings'
+                                      action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"
                                       method='post'>
                                     <br/>
                                     <p><?php echo __(
