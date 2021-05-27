@@ -15,18 +15,9 @@ jQuery(() => {
             ajaxUrl={publishpressCalendarParams.ajaxUrl}
             actionGetData={'publishpress_calendar_get_data'}
             actionMoveItem={'publishpress_calendar_move_item'}
-            nonce={publishpressCalendarParams.nonce}/>,
-        document.getElementById('publishpress-calendar-wrap')
-    );
-
-    ReactDOM.render(
-        <FilterBar
-            statuses={publishpressCalendarParams.statuses}
-            postTypes={publishpressCalendarParams.postTypes}
-            numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
-            ajaxurl={publishpressCalendarParams.ajaxUrl}
             nonce={publishpressCalendarParams.nonce}
-        />,
-        document.getElementById('publishpress-calendar-filters-wrap')
+            statuses={publishpressCalendarParams.statuses}
+            postTypes={publishpressCalendarParams.postTypes}/>,
+        document.getElementById('publishpress-calendar-wrap')
     );
 });

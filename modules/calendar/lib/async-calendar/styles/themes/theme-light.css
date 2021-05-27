@@ -89,15 +89,15 @@
 .publishpress-calendar-theme-light .publishpress-calendar-day-hover.publishpress-calendar-first-day-of-month {
   background-image: linear-gradient(to right, #c7cba6, 20%, #e3e9c2);
 }
-.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a {
+.publishpress-calendar-button {
   border: 1px solid #ccc;
   color: #3e3e3e;
   background: #f7f7f7;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a:hover {
+.publishpress-calendar-button:hover {
   background: #fcfcfc;
 }
-.publishpress-calendar-theme-light .publishpress-calendar-navigation-bar a:active {
+.publishpress-calendar-button:active {
   background: #e6e6e6;
 }
 /*# sourceMappingURL=theme-light.css.map */

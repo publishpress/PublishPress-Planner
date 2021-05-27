@@ -1341,8 +1341,6 @@ if (!class_exists('PP_Calendar')) {
                     echo '</p></div>';
                 } ?>
 
-                <div id="publishpress-calendar-filters-wrap"></div>
-
                 <div id="publishpress-calendar-wrap" class="publishpress-calendar-wrap">
                     <div class="publishpress-calendar-loader">
                         <div class="publishpress-calendar-loader-message">

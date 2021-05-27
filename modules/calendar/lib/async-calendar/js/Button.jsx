@@ -5,7 +5,9 @@ export default function Button(props) {
         icon = <span className={"dashicons dashicons-" + props.icon}></span>;
     }
 
+    const className = 'publishpress-calendar-button ' + (props.className || '');
+
     return (
-        <a href={props.href || '#'} className={props.className} onClick={props.onClick}>{icon}{props.label}</a>
+        <a href={props.href || '#'} className={className} onClick={props.onClick}>{icon}{props.label}</a>
     )
 }

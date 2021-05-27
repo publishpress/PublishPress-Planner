@@ -3,6 +3,7 @@ import WeekDays from "./WeekDays";
 import MessageBar from "./MessageBar";
 import CalendarCell from "./CalendarCell";
 import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
+import FilterBar from "./FilterBar";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -325,6 +326,14 @@ export default function AsyncCalendar(props) {
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
+            <FilterBar
+                statuses={props.statuses}
+                postTypes={props.postTypes}
+                numberOfWeeksToDisplay={props.numberOfWeeksToDisplay}
+                ajaxurl={props.ajaxUrl}
+                nonce={props.nonce}
+            />
+
             <NavigationBar
                 refreshOnClickCallback={handleRefreshOnClick}
                 backPageOnClickCallback={handleBackPageOnClick}

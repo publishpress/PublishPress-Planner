@@ -58,7 +58,7 @@ export default function FilterBar(props) {
     }
 
     return (
-        <>
+        <div className="publishpress-calendar-filter-bar">
             <Select
                 placeholder={"All statuses"}
                 options={props.statuses}
@@ -106,6 +106,6 @@ export default function FilterBar(props) {
                 onSelect={handleWeeksChange}
                 onClear={handleWeeksChange}
             />
-        </>
+        </div>
     )
 }
