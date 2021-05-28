@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed: Fix "Statuses" doesn't appear with a title in important areas, #846;
+
 = [3.3.2] - 2021-05-27 =
 
 * Fixed: Fix the icons for statuses, #841;

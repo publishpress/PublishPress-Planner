@@ -299,7 +299,7 @@ if (!class_exists('PP_Custom_Status')) {
                     [
                         'hierarchical'          => false,
                         'update_count_callback' => '_update_post_term_count',
-                        'label'                 => false,
+                        'label'                 => __('Statuses', 'publishpress'),
                         'query_var'             => false,
                         'rewrite'               => false,
                         'show_ui'               => false,
