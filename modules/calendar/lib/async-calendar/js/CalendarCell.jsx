@@ -85,7 +85,9 @@ export default function CalendarCell(props) {
                             showTime={item.showTime}
                             showIcon={true}
                             collapse={item.collapse}
-                            index={itemIndex++}/>
+                            index={itemIndex++}
+                            openPopup={item.id === 421}
+                        />
                     )
                 })}
             </ul>

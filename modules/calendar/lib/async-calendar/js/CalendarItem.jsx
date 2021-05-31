@@ -1,4 +1,5 @@
 import {getHourStringOnFormat} from './Functions';
+import Popup from './Popup';
 
 const {__} = wp.i18n;
 
@@ -32,6 +33,8 @@ export default function CalendarItem(props) {
               dateTime={props.timestamp}
               title={props.timestamp}>{getHourString()}</time> : null;
 
+    const label = props.label || DEFAULT_LABEL;
+
     return (
         <li
             ref={calendarItem}
@@ -39,6 +42,14 @@ export default function CalendarItem(props) {
             style={{backgroundColor: props.color}}
             data-index={props.index}
             data-id={props.id}
-            data-datetime={props.timestamp}>{iconElement}{timeElement}{props.label || DEFAULT_LABEL}</li>
+            data-datetime={props.timestamp}>
+
+            {iconElement}{timeElement}
+            {label}
+            {props.openPopup &&
+                <Popup target={calendarItem}
+                    title={label}/>
+            }
+        </li>
     )
 }
