@@ -30,7 +30,7 @@ export default function WeekDays(props) {
 
     return (
         <>
-            {weekDays.map((item) =>
+            {weekDays.map(item =>
                 <th key={item.key.toString()}>{item.label}</th>
             )}
         </>

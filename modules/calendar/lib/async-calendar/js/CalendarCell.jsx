@@ -72,7 +72,7 @@ export default function CalendarCell(props) {
             </div>
 
             <ul className="publishpress-calendar-day-items">
-                {visibleItems.map((item) => {
+                {visibleItems.map(item => {
                     return (
                         <CalendarItem
                             key={'item-' + item.id + '-' + props.date.getTime()}

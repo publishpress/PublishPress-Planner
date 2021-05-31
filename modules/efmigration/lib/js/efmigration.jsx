@@ -22,7 +22,7 @@
             const hasErrors = errors.length > 0;
             const inProgress = started && !finished;
 
-            var errorRows = errors.map((error) =>
+            var errorRows = errors.map(error =>
                 <ErrorRow key={error.key} msg={error.msg}/>
             );
 
@@ -158,7 +158,7 @@
         updateStep (newStep) {
             var index = this.state.currentStepIndex;
 
-            var newSteps = this.state.steps.map((step) => {
+            var newSteps = this.state.steps.map(step => {
                 return step.key === newStep.key ? newStep : step;
             });
 

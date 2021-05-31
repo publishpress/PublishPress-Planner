@@ -63,7 +63,7 @@ export default function Select(props) {
     let options;
 
     if (props.options) {
-        options = props.options.map((option) => {
+        options = props.options.map(option => {
             return <option value={option.value}>{option.text}</option>
         });
     }
