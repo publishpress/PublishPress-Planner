@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.7
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,7 +122,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [3.4.0] - UNRELEASED =
 
+* Fixed: Fix "Statuses" doesn't appear with a title in important areas, #846;
+
+= [3.3.2] - 2021-05-27 =
+
 * Fixed: Fix the icons for statuses, #841;
+* Fixed: Fix HTML syntax error in the custom status module for the admin pages;
+* Changed: Add new background color for the PublishPress Debug button;
 
 = [3.3.1] - 2021-04-15 =
 
