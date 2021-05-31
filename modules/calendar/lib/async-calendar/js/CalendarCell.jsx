@@ -55,6 +55,8 @@ export default function CalendarCell(props) {
         return (<></>);
     }
 
+    const visibleItems = uncollapseItems ? props.items : props.items.slice(0, props.maxVisibleItems);
+
     return (
         <td
             className={getDayItemClassName(props.date, props.todayDate)}
@@ -70,7 +72,7 @@ export default function CalendarCell(props) {
             </div>
 
             <ul className="publishpress-calendar-day-items">
-                {props.items.map((item) => {
+                {visibleItems.map((item) => {
                     return (
                         <CalendarItem
                             key={'item-' + item.id + '-' + props.date.getTime()}
