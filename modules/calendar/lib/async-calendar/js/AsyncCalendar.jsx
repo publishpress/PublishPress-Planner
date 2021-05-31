@@ -16,7 +16,14 @@ export default function AsyncCalendar(props) {
     const [cells, setCells] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({status: null, category: null, tag: null, author: null, postType: null, weeks: null});
+    const [filters, setFilters] = React.useState({
+        status: null,
+        category: null,
+        tag: null,
+        author: null,
+        postType: null,
+        weeks: null
+    });
 
     let $lastHoveredCell;
 
