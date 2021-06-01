@@ -24,6 +24,7 @@ export default function AsyncCalendar(props) {
         postType: null,
         weeks: null
     });
+    const [openedItemId, setOpenedItemId] = React.useState();
 
     let $lastHoveredCell;
 
@@ -39,6 +40,8 @@ export default function AsyncCalendar(props) {
         prepareDataByDate();
 
         window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
+        window.addEventListener('PublishpressCalendar:clickItem',  onClickItem);
+        document.addEventListener('keydown',  pressEscKey);
 
         return () => {
             window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
@@ -290,6 +293,16 @@ export default function AsyncCalendar(props) {
         }
     }
 
+    const onClickItem = (e) => {
+        setOpenedItemId(e.detail.id);
+    }
+
+    const pressEscKey = (e) => {
+        if (e.key === 'Escape') {
+            setOpenedItemId(null);
+        }
+    }
+
     const calendarBodyRows = () => {
         let rows = [];
         let rowCells;
@@ -312,7 +325,8 @@ export default function AsyncCalendar(props) {
                     isLoading={cell.isLoading}
                     items={cell.items}
                     maxVisibleItems={props.maxVisibleItems}
-                    timeFormat={props.timeFormat}/>
+                    timeFormat={props.timeFormat}
+                    openedItemId={openedItemId}/>
             );
 
             dayIndex++;

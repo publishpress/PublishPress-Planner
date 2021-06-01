@@ -29,6 +29,19 @@ export default function CalendarItem(props) {
         return className;
     }
 
+    const dispatchClickEvent = () => {
+        window.dispatchEvent(
+            new CustomEvent(
+                'PublishpressCalendar:clickItem',
+                {
+                    detail: {
+                        id: props.id
+                    }
+                }
+            )
+        );
+    }
+
     const iconElement = props.showIcon && props.icon ?
         <span className={'dashicons ' + props.icon}> </span> : null;
 
@@ -46,7 +59,8 @@ export default function CalendarItem(props) {
             style={{backgroundColor: props.color}}
             data-index={props.index}
             data-id={props.id}
-            data-datetime={props.timestamp}>
+            data-datetime={props.timestamp}
+            onClick={dispatchClickEvent}>
 
             {iconElement}{timeElement}
             {label}
