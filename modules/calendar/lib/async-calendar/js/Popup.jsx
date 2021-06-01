@@ -42,7 +42,8 @@ export default function Popup(props) {
 
     return (
         <div className="publishpress-calendar-popup" ref={popupRef} style={{top: top, left: left}}>
-            {props.title}
+            <div className="publishpress-calendar-popup-title">{props.title}</div>
+
         </div>
     )
 }

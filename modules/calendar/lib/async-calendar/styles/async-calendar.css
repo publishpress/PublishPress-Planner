@@ -191,6 +191,9 @@
   overflow: hidden;
   width: 100%;
 }
+.publishpress-calendar .publishpress-calendar-item-opened-popup {
+  border: 1px dashed yellow;
+}
 .publishpress-calendar .publishpress-calendar-month-name {
   margin-right: 2px;
   font-weight: bold;

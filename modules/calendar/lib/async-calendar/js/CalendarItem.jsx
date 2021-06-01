@@ -22,6 +22,10 @@ export default function CalendarItem(props) {
             className += ' publishpress-calendar-item-collapse';
         }
 
+        if (props.openPopup) {
+            className += ' publishpress-calendar-item-opened-popup';
+        }
+
         return className;
     }
 
