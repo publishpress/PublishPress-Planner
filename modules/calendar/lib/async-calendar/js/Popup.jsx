@@ -26,7 +26,7 @@ export default function Popup(props) {
         }
 
         setTop(targetPosition.top);
-        setLeft(isWiderThanParentWidth() ? getPositionOnRightSide() : getPositionOnLeftSide());
+        setLeft(isWiderThanParentWidth() ? getPositionOnLeftSide() : getPositionOnRightSide());
 
     }
 
