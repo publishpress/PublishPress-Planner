@@ -45,6 +45,8 @@ export default function AsyncCalendar(props) {
 
         return () => {
             window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
+            window.removeEventListener('PublishpressCalendar:clickItem',  onClickItem);
+            document.removeEventListener('keydown',  pressEscKey);
         }
     };
 
