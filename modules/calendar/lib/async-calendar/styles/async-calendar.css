@@ -109,13 +109,21 @@
   }
 }
 .publishpress-calendar-popup {
-  background-color: green;
+  background-color: #fff;
   position: absolute;
   top: 0;
   left: 0;
   min-height: 50px;
-  min-width: 50px;
+  width: 380px;
   z-index: 20000;
+  -moz-box-shadow: -1px 3px 6px 1px #b8b8b8;
+  -webkit-box-shadow: -1px 3px 6px 1px #b8b8b8;
+  box-shadow: -1px 3px 6px 1px #b8b8b8;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  color: #000;
+  padding: 10px;
 }
 .publishpress-calendar {
   display: block;
@@ -138,9 +146,9 @@
 .publishpress-calendar .publishpress-calendar-cell-header {
   display: block;
   width: 100%;
-  height: 23px;
+  height: 26px;
   text-align: center;
-  padding-top: 3px;
+  padding-top: 2px;
 }
 .publishpress-calendar .publishpress-calendar-day-items {
   margin: 0;
@@ -148,6 +156,11 @@
 }
 .publishpress-calendar .publishpress-calendar-date {
   padding: 4px;
+  border-radius: 50%;
+  width: 16px !important;
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
 }
 .publishpress-calendar .publishpress-calendar-today .publishpress-calendar-date {
   border-radius: 50%;
