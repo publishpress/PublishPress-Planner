@@ -1,5 +1,5 @@
 import {getHourStringOnFormat} from './Functions';
-import Popup from './Popup';
+import ItemPopup from './Popup';
 
 const {__} = wp.i18n;
 
@@ -65,8 +65,8 @@ export default function CalendarItem(props) {
             {iconElement}{timeElement}
             {label}
             {props.openPopup &&
-                <Popup target={calendarItem}
-                    title={label}/>
+                <ItemPopup target={calendarItem}
+                           title={label}/>
             }
         </li>
     )

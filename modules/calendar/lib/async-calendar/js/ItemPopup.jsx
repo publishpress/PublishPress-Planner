@@ -1,6 +1,6 @@
 const $ = jQuery;
 
-export default function Popup(props) {
+export default function ItemPopup(props) {
     const popupRef = React.useRef(null);
     const [top, setTop] = React.useState(0);
     const [left, setLeft] = React.useState(0);
@@ -27,7 +27,6 @@ export default function Popup(props) {
 
         setTop(targetPosition.top);
         setLeft(isWiderThanParentWidth() ? getPositionOnLeftSide() : getPositionOnRightSide());
-
     }
 
     const didMount = () => {
@@ -43,7 +42,6 @@ export default function Popup(props) {
     return (
         <div className="publishpress-calendar-popup" ref={popupRef} style={{top: top, left: left}}>
             <div className="publishpress-calendar-popup-title">{props.title}</div>
-
         </div>
     )
 }
