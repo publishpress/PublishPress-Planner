@@ -1,9 +1,21 @@
+@backgroundColor: #fff;
+@shadowColor: #b8b8b8;
+@textColor: #000;
+
 .publishpress-calendar-popup {
-    background-color: green;
+    background-color: @backgroundColor;
     position: absolute;
     top: 0;
     left: 0;
     min-height: 50px;
-    min-width: 50px;
+    width: 380px;
     z-index: 20000;
+    -moz-box-shadow: -1px 3px 6px 1px @shadowColor;
+    -webkit-box-shadow: -1px 3px 6px 1px @shadowColor;
+    box-shadow: -1px 3px 6px 1px @shadowColor;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color: @textColor;
+    padding: 10px;
 }
