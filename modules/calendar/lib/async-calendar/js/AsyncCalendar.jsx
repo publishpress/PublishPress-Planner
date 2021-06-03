@@ -25,6 +25,7 @@ export default function AsyncCalendar(props) {
         weeks: null
     });
     const [openedItemId, setOpenedItemId] = React.useState();
+    const [openedItemData, setOpenedItemData] = React.useState([]);
 
     let $lastHoveredCell;
 
@@ -141,6 +142,12 @@ export default function AsyncCalendar(props) {
             }
         }
 
+        const response = await fetch(dataUrl);
+        return await response.json();
+    }
+
+    const fetchItemData = async (id) => {
+        const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + id;
         const response = await fetch(dataUrl);
         return await response.json();
     }
@@ -262,6 +269,7 @@ export default function AsyncCalendar(props) {
             },
             stop: (event, ui) => {
                 $('.ui-draggable-target').removeClass('ui-draggable-target');
+                resetOpenedItem();
             }
         });
 
@@ -295,14 +303,28 @@ export default function AsyncCalendar(props) {
         }
     }
 
+    const resetOpenedItem = () => {
+        setOpenedItemId(null);
+        setOpenedItemData(null);
+    }
+
     const onClickItem = (e) => {
         setOpenedItemId(e.detail.id);
+        setOpenedItemData(null);
+
+        fetchItemData(e.detail.id).then(fetchedData => {
+            setOpenedItemData(fetchedData);
+        });
     }
 
     const pressEscKey = (e) => {
         if (e.key === 'Escape') {
-            setOpenedItemId(null);
+            resetOpenedItem();
         }
+    }
+
+    const getOpenedItemData = () => {
+        return openedItemData;
     }
 
     const calendarBodyRows = () => {
@@ -328,7 +350,8 @@ export default function AsyncCalendar(props) {
                     items={cell.items}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
-                    openedItemId={openedItemId}/>
+                    openedItemId={openedItemId}
+                    getOpenedItemDataCallback={getOpenedItemData}/>
             );
 
             dayIndex++;

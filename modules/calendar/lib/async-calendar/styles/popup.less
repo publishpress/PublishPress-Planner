@@ -1,6 +1,7 @@
 @backgroundColor: #fff;
-@shadowColor: #b8b8b8;
+@shadowColor: #838383;
 @textColor: #000;
+@iconColor: #626262;
 
 .publishpress-calendar-popup {
     background-color: @backgroundColor;
@@ -10,12 +11,50 @@
     min-height: 50px;
     width: 380px;
     z-index: 20000;
-    -moz-box-shadow: -1px 3px 6px 1px @shadowColor;
-    -webkit-box-shadow: -1px 3px 6px 1px @shadowColor;
-    box-shadow: -1px 3px 6px 1px @shadowColor;
+    -moz-box-shadow: -1px 3px 10px 2px @shadowColor;
+    -webkit-box-shadow: -1px 3px 10px 2px @shadowColor;
+    box-shadow: -1px 3px 10px 2px @shadowColor;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
     color: @textColor;
     padding: 10px;
+
+    table {
+        border: none;
+        border-collapse: inherit;
+        border-spacing: 0;
+
+        th,
+        td {
+            border: none;
+            border-collapse: inherit;
+            border-spacing: 0;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    }
+
+}
+
+.publishpress-calendar-popup-title {
+    font-weight: bold;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.publishpress-calendar-popup .dashicons {
+    color: @iconColor !important;
+    margin-right: 5px;
+}
+
+.publishpress-calendar-item-color {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 5px;
 }

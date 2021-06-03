@@ -1,5 +1,5 @@
 import {getHourStringOnFormat} from './Functions';
-import ItemPopup from './Popup';
+import ItemPopup from './ItemPopup';
 
 const {__} = wp.i18n;
 
@@ -22,7 +22,7 @@ export default function CalendarItem(props) {
             className += ' publishpress-calendar-item-collapse';
         }
 
-        if (props.openPopup) {
+        if (props.isPopupOpened) {
             className += ' publishpress-calendar-item-opened-popup';
         }
 
@@ -64,9 +64,14 @@ export default function CalendarItem(props) {
 
             {iconElement}{timeElement}
             {label}
-            {props.openPopup &&
+            {props.isPopupOpened &&
                 <ItemPopup target={calendarItem}
-                           title={label}/>
+                           id={props.id}
+                           title={label}
+                           icon={props.icon}
+                           timestamp={props.timestamp}
+                           color={props.color}
+                           data={props.popupItemData}/>
             }
         </li>
     )

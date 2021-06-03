@@ -1,19 +1,19 @@
-.publishpress-calendar-theme-light table {
+.publishpress-calendar-theme-light > table {
   border: 1px solid #ededed;
   border-spacing: 0;
   border-collapse: collapse;
 }
-.publishpress-calendar-theme-light table > thead > tr > th,
-.publishpress-calendar-theme-light table > tbody > tr > td {
+.publishpress-calendar-theme-light > table > thead > tr > th,
+.publishpress-calendar-theme-light > table > tbody > tr > td {
   border: 1px solid #ededed;
 }
-.publishpress-calendar-theme-light table > thead > tr > th {
+.publishpress-calendar-theme-light > table > thead > tr > th {
   background: #fff;
   border-bottom: 3px solid #655997;
   color: #333333;
   height: 25px;
 }
-.publishpress-calendar-theme-light table > tbody > tr > td {
+.publishpress-calendar-theme-light > table > tbody > tr > td {
   vertical-align: top;
 }
 .publishpress-calendar-theme-light .publishpress-calendar-month-name {

@@ -1,3 +1,6 @@
+import TimeField from "./fields/TimeField";
+import AuthorField from "./fields/AuthorField";
+
 const $ = jQuery;
 
 export default function ItemPopup(props) {
@@ -6,6 +9,7 @@ export default function ItemPopup(props) {
     const [left, setLeft] = React.useState(0);
     const offsetX = 10;
     const offsetWidth = 300;
+    const isEditing = false;
 
     const setPosition = () => {
         const targetPosition = $(props.target.current).position();
@@ -39,9 +43,60 @@ export default function ItemPopup(props) {
 
     React.useEffect(didMount, []);
 
+    if (!props.data) {
+        return <></>;
+    }
+
+    const fieldsRows = [];
+
+    let dataProperty;
+    let field;
+    for (const dataPropertyName in props.data) {
+        if (!props.data.hasOwnProperty(dataPropertyName)) {
+            continue;
+        }
+
+        dataProperty = props.data[dataPropertyName];
+
+        switch (dataProperty.type) {
+            case 'time':
+                field = <TimeField value={dataProperty.value} isEditing={isEditing}/>;
+                break;
+
+            case 'author':
+                field = <AuthorField value={dataProperty.value} isEditing={isEditing}/>;
+                break;
+
+            default:
+                field = null;
+                break;
+        }
+
+        fieldsRows.push(
+            <tr>
+                <th>{dataProperty.label}:</th>
+                <td>{field}</td>
+            </tr>
+        );
+    }
+
     return (
         <div className="publishpress-calendar-popup" ref={popupRef} style={{top: top, left: left}}>
-            <div className="publishpress-calendar-popup-title">{props.title}</div>
+            <div className="publishpress-calendar-popup-title">
+                {props.color &&
+                <span className="publishpress-calendar-item-color" style={{backgroundColor: props.color}}/>
+                }
+                {props.icon &&
+                <span className={'dashicons ' + props.icon}/>
+                }
+                {props.title}
+            </div>
+            <hr/>
+            <table>
+                <tbody>
+                    {fieldsRows}
+                </tbody>
+            </table>
         </div>
     )
 }

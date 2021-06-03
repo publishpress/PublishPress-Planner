@@ -73,6 +73,9 @@ export default function CalendarCell(props) {
 
             <ul className="publishpress-calendar-day-items">
                 {visibleItems.map(item => {
+                    const isPopupOpened = item.id === props.openedItemId;
+                    const popupItemData = isPopupOpened ? props.getOpenedItemDataCallback() : null;
+
                     return (
                         <CalendarItem
                             key={'item-' + item.id + '-' + props.date.getTime()}
@@ -86,7 +89,8 @@ export default function CalendarCell(props) {
                             showIcon={true}
                             collapse={item.collapse}
                             index={itemIndex++}
-                            openPopup={item.id === props.openedItemId}
+                            isPopupOpened={isPopupOpened}
+                            popupItemData={popupItemData}
                         />
                     )
                 })}

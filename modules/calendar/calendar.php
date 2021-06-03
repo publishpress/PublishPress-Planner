@@ -253,6 +253,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
             add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
             add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
+            add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -3315,6 +3316,42 @@ if (!class_exists('PP_Calendar')) {
                 $this->getCalendarData($beginningDate, $endingDate, $args),
                 200
             );
+        }
+
+        public function getPostData()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([], 403);
+            }
+
+            $id = (int)$_GET['id'];
+
+            if (empty($id)) {
+                wp_send_json(null, 404);
+            }
+
+            $post = get_post($id);
+
+            $authorsNames = apply_filters(
+                'publishpress_post_authors_names',
+                [get_the_author_meta('display_name', $post->post_author)],
+                $id
+            );
+
+            $data = [
+                'date'    => [
+                    'label' => __('Date', 'publishpress'),
+                    'value' => $post->post_date,
+                    'type'  => 'time',
+                ],
+                'authors' => [
+                    'label' => _n('Author', 'Authors', count($authorsNames), 'publishpress'),
+                    'value' => $authorsNames,
+                    'type'  => 'author',
+                ],
+            ];
+
+            wp_send_json($data, 202);
         }
 
         private function getCalendarData($beginningDate, $endingDate, $args = [])
