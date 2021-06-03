@@ -9,6 +9,10 @@ export default function ItemPopup(props) {
         return <></>;
     }
 
+    if (!props.target.current) {
+        return <></>;
+    }
+
     const offsetX = 10;
     const offsetWidth = 180;
     const isEditing = false;
