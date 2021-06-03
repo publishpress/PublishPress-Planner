@@ -88,7 +88,7 @@ export default function ItemPopup(props) {
             </table>
             <hr/>
             <div className="publishpress-calendar-popup-links">
-                <a href="#">Edit</a>
+                <a href={props.data.links.edit}>Edit</a>
                 <a href="#">Trash</a>
                 <a href="#">Preview</a>
                 <a href="#">Notify me</a>

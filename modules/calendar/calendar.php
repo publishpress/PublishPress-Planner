@@ -3352,6 +3352,9 @@ if (!class_exists('PP_Calendar')) {
                         'type'  => 'author',
                     ],
                 ],
+                'links'  => [
+                    'edit' => get_edit_post_link($id),
+                ]
             ];
 
             wp_send_json($data, 202);

@@ -259,7 +259,6 @@ export default function AsyncCalendar(props) {
     };
 
     const itemPopupIsOpenedById = (id) => {
-        console.log(openedItemId, id, openedItemData);
         return id === openedItemId;
     }
 
