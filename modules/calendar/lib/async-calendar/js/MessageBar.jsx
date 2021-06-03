@@ -5,7 +5,7 @@ export default function MessageBar(props) {
     return (
         <div className={'publishpress-calendar-message-bar'}>
             {showSpinner &&
-                <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
+            <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
             }
             <span>{message}</span>
         </div>

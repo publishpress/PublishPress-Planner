@@ -46,9 +46,9 @@ export default function CalendarCell(props) {
 
             return (
                 <a
-                href="javascript:void(0);"
-                className={className}
-                onClick={toggleUncollapseItems}>{label}</a>
+                    href="javascript:void(0);"
+                    className={className}
+                    onClick={toggleUncollapseItems}>{label}</a>
             );
         }
 

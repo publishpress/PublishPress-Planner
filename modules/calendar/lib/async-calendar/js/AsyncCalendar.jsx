@@ -41,13 +41,13 @@ export default function AsyncCalendar(props) {
         prepareDataByDate();
 
         window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
-        window.addEventListener('PublishpressCalendar:clickItem',  onClickItem);
-        document.addEventListener('keydown',  pressEscKey);
+        window.addEventListener('PublishpressCalendar:clickItem', onClickItem);
+        document.addEventListener('keydown', pressEscKey);
 
         return () => {
             window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
-            window.removeEventListener('PublishpressCalendar:clickItem',  onClickItem);
-            document.removeEventListener('keydown',  pressEscKey);
+            window.removeEventListener('PublishpressCalendar:clickItem', onClickItem);
+            document.removeEventListener('keydown', pressEscKey);
         }
     };
 

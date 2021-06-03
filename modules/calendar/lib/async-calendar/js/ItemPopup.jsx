@@ -94,7 +94,7 @@ export default function ItemPopup(props) {
             <hr/>
             <table>
                 <tbody>
-                    {fieldsRows}
+                {fieldsRows}
                 </tbody>
             </table>
         </div>

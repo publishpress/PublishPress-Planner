@@ -65,13 +65,13 @@ export default function CalendarItem(props) {
             {iconElement}{timeElement}
             {label}
             {props.isPopupOpened &&
-                <ItemPopup target={calendarItem}
-                           id={props.id}
-                           title={label}
-                           icon={props.icon}
-                           timestamp={props.timestamp}
-                           color={props.color}
-                           data={props.popupItemData}/>
+            <ItemPopup target={calendarItem}
+                       id={props.id}
+                       title={label}
+                       icon={props.icon}
+                       timestamp={props.timestamp}
+                       color={props.color}
+                       data={props.popupItemData}/>
             }
         </li>
     )

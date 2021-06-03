@@ -1,5 +1,4 @@
 import AsyncCalendar from "./AsyncCalendar";
-import FilterBar from "./FilterBar";
 
 jQuery(() => {
     ReactDOM.render(

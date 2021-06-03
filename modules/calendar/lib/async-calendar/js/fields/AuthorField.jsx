@@ -1,4 +1,4 @@
-export default function AuthorField (props) {
+export default function AuthorField(props) {
     const editField = () => {
         return (
             <input type="text" value={props.value}/>
