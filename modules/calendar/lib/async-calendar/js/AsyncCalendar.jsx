@@ -267,7 +267,6 @@ export default function AsyncCalendar(props) {
             zIndex: 99999,
             helper: 'clone',
             containment: '.publishpress-calendar table',
-            cursor: 'move',
             start: (event, ui) => {
                 // Do not drag the item if the popup is opened.
                 if (itemPopupIsOpenedById($(event.target).data('id'))) {
