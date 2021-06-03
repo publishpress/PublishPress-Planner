@@ -1,6 +1,7 @@
 import TimeField from "./fields/TimeField";
 import AuthorField from "./fields/AuthorField";
 
+const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function ItemPopup(props) {
@@ -88,10 +89,10 @@ export default function ItemPopup(props) {
             </table>
             <hr/>
             <div className="publishpress-calendar-popup-links">
-                <a href={props.data.links.edit}>Edit</a>
-                <a href="#">Trash</a>
-                <a href="#">Preview</a>
-                <a href="#">Notify me</a>
+                <a href={props.data.links.edit}>{__('Edit', 'publishpress')}</a>
+                <a href={props.data.links.trash}>{__('Trash', 'publishpress')}</a>
+                <a href="#">{__('Preview', 'publishpress')}</a>
+                <a href="#">{__('Notify me', 'publishpress')}</a>
             </div>
         </div>
     )

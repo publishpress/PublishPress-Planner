@@ -3353,7 +3353,8 @@ if (!class_exists('PP_Calendar')) {
                     ],
                 ],
                 'links'  => [
-                    'edit' => htmlspecialchars_decode(get_edit_post_link($id)),
+                    'edit'  => htmlspecialchars_decode(get_edit_post_link($id)),
+                    'trash' => htmlspecialchars_decode(get_delete_post_link($id)),
                 ]
             ];
 
