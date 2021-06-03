@@ -258,6 +258,11 @@ export default function AsyncCalendar(props) {
         $lastHoveredCell = $dayParent;
     };
 
+    const itemPopupIsOpenedById = (id) => {
+        console.log(openedItemId, id, openedItemData);
+        return id === openedItemId;
+    }
+
     const initDraggable = () => {
         $('.publishpress-calendar-day-items li').draggable({
             zIndex: 99999,
@@ -265,11 +270,17 @@ export default function AsyncCalendar(props) {
             containment: '.publishpress-calendar table',
             cursor: 'move',
             start: (event, ui) => {
+                // Do not drag the item if the popup is opened.
+                if (itemPopupIsOpenedById($(event.target).data('id'))) {
+                    return false;
+                }
+
                 $(event.target).addClass('ui-draggable-target');
+
+                resetOpenedItem();
             },
             stop: (event, ui) => {
                 $('.ui-draggable-target').removeClass('ui-draggable-target');
-                resetOpenedItem();
             }
         });
 
@@ -311,6 +322,10 @@ export default function AsyncCalendar(props) {
     const onClickItem = (e) => {
         setOpenedItemId(e.detail.id);
         setOpenedItemData(null);
+
+        if (itemPopupIsOpenedById(e.detail.id)) {
+            return false;
+        }
 
         fetchItemData(e.detail.id).then(fetchedData => {
             setOpenedItemData(fetchedData);

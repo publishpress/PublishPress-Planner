@@ -19,11 +19,13 @@
     border-radius: 6px;
     color: @textColor;
     padding: 10px;
+    cursor: default;
 
     table {
         border: none;
         border-collapse: inherit;
         border-spacing: 0;
+        user-select: text !important;
 
         th,
         td {
@@ -37,24 +39,36 @@
         }
     }
 
+    .publishpress-calendar-popup-title {
+        font-weight: bold;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        .dashicons {
+            color: @iconColor !important;
+            margin-right: 5px;
+        }
+
+        .publishpress-calendar-item-color {
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    }
+
+    .publishpress-calendar-popup-links {
+        > a {
+            margin-right: 4px;
+        }
+
+        ::after {
+            margin-left: 4px;
+            content: "|";
+            display: inline-block;
+        }
+    }
 }
 
-.publishpress-calendar-popup-title {
-    font-weight: bold;
-    width: 100%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.publishpress-calendar-popup .dashicons {
-    color: @iconColor !important;
-    margin-right: 5px;
-}
-
-.publishpress-calendar-item-color {
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    border-radius: 50%;
-    margin-right: 5px;
-}

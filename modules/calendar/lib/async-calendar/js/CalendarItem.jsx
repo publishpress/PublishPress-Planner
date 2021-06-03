@@ -2,6 +2,7 @@ import {getHourStringOnFormat} from './Functions';
 import ItemPopup from './ItemPopup';
 
 const {__} = wp.i18n;
+const $ = jQuery;
 
 export default function CalendarItem(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
@@ -29,7 +30,18 @@ export default function CalendarItem(props) {
         return className;
     }
 
-    const dispatchClickEvent = () => {
+    const isPopupElementOrChildrenOfPopup = (element) => {
+        return $(element).hasClass('publishpress-calendar-popup')
+            || $(element).parents('.publishpress-calendar-popup').length > 0;
+    }
+
+    const dispatchClickEvent = (e) => {
+        e.preventDefault();
+
+        if (isPopupElementOrChildrenOfPopup(e.target)) {
+            return;
+        }
+
         window.dispatchEvent(
             new CustomEvent(
                 'PublishpressCalendar:clickItem',
