@@ -91,7 +91,7 @@ export default function ItemPopup(props) {
             <div className="publishpress-calendar-popup-links">
                 <a href={props.data.links.edit}>{__('Edit', 'publishpress')}</a>
                 <a href={props.data.links.trash}>{__('Trash', 'publishpress')}</a>
-                <a href="#">{__('Preview', 'publishpress')}</a>
+                <a href={props.data.links.view}>{props.data.status === 'publish' ? __('View', 'publishpress') : __('Preview', 'publishpress')}</a>
                 <a href="#">{__('Notify me', 'publishpress')}</a>
             </div>
         </div>

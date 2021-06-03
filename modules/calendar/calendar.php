@@ -3338,8 +3338,11 @@ if (!class_exists('PP_Calendar')) {
                 $id
             );
 
+            $viewLink = $post->post_status === 'publish' ? get_permalink($id) : get_preview_post_link($id);
+
             $data = [
                 'id'     => $id,
+                'status' => $post->post_status,
                 'fields' => [
                     'date'    => [
                         'label' => __('Date', 'publishpress'),
@@ -3355,6 +3358,7 @@ if (!class_exists('PP_Calendar')) {
                 'links'  => [
                     'edit'  => htmlspecialchars_decode(get_edit_post_link($id)),
                     'trash' => htmlspecialchars_decode(get_delete_post_link($id)),
+                    'view'  => htmlspecialchars_decode($viewLink),
                 ]
             ];
 
