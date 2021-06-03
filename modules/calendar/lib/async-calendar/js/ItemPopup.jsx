@@ -1,5 +1,8 @@
 import TimeField from "./fields/TimeField";
-import AuthorField from "./fields/AuthorField";
+import AuthorsField from "./fields/AuthorsField";
+import PostTypeField from "./fields/PostTypeField";
+import PostStatusField from "./fields/PostStatusField";
+import CategoriesField from "./fields/CategoriesField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -54,8 +57,20 @@ export default function ItemPopup(props) {
                     field = <TimeField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
-                case 'author':
-                    field = <AuthorField value={dataProperty.value} isEditing={isEditing}/>;
+                case 'authors':
+                    field = <AuthorsField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'type':
+                    field = <PostTypeField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'status':
+                    field = <PostStatusField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'categories':
+                    field = <CategoriesField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
                 default:

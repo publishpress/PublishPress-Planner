@@ -1,4 +1,4 @@
-export default function AuthorField(props) {
+export default function PostStatusField(props) {
     const editField = () => {
         return (
             <input type="text" value={props.value}/>
@@ -7,7 +7,7 @@ export default function AuthorField(props) {
 
     const viewField = () => {
         return (
-            <span>{props.value.join(', ')}</span>
+            <span>{props.value}</span>
         );
     }
 

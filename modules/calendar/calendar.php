@@ -3318,6 +3318,31 @@ if (!class_exists('PP_Calendar')) {
             );
         }
 
+        private function getPostTypeName($postType)
+        {
+            $postTypeObj = get_post_type_object($postType);
+
+            return $postTypeObj->label;
+        }
+
+        private function getPostStatusName($postStatusSlug)
+        {
+            $postStatuses = $this->get_post_statuses();
+
+            foreach ($postStatuses as $postStatus) {
+                if ($postStatus->slug === $postStatusSlug) {
+                    return $postStatus->name;
+                }
+            }
+
+            return null;
+        }
+
+        private function getPostCategories($postId)
+        {
+            return [];
+        }
+
         public function getPostData()
         {
             if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
@@ -3348,18 +3373,33 @@ if (!class_exists('PP_Calendar')) {
                 'id'     => $id,
                 'status' => $post->post_status,
                 'fields' => [
-                    'date'    => [
+                    'type'       => [
+                        'label' => __('Post Type', 'publishpress'),
+                        'value' => $this->getPostTypeName($post->post_type),
+                        'type'  => 'type',
+                    ],
+                    'date'       => [
                         'label' => __('Date', 'publishpress'),
                         'value' => $post->post_date,
                         'type'  => 'time',
                     ],
-                    'authors' => [
+                    'status'     => [
+                        'label' => __('Post Status', 'publishpress'),
+                        'value' => $this->getPostStatusName($post->post_status),
+                        'type'  => 'status',
+                    ],
+                    'authors'    => [
                         'label' => _n('Author', 'Authors', count($authorsNames), 'publishpress'),
                         'value' => $authorsNames,
-                        'type'  => 'author',
+                        'type'  => 'authors',
+                    ],
+                    'categories' => [
+                        'label' => _n('Category', 'Categories', count($categories), 'publishpress'),
+                        'value' => $this->getPostCategories($id),
+                        'type'  => 'categories',
                     ],
                 ],
-                'links' => [
+                'links'  => [
                     'edit'  => [
                         'label' => __('Edit', 'publishpress'),
                         'url'   => htmlspecialchars_decode(get_edit_post_link($id))
@@ -3369,7 +3409,10 @@ if (!class_exists('PP_Calendar')) {
                         'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
                     ],
                     'view'  => [
-                        'label' => $post->ping_status === 'publish' ? __('View', 'publishpress') : __('Preview', 'publishpress'),
+                        'label' => $post->ping_status === 'publish' ? __('View', 'publishpress') : __(
+                            'Preview',
+                            'publishpress'
+                        ),
                         'url'   => htmlspecialchars_decode($viewLink),
                     ],
                 ]
