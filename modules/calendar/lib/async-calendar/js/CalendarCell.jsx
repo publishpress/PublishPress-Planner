@@ -91,6 +91,7 @@ export default function CalendarCell(props) {
                             index={itemIndex++}
                             isPopupOpened={isPopupOpened}
                             popupItemData={popupItemData}
+                            ajaxUrl={props.ajaxUrl}
                         />
                     )
                 })}

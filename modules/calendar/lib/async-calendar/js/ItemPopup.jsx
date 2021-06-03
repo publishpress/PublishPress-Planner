@@ -74,6 +74,64 @@ export default function ItemPopup(props) {
         return fieldRows;
     };
 
+    const callAjaxAction = async (action, args) => {
+        let dataUrl = props.ajaxUrl + '?action=' + action;
+
+        for (const argumentName in args) {
+            if (!args.hasOwnProperty(argumentName)) {
+                continue;
+            }
+
+            dataUrl += '&' + argumentName + '=' + args[argumentName];
+        }
+
+        const response = await fetch(dataUrl);
+        return await response.json();
+    }
+
+    const handleOnClick = (e, linkData) => {
+        e.preventDefault();
+
+        callAjaxAction(linkData.action, linkData.args).then((result) => {
+            window.dispatchEvent(
+                new CustomEvent(
+                    'PublishpressCalendar:refreshItemPopup',
+                    {
+                        detail: {
+                            id: props.id
+                        }
+                    }
+                )
+            );
+        });
+    }
+
+
+    const getPostLinks = () => {
+        const links = [];
+        let linkData;
+
+        for (const linkName in props.data.links) {
+            if (!props.data.links.hasOwnProperty(linkName)) {
+                continue;
+            }
+
+            linkData = props.data.links[linkName];
+
+            if (linkData.url) {
+                links.push(
+                    <a href={linkData.url}>{linkData.label}</a>
+                );
+            } else if (linkData.action) {
+                links.push(
+                    <a href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
+                );
+            }
+        }
+
+        return links;
+    }
+
     return (
         <div className="publishpress-calendar-popup" style={{top: positionTop, left: positionLeft}}>
             <div className="publishpress-calendar-popup-title">
@@ -93,10 +151,7 @@ export default function ItemPopup(props) {
             </table>
             <hr/>
             <div className="publishpress-calendar-popup-links">
-                <a href={props.data.links.edit}>{__('Edit', 'publishpress')}</a>
-                <a href={props.data.links.trash}>{__('Trash', 'publishpress')}</a>
-                <a href={props.data.links.view}>{props.data.status === 'publish' ? __('View', 'publishpress') : __('Preview', 'publishpress')}</a>
-                <a href="#">{__('Notify me', 'publishpress')}</a>
+                {getPostLinks()}
             </div>
         </div>
     )

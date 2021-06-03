@@ -3332,6 +3332,10 @@ if (!class_exists('PP_Calendar')) {
 
             $post = get_post($id);
 
+            if (empty($post) || is_wp_error($post)) {
+                wp_send_json(null, 404);
+            }
+
             $authorsNames = apply_filters(
                 'publishpress_post_authors_names',
                 [get_the_author_meta('display_name', $post->post_author)],
@@ -3355,12 +3359,23 @@ if (!class_exists('PP_Calendar')) {
                         'type'  => 'author',
                     ],
                 ],
-                'links'  => [
-                    'edit'  => htmlspecialchars_decode(get_edit_post_link($id)),
-                    'trash' => htmlspecialchars_decode(get_delete_post_link($id)),
-                    'view'  => htmlspecialchars_decode($viewLink),
+                'links' => [
+                    'edit'  => [
+                        'label' => __('Edit', 'publishpress'),
+                        'url'   => htmlspecialchars_decode(get_edit_post_link($id))
+                    ],
+                    'trash' => [
+                        'label' => __('Trash', 'publishpress'),
+                        'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
+                    ],
+                    'view'  => [
+                        'label' => $post->ping_status === 'publish' ? __('View', 'publishpress') : __('Preview', 'publishpress'),
+                        'url'   => htmlspecialchars_decode($viewLink),
+                    ],
                 ]
             ];
+
+            $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
 
             wp_send_json($data, 202);
         }

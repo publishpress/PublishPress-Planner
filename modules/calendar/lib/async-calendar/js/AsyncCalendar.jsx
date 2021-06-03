@@ -42,12 +42,14 @@ export default function AsyncCalendar(props) {
 
         window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
         window.addEventListener('PublishpressCalendar:clickItem', onClickItem);
-        document.addEventListener('keydown', pressEscKey);
+        window.addEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
+        document.addEventListener('keydown', onDocumentKeyDown);
 
         return () => {
             window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
             window.removeEventListener('PublishpressCalendar:clickItem', onClickItem);
-            document.removeEventListener('keydown', pressEscKey);
+            window.removeEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
+            document.removeEventListener('keydown', onDocumentKeyDown);
         }
     };
 
@@ -330,7 +332,13 @@ export default function AsyncCalendar(props) {
         });
     }
 
-    const pressEscKey = (e) => {
+    const onRefreshItemPopup = (e) => {
+        fetchItemData(e.detail.id).then(fetchedData => {
+            setOpenedItemData(fetchedData);
+        });
+    }
+
+    const onDocumentKeyDown = (e) => {
         if (e.key === 'Escape') {
             resetOpenedItem();
         }
@@ -364,7 +372,8 @@ export default function AsyncCalendar(props) {
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
                     openedItemId={openedItemId}
-                    getOpenedItemDataCallback={getOpenedItemData}/>
+                    getOpenedItemDataCallback={getOpenedItemData}
+                    ajaxUrl={props.ajaxUrl}/>
             );
 
             dayIndex++;
