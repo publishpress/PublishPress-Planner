@@ -36,8 +36,6 @@ export default function CalendarItem(props) {
     }
 
     const dispatchClickEvent = (e) => {
-        e.preventDefault();
-
         if (isPopupElementOrChildrenOfPopup(e.target)) {
             return;
         }
