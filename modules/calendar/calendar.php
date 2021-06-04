@@ -3338,9 +3338,16 @@ if (!class_exists('PP_Calendar')) {
             return null;
         }
 
-        private function getPostCategories($postId)
+        private function getPostCategoriesNames($postId)
         {
-            return [];
+            $categories = wp_get_post_terms($postId, 'category');
+
+            $categoriesNames = [];
+            foreach ($categories as $category) {
+                $categoriesNames[] = $category->name;
+            }
+
+            return $categoriesNames;
         }
 
         public function getPostData()
@@ -3395,7 +3402,7 @@ if (!class_exists('PP_Calendar')) {
                     ],
                     'categories' => [
                         'label' => _n('Category', 'Categories', count($categories), 'publishpress'),
-                        'value' => $this->getPostCategories($id),
+                        'value' => $this->getPostCategoriesNames($id),
                         'type'  => 'categories',
                     ],
                 ],
