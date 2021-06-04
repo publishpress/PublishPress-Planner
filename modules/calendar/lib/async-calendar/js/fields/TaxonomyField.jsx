@@ -1,4 +1,4 @@
-export default function CategoriesField(props) {
+export default function TaxonomyField(props) {
     const editField = () => {
         return (
             <input type="text" value={props.value}/>

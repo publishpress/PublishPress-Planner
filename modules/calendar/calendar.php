@@ -3338,16 +3338,26 @@ if (!class_exists('PP_Calendar')) {
             return null;
         }
 
-        private function getPostCategoriesNames($postId)
+        private function getPostTerms($postId, $taxonomy)
         {
-            $categories = wp_get_post_terms($postId, 'category');
+            $terms = wp_get_post_terms($postId, $taxonomy);
 
-            $categoriesNames = [];
-            foreach ($categories as $category) {
-                $categoriesNames[] = $category->name;
+            $termsNames = [];
+            foreach ($terms as $term) {
+                $termsNames[] = $term->name;
             }
 
-            return $categoriesNames;
+            return $termsNames;
+        }
+
+        private function getPostCategoriesNames($postId)
+        {
+            return $this->getPostTerms($postId, 'category');
+        }
+
+        private function getPostTagsNames($postId)
+        {
+            return $this->getPostTerms($postId, 'post_tag');
         }
 
         public function getPostData()
@@ -3376,6 +3386,9 @@ if (!class_exists('PP_Calendar')) {
 
             $viewLink = $post->post_status === 'publish' ? get_permalink($id) : get_preview_post_link($id);
 
+            $categories = $this->getPostCategoriesNames($id);
+            $tags = $this->getPostTagsNames($id);
+
             $data = [
                 'id'     => $id,
                 'status' => $post->post_status,
@@ -3402,8 +3415,13 @@ if (!class_exists('PP_Calendar')) {
                     ],
                     'categories' => [
                         'label' => _n('Category', 'Categories', count($categories), 'publishpress'),
-                        'value' => $this->getPostCategoriesNames($id),
-                        'type'  => 'categories',
+                        'value' => $categories,
+                        'type'  => 'taxonomy',
+                    ],
+                    'tags'       => [
+                        'label' => _n('Tag', 'Tags', count($tags), 'publishpress'),
+                        'value' => $tags,
+                        'type'  => 'taxonomy',
                     ],
                 ],
                 'links'  => [
