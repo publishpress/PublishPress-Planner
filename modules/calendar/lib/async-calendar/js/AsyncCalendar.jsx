@@ -111,11 +111,11 @@ export default function AsyncCalendar(props) {
             setIsLoading(false);
             setMessage(null);
 
-            resetClasses();
+            resetCSSClasses();
         });
     };
 
-    const resetClasses = () => {
+    const resetCSSClasses = () => {
         $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
