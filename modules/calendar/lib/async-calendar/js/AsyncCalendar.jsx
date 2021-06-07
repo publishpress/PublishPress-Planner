@@ -37,20 +37,29 @@ export default function AsyncCalendar(props) {
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
     };
 
-    const didMount = () => {
-        prepareDataByDate();
-
+    const addEventListeners = () => {
         window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
         window.addEventListener('PublishpressCalendar:clickItem', onClickItem);
         window.addEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
         document.addEventListener('keydown', onDocumentKeyDown);
+    }
 
-        return () => {
-            window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
-            window.removeEventListener('PublishpressCalendar:clickItem', onClickItem);
-            window.removeEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
-            document.removeEventListener('keydown', onDocumentKeyDown);
-        }
+    const removeEventListeners = () => {
+        window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
+        window.removeEventListener('PublishpressCalendar:clickItem', onClickItem);
+        window.removeEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
+        document.removeEventListener('keydown', onDocumentKeyDown);
+    }
+
+    const didUnmount = () => {
+        removeEventListeners();
+    }
+
+    const didMount = () => {
+        prepareDataByDate();
+        addEventListeners();
+
+        return didUnmount;
     };
 
     const prepareDataByDate = (newDate, filtersOverride) => {
