@@ -1358,7 +1358,7 @@ if (!class_exists('PP_Calendar')) {
                             </div>
                             <div><?php echo __('Initializing the calendar. Please wait...', 'publishpress'); ?></div>
                         </div>
-                        <div class="publishpress-calendar-loader-tip">
+                        <div class="publishpress-calendar-loader-delayed-tip">
                             <?php
                             echo __(
                                 'It seems like it is taking too long. Please, try reloading the page again and check the browser console looking for errors.',

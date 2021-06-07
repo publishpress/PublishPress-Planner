@@ -7,7 +7,7 @@
   box-sizing: border-box;
   position: relative;
 }
-.publishpress-calendar-wrap .publishpress-calendar-loader-tip {
+.publishpress-calendar-wrap .publishpress-calendar-loader-delayed-tip {
   color: #a9a9a9;
   width: 50%;
   padding-left: 50%;
