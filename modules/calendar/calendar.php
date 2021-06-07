@@ -1356,8 +1356,7 @@ if (!class_exists('PP_Calendar')) {
                                 <div class="sk-cube sk-cube8"></div>
                                 <div class="sk-cube sk-cube9"></div>
                             </div>
-                            <p><?php
-                                echo __('Loading the calendar...', 'publishpress'); ?></p>
+                            <div><?php echo __('Initializing the calendar. Please wait...', 'publishpress'); ?></div>
                         </div>
                         <div class="publishpress-calendar-loader-tip">
                             <?php
