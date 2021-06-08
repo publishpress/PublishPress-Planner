@@ -24,6 +24,7 @@ export default function AsyncCalendar(props) {
     const [filterWeeks, setFilterWeeks] = React.useState(props.numberOfWeeksToDisplay);
     const [openedItemId, setOpenedItemId] = React.useState();
     const [openedItemData, setOpenedItemData] = React.useState([]);
+    const [refreshCount, setRefreshCount] = React.useState(0);
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -55,67 +56,52 @@ export default function AsyncCalendar(props) {
         return didUnmount;
     }
 
-    const loadDataByDate = (newDate, filtersOverride) => {
+    const loadData = () => {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        fetchData(newDate, filtersOverride).then((fetchedData) => {
-            setFirstDateToDisplay(newDate);
-            setItemsByDate(fetchedData);
-            setIsLoading(false);
-            setMessage(null);
 
-            resetCSSClasses();
-        });
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay )) + '&number_of_weeks=' + numberOfWeeksToDisplay);
+
+        if (filterStatus) {
+            dataUrl += '&post_status=' + filterStatus;
+        }
+
+        if (filterCategory) {
+            dataUrl += '&category=' + filterCategory;
+        }
+
+        if (filterTag) {
+            dataUrl += '&post_tag=' + filterTag;
+        }
+
+        if (filterAuthor) {
+            dataUrl += '&post_author=' + filterAuthor;
+        }
+
+        if (filterPostType) {
+            dataUrl += '&post_author=' + filterPostType;
+        }
+
+        if (filterWeeks) {
+            dataUrl += '&weeks=' + filterWeeks;
+        }
+
+        fetch(dataUrl)
+            .then(response => response.json())
+            .then((fetchedData) => {
+                setItemsByDate(fetchedData);
+                setIsLoading(false);
+                setMessage(null);
+
+                resetCSSClasses();
+            });
     };
 
     const resetCSSClasses = () => {
         $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
-
-    const fetchData = async (newDate, filtersOverride) => {
-        if (!filtersOverride) {
-            filtersOverride = {filterName: null, filterValue: null};
-        }
-
-        const numberOfWeeksToDisplayOverride = (filtersOverride.filterName === 'weeks') ? (filtersOverride.filterValue || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
-
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(newDate || firstDateToDisplay )) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
-
-        const filterStatusValue = (filtersOverride.filterName === 'status' && filtersOverride.filterValue) || filterStatus;
-        if (filterStatusValue) {
-            dataUrl += '&post_status=' + filterStatusValue;
-        }
-
-        const filterCategoryValue = (filtersOverride.filterName === 'category' && filtersOverride.filterValue) || filterCategory;
-        if (filterCategoryValue) {
-            dataUrl += '&category=' + filterCategoryValue;
-        }
-
-        const filterTagValue = (filtersOverride.filterName === 'tag' && filtersOverride.filterValue) || filterTag;
-        if (filterTagValue) {
-            dataUrl += '&post_tag=' + filterTagValue;
-        }
-
-        const filterAuthorValue = (filtersOverride.filterName === 'author' && filtersOverride.filterValue) || filterAuthor;
-        if (filterAuthorValue) {
-            dataUrl += '&post_author=' + filterAuthorValue;
-        }
-
-        const filterPostTypeValue = (filtersOverride.filterName === 'postType' && filtersOverride.filterValue) || filterPostType;
-        if (filterPostTypeValue) {
-            dataUrl += '&post_author=' + filterPostTypeValue;
-        }
-
-        const filterWeeksValue = (filtersOverride.filterName === 'weeks' && filtersOverride.filterValue) || filterWeeks;
-        if (filterWeeksValue) {
-            dataUrl += '&weeks=' + filterWeeksValue;
-        }
-
-        const response = await fetch(dataUrl);
-        return await response.json();
-    }
 
     const fetchItemData = async (id) => {
         const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + id;
@@ -124,13 +110,13 @@ export default function AsyncCalendar(props) {
     }
 
     const navigateByOffsetInWeeks = (offsetInWeeks) => {
-        loadDataByDate(new Date(firstDateToDisplay.getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
+        setFirstDateToDisplay(new Date(firstDateToDisplay.getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
     };
 
     const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
-        loadDataByDate(firstDateToDisplay);
+        setRefreshCount(refreshCount + 1);
     };
 
     const handleBackPageOnClick = (e) => {
@@ -160,17 +146,11 @@ export default function AsyncCalendar(props) {
     const handleTodayOnClick = (e) => {
         e.preventDefault();
 
-        const newDate = getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday);
-
-        loadDataByDate(newDate);
-    };
-
-    const getItemByDateAndIndex = (date, index) => {
-        return itemsByDate[date][index];
+        setFirstDateToDisplay(getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday));
     };
 
     const moveItemToNewDate = async (itemDate, itemIndex, newYear, newMonth, newDay) => {
-        let item = getItemByDateAndIndex(itemDate, itemIndex);
+        let item = itemsByDate[itemDate][itemIndex];
 
         setIsLoading(true);
         setMessage(__('Moving the item...', 'publishpress'));
@@ -189,7 +169,7 @@ export default function AsyncCalendar(props) {
         });
 
         response.json().then(() => {
-            loadDataByDate(firstDateToDisplay);
+            setRefreshCount(refreshCount + 1);
         });
     }
 
@@ -276,8 +256,6 @@ export default function AsyncCalendar(props) {
             setNumberOfWeeksToDisplay(value);
 
         }
-
-        loadDataByDate(firstDateToDisplay, {filterName: filterName, filterValue: value});
     }
 
     const resetOpenedItem = () => {
@@ -365,6 +343,20 @@ export default function AsyncCalendar(props) {
 
     React.useEffect(didMount, []);
     React.useEffect(initDraggable);
+    React.useEffect(
+        loadData,
+        [
+            firstDateToDisplay,
+            numberOfWeeksToDisplay,
+            filterWeeks,
+            filterAuthor,
+            filterTag,
+            filterCategory,
+            filterStatus,
+            filterPostType,
+            refreshCount
+        ]
+    );
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
