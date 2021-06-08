@@ -11,23 +11,27 @@ const $ = jQuery;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(props.firstDateToDisplay);
-    const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
-    const [cells, setCells] = React.useState({});
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [message, setMessage] = React.useState();
-    const [filters, setFilters] = React.useState({
-        status: null,
-        category: null,
-        tag: null,
-        author: null,
-        postType: null,
-        weeks: null
+    const [state, setState] = React.useState({
+        firstDateToDisplay: getBeginDateOfWeekByDate(props.firstDateToDisplay),
+        numberOfWeeksToDisplay: props.numberOfWeeksToDisplay,
+        itemsByDate: props.items,
+        isLoading: false,
+        message: null,
+        filters: {
+            status: null,
+            category: null,
+            tag: null,
+            author: null,
+            postType: null,
+            weeks: props.numberOfWeeksToDisplay
+        },
+        openedItemId: null,
+        openedItemData: []
     });
-    const [openedItemId, setOpenedItemId] = React.useState();
-    const [openedItemData, setOpenedItemData] = React.useState([]);
 
-    let $lastHoveredCell;
+    const getFirstDateToDisplay = () => {
+        return state.firstDateToDisplay || props.firstDateToDisplay;
+    }
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -35,7 +39,7 @@ export default function AsyncCalendar(props) {
         }
 
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
-    };
+    }
 
     const addEventListeners = () => {
         window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
@@ -56,60 +60,42 @@ export default function AsyncCalendar(props) {
     }
 
     const didMount = () => {
-        prepareDataByDate();
         addEventListeners();
 
         return didUnmount;
-    };
+    }
 
-    const prepareDataByDate = (newDate, filtersOverride) => {
-        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
+    const setStateProperty = (stateProperties) => {
+        let newState = {...state};
 
-        const numberOfDaysToDisplay = numberOfWeeksToDisplayOverride * 7;
-        const firstDate = getBeginDateOfWeekByDate((newDate) ? newDate : firstDateToDisplay);
-
-        let newDataList = {};
-        let newCell;
-        let dayDate;
-        let dateString;
-        let lastMonthDisplayed = firstDate.getMonth();
-        let shouldDisplayMonthName;
-
-        setIsLoading(true);
-        setMessage(__('Loading...', 'publishpress'));
-
-        fetchData(filtersOverride).then((fetchedData) => {
-            for (let dataIndex = 0; dataIndex < numberOfDaysToDisplay; dataIndex++) {
-                dayDate = new Date(firstDate);
-                dayDate.setDate(dayDate.getDate() + dataIndex);
-                dateString = getDateAsStringInWpFormat(dayDate);
-
-                shouldDisplayMonthName = lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0;
-
-                newCell = {
-                    date: dayDate,
-                    shouldDisplayMonthName: shouldDisplayMonthName,
-                    isLoading: false,
-                    items: []
-                };
-
-                if (fetchedData[dateString]) {
-                    newCell.items = fetchedData[dateString];
-
-                    for (let itemIndex = 0; itemIndex < newCell.items.length; itemIndex++) {
-                        newCell.items[itemIndex].collapse = itemIndex >= props.maxVisibleItems;
-                    }
-                }
-
-                newDataList[getDateAsStringInWpFormat(dayDate)] = newCell;
-
-                lastMonthDisplayed = dayDate.getMonth();
+        for (const propertyName in stateProperties) {
+            if (!stateProperties.hasOwnProperty(propertyName)) {
+                continue;
             }
 
-            setCells(newDataList);
+            newState[propertyName] = stateProperties[propertyName];
+        }
 
-            setIsLoading(false);
-            setMessage(null);
+        setState(newState);
+
+        return newState;
+    }
+
+    window.t = setStateProperty;
+
+    const loadDataByDate = (newDate, filtersOverride) => {
+        setStateProperty({
+            isLoading: true,
+            message: __('Loading...', 'publishpress')
+        });
+
+        fetchData(newDate, filtersOverride).then((fetchedData) => {
+            setStateProperty({
+                firstDateToDisplay: newDate,
+                itemsByDate: fetchedData,
+                isLoading: false,
+                message: null,
+            });
 
             resetCSSClasses();
         });
@@ -120,12 +106,13 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
-    const fetchData = async (filtersOverride) => {
-        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
+    const fetchData = async (newDate, filtersOverride) => {
+        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || state.numberOfWeeksToDisplay) : state.numberOfWeeksToDisplay;
+        const firstDateToDisplay = newDate || state.firstDateToDisplay || props.firstDateToDisplay;
 
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(props.firstDateToDisplay) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay)) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
 
-        const filtersToUse = filtersOverride ? filtersOverride : filters;
+        const filtersToUse = filtersOverride || state.filters;
 
         if (filtersToUse) {
             if (filtersToUse.status) {
@@ -147,10 +134,6 @@ export default function AsyncCalendar(props) {
             if (filtersToUse.postType) {
                 dataUrl += '&post_type=' + filtersToUse.postType;
             }
-
-            if (filtersToUse.weeks) {
-                setNumberOfWeeksToDisplay(filtersToUse.weeks);
-            }
         }
 
         const response = await fetch(dataUrl);
@@ -164,27 +147,19 @@ export default function AsyncCalendar(props) {
     }
 
     const navigateByOffsetInWeeks = (offsetInWeeks) => {
-        const offsetInMilliseconds = calculateWeeksInMilliseconds(offsetInWeeks);
-
-        const newDate = new Date(
-            firstDateToDisplay.getTime() + offsetInMilliseconds
-        );
-
-        setFirstDateToDisplay(newDate);
-
-        prepareDataByDate(newDate);
+        loadDataByDate(new Date(getFirstDateToDisplay().getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
     };
 
     const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
-        prepareDataByDate();
+        loadDataByDate(state.firstDateToDisplay);
     };
 
     const handleBackPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(numberOfWeeksToDisplay * -1);
+        navigateByOffsetInWeeks(state.numberOfWeeksToDisplay * -1);
     };
 
     const handleBackOnClick = (e) => {
@@ -202,27 +177,28 @@ export default function AsyncCalendar(props) {
     const handleForwardPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(numberOfWeeksToDisplay);
+        navigateByOffsetInWeeks(state.numberOfWeeksToDisplay);
     };
 
     const handleTodayOnClick = (e) => {
         e.preventDefault();
 
         const newDate = getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday);
-        setFirstDateToDisplay(newDate);
 
-        prepareDataByDate(newDate);
+        loadDataByDate(newDate);
     };
 
     const getItemByDateAndIndex = (date, index) => {
-        return cells[date].items[index];
+        return state.itemsByDate[date][index];
     };
 
     const moveItemToNewDate = async (itemDate, itemIndex, newYear, newMonth, newDay) => {
         let item = getItemByDateAndIndex(itemDate, itemIndex);
 
-        setIsLoading(true);
-        setMessage(__('Moving the item...', 'publishpress'));
+        setStateProperty({
+            isLoading: true,
+            message: __('Moving the item...', 'publishpress'),
+        });
 
         const dataUrl = getUrl(props.actionMoveItem);
 
@@ -238,7 +214,7 @@ export default function AsyncCalendar(props) {
         });
 
         response.json().then(() => {
-            prepareDataByDate();
+            loadDataByDate(state.firstDateToDisplay);
         });
     }
 
@@ -247,7 +223,7 @@ export default function AsyncCalendar(props) {
         const $item = $(ui.draggable[0]);
         const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
 
-        $dayCell.addClass('publishpress-calendar-loading');
+        $(event.target).addClass('publishpress-calendar-loading');
 
         moveItemToNewDate(
             dateTime,
@@ -259,18 +235,13 @@ export default function AsyncCalendar(props) {
     };
 
     const handleOnHoverCellCallback = (event, ui) => {
-        if ($lastHoveredCell) {
-            $lastHoveredCell.removeClass('publishpress-calendar-day-hover');
-        }
+        resetCSSClasses();
 
-        const $dayParent = $(event.target);
-        $dayParent.addClass('publishpress-calendar-day-hover');
-
-        $lastHoveredCell = $dayParent;
+        $(event.target).addClass('publishpress-calendar-day-hover');
     };
 
     const itemPopupIsOpenedById = (id) => {
-        return id === openedItemId;
+        return id === state.openedItemId;
     }
 
     const initDraggable = () => {
@@ -300,8 +271,6 @@ export default function AsyncCalendar(props) {
     };
 
     const onFilterEventCallback = (e) => {
-        let currentFilters;
-
         switch (e.detail.filter) {
             case 'status':
             case 'category':
@@ -309,41 +278,47 @@ export default function AsyncCalendar(props) {
             case 'author':
             case 'postType':
             case 'weeks':
+                let filters = {...state.filters}
+
                 if (e.detail.value) {
                     filters[e.detail.filter] = e.detail.value[0].id;
                 } else {
                     filters[e.detail.filter] = null;
                 }
 
-                currentFilters = filters;
-                setFilters({...filters});
+                setStateProperty({filters: filters});
 
-                prepareDataByDate(firstDateToDisplay, currentFilters);
+                loadDataByDate(getFirstDateToDisplay(), filters);
                 break;
         }
     }
 
     const resetOpenedItem = () => {
-        setOpenedItemId(null);
-        setOpenedItemData(null);
+        setStateProperty({
+            openedItemId: null,
+            openedItemData: null,
+        });
     }
 
     const onClickItem = (e) => {
-        setOpenedItemId(e.detail.id);
-        setOpenedItemData(null);
+        setStateProperty({
+            openedItemId: e.detail.id,
+            openedItemData: null,
+        });
 
         if (itemPopupIsOpenedById(e.detail.id)) {
             return false;
         }
 
-        fetchItemData(e.detail.id).then(fetchedData => {
-            setOpenedItemData(fetchedData);
-        });
+        onRefreshItemPopup(e);
     }
 
     const onRefreshItemPopup = (e) => {
         fetchItemData(e.detail.id).then(fetchedData => {
-            setOpenedItemData(fetchedData);
+            setStateProperty({
+                openedItemId: e.detail.id,
+                openedItemData: fetchedData
+            });
         });
     }
 
@@ -354,48 +329,57 @@ export default function AsyncCalendar(props) {
     }
 
     const getOpenedItemData = () => {
-        return openedItemData;
+        return state.openedItemData;
     }
 
     const calendarBodyRows = () => {
-        let rows = [];
-        let rowCells;
-        let cell;
-        let dayIndex = 0;
+        const numberOfDaysToDisplay = state.numberOfWeeksToDisplay * 7;
+        const firstDate = getBeginDateOfWeekByDate(getFirstDateToDisplay());
 
-        for (const date in cells) {
-            if (dayIndex === 0) {
+        let tableRows = [];
+        let rowCells = [];
+        let dayIndexInTheRow = 0;
+        let dayDate;
+        let dateString;
+        let lastMonthDisplayed = firstDate.getMonth();
+
+        for (let dataIndex = 0; dataIndex < numberOfDaysToDisplay; dataIndex++) {
+            if (dayIndexInTheRow === 0) {
                 rowCells = [];
             }
 
-            cell = cells[date];
+            dayDate = new Date(firstDate);
+            dayDate.setDate(dayDate.getDate() + dataIndex);
+            dateString = getDateAsStringInWpFormat(dayDate);
 
             rowCells.push(
                 <CalendarCell
-                    key={'day-' + cell.date.getTime()}
-                    date={cell.date}
-                    shouldDisplayMonthName={cell.shouldDisplayMonthName}
+                    key={'day-' + dayDate.getTime()}
+                    date={dayDate}
+                    shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
-                    isLoading={cell.isLoading}
-                    items={cell.items}
+                    isLoading={false}
+                    items={state.itemsByDate[dateString] || []}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
-                    openedItemId={openedItemId}
+                    openedItemId={state.openedItemId}
                     getOpenedItemDataCallback={getOpenedItemData}
                     ajaxUrl={props.ajaxUrl}/>
             );
 
-            dayIndex++;
+            dayIndexInTheRow++;
 
-            if (dayIndex === 7) {
-                dayIndex = 0;
-                rows.push(
+            if (dayIndexInTheRow === 7) {
+                dayIndexInTheRow = 0;
+                tableRows.push(
                     <tr>{rowCells}</tr>
                 );
             }
+
+            lastMonthDisplayed = dayDate.getMonth();
         }
 
-        return rows;
+        return tableRows;
     };
 
     React.useEffect(didMount, []);
@@ -406,7 +390,7 @@ export default function AsyncCalendar(props) {
             <FilterBar
                 statuses={props.statuses}
                 postTypes={props.postTypes}
-                numberOfWeeksToDisplay={props.numberOfWeeksToDisplay}
+                numberOfWeeksToDisplay={state.numberOfWeeksToDisplay}
                 ajaxurl={props.ajaxUrl}
                 nonce={props.nonce}
             />
@@ -429,7 +413,8 @@ export default function AsyncCalendar(props) {
                 {calendarBodyRows()}
                 </tbody>
             </table>
-            <MessageBar showSpinner={isLoading} message={message}/>
+
+            <MessageBar showSpinner={state.isLoading} message={state.message}/>
         </div>
     )
 }

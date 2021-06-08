@@ -597,11 +597,17 @@ if (!class_exists('PP_Calendar')) {
                         ];
                     }
 
+                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
+
+                    $firstDateToDisplay = (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
+                            'Y-m-d'
+                        )) . ' 00:00:00';
+                    $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
+                    $endDate = $this->get_ending_of_week($firstDateToDisplay, 'Y-m-d', $numberOfWeeksToDisplay);
+
                     $params = [
-                        'numberOfWeeksToDisplay' => isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS,
-                        'firstDateToDisplay'     => (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
-                                'Y-m-d'
-                            )) . ' 00:00:00',
+                        'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
+                        'firstDateToDisplay'     => $firstDateToDisplay,
                         'theme'                  => 'light',
                         'weekStartsOnSunday'     => get_option('start_of_week', 0) == 0,
                         'todayDate'              => date('Y-m-d 00:00:00'),
@@ -611,6 +617,7 @@ if (!class_exists('PP_Calendar')) {
                         'postTypes'              => $postTypes,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
+                        'items'                  => $this->getCalendarData($firstDateToDisplay, $endDate, []),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
                 }

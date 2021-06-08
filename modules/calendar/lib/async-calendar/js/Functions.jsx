@@ -126,3 +126,10 @@ export function getMonthNameByMonthIndex(month) {
 
     return monthNames[month];
 }
+
+export function getDateWithNoTimezoneOffset(dateString) {
+    let date = new Date(dateString);
+    const browserTimezoneOffset = date.getTimezoneOffset() * 60000;
+
+    return new Date(date.getTime() + browserTimezoneOffset);
+}
