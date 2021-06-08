@@ -40,16 +40,7 @@ export default function CalendarItem(props) {
             return;
         }
 
-        window.dispatchEvent(
-            new CustomEvent(
-                'PublishpressCalendar:clickItem',
-                {
-                    detail: {
-                        id: props.id
-                    }
-                }
-            )
-        );
+        props.onClickItemCallback(props.id);
     }
 
     const iconElement = props.showIcon && props.icon ?
