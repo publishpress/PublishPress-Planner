@@ -121,7 +121,7 @@ export default function AsyncCalendar(props) {
             });
     }
 
-    const navigateByOffsetInWeeks = (offsetInWeeks) => {
+    const addOffsetInWeeksToFirstDateToDisplay = (offsetInWeeks) => {
         setFirstDateToDisplay(new Date(firstDateToDisplay.getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
     };
 
@@ -134,25 +134,25 @@ export default function AsyncCalendar(props) {
     const handleBackPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(numberOfWeeksToDisplay * -1);
+        addOffsetInWeeksToFirstDateToDisplay(numberOfWeeksToDisplay * -1);
     };
 
     const handleBackOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(-1);
+        addOffsetInWeeksToFirstDateToDisplay(-1);
     };
 
     const handleForwardOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(1);
+        addOffsetInWeeksToFirstDateToDisplay(1);
     }
 
     const handleForwardPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(numberOfWeeksToDisplay);
+        addOffsetInWeeksToFirstDateToDisplay(numberOfWeeksToDisplay);
     };
 
     const handleTodayOnClick = (e) => {
