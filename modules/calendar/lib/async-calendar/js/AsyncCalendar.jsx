@@ -159,7 +159,7 @@ export default function AsyncCalendar(props) {
         setFirstDateToDisplay(getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday));
     };
 
-    const moveItemToNewDate = async (itemDate, itemIndex, newYear, newMonth, newDay) => {
+    const moveItemToNewDate = (itemDate, itemIndex, newYear, newMonth, newDay) => {
         let item = itemsByDate[itemDate][itemIndex];
 
         setIsLoading(true);
@@ -173,14 +173,11 @@ export default function AsyncCalendar(props) {
         formData.append('month', newMonth);
         formData.append('day', newDay);
 
-        const response = await fetch(dataUrl, {
-            method: 'POST',
-            body: formData
-        });
-
-        response.json().then(() => {
-            setRefreshCount(refreshCount + 1);
-        });
+        fetch(dataUrl, {method: 'POST', body: formData})
+            .then(response => response.json())
+            .then(() => {
+                setRefreshCount(refreshCount + 1);
+            });
     }
 
     const handleOnDropItemCallback = (event, ui) => {
