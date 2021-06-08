@@ -81,7 +81,7 @@ export default function CalendarItem(props) {
                        icon={props.icon}
                        timestamp={props.timestamp}
                        color={props.color}
-                       data={props.popupItemData}
+                       data={props.isPopupOpened ? props.getPopupItemDataCallback() : null}
                        ajaxUrl={props.ajaxUrl}/>
             }
         </li>
