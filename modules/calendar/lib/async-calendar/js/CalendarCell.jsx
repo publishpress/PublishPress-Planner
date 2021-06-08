@@ -91,6 +91,7 @@ export default function CalendarCell(props) {
                             isPopupOpened={isPopupOpened}
                             getPopupItemDataCallback={props.getOpenedItemDataCallback}
                             onClickItemCallback={props.onClickItemCallback}
+                            onItemActionClickCallback={props.onItemActionClickCallback}
                             ajaxUrl={props.ajaxUrl}
                         />
                     )

@@ -108,17 +108,7 @@ export default function ItemPopup(props) {
         e.preventDefault();
 
         callAjaxAction(linkData.action, linkData.args).then((result) => {
-            window.dispatchEvent(
-                new CustomEvent(
-                    'PublishpressCalendar:refreshItemPopup',
-                    {
-                        detail: {
-                            id: props.id,
-                            result: result
-                        }
-                    }
-                )
-            );
+            props.onItemActionClickCallback(linkData.action, props.id, result);
         });
     }
 

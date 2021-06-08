@@ -36,12 +36,10 @@ export default function AsyncCalendar(props) {
     }
 
     const addEventListeners = () => {
-        window.addEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
         document.addEventListener('keydown', onDocumentKeyDown);
     }
 
     const removeEventListeners = () => {
-        window.removeEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
         document.removeEventListener('keydown', onDocumentKeyDown);
     }
 
@@ -280,7 +278,7 @@ export default function AsyncCalendar(props) {
         setOpenedItemId(id);
     }
 
-    const onRefreshItemPopup = (e) => {
+    const onPopupItemActionClick = (action, id, result) => {
         setOpenedItemRefreshCount(openedItemRefreshCount + 1);
     }
 
@@ -327,7 +325,8 @@ export default function AsyncCalendar(props) {
                     openedItemId={openedItemId}
                     getOpenedItemDataCallback={getOpenedItemData}
                     ajaxUrl={props.ajaxUrl}
-                    onClickItemCallback={onClickItem}/>
+                    onClickItemCallback={onClickItem}
+                    onItemActionClickCallback={onPopupItemActionClick}/>
             );
 
             dayIndexInTheRow++;
