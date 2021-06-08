@@ -113,7 +113,8 @@ export default function ItemPopup(props) {
                     'PublishpressCalendar:refreshItemPopup',
                     {
                         detail: {
-                            id: props.id
+                            id: props.id,
+                            result: result
                         }
                     }
                 )

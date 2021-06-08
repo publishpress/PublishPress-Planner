@@ -24,6 +24,7 @@ export default function AsyncCalendar(props) {
     const [filterWeeks, setFilterWeeks] = React.useState(props.numberOfWeeksToDisplay);
     const [openedItemId, setOpenedItemId] = React.useState();
     const [openedItemData, setOpenedItemData] = React.useState([]);
+    const [openedItemRefreshCount, setOpenedItemRefreshCount] = React.useState(0);
     const [refreshCount, setRefreshCount] = React.useState(0);
 
     const getUrl = (action, query) => {
@@ -103,10 +104,23 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
-    const fetchItemData = async (id) => {
-        const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + id;
-        const response = await fetch(dataUrl);
-        return await response.json();
+    const loadItemData = () => {
+        if (!openedItemId) {
+            return;
+        }
+
+        setIsLoading(true);
+        setMessage(__('Loading item...', 'publishpress'));
+
+        const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + openedItemId;
+        fetch(dataUrl)
+            .then(response => response.json())
+            .then((data) => {
+                setIsLoading(false);
+                setMessage(null);
+
+                setOpenedItemData(data);
+            });
     }
 
     const navigateByOffsetInWeeks = (offsetInWeeks) => {
@@ -264,21 +278,12 @@ export default function AsyncCalendar(props) {
     }
 
     const onClickItem = (e) => {
-        setOpenedItemId(e.detail.id);
         setOpenedItemData(null);
-
-        if (itemPopupIsOpenedById(e.detail.id)) {
-            return false;
-        }
-
-        onRefreshItemPopup(e);
+        setOpenedItemId(e.detail.id);
     }
 
     const onRefreshItemPopup = (e) => {
-        fetchItemData(e.detail.id).then(fetchedData => {
-            setOpenedItemId(e.detail.id);
-            setOpenedItemData(fetchedData);
-        });
+        setOpenedItemRefreshCount(openedItemRefreshCount + 1);
     }
 
     const onDocumentKeyDown = (e) => {
@@ -357,6 +362,13 @@ export default function AsyncCalendar(props) {
             refreshCount
         ]
     );
+    React.useEffect(
+        loadItemData,
+        [
+            openedItemId,
+            openedItemRefreshCount
+        ]
+    )
 
     return (
         <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
