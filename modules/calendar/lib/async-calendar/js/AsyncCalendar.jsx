@@ -11,27 +11,19 @@ const $ = jQuery;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-    const [state, setState] = React.useState({
-        firstDateToDisplay: getBeginDateOfWeekByDate(props.firstDateToDisplay),
-        numberOfWeeksToDisplay: props.numberOfWeeksToDisplay,
-        itemsByDate: props.items,
-        isLoading: false,
-        message: null,
-        filters: {
-            status: null,
-            category: null,
-            tag: null,
-            author: null,
-            postType: null,
-            weeks: props.numberOfWeeksToDisplay
-        },
-        openedItemId: null,
-        openedItemData: []
-    });
-
-    const getFirstDateToDisplay = () => {
-        return state.firstDateToDisplay || props.firstDateToDisplay;
-    }
+    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay));
+    const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
+    const [itemsByDate, setItemsByDate] = React.useState(props.items);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [message, setMessage] = React.useState();
+    const [filterStatus, setFilterStatus] = React.useState();
+    const [filterCategory, setFilterCategory] = React.useState();
+    const [filterTag, setFilterTag] = React.useState();
+    const [filterAuthor, setFilterAuthor] = React.useState();
+    const [filterPostType, setFilterPostType] = React.useState();
+    const [filterWeeks, setFilterWeeks] = React.useState(props.numberOfWeeksToDisplay);
+    const [openedItemId, setOpenedItemId] = React.useState();
+    const [openedItemData, setOpenedItemData] = React.useState([]);
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -42,14 +34,12 @@ export default function AsyncCalendar(props) {
     }
 
     const addEventListeners = () => {
-        window.addEventListener('PublishpressCalendar:filter', onFilterEventCallback);
         window.addEventListener('PublishpressCalendar:clickItem', onClickItem);
         window.addEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
         document.addEventListener('keydown', onDocumentKeyDown);
     }
 
     const removeEventListeners = () => {
-        window.removeEventListener('PublishpressCalendar:filter', onFilterEventCallback);
         window.removeEventListener('PublishpressCalendar:clickItem', onClickItem);
         window.removeEventListener('PublishpressCalendar:refreshItemPopup', onRefreshItemPopup);
         document.removeEventListener('keydown', onDocumentKeyDown);
@@ -65,37 +55,15 @@ export default function AsyncCalendar(props) {
         return didUnmount;
     }
 
-    const setStateProperty = (stateProperties) => {
-        let newState = {...state};
-
-        for (const propertyName in stateProperties) {
-            if (!stateProperties.hasOwnProperty(propertyName)) {
-                continue;
-            }
-
-            newState[propertyName] = stateProperties[propertyName];
-        }
-
-        setState(newState);
-
-        return newState;
-    }
-
-    window.t = setStateProperty;
-
     const loadDataByDate = (newDate, filtersOverride) => {
-        setStateProperty({
-            isLoading: true,
-            message: __('Loading...', 'publishpress')
-        });
+        setIsLoading(true);
+        setMessage(__('Loading...', 'publishpress'));
 
         fetchData(newDate, filtersOverride).then((fetchedData) => {
-            setStateProperty({
-                firstDateToDisplay: newDate,
-                itemsByDate: fetchedData,
-                isLoading: false,
-                message: null,
-            });
+            setFirstDateToDisplay(newDate);
+            setItemsByDate(fetchedData);
+            setIsLoading(false);
+            setMessage(null);
 
             resetCSSClasses();
         });
@@ -107,33 +75,42 @@ export default function AsyncCalendar(props) {
     };
 
     const fetchData = async (newDate, filtersOverride) => {
-        const numberOfWeeksToDisplayOverride = filtersOverride ? (filtersOverride.weeks || state.numberOfWeeksToDisplay) : state.numberOfWeeksToDisplay;
-        const firstDateToDisplay = newDate || state.firstDateToDisplay || props.firstDateToDisplay;
+        if (!filtersOverride) {
+            filtersOverride = {filterName: null, filterValue: null};
+        }
 
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay)) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
+        const numberOfWeeksToDisplayOverride = (filtersOverride.filterName === 'weeks') ? (filtersOverride.filterValue || numberOfWeeksToDisplay) : numberOfWeeksToDisplay;
 
-        const filtersToUse = filtersOverride || state.filters;
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(newDate || firstDateToDisplay )) + '&number_of_weeks=' + numberOfWeeksToDisplayOverride);
 
-        if (filtersToUse) {
-            if (filtersToUse.status) {
-                dataUrl += '&post_status=' + filtersToUse.status;
-            }
+        const filterStatusValue = (filtersOverride.filterName === 'status' && filtersOverride.filterValue) || filterStatus;
+        if (filterStatusValue) {
+            dataUrl += '&post_status=' + filterStatusValue;
+        }
 
-            if (filtersToUse.category) {
-                dataUrl += '&category=' + filtersToUse.category;
-            }
+        const filterCategoryValue = (filtersOverride.filterName === 'category' && filtersOverride.filterValue) || filterCategory;
+        if (filterCategoryValue) {
+            dataUrl += '&category=' + filterCategoryValue;
+        }
 
-            if (filtersToUse.tag) {
-                dataUrl += '&post_tag=' + filtersToUse.tag;
-            }
+        const filterTagValue = (filtersOverride.filterName === 'tag' && filtersOverride.filterValue) || filterTag;
+        if (filterTagValue) {
+            dataUrl += '&post_tag=' + filterTagValue;
+        }
 
-            if (filtersToUse.author) {
-                dataUrl += '&post_author=' + filtersToUse.author;
-            }
+        const filterAuthorValue = (filtersOverride.filterName === 'author' && filtersOverride.filterValue) || filterAuthor;
+        if (filterAuthorValue) {
+            dataUrl += '&post_author=' + filterAuthorValue;
+        }
 
-            if (filtersToUse.postType) {
-                dataUrl += '&post_type=' + filtersToUse.postType;
-            }
+        const filterPostTypeValue = (filtersOverride.filterName === 'postType' && filtersOverride.filterValue) || filterPostType;
+        if (filterPostTypeValue) {
+            dataUrl += '&post_author=' + filterPostTypeValue;
+        }
+
+        const filterWeeksValue = (filtersOverride.filterName === 'weeks' && filtersOverride.filterValue) || filterWeeks;
+        if (filterWeeksValue) {
+            dataUrl += '&weeks=' + filterWeeksValue;
         }
 
         const response = await fetch(dataUrl);
@@ -147,19 +124,19 @@ export default function AsyncCalendar(props) {
     }
 
     const navigateByOffsetInWeeks = (offsetInWeeks) => {
-        loadDataByDate(new Date(getFirstDateToDisplay().getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
+        loadDataByDate(new Date(firstDateToDisplay.getTime() + calculateWeeksInMilliseconds(offsetInWeeks)));
     };
 
     const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
-        loadDataByDate(state.firstDateToDisplay);
+        loadDataByDate(firstDateToDisplay);
     };
 
     const handleBackPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(state.numberOfWeeksToDisplay * -1);
+        navigateByOffsetInWeeks(numberOfWeeksToDisplay * -1);
     };
 
     const handleBackOnClick = (e) => {
@@ -177,7 +154,7 @@ export default function AsyncCalendar(props) {
     const handleForwardPageOnClick = (e) => {
         e.preventDefault();
 
-        navigateByOffsetInWeeks(state.numberOfWeeksToDisplay);
+        navigateByOffsetInWeeks(numberOfWeeksToDisplay);
     };
 
     const handleTodayOnClick = (e) => {
@@ -189,16 +166,14 @@ export default function AsyncCalendar(props) {
     };
 
     const getItemByDateAndIndex = (date, index) => {
-        return state.itemsByDate[date][index];
+        return itemsByDate[date][index];
     };
 
     const moveItemToNewDate = async (itemDate, itemIndex, newYear, newMonth, newDay) => {
         let item = getItemByDateAndIndex(itemDate, itemIndex);
 
-        setStateProperty({
-            isLoading: true,
-            message: __('Moving the item...', 'publishpress'),
-        });
+        setIsLoading(true);
+        setMessage(__('Moving the item...', 'publishpress'));
 
         const dataUrl = getUrl(props.actionMoveItem);
 
@@ -214,7 +189,7 @@ export default function AsyncCalendar(props) {
         });
 
         response.json().then(() => {
-            loadDataByDate(state.firstDateToDisplay);
+            loadDataByDate(firstDateToDisplay);
         });
     }
 
@@ -241,7 +216,7 @@ export default function AsyncCalendar(props) {
     };
 
     const itemPopupIsOpenedById = (id) => {
-        return id === state.openedItemId;
+        return id === openedItemId;
     }
 
     const initDraggable = () => {
@@ -270,41 +245,49 @@ export default function AsyncCalendar(props) {
         });
     };
 
-    const onFilterEventCallback = (e) => {
-        switch (e.detail.filter) {
-            case 'status':
-            case 'category':
-            case 'tag':
-            case 'author':
-            case 'postType':
-            case 'weeks':
-                let filters = {...state.filters}
-
-                if (e.detail.value) {
-                    filters[e.detail.filter] = e.detail.value[0].id;
-                } else {
-                    filters[e.detail.filter] = null;
-                }
-
-                setStateProperty({filters: filters});
-
-                loadDataByDate(getFirstDateToDisplay(), filters);
-                break;
+    const onFilterEventCallback = (filterName, value) => {
+        if ('status' === filterName) {
+            setFilterStatus(value);
         }
+
+        if ('category' === filterName) {
+            setFilterCategory(value);
+        }
+
+        if ('tag' === filterName) {
+            setFilterTag(value);
+        }
+
+        if ('author' === filterName) {
+            setFilterAuthor(value);
+        }
+
+        if ('postType' === filterName) {
+            setFilterPostType(value);
+        }
+
+        if ('weeks' === filterName) {
+            value = parseInt(value);
+            if (value === 0 || isNaN(value)) {
+                value = props.numberOfWeeksToDisplay;
+            }
+
+            setFilterWeeks(value);
+            setNumberOfWeeksToDisplay(value);
+
+        }
+
+        loadDataByDate(firstDateToDisplay, {filterName: filterName, filterValue: value});
     }
 
     const resetOpenedItem = () => {
-        setStateProperty({
-            openedItemId: null,
-            openedItemData: null,
-        });
+        setOpenedItemId(null);
+        setOpenedItemData(null);
     }
 
     const onClickItem = (e) => {
-        setStateProperty({
-            openedItemId: e.detail.id,
-            openedItemData: null,
-        });
+        setOpenedItemId(e.detail.id);
+        setOpenedItemData(null);
 
         if (itemPopupIsOpenedById(e.detail.id)) {
             return false;
@@ -315,10 +298,8 @@ export default function AsyncCalendar(props) {
 
     const onRefreshItemPopup = (e) => {
         fetchItemData(e.detail.id).then(fetchedData => {
-            setStateProperty({
-                openedItemId: e.detail.id,
-                openedItemData: fetchedData
-            });
+            setOpenedItemId(e.detail.id);
+            setOpenedItemData(fetchedData);
         });
     }
 
@@ -329,12 +310,12 @@ export default function AsyncCalendar(props) {
     }
 
     const getOpenedItemData = () => {
-        return state.openedItemData;
+        return openedItemData;
     }
 
     const calendarBodyRows = () => {
-        const numberOfDaysToDisplay = state.numberOfWeeksToDisplay * 7;
-        const firstDate = getBeginDateOfWeekByDate(getFirstDateToDisplay());
+        const numberOfDaysToDisplay = numberOfWeeksToDisplay * 7;
+        const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay);
 
         let tableRows = [];
         let rowCells = [];
@@ -359,10 +340,10 @@ export default function AsyncCalendar(props) {
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
                     isLoading={false}
-                    items={state.itemsByDate[dateString] || []}
+                    items={itemsByDate[dateString] || []}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
-                    openedItemId={state.openedItemId}
+                    openedItemId={openedItemId}
                     getOpenedItemDataCallback={getOpenedItemData}
                     ajaxUrl={props.ajaxUrl}/>
             );
@@ -390,10 +371,10 @@ export default function AsyncCalendar(props) {
             <FilterBar
                 statuses={props.statuses}
                 postTypes={props.postTypes}
-                numberOfWeeksToDisplay={state.numberOfWeeksToDisplay}
+                numberOfWeeksToDisplay={numberOfWeeksToDisplay}
                 ajaxurl={props.ajaxUrl}
                 nonce={props.nonce}
-            />
+                onChange={onFilterEventCallback}/>
 
             <NavigationBar
                 refreshOnClickCallback={handleRefreshOnClick}
@@ -414,7 +395,7 @@ export default function AsyncCalendar(props) {
                 </tbody>
             </table>
 
-            <MessageBar showSpinner={state.isLoading} message={state.message}/>
+            <MessageBar showSpinner={isLoading} message={message}/>
         </div>
     )
 }

@@ -1,45 +1,36 @@
 import Select from "./Select";
 
-const $ = jQuery;
 const _n = wp.i18n._n;
 
 export default function FilterBar(props) {
-    const dispatchFilterEvent = (filterName, value) => {
-        window.dispatchEvent(
-            new CustomEvent(
-                'PublishpressCalendar:filter',
-                {
-                    detail: {
-                        filter: filterName,
-                        value: value
-                    }
-                }
-            )
-        );
+    const handleFilterChange = (filterName, value) => {
+        const filterValue = value ? value[0].id : null;
+
+        props.onChange(filterName, filterValue);
     }
 
     const handleStatusChange = (e, element, value) => {
-        dispatchFilterEvent('status', value);
+        handleFilterChange('status', value);
     }
 
     const handleCategoriesChange = (e, element, value) => {
-        dispatchFilterEvent('category', value);
+        handleFilterChange('category', value);
     }
 
     const handleTagsChange = (e, element, value) => {
-        dispatchFilterEvent('tag', value);
+        handleFilterChange('tag', value);
     }
 
     const handleAuthorsChange = (e, element, value) => {
-        dispatchFilterEvent('author', value);
+        handleFilterChange('author', value);
     }
 
     const handlePostTypeChange = (e, element, value) => {
-        dispatchFilterEvent('postType', value);
+        handleFilterChange('postType', value);
     }
 
     const handleWeeksChange = (e, element, value) => {
-        dispatchFilterEvent('weeks', value);
+        handleFilterChange('weeks', value);
     }
 
     const getWeeksFilterLabel = (numberOfWeeks) => {
