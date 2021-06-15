@@ -123,6 +123,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Fixed: Fix "Statuses" doesn't appear with a title in important areas, #846;
+* Fixed: Fix links to posts with custom privacy are changed to preview links, #852;
 
 = [3.3.2] - 2021-05-27 =
 
