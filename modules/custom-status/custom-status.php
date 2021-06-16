@@ -299,7 +299,7 @@ if (!class_exists('PP_Custom_Status')) {
                     [
                         'hierarchical'          => false,
                         'update_count_callback' => '_update_post_term_count',
-                        'label'                 => false,
+                        'label'                 => __('Statuses', 'publishpress'),
                         'query_var'             => false,
                         'rewrite'               => false,
                         'show_ui'               => false,
@@ -2215,9 +2215,11 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             //Is this published?
-            if (in_array($post->post_status, $this->published_statuses)) {
-                return $permalink;
-            }
+            if ($status_obj = get_post_status_object($post->post_status)) {
+                if (!empty($status_obj->public) || !empty($status_obj->private)) {
+                	return $permalink;
+            	}
+            } 
 
             //Are we overriding the permalink? Don't do anything
             if (isset($_POST['action']) && $_POST['action'] == 'sample-permalink') {
