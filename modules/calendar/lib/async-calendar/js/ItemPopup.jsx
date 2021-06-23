@@ -99,6 +99,10 @@ export default function ItemPopup(props) {
                     field = <UserField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
+                case 'number':
+                    field = <UserField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
                 default:
                     field = null;
                     break;
