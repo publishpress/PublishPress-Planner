@@ -3,6 +3,8 @@ import AuthorsField from "./fields/AuthorsField";
 import PostTypeField from "./fields/PostTypeField";
 import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
+import CheckboxField from "./fields/CheckboxField";
+import LocationField from "./fields/LocationField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -72,6 +74,14 @@ export default function ItemPopup(props) {
 
                 case 'taxonomy':
                     field = <TaxonomyField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'checkbox':
+                    field = <CheckboxField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'location':
+                    field = <LocationField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
                 default:

@@ -10,6 +10,9 @@
 @itemColor: #fff;
 @itemIconColor: rgba(255, 255, 255, 0.8);
 @itemTimeColor: rgba(255, 255, 255, 0.6);
+@itemPopupColor: #000;
+@itemPopupYesColor: #4eaf5a;
+@itemPopupNoColor: #f7b8b8;
 
 @todayBackground: #d6e3f8;
 @todayDateBackground: #655997;
@@ -31,6 +34,7 @@
 @buttonBorder: #ccc;
 @buttonHoverBackground: #fcfcfc;
 @buttonActiveBackground: #e6e6e6;
+
 
 .publishpress-calendar-theme-light {
     > table {
@@ -115,6 +119,25 @@
             margin-right: 2px;
             color: @itemTimeColor;
             font-size: 11px;
+        }
+    }
+
+    .publishpress-calendar-popup {
+        color: @itemPopupColor;
+
+        .dashicons {
+            color: @itemPopupColor;
+            line-height: 20px;
+        }
+
+        .dashicons-no,
+        .dashicons-no-alt {
+            color: @itemPopupNoColor;
+        }
+
+        .dashicons-yes,
+        .dashicons-yes-alt {
+            color: @itemPopupYesColor;
         }
     }
 

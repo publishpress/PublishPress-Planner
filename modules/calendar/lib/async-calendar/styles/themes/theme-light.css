@@ -63,6 +63,21 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 11px;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-popup {
+  color: #000;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons {
+  color: #000;
+  line-height: 20px;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-no,
+.publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-no-alt {
+  color: #f7b8b8;
+}
+.publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-yes,
+.publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-yes-alt {
+  color: #4eaf5a;
+}
 .publishpress-calendar-theme-light .publishpress-calendar-message-bar {
   padding: 5px 5px;
   height: 20px;
