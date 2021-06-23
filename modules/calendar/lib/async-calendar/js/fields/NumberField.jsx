@@ -6,8 +6,10 @@ export default function NumberField(props) {
     }
 
     const viewField = () => {
+        const className = props.value === 0 ? 'publishpress-calendar-empty-value' : '';
+
         return (
-            <span>{props.value}</span>
+            <span className={className}>{props.value}</span>
         );
     }
 

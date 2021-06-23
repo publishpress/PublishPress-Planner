@@ -1,3 +1,5 @@
+const __ = wp.i18n.__;
+
 export default function TaxonomyField(props) {
     const editField = () => {
         return (
@@ -6,6 +8,12 @@ export default function TaxonomyField(props) {
     }
 
     const viewField = () => {
+        if (props.value.length === 0) {
+            return (
+                <span className="publishpress-calendar-empty-value">{__('No terms', 'publishpress')}</span>
+            );
+        }
+
         return (
             <span>{props.value.join(', ')}</span>
         );

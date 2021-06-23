@@ -583,7 +583,7 @@ if (!class_exists('PP_Editorial_Comments')) {
 
             $data['fields']['editorial-comments'] = [
                 'label'    => $this->module->title,
-                'value'    => $this->get_editorial_comment_count($post->ID),
+                'value'    => (int)$this->get_editorial_comment_count($post->ID),
                 'editable' => false,
                 'type'     => 'number',
             ];

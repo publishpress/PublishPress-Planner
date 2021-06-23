@@ -70,6 +70,7 @@
   color: #000;
   line-height: 20px;
 }
+.publishpress-calendar-theme-light .publishpress-calendar-popup .publishpress-calendar-empty-value,
 .publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-no,
 .publishpress-calendar-theme-light .publishpress-calendar-popup .dashicons-no-alt {
   color: #f7b8b8;
