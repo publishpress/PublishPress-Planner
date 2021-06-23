@@ -1,4 +1,4 @@
-import TimeField from "./fields/TimeField";
+import DateTimeField from "./fields/DateTimeField";
 import AuthorsField from "./fields/AuthorsField";
 import PostTypeField from "./fields/PostTypeField";
 import PostStatusField from "./fields/PostStatusField";
@@ -53,8 +53,9 @@ export default function ItemPopup(props) {
             dataProperty = props.data.fields[dataPropertyName];
 
             switch (dataProperty.type) {
+                case 'date':
                 case 'time':
-                    field = <TimeField value={dataProperty.value} isEditing={isEditing}/>;
+                    field = <DateTimeField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
                 case 'authors':

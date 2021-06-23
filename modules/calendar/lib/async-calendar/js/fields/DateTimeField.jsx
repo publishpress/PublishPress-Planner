@@ -1,4 +1,4 @@
-export default function TimeField(props) {
+export default function DateTimeField(props) {
     const editField = () => {
         return (
             <input type="text" value={props.value}/>
