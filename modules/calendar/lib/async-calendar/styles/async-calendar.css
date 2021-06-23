@@ -188,7 +188,8 @@
   display: block;
   width: 100%;
   height: 26px;
-  text-align: center;
+  text-align: left;
+  padding-left: 2px;
   padding-top: 2px;
 }
 .publishpress-calendar .publishpress-calendar-day-items {
@@ -197,7 +198,6 @@
 }
 .publishpress-calendar .publishpress-calendar-date {
   padding: 4px;
-  border-radius: 50%;
   width: 16px !important;
   display: inline-block;
   height: 16px;
