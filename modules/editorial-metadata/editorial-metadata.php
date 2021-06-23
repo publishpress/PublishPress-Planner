@@ -156,7 +156,7 @@ if (!class_exists('PP_Editorial_Metadata')) {
 
                 // Add Editorial Metadata to the calendar if the calendar is activated
                 if ($this->module_enabled('calendar')) {
-                    add_filter('pp_calendar_item_information_fields', [$this, 'filter_calendar_item_fields'], 10, 2);
+                    add_filter('publishpress_calendar_get_post_data', [$this, 'filterCalendarPostData'], 10, 2);
                 }
 
                 // Add Editorial Metadata columns to the Content Overview if it exists
@@ -828,37 +828,43 @@ if (!class_exists('PP_Editorial_Metadata')) {
         /**
          * If the PublishPress Calendar is enabled, add viewable Editorial Metadata terms
          *
-         * @param array $calendar_fields Additional data fields to include on the calendar
-         * @param int $post_id Unique ID for the post data we're building
+         * @param array $data Additional data fields to include on the calendar
+         * @param WP_Post $post
          *
-         * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
-         *@uses apply_filters('pp_calendar_item_information_fields')
-         *
-         * @since 0.7
+         * @return array
          */
-        public function filter_calendar_item_fields($calendar_fields, $post_id)
+        public function filterCalendarPostData($data, $post)
         {
             // Make sure we respect which post type we're on
-            if (!in_array(get_post_type($post_id), $this->get_post_types_for_module($this->module))) {
-                return $calendar_fields;
+            if (!in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
+                return $data;
             }
 
             $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
 
             foreach ($terms as $term) {
-                $key = $this->module->slug . '-' . $term->slug;
+                $currentMetadata = $this->get_postmeta_value($term, $post->ID);
+                $value = $this->generate_editorial_metadata_term_output($term, $currentMetadata);
 
-                // Default values
-                $current_metadata = $this->get_postmeta_value($term, $post_id);
-                $term_data        = [
-                    'label' => $term->name,
-                    'value' => $this->generate_editorial_metadata_term_output($term, $current_metadata),
+                if (apply_filters(
+                        'pp_calendar_hide_empty_item_information_fields',
+                        true,
+                        $post->ID
+                    )
+                    && (is_null($value) || '' === $value)
+                ) {
+                    continue;
+                }
+
+                $data['fields'][$term->slug] = [
+                    'label'    => $term->name,
+                    'value'    => $value,
+                    'editable' => true,
+                    'type'     => $term->type,
                 ];
-                $term_data['editable'] = true;
-                $term_data['type']     = $term->type;
-                $calendar_fields[$key] = $term_data;
             }
-            return $calendar_fields;
+
+            return $data;
         }
 
         /**

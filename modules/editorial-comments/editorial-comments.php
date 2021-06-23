@@ -92,7 +92,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
                 // Still in progress. See: https://www.pivotaltracker.com/story/show/5930884 and https://www.pivotaltracker.com/story/show/5930895
-                //add_filter('pp_calendar_item_information_fields', array($this, 'filter_calendar_item_fields'), null, 2);
+                //add_filter('publishpress_calendar_get_post_data', array($this, 'filter_calendar_item_fields'), null, 2);
             }
         }
 
@@ -571,7 +571,7 @@ if (!class_exists('PP_Editorial_Comments')) {
          * @param int $post_id Unique ID for the post data we're building
          *
          * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
-         * @uses  apply_filters('pp_calendar_item_information_fields')
+         * @uses  apply_filters('publishpress_calendar_get_post_data')
          *
          * @since 0.7
          */
