@@ -1,7 +1,7 @@
 import {getMonthNameByMonthIndex} from "./Functions";
-import CalendarItem from "./CalendarItem";
+import Item from "./Item";
 
-export default function CalendarCell(props) {
+export default function DayCell(props) {
     const [uncollapseItems, setUncollapseItems] = React.useState(false);
 
     let itemIndex = 0;
@@ -76,7 +76,7 @@ export default function CalendarCell(props) {
                     const isPopupOpened = item.id === props.openedItemId;
 
                     return (
-                        <CalendarItem
+                        <Item
                             key={'item-' + item.id + '-' + props.date.getTime()}
                             icon={item.icon}
                             color={item.color}

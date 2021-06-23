@@ -1,7 +1,7 @@
 import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import MessageBar from "./MessageBar";
-import CalendarCell from "./CalendarCell";
+import DayCell from "./DayCell";
 import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
 import FilterBar from "./FilterBar";
 
@@ -310,7 +310,7 @@ export default function AsyncCalendar(props) {
             dateString = getDateAsStringInWpFormat(dayDate);
 
             rowCells.push(
-                <CalendarCell
+                <DayCell
                     key={'day-' + dayDate.getTime()}
                     date={dayDate}
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}

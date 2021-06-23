@@ -4,7 +4,7 @@ import ItemPopup from './ItemPopup';
 const {__} = wp.i18n;
 const $ = jQuery;
 
-export default function CalendarItem(props) {
+export default function Item(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
     const DEFAULT_LABEL = __('Untitled', 'publishpress');
 
