@@ -7,6 +7,7 @@ import CheckboxField from "./fields/CheckboxField";
 import LocationField from "./fields/LocationField";
 import ParagraphField from "./fields/ParagraphField";
 import TextField from "./fields/TextField";
+import UserField from "./fields/UserField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -92,6 +93,10 @@ export default function ItemPopup(props) {
 
                 case 'text':
                     field = <TextField value={dataProperty.value} isEditing={isEditing}/>;
+                    break;
+
+                case 'user':
+                    field = <UserField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
                 default:
