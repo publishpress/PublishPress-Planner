@@ -581,16 +581,12 @@ if (!class_exists('PP_Editorial_Comments')) {
                 return $data;
             }
 
-            $count = $this->get_editorial_comment_count($post->ID);
-
-            if ($count > 0) {
-                $data['fields']['editorial-comments'] = [
-                    'label'    => $this->module->title,
-                    'value'    => $count,
-                    'editable' => false,
-                    'type'     => 'number',
-                ];
-            }
+            $data['fields']['editorial-comments'] = [
+                'label'    => $this->module->title,
+                'value'    => $this->get_editorial_comment_count($post->ID),
+                'editable' => false,
+                'type'     => 'number',
+            ];
 
             return $data;
         }
