@@ -8,6 +8,7 @@ import LocationField from "./fields/LocationField";
 import ParagraphField from "./fields/ParagraphField";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
+import NumberField from "./fields/NumberField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -100,7 +101,7 @@ export default function ItemPopup(props) {
                     break;
 
                 case 'number':
-                    field = <UserField value={dataProperty.value} isEditing={isEditing}/>;
+                    field = <NumberField value={dataProperty.value} isEditing={isEditing}/>;
                     break;
 
                 default:
