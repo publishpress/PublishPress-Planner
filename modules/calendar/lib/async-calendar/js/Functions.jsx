@@ -1,4 +1,15 @@
 import {__} from '@wordpress/i18n';
+import DateTimeField from "./fields/DateTimeField";
+import AuthorsField from "./fields/AuthorsField";
+import PostTypeField from "./fields/PostTypeField";
+import PostStatusField from "./fields/PostStatusField";
+import TaxonomyField from "./fields/TaxonomyField";
+import CheckboxField from "./fields/CheckboxField";
+import LocationField from "./fields/LocationField";
+import ParagraphField from "./fields/ParagraphField";
+import TextField from "./fields/TextField";
+import UserField from "./fields/UserField";
+import NumberField from "./fields/NumberField";
 
 /**
  * Base on :
@@ -132,4 +143,84 @@ export function getDateWithNoTimezoneOffset(dateString) {
     const browserTimezoneOffset = date.getTimezoneOffset() * 60000;
 
     return new Date(date.getTime() + browserTimezoneOffset);
+}
+
+export function getFieldElementElement(fieldType, value, isEditing) {
+    let field;
+
+    switch (fieldType) {
+        case 'date':
+        case 'time':
+            field = <DateTimeField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'authors':
+            field = <AuthorsField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'type':
+            field = <PostTypeField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'status':
+            field = <PostStatusField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'taxonomy':
+            field = <TaxonomyField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'checkbox':
+            field = <CheckboxField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'location':
+            field = <LocationField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'paragraph':
+            field = <ParagraphField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'text':
+            field = <TextField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'user':
+            field = <UserField value={value} isEditing={isEditing}/>;
+            break;
+
+        case 'number':
+            field = <NumberField value={value} isEditing={isEditing}/>;
+            break;
+
+        default:
+            field = null;
+            break;
+    }
+
+    return field;
+}
+
+export function getPostLinksElement(linkData, handleOnClick) {
+    if (linkData.url) {
+        return (<a href={linkData.url}>{linkData.label}</a>);
+    } else if (linkData.action) {
+        return (<a href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>);
+    }
+}
+
+export async function callAjaxAction(action, args, ajaxUrl) {
+    let dataUrl = ajaxUrl + '?action=' + action;
+
+    for (const argumentName in args) {
+        if (!args.hasOwnProperty(argumentName)) {
+            continue;
+        }
+
+        dataUrl += '&' + argumentName + '=' + args[argumentName];
+    }
+
+    const response = await fetch(dataUrl);
+    return await response.json();
 }

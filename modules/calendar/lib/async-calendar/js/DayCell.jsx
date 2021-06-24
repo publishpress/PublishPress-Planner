@@ -30,6 +30,10 @@ export default function DayCell(props) {
             dayItemClassName += ' publishpress-calendar-first-day-of-month';
         }
 
+        if (props.isHovering) {
+            dayItemClassName += ' publishpress-calendar-hovering';
+        }
+
         return 'publishpress-calendar-' + dayItemClassName;
     };
 

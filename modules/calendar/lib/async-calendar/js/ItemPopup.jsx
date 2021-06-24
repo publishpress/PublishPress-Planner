@@ -1,14 +1,4 @@
-import DateTimeField from "./fields/DateTimeField";
-import AuthorsField from "./fields/AuthorsField";
-import PostTypeField from "./fields/PostTypeField";
-import PostStatusField from "./fields/PostStatusField";
-import TaxonomyField from "./fields/TaxonomyField";
-import CheckboxField from "./fields/CheckboxField";
-import LocationField from "./fields/LocationField";
-import ParagraphField from "./fields/ParagraphField";
-import TextField from "./fields/TextField";
-import UserField from "./fields/UserField";
-import NumberField from "./fields/NumberField";
+import {callAjaxAction, getFieldElementElement} from "./Functions";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -58,56 +48,7 @@ export default function ItemPopup(props) {
 
             dataProperty = props.data.fields[dataPropertyName];
 
-            switch (dataProperty.type) {
-                case 'date':
-                case 'time':
-                    field = <DateTimeField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'authors':
-                    field = <AuthorsField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'type':
-                    field = <PostTypeField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'status':
-                    field = <PostStatusField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'taxonomy':
-                    field = <TaxonomyField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'checkbox':
-                    field = <CheckboxField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'location':
-                    field = <LocationField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'paragraph':
-                    field = <ParagraphField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'text':
-                    field = <TextField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'user':
-                    field = <UserField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                case 'number':
-                    field = <NumberField value={dataProperty.value} isEditing={isEditing}/>;
-                    break;
-
-                default:
-                    field = null;
-                    break;
-            }
+            field = getFieldElementElement(dataProperty.type, dataProperty.value, false);
 
             fieldRows.push(
                 <tr>
@@ -120,25 +61,10 @@ export default function ItemPopup(props) {
         return fieldRows;
     };
 
-    const callAjaxAction = async (action, args) => {
-        let dataUrl = props.ajaxUrl + '?action=' + action;
-
-        for (const argumentName in args) {
-            if (!args.hasOwnProperty(argumentName)) {
-                continue;
-            }
-
-            dataUrl += '&' + argumentName + '=' + args[argumentName];
-        }
-
-        const response = await fetch(dataUrl);
-        return await response.json();
-    }
-
     const handleOnClick = (e, linkData) => {
         e.preventDefault();
 
-        callAjaxAction(linkData.action, linkData.args).then((result) => {
+        callAjaxAction(linkData.action, linkData.args, props.ajaxUrl).then((result) => {
             props.onItemActionClickCallback(linkData.action, props.id, result);
         });
     }

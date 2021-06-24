@@ -26,6 +26,7 @@ export default function AsyncCalendar(props) {
     const [openedItemData, setOpenedItemData] = React.useState([]);
     const [openedItemRefreshCount, setOpenedItemRefreshCount] = React.useState(0);
     const [refreshCount, setRefreshCount] = React.useState(0);
+    const [hoveredDate, setHoveredDate] = React.useState();
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -41,6 +42,7 @@ export default function AsyncCalendar(props) {
 
     const removeEventListeners = () => {
         document.removeEventListener('keydown', onDocumentKeyDown);
+        $('.publishpress-calendar tbody > tr > td').removeEventListener('mouseenter');
     }
 
     const didUnmount = () => {
@@ -49,6 +51,8 @@ export default function AsyncCalendar(props) {
 
     const didMount = () => {
         addEventListeners();
+
+        initClickToCreate();
 
         return didUnmount;
     }
@@ -232,6 +236,53 @@ export default function AsyncCalendar(props) {
         });
     };
 
+    const eventTargetIsACell = (e) => {
+        const target = e.srcElement || e.target;
+        let $target = $(target);
+
+        if ($target.is('td.publishpress-calendar-business-day, td.publishpress-calendar-weekend-day, .publishpress-calendar-cell-header, .publishpress-calendar-date')){
+            if ($target.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-show-more, .publishpress-calendar-date, .publishpress-calendar-month-name')) {
+                return $target.parents('td');
+            }
+
+            return $target;
+        }
+
+        return null;
+    }
+
+    const getCellDate = (cell) => {
+        return new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+    }
+
+    const initClickToCreate = () => {
+        $('.publishpress-calendar tbody > tr > td')
+            .on('mouseover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const cell = eventTargetIsACell(e);
+
+                if (cell) {
+                    setHoveredDate(getCellDate(cell));
+                }
+            })
+            .on('mouseout', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+
+                setHoveredDate(null);
+            })
+            .on('click', (e) => {
+                const cell = eventTargetIsACell(e);
+
+                if (cell) {
+                    setOpenedItemId(null);
+                    setFormDate(getCellDate(cell));
+                }
+            });
+    }
+
     const onFilterEventCallback = (filterName, value) => {
         if ('status' === filterName) {
             setFilterStatus(value);
@@ -316,6 +367,7 @@ export default function AsyncCalendar(props) {
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
                     isLoading={false}
+                    isHovering={hoveredDate && hoveredDate.getTime() === dayDate.getTime()}
                     items={itemsByDate[dateString] || []}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
