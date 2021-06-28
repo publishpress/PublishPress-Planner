@@ -3393,7 +3393,7 @@ if (!class_exists('PP_Calendar')) {
             $viewLink = $post->post_status === 'publish' ? get_permalink($id) : get_preview_post_link($id);
 
             $categories = $this->getPostCategoriesNames($id);
-            $tags = $this->getPostTagsNames($id);
+            $tags       = $this->getPostTagsNames($id);
 
             $data = [
                 'id'     => $id,
@@ -3454,12 +3454,7 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($data, 202);
         }
 
-        private
-        function getCalendarData(
-            $beginningDate,
-            $endingDate,
-            $args = []
-        ) {
+        private function getCalendarData($beginningDate, $endingDate, $args = []) {
             $post_query_args = [
                 'post_status' => null,
                 'post_type'   => null,
@@ -3507,11 +3502,7 @@ if (!class_exists('PP_Calendar')) {
          * @since 0.8
          *
          */
-        public
-        function sanitize_filter(
-            $key,
-            $dirty_value
-        ) {
+        public function sanitize_filter($key, $dirty_value) {
             switch ($key) {
                 case 'post_status':
                     // Whitelist-based validation for this parameter
@@ -3554,12 +3545,7 @@ if (!class_exists('PP_Calendar')) {
             }
         }
 
-        public
-        function calendar_filter_options(
-            $select_id,
-            $select_name,
-            $filters
-        ) {
+        public function calendar_filter_options($select_id, $select_name, $filters) {
             switch ($select_id) {
                 case 'post_status':
                     $post_statuses = $this->get_post_statuses();
@@ -3692,10 +3678,7 @@ if (!class_exists('PP_Calendar')) {
         /**
          * When a post is updated, clean the <li> html post cache for it
          */
-        public
-        function action_clean_li_html_cache(
-            $post_id
-        ) {
+        public function action_clean_li_html_cache($post_id) {
             wp_cache_delete($post_id . 'can_modify', self::$post_li_html_cache_key);
             wp_cache_delete($post_id . 'read_only', self::$post_li_html_cache_key);
         }
@@ -3708,13 +3691,7 @@ if (!class_exists('PP_Calendar')) {
          * @param string $column_name The column name.
          * @param string $mode The list display mode ('excerpt' or 'list').
          */
-        public
-        function filter_post_date_column_status(
-            $status,
-            $post,
-            $column_name,
-            $mode
-        ) {
+        public function filter_post_date_column_status($status, $post, $column_name, $mode) {
             if ('date' === $column_name) {
                 if ('0000-00-00 00:00:00' === $post->post_date) {
                     $time_diff = 0;
@@ -3749,10 +3726,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @access  private
          */
-        private
-        function showPostsPublishTime(
-            $status
-        ) {
+        private function showPostsPublishTime($status) {
             if ($this->module->options->show_posts_publish_time === 'on') {
                 $this->module->options->show_posts_publish_time = [
                     'publish' => 'on',
@@ -3771,10 +3745,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @return  string
          */
-        public
-        static function sanitize_text_input(
-            $input_value = ''
-        ) {
+        public static function sanitize_text_input($input_value = '') {
             return sanitize_text_field($input_value);
         }
 
@@ -3785,10 +3756,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @return  int
          */
-        public
-        static function sanitize_author_input(
-            $author_id = ''
-        ) {
+        public static function sanitize_author_input($author_id = '') {
             return (int)sanitize_text_field($author_id);
         }
 
@@ -3799,10 +3767,7 @@ if (!class_exists('PP_Calendar')) {
          *
          * @throws  Exception
          */
-        public
-        static function validate_author_input(
-            $post_author_id = ''
-        ) {
+        public static function validate_author_input($post_author_id = '') {
             if (empty($post_author_id)) {
                 return null;
             }
@@ -3823,8 +3788,7 @@ if (!class_exists('PP_Calendar')) {
             return (int)$post_author_id;
         }
 
-        public
-        function setDefaultCapabilities()
+        public function setDefaultCapabilities()
         {
             $role = get_role('administrator');
 
