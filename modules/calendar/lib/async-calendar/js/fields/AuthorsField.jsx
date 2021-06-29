@@ -1,7 +1,14 @@
+import Select from "../Select";
+
 export default function AuthorsField(props) {
     const editField = () => {
         return (
-            <input type="text" value={props.value}/>
+            <Select
+                ajaxUrl={props.ajaxUrl}
+                nonce={props.nonce}
+                ajaxAction={'publishpress_calendar_search_authors'}
+                value={props.value}
+            />
         )
     }
 

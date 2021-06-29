@@ -1,11 +1,15 @@
-import {
-    callAjaxAction,
-    getDateAsStringInWpFormat,
-    getFieldElementElement,
-    getPostLinksElement,
-    getTodayMidnight
-} from "./Functions";
+import {callAjaxAction, getDateAsStringInWpFormat, getPostLinksElement, getTodayMidnight} from "./Functions";
 import Select from "./Select";
+import DateTimeField from "./fields/DateTimeField";
+import AuthorsField from "./fields/AuthorsField";
+import PostStatusField from "./fields/PostStatusField";
+import TaxonomyField from "./fields/TaxonomyField";
+import CheckboxField from "./fields/CheckboxField";
+import LocationField from "./fields/LocationField";
+import ParagraphField from "./fields/ParagraphField";
+import TextField from "./fields/TextField";
+import UserField from "./fields/UserField";
+import NumberField from "./fields/NumberField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -37,12 +41,57 @@ export default function ItemFormPopup(props) {
 
             dataProperty = fields[dataPropertyName];
 
-            options = [];
-            if (dataProperty.type === 'status') {
-                options = props.statuses;
-            }
+            switch (dataProperty.type) {
+                case 'date':
+                case 'time':
+                    field = <DateTimeField value={dataProperty.value} isEditing={true}/>;
+                    break;
 
-            field = getFieldElementElement(dataProperty.type, dataProperty.value, true, options);
+                case 'authors':
+                    field = <AuthorsField value={dataProperty.value}
+                                          isEditing={true}
+                                          nonce={props.nonce}
+                                          ajaxUrl={props.ajaxUrl}/>;
+                    break;
+
+                case 'status':
+                    field = <PostStatusField value={dataProperty.value}
+                                             isEditing={true}
+                                             options={props.statuses}/>;
+                    break;
+
+                case 'taxonomy':
+                    field = <TaxonomyField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'checkbox':
+                    field = <CheckboxField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'location':
+                    field = <LocationField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'paragraph':
+                    field = <ParagraphField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'text':
+                    field = <TextField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'user':
+                    field = <UserField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'number':
+                    field = <NumberField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                default:
+                    field = null;
+                    break;
+            }
 
             fieldRows.push(
                 <tr>
@@ -140,27 +189,25 @@ export default function ItemFormPopup(props) {
             <table>
                 <tbody>
                 {props.postTypes.length > 1 &&
-                    <tr>
-                        <th><label>{__('Post type:', 'publishpress')}</label></th>
-                        <td>
-                            <Select
-                                options={props.postTypes}
-                                allowClear={false}
-                                onSelect={handleOnSelectPostType}
-                            />
-                            {!postType &&
-                                <div>{__('Please, select a post type to continue.', 'publishpress')}</div>
-                            }
-                        </td>
-                    </tr>
+                <tr>
+                    <th><label>{__('Post type:', 'publishpress')}</label></th>
+                    <td>
+                        <Select
+                            options={props.postTypes}
+                            allowClear={false}
+                            onSelect={handleOnSelectPostType}
+                        />
+                    </td>
+                </tr>
                 }
 
                 {props.postTypes.length === 1 &&
-                    <tr>
-                        <th>{__('Post type:', 'publishpress')}</th>
-                        <td>{getPostTypeText(postType)}</td>
-                    </tr>
+                <tr>
+                    <th>{__('Post type:', 'publishpress')}</th>
+                    <td>{getPostTypeText(postType)}</td>
+                </tr>
                 }
+
                 {getFieldRows()}
                 </tbody>
             </table>

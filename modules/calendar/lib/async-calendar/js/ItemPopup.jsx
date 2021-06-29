@@ -1,6 +1,16 @@
-import {callAjaxAction, getFieldElementElement} from "./Functions";
+import {callAjaxAction} from "./Functions";
+import DateTimeField from "./fields/DateTimeField";
+import AuthorsField from "./fields/AuthorsField";
+import PostTypeField from "./fields/PostTypeField";
+import PostStatusField from "./fields/PostStatusField";
+import TaxonomyField from "./fields/TaxonomyField";
+import CheckboxField from "./fields/CheckboxField";
+import LocationField from "./fields/LocationField";
+import ParagraphField from "./fields/ParagraphField";
+import TextField from "./fields/TextField";
+import UserField from "./fields/UserField";
+import NumberField from "./fields/NumberField";
 
-const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function ItemPopup(props) {
@@ -14,7 +24,6 @@ export default function ItemPopup(props) {
 
     const offsetX = 10;
     const offsetWidth = 180;
-    const isEditing = false;
     const targetPosition = $(props.target.current).position();
     const targetOffset = $(props.target.current).offset();
     const targetWidth = $(props.target.current).width();
@@ -48,7 +57,56 @@ export default function ItemPopup(props) {
 
             dataProperty = props.data.fields[dataPropertyName];
 
-            field = getFieldElementElement(dataProperty.type, dataProperty.value, false);
+            switch (dataProperty.type) {
+                case 'date':
+                case 'time':
+                    field = <DateTimeField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'authors':
+                    field = <AuthorsField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'type':
+                    field = <PostTypeField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'status':
+                    field = <PostStatusField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'taxonomy':
+                    field = <TaxonomyField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'checkbox':
+                    field = <CheckboxField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'location':
+                    field = <LocationField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'paragraph':
+                    field = <ParagraphField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'text':
+                    field = <TextField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'user':
+                    field = <UserField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'number':
+                    field = <NumberField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                default:
+                    field = null;
+                    break;
+            }
 
             fieldRows.push(
                 <tr>
