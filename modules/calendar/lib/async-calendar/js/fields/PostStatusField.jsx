@@ -1,7 +1,9 @@
+import Select from "../Select";
+
 export default function PostStatusField(props) {
     const editField = () => {
         return (
-            <input type="text" value={props.value}/>
+            <Select options={props.options} value={props.value} allowClear={props.allowClear}/>
         )
     }
 

@@ -145,7 +145,7 @@ export function getDateWithNoTimezoneOffset(dateString) {
     return new Date(date.getTime() + browserTimezoneOffset);
 }
 
-export function getFieldElementElement(fieldType, value, isEditing) {
+export function getFieldElementElement(fieldType, value, isEditing, options) {
     let field;
 
     switch (fieldType) {
@@ -163,7 +163,7 @@ export function getFieldElementElement(fieldType, value, isEditing) {
             break;
 
         case 'status':
-            field = <PostStatusField value={value} isEditing={isEditing}/>;
+            field = <PostStatusField value={value} isEditing={isEditing} options={options}/>;
             break;
 
         case 'taxonomy':
@@ -223,4 +223,11 @@ export async function callAjaxAction(action, args, ajaxUrl) {
 
     const response = await fetch(dataUrl);
     return await response.json();
+}
+
+export function getTodayMidnight() {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return today;
 }

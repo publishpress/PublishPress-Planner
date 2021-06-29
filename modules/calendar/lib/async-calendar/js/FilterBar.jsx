@@ -59,7 +59,7 @@ export default function FilterBar(props) {
 
             <Select
                 placeholder={"All categories"}
-                ajaxurl={props.ajaxurl}
+                ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_categories'}
                 onSelect={handleCategoriesChange}
@@ -68,7 +68,7 @@ export default function FilterBar(props) {
 
             <Select
                 placeholder={"All tags"}
-                ajaxurl={props.ajaxurl}
+                ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_tags'}
                 onSelect={handleTagsChange}
@@ -77,7 +77,7 @@ export default function FilterBar(props) {
 
             <Select
                 placeholder={"All authors"}
-                ajaxurl={props.ajaxurl}
+                ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_authors'}
                 onSelect={handleAuthorsChange}

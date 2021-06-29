@@ -4,6 +4,7 @@ import MessageBar from "./MessageBar";
 import DayCell from "./DayCell";
 import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
 import FilterBar from "./FilterBar";
+import ItemFormPopup from "./ItemFormPopup";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -27,6 +28,7 @@ export default function AsyncCalendar(props) {
     const [openedItemRefreshCount, setOpenedItemRefreshCount] = React.useState(0);
     const [refreshCount, setRefreshCount] = React.useState(0);
     const [hoveredDate, setHoveredDate] = React.useState();
+    const [formDate, setFormDate] = React.useState();
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -42,7 +44,7 @@ export default function AsyncCalendar(props) {
 
     const removeEventListeners = () => {
         document.removeEventListener('keydown', onDocumentKeyDown);
-        $('.publishpress-calendar tbody > tr > td').removeEventListener('mouseenter');
+        $('.publishpress-calendar tbody > tr > td').off('mouseenter');
     }
 
     const didUnmount = () => {
@@ -319,10 +321,13 @@ export default function AsyncCalendar(props) {
     const resetOpenedItem = () => {
         setOpenedItemId(null);
         setOpenedItemData(null);
+        setFormDate(null);
     }
 
     const onClickItem = (id) => {
         setOpenedItemData(null);
+        setHoveredDate(null);
+        setFormDate(null);
         setOpenedItemId(id);
     }
 
@@ -367,7 +372,7 @@ export default function AsyncCalendar(props) {
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
                     isLoading={false}
-                    isHovering={hoveredDate && hoveredDate.getTime() === dayDate.getTime()}
+                    isHovering={hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
                     items={itemsByDate[dateString] || []}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
@@ -423,7 +428,7 @@ export default function AsyncCalendar(props) {
                 statuses={props.statuses}
                 postTypes={props.postTypes}
                 numberOfWeeksToDisplay={numberOfWeeksToDisplay}
-                ajaxurl={props.ajaxUrl}
+                ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 onChange={onFilterEventCallback}/>
 
@@ -445,6 +450,19 @@ export default function AsyncCalendar(props) {
                 {calendarBodyRows()}
                 </tbody>
             </table>
+
+            {formDate &&
+                <ItemFormPopup
+                    date={formDate}
+                    ajaxUrl={props.ajaxUrl}
+                    postTypes={props.singularPostTypes}
+                    statuses={props.statuses}
+                    actionGetPostTypeFields={props.actionGetPostTypeFields}
+                    nonce={props.nonce}
+                    fields={[]}
+                    links={[]}
+                    postId={0}/>
+            }
 
             <MessageBar showSpinner={isLoading} message={message}/>
         </div>

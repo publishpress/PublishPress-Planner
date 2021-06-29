@@ -3,17 +3,25 @@ const $ = jQuery;
 export default function Select(props) {
     const selectRef = React.useRef(null);
 
+    const getAllowClearProp = () => {
+        if (typeof props.allowClear !== 'undefined' && props.allowClear !== null) {
+            return props.allowClear;
+        }
+
+        return true;
+    }
+
     const initSelect2 = () => {
         let params = {
             placeholder: props.placeholder || false,
             tags: true,
-            allowClear: true
+            allowClear: getAllowClearProp()
         };
 
-        if (props.ajaxurl) {
+        if (props.ajaxUrl) {
             params.ajax = {
                 delay: 250,
-                url: props.ajaxurl,
+                url: props.ajaxUrl,
                 dataType: 'json',
                 data: function (params) {
                     return {
@@ -32,17 +40,21 @@ export default function Select(props) {
 
         $(selectRef.current).pp_select2(params)
             .on('select2:select', (e) => {
-                props.onSelect(
-                    e,
-                    selectRef.current,
-                    $(selectRef.current).pp_select2('data')
-                );
+                if (typeof props.onSelect === 'function') {
+                    props.onSelect(
+                        e,
+                        selectRef.current,
+                        $(selectRef.current).pp_select2('data')
+                    );
+                }
             })
             .on('select2:clear', (e) => {
-                props.onClear(
-                    e,
-                    selectRef.current
-                );
+                if (typeof props.onClear === 'function') {
+                    props.onClear(
+                        e,
+                        selectRef.current
+                    );
+                }
             });
 
         return () => {

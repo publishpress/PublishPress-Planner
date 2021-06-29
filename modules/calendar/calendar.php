@@ -254,6 +254,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
             add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
             add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
+            add_action('wp_ajax_publishpress_calendar_get_post_type_fields', [$this, 'getPostTypeFields']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -587,13 +588,19 @@ if (!class_exists('PP_Calendar')) {
                         ];
                     }
 
-                    $postTypes = [];
+                    $postTypes         = [];
+                    $singularPostTypes = [];
                     foreach ($this->get_selected_post_types() as $postTypeName) {
                         $postType = get_post_type_object($postTypeName);
 
                         $postTypes[] = [
                             'value' => $postTypeName,
                             'text'  => $postType->label
+                        ];
+
+                        $singularPostTypes[] = [
+                            'value' => $postTypeName,
+                            'text'  => $postType->labels->singular_name
                         ];
                     }
 
@@ -603,7 +610,11 @@ if (!class_exists('PP_Calendar')) {
                             'Y-m-d'
                         )) . ' 00:00:00';
                     $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
-                    $endDate = $this->get_ending_of_week($firstDateToDisplay, 'Y-m-d', $numberOfWeeksToDisplay);
+                    $endDate            = $this->get_ending_of_week(
+                        $firstDateToDisplay,
+                        'Y-m-d',
+                        $numberOfWeeksToDisplay
+                    );
 
                     $params = [
                         'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
@@ -615,6 +626,7 @@ if (!class_exists('PP_Calendar')) {
                         'maxVisibleItems'        => $maxVisibleItemsOption,
                         'statuses'               => $postStatuses,
                         'postTypes'              => $postTypes,
+                        'singularPostTypes'      => $singularPostTypes,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
                         'items'                  => $this->getCalendarData($firstDateToDisplay, $endDate, []),
@@ -3455,6 +3467,44 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($data, 202);
         }
 
+        public function getPostTypeFields()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([], 403);
+            }
+
+            $data = [
+                'title'      => [
+                    'label' => __('Title', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'time',
+                ],
+                'status'     => [
+                    'label' => __('Post Status', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'status',
+                ],
+                'authors'    => [
+                    'label' => __('Authors', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'authors',
+                ],
+                'categories' => [
+                    'label' => __('Categories', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'taxonomy',
+                ],
+                'tags'       => [
+                    'label' => __('Tags', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'taxonomy',
+                ],
+            ];
+
+//            $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
+
+            wp_send_json($data, 202);
+        }
 
         private function getCalendarData($beginningDate, $endingDate, $args = [])
         {

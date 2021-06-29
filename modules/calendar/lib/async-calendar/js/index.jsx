@@ -15,9 +15,11 @@ jQuery(() => {
             ajaxUrl={publishpressCalendarParams.ajaxUrl}
             actionGetData={'publishpress_calendar_get_data'}
             actionMoveItem={'publishpress_calendar_move_item'}
+            actionGetPostTypeFields={'publishpress_calendar_get_post_type_fields'}
             nonce={publishpressCalendarParams.nonce}
             statuses={publishpressCalendarParams.statuses}
             postTypes={publishpressCalendarParams.postTypes}
+            singularPostTypes={publishpressCalendarParams.singularPostTypes}
             items={publishpressCalendarParams.items}/>,
         document.getElementById('publishpress-calendar-wrap')
     );
