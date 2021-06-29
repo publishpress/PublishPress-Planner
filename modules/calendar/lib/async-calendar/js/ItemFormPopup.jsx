@@ -1,4 +1,4 @@
-import {callAjaxAction, getDateAsStringInWpFormat, getPostLinksElement, getTodayMidnight} from "./Functions";
+import {callAjaxAction, callAjaxPostAction, getDateAsStringInWpFormat, getPostLinksElement} from "./Functions";
 import Select from "./Select";
 import DateTimeField from "./fields/DateTimeField";
 import AuthorsField from "./fields/AuthorsField";
@@ -6,7 +6,7 @@ import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
 import LocationField from "./fields/LocationField";
-import ParagraphField from "./fields/ParagraphField";
+import TextArea from "./fields/TextArea";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
@@ -19,12 +19,9 @@ export default function ItemFormPopup(props) {
     const [postType, setPostType] = React.useState(props.postTypes[0].value);
     const [fields, setFields] = React.useState([]);
 
-    const today = getTodayMidnight();
-
     const didMount = () => {
-        if (props.postTypes.length === 1) {
-            setPostType(props.postTypes[0].id);
-        }
+        setPostType(props.postTypes[0].value);
+        updateFormsFieldData('post_type', props.postTypes[0].value);
     }
 
     const getFieldRows = () => {
@@ -32,7 +29,6 @@ export default function ItemFormPopup(props) {
 
         let dataProperty;
         let field;
-        let options;
 
         for (const dataPropertyName in fields) {
             if (!fields.hasOwnProperty(dataPropertyName)) {
@@ -43,20 +39,48 @@ export default function ItemFormPopup(props) {
 
             switch (dataProperty.type) {
                 case 'date':
-                    field = <DateTimeField value={dataProperty.value} isEditing={true}/>;
+                    field = <DateTimeField value={dataProperty.value}
+                                           isEditing={true}
+                                           onChange={(e, value) => {
+                                               updateFormsFieldData(dataPropertyName, value);
+                                           }}/>;
                     break;
 
                 case 'authors':
                     field = <AuthorsField value={dataProperty.value}
                                           isEditing={true}
+                                          name={dataPropertyName}
                                           nonce={props.nonce}
-                                          ajaxUrl={props.ajaxUrl}/>;
+                                          ajaxUrl={props.ajaxUrl}
+                                          onSelect={(e, elem, data) => {
+                                              let values = [];
+                                              for (let i = 0; i < data.length; i++) {
+                                                  values.push(data[i].id);
+                                              }
+
+                                              updateFormsFieldData(dataPropertyName, values);
+                                          }}
+                                          onClear={(e, elem) => {
+                                              updateFormsFieldData(dataPropertyName, null);
+                                          }}/>;
                     break;
 
                 case 'status':
+                    updateFormsFieldData(dataPropertyName, dataProperty.value);
                     field = <PostStatusField value={dataProperty.value}
                                              isEditing={true}
-                                             options={props.statuses}/>;
+                                             options={props.statuses}
+                                             onSelect={(e, elem, data) => {
+                                                 let value = null;
+                                                 if (data.length > 0) {
+                                                     value = data[0].id;
+                                                 }
+
+                                                 updateFormsFieldData(dataPropertyName, value);
+                                             }}
+                                             onClear={(e, elem) => {
+                                                 updateFormsFieldData(dataPropertyName, null);
+                                             }}/>;
                     break;
 
                 case 'taxonomy':
@@ -65,7 +89,18 @@ export default function ItemFormPopup(props) {
                                            taxonomy={dataProperty.taxonomy}
                                            nonce={props.nonce}
                                            ajaxUrl={props.ajaxUrl}
-                                           multiple={true}/>;
+                                           multiple={true}
+                                           onSelect={(e, elem, data) => {
+                                               let values = [];
+                                               for (let i = 0; i < data.length; i++) {
+                                                   values.push(data[i].id);
+                                               }
+
+                                               updateFormsFieldData(dataPropertyName, values);
+                                           }}
+                                           onClear={(e, elem) => {
+                                               updateFormsFieldData(dataPropertyName, null);
+                                           }}/>;
                     break;
 
                 case 'checkbox':
@@ -73,16 +108,27 @@ export default function ItemFormPopup(props) {
                     break;
 
                 case 'location':
-                    field = <LocationField value={dataProperty.value} isEditing={true}/>;
+                    field = <LocationField value={dataProperty.value}
+                                           isEditing={true}
+                                           onChange={(e, value) => {
+                                               updateFormsFieldData(dataPropertyName, value);
+                                           }}/>;
                     break;
 
                 case 'html':
-                    field = <ParagraphField value={dataProperty.value}
-                                            isEditing={true}/>;
+                    field = <TextArea value={dataProperty.value}
+                                      isEditing={true}
+                                      onChange={(e, value) => {
+                                                updateFormsFieldData(dataPropertyName, value);
+                                            }}/>;
                     break;
 
                 case 'text':
-                    field = <TextField value={dataProperty.value} isEditing={true}/>;
+                    field = <TextField value={dataProperty.value}
+                                       isEditing={true}
+                                       onChange={(e, value) => {
+                                           updateFormsFieldData(dataPropertyName, value);
+                                       }}/>;
                     break;
 
                 case 'user':
@@ -90,11 +136,19 @@ export default function ItemFormPopup(props) {
                     break;
 
                 case 'number':
-                    field = <NumberField value={dataProperty.value} isEditing={true}/>;
+                    field = <NumberField value={dataProperty.value}
+                                         isEditing={true}
+                                         onChange={(e, value) => {
+                                             updateFormsFieldData(dataPropertyName, value);
+                                         }}/>;
                     break;
 
                 case 'time':
-                    field = <TimeField value={dataProperty.value} isEditing={true}/>;
+                    field = <TimeField value={dataProperty.value}
+                                       isEditing={true}
+                                       onChange={(e, value) => {
+                                           updateFormsFieldData(dataPropertyName, value);
+                                       }}/>;
                     break;
 
                 default:
@@ -121,11 +175,55 @@ export default function ItemFormPopup(props) {
         return fieldRows;
     };
 
+    // We are using a global var because the states are async and we were having a hard time to make all
+    // fields work together updating the same state.
+    const getGlobal = (name) => {
+        if (typeof window.publishpressCalendaGlobal === 'undefined') {
+            window.publishpressCalendaGlobal = {};
+        }
+
+        if (typeof window.publishpressCalendaGlobal.formFieldsData === 'undefined') {
+            window.publishpressCalendaGlobal.formFieldsData = {};
+        }
+
+        if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(name)) {
+            return window.publishpressCalendaGlobal.formFieldsData[name];
+        }
+
+        return null;
+    }
+
+    const setGlobal = (name, value) => {
+        getGlobal(name);
+
+        window.publishpressCalendaGlobal.formFieldsData[name] = value;
+    }
+
+    const updateFormsFieldData = (fieldName, value) => {
+        setGlobal(fieldName, value);
+    }
+
+    const getFormData = () => {
+        let formData = new FormData;
+
+        for (const fieldName in window.publishpressCalendaGlobal.formFieldsData) {
+            if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(fieldName)) {
+                formData.append(fieldName, window.publishpressCalendaGlobal.formFieldsData[fieldName]);
+            }
+        }
+
+        return formData;
+    }
+
     const handleLinkOnClick = (e, linkData) => {
         e.preventDefault();
 
-        callAjaxAction(linkData.action, linkData.args, props.ajaxUrl).then((result) => {
-            props.onItemActionClickCallback(linkData.action, props.id, result);
+        callAjaxPostAction(linkData.action, linkData.args, props.ajaxUrl, getFormData()).then((result) => {
+            if (linkData.action === 'create') {
+
+            } else if (linkData.action === 'edit') {
+
+            }
         });
     }
 
@@ -133,11 +231,11 @@ export default function ItemFormPopup(props) {
         const formLinks = [
             {
                 'label': 'Create',
-                'action': 'test'
+                'action': 'publishpress_calendar_create_item'
             },
             {
                 'label': 'Edit',
-                'action': 'test'
+                'action': 'publishpress_calendar_create_item'
             }
         ];
 
@@ -159,7 +257,12 @@ export default function ItemFormPopup(props) {
 
     const handleOnSelectPostType = (e) => {
         let $target = $(e.target);
-        setPostType($target.pp_select2('data')[0].id);
+
+        const postType = $target.pp_select2('data')[0].id;
+
+        setPostType(postType);
+
+        updateFormsFieldData('post_type', postType);
     }
 
     const getTitle = () => {

@@ -1,17 +1,17 @@
-export default function TimeField(props) {
+export default function TextArea(props) {
     const editField = () => {
         return (
-            <input type="time" value={props.value} onChange={(e) => {
+            <textarea onChange={(e) => {
                 if (props.onChange) {
                     props.onChange(e, e.target.value);
                 }
-            }}/>
+            }}>{props.value}</textarea>
         )
     }
 
     const viewField = () => {
         return (
-            <span>{props.value}</span>
+            <div>{props.value}</div>
         );
     }
 

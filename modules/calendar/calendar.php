@@ -254,6 +254,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
             add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
             add_action('wp_ajax_publishpress_calendar_get_post_type_fields', [$this, 'getPostTypeFields']);
+            add_action('wp_ajax_publishpress_calendar_create_item', [$this, 'createItem']);
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
@@ -3456,7 +3457,7 @@ if (!class_exists('PP_Calendar')) {
                 ],
                 'status'     => [
                     'label' => __('Post Status', 'publishpress'),
-                    'value' => null,
+                    'value' => 'draft',
                     'type'  => 'status',
                 ],
                 'time'       => [
@@ -3491,6 +3492,13 @@ if (!class_exists('PP_Calendar')) {
 //            $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
 
             wp_send_json($data, 202);
+        }
+
+        public function createItem()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([], 403);
+            }
         }
 
         private function getCalendarData($beginningDate, $endingDate, $args = [])

@@ -6,7 +6,7 @@ import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
 import LocationField from "./fields/LocationField";
-import ParagraphField from "./fields/ParagraphField";
+import TextArea from "./fields/TextArea";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
@@ -88,7 +88,7 @@ export default function ItemPopup(props) {
                     break;
 
                 case 'paragraph':
-                    field = <ParagraphField value={dataProperty.value} isEditing={false}/>;
+                    field = <TextArea value={dataProperty.value} isEditing={false}/>;
                     break;
 
                 case 'text':

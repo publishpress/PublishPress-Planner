@@ -1,7 +1,11 @@
 export default function LocationField(props) {
     const editField = () => {
         return (
-            <input type="location" value={props.value}/>
+            <input type="location" value={props.value} onChange={(e) => {
+                if (props.onChange) {
+                    props.onChange(e, e.target.value);
+                }
+            }}/>
         )
     }
 

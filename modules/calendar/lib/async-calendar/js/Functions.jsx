@@ -6,7 +6,7 @@ import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
 import LocationField from "./fields/LocationField";
-import ParagraphField from "./fields/ParagraphField";
+import TextArea from "./fields/TextArea";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
@@ -165,6 +165,24 @@ export async function callAjaxAction(action, args, ajaxUrl) {
     }
 
     const response = await fetch(dataUrl);
+    return await response.json();
+}
+
+export async function callAjaxPostAction(action, args, ajaxUrl, body) {
+    let dataUrl = ajaxUrl + '?action=' + action;
+
+    for (const argumentName in args) {
+        if (!args.hasOwnProperty(argumentName)) {
+            continue;
+        }
+
+        dataUrl += '&' + argumentName + '=' + args[argumentName];
+    }
+
+    const response = await fetch(dataUrl, {
+        method: 'post',
+        body: body
+    });
     return await response.json();
 }
 
