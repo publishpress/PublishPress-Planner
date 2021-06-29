@@ -179,6 +179,9 @@
   background-color: white;
   z-index: 999;
 }
+.publishpress-calendar-popup-form select {
+  width: 200px;
+}
 .publishpress-calendar {
   display: block;
   width: 100%;
@@ -311,5 +314,9 @@
 }
 .publishpress-calendar-button .dashicons {
   line-height: 30px;
+}
+.publishpress-calendar-category-filter,
+.publishpress-calendar-tag-filter {
+  width: 120px;
 }
 /*# sourceMappingURL=async-calendar.css.map */

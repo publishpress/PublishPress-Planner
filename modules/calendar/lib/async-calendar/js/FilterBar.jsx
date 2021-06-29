@@ -1,5 +1,7 @@
 import Select from "./Select";
+import TaxonomyField from "./fields/TaxonomyField";
 
+const __ = wp.i18n.__;
 const _n = wp.i18n._n;
 
 export default function FilterBar(props) {
@@ -51,52 +53,50 @@ export default function FilterBar(props) {
     return (
         <div className="publishpress-calendar-filter-bar">
             <Select
-                placeholder={"All statuses"}
+                placeholder={__('All statuses', 'publishpress')}
                 options={props.statuses}
                 onSelect={handleStatusChange}
-                onClear={handleStatusChange}
-            />
+                onClear={handleStatusChange}/>
+
+            <TaxonomyField placeholder={__('All categories', 'publishpress')}
+                           isEditing={true}
+                           ajaxUrl={props.ajaxUrl}
+                           nonce={props.nonce}
+                           taxonomy={'category'}
+                           onSelect={handleCategoriesChange}
+                           onClear={handleCategoriesChange}
+                           multiple={false}
+                           className={'publishpress-calendar-category-filter'}/>
+
+            <TaxonomyField placeholder={__('All tags', 'publishpress')}
+                           isEditing={true}
+                           ajaxUrl={props.ajaxUrl}
+                           nonce={props.nonce}
+                           taxonomy={'post_tag'}
+                           onSelect={handleTagsChange}
+                           onClear={handleTagsChange}
+                           multiple={false}
+                           className={'publishpress-calendar-tag-filter'}/>
 
             <Select
-                placeholder={"All categories"}
-                ajaxUrl={props.ajaxUrl}
-                nonce={props.nonce}
-                ajaxAction={'publishpress_calendar_search_categories'}
-                onSelect={handleCategoriesChange}
-                onClear={handleCategoriesChange}
-            />
-
-            <Select
-                placeholder={"All tags"}
-                ajaxUrl={props.ajaxUrl}
-                nonce={props.nonce}
-                ajaxAction={'publishpress_calendar_search_tags'}
-                onSelect={handleTagsChange}
-                onClear={handleTagsChange}
-            />
-
-            <Select
-                placeholder={"All authors"}
+                placeholder={__('All authors', 'publishpress')}
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_authors'}
                 onSelect={handleAuthorsChange}
-                onClear={handleAuthorsChange}
-            />
+                onClear={handleAuthorsChange}/>
 
             <Select
-                placeholder={"All types"}
+                placeholder={__('All types', 'publishpress')}
                 options={props.postTypes}
                 onSelect={handlePostTypeChange}
-                onClear={handlePostTypeChange}
-            />
+                onClear={handlePostTypeChange}/>
 
             <Select
                 placeholder={weeksFilterPlaceholder}
                 options={weeksOptions}
                 onSelect={handleWeeksChange}
-                onClear={handleWeeksChange}
-            />
+                onClear={handleWeeksChange}/>
         </div>
     )
 }

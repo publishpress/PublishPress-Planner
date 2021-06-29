@@ -24,11 +24,22 @@ export default function Select(props) {
                 url: props.ajaxUrl,
                 dataType: 'json',
                 data: function (params) {
-                    return {
+                    let args = {
                         q: params.term,
                         action: props.ajaxAction,
                         nonce: props.nonce,
-                    };
+                    }
+                    console.log(args);
+
+                    if (props.ajaxArgs) {
+                        for (const arg in props.ajaxArgs) {
+                            if (props.ajaxArgs.hasOwnProperty(arg)) {
+                                args[arg] = props.ajaxArgs[arg];
+                            }
+                        }
+                    }
+
+                    return args;
                 },
                 processResults: function (data) {
                     return {
@@ -80,8 +91,13 @@ export default function Select(props) {
         });
     }
 
+    let className = 'pp_select2';
+    if (props.className) {
+        className += ' ' + props.className;
+    }
+
     return (
-        <select className="pp_select2"
+        <select className={className}
                 multiple={props.multiple}
                 ref={selectRef}>
             {blankOption()}

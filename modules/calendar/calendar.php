@@ -249,8 +249,7 @@ if (!class_exists('PP_Calendar')) {
             add_action('wp_ajax_pp_calendar_update_metadata', [$this, 'handle_ajax_update_metadata']);
 
             add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
-            add_action('wp_ajax_publishpress_calendar_search_categories', [$this, 'searchCategories']);
-            add_action('wp_ajax_publishpress_calendar_search_tags', [$this, 'searchTags']);
+            add_action('wp_ajax_publishpress_calendar_search_terms', [$this, 'searchTerms']);
             add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
             add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
             add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
@@ -3147,7 +3146,7 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($results);
         }
 
-        public function searchCategories()
+        public function searchTerms()
         {
             header('Content-type: application/json;');
 
@@ -3156,6 +3155,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+            $taxonomy  = isset($_GET['taxonomy']) ? sanitize_text_field($_GET['taxonomy']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(
@@ -3163,35 +3163,10 @@ if (!class_exists('PP_Calendar')) {
                     "SELECT DISTINCT t.slug AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                WHERE taxonomy = 'category' AND t.name LIKE %s
+                WHERE tt.taxonomy = %s AND t.name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
-
-            wp_send_json($queryResult);
-        }
-
-        public function searchTags()
-        {
-            header('Content-type: application/json;');
-
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
-                wp_send_json([]);
-            }
-
-            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-            global $wpdb;
-
-            $queryResult = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT DISTINCT t.slug AS id, t.name AS text
-                FROM {$wpdb->term_taxonomy} as tt
-                INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                WHERE taxonomy = 'post_tag' AND t.name LIKE %s
-                ORDER BY 2
-                LIMIT 20",
+                    $taxonomy,
                     '%' . $wpdb->esc_like($queryText) . '%'
                 )
             );
@@ -3490,14 +3465,16 @@ if (!class_exists('PP_Calendar')) {
                     'type'  => 'authors',
                 ],
                 'categories' => [
-                    'label' => __('Categories', 'publishpress'),
-                    'value' => null,
-                    'type'  => 'taxonomy',
+                    'label'    => __('Categories', 'publishpress'),
+                    'value'    => null,
+                    'type'     => 'taxonomy',
+                    'taxonomy' => 'category'
                 ],
                 'tags'       => [
-                    'label' => __('Tags', 'publishpress'),
-                    'value' => null,
-                    'type'  => 'taxonomy',
+                    'label'    => __('Tags', 'publishpress'),
+                    'value'    => null,
+                    'type'     => 'taxonomy',
+                    'taxonomy' => 'post_tag'
                 ],
             ];
 

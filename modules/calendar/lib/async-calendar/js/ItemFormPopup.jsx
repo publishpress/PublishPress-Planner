@@ -61,7 +61,12 @@ export default function ItemFormPopup(props) {
                     break;
 
                 case 'taxonomy':
-                    field = <TaxonomyField value={dataProperty.value} isEditing={true}/>;
+                    field = <TaxonomyField value={dataProperty.value}
+                                           isEditing={true}
+                                           taxonomy={dataProperty.taxonomy}
+                                           nonce={props.nonce}
+                                           ajaxUrl={props.ajaxUrl}
+                                            multiple={true}/>;
                     break;
 
                 case 'checkbox':

@@ -458,10 +458,7 @@ export default function AsyncCalendar(props) {
                     postTypes={props.singularPostTypes}
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
-                    nonce={props.nonce}
-                    fields={[]}
-                    links={[]}
-                    postId={0}/>
+                    nonce={props.nonce}/>
             }
 
             <MessageBar showSpinner={isLoading} message={message}/>
