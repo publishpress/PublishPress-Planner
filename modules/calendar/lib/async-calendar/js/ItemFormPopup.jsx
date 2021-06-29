@@ -111,6 +111,14 @@ export default function ItemFormPopup(props) {
             );
         }
 
+        if (fieldRows.length === 0) {
+            fieldRows.push(
+                <tr>
+                    <td colSpan={2}>{__('Please, wait! Loading the form fields...', 'publishpress')}</td>
+                </tr>
+            );
+        }
+
         return fieldRows;
     };
 
