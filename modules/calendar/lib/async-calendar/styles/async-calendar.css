@@ -137,6 +137,7 @@
   border: none;
   border-collapse: inherit;
   border-spacing: 0;
+  text-align: left;
 }
 .publishpress-calendar-popup table th {
   font-weight: bold;
@@ -171,16 +172,21 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 300px;
-  max-width: 500px;
+  min-width: 400px;
+  max-width: 400px;
   min-height: 100px;
   width: 50%;
   height: auto;
   background-color: white;
   z-index: 999;
 }
+.publishpress-calendar-popup-form input[type="text"],
+.publishpress-calendar-popup-form textarea,
 .publishpress-calendar-popup-form select {
-  width: 200px;
+  width: 300px;
+}
+.publishpress-calendar-popup-form textarea {
+  height: 85px;
 }
 .publishpress-calendar {
   display: block;

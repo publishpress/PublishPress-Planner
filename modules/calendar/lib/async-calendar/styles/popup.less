@@ -32,6 +32,7 @@
             border: none;
             border-collapse: inherit;
             border-spacing: 0;
+            text-align: left;
         }
 
         th {
@@ -77,15 +78,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 300px;
-    max-width: 500px;
+    min-width: 400px;
+    max-width: 400px;
     min-height: 100px;
     width: 50%;
     height: auto;
     background-color: white;
     z-index: 999;
 
+    input[type="text"],
+    textarea,
     select {
-        width: 200px;
+        width: 300px;
     }
+
+    textarea {
+        height: 85px;
+    }
+;
 }

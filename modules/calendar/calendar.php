@@ -3452,12 +3452,17 @@ if (!class_exists('PP_Calendar')) {
                 'title'      => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
-                    'type'  => 'time',
+                    'type'  => 'text',
                 ],
                 'status'     => [
                     'label' => __('Post Status', 'publishpress'),
                     'value' => null,
                     'type'  => 'status',
+                ],
+                'time'       => [
+                    'label' => __('Publish Time', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'time',
                 ],
                 'authors'    => [
                     'label' => __('Authors', 'publishpress'),
@@ -3476,6 +3481,11 @@ if (!class_exists('PP_Calendar')) {
                     'type'     => 'taxonomy',
                     'taxonomy' => 'post_tag'
                 ],
+                'content'    => [
+                    'label' => __('Content', 'publishpress'),
+                    'value' => null,
+                    'type'  => 'html'
+                ]
             ];
 
 //            $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);

@@ -10,6 +10,7 @@ import ParagraphField from "./fields/ParagraphField";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
+import TimeField from "./fields/TimeField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -43,7 +44,6 @@ export default function ItemFormPopup(props) {
 
             switch (dataProperty.type) {
                 case 'date':
-                case 'time':
                     field = <DateTimeField value={dataProperty.value} isEditing={true}/>;
                     break;
 
@@ -77,8 +77,9 @@ export default function ItemFormPopup(props) {
                     field = <LocationField value={dataProperty.value} isEditing={true}/>;
                     break;
 
-                case 'paragraph':
-                    field = <ParagraphField value={dataProperty.value} isEditing={true}/>;
+                case 'html':
+                    field = <ParagraphField value={dataProperty.value}
+                                            isEditing={true}/>;
                     break;
 
                 case 'text':
@@ -91,6 +92,10 @@ export default function ItemFormPopup(props) {
 
                 case 'number':
                     field = <NumberField value={dataProperty.value} isEditing={true}/>;
+                    break;
+
+                case 'time':
+                    field = <TimeField value={dataProperty.value} isEditing={true}/>;
                     break;
 
                 default:
