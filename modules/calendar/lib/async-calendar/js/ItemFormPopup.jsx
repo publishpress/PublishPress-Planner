@@ -14,7 +14,6 @@ import TimeField from "./fields/TimeField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
-const date = wp.date;
 
 export default function ItemFormPopup(props) {
     const [postType, setPostType] = React.useState(props.postTypes[0].value);
@@ -66,7 +65,7 @@ export default function ItemFormPopup(props) {
                                            taxonomy={dataProperty.taxonomy}
                                            nonce={props.nonce}
                                            ajaxUrl={props.ajaxUrl}
-                                            multiple={true}/>;
+                                           multiple={true}/>;
                     break;
 
                 case 'checkbox':
@@ -131,15 +130,26 @@ export default function ItemFormPopup(props) {
     }
 
     const getFormLinks = () => {
+        const formLinks = [
+            {
+                'label': 'Create',
+                'action': 'test'
+            },
+            {
+                'label': 'Edit',
+                'action': 'test'
+            }
+        ];
+
         const links = [];
         let linkData;
 
-        for (const linkName in props.links) {
-            if (!props.links.hasOwnProperty(linkName)) {
+        for (const linkName in formLinks) {
+            if (!formLinks.hasOwnProperty(linkName)) {
                 continue;
             }
 
-            linkData = props.links[linkName];
+            linkData = formLinks[linkName];
 
             links.push(getPostLinksElement(linkData, handleLinkOnClick));
         }
@@ -157,12 +167,7 @@ export default function ItemFormPopup(props) {
         if (props.postId) {
             title = '';
         } else {
-            if (props.date >= today) {
-                title = __('Schedule for %s', 'publishpress');
-            } else {
-                title = __('Create with date %s', 'publishpress');
-            }
-
+            title = __('Schedule content for %s', 'publishpress');
             title = title.replace('%s', getDateAsStringInWpFormat(props.date));
         }
 
@@ -188,9 +193,15 @@ export default function ItemFormPopup(props) {
             nonce: props.nonce
         };
 
-        callAjaxAction(props.actionGetPostTypeFields, args, props.ajaxUrl).then((result) => {
-            setFields(result);
-        });
+        callAjaxAction(props.actionGetPostTypeFields, args, props.ajaxUrl)
+            .then((result) => {
+                setFields(result);
+            })
+            .then(() => {
+                setTimeout(() => {
+                    $('.publishpress-calendar-popup-form input').first().focus();
+                }, 500);
+            });
     }
 
     const title = getTitle();
@@ -201,7 +212,7 @@ export default function ItemFormPopup(props) {
     return (
         <div className="publishpress-calendar-popup publishpress-calendar-popup-form">
             <div className="publishpress-calendar-popup-title">
-                {title}
+                <span className={'dashicons dashicons-plus-alt'}/> {title}
             </div>
             <hr/>
             <table>
@@ -229,10 +240,14 @@ export default function ItemFormPopup(props) {
                 {getFieldRows()}
                 </tbody>
             </table>
-            <hr/>
-            <div className="publishpress-calendar-popup-links">
-                {getFormLinks()}
-            </div>
+            {fields &&
+            <>
+                <hr/>
+                <div className="publishpress-calendar-popup-links">
+                    {getFormLinks()}
+                </div>
+            </>
+            }
         </div>
     )
 }

@@ -3465,7 +3465,7 @@ if (!class_exists('PP_Calendar')) {
                     'type'  => 'time',
                 ],
                 'authors'    => [
-                    'label' => __('Authors', 'publishpress'),
+                    'label' => __('Author', 'publishpress'),
                     'value' => null,
                     'type'  => 'authors',
                 ],
