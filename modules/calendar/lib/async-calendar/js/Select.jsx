@@ -29,7 +29,6 @@ export default function Select(props) {
                         action: props.ajaxAction,
                         nonce: props.nonce,
                     }
-                    console.log(args);
 
                     if (props.ajaxArgs) {
                         for (const arg in props.ajaxArgs) {
