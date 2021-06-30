@@ -296,6 +296,11 @@
   font-size: 11px;
   cursor: pointer;
 }
+.publishpress-calendar .publishpress-calendar-hide-items .dashicons,
+.publishpress-calendar .publishpress-calendar-show-more .dashicons {
+  font-size: 15px;
+  padding-top: 2px;
+}
 .publishpress-calendar .publishpress-calendar-hide-items:hover,
 .publishpress-calendar .publishpress-calendar-show-more:hover {
   color: #acacac;

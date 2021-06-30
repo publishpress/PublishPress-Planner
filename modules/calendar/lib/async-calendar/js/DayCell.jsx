@@ -45,14 +45,15 @@ export default function DayCell(props) {
         if (props.items.length > props.maxVisibleItems) {
             const numberOfExtraItems = props.items.length - props.maxVisibleItems;
 
-            let label = uncollapseItems ? 'Hide the ' + numberOfExtraItems + ' last items' : 'Show ' + numberOfExtraItems + ' more';
-            let className = uncollapseItems ? 'publishpress-calendar-hide-items' : 'publishpress-calendar-show-more';
+            const label = uncollapseItems ? 'Hide the ' + numberOfExtraItems + ' last items' : 'Show ' + numberOfExtraItems + ' more';
+            const className = uncollapseItems ? 'publishpress-calendar-hide-items' : 'publishpress-calendar-show-more';
+            const iconClass = uncollapseItems ? 'hidden' : 'visibility';
 
             return (
                 <a
                     href="javascript:void(0);"
                     className={className}
-                    onClick={toggleUncollapseItems}>{label}</a>
+                    onClick={toggleUncollapseItems}><span className={'dashicons dashicons-' + iconClass}/> {label}</a>
             );
         }
 
