@@ -121,8 +121,8 @@ export default function ItemFormPopup(props) {
                     field = <TextArea value={dataProperty.value}
                                       isEditing={true}
                                       onChange={(e, value) => {
-                                                updateFormsFieldData(dataPropertyName, value);
-                                            }}/>;
+                                          updateFormsFieldData(dataPropertyName, value);
+                                      }}/>;
                     break;
 
                 case 'text':
@@ -162,14 +162,6 @@ export default function ItemFormPopup(props) {
                 <tr>
                     <th>{dataProperty.label}:</th>
                     <td>{field}</td>
-                </tr>
-            );
-        }
-
-        if (fieldRows.length === 0) {
-            fieldRows.push(
-                <tr>
-                    <td colSpan={2}>{__('Please, wait! Loading the form fields...', 'publishpress')}</td>
                 </tr>
             );
         }
@@ -312,6 +304,8 @@ export default function ItemFormPopup(props) {
             nonce: props.nonce
         };
 
+        setFields(null);
+
         callAjaxAction(props.actionGetPostTypeFields, args, props.ajaxUrl)
             .then((result) => {
                 setFields(result);
@@ -329,12 +323,14 @@ export default function ItemFormPopup(props) {
     React.useEffect(didMount, []);
     React.useEffect(loadFields, [postType]);
 
+    const fieldRows = getFieldRows();
+
     return (
         <div className="publishpress-calendar-popup publishpress-calendar-popup-form">
             <div className="publishpress-calendar-popup-title">
                 <span className={'dashicons dashicons-plus-alt'}/> {title}
                 {isLoading &&
-                    <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
+                <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
                 }
             </div>
             <hr/>
@@ -360,17 +356,22 @@ export default function ItemFormPopup(props) {
                 </tr>
                 }
 
-                {getFieldRows()}
+                {fieldRows.length > 0 &&
+                    fieldRows
+                }
                 </tbody>
             </table>
-            {fields &&
-            <>
-                <hr/>
-                <div className="publishpress-calendar-popup-links">
-                    {getFormLinks()}
-                </div>
-            </>
+
+
+            {fieldRows.length === 0 &&
+            <div
+                className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
             }
+
+            <hr className={'publishpress-calendar-popup-links-hr'}/>
+            <div className="publishpress-calendar-popup-links">
+                {getFormLinks()}
+            </div>
         </div>
     )
 }
