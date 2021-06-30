@@ -259,6 +259,10 @@ export default function AsyncCalendar(props) {
     }
 
     const initClickToCreate = () => {
+        if (!props.userCanAddPosts) {
+            return;
+        }
+
         $('.publishpress-calendar tbody > tr > td')
             .on('mouseover', (e) => {
                 e.preventDefault();

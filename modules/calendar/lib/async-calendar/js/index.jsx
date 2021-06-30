@@ -20,6 +20,7 @@ jQuery(() => {
             statuses={publishpressCalendarParams.statuses}
             postTypes={publishpressCalendarParams.postTypes}
             singularPostTypes={publishpressCalendarParams.singularPostTypes}
+            userCanAddPosts={publishpressCalendarParams.userCanAddPosts}
             items={publishpressCalendarParams.items}/>,
         document.getElementById('publishpress-calendar-wrap')
     );

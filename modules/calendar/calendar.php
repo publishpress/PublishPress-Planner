@@ -629,6 +629,7 @@ if (!class_exists('PP_Calendar')) {
                         'singularPostTypes'      => $singularPostTypes,
                         'ajaxUrl'                => admin_url('admin-ajax.php'),
                         'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
+                        'userCanAddPosts'        => current_user_can($this->create_post_cap),
                         'items'                  => $this->getCalendarData($firstDateToDisplay, $endDate, []),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
