@@ -20,6 +20,7 @@ export default function ItemFormPopup(props) {
     const [fields, setFields] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [savingLink, setSavingLink] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState();
 
     const didMount = () => {
         setPostType(props.postTypes[0].value);
@@ -201,6 +202,7 @@ export default function ItemFormPopup(props) {
         let formData = new FormData;
 
         formData.append('date', getDateAsStringInWpFormat(props.date));
+        formData.append('nonce', props.nonce);
 
         for (const fieldName in window.publishpressCalendaGlobal.formFieldsData) {
             if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(fieldName)) {
@@ -216,15 +218,28 @@ export default function ItemFormPopup(props) {
 
         setIsLoading(true);
         setSavingLink(linkData.id);
+        setErrorMessage(null);
 
         callAjaxPostAction(linkData.action, linkData.args, props.ajaxUrl, getFormData()).then((result) => {
-            setIsLoading(false);
-            setSavingLink(null);
+            if (linkData.id === 'create') {
+                setIsLoading(false);
+                setSavingLink(null);
 
-            if (linkData.action === 'create') {
-
-            } else if (linkData.action === 'edit') {
-
+                if (result.status === 'success') {
+                    if (props.onCloseCallback) {
+                        props.onCloseCallback();
+                    }
+                } else {
+                    setErrorMessage(result.message);
+                }
+            } else if (linkData.id === 'edit') {
+                if (result.status === 'success') {
+                    window.location.href = result.data.link;
+                } else {
+                    setIsLoading(false);
+                    setSavingLink(null);
+                    setErrorMessage(result.message);
+                }
             }
         });
     }
@@ -233,13 +248,13 @@ export default function ItemFormPopup(props) {
         const formLinks = [
             {
                 'id': 'create',
-                'label': __('Create', 'publishpress'),
+                'label': __('Save', 'publishpress'),
                 'labelLoading': __('Saving...', 'publishpress'),
                 'action': 'publishpress_calendar_create_item'
             },
             {
                 'id': 'edit',
-                'label': __('Edit', 'publishpress'),
+                'label': __('Save and edit', 'publishpress'),
                 'labelLoading': __('Saving...', 'publishpress'),
                 'action': 'publishpress_calendar_create_item'
             }
@@ -369,6 +384,13 @@ export default function ItemFormPopup(props) {
             {fieldRows.length === 0 &&
             <div
                 className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
+            }
+
+            {errorMessage &&
+            <div className={'publishpress-calendar-popup-error-message'}>
+                <span className={'dashicons dashicons-warning'}/>
+                {errorMessage}
+            </div>
             }
 
             <hr className={'publishpress-calendar-popup-links-hr'}/>

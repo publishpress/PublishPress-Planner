@@ -345,6 +345,13 @@ export default function AsyncCalendar(props) {
         return openedItemData;
     }
 
+    const onCloseForm = () => {
+        console.log('Closing form...');
+        setRefreshCount(refreshCount + 1);
+
+        setFormDate(null);
+    }
+
     const calendarBodyRows = () => {
         const numberOfDaysToDisplay = numberOfWeeksToDisplay * 7;
         const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay);
@@ -458,7 +465,8 @@ export default function AsyncCalendar(props) {
                     postTypes={props.singularPostTypes}
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
-                    nonce={props.nonce}/>
+                    nonce={props.nonce}
+                    onCloseCallback={onCloseForm}/>
             }
 
             <MessageBar showSpinner={isLoading} message={message}/>

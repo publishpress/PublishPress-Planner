@@ -204,6 +204,17 @@
   bottom: 28px;
   width: 96%;
 }
+.publishpress-calendar-popup-form .publishpress-calendar-popup-error-message {
+  padding: 8px;
+  background: #f7d4d4;
+  border: 1px solid #ba9898;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.publishpress-calendar-popup-form .publishpress-calendar-popup-error-message .dashicons {
+  margin-right: 5px;
+  color: #714646;
+}
 .publishpress-calendar {
   display: block;
   width: 100%;
