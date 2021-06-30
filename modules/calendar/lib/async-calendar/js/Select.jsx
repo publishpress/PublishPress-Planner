@@ -97,6 +97,7 @@ export default function Select(props) {
 
     return (
         <select className={className}
+                id={props.id}
                 multiple={props.multiple}
                 ref={selectRef}>
             {blankOption()}

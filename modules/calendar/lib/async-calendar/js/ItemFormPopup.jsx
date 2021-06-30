@@ -32,11 +32,14 @@ export default function ItemFormPopup(props) {
 
         let dataProperty;
         let field;
+        let fieldId;
 
         for (const dataPropertyName in fields) {
             if (!fields.hasOwnProperty(dataPropertyName)) {
                 continue;
             }
+
+            fieldId = 'publishpress-calendar-field-' + dataPropertyName;
 
             dataProperty = fields[dataPropertyName];
 
@@ -44,6 +47,7 @@ export default function ItemFormPopup(props) {
                 case 'date':
                     field = <DateTimeField value={dataProperty.value}
                                            isEditing={true}
+                                           id={fieldId}
                                            onChange={(e, value) => {
                                                updateFormsFieldData(dataPropertyName, value);
                                            }}/>;
@@ -53,6 +57,7 @@ export default function ItemFormPopup(props) {
                     field = <AuthorsField value={dataProperty.value}
                                           isEditing={true}
                                           name={dataPropertyName}
+                                          id={fieldId}
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
                                           onSelect={(e, elem, data) => {
@@ -71,6 +76,7 @@ export default function ItemFormPopup(props) {
                 case 'status':
                     field = <PostStatusField value={dataProperty.value}
                                              isEditing={true}
+                                             id={fieldId}
                                              options={props.statuses}
                                              onSelect={(e, elem, data) => {
                                                  let value = null;
@@ -88,6 +94,7 @@ export default function ItemFormPopup(props) {
                 case 'taxonomy':
                     field = <TaxonomyField value={dataProperty.value}
                                            isEditing={true}
+                                           id={fieldId}
                                            taxonomy={dataProperty.taxonomy}
                                            nonce={props.nonce}
                                            ajaxUrl={props.ajaxUrl}
@@ -106,12 +113,16 @@ export default function ItemFormPopup(props) {
                     break;
 
                 case 'checkbox':
-                    field = <CheckboxField value={dataProperty.value} isEditing={true}/>;
+                    field = <CheckboxField
+                                isEditing={true}
+                                id={fieldId}
+                                value={dataProperty.value}/>;
                     break;
 
                 case 'location':
                     field = <LocationField value={dataProperty.value}
                                            isEditing={true}
+                                           id={fieldId}
                                            onChange={(e, value) => {
                                                updateFormsFieldData(dataPropertyName, value);
                                            }}/>;
@@ -120,6 +131,7 @@ export default function ItemFormPopup(props) {
                 case 'html':
                     field = <TextArea value={dataProperty.value}
                                       isEditing={true}
+                                      id={fieldId}
                                       onChange={(e, value) => {
                                           updateFormsFieldData(dataPropertyName, value);
                                       }}/>;
@@ -128,18 +140,22 @@ export default function ItemFormPopup(props) {
                 case 'text':
                     field = <TextField value={dataProperty.value}
                                        isEditing={true}
+                                       id={fieldId}
                                        onChange={(e, value) => {
                                            updateFormsFieldData(dataPropertyName, value);
                                        }}/>;
                     break;
 
                 case 'user':
-                    field = <UserField value={dataProperty.value} isEditing={true}/>;
+                    field = <UserField value={dataProperty.value}
+                                       isEditing={true}
+                                       id={fieldId}/>;
                     break;
 
                 case 'number':
                     field = <NumberField value={dataProperty.value}
                                          isEditing={true}
+                                         id={fieldId}
                                          onChange={(e, value) => {
                                              updateFormsFieldData(dataPropertyName, value);
                                          }}/>;
@@ -148,6 +164,7 @@ export default function ItemFormPopup(props) {
                 case 'time':
                     field = <TimeField value={dataProperty.value}
                                        isEditing={true}
+                                       id={fieldId}
                                        onChange={(e, value) => {
                                            updateFormsFieldData(dataPropertyName, value);
                                        }}/>;
@@ -160,7 +177,7 @@ export default function ItemFormPopup(props) {
 
             fieldRows.push(
                 <tr>
-                    <th>{dataProperty.label}:</th>
+                    <th><label htmlFor={fieldId}>{dataProperty.label}:</label></th>
                     <td>{field}</td>
                 </tr>
             );

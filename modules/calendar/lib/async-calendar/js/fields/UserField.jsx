@@ -1,13 +1,13 @@
 export default function UserField(props) {
     const editField = () => {
         return (
-            <input type="text" value={props.value}/>
+            <input type="text" id={props.id} value={props.value}/>
         )
     }
 
     const viewField = () => {
         return (
-            <span>{props.value}</span>
+            <span id={props.id}>{props.value}</span>
         );
     }
 

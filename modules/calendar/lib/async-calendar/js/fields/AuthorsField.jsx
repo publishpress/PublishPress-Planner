@@ -9,6 +9,7 @@ export default function AuthorsField(props) {
                 ajaxAction={'publishpress_calendar_search_authors'}
                 value={props.value}
                 name={props.name}
+                id={props.id}
                 onSelect={props.onSelect}
                 onClear={props.onClear}/>
         )
@@ -16,7 +17,7 @@ export default function AuthorsField(props) {
 
     const viewField = () => {
         return (
-            <span>{props.value.join(', ')}</span>
+            <span id={props.id}>{props.value.join(', ')}</span>
         );
     }
 

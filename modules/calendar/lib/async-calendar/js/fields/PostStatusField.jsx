@@ -4,6 +4,7 @@ export default function PostStatusField(props) {
     const editField = () => {
         return (
             <Select options={props.options}
+                    id={props.id}
                     value={props.value}
                     allowClear={props.allowClear}
                     onSelect={props.onSelect}
@@ -13,7 +14,7 @@ export default function PostStatusField(props) {
 
     const viewField = () => {
         return (
-            <span>{props.value}</span>
+            <span id={props.id}>{props.value}</span>
         );
     }
 
