@@ -148,7 +148,11 @@ export default function ItemPopup(props) {
                     <a href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
                 );
             }
+
+            links.push(<span>|</span>);
         }
+
+        links.pop();
 
         return links;
     }

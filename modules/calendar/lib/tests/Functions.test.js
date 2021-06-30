@@ -4,7 +4,7 @@ import {
     getBeginDateOfWeekByWeekNumber,
     getDateAsStringInWpFormat, getDateWithNoTimezoneOffset,
     getHourStringOnFormat,
-    getMonthNameByMonthIndex,
+    getMonthNameByMonthIndex, getPostLinksElement,
     getWeekNumberByDate
 } from "../async-calendar/js/Functions";
 

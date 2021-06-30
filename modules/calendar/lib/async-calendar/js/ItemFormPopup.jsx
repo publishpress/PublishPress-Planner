@@ -260,7 +260,10 @@ export default function ItemFormPopup(props) {
             } else {
                 links.push(getPostLinksElement(linkData, handleLinkOnClick));
             }
+            links.push(<span>|</span>);
         }
+
+        links.pop();
 
         return links;
     }
