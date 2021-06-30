@@ -2,7 +2,7 @@ import {
     calculateWeeksInMilliseconds,
     getBeginDateOfWeekByDate,
     getBeginDateOfWeekByWeekNumber,
-    getDateAsStringInWpFormat,
+    getDateAsStringInWpFormat, getDateWithNoTimezoneOffset,
     getHourStringOnFormat,
     getMonthNameByMonthIndex,
     getWeekNumberByDate
@@ -385,4 +385,18 @@ test('getMonthNameByMonthIndex, for Dec', () => {
     expect(
         getMonthNameByMonthIndex(11)
     ).toStrictEqual('Dec');
+})
+
+/*
+ * getDateWithNoTimezoneOffset, for 2021-06-03
+ */
+test('getDateWithNoTimezoneOffset', () => {
+    const date = getDateWithNoTimezoneOffset('2021-06-03');
+
+    expect(date.getFullYear()).toStrictEqual(2021);
+    expect(date.getMonth()).toStrictEqual(5);
+    expect(date.getDate()).toStrictEqual(3);
+    expect(date.getHours()).toStrictEqual(0);
+    expect(date.getMinutes()).toStrictEqual(0);
+    expect(date.getSeconds()).toStrictEqual(0);
 })

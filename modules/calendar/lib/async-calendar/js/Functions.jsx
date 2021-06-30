@@ -1,15 +1,4 @@
 import {__} from '@wordpress/i18n';
-import DateTimeField from "./fields/DateTimeField";
-import AuthorsField from "./fields/AuthorsField";
-import PostTypeField from "./fields/PostTypeField";
-import PostStatusField from "./fields/PostStatusField";
-import TaxonomyField from "./fields/TaxonomyField";
-import CheckboxField from "./fields/CheckboxField";
-import LocationField from "./fields/LocationField";
-import TextArea from "./fields/TextArea";
-import TextField from "./fields/TextField";
-import UserField from "./fields/UserField";
-import NumberField from "./fields/NumberField";
 
 /**
  * Base on :
