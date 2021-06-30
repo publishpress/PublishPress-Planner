@@ -437,8 +437,17 @@ export default function AsyncCalendar(props) {
         ]
     )
 
+    let classNames = [
+        'publishpress-calendar',
+        'publishpress-calendar-theme-' + theme,
+    ];
+
+    if (props.userCanAddPosts) {
+        classNames.push('user-can-add-posts');
+    }
+
     return (
-        <div className={'publishpress-calendar publishpress-calendar-theme-' + theme}>
+        <div className={classNames.join(' ')}>
             <FilterBar
                 statuses={props.statuses}
                 postTypes={props.postTypes}

@@ -3,6 +3,16 @@
 @textColor: #000;
 @iconColor: #626262;
 
+.publishpress-calendar-popup-screen-lock {
+    background-color: rgba(99, 89, 147, 0.6);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    z-index: 980;
+}
+
 .publishpress-calendar-popup {
     background-color: @backgroundColor;
     position: absolute;
@@ -10,7 +20,7 @@
     left: 0;
     min-height: 50px;
     width: 380px;
-    z-index: 20000;
+    z-index: 999;
     -moz-box-shadow: -1px 3px 10px 2px @shadowColor;
     -webkit-box-shadow: -1px 3px 10px 2px @shadowColor;
     box-shadow: -1px 3px 10px 2px @shadowColor;

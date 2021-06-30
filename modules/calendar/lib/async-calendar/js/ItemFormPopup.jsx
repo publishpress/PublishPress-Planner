@@ -25,6 +25,14 @@ export default function ItemFormPopup(props) {
     const didMount = () => {
         setPostType(props.postTypes[0].value);
         updateFormsFieldData('post_type', props.postTypes[0].value);
+
+        // Fix the overflow to adjust the screen lock div to fill all the screen
+        $('#wpwrap').css('overflow', 'hidden');
+
+        return () => {
+            // Restore the default overflow style
+            $('#wpwrap').css('overflow', 'auto');
+        }
     }
 
     const getFieldRows = () => {
@@ -360,61 +368,64 @@ export default function ItemFormPopup(props) {
     const fieldRows = getFieldRows();
 
     return (
-        <div className="publishpress-calendar-popup publishpress-calendar-popup-form">
-            <div className="publishpress-calendar-popup-title">
-                <span className={'dashicons dashicons-plus-alt'}/>
-                {title}
-                <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
+        <>
+            <div className={'publishpress-calendar-popup-screen-lock'}/>
+            <div className={'publishpress-calendar-popup publishpress-calendar-popup-form'}>
+                <div className={'publishpress-calendar-popup-title'}>
+                    <span className={'dashicons dashicons-plus-alt'}/>
+                    {title}
+                    <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
+                </div>
+                <hr/>
+                <table>
+                    <tbody>
+                    {props.postTypes.length > 1 &&
+                    <tr>
+                        <th><label>{__('Post type:', 'publishpress')}</label></th>
+                        <td>
+                            <Select
+                                options={props.postTypes}
+                                allowClear={false}
+                                onSelect={handleOnSelectPostType}
+                            />
+                        </td>
+                    </tr>
+                    }
+
+                    {props.postTypes.length === 1 &&
+                    <tr>
+                        <th><label>{__('Post type:', 'publishpress')}</label></th>
+                        <td>{getPostTypeText(postType)}</td>
+                    </tr>
+                    }
+
+                    {fieldRows.length > 0 &&
+                        fieldRows
+                    }
+                    </tbody>
+                </table>
+
+
+                {fieldRows.length === 0 &&
+                <div
+                    className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
+                }
+
+                {errorMessage &&
+                <div className={'publishpress-calendar-popup-error-message'}>
+                    <span className={'dashicons dashicons-warning'}/>
+                    {errorMessage}
+                </div>
+                }
+
+                <hr className={'publishpress-calendar-popup-links-hr'}/>
+                <div className="publishpress-calendar-popup-links">
+                    {getFormLinks()}
+                    {isLoading &&
+                    <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
+                    }
+                </div>
             </div>
-            <hr/>
-            <table>
-                <tbody>
-                {props.postTypes.length > 1 &&
-                <tr>
-                    <th><label>{__('Post type:', 'publishpress')}</label></th>
-                    <td>
-                        <Select
-                            options={props.postTypes}
-                            allowClear={false}
-                            onSelect={handleOnSelectPostType}
-                        />
-                    </td>
-                </tr>
-                }
-
-                {props.postTypes.length === 1 &&
-                <tr>
-                    <th>{__('Post type:', 'publishpress')}</th>
-                    <td>{getPostTypeText(postType)}</td>
-                </tr>
-                }
-
-                {fieldRows.length > 0 &&
-                    fieldRows
-                }
-                </tbody>
-            </table>
-
-
-            {fieldRows.length === 0 &&
-            <div
-                className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
-            }
-
-            {errorMessage &&
-            <div className={'publishpress-calendar-popup-error-message'}>
-                <span className={'dashicons dashicons-warning'}/>
-                {errorMessage}
-            </div>
-            }
-
-            <hr className={'publishpress-calendar-popup-links-hr'}/>
-            <div className="publishpress-calendar-popup-links">
-                {getFormLinks()}
-                {isLoading &&
-                <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
-                }
-            </div>
-        </div>
+        </>
     )
 }
