@@ -18,6 +18,8 @@ const $ = jQuery;
 export default function ItemFormPopup(props) {
     const [postType, setPostType] = React.useState(props.postTypes[0].value);
     const [fields, setFields] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [savingLink, setSavingLink] = React.useState(false);
 
     const didMount = () => {
         setPostType(props.postTypes[0].value);
@@ -206,6 +208,8 @@ export default function ItemFormPopup(props) {
     const getFormData = () => {
         let formData = new FormData;
 
+        formData.append('date', getDateAsStringInWpFormat(props.date));
+
         for (const fieldName in window.publishpressCalendaGlobal.formFieldsData) {
             if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(fieldName)) {
                 formData.append(fieldName, window.publishpressCalendaGlobal.formFieldsData[fieldName]);
@@ -218,7 +222,13 @@ export default function ItemFormPopup(props) {
     const handleLinkOnClick = (e, linkData) => {
         e.preventDefault();
 
+        setIsLoading(true);
+        setSavingLink(linkData.id);
+
         callAjaxPostAction(linkData.action, linkData.args, props.ajaxUrl, getFormData()).then((result) => {
+            setIsLoading(false);
+            setSavingLink(null);
+
             if (linkData.action === 'create') {
 
             } else if (linkData.action === 'edit') {
@@ -230,11 +240,15 @@ export default function ItemFormPopup(props) {
     const getFormLinks = () => {
         const formLinks = [
             {
-                'label': 'Create',
+                'id': 'create',
+                'label': __('Create', 'publishpress'),
+                'labelLoading': __('Saving...', 'publishpress'),
                 'action': 'publishpress_calendar_create_item'
             },
             {
-                'label': 'Edit',
+                'id': 'edit',
+                'label': __('Edit', 'publishpress'),
+                'labelLoading': __('Saving...', 'publishpress'),
                 'action': 'publishpress_calendar_create_item'
             }
         ];
@@ -249,7 +263,11 @@ export default function ItemFormPopup(props) {
 
             linkData = formLinks[linkName];
 
-            links.push(getPostLinksElement(linkData, handleLinkOnClick));
+            if (savingLink === linkData.id) {
+                links.push(<span>{linkData.labelLoading}</span>);
+            } else {
+                links.push(getPostLinksElement(linkData, handleLinkOnClick));
+            }
         }
 
         return links;
@@ -288,9 +306,7 @@ export default function ItemFormPopup(props) {
     }
 
     const loadFields = () => {
-        if (postType === null || typeof postType === 'undefined') {
-
-        }
+        setIsLoading(true);
 
         const args = {
             nonce: props.nonce
@@ -304,6 +320,7 @@ export default function ItemFormPopup(props) {
                 setTimeout(() => {
                     $('.publishpress-calendar-popup-form input').first().focus();
                 }, 500);
+                setIsLoading(false);
             });
     }
 
@@ -316,6 +333,9 @@ export default function ItemFormPopup(props) {
         <div className="publishpress-calendar-popup publishpress-calendar-popup-form">
             <div className="publishpress-calendar-popup-title">
                 <span className={'dashicons dashicons-plus-alt'}/> {title}
+                {isLoading &&
+                    <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
+                }
             </div>
             <hr/>
             <table>

@@ -188,6 +188,10 @@
 .publishpress-calendar-popup-form textarea {
   height: 85px;
 }
+.publishpress-calendar-popup-form .publishpress-spinner {
+  position: absolute;
+  right: 4px;
+}
 .publishpress-calendar {
   display: block;
   width: 100%;
