@@ -645,6 +645,7 @@ if (!class_exists('PP_Calendar')) {
          * - Need to respect user permissions. Editors can move all, authors can move their own, and contributors can't move at all
          *
          * @since 0.7
+         * @todo Check if this method is still needed
          */
         public function handle_ajax_drag_and_drop()
         {
@@ -2810,145 +2811,6 @@ if (!class_exists('PP_Calendar')) {
             <?php
         }
 
-        /**
-         * Ajax callback to insert a post placeholder for a particular date
-         *
-         * @since 0.8
-         */
-        public function handle_ajax_insert_post()
-        {
-            // Nonce check!
-            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
-
-            // Check that the user has the right capabilities to add posts to the calendar (defaults to 'edit_posts')
-            if (!current_user_can($this->create_post_cap)) {
-                $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
-            }
-
-            if (empty($_POST['pp_insert_date'])) {
-                $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
-            }
-
-            // Post type has to be visible on the calendar to create a placeholder
-            $post_type = sanitize_text_field($_POST['pp_insert_type']);
-            if (empty($post_type)) {
-                $post_type = 'post';
-            }
-
-            if (!in_array($post_type, $this->get_post_types_for_module($this->module))) {
-                $this->print_ajax_response(
-                    'error',
-                    __('Please change Quick Create to  use a post type viewable on the calendar.', 'publishpress')
-                );
-            }
-
-            // Sanitize post values
-            $post_title = apply_filters(
-                'pp_calendar_after_form_submission_sanitize_title',
-                sanitize_text_field($_POST['pp_insert_title'])
-            );
-            if (empty($post_title)) {
-                $post_title = __('Untitled', 'publishpress');
-            }
-
-            $post_content = apply_filters(
-                'pp_calendar_after_form_submission_sanitize_content',
-                wp_filter_post_kses($_POST['pp_insert_content'])
-            );
-            if (!$post_content) {
-                $post_content = '';
-            }
-
-            $post_author = apply_filters(
-                'pp_calendar_after_form_submission_sanitize_author',
-                (int)$_POST['pp_insert_author']
-            );
-            try {
-                $post_author = apply_filters('pp_calendar_after_form_submission_validate_author', $post_author);
-            } catch (Exception $e) {
-                $this->print_ajax_response('error', $e->getMessage());
-            }
-
-            if (empty($post_author)) {
-                $post_author = apply_filters('publishpress_calendar_default_author', get_current_user_id());
-            }
-
-            $post_status = sanitize_text_field($_POST['pp_insert_status']);
-            if (!$this->isPostStatusValid($post_status)) {
-                $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
-            }
-
-            $post_date           = sanitize_text_field($_POST['pp_insert_date']);
-            $post_date_timestamp = strtotime($post_date);
-
-            $post_publish_time = trim(sanitize_text_field($_POST['pp_insert_publish_time']));
-
-            if (empty($post_publish_time)) {
-                $post_publish_time = $this->module->options->default_publish_time;
-            }
-
-            if (!empty($post_publish_time)) {
-                $post_date = sprintf(
-                    '%s %s',
-                    $post_date,
-                    ((function_exists('mb_strlen') ? mb_strlen($post_publish_time) : strlen($post_publish_time)) === 5)
-                        ? "{$post_publish_time}:" . date('s', $post_date_timestamp)
-                        : date('H:i:s', $post_date_timestamp)
-                );
-            }
-
-            $post_publish_date_time_instance = new DateTime($post_date);
-            if ($post_publish_date_time_instance === false) {
-                $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
-            }
-            unset($post_publish_date_time_instance);
-
-            // Set new post parameters
-            $post_placeholder = [
-                'post_author'       => $post_author,
-                'post_title'        => $post_title,
-                'post_content'      => $post_content,
-                'post_type'         => $post_type,
-                'post_status'       => $post_status,
-                'post_date'         => $post_date,
-                'post_modified'     => current_time('mysql'),
-                'post_modified_gmt' => current_time('mysql', 1),
-            ];
-
-            /*
-             * By default, adding a post to the calendar will set the timestamp.
-             * If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
-             * With how WordPress works internally, setting 'post_date_gmt' will set the timestamp.
-             * But check the Custom Status module and the hook to "wp_insert_post_data". It will reset the date if not
-             * publishing or scheduling.
-             */
-
-            if (apply_filters('pp_calendar_allow_ajax_to_set_timestamp', true)) {
-                $post_placeholder['post_date_gmt'] = get_gmt_from_date($post_date);
-            }
-
-            // Create the post
-            add_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
-            $post_id = wp_insert_post($post_placeholder);
-            remove_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
-
-            do_action('publishpress_calendar_after_create_post', $post_id, $post_author);
-
-            if ($post_id) {
-                $post = get_post($post_id);
-
-                // Generate the HTML for the post item so it can be injected
-                $post_li_html = $this->generate_post_li_html($post, $post_date, 0);
-
-                // announce success and send back the html to inject
-                $this->print_ajax_response('success', $post_li_html);
-            } else {
-                $this->print_ajax_response('error', __('Post could not be created', 'publishpress'));
-            }
-        }
-
         private function isPostStatusValid($subject)
         {
             foreach ($this->get_post_statuses() as $post_status) {
@@ -2983,31 +2845,13 @@ if (!class_exists('PP_Calendar')) {
         }
 
         /**
-         * Returns the singular label for the posts that are
-         * quick-created on the calendar
-         *
-         * @param mix $post_type_slug
-         *
-         * @return str Singular label for a post-type
-         */
-        public function get_quick_create_post_type_name($post_type_slug)
-        {
-            if (is_array($post_type_slug)) {
-                $post_type_slug = $post_type_slug[0];
-            }
-
-            $post_type_obj = get_post_type_object($post_type_slug);
-
-            return $post_type_obj->labels->singular_name ? $post_type_obj->labels->singular_name : $post_type_slug;
-        }
-
-        /**
          * ajax_pp_calendar_update_metadata
          * Update the metadata from the calendar.
          *
          * @return string representing the overlay
          *
          * @since 0.8
+         * @todo Check if this method is still needed
          */
         public function handle_ajax_update_metadata()
         {
@@ -3512,8 +3356,8 @@ if (!class_exists('PP_Calendar')) {
             $content    = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
             $time       = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
             $author     = isset($_POST['authors']) ? (array)$_POST['authors'] : [];
-            $categories = isset($_POST['categories']) ? (array)$_POST['categories'] : [];
-            $tags       = isset($_POST['tags']) ? (array)$_POST['tags'] : [];
+            $categories = isset($_POST['categories']) ? explode(',', $_POST['categories']) : [];
+            $tags       = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
 
             if (empty($date)) {
                 $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
@@ -3561,6 +3405,9 @@ if (!class_exists('PP_Calendar')) {
                 $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
             }
 
+            $categories = array_map('sanitize_text_field', $categories);
+            $tags       = array_map('sanitize_text_field', $tags);
+
             $dateTimestamp = strtotime($date);
 
             if (empty($time)) {
@@ -3570,7 +3417,7 @@ if (!class_exists('PP_Calendar')) {
             if (!empty($time)) {
                 $date = sprintf(
                     '%s %s',
-                    $post_date,
+                    $date,
                     ((function_exists('mb_strlen') ? mb_strlen($time) : strlen($time)) === 5)
                         ? "{$time}:" . date('s', $dateTimestamp)
                         : date('H:i:s', $dateTimestamp)
@@ -3615,6 +3462,36 @@ if (!class_exists('PP_Calendar')) {
             do_action('publishpress_calendar_after_create_post', $postId, $author);
 
             if ($postId) {
+                if (!empty($categories)) {
+                    $categoriesIdList = [];
+                    foreach ($categories as $categorySlug) {
+                        $category = get_term_by('slug', $categorySlug, 'category');
+
+                        if (!$category || is_wp_error($category)) {
+                            $category = wp_create_category($categorySlug);
+                            $category = get_term($category);
+                        }
+
+                        if (!is_wp_error($category)) {
+                            $categoriesIdList[] = $category->term_id;
+                        }
+                    }
+
+                    wp_set_post_terms($postId, $categoriesIdList, 'category');
+                }
+
+                if (!empty($tags)) {
+                    foreach ($tags as $tagSlug) {
+                        $tag = get_term_by('slug', $tagSlug, 'post_tag');
+
+                        if (!$tag || is_wp_error($tag)) {
+                            wp_create_tag($tagSlug);
+                        }
+                    }
+
+                    wp_set_post_terms($postId, $tags);
+                }
+
                 // announce success and send back the html to inject
                 $this->print_ajax_response(
                     'success',
