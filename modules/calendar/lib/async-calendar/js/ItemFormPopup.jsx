@@ -69,7 +69,6 @@ export default function ItemFormPopup(props) {
                     break;
 
                 case 'status':
-                    updateFormsFieldData(dataPropertyName, dataProperty.value);
                     field = <PostStatusField value={dataProperty.value}
                                              isEditing={true}
                                              options={props.statuses}
