@@ -46,7 +46,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
 
-        .dashicons {
+        .publishpress-calendar-icon {
             color: @iconColor !important;
             margin-right: 5px;
         }
@@ -57,6 +57,12 @@
             display: inline-block;
             border-radius: 50%;
             margin-right: 5px;
+        }
+
+        .publishpress-calendar-popup-close {
+            position: absolute;
+            right: 4px;
+            cursor: pointer;
         }
     }
 
@@ -95,9 +101,18 @@
         position: absolute;
         right: 4px;
     }
+
+    .publishpress-calendar-popup-close {
+        position: absolute;
+        right: 4px;
+        cursor: pointer;
+    }
+
     .publishpress-calendar-popup-links {
         position: absolute;
         bottom: 10px;
+        width: 98%;
+        box-sizing: border-box;
     }
 
     .publishpress-calendar-popup-loading-fields {

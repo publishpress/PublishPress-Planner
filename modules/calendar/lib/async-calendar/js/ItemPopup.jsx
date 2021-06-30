@@ -11,6 +11,7 @@ import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
 
+const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function ItemPopup(props) {
@@ -39,6 +40,10 @@ export default function ItemPopup(props) {
 
     const getPositionOnLeftSide = () => {
         return targetPosition.left - (offsetX * 2.5) - popupWidth;
+    }
+
+    const closePopup = () => {
+        $(document).trigger('publishpress_calendar:close_popup');
     }
 
     const positionTop = targetPosition.top;
@@ -164,9 +169,11 @@ export default function ItemPopup(props) {
                 <span className="publishpress-calendar-item-color" style={{backgroundColor: props.color}}/>
                 }
                 {props.icon &&
-                <span className={'dashicons ' + props.icon}/>
+                <span className={'dashicons ' + props.icon + ' publishpress-calendar-icon'}/>
                 }
                 {props.title}
+
+                <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={closePopup}/>
             </div>
             <hr/>
             <table>

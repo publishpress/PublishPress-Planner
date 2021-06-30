@@ -40,6 +40,7 @@ export default function AsyncCalendar(props) {
 
     const addEventListeners = () => {
         document.addEventListener('keydown', onDocumentKeyDown);
+        $(document).on('publishpress_calendar:close_popup', onCloseItemPopup);
     }
 
     const removeEventListeners = () => {
@@ -346,10 +347,13 @@ export default function AsyncCalendar(props) {
     }
 
     const onCloseForm = () => {
-        console.log('Closing form...');
         setRefreshCount(refreshCount + 1);
 
         setFormDate(null);
+    }
+
+    const onCloseItemPopup = () => {
+        setOpenedItemId(null);
     }
 
     const calendarBodyRows = () => {

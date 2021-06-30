@@ -345,10 +345,9 @@ export default function ItemFormPopup(props) {
     return (
         <div className="publishpress-calendar-popup publishpress-calendar-popup-form">
             <div className="publishpress-calendar-popup-title">
-                <span className={'dashicons dashicons-plus-alt'}/> {title}
-                {isLoading &&
-                <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
-                }
+                <span className={'dashicons dashicons-plus-alt'}/>
+                {title}
+                <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
             </div>
             <hr/>
             <table>
@@ -395,6 +394,9 @@ export default function ItemFormPopup(props) {
             <hr className={'publishpress-calendar-popup-links-hr'}/>
             <div className="publishpress-calendar-popup-links">
                 {getFormLinks()}
+                {isLoading &&
+                <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
+                }
             </div>
         </div>
     )
