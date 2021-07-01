@@ -3334,7 +3334,7 @@ if (!class_exists('PP_Calendar')) {
                 ]
             ];
 
-//            $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
+            $data = apply_filters('publishpress_calendar_get_post_type_fields', $data, $postTy);
 
             wp_send_json($data, 202);
         }

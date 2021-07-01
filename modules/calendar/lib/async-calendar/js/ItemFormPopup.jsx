@@ -25,16 +25,16 @@ export default function ItemFormPopup(props) {
     const didMount = () => {
         setPostType(props.postTypes[0].value);
 
-        resetFormFieldData();
-        updateFormsFieldData('post_type', props.postTypes[0].value);
-        updateFormsFieldData('status', 'draft');
+        resetGlobalFormFieldData();
+        updateGlobalFormFieldData('post_type', props.postTypes[0].value);
+        updateGlobalFormFieldData('status', 'draft');
 
         activateFixForScreenLockerSize();
 
         return () => {
             deactivateFixForScreenLockerSize();
 
-            resetFormFieldData();
+            resetGlobalFormFieldData();
         }
     }
 
@@ -46,7 +46,7 @@ export default function ItemFormPopup(props) {
         $('#wpwrap').css('overflow', 'auto');
     }
 
-    const getFieldRows = () => {
+    const getFormTableFieldRows = () => {
         const fieldRows = [];
 
         let dataProperty;
@@ -68,7 +68,7 @@ export default function ItemFormPopup(props) {
                                            isEditing={true}
                                            id={fieldId}
                                            onChange={(e, value) => {
-                                               updateFormsFieldData(dataPropertyName, value);
+                                               updateGlobalFormFieldData(dataPropertyName, value);
                                            }}/>;
                     break;
 
@@ -85,10 +85,10 @@ export default function ItemFormPopup(props) {
                                                   values.push(data[i].id);
                                               }
 
-                                              updateFormsFieldData(dataPropertyName, values);
+                                              updateGlobalFormFieldData(dataPropertyName, values);
                                           }}
                                           onClear={(e, elem) => {
-                                              updateFormsFieldData(dataPropertyName, null);
+                                              updateGlobalFormFieldData(dataPropertyName, null);
                                           }}/>;
                     break;
 
@@ -103,10 +103,10 @@ export default function ItemFormPopup(props) {
                                                      value = data[0].id;
                                                  }
 
-                                                 updateFormsFieldData(dataPropertyName, value);
+                                                 updateGlobalFormFieldData(dataPropertyName, value);
                                              }}
                                              onClear={(e, elem) => {
-                                                 updateFormsFieldData(dataPropertyName, null);
+                                                 updateGlobalFormFieldData(dataPropertyName, null);
                                              }}/>;
                     break;
 
@@ -124,10 +124,10 @@ export default function ItemFormPopup(props) {
                                                    values.push(data[i].id);
                                                }
 
-                                               updateFormsFieldData(dataPropertyName, values);
+                                               updateGlobalFormFieldData(dataPropertyName, values);
                                            }}
                                            onClear={(e, elem) => {
-                                               updateFormsFieldData(dataPropertyName, null);
+                                               updateGlobalFormFieldData(dataPropertyName, null);
                                            }}/>;
                     break;
 
@@ -143,7 +143,7 @@ export default function ItemFormPopup(props) {
                                            isEditing={true}
                                            id={fieldId}
                                            onChange={(e, value) => {
-                                               updateFormsFieldData(dataPropertyName, value);
+                                               updateGlobalFormFieldData(dataPropertyName, value);
                                            }}/>;
                     break;
 
@@ -152,7 +152,7 @@ export default function ItemFormPopup(props) {
                                       isEditing={true}
                                       id={fieldId}
                                       onChange={(e, value) => {
-                                          updateFormsFieldData(dataPropertyName, value);
+                                          updateGlobalFormFieldData(dataPropertyName, value);
                                       }}/>;
                     break;
 
@@ -161,7 +161,7 @@ export default function ItemFormPopup(props) {
                                        isEditing={true}
                                        id={fieldId}
                                        onChange={(e, value) => {
-                                           updateFormsFieldData(dataPropertyName, value);
+                                           updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
                     break;
 
@@ -176,7 +176,7 @@ export default function ItemFormPopup(props) {
                                          isEditing={true}
                                          id={fieldId}
                                          onChange={(e, value) => {
-                                             updateFormsFieldData(dataPropertyName, value);
+                                             updateGlobalFormFieldData(dataPropertyName, value);
                                          }}/>;
                     break;
 
@@ -185,7 +185,7 @@ export default function ItemFormPopup(props) {
                                        isEditing={true}
                                        id={fieldId}
                                        onChange={(e, value) => {
-                                           updateFormsFieldData(dataPropertyName, value);
+                                           updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
                     break;
 
@@ -207,7 +207,7 @@ export default function ItemFormPopup(props) {
 
     // We are using a global var because the states are async and we were having a hard time to make all
     // fields work together updating the same state.
-    const getGlobal = (name) => {
+    const getGlobalFormFieldData = (name) => {
         if (typeof window.publishpressCalendaGlobal === 'undefined') {
             window.publishpressCalendaGlobal = {};
         }
@@ -223,24 +223,24 @@ export default function ItemFormPopup(props) {
         return null;
     }
 
-    const setGlobal = (name, value) => {
-        getGlobal(name);
+    const setGlobalFormFieldData = (name, value) => {
+        getGlobalFormFieldData(name);
 
         window.publishpressCalendaGlobal.formFieldsData[name] = value;
     }
 
-    const resetFormFieldData = () => {
+    const resetGlobalFormFieldData = () => {
         if (typeof window.publishpressCalendaGlobal !== 'undefined'
             && typeof window.publishpressCalendaGlobal.formFieldsData !== 'undefined') {
             window.publishpressCalendaGlobal.formFieldsData = [];
         }
     }
 
-    const updateFormsFieldData = (fieldName, value) => {
-        setGlobal(fieldName, value);
+    const updateGlobalFormFieldData = (fieldName, value) => {
+        setGlobalFormFieldData(fieldName, value);
     }
 
-    const getFormData = () => {
+    const getFormDataForThePostRequest = () => {
         let formData = new FormData;
 
         formData.append('date', getDateAsStringInWpFormat(props.date));
@@ -262,7 +262,7 @@ export default function ItemFormPopup(props) {
         setSavingLink(linkData.id);
         setErrorMessage(null);
 
-        callAjaxPostAction(linkData.action, linkData.args, props.ajaxUrl, getFormData()).then((result) => {
+        callAjaxPostAction(linkData.action, linkData.args, props.ajaxUrl, getFormDataForThePostRequest()).then((result) => {
             if (linkData.id === 'create') {
                 setIsLoading(false);
                 setSavingLink(null);
@@ -286,7 +286,7 @@ export default function ItemFormPopup(props) {
         });
     }
 
-    const getFormLinks = () => {
+    const getFooterLinks = () => {
         const formLinks = [
             {
                 'id': 'create',
@@ -325,17 +325,17 @@ export default function ItemFormPopup(props) {
         return links;
     }
 
-    const handleOnSelectPostType = (e) => {
+    const handleOnSelectPostTypeField = (e) => {
         let $target = $(e.target);
 
         const postType = $target.pp_select2('data')[0].id;
 
         setPostType(postType);
 
-        updateFormsFieldData('post_type', postType);
+        updateGlobalFormFieldData('post_type', postType);
     }
 
-    const getTitle = () => {
+    const getFormPopupTitle = () => {
         let title;
         if (props.postId) {
             title = '';
@@ -347,9 +347,9 @@ export default function ItemFormPopup(props) {
         return title;
     }
 
-    const getPostTypeText = (postTypeId) => {
+    const getPostTypeNameBySlug = (postTypeSlug) => {
         for (let i = 0; i < props.postTypes.length; i++) {
-            if (props.postTypes[i].value === postTypeId) {
+            if (props.postTypes[i].value === postTypeSlug) {
                 return props.postTypes[i].text;
             }
         }
@@ -357,7 +357,7 @@ export default function ItemFormPopup(props) {
         return __('Post type not found', 'publishpress');
     }
 
-    const loadFields = () => {
+    const loadPostTypeFields = () => {
         setIsLoading(true);
 
         const args = {
@@ -378,12 +378,10 @@ export default function ItemFormPopup(props) {
             });
     }
 
-    const title = getTitle();
-
     React.useEffect(didMount, []);
-    React.useEffect(loadFields, [postType]);
+    React.useEffect(loadPostTypeFields, [postType]);
 
-    const fieldRows = getFieldRows();
+    const fieldTableRows = getFormTableFieldRows();
 
     return (
         <>
@@ -391,7 +389,7 @@ export default function ItemFormPopup(props) {
             <div className={'publishpress-calendar-popup publishpress-calendar-popup-form'}>
                 <div className={'publishpress-calendar-popup-title'}>
                     <span className={'dashicons dashicons-plus-alt'}/>
-                    {title}
+                    {getFormPopupTitle()}
                     <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
                 </div>
                 <hr/>
@@ -404,7 +402,7 @@ export default function ItemFormPopup(props) {
                             <Select
                                 options={props.postTypes}
                                 allowClear={false}
-                                onSelect={handleOnSelectPostType}
+                                onSelect={handleOnSelectPostTypeField}
                             />
                         </td>
                     </tr>
@@ -413,18 +411,18 @@ export default function ItemFormPopup(props) {
                     {props.postTypes.length === 1 &&
                     <tr>
                         <th><label>{__('Post type:', 'publishpress')}</label></th>
-                        <td>{getPostTypeText(postType)}</td>
+                        <td>{getPostTypeNameBySlug(postType)}</td>
                     </tr>
                     }
 
-                    {fieldRows.length > 0 &&
-                        fieldRows
+                    {fieldTableRows.length > 0 &&
+                        fieldTableRows
                     }
                     </tbody>
                 </table>
 
 
-                {fieldRows.length === 0 &&
+                {fieldTableRows.length === 0 &&
                 <div
                     className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
                 }
@@ -438,7 +436,7 @@ export default function ItemFormPopup(props) {
 
                 <hr className={'publishpress-calendar-popup-links-hr'}/>
                 <div className="publishpress-calendar-popup-links">
-                    {getFormLinks()}
+                    {getFooterLinks()}
                     {isLoading &&
                     <span className={'dashicons dashicons-update-alt publishpress-spinner'}/>
                     }
