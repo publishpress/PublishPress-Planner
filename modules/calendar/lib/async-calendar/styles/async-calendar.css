@@ -278,7 +278,6 @@
   text-align: center;
 }
 .publishpress-calendar .ui-draggable-dragging {
-  width: 250px !important;
   display: block !important;
 }
 .publishpress-calendar .ui-draggable-target {
