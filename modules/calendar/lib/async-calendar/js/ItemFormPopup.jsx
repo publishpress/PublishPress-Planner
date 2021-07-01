@@ -23,12 +23,8 @@ export default function ItemFormPopup(props) {
     const [errorMessage, setErrorMessage] = React.useState();
 
     const didMount = () => {
-        setPostType(props.postTypes[0].value);
-
         resetGlobalFormFieldData();
-        updateGlobalFormFieldData('post_type', props.postTypes[0].value);
-        updateGlobalFormFieldData('status', 'draft');
-
+        setDefaultValueForFields();
         activateFixForScreenLockerSize();
 
         return didUnmount();
@@ -46,6 +42,13 @@ export default function ItemFormPopup(props) {
 
     const deactivateFixForScreenLockerSize = () => {
         $('#wpwrap').css('overflow', 'auto');
+    }
+
+    const setDefaultValueForFields = () => {
+        setPostType(props.postTypes[0].value);
+
+        updateGlobalFormFieldData('post_type', props.postTypes[0].value);
+        updateGlobalFormFieldData('status', 'draft');
     }
 
     const getFormTableFieldRows = () => {
@@ -359,7 +362,7 @@ export default function ItemFormPopup(props) {
         return __('Post type not found', 'publishpress');
     }
 
-    const loadPostTypeFields = () => {
+    const fetchFieldsForSelectedPostType = () => {
         setIsLoading(true);
 
         const args = {
@@ -373,15 +376,21 @@ export default function ItemFormPopup(props) {
                 setFields(result);
             })
             .then(() => {
-                setTimeout(() => {
-                    $('.publishpress-calendar-popup-form input').first().focus();
-                }, 500);
+                setFocusOnTitleField();
+                setDefaultValueForFields();
+
                 setIsLoading(false);
             });
     }
 
+    const setFocusOnTitleField = () => {
+        setTimeout(() => {
+            $('.publishpress-calendar-popup-form input').first().focus();
+        }, 500);
+    }
+
     React.useEffect(didMount, []);
-    React.useEffect(loadPostTypeFields, [postType]);
+    React.useEffect(fetchFieldsForSelectedPostType, [postType]);
 
     const fieldTableRows = getFormTableFieldRows();
 
