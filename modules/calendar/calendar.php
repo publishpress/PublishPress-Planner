@@ -3851,7 +3851,7 @@ if (!class_exists('PP_Calendar')) {
 
             $user = get_user_by('id', $post_author_id);
 
-            $is_valid = (is_object($user) && !is_wp_error($user)) ? $user->has_cap('edit_posts') : false;
+            $is_valid = is_object($user) && !is_wp_error($user) && $user->has_cap('edit_posts');
 
             if (!apply_filters('publishpress_author_can_edit_posts', $is_valid, $post_author_id)) {
                 throw new Exception(
