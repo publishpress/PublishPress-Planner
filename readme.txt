@@ -122,7 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
-* Fixed:
+* Fixed: Fix calendar items ordering when sorted by status or time;
 
 = [3.3.3] - 2021-06-16 =
 

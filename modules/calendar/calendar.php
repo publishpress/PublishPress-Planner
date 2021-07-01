@@ -2122,6 +2122,10 @@ if (!class_exists('PP_Calendar')) {
             // Filter for an end user to implement any of their own query args
             $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
 
+            if (isset($this->module->options->sort_by)) {
+                add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
+            }
+
             $post_results = new WP_Query($args);
 
             $posts = [];
@@ -2132,7 +2136,22 @@ if (!class_exists('PP_Calendar')) {
                 $posts[$key_date][] = $post;
             }
 
+            if (isset($this->module->options->sort_by)) {
+                remove_filter('posts_orderby', [$this, 'filterPostsOrderBy']);
+            }
+
             return $posts;
+        }
+
+        public function filterPostsOrderBy($orderBy)
+        {
+            if ($this->module->options->sort_by === 'status') {
+                $orderBy = 'post_status ASC, post_date ASC';
+            } else {
+                $orderBy = 'post_date ASC';
+            }
+
+            return $orderBy;
         }
 
         /**
@@ -3451,7 +3470,9 @@ if (!class_exists('PP_Calendar')) {
             $post_query_args = wp_parse_args($args, $post_query_args);
 
             if (isset($this->module->options->sort_by) && $this->module->options->sort_by === 'status') {
-                $post_query_args['orderby'] = ['post_status'];
+                $post_query_args['orderby'] = ['post_status' => 'ASC'];
+            } else {
+                $post_query_args['orderby'] = ['post_date' => 'ASC'];
             }
 
             $postsList = $this->getCalendarDataForMultipleWeeks($post_query_args);
