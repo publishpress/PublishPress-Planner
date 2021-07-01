@@ -31,11 +31,13 @@ export default function ItemFormPopup(props) {
 
         activateFixForScreenLockerSize();
 
-        return () => {
-            deactivateFixForScreenLockerSize();
+        return didUnmount();
+    }
 
-            resetGlobalFormFieldData();
-        }
+    const didUnmount = () => {
+        deactivateFixForScreenLockerSize();
+
+        resetGlobalFormFieldData();
     }
 
     const activateFixForScreenLockerSize = () => {
