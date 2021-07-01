@@ -551,6 +551,25 @@ if (!class_exists('PP_Calendar')) {
 
                 if (is_admin(
                     ) && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
+                    global $wp_scripts;
+
+                    if (!isset($wp_scripts->queue['react'])) {
+                        wp_enqueue_script(
+                            'react',
+                            PUBLISHPRESS_URL . 'common/js/react.min.js',
+                            [],
+                            PUBLISHPRESS_VERSION,
+                            true
+                        );
+                        wp_enqueue_script(
+                            'react-dom',
+                            PUBLISHPRESS_URL . 'common/js/react-dom.min.js',
+                            ['react'],
+                            PUBLISHPRESS_VERSION,
+                            true
+                        );
+                    }
+
                     wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
