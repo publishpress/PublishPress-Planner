@@ -27,7 +27,7 @@ export default function ItemFormPopup(props) {
         setDefaultValueForFields();
         activateFixForScreenLockerSize();
 
-        return didUnmount();
+        return didUnmount;
     }
 
     const didUnmount = () => {
