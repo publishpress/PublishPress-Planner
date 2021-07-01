@@ -125,6 +125,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: The calendar page has changed and is fully based on React now, #680;
 * Changed: Minor improvements to the calendar UI, #680;
 * Changed: The "Show 'n' more" option in the calendar cells now works independently and shows the number of visible or hidden posts, #680;
+* Changed: The title field in the quick create form in the calendar is now focused automatically after the form is showed, #680;
 * Added: Added async data loading to the calendar, with faster navigation and filtering without the need to reload the page, #680;
 * Added: New quick create posts form in the calendar with specific fields per post type, #680;
 * Added: Added the Post ID to the calendar item popup, #680;
