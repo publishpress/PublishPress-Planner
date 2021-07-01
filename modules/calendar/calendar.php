@@ -245,9 +245,6 @@ if (!class_exists('PP_Calendar')) {
             // Ajax insert post placeholder for a specific date
             add_action('wp_ajax_pp_insert_post', [$this, 'handle_ajax_insert_post']);
 
-            // Update metadata
-            add_action('wp_ajax_pp_calendar_update_metadata', [$this, 'handle_ajax_update_metadata']);
-
             add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
             add_action('wp_ajax_publishpress_calendar_search_terms', [$this, 'searchTerms']);
             add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
@@ -552,12 +549,6 @@ if (!class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION
                 );
 
-                $pp_cal_js_params = [
-                    'can_add_posts' => current_user_can($this->create_post_cap) ? 'true' : 'false',
-                    'nonce'         => wp_create_nonce('calendar_filter_nonce'),
-                ];
-                wp_localize_script('publishpress-calendar-js', 'pp_calendar_params', $pp_cal_js_params);
-
                 if (is_admin(
                     ) && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
                     wp_enqueue_script(
@@ -631,7 +622,10 @@ if (!class_exists('PP_Calendar')) {
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts'            => current_user_can($this->create_post_cap),
                         'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
-                        'allowAddingMultipleAuthors' => apply_filters('publishpress_calendar_allow_multiple_authors', false),
+                        'allowAddingMultipleAuthors' => apply_filters(
+                            'publishpress_calendar_allow_multiple_authors',
+                            false
+                        ),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
                 }
@@ -2072,11 +2066,11 @@ if (!class_exists('PP_Calendar')) {
          * Query to get all of the calendar posts for a given day
          *
          * @param array $args Any filter arguments we want to pass
-         * @param string $request_context Where the query is coming from, to distinguish dashboard and subscriptions
+         * @param string $context Where the query is coming from, to distinguish dashboard and subscriptions
          *
          * @return array $posts All of the posts as an array sorted by date
          */
-        public function get_calendar_posts_for_multiple_weeks($args = [], $context = 'dashboard')
+        public function getCalendarDataForMultipleWeeks($args = [], $context = 'dashboard')
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
             $defaults             = [
@@ -2846,98 +2840,6 @@ if (!class_exists('PP_Calendar')) {
             return $data;
         }
 
-        /**
-         * ajax_pp_calendar_update_metadata
-         * Update the metadata from the calendar.
-         *
-         * @return string representing the overlay
-         *
-         * @since 0.8
-         * @todo Check if this method is still needed
-         */
-        public function handle_ajax_update_metadata()
-        {
-            global $wpdb;
-
-            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
-
-            // Check that we got a proper post
-            $post_id = (int)$_POST['post_id'];
-            $post    = get_post($post_id);
-
-            if (!$post) {
-                $this->print_ajax_response('error', $this->module->messages['missing-post']);
-            }
-
-            if ($post->post_type == 'page') {
-                $edit_check = 'edit_page';
-            } else {
-                $edit_check = 'edit_post';
-            }
-
-            if (!current_user_can($edit_check, $post->ID)) {
-                $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
-            }
-
-            // Check that the user can modify the post
-            if (!$this->current_user_can_modify_post($post)) {
-                $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
-            }
-
-            $default_types = [
-                'author',
-                'taxonomy',
-            ];
-
-            $metadata_types = [];
-
-            if (!$this->module_enabled('editorial_metadata')) {
-                $this->print_ajax_response('error', $this->module->messages['update-error']);
-            }
-
-            $metadata_types = array_keys(PublishPress()->editorial_metadata->get_supported_metadata_types());
-
-            // Update an editorial metadata field
-            if (isset($_POST['metadata_type']) && in_array($_POST['metadata_type'], $metadata_types)) {
-                $post_meta_key = sanitize_text_field(
-                    '_pp_editorial_meta_' . $_POST['metadata_type'] . '_' . $_POST['metadata_term']
-                );
-
-                // Javascript date parsing is terrible, so use strtotime in php
-                if ($_POST['metadata_type'] == 'date') {
-                    $metadata_value = strtotime(sanitize_text_field($_POST['metadata_value']));
-                } else {
-                    $metadata_value = sanitize_text_field($_POST['metadata_value']);
-                }
-
-                update_post_meta($post->ID, $post_meta_key, $metadata_value);
-                $response = 'success';
-            } else {
-                switch ($_POST['metadata_type']) {
-                    case 'taxonomy':
-                    case 'taxonomy hierarchical':
-                        $response = wp_set_post_terms(
-                            $post->ID,
-                            sanitize_text_field($_POST['metadata_value']),
-                            sanitize_text_field($_POST['metadata_term'])
-                        );
-                        break;
-                    default:
-                        $response = new WP_Error('invalid-type', __('Invalid metadata type', 'publishpress'));
-                        break;
-                }
-            }
-
-            // Assuming we've got to this point, just regurgitate the value
-            if (!is_wp_error($response)) {
-                $this->print_ajax_response('success', sanitize_text_field($_POST['metadata_value']));
-            } else {
-                $this->print_ajax_response('error', esc_html__('Metadata could not be updated.', 'publishpress'));
-            }
-        }
-
         public function calendar_filters()
         {
             $select_filter_names = [];
@@ -3552,7 +3454,7 @@ if (!class_exists('PP_Calendar')) {
                 $post_query_args['orderby'] = ['post_status'];
             }
 
-            $postsList = $this->get_calendar_posts_for_multiple_weeks($post_query_args);
+            $postsList = $this->getCalendarDataForMultipleWeeks($post_query_args);
 
             $data = [];
 
