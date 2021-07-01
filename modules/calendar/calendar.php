@@ -3239,6 +3239,11 @@ if (!class_exists('PP_Calendar')) {
                         'value' => $this->getPostTypeName($post->post_type),
                         'type'  => 'type',
                     ],
+                    'id'         => [
+                        'label' => __('ID', 'publishpress'),
+                        'value' => $id,
+                        'type'  => 'number',
+                    ],
                     'date'       => [
                         'label' => __('Date', 'publishpress'),
                         'value' => $post->post_date,
