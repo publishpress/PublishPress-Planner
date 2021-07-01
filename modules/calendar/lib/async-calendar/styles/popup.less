@@ -1,7 +1,6 @@
 @backgroundColor: #fff;
 @shadowColor: #838383;
 @textColor: #000;
-@iconColor: #626262;
 
 .publishpress-calendar-popup-screen-lock {
     background-color: rgba(99, 89, 147, 0.6);
@@ -55,23 +54,19 @@
         width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
+        box-sizing: border-box;
+        color: #fff;
+        margin-bottom: 8px;
+        padding: 4px 23px 4px 4px;
 
         .publishpress-calendar-icon {
-            color: @iconColor !important;
             margin-right: 5px;
-        }
-
-        .publishpress-calendar-item-color {
-            width: 15px;
-            height: 15px;
-            display: inline-block;
-            border-radius: 50%;
-            margin-right: 5px;
+            color: #fff;
         }
 
         .publishpress-calendar-popup-close {
             position: absolute;
-            right: 4px;
+            right: 14px;
             cursor: pointer;
         }
     }

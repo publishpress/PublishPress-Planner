@@ -164,10 +164,7 @@ export default function ItemPopup(props) {
 
     return (
         <div className="publishpress-calendar-popup" style={{top: positionTop, left: positionLeft}}>
-            <div className="publishpress-calendar-popup-title">
-                {props.color &&
-                <span className="publishpress-calendar-item-color" style={{backgroundColor: props.color}}/>
-                }
+            <div className="publishpress-calendar-popup-title" style={{backgroundColor: props.color}}>
                 {props.icon &&
                 <span className={'dashicons ' + props.icon + ' publishpress-calendar-icon'}/>
                 }
@@ -175,7 +172,6 @@ export default function ItemPopup(props) {
 
                 <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={closePopup}/>
             </div>
-            <hr/>
             <table>
                 <tbody>
                 {getFieldRows()}
