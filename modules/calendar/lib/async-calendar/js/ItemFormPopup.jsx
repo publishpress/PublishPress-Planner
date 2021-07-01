@@ -29,15 +29,21 @@ export default function ItemFormPopup(props) {
         updateFormsFieldData('post_type', props.postTypes[0].value);
         updateFormsFieldData('status', 'draft');
 
-        // Fix the overflow to adjust the screen lock div to fill all the screen
-        $('#wpwrap').css('overflow', 'hidden');
+        activateFixForScreenLockerSize();
 
         return () => {
-            // Restore the default overflow style
-            $('#wpwrap').css('overflow', 'auto');
+            deactivateFixForScreenLockerSize();
 
             resetFormFieldData();
         }
+    }
+
+    const activateFixForScreenLockerSize = () => {
+        $('#wpwrap').css('overflow', 'hidden');
+    }
+
+    const deactivateFixForScreenLockerSize = () => {
+        $('#wpwrap').css('overflow', 'auto');
     }
 
     const getFieldRows = () => {
