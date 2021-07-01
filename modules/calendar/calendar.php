@@ -270,7 +270,7 @@ if (!class_exists('PP_Calendar')) {
             add_filter('pp_calendar_after_form_submission_sanitize_title', [$this, 'sanitize_text_input'], 10, 1);
             add_filter('pp_calendar_after_form_submission_sanitize_content', [$this, 'sanitize_text_input'], 10, 1);
             add_filter('pp_calendar_after_form_submission_sanitize_author', [$this, 'sanitize_author_input'], 10, 1);
-            add_filter('pp_calendar_after_form_submission_validate_author', [$this, 'validate_author_input'], 10, 1);
+            add_filter('pp_calendar_after_form_submission_validate_author', [$this, 'validateAuthorForPost'], 10, 1);
         }
 
         /**
@@ -617,20 +617,21 @@ if (!class_exists('PP_Calendar')) {
                     );
 
                     $params = [
-                        'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
-                        'firstDateToDisplay'     => $firstDateToDisplay,
-                        'theme'                  => 'light',
-                        'weekStartsOnSunday'     => get_option('start_of_week', 0) == 0,
-                        'todayDate'              => date('Y-m-d 00:00:00'),
-                        'timeFormat'             => $this->getCalendarTimeFormat(),
-                        'maxVisibleItems'        => $maxVisibleItemsOption,
-                        'statuses'               => $postStatuses,
-                        'postTypes'              => $postTypes,
-                        'singularPostTypes'      => $singularPostTypes,
-                        'ajaxUrl'                => admin_url('admin-ajax.php'),
-                        'nonce'                  => wp_create_nonce('publishpress-calendar-get-data'),
-                        'userCanAddPosts'        => current_user_can($this->create_post_cap),
-                        'items'                  => $this->getCalendarData($firstDateToDisplay, $endDate, []),
+                        'numberOfWeeksToDisplay'     => $numberOfWeeksToDisplay,
+                        'firstDateToDisplay'         => $firstDateToDisplay,
+                        'theme'                      => 'light',
+                        'weekStartsOnSunday'         => get_option('start_of_week', 0) == 0,
+                        'todayDate'                  => date('Y-m-d 00:00:00'),
+                        'timeFormat'                 => $this->getCalendarTimeFormat(),
+                        'maxVisibleItems'            => $maxVisibleItemsOption,
+                        'statuses'                   => $postStatuses,
+                        'postTypes'                  => $postTypes,
+                        'singularPostTypes'          => $singularPostTypes,
+                        'ajaxUrl'                    => admin_url('admin-ajax.php'),
+                        'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
+                        'userCanAddPosts'            => current_user_can($this->create_post_cap),
+                        'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
+                        'allowAddingMultipleAuthors' => apply_filters('publishpress_calendar_allow_multiple_authors', false),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
                 }
@@ -3354,6 +3355,9 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($data, 202);
         }
 
+        /**
+         * @throws Exception
+         */
         public function createItem()
         {
             if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'publishpress-calendar-get-data')) {
@@ -3371,7 +3375,7 @@ if (!class_exists('PP_Calendar')) {
             $title      = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
             $content    = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
             $time       = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
-            $author     = isset($_POST['authors']) ? (array)$_POST['authors'] : [];
+            $authors    = isset($_POST['authors']) ? explode(',', $_POST['authors']) : [];
             $categories = isset($_POST['categories']) ? explode(',', $_POST['categories']) : [];
             $tags       = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
 
@@ -3401,20 +3405,19 @@ if (!class_exists('PP_Calendar')) {
                 $content = '';
             }
 
-            if (count($author) === 1) {
-                $author = (int)$author[0];
-            } else {
-                $author = null;
-            }
-            $author = apply_filters('pp_calendar_after_form_submission_sanitize_author', $author);
+            $authors = apply_filters('pp_calendar_after_form_submission_sanitize_author', $authors);
             try {
-                $author = apply_filters('pp_calendar_after_form_submission_validate_author', $author);
+                $authors = apply_filters('pp_calendar_after_form_submission_validate_author', $authors);
             } catch (Exception $e) {
                 $this->print_ajax_response('error', $e->getMessage());
             }
 
-            if (empty($author)) {
-                $author = apply_filters('publishpress_calendar_default_author', get_current_user_id());
+            if (empty($authors)) {
+                $authors = apply_filters('publishpress_calendar_default_author', get_current_user_id());
+            }
+
+            if (!is_array($authors)) {
+                $authors = [$authors];
             }
 
             if (!$this->isPostStatusValid($status)) {
@@ -3448,7 +3451,7 @@ if (!class_exists('PP_Calendar')) {
 
             // Set new post parameters
             $postPlaceholder = [
-                'post_author'       => $author,
+                'post_author'       => $authors[0],
                 'post_title'        => $title,
                 'post_content'      => $content,
                 'post_type'         => $postType,
@@ -3473,9 +3476,9 @@ if (!class_exists('PP_Calendar')) {
             // Create the post
             add_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
             $postId = wp_insert_post($postPlaceholder);
-            remove_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99, 2);
+            remove_filter('wp_insert_post_data', [$this, 'alter_post_modification_time'], 99);
 
-            do_action('publishpress_calendar_after_create_post', $postId, $author);
+            do_action('publishpress_calendar_after_create_post', $postId, $authors);
 
             if ($postId) {
                 if (!empty($categories)) {
@@ -3827,42 +3830,44 @@ if (!class_exists('PP_Calendar')) {
         /**
          * Sanitizes a given author id.
          *
-         * @param string $author_id
+         * @param string $authorsIds
          *
-         * @return  int
+         * @return  array
          */
-        public static function sanitize_author_input($author_id = '')
+        public static function sanitize_author_input($authorsIds = '')
         {
-            return (int)sanitize_text_field($author_id);
+            return array_map('intval', $authorsIds);
         }
 
         /**
-         * @param string $post_author_id
+         * @param array $postAuthorIds
          *
-         * @return  int|null
+         * @return  array
          *
          * @throws  Exception
          */
-        public static function validate_author_input($post_author_id = '')
+        public static function validateAuthorForPost($postAuthorIds = [])
         {
-            if (empty($post_author_id)) {
+            if (empty($postAuthorIds)) {
                 return null;
             }
 
-            $user = get_user_by('id', $post_author_id);
+            foreach ($postAuthorIds as $authorId) {
+                $user = get_user_by('id', $authorId);
 
-            $is_valid = is_object($user) && !is_wp_error($user) && $user->has_cap('edit_posts');
+                $isValid = is_object($user) && !is_wp_error($user) && $user->has_cap('edit_posts');
 
-            if (!apply_filters('publishpress_author_can_edit_posts', $is_valid, $post_author_id)) {
-                throw new Exception(
-                    esc_html__(
-                        "The selected user doesn't have enough permissions to be set as the post author.",
-                        'publishpress'
-                    )
-                );
+                if (!apply_filters('publishpress_author_can_edit_posts', $isValid, $authorId)) {
+                    throw new Exception(
+                        esc_html__(
+                            "The selected user doesn't have enough permissions to be set as the post author.",
+                            'publishpress'
+                        )
+                    );
+                }
             }
 
-            return (int)$post_author_id;
+            return $postAuthorIds;
         }
 
         public function setDefaultCapabilities()

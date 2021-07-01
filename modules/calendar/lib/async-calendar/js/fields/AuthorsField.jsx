@@ -6,6 +6,7 @@ export default function AuthorsField(props) {
             <Select
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
+                multiple={props.multiple}
                 ajaxAction={'publishpress_calendar_search_authors'}
                 value={props.value}
                 name={props.name}

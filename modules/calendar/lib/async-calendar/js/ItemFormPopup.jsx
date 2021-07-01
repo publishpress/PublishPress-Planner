@@ -85,6 +85,7 @@ export default function ItemFormPopup(props) {
                                           id={fieldId}
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
+                                          multiple={props.allowAddingMultipleAuthors}
                                           onSelect={(e, elem, data) => {
                                               let values = [];
                                               for (let i = 0; i < data.length; i++) {

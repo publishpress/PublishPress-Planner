@@ -492,7 +492,8 @@ export default function AsyncCalendar(props) {
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
                     nonce={props.nonce}
-                    onCloseCallback={onCloseForm}/>
+                    onCloseCallback={onCloseForm}
+                    allowAddingMultipleAuthors={props.allowAddingMultipleAuthors}/>
             }
 
             <MessageBar showSpinner={isLoading} message={message}/>
