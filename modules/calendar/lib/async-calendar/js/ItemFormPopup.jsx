@@ -24,7 +24,10 @@ export default function ItemFormPopup(props) {
 
     const didMount = () => {
         setPostType(props.postTypes[0].value);
+
+        resetFormFieldData();
         updateFormsFieldData('post_type', props.postTypes[0].value);
+        updateFormsFieldData('status', 'draft');
 
         // Fix the overflow to adjust the screen lock div to fill all the screen
         $('#wpwrap').css('overflow', 'hidden');
@@ -32,6 +35,8 @@ export default function ItemFormPopup(props) {
         return () => {
             // Restore the default overflow style
             $('#wpwrap').css('overflow', 'auto');
+
+            resetFormFieldData();
         }
     }
 
@@ -216,6 +221,13 @@ export default function ItemFormPopup(props) {
         getGlobal(name);
 
         window.publishpressCalendaGlobal.formFieldsData[name] = value;
+    }
+
+    const resetFormFieldData = () => {
+        if (typeof window.publishpressCalendaGlobal !== 'undefined'
+            && typeof window.publishpressCalendaGlobal.formFieldsData !== 'undefined') {
+            window.publishpressCalendaGlobal.formFieldsData = [];
+        }
     }
 
     const updateFormsFieldData = (fieldName, value) => {
