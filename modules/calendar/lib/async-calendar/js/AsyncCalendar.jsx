@@ -412,6 +412,18 @@ export default function AsyncCalendar(props) {
 
     React.useEffect(didMount, []);
     React.useEffect(initDraggableAndDroppableBehaviors);
+
+    if (props.userCanAddPosts) {
+        React.useEffect(
+            initClickToCreateFeature,
+            [
+                firstDateToDisplay,
+                numberOfWeeksToDisplay,
+                filterWeeks
+            ]
+        );
+    }
+
     React.useEffect(
         fetchCalendarData,
         [
