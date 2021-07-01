@@ -199,6 +199,9 @@
   position: absolute;
   right: 4px;
 }
+.publishpress-calendar-popup-form .publishpress-calendar-popup-title {
+  background-color: #a0a0a0;
+}
 .publishpress-calendar-popup-form .publishpress-calendar-popup-close {
   position: absolute;
   right: 4px;

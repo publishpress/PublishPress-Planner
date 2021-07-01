@@ -402,7 +402,6 @@ export default function ItemFormPopup(props) {
             <div className={'publishpress-calendar-popup-screen-lock'}/>
             <div className={'publishpress-calendar-popup publishpress-calendar-popup-form'}>
                 <div className={'publishpress-calendar-popup-title'}>
-                    <span className={'dashicons dashicons-plus-alt'}/>
                     {getFormPopupTitle()}
                     <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
                 </div>
