@@ -23,7 +23,10 @@ export default function ItemFormPopup(props) {
     const [errorMessage, setErrorMessage] = React.useState();
 
     const didMount = () => {
-        resetGlobalFormFieldData();
+        resetGlobalFormFieldData()
+
+        setPostType(props.postTypes[0].value);
+
         setDefaultValueForFields();
         activateFixForScreenLockerSize();
 
@@ -45,8 +48,6 @@ export default function ItemFormPopup(props) {
     }
 
     const setDefaultValueForFields = () => {
-        setPostType(props.postTypes[0].value);
-
         updateGlobalFormFieldData('post_type', props.postTypes[0].value);
         updateGlobalFormFieldData('status', 'draft');
     }
@@ -366,7 +367,8 @@ export default function ItemFormPopup(props) {
         setIsLoading(true);
 
         const args = {
-            nonce: props.nonce
+            nonce: props.nonce,
+            postType: getGlobalFormFieldData('post_type')
         };
 
         setFields(null);

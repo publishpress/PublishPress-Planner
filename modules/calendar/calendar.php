@@ -3294,44 +3294,59 @@ if (!class_exists('PP_Calendar')) {
                 wp_send_json([], 403);
             }
 
+            $postType       = isset($_GET['postType']) ? sanitize_text_field($_GET['postType']) : 'post';
+            $postTypeObject = get_post_type_object($postType);
+            if (empty($postTypeObject) || is_wp_error($postTypeObject)) {
+                wp_send_json([], 404);
+            }
+
             $data = [
-                'title'      => [
+                'title'   => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
                     'type'  => 'text',
                 ],
-                'status'     => [
+                'status'  => [
                     'label' => __('Post Status', 'publishpress'),
                     'value' => 'draft',
                     'type'  => 'status',
                 ],
-                'time'       => [
+                'time'    => [
                     'label' => __('Publish Time', 'publishpress'),
                     'value' => null,
                     'type'  => 'time',
                 ],
-                'authors'    => [
+                'authors' => [
                     'label' => __('Author', 'publishpress'),
                     'value' => null,
                     'type'  => 'authors',
-                ],
-                'categories' => [
+                ]
+            ];
+
+            $taxonomies = get_object_taxonomies($postType);
+
+            if (in_array('category', $taxonomies)) {
+                $data['categories'] = [
                     'label'    => __('Categories', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
-                    'taxonomy' => 'category'
-                ],
-                'tags'       => [
+                    'taxonomy' => 'category',
+                ];
+            }
+
+            if (in_array('post_tag', $taxonomies)) {
+                $data['tags'] = [
                     'label'    => __('Tags', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
-                    'taxonomy' => 'post_tag'
-                ],
-                'content'    => [
-                    'label' => __('Content', 'publishpress'),
-                    'value' => null,
-                    'type'  => 'html'
-                ]
+                    'taxonomy' => 'post_tag',
+                ];
+            }
+
+            $data['content'] = [
+                'label' => __('Content', 'publishpress'),
+                'value' => null,
+                'type'  => 'html'
             ];
 
             $data = apply_filters('publishpress_calendar_get_post_type_fields', $data, $postTy);
