@@ -48,22 +48,23 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar tbody > tr > td').off('mouseenter');
     }
 
-    const didUnmount = () => {
-        removeEventListeners();
-    }
-
     const didMount = () => {
         addEventListeners();
 
-        initClickToCreate();
+        if (props.userCanAddPosts) {
+            initClickToCreateFeature();
+        }
 
         return didUnmount;
     }
 
-    const loadData = () => {
+    const didUnmount = () => {
+        removeEventListeners();
+    }
+
+    const fetchCalendarData = () => {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
-
 
         let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay )) + '&number_of_weeks=' + numberOfWeeksToDisplay);
 
@@ -107,7 +108,7 @@ export default function AsyncCalendar(props) {
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
-    const loadItemData = () => {
+    const fetchCalendarItemData = () => {
         if (!openedItemId) {
             return;
         }
@@ -166,7 +167,7 @@ export default function AsyncCalendar(props) {
         setFirstDateToDisplay(getBeginDateOfWeekByDate(props.todayDate, props.weekStartsOnSunday));
     };
 
-    const moveItemToNewDate = (itemDate, itemIndex, newYear, newMonth, newDay) => {
+    const moveCalendarItemToANewDate = (itemDate, itemIndex, newYear, newMonth, newDay) => {
         let item = itemsByDate[itemDate][itemIndex];
 
         setIsLoading(true);
@@ -194,7 +195,7 @@ export default function AsyncCalendar(props) {
 
         $(event.target).addClass('publishpress-calendar-loading');
 
-        moveItemToNewDate(
+        moveCalendarItemToANewDate(
             dateTime,
             $item.data('index'),
             $dayCell.data('year'),
@@ -213,7 +214,7 @@ export default function AsyncCalendar(props) {
         return id === openedItemId;
     }
 
-    const initDraggable = () => {
+    const initDraggableAndDroppableBehaviors = () => {
         $('.publishpress-calendar-day-items li').draggable({
             zIndex: 99999,
             helper: 'clone',
@@ -226,7 +227,7 @@ export default function AsyncCalendar(props) {
 
                 $(event.target).addClass('ui-draggable-target');
 
-                resetOpenedItem();
+                resetOpenedItemInPopup();
             },
             stop: (event, ui) => {
                 $('.ui-draggable-target').removeClass('ui-draggable-target');
@@ -258,11 +259,7 @@ export default function AsyncCalendar(props) {
         return new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
     }
 
-    const initClickToCreate = () => {
-        if (!props.userCanAddPosts) {
-            return;
-        }
-
+    const initClickToCreateFeature = () => {
         $('.publishpress-calendar tbody > tr > td')
             .on('mouseover', (e) => {
                 e.preventDefault();
@@ -323,7 +320,7 @@ export default function AsyncCalendar(props) {
         }
     }
 
-    const resetOpenedItem = () => {
+    const resetOpenedItemInPopup = () => {
         setOpenedItemId(null);
         setOpenedItemData(null);
         setFormDate(null);
@@ -342,7 +339,7 @@ export default function AsyncCalendar(props) {
 
     const onDocumentKeyDown = (e) => {
         if (e.key === 'Escape') {
-            resetOpenedItem();
+            resetOpenedItemInPopup();
         }
     }
 
@@ -360,7 +357,7 @@ export default function AsyncCalendar(props) {
         setOpenedItemId(null);
     }
 
-    const calendarBodyRows = () => {
+    const calendarTableBodyRowsWithCells = () => {
         const numberOfDaysToDisplay = numberOfWeeksToDisplay * 7;
         const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay);
 
@@ -414,9 +411,9 @@ export default function AsyncCalendar(props) {
     };
 
     React.useEffect(didMount, []);
-    React.useEffect(initDraggable);
+    React.useEffect(initDraggableAndDroppableBehaviors);
     React.useEffect(
-        loadData,
+        fetchCalendarData,
         [
             firstDateToDisplay,
             numberOfWeeksToDisplay,
@@ -430,24 +427,24 @@ export default function AsyncCalendar(props) {
         ]
     );
     React.useEffect(
-        loadItemData,
+        fetchCalendarItemData,
         [
             openedItemId,
             openedItemRefreshCount
         ]
     )
 
-    let classNames = [
+    let componentClassName = [
         'publishpress-calendar',
         'publishpress-calendar-theme-' + theme,
     ];
 
     if (props.userCanAddPosts) {
-        classNames.push('user-can-add-posts');
+        componentClassName.push('user-can-add-posts');
     }
 
     return (
-        <div className={classNames.join(' ')}>
+        <div className={componentClassName.join(' ')}>
             <FilterBar
                 statuses={props.statuses}
                 postTypes={props.postTypes}
@@ -471,7 +468,7 @@ export default function AsyncCalendar(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {calendarBodyRows()}
+                {calendarTableBodyRowsWithCells()}
                 </tbody>
             </table>
 
