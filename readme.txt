@@ -142,6 +142,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed a bug when dragging and dropping items in the calendar, removing the visual feedback of sorting items in the calendar cell, #680;
 * Fixed: Fixed a bug after drag and drop an item in the calendar, showing the correct order of the moved item in the calendar cell, #680;
 * Fixed: Fix calendar items ordering when sorted by status or time, #680;
+* Fixed: Fix publishing date after publishing a post, using date_floating on custom statuses. Stops auto updating the publishing date with today's date, #741;
 
 = [3.3.3] - 2021-06-16 =
 
