@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Fixed: Fix publishing date after publishing a post, using date_floating on custom statuses. Stops auto updating the publishing date with today's date, #741;
+
 = [3.3.3] - 2021-06-16 =
 
 * Fixed: Fix "Statuses" doesn't appear with a title in important areas, #846;
