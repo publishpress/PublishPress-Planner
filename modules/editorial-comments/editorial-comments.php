@@ -91,8 +91,7 @@ if (!class_exists('PP_Editorial_Comments')) {
 
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
-                // Still in progress. See: https://www.pivotaltracker.com/story/show/5930884 and https://www.pivotaltracker.com/story/show/5930895
-                //add_filter('pp_calendar_item_information_fields', array($this, 'filter_calendar_item_fields'), null, 2);
+                add_filter('publishpress_calendar_get_post_data', [$this, 'filterCalendarItemData'], 12, 2);
             }
         }
 
@@ -567,30 +566,29 @@ if (!class_exists('PP_Editorial_Comments')) {
         /**
          * If the PublishPress Calendar is enabled, add the editorial comment count to the post overlay.
          *
-         * @param array $calendar_fields Additional data fields to include on the calendar
-         * @param int $post_id Unique ID for the post data we're building
+         * @param array $data Additional data fields to include on the calendar
+         * @param WP_Post $post
          *
          * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
-         * @uses  apply_filters('pp_calendar_item_information_fields')
+         * @uses  apply_filters('publishpress_calendar_get_post_data')
          *
          * @since 0.7
          */
-        public function filter_calendar_item_fields($calendar_fields, $post_id)
+        public function filterCalendarItemData($data, $post)
         {
             // Make sure we respect which post type we're on
-            if (!in_array(get_post_type($post_id), $this->get_post_types_for_module($this->module))) {
-                return $calendar_fields;
+            if (!in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
+                return $data;
             }
 
-            // Name/value for the field to add
-            $comment_count_data = [
-                'label' => $this->module->title,
-                'value' => $this->get_editorial_comment_count($post_id),
+            $data['fields']['editorial-comments'] = [
+                'label'    => $this->module->title,
+                'value'    => (int)$this->get_editorial_comment_count($post->ID),
+                'editable' => false,
+                'type'     => 'number',
             ];
 
-            $calendar_fields[$this->module->slug] = $comment_count_data;
-
-            return $calendar_fields;
+            return $data;
         }
     }
 }

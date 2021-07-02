@@ -138,14 +138,14 @@ if (!class_exists('PP_Efmigration')) {
                 if (!isset($wp_scripts->queue['react'])) {
                     wp_enqueue_script(
                         'react',
-                        $this->module_url . 'lib/js/react.min.js',
+                        PUBLISHPRESS_URL . 'common/js/react.min.js',
                         [],
                         PUBLISHPRESS_VERSION,
                         true
                     );
                     wp_enqueue_script(
                         'react-dom',
-                        $this->module_url . 'lib/js/react-dom.min.js',
+                        PUBLISHPRESS_URL . 'common/js/react-dom.min.js',
                         ['react'],
                         PUBLISHPRESS_VERSION,
                         true

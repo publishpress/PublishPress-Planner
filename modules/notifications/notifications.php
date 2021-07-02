@@ -167,6 +167,13 @@ if (!class_exists('PP_Notifications')) {
                 2
             );
 
+            add_filter(
+                'publishpress_calendar_get_post_data',
+                [$this, 'filterCalendarGetPostData'],
+                10,
+                2
+            );
+
             add_action('save_post', [$this, 'action_save_post'], 10);
 
             // Ajax for saving notification updates
@@ -787,6 +794,33 @@ if (!class_exists('PP_Notifications')) {
             }
 
             return (bool)$this->module->options->notify_current_user_by_default;
+        }
+
+        public function filterCalendarGetPostData($postData, $post)
+        {
+            $user_to_notify = $this->get_users_to_notify($post->ID);
+
+            if (in_array(wp_get_current_user()->user_login, $user_to_notify)) {
+                $link = [
+                    'args'  => ['method' => 'stop_notifying'],
+                    'label' => __('Stop notifying me', 'publishpress'),
+                    'title' => __('Click to stop being notified on updates for this post', 'publishpress'),
+                ];
+            } else {
+                $link = [
+                    'args'  => ['method' => 'start_notifying'],
+                    'label' => __('Notify me', 'publishpress'),
+                    'title' => __('Click to start being notified on updates for this post', 'publishpress'),
+                ];
+            }
+
+            $link['action'] = 'pp_notifications_user_post_subscription';
+            $link['args']['_wpnonce'] = wp_create_nonce('pp_notifications_user_post_subscription');
+            $link['args']['post_id'] = $post->ID;
+
+            $postData['links']['notify'] = $link;
+
+            return $postData;
         }
 
         /**
