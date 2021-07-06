@@ -12,7 +12,7 @@ const $ = jQuery;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay));
+    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay, props.weekStartsOnSunday));
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
     const [isLoading, setIsLoading] = React.useState(false);
@@ -66,7 +66,7 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(__('Loading...', 'publishpress'));
 
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay )) + '&number_of_weeks=' + numberOfWeeksToDisplay);
+        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay);
 
         if (filterStatus) {
             dataUrl += '&post_status=' + filterStatus;
@@ -359,7 +359,7 @@ export default function AsyncCalendar(props) {
 
     const calendarTableBodyRowsWithCells = () => {
         const numberOfDaysToDisplay = numberOfWeeksToDisplay * 7;
-        const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay);
+        const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday);
 
         let tableRows = [];
         let rowCells = [];

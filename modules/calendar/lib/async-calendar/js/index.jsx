@@ -5,7 +5,7 @@ jQuery(() => {
     ReactDOM.render(
         <AsyncCalendar
             firstDateToDisplay={getDateWithNoTimezoneOffset(publishpressCalendarParams.firstDateToDisplay)}
-            weekStartsOnSunday={publishpressCalendarParams.weekStartsOnSunday}
+            weekStartsOnSunday={parseInt(publishpressCalendarParams.weekStartsOnSunday) === 1}
             numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
             todayDate={new Date(publishpressCalendarParams.todayDate)}
             timeFormat={publishpressCalendarParams.timeFormat}

@@ -630,7 +630,7 @@ if (!class_exists('PP_Calendar')) {
                         'numberOfWeeksToDisplay'     => $numberOfWeeksToDisplay,
                         'firstDateToDisplay'         => $firstDateToDisplay,
                         'theme'                      => 'light',
-                        'weekStartsOnSunday'         => get_option('start_of_week', 0) == 0,
+                        'weekStartsOnSunday'         => (int)get_option('start_of_week') === 0,
                         'todayDate'                  => date('Y-m-d 00:00:00'),
                         'timeFormat'                 => $this->getCalendarTimeFormat(),
                         'maxVisibleItems'            => $maxVisibleItemsOption,
@@ -2323,7 +2323,7 @@ if (!class_exists('PP_Calendar')) {
         public function get_beginning_of_week($date, $format = 'Y-m-d', $week = 1)
         {
             $date                    = strtotime($date);
-            $start_of_week           = get_option('start_of_week');
+            $start_of_week           = (int)get_option('start_of_week');
             $day_of_week             = date('w', $date);
             $date                    += (($start_of_week - $day_of_week - 7) % 7) * 60 * 60 * 24 * $week;
             $additional              = 3600 * 24 * 7 * ($week - 1);
@@ -2347,7 +2347,7 @@ if (!class_exists('PP_Calendar')) {
         public function get_ending_of_week($date, $format = 'Y-m-d', $week = 1)
         {
             $date                  = strtotime($date);
-            $end_of_week           = get_option('start_of_week') - 1;
+            $end_of_week           = (int)get_option('start_of_week') - 1;
             $day_of_week           = date('w', $date);
             $date                  += (($end_of_week - $day_of_week + 7) % 7) * 60 * 60 * 24;
             $additional            = 3600 * 24 * 7 * ($week - 1);
