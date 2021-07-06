@@ -145,6 +145,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix publishing date after publishing a post, using date_floating on custom statuses. Stops auto updating the publishing date with today's date, #741;
 * Fixed: Fix adding or editing an user Role, #872;
 * Fixed: Fix the scheduled time for cron events of scheduled posts that are moved to different dates in the calendar, #855;
+* Fixed: Allow to publish a post with backdate in the calendar or post edit page, #715;
 
 = [3.3.3] - 2021-06-16 =
 
