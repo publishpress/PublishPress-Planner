@@ -3054,8 +3054,6 @@ if (!class_exists('PP_Calendar')) {
                     }
                 }
             }
-
-            return;
         }
 
         private function addTaxQueryToArgs($taxonomy, $termSlug, $args)
