@@ -3018,10 +3018,43 @@ if (!class_exists('PP_Calendar')) {
                 ]
             );
 
+            if ($post->post_status === 'future') {
+                $this->updatePublishFuturePostCronForPost($postId, $newDate);
+            }
+
             wp_send_json(
                 true,
                 200
             );
+        }
+
+        private function updatePublishFuturePostCronForPost($postId, $newDate)
+        {
+            $crons = _get_cron_array();
+
+            if (empty($crons)) {
+                return;
+            }
+
+            $newDateU = strtotime($newDate);
+
+            foreach ($crons as $timestamp => $hooks) {
+                if (isset($hooks['publish_future_post'])) {
+                    foreach ((array)$hooks['publish_future_post'] as $args) {
+                        if (isset($args['args'])
+                            && is_array($args['args'])
+                            && isset($args['args'][0])
+                            && $args['args'][0] === $postId
+                            && $newDateU !== $timestamp
+                        ) {
+                            wp_unschedule_event($timestamp, 'publish_future_post', $args['args']);
+                            wp_schedule_single_event($newDateU, 'publish_future_post', $args['args']);
+                        }
+                    }
+                }
+            }
+
+            return;
         }
 
         private function addTaxQueryToArgs($taxonomy, $termSlug, $args)
