@@ -3011,7 +3011,8 @@ if (!class_exists('PP_Calendar')) {
             $wpdb->update(
                 $wpdb->posts,
                 [
-                    'post_date' => $newDate
+                    'post_date' => $newDate,
+                    'post_date_gmt' => get_gmt_from_date($newDate),
                 ],
                 [
                     'ID' => $postId
