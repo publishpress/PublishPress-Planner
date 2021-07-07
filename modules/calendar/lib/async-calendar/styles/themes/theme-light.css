@@ -5,7 +5,7 @@
 }
 .publishpress-calendar-theme-light > table > thead > tr > th,
 .publishpress-calendar-theme-light > table > tbody > tr > td {
-  border: 1px solid #ededed;
+  border: 2px solid #ededed;
 }
 .publishpress-calendar-theme-light > table > thead > tr > th {
   background: #fff;
