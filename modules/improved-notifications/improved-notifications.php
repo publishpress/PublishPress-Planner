@@ -54,7 +54,7 @@ if (!class_exists('PP_Improved_Notifications')) {
         public $module_name = 'improved-notifications';
 
         /**
-         * Instace for the module
+         * Instance for the module
          *
          * @var stdClass
          */

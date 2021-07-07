@@ -152,13 +152,13 @@ if (!class_exists('PP_Roles')) {
 
             $requestMethod = Util::getRequestMethod();
 
-            if ($requestMethod === 'POST') {
+            if (strtoupper($requestMethod) === 'POST') {
                 // Handle any adding, editing or saving
                 add_action('admin_init', [$this, 'handle_add_role']);
                 add_action('admin_init', [$this, 'handle_edit_role']);
             }
 
-            if ($requestMethod === 'GET') {
+            if (strtoupper($requestMethod) === 'GET') {
                 add_action('admin_init', [$this, 'handle_delete_role']);
             }
 

@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.7
-Stable tag: 3.3.3
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,33 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.4.0] - 2021-07-07 =
+
+* Changed: The calendar page has changed and is fully based on React now, #680;
+* Changed: Minor improvements to the calendar UI, #680;
+* Changed: The "Show 'n' more" option in the calendar cells now works independently and shows the number of visible or hidden posts, #680;
+* Changed: The title field in the quick create form in the calendar is now focused automatically after the form is showed, #680;
+* Added: Added async data loading to the calendar, with faster navigation and filtering without the need to reload the page, #680;
+* Added: New quick create posts form in the calendar with specific fields per post type, #680;
+* Added: Added the Post ID to the calendar item popup, #680;
+* Added: Added the post status to the calendar item popup, #680;
+* Added: Added the post publishing date to the calendar item popup, #680;
+* Added: Added support to PublishPress Authors' multiple authors in the calendar, #680;
+* Added: Added new fields for setting categories and tags when creating a post in the calendar, #680;
+* Added: Added the number of editorial comments of a post in the calendar item popup, #680;
+* Added: Type and create new post category or tag right in the quick create posts form in the calendar, #680;
+* Added: Added a new button to the calendar navigation controls to refresh the calendar, #680;
+* Fixed: Fixed support to PublishPress Authors for assigning guest authors to posts in the calendar, #680;
+* Fixed: Fixed the Max visible posts per date setting in the calendar, #680;
+* Fixed: Fixed the sorting option in the calendar for correctly sort items by publishing time or post status, #680;
+* Fixed: Fixed a bug when dragging and dropping items in the calendar, removing the visual feedback of sorting items in the calendar cell, #680;
+* Fixed: Fixed a bug after drag and drop an item in the calendar, showing the correct order of the moved item in the calendar cell, #680;
+* Fixed: Fix calendar items ordering when sorted by status or time, #680;
+* Fixed: Fix publishing date after publishing a post, using date_floating on custom statuses. Stops auto updating the publishing date with today's date, #741;
+* Fixed: Fix adding or editing an user Role, #872;
+* Fixed: Fix the scheduled time for cron events of scheduled posts that are moved to different dates in the calendar, #855;
+* Fixed: Allow to publish a post with backdate in the calendar or post edit page, #715;
 
 = [3.3.3] - 2021-06-16 =
 

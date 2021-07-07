@@ -1,0 +1,154 @@
+@backgroundColor: #fff;
+@shadowColor: #838383;
+@textColor: #000;
+
+.publishpress-calendar-popup-screen-lock {
+    background-color: rgba(99, 89, 147, 0.6);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    z-index: 980;
+}
+
+.publishpress-calendar-popup {
+    background-color: @backgroundColor;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 50px;
+    width: 380px;
+    z-index: 999;
+    -moz-box-shadow: -1px 3px 10px 2px @shadowColor;
+    -webkit-box-shadow: -1px 3px 10px 2px @shadowColor;
+    box-shadow: -1px 3px 10px 2px @shadowColor;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color: @textColor;
+    padding: 10px;
+    cursor: default;
+
+    table {
+        border: none;
+        border-collapse: inherit;
+        border-spacing: 0;
+        user-select: text !important;
+
+        th,
+        td {
+            border: none;
+            border-collapse: inherit;
+            border-spacing: 0;
+            text-align: left;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    }
+
+    .publishpress-calendar-popup-title {
+        font-weight: bold;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        box-sizing: border-box;
+        color: #fff;
+        margin-bottom: 8px;
+        padding: 4px 23px 4px 4px;
+
+        .publishpress-calendar-icon {
+            margin-right: 5px;
+            color: #fff;
+        }
+
+        .publishpress-calendar-popup-close {
+            position: absolute;
+            right: 14px;
+            cursor: pointer;
+        }
+    }
+
+    .publishpress-calendar-popup-links {
+        > a,
+        > a + span {
+            margin-right: 4px;
+        }
+    }
+}
+
+.publishpress-calendar-popup-form {
+    position: absolute;
+    padding-bottom: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 420px;
+    height: auto;
+    background-color: white;
+    z-index: 999;
+
+    input[type="text"],
+    textarea,
+    select {
+        width: 300px;
+    }
+
+    textarea {
+        height: 85px;
+    }
+
+    .publishpress-spinner {
+        position: absolute;
+        right: 4px;
+    }
+
+    .publishpress-calendar-popup-title {
+        background-color: #a0a0a0;
+        padding-left: 8px;
+    }
+
+    .publishpress-calendar-popup-close {
+        position: absolute;
+        right: 4px;
+        cursor: pointer;
+    }
+
+    .publishpress-calendar-popup-links {
+        position: absolute;
+        bottom: 10px;
+        width: 98%;
+        box-sizing: border-box;
+    }
+
+    .publishpress-calendar-popup-loading-fields {
+        width: 400px;
+        height: 300px;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .publishpress-calendar-popup-links-hr {
+        position: absolute;
+        bottom: 28px;
+        width: 96%;
+    }
+
+    .publishpress-calendar-popup-error-message {
+        padding: 8px;
+        background: #f7d4d4;
+        border: 1px solid #ba9898;
+        margin-top: 10px;
+        border-radius: 5px;
+
+        .dashicons {
+            margin-right: 5px;
+            color: #714646;
+        }
+    }
+}
