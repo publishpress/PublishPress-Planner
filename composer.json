@@ -12,11 +12,6 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "autoload": {
-        "files": [
-            "defines-free-plugin-path.php"
-        ]
-    },
     "dist": {
         "url": "https://github.com/publishpress/PublishPress/releases/download/v3.4.0/publishpress-3.4.0.zip",
         "type": "zip"
