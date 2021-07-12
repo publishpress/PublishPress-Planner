@@ -17,6 +17,10 @@
             "defines-free-plugin-path.php"
         ]
     },
+    "dist": {
+        "url": "https://github.com/publishpress/PublishPress/releases/download/v3.4.0/publishpress-3.4.0.zip",
+        "type": "zip"
+    },
     "repositories": [
         {
             "type": "git",
@@ -34,6 +38,7 @@
         "symfony/polyfill-ctype": "1.19.*",
         "publishpress/wordpress-version-notices": "^1",
         "sabre/vobject": "^3.4",
+        "composer/installers": "~1.0",
         "psr/container": "1.0.0"
     },
     "require-dev": {
