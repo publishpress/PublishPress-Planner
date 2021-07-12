@@ -6370,11 +6370,11 @@
         },
         {
             "name": "publishpress/publishpress-plugin-builder",
-            "version": "v1.3.1",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Plugin-Builder",
-                "reference": "0d17a7381f0b3847c597e23ee125863f81a87378"
+                "reference": "6a867bf2484276f0fe67f50478e0d82ef91166e3"
             },
             "require": {
                 "consolidation/robo": "^2.0",
@@ -6405,7 +6405,7 @@
                 }
             ],
             "description": "Robo tasks for building WordPress plugins",
-            "time": "2020-10-12T16:51:04+00:00"
+            "time": "2021-07-12T16:22:29+00:00"
         },
         {
             "name": "publishpress/wp-browser",
