@@ -16,6 +16,7 @@ export default function AsyncCalendar(props) {
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [isDragging, setIsDragging] = React.useState(false);
     const [message, setMessage] = React.useState();
     const [filterStatus, setFilterStatus] = React.useState();
     const [filterCategory, setFilterCategory] = React.useState();
@@ -29,6 +30,8 @@ export default function AsyncCalendar(props) {
     const [refreshCount, setRefreshCount] = React.useState(0);
     const [hoveredDate, setHoveredDate] = React.useState();
     const [formDate, setFormDate] = React.useState();
+
+    const DRAG_AND_DROP_HOVERING_CLASS = 'publishpress-calendar-day-hover';
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -104,7 +107,7 @@ export default function AsyncCalendar(props) {
     };
 
     const resetCSSClasses = () => {
-        $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
+        $('.' + DRAG_AND_DROP_HOVERING_CLASS).removeClass(DRAG_AND_DROP_HOVERING_CLASS);
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
@@ -207,7 +210,7 @@ export default function AsyncCalendar(props) {
     const handleOnHoverCellCallback = (event, ui) => {
         resetCSSClasses();
 
-        $(event.target).addClass('publishpress-calendar-day-hover');
+        $(event.target).addClass(DRAG_AND_DROP_HOVERING_CLASS);
     };
 
     const itemPopupIsOpenedById = (id) => {
@@ -228,9 +231,13 @@ export default function AsyncCalendar(props) {
                 $(event.target).addClass('ui-draggable-target');
 
                 resetOpenedItemInPopup();
+
+                setIsDragging(true);
             },
             stop: (event, ui) => {
                 $('.ui-draggable-target').removeClass('ui-draggable-target');
+
+                setIsDragging(false);
             }
         });
 
@@ -259,6 +266,10 @@ export default function AsyncCalendar(props) {
         return new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
     }
 
+    const isHoveringCell = (cell) => {
+        return $(cell).hasClass(DRAG_AND_DROP_HOVERING_CLASS);
+    }
+
     const initClickToCreateFeature = () => {
         $('.publishpress-calendar tbody > tr > td')
             .on('mouseover', (e) => {
@@ -268,6 +279,10 @@ export default function AsyncCalendar(props) {
                 const cell = eventTargetIsACell(e);
 
                 if (cell) {
+                    if (isHoveringCell(cell)) {
+                        return;
+                    }
+
                     setHoveredDate(getCellDate(cell));
                 }
             })
@@ -275,12 +290,22 @@ export default function AsyncCalendar(props) {
                 e.stopPropagation();
                 e.preventDefault();
 
+                const cell = eventTargetIsACell(e);
+
+                if (cell && isHoveringCell(cell)) {
+                    return;
+                }
+
                 setHoveredDate(null);
             })
             .on('click', (e) => {
                 const cell = eventTargetIsACell(e);
 
                 if (cell) {
+                    if (isHoveringCell(cell)) {
+                        return;
+                    }
+
                     setOpenedItemId(null);
                     setFormDate(getCellDate(cell));
                 }
@@ -384,7 +409,7 @@ export default function AsyncCalendar(props) {
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
                     isLoading={false}
-                    isHovering={hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
+                    isHovering={!isDragging && hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
                     items={itemsByDate[dateString] || []}
                     maxVisibleItems={props.maxVisibleItems}
                     timeFormat={props.timeFormat}
