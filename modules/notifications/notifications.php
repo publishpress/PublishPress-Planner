@@ -798,6 +798,10 @@ if (!class_exists('PP_Notifications')) {
 
         public function filterCalendarGetPostData($postData, $post)
         {
+            if (!current_user_can($this->edit_post_subscriptions_cap)) {
+                return $postData;
+            }
+
             $user_to_notify = $this->get_users_to_notify($post->ID);
 
             if (in_array(wp_get_current_user()->user_login, $user_to_notify)) {
