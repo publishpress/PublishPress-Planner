@@ -517,7 +517,8 @@ if (!class_exists('PP_Calendar')) {
             return $postStatuses;
         }
 
-        protected function getUserAuthorizedPostStatusOptions($postType) {
+        protected function getUserAuthorizedPostStatusOptions($postType)
+        {
             $postStatuses = $this->getPostStatusOptions();
 
             foreach ($postStatuses as $index => $status) {
@@ -3046,7 +3047,7 @@ if (!class_exists('PP_Calendar')) {
             $wpdb->update(
                 $wpdb->posts,
                 [
-                    'post_date' => $newDate,
+                    'post_date'     => $newDate,
                     'post_date_gmt' => get_gmt_from_date($newDate),
                 ],
                 [
@@ -3232,8 +3233,6 @@ if (!class_exists('PP_Calendar')) {
                 $id
             );
 
-            $viewLink = $post->post_status === 'publish' ? get_permalink($id) : get_preview_post_link($id);
-
             $categories = $this->getPostCategoriesNames($id);
             $tags       = $this->getPostTagsNames($id);
 
@@ -3277,24 +3276,40 @@ if (!class_exists('PP_Calendar')) {
                         'type'  => 'taxonomy',
                     ],
                 ],
-                'links'  => [
-                    'edit'  => [
-                        'label' => __('Edit', 'publishpress'),
-                        'url'   => htmlspecialchars_decode(get_edit_post_link($id))
-                    ],
-                    'trash' => [
-                        'label' => __('Trash', 'publishpress'),
-                        'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
-                    ],
-                    'view'  => [
-                        'label' => $post->ping_status === 'publish' ? __('View', 'publishpress') : __(
-                            'Preview',
-                            'publishpress'
-                        ),
-                        'url'   => htmlspecialchars_decode($viewLink),
-                    ],
-                ]
+                'links'  => []
             ];
+
+            $postTypeObject = get_post_type_object($post->post_type);
+
+            if (current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
+                $data['links']['edit'] = [
+                    'label' => __('Edit', 'publishpress'),
+                    'url'   => htmlspecialchars_decode(get_edit_post_link($id))
+                ];
+            }
+
+
+            if (current_user_can($postTypeObject->cap->delete_post, $post->ID)) {
+                $data['links']['trash'] = [
+                    'label' => __('Trash', 'publishpress'),
+                    'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
+                ];
+            }
+
+            if (current_user_can($postTypeObject->cap->read_post, $post->ID)) {
+                if ($post->post_status === 'publish') {
+                    $label = __('View', 'publishpress');
+                    $link  = get_permalink($id);
+                } else {
+                    $label = __('Preview', 'publishpress');
+                    $link  = get_preview_post_link($id);
+                }
+
+                $data['links']['view'] = [
+                    'label' => $label,
+                    'url'   => htmlspecialchars_decode($link),
+                ];
+            }
 
             $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
 
@@ -3314,18 +3329,18 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $data = [
-                'title'   => [
+                'title'  => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
                     'type'  => 'text',
                 ],
-                'status'  => [
-                    'label' => __('Post Status', 'publishpress'),
-                    'value' => 'draft',
-                    'type'  => 'status',
+                'status' => [
+                    'label'   => __('Post Status', 'publishpress'),
+                    'value'   => 'draft',
+                    'type'    => 'status',
                     'options' => $this->getUserAuthorizedPostStatusOptions($postType)
                 ],
-                'time'    => [
+                'time'   => [
                     'label'       => __('Publish Time', 'publishpress'),
                     'value'       => null,
                     'type'        => 'time',
