@@ -65,11 +65,8 @@ export default function AsyncCalendar(props) {
         removeEventListeners();
     }
 
-    const fetchCalendarData = () => {
-        setIsLoading(true);
-        setMessage(__('Loading...', 'publishpress'));
-
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay);
+    const getFiltersURLArgs = () => {
+        let dataUrl = '';
 
         if (filterStatus) {
             dataUrl += '&post_status=' + filterStatus;
@@ -95,7 +92,28 @@ export default function AsyncCalendar(props) {
             dataUrl += '&weeks=' + filterWeeks;
         }
 
-        fetch(dataUrl)
+        return dataUrl;
+    }
+
+    const getFetchCalendarDataUrl = (startDate, endDate) => {
+        let dataUrl = getUrl(props.actionGetData);
+
+        if (!startDate && !endDate) {
+            dataUrl += '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay;
+        } else {
+            dataUrl += '&start_date=' + startDate + '&end_date=' + endDate;
+        }
+
+        dataUrl += getFiltersURLArgs();
+
+        return dataUrl;
+    }
+
+    const fetchCalendarData = () => {
+        setIsLoading(true);
+        setMessage(__('Loading...', 'publishpress'));
+
+        fetch(getFetchCalendarDataUrl())
             .then(response => response.json())
             .then((fetchedData) => {
                 setItemsByDate(fetchedData);
@@ -176,7 +194,7 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(__('Moving the item...', 'publishpress'));
 
-        const dataUrl = getUrl(props.actionMoveItem);
+        const dataUrl = getUrl(props.actionMoveItem, getFiltersURLArgs());
 
         const formData = new FormData();
         formData.append('id', item.id);
@@ -186,8 +204,24 @@ export default function AsyncCalendar(props) {
 
         fetch(dataUrl, {method: 'POST', body: formData})
             .then(response => response.json())
-            .then(() => {
-                setRefreshCount(refreshCount + 1);
+            .then((data) => {
+                setMessage(__('Loading...', 'publishpress'));
+
+                let newListOfItemsByDate = {...itemsByDate};
+
+                const newDate = `${newYear}-${newMonth.toString().padStart(2, '0')}-${newDay.toString().padStart(2, '0')}`;
+
+                delete newListOfItemsByDate[itemDate][itemIndex];
+                newListOfItemsByDate[newDate] = data.data[newDate];
+
+                console.log(data.data[newDate]);
+
+                setItemsByDate(newListOfItemsByDate);
+                setIsLoading(false);
+                setMessage(null);
+
+                resetCSSClasses();
+
             });
     }
 

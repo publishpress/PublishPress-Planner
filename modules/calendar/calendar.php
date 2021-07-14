@@ -3059,8 +3059,18 @@ if (!class_exists('PP_Calendar')) {
                 $this->updatePublishFuturePostCronForPost($postId, $newDate);
             }
 
+            $startDade = $postDate->setTime(0, 0, 0, 0)->format('Y-m-d H:i:s');
+            $endDate = $postDate->setTime(23, 59, 59, 0)->format('Y-m-d H:i:s');
+
             wp_send_json(
-                true,
+                [
+                        'success' => true,
+                        'data' => $this->getCalendarData(
+                            $startDade,
+                            $endDate,
+                            $this->getFilterArgumentsFromUrlParams()
+                        )
+                ],
                 200
             );
         }
@@ -3107,15 +3117,8 @@ if (!class_exists('PP_Calendar')) {
             return $args;
         }
 
-        public function fetchCalendarDataJson()
+        protected function getFilterArgumentsFromUrlParams()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
-                wp_send_json([], 403);
-            }
-
-            $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
-            $endingDate    = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
-
             $args = [];
 
             /*
@@ -3161,8 +3164,24 @@ if (!class_exists('PP_Calendar')) {
                 }
             }
 
+            return $args;
+        }
+
+        public function fetchCalendarDataJson()
+        {
+            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+                wp_send_json([], 403);
+            }
+
+            $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
+            $endingDate    = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
+
             wp_send_json(
-                $this->getCalendarData($beginningDate, $endingDate, $args),
+                $this->getCalendarData(
+                        $beginningDate,
+                        $endingDate,
+                        $this->getFilterArgumentsFromUrlParams()
+                ),
                 200
             );
         }
