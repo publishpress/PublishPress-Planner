@@ -571,6 +571,16 @@ if (!class_exists('PP_Calendar')) {
                     }
 
                     wp_enqueue_script(
+                        'jquery-inputmask',
+                        PUBLISHPRESS_URL . 'common/js/jquery.inputmask.min.js',
+                        [
+                            'jquery',
+                        ],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
                         [
@@ -581,6 +591,7 @@ if (!class_exists('PP_Calendar')) {
                             'jquery-ui-sortable',
                             'jquery-ui-draggable',
                             'jquery-ui-droppable',
+                            'jquery-inputmask',
                             'wp-i18n',
                         ],
                         PUBLISHPRESS_VERSION,
@@ -641,6 +652,7 @@ if (!class_exists('PP_Calendar')) {
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts'            => current_user_can($this->create_post_cap),
                         'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
+                        'defaultPublishingTime'      => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
                         'allowAddingMultipleAuthors' => apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
                             false
@@ -3290,9 +3302,10 @@ if (!class_exists('PP_Calendar')) {
                     'type'  => 'status',
                 ],
                 'time'    => [
-                    'label' => __('Publish Time', 'publishpress'),
-                    'value' => null,
-                    'type'  => 'time',
+                    'label'       => __('Publish Time', 'publishpress'),
+                    'value'       => null,
+                    'type'        => 'time',
+                    'placeholder' => $this->module->options->default_publish_time
                 ],
                 'authors' => [
                     'label' => __('Author', 'publishpress'),
