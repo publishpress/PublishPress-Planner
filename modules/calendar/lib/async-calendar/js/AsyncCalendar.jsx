@@ -228,6 +228,10 @@ export default function AsyncCalendar(props) {
                     return false;
                 }
 
+                if (!$(event.target).hasClass('publishpress-calendar-item-movable')) {
+                    return false;
+                }
+
                 $(event.target).addClass('ui-draggable-target');
 
                 resetOpenedItemInPopup();
