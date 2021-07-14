@@ -146,6 +146,11 @@ if (!class_exists('PP_Calendar')) {
         private $default_date_time_format = 'ha';
 
         /**
+         * @var array
+         */
+        private $postTypeObjectCache = [];
+
+        /**
          * Construct the PP_Calendar class
          */
         public function __construct()
@@ -2997,9 +3002,19 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($queryResult);
         }
 
+        private function getPostTypeObject($postType)
+        {
+            if (!isset($this->postTypeObjectCache[$postType])) {
+                $this->postTypeObjectCache[$postType] = get_post_type_object($postType);
+            }
+
+            return $this->postTypeObjectCache[$postType];
+        }
+
         private function extractPostDataForTheCalendar($post)
         {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
+            $postTypeObject  = $this->getPostTypeObject($post->post_type);
 
             return [
                 'label'     => $post->post_title,
@@ -3008,6 +3023,7 @@ if (!class_exists('PP_Calendar')) {
                 'icon'      => $postTypeOptions['icon'],
                 'color'     => $postTypeOptions['color'],
                 'showTime'  => $this->showPostsPublishTime($post->post_status),
+                'canEdit'   => current_user_can($postTypeObject->cap->edit_post, $post->ID),
             ];
         }
 
@@ -3027,6 +3043,12 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $post = get_post($postId);
+
+            // Check if the user can edit the post
+            $postTypeObject = $this->getPostTypeObject($post->post_type);
+            if (!current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
+                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
+            }
 
             if (empty($post) || is_wp_error($post)) {
                 wp_send_json(['error' => __('Post not found', 'publishpress')], 404);

@@ -27,6 +27,10 @@ export default function Item(props) {
             className += ' publishpress-calendar-item-opened-popup';
         }
 
+        if (props.canMove) {
+            className += ' publishpress-calendar-item-movable';
+        }
+
         return className;
     }
 

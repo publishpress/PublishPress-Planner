@@ -93,6 +93,7 @@ export default function DayCell(props) {
                             showIcon={true}
                             collapse={item.collapse}
                             index={itemIndex++}
+                            canMove={item.canEdit}
                             isPopupOpened={isPopupOpened}
                             getPopupItemDataCallback={props.getOpenedItemDataCallback}
                             onClickItemCallback={props.onClickItemCallback}
