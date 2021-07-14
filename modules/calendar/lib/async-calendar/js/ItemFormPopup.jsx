@@ -58,6 +58,7 @@ export default function ItemFormPopup(props) {
         let dataProperty;
         let field;
         let fieldId;
+        let placeholder;
 
         for (const dataPropertyName in fields) {
             if (!fields.hasOwnProperty(dataPropertyName)) {
@@ -67,6 +68,7 @@ export default function ItemFormPopup(props) {
             fieldId = 'publishpress-calendar-field-' + dataPropertyName;
 
             dataProperty = fields[dataPropertyName];
+            placeholder  = dataProperty.placeholder ? dataProperty.placeholder : null;
 
             switch (dataProperty.type) {
                 case 'date':
@@ -167,6 +169,7 @@ export default function ItemFormPopup(props) {
                     field = <TextField value={dataProperty.value}
                                        isEditing={true}
                                        id={fieldId}
+                                       placeholder={placeholder}
                                        onChange={(e, value) => {
                                            updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
@@ -191,6 +194,7 @@ export default function ItemFormPopup(props) {
                     field = <TimeField value={dataProperty.value}
                                        isEditing={true}
                                        id={fieldId}
+                                       placeholder={placeholder}
                                        onChange={(e, value) => {
                                            updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
