@@ -504,6 +504,35 @@ if (!class_exists('PP_Calendar')) {
             return current_user_can($view_calendar_cap);
         }
 
+        protected function getPostStatusOptions()
+        {
+            $postStatuses = [];
+            foreach ($this->get_post_statuses() as $status) {
+                $postStatuses[] = [
+                    'value' => $status->slug,
+                    'text'  => $status->name,
+                ];
+            }
+
+            return $postStatuses;
+        }
+
+        protected function getUserAuthorizedPostStatusOptions($postType) {
+            $postStatuses = $this->getPostStatusOptions();
+
+            foreach ($postStatuses as $index => $status) {
+                // Filter publishing posts if the post type is set
+                if (in_array($status['value'], ['publish', 'future', 'private'])) {
+                    $postTypeObj = get_post_type_object($postType);
+                    if (!current_user_can($postTypeObj->cap->publish_posts)) {
+                        unset($postStatuses[$index]);
+                    }
+                }
+            }
+
+            return $postStatuses;
+        }
+
         /**
          * Add any necessary JS to the WordPress admin
          *
@@ -601,13 +630,7 @@ if (!class_exists('PP_Calendar')) {
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
-                    $postStatuses = [];
-                    foreach ($this->get_post_statuses() as $status) {
-                        $postStatuses[] = [
-                            'value' => $status->slug,
-                            'text'  => $status->name,
-                        ];
-                    }
+                    $postStatuses = $this->getPostStatusOptions();
 
                     $postTypes         = [];
                     $singularPostTypes = [];
@@ -3300,6 +3323,7 @@ if (!class_exists('PP_Calendar')) {
                     'label' => __('Post Status', 'publishpress'),
                     'value' => 'draft',
                     'type'  => 'status',
+                    'options' => $this->getUserAuthorizedPostStatusOptions($postType)
                 ],
                 'time'    => [
                     'label'       => __('Publish Time', 'publishpress'),

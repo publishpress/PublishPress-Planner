@@ -105,7 +105,7 @@ export default function ItemFormPopup(props) {
                     field = <PostStatusField value={dataProperty.value}
                                              isEditing={true}
                                              id={fieldId}
-                                             options={props.statuses}
+                                             options={dataProperty.options}
                                              onSelect={(e, elem, data) => {
                                                  let value = null;
                                                  if (data.length > 0) {
