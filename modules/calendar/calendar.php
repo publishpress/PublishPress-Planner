@@ -3330,13 +3330,16 @@ if (!class_exists('PP_Calendar')) {
                     'value'       => null,
                     'type'        => 'time',
                     'placeholder' => $this->module->options->default_publish_time
-                ],
-                'authors' => [
+                ]
+            ];
+
+            if (current_user_can($postTypeObject->cap->edit_others_posts)) {
+                $data['authors'] = [
                     'label' => __('Author', 'publishpress'),
                     'value' => null,
                     'type'  => 'authors',
-                ]
-            ];
+                ];
+            }
 
             $taxonomies = get_object_taxonomies($postType);
 
