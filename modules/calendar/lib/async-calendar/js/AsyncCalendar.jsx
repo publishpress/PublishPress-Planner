@@ -275,7 +275,7 @@ export default function AsyncCalendar(props) {
         return date;
     }
 
-    const isHoveringCell = (cell) => {
+    const isHoveringCellWhileDragging = (cell) => {
         return $(cell).hasClass(DRAG_AND_DROP_HOVERING_CLASS);
     }
 
@@ -288,7 +288,7 @@ export default function AsyncCalendar(props) {
                 const cell = eventTargetIsACell(e);
 
                 if (cell) {
-                    if (isHoveringCell(cell)) {
+                    if (isHoveringCellWhileDragging(cell)) {
                         return;
                     }
 
@@ -301,7 +301,7 @@ export default function AsyncCalendar(props) {
 
                 const cell = eventTargetIsACell(e);
 
-                if (cell && isHoveringCell(cell)) {
+                if (cell && isHoveringCellWhileDragging(cell)) {
                     return;
                 }
 
@@ -311,7 +311,7 @@ export default function AsyncCalendar(props) {
                 const cell = eventTargetIsACell(e);
 
                 if (cell) {
-                    if (isHoveringCell(cell)) {
+                    if (isHoveringCellWhileDragging(cell)) {
                         return;
                     }
 
