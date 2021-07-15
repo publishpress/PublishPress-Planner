@@ -42,6 +42,10 @@ export default function DayCell(props) {
     };
 
     const uncollapseButton = () => {
+        if (props.maxVisibleItems === -1) {
+            return (<></>);
+        }
+
         if (props.items.length > props.maxVisibleItems) {
             const numberOfExtraItems = props.items.length - props.maxVisibleItems;
 
@@ -60,7 +64,7 @@ export default function DayCell(props) {
         return (<></>);
     }
 
-    const visibleItems = uncollapseItems ? props.items : props.items.slice(0, props.maxVisibleItems);
+    const visibleItems = uncollapseItems || props.maxVisibleItems === -1 ? props.items : props.items.slice(0, props.maxVisibleItems);
 
     return (
         <td
@@ -91,7 +95,6 @@ export default function DayCell(props) {
                             timeFormat={props.timeFormat}
                             showTime={item.showTime}
                             showIcon={true}
-                            collapse={item.collapse}
                             index={itemIndex++}
                             canMove={item.canEdit}
                             isPopupOpened={isPopupOpened}
