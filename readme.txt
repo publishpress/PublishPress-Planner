@@ -135,6 +135,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix the "load more" behavior and links when the calendar is configured to display "All posts", #897;
 * Fixed: Fix the drag and drop behavior in the calendar to trigger WP hooks after updating the post, #895;
 * Fixed: Make the calendar string "Click to add" translatable, #883;
+* Fixed: Fix border of calendar cells on Firefox, #901;
 
 = [3.4.0] - 07 Jul 2021 =
 

@@ -253,6 +253,8 @@
 }
 .publishpress-calendar > table > tbody > tr > td {
   height: 110px;
+}
+.publishpress-calendar > table > tbody > tr > td > div {
   position: relative;
 }
 .publishpress-calendar .publishpress-calendar-cell-header {

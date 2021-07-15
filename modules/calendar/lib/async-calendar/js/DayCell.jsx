@@ -74,45 +74,47 @@ export default function DayCell(props) {
             data-year={props.date.getFullYear()}
             data-month={props.date.getMonth() + 1}
             data-day={props.date.getDate()}>
-            <div className="publishpress-calendar-cell-header">
-                {props.shouldDisplayMonthName &&
-                <span
-                    className="publishpress-calendar-month-name">{getMonthNameByMonthIndex(props.date.getMonth())}</span>
-                }
-                <span className="publishpress-calendar-date">{props.date.getDate()}</span>
-                {props.isHovering &&
-                    <span className="publishpress-calendar-cell-click-to-add">{__('Click to add', 'publishpress')}</span>
-                }
+            <div>
+                <div className="publishpress-calendar-cell-header">
+                    {props.shouldDisplayMonthName &&
+                    <span
+                        className="publishpress-calendar-month-name">{getMonthNameByMonthIndex(props.date.getMonth())}</span>
+                    }
+                    <span className="publishpress-calendar-date">{props.date.getDate()}</span>
+                    {props.isHovering &&
+                        <span className="publishpress-calendar-cell-click-to-add">{__('Click to add', 'publishpress')}</span>
+                    }
+                </div>
+
+                <ul className="publishpress-calendar-day-items">
+                    {visibleItems.map(item => {
+                        const isPopupOpened = item.id === props.openedItemId;
+
+                        return (
+                            <Item
+                                key={'item-' + item.id + '-' + props.date.getTime()}
+                                icon={item.icon}
+                                color={item.color}
+                                label={item.label}
+                                id={item.id}
+                                timestamp={item.timestamp}
+                                timeFormat={props.timeFormat}
+                                showTime={item.showTime}
+                                showIcon={true}
+                                index={itemIndex++}
+                                canMove={item.canEdit}
+                                isPopupOpened={isPopupOpened}
+                                getPopupItemDataCallback={props.getOpenedItemDataCallback}
+                                onClickItemCallback={props.onClickItemCallback}
+                                onItemActionClickCallback={props.onItemActionClickCallback}
+                                ajaxUrl={props.ajaxUrl}
+                            />
+                        )
+                    })}
+                </ul>
+
+                {uncollapseButton()}
             </div>
-
-            <ul className="publishpress-calendar-day-items">
-                {visibleItems.map(item => {
-                    const isPopupOpened = item.id === props.openedItemId;
-
-                    return (
-                        <Item
-                            key={'item-' + item.id + '-' + props.date.getTime()}
-                            icon={item.icon}
-                            color={item.color}
-                            label={item.label}
-                            id={item.id}
-                            timestamp={item.timestamp}
-                            timeFormat={props.timeFormat}
-                            showTime={item.showTime}
-                            showIcon={true}
-                            index={itemIndex++}
-                            canMove={item.canEdit}
-                            isPopupOpened={isPopupOpened}
-                            getPopupItemDataCallback={props.getOpenedItemDataCallback}
-                            onClickItemCallback={props.onClickItemCallback}
-                            onItemActionClickCallback={props.onItemActionClickCallback}
-                            ajaxUrl={props.ajaxUrl}
-                        />
-                    )
-                })}
-            </ul>
-
-            {uncollapseButton()}
         </td>
     )
 }
