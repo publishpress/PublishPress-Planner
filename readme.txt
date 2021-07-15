@@ -139,6 +139,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix date identified on clicking the calendar cell to create new posts, compensating the timezone, #903;
 * Fixed: Fix the post type selection for new posts created on the calendar, #904;
 * Fixed: Fix the format of the post date on the calendar popup, #905;
+* Fixed: Fix the format of the date on the title of the post form on the calendar, #906;
 
 = [3.4.0] - 07 Jul 2021 =
 
