@@ -137,6 +137,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Make the calendar string "Click to add" translatable, #883;
 * Fixed: Fix border of calendar cells on Firefox, #901;
 * Fixed: Fix date identified on clicking the calendar cell to create new posts, compensating the timezone, #903;
+* Fixed: Fix the post type selection for new posts created on the calendar, #904;
 
 = [3.4.0] - 07 Jul 2021 =
 
