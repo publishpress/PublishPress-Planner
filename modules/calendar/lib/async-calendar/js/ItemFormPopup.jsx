@@ -352,7 +352,7 @@ export default function ItemFormPopup(props) {
             title = '';
         } else {
             title = __('Schedule content for %s', 'publishpress');
-            title = title.replace('%s', getDateAsStringInWpFormat(props.date));
+            title = title.replace('%s', date_i18n(props.dateFormat, props.date));
         }
 
         return title;
@@ -373,14 +373,15 @@ export default function ItemFormPopup(props) {
 
         const args = {
             nonce: props.nonce,
-            postType: getGlobalFormFieldData('post_type')
+            postType: getGlobalFormFieldData('post_type'),
+            date: getDateAsStringInWpFormat(props.date)
         };
 
         setFields(null);
 
         callAjaxAction(props.actionGetPostTypeFields, args, props.ajaxUrl)
             .then((result) => {
-                setFields(result);
+                setFields(result.fields);
             })
             .then(() => {
                 setFocusOnTitleField();

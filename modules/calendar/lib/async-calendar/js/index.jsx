@@ -8,6 +8,7 @@ jQuery(() => {
             weekStartsOnSunday={parseInt(publishpressCalendarParams.weekStartsOnSunday) === 1}
             numberOfWeeksToDisplay={publishpressCalendarParams.numberOfWeeksToDisplay}
             todayDate={new Date(publishpressCalendarParams.todayDate)}
+            dateFormat={publishpressCalendarParams.dateFormat}
             timeFormat={publishpressCalendarParams.timeFormat}
             theme={publishpressCalendarParams.theme}
             statusesToDisplayTime={publishpressCalendarParams.statusesToDisplayTime}

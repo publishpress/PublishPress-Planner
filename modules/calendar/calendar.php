@@ -616,6 +616,14 @@ if (!class_exists('PP_Calendar')) {
                     );
 
                     wp_enqueue_script(
+                        'date_i18n',
+                        PUBLISHPRESS_URL . 'common/js/date-i18n.js',
+                        [],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
                         [
@@ -628,6 +636,7 @@ if (!class_exists('PP_Calendar')) {
                             'jquery-ui-droppable',
                             'jquery-inputmask',
                             'wp-i18n',
+                            'date_i18n',
                         ],
                         PUBLISHPRESS_VERSION,
                         true
@@ -672,6 +681,7 @@ if (!class_exists('PP_Calendar')) {
                         'theme'                      => 'light',
                         'weekStartsOnSunday'         => (int)get_option('start_of_week') === 0,
                         'todayDate'                  => date('Y-m-d 00:00:00'),
+                        'dateFormat'                 => get_option('date_format', 'Y-m-d H:i:s'),
                         'timeFormat'                 => $this->getCalendarTimeFormat(),
                         'maxVisibleItems'            => $maxVisibleItemsOption,
                         'statuses'                   => $postStatuses,
@@ -687,6 +697,22 @@ if (!class_exists('PP_Calendar')) {
                         ),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
+
+                    global $wp_locale;
+                    $monthNames      = array_map([&$wp_locale, 'get_month'], range(1, 12));
+                    $monthNamesShort = array_map([&$wp_locale, 'get_month_abbrev'], $monthNames);
+                    $dayNames        = array_map([&$wp_locale, 'get_weekday'], range(0, 6));
+                    $dayNamesShort   = array_map([&$wp_locale, 'get_weekday_abbrev'], $dayNames);
+                    wp_localize_script(
+                        "date_i18n",
+                        "DATE_I18N",
+                        array(
+                            "month_names"       => $monthNames,
+                            "month_names_short" => $monthNamesShort,
+                            "day_names"         => $dayNames,
+                            "day_names_short"   => $dayNamesShort
+                        )
+                    );
                 }
             }
         }
@@ -3275,7 +3301,6 @@ if (!class_exists('PP_Calendar')) {
                 ];
             }
 
-
             if (current_user_can($postTypeObject->cap->delete_post, $post->ID)) {
                 $data['links']['trash'] = [
                     'label' => __('Trash', 'publishpress'),
@@ -3315,7 +3340,7 @@ if (!class_exists('PP_Calendar')) {
                 wp_send_json([], 404);
             }
 
-            $data = [
+            $fields = [
                 'title'  => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
@@ -3336,7 +3361,7 @@ if (!class_exists('PP_Calendar')) {
             ];
 
             if (current_user_can($postTypeObject->cap->edit_others_posts)) {
-                $data['authors'] = [
+                $fields['authors'] = [
                     'label' => __('Author', 'publishpress'),
                     'value' => null,
                     'type'  => 'authors',
@@ -3346,7 +3371,7 @@ if (!class_exists('PP_Calendar')) {
             $taxonomies = get_object_taxonomies($postType);
 
             if (in_array('category', $taxonomies)) {
-                $data['categories'] = [
+                $fields['categories'] = [
                     'label'    => __('Categories', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
@@ -3355,7 +3380,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             if (in_array('post_tag', $taxonomies)) {
-                $data['tags'] = [
+                $fields['tags'] = [
                     'label'    => __('Tags', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
@@ -3363,15 +3388,23 @@ if (!class_exists('PP_Calendar')) {
                 ];
             }
 
-            $data['content'] = [
+            $fields['content'] = [
                 'label' => __('Content', 'publishpress'),
                 'value' => null,
                 'type'  => 'html'
             ];
 
-            $data = apply_filters('publishpress_calendar_get_post_type_fields', $data, $postTy);
+            $fields = apply_filters('publishpress_calendar_get_post_type_fields', $fields, $postType);
+
+            $data = ['fields' => $fields];
 
             wp_send_json($data, 202);
+        }
+
+        private function formatDateFromString($date, $originalFormat = 'Y-m-d')
+        {
+            $datetime = date_create_immutable_from_format($originalFormat, $date);
+            return $datetime->format(get_option('date_format', 'Y-m-d H:i:s'));
         }
 
         /**

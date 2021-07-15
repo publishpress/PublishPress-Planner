@@ -528,6 +528,7 @@ export default function AsyncCalendar(props) {
                 <ItemFormPopup
                     date={formDate}
                     ajaxUrl={props.ajaxUrl}
+                    dateFormat={props.dateFormat}
                     postTypes={props.singularPostTypes}
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
