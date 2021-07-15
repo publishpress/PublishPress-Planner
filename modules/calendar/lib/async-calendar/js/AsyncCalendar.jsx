@@ -270,7 +270,9 @@ export default function AsyncCalendar(props) {
         let date = new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
 
         // Compensate the timezone for returning the correct date
-        date.setTime(date.getTime() + (60*1000*date.getTimezoneOffset()));
+        if (date.getHours() > 0) {
+            date.setTime(date.getTime() + (60*1000*date.getTimezoneOffset()));
+        }
 
         return date;
     }
