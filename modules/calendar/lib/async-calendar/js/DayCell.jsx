@@ -1,6 +1,8 @@
 import {getMonthNameByMonthIndex} from "./Functions";
 import Item from "./Item";
 
+const {__} = wp.i18n;
+
 export default function DayCell(props) {
     const [uncollapseItems, setUncollapseItems] = React.useState(false);
 
@@ -78,6 +80,9 @@ export default function DayCell(props) {
                     className="publishpress-calendar-month-name">{getMonthNameByMonthIndex(props.date.getMonth())}</span>
                 }
                 <span className="publishpress-calendar-date">{props.date.getDate()}</span>
+                {props.isHovering &&
+                    <span className="publishpress-calendar-cell-click-to-add">{__('Click to add', 'publishpress')}</span>
+                }
             </div>
 
             <ul className="publishpress-calendar-day-items">
