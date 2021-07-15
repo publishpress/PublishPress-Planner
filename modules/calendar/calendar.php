@@ -3236,10 +3236,11 @@ if (!class_exists('PP_Calendar')) {
                         'value' => $id,
                         'type'  => 'number',
                     ],
-                    'date'       => [
-                        'label' => __('Date', 'publishpress'),
-                        'value' => $post->post_date,
-                        'type'  => 'time',
+                    'date' => [
+                        'label'       => __('Date', 'publishpress'),
+                        'value'       => $post->post_date,
+                        'valueString' => get_the_date(get_option('date_format', 'Y-m-d H:i:s'), $post),
+                        'type'        => 'date',
                     ],
                     'status'     => [
                         'label' => __('Post Status', 'publishpress'),

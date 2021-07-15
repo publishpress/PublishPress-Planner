@@ -16,7 +16,7 @@ export default function DateTimeField(props) {
         return (
             <time dateTime={props.value}
                   title={props.value}
-                  id={props.id}>{props.value}</time>
+                  id={props.id}>{props.valueString || props.value}</time>
         );
     }
 
