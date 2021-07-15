@@ -681,7 +681,6 @@ if (!class_exists('PP_Calendar')) {
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts'            => current_user_can($this->create_post_cap),
                         'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
-                        'defaultPublishingTime'      => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
                         'allowAddingMultipleAuthors' => apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
                             false
@@ -3331,7 +3330,7 @@ if (!class_exists('PP_Calendar')) {
                     'label'       => __('Publish Time', 'publishpress'),
                     'value'       => null,
                     'type'        => 'time',
-                    'placeholder' => $this->module->options->default_publish_time
+                    'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
                 ]
             ];
 

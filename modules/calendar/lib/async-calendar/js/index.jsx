@@ -22,8 +22,7 @@ jQuery(() => {
             singularPostTypes={publishpressCalendarParams.singularPostTypes}
             userCanAddPosts={publishpressCalendarParams.userCanAddPosts}
             items={publishpressCalendarParams.items}
-            allowAddingMultipleAuthors={publishpressCalendarParams.allowAddingMultipleAuthors}
-            defaultPublishingTime={publishpressCalendarParams.defaultPublishingTime}/>,
+            allowAddingMultipleAuthors={publishpressCalendarParams.allowAddingMultipleAuthors}/>,
         document.getElementById('publishpress-calendar-wrap')
     );
 });
