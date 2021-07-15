@@ -219,16 +219,16 @@ export default function ItemFormPopup(props) {
     // We are using a global var because the states are async and we were having a hard time to make all
     // fields work together updating the same state.
     const getGlobalFormFieldData = (name) => {
-        if (typeof window.publishpressCalendaGlobal === 'undefined') {
-            window.publishpressCalendaGlobal = {};
+        if (typeof window.publishpressCalendarGlobalData === 'undefined') {
+            window.publishpressCalendarGlobalData = {};
         }
 
-        if (typeof window.publishpressCalendaGlobal.formFieldsData === 'undefined') {
-            window.publishpressCalendaGlobal.formFieldsData = {};
+        if (typeof window.publishpressCalendarGlobalData.formFieldsData === 'undefined') {
+            window.publishpressCalendarGlobalData.formFieldsData = {};
         }
 
-        if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(name)) {
-            return window.publishpressCalendaGlobal.formFieldsData[name];
+        if (window.publishpressCalendarGlobalData.formFieldsData.hasOwnProperty(name)) {
+            return window.publishpressCalendarGlobalData.formFieldsData[name];
         }
 
         return null;
@@ -237,13 +237,13 @@ export default function ItemFormPopup(props) {
     const setGlobalFormFieldData = (name, value) => {
         getGlobalFormFieldData(name);
 
-        window.publishpressCalendaGlobal.formFieldsData[name] = value;
+        window.publishpressCalendarGlobalData.formFieldsData[name] = value;
     }
 
     const resetGlobalFormFieldData = () => {
-        if (typeof window.publishpressCalendaGlobal !== 'undefined'
-            && typeof window.publishpressCalendaGlobal.formFieldsData !== 'undefined') {
-            window.publishpressCalendaGlobal.formFieldsData = [];
+        if (typeof window.publishpressCalendarGlobalData !== 'undefined'
+            && typeof window.publishpressCalendarGlobalData.formFieldsData !== 'undefined') {
+            window.publishpressCalendarGlobalData.formFieldsData = [];
         }
     }
 
@@ -257,9 +257,9 @@ export default function ItemFormPopup(props) {
         formData.append('date', getDateAsStringInWpFormat(props.date));
         formData.append('nonce', props.nonce);
 
-        for (const fieldName in window.publishpressCalendaGlobal.formFieldsData) {
-            if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(fieldName)) {
-                formData.append(fieldName, window.publishpressCalendaGlobal.formFieldsData[fieldName]);
+        for (const fieldName in window.publishpressCalendarGlobalData.formFieldsData) {
+            if (window.publishpressCalendarGlobalData.formFieldsData.hasOwnProperty(fieldName)) {
+                formData.append(fieldName, window.publishpressCalendarGlobalData.formFieldsData[fieldName]);
             }
         }
 
