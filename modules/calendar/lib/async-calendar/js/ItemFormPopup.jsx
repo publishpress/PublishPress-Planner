@@ -384,7 +384,6 @@ export default function ItemFormPopup(props) {
             })
             .then(() => {
                 setFocusOnTitleField();
-                setDefaultValueForFields();
 
                 setIsLoading(false);
             });
