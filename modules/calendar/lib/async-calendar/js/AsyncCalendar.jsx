@@ -453,7 +453,13 @@ export default function AsyncCalendar(props) {
             [
                 firstDateToDisplay,
                 numberOfWeeksToDisplay,
-                filterWeeks
+                filterWeeks,
+                filterAuthor,
+                filterTag,
+                filterCategory,
+                filterStatus,
+                filterPostType,
+                refreshCount
             ]
         );
     }
