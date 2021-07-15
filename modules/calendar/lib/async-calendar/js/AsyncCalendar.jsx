@@ -267,7 +267,12 @@ export default function AsyncCalendar(props) {
     }
 
     const getCellDate = (cell) => {
-        return new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+        let date = new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+
+        // Compensate the timezone for returning the correct date
+        date.setTime(date.getTime() + (60*1000*date.getTimezoneOffset()));
+
+        return date;
     }
 
     const isHoveringCell = (cell) => {
