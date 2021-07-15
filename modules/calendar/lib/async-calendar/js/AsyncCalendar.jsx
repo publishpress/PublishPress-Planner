@@ -415,7 +415,7 @@ export default function AsyncCalendar(props) {
                     isLoading={false}
                     isHovering={!isDragging && hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
                     items={itemsByDate[dateString] || []}
-                    maxVisibleItems={props.maxVisibleItems}
+                    maxVisibleItems={parseInt(props.maxVisibleItems)}
                     timeFormat={props.timeFormat}
                     openedItemId={openedItemId}
                     getOpenedItemDataCallback={getOpenedItemData}

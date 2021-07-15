@@ -19,10 +19,6 @@ export default function Item(props) {
     const getClassName = () => {
         let className = 'publishpress-calendar-item';
 
-        if (props.collapse) {
-            className += ' publishpress-calendar-item-collapse';
-        }
-
         if (props.isPopupOpened) {
             className += ' publishpress-calendar-item-opened-popup';
         }
