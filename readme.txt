@@ -120,6 +120,22 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.4.1] - 15 Jul 2021 =
+
+* Fixed: Fix the visual feedback for the calendar items drag and drop, #881;
+* Fixed: Fix the publishing time field in the calendar form to display the default publishing date, #882;
+* Fixed: Fix post creation capability check before allowing to create posts in the calendar, #799;
+* Fixed: Fix publishing capability check before allow to create posts with "publish", "future", "private" statuses, #825;
+* Fixed: Fix edit other posts capability check before allow to set a different author for the post, #834;
+* Fixed: Fix capabilities check before displaying the links in the footer of the items popup on the calendar, #887;
+* Fixed: Fix post subscribe capability check before displaying the option to "Notify me" in the item popup on the calendar, #886;
+* Fixed: Fix edit posts permission before allowing to move items in the calendar, #891;
+* Fixed: Fix PHP warning: Invalid argument supplied for foreach(), #828;
+* Fixed: Fix the default selected status in the post creation form on the calendar, #893;
+* Fixed: Fix the "load more" behavior and links when the calendar is configured to display "All posts", #897;
+* Fixed: Fix the drag and drop behavior in the calendar to trigger WP hooks after updating the post, #895;
+* Fixed: Make the calendar string "Click to add" translatable, #883;
+
 = [3.4.0] - 07 Jul 2021 =
 
 * Changed: The calendar page has changed and is fully based on React now, #680;
