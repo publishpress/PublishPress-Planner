@@ -771,7 +771,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:1170
 #, php-format
-msgid "Schedule content for %1$s"
+msgid "Add content for %1$s"
 msgstr ""
 
 #: modules/calendar/calendar.php:1173

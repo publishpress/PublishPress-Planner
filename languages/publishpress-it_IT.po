@@ -731,7 +731,7 @@ msgstr "Metti in programma un %1$s per %2$s"
 
 #: modules/calendar/calendar.php:1321
 #, php-format
-msgid "Schedule content for %1$s"
+msgid "Add content for %1$s"
 msgstr "Contenuto programmato per %1$s"
 
 #: modules/calendar/calendar.php:1328

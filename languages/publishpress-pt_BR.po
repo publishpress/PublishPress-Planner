@@ -3316,7 +3316,7 @@ msgstr "https://publishpress.com"
 #~ msgstr "Agendar um %1$s para %2$s"
 
 #, php-format
-#~ msgid "Schedule content for %1$s"
+#~ msgid "Add content for %1$s"
 #~ msgstr "Programe conteúdo para %s"
 
 #~ msgid "Create"

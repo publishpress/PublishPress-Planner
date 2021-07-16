@@ -351,7 +351,7 @@ export default function ItemFormPopup(props) {
         if (props.postId) {
             title = '';
         } else {
-            title = __('Schedule content for %s', 'publishpress');
+            title = __('Add content for %s', 'publishpress');
             title = title.replace('%s', date_i18n(props.dateFormat, props.date));
         }
 
