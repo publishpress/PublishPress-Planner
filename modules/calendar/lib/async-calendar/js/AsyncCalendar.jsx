@@ -251,16 +251,15 @@ export default function AsyncCalendar(props) {
         });
     };
 
-    const eventTargetIsACell = (e) => {
-        const target = e.srcElement || e.target;
-        let $target = $(target);
+    const getCellFromChild = (child) => {
+        let $child = $(child);
 
-        if ($target.is('td.publishpress-calendar-business-day, td.publishpress-calendar-weekend-day, .publishpress-calendar-cell-header, .publishpress-calendar-date')){
-            if ($target.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-show-more, .publishpress-calendar-date, .publishpress-calendar-month-name')) {
-                return $target.parents('td');
-            }
+        if ($child.is('td.publishpress-calendar-business-day, td.publishpress-calendar-weekend-day')) {
+            return $child;
+        }
 
-            return $target;
+        if ($child.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-cell-click-to-add, .publishpress-calendar-month-name')) {
+            return $child.parents('td');
         }
 
         return null;
@@ -282,12 +281,15 @@ export default function AsyncCalendar(props) {
     }
 
     const initClickToCreateFeature = () => {
+        // We have to use this variable because when the click is done on the "click to add" label, we can't get its parent.
+        // Probably because it was already removed from the DOM.
+        let lastHoveredDate;
         $('.publishpress-calendar tbody > tr > td')
             .on('mouseover', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const cell = eventTargetIsACell(e);
+                const cell = getCellFromChild(e.target);
 
                 if (cell) {
                     if (isHoveringCellWhileDragging(cell)) {
@@ -295,30 +297,29 @@ export default function AsyncCalendar(props) {
                     }
 
                     setHoveredDate(getCellDate(cell));
+                    lastHoveredDate = getCellDate(cell);
                 }
             })
             .on('mouseout', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
 
-                const cell = eventTargetIsACell(e);
-
-                if (cell && isHoveringCellWhileDragging(cell)) {
+                if (getCellFromChild(e.relatedTarget)) {
                     return;
                 }
 
                 setHoveredDate(null);
+                lastHoveredDate = null;
             })
             .on('click', (e) => {
-                const cell = eventTargetIsACell(e);
+                e.preventDefault();
+                e.stopPropagation();
+
+                const cell = getCellFromChild(e.target);
 
                 if (cell) {
-                    if (isHoveringCellWhileDragging(cell)) {
-                        return;
-                    }
-
                     setOpenedItemId(null);
-                    setFormDate(getCellDate(cell));
+                    setFormDate(lastHoveredDate);
                 }
             });
     }
