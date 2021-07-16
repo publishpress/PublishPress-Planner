@@ -647,8 +647,8 @@ if (!class_exists('PP_Calendar')) {
 
                     $postStatuses = $this->getPostStatusOptions();
 
-                    $postTypes         = [];
-                    $singularPostTypes = [];
+                    $postTypes              = [];
+                    $postTypesUserCanCreate = [];
                     foreach ($this->get_selected_post_types() as $postTypeName) {
                         $postType = get_post_type_object($postTypeName);
 
@@ -657,10 +657,12 @@ if (!class_exists('PP_Calendar')) {
                             'text'  => $postType->label
                         ];
 
-                        $singularPostTypes[] = [
-                            'value' => $postTypeName,
-                            'text'  => $postType->labels->singular_name
-                        ];
+                        if (current_user_can($postType->cap->edit_posts)) {
+                            $postTypesUserCanCreate[] = [
+                                'value' => $postTypeName,
+                                'text'  => $postType->labels->singular_name
+                            ];
+                        }
                     }
 
                     $numberOfWeeksToDisplay = isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
@@ -686,7 +688,7 @@ if (!class_exists('PP_Calendar')) {
                         'maxVisibleItems'            => $maxVisibleItemsOption,
                         'statuses'                   => $postStatuses,
                         'postTypes'                  => $postTypes,
-                        'singularPostTypes'          => $singularPostTypes,
+                        'postTypesCanCreate'         => $postTypesUserCanCreate,
                         'ajaxUrl'                    => admin_url('admin-ajax.php'),
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts'            => current_user_can($this->create_post_cap),

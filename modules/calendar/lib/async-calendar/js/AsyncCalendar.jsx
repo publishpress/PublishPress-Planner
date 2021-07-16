@@ -531,7 +531,7 @@ export default function AsyncCalendar(props) {
                     date={formDate}
                     ajaxUrl={props.ajaxUrl}
                     dateFormat={props.dateFormat}
-                    postTypes={props.singularPostTypes}
+                    postTypes={props.postTypesCanCreate}
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
                     nonce={props.nonce}
