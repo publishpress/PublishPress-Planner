@@ -140,6 +140,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix the post type selection for new posts created on the calendar, #904;
 * Fixed: Fix the format of the post date on the calendar popup, #905;
 * Fixed: Fix the format of the date on the title of the post form on the calendar, #906;
+* Fixed: Fix the JS error that the form in the calendar throws if the user can edit only one post type, #907;
 
 = [3.4.0] - 07 Jul 2021 =
 
