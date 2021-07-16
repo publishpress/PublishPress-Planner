@@ -361,7 +361,7 @@ export default function ItemFormPopup(props) {
     const getPostTypeNameBySlug = (postTypeSlug) => {
         for (let postTypeObj of props.postTypes) {
             if (postTypeObj.value === postTypeSlug) {
-                return postTypeObj;
+                return postTypeObj.text;
             }
         }
 
