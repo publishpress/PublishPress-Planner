@@ -691,7 +691,7 @@ if (!class_exists('PP_Calendar')) {
                         'postTypesCanCreate'         => $postTypesUserCanCreate,
                         'ajaxUrl'                    => admin_url('admin-ajax.php'),
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
-                        'userCanAddPosts'            => current_user_can($this->create_post_cap),
+                        'userCanAddPosts'            => count($postTypesUserCanCreate) > 0,
                         'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
                         'allowAddingMultipleAuthors' => apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
