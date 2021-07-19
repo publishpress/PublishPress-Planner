@@ -10,6 +10,7 @@ import TextArea from "./fields/TextArea";
 import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
+import TimeField from "./fields/TimeField";
 
 const {__} = wp.i18n;
 const $ = jQuery;
@@ -64,8 +65,11 @@ export default function ItemPopup(props) {
 
             switch (dataProperty.type) {
                 case 'date':
+                    field = <DateTimeField value={dataProperty.value} valueString={dataProperty.valueString || null} isEditing={false}/>;
+                    break;
+
                 case 'time':
-                    field = <DateTimeField value={dataProperty.value} isEditing={false}/>;
+                    field = <TimeField value={dataProperty.value} isEditing={false}/>;
                     break;
 
                 case 'authors':

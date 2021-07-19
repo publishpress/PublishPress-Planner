@@ -44,7 +44,10 @@
 
         > thead > tr > th,
         > tbody > tr > td {
-            border: 2px solid @borderColor;
+            border: 1px solid @borderColor;
+            box-sizing: border-box;
+            border-collapse: separate;
+            background-clip: padding-box;
         }
 
         > thead > tr > th {

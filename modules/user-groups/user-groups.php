@@ -233,8 +233,34 @@ if (!class_exists('PP_User_Groups')) {
 
             // Use a taxonomy to manage relationships between posts and usergroups
             $args = [
-                'public'  => false,
-                'rewrite' => false,
+                'label'        => __('User Group', 'publishpress'),
+                'public'       => false,
+                'rewrite'      => false,
+                'hierarchical' => false,
+                'labels'       => [
+                    'name'                       => __('User Groups', 'publishpress'),
+                    'singular_name'              => __('User Group', 'publishpress'),
+                    'search_items'               => __('Search User Groups', 'publishpress'),
+                    'popular_items'              => __('Popular User Groups', 'publishpress'),
+                    'all_items'                  => __('All User Groups', 'publishpress'),
+                    'parent_item'                => __('Parent User Group', 'publishpress'),
+                    'parent_item_colon'          => __('Parent User Group:', 'publishpress'),
+                    'edit_item'                  => __('Edit User Group', 'publishpress'),
+                    'view_item'                  => __('View User Group', 'publishpress'),
+                    'update_item'                => __('Update User Group', 'publishpress'),
+                    'add_new_item'               => __('Add New User Group', 'publishpress'),
+                    'new_item_name'              => __('New User Group', 'publishpress'),
+                    'separate_items_with_commas' => __('Separate user groups with commas', 'publishpress'),
+                    'add_or_remove_items'        => __('Add or remove user groups', 'publishpress'),
+                    'choose_from_most_used'      => __('Choose from the most used user groups', 'publishpress'),
+                    'not_found'                  => __('No user groups', 'publishpress'),
+                    'no_terms'                   => __('No user groups', 'publishpress'),
+                    'filter_by_item'             => __('Filter by user group', 'publishpress'),
+                    'items_list_navigation'      => __('User Group', 'publishpress'),
+                    'items_list'                 => __('User Group', 'publishpress'),
+                    'most_used'                  => __('Most Used User Group', 'publishpress'),
+                    'back_to_items'              => __('Back to user groups', 'publishpress'),
+                ],
             ];
             register_taxonomy(self::taxonomy_key, $supported_post_types, $args);
         }

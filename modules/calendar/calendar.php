@@ -146,6 +146,11 @@ if (!class_exists('PP_Calendar')) {
         private $default_date_time_format = 'ha';
 
         /**
+         * @var array
+         */
+        private $postTypeObjectCache = [];
+
+        /**
          * Construct the PP_Calendar class
          */
         public function __construct()
@@ -504,6 +509,36 @@ if (!class_exists('PP_Calendar')) {
             return current_user_can($view_calendar_cap);
         }
 
+        protected function getPostStatusOptions()
+        {
+            $postStatuses = [];
+            foreach ($this->get_post_statuses() as $status) {
+                $postStatuses[] = [
+                    'value' => $status->slug,
+                    'text'  => $status->name,
+                ];
+            }
+
+            return $postStatuses;
+        }
+
+        protected function getUserAuthorizedPostStatusOptions($postType)
+        {
+            $postStatuses = $this->getPostStatusOptions();
+
+            foreach ($postStatuses as $index => $status) {
+                // Filter publishing posts if the post type is set
+                if (in_array($status['value'], ['publish', 'future', 'private'])) {
+                    $postTypeObj = get_post_type_object($postType);
+                    if (!current_user_can($postTypeObj->cap->publish_posts)) {
+                        unset($postStatuses[$index]);
+                    }
+                }
+            }
+
+            return $postStatuses;
+        }
+
         /**
          * Add any necessary JS to the WordPress admin
          *
@@ -571,6 +606,24 @@ if (!class_exists('PP_Calendar')) {
                     }
 
                     wp_enqueue_script(
+                        'jquery-inputmask',
+                        PUBLISHPRESS_URL . 'common/js/jquery.inputmask.min.js',
+                        [
+                            'jquery',
+                        ],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    wp_enqueue_script(
+                        'date_i18n',
+                        PUBLISHPRESS_URL . 'common/js/date-i18n.js',
+                        [],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
                         [
@@ -581,7 +634,9 @@ if (!class_exists('PP_Calendar')) {
                             'jquery-ui-sortable',
                             'jquery-ui-draggable',
                             'jquery-ui-droppable',
+                            'jquery-inputmask',
                             'wp-i18n',
+                            'date_i18n',
                         ],
                         PUBLISHPRESS_VERSION,
                         true
@@ -590,16 +645,10 @@ if (!class_exists('PP_Calendar')) {
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
-                    $postStatuses = [];
-                    foreach ($this->get_post_statuses() as $status) {
-                        $postStatuses[] = [
-                            'value' => $status->slug,
-                            'text'  => $status->name,
-                        ];
-                    }
+                    $postStatuses = $this->getPostStatusOptions();
 
-                    $postTypes         = [];
-                    $singularPostTypes = [];
+                    $postTypes              = [];
+                    $postTypesUserCanCreate = [];
                     foreach ($this->get_selected_post_types() as $postTypeName) {
                         $postType = get_post_type_object($postTypeName);
 
@@ -608,10 +657,12 @@ if (!class_exists('PP_Calendar')) {
                             'text'  => $postType->label
                         ];
 
-                        $singularPostTypes[] = [
-                            'value' => $postTypeName,
-                            'text'  => $postType->labels->singular_name
-                        ];
+                        if (current_user_can($postType->cap->edit_posts)) {
+                            $postTypesUserCanCreate[] = [
+                                'value' => $postTypeName,
+                                'text'  => $postType->labels->singular_name
+                            ];
+                        }
                     }
 
                     $numberOfWeeksToDisplay = isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
@@ -632,14 +683,15 @@ if (!class_exists('PP_Calendar')) {
                         'theme'                      => 'light',
                         'weekStartsOnSunday'         => (int)get_option('start_of_week') === 0,
                         'todayDate'                  => date('Y-m-d 00:00:00'),
+                        'dateFormat'                 => get_option('date_format', 'Y-m-d H:i:s'),
                         'timeFormat'                 => $this->getCalendarTimeFormat(),
                         'maxVisibleItems'            => $maxVisibleItemsOption,
                         'statuses'                   => $postStatuses,
                         'postTypes'                  => $postTypes,
-                        'singularPostTypes'          => $singularPostTypes,
+                        'postTypesCanCreate'         => $postTypesUserCanCreate,
                         'ajaxUrl'                    => admin_url('admin-ajax.php'),
                         'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
-                        'userCanAddPosts'            => current_user_can($this->create_post_cap),
+                        'userCanAddPosts'            => count($postTypesUserCanCreate) > 0,
                         'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
                         'allowAddingMultipleAuthors' => apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
@@ -647,6 +699,22 @@ if (!class_exists('PP_Calendar')) {
                         ),
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
+
+                    global $wp_locale;
+                    $monthNames      = array_map([&$wp_locale, 'get_month'], range(1, 12));
+                    $monthNamesShort = array_map([&$wp_locale, 'get_month_abbrev'], $monthNames);
+                    $dayNames        = array_map([&$wp_locale, 'get_weekday'], range(0, 6));
+                    $dayNamesShort   = array_map([&$wp_locale, 'get_weekday_abbrev'], $dayNames);
+                    wp_localize_script(
+                        "date_i18n",
+                        "DATE_I18N",
+                        array(
+                            "month_names"       => $monthNames,
+                            "month_names_short" => $monthNamesShort,
+                            "day_names"         => $dayNames,
+                            "day_names_short"   => $dayNamesShort
+                        )
+                    );
                 }
             }
         }
@@ -2961,9 +3029,19 @@ if (!class_exists('PP_Calendar')) {
             wp_send_json($queryResult);
         }
 
+        private function getPostTypeObject($postType)
+        {
+            if (!isset($this->postTypeObjectCache[$postType])) {
+                $this->postTypeObjectCache[$postType] = get_post_type_object($postType);
+            }
+
+            return $this->postTypeObjectCache[$postType];
+        }
+
         private function extractPostDataForTheCalendar($post)
         {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
+            $postTypeObject  = $this->getPostTypeObject($post->post_type);
 
             return [
                 'label'     => $post->post_title,
@@ -2972,6 +3050,7 @@ if (!class_exists('PP_Calendar')) {
                 'icon'      => $postTypeOptions['icon'],
                 'color'     => $postTypeOptions['color'],
                 'showTime'  => $this->showPostsPublishTime($post->post_status),
+                'canEdit'   => current_user_can($postTypeObject->cap->edit_post, $post->ID),
             ];
         }
 
@@ -2992,6 +3071,12 @@ if (!class_exists('PP_Calendar')) {
 
             $post = get_post($postId);
 
+            // Check if the user can edit the post
+            $postTypeObject = $this->getPostTypeObject($post->post_type);
+            if (!current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
+                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
+            }
+
             if (empty($post) || is_wp_error($post)) {
                 wp_send_json(['error' => __('Post not found', 'publishpress')], 404);
             }
@@ -3006,54 +3091,19 @@ if (!class_exists('PP_Calendar')) {
 
             $newDate = $postDate->format('Y-m-d H:i:s');
 
-            global $wpdb;
-
-            $wpdb->update(
-                $wpdb->posts,
+            wp_update_post(
                 [
-                    'post_date' => $newDate,
+                    'ID'            => $postId,
+                    'post_date'     => $newDate,
                     'post_date_gmt' => get_gmt_from_date($newDate),
-                ],
-                [
-                    'ID' => $postId
+
                 ]
             );
-
-            if ($post->post_status === 'future') {
-                $this->updatePublishFuturePostCronForPost($postId, $newDate);
-            }
 
             wp_send_json(
                 true,
                 200
             );
-        }
-
-        private function updatePublishFuturePostCronForPost($postId, $newDate)
-        {
-            $crons = _get_cron_array();
-
-            if (empty($crons)) {
-                return;
-            }
-
-            $newDateU = strtotime($newDate);
-
-            foreach ($crons as $timestamp => $hooks) {
-                if (isset($hooks['publish_future_post'])) {
-                    foreach ((array)$hooks['publish_future_post'] as $args) {
-                        if (isset($args['args'])
-                            && is_array($args['args'])
-                            && isset($args['args'][0])
-                            && $args['args'][0] === $postId
-                            && $newDateU !== $timestamp
-                        ) {
-                            wp_unschedule_event($timestamp, 'publish_future_post', $args['args']);
-                            wp_schedule_single_event($newDateU, 'publish_future_post', $args['args']);
-                        }
-                    }
-                }
-            }
         }
 
         private function addTaxQueryToArgs($taxonomy, $termSlug, $args)
@@ -3197,8 +3247,6 @@ if (!class_exists('PP_Calendar')) {
                 $id
             );
 
-            $viewLink = $post->post_status === 'publish' ? get_permalink($id) : get_preview_post_link($id);
-
             $categories = $this->getPostCategoriesNames($id);
             $tags       = $this->getPostTagsNames($id);
 
@@ -3216,10 +3264,11 @@ if (!class_exists('PP_Calendar')) {
                         'value' => $id,
                         'type'  => 'number',
                     ],
-                    'date'       => [
-                        'label' => __('Date', 'publishpress'),
-                        'value' => $post->post_date,
-                        'type'  => 'time',
+                    'date' => [
+                        'label'       => __('Date', 'publishpress'),
+                        'value'       => $post->post_date,
+                        'valueString' => get_the_date(get_option('date_format', 'Y-m-d H:i:s'), $post),
+                        'type'        => 'date',
                     ],
                     'status'     => [
                         'label' => __('Post Status', 'publishpress'),
@@ -3242,24 +3291,39 @@ if (!class_exists('PP_Calendar')) {
                         'type'  => 'taxonomy',
                     ],
                 ],
-                'links'  => [
-                    'edit'  => [
-                        'label' => __('Edit', 'publishpress'),
-                        'url'   => htmlspecialchars_decode(get_edit_post_link($id))
-                    ],
-                    'trash' => [
-                        'label' => __('Trash', 'publishpress'),
-                        'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
-                    ],
-                    'view'  => [
-                        'label' => $post->ping_status === 'publish' ? __('View', 'publishpress') : __(
-                            'Preview',
-                            'publishpress'
-                        ),
-                        'url'   => htmlspecialchars_decode($viewLink),
-                    ],
-                ]
+                'links'  => []
             ];
+
+            $postTypeObject = get_post_type_object($post->post_type);
+
+            if (current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
+                $data['links']['edit'] = [
+                    'label' => __('Edit', 'publishpress'),
+                    'url'   => htmlspecialchars_decode(get_edit_post_link($id))
+                ];
+            }
+
+            if (current_user_can($postTypeObject->cap->delete_post, $post->ID)) {
+                $data['links']['trash'] = [
+                    'label' => __('Trash', 'publishpress'),
+                    'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
+                ];
+            }
+
+            if (current_user_can($postTypeObject->cap->read_post, $post->ID)) {
+                if ($post->post_status === 'publish') {
+                    $label = __('View', 'publishpress');
+                    $link  = get_permalink($id);
+                } else {
+                    $label = __('Preview', 'publishpress');
+                    $link  = get_preview_post_link($id);
+                }
+
+                $data['links']['view'] = [
+                    'label' => $label,
+                    'url'   => htmlspecialchars_decode($link),
+                ];
+            }
 
             $data = apply_filters('publishpress_calendar_get_post_data', $data, $post);
 
@@ -3278,33 +3342,38 @@ if (!class_exists('PP_Calendar')) {
                 wp_send_json([], 404);
             }
 
-            $data = [
-                'title'   => [
+            $fields = [
+                'title'  => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
                     'type'  => 'text',
                 ],
-                'status'  => [
-                    'label' => __('Post Status', 'publishpress'),
-                    'value' => 'draft',
-                    'type'  => 'status',
+                'status' => [
+                    'label'   => __('Post Status', 'publishpress'),
+                    'value'   => 'draft',
+                    'type'    => 'status',
+                    'options' => $this->getUserAuthorizedPostStatusOptions($postType)
                 ],
-                'time'    => [
-                    'label' => __('Publish Time', 'publishpress'),
-                    'value' => null,
-                    'type'  => 'time',
-                ],
-                'authors' => [
+                'time'   => [
+                    'label'       => __('Publish Time', 'publishpress'),
+                    'value'       => null,
+                    'type'        => 'time',
+                    'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
+                ]
+            ];
+
+            if (current_user_can($postTypeObject->cap->edit_others_posts)) {
+                $fields['authors'] = [
                     'label' => __('Author', 'publishpress'),
                     'value' => null,
                     'type'  => 'authors',
-                ]
-            ];
+                ];
+            }
 
             $taxonomies = get_object_taxonomies($postType);
 
             if (in_array('category', $taxonomies)) {
-                $data['categories'] = [
+                $fields['categories'] = [
                     'label'    => __('Categories', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
@@ -3313,7 +3382,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             if (in_array('post_tag', $taxonomies)) {
-                $data['tags'] = [
+                $fields['tags'] = [
                     'label'    => __('Tags', 'publishpress'),
                     'value'    => null,
                     'type'     => 'taxonomy',
@@ -3321,15 +3390,23 @@ if (!class_exists('PP_Calendar')) {
                 ];
             }
 
-            $data['content'] = [
+            $fields['content'] = [
                 'label' => __('Content', 'publishpress'),
                 'value' => null,
                 'type'  => 'html'
             ];
 
-            $data = apply_filters('publishpress_calendar_get_post_type_fields', $data, $postTy);
+            $fields = apply_filters('publishpress_calendar_get_post_type_fields', $fields, $postType);
+
+            $data = ['fields' => $fields];
 
             wp_send_json($data, 202);
+        }
+
+        private function formatDateFromString($date, $originalFormat = 'Y-m-d')
+        {
+            $datetime = date_create_immutable_from_format($originalFormat, $date);
+            return $datetime->format(get_option('date_format', 'Y-m-d H:i:s'));
         }
 
         /**

@@ -21,7 +21,10 @@
 
         > tbody > tr > td {
             height: 110px;
-            position: relative;
+
+            > div {
+                position: relative;
+            }
         }
     }
 
@@ -115,9 +118,9 @@
         content: "\f113";
         font-size: 17px;
         font-weight: bold;
-        position: absolute;
-        left: 50%;
-        top: 4px;
+        float: right;
+        margin-top: 4px;
+        margin-right: 4px;
         animation: publishpress-spinner-animation 0.6s infinite reverse;
     }
 
@@ -125,15 +128,14 @@
         text-align: right;
     }
 
-    .publishpress-calendar-hovering .publishpress-calendar-cell-header::after {
-        content: 'Click to add';
+    .publishpress-calendar-hovering .publishpress-calendar-cell-click-to-add {
         font-style: italic;
         color: #b0b0b0;
         margin-left: 5px;
         font-size: 12px;
     }
 
-    .publishpress-calendar-hovering.publishpress-calendar-today .publishpress-calendar-cell-header::after {
+    .publishpress-calendar-hovering.publishpress-calendar-today .publishpress-calendar-cell-click-to-add {
         color: #717171;
     }
 }

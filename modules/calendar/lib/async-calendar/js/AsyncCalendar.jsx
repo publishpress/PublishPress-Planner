@@ -16,6 +16,7 @@ export default function AsyncCalendar(props) {
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [isDragging, setIsDragging] = React.useState(false);
     const [message, setMessage] = React.useState();
     const [filterStatus, setFilterStatus] = React.useState();
     const [filterCategory, setFilterCategory] = React.useState();
@@ -29,6 +30,8 @@ export default function AsyncCalendar(props) {
     const [refreshCount, setRefreshCount] = React.useState(0);
     const [hoveredDate, setHoveredDate] = React.useState();
     const [formDate, setFormDate] = React.useState();
+
+    const DRAG_AND_DROP_HOVERING_CLASS = 'publishpress-calendar-day-hover';
 
     const getUrl = (action, query) => {
         if (!query) {
@@ -104,7 +107,7 @@ export default function AsyncCalendar(props) {
     };
 
     const resetCSSClasses = () => {
-        $('.publishpress-calendar-day-hover').removeClass('publishpress-calendar-day-hover');
+        $('.' + DRAG_AND_DROP_HOVERING_CLASS).removeClass(DRAG_AND_DROP_HOVERING_CLASS);
         $('.publishpress-calendar-loading').removeClass('publishpress-calendar-loading');
     };
 
@@ -207,7 +210,7 @@ export default function AsyncCalendar(props) {
     const handleOnHoverCellCallback = (event, ui) => {
         resetCSSClasses();
 
-        $(event.target).addClass('publishpress-calendar-day-hover');
+        $(event.target).addClass(DRAG_AND_DROP_HOVERING_CLASS);
     };
 
     const itemPopupIsOpenedById = (id) => {
@@ -225,12 +228,20 @@ export default function AsyncCalendar(props) {
                     return false;
                 }
 
+                if (!$(event.target).hasClass('publishpress-calendar-item-movable')) {
+                    return false;
+                }
+
                 $(event.target).addClass('ui-draggable-target');
 
                 resetOpenedItemInPopup();
+
+                setIsDragging(true);
             },
             stop: (event, ui) => {
                 $('.ui-draggable-target').removeClass('ui-draggable-target');
+
+                setIsDragging(false);
             }
         });
 
@@ -240,49 +251,72 @@ export default function AsyncCalendar(props) {
         });
     };
 
-    const eventTargetIsACell = (e) => {
-        const target = e.srcElement || e.target;
-        let $target = $(target);
+    const getCellFromChild = (child) => {
+        let $child = $(child);
 
-        if ($target.is('td.publishpress-calendar-business-day, td.publishpress-calendar-weekend-day, .publishpress-calendar-cell-header, .publishpress-calendar-date')){
-            if ($target.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-show-more, .publishpress-calendar-date, .publishpress-calendar-month-name')) {
-                return $target.parents('td');
-            }
+        if ($child.is('td.publishpress-calendar-business-day, td.publishpress-calendar-weekend-day')) {
+            return $child;
+        }
 
-            return $target;
+        if ($child.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-cell-click-to-add, .publishpress-calendar-month-name')) {
+            return $child.parents('td');
         }
 
         return null;
     }
 
     const getCellDate = (cell) => {
-        return new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+        let date = new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+
+        // Compensate the timezone for returning the correct date
+        if (date.getHours() > 0) {
+            date.setTime(date.getTime() + (60*1000*date.getTimezoneOffset()));
+        }
+
+        return date;
+    }
+
+    const isHoveringCellWhileDragging = (cell) => {
+        return $(cell).hasClass(DRAG_AND_DROP_HOVERING_CLASS);
     }
 
     const initClickToCreateFeature = () => {
+        // We have to use this variable because when the click is done on the "click to add" label, we can't get its parent.
+        // Probably because it was already removed from the DOM.
+        let lastHoveredDate;
         $('.publishpress-calendar tbody > tr > td')
             .on('mouseover', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const cell = eventTargetIsACell(e);
+                const cell = getCellFromChild(e.target);
 
                 if (cell) {
+                    if (isHoveringCellWhileDragging(cell)) {
+                        return;
+                    }
+
                     setHoveredDate(getCellDate(cell));
+                    lastHoveredDate = getCellDate(cell);
                 }
             })
             .on('mouseout', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
 
+                if (getCellFromChild(e.relatedTarget)) {
+                    return;
+                }
+
                 setHoveredDate(null);
+                lastHoveredDate = null;
             })
             .on('click', (e) => {
-                const cell = eventTargetIsACell(e);
+                const cell = getCellFromChild(e.target);
 
                 if (cell) {
                     setOpenedItemId(null);
-                    setFormDate(getCellDate(cell));
+                    setFormDate(lastHoveredDate);
                 }
             });
     }
@@ -384,9 +418,9 @@ export default function AsyncCalendar(props) {
                     shouldDisplayMonthName={lastMonthDisplayed !== dayDate.getMonth() || dataIndex === 0}
                     todayDate={props.todayDate}
                     isLoading={false}
-                    isHovering={hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
+                    isHovering={!isDragging && hoveredDate && hoveredDate.getTime() === dayDate.getTime() && !formDate}
                     items={itemsByDate[dateString] || []}
-                    maxVisibleItems={props.maxVisibleItems}
+                    maxVisibleItems={parseInt(props.maxVisibleItems)}
                     timeFormat={props.timeFormat}
                     openedItemId={openedItemId}
                     getOpenedItemDataCallback={getOpenedItemData}
@@ -419,7 +453,13 @@ export default function AsyncCalendar(props) {
             [
                 firstDateToDisplay,
                 numberOfWeeksToDisplay,
-                filterWeeks
+                filterWeeks,
+                filterAuthor,
+                filterTag,
+                filterCategory,
+                filterStatus,
+                filterPostType,
+                refreshCount
             ]
         );
     }
@@ -488,7 +528,8 @@ export default function AsyncCalendar(props) {
                 <ItemFormPopup
                     date={formDate}
                     ajaxUrl={props.ajaxUrl}
-                    postTypes={props.singularPostTypes}
+                    dateFormat={props.dateFormat}
+                    postTypes={props.postTypesCanCreate}
                     statuses={props.statuses}
                     actionGetPostTypeFields={props.actionGetPostTypeFields}
                     nonce={props.nonce}

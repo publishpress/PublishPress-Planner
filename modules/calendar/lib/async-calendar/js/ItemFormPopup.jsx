@@ -58,6 +58,7 @@ export default function ItemFormPopup(props) {
         let dataProperty;
         let field;
         let fieldId;
+        let placeholder;
 
         for (const dataPropertyName in fields) {
             if (!fields.hasOwnProperty(dataPropertyName)) {
@@ -67,6 +68,7 @@ export default function ItemFormPopup(props) {
             fieldId = 'publishpress-calendar-field-' + dataPropertyName;
 
             dataProperty = fields[dataPropertyName];
+            placeholder  = dataProperty.placeholder ? dataProperty.placeholder : null;
 
             switch (dataProperty.type) {
                 case 'date':
@@ -103,7 +105,7 @@ export default function ItemFormPopup(props) {
                     field = <PostStatusField value={dataProperty.value}
                                              isEditing={true}
                                              id={fieldId}
-                                             options={props.statuses}
+                                             options={dataProperty.options}
                                              onSelect={(e, elem, data) => {
                                                  let value = null;
                                                  if (data.length > 0) {
@@ -167,6 +169,7 @@ export default function ItemFormPopup(props) {
                     field = <TextField value={dataProperty.value}
                                        isEditing={true}
                                        id={fieldId}
+                                       placeholder={placeholder}
                                        onChange={(e, value) => {
                                            updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
@@ -191,6 +194,7 @@ export default function ItemFormPopup(props) {
                     field = <TimeField value={dataProperty.value}
                                        isEditing={true}
                                        id={fieldId}
+                                       placeholder={placeholder}
                                        onChange={(e, value) => {
                                            updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
@@ -215,16 +219,16 @@ export default function ItemFormPopup(props) {
     // We are using a global var because the states are async and we were having a hard time to make all
     // fields work together updating the same state.
     const getGlobalFormFieldData = (name) => {
-        if (typeof window.publishpressCalendaGlobal === 'undefined') {
-            window.publishpressCalendaGlobal = {};
+        if (typeof window.publishpressCalendarGlobalData === 'undefined') {
+            window.publishpressCalendarGlobalData = {};
         }
 
-        if (typeof window.publishpressCalendaGlobal.formFieldsData === 'undefined') {
-            window.publishpressCalendaGlobal.formFieldsData = {};
+        if (typeof window.publishpressCalendarGlobalData.formFieldsData === 'undefined') {
+            window.publishpressCalendarGlobalData.formFieldsData = {};
         }
 
-        if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(name)) {
-            return window.publishpressCalendaGlobal.formFieldsData[name];
+        if (window.publishpressCalendarGlobalData.formFieldsData.hasOwnProperty(name)) {
+            return window.publishpressCalendarGlobalData.formFieldsData[name];
         }
 
         return null;
@@ -233,13 +237,13 @@ export default function ItemFormPopup(props) {
     const setGlobalFormFieldData = (name, value) => {
         getGlobalFormFieldData(name);
 
-        window.publishpressCalendaGlobal.formFieldsData[name] = value;
+        window.publishpressCalendarGlobalData.formFieldsData[name] = value;
     }
 
     const resetGlobalFormFieldData = () => {
-        if (typeof window.publishpressCalendaGlobal !== 'undefined'
-            && typeof window.publishpressCalendaGlobal.formFieldsData !== 'undefined') {
-            window.publishpressCalendaGlobal.formFieldsData = [];
+        if (typeof window.publishpressCalendarGlobalData !== 'undefined'
+            && typeof window.publishpressCalendarGlobalData.formFieldsData !== 'undefined') {
+            window.publishpressCalendarGlobalData.formFieldsData = [];
         }
     }
 
@@ -253,9 +257,9 @@ export default function ItemFormPopup(props) {
         formData.append('date', getDateAsStringInWpFormat(props.date));
         formData.append('nonce', props.nonce);
 
-        for (const fieldName in window.publishpressCalendaGlobal.formFieldsData) {
-            if (window.publishpressCalendaGlobal.formFieldsData.hasOwnProperty(fieldName)) {
-                formData.append(fieldName, window.publishpressCalendaGlobal.formFieldsData[fieldName]);
+        for (const fieldName in window.publishpressCalendarGlobalData.formFieldsData) {
+            if (window.publishpressCalendarGlobalData.formFieldsData.hasOwnProperty(fieldName)) {
+                formData.append(fieldName, window.publishpressCalendarGlobalData.formFieldsData[fieldName]);
             }
         }
 
@@ -347,17 +351,17 @@ export default function ItemFormPopup(props) {
         if (props.postId) {
             title = '';
         } else {
-            title = __('Schedule content for %s', 'publishpress');
-            title = title.replace('%s', getDateAsStringInWpFormat(props.date));
+            title = __('Add content for %s', 'publishpress');
+            title = title.replace('%s', date_i18n(props.dateFormat, props.date));
         }
 
         return title;
     }
 
     const getPostTypeNameBySlug = (postTypeSlug) => {
-        for (let i = 0; i < props.postTypes.length; i++) {
-            if (props.postTypes[i].value === postTypeSlug) {
-                return props.postTypes[i].text;
+        for (let postTypeObj of props.postTypes) {
+            if (postTypeObj.value === postTypeSlug) {
+                return postTypeObj.text;
             }
         }
 
@@ -369,18 +373,18 @@ export default function ItemFormPopup(props) {
 
         const args = {
             nonce: props.nonce,
-            postType: getGlobalFormFieldData('post_type')
+            postType: getGlobalFormFieldData('post_type'),
+            date: getDateAsStringInWpFormat(props.date)
         };
 
         setFields(null);
 
         callAjaxAction(props.actionGetPostTypeFields, args, props.ajaxUrl)
             .then((result) => {
-                setFields(result);
+                setFields(result.fields);
             })
             .then(() => {
                 setFocusOnTitleField();
-                setDefaultValueForFields();
 
                 setIsLoading(false);
             });

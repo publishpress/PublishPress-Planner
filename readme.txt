@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.7
-Stable tag: 3.4.0
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,7 +120,31 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.4.0] - 2021-07-07 =
+= [3.4.1] - 15 Jul 2021 =
+
+* Fixed: Fix the visual feedback for the calendar items drag and drop, #881;
+* Fixed: Fix the publishing time field in the calendar form to display the default publishing date, #882;
+* Fixed: Fix post creation capability check before allowing to create posts in the calendar, #799;
+* Fixed: Fix publishing capability check before allow to create posts with "publish", "future", "private" statuses, #825;
+* Fixed: Fix edit other posts capability check before allow to set a different author for the post, #834;
+* Fixed: Fix capabilities check before displaying the links in the footer of the items popup on the calendar, #887;
+* Fixed: Fix post subscribe capability check before displaying the option to "Notify me" in the item popup on the calendar, #886;
+* Fixed: Fix edit posts permission before allowing to move items in the calendar, #891;
+* Fixed: Fix PHP warning: Invalid argument supplied for foreach(), #828;
+* Fixed: Fix the default selected status in the post creation form on the calendar, #893;
+* Fixed: Fix the "load more" behavior and links when the calendar is configured to display "All posts", #897;
+* Fixed: Fix the drag and drop behavior in the calendar to trigger WP hooks after updating the post, #895;
+* Fixed: Make the calendar string "Click to add" translatable, #883;
+* Fixed: Fix border of calendar cells on Firefox, #901;
+* Fixed: Fix date identified on clicking the calendar cell to create new posts, compensating the timezone, #903;
+* Fixed: Fix the post type selection for new posts created on the calendar, #904;
+* Fixed: Fix the format of the post date on the calendar popup, #905;
+* Fixed: Fix the format of the date on the title of the post form on the calendar, #906;
+* Fixed: Fix the JS error that the form in the calendar throws if the user can edit only one post type, #907;
+* Fixed: Fix the translation for the private taxonomies: "pp_usergroup", "pp_notify_email", "pp_notify_role" and "pp_notify_user", #908;
+* Fixed: Fix the click event over the "Click to add" label;
+
+= [3.4.0] - 07 Jul 2021 =
 
 * Changed: The calendar page has changed and is fully based on React now, #680;
 * Changed: Minor improvements to the calendar UI, #680;
@@ -147,24 +171,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix the scheduled time for cron events of scheduled posts that are moved to different dates in the calendar, #855;
 * Fixed: Allow to publish a post with backdate in the calendar or post edit page, #715;
 
-= [3.3.3] - 2021-06-16 =
+= [3.3.3] - 16 Jun 2021 =
 
 * Fixed: Fix "Statuses" doesn't appear with a title in important areas, #846;
 * Fixed: Fix links to posts with custom privacy are changed to preview links, #852;
 
-= [3.3.2] - 2021-05-27 =
+= [3.3.2] - 27 May 2021 =
 
 * Fixed: Fix the icons for statuses, #841;
 * Fixed: Fix HTML syntax error in the custom status module for the admin pages;
 * Changed: Add new background color for the PublishPress Debug button;
 
-= [3.3.1] - 2021-04-15 =
+= [3.3.1] - 15 Apr 2021 =
 
 * Fixed: Fix the editorial comments for non-admins, #827;
 * Fixed: Check capability "edit_pp_notif_workflows" before displaying the "Active Notifications" list in the post edit page, not displaying it for those who can't edit notifications;
 * Fixed: Fix PHP warning about undefined index "untrashed" after trashing a scheduled post, #831;
 
-= [3.3.0] - 2021-03-18 =
+= [3.3.0] - 18 Mar 2021 =
 
 * Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
 * Fixed: Fix the value of the notification channel for authors identified by the email, #793;
@@ -174,7 +198,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed PHP notice: array to string conversion in debug.php:87, #813;
 * Fixed: Fixed The Upgrade to Pro banner and menu item to show only for the users who can install plugins, #599;
 
-= [3.2.0] - 2021-02-10 =
+= [3.2.0] - 10 Feb 2021 =
 
 * Added: Add option to rescheduled failed notifications in the notifications log. We only had that option for scheduled notifications, #786;
 * Added: Added option to the notification workflow for avoiding notifying the user who triggered the action, #778;
@@ -186,17 +210,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
 * Fixed: Fixed role selection when adding a new user in a multisite, #788;
 
-= [3.1.0] - 2021-01-20 =
+= [3.1.0] - 20 Jan 2021 =
 
 * Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288
 * Fixed: Fixed support to PHP 5.6, #772;
 
-= [3.0.3] - 2021-01-11 =
+= [3.0.3] - 11 Jan 2021 =
 
 * Fixed: Fix fatal error when "editor" or "author" user roles are missed in the site, #767;
 * Fixed: Update the list of capabilities in the PublishPress Capabilities plugin;
 
-= [3.0.2] - 2021-01-07 =
+= [3.0.2] - 07 Jan 2021 =
 
 * Fixed: Fix JS warning: $(html) HTML text after last tag is ignored in the custom-status.js file, #754;
 * Fixed: Fix JS warning: jQuery.fn.attr(‘selected’) might use property instead of attribute on custom-status.js, #753;
@@ -225,7 +249,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: Removed the user field in the Roles page to avoid break big sites, #750;
 * Added: Add capability to control who can view ("pp_view_editorial_metadata") or edit ("pp_edit_editorial_metadata") the editorial metadata, deprecating the capability "pp_editorial_metadata_user_can_edit", #758;
 
-= [3.0.1] - 2020-11-24 =
+= [3.0.1] - 24 Nov 2020 =
 
 * Fixed: Can't delete users because the plugin redirects to the Notifications Log page, #737;
 * Fixed: Fixed the arguments "old_status" and "new_status" for the shortcode "psppno_post", #713;
@@ -234,7 +258,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed bug in the notification filters that was triggering notifications for unselected post types, #743;
 * Fixed: Updated the Italian language files;
 
-= [3.0.0] - 2020-11-16 =
+= [3.0.0] - 16 Nov 2020 =
 
 * Added: Added sortable columns to the Content Overview post list, #709;
 * Added: Added post type filter to the Content Overview page, #727;
@@ -268,7 +292,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Removed: Removed the action "publishpress_notif_before_run_workflow", #650
 * Removed: Removed the filter "publishpress_notif_workflow_receiver_post_authors", #650
 
-= [2.4.2] - 2020-11-05  =
+= [2.4.2] - 05 Nov 2020 =
 
 * Fixed: Invalid assets paths for modules on Windows servers, #712;
 * Fixed: Fixed error in the calendar: Error: selected user doesn't have enough permissions to be set as the post author, #704;
@@ -276,11 +300,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Method get_inner_information was ignoring the passed information fields to the first argument, #654;
 * Fixed: Updated the .POT file;
 
-= [2.4.1] - 2020-10-22  =
+= [2.4.1] - 22 Oct Oct 2020 =
 
 * Fixed: Fix the assets URL when the plugin is not installed in a standard folder;
 
-= [2.4.0] - 2020-10-22 =
+= [2.4.0] - 22 Oct 2020 =
 
 * Fixed: Fix PHP notice on Ajax call after clicking a filter without typing anything in the calendar or content overview, #693;
 * Fixed: Fix JS error: No select2/compat/containerCss, #695;
@@ -292,7 +316,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added: Added option to show all posts, or specific number of posts, on a date in the calendar, #675;
 * Changed: Updated the Twig library to 1.42.5;
 
-= [2.3.0] - 2020-10-07 =
+= [2.3.0] - 07 Oct 2020 =
 
 * Fixed: Fixed performance and memory issue for the calendar and content overview pages adding filters with asynchronous data search, removing the bloat of rendering all the users/tags in fields for each calendar cell, and content overview filters, #674;
 * Fixed: Fixed language domain loading and updated the POT file, #670;
@@ -303,7 +327,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: Updated the Select2 JS library to version 4.0.13. The library instance was refactored to pp_select2;
 * Changed: Converted the select field for notifications in the post edit page from Chosen to Select2;
 
-= [2.2.1] - 2020-08-13 =
+= [2.2.1] - 13 Aug 2020 =
 
 * Fixed: Fixed PHP warning about variable $key being used outside and inside the context;
 * Added: Added new filter "publishpress_new_custom_status_args" to customize the post status arguments, #640;
@@ -314,7 +338,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fixed DOM errors in the browser related to multiple elements using the same ID, #660;
 * Fixed: Compatibility with WP 5.5;
 
-= [2.2.0] - 2020-06-17 =
+= [2.2.0] - 17 Jun 2020 =
 
 * Removed: Fixed conflict with Gutenberg and other plugins keeping draft as the default status, always. Removed the option to set another status as default, #621;
 * Removed: Removed the notice asking for reviews after a few weeks of usage, #637;
@@ -327,7 +351,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Load languages from the relative path, #626;
 * Fixed: Updated the PT-BR translation strings;
 
-= [2.1.0] - 2020-05-28 =
+= [2.1.0] - 28 May 2020 =
 
 * Added: Added support to PublishPress Authors (requires at least 3.3.1), #610, #614;
 * Added: Added the user email to the notifications log entries and details popup, #602;
@@ -341,42 +365,42 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Added visual feedback and error messages when errors happens while dragging and dropping items in the calendar, #609;
 * Fixed: Fixed compatibility with PHP < 7.3 removing the call to the function "array_key_first";
 
-= [2.0.6] - 2020-04-15 =
+= [2.0.6] - 15 Apr 2020 =
 
 * Fixed: Fixed the duplicated posts after publishing using another algorithm due to new reports of a similar issue (#546);
 
-= [2.0.5] - 2020-04-15 =
+= [2.0.5] - 15 Apr 2020 =
 
 * Fixed: Fixed duplicated posts after publishing from custom post statuses, a bug introduced by the fix for #546;
 * Fixed: Fixes the metadata form in the settings to display the errors after a form submission; (#592)
 * Fixed: Updated the build script to remove test files from the built package to avoid false positive on security warnings issued by some hosts;
 
-= [2.0.4] - 2020-04-08 =
+= [2.0.4] - 08 Apr 2020 =
 
 * Fixed: Wrong publish date when using custom statuses - Now the publish date is always updated when the post is published;
 * Fixed: Fixed the error displayed on Windows servers when the constant DIRECTORY_SEPARATOR is not defined;
 * Added: Added link in the menu for upgrading to Pro;
 
-= [2.0.3] - 2020-03-16 =
+= [2.0.3] - 16 Mar 2020 =
 
 * Fixed: JS error related to undefined editor when subject or content is empty;
 * Fixed: Permalinks for scheduled posts removing the preview param;
 * Fixed: Not all custom posts were available for notifications;
 * Added: Add top banner for the Pro version;
 
-= [2.0.2] - 2020-02-18 =
+= [2.0.2] - 18 Feb 2020 =
 
 * Fixed: Bulk actions in the notifications log page not working;
 * Fixed: Notifications sent to wrong roles on some cases. If the post has any user role set to be notified, and the notification workflow doesn't have that option selected, notifications were being sent to the followers - #571;
 * Fixed: If PublishPress\Notifications\Shortcodes::handle_psppno_edcomment is called with null string attrs a fatal error occurs;
 * Fixed: The Notifications Log text is bigger than the other h3 elements in the post editor metabox;
 
-= [2.0.1] - 2020-02-11 =
+= [2.0.1] - 11 Feb 2020 =
 
 * Fixed: Fixed the hidden publish status and notifications for published posts;
 * Fixed: Fixed the default order for custom statuses;
 
-= [2.0.0] - 2020-02-06 =
+= [2.0.0] - 06 Feb 2020 =
 
 * Fixed: Fixed the default status after sort statuses;
 * Fixed: Removed TypeError exception to keep backward compatibility with PHP 5.6;
@@ -387,7 +411,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: Removed the 20% discount banner;
 * Added: Added new capabilities for controlling the Notifications permissions: edit_pp_notif_workflow, read_pp_notif_workflow, etc.
 
-= [1.21.2] - 2019-11-19 =
+= [1.21.2] - 19 Nov 2019 =
 
 * Added: New action for writing a debug log message: publishpress_debug_write_log;
 * Added: Show receiver's data in the notifications log;
@@ -398,12 +422,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: The React library is being downgraded (overridden) in WP 5.3;
 * Changed: Removed not used methods from the Notifications\Table\Base class: hide_months_dropdown_filter and months_dropdown;
 
-= [1.21.1] - 2019-10-23 =
+= [1.21.1] - 23 Oct 2019 =
 
 * Fixed: Updated the Plugin Framework removing a debug statement;
 * Changed: Removed the Async column from the Notifications Log and added text to the Status column for async notifications;
 
-= [1.21.0] - 2019-10-22 =
+= [1.21.0] - 22 Oct 2019 =
 
 * Feature: Implement a log for notifications, #500;
 * Feature: Implement support for pages in the content overview, #503
@@ -419,7 +443,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Removed: Removed leftovers from the Freemius integration;
 * Changed: Renamed the file common/js/admin.js to common/js/admin-menu.js;
 
-= [1.20.9] - 2019-09-11 =
+= [1.20.9] - 11 Sep 2019 =
 
 * Fixed: Too many Notifications sent for wc_admin_unsnooze_admin_notes posts created by WooCommerce Admin. Notifications were being sent for non supported post types;
 * Fixed: JavaScript breaks when Alledia framework object is not found;
@@ -429,7 +453,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Undefined index: REQUEST_METHOD for $_SERVER.
 * Fixed: The logo is missed on the Notification Workflows page.
 
-= [1.20.8] - 2019-08-19 =
+= [1.20.8] - 19 Aug 2019 =
 
 * Feature: Support post meta fields in notification body (also requires PublishPress Reminders 1.1.1)
 * Feature: Added general debug information and settings to the Site Health page
@@ -443,7 +467,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: The column "Last Updated" on content overview had a wrong date format
 * Fixed: Missed "use" statement for Dependency Injection on the custom status module
 
-= [1.20.7] - 2019-06-17 =
+= [1.20.7] - 17 Jun 2019 =
 
 * Fix fatal error in wp-admin when active alongside WPML or another plugin that uses an obsolete version of the Twig library
 * Fix alignment of stars on "please leave us a rating" footer
@@ -461,24 +485,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * For PublishPress Reminders, support status selection in "Before Publication" workflow notifications
 * Fix double slash on some assets URLs
 
-= [1.20.6] - 2019-05-16 =
+= [1.20.6] - 16 May 2019 =
 * Fix fatal error on Edit Notification Workflow screen
 * Fix JS error in wp-admin (blocking other plugin JS) for sites running on localhost and Windows servers
 
-= [1.20.5] - 2019-05-15 =
+= [1.20.5] - 15 May 2019 =
 * Fix blacklisting taxonomies causing WSOD in some envs containing a lot of Terms
 * Fix Calendar displaying times on wrong Timezones
 * Fix Custom Statuses listing on Settings page not being reordable anymore
 
-= [1.20.4] - 2019-05-03 =
+= [1.20.4] - 03 May 2019 =
 * Fix JS error in wp-admin (blocking other plugin JS) for sites running on localhost and Windows servers
 
-= [1.20.3] - 2019-05-03 =
+= [1.20.3] - 03 May 2019 =
 
 * Fix fatal error in Calendar module: "undefined function mb_strtolower()" on servers that don't have PHP multibyte string extension
 * Fix PHP notice in Unpublished Content dashboard metabox
 
-= [1.20.2] - 2019-05-02 =
+= [1.20.2] - 02 May 2019 =
 
 * Partially adds support for Gutenberg-Ramp plugin
 * Fix PublishPress icon missing on admin sidebar in some envs
@@ -488,7 +512,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fix PHP warnings on Notifications section on Posts form if WP_DEBUG is on
 * Add option to blacklist taxonomies-slugs on the taxonomies filter for adding New Notification Workflow
 
-= [1.20.1] - 2019-04-16 =
+= [1.20.1] - 16 Apr 2019 =
 
 * Fix PHP warning regarding missing variable reference
 * Fix custom statuses not being available for Quick/Bulk post editing
@@ -496,7 +520,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fix missing default value for the Display Publish Time calendar option
 * Fix a performance issue caused by duplicated DB queries calls on Calendar
 
-= [1.20.0] - 2019-04-08 =
+= [1.20.0] - 08 Apr 2019 =
 
 * Fix metadata not showing up on Content Overview;
 * Fix Content Overview Start Date filter not detecting current date;
@@ -506,7 +530,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Add Author field on Calendar item pop up;
 * Add option to toggle posts/pages publish time on Calendar;
 
-= [1.19.4] - 2019-02-22 =
+= [1.19.4] - 22 Feb 2019 =
 
 * Fixed the list of notification receivers for not excluding emails with numeric chars;
 * Fixed email notifications for email addresses added directly into the post, using the "Notify" box;
@@ -515,21 +539,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated Tested Up To version to 5.1 and added kevinb as contributor;
 * Fixed compatibility with Revisionary < v1.2.3 and Statuses;
 
-= [1.19.3] - 2019-02-15 =
+= [1.19.3] - 15 Feb 2019 =
 
 * Fixed the publishing workflow, removing Published from the select box of post statuses;
 * Fixed the list of statuses applying the filter which allows to add-ons like Permissions to filter the list;
 
-= [1.19.2] - 2019-02-12 =
+= [1.19.2] - 12 Feb 2019 =
 
 * Fixed bug preventing to unpublish posts;
 
-= [1.19.1] - 2019-02-12 =
+= [1.19.1] - 12 Feb 2019 =
 
 * Fixed method that detects the block editor, restoring the publish button in the classic editor;
 * Fixed the Save button for custom statuses in the block editor;
 
-= [1.19.0] - 2019-02-11 =
+= [1.19.0] - 11 Feb 2019 =
 
 * Fixed PHP Warning about to_notify variable;
 * Removed the requirement for the classic editor when the Content Checklist is active;
@@ -537,36 +561,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added support to custom statuses for posts in Gutenberg;
 * Improved text for custom status settings options;
 
-= [1.18.5] - 2019-01-30 =
+= [1.18.5] - 30 Jan 2019 =
 
 * Fixed warning message when a string is added as param for the shortcode psppno_workflow;
 * Fixed redirection after dismissing the alert regarding reviewing PublishPress, when calendar is not activated;
 * Fixed Gutenberg compatibility do not falling off to the classic editor;
 * Fixed compatibility with Bedrock, fixing paths for assets and the plugin;
 
-= [1.18.4] - 2019-01-25 =
+= [1.18.4] - 25 Jan 2019 =
 
 * Fixed incompatibility with UpStream 1.23.1;
 
-= [1.18.3] - 2019-01-23 =
+= [1.18.3] - 23 Jan 2019 =
 
 * Released only to trigger a new update on sites due to corrupted package for 1.18.2;
 
-= [1.18.2] - 2019-01-23 =
+= [1.18.2] - 23 Jan 2019 =
 
 * Updated the subscription form for discount coupon, for the new Mailchimp account;
 * Updated the settings tabs for the editorial metadata and custom statuses moving Options before Add New;
 * Removed warning about Classic Editor as requirement;
 * Updated the default value for selected post types for the custom status module, disabling by default if Gutenberg is installed;
 
-= [1.18.1] - 2019-01-14 =
+= [1.18.1] - 14 Jan 2019 =
 
 * Fixed minor performance issue in the settings page removing a code from a loop;
 * Added an option for selecting a default notification channel;
 * Fixed the position of the editorial comments metabox removing from the sidebar and added as high priority;
 * Fixed the output of boolean values in the Debug page;
 
-= [1.18.0] - 2018-12-06 =
+= [1.18.0] - 06 Dec 2018 =
 
 * Fixed non-escaped attributes and URLs in the whole plugin;
 * Fixed style of editorial comments for fitting the sidebar in Gutenberg;
@@ -584,7 +608,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed broken HTML syntax in some settings panels;
 * Updated the "Tested up" version to 5.0
 
-= [1.17.0] - 2018-11-08 =
+= [1.17.0] - 08 Nov 2018 =
 
 * Fixed permalink for posts in multisite URLs;
 * Fixed the position for the editorial comments metabox for Gutenberg;
@@ -594,14 +618,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added a new option to disable PublishPress' branding for who has at least one activated license key;
 * Added a debug module with basic information for debugging, and log viewer;
 
-= [1.16.4] - 2018-10-03 =
+= [1.16.4] - 03 Oct 2018 =
 
 *Fixed:*
 
 * Fixed properties (color and icon) for customizing core statuses;
 * Fixed fatal error in shortcode processing when the param is sent as string - for notifications' body;
 
-= [1.16.3] - 2018-09-19 =
+= [1.16.3] - 19 Sep 2018 =
 
 *Fixed:*
 
@@ -611,19 +635,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed icon of Multiple Authors add-on in the add-ons page;
 * Fixed wrong URL for assets on Windows machines;
 
-= [1.16.2] - 2018-08-28 =
+= [1.16.2] - 28 Aug 2018 =
 
 *Fixed:*
 
 * Fixed a bug in the URL sent in the validation of license keys for add-ons;
 
-= [1.16.1] - 2018-08-27 =
+= [1.16.1] - 27 Aug 2018 =
 
 *Fixed:*
 
 * Fixed a bug in the validation of license keys for add-ons;
 
-= [1.16.0] - 2018-08-27 =
+= [1.16.0] - 27 Aug 2018 =
 
 * Changed:*
 
@@ -631,20 +655,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Rebranded with the new logo;
 * Added sidebar with form offering discount of 20% in a plan when the user doesn't have any plugin installed;
 
-= [1.15.0] - 2018-07-19 =
+= [1.15.0] - 19 Jul 2018 =
 
 *Added:*
 
 * Added filter for taxonomies and improved custom post type support in notification workflows;
 
-= [1.14.1] - 2018-07-12 =
+= [1.14.1] - 12 Jul 2018 =
 
 *Fixed:*
 
 * Fixed a PHP warning when we receive an array as receiver for notifications;
 * Fixed notifications when roles are selected as receivers;
 
-= [1.14.0] - 2018-06-12 =
+= [1.14.0] - 12 Jun 2018 =
 
 *Fixed:*
 
@@ -661,7 +685,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added a new action (action_enqueue_notification) after enqueuing  notifications;
 
-= [1.13.0] - 2018-05-16 =
+= [1.13.0] - 16 May 2018 =
 
 *Added:*
 
@@ -672,7 +696,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Improved some help texts;
 * Updated language files;
 
-= [1.12.1] - 2018-05-09 =
+= [1.12.1] - 09 May 2018 =
 
 *Fixed:*
 
@@ -683,7 +707,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Increased the priority of the hook user_register to have the multiple roles loaded and available for add-ons;
 
-= [1.12.0] - 2018-04-18 =
+= [1.12.0] - 18 Apr 2018 =
 
 *Added:*
 
@@ -698,7 +722,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Improved async notifications module for allowing extending workflows with add-ons (specially Reminders);
 
-= [1.11.4] - 2018-04-05 =
+= [1.11.4] - 05 Apr 2018 =
 
 *Fixed:*
 
@@ -707,7 +731,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed compatibility with Forum Role field of bbPress;
 * Fixed start date for the calendar to display current week if a custom date is not set;
 
-= [1.11.3] - 2018-03-20 =
+= [1.11.3] - 20 Mar 2018 =
 
 *Fixed:*
 
@@ -720,19 +744,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Removed option to delete the administrator role;
 * Improved some text;
 
-= [1.11.2] - 2018-03-19 =
+= [1.11.2] - 19 Mar 2018 =
 
 *Fixed:*
 
 * Fixed migration of following users and user groups in notifications;
 
-= [1.11.1] - 2018-03-13 =
+= [1.11.1] - 13 Mar 2018 =
 
 *Fixed:*
 
 * Fixed backward compatibility with legacy PublishPress Permissions;
 
-= [1.11.0] - 2018-03-13 =
+= [1.11.0] - 13 Mar 2018 =
 
 *Fixed:*
 
@@ -755,7 +779,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added new receiver option for notification workflows to reach Roles;
 * Added support for multiple Roles per user. A new field is displayed in the user's profile allowing to select multiple roles;
 
-= [1.10.0] - 2018-02-21 =
+= [1.10.0] - 21 Feb Feb 2018 =
 
 *Added:*
 
@@ -771,7 +795,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed issue where custom post types where not recognized by some modules;
 * Fixed the publishing date for unpublished posts. Now it is not changed when saved so unscheduled posts keep ready for publishing immediately;
 
-= [1.9.8] - 2018-02-06 =
+= [1.9.8] - 06 Feb 2018 =
 
 *Fixed:*
 
@@ -782,20 +806,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Removed Date column from the notification workflows list;
 
-= [1.9.7] - 2018-02-01 =
+= [1.9.7] - 01 Feb 2018 =
 
 *Fixed:*
 
 * Fixed broken menu;
 
-= [1.9.6] - 2018-02-01 =
+= [1.9.6] - 01 Feb 2018 =
 
 *Fixed:*
 
 * Fixed PublishPress menu ordering;
 * Fixed last release, which changed version but didn't include all the changes;
 
-= [1.9.5] - 2018-01-31 =
+= [1.9.5] - 31 Jan 2018 =
 
 *Fixed:*
 
@@ -805,7 +829,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Removed Freemius integration and contact form;
 
-= [1.9.4] - 2018-01-25 =
+= [1.9.4] - 25 Jan 2018 =
 
 *Fixed:*
 
@@ -820,7 +844,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added a new optional receiver to the notification workflow form, "Users who selected Notify Me for the content";
 
-= [1.9.3] - 2018-01-18 =
+= [1.9.3] - 18 Jan 2018 =
 
 *Fixed:*
 
@@ -834,14 +858,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Rebranded for PublishPress;
 * Added footer to the addons page;
 
-= [1.9.2] - 2017-12-14 =
+= [1.9.2] - 14 Dec 2017 =
 
 *Fixed:*
 
 * Fixed view link for published posts in the list of posts. It was displaying "preview" instead of "view";
 * Fixed CSS loader to only load it in the admin pages;
 
-= [1.9.1] - 2017-11-10 =
+= [1.9.1] - 10 Nov 2017 =
 
 *Fixed:*
 
@@ -852,7 +876,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Updated required PHP version to 5.4;
 
-= [1.9.0] - 2017-11-09 =
+= [1.9.0] - 09 Nov 2017 =
 
 *Changed:*
 
@@ -860,7 +884,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added search box for each list field on the notification workflow form;
 * Updated the Post Type and Category filters for notification workflows. If not selected, they disable the filter and all the content would be picked;
 
-= [1.8.1] - 2017-11-01 =
+= [1.8.1] - 01 Nov 2017 =
 
 *Changed:*
 
@@ -873,7 +897,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed missed “published” status on filters in notifications if “custom status” feature is disabled;
 * Fixed PHP warning when some features are disabled;
 
-= [1.8.0] - 2017-10-26 =
+= [1.8.0] - 26 Oct 2017 =
 
 *Fixed:*
 
@@ -889,7 +913,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added a setting field to configure the "email from" information for email notifications;
 
-= [1.7.5] - 2017-10-11 =
+= [1.7.5] - 11 Oct 2017 =
 
 *Fixed:*
 
@@ -904,14 +928,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated the Twig library to v1.35.0;
 * Adjusted filters on notification workflows to only consider selected items. Before that, if no post type, category, or statuses where selected, all the items would be considered selected.
 
-= [1.7.4] - 2017-09-13 =
+= [1.7.4] - 13 Sep 2017 =
 
 *Fixed:*
 
 * Fixed the button Submit for Review which was hidden for contributors, or users who can't publish;
 * Fixed empty permalink when publishing posts, or saving new posts with empty title;
 
-= [1.7.3] - 2017-09-04 =
+= [1.7.3] - 04 Sep 2017 =
 
 *Added:*
 
@@ -930,7 +954,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Replaced the string 'Follow' to 'Notify' on the UI;
 * Removed the filter for months on the Workflows list;
 
-= [1.7.2] - 2017-08-31 =
+= [1.7.2] - 31 Aug 2017 =
 
 *Fixed:*
 
@@ -939,7 +963,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed the notifications workflows to ignore autosaves;
 * Fixed post type options in the calendar settings, selecting the Post post type by default, if nothing is selected - Displaying a warning;
 
-= [1.7.1] - 2017-08-30 =
+= [1.7.1] - 30 Aug 2017 =
 
 *Fixed:*
 
@@ -952,7 +976,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Improved default colors for custom statuses;
 
-= [1.7.0] - 2017-08-29 =
+= [1.7.0] - 29 Aug 2017 =
 
 *Added:*
 
@@ -981,7 +1005,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed the label of the setting for the notification module adjusting to the new notification workflows;
 * Removed field "Always notify the blog admin" from the notification settings. This is now set on the notification workflow;
 
-= [1.6.1] - 2017-07-27 =
+= [1.6.1] - 27 Jul 2017 =
 
 *Changed:*
 
@@ -991,7 +1015,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed the icon size for calendar
 
-= [1.6.0] - 2017-07-12 =
+= [1.6.0] - 12 Jul 2017 =
 
 *Fixed:*
 
@@ -1002,13 +1026,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Moved the Add-ons tab to a menu item;
 * Updated internal method to show post type settings fields for add-ons;
 
-= [1.5.1] - 2017-06-28 =
+= [1.5.1] - 28 Jun 2017 =
 
 *Fixed:*
 
 * Fixes required capability to see the calendar
 
-= [1.5.0] - 2017-06-27 =
+= [1.5.0] - 27 Jun 2017 =
 
 *Changed:*
 
@@ -1027,7 +1051,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed the "Click to create" on Chrome label in Firefox
 * Fixed last column popup display in Internet Explorer 11
 
-= [1.4.3] - 2017-06-21 =
+= [1.4.3] - 21 Jun 2017 =
 
 *Added:*
 
@@ -1046,19 +1070,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated "Tested up" to 4.8
 * Improved the output for unset medatada
 
-= [1.4.2] - 2017-06-06 =
+= [1.4.2] - 06 Jun 2017 =
 
 *Fixed:*
 
 * Fixed French translation. Thanks [Thierry Pasquier](https://github.com/jeau)
 
-= [1.4.1] - 2017-05-29 =
+= [1.4.1] - 29 May 2017 =
 
 *Changed:*
 
 * Added the Slack add-on as available in the Add-on tab.
 
-= [1.4.0] - 2017-05-25 =
+= [1.4.0] - 25 May 2017 =
 
 *Fixed:*
 
@@ -1070,7 +1094,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Refactor notification module allowing add-ons to use any other message system
 * Allow to customize priority for the action triggered on the status change
 
-= [1.3.3] - 2017-05-22 =
+= [1.3.3] - 22 May 2017 =
 
 *Fixed:*
 
@@ -1083,7 +1107,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Added partial pt-PT translation
 * Increased the minimum WordPress version to 4.6
 
-= [1.3.2] - 2017-05-04 =
+= [1.3.2] - 04 May 2017 =
 
 *Fixed:*
 
@@ -1091,7 +1115,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed selector for the active admin menu
 * Fixed readme.txt file with better title, tags and description
 
-= [1.3.1] - 2017-05-02 =
+= [1.3.1] - 02 May 2017 =
 
 *Fixed:*
 
@@ -1108,7 +1132,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Updated name of add-ons in the settings tab
 * Improved content from the readme file
 
-= [1.3.0] - 2017-04-27 =
+= [1.3.0] - 27 Apr 2017 =
 
 *Fixed:*
 
@@ -1128,14 +1152,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Cleaned up the metadata removing default registers for "Needs photo" and "Word Count"
 * Improved twig files removing hardcoded strings
 
-= [1.2.2] - 2017-03-16 =
+= [1.2.2] - 16 Mar 2017 =
 
 *Changed:*
 
 * Add icon to the print link on the Overview screen
 * Update the language files
 
-= [1.2.1] - 2017-03-15 =
+= [1.2.1] - 15 Mar 2017 =
 
 *Changed:*
 
@@ -1150,7 +1174,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed empty messages while deleting custom statuses, metadata and user groups
 * Fixed link to redirect after the EditFlow migration
 
-= [1.2.0] - 2017-03-15 =
+= [1.2.0] - 15 Mar 2017 =
 
 *Changed:*
 
@@ -1163,7 +1187,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Allow to create multiple types of content on the calendar
 
-= [1.1.0] - 2017-03-07 =
+= [1.1.0] - 07 Mar 2017 =
 
 *Changed:*
 
@@ -1174,13 +1198,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Refactor Story Budget to Content Overview
 * Move PublishPress menu to after Comments menu
 
-= [1.0.5] - 2017-02-16 =
+= [1.0.5] - 16 Feb 2017 =
 
 *Changed:*
 
 * Update version to trigger a new release fixing SVN issues on the last release
 
-= [1.0.4] - 2017-02-15 =
+= [1.0.4] - 15 Feb 2017 =
 
 *Changed:*
 
@@ -1197,26 +1221,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Update language strings and some links
 * Fix bug on editorial comments box in the post form
 
-= [1.0.3] - 2017-02-01 =
+= [1.0.3] - 01 Feb 2017 =
 
 *Changed:*
 
 * Update language .mo files
 
-= [1.0.2] - 2017-02-01 =
+= [1.0.2] - 01 Feb 2017 =
 
 *Changed:*
 
 * Update plugin's description
 
-= [1.0.1] - 2017-02-01 =
+= [1.0.1] - 01 Feb 2017 =
 
 *Changed:*
 
 * Update plugin's description
 * Update language strings
 
-= [1.0.0] - 2017-02-01 =
+= [1.0.0] - 01 Feb 2017 =
 
 *Changed:*
 
