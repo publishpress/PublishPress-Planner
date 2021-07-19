@@ -142,6 +142,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Fix the format of the date on the title of the post form on the calendar, #906;
 * Fixed: Fix the JS error that the form in the calendar throws if the user can edit only one post type, #907;
 * Fixed: Fix the translation for the private taxonomies: "pp_usergroup", "pp_notify_email", "pp_notify_role" and "pp_notify_user", #908;
+* Fixed: Fix the click event over the "Click to add" label;
 
 = [3.4.0] - 07 Jul 2021 =
 
