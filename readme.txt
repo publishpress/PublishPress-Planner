@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.4.1] - 15 Jul 2021 =
+= [3.4.1] - 19 Jul 2021 =
 
 * Fixed: Fix the visual feedback for the calendar items drag and drop, #881;
 * Fixed: Fix the publishing time field in the calendar form to display the default publishing date, #882;
