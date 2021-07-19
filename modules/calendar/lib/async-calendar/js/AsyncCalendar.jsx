@@ -312,9 +312,6 @@ export default function AsyncCalendar(props) {
                 lastHoveredDate = null;
             })
             .on('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-
                 const cell = getCellFromChild(e.target);
 
                 if (cell) {
