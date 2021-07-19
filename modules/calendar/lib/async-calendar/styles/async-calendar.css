@@ -334,9 +334,9 @@
   content: "\f113";
   font-size: 17px;
   font-weight: bold;
-  position: absolute;
-  left: 50%;
-  top: 4px;
+  float: right;
+  margin-top: 4px;
+  margin-right: 4px;
   animation: publishpress-spinner-animation 0.6s infinite reverse;
 }
 .publishpress-calendar .publishpress-calendar-navigation-bar {
