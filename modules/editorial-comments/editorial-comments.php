@@ -298,20 +298,15 @@ if (!class_exists('PP_Editorial_Comments')) {
          */
         public function the_comment($theComment, $args, $depth)
         {
-            global $current_user, $userdata, $comment;
+            global $comment;
 
             // Get current user
-            wp_get_current_user();
+            $user = wp_get_current_user();
 
             // Update the global var for the comment.
             // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
             $comment = $theComment;
             // phpcs:enable
-
-            // Deleting editorial comments is not enabled for now for the sake of transparency. However, we could consider
-            // EF comment edits (with history, if possible). P2 already allows for edits without history, so even that might work.
-            // Pivotal ticket: https://www.pivotaltracker.com/story/show/18483757
-            //$delete_url = esc_url(wp_nonce_url("comment.php?action=deletecomment&p=$comment->comment_post_ID&c=$comment->comment_ID", "delete-comment_$comment->comment_ID"));
 
             $actions = [];
 
@@ -323,6 +318,23 @@ if (!class_exists('PP_Editorial_Comments')) {
                         'publishpress'
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
+                if (
+                    ($user->ID === $theComment->author && current_user_can('pp_delete_editorial_comment')
+                        || current_user_can('pp_delete_others_editorial_comment')
+                    )
+                ) {
+                    $delete_url = esc_url(
+                        wp_nonce_url(
+                            "comment.php?action=deletecomment&p=$comment->comment_post_ID&c=$comment->comment_ID",
+                            "delete-comment_$comment->comment_ID"
+                        )
+                    );
+                    $actions['delete'] = '<a href="' . $delete_url . '">' . esc_html__(
+                            'Delete',
+                            'publishpress'
+                        ) . '</a>';
+                }
+
                 $i = 0;
                 foreach ($actions as $action => $link) {
                     ++$i;
@@ -333,7 +345,9 @@ if (!class_exists('PP_Editorial_Comments')) {
 
                     $actions_string_escaped .= "&nbsp;<span class='". esc_attr($action) . "'>$link</span>";
                 }
-            } ?>
+            }
+
+            ?>
 
             <li id="comment-<?php echo esc_attr($theComment->comment_ID); ?>" <?php comment_class(
                 [
