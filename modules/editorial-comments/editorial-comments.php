@@ -642,10 +642,10 @@ if (!class_exists('PP_Editorial_Comments')) {
                 // Prepare response
 
                 $theComment = get_comment($comment_id);
-                var_dump($theComment);
+
                 $response = [
                     'id'     => $comment_id,
-                    'content'   => $comment_content,
+                    'content'   => apply_filters('comment_text', $theComment->comment_content, $theComment),
                     'action' => 'edit',
                 ];
 
