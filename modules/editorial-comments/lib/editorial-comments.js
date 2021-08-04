@@ -2,7 +2,7 @@ jQuery(function ($) {
   editorialCommentReply.init();
 
   // Check if certain hash flag set and take action
-  if (location.hash == '#editorialcomments/add') {
+  if (location.hash === '#editorialcomments/add') {
     editorialCommentReply.open();
   } else if (location.hash.search(/#editorialcomments\/reply/) > -1) {
     var reply_id = location.hash.substring(location.hash.lastIndexOf('/') + 1);
@@ -95,7 +95,6 @@ editorialCommentReply = {
    */
   send: function (reply) {
     var post = {};
-    var containter_id = '#pp-replyrow';
 
     jQuery('#pp-replysubmit .error').html('').hide();
 
@@ -195,4 +194,97 @@ editorialCommentReply = {
       jQuery('#pp-replysubmit .error').html(er).show();
     }
   }
+};
+
+editorialCommentEdit = {
+  $: jQuery,
+
+  init: function () {},
+
+  close: function () {
+    var $editRow = this.$('#pp-editrow');
+
+    var id = $editRow.data('id');
+    this.$('#comment-' + id + ' .comment-content').show();
+
+    $editRow.remove();
+  },
+
+  open: function (id) {
+    // Close any open reply boxes
+    this.close();
+
+    // Check if reply or new comment
+    if (!id) {
+      return false;
+    }
+
+    var $rowActions = this.$('#comment-' + id + ' .post-comment-wrap .row-actions');
+    var $content    = this.$('#comment-' + id + ' .comment-content');
+
+    var $editBox = this.$('<div id="pp-editrow" data-id="' + id + '"><div id="pp-editcontainer"></div></div>');
+    $rowActions.before($editBox);
+
+    var $textArea = this.$('<textarea id="pp-editcontent" name="editcontent" cols="40" rows="5" spellcheck="false">');
+    var $editContainer = this.$('#pp-editcontainer');
+    $editContainer.append($textArea);
+    $textArea.val($content.text());
+    $content.hide();
+
+    var $buttonSave = this.$('<a class="button pp-editsave button-primary alignright" href="#pp-editrow">' + wp.i18n.__('Save', 'publishpress') + '</a>');
+    var $buttonCancel = this.$('<a class="button pp-editcancel alignright" href="#pp-editrow">' + wp.i18n.__('Cancel', 'publishpress') + '</a>');
+    $editContainer.append($buttonSave);
+    $editContainer.append($buttonCancel);
+
+    $buttonCancel.on('click', this.close.bind(this));
+    $buttonSave.on('click', this.send.bind(this));
+
+    return false;
+  },
+
+  send: function (reply) {
+    var post = {};
+    var self = this;
+
+    this.$('.pp-error').remove();
+
+    var $li = this.$(this.$('#pp-editcontent').parents('li')[0]);
+
+    // Validation: check to see if comment entered
+    post.content = this.$.trim(this.$('#pp-editcontent').val());
+    if (!post.content) {
+      var $errorLine = this.$('<div class="pp-error">').text('Please enter a comment');
+      this.$('#pp-editcontainer').append($errorLine);
+      return;
+    }
+
+    this.$('#pp-comment_loading').remove();
+    var $loading = this.$('<img alt="' + wp.i18n.__('Sending content...', 'publishpress') + '" src="' + publishpressEditorialCommentsParams.loadingImgSrc + '" class="alignright" id="pp-comment_loading"/>');
+    this.$('#pp-editcontainer').append($loading);
+
+    // Prepare data
+    post.action = 'publishpress_ajax_edit_comment';
+    post._nonce = this.$('#pp_comment_nonce').val();
+    post.comment_id = $li.data('id');
+    post.post_id = $li.data('post-id');
+
+    // Send the request
+    this.$.ajax({
+      type: 'POST',
+      url: (ajaxurl) ? ajaxurl : wpListL10n.url,
+      data: post,
+      success: function (x) {
+        self.$('#comment-' + post.comment_id + ' .comment-content').html(x.content);
+        self.close();
+      },
+      error: function (r) {
+        var $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+        self.$('#pp-editcontainer').append($errorLine);
+        self.$('#pp-comment_loading').remove();
+      }
+    });
+
+
+    return false;
+  },
 };

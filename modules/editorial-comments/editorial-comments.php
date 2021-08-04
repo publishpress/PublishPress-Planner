@@ -88,6 +88,7 @@ if (!class_exists('PP_Editorial_Comments')) {
             add_action('admin_init', [$this, 'register_settings']);
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
             add_action('wp_ajax_publishpress_ajax_insert_comment', [$this, 'ajax_insert_comment']);
+            add_action('wp_ajax_publishpress_ajax_edit_comment', [$this, 'ajax_edit_comment']);
 
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
@@ -146,6 +147,14 @@ if (!class_exists('PP_Editorial_Comments')) {
                 false,
                 PUBLISHPRESS_VERSION,
                 'all'
+            );
+
+            wp_localize_script(
+                'publishpress-editorial-comments',
+                'publishpressEditorialCommentsParams',
+                [
+                    'loadingImgSrc' => esc_url(admin_url('/images/wpspin_light.gif')),
+                ]
             );
 
             $thread_comments = (int)get_option('thread_comments'); ?>
@@ -319,6 +328,17 @@ if (!class_exists('PP_Editorial_Comments')) {
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
                 if (
+                    ($user->user_nicename == $theComment->comment_author && current_user_can('pp_edit_editorial_comment')
+                        || current_user_can('pp_edit_others_editorial_comment')
+                    )
+                ) {
+                    $actions['quickedit'] = '<a onclick="editorialCommentEdit.open(\'' . (int)$theComment->comment_ID . '\');" href="javascript:void(0);">' . esc_html__(
+                            'Edit',
+                            'publishpress'
+                        ) . '</a>';
+                }
+
+                if (
                     ($user->ID === $theComment->author && current_user_can('pp_delete_editorial_comment')
                         || current_user_can('pp_delete_others_editorial_comment')
                     )
@@ -338,6 +358,11 @@ if (!class_exists('PP_Editorial_Comments')) {
                 $i = 0;
                 foreach ($actions as $action => $link) {
                     ++$i;
+
+                    if ($i > 1) {
+                        $actions_string_escaped .= ' | ';
+                    }
+
                     // Reply and quickedit need a hide-if-no-js span
                     if ('reply' == $action || 'quickedit' == $action) {
                         $action .= ' hide-if-no-js';
@@ -354,7 +379,8 @@ if (!class_exists('PP_Editorial_Comments')) {
                     'comment-item',
                     wp_get_comment_status($theComment->comment_ID),
                 ]
-            ); ?>>
+            ); ?> data-parent="<?php echo $theComment->comment_parent; ?>" data-id="<?php echo $theComment->comment_ID; ?>" data-post-id="<?php echo $theComment->comment_post_ID; ?>">
+
 
                 <?php echo get_avatar($theComment->comment_author_email, 50); ?>
 
@@ -509,6 +535,129 @@ if (!class_exists('PP_Editorial_Comments')) {
                         'There was a problem of some sort. Try again or contact your administrator.',
                         'publishpress'
                     )
+                );
+            }
+        }
+
+        /**
+         * Handles AJAX edit comment
+         */
+        public function ajax_edit_comment()
+        {
+            global $current_user;
+
+            // Verify nonce
+            if (!isset($_POST['_nonce'])
+                || !wp_verify_nonce($_POST['_nonce'], 'comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        "Nonce check failed. Please ensure you're supposed to be editing editorial comments.",
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            if (!isset($_POST['comment_id']) || !isset($_POST['content']) || !isset($_POST['post_id'])) {
+                wp_die(esc_html__('Invalid comment data', 'publishpress'),
+                       '',
+                       ['response' => 400]);
+            }
+
+            wp_get_current_user();
+
+            $comment_id      = absint($_POST['comment_id']);
+            $post_id = absint($_POST['post_id']);
+
+            // Only allow the comment if user can edit post
+            if (!current_user_can('edit_post', $post_id)) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to edit editorial comments. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            $theComment = get_comment($comment_id);
+
+            if (
+                !($current_user->user_nicename == $theComment->comment_author && current_user_can('pp_edit_editorial_comment'))
+                && !current_user_can('pp_edit_others_editorial_comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to edit this editorial comment. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            // Verify that comment was actually entered
+            $comment_content = esc_html(trim($_POST['content']));
+            if (!$comment_content) {
+                wp_die(esc_html__("Please enter a comment.", 'publishpress'),
+                       '',
+                       ['response' => 400]);
+            }
+
+            // Check that we have a post_id and user logged in
+            if ($post_id && $comment_id && $current_user) {
+
+                $comment_content = wp_kses(
+                    $comment_content,
+                    [
+                        'a'          => ['href' => [], 'title' => []],
+                        'b'          => [],
+                        'i'          => [],
+                        'strong'     => [],
+                        'em'         => [],
+                        'u'          => [],
+                        'del'        => [],
+                        'blockquote' => [],
+                        'sub'        => [],
+                        'sup'        => [],
+                    ]
+                );
+
+                $data = [
+                    'comment_ID' => (int)$comment_id,
+                    'comment_content' => $comment_content,
+                ];
+
+                $data = apply_filters('pp_pre_edit_editorial_comment', $data);
+
+                $status = wp_update_comment($data);
+
+                if ($status == 1) {
+                    do_action('pp_post_edit_editorial_comment', $comment_id);
+                }
+
+                // Prepare response
+
+                $theComment = get_comment($comment_id);
+                var_dump($theComment);
+                $response = [
+                    'id'     => $comment_id,
+                    'content'   => $comment_content,
+                    'action' => 'edit',
+                ];
+
+                wp_send_json($response);
+            } else {
+                wp_die(
+                    esc_html__(
+                        'There was a problem of some sort. Try again or contact your administrator.',
+                        'publishpress'
+                    ),
+                '',
+                    ['response' => 403]
                 );
             }
         }
