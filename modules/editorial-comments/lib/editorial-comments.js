@@ -237,10 +237,13 @@ editorialCommentEdit = {
     $textArea.val($content.text());
     $content.hide();
 
+    var $editSubmit = this.$('<div id="pp-editsubmit">');
+    $editContainer.append($editSubmit);
+
     var $buttonSave = this.$('<a class="button pp-editsave button-primary alignright" href="#pp-editrow">' + wp.i18n.__('Save', 'publishpress') + '</a>');
     var $buttonCancel = this.$('<a class="button pp-editcancel alignright" href="#pp-editrow">' + wp.i18n.__('Cancel', 'publishpress') + '</a>');
-    $editContainer.append($buttonSave);
-    $editContainer.append($buttonCancel);
+    $editSubmit.append($buttonSave);
+    $editSubmit.append($buttonCancel);
 
     $buttonCancel.on('click', this.close.bind(this));
     $buttonSave.on('click', this.send.bind(this));

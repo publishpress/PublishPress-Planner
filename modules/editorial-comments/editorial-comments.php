@@ -279,7 +279,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     <textarea id="pp-replycontent" name="replycontent" cols="40" rows="5"></textarea>
                 </div>
 
-                <p id="pp-replysubmit">
+                <div id="pp-replysubmit">
                     <a class="button pp-replysave button-primary alignright" href="#comments-form">
                         <span id="pp-replybtn"><?php _e('Add Comment', 'publishpress') ?></span>
                     </a>
@@ -289,7 +289,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                          class="alignright" style="display: none;" id="pp-comment_loading"/>
                     <br class="clear" style="margin-bottom:35px;"/>
                     <span style="display: none;" class="error"></span>
-                </p>
+                </div>
 
                 <input type="hidden" value="" id="pp-comment_parent" name="pp-comment_parent"/>
                 <input type="hidden" name="pp-post_id" id="pp-post_id" value="<?php echo esc_attr($post->ID); ?>"/>
@@ -397,10 +397,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     </h5>
 
                     <div class="comment-content"><?php comment_text(); ?></div>
-                    <?php // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                    <p class="row-actions"><?php echo $actions_string_escaped; ?></p>
-                    <?php // phpcs:enable ?>
-
+                    <div class="row-actions"><?php echo $actions_string_escaped; ?></div>
                 </div>
             </li>
             <?php
