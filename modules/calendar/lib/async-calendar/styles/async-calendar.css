@@ -151,6 +151,12 @@
 .publishpress-calendar-popup table th {
   font-weight: bold;
 }
+.publishpress-calendar-popup table td {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  padding-right: 35px;
+}
 .publishpress-calendar-popup .publishpress-calendar-popup-title {
   font-weight: bold;
   width: 100%;
