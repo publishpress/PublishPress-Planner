@@ -63,6 +63,8 @@ editorialCommentReply = {
    * @id = comment id
    */
   open: function (id) {
+    editorialCommentEdit.close();
+
     var parent;
 
     // Close any open reply boxes
@@ -130,6 +132,8 @@ editorialCommentReply = {
   },
 
   show: function (xml) {
+    editorialCommentEdit.close();
+
     var response, comment, supplemental, id, bg;
 
     // Didn't pass validation, so let's throw an error
@@ -211,6 +215,8 @@ editorialCommentEdit = {
   },
 
   open: function (id) {
+    editorialCommentReply.revert();
+
     // Close any open reply boxes
     this.close();
 
