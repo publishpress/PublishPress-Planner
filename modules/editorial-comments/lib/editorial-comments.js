@@ -287,7 +287,7 @@ editorialCommentEdit = {
         self.close();
       },
       error: function (r) {
-        var $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+        let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
         self.$('#pp-editcontainer').append($errorLine);
         self.$('#pp-comment_loading').remove();
       }
@@ -296,4 +296,60 @@ editorialCommentEdit = {
 
     return false;
   },
+};
+
+editorialCommentDelete = {
+  $: jQuery,
+
+  init: function () {
+  },
+
+  close: function() {
+    let $editRow = this.$('#pp-editrow');
+    $editRow.remove();
+  },
+
+  open: function (id) {
+    const hasChildComments = this.$(`#pp-comments [data-parent="${id}"]`).length > 0;
+
+    this.close();
+
+    if (hasChildComments) {
+      alert(wp.i18n.__('This comment can\'t be deleted because it has one or more replies. Before deleting it make sure to delete all the replies first.', 'publishpress'));
+      return;
+    }
+
+    if (confirm(wp.i18n.__('Are you sure you want to delete this comment?', 'publishpress'))) {
+      var self = this;
+
+      var $rowActions = this.$('#comment-' + id + ' .post-comment-wrap .row-actions');
+      var $editBox = this.$('<div id="pp-editrow" data-id="' + id + '"><div id="pp-editcontainer"></div></div>');
+      $rowActions.before($editBox);
+
+      // Prepare data
+      let data = {};
+
+      data.action = 'publishpress_ajax_delete_comment';
+      data._nonce = this.$('#pp_comment_nonce').val();
+      data.comment_id = id;
+
+      // Send the request
+      this.$.ajax({
+        type: 'POST',
+        url: (ajaxurl) ? ajaxurl : wpListL10n.url,
+        data: data,
+        success: function (x) {
+          self.$('#comment-' + id).remove();
+
+          editorialCommentEdit.close();
+          editorialCommentReply.revert();
+        },
+        error: function (r) {
+          let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+          self.$('#pp-editcontainer').append($errorLine);
+          self.$('#pp-comment_loading').remove();
+        }
+      });
+    }
+  }
 };

@@ -56,7 +56,7 @@
   margin-left: 10px; }
 
 #pp-editcontainer .pp-error {
-  width: 100%;
+  width: calc(100% - 70px);
   margin-left: 70px;
   padding: 10px;
   background: #ffdddd;
