@@ -120,6 +120,12 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.5.0] - UNRELEASED =
+
+* Added: Add the option to edit and delete editorial comments, #277;
+* Added: Add new capabilities to control who can edit or delete editorial comments: pp_delete_editorial_comment, pp_delete_others_editorial_comment, pp_edit_editorial_comment, pp_edit_others_editorial_comment, #277;
+* Fixed: Fix long text on the posts attributes in the calendar popup, #917;
+
 = [3.4.1] - 19 Jul 2021 =
 
 * Fixed: Fix the visual feedback for the calendar items drag and drop, #881;
