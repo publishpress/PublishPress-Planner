@@ -1,35 +1,29 @@
 /** Comments **/
-
 #pp-comments li:target {
   border: 1px solid #ffd400 !important;
   border-left: 5px solid #ffd400 !important;
   border-right: 5px solid #ffd400 !important;
-  background: #f7eaff;
-}
+  background: #f7eaff; }
 
 #pp-comments li:target:before {
   display: block;
   content: " ";
   margin-top: -75px;
   height: 75px;
-  visibility: hidden;
-}
+  visibility: hidden; }
 
 #pp-comments_wrapper {
-  padding: 0;
-}
+  padding: 0; }
 
 #publishpress-editorial-comments h3 {
   padding-left: 25px;
   background-image: url(editorial_comments_s16.png);
   background-repeat: no-repeat;
-  background-position: 5px 5px;
-}
+  background-position: 5px 5px; }
 
 #pp-comments {
   margin-bottom: 10px;
-  background: #eee;
-}
+  background: #eee; }
 
 #pp-comments li {
   padding: 5px;
@@ -37,27 +31,36 @@
   border-left: 5px solid #e5e5e5;
   border-right: 5px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
-  background: #fff;
-}
+  background: #fff; }
 
-#pp-comments li:hover p.row-actions {
-  visibility: visible;
-}
+#pp-comments li:hover .row-actions {
+  visibility: visible; }
 
-#pp-comments li p.row-actions {
+#pp-comments li .row-actions {
   text-align: right;
-}
+  margin: 4px 0;
+  display: block;
+  width: 100%;
+  height: 20px; }
 
 #pp-comments ul.children {
   margin-left: 30px;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 #pp-comments ul.children li {
   /*background: #EAF2FA;*/
   border-left: 5px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-}
+  border-bottom: 1px solid #e5e5e5; }
+
+#pp-comment_loading {
+  margin-left: 10px; }
+
+#pp-editcontainer .pp-error {
+  width: calc(100% - 70px);
+  margin-left: 70px;
+  padding: 10px;
+  background: #ffdddd;
+  border: 1px solid #f7bebe; }
 
 /*
 #pp-comments .even { background: none; }
@@ -68,109 +71,97 @@
   float: left;
   margin-left: 2px;
   margin-right: 15px;
-  margin-top: 0;
-}
+  margin-top: 0; }
 
 #pp-comments h5 {
   font-style: normal;
   font-size: 1em;
   line-height: 1.1em;
   margin-top: 10px;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 #pp-comments h5 span.meta {
   color: #666666;
   font-size: 0.85em;
   margin: 0 0 1.5em;
-  font-style: normal;
-}
+  font-style: normal; }
 
 #pp-comments .comment-content {
-  margin-left: 67px;
-}
+  margin-left: 67px; }
 
 #pp-comments .comment-content p {
   color: #555555;
   font-size: 1em;
   line-height: 1.4em;
-  margin: 0.7em 0;
-}
+  margin: 0.7em 0; }
 
 #pp-replyrow #pp-replycontent {
   width: 100%;
-  height: 100px;
-}
+  height: 150px;
+  padding: 5px; }
 
+#pp-editrow #pp-editcontent {
+  box-sizing: border-box;
+  width: calc(100% - 70px);
+  height: 150px;
+  margin-left: 70px;
+  padding: 5px; }
+
+#pp-editrow #pp-editsubmit,
 #pp-replyrow #pp-replysubmit {
-  margin: 6px 0;
-}
+  margin: 6px 0; }
 
+#pp-editrow #pp-editsubmit *,
 #pp-replyrow #pp-replysubmit * {
-  margin-left: 3px;
-}
+  margin-left: 3px; }
 
+#pp-editrow #pp-editsubmit .error,
 #pp-replyrow #pp-replysubmit .error {
   margin: 6px 6px 0 0;
   line-height: 1.2em;
-  padding: 4px 10px;
-}
+  padding: 4px 10px; }
+
+#pp-editrow #pp-editsubmit {
+  width: 100%;
+  height: 40px; }
 
 .pp-comment {
   font-size: 14px;
-  line-height: 18px;
-}
+  line-height: 18px; }
 
 .pp-comment-meta {
   margin-bottom: 5px;
   margin-top: 5px;
   float: none;
-  text-align: right;
-}
+  text-align: right; }
 
 #pp-comment-rbutton {
   margin-top: 10px;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 /* Gutenberg support */
 body.gutenberg-editor-page #pp-comments li {
   border-left: none;
   border-right: none;
   padding: 0 4px 0 0;
-  margin-bottom: 5px;
-}
-
+  margin-bottom: 5px; }
 body.gutenberg-editor-page #pp-comments img.avatar {
   width: 30px;
   margin-left: 0;
-  margin-right: 6px;
-}
-
+  margin-right: 6px; }
 body.gutenberg-editor-page #pp-comments h5 {
   margin-top: 1px;
-  margin-bottom: 4px;
-}
-
+  margin-bottom: 4px; }
 body.gutenberg-editor-page #pp-comments ul.children {
   margin-left: 14px;
-  margin-bottom: 7px;
-}
-
+  margin-bottom: 7px; }
 body.gutenberg-editor-page #pp-comments .comment-content {
-  margin-left: 0;
-}
-
+  margin-left: 0; }
 body.gutenberg-editor-page #pp-comments {
-  background: none;
-}
-
+  background: none; }
 body.gutenberg-editor-page #pp-comments .comment-content p {
-  margin: 0;
-}
-
-body.gutenberg-editor-page #pp-comments li p.row-actions {
-  margin: 4px 0;
-}
+  margin: 0; }
+body.gutenberg-editor-page #pp-comments li .row-actions {
+  margin: 4px 0; }
 
 /*# sourceMappingURL=editorial-comments.css.map */

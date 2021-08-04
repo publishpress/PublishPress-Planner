@@ -136,6 +136,10 @@ if (!class_exists('publishpress')) {
                 'pp_view_content_overview',
                 'edit_post_subscriptions',
                 'pp_set_notification_channel',
+                'pp_delete_editorial_comment',
+                'pp_delete_others_editorial_comment',
+                'pp_edit_editorial_comment',
+                'pp_edit_others_editorial_comment',
             ];
 
             $roles = [
@@ -1138,6 +1142,10 @@ if (!class_exists('publishpress')) {
             $newCapabilities = [
                 'pp_edit_editorial_metadata',
                 'pp_view_editorial_metadata',
+                'pp_delete_editorial_comment',
+                'pp_delete_others_editorial_comment',
+                'pp_edit_editorial_comment',
+                'pp_edit_others_editorial_comment',
             ];
 
             foreach ($newCapabilities as $capability) {
