@@ -18,3 +18,4 @@ builder.yml
 !tests/_support/.gitkeep
 tests/_support/*
 .php_cs.cache
+.sass-cache/*

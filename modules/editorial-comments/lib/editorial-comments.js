@@ -2,7 +2,7 @@ jQuery(function ($) {
   editorialCommentReply.init();
 
   // Check if certain hash flag set and take action
-  if (location.hash == '#editorialcomments/add') {
+  if (location.hash === '#editorialcomments/add') {
     editorialCommentReply.open();
   } else if (location.hash.search(/#editorialcomments\/reply/) > -1) {
     var reply_id = location.hash.substring(location.hash.lastIndexOf('/') + 1);
@@ -63,6 +63,8 @@ editorialCommentReply = {
    * @id = comment id
    */
   open: function (id) {
+    editorialCommentEdit.close();
+
     var parent;
 
     // Close any open reply boxes
@@ -95,7 +97,6 @@ editorialCommentReply = {
    */
   send: function (reply) {
     var post = {};
-    var containter_id = '#pp-replyrow';
 
     jQuery('#pp-replysubmit .error').html('').hide();
 
@@ -131,6 +132,8 @@ editorialCommentReply = {
   },
 
   show: function (xml) {
+    editorialCommentEdit.close();
+
     var response, comment, supplemental, id, bg;
 
     // Didn't pass validation, so let's throw an error
@@ -193,6 +196,160 @@ editorialCommentReply = {
       er = r.responseText.replace(/<.[^<>]*?>/g, '');
 
       jQuery('#pp-replysubmit .error').html(er).show();
+    }
+  }
+};
+
+editorialCommentEdit = {
+  $: jQuery,
+
+  init: function () {},
+
+  close: function () {
+    var $editRow = this.$('#pp-editrow');
+
+    var id = $editRow.data('id');
+    this.$('#comment-' + id + ' .comment-content').show();
+
+    $editRow.remove();
+  },
+
+  open: function (id) {
+    editorialCommentReply.revert();
+
+    // Close any open reply boxes
+    this.close();
+
+    // Check if reply or new comment
+    if (!id) {
+      return false;
+    }
+
+    var $rowActions = this.$('#comment-' + id + ' .post-comment-wrap .row-actions');
+    var $content    = this.$('#comment-' + id + ' .comment-content');
+
+    var $editBox = this.$('<div id="pp-editrow" data-id="' + id + '"><div id="pp-editcontainer"></div></div>');
+    $rowActions.before($editBox);
+
+    var $textArea = this.$('<textarea id="pp-editcontent" name="editcontent" cols="40" rows="5" spellcheck="false">');
+    var $editContainer = this.$('#pp-editcontainer');
+    $editContainer.append($textArea);
+    $textArea.val($content.text());
+    $content.hide();
+
+    var $editSubmit = this.$('<div id="pp-editsubmit">');
+    $editContainer.append($editSubmit);
+
+    var $buttonSave = this.$('<a class="button pp-editsave button-primary alignright" href="#pp-editrow">' + wp.i18n.__('Save', 'publishpress') + '</a>');
+    var $buttonCancel = this.$('<a class="button pp-editcancel alignright" href="#pp-editrow">' + wp.i18n.__('Cancel', 'publishpress') + '</a>');
+    $editSubmit.append($buttonSave);
+    $editSubmit.append($buttonCancel);
+
+    $buttonCancel.on('click', this.close.bind(this));
+    $buttonSave.on('click', this.send.bind(this));
+
+    return false;
+  },
+
+  send: function (reply) {
+    var post = {};
+    var self = this;
+
+    this.$('.pp-error').remove();
+
+    var $li = this.$(this.$('#pp-editcontent').parents('li')[0]);
+
+    // Validation: check to see if comment entered
+    post.content = this.$.trim(this.$('#pp-editcontent').val());
+    if (!post.content) {
+      var $errorLine = this.$('<div class="pp-error">').text('Please enter a comment');
+      this.$('#pp-editcontainer').append($errorLine);
+      return;
+    }
+
+    this.$('#pp-comment_loading').remove();
+    var $loading = this.$('<img alt="' + wp.i18n.__('Sending content...', 'publishpress') + '" src="' + publishpressEditorialCommentsParams.loadingImgSrc + '" class="alignright" id="pp-comment_loading"/>');
+    this.$('#pp-editcontainer').append($loading);
+
+    // Prepare data
+    post.action = 'publishpress_ajax_edit_comment';
+    post._nonce = this.$('#pp_comment_nonce').val();
+    post.comment_id = $li.data('id');
+    post.post_id = $li.data('post-id');
+
+    // Send the request
+    this.$.ajax({
+      type: 'POST',
+      url: (ajaxurl) ? ajaxurl : wpListL10n.url,
+      data: post,
+      success: function (x) {
+        self.$('#comment-' + post.comment_id + ' .comment-content').html(x.content);
+        self.close();
+      },
+      error: function (r) {
+        let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+        self.$('#pp-editcontainer').append($errorLine);
+        self.$('#pp-comment_loading').remove();
+      }
+    });
+
+
+    return false;
+  },
+};
+
+editorialCommentDelete = {
+  $: jQuery,
+
+  init: function () {
+  },
+
+  close: function() {
+    let $editRow = this.$('#pp-editrow');
+    $editRow.remove();
+  },
+
+  open: function (id) {
+    const hasChildComments = this.$(`#pp-comments [data-parent="${id}"]`).length > 0;
+
+    this.close();
+
+    if (hasChildComments) {
+      alert(wp.i18n.__('This comment can\'t be deleted because it has one or more replies. Before deleting it make sure to delete all the replies first.', 'publishpress'));
+      return;
+    }
+
+    if (confirm(wp.i18n.__('Are you sure you want to delete this comment?', 'publishpress'))) {
+      var self = this;
+
+      var $rowActions = this.$('#comment-' + id + ' .post-comment-wrap .row-actions');
+      var $editBox = this.$('<div id="pp-editrow" data-id="' + id + '"><div id="pp-editcontainer"></div></div>');
+      $rowActions.before($editBox);
+
+      // Prepare data
+      let data = {};
+
+      data.action = 'publishpress_ajax_delete_comment';
+      data._nonce = this.$('#pp_comment_nonce').val();
+      data.comment_id = id;
+
+      // Send the request
+      this.$.ajax({
+        type: 'POST',
+        url: (ajaxurl) ? ajaxurl : wpListL10n.url,
+        data: data,
+        success: function (x) {
+          self.$('#comment-' + id).remove();
+
+          editorialCommentEdit.close();
+          editorialCommentReply.revert();
+        },
+        error: function (r) {
+          let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+          self.$('#pp-editcontainer').append($errorLine);
+          self.$('#pp-comment_loading').remove();
+        }
+      });
     }
   }
 };

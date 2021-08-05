@@ -88,6 +88,8 @@ if (!class_exists('PP_Editorial_Comments')) {
             add_action('admin_init', [$this, 'register_settings']);
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
             add_action('wp_ajax_publishpress_ajax_insert_comment', [$this, 'ajax_insert_comment']);
+            add_action('wp_ajax_publishpress_ajax_edit_comment', [$this, 'ajax_edit_comment']);
+            add_action('wp_ajax_publishpress_ajax_delete_comment', [$this, 'ajax_delete_comment']);
 
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
@@ -146,6 +148,14 @@ if (!class_exists('PP_Editorial_Comments')) {
                 false,
                 PUBLISHPRESS_VERSION,
                 'all'
+            );
+
+            wp_localize_script(
+                'publishpress-editorial-comments',
+                'publishpressEditorialCommentsParams',
+                [
+                    'loadingImgSrc' => esc_url(admin_url('/images/wpspin_light.gif')),
+                ]
             );
 
             $thread_comments = (int)get_option('thread_comments'); ?>
@@ -270,7 +280,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     <textarea id="pp-replycontent" name="replycontent" cols="40" rows="5"></textarea>
                 </div>
 
-                <p id="pp-replysubmit">
+                <div id="pp-replysubmit">
                     <a class="button pp-replysave button-primary alignright" href="#comments-form">
                         <span id="pp-replybtn"><?php _e('Add Comment', 'publishpress') ?></span>
                     </a>
@@ -280,7 +290,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                          class="alignright" style="display: none;" id="pp-comment_loading"/>
                     <br class="clear" style="margin-bottom:35px;"/>
                     <span style="display: none;" class="error"></span>
-                </p>
+                </div>
 
                 <input type="hidden" value="" id="pp-comment_parent" name="pp-comment_parent"/>
                 <input type="hidden" name="pp-post_id" id="pp-post_id" value="<?php echo esc_attr($post->ID); ?>"/>
@@ -298,20 +308,15 @@ if (!class_exists('PP_Editorial_Comments')) {
          */
         public function the_comment($theComment, $args, $depth)
         {
-            global $current_user, $userdata, $comment;
+            global $comment;
 
             // Get current user
-            wp_get_current_user();
+            $user = wp_get_current_user();
 
             // Update the global var for the comment.
             // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
             $comment = $theComment;
             // phpcs:enable
-
-            // Deleting editorial comments is not enabled for now for the sake of transparency. However, we could consider
-            // EF comment edits (with history, if possible). P2 already allows for edits without history, so even that might work.
-            // Pivotal ticket: https://www.pivotaltracker.com/story/show/18483757
-            //$delete_url = esc_url(wp_nonce_url("comment.php?action=deletecomment&p=$comment->comment_post_ID&c=$comment->comment_ID", "delete-comment_$comment->comment_ID"));
 
             $actions = [];
 
@@ -323,24 +328,51 @@ if (!class_exists('PP_Editorial_Comments')) {
                         'publishpress'
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
+                if (
+                    ($user->user_nicename == $theComment->comment_author && current_user_can('pp_edit_editorial_comment')
+                        || current_user_can('pp_edit_others_editorial_comment')
+                    )
+                ) {
+                    $actions['quickedit'] = '<a onclick="editorialCommentEdit.open(\'' . (int)$theComment->comment_ID . '\');" href="javascript:void(0);">' . esc_html__(
+                            'Edit',
+                            'publishpress'
+                        ) . '</a>';
+                }
+
+                if (
+                    ($user->ID === $theComment->author && current_user_can('pp_delete_editorial_comment')
+                        || current_user_can('pp_delete_others_editorial_comment')
+                    )
+                ) {
+                    $actions['delete'] = '<a onclick="editorialCommentDelete.open(\'' . (int)$theComment->comment_ID . '\');" href="javascript:void(0);">' . esc_html__(
+                            'Delete',
+                            'publishpress'
+                        ) . '</a>';
+                }
+
                 $i = 0;
                 foreach ($actions as $action => $link) {
                     ++$i;
-                    // Reply and quickedit need a hide-if-no-js span
-                    if ('reply' == $action || 'quickedit' == $action) {
-                        $action .= ' hide-if-no-js';
+
+                    if ($i > 1) {
+                        $actions_string_escaped .= ' | ';
                     }
+
+                    $action .= ' hide-if-no-js';
 
                     $actions_string_escaped .= "&nbsp;<span class='". esc_attr($action) . "'>$link</span>";
                 }
-            } ?>
+            }
+
+            ?>
 
             <li id="comment-<?php echo esc_attr($theComment->comment_ID); ?>" <?php comment_class(
                 [
                     'comment-item',
                     wp_get_comment_status($theComment->comment_ID),
                 ]
-            ); ?>>
+            ); ?> data-parent="<?php echo $theComment->comment_parent; ?>" data-id="<?php echo $theComment->comment_ID; ?>" data-post-id="<?php echo $theComment->comment_post_ID; ?>">
+
 
                 <?php echo get_avatar($theComment->comment_author_email, 50); ?>
 
@@ -357,10 +389,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                     </h5>
 
                     <div class="comment-content"><?php comment_text(); ?></div>
-                    <?php // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                    <p class="row-actions"><?php echo $actions_string_escaped; ?></p>
-                    <?php // phpcs:enable ?>
-
+                    <div class="row-actions"><?php echo $actions_string_escaped; ?></div>
                 </div>
             </li>
             <?php
@@ -495,6 +524,235 @@ if (!class_exists('PP_Editorial_Comments')) {
                         'There was a problem of some sort. Try again or contact your administrator.',
                         'publishpress'
                     )
+                );
+            }
+        }
+
+        /**
+         * Handles AJAX edit comment
+         */
+        public function ajax_edit_comment()
+        {
+            global $current_user;
+
+            // Verify nonce
+            if (!isset($_POST['_nonce'])
+                || !wp_verify_nonce($_POST['_nonce'], 'comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        "Nonce check failed. Please ensure you're supposed to be editing editorial comments.",
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            if (!isset($_POST['comment_id']) || !isset($_POST['content']) || !isset($_POST['post_id'])) {
+                wp_die(esc_html__('Invalid comment data', 'publishpress'),
+                       '',
+                       ['response' => 400]);
+            }
+
+            wp_get_current_user();
+
+            $comment_id      = absint($_POST['comment_id']);
+            $post_id = absint($_POST['post_id']);
+
+            // Only allow the comment if user can edit post
+            if (!current_user_can('edit_post', $post_id)) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to edit editorial comments. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            $theComment = get_comment($comment_id);
+
+            if (
+                !($current_user->user_nicename == $theComment->comment_author && current_user_can('pp_edit_editorial_comment'))
+                && !current_user_can('pp_edit_others_editorial_comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to edit this editorial comment. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            // Verify that comment was actually entered
+            $comment_content = esc_html(trim($_POST['content']));
+            if (!$comment_content) {
+                wp_die(esc_html__("Please enter a comment.", 'publishpress'),
+                       '',
+                       ['response' => 400]);
+            }
+
+            // Check that we have a post_id and user logged in
+            if ($post_id && $comment_id && $current_user) {
+
+                $comment_content = wp_kses(
+                    $comment_content,
+                    [
+                        'a'          => ['href' => [], 'title' => []],
+                        'b'          => [],
+                        'i'          => [],
+                        'strong'     => [],
+                        'em'         => [],
+                        'u'          => [],
+                        'del'        => [],
+                        'blockquote' => [],
+                        'sub'        => [],
+                        'sup'        => [],
+                    ]
+                );
+
+                $data = [
+                    'comment_ID' => (int)$comment_id,
+                    'comment_content' => $comment_content,
+                ];
+
+                $data = apply_filters('pp_pre_edit_editorial_comment', $data);
+
+                $status = wp_update_comment($data);
+
+                if ($status == 1) {
+                    do_action('pp_post_edit_editorial_comment', $comment_id);
+                }
+
+                // Prepare response
+
+                $theComment = get_comment($comment_id);
+
+                $response = [
+                    'id'     => $comment_id,
+                    'content'   => apply_filters('comment_text', $theComment->comment_content, $theComment),
+                    'action' => 'edit',
+                ];
+
+                wp_send_json($response);
+            } else {
+                wp_die(
+                    esc_html__(
+                        'There was a problem of some sort. Try again or contact your administrator.',
+                        'publishpress'
+                    ),
+                '',
+                    ['response' => 403]
+                );
+            }
+        }
+
+        /**
+         * Handles AJAX delete comment
+         */
+        public function ajax_delete_comment()
+        {
+            global $current_user;
+
+            // Verify nonce
+            if (!isset($_POST['_nonce'])
+                || !wp_verify_nonce($_POST['_nonce'], 'comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        "Nonce check failed. Please ensure you're supposed to be editing editorial comments.",
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            if (!isset($_POST['comment_id'])) {
+                wp_die(esc_html__('Invalid comment data', 'publishpress'),
+                       '',
+                       ['response' => 400]);
+            }
+
+            wp_get_current_user();
+
+            $comment_id      = absint($_POST['comment_id']);
+
+            $theComment = get_comment($comment_id);
+
+            // Only allow the comment if user can edit post
+            if (!current_user_can('edit_post', $theComment->comment_post_ID)) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to edit editorial comments. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            if (
+                !($current_user->user_nicename == $theComment->comment_author && current_user_can('pp_delete_editorial_comment'))
+                && !current_user_can('pp_delete_others_editorial_comment')
+            ) {
+                wp_die(
+                    esc_html__(
+                        'Sorry, you don\'t have the privileges to delete this editorial comment. Please talk to your Administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
+                );
+            }
+
+            // Check that we have a post_id and user logged in
+            if ($comment_id && $current_user) {
+                // Check if the comment has any reply and deny the delete action.
+                $replies = get_comments([
+                    'parent' => $comment_id,
+                    'count'  => true,
+                    'type'   => self::comment_type,
+                    'status' => self::comment_type,
+                 ]);
+
+                if (!empty($replies)) {
+                    wp_die(
+                        esc_html__(
+                            'Sorry, you can\'t delete this editorial comment because it has some replies.',
+                            'publishpress'
+                        ),
+                        '',
+                        ['response' => 403]
+                    );
+                }
+
+                do_action('pp_pre_delete_editorial_comment', $comment_id);
+
+                $deleted = wp_trash_comment($comment_id);
+
+                if ($deleted) {
+                    do_action('pp_post_delete_editorial_comment', $comment_id);
+                }
+
+                $response = [
+                    'id'     => $comment_id,
+                    'action' => 'delete',
+                ];
+
+                wp_send_json($response);
+            } else {
+                wp_die(
+                    esc_html__(
+                        'There was a problem of some sort. Try again or contact your administrator.',
+                        'publishpress'
+                    ),
+                    '',
+                    ['response' => 403]
                 );
             }
         }
