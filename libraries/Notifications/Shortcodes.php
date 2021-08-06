@@ -489,7 +489,7 @@ class Shortcodes
                         if ($meta && is_scalar($meta)) {
                             if ('meta-date' == $arr[0]) {
                                 $result = date_i18n(get_option('date_format'), $meta);
-                            } elseif ('meta-relationship' == $arr[0]) {
+                            } elseif ('meta-relationship' == $arr[0] || 'meta-post' == $arr[0]) {
                                 $rel_post = get_post((int)$meta);
 
                                 if (!empty($rel_post) && !is_wp_error($rel_post)) {
@@ -507,6 +507,7 @@ class Shortcodes
                         } elseif (is_array($meta)) {
                             if (!empty($meta)) {
                                 switch ($arr[0]) {
+                                    case 'meta-post':
                                     case 'meta-relationship':
                                         if (is_null($meta_sub_field)) {
                                             $meta_sub_field = 'title';
