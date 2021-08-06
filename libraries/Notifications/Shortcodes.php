@@ -494,8 +494,14 @@ class Shortcodes
                                         }
                                         break;
 
-                                if (!empty($rel_result)) {
-                                    $result = implode($attrs['separator'], $rel_result);
+                                    case 'meta-link':
+                                        $result = sprintf(
+                                            '<a href="%s" target="%s">%s</a>',
+                                            $meta['url'],
+                                            $meta['target'],
+                                            $meta['title']
+                                        );
+                                        break;
                                 }
                             }
                         }
