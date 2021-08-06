@@ -148,34 +148,61 @@ class Shortcodes
         // Get the user's info
         $info = [];
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $user->ID;
-                    break;
+        foreach ($attrs as $index => $field) {
+            $data = $this->get_user_field($user, $field, $attrs);
 
-                case 'login':
-                    $info[] = $user->user_login;
-                    break;
-
-                case 'url':
-                    $info[] = $user->user_url;
-                    break;
-
-                case 'display_name':
-                    $info[] = $user->display_name;
-                    break;
-
-                case 'email':
-                    $info[] = $user->user_email;
-                    break;
-
-                default:
-                    break;
+            if (false !== $data) {
+                $info[] = $data;
             }
         }
 
         return implode($attrs['separator'], $info);
+    }
+
+    private function get_user_field($user, $field, $attrs)
+    {
+        $result = false;
+
+        if (empty($field)) {
+            $field = 'name';
+        }
+
+        switch ($field) {
+            case 'id':
+                $result = $user->ID;
+                break;
+
+            case 'login':
+                $result = $user->user_login;
+                break;
+
+            case 'url':
+                $result = $user->user_url;
+                break;
+
+            case 'name':
+            case 'display_name':
+                $result = $user->display_name;
+                break;
+
+            case 'email':
+                $result = $user->user_email;
+                break;
+
+            default:
+                if ($custom = apply_filters(
+                    'publishpress_notif_shortcode_user_data',
+                    false,
+                    $field,
+                    $user,
+                    $attrs
+                )) {
+                    $result = $custom;
+                }
+                break;
+        }
+
+        return $result;
     }
 
     /**
@@ -468,6 +495,12 @@ class Shortcodes
                                 if (!empty($rel_post) && !is_wp_error($rel_post)) {
                                     $result = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
                                 }
+                            } elseif ('meta-user' == $arr[0]) {
+                                $rel_user = get_user_by('ID', (int)$meta);
+
+                                if (!empty($rel_user) && !is_wp_error($rel_user)) {
+                                    $result = $this->get_user_field($rel_user, $meta_sub_field, $attrs);
+                                }
                             } else {
                                 $result = $meta;
                             }
@@ -515,6 +548,26 @@ class Shortcodes
 
                                             if (!empty($rel_term) && !is_wp_error($rel_term)) {
                                                 $rel_result[] = $this->get_term_field($rel_term, $meta_sub_field, $attrs);
+                                            }
+                                        }
+
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
+
+                                    case 'meta-user':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'name';
+                                        }
+
+                                        $rel_result = [];
+
+                                        foreach ($meta as $rel_user_ID) {
+                                            $rel_user = get_user_by('ID', $rel_user_ID);
+
+                                            if (!empty($rel_user) && !is_wp_error($rel_user)) {
+                                                $rel_result[] = $this->get_user_field($rel_user, $meta_sub_field, $attrs);
                                             }
                                         }
 
