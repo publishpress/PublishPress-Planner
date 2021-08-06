@@ -502,6 +502,26 @@ class Shortcodes
                                             $meta['title']
                                         );
                                         break;
+
+                                    case 'meta-term':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'name';
+                                        }
+
+                                        $rel_result = [];
+
+                                        foreach ($meta as $rel_term_ID) {
+                                            $rel_term = get_term($rel_term_ID);
+
+                                            if (!empty($rel_term) && !is_wp_error($rel_term)) {
+                                                $rel_result[] = $this->get_term_field($rel_term, $meta_sub_field, $attrs);
+                                            }
+                                        }
+
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
                                 }
                             }
                         }
@@ -519,6 +539,42 @@ class Shortcodes
                 }
 
                 break;
+        }
+
+        return $result;
+    }
+
+    private function get_term_field($term, $field, $attrs)
+    {
+        $result = false;
+
+        if (is_null($field)) {
+            $field = 'name';
+        }
+
+        switch ($field) {
+            case 'id':
+                $result = $term->term_id;
+                break;
+
+            case 'name':
+                $result = $term->name;
+                break;
+
+            case 'slug':
+                $result = $term->slug;
+                break;
+
+            default:
+                if ($custom = apply_filters(
+                    'publishpress_notif_shortcode_term_data',
+                    false,
+                    $field,
+                    $term,
+                    $attrs
+                )) {
+                    $result = $custom;
+                }
         }
 
         return $result;
