@@ -366,6 +366,10 @@ class Shortcodes
 
         $result = false;
 
+        if (is_null($field)) {
+            $field = 'title';
+        }
+
         switch ($field) {
             case 'id':
                 $result = $post->ID;
@@ -455,7 +459,6 @@ class Shortcodes
                         }
 
                         $meta = get_post_meta($post->ID, $meta_name, true);
-
                         if ($meta && is_scalar($meta)) {
                             if ('meta-date' == $arr[0]) {
                                 $result = date_i18n(get_option('date_format'), $meta);
@@ -469,21 +472,27 @@ class Shortcodes
                                 $result = $meta;
                             }
                         } elseif (is_array($meta)) {
-                            if ('meta-relationship' == $arr[0] && !empty($meta)) {
-                                if (is_null($meta_sub_field)) {
-                                    $meta_sub_field = 'title';
-                                }
+                            if (!empty($meta)) {
+                                switch ($arr[0]) {
+                                    case 'meta-relationship':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'title';
+                                        }
 
+                                        $rel_result = [];
 
-                                $rel_result = [];
+                                        foreach ($meta as $rel_post_ID) {
+                                            $rel_post = get_post($rel_post_ID);
 
-                                foreach ($meta as $rel_post_ID) {
-                                    $rel_post = get_post($rel_post_ID);
+                                            if (!empty($rel_post) && !is_wp_error($rel_post)) {
+                                                $rel_result[] = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
+                                            }
+                                        }
 
-                                    if (!empty($rel_post) && !is_wp_error($rel_post)) {
-                                        $rel_result[] = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
-                                    }
-                                }
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
 
                                 if (!empty($rel_result)) {
                                     $result = implode($attrs['separator'], $rel_result);
