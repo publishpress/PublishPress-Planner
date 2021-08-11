@@ -120,6 +120,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Added: Add support on Notifications content for different data types in the meta fields, including support to ACF relationship fields for posts, link, taxonomy and user, #924;
+
 = [3.5.0] - 5 Aug 2021 =
 
 * Added: Add the option to edit and delete editorial comments, #277;

@@ -148,34 +148,61 @@ class Shortcodes
         // Get the user's info
         $info = [];
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $user->ID;
-                    break;
+        foreach ($attrs as $index => $field) {
+            $data = $this->get_user_field($user, $field, $attrs);
 
-                case 'login':
-                    $info[] = $user->user_login;
-                    break;
-
-                case 'url':
-                    $info[] = $user->user_url;
-                    break;
-
-                case 'display_name':
-                    $info[] = $user->display_name;
-                    break;
-
-                case 'email':
-                    $info[] = $user->user_email;
-                    break;
-
-                default:
-                    break;
+            if (false !== $data) {
+                $info[] = $data;
             }
         }
 
         return implode($attrs['separator'], $info);
+    }
+
+    private function get_user_field($user, $field, $attrs)
+    {
+        $result = false;
+
+        if (empty($field)) {
+            $field = 'name';
+        }
+
+        switch ($field) {
+            case 'id':
+                $result = $user->ID;
+                break;
+
+            case 'login':
+                $result = $user->user_login;
+                break;
+
+            case 'url':
+                $result = $user->user_url;
+                break;
+
+            case 'name':
+            case 'display_name':
+                $result = $user->display_name;
+                break;
+
+            case 'email':
+                $result = $user->user_email;
+                break;
+
+            default:
+                if ($custom = apply_filters(
+                    'publishpress_notif_shortcode_user_data',
+                    false,
+                    $field,
+                    $user,
+                    $attrs
+                )) {
+                    $result = $custom;
+                }
+                break;
+        }
+
+        return $result;
     }
 
     /**
@@ -336,8 +363,6 @@ class Shortcodes
      */
     protected function get_post_data($post, $attrs)
     {
-        $publishpress = $this->get_service('publishpress');
-
         // No attributes? Set the default one.
         if (empty($attrs)) {
             $attrs = ['title'];
@@ -351,111 +376,262 @@ class Shortcodes
         // Get the post's info
         $info = [];
 
-        foreach ($attrs as $index => $item) {
-            switch ($item) {
-                case 'id':
-                    $info[] = $post->ID;
-                    break;
+        foreach ($attrs as $field) {
+            $data = $this->get_post_field($post, $field, $attrs);
 
-                case 'title':
-                    $info[] = $post->post_title;
-                    break;
-
-                case 'post_type':
-                    $postType = get_post_type_object($post->post_type);
-
-                    if (!empty($postType) && !is_wp_error($postType)) {
-                        $info[] = $postType->labels->singular_name;
-                    }
-                    break;
-
-                case 'permalink':
-                    $info[] = get_permalink($post->ID);
-                    break;
-
-                case 'date':
-                    $info[] = get_the_date('', $post);
-                    break;
-
-                case 'time':
-                    $info[] = get_the_time('', $post);
-                    break;
-
-                case 'old_status':
-                case 'new_status':
-                    $status = $publishpress->custom_status->get_custom_status_by(
-                        'slug',
-                        $this->event_args['params'][$item]
-                    );
-
-                    if (empty($status) || 'WP_Error' === get_class($status)) {
-                        break;
-                    }
-
-                    $info[] = $status->name;
-                    break;
-
-                case 'content':
-                    $info[] = $post->post_content;
-                    break;
-
-                case 'excerpt':
-                    $info[] = $post->post_excerpt;
-                    break;
-
-                case 'edit_link':
-                    $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
-                    $info[]     = htmlspecialchars_decode(admin_url($admin_path));
-                    break;
-
-                case 'author_display_name':
-                case 'author_email':
-                case 'author_login':
-                    $authordata = get_userdata($post->post_author);
-
-                    $field_map = [
-                        'author_display_name' => 'display_name',
-                        'author_email'        => 'user_email',
-                        'author_login'        => 'user_login',
-                    ];
-
-                    $user_field = $field_map[$item];
-                    $data       = $authordata->{$user_field};
-
-                    $info[] = apply_filters('pp_get_author_data', $data, $item, $post);
-                    break;
-
-                default:
-                    // Meta data attribute
-                    if (0 === strpos($item, 'meta')) {
-                        $arr = explode(':', $item);
-                        if (!empty($arr[1])) {
-                            $meta = get_post_meta($post->ID, $arr[1], true);
-                            if ($meta && is_scalar($meta)) {
-                                if ('meta-date' == $arr[0]) {
-                                    $info[] = date_i18n(get_option('date_format'), $meta);
-                                } else {
-                                    $info[] = $meta;
-                                }
-                            }
-                        }
-                    } else {
-                        if ($custom = apply_filters(
-                            'publishpress_notif_shortcode_post_data',
-                            false,
-                            $item,
-                            $post,
-                            $attrs
-                        )) {
-                            $info[] = $custom;
-                        }
-                    }
-
-                    break;
+            if (false !== $data) {
+                $info[] = $data;
             }
         }
 
         return implode($attrs['separator'], $info);
+    }
+
+    private function get_post_field($post, $field, $attrs)
+    {
+        $publishpress = $this->get_service('publishpress');
+
+        $result = false;
+
+        if (is_null($field)) {
+            $field = 'title';
+        }
+
+        switch ($field) {
+            case 'id':
+                $result = $post->ID;
+                break;
+
+            case 'title':
+                $result = $post->post_title;
+                break;
+
+            case 'post_type':
+                $postType = get_post_type_object($post->post_type);
+
+                if (!empty($postType) && !is_wp_error($postType)) {
+                    $result = $postType->labels->singular_name;
+                }
+                break;
+
+            case 'permalink':
+                $result = get_permalink($post->ID);
+                break;
+
+            case 'date':
+                $result = get_the_date('', $post);
+                break;
+
+            case 'time':
+                $result = get_the_time('', $post);
+                break;
+
+            case 'old_status':
+            case 'new_status':
+                $status = $publishpress->custom_status->get_custom_status_by(
+                    'slug',
+                    $this->event_args['params'][$field]
+                );
+
+                if (empty($status) || 'WP_Error' === get_class($status)) {
+                    break;
+                }
+
+                $result = $status->name;
+                break;
+
+            case 'content':
+                $result = $post->post_content;
+                break;
+
+            case 'excerpt':
+                $result = $post->post_excerpt;
+                break;
+
+            case 'edit_link':
+                $admin_path = 'post.php?post=' . $post->ID . '&action=edit';
+                $result     = htmlspecialchars_decode(admin_url($admin_path));
+                break;
+
+            case 'author_display_name':
+            case 'author_email':
+            case 'author_login':
+                $author_data = get_userdata($post->post_author);
+
+                $field_map = [
+                    'author_display_name' => 'display_name',
+                    'author_email'        => 'user_email',
+                    'author_login'        => 'user_login',
+                ];
+
+                $user_field = $field_map[$field];
+                $data       = $author_data->{$user_field};
+
+                $result = apply_filters('pp_get_author_data', $data, $field, $post);
+                break;
+
+            default:
+                // Meta data attribute
+                if (0 === strpos($field, 'meta')) {
+                    $arr = explode(':', $field);
+                    if (!empty($arr[1])) {
+                        if (substr_count($arr[1], '.')) {
+                            $meta_fragments = explode('.', $arr[1]);
+
+                            $meta_name      = $meta_fragments[0];
+                            $meta_sub_field = $meta_fragments[1];
+                        } else {
+                            $meta_name      = $arr[1];
+                            $meta_sub_field = null;
+                        }
+
+                        $meta = get_post_meta($post->ID, $meta_name, true);
+                        if ($meta && is_scalar($meta)) {
+                            if ('meta-date' == $arr[0]) {
+                                $result = date_i18n(get_option('date_format'), $meta);
+                            } elseif ('meta-relationship' == $arr[0] || 'meta-post' == $arr[0]) {
+                                $rel_post = get_post((int)$meta);
+
+                                if (!empty($rel_post) && !is_wp_error($rel_post)) {
+                                    $result = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
+                                }
+                            } elseif ('meta-user' == $arr[0]) {
+                                $rel_user = get_user_by('ID', (int)$meta);
+
+                                if (!empty($rel_user) && !is_wp_error($rel_user)) {
+                                    $result = $this->get_user_field($rel_user, $meta_sub_field, $attrs);
+                                }
+                            } else {
+                                $result = $meta;
+                            }
+                        } elseif (is_array($meta)) {
+                            if (!empty($meta)) {
+                                switch ($arr[0]) {
+                                    case 'meta-post':
+                                    case 'meta-relationship':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'title';
+                                        }
+
+                                        $rel_result = [];
+
+                                        foreach ($meta as $rel_post_ID) {
+                                            $rel_post = get_post($rel_post_ID);
+
+                                            if (!empty($rel_post) && !is_wp_error($rel_post)) {
+                                                $rel_result[] = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
+                                            }
+                                        }
+
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
+
+                                    case 'meta-link':
+                                        $result = sprintf(
+                                            '<a href="%s" target="%s">%s</a>',
+                                            $meta['url'],
+                                            $meta['target'],
+                                            $meta['title']
+                                        );
+                                        break;
+
+                                    case 'meta-term':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'name';
+                                        }
+
+                                        $rel_result = [];
+
+                                        foreach ($meta as $rel_term_ID) {
+                                            $rel_term = get_term($rel_term_ID);
+
+                                            if (!empty($rel_term) && !is_wp_error($rel_term)) {
+                                                $rel_result[] = $this->get_term_field($rel_term, $meta_sub_field, $attrs);
+                                            }
+                                        }
+
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
+
+                                    case 'meta-user':
+                                        if (is_null($meta_sub_field)) {
+                                            $meta_sub_field = 'name';
+                                        }
+
+                                        $rel_result = [];
+
+                                        foreach ($meta as $rel_user_ID) {
+                                            $rel_user = get_user_by('ID', $rel_user_ID);
+
+                                            if (!empty($rel_user) && !is_wp_error($rel_user)) {
+                                                $rel_result[] = $this->get_user_field($rel_user, $meta_sub_field, $attrs);
+                                            }
+                                        }
+
+                                        if (!empty($rel_result)) {
+                                            $result = implode($attrs['separator'], $rel_result);
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if ($custom = apply_filters(
+                        'publishpress_notif_shortcode_post_data',
+                        false,
+                        $field,
+                        $post,
+                        $attrs
+                    )) {
+                        $result = $custom;
+                    }
+                }
+
+                break;
+        }
+
+        return $result;
+    }
+
+    private function get_term_field($term, $field, $attrs)
+    {
+        $result = false;
+
+        if (is_null($field)) {
+            $field = 'name';
+        }
+
+        switch ($field) {
+            case 'id':
+                $result = $term->term_id;
+                break;
+
+            case 'name':
+                $result = $term->name;
+                break;
+
+            case 'slug':
+                $result = $term->slug;
+                break;
+
+            default:
+                if ($custom = apply_filters(
+                    'publishpress_notif_shortcode_term_data',
+                    false,
+                    $field,
+                    $term,
+                    $attrs
+                )) {
+                    $result = $custom;
+                }
+        }
+
+        return $result;
     }
 
     /**
