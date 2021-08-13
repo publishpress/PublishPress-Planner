@@ -340,7 +340,7 @@ if (!class_exists('PP_Editorial_Comments')) {
                 }
 
                 if (
-                    ($user->ID === $theComment->author && current_user_can('pp_delete_editorial_comment')
+                    ($user->ID === $theComment->comment_author && current_user_can('pp_delete_editorial_comment')
                         || current_user_can('pp_delete_others_editorial_comment')
                     )
                 ) {
