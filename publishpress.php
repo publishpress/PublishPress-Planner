@@ -1226,7 +1226,7 @@ if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
 }
 
 if (!defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
-    add_action('init', 'PublishPress');
+    PublishPress();
     add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
