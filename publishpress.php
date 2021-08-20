@@ -102,7 +102,7 @@ if (!class_exists('publishpress')) {
          */
         private function setup_actions()
         {
-            add_action('init', [$this, 'action_init'], 1000);
+            add_action('init', [$this, 'action_init']);
             add_action('init', [$this, 'action_init_after'], 1100);
 
             add_action('init', [$this, 'action_ini_for_admin'], 1010);
