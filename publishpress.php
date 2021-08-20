@@ -164,7 +164,7 @@ if (!class_exists('publishpress')) {
         }
 
         /**
-         * Inititalizes the PublishPresss!
+         * Inititalizes the PublishPress!
          * Loads options for each registered module and then initializes it if it's active
          */
         public function action_init()
