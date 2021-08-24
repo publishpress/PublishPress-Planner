@@ -317,7 +317,6 @@ if (!class_exists('publishpress')) {
                 'async-notifications'    => PUBLISHPRESS_BASE_PATH,
                 'notifications-log'      => PUBLISHPRESS_BASE_PATH,
                 'roles'                  => PUBLISHPRESS_BASE_PATH,
-                'user-groups'            => PUBLISHPRESS_BASE_PATH,
                 'dashboard'              => PUBLISHPRESS_BASE_PATH,
                 'editorial-comments'     => PUBLISHPRESS_BASE_PATH,
                 'settings'               => PUBLISHPRESS_BASE_PATH,
