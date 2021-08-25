@@ -581,11 +581,6 @@ if (!class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            // Ignores auto-draft
-            if ('new' === $old_status && 'auto-draft' === $new_status) {
-                return;
-            }
-
             // Ignores if it is saved with the same status, avoiding multiple notifications on some situations.
             if ($old_status === $new_status) {
                 return;
