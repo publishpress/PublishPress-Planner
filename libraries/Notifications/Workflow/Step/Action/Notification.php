@@ -57,7 +57,7 @@ class Notification
         }
 
         global $publishpress;
-        if ($publishpress->improved_notifications->module->options->duplicated_notification_threshold) {
+        if (isset($publishpress->improved_notifications->module->options->duplicated_notification_threshold)) {
             $threshold = (int)$publishpress->improved_notifications->module->options->duplicated_notification_threshold;
         } else {
             $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
@@ -133,7 +133,7 @@ class Notification
                 );
 
                 global $publishpress;
-                if ($publishpress->improved_notifications->module->options->duplicated_notification_threshold) {
+                if (isset($publishpress->improved_notifications->module->options->duplicated_notification_threshold)) {
                     $threshold = $publishpress->improved_notifications->module->options->duplicated_notification_threshold;
                 } else {
                     $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
