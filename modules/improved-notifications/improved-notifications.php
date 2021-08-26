@@ -190,6 +190,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
             add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
             add_action('trashed_post', [$this, 'action_trashed_post']);
+            add_action('untrashed_post', [$this, 'action_untrashed_post']);
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
 
@@ -669,6 +670,37 @@ if (!class_exists('PP_Improved_Notifications')) {
                     'post_id'    => (int)$postId,
                     'new_status' => 'trash',
                     'old_status' => '',
+                ],
+            ];
+
+            do_action('publishpress_notifications_trigger_workflows', $params);
+        }
+
+        public function action_untrashed_post($postId)
+        {
+            $post = get_post($postId);
+
+            if (!is_object($post) || is_wp_error($post)) {
+                return;
+            }
+
+            if (!$this->is_supported_post_type($post->post_type)) {
+                return;
+            }
+
+            // Ignores auto-save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+
+            // Go ahead and do the action to run workflows
+            $params = [
+                'event'   => 'post_untrashed',
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$postId,
+                    'new_status' => $post->post_status,
+                    'old_status' => 'trash',
                 ],
             ];
 

@@ -9,13 +9,13 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event;
 
-class Post_Trashed extends Base
+class Post_Untrashed extends Base
 {
-    const META_KEY_SELECTED = '_psppno_evtposttrashed';
+    const META_KEY_SELECTED = '_psppno_evtpostuntrashed';
 
-    const META_VALUE_SELECTED = 'post_trashed';
+    const META_VALUE_SELECTED = 'post_untrashed';
 
-    const EVENT_NAME = 'post_trashed';
+    const EVENT_NAME = 'post_untrashed';
 
     /**
      * The constructor
@@ -23,7 +23,7 @@ class Post_Trashed extends Base
     public function __construct()
     {
         $this->name  = static::EVENT_NAME;
-        $this->label = __('When the content is trashed', 'publishpress');
+        $this->label = __('When the content is untrashed', 'publishpress');
 
         parent::__construct();
 

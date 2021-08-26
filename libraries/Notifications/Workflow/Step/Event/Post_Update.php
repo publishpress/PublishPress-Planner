@@ -22,7 +22,7 @@ class Post_Update extends Base
      */
     public function __construct()
     {
-        $this->name  = 'post_update';
+        $this->name  = static::EVENT_NAME;
         $this->label = __('When the content is updated', 'publishpress');
 
         parent::__construct();
