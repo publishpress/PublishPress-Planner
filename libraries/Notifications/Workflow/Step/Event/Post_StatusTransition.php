@@ -11,14 +11,14 @@ namespace PublishPress\Notifications\Workflow\Step\Event;
 
 use PublishPress\Notifications\Workflow\Step\Event\Filter;
 
-class Post_Save extends Base
+class Post_StatusTransition extends Base
 {
     const META_KEY_SELECTED = '_psppno_evtpostsave';
 
     const META_VALUE_SELECTED = 'post_save';
 
     /**
-     * The constructor
+     * The constructorPost_StatusTransition'
      */
     public function __construct()
     {
