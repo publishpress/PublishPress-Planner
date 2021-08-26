@@ -189,6 +189,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             // Add action to intercept transition between post status - post save
             add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
             add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
+            add_action('trashed_post', [$this, 'action_trashed_post']);
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
 
@@ -624,14 +625,50 @@ if (!class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
+            // Ignores trashed posts, we have a specific event for that.
+            if ('trash' === $new_status) {
+                return;
+            }
+
             // Go ahead and do the action to run workflows
             $params = [
-                'event'   => 'update_post',
+                'event'   => 'post_update',
                 'user_id' => get_current_user_id(),
                 'params'  => [
                     'post_id'    => (int)$post->ID,
                     'new_status' => $new_status,
                     'old_status' => $old_status,
+                ],
+            ];
+
+            do_action('publishpress_notifications_trigger_workflows', $params);
+        }
+
+        public function action_trashed_post($postId)
+        {
+            $post = get_post($postId);
+
+            if (!is_object($post) || is_wp_error($post)) {
+                return;
+            }
+
+            if (!$this->is_supported_post_type($post->post_type)) {
+                return;
+            }
+
+            // Ignores auto-save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+
+            // Go ahead and do the action to run workflows
+            $params = [
+                'event'   => 'post_trashed',
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$postId,
+                    'new_status' => 'trash',
+                    'old_status' => '',
                 ],
             ];
 
