@@ -53,3 +53,5 @@ class Util extends Legacy\Util
 class Auto_loader extends Legacy\Auto_loader
 {
 }
+
+class_alias('PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_StatusTransition', 'PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Save');
