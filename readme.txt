@@ -120,9 +120,20 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [3.6.0] = UNRELEASED
 
 * Added: Add support on Notifications content for different data types in the meta fields, including support to ACF relationship fields for posts, link, taxonomy and user, #924;
+* Added: Add Japanese language translation files, #934;
+* Added: Add support for notifications on content update, #483;
+* Added: Add support for notifications when post is trashed, #938;
+* Added: Add support for notifications when post is untrashed, #939;
+* Fixed: Fix warning Undefined property stdClass::$author on editorial-comments, #931;
+* Fixed: Fix notifications not triggered for posts created in the frontend, #936;
+* Fixed: Fix the spacing between fields in the calendar popup, increasing it, #920;
+* Fixed: Fix notifications for new posts, #936;
+* Fixed: Fix PHP warning about undefined setting for duplicate notification threshold;
+* Removed: Remove the deprecated module User Groups, and unused user roles for groups, #926;
+* Removed: Remove the deprecated module Roles. Users should use specific plugins for capabilities or roles like PublishPress Capabilities, #925;
 
 = [3.5.0] - 5 Aug 2021 =
 
