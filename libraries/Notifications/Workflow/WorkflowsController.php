@@ -124,8 +124,6 @@ class WorkflowsController
         $classes_event = [
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Editorial_Comment',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Update',
-            '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Trashed',
-            '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Untrashed',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_StatusTransition',
         ];
         /**
