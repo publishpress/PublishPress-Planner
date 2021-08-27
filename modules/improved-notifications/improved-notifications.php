@@ -625,7 +625,7 @@ if (!class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            // Ignores trashed posts, we have a specific event for that.
+            // Ignores trashed posts, we have the status transition event.
             if ('trash' === $new_status) {
                 return;
             }
@@ -1018,7 +1018,6 @@ if (!class_exists('PP_Improved_Notifications')) {
         public function save_meta_boxes($id, $post)
         {
             // Check if the saved post is a notification workflow
-
             if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type) {
                 // Authentication checks. Make sure the data came from the metabox
                 if (!(
