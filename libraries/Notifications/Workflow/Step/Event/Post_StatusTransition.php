@@ -17,12 +17,14 @@ class Post_StatusTransition extends Base
 
     const META_VALUE_SELECTED = 'post_save';
 
+    const EVENT_NAME = 'transition_post_status';
+
     /**
      * The constructorPost_StatusTransition'
      */
     public function __construct()
     {
-        $this->name  = 'post_save';
+        $this->name  = static::META_VALUE_SELECTED;
         $this->label = __('When the content is moved to a new status', 'publishpress');
 
         parent::__construct();
@@ -49,7 +51,7 @@ class Post_StatusTransition extends Base
             return $query_args;
         }
 
-        if ('transition_post_status' === $event_args['event']) {
+        if (static::EVENT_NAME === $event_args['event']) {
             $query_args['meta_query'][] = [
                 'key'     => static::META_KEY_SELECTED,
                 'value'   => 1,
@@ -94,14 +96,14 @@ class Post_StatusTransition extends Base
             $actions = [];
         }
 
-        $actions[] = 'transition_post_status';
+        $actions[] = static::EVENT_NAME;
 
         return $actions;
     }
 
     public function filter_action_params_for_log($paramsString, $log)
     {
-        if ($log->event === 'transition_post_status') {
+        if ($log->event === static::EVENT_NAME) {
             global $publishpress;
 
             $oldStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->oldStatus);
@@ -127,7 +129,7 @@ class Post_StatusTransition extends Base
      */
     public function filter_event_label($label, $event)
     {
-        if ($event === 'transition_post_status') {
+        if ($event === static::EVENT_NAME) {
             $label = $this->label;
         }
 
