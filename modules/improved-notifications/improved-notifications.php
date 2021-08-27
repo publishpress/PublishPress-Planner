@@ -180,15 +180,14 @@ if (!class_exists('PP_Improved_Notifications')) {
             );
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
 
+            // Add action to intercept transition between post status - post save
+            add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
+            add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
+
             // Cancel the PublishPress and PublishPress Slack Notifications, since they will be sent by the cron task.
             add_filter('publishpress_slack_enable_notifications', [$this, 'filter_slack_enable_notifications']);
             remove_all_actions('pp_send_notification_status_update');
             remove_all_actions('pp_send_notification_comment');
-
-
-            // Add action to intercept transition between post status - post save
-            add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
-            add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
 
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);

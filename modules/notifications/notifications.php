@@ -174,7 +174,7 @@ if (!class_exists('PP_Notifications')) {
                 2
             );
 
-            add_action('save_post', [$this, 'action_save_post'], 10);
+            add_action('transition_post_status', [$this, 'action_save_post'], 990, 3);
 
             // Ajax for saving notification updates
             add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
@@ -759,7 +759,7 @@ if (!class_exists('PP_Notifications')) {
             return $workflows_controller->get_filtered_workflows($args);
         }
 
-        public function action_save_post($postId)
+        public function action_save_post($new_status, $old_status, $post)
         {
             if (!isset($_POST['pp_notifications_nonce']) || !wp_verify_nonce(
                     $_POST['pp_notifications_nonce'],
@@ -769,35 +769,35 @@ if (!class_exists('PP_Notifications')) {
             }
 
             // Remove current users
-            $terms = get_the_terms($postId, $this->notify_user_taxonomy);
+            $terms = get_the_terms($post->ID, $this->notify_user_taxonomy);
             $users = [];
             if (!empty($terms)) {
                 foreach ($terms as $term) {
                     $users[] = $term->term_id;
                 }
             }
-            wp_remove_object_terms($postId, $users, $this->notify_user_taxonomy);
+            wp_remove_object_terms($post->ID, $users, $this->notify_user_taxonomy);
 
 
             // Remove current roles
-            $terms = get_the_terms($postId, $this->notify_role_taxonomy);
+            $terms = get_the_terms($post->ID, $this->notify_role_taxonomy);
             $roles = [];
             if (!empty($terms)) {
                 foreach ($terms as $term) {
                     $roles[] = $term->term_id;
                 }
             }
-            wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
+            wp_remove_object_terms($post->ID, $roles, $this->notify_role_taxonomy);
 
             // Remove current emails
-            $terms  = get_the_terms($postId, $this->notify_email_taxonomy);
+            $terms  = get_the_terms($post->ID, $this->notify_email_taxonomy);
             $emails = [];
             if (!empty($terms)) {
                 foreach ($terms as $term) {
                     $emails[] = $term->term_id;
                 }
             }
-            wp_remove_object_terms($postId, $emails, $this->notify_email_taxonomy);
+            wp_remove_object_terms($post->ID, $emails, $this->notify_email_taxonomy);
 
             if (apply_filters('pp_notification_auto_subscribe_current_user', true)) {
                 if (!isset($_POST['to_notify'])) {
@@ -812,16 +812,16 @@ if (!class_exists('PP_Notifications')) {
                 foreach ($_POST['to_notify'] as $id) {
                     if (is_numeric($id)) {
                         // User id
-                        $this->post_set_users_to_notify($postId, (int)$id, true);
+                        $this->post_set_users_to_notify($post->ID, (int)$id, true);
                     } else {
                         $id = sanitize_text_field($id);
 
                         // Is an email address?
                         if (strpos($id, '@') > 0) {
-                            $this->post_set_emails_to_notify($postId, $id, true);
+                            $this->post_set_emails_to_notify($post->ID, $id, true);
                         } else {
                             // Role name
-                            $this->post_set_roles_to_notify($postId, $id, true);
+                            $this->post_set_roles_to_notify($post->ID, $id, true);
                         }
                     }
                 }
