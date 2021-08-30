@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.7
-Stable tag: 3.5.0
+Tested up to: 5.8
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,14 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.5.1] - 30 Aug 2021 =
+
+* Fixed: Fix undefined property stdClass::$author, #931;
+* Fixed: Notifications don't trigger for posts created in the frontend, #936;
+* Fixed: PHP warnings about not set configuration;
+* Fixed: Fix the order and orderby filter in the content overview;
+* Added: Add Japanese translation files, #934;
 
 = [3.5.0] - 5 Aug 2021 =
 

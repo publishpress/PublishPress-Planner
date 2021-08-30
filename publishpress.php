@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.5.0
+ * Version: 3.5.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -102,7 +102,7 @@ if (!class_exists('publishpress')) {
          */
         private function setup_actions()
         {
-            add_action('init', [$this, 'action_init'], 1000);
+            add_action('init', [$this, 'action_init']);
             add_action('init', [$this, 'action_init_after'], 1100);
 
             add_action('init', [$this, 'action_ini_for_admin'], 1010);
@@ -164,7 +164,7 @@ if (!class_exists('publishpress')) {
         }
 
         /**
-         * Inititalizes the PublishPresss!
+         * Inititalizes the PublishPress!
          * Loads options for each registered module and then initializes it if it's active
          */
         public function action_init()
@@ -1226,7 +1226,7 @@ if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
 }
 
 if (!defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
-    add_action('init', 'PublishPress');
+    PublishPress();
     add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
