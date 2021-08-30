@@ -920,8 +920,8 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="post_status" value=""/>
                     <input type="hidden" name="cat" value=""/>
                     <input type="hidden" name="author" value=""/>
-                    <input type="hidden" name="orderby" value="<?php echo (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date'; ?>"/>
-                    <input type="hidden" name="order" value="<?php echo (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'ASC'; ?>"/>
+                    <input type="hidden" name="orderby" value="<?php echo (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? esc_attr($_GET['orderby']) : 'post_date'; ?>"/>
+                    <input type="hidden" name="order" value="<?php echo (isset($_GET['order']) && !empty($_GET['order'])) ? esc_attr($_GET['order']) : 'ASC'; ?>"/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
