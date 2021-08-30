@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,20 +120,13 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.6.0] = UNRELEASED
+= [3.5.1] - 30 Aug 2021 =
 
-* Added: Add support on Notifications content for different data types in the meta fields, including support to ACF relationship fields for posts, link, taxonomy and user, #924;
-* Added: Add Japanese language translation files, #934;
-* Added: Add support for notifications on content update, #483;
-* Added: Add support for notifications when post is trashed, #938;
-* Added: Add support for notifications when post is untrashed, #939;
-* Fixed: Fix warning Undefined property stdClass::$author on editorial-comments, #931;
-* Fixed: Fix notifications not triggered for posts created in the frontend, #936;
-* Fixed: Fix the spacing between fields in the calendar popup, increasing it, #920;
-* Fixed: Fix notifications for new posts, #936;
-* Fixed: Fix PHP warning about undefined setting for duplicate notification threshold;
-* Removed: Remove the deprecated module User Groups, and unused user roles for groups, #926;
-* Removed: Remove the deprecated module Roles. Users should use specific plugins for capabilities or roles like PublishPress Capabilities, #925;
+* Fixed: Fix undefined property stdClass::$author, #931;
+* Fixed: Notifications don't trigger for posts created in the frontend, #936;
+* Fixed: PHP warnings about not set configuration;
+* Fixed: Fix the order and orderby filter in the content overview;
+* Added: Add Japanese translation files, #934;
 
 = [3.5.0] - 5 Aug 2021 =
 

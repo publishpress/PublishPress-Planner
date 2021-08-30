@@ -592,6 +592,7 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             // Go ahead and do the action to run workflows
             $params = [
+                'event'   => 'transition_post_status',
                 'event'   => Post_StatusTransition::EVENT_NAME,
                 'user_id' => get_current_user_id(),
                 'params'  => [
