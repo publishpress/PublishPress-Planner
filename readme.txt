@@ -120,6 +120,14 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.5.1] - 30 Aug 2021 =
+
+* Fixed: Fix undefined property stdClass::$author, #931;
+* Fixed: Notifications don't trigger for posts created in the frontend, #936;
+* Fixed: PHP warnings about not set configuration;
+* Fixed: Fix the order and orderby filter in the content overview;
+* Added: Add Japanese translation files, #934;
+
 = [3.5.0] - 5 Aug 2021 =
 
 * Added: Add the option to edit and delete editorial comments, #277;
