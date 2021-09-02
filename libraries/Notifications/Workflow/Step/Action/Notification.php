@@ -10,11 +10,16 @@
 namespace PublishPress\Notifications\Workflow\Step\Action;
 
 use Exception;
+use PublishPress\Notifications\Helper;
 use PublishPress\Notifications\Workflow\Workflow;
 
 class Notification
 {
-    const DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD = 10;
+    const DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD_IN_MINUTES = 10;
+
+    const DEFAULT_DELAY_FOR_SENDING_NOTIFICATION_IN_SECONDS = 5;
+
+    const DEFAULT_ROUND_FACTOR_FOR_NOTIFICATION_IN_SECONDS = 10;
 
     public function __construct()
     {
@@ -32,67 +37,6 @@ class Notification
         }
 
         $this->send_notifications($workflow);
-    }
-
-    /**
-     * Check if the notification was just sent, to avoid duplicated notifications when
-     * multiple requests try to run the same job.
-     *
-     * @param array $content
-     * @param string $receiver
-     * @param string $channel
-     *
-     * @return bool
-     */
-    private function is_duplicated_notification($content, $receiver, $channel)
-    {
-        $uid = $this->calculateNotificationUID($content, $receiver, $channel);
-
-        $transientName = 'ppnotif_' . $uid;
-
-        // Check if we already have the transient.
-        if (get_transient($transientName)) {
-            // Yes, duplicated notification.
-            return true;
-        }
-
-        global $publishpress;
-        if (isset($publishpress->improved_notifications->module->options->duplicated_notification_threshold)) {
-            $threshold = (int)$publishpress->improved_notifications->module->options->duplicated_notification_threshold;
-        } else {
-            $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
-        }
-
-        /**
-         * Filters the value of the timeout to ignore duplicated notifications.
-         *
-         * @param int $timeout
-         * @param string $uid
-         *
-         * @return int
-         */
-        $timeout = (int)apply_filters(
-            'pp_duplicated_notification_timeout',
-            $threshold * 60,
-            $uid
-        );
-
-        // Set the flag and return as non-duplicated.
-        set_transient($transientName, 1, $timeout);
-
-        return false;
-    }
-
-    /**
-     * @param array $content
-     * @param string $receiver
-     * @param string $channel
-     *
-     * @return string
-     */
-    private function calculateNotificationUID($content, $receiver, $channel)
-    {
-        return md5(maybe_serialize([$content, $receiver, $channel]));
     }
 
     /**
@@ -132,17 +76,12 @@ class Notification
                     $channel
                 );
 
-                global $publishpress;
-                if (isset($publishpress->improved_notifications->module->options->duplicated_notification_threshold)) {
-                    $threshold = $publishpress->improved_notifications->module->options->duplicated_notification_threshold;
-                } else {
-                    $threshold = self::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
-                }
+                $threshold = Helper::getDuplicatedNotificationThreshold();
 
                 // Check if this is a duplicated notification and skip it.
                 // I hope this is a temporary fix. When scheduled, some notifications seems to be triggered multiple times
                 // by the same cron task.
-                if ($this->is_duplicated_notification($content, $receiverAddress, $channel)) {
+                if (Helper::isDuplicatedNotification($content, $receiverAddress, $channel, $threshold)) {
                     do_action(
                         'publishpress_notifications_skipped_duplicated',
                         $workflow,

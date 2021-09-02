@@ -28,7 +28,7 @@
         }
     ],
     "dist": {
-        "url": "https://github.com/publishpress/PublishPress/releases/download/v3.5.1/publishpress-3.5.1.zip",
+        "url": "https://github.com/publishpress/PublishPress/releases/download/v3.6.0/publishpress-3.6.0.zip",
         "type": "zip"
     },
     "require": {

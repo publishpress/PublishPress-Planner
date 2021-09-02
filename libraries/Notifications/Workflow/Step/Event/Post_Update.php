@@ -9,28 +9,27 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event;
 
-use PublishPress\Notifications\Workflow\Step\Event\Filter;
-
-class Post_Save extends Base
+class Post_Update extends Base
 {
-    const META_KEY_SELECTED = '_psppno_evtpostsave';
+    const META_KEY_SELECTED = '_psppno_evtpostupdate';
 
-    const META_VALUE_SELECTED = 'post_save';
+    const META_VALUE_SELECTED = 'post_update';
+
+    const EVENT_NAME = 'post_update';
 
     /**
      * The constructor
      */
     public function __construct()
     {
-        $this->name  = 'post_save';
-        $this->label = __('When the content is moved to a new status', 'publishpress');
+        $this->name  = static::EVENT_NAME;
+        $this->label = __('When the content is updated', 'publishpress');
 
         parent::__construct();
 
         // Add filter to return the metakey representing if it is selected or not
         add_filter('psppno_events_metakeys', [$this, 'filter_events_metakeys']);
         add_filter('publishpress_notifications_workflow_events', [$this, 'filter_workflow_actions']);
-        add_filter('publishpress_notifications_action_params_for_log', [$this, 'filter_action_params_for_log'], 10, 2);
         add_filter('publishpress_notifications_event_label', [$this, 'filter_event_label'], 10, 2);
     }
 
@@ -49,7 +48,7 @@ class Post_Save extends Base
             return $query_args;
         }
 
-        if ('transition_post_status' === $event_args['event']) {
+        if (self::EVENT_NAME === $event_args['event']) {
             $query_args['meta_query'][] = [
                 'key'     => static::META_KEY_SELECTED,
                 'value'   => 1,
@@ -68,56 +67,15 @@ class Post_Save extends Base
         return $query_args;
     }
 
-    /**
-     * Method to return a list of fields to display in the filter area
-     *
-     * @param array
-     *
-     * @return array
-     */
-    protected function get_filters($filters = [])
-    {
-        if (!empty($this->cache_filters)) {
-            return $this->cache_filters;
-        }
-
-        $step_name = $this->attr_prefix . '_' . $this->name;
-
-        $filters[] = new Filter\Post_Status($step_name);
-
-        return parent::get_filters($filters);
-    }
-
     public function filter_workflow_actions($actions)
     {
         if (!is_array($actions) || empty($actions)) {
             $actions = [];
         }
 
-        $actions[] = 'transition_post_status';
+        $actions[] = self::EVENT_NAME;
 
         return $actions;
-    }
-
-    public function filter_action_params_for_log($paramsString, $log)
-    {
-        if ($log->event === 'transition_post_status') {
-            global $publishpress;
-
-            $oldStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->oldStatus);
-            $newStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->newStatus);
-
-            $paramsString = '';
-            if (is_object($oldStatus)) {
-                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
-            }
-
-            if (is_object($newStatus)) {
-                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
-            }
-        }
-
-        return $paramsString;
     }
 
     /**
@@ -127,7 +85,7 @@ class Post_Save extends Base
      */
     public function filter_event_label($label, $event)
     {
-        if ($event === 'transition_post_status') {
+        if ($event === self::EVENT_NAME) {
             $label = $this->label;
         }
 

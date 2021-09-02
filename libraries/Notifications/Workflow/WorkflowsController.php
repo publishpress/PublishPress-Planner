@@ -123,7 +123,8 @@ class WorkflowsController
         // When
         $classes_event = [
             '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Editorial_Comment',
-            '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Save',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_Update',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Event\\Post_StatusTransition',
         ];
         /**
          * Filters the list of classes to define workflow "when" steps.

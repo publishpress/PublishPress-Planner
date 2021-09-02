@@ -75,6 +75,12 @@ class Post_Status extends Base implements Filter_Interface
             ];
         }
 
+        $options[] = [
+            'value'    => 'trash',
+            'label'    => esc_html(__('Trashed')),
+            'selected' => in_array('trash', $metadata[$group]),
+        ];
+
         return $options;
     }
 
