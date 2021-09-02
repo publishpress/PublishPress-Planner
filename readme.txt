@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable tag: 3.5.1
+Stable tag: 3.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,17 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.6.0] - 02 Sep 2021 =
+
+* Added: Add support for notifications when post is trashed/untrashed posts, #939;
+* Added: Add support for notifications when post is updated/saved, #483;
+* Added: Add support for ACF relationship fields on notifications, #924;
+* Removed: Remove the deprecated module "Roles". Please, use PublishPress Capabilities or other plugin for handling user roles, #925;
+* Removed: Remove the deprecated module "User Groups", #926;
+* Fixed: Stop creating unused user roles on install, #926;
+* Fixed: Fixed spacing between fields in the calendar popup, #920;
+* Fixed: Fixed PHP warning about not set configuration: duplicated_notification_threshold;
 
 = [3.5.1] - 30 Aug 2021 =
 
