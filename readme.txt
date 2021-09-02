@@ -124,7 +124,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Added: Add support for notifications when post is trashed/untrashed posts, #939;
 * Added: Add support for notifications when post is updated/saved, #483;
-* Added: Add support for ACF relationship fields on notifications, #924;
+* Added: Add support on Notifications content for different data types in the meta fields, including support to ACF relationship fields for posts, link, taxonomy and user, #924;
 * Removed: Remove the deprecated module "Roles". Please, use PublishPress Capabilities or other plugin for handling user roles, #925;
 * Removed: Remove the deprecated module "User Groups", #926;
 * Fixed: Stop creating unused user roles on install, #926;
