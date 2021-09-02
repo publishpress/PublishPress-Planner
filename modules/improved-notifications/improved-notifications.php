@@ -28,13 +28,14 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Helper;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 use PublishPress\Notifications\Workflow\Step\Action\Notification as Notification;
 use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
-use PublishPress\Notifications\Workflow\Step\Event\Post_Save as Event_Post_Save;
+use PublishPress\Notifications\Workflow\Step\Event\Post_StatusTransition;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Filter\Post_Type as Post_Type_Filter;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
@@ -102,6 +103,7 @@ if (!class_exists('PP_Improved_Notifications')) {
                     'enabled'          => 'on',
                     'post_types'       => ['post'],
                     'default_channels' => apply_filters('psppno_filter_default_notification_channel', 'email'),
+                    'duplicated_notification_threshold' => Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD_IN_MINUTES,
                 ],
                 'general_options'      => true,
             ];
@@ -186,6 +188,8 @@ if (!class_exists('PP_Improved_Notifications')) {
 
             // Add action to intercept transition between post status - post save
             add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
+            add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
+
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
 
@@ -318,7 +322,7 @@ if (!class_exists('PP_Improved_Notifications')) {
                 'post_type'   => 'psppnotif_workflow',
                 'meta_input'  => [
                     static::META_KEY_IS_DEFAULT_WORKFLOW        => '1',
-                    Event_Post_save::META_KEY_SELECTED          => '1',
+                    Post_StatusTransition::META_KEY_SELECTED          => '1',
                     Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish',
                     Content_Main::META_KEY_SUBJECT              => '&quot;[psppno_post title]&quot; was published',
                     Content_Main::META_KEY_BODY                 => $twig->render(
@@ -393,7 +397,7 @@ if (!class_exists('PP_Improved_Notifications')) {
 
         public function settings_duplicated_notification_threshold_option()
         {
-            $value = isset($this->module->options->duplicated_notification_threshold) ? (int)$this->module->options->duplicated_notification_threshold : Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+            $value = Helper::getDuplicatedNotificationThreshold();
 
             echo '<input
                     id="' . esc_attr($this->module->slug) . '_duplicated_notification_threshold"
@@ -589,6 +593,47 @@ if (!class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $params = [
                 'event'   => 'transition_post_status',
+                'event'   => Post_StatusTransition::EVENT_NAME,
+                'user_id' => get_current_user_id(),
+                'params'  => [
+                    'post_id'    => (int)$post->ID,
+                    'new_status' => $new_status,
+                    'old_status' => $old_status,
+                ],
+            ];
+
+            do_action('publishpress_notifications_trigger_workflows', $params);
+        }
+
+        /**
+         * Action called on updating a post. Used to trigger the
+         * controller of workflows to filter and execute them.
+         *
+         * @param string $new_status
+         * @param string $old_status
+         * @param WP_Post $post
+         *
+         * @throws Exception
+         */
+        public function action_update_post($new_status, $old_status, $post)
+        {
+            if (!$this->is_supported_post_type($post->post_type)) {
+                return;
+            }
+
+            // Ignores auto-save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+
+            // Ignores trashed posts, we have the status transition event.
+            if ('trash' === $new_status) {
+                return;
+            }
+
+            // Go ahead and do the action to run workflows
+            $params = [
+                'event'   => 'post_update',
                 'user_id' => get_current_user_id(),
                 'params'  => [
                     'post_id'    => (int)$post->ID,
@@ -974,7 +1019,6 @@ if (!class_exists('PP_Improved_Notifications')) {
         public function save_meta_boxes($id, $post)
         {
             // Check if the saved post is a notification workflow
-
             if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === $post->post_type) {
                 // Authentication checks. Make sure the data came from the metabox
                 if (!(
@@ -1194,7 +1238,7 @@ if (!class_exists('PP_Improved_Notifications')) {
             if (isset($new_options['duplicated_notification_threshold'])) {
                 $new_options['duplicated_notification_threshold'] = (int)$new_options['duplicated_notification_threshold'];
             } else {
-                $new_options['duplicated_notification_threshold'] = Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD;
+                $new_options['duplicated_notification_threshold'] = Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD_IN_MINUTES;
             }
 
             return $new_options;
