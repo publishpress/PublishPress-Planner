@@ -480,14 +480,14 @@ if (!class_exists('PP_Module')) {
                     return true;
                 }
 
-                if (!isset($_GET['module']) || $_GET['module'] === 'pp-modules-settings-settings') {
+                if (!isset($_GET['settings_module']) || $_GET['settings_module'] === 'pp-modules-settings-settings') {
                     if (in_array($module_name, ['editorial_comments', 'notifications', 'dashboard'])) {
                         return true;
                     }
                 }
 
                 $slug = str_replace('_', '-', $module_name);
-                if (isset($_GET['module']) && $_GET['module'] === 'pp-' . $slug . '-settings') {
+                if (isset($_GET['settings_module']) && $_GET['settings_module'] === 'pp-' . $slug . '-settings') {
                     return true;
                 }
             }

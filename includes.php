@@ -50,7 +50,7 @@ if (!defined('PP_LOADED')) {
     $settingsPage = add_query_arg(
         [
             'page'   => 'pp-modules-settings',
-            'module' => 'pp-modules-settings-settings',
+            'settings_module' => 'pp-modules-settings-settings',
         ],
         get_admin_url(null, 'admin.php')
     );

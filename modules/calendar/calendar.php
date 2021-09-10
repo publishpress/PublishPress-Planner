@@ -1122,7 +1122,7 @@ if (!class_exists('PP_Calendar')) {
 
             $args = [
                 'page'   => PP_Modules_Settings::SETTINGS_SLUG,
-                'module' => $this->module->settings_slug,
+                'settings_module' => $this->module->settings_slug,
             ];
 
             wp_safe_redirect(
