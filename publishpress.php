@@ -102,10 +102,9 @@ if (!class_exists('publishpress')) {
          */
         private function setup_actions()
         {
-            add_action('init', [$this, 'action_init']);
-            add_action('init', [$this, 'action_init_after'], 1100);
-
-            add_action('init', [$this, 'action_ini_for_admin'], 1010);
+            add_action('init', [$this, 'action_init'], PUBLISHPRESS_ACTION_PRIORITY_INIT);
+            add_action('init', [$this, 'action_init_after'], PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE);
+            add_action('init', [$this, 'action_ini_for_admin'], PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN);
             add_action('admin_menu', [$this, 'action_admin_menu'], 9);
 
             add_action('admin_enqueue_scripts', [$this, 'register_scripts_and_styles']);
