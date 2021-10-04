@@ -18,6 +18,9 @@ PublishPress has all the tools you need to manage WordPress content, including a
 
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
+> <strong>PublishPress Pro</strong><br />
+> This plugin is the free version of the PublishPress Pro plugin that comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+
 = Editorial Calendar =
 
 The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
