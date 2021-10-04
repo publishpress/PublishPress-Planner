@@ -1068,8 +1068,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
             if (!isset($args['page'])) {
                 $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
-            if (!isset($args['module'])) {
-                $args['module'] = self::SETTINGS_SLUG;
+            if (!isset($args['settings_module'])) {
+                $args['settings_module'] = self::SETTINGS_SLUG;
             }
 
             // Add other things we may need depending on the action
@@ -1090,8 +1090,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_add_editorial_metadata()
         {
-            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['module'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-term') {
+            if (!isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['settings_module'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-term') {
                 return;
             }
 
@@ -1191,8 +1191,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_edit_editorial_metadata()
         {
-            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
-                || !($_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] === self::SETTINGS_SLUG)
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'])
+                || !($_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] === self::SETTINGS_SLUG)
                 || $_GET['action'] != 'edit-term') {
                 return;
             }
@@ -1290,8 +1290,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
         {
 
             // Check that the current GET request is our GET request
-            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || !in_array($_GET['action'], ['make-viewable', 'make-hidden'])) {
+            if (!isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || !in_array($_GET['action'], ['make-viewable', 'make-hidden'])) {
                 return;
             }
 
@@ -1361,8 +1361,8 @@ if (!class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_delete_editorial_metadata()
         {
-            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-term') {
+            if (!isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-term') {
                 return;
             }
 

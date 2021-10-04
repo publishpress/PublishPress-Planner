@@ -1475,8 +1475,8 @@ if (!class_exists('PP_Custom_Status')) {
         public function handle_add_custom_status()
         {
             // Check that the current POST request is our POST request
-            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_POST['action'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_POST['action'] != 'add-new') {
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['settings_module'], $_POST['action'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_POST['action'] != 'add-new') {
                 return;
             }
 
@@ -1572,8 +1572,8 @@ if (!class_exists('PP_Custom_Status')) {
          */
         public function handle_edit_custom_status()
         {
-            if (!isset($_POST['submit'], $_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'edit-status') {
+            if (!isset($_POST['submit'], $_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'edit-status') {
                 return;
             }
 
@@ -1710,8 +1710,8 @@ if (!class_exists('PP_Custom_Status')) {
         public function handle_delete_custom_status()
         {
             // Check that this GET request is our GET request
-            if (!isset($_GET['page'], $_GET['module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-status') {
+            if (!isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-status') {
                 return;
             }
 
@@ -1759,8 +1759,8 @@ if (!class_exists('PP_Custom_Status')) {
             if (!isset($args['page'])) {
                 $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
             }
-            if (!isset($args['module'])) {
-                $args['module'] = self::SETTINGS_SLUG;
+            if (!isset($args['settings_module'])) {
+                $args['settings_module'] = self::SETTINGS_SLUG;
             }
 
             // Add other things we may need depending on the action
@@ -2219,7 +2219,7 @@ if (!class_exists('PP_Custom_Status')) {
                 if (!empty($status_obj->public) || !empty($status_obj->private)) {
                 	return $permalink;
             	}
-            } 
+            }
 
             //Are we overriding the permalink? Don't do anything
             if (isset($_POST['action']) && $_POST['action'] == 'sample-permalink') {

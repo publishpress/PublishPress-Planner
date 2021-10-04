@@ -81,7 +81,7 @@ class Email extends Base implements Channel_Interface
         $subject = html_entity_decode($content['subject']);
 
         $body = wpautop($content['body']);
-        $body = apply_filters('the_content', $body);
+        $body = apply_filters('publishpress_notifications_the_content', $body);
         $body = str_replace(']]>', ']]&gt;', $body);
 
         // Call the legacy notification module

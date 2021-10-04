@@ -33,10 +33,22 @@ use PublishPress\Legacy\Auto_loader;
 
 if (!defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.6.0');
+    define('PUBLISHPRESS_VERSION', '3.6.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
+
+    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
+        define('PUBLISHPRESS_ACTION_PRIORITY_INIT', 10);
+    }
+
+    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE')) {
+        define('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE', 1100);
+    }
+
+    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN')) {
+        define('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN', 1010);
+    }
 
     $relativePath = PUBLISHPRESS_BASE_PATH;
 
@@ -50,7 +62,7 @@ if (!defined('PP_LOADED')) {
     $settingsPage = add_query_arg(
         [
             'page'   => 'pp-modules-settings',
-            'module' => 'pp-modules-settings-settings',
+            'settings_module' => 'pp-modules-settings-settings',
         ],
         get_admin_url(null, 'admin.php')
     );
