@@ -120,7 +120,7 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.6.1] - 01 Oct 2021 =
+= [3.6.1] - 04 Oct 2021 =
 
 * Fixed: Add constants to customize priority of main actions: action_init, action_init_after and action_ini_for_admin, #953;
 * Fixed: Fix notification body on events triggered by Elementor pages, #951;
