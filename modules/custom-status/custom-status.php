@@ -987,7 +987,7 @@ if (!class_exists('PP_Custom_Status')) {
             if ($this->is_whitelisted_page()) {
                 $post_type_obj   = get_post_type_object($this->get_current_post_type());
                 $custom_statuses = $this->get_custom_statuses();
-                $selected        = self::DEFAULT_STATUS;
+                $selected        = null;
                 $selected_name   = __('Draft', 'publishpress');
 
                 $custom_statuses = apply_filters('pp_custom_status_list', $custom_statuses, $post);
@@ -1000,6 +1000,10 @@ if (!class_exists('PP_Custom_Status')) {
                         $selected = self::DEFAULT_STATUS;
                     } else {
                         $selected = $post->post_status;
+                    }
+
+                    if (empty($selected)) {
+                        $selected = self::DEFAULT_STATUS;
                     }
 
                     // Get the current post status name
