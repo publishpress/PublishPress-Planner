@@ -28,12 +28,13 @@
         }
     ],
     "dist": {
-        "url": "https://github.com/publishpress/PublishPress/releases/download/v3.6.1/publishpress-3.6.1.zip",
+        "url": "https://github.com/publishpress/PublishPress/releases/download/v3.6.2-beta.1/publishpress-3.6.2-beta.1.zip",
         "type": "zip"
     },
     "require": {
         "php": ">=5.6.20",
         "pimple/pimple": "3.2.3.*",
+
         "twig/twig": "1.42.5.*",
         "symfony/polyfill-ctype": "1.19.*",
         "publishpress/wordpress-version-notices": "^1",
