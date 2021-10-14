@@ -1246,6 +1246,10 @@ if (!class_exists('PP_Custom_Status')) {
                 return $this->custom_statuses_cache[$arg_hash];
             }
 
+            if (!taxonomy_exists(self::taxonomy_key)) {
+                $this->register_custom_statuses();
+            }
+
             // Handle if the requested taxonomy doesn't exist
             $args     = array_merge(
                 [
