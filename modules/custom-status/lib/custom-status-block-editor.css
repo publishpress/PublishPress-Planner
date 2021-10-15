@@ -9,4 +9,15 @@
   color: #545454;
 }
 
-/*# sourceMappingURL=custom-status-block-editor.css.map */
+.block-editor button.components-button.editor-post-save-draft {
+  overflow: hidden;
+  text-indent: -99999px;
+}
+.block-editor button.components-button.editor-post-save-draft::before {
+  overflow: auto;
+  text-indent: 0;
+  content: attr(aria-label);
+}
+.block-editor button.components-button.editor-post-save-draft.has-icon::before {
+  content: none;
+}
