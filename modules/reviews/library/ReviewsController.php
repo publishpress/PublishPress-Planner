@@ -109,7 +109,8 @@ class ReviewsController
             $userId = get_current_user_id();
 
             $dismissedTriggers = $this->getDismissedTriggerGroups();
-            $dismissedTriggers[$args['group']] = $args['pri'];
+            $dismissedTriggers[$args['group']] = (int)$args['priority'];
+
             update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', $dismissedTriggers);
             update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
 
