@@ -96,7 +96,7 @@ class ReviewsController
             [
                 'group' => $this->getTriggerGroup(),
                 'code' => $this->getTriggerCode(),
-                'pri' => $this->getCurrentTrigger('pri'),
+                'priority' => $this->getCurrentTrigger('priority'),
                 'reason' => 'maybe_later',
             ]
         );
@@ -124,7 +124,6 @@ class ReviewsController
             }
 
             wp_send_json_success();
-
         } catch (Exception $e) {
             wp_send_json_error($e);
         }
@@ -147,7 +146,7 @@ class ReviewsController
 
             foreach ($triggers as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
-                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['pri'])) {
+                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['priority'])) {
                         $selected = $g;
                         break;
                     }
@@ -199,7 +198,6 @@ class ReviewsController
         static $triggers;
 
         if (! isset($triggers)) {
-
             $timeMessage = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", 'publishpress');
 
             $triggers = apply_filters(
@@ -213,7 +211,7 @@ class ReviewsController
                                     strtotime($this->installationPath() . ' +1 week') < time(),
                                 ],
                                 'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                                'pri' => 10,
+                                'priority' => 10,
                             ],
                             'one_month' => [
                                 'message' => sprintf($timeMessage, $this->pluginName, __('1 month', $this->pluginSlug)),
@@ -221,7 +219,7 @@ class ReviewsController
                                     strtotime($this->installationPath() . ' +1 month') < time(),
                                 ],
                                 'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                                'pri' => 20,
+                                'priority' => 20,
                             ],
                             'three_months' => [
                                 'message' => sprintf($timeMessage, $this->pluginName, __('3 months', $this->pluginSlug)),
@@ -229,10 +227,10 @@ class ReviewsController
                                     strtotime($this->installationPath() . ' +3 months') < time(),
                                 ],
                                 'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                                'pri' => 30,
+                                'priority' => 30,
                             ],
                         ],
-                        'pri' => 10,
+                        'priority' => 10,
                     ],
                 ]
             );
@@ -273,12 +271,11 @@ class ReviewsController
         static $selected;
 
         if (! isset($selected)) {
-
             $dismissedTriggers = $this->getDismissedTriggerGroups();
 
             foreach ($this->getTriggers() as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
-                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['pri'])) {
+                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['priority'])) {
                         $selected = $t;
                         break;
                     }
@@ -351,7 +348,7 @@ class ReviewsController
 
         $group = $this->getTriggerGroup();
         $code = $this->getTriggerCode();
-        $pri = $this->getCurrentTrigger('pri');
+        $priority = $this->getCurrentTrigger('priority');
         $trigger = $this->getCurrentTrigger();
 
         // Used to anonymously distinguish unique site+user combinations in terms of effectiveness of each trigger.
@@ -364,7 +361,7 @@ class ReviewsController
                 var trigger = {
                     group: '<?php echo $group; ?>',
                     code: '<?php echo $code; ?>',
-                    pri: '<?php echo $pri; ?>'
+                    priority: '<?php echo $priority; ?>'
                 };
 
                 function dismiss(reason) {
@@ -377,7 +374,7 @@ class ReviewsController
                             nonce: '<?php echo wp_create_nonce('reviews_' . $this->pluginSlug . '_action'); ?>',
                             group: trigger.group,
                             code: trigger.code,
-                            pri: trigger.pri,
+                            priority: trigger.priority,
                             reason: reason
                         }
                     });
@@ -481,11 +478,11 @@ class ReviewsController
      */
     public function sortByPriority($a, $b)
     {
-        if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
+        if (! isset($a['priority']) || ! isset($b['priority']) || $a['priority'] === $b['priority']) {
             return 0;
         }
 
-        return ($a['pri'] < $b['pri']) ? -1 : 1;
+        return ($a['priority'] < $b['priority']) ? -1 : 1;
     }
 
     /**
@@ -498,10 +495,10 @@ class ReviewsController
      */
     public function rsortByPriority($a, $b)
     {
-        if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
+        if (! isset($a['priority']) || ! isset($b['priority']) || $a['priority'] === $b['priority']) {
             return 0;
         }
 
-        return ($a['pri'] < $b['pri']) ? 1 : -1;
+        return ($a['priority'] < $b['priority']) ? 1 : -1;
     }
 }
