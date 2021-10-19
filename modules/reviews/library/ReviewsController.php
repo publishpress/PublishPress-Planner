@@ -51,20 +51,21 @@ class ReviewsController
 
     public function init()
     {
-        add_action('init', [$this, 'hooks']);
-        add_action('wp_ajax_' . $this->pluginSlug . '_action', [$this, 'ajax_handler']);
+        add_action('wp_ajax_' . $this->pluginSlug . '_action', [$this, 'ajaxHandler']);
+
+        $this->addHooks();
     }
 
     /**
      * Hook into relevant WP actions.
      */
-    public function hooks()
+    public function addHooks()
     {
         if (is_admin() && current_user_can('edit_posts')) {
-            $this->installed_on();
-            add_action('admin_notices', [$this, 'admin_notices']);
-            add_action('network_admin_notices', [$this, 'admin_notices']);
-            add_action('user_admin_notices', [$this, 'admin_notices']);
+            $this->installationPath();
+            add_action('admin_notices', [$this, 'renderAdminNotices']);
+            add_action('network_admin_notices', [$this, 'renderAdminNotices']);
+            add_action('user_admin_notices', [$this, 'renderAdminNotices']);
         }
     }
 
@@ -73,29 +74,29 @@ class ReviewsController
      *
      * @return false|string
      */
-    public function installed_on()
+    public function installationPath()
     {
-        $installed_on = get_option('reviews_' . $this->pluginSlug . '_installed_on', false);
+        $installationPath = get_option('reviews_' . $this->pluginSlug . '_installed_on', false);
 
-        if (! $installed_on) {
-            $installed_on = current_time('mysql');
-            update_option('reviews_' . $this->pluginSlug . '_installed_on', $installed_on);
+        if (! $installationPath) {
+            $installationPath = current_time('mysql');
+            update_option('reviews_' . $this->pluginSlug . '_installed_on', $installationPath);
         }
 
-        return $installed_on;
+        return $installationPath;
     }
 
     /**
      *
      */
-    public function ajax_handler()
+    public function ajaxHandler()
     {
         $args = wp_parse_args(
             $_REQUEST,
             [
-                'group' => $this->get_trigger_group(),
-                'code' => $this->get_trigger_code(),
-                'pri' => $this->get_current_trigger('pri'),
+                'group' => $this->getTriggerGroup(),
+                'code' => $this->getTriggerCode(),
+                'pri' => $this->getCurrentTrigger('pri'),
                 'reason' => 'maybe_later',
             ]
         );
@@ -105,20 +106,20 @@ class ReviewsController
         }
 
         try {
-            $user_id = get_current_user_id();
+            $userId = get_current_user_id();
 
-            $dismissed_triggers = $this->dismissed_triggers();
-            $dismissed_triggers[$args['group']] = $args['pri'];
-            update_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', $dismissed_triggers);
-            update_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
+            $dismissedTriggers = $this->getDismissedTriggerGroups();
+            $dismissedTriggers[$args['group']] = $args['pri'];
+            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', $dismissedTriggers);
+            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
 
             switch ($args['reason']) {
                 case 'maybe_later':
-                    update_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
+                    update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
                     break;
                 case 'am_now':
                 case 'already_did':
-                    $this->already_did(true);
+                    $this->userSelectedAlreadyDid(true);
                     break;
             }
 
@@ -130,21 +131,23 @@ class ReviewsController
     }
 
     /**
+     * Get the trigger group.
+     *
      * @return int|string
      */
-    public function get_trigger_group()
+    public function getTriggerGroup()
     {
         static $selected;
 
         if (! isset($selected)) {
 
-            $dismissed_triggers = $this->dismissed_triggers();
+            $dismissedTriggers = $this->getDismissedTriggerGroups();
 
-            $triggers = $this->triggers();
+            $triggers = $this->getTriggers();
 
             foreach ($triggers as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
-                    if (! in_array(false, $trigger['conditions']) && (empty($dismissed_triggers[$g]) || $dismissed_triggers[$g] < $trigger['pri'])) {
+                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['pri'])) {
                         $selected = $g;
                         break;
                     }
@@ -170,17 +173,17 @@ class ReviewsController
      *
      * @return array|mixed
      */
-    public function dismissed_triggers()
+    public function getDismissedTriggerGroups()
     {
-        $user_id = get_current_user_id();
+        $userId = get_current_user_id();
 
-        $dismissed_triggers = get_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', true);
+        $dismissedTriggers = get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', true);
 
-        if (! $dismissed_triggers) {
-            $dismissed_triggers = array();
+        if (! $dismissedTriggers) {
+            $dismissedTriggers = [];
         }
 
-        return $dismissed_triggers;
+        return $dismissedTriggers;
     }
 
     /**
@@ -191,53 +194,55 @@ class ReviewsController
      *
      * @return bool|mixed|void
      */
-    public function triggers($group = null, $code = null)
+    public function getTriggers($group = null, $code = null)
     {
         static $triggers;
 
         if (! isset($triggers)) {
 
-            $time_message = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", 'publishpress');
+            $timeMessage = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", 'publishpress');
 
-            $triggers = apply_filters('reviews_' . $this->pluginSlug . '_triggers', array(
-                'time_installed' => array(
-                    'triggers' => array(
-                        'one_week' => array(
-                            'message' => sprintf($time_message, $this->pluginName, __('1 week', $this->pluginSlug)),
-                            'conditions' => array(
-                                strtotime($this->installed_on() . ' +1 week') < time(),
-                            ),
-                            'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                            'pri' => 10,
-                        ),
-                        'one_month' => array(
-                            'message' => sprintf($time_message, $this->pluginName, __('1 month', $this->pluginSlug)),
-                            'conditions' => array(
-                                strtotime($this->installed_on() . ' +1 month') < time(),
-                            ),
-                            'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                            'pri' => 20,
-                        ),
-                        'three_months' => array(
-                            'message' => sprintf($time_message, $this->pluginName, __('3 months', $this->pluginSlug)),
-                            'conditions' => array(
-                                strtotime($this->installed_on() . ' +3 months') < time(),
-                            ),
-                            'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
-                            'pri' => 30,
-                        ),
-
-                    ),
-                    'pri' => 10,
-                ),
-            ));
+            $triggers = apply_filters(
+                'reviews_' . $this->pluginSlug . '_triggers',
+                [
+                    'time_installed' => [
+                        'triggers' => [
+                            'one_week' => [
+                                'message' => sprintf($timeMessage, $this->pluginName, __('1 week', $this->pluginSlug)),
+                                'conditions' => [
+                                    strtotime($this->installationPath() . ' +1 week') < time(),
+                                ],
+                                'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
+                                'pri' => 10,
+                            ],
+                            'one_month' => [
+                                'message' => sprintf($timeMessage, $this->pluginName, __('1 month', $this->pluginSlug)),
+                                'conditions' => [
+                                    strtotime($this->installationPath() . ' +1 month') < time(),
+                                ],
+                                'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
+                                'pri' => 20,
+                            ],
+                            'three_months' => [
+                                'message' => sprintf($timeMessage, $this->pluginName, __('3 months', $this->pluginSlug)),
+                                'conditions' => [
+                                    strtotime($this->installationPath() . ' +3 months') < time(),
+                                ],
+                                'link' => 'https://wordpress.org/support/plugin/' . $this->pluginSlug . '/reviews/?rate=5#rate-response',
+                                'pri' => 30,
+                            ],
+                        ],
+                        'pri' => 10,
+                    ],
+                ]
+            );
 
             // Sort Groups
-            uasort($triggers, array($this, 'rsort_by_priority'));
+            uasort($triggers, [$this, 'rsortByPriority']);
 
             // Sort each groups triggers.
             foreach ($triggers as $k => $v) {
-                uasort($triggers[$k]['triggers'], array($this, 'rsort_by_priority'));
+                uasort($v['triggers'], [$this, 'rsortByPriority']);
             }
         }
 
@@ -263,17 +268,17 @@ class ReviewsController
     /**
      * @return int|string
      */
-    public function get_trigger_code()
+    public function getTriggerCode()
     {
         static $selected;
 
         if (! isset($selected)) {
 
-            $dismissed_triggers = $this->dismissed_triggers();
+            $dismissedTriggers = $this->getDismissedTriggerGroups();
 
-            foreach ($this->triggers() as $g => $group) {
+            foreach ($this->getTriggers() as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
-                    if (! in_array(false, $trigger['conditions']) && (empty($dismissed_triggers[$g]) || $dismissed_triggers[$g] < $trigger['pri'])) {
+                    if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['pri'])) {
                         $selected = $t;
                         break;
                     }
@@ -293,16 +298,16 @@ class ReviewsController
      *
      * @return bool|mixed|void
      */
-    public function get_current_trigger($key = null)
+    public function getCurrentTrigger($key = null)
     {
-        $group = $this->get_trigger_group();
-        $code = $this->get_trigger_code();
+        $group = $this->getTriggerGroup();
+        $code = $this->getTriggerCode();
 
         if (! $group || ! $code) {
             return false;
         }
 
-        $trigger = $this->triggers($group, $code);
+        $trigger = $this->getTriggers($group, $code);
 
         if (empty($key)) {
             $return = $trigger;
@@ -322,32 +327,32 @@ class ReviewsController
      *
      * @return bool
      */
-    public function already_did($set = false)
+    public function userSelectedAlreadyDid($set = false)
     {
-        $user_id = get_current_user_id();
+        $userId = get_current_user_id();
 
         if ($set) {
-            update_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_already_did', true);
+            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_already_did', true);
 
             return true;
         }
 
-        return (bool)get_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_already_did', true);
+        return (bool)get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_already_did', true);
     }
 
     /**
      * Render admin notices if available.
      */
-    public function admin_notices()
+    public function renderAdminNotices()
     {
-        if ($this->hide_notices()) {
+        if ($this->hideNotices()) {
             return;
         }
 
-        $group = $this->get_trigger_group();
-        $code = $this->get_trigger_code();
-        $pri = $this->get_current_trigger('pri');
-        $trigger = $this->get_current_trigger();
+        $group = $this->getTriggerGroup();
+        $code = $this->getTriggerCode();
+        $pri = $this->getCurrentTrigger('pri');
+        $trigger = $this->getCurrentTrigger();
 
         // Used to anonymously distinguish unique site+user combinations in terms of effectiveness of each trigger.
         $uuid = wp_hash(home_url() . '-' . get_current_user_id());
@@ -443,13 +448,13 @@ class ReviewsController
      *
      * @return bool
      */
-    public function hide_notices()
+    public function hideNotices()
     {
-        $conditions = array(
-            $this->already_did(),
-            $this->last_dismissed() && strtotime($this->last_dismissed() . ' +2 weeks') > time(),
-            empty($this->get_trigger_code()),
-        );
+        $conditions = [
+            $this->userSelectedAlreadyDid(),
+            $this->lastDismissedDate() && strtotime($this->lastDismissedDate() . ' +2 weeks') > time(),
+            empty($this->getTriggerCode()),
+        ];
 
         return in_array(true, $conditions);
     }
@@ -459,11 +464,11 @@ class ReviewsController
      *
      * @return false|string
      */
-    public function last_dismissed()
+    public function lastDismissedDate()
     {
-        $user_id = get_current_user_id();
+        $userId = get_current_user_id();
 
-        return get_user_meta($user_id, '_reviews_' . $this->pluginSlug . '_last_dismissed', true);
+        return get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', true);
     }
 
     /**
@@ -474,7 +479,7 @@ class ReviewsController
      *
      * @return int
      */
-    public function sort_by_priority($a, $b)
+    public function sortByPriority($a, $b)
     {
         if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
             return 0;
@@ -491,7 +496,7 @@ class ReviewsController
      *
      * @return int
      */
-    public function rsort_by_priority($a, $b)
+    public function rsortByPriority($a, $b)
     {
         if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
             return 0;
