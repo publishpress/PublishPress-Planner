@@ -34,7 +34,7 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 use PublishPress\Notifications\Workflow\Workflow;
 
-if (!class_exists('PP_Async_Notifications')) {
+if (! class_exists('PP_Async_Notifications')) {
     /**
      * class PP_Async_Notifications. Depends on the Improved Notifications module.
      */
@@ -68,16 +68,16 @@ if (!class_exists('PP_Async_Notifications')) {
 
             // Register the module with PublishPress
             $args = [
-                'title'                => __('Async Notifications', 'publishpress'),
-                'short_description'    => false,
+                'title' => __('Async Notifications', 'publishpress'),
+                'short_description' => false,
                 'extended_description' => false,
-                'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-feedback',
-                'slug'                 => 'async-notifications',
-                'default_options'      => [
+                'module_url' => $this->module_url,
+                'icon_class' => 'dashicons dashicons-feedback',
+                'slug' => 'async-notifications',
+                'default_options' => [
                     'enabled' => 'on',
                 ],
-                'options_page'         => false,
+                'options_page' => false,
             ];
 
             // Apply a filter to the default options
@@ -85,7 +85,7 @@ if (!class_exists('PP_Async_Notifications')) {
                 'publishpress_async_notif_default_options',
                 $args['default_options']
             );
-            $this->module            = $publishpress->register_module(
+            $this->module = $publishpress->register_module(
                 PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
                 $args
             );
@@ -132,7 +132,7 @@ if (!class_exists('PP_Async_Notifications')) {
         public function send_notification($params)
         {
             // Work the notification
-            $workflow             = Workflow::load_by_id((int)$params['workflow_id']);
+            $workflow = Workflow::load_by_id((int)$params['workflow_id']);
             $workflow->event_args = $params['event_args'];
 
             do_action('publishpress_notifications_send_notifications_action', $workflow, true);
@@ -156,10 +156,10 @@ if (!class_exists('PP_Async_Notifications')) {
                 'publishpress_notifications_send_notification',
             ];
 
-            if (!empty($cronTasks)) {
+            if (! empty($cronTasks)) {
                 foreach ($cronTasks as $time => $cron) {
                     foreach ($cron as $hook => $dings) {
-                        if (!in_array($hook, $expectedHooks)) {
+                        if (! in_array($hook, $expectedHooks)) {
                             continue;
                         }
 
@@ -182,10 +182,10 @@ if (!class_exists('PP_Async_Notifications')) {
             }
 
             $debugInfo['publishpress-scheduled-notifications'] = [
-                'label'       => 'PublishPress Scheduled Notifications in the Cron',
+                'label' => 'PublishPress Scheduled Notifications in the Cron',
                 'description' => '',
-                'show_count'  => true,
-                'fields'      => $scheduledNotifications,
+                'show_count' => true,
+                'fields' => $scheduledNotifications,
             ];
 
             return $debugInfo;

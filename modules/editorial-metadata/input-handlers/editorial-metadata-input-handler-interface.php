@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (!class_exists('Editorial_Metadata_Input_Handler_Contract')) {
+if (! class_exists('Editorial_Metadata_Input_Handler_Contract')) {
     interface Editorial_Metadata_Input_Handler_Contract
     {
         /**

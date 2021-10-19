@@ -1,7 +1,7 @@
 'use strict';
 
 var _createClass = function () {
-    function defineProperties (target, props) {
+    function defineProperties(target, props) {
         for (var i = 0; i < props.length; i++) {
             var descriptor = props[i];
             descriptor.enumerable = descriptor.enumerable || false;
@@ -18,20 +18,20 @@ var _createClass = function () {
     };
 }();
 
-function _classCallCheck (instance, Constructor) {
+function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
     }
 }
 
-function _possibleConstructorReturn (self, call) {
+function _possibleConstructorReturn(self, call) {
     if (!self) {
         throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called');
     }
     return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
 }
 
-function _inherits (subClass, superClass) {
+function _inherits(subClass, superClass) {
     if (typeof superClass !== 'function' && superClass !== null) {
         throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
     }
@@ -55,7 +55,7 @@ function _inherits (subClass, superClass) {
     var ErrorRow = function (_React$Component) {
         _inherits(ErrorRow, _React$Component);
 
-        function ErrorRow () {
+        function ErrorRow() {
             _classCallCheck(this, ErrorRow);
 
             return _possibleConstructorReturn(this, (ErrorRow.__proto__ || Object.getPrototypeOf(ErrorRow)).apply(this, arguments));
@@ -63,7 +63,7 @@ function _inherits (subClass, superClass) {
 
         _createClass(ErrorRow, [{
             key: 'render',
-            value: function render () {
+            value: function render() {
                 return React.createElement(
                     'div',
                     {className: 'error'},
@@ -82,7 +82,7 @@ function _inherits (subClass, superClass) {
     var StepList = function (_React$Component2) {
         _inherits(StepList, _React$Component2);
 
-        function StepList () {
+        function StepList() {
             _classCallCheck(this, StepList);
 
             return _possibleConstructorReturn(this, (StepList.__proto__ || Object.getPrototypeOf(StepList)).apply(this, arguments));
@@ -90,7 +90,7 @@ function _inherits (subClass, superClass) {
 
         _createClass(StepList, [{
             key: 'render',
-            value: function render () {
+            value: function render() {
                 var finished = this.props.finished;
                 var errors = this.props.errors;
                 var started = this.props.started;
@@ -108,54 +108,54 @@ function _inherits (subClass, superClass) {
                         'div',
                         {className: 'pp-progressbar-container'},
                         inProgress && React.createElement(
-                        'div',
-                        null,
-                        React.createElement('span', {className: 'dashicons dashicons-update pp-rotating'}),
-                        React.createElement(
-                            'span',
-                            {className: 'pp-in-progress'},
-                            objectL10n.header_msg
-                        )
+                            'div',
+                            null,
+                            React.createElement('span', {className: 'dashicons dashicons-update pp-rotating'}),
+                            React.createElement(
+                                'span',
+                                {className: 'pp-in-progress'},
+                                objectL10n.header_msg
+                            )
                         )
                     ),
                     hasErrors && React.createElement(
-                    'div',
-                    {className: 'pp-errors'},
-                    React.createElement(
-                        'h2',
-                        null,
-                        objectL10n.error
-                    ),
-                    React.createElement(
                         'div',
-                        null,
-                        errorRows
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        objectL10n.error_msg_intro,
-                        ' ',
+                        {className: 'pp-errors'},
                         React.createElement(
-                            'a',
-                            {href: 'mailto:help@publishpress.com'},
-                            objectL10n.error_msg_contact
+                            'h2',
+                            null,
+                            objectL10n.error
+                        ),
+                        React.createElement(
+                            'div',
+                            null,
+                            errorRows
+                        ),
+                        React.createElement(
+                            'p',
+                            null,
+                            objectL10n.error_msg_intro,
+                            ' ',
+                            React.createElement(
+                                'a',
+                                {href: 'mailto:help@publishpress.com'},
+                                objectL10n.error_msg_contact
+                            )
                         )
-                    )
                     ),
                     finished && React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'p',
-                        {className: 'pp-success'},
-                        objectL10n.success_msg
-                    ),
-                    React.createElement(
-                        'a',
-                        {className: 'button', href: objectL10n.back_to_publishpress_url},
-                        objectL10n.back_to_publishpress_label
-                    )
+                        'div',
+                        null,
+                        React.createElement(
+                            'p',
+                            {className: 'pp-success'},
+                            objectL10n.success_msg
+                        ),
+                        React.createElement(
+                            'a',
+                            {className: 'button', href: objectL10n.back_to_publishpress_url},
+                            objectL10n.back_to_publishpress_label
+                        )
                     )
                 );
             }
@@ -167,7 +167,7 @@ function _inherits (subClass, superClass) {
     var StepListContainer = function (_React$Component3) {
         _inherits(StepListContainer, _React$Component3);
 
-        function StepListContainer () {
+        function StepListContainer() {
             _classCallCheck(this, StepListContainer);
 
             return _possibleConstructorReturn(this, (StepListContainer.__proto__ || Object.getPrototypeOf(StepListContainer)).apply(this, arguments));
@@ -175,7 +175,7 @@ function _inherits (subClass, superClass) {
 
         _createClass(StepListContainer, [{
             key: 'render',
-            value: function render () {
+            value: function render() {
                 return React.createElement(StepList, {
                     started: this.props.started,
                     finished: this.props.finished,
@@ -190,7 +190,7 @@ function _inherits (subClass, superClass) {
     var MigrationForm = function (_React$Component4) {
         _inherits(MigrationForm, _React$Component4);
 
-        function MigrationForm () {
+        function MigrationForm() {
             _classCallCheck(this, MigrationForm);
 
             var _this4 = _possibleConstructorReturn(this, (MigrationForm.__proto__ || Object.getPrototypeOf(MigrationForm)).call(this));
@@ -218,7 +218,7 @@ function _inherits (subClass, superClass) {
 
         _createClass(MigrationForm, [{
             key: 'executeNextStep',
-            value: function executeNextStep () {
+            value: function executeNextStep() {
                 var _this5 = this;
 
                 // Go to the next step index.
@@ -278,7 +278,7 @@ function _inherits (subClass, superClass) {
             }
         }, {
             key: 'updateStep',
-            value: function updateStep (newStep) {
+            value: function updateStep(newStep) {
                 var index = this.state.currentStepIndex;
 
                 var newSteps = this.state.steps.map(function (step) {
@@ -289,7 +289,7 @@ function _inherits (subClass, superClass) {
             }
         }, {
             key: 'appendError',
-            value: function appendError (msg) {
+            value: function appendError(msg) {
                 var errors = this.state.errors;
                 errors.push({key: errors.length, msg: msg});
 
@@ -297,12 +297,12 @@ function _inherits (subClass, superClass) {
             }
         }, {
             key: 'eventStartMigration',
-            value: function eventStartMigration () {
+            value: function eventStartMigration() {
                 this.executeNextStep();
             }
         }, {
             key: 'render',
-            value: function render () {
+            value: function render() {
                 var started = this.state.currentStepIndex > -1;
 
                 return React.createElement(
@@ -318,9 +318,9 @@ function _inherits (subClass, superClass) {
                         )
                     ),
                     !started && React.createElement(
-                    'h4',
-                    {className: 'pp-warning'},
-                    objectL10n.migration_warning
+                        'h4',
+                        {className: 'pp-warning'},
+                        objectL10n.migration_warning
                     ),
                     React.createElement(
                         'div',
@@ -332,9 +332,9 @@ function _inherits (subClass, superClass) {
                         }),
                         React.createElement('br', null),
                         !started && React.createElement(
-                        'button',
-                        {onClick: this.eventStartMigration, className: 'button button-primary'},
-                        objectL10n.start_migration
+                            'button',
+                            {onClick: this.eventStartMigration, className: 'button button-primary'},
+                            objectL10n.start_migration
                         )
                     )
                 );

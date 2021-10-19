@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
+if (! class_exists('Editorial_Metadata_Input_Date_Handler')) {
     require_once 'editorial-metadata-input-handler.php';
 
     class Editorial_Metadata_Input_Date_Handler extends Editorial_Metadata_Input_Handler
@@ -28,11 +28,11 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          */
         protected function renderInput($inputOptions = array(), $value = null)
         {
-            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
-            $value_formatted = !empty($value) ? self::show_date_or_datetime(intval($value)) : '';
+            $value_formatted = ! empty($value) ? self::show_date_or_datetime(intval($value)) : '';
 
             self::renderLabel($input_label, $input_name);
 
@@ -99,17 +99,17 @@ if (!class_exists('Editorial_Metadata_Input_Date_Handler')) {
          */
         protected function renderInputPreview($inputOptions = array(), $value = null)
         {
-            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
-            $value             = !empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
+            $value = ! empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
 
             self::renderLabel(
                 $input_label . self::generateDescriptionHtml($input_description),
                 $input_name
             );
 
-            if (!empty($value)) {
+            if (! empty($value)) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
                     esc_html($value)

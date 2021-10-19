@@ -30,7 +30,7 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
-if (!class_exists('PP_Debug')) {
+if (! class_exists('PP_Debug')) {
     /**
      * Class PP_Debug
      */
@@ -61,19 +61,19 @@ if (!class_exists('PP_Debug')) {
 
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
-            $args             = [
-                'title'                => __('Debug', 'publishpress'),
-                'short_description'    => false,
+            $args = [
+                'title' => __('Debug', 'publishpress'),
+                'short_description' => false,
                 'extended_description' => false,
-                'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-bug',
-                'slug'                 => 'debug',
-                'default_options'      => [
+                'module_url' => $this->module_url,
+                'icon_class' => 'dashicons dashicons-bug',
+                'slug' => 'debug',
+                'default_options' => [
                     'enabled' => 'off',
                 ],
-                'configure_page_cb'    => 'print_configure_view',
+                'configure_page_cb' => 'print_configure_view',
             ];
-            $this->module     = PublishPress()->register_module('debug', $args);
+            $this->module = PublishPress()->register_module('debug', $args);
         }
 
         /**
@@ -174,12 +174,12 @@ if (!class_exists('PP_Debug')) {
          */
         public function write($message, $id = null, $line = 0)
         {
-            if (!$this->get_service('DEBUGGING')) {
+            if (! $this->get_service('DEBUGGING')) {
                 return;
             }
 
             // Make sure we have a string to write.
-            if (!is_string($message)) {
+            if (! is_string($message)) {
                 if (is_bool($message)) {
                     $message = $message ? 'true' : 'false';
                 } else {
@@ -188,8 +188,8 @@ if (!class_exists('PP_Debug')) {
             }
 
             // Prepend the id, if set.
-            if (!empty($id)) {
-                if (!empty($line)) {
+            if (! empty($id)) {
+                if (! empty($line)) {
                     $id .= ':' . $line;
                 }
 
@@ -209,9 +209,9 @@ if (!class_exists('PP_Debug')) {
             global $wp_admin_bar;
 
             $args = [
-                'id'    => 'publishpress_debug',
+                'id' => 'publishpress_debug',
                 'title' => __('PublishPress Debug Log', 'publishpress'),
-                'href'  => admin_url('admin.php?page=' . self::PAGE_SLUG),
+                'href' => admin_url('admin.php?page=' . self::PAGE_SLUG),
             ];
 
             $wp_admin_bar->add_menu($args);
@@ -239,7 +239,7 @@ if (!class_exists('PP_Debug')) {
             $is_log_found = file_exists($this->path);
 
             // Get all the plugins and versions
-            $plugins     = get_plugins();
+            $plugins = get_plugins();
             $pluginsData = [];
             foreach ($plugins as $plugin => $data) {
                 $pluginsData[$plugin] = (is_plugin_active(
@@ -249,50 +249,50 @@ if (!class_exists('PP_Debug')) {
 
             // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
             $debug_data = [
-                'php'       => [
-                    'version'                   => PHP_VERSION,
-                    'os'                        => PHP_OS,
+                'php' => [
+                    'version' => PHP_VERSION,
+                    'os' => PHP_OS,
                     'date_default_timezone_get' => date_default_timezone_get(),
-                    'date(e)'                   => date('e'),
-                    'date(T)'                   => date('T'),
+                    'date(e)' => date('e'),
+                    'date(T)' => date('T'),
                 ],
                 'wordpress' => [
-                    'version'         => $wp_version,
-                    'date_format'     => get_option('date_format'),
-                    'time_format'     => get_option('time_format'),
+                    'version' => $wp_version,
+                    'date_format' => get_option('date_format'),
+                    'time_format' => get_option('time_format'),
                     'timezone_string' => get_option('timezone_string'),
-                    'gmt_offset'      => get_option('gmt_offset'),
-                    'plugins'         => $pluginsData,
+                    'gmt_offset' => get_option('gmt_offset'),
+                    'plugins' => $pluginsData,
                 ],
             ];
             // phpcs:enable
 
             $context = [
-                'label'         => [
-                    'title'             => esc_html__('PublishPress Debug Log', 'publishpress'),
-                    'file_info'         => esc_html__('File info', 'publishpress'),
-                    'path'              => esc_html__('Path', 'publishpress'),
-                    'log_content'       => esc_html__('Log content', 'publishpress'),
-                    'size'              => esc_html__('Size', 'publishpress'),
-                    'creation_time'     => esc_html__('Created on', 'publishpress'),
+                'label' => [
+                    'title' => esc_html__('PublishPress Debug Log', 'publishpress'),
+                    'file_info' => esc_html__('File info', 'publishpress'),
+                    'path' => esc_html__('Path', 'publishpress'),
+                    'log_content' => esc_html__('Log content', 'publishpress'),
+                    'size' => esc_html__('Size', 'publishpress'),
+                    'creation_time' => esc_html__('Created on', 'publishpress'),
                     'modification_time' => esc_html__('Modified on', 'publishpress'),
-                    'delete_file'       => esc_html__('Delete file', 'publishpress'),
-                    'debug_data'        => esc_html__('Debug data', 'publishpress'),
-                    'log_file'          => esc_html__('Log File', 'publishpress'),
+                    'delete_file' => esc_html__('Delete file', 'publishpress'),
+                    'debug_data' => esc_html__('Debug data', 'publishpress'),
+                    'log_file' => esc_html__('Log File', 'publishpress'),
                 ],
-                'message'       => [
-                    'log_not_found'       => esc_html__('Log file not found.', 'publishpress'),
+                'message' => [
+                    'log_not_found' => esc_html__('Log file not found.', 'publishpress'),
                     'contact_support_tip' => esc_html__(
                         'If you see any error or look for information regarding PublishPress, please don\'t hesitate to contact the support team. E-mail us:',
                         'publishpress'
                     ),
-                    'click_to_delete'     => esc_html__(
+                    'click_to_delete' => esc_html__(
                         'Click to delete the log file. Be careful, this operation can not be undone. ',
                         'publishpress'
                     ),
                 ],
                 'contact_email' => 'help@publishpress.com',
-                'link_delete'   => admin_url(
+                'link_delete' => admin_url(
                     sprintf(
                         'admin.php?page=%s&action=%s&_wpnonce=%s',
                         self::PAGE_SLUG,
@@ -300,15 +300,15 @@ if (!class_exists('PP_Debug')) {
                         wp_create_nonce(self::ACTION_DELETE_LOG)
                     )
                 ),
-                'is_log_found'  => $is_log_found,
-                'file'          => [
-                    'path'              => $this->path,
-                    'size'              => $is_log_found ? round(filesize($this->path) / 1024, 2) : 0,
+                'is_log_found' => $is_log_found,
+                'file' => [
+                    'path' => $this->path,
+                    'size' => $is_log_found ? round(filesize($this->path) / 1024, 2) : 0,
                     'modification_time' => $is_log_found ? gmdate('Y-m-d H:i:s T O', filemtime($this->path)) : '',
-                    'content'           => $is_log_found ? file_get_contents($this->path) : '',
+                    'content' => $is_log_found ? file_get_contents($this->path) : '',
                 ],
-                'debug_data'    => print_r($debug_data, true),
-                'messages'      => $this->messages,
+                'debug_data' => print_r($debug_data, true),
+                'messages' => $this->messages,
             ];
 
             // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -319,26 +319,26 @@ if (!class_exists('PP_Debug')) {
         protected function handle_actions()
         {
             // Are we on the correct page?
-            if (!array_key_exists('page', $_GET) || $_GET['page'] !== self::PAGE_SLUG) {
+            if (! array_key_exists('page', $_GET) || $_GET['page'] !== self::PAGE_SLUG) {
                 return;
             }
 
             // Do we have an action?
-            if (!array_key_exists('action', $_GET) || empty($_GET['action'])) {
+            if (! array_key_exists('action', $_GET) || empty($_GET['action'])) {
                 return;
             }
 
             $action = preg_replace('/[^a-z0-9_\-]/i', '', sanitize_text_field($_GET['action']));
 
             // Do we have a nonce?
-            if (!array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
+            if (! array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
                 $this->messages[] = __('Action nonce not found.', 'publishpress');
 
                 return;
             }
 
             // Check the nonce.
-            if (!wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), $action)) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), $action)) {
                 $this->messages[] = __('Invalid action nonce.', 'publishpress');
 
                 return;

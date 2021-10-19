@@ -28,7 +28,7 @@
  * along with PublishPress. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!defined('PUBLISHPRESS_FREE_PLUGIN_PATH')) {
+if (! defined('PUBLISHPRESS_FREE_PLUGIN_PATH')) {
     /*
      * This constant is used by the Pro plugin to know where the Free plugin is installed.
      * This file should be automatically loaded by Composer. We use this file instead of

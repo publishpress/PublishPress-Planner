@@ -1,5 +1,7 @@
 <?php
 
+use Codeception\Actor;
+
 
 /**
  * Inherited Methods
@@ -15,8 +17,8 @@
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class WpunitTester extends \Codeception\Actor
+ */
+class WpunitTester extends Actor
 {
     use _generated\WpunitTesterActions;
 

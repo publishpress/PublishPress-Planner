@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Dashboard')) {
+if (! class_exists('PP_Dashboard')) {
     /**
      * class PP_Dashboard
      * All of the code for the dashboard widgets from PublishPress
@@ -51,25 +51,25 @@ if (!class_exists('PP_Dashboard')) {
         {
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
-            $args             = [
-                'title'                => __('Dashboard', 'publishpress'),
-                'short_description'    => false,
+            $args = [
+                'title' => __('Dashboard', 'publishpress'),
+                'short_description' => false,
                 'extended_description' => false,
-                'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-layout',
-                'slug'                 => 'dashboard',
-                'post_type_support'    => 'pp_dashboard',
-                'default_options'      => [
-                    'enabled'            => 'on',
+                'module_url' => $this->module_url,
+                'icon_class' => 'dashicons dashicons-layout',
+                'slug' => 'dashboard',
+                'post_type_support' => 'pp_dashboard',
+                'default_options' => [
+                    'enabled' => 'on',
                     'post_status_widget' => 'on',
-                    'my_posts_widget'    => 'on',
-                    'notepad_widget'     => 'on',
+                    'my_posts_widget' => 'on',
+                    'notepad_widget' => 'on',
                 ],
-                'configure_page_cb'    => 'print_configure_view',
-                'configure_link_text'  => __('Widget Options', 'publishpress'),
-                'general_options'      => true,
+                'configure_page_cb' => 'print_configure_view',
+                'configure_link_text' => __('Widget Options', 'publishpress'),
+                'general_options' => true,
             ];
-            $this->module     = PublishPress()->register_module('dashboard', $args);
+            $this->module = PublishPress()->register_module('dashboard', $args);
         }
 
         /**
@@ -141,7 +141,7 @@ if (!class_exists('PP_Dashboard')) {
         public function add_dashboard_widgets()
         {
             // Only show dashboard widgets for Contributor or higher
-            if (!current_user_can('edit_posts')) {
+            if (! current_user_can('edit_posts')) {
                 return;
             }
 
@@ -202,18 +202,23 @@ if (!class_exists('PP_Dashboard')) {
                     get_admin_url(null, 'admin.php')
                 );
             } ?>
-            <p class="sub"><?php _e('Posts at a Glance', 'publishpress') ?></p>
+            <p class="sub"><?php
+                _e('Posts at a Glance', 'publishpress') ?></p>
 
             <div class="table">
                 <table>
                     <tbody>
-                    <?php $post_count = wp_count_posts('post'); ?>
+                    <?php
+                    $post_count = wp_count_posts('post'); ?>
 
-                    <?php foreach ($statuses as $status) : ?>
-                        <?php $filter_link = $this->filter_posts_link($status->slug); ?>
+                    <?php
+                    foreach ($statuses as $status) : ?>
+                        <?php
+                        $filter_link = $this->filter_posts_link($status->slug); ?>
                         <tr>
                             <td class="b">
-                                <a href="<?php echo esc_url($filter_link); ?>">
+                                <a href="<?php
+                                echo esc_url($filter_link); ?>">
                                     <?php
                                     $slug = $status->slug;
 
@@ -225,13 +230,16 @@ if (!class_exists('PP_Dashboard')) {
                                 </a>
                             </td>
                             <td>
-                                <a href="<?php echo esc_url($filter_link); ?>">
-                                    <?php echo esc_html($status->name); ?>
+                                <a href="<?php
+                                echo esc_url($filter_link); ?>">
+                                    <?php
+                                    echo esc_html($status->name); ?>
                                 </a>
                             </td>
                         </tr>
 
-                    <?php endforeach; ?>
+                    <?php
+                    endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -251,7 +259,7 @@ if (!class_exists('PP_Dashboard')) {
 
             $newList = [];
             foreach ($statuses as $status) {
-                if (!in_array($status->slug, ['publish', 'private'])) {
+                if (! in_array($status->slug, ['publish', 'private'])) {
                     $newList[] = $status;
                 }
             }
@@ -271,27 +279,38 @@ if (!class_exists('PP_Dashboard')) {
 
             $myposts = $publishpress->notifications->get_user_to_notify_posts(); ?>
             <div class="pp-myposts">
-                <?php if (!empty($myposts)) : ?>
+                <?php
+                if (! empty($myposts)) : ?>
 
-                    <?php foreach ($myposts as $post) : ?>
+                    <?php
+                    foreach ($myposts as $post) : ?>
                         <?php
-                        $url   = get_edit_post_link($post->ID);
+                        $url = get_edit_post_link($post->ID);
                         ?>
                         <li>
-                            <h4><a href="<?php echo esc_url($url) ?>"
-                                   title="<?php esc_attr_e(
-                                           'Edit this post',
-                                           'publishpress'
-                                   ); ?>"><?php echo esc_html($post->post_title); ?></a></h4>
-                            <span class="pp-myposts-timestamp"><?php esc_html_e(
+                            <h4><a href="<?php
+                                echo esc_url($url) ?>"
+                                   title="<?php
+                                   esc_attr_e(
+                                       'Edit this post',
+                                       'publishpress'
+                                   ); ?>"><?php
+                                    echo esc_html($post->post_title); ?></a></h4>
+                            <span class="pp-myposts-timestamp"><?php
+                                esc_html_e(
                                     'This post was last updated on ',
                                     'publishpress'
-                                ) ?><?php echo esc_html(get_the_time('F j, Y \\a\\t g:i a', $post)); ?></span>
+                                ) ?><?php
+                                echo esc_html(get_the_time('F j, Y \\a\\t g:i a', $post)); ?></span>
                         </li>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p><?php esc_html_e('Sorry! You\'re not subscribed to any posts!', 'publishpress'); ?></p>
-                <?php endif; ?>
+                    <?php
+                    endforeach; ?>
+                <?php
+                else : ?>
+                    <p><?php
+                        esc_html_e('Sorry! You\'re not subscribed to any posts!', 'publishpress'); ?></p>
+                <?php
+                endif; ?>
             </div>
             <?php
         }
@@ -342,7 +361,7 @@ if (!class_exists('PP_Dashboard')) {
         {
             $options = [
                 'off' => __('Disabled', 'publishpress'),
-                'on'  => __('Enabled', 'publishpress'),
+                'on' => __('Enabled', 'publishpress'),
             ];
             echo '<select id="post_status_widget" name="' . esc_attr(
                     $this->module->options_group_name
@@ -365,13 +384,13 @@ if (!class_exists('PP_Dashboard')) {
             global $publishpress;
             $options = [
                 'off' => __('Disabled', 'publishpress'),
-                'on'  => __('Enabled', 'publishpress'),
+                'on' => __('Enabled', 'publishpress'),
             ];
             echo '<select id="my_posts_widget" name="' . esc_attr(
                     $this->module->options_group_name
                 ) . '[my_posts_widget]"';
             // Notifications module has to be enabled for the My Posts widget to work
-            if (!$this->module_enabled('notifications')) {
+            if (! $this->module_enabled('notifications')) {
                 echo ' disabled="disabled"';
                 $this->module->options->my_posts_widget = 'off';
             }
@@ -382,7 +401,7 @@ if (!class_exists('PP_Dashboard')) {
                 echo '>' . esc_html($label) . '</option>';
             }
             echo '</select>';
-            if (!$this->module_enabled('notifications')) {
+            if (! $this->module_enabled('notifications')) {
                 echo '&nbsp;&nbsp;&nbsp;<span class="description">' . esc_html__(
                         'The notifications module will need to be enabled for this widget to display.',
                         'publishpress'
@@ -399,7 +418,7 @@ if (!class_exists('PP_Dashboard')) {
         {
             $options = [
                 'off' => __('Disabled', 'publishpress'),
-                'on'  => __('Enabled', 'publishpress'),
+                'on' => __('Enabled', 'publishpress'),
             ];
             echo '<select id="notepad_widget" name="' . esc_attr(
                     $this->module->options_group_name

@@ -68,7 +68,7 @@ export default function ItemFormPopup(props) {
             fieldId = 'publishpress-calendar-field-' + dataPropertyName;
 
             dataProperty = fields[dataPropertyName];
-            placeholder  = dataProperty.placeholder ? dataProperty.placeholder : null;
+            placeholder = dataProperty.placeholder ? dataProperty.placeholder : null;
 
             switch (dataProperty.type) {
                 case 'date':
@@ -142,9 +142,9 @@ export default function ItemFormPopup(props) {
 
                 case 'checkbox':
                     field = <CheckboxField
-                                isEditing={true}
-                                id={fieldId}
-                                value={dataProperty.value}/>;
+                        isEditing={true}
+                        id={fieldId}
+                        value={dataProperty.value}/>;
                     break;
 
                 case 'location':
@@ -407,7 +407,8 @@ export default function ItemFormPopup(props) {
             <div className={'publishpress-calendar-popup publishpress-calendar-popup-form'}>
                 <div className={'publishpress-calendar-popup-title'}>
                     {getFormPopupTitle()}
-                    <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
+                    <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
+                          title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
                 </div>
                 <hr/>
                 <table>
@@ -433,7 +434,7 @@ export default function ItemFormPopup(props) {
                     }
 
                     {fieldTableRows.length > 0 &&
-                        fieldTableRows
+                    fieldTableRows
                     }
                     </tbody>
                 </table>

@@ -23,6 +23,8 @@
 
 namespace PublishPress\NotificationsLog;
 
+use Exception;
+use PP_Editorial_Comments;
 use WP_CLI;
 
 /**
@@ -34,7 +36,7 @@ class CliHandler
 {
     public function __construct()
     {
-        \WP_CLI::add_command(
+        WP_CLI::add_command(
             'publishpress-notifications',
             [$this, 'handleCommands'],
             [
@@ -82,7 +84,7 @@ class CliHandler
             $requiredArguments = ['post_id', 'action', 'user_id'];
 
             foreach ($requiredArguments as $requiredArgument) {
-                if (!key_exists($requiredArgument, $assocArgs)) {
+                if (! key_exists($requiredArgument, $assocArgs)) {
                     $this->halt('Missed argument: ' . $requiredArgument);
                 }
             }
@@ -97,7 +99,7 @@ class CliHandler
             }
 
             WP_CLI::success('Notification created');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->halt('Exception: ' . $e->getMessage());
         }
     }
@@ -110,26 +112,26 @@ class CliHandler
 
         // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
         $data = [
-            'comment_post_ID'      => (int)$assocArgs['post_id'],
-            'comment_author'       => esc_sql($current_user->display_name),
+            'comment_post_ID' => (int)$assocArgs['post_id'],
+            'comment_author' => esc_sql($current_user->display_name),
             'comment_author_email' => esc_sql($current_user->user_email),
-            'comment_author_url'   => esc_sql($current_user->user_url),
-            'comment_content'      => $comment_content,
-            'comment_type'         => \PP_Editorial_Comments::comment_type,
-            'comment_parent'       => 0,
-            'user_id'              => $current_user->ID,
-            'comment_author_IP'    => '0.0.0.0',
-            'comment_agent'        => 'WP_Cli/Publishpress-notifications',
-            'comment_date'         => date('Y-m-d H:i:s'),
-            'comment_date_gmt'     => gmdate('Y-m-d H:i:s'),
+            'comment_author_url' => esc_sql($current_user->user_url),
+            'comment_content' => $comment_content,
+            'comment_type' => PP_Editorial_Comments::comment_type,
+            'comment_parent' => 0,
+            'user_id' => $current_user->ID,
+            'comment_author_IP' => '0.0.0.0',
+            'comment_agent' => 'WP_Cli/Publishpress-notifications',
+            'comment_date' => date('Y-m-d H:i:s'),
+            'comment_date_gmt' => gmdate('Y-m-d H:i:s'),
             // Set to -1?
-            'comment_approved'     => \PP_Editorial_Comments::comment_type,
+            'comment_approved' => PP_Editorial_Comments::comment_type,
         ];
         // phpcs:enable
 
         // Insert Comment
         $comment_id = wp_insert_comment($data);
-        $comment    = get_comment($comment_id);
+        $comment = get_comment($comment_id);
 
         // Register actions -- will be used to set up notifications and other modules can hook into this
         if ($comment_id) {

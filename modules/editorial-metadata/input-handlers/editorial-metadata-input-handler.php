@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (!class_exists('Editorial_Metadata_Input_Handler')) {
+if (! class_exists('Editorial_Metadata_Input_Handler')) {
     require_once 'editorial-metadata-input-handler-interface.php';
 
     abstract class Editorial_Metadata_Input_Handler implements Editorial_Metadata_Input_Handler_Contract
@@ -54,11 +54,11 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          */
         final public function registerHandler($handler)
         {
-            if (!($handler instanceof Editorial_Metadata_Input_Handler)) {
+            if (! ($handler instanceof Editorial_Metadata_Input_Handler)) {
                 throw new Exception('Invalid type for handler parameter.');
             }
 
-            if (!is_null($this->nextHandler)) {
+            if (! is_null($this->nextHandler)) {
                 return $this->nextHandler->registerHandler($handler);
             }
 
@@ -78,8 +78,8 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          */
         final public function handleHtmlRendering($type, $inputOptions = array(), $value = null)
         {
-            if (!$this->canHandle($type)) {
-                return !is_null($this->nextHandler)
+            if (! $this->canHandle($type)) {
+                return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handleHtmlRendering($type, $inputOptions, $value)
                     : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
@@ -100,8 +100,8 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          */
         final public function handlePreviewRendering($type, $inputOptions = array(), $value = null)
         {
-            if (!$this->canHandle($type)) {
-                return !is_null($this->nextHandler)
+            if (! $this->canHandle($type)) {
+                return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handlePreviewRendering($type, $inputOptions, $value)
                     : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
@@ -120,8 +120,8 @@ if (!class_exists('Editorial_Metadata_Input_Handler')) {
          */
         final public function handleMetaValueHtmling($type, $value = null)
         {
-            if (!$this->canHandle($type)) {
-                return !is_null($this->nextHandler)
+            if (! $this->canHandle($type)) {
+                return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handleMetaValueHtmling($type, $value)
                     : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
