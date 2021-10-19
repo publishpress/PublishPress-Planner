@@ -17,6 +17,8 @@
  * URL: https://github.com/danieliser/WP-Product-In-Dash-Review-Requests
  */
 
+use PublishPress\Legacy\Auto_loader;
+
 if (! defined('ABSPATH')) {
     exit;
 }
@@ -26,7 +28,7 @@ if (! defined('ABSPATH')) {
  *
  * This class adds a review request system for your plugin or theme to the WP dashboard.
  */
-class PP_Reviews
+class PP_Reviews extends PP_Module
 {
     /**
      * Tracking API Endpoint.
@@ -35,25 +37,69 @@ class PP_Reviews
      */
     public static $api_url = '';
 
+    public $module_name = 'reviews';
+
+    public $module_url = '';
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        global $publishpress;
+
+        $this->module_url = $this->get_module_url(__FILE__);
+
+        // Register the module with PublishPress
+        $args = [
+            'title' => __('Reviews', 'publishpress'),
+            'short_description' => false,
+            'extended_description' => false,
+            'module_url' => $this->module_url,
+            'icon_class' => 'dashicons dashicons-feedback',
+            'slug' => 'reviews',
+            'default_options' => [
+                'enabled' => 'on',
+            ],
+            'general_options' => false,
+            'autoload' => true,
+        ];
+
+        // Apply a filter to the default options
+        $args['default_options'] = apply_filters(
+            'pp_reviews_default_options',
+            $args['default_options']
+        );
+
+        $this->module = $publishpress->register_module(
+            PublishPress\Legacy\Util::sanitize_module_name($this->module_name),
+            $args
+        );
+
+        Auto_loader::register('\\PublishPress\\Reviews\\', __DIR__ . '/library');
+
+        parent::__construct();
+    }
+
     /**
      *
      */
-    public static function init()
+    public function init()
     {
-        add_action('init', array(__CLASS__, 'hooks'));
-        add_action('wp_ajax_ppch_review_action', array(__CLASS__, 'ajax_handler'));
+        add_action('init', array($this, 'hooks'));
+        add_action('wp_ajax_ppch_review_action', array($this, 'ajax_handler'));
     }
 
     /**
      * Hook into relevant WP actions.
      */
-    public static function hooks()
+    public function hooks()
     {
         if (is_admin() && current_user_can('edit_posts')) {
-            self::installed_on();
-            add_action('admin_notices', array(__CLASS__, 'admin_notices'));
-            add_action('network_admin_notices', array(__CLASS__, 'admin_notices'));
-            add_action('user_admin_notices', array(__CLASS__, 'admin_notices'));
+            $this->installed_on();
+            add_action('admin_notices', array($this, 'admin_notices'));
+            add_action('network_admin_notices', array($this, 'admin_notices'));
+            add_action('user_admin_notices', array($this, 'admin_notices'));
         }
     }
 
@@ -62,7 +108,7 @@ class PP_Reviews
      *
      * @return false|string
      */
-    public static function installed_on()
+    public function installed_on()
     {
         $installed_on = get_option('ppch_reviews_installed_on', false);
 
@@ -77,12 +123,12 @@ class PP_Reviews
     /**
      *
      */
-    public static function ajax_handler()
+    public function ajax_handler()
     {
         $args = wp_parse_args($_REQUEST, array(
-            'group' => self::get_trigger_group(),
-            'code' => self::get_trigger_code(),
-            'pri' => self::get_current_trigger('pri'),
+            'group' => $this->get_trigger_group(),
+            'code' => $this->get_trigger_code(),
+            'pri' => $this->get_current_trigger('pri'),
             'reason' => 'maybe_later',
         ));
 
@@ -93,7 +139,7 @@ class PP_Reviews
         try {
             $user_id = get_current_user_id();
 
-            $dismissed_triggers = self::dismissed_triggers();
+            $dismissed_triggers = $this->dismissed_triggers();
             $dismissed_triggers[$args['group']] = $args['pri'];
             update_user_meta($user_id, '_ppch_reviews_dismissed_triggers', $dismissed_triggers);
             update_user_meta($user_id, '_ppch_reviews_last_dismissed', current_time('mysql'));
@@ -104,7 +150,7 @@ class PP_Reviews
                     break;
                 case 'am_now':
                 case 'already_did':
-                    self::already_did(true);
+                    $this->already_did(true);
                     break;
             }
 
@@ -118,15 +164,15 @@ class PP_Reviews
     /**
      * @return int|string
      */
-    public static function get_trigger_group()
+    public function get_trigger_group()
     {
         static $selected;
 
         if (! isset($selected)) {
 
-            $dismissed_triggers = self::dismissed_triggers();
+            $dismissed_triggers = $this->dismissed_triggers();
 
-            $triggers = self::triggers();
+            $triggers = $this->triggers();
 
             foreach ($triggers as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
@@ -156,7 +202,7 @@ class PP_Reviews
      *
      * @return array|mixed
      */
-    public static function dismissed_triggers()
+    public function dismissed_triggers()
     {
         $user_id = get_current_user_id();
 
@@ -177,7 +223,7 @@ class PP_Reviews
      *
      * @return bool|mixed|void
      */
-    public static function triggers($group = null, $code = null)
+    public function triggers($group = null, $code = null)
     {
         static $triggers;
 
@@ -191,7 +237,7 @@ class PP_Reviews
                         'one_week' => array(
                             'message' => sprintf($time_message, __('1 week', 'publishpress-checklists')),
                             'conditions' => array(
-                                strtotime(self::installed_on() . ' +1 week') < time(),
+                                strtotime($this->installed_on() . ' +1 week') < time(),
                             ),
                             'link' => 'https://wordpress.org/support/plugin/publishpress-checklists/reviews/?rate=5#rate-response',
                             'pri' => 10,
@@ -199,7 +245,7 @@ class PP_Reviews
                         'one_month' => array(
                             'message' => sprintf($time_message, __('1 month', 'publishpress-checklists')),
                             'conditions' => array(
-                                strtotime(self::installed_on() . ' +1 month') < time(),
+                                strtotime($this->installed_on() . ' +1 month') < time(),
                             ),
                             'link' => 'https://wordpress.org/support/plugin/publishpress-checklists/reviews/?rate=5#rate-response',
                             'pri' => 20,
@@ -207,7 +253,7 @@ class PP_Reviews
                         'three_months' => array(
                             'message' => sprintf($time_message, __('3 months', 'publishpress-checklists')),
                             'conditions' => array(
-                                strtotime(self::installed_on() . ' +3 months') < time(),
+                                strtotime($this->installed_on() . ' +3 months') < time(),
                             ),
                             'link' => 'https://wordpress.org/support/plugin/publishpress-checklists/reviews/?rate=5#rate-response',
                             'pri' => 30,
@@ -219,11 +265,11 @@ class PP_Reviews
             ));
 
             // Sort Groups
-            uasort($triggers, array(__CLASS__, 'rsort_by_priority'));
+            uasort($triggers, array($this, 'rsort_by_priority'));
 
             // Sort each groups triggers.
             foreach ($triggers as $k => $v) {
-                uasort($triggers[$k]['triggers'], array(__CLASS__, 'rsort_by_priority'));
+                uasort($triggers[$k]['triggers'], array($this, 'rsort_by_priority'));
             }
         }
 
@@ -249,15 +295,15 @@ class PP_Reviews
     /**
      * @return int|string
      */
-    public static function get_trigger_code()
+    public function get_trigger_code()
     {
         static $selected;
 
         if (! isset($selected)) {
 
-            $dismissed_triggers = self::dismissed_triggers();
+            $dismissed_triggers = $this->dismissed_triggers();
 
-            foreach (self::triggers() as $g => $group) {
+            foreach ($this->triggers() as $g => $group) {
                 foreach ($group['triggers'] as $t => $trigger) {
                     if (! in_array(false, $trigger['conditions']) && (empty($dismissed_triggers[$g]) || $dismissed_triggers[$g] < $trigger['pri'])) {
                         $selected = $t;
@@ -279,16 +325,16 @@ class PP_Reviews
      *
      * @return bool|mixed|void
      */
-    public static function get_current_trigger($key = null)
+    public function get_current_trigger($key = null)
     {
-        $group = self::get_trigger_group();
-        $code = self::get_trigger_code();
+        $group = $this->get_trigger_group();
+        $code = $this->get_trigger_code();
 
         if (! $group || ! $code) {
             return false;
         }
 
-        $trigger = self::triggers($group, $code);
+        $trigger = $this->triggers($group, $code);
 
         if (empty($key)) {
             $return = $trigger;
@@ -308,7 +354,7 @@ class PP_Reviews
      *
      * @return bool
      */
-    public static function already_did($set = false)
+    public function already_did($set = false)
     {
         $user_id = get_current_user_id();
 
@@ -324,16 +370,16 @@ class PP_Reviews
     /**
      * Render admin notices if available.
      */
-    public static function admin_notices()
+    public function admin_notices()
     {
-        if (self::hide_notices()) {
+        if ($this->hide_notices()) {
             return;
         }
 
-        $group = self::get_trigger_group();
-        $code = self::get_trigger_code();
-        $pri = self::get_current_trigger('pri');
-        $tigger = self::get_current_trigger();
+        $group = $this->get_trigger_group();
+        $code = $this->get_trigger_code();
+        $pri = $this->get_current_trigger('pri');
+        $tigger = $this->get_current_trigger();
 
         // Used to anonymously distinguish unique site+user combinations in terms of effectiveness of each trigger.
         $uuid = wp_hash(home_url() . '-' . get_current_user_id());
@@ -363,11 +409,11 @@ class PP_Reviews
                         }
                     });
 
-                    <?php if ( ! empty(self::$api_url) ) : ?>
+                    <?php if ( ! empty($this->$api_url) ) : ?>
                     $.ajax({
                         method: "POST",
                         dataType: "json",
-                        url: '<?php echo self::$api_url; ?>',
+                        url: '<?php echo $this->$api_url; ?>',
                         data: {
                             trigger_group: trigger.group,
                             trigger_code: trigger.code,
@@ -429,12 +475,12 @@ class PP_Reviews
      *
      * @return bool
      */
-    public static function hide_notices()
+    public function hide_notices()
     {
         $conditions = array(
-            self::already_did(),
-            self::last_dismissed() && strtotime(self::last_dismissed() . ' +2 weeks') > time(),
-            empty(self::get_trigger_code()),
+            $this->already_did(),
+            $this->last_dismissed() && strtotime($this->last_dismissed() . ' +2 weeks') > time(),
+            empty($this->get_trigger_code()),
         );
 
         return in_array(true, $conditions);
@@ -445,7 +491,7 @@ class PP_Reviews
      *
      * @return false|string
      */
-    public static function last_dismissed()
+    public function last_dismissed()
     {
         $user_id = get_current_user_id();
 
@@ -460,7 +506,7 @@ class PP_Reviews
      *
      * @return int
      */
-    public static function sort_by_priority($a, $b)
+    public function sort_by_priority($a, $b)
     {
         if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
             return 0;
@@ -477,7 +523,7 @@ class PP_Reviews
      *
      * @return int
      */
-    public static function rsort_by_priority($a, $b)
+    public function rsort_by_priority($a, $b)
     {
         if (! isset($a['pri']) || ! isset($b['pri']) || $a['pri'] === $b['pri']) {
             return 0;
