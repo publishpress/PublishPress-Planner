@@ -68,6 +68,10 @@ class ReviewsController
      */
     private $metaMap;
 
+    /**
+     * @param string $pluginSlug
+     * @param string $pluginName
+     */
     public function __construct($pluginSlug, $pluginName)
     {
         $this->pluginSlug = $pluginSlug;
@@ -76,7 +80,7 @@ class ReviewsController
         $this->metaMap = apply_filters(
             'publishpress_reviews_meta_map_' . $pluginSlug,
             [
-                'action_ajax_handler' => 'wp_ajax_' . $this->pluginSlug . '_action',
+                'action_ajax_handler' => $this->pluginSlug . '_action',
                 'option_installed_on' => $this->pluginSlug . '_reviews_installed_on',
                 'nonce_action' => $this->pluginSlug . '_reviews_action',
                 'user_meta_dismissed_triggers' => '_' . $this->pluginSlug . '_reviews_dismissed_triggers',
@@ -87,9 +91,12 @@ class ReviewsController
         );
     }
 
+    /**
+     * Initialize the library.
+     */
     public function init()
     {
-        add_action($this->metaMap['action_ajax_handler'], [$this, 'ajaxHandler']);
+        add_action('wp_ajax_' . $this->metaMap['action_ajax_handler'], [$this, 'ajaxHandler']);
 
         $this->addHooks();
     }
@@ -125,7 +132,7 @@ class ReviewsController
     }
 
     /**
-     *
+     * The function called by the ajax request.
      */
     public function ajaxHandler()
     {
@@ -158,7 +165,7 @@ class ReviewsController
                     break;
                 case 'am_now':
                 case 'already_did':
-                    $this->userSelectedAlreadyDid(true);
+                    $this->setUserAlreadyDid($userId);
                     break;
             }
 
@@ -237,7 +244,7 @@ class ReviewsController
         static $triggers;
 
         if (! isset($triggers)) {
-            $timeMessage = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", $this->pluginSlug);
+            $timeMessage = __('Hey, you\'ve been using %s for %s on your site - I hope it has been helpful. I would very much appreciate it if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.', $this->pluginSlug);
 
             $triggers = apply_filters(
                 $this->metaMap['filter_triggers'],
@@ -357,23 +364,12 @@ class ReviewsController
     }
 
     /**
-     * Returns true if the user has opted to never see this again. Or sets the option.
-     *
-     * @param bool $set If set this will mark the user as having opted to never see this again.
-     *
-     * @return bool
+     * @param $userId
+     * @param bool $value
      */
     private function setUserAlreadyDid($userId)
     {
-        $userId = get_current_user_id();
-
-        if ($set) {
-            update_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
-
-            return true;
-        }
-
-        return (bool)get_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
+        update_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
     }
 
     /**
@@ -409,7 +405,7 @@ class ReviewsController
                         dataType: "json",
                         url: ajaxurl,
                         data: {
-                            action: 'reviews_<?php echo $this->pluginSlug; ?>_action',
+                            action: '<?php echo $this->metaMap['action_ajax_handler']; ?>',
                             nonce: '<?php echo wp_create_nonce($this->metaMap['nonce_action']); ?>',
                             group: trigger.group,
                             code: trigger.code,
@@ -493,6 +489,18 @@ class ReviewsController
         ];
 
         return in_array(true, $conditions);
+    }
+
+    /**
+     * Returns true if the user has opted to never see this again.
+     *
+     * @return bool
+     */
+    private function userSelectedAlreadyDid()
+    {
+        $userId = get_current_user_id();
+
+        return (bool)get_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
     }
 
     /**
