@@ -123,6 +123,13 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.6.2] - 20 Oct 2021 =
+
+* Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
+* Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
+* Fixed: Block editor crashing if we resize the window to a mobile device dimension, #960;
+* Added: Add a review request banner, #949;
+
 = [3.6.1] - 04 Oct 2021 =
 
 * Fixed: Add constants to customize priority of main actions: action_init, action_init_after and action_ini_for_admin, #953;
