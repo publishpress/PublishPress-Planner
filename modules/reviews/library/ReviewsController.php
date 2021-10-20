@@ -77,13 +77,12 @@ class ReviewsController
             'publishpress_reviews_meta_map_' . $pluginSlug,
             [
                 'action_ajax_handler' => 'wp_ajax_' . $this->pluginSlug . '_action',
-                'option_installed_on' => 'reviews_' . $this->pluginSlug . '_installed_on',
-                'nonce_action' => 'reviews_' . $this->pluginSlug . '_action',
-                'user_meta_dismissed_triggers' => '_reviews_' . $this->pluginSlug . '_dismissed_triggers',
-                'user_meta_last_dismissed' => '_reviews_' . $this->pluginSlug . '_last_dismissed',
-                'user_meta_already_did' => '_reviews_' . $this->pluginSlug . '_already_did',
-                'filter_triggers' => 'reviews_' . $this->pluginSlug . '_triggers',
-
+                'option_installed_on' => $this->pluginSlug . '_reviews_installed_on',
+                'nonce_action' => $this->pluginSlug . '_reviews_action',
+                'user_meta_dismissed_triggers' => '_' . $this->pluginSlug . '_reviews_dismissed_triggers',
+                'user_meta_last_dismissed' => '_' . $this->pluginSlug . '_reviews_last_dismissed',
+                'user_meta_already_did' => '_' . $this->pluginSlug . '_reviews_already_did',
+                'filter_triggers' => $this->pluginSlug . '_reviews_triggers',
             ]
         );
     }
