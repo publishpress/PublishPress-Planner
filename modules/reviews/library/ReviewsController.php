@@ -445,7 +445,7 @@ class ReviewsController
             </p>
             <p>
                 <a class="button button-primary <?php echo $this->pluginSlug; ?>-dismiss" target="_blank"
-                   href="https://wordpress.org/support/plugin/<?php echo $this->pluginSlug; ?>/reviews/?rate=5#rate-response"
+                   href="<?php echo $trigger['link']; ?>"
                    data-reason="am_now">
                     <strong><?php _e('Ok, you deserve it', $this->pluginSlug); ?></strong>
                 </a> <a href="#" class="button <?php echo $this->pluginSlug; ?>-dismiss" data-reason="maybe_later">
