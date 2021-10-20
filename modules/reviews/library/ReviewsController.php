@@ -97,7 +97,7 @@ class ReviewsController
     /**
      * Hook into relevant WP actions.
      */
-    public function addHooks()
+    private function addHooks()
     {
         if (is_admin() && current_user_can('edit_posts')) {
             $this->installationPath();
@@ -173,7 +173,7 @@ class ReviewsController
      *
      * @return int|string
      */
-    public function getTriggerGroup()
+    private function getTriggerGroup()
     {
         static $selected;
 
@@ -211,7 +211,7 @@ class ReviewsController
      *
      * @return array|mixed
      */
-    public function getDismissedTriggerGroups()
+    private function getDismissedTriggerGroups()
     {
         $userId = get_current_user_id();
 
@@ -232,7 +232,7 @@ class ReviewsController
      *
      * @return bool|mixed|void
      */
-    public function getTriggers($group = null, $code = null)
+    private function getTriggers($group = null, $code = null)
     {
         static $triggers;
 
@@ -305,7 +305,7 @@ class ReviewsController
     /**
      * @return int|string
      */
-    public function getTriggerCode()
+    private function getTriggerCode()
     {
         static $selected;
 
@@ -334,7 +334,7 @@ class ReviewsController
      *
      * @return bool|mixed|void
      */
-    public function getCurrentTrigger($key = null)
+    private function getCurrentTrigger($key = null)
     {
         $group = $this->getTriggerGroup();
         $code = $this->getTriggerCode();
@@ -363,7 +363,7 @@ class ReviewsController
      *
      * @return bool
      */
-    public function userSelectedAlreadyDid($set = false)
+    private function setUserAlreadyDid($userId)
     {
         $userId = get_current_user_id();
 
@@ -484,7 +484,7 @@ class ReviewsController
      *
      * @return bool
      */
-    public function hideNotices()
+    private function hideNotices()
     {
         $conditions = [
             $this->userSelectedAlreadyDid(),
@@ -500,7 +500,7 @@ class ReviewsController
      *
      * @return false|string
      */
-    public function lastDismissedDate()
+    private function lastDismissedDate()
     {
         $userId = get_current_user_id();
 
