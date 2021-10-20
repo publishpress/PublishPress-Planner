@@ -43,15 +43,34 @@ class ReviewsController
      */
     private $pluginName;
 
+    /**
+     * @var array
+     */
+    private $metaMap;
+
     public function __construct($pluginSlug, $pluginName)
     {
         $this->pluginSlug = $pluginSlug;
         $this->pluginName = $pluginName;
+
+        $this->metaMap = apply_filters(
+            'publishpress_reviews_meta_map_' . $pluginSlug,
+            [
+                'action_ajax_handler' => 'wp_ajax_' . $this->pluginSlug . '_action',
+                'option_installed_on' => 'reviews_' . $this->pluginSlug . '_installed_on',
+                'nonce_action' => 'reviews_' . $this->pluginSlug . '_action',
+                'user_meta_dismissed_triggers' => '_reviews_' . $this->pluginSlug . '_dismissed_triggers',
+                'user_meta_last_dismissed' => '_reviews_' . $this->pluginSlug . '_last_dismissed',
+                'user_meta_already_did' => '_reviews_' . $this->pluginSlug . '_already_did',
+                'filter_triggers' => 'reviews_' . $this->pluginSlug . '_triggers',
+
+            ]
+        );
     }
 
     public function init()
     {
-        add_action('wp_ajax_' . $this->pluginSlug . '_action', [$this, 'ajaxHandler']);
+        add_action($this->metaMap['action_ajax_handler'], [$this, 'ajaxHandler']);
 
         $this->addHooks();
     }
@@ -76,11 +95,11 @@ class ReviewsController
      */
     public function installationPath()
     {
-        $installationPath = get_option('reviews_' . $this->pluginSlug . '_installed_on', false);
+        $installationPath = get_option($this->metaMap['option_installed_on'], false);
 
         if (! $installationPath) {
             $installationPath = current_time('mysql');
-            update_option('reviews_' . $this->pluginSlug . '_installed_on', $installationPath);
+            update_option($this->metaMap['option_installed_on'], $installationPath);
         }
 
         return $installationPath;
@@ -101,7 +120,7 @@ class ReviewsController
             ]
         );
 
-        if (! wp_verify_nonce($_REQUEST['nonce'], 'reviews_' . $this->pluginSlug . '_action')) {
+        if (! wp_verify_nonce($_REQUEST['nonce'], $this->metaMap['nonce_action'])) {
             wp_send_json_error();
         }
 
@@ -111,12 +130,12 @@ class ReviewsController
             $dismissedTriggers = $this->getDismissedTriggerGroups();
             $dismissedTriggers[$args['group']] = (int)$args['priority'];
 
-            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', $dismissedTriggers);
-            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
+            update_user_meta($userId, $this->metaMap['user_meta_dismissed_triggers'], $dismissedTriggers);
+            update_user_meta($userId, $this->metaMap['user_meta_last_dismissed'], current_time('mysql'));
 
             switch ($args['reason']) {
                 case 'maybe_later':
-                    update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', current_time('mysql'));
+                    update_user_meta($userId, $this->metaMap['user_meta_last_dismissed'], current_time('mysql'));
                     break;
                 case 'am_now':
                 case 'already_did':
@@ -177,7 +196,7 @@ class ReviewsController
     {
         $userId = get_current_user_id();
 
-        $dismissedTriggers = get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_dismissed_triggers', true);
+        $dismissedTriggers = get_user_meta($userId, $this->metaMap['user_meta_dismissed_triggers'], true);
 
         if (! $dismissedTriggers) {
             $dismissedTriggers = [];
@@ -199,10 +218,10 @@ class ReviewsController
         static $triggers;
 
         if (! isset($triggers)) {
-            $timeMessage = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", 'publishpress');
+            $timeMessage = __("Hey, you've been using %s for %s on your site - I hope that its been helpful. I would very much appreciate if you could quickly give it a 5-star rating on WordPress, just to help us spread the word.", $this->pluginSlug);
 
             $triggers = apply_filters(
-                'reviews_' . $this->pluginSlug . '_triggers',
+                $this->metaMap['filter_triggers'],
                 [
                     'time_installed' => [
                         'triggers' => [
@@ -330,12 +349,12 @@ class ReviewsController
         $userId = get_current_user_id();
 
         if ($set) {
-            update_user_meta($userId, '_reviews_' . $this->pluginSlug . '_already_did', true);
+            update_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
 
             return true;
         }
 
-        return (bool)get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_already_did', true);
+        return (bool)get_user_meta($userId, $this->metaMap['user_meta_already_did'], true);
     }
 
     /**
@@ -372,7 +391,7 @@ class ReviewsController
                         url: ajaxurl,
                         data: {
                             action: 'reviews_<?php echo $this->pluginSlug; ?>_action',
-                            nonce: '<?php echo wp_create_nonce('reviews_' . $this->pluginSlug . '_action'); ?>',
+                            nonce: '<?php echo wp_create_nonce($this->metaMap['nonce_action']); ?>',
                             group: trigger.group,
                             code: trigger.code,
                             priority: trigger.priority,
@@ -466,7 +485,7 @@ class ReviewsController
     {
         $userId = get_current_user_id();
 
-        return get_user_meta($userId, '_reviews_' . $this->pluginSlug . '_last_dismissed', true);
+        return get_user_meta($userId, $this->metaMap['user_meta_last_dismissed'], true);
     }
 
     /**
@@ -501,5 +520,12 @@ class ReviewsController
         }
 
         return ($a['priority'] < $b['priority']) ? 1 : -1;
+    }
+
+    private function mapMetaOptionName($name)
+    {
+
+
+        return $name;
     }
 }
