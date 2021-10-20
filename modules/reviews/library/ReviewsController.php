@@ -26,9 +26,9 @@
  * - Multiple triggers per group.
  * - Customizable messaging per trigger.
  * - Link to review page.
- * - Request reviews on a per user basis rather than per site.
+ * - Request reviews on a per-user basis rather than per site.
  * - Allows each user to dismiss it until later or permanently seamlessly via AJAX.
- * - Integrates with attached tracking server to keep anonymous records of each triggers effectiveness.
+ * - Integrates with attached tracking server to keep anonymous records of each trigger's effectiveness.
  *   - Tracking Server API: https://gist.github.com/danieliser/0d997532e023c46d38e1bdfd50f38801
  *
  * Original Author: danieliser
@@ -57,6 +57,11 @@ class ReviewsController
      * @var string
      */
     private $pluginName;
+
+    /**
+     * @var string
+     */
+    private $apiUrl = '';
 
     /**
      * @var array
@@ -180,7 +185,7 @@ class ReviewsController
             $triggers = $this->getTriggers();
 
             foreach ($triggers as $g => $group) {
-                foreach ($group['triggers'] as $t => $trigger) {
+                foreach ($group['triggers'] as $trigger) {
                     if (! in_array(false, $trigger['conditions']) && (empty($dismissedTriggers[$g]) || $dismissedTriggers[$g] < $trigger['priority'])) {
                         $selected = $g;
                         break;
@@ -274,7 +279,7 @@ class ReviewsController
             uasort($triggers, [$this, 'rsortByPriority']);
 
             // Sort each groups triggers.
-            foreach ($triggers as $k => $v) {
+            foreach ($triggers as $v) {
                 uasort($v['triggers'], [$this, 'rsortByPriority']);
             }
         }
@@ -414,11 +419,11 @@ class ReviewsController
                         }
                     });
 
-                    <?php if ( ! empty($this->$api_url) ) : ?>
+                    <?php if ( ! empty($this->apiUrl) ) : ?>
                     $.ajax({
                         method: "POST",
                         dataType: "json",
-                        url: '<?php echo $this->$api_url; ?>',
+                        url: '<?php echo $this->apiUrl; ?>',
                         data: {
                             trigger_group: trigger.group,
                             trigger_code: trigger.code,
@@ -535,12 +540,5 @@ class ReviewsController
         }
 
         return ($a['priority'] < $b['priority']) ? 1 : -1;
-    }
-
-    private function mapMetaOptionName($name)
-    {
-
-
-        return $name;
     }
 }
