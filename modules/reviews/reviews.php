@@ -22,8 +22,7 @@
  *
  */
 
-use PublishPress\Legacy\Auto_loader;
-use PublishPress\Reviews\ReviewsController;
+use \PublishPress\FiveStarsReview\ReviewsController;
 
 if (! defined('ABSPATH')) {
     exit;
@@ -48,7 +47,7 @@ class PP_Reviews extends PP_Module
     public $module_url = '';
 
     /**
-     * @var ReviewController
+     * @var ReviewsController
      */
     private $reviewController;
 
@@ -88,8 +87,6 @@ class PP_Reviews extends PP_Module
         );
 
         parent::__construct();
-
-        Auto_loader::register('\\PublishPress\\Reviews\\', __DIR__ . '/library');
 
         $this->reviewController = new ReviewsController('publishpress', 'PublishPress');
     }
