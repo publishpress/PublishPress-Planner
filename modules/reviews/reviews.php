@@ -1,20 +1,25 @@
 <?php
 /**
- * This class can be customized to quickly add a review request system.
+ * @package PublishPress
+ * @author  PublishPress
  *
- * It includes:
- * - Multiple trigger groups which can be ordered by priority.
- * - Multiple triggers per group.
- * - Customizable messaging per trigger.
- * - Link to review page.
- * - Request reviews on a per user basis rather than per site.
- * - Allows each user to dismiss it until later or permanently seamlessly via AJAX.
- * - Integrates with attached tracking server to keep anonymous records of each triggers effectiveness.
- *   - Tracking Server API: https://gist.github.com/danieliser/0d997532e023c46d38e1bdfd50f38801
+ * Copyright (c) 2021 PublishPress
  *
- * Original Author: danieliser
- * Original Author URL: https://danieliser.com
- * URL: https://github.com/danieliser/WP-Product-In-Dash-Review-Requests
+ * This file is part of PublishPress
+ *
+ * PublishPress is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PublishPress is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 
 use PublishPress\Legacy\Auto_loader;

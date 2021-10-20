@@ -19,6 +19,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------------------------------------------------------------------
+ * It includes:
+ * - Multiple trigger groups which can be ordered by priority.
+ * - Multiple triggers per group.
+ * - Customizable messaging per trigger.
+ * - Link to review page.
+ * - Request reviews on a per user basis rather than per site.
+ * - Allows each user to dismiss it until later or permanently seamlessly via AJAX.
+ * - Integrates with attached tracking server to keep anonymous records of each triggers effectiveness.
+ *   - Tracking Server API: https://gist.github.com/danieliser/0d997532e023c46d38e1bdfd50f38801
+ *
+ * Original Author: danieliser
+ * Original Author URL: https://danieliser.com
+ * URL: https://github.com/danieliser/WP-Product-In-Dash-Review-Requests
  */
 
 namespace PublishPress\Reviews;
