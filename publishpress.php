@@ -331,6 +331,7 @@ if (! class_exists('publishpress')) {
                 'settings' => PUBLISHPRESS_BASE_PATH,
                 'efmigration' => PUBLISHPRESS_BASE_PATH,
                 'debug' => PUBLISHPRESS_BASE_PATH,
+                'reviews' => PUBLISHPRESS_BASE_PATH,
             ];
 
             // Add filters to extend the modules
