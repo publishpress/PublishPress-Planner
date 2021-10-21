@@ -115,16 +115,16 @@
         },
         {
             "name": "publishpress/wordpress-reviews",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/wordpress-reviews.git",
-                "reference": "6da941ccba82517897d7091840988c815962856a"
+                "reference": "abd131832028abec9495878ebea881a6a71fef2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/6da941ccba82517897d7091840988c815962856a",
-                "reference": "6da941ccba82517897d7091840988c815962856a",
+                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/abd131832028abec9495878ebea881a6a71fef2a",
+                "reference": "abd131832028abec9495878ebea881a6a71fef2a",
                 "shasum": ""
             },
             "require": {
@@ -162,9 +162,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/wordpress-reviews/issues",
-                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.5"
+                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.6"
             },
-            "time": "2021-10-21T20:14:59+00:00"
+            "time": "2021-10-21T21:29:04+00:00"
         },
         {
             "name": "publishpress/wordpress-version-notices",
