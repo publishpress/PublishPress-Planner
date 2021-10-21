@@ -88,7 +88,11 @@ class PP_Reviews extends PP_Module
 
         parent::__construct();
 
-        $this->reviewController = new ReviewsController('publishpress', 'PublishPress');
+        $this->reviewController = new ReviewsController(
+            'publishpress',
+            'PublishPress',
+            PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png'
+        );
     }
 
     /**
@@ -105,7 +109,7 @@ class PP_Reviews extends PP_Module
     {
         global $pagenow;
 
-        if (!is_admin() || !current_user_can('edit_posts')) {
+        if (! is_admin() || ! current_user_can('edit_posts')) {
             return false;
         }
 
