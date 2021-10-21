@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7a0efe7afb8bba7069e728712cee9f0",
+    "content-hash": "882dd6b1f2eced79a31f61d0138fa903",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -114,17 +114,17 @@
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
-            "name": "publishpress/publishpress-five-stars-review",
-            "version": "v1.0.0",
+            "name": "publishpress/wordpress-reviews",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/publishpress/publishpress-five-stars-review.git",
-                "reference": "a1ac7f2f1b875c4ca468d958afaef88781fadb87"
+                "url": "https://github.com/publishpress/wordpress-reviews.git",
+                "reference": "faf1a8af66d878fa405ce7cf3f9ecd76d65b4f41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/publishpress-five-stars-review/zipball/a1ac7f2f1b875c4ca468d958afaef88781fadb87",
-                "reference": "a1ac7f2f1b875c4ca468d958afaef88781fadb87",
+                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/faf1a8af66d878fa405ce7cf3f9ecd76d65b4f41",
+                "reference": "faf1a8af66d878fa405ce7cf3f9ecd76d65b4f41",
                 "shasum": ""
             },
             "require": {
@@ -155,11 +155,16 @@
             ],
             "description": "Library for showing a five-star review banner.",
             "homepage": "http://publishpress.com/",
+            "keywords": [
+                "review",
+                "reviews",
+                "wordpress plugin"
+            ],
             "support": {
-                "issues": "https://github.com/publishpress/publishpress-five-stars-review/issues",
-                "source": "https://github.com/publishpress/publishpress-five-stars-review/tree/v1.0.0"
+                "issues": "https://github.com/publishpress/wordpress-reviews/issues",
+                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.2"
             },
-            "time": "2021-10-20T13:52:03+00:00"
+            "time": "2021-10-21T03:11:28+00:00"
         },
         {
             "name": "publishpress/wordpress-version-notices",
