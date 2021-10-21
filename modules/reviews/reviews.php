@@ -91,7 +91,7 @@ class PP_Reviews extends PP_Module
         $this->reviewController = new ReviewsController(
             'publishpress',
             'PublishPress',
-            PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png'
+            PUBLISHPRESS_URL . '/common/img/publishpress-wp-logo.png'
         );
     }
 
