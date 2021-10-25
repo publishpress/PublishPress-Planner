@@ -2,9 +2,10 @@ import {
     calculateWeeksInMilliseconds,
     getBeginDateOfWeekByDate,
     getBeginDateOfWeekByWeekNumber,
-    getDateAsStringInWpFormat, getDateWithNoTimezoneOffset,
+    getDateAsStringInWpFormat,
+    getDateWithNoTimezoneOffset,
     getHourStringOnFormat,
-    getMonthNameByMonthIndex, getPostLinksElement,
+    getMonthNameByMonthIndex,
     getWeekNumberByDate
 } from "../async-calendar/js/Functions";
 

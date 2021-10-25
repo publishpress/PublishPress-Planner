@@ -26,7 +26,7 @@ namespace PublishPress\NotificationsLog;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_List_Table;
 
-if (!class_exists('WP_List_Table')) {
+if (! class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
@@ -65,8 +65,8 @@ class NotificationsLogTable extends WP_List_Table
         parent::__construct(
             [
                 'singular' => 'notification_log',     //singular name of the listed records
-                'plural'   => 'notifications_log',    //plural name of the listed records
-                'ajax'     => false        //does this table support ajax?
+                'plural' => 'notifications_log',    //plural name of the listed records
+                'ajax' => false        //does this table support ajax?
             ]
         );
 
@@ -92,7 +92,7 @@ class NotificationsLogTable extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
-        $log    = new NotificationsLogModel($item);
+        $log = new NotificationsLogModel($item);
         $output = '';
 
         $log->switchToTheBlog();
@@ -100,8 +100,8 @@ class NotificationsLogTable extends WP_List_Table
         switch ($column_name) {
             case 'event':
                 if ($log->workflowId !== null) {
-                    $user         = get_user_by('id', $log->userId);
-                    $userNicename = (!is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
+                    $user = get_user_by('id', $log->userId);
+                    $userNicename = (! is_wp_error($user) && is_object($user)) ? $user->user_nicename : '';
                     $actionParams = apply_filters('publishpress_notifications_action_params_for_log', '', $log);
 
                     $output .= apply_filters('publishpress_notifications_event_label', $log->event, $log->event);
@@ -114,7 +114,7 @@ class NotificationsLogTable extends WP_List_Table
                             )
                         ) . '</div>';
 
-                    if (!empty($actionParams)) {
+                    if (! empty($actionParams)) {
                         $output .= '<div>' . $actionParams . '</div>';
                     }
 
@@ -137,8 +137,8 @@ class NotificationsLogTable extends WP_List_Table
 
             case 'content':
                 if ($log->workflowId !== null) {
-                    $post           = get_post($log->postId);
-                    $postType       = get_post_type_object($post->post_type);
+                    $post = get_post($log->postId);
+                    $postType = get_post_type_object($post->post_type);
                     $postTypeLabels = get_post_type_labels($postType);
 
                     $output .= $this->wrapInALink(
@@ -165,7 +165,7 @@ class NotificationsLogTable extends WP_List_Table
 
             case 'receiver':
                 if ($log->workflowId !== null) {
-                    $receivers      = $log->getReceiversByGroup();
+                    $receivers = $log->getReceiversByGroup();
                     $receiversCount = 0;
 
                     $output .= '<ul class="publishpress-notifications-receivers">';
@@ -184,7 +184,7 @@ class NotificationsLogTable extends WP_List_Table
                             if (
                                 isset($receiverData['subgroup'])
                                 && $receiverData['subgroup'] !== $lastSubgroup
-                                && !empty($receiverData['subgroup'])
+                                && ! empty($receiverData['subgroup'])
                             ) {
                                 $output .= sprintf(
                                     '<li class="receiver-subgroup"><span>%s</span></li>',
@@ -194,7 +194,12 @@ class NotificationsLogTable extends WP_List_Table
                                 $lastSubgroup = $receiverData['subgroup'];
                             }
 
-                            $receiverText = apply_filters('publishpress_notifications_log_receiver_text', $receiver, $receiverData, $log->workflowId);
+                            $receiverText = apply_filters(
+                                'publishpress_notifications_log_receiver_text',
+                                $receiver,
+                                $receiverData,
+                                $log->workflowId
+                            );
 
                             $output .= sprintf(
                                 '<li><i title="%s" class="dashicons dashicons-visibility view-log" data-id="%d" data-receiver-text="%s" data-receiver="%s" data-channel="%s"></i><i class="channel-icon %s"></i>',
@@ -242,9 +247,9 @@ class NotificationsLogTable extends WP_List_Table
                     $cronTask = $log->getCronTask();
 
                     if (false !== $cronTask) {
-                        $offset        = (int)get_option('gmt_offset', 0) * 60 * 60;
+                        $offset = (int)get_option('gmt_offset', 0) * 60 * 60;
                         $scheduledTime = $cronTask['time'] + $offset;
-                        $currentTime   = current_time('timestamp');
+                        $currentTime = current_time('timestamp');
 
                         if ($scheduledTime < $currentTime) {
                             $label = __(' Scheduled, but late', 'publishpress');
@@ -282,7 +287,7 @@ class NotificationsLogTable extends WP_List_Table
                             $output .= '<i class="dashicons dashicons-no"></i> ' . __('Failed', 'publishpress');
                         }
 
-                        if (!empty($log->error)) {
+                        if (! empty($log->error)) {
                             $output .= '<span class="error"> - ' . $log->error . '</span>';
                         }
                     }
@@ -332,7 +337,7 @@ class NotificationsLogTable extends WP_List_Table
     public function column_date($item)
     {
         $actions = [];
-        $log     = new NotificationsLogModel($item);
+        $log = new NotificationsLogModel($item);
 
         if ('scheduled' === $log->status || 'error' === $log->status) {
             $actions['try_again'] = sprintf(
@@ -340,7 +345,7 @@ class NotificationsLogTable extends WP_List_Table
                 esc_url(
                     add_query_arg(
                         [
-                            'action'                 => 'try_again',
+                            'action' => 'try_again',
                             $this->_args['singular'] => $log->id,
                         ]
                     )
@@ -354,7 +359,7 @@ class NotificationsLogTable extends WP_List_Table
             esc_url(
                 add_query_arg(
                     [
-                        'action'                 => 'delete',
+                        'action' => 'delete',
                         $this->_args['singular'] => $log->id,
                     ]
                 )
@@ -366,7 +371,10 @@ class NotificationsLogTable extends WP_List_Table
         if ($log->isFromAnotherBlog()) {
             $log->switchToTheBlog();
             $blog = get_blog_details($log->blogId);
-            $additionalText .= '<div class="muted">' . __('Blog: ', 'publishpress') . $log->blogId . ' - ' . $blog->blogname . '</div>';
+            $additionalText .= '<div class="muted">' . __(
+                    'Blog: ',
+                    'publishpress'
+                ) . $log->blogId . ' - ' . $blog->blogname . '</div>';
             $log->restoreCurrentBlog();
         }
 
@@ -386,8 +394,8 @@ class NotificationsLogTable extends WP_List_Table
     public function get_bulk_actions()
     {
         return [
-            self::BULK_ACTION_TRY_AGAIN  => __('Reschedule', 'publishpress'),
-            self::BULK_ACTION_DELETE     => __('Delete', 'publishpress'),
+            self::BULK_ACTION_TRY_AGAIN => __('Reschedule', 'publishpress'),
+            self::BULK_ACTION_DELETE => __('Delete', 'publishpress'),
             self::BULK_ACTION_DELETE_ALL => __('Delete All', 'publishpress'),
         ];
     }
@@ -397,13 +405,13 @@ class NotificationsLogTable extends WP_List_Table
         $this->process_bulk_action();
 
         $currentUserId = get_current_user_id();
-        $per_page      = get_user_meta($currentUserId, 'logs_per_page', true);
+        $per_page = get_user_meta($currentUserId, 'logs_per_page', true);
         if (empty($per_page)) {
             $per_page = self::POSTS_PER_PAGE;
         }
 
-        $columns  = $this->get_columns();
-        $hidden   = [];
+        $columns = $this->get_columns();
+        $hidden = [];
         $sortable = $this->get_sortable_columns();
 
         $this->_column_headers = [$columns, $hidden, $sortable];
@@ -438,7 +446,7 @@ class NotificationsLogTable extends WP_List_Table
 
         if (isset($_REQUEST['date_begin']) && isset($_REQUEST['date_end'])) {
             $filters['date_begin'] = sanitize_text_field($_REQUEST['date_begin']);
-            $filters['date_end']   = sanitize_text_field($_REQUEST['date_end']);
+            $filters['date_end'] = sanitize_text_field($_REQUEST['date_end']);
         }
 
         if (isset($_REQUEST['receiver'])) {
@@ -447,8 +455,8 @@ class NotificationsLogTable extends WP_List_Table
 
         $total_items = $this->logHandler->getNotificationLogEntries($postId, null, null, true, $filters);
 
-        $orderBy = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
-        $order   = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
+        $orderBy = (! empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'comment_date'; //If no sort, default to title
+        $order = (! empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'desc'; //If no order, default to asc
 
         $this->items = $this->logHandler->getNotificationLogEntries(
             $postId,
@@ -463,7 +471,7 @@ class NotificationsLogTable extends WP_List_Table
         $this->set_pagination_args(
             [
                 'total_items' => $total_items,
-                'per_page'    => $per_page,
+                'per_page' => $per_page,
                 'total_pages' => ceil($total_items / $per_page),
             ]
         );
@@ -475,12 +483,12 @@ class NotificationsLogTable extends WP_List_Table
     public function get_columns()
     {
         return [
-            'cb'       => '<input type="checkbox" />',
-            'date'     => __('Date', 'publishpress'),
-            'event'    => __('When to notify?', 'publishpress'),
-            'content'  => __('For which content?', 'publishpress'),
+            'cb' => '<input type="checkbox" />',
+            'date' => __('Date', 'publishpress'),
+            'event' => __('When to notify?', 'publishpress'),
+            'content' => __('For which content?', 'publishpress'),
             'receiver' => __('Who to notify?', 'publishpress'),
-            'status'   => __('Status', 'publishpress'),
+            'status' => __('Status', 'publishpress'),
         ];
     }
 
@@ -497,15 +505,15 @@ class NotificationsLogTable extends WP_List_Table
     protected function get_views()
     {
         return [
-            'all'       => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
+            'all' => '<a href="' . esc_url(add_query_arg('status', 'all')) . '">' . __(
                     'All',
                     'publishpress'
                 ) . '</a>',
-            'success'   => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __(
+            'success' => '<a href="' . esc_url(add_query_arg('status', 'success')) . '">' . __(
                     'Success',
                     'publishpress'
                 ) . '</a>',
-            'skipped'   => '<a href="' . esc_url(add_query_arg('status', 'skipped')) . '">' . __(
+            'skipped' => '<a href="' . esc_url(add_query_arg('status', 'skipped')) . '">' . __(
                     'Skipped',
                     'publishpress'
                 ) . '</a>',
@@ -513,7 +521,7 @@ class NotificationsLogTable extends WP_List_Table
                     'Scheduled',
                     'publishpress'
                 ) . '</a>',
-            'error'     => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
+            'error' => '<a href="' . esc_url(add_query_arg('status', 'error')) . '">' . __(
                     'Error',
                     'publishpress'
                 ) . '</a>',
@@ -535,9 +543,9 @@ class NotificationsLogTable extends WP_List_Table
         }
 
         // Post
-        $postId         = isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
+        $postId = isset($_GET['post_id']) ? (int)$_GET['post_id'] : 0;
         $selectedOptionEscaped = '';
-        if (!empty($postId)) {
+        if (! empty($postId)) {
             $post = get_post($postId);
 
             $selectedOptionEscaped = '<option selected="selected" value="' . esc_attr(
@@ -550,9 +558,9 @@ class NotificationsLogTable extends WP_List_Table
         // phpcs:enable
 
         // Workflow
-        $workflowId     = isset($_GET['workflow_id']) ? (int)$_GET['workflow_id'] : 0;
+        $workflowId = isset($_GET['workflow_id']) ? (int)$_GET['workflow_id'] : 0;
         $selectedOptionEscaped = '';
-        if (!empty($workflowId)) {
+        if (! empty($workflowId)) {
             $workflow = get_post($workflowId);
 
             $selectedOptionEscaped = '<option selected="selected" value="' . esc_attr(
@@ -600,7 +608,7 @@ class NotificationsLogTable extends WP_List_Table
         echo '<br clear="all">';
 
         $dateBegin = isset($_GET['date_begin']) ? sanitize_text_field($_GET['date_begin']) : '';
-        $dateEnd   = isset($_GET['date_end']) ? sanitize_text_field($_GET['date_end']) : '';
+        $dateEnd = isset($_GET['date_end']) ? sanitize_text_field($_GET['date_end']) : '';
 
         echo '<div class="filter-2nd-line">';
         echo '<span class="filter-dates">';
@@ -627,8 +635,8 @@ class NotificationsLogTable extends WP_List_Table
 
         echo wp_kses(
             submit_button(esc_html__('Filter', 'publishpress'), 'secondary', 'submit', false),
-        [
-            'input' => "type"
+            [
+                'input' => "type"
             ]
         );
 

@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    function updateParam (url, paramToUpdate, newValue) {
+    function updateParam(url, paramToUpdate, newValue) {
         var parts = url.split('?'),
             query,
             param,

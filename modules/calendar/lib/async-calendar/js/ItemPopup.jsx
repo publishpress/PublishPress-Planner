@@ -65,7 +65,8 @@ export default function ItemPopup(props) {
 
             switch (dataProperty.type) {
                 case 'date':
-                    field = <DateTimeField value={dataProperty.value} valueString={dataProperty.valueString || null} isEditing={false}/>;
+                    field = <DateTimeField value={dataProperty.value} valueString={dataProperty.valueString || null}
+                                           isEditing={false}/>;
                     break;
 
                 case 'time':
@@ -174,7 +175,8 @@ export default function ItemPopup(props) {
                 }
                 {props.title}
 
-                <span className={'dashicons dashicons-no publishpress-calendar-popup-close'} title={__('Close', 'publishpress')} onClick={closePopup}/>
+                <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
+                      title={__('Close', 'publishpress')} onClick={closePopup}/>
             </div>
             <table>
                 <tbody>

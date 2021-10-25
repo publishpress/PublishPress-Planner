@@ -31,22 +31,22 @@
 use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Legacy\Auto_loader;
 
-if (!defined('PP_LOADED')) {
+if (! defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.6.1');
+    define('PUBLISHPRESS_VERSION', '3.6.2');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
 
-    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
+    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
         define('PUBLISHPRESS_ACTION_PRIORITY_INIT', 10);
     }
 
-    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE')) {
+    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE')) {
         define('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE', 1100);
     }
 
-    if (!defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN')) {
+    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN')) {
         define('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN', 1010);
     }
 
@@ -61,7 +61,7 @@ if (!defined('PP_LOADED')) {
 
     $settingsPage = add_query_arg(
         [
-            'page'   => 'pp-modules-settings',
+            'page' => 'pp-modules-settings',
             'settings_module' => 'pp-modules-settings-settings',
         ],
         get_admin_url(null, 'admin.php')
@@ -77,7 +77,7 @@ if (!defined('PP_LOADED')) {
 
     // Define the Priority for the notification/notification_status_change method
     // Added to allow users select a custom priority
-    if (!defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE')) {
+    if (! defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE')) {
         define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
     }
 
@@ -88,7 +88,7 @@ if (!defined('PP_LOADED')) {
     }
 
     // Register the legacy autoloader
-    if (!class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
+    if (! class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
         require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
     }
 
@@ -108,7 +108,7 @@ if (!defined('PP_LOADED')) {
     $plugin = new PublishPress\Notifications\Plugin();
     $plugin->init();
 
-    if (is_admin() && !defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+    if (is_admin() && ! defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
         $includesFile = __DIR__ . '/vendor/publishpress/wordpress-version-notices/includes.php';
 
         if (file_exists($includesFile)) {
@@ -124,7 +124,7 @@ if (!defined('PP_LOADED')) {
                         function ($settings) {
                             $settings['publishpress'] = [
                                 'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
-                                'link'    => 'https://publishpress.com/links/publishpress-banner',
+                                'link' => 'https://publishpress.com/links/publishpress-banner',
                                 'screens' => [
                                     ['base' => 'publishpress_page_pp-modules-settings',],
                                     ['base' => 'publishpress_page_pp-manage-roles',],
@@ -152,8 +152,8 @@ if (!defined('PP_LOADED')) {
                                     'pp-manage-roles',
                                     'pp-modules-settings',
                                 ],
-                                'label'  => 'Upgrade to Pro',
-                                'link'   => 'https://publishpress.com/links/publishpress-menu',
+                                'label' => 'Upgrade to Pro',
+                                'link' => 'https://publishpress.com/links/publishpress-menu',
                             ];
 
                             return $settings;

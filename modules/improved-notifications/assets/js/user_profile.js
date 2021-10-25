@@ -29,11 +29,11 @@
             show_workflow_channel_options();
         });
 
-        function hide_all_channel_options () {
+        function hide_all_channel_options() {
             $('.psppno_workflow_channel_options > div').hide();
         }
 
-        function show_workflow_channel_options () {
+        function show_workflow_channel_options() {
             hide_all_channel_options();
 
             // Show the channel options for the selected channels

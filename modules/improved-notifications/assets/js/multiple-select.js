@@ -223,7 +223,7 @@
 
     };
 
-    function MultipleSelect ($el, options) {
+    function MultipleSelect($el, options) {
         var that = this,
             name = $el.attr('name') || options.name || '';
 
@@ -280,7 +280,7 @@
                     return;
                 }
                 if (($(e.target)[0] === that.$drop[0] ||
-                    $(e.target).parents('.ms-drop')[0] !== that.$drop[0] && e.target !== $el[0]) &&
+                        $(e.target).parents('.ms-drop')[0] !== that.$drop[0] && e.target !== $el[0]) &&
                     that.options.isOpen) {
                     that.close();
                 }

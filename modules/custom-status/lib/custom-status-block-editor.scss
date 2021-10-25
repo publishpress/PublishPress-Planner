@@ -1,5 +1,6 @@
 .publishpress-extended-post-status {
   flex-flow: row wrap;
+
   > * {
     flex-basis: 48%;
   }
@@ -7,5 +8,22 @@
   .publishpress-extended-post-status-note {
     flex-basis: 100%;
     color: #545454;
+  }
+}
+
+.block-editor {
+  button.components-button.editor-post-save-draft {
+    overflow: hidden;
+    text-indent: -99999px;
+  }
+
+  button.components-button.editor-post-save-draft::before {
+    overflow: auto;
+    text-indent: 0;
+    content: attr(aria-label);
+  }
+
+  button.components-button.editor-post-save-draft.has-icon::before {
+    content: none;
   }
 }

@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,9 @@ PublishPress has all the tools you need to manage WordPress content, including a
 [PublishPress](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+
+> <strong>PublishPress Pro</strong><br />
+> This plugin is the free version of the PublishPress Pro plugin that comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -119,6 +122,13 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.6.2] - 25 Oct 2021 =
+
+* Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
+* Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
+* Fixed: Block editor crashing if we resize the window to a mobile device dimension, #960;
+* Added: Add a review request banner, #949;
 
 = [3.6.1] - 04 Oct 2021 =
 

@@ -30,7 +30,7 @@
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
-if (!class_exists('PP_Calendar')) {
+if (! class_exists('PP_Calendar')) {
     /**
      * class PP_Calendar
      * Threaded commenting in the admin for discussion between writers and editors
@@ -159,24 +159,24 @@ if (!class_exists('PP_Calendar')) {
 
             // Register the module with PublishPress
             $args = [
-                'title'                 => __('Calendar', 'publishpress'),
-                'short_description'     => false,
-                'extended_description'  => false,
-                'module_url'            => $this->module_url,
-                'icon_class'            => 'dashicons dashicons-calendar-alt',
-                'slug'                  => 'calendar',
-                'post_type_support'     => 'pp_calendar',
-                'default_options'       => [
-                    'enabled'                 => 'on',
-                    'post_types'              => $this->pre_select_all_post_types(),
-                    'ics_subscription'        => 'on',
-                    'ics_secret_key'          => wp_generate_password(),
+                'title' => __('Calendar', 'publishpress'),
+                'short_description' => false,
+                'extended_description' => false,
+                'module_url' => $this->module_url,
+                'icon_class' => 'dashicons dashicons-calendar-alt',
+                'slug' => 'calendar',
+                'post_type_support' => 'pp_calendar',
+                'default_options' => [
+                    'enabled' => 'on',
+                    'post_types' => $this->pre_select_all_post_types(),
+                    'ics_subscription' => 'on',
+                    'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
-                    'default_publish_time'    => '',
+                    'default_publish_time' => '',
                 ],
-                'messages'              => [
-                    'post-date-updated'   => __('Post date updated.', 'publishpress'),
-                    'update-error'        => __(
+                'messages' => [
+                    'post-date-updated' => __('Post date updated.', 'publishpress'),
+                    'update-error' => __(
                         'There was an error updating the post. Please try again.',
                         'publishpress'
                     ),
@@ -184,15 +184,15 @@ if (!class_exists('PP_Calendar')) {
                         "Updating the post date dynamically doesn't work for published content. Please <a href='%s'>edit the post</a>.",
                         'publishpress'
                     ),
-                    'key-regenerated'     => __(
+                    'key-regenerated' => __(
                         'iCal secret key regenerated. Please inform all users they will need to resubscribe.',
                         'publishpress'
                     ),
                 ],
-                'configure_page_cb'     => 'print_configure_view',
-                'settings_help_tab'     => [
-                    'id'      => 'pp-calendar-overview',
-                    'title'   => __('Overview', 'publishpress'),
+                'configure_page_cb' => 'print_configure_view',
+                'settings_help_tab' => [
+                    'id' => 'pp-calendar-overview',
+                    'title' => __('Overview', 'publishpress'),
                     'content' => __(
                         '<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>',
                         'publishpress'
@@ -202,9 +202,9 @@ if (!class_exists('PP_Calendar')) {
                     '<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/calendar/">Calendar Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>',
                     'publishpress'
                 ),
-                'show_configure_btn'    => false,
-                'options_page'          => true,
-                'page_link'             => admin_url('admin.php?page=pp-calendar'),
+                'show_configure_btn' => false,
+                'options_page' => true,
+                'page_link' => admin_url('admin.php?page=pp-calendar'),
             ];
 
             $this->module = PublishPress()->register_module('calendar', $args);
@@ -222,7 +222,7 @@ if (!class_exists('PP_Calendar')) {
             $this->setDefaultCapabilities();
 
             // Can view the calendar?
-            if (!$this->check_capability()) {
+            if (! $this->check_capability()) {
                 return false;
             }
 
@@ -288,7 +288,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Confirm all of the arguments are present
-            if (!isset($_GET['user'], $_GET['user_key'], $_GET['pp_action'])) {
+            if (! isset($_GET['user'], $_GET['user_key'], $_GET['pp_action'])) {
                 return $original_template;
             }
 
@@ -319,7 +319,7 @@ if (!class_exists('PP_Calendar')) {
          */
         public function filter_calendar_total_weeks_public_feed($weeks, $startDate, $context)
         {
-            if (!isset($_GET['end'])) {
+            if (! isset($_GET['end'])) {
                 $end = 'm2';
             } else {
                 $end = preg_replace('/[^wm0-9]/', '', sanitize_text_field($_GET['end']));
@@ -334,7 +334,7 @@ if (!class_exists('PP_Calendar')) {
             // Calculate the diff in weeks from start date until now
             $today = date('Y-m-d');
 
-            $first  = DateTime::createFromFormat('Y-m-d', $startDate);
+            $first = DateTime::createFromFormat('Y-m-d', $startDate);
             $second = DateTime::createFromFormat('Y-m-d', $today);
 
             $diff = floor($first->diff($second)->days / 7);
@@ -351,7 +351,7 @@ if (!class_exists('PP_Calendar')) {
          */
         public function filter_calendar_start_date_public_feed($startDate)
         {
-            if (!isset($_GET['start'])) {
+            if (! isset($_GET['start'])) {
                 // Current week
                 $start = 0;
             } else {
@@ -515,7 +515,7 @@ if (!class_exists('PP_Calendar')) {
             foreach ($this->get_post_statuses() as $status) {
                 $postStatuses[] = [
                     'value' => $status->slug,
-                    'text'  => $status->name,
+                    'text' => $status->name,
                 ];
             }
 
@@ -530,7 +530,7 @@ if (!class_exists('PP_Calendar')) {
                 // Filter publishing posts if the post type is set
                 if (in_array($status['value'], ['publish', 'future', 'private'])) {
                     $postTypeObj = get_post_type_object($postType);
-                    if (!current_user_can($postTypeObj->cap->publish_posts)) {
+                    if (! current_user_can($postTypeObj->cap->publish_posts)) {
                         unset($postStatuses[$index]);
                     }
                 }
@@ -584,11 +584,10 @@ if (!class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION
                 );
 
-                if (is_admin(
-                    ) && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && !isset($_GET['stop-the-calendar'])) {
+                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && ! isset($_GET['stop-the-calendar'])) {
                     global $wp_scripts;
 
-                    if (!isset($wp_scripts->queue['react'])) {
+                    if (! isset($wp_scripts->queue['react'])) {
                         wp_enqueue_script(
                             'react',
                             PUBLISHPRESS_URL . 'common/js/react.min.js',
@@ -642,57 +641,57 @@ if (!class_exists('PP_Calendar')) {
                         true
                     );
 
-                    $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
+                    $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
                     $postStatuses = $this->getPostStatusOptions();
 
-                    $postTypes              = [];
+                    $postTypes = [];
                     $postTypesUserCanCreate = [];
                     foreach ($this->get_selected_post_types() as $postTypeName) {
                         $postType = get_post_type_object($postTypeName);
 
                         $postTypes[] = [
                             'value' => $postTypeName,
-                            'text'  => $postType->label
+                            'text' => $postType->label
                         ];
 
                         if (current_user_can($postType->cap->edit_posts)) {
                             $postTypesUserCanCreate[] = [
                                 'value' => $postTypeName,
-                                'text'  => $postType->labels->singular_name
+                                'text' => $postType->labels->singular_name
                             ];
                         }
                     }
 
-                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && !empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
+                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
 
                     $firstDateToDisplay = (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
                             'Y-m-d'
                         )) . ' 00:00:00';
                     $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
-                    $endDate            = $this->get_ending_of_week(
+                    $endDate = $this->get_ending_of_week(
                         $firstDateToDisplay,
                         'Y-m-d',
                         $numberOfWeeksToDisplay
                     );
 
                     $params = [
-                        'numberOfWeeksToDisplay'     => $numberOfWeeksToDisplay,
-                        'firstDateToDisplay'         => $firstDateToDisplay,
-                        'theme'                      => 'light',
-                        'weekStartsOnSunday'         => (int)get_option('start_of_week') === 0,
-                        'todayDate'                  => date('Y-m-d 00:00:00'),
-                        'dateFormat'                 => get_option('date_format', 'Y-m-d H:i:s'),
-                        'timeFormat'                 => $this->getCalendarTimeFormat(),
-                        'maxVisibleItems'            => $maxVisibleItemsOption,
-                        'statuses'                   => $postStatuses,
-                        'postTypes'                  => $postTypes,
-                        'postTypesCanCreate'         => $postTypesUserCanCreate,
-                        'ajaxUrl'                    => admin_url('admin-ajax.php'),
-                        'nonce'                      => wp_create_nonce('publishpress-calendar-get-data'),
-                        'userCanAddPosts'            => count($postTypesUserCanCreate) > 0,
-                        'items'                      => $this->getCalendarData($firstDateToDisplay, $endDate, []),
+                        'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
+                        'firstDateToDisplay' => $firstDateToDisplay,
+                        'theme' => 'light',
+                        'weekStartsOnSunday' => (int)get_option('start_of_week') === 0,
+                        'todayDate' => date('Y-m-d 00:00:00'),
+                        'dateFormat' => get_option('date_format', 'Y-m-d H:i:s'),
+                        'timeFormat' => $this->getCalendarTimeFormat(),
+                        'maxVisibleItems' => $maxVisibleItemsOption,
+                        'statuses' => $postStatuses,
+                        'postTypes' => $postTypes,
+                        'postTypesCanCreate' => $postTypesUserCanCreate,
+                        'ajaxUrl' => admin_url('admin-ajax.php'),
+                        'nonce' => wp_create_nonce('publishpress-calendar-get-data'),
+                        'userCanAddPosts' => count($postTypesUserCanCreate) > 0,
+                        'items' => $this->getCalendarData($firstDateToDisplay, $endDate, []),
                         'allowAddingMultipleAuthors' => apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
                             false
@@ -701,18 +700,18 @@ if (!class_exists('PP_Calendar')) {
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
 
                     global $wp_locale;
-                    $monthNames      = array_map([&$wp_locale, 'get_month'], range(1, 12));
+                    $monthNames = array_map([&$wp_locale, 'get_month'], range(1, 12));
                     $monthNamesShort = array_map([&$wp_locale, 'get_month_abbrev'], $monthNames);
-                    $dayNames        = array_map([&$wp_locale, 'get_weekday'], range(0, 6));
-                    $dayNamesShort   = array_map([&$wp_locale, 'get_weekday_abbrev'], $dayNames);
+                    $dayNames = array_map([&$wp_locale, 'get_weekday'], range(0, 6));
+                    $dayNamesShort = array_map([&$wp_locale, 'get_weekday_abbrev'], $dayNames);
                     wp_localize_script(
                         "date_i18n",
                         "DATE_I18N",
                         array(
-                            "month_names"       => $monthNames,
+                            "month_names" => $monthNames,
                             "month_names_short" => $monthNamesShort,
-                            "day_names"         => $dayNames,
-                            "day_names_short"   => $dayNamesShort
+                            "day_names" => $dayNames,
+                            "day_names_short" => $dayNamesShort
                         )
                     );
                 }
@@ -734,27 +733,27 @@ if (!class_exists('PP_Calendar')) {
         {
             global $wpdb;
 
-            if (!isset($_POST['nonce'])
-                || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')
+            if (! isset($_POST['nonce'])
+                || ! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')
             ) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
             // Check that we got a proper post
             $post_id = (int)$_POST['post_id'];
-            $post    = get_post($post_id);
-            if (!$post) {
+            $post = get_post($post_id);
+            if (! $post) {
                 $this->print_ajax_response('error', $this->module->messages['missing-post']);
             }
 
             // Check that the user can modify the post
-            if (!$this->current_user_can_modify_post($post)) {
+            if (! $this->current_user_can_modify_post($post)) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
             }
 
             // Check that the new date passed is a valid one
             $next_date_full = strtotime(sanitize_text_field($_POST['next_date']));
-            if (!$next_date_full) {
+            if (! $next_date_full) {
                 $this->print_ajax_response(
                     'error',
                     esc_html__('Something is wrong with the format for the new date.', 'publishpress')
@@ -763,11 +762,11 @@ if (!class_exists('PP_Calendar')) {
 
             // Persist the old timestamp because we can't manipulate the exact time on the calendar
             // Bump the last modified timestamps too
-            $existing_time     = date('H:i:s', strtotime($post->post_date));
+            $existing_time = date('H:i:s', strtotime($post->post_date));
             $existing_time_gmt = date('H:i:s', strtotime($post->post_date_gmt));
-            $new_values        = [
-                'post_date'         => date('Y-m-d', $next_date_full) . ' ' . $existing_time,
-                'post_modified'     => current_time('mysql'),
+            $new_values = [
+                'post_date' => date('Y-m-d', $next_date_full) . ' ' . $existing_time,
+                'post_modified' => current_time('mysql'),
                 'post_modified_gmt' => current_time('mysql', 1),
             ];
 
@@ -800,7 +799,7 @@ if (!class_exists('PP_Calendar')) {
                 ]
             );
             clean_post_cache($post->ID);
-            if (!$response) {
+            if (! $response) {
                 $this->print_ajax_response('error', $this->module->messages['update-error']);
             }
 
@@ -846,10 +845,10 @@ if (!class_exists('PP_Calendar')) {
          */
         private function generateVTimeZone(&$calendar, $tzid, $from = 0, $to = 0)
         {
-            if (!$from) {
+            if (! $from) {
                 $from = time();
             }
-            if (!$to) {
+            if (! $to) {
                 $to = $from;
             }
 
@@ -860,7 +859,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // get all transitions for one year back/ahead
-            $year        = 86400 * 360;
+            $year = 86400 * 360;
             $transitions = $tz->getTransitions($from - $year, $to + $year);
 
             $vTimeZone = $calendar->add(
@@ -872,29 +871,29 @@ if (!class_exists('PP_Calendar')) {
 
             $standard = null;
             $daylight = null;
-            $t_std    = null;
-            $t_dst    = null;
+            $t_std = null;
+            $t_dst = null;
 
             foreach ($transitions as $i => $trans) {
                 $cmp = null;
 
                 // daylight saving time definition
                 if ($trans['isdst']) {
-                    $t_dst  = $trans['ts'];
-                    $dt     = new DateTime($trans['time']);
+                    $t_dst = $trans['ts'];
+                    $dt = new DateTime($trans['time']);
                     $offset = $trans['offset'] / 3600;
 
                     $daylight = $vTimeZone->add(
                         'DAYLIGHTe',
                         [
-                            'DTSTART'      => $dt->format('Ymd\THis'),
+                            'DTSTART' => $dt->format('Ymd\THis'),
                             'TZOFFSETFROM' => sprintf(
                                 '%s%02d%02d',
                                 $tzfrom >= 0 ? '+' : '',
                                 floor($tzfrom),
                                 ($tzfrom - floor($tzfrom)) * 60
                             ),
-                            'TZOFFSETTO'   => sprintf(
+                            'TZOFFSETTO' => sprintf(
                                 '%s%02d%02d',
                                 $offset >= 0 ? '+' : '',
                                 floor($offset),
@@ -904,27 +903,27 @@ if (!class_exists('PP_Calendar')) {
                     );
 
                     // add abbreviated timezone name if available
-                    if (!empty($trans['abbr'])) {
+                    if (! empty($trans['abbr'])) {
                         $daylight->add('TZNAME', [$trans['abbr']]);
                     }
 
                     $tzfrom = $offset;
                 } else {
-                    $t_std  = $trans['ts'];
-                    $dt     = new DateTime($trans['time']);
+                    $t_std = $trans['ts'];
+                    $dt = new DateTime($trans['time']);
                     $offset = $trans['offset'] / 3600;
 
                     $standard = $vTimeZone->add(
                         'STANDARD',
                         [
-                            'DTSTART'      => $dt->format('Ymd\THis'),
+                            'DTSTART' => $dt->format('Ymd\THis'),
                             'TZOFFSETFROM' => sprintf(
                                 '%s%02d%02d',
                                 $tzfrom >= 0 ? '+' : '',
                                 floor($tzfrom),
                                 ($tzfrom - floor($tzfrom)) * 60
                             ),
-                            'TZOFFSETTO'   => sprintf(
+                            'TZOFFSETTO' => sprintf(
                                 '%s%02d%02d',
                                 $offset >= 0 ? '+' : '',
                                 floor($offset),
@@ -934,7 +933,7 @@ if (!class_exists('PP_Calendar')) {
                     );
 
                     // add abbreviated timezone name if available
-                    if (!empty($trans['abbr'])) {
+                    if (! empty($trans['abbr'])) {
                         $standard->add('TZNAME', [$trans['abbr']]);
                     }
 
@@ -969,20 +968,20 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Confirm all of the arguments are present
-            if (!isset($_GET['user'], $_GET['user_key'])) {
+            if (! isset($_GET['user'], $_GET['user_key'])) {
                 die();
             }
 
             // Confirm this is a valid request
-            $user           = sanitize_user($_GET['user']);
-            $user_key       = sanitize_user($_GET['user_key']);
+            $user = sanitize_user($_GET['user']);
+            $user_key = sanitize_user($_GET['user_key']);
             $ics_secret_key = $this->module->options->ics_secret_key;
-            if (!$ics_secret_key || md5($user . $ics_secret_key) !== $user_key) {
+            if (! $ics_secret_key || md5($user . $ics_secret_key) !== $user_key) {
                 die($this->module->messages['nonce-failed']);
             }
 
             // Set up the post data to be printed
-            $post_query_args  = [];
+            $post_query_args = [];
             $calendar_filters = $this->calendar_filters();
             foreach ($calendar_filters as $filter) {
                 if (isset($_GET[$filter]) && false !== ($value = $this->sanitize_filter(
@@ -1028,7 +1027,7 @@ if (!class_exists('PP_Calendar')) {
             for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) {
                 // We need to set the object variable for our posts_where filter
                 $this->current_week = $current_week;
-                $week_posts         = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
+                $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
                         $start_date = new DateTime($post->post_date_gmt);
@@ -1046,8 +1045,8 @@ if (!class_exists('PP_Calendar')) {
 
                         // Description should include everything visible in the calendar popup
                         $information_fields = $this->get_post_information_fields($post);
-                        $eventDescription   = '';
-                        if (!empty($information_fields)) {
+                        $eventDescription = '';
+                        if (! empty($information_fields)) {
                             foreach ($information_fields as $key => $values) {
                                 $eventDescription .= $values['label'] . ': ' . $values['value'] . "\n";
                             }
@@ -1057,14 +1056,14 @@ if (!class_exists('PP_Calendar')) {
                         $vCalendar->add(
                             'VEVENT',
                             [
-                                'UID'           => $post->guid,
-                                'SUMMARY'       => $this->do_ics_escaping(apply_filters('the_title', $post->post_title))
+                                'UID' => $post->guid,
+                                'SUMMARY' => $this->do_ics_escaping(apply_filters('the_title', $post->post_title))
                                     . ' - ' . $this->get_post_status_friendly_name(get_post_status($post->ID)),
-                                'DTSTART'       => $start_date,
-                                'DTEND'         => $end_date,
+                                'DTSTART' => $start_date,
+                                'DTEND' => $end_date,
                                 'LAST-MODIFIED' => $last_modified,
-                                'URL'           => get_post_permalink($post->ID),
-                                'DESCRIPTION'   => $eventDescription,
+                                'URL' => get_post_permalink($post->ID),
+                                'DESCRIPTION' => $eventDescription,
                             ]
                         );
                     }
@@ -1104,16 +1103,16 @@ if (!class_exists('PP_Calendar')) {
          */
         public function handle_regenerate_calendar_feed_secret()
         {
-            if (!isset($_GET['action']) || 'pp_calendar_regenerate_calendar_feed_secret' != $_GET['action']) {
+            if (! isset($_GET['action']) || 'pp_calendar_regenerate_calendar_feed_secret' != $_GET['action']) {
                 return;
             }
 
-            if (!current_user_can('manage_options')) {
+            if (! current_user_can('manage_options')) {
                 wp_die($this->module->messages['invalid-permissions']);
             }
 
-            if (!isset($_GET['_wpnonce'])
-                || !wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), 'pp-regenerate-ics-key')
+            if (! isset($_GET['_wpnonce'])
+                || ! wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), 'pp-regenerate-ics-key')
             ) {
                 wp_die($this->module->messages['nonce-failed']);
             }
@@ -1121,7 +1120,7 @@ if (!class_exists('PP_Calendar')) {
             PublishPress()->update_module_option($this->module->name, 'ics_secret_key', wp_generate_password());
 
             $args = [
-                'page'   => PP_Modules_Settings::SETTINGS_SLUG,
+                'page' => PP_Modules_Settings::SETTINGS_SLUG,
                 'settings_module' => $this->module->settings_slug,
             ];
 
@@ -1145,19 +1144,19 @@ if (!class_exists('PP_Calendar')) {
         public function get_filters()
         {
             $current_user = wp_get_current_user();
-            $filters      = [];
-            $old_filters  = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
+            $filters = [];
+            $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
 
             $default_filters = [
-                'weeks'       => self::DEFAULT_NUM_WEEKS,
+                'weeks' => self::DEFAULT_NUM_WEEKS,
                 'post_status' => '',
-                'cpt'         => '',
-                'cat'         => '',
-                'tag'         => '',
-                'author'      => '',
-                'start_date'  => date('Y-m-d', current_time('timestamp')),
+                'cpt' => '',
+                'cat' => '',
+                'tag' => '',
+                'author' => '',
+                'start_date' => date('Y-m-d', current_time('timestamp')),
             ];
-            $old_filters     = array_merge($default_filters, (array)$old_filters);
+            $old_filters = array_merge($default_filters, (array)$old_filters);
 
             // Sanitize and validate any newly added filters
             foreach ($old_filters as $key => $old_value) {
@@ -1174,7 +1173,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Fix start_date, if no specific date was set
-            if (!isset($_GET['start_date'])) {
+            if (! isset($_GET['start_date'])) {
                 $filters['start_date'] = $default_filters['start_date'];
             }
 
@@ -1213,11 +1212,11 @@ if (!class_exists('PP_Calendar')) {
         {
             $return = [];
 
-            if (!isset($this->module->options->post_types)) {
+            if (! isset($this->module->options->post_types)) {
                 $this->module->options->post_types = [];
             }
 
-            if (!empty($this->module->options->post_types)) {
+            if (! empty($this->module->options->post_types)) {
                 foreach ($this->module->options->post_types as $type => $value) {
                     if ('on' === $value) {
                         $return[] = $type;
@@ -1253,12 +1252,12 @@ if (!class_exists('PP_Calendar')) {
             $this->total_weeks = empty($filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $filters['weeks'];
 
             // For generating the WP Query objects later on
-            $post_query_args  = [
+            $post_query_args = [
                 'post_status' => $filters['post_status'],
-                'post_type'   => $filters['cpt'],
-                'cat'         => $filters['cat'],
-                'tag'         => $filters['tag'],
-                'author'      => $filters['author'],
+                'post_type' => $filters['cpt'],
+                'cat' => $filters['cat'],
+                'tag' => $filters['tag'],
+                'author' => $filters['author'],
             ];
             $this->start_date = $filters['start_date'];
 
@@ -1266,10 +1265,10 @@ if (!class_exists('PP_Calendar')) {
             if (count($supported_post_types) > 1) {
                 $all_post_types = get_post_types(null, 'objects');
             }
-            $dates        = [];
+            $dates = [];
             $heading_date = $filters['start_date'];
             for ($i = 0; $i < 7; $i++) {
-                $dates[$i]    = $heading_date;
+                $dates[$i] = $heading_date;
                 $heading_date = date('Y-m-d', strtotime('+1 day', strtotime($heading_date)));
             }
 
@@ -1280,16 +1279,16 @@ if (!class_exists('PP_Calendar')) {
             if ('on' == $this->module->options->ics_subscription && $this->module->options->ics_secret_key) {
                 // Prepare the download link
                 $args = [
-                    'action'   => 'pp_calendar_ics_subscription',
-                    'user'     => wp_get_current_user()->user_login,
+                    'action' => 'pp_calendar_ics_subscription',
+                    'user' => wp_get_current_user()->user_login,
                     'user_key' => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
                 ];
 
                 // Prepare the subscribe link for the feed
                 unset($args['action']);
                 $args['post_status'] = 'unpublish';
-                $args['pp_action']   = 'pp_calendar_ics_feed';
-                $subscription_link   = add_query_arg($args, site_url());
+                $args['pp_action'] = 'pp_calendar_ics_feed';
+                $subscription_link = add_query_arg($args, site_url());
 
                 $description .= '<div class="calendar-subscribe">';
 
@@ -1415,8 +1414,8 @@ if (!class_exists('PP_Calendar')) {
                             ),
                             number_format_i18n((int)$_GET['trashed'])
                         );
-                        $ids       = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
-                        $pid       = explode(',', $ids);
+                        $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
+                        $pid = explode(',', $ids);
                         $post_type = get_post_type($pid[0]);
                         echo ' <a href="' . esc_url(
                                 wp_nonce_url(
@@ -1489,12 +1488,12 @@ if (!class_exists('PP_Calendar')) {
         public function generate_post_li_html($post, $post_date, $num = 0)
         {
             $can_modify = $this->current_user_can_modify_post($post);
-            $cache_key  = sprintf(
+            $cache_key = sprintf(
                 '%s%s',
                 $post->ID,
                 $can_modify ? 'can_modify' : 'read_only'
             );
-            $cache_val  = wp_cache_get($cache_key, self::$post_li_html_cache_key);
+            $cache_val = wp_cache_get($cache_key, self::$post_li_html_cache_key);
             // Because $num is pertinent to the display of the post LI, need to make sure that's what's in cache
             if (is_array($cache_val) && $cache_val['num'] == $num) {
                 $this->hidden = $cache_val['hidden'];
@@ -1504,16 +1503,16 @@ if (!class_exists('PP_Calendar')) {
 
             ob_start();
 
-            $post_id        = $post->ID;
+            $post_id = $post->ID;
             $edit_post_link = get_edit_post_link($post_id);
 
             $show_posts_publish_time = $this->showPostsPublishTime($post->post_status);
 
             $post_publish_date_time = '';
             if ($show_posts_publish_time) {
-                $post_publish_datetime       = get_the_date('c', $post);
+                $post_publish_datetime = get_the_date('c', $post);
                 $post_publish_date_timestamp = get_post_time('U', false, $post);
-                $posts_publish_time_format   = isset($this->module->options->posts_publish_time_format) && !empty(
+                $posts_publish_time_format = isset($this->module->options->posts_publish_time_format) && ! empty(
                 $this->module->options->posts_publish_time_format
                 )
                     ? $this->module->options->posts_publish_time_format
@@ -1541,7 +1540,7 @@ if (!class_exists('PP_Calendar')) {
             }
 
             // Hide posts over a certain number to prevent clutter, unless user is only viewing 1 or 2 weeks
-            $max_visible_posts_option = isset($this->module->options->max_visible_posts_per_date) && !empty($this->default_max_visible_posts_per_date) ?
+            $max_visible_posts_option = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                 (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
             if ($max_visible_posts_option < 0) {
@@ -1608,7 +1607,7 @@ if (!class_exists('PP_Calendar')) {
                         $this->get_inner_information($this->get_post_information_fields($post), $post); ?>
                     </div>
                     <?php
-                    if (!$this->current_user_can_modify_post($post)) : ?>
+                    if (! $this->current_user_can_modify_post($post)) : ?>
                         <div class="item-inner read-only-notice"
                              title="<?php
                              esc_attr_e('You can\'t edit or move this post'); ?>">
@@ -1625,9 +1624,9 @@ if (!class_exists('PP_Calendar')) {
             ob_end_clean();
 
             $post_li_cache = [
-                'num'          => $num,
+                'num' => $num,
                 'post_li_html' => $post_li_html,
-                'hidden'       => $this->hidden,
+                'hidden' => $this->hidden,
             ];
             wp_cache_set($cache_key, $post_li_cache, self::$post_li_html_cache_key);
 
@@ -1653,16 +1652,16 @@ if (!class_exists('PP_Calendar')) {
 
             // Icon
             $icon = null;
-            if (!empty($term->icon)) {
+            if (! empty($term->icon)) {
                 $icon = $term->icon;
             } else {
                 // Add an icon for the items
                 $default_icons = [
-                    'publish'    => 'dashicons-yes',
-                    'future'     => 'dashicons-calendar-alt',
-                    'private'    => 'dashicons-lock',
-                    'draft'      => 'dashicons-edit',
-                    'pending'    => 'dashicons-edit',
+                    'publish' => 'dashicons-yes',
+                    'future' => 'dashicons-calendar-alt',
+                    'private' => 'dashicons-lock',
+                    'draft' => 'dashicons-edit',
+                    'pending' => 'dashicons-edit',
                     'auto-draft' => 'dashicons-edit',
                 ];
 
@@ -1671,13 +1670,13 @@ if (!class_exists('PP_Calendar')) {
 
             // Color
             $color = PP_Custom_Status::DEFAULT_COLOR;
-            if (!empty($term->color)) {
+            if (! empty($term->color)) {
                 $color = $term->color;
             }
 
             return [
                 'color' => $color,
-                'icon'  => $icon,
+                'icon' => $icon,
             ];
         }
 
@@ -1761,7 +1760,7 @@ if (!class_exists('PP_Calendar')) {
             </table>
             <?php
             $post_type_object = get_post_type_object($post->post_type);
-            $item_actions     = [];
+            $item_actions = [];
             if ($this->current_user_can_modify_post($post)) {
                 // Edit this post
                 $item_actions['edit'] = '<a href="' . esc_url(
@@ -1781,7 +1780,7 @@ if (!class_exists('PP_Calendar')) {
                         'publishpress'
                     ) . '">' . __('Trash', 'publishpress') . '</a>';
                 // Preview/view this post
-                if (!in_array($post->post_status, $this->published_statuses)) {
+                if (! in_array($post->post_status, $this->published_statuses)) {
                     $item_actions['view'] = '<a href="' . esc_url(
                             apply_filters(
                                 'preview_post_link',
@@ -1886,7 +1885,7 @@ if (!class_exists('PP_Calendar')) {
                 case 'taxonomy hierarchical':
                     return wp_dropdown_categories(
                         [
-                            'echo'       => 0,
+                            'echo' => 0,
                             'hide_empty' => 0,
                         ]
                     );
@@ -1916,7 +1915,7 @@ if (!class_exists('PP_Calendar')) {
             $information_fields['author'] = [
                 'label' => _n('Author', 'Authors', count($authorsNames), 'publishpress'),
                 'value' => implode(', ', $authorsNames),
-                'type'  => 'author',
+                'type' => 'author',
             ];
 
             // If the calendar supports more than one post type, show the post type label
@@ -1941,18 +1940,18 @@ if (!class_exists('PP_Calendar')) {
                 }
             }
             // Taxonomies and their values
-            $args       = [
+            $args = [
                 'post_type' => $post->post_type,
             ];
             $taxonomies = get_object_taxonomies($args, 'object');
             foreach ((array)$taxonomies as $taxonomy) {
                 // Sometimes taxonomies skip by, so let's make sure it has a label too
-                if (!$taxonomy->public || !$taxonomy->label) {
+                if (! $taxonomy->public || ! $taxonomy->label) {
                     continue;
                 }
 
                 $terms = get_the_terms($post->ID, $taxonomy->name);
-                if (!$terms || is_wp_error($terms)) {
+                if (! $terms || is_wp_error($terms)) {
                     continue;
                 }
 
@@ -1976,7 +1975,7 @@ if (!class_exists('PP_Calendar')) {
                 $information_fields[$key] = [
                     'label' => $taxonomy->label,
                     'value' => $value,
-                    'type'  => $type,
+                    'type' => $type,
                 ];
 
                 if ($post->post_type == 'page') {
@@ -2160,14 +2159,14 @@ if (!class_exists('PP_Calendar')) {
         public function getCalendarDataForMultipleWeeks($args = [], $context = 'dashboard')
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            $defaults             = [
-                'post_status'    => null,
-                'cat'            => null,
-                'tag'            => null,
-                'author'         => null,
-                'post_type'      => $supported_post_types,
+            $defaults = [
+                'post_status' => null,
+                'cat' => null,
+                'tag' => null,
+                'author' => null,
+                'post_type' => $supported_post_types,
                 'posts_per_page' => -1,
-                'order'          => 'ASC',
+                'order' => 'ASC',
             ];
 
             $args = array_merge($defaults, $args);
@@ -2175,7 +2174,7 @@ if (!class_exists('PP_Calendar')) {
             // Unpublished as a status is just an array of everything but 'publish'
             if ($args['post_status'] == 'unpublish') {
                 $args['post_status'] = '';
-                $post_statuses       = $this->get_post_statuses();
+                $post_statuses = $this->get_post_statuses();
                 foreach ($post_statuses as $post_status) {
                     $args['post_status'] .= $post_status->slug . ', ';
                 }
@@ -2202,7 +2201,7 @@ if (!class_exists('PP_Calendar')) {
                 unset($args['author']);
             }
 
-            if (empty($args['post_type']) || !in_array($args['post_type'], $supported_post_types)) {
+            if (empty($args['post_type']) || ! in_array($args['post_type'], $supported_post_types)) {
                 $args['post_type'] = $supported_post_types;
             }
 
@@ -2219,7 +2218,7 @@ if (!class_exists('PP_Calendar')) {
             while ($post_results->have_posts()) {
                 $post_results->the_post();
                 global $post;
-                $key_date           = date('Y-m-d', strtotime($post->post_date));
+                $key_date = date('Y-m-d', strtotime($post->post_date));
                 $posts[$key_date][] = $post;
             }
 
@@ -2252,14 +2251,14 @@ if (!class_exists('PP_Calendar')) {
         public function get_calendar_posts_for_week($args = [], $context = 'dashboard')
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            $defaults             = [
-                'post_status'    => null,
-                'cat'            => null,
-                'tag'            => null,
-                'author'         => null,
-                'post_type'      => $supported_post_types,
+            $defaults = [
+                'post_status' => null,
+                'cat' => null,
+                'tag' => null,
+                'author' => null,
+                'post_type' => $supported_post_types,
                 'posts_per_page' => -1,
-                'order'          => 'ASC',
+                'order' => 'ASC',
             ];
 
             $args = array_merge($defaults, $args);
@@ -2267,7 +2266,7 @@ if (!class_exists('PP_Calendar')) {
             // Unpublished as a status is just an array of everything but 'publish'
             if ($args['post_status'] == 'unpublish') {
                 $args['post_status'] = '';
-                $post_statuses       = $this->get_post_statuses();
+                $post_statuses = $this->get_post_statuses();
                 foreach ($post_statuses as $post_status) {
                     $args['post_status'] .= $post_status->slug . ', ';
                 }
@@ -2294,7 +2293,7 @@ if (!class_exists('PP_Calendar')) {
                 unset($args['author']);
             }
 
-            if (empty($args['post_type']) || !in_array($args['post_type'], $supported_post_types)) {
+            if (empty($args['post_type']) || ! in_array($args['post_type'], $supported_post_types)) {
                 $args['post_type'] = $supported_post_types;
             }
 
@@ -2309,7 +2308,7 @@ if (!class_exists('PP_Calendar')) {
             while ($post_results->have_posts()) {
                 $post_results->the_post();
                 global $post;
-                $key_date           = date('Y-m-d', strtotime($post->post_date));
+                $key_date = date('Y-m-d', strtotime($post->post_date));
                 $posts[$key_date][] = $post;
             }
 
@@ -2328,10 +2327,10 @@ if (!class_exists('PP_Calendar')) {
             global $wpdb;
 
             $beginning_date = $this->get_beginning_of_week($this->start_date, 'Y-m-d', $this->current_week);
-            $ending_date    = $this->get_ending_of_week($this->start_date, 'Y-m-d', $this->current_week);
+            $ending_date = $this->get_ending_of_week($this->start_date, 'Y-m-d', $this->current_week);
             // Adjust the ending date to account for the entire day of the last day of the week
             $ending_date = date('Y-m-d', strtotime('+1 day', strtotime($ending_date)));
-            $where       = $where . $wpdb->prepare(
+            $where = $where . $wpdb->prepare(
                     " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
                     $beginning_date,
                     $ending_date
@@ -2353,7 +2352,7 @@ if (!class_exists('PP_Calendar')) {
         {
             $supported_post_types = $this->get_post_types_for_module($this->module);
 
-            if (!isset($weeks_offset)) {
+            if (! isset($weeks_offset)) {
                 $weeks_offset = $this->total_weeks;
             } elseif ($weeks_offset == 0) {
                 $filters['start_date'] = $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp')));
@@ -2367,7 +2366,7 @@ if (!class_exists('PP_Calendar')) {
                 'Y-m-d',
                 strtotime($weeks_offset . ' weeks', strtotime($filters['start_date']))
             );
-            $url                   = add_query_arg($filters, menu_page_url('pp-calendar', false));
+            $url = add_query_arg($filters, menu_page_url('pp-calendar', false));
 
             if (count($supported_post_types) > 1) {
                 $url = add_query_arg('cpt', $filters['cpt'], $url);
@@ -2390,11 +2389,11 @@ if (!class_exists('PP_Calendar')) {
          */
         public function get_beginning_of_week($date, $format = 'Y-m-d', $week = 1)
         {
-            $date                    = strtotime($date);
-            $start_of_week           = (int)get_option('start_of_week');
-            $day_of_week             = date('w', $date);
-            $date                    += (($start_of_week - $day_of_week - 7) % 7) * 60 * 60 * 24 * $week;
-            $additional              = 3600 * 24 * 7 * ($week - 1);
+            $date = strtotime($date);
+            $start_of_week = (int)get_option('start_of_week');
+            $day_of_week = date('w', $date);
+            $date += (($start_of_week - $day_of_week - 7) % 7) * 60 * 60 * 24 * $week;
+            $additional = 3600 * 24 * 7 * ($week - 1);
             $formatted_start_of_week = date($format, $date + $additional);
 
             return $formatted_start_of_week;
@@ -2414,11 +2413,11 @@ if (!class_exists('PP_Calendar')) {
          */
         public function get_ending_of_week($date, $format = 'Y-m-d', $week = 1)
         {
-            $date                  = strtotime($date);
-            $end_of_week           = (int)get_option('start_of_week') - 1;
-            $day_of_week           = date('w', $date);
-            $date                  += (($end_of_week - $day_of_week + 7) % 7) * 60 * 60 * 24;
-            $additional            = 3600 * 24 * 7 * ($week - 1);
+            $date = strtotime($date);
+            $end_of_week = (int)get_option('start_of_week') - 1;
+            $day_of_week = date('w', $date);
+            $date += (($end_of_week - $day_of_week + 7) % 7) * 60 * 60 * 24;
+            $additional = 3600 * 24 * 7 * ($week - 1);
             $formatted_end_of_week = date($format, $date + $additional);
 
             return $formatted_end_of_week;
@@ -2435,23 +2434,23 @@ if (!class_exists('PP_Calendar')) {
          */
         public function current_user_can_modify_post($post)
         {
-            if (!$post) {
+            if (! $post) {
                 return false;
             }
 
             $post_type_object = get_post_type_object($post->post_type);
 
             // Is the current user an author of the post?
-            $userId                  = (int)wp_get_current_user()->ID;
-            $isAuthor                = apply_filters(
+            $userId = (int)wp_get_current_user()->ID;
+            $isAuthor = apply_filters(
                 'publishpress_is_author_of_post',
                 $userId === (int)$post->post_author,
                 $userId,
                 $post->ID
             );
-            $isPublished             = in_array($post->post_status, $this->published_statuses);
-            $canPublish              = current_user_can($post_type_object->cap->publish_posts, $post->ID);
-            $passedPublishedPostRule = (!$isPublished || ($isPublished && $canPublish));
+            $isPublished = in_array($post->post_status, $this->published_statuses);
+            $canPublish = current_user_can($post_type_object->cap->publish_posts, $post->ID);
+            $passedPublishedPostRule = (! $isPublished || ($isPublished && $canPublish));
 
             // Published posts only can be updated by those who can publish posts.
             // Is the user an author for the content?
@@ -2584,7 +2583,7 @@ if (!class_exists('PP_Calendar')) {
         {
             $options = [
                 'off' => __('Disabled', 'publishpress'),
-                'on'  => __('Enabled', 'publishpress'),
+                'on' => __('Enabled', 'publishpress'),
             ];
             echo '<select id="ics_subscription" name="' . esc_attr(
                     $this->module->options_group_name
@@ -2627,7 +2626,7 @@ if (!class_exists('PP_Calendar')) {
             if (empty($customStatuses)) {
                 $statuses = [
                     'publish' => __('Publish'),
-                    'future'  => __('Scheduled'),
+                    'future' => __('Scheduled'),
                 ];
             } else {
                 $statuses = [];
@@ -2641,7 +2640,7 @@ if (!class_exists('PP_Calendar')) {
             if ($this->module->options->show_posts_publish_time === 'on') {
                 $this->module->options->show_posts_publish_time = [
                     'publish' => 'on',
-                    'future'  => 'on',
+                    'future' => 'on',
                 ];
             }
 
@@ -2665,7 +2664,7 @@ if (!class_exists('PP_Calendar')) {
 
         private function getCalendarTimeFormat()
         {
-            return !isset($this->module->options->posts_publish_time_format) || is_null(
+            return ! isset($this->module->options->posts_publish_time_format) || is_null(
                 $this->module->options->posts_publish_time_format
             )
                 ? self::TIME_FORMAT_12H_NO_LEADING_ZEROES
@@ -2680,9 +2679,9 @@ if (!class_exists('PP_Calendar')) {
         public function settings_posts_publish_time_format_option()
         {
             $timeFormats = [
-                self::TIME_FORMAT_12H_NO_LEADING_ZEROES   => '1-12 am/pm',
+                self::TIME_FORMAT_12H_NO_LEADING_ZEROES => '1-12 am/pm',
                 self::TIME_FORMAT_12H_WITH_LEADING_ZEROES => '01-12 am/pm',
-                self::TIME_FORMAT_24H                     => '00-23',
+                self::TIME_FORMAT_24H => '00-23',
             ];
 
             $posts_publish_time_format = $this->getCalendarTimeFormat();
@@ -2734,11 +2733,11 @@ if (!class_exists('PP_Calendar')) {
         public function settings_sort_by_option()
         {
             $fields = [
-                'time'   => __('Publishing Time', 'publishpress'),
+                'time' => __('Publishing Time', 'publishpress'),
                 'status' => __('Post Status', 'publishpress'),
             ];
 
-            $sortByOptionValue = !isset($this->module->options->sort_by) || is_null(
+            $sortByOptionValue = ! isset($this->module->options->sort_by) || is_null(
                 $this->module->options->sort_by
             )
                 ? 'time'
@@ -2773,7 +2772,7 @@ if (!class_exists('PP_Calendar')) {
 
         public function settings_max_visible_posts_per_date()
         {
-            $maxVisiblePostsPerDate = !isset($this->module->options->max_visible_posts_per_date) || is_null(
+            $maxVisiblePostsPerDate = ! isset($this->module->options->max_visible_posts_per_date) || is_null(
                 $this->module->options->max_visible_posts_per_date
             )
                 ? (int)$this->default_max_visible_posts_per_date
@@ -2853,7 +2852,7 @@ if (!class_exists('PP_Calendar')) {
                 if ($new_options['show_posts_publish_time'] == 'on') {
                     $options['show_posts_publish_time'] = [
                         'publish' => 'on',
-                        'future'  => 'on',
+                        'future' => 'on',
                     ];
                 } else {
                     $options['show_posts_publish_time'] = $new_options['show_posts_publish_time'];
@@ -2938,8 +2937,8 @@ if (!class_exists('PP_Calendar')) {
          */
         public function alter_post_modification_time($data, $postarr)
         {
-            if (!empty($postarr['post_modified']) && !empty($postarr['post_modified_gmt'])) {
-                $data['post_modified']     = $postarr['post_modified'];
+            if (! empty($postarr['post_modified']) && ! empty($postarr['post_modified_gmt'])) {
+                $data['post_modified'] = $postarr['post_modified'];
                 $data['post_modified_gmt'] = $postarr['post_modified_gmt'];
             }
 
@@ -2951,11 +2950,11 @@ if (!class_exists('PP_Calendar')) {
             $select_filter_names = [];
 
             $select_filter_names['post_status'] = 'post_status';
-            $select_filter_names['cat']         = 'cat';
-            $select_filter_names['tag']         = 'tag';
-            $select_filter_names['author']      = 'author';
-            $select_filter_names['type']        = 'cpt';
-            $select_filter_names['weeks']       = 'weeks';
+            $select_filter_names['cat'] = 'cat';
+            $select_filter_names['tag'] = 'tag';
+            $select_filter_names['author'] = 'author';
+            $select_filter_names['type'] = 'cpt';
+            $select_filter_names['weeks'] = 'weeks';
 
             return apply_filters('pp_calendar_filter_names', $select_filter_names);
         }
@@ -2964,7 +2963,7 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([]);
             }
 
@@ -2976,16 +2975,16 @@ if (!class_exists('PP_Calendar')) {
              */
             $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
 
-            if (!empty($results)) {
+            if (! empty($results)) {
                 wp_send_json($results);
             }
 
             $user_args = [
-                'number'  => 20,
+                'number' => 20,
                 'orderby' => 'display_name',
             ];
 
-            if (!empty($queryText)) {
+            if (! empty($queryText)) {
                 $user_args['search'] = '*' . $queryText . '*';
             }
 
@@ -2993,7 +2992,7 @@ if (!class_exists('PP_Calendar')) {
 
             foreach ($users as $user) {
                 $results[] = [
-                    'id'   => $user->ID,
+                    'id' => $user->ID,
                     'text' => $user->display_name,
                 ];
             }
@@ -3005,12 +3004,12 @@ if (!class_exists('PP_Calendar')) {
         {
             header('Content-type: application/json;');
 
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([]);
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-            $taxonomy  = isset($_GET['taxonomy']) ? sanitize_text_field($_GET['taxonomy']) : '';
+            $taxonomy = isset($_GET['taxonomy']) ? sanitize_text_field($_GET['taxonomy']) : '';
             global $wpdb;
 
             $queryResult = $wpdb->get_results(
@@ -3031,7 +3030,7 @@ if (!class_exists('PP_Calendar')) {
 
         private function getPostTypeObject($postType)
         {
-            if (!isset($this->postTypeObjectCache[$postType])) {
+            if (! isset($this->postTypeObjectCache[$postType])) {
                 $this->postTypeObjectCache[$postType] = get_post_type_object($postType);
             }
 
@@ -3041,29 +3040,29 @@ if (!class_exists('PP_Calendar')) {
         private function extractPostDataForTheCalendar($post)
         {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
-            $postTypeObject  = $this->getPostTypeObject($post->post_type);
+            $postTypeObject = $this->getPostTypeObject($post->post_type);
 
             return [
-                'label'     => $post->post_title,
-                'id'        => $post->ID,
+                'label' => $post->post_title,
+                'id' => $post->ID,
                 'timestamp' => $post->post_date,
-                'icon'      => $postTypeOptions['icon'],
-                'color'     => $postTypeOptions['color'],
-                'showTime'  => $this->showPostsPublishTime($post->post_status),
-                'canEdit'   => current_user_can($postTypeObject->cap->edit_post, $post->ID),
+                'icon' => $postTypeOptions['icon'],
+                'color' => $postTypeOptions['color'],
+                'showTime' => $this->showPostsPublishTime($post->post_status),
+                'canEdit' => current_user_can($postTypeObject->cap->edit_post, $post->ID),
             ];
         }
 
         public function moveCalendarItemToNewDate()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json(['error' => __('Invalid nonce', 'publishpress')], 403);
             }
 
-            $postId   = isset($_POST['id']) ? (int)$_POST['id'] : null;
-            $newYear  = isset($_POST['year']) ? (int)$_POST['year'] : null;
+            $postId = isset($_POST['id']) ? (int)$_POST['id'] : null;
+            $newYear = isset($_POST['year']) ? (int)$_POST['year'] : null;
             $newMonth = isset($_POST['month']) ? (int)$_POST['month'] : null;
-            $newDay   = isset($_POST['day']) ? (int)$_POST['day'] : null;
+            $newDay = isset($_POST['day']) ? (int)$_POST['day'] : null;
 
             if (empty($postId) || empty($newYear) || empty($newMonth) || empty($newDay)) {
                 wp_send_json(['error' => __('Invalid input', 'publishpress')], 400);
@@ -3073,7 +3072,7 @@ if (!class_exists('PP_Calendar')) {
 
             // Check if the user can edit the post
             $postTypeObject = $this->getPostTypeObject($post->post_type);
-            if (!current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
+            if (! current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
                 wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
             }
 
@@ -3093,8 +3092,8 @@ if (!class_exists('PP_Calendar')) {
 
             wp_update_post(
                 [
-                    'ID'            => $postId,
-                    'post_date'     => $newDate,
+                    'ID' => $postId,
+                    'post_date' => $newDate,
                     'post_date_gmt' => get_gmt_from_date($newDate),
 
                 ]
@@ -3108,14 +3107,14 @@ if (!class_exists('PP_Calendar')) {
 
         private function addTaxQueryToArgs($taxonomy, $termSlug, $args)
         {
-            if (!isset($args['tax_query'])) {
+            if (! isset($args['tax_query'])) {
                 $args['tax_query'] = [];
             }
 
             $args['tax_query'][] = [
                 'taxonomy' => $taxonomy,
-                'field'    => 'slug',
-                'terms'    => $termSlug
+                'field' => 'slug',
+                'terms' => $termSlug
             ];
 
             return $args;
@@ -3123,12 +3122,12 @@ if (!class_exists('PP_Calendar')) {
 
         public function fetchCalendarDataJson()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
 
             $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
-            $endingDate    = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
+            $endingDate = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
 
             $args = [];
 
@@ -3138,7 +3137,7 @@ if (!class_exists('PP_Calendar')) {
             if (isset($_GET['post_status'])) {
                 $postStatus = sanitize_text_field($_GET['post_status']);
 
-                if (!empty($postStatus)) {
+                if (! empty($postStatus)) {
                     $args['post_status'] = $postStatus;
                 }
             }
@@ -3146,7 +3145,7 @@ if (!class_exists('PP_Calendar')) {
             if (isset($_GET['category'])) {
                 $category = sanitize_key($_GET['category']);
 
-                if (!empty($category)) {
+                if (! empty($category)) {
                     $args = $this->addTaxQueryToArgs('category', $category, $args);
                 }
             }
@@ -3154,7 +3153,7 @@ if (!class_exists('PP_Calendar')) {
             if (isset($_GET['post_tag'])) {
                 $postTag = sanitize_key($_GET['post_tag']);
 
-                if (!empty($postTag)) {
+                if (! empty($postTag)) {
                     $args = $this->addTaxQueryToArgs('post_tag', $postTag, $args);
                 }
             }
@@ -3162,7 +3161,7 @@ if (!class_exists('PP_Calendar')) {
             if (isset($_GET['post_author'])) {
                 $postAuthor = (int)$_GET['post_author'];
 
-                if (!empty($postAuthor)) {
+                if (! empty($postAuthor)) {
                     $args['author'] = $postAuthor;
                 }
             }
@@ -3170,7 +3169,7 @@ if (!class_exists('PP_Calendar')) {
             if (isset($_GET['post_type'])) {
                 $postType = sanitize_key($_GET['post_type']);
 
-                if (!empty($postType)) {
+                if (! empty($postType)) {
                     $args['post_type'] = $postType;
                 }
             }
@@ -3225,7 +3224,7 @@ if (!class_exists('PP_Calendar')) {
 
         public function getPostData()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
 
@@ -3248,50 +3247,50 @@ if (!class_exists('PP_Calendar')) {
             );
 
             $categories = $this->getPostCategoriesNames($id);
-            $tags       = $this->getPostTagsNames($id);
+            $tags = $this->getPostTagsNames($id);
 
             $data = [
-                'id'     => $id,
+                'id' => $id,
                 'status' => $post->post_status,
                 'fields' => [
-                    'type'       => [
+                    'type' => [
                         'label' => __('Post Type', 'publishpress'),
                         'value' => $this->getPostTypeName($post->post_type),
-                        'type'  => 'type',
+                        'type' => 'type',
                     ],
-                    'id'         => [
+                    'id' => [
                         'label' => __('ID', 'publishpress'),
                         'value' => $id,
-                        'type'  => 'number',
+                        'type' => 'number',
                     ],
                     'date' => [
-                        'label'       => __('Date', 'publishpress'),
-                        'value'       => $post->post_date,
+                        'label' => __('Date', 'publishpress'),
+                        'value' => $post->post_date,
                         'valueString' => get_the_date(get_option('date_format', 'Y-m-d H:i:s'), $post),
-                        'type'        => 'date',
+                        'type' => 'date',
                     ],
-                    'status'     => [
+                    'status' => [
                         'label' => __('Post Status', 'publishpress'),
                         'value' => $this->getPostStatusName($post->post_status),
-                        'type'  => 'status',
+                        'type' => 'status',
                     ],
-                    'authors'    => [
+                    'authors' => [
                         'label' => _n('Author', 'Authors', count($authorsNames), 'publishpress'),
                         'value' => $authorsNames,
-                        'type'  => 'authors',
+                        'type' => 'authors',
                     ],
                     'categories' => [
                         'label' => _n('Category', 'Categories', count($categories), 'publishpress'),
                         'value' => $categories,
-                        'type'  => 'taxonomy',
+                        'type' => 'taxonomy',
                     ],
-                    'tags'       => [
+                    'tags' => [
                         'label' => _n('Tag', 'Tags', count($tags), 'publishpress'),
                         'value' => $tags,
-                        'type'  => 'taxonomy',
+                        'type' => 'taxonomy',
                     ],
                 ],
-                'links'  => []
+                'links' => []
             ];
 
             $postTypeObject = get_post_type_object($post->post_type);
@@ -3299,29 +3298,29 @@ if (!class_exists('PP_Calendar')) {
             if (current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
                 $data['links']['edit'] = [
                     'label' => __('Edit', 'publishpress'),
-                    'url'   => htmlspecialchars_decode(get_edit_post_link($id))
+                    'url' => htmlspecialchars_decode(get_edit_post_link($id))
                 ];
             }
 
             if (current_user_can($postTypeObject->cap->delete_post, $post->ID)) {
                 $data['links']['trash'] = [
                     'label' => __('Trash', 'publishpress'),
-                    'url'   => htmlspecialchars_decode(get_delete_post_link($id)),
+                    'url' => htmlspecialchars_decode(get_delete_post_link($id)),
                 ];
             }
 
             if (current_user_can($postTypeObject->cap->read_post, $post->ID)) {
                 if ($post->post_status === 'publish') {
                     $label = __('View', 'publishpress');
-                    $link  = get_permalink($id);
+                    $link = get_permalink($id);
                 } else {
                     $label = __('Preview', 'publishpress');
-                    $link  = get_preview_post_link($id);
+                    $link = get_preview_post_link($id);
                 }
 
                 $data['links']['view'] = [
                     'label' => $label,
-                    'url'   => htmlspecialchars_decode($link),
+                    'url' => htmlspecialchars_decode($link),
                 ];
             }
 
@@ -3332,32 +3331,32 @@ if (!class_exists('PP_Calendar')) {
 
         public function getPostTypeFields()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
 
-            $postType       = isset($_GET['postType']) ? sanitize_text_field($_GET['postType']) : 'post';
+            $postType = isset($_GET['postType']) ? sanitize_text_field($_GET['postType']) : 'post';
             $postTypeObject = get_post_type_object($postType);
             if (empty($postTypeObject) || is_wp_error($postTypeObject)) {
                 wp_send_json([], 404);
             }
 
             $fields = [
-                'title'  => [
+                'title' => [
                     'label' => __('Title', 'publishpress'),
                     'value' => null,
-                    'type'  => 'text',
+                    'type' => 'text',
                 ],
                 'status' => [
-                    'label'   => __('Post Status', 'publishpress'),
-                    'value'   => 'draft',
-                    'type'    => 'status',
+                    'label' => __('Post Status', 'publishpress'),
+                    'value' => 'draft',
+                    'type' => 'status',
                     'options' => $this->getUserAuthorizedPostStatusOptions($postType)
                 ],
-                'time'   => [
-                    'label'       => __('Publish Time', 'publishpress'),
-                    'value'       => null,
-                    'type'        => 'time',
+                'time' => [
+                    'label' => __('Publish Time', 'publishpress'),
+                    'value' => null,
+                    'type' => 'time',
                     'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
                 ]
             ];
@@ -3366,7 +3365,7 @@ if (!class_exists('PP_Calendar')) {
                 $fields['authors'] = [
                     'label' => __('Author', 'publishpress'),
                     'value' => null,
-                    'type'  => 'authors',
+                    'type' => 'authors',
                 ];
             }
 
@@ -3374,18 +3373,18 @@ if (!class_exists('PP_Calendar')) {
 
             if (in_array('category', $taxonomies)) {
                 $fields['categories'] = [
-                    'label'    => __('Categories', 'publishpress'),
-                    'value'    => null,
-                    'type'     => 'taxonomy',
+                    'label' => __('Categories', 'publishpress'),
+                    'value' => null,
+                    'type' => 'taxonomy',
                     'taxonomy' => 'category',
                 ];
             }
 
             if (in_array('post_tag', $taxonomies)) {
                 $fields['tags'] = [
-                    'label'    => __('Tags', 'publishpress'),
-                    'value'    => null,
-                    'type'     => 'taxonomy',
+                    'label' => __('Tags', 'publishpress'),
+                    'value' => null,
+                    'type' => 'taxonomy',
                     'taxonomy' => 'post_tag',
                 ];
             }
@@ -3393,7 +3392,7 @@ if (!class_exists('PP_Calendar')) {
             $fields['content'] = [
                 'label' => __('Content', 'publishpress'),
                 'value' => null,
-                'type'  => 'html'
+                'type' => 'html'
             ];
 
             $fields = apply_filters('publishpress_calendar_get_post_type_fields', $fields, $postType);
@@ -3414,24 +3413,24 @@ if (!class_exists('PP_Calendar')) {
          */
         public function createItem()
         {
-            if (!wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'publishpress-calendar-get-data')) {
+            if (! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'publishpress-calendar-get-data')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
             // Check that the user has the right capabilities to add posts to the calendar (defaults to 'edit_posts')
-            if (!current_user_can($this->create_post_cap)) {
+            if (! current_user_can($this->create_post_cap)) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
             }
 
-            $postType   = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : null;
-            $date       = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : null;
-            $status     = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
-            $title      = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
-            $content    = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
-            $time       = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
-            $authors    = isset($_POST['authors']) ? explode(',', $_POST['authors']) : [];
+            $postType = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : null;
+            $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : null;
+            $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+            $title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+            $content = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
+            $time = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
+            $authors = isset($_POST['authors']) ? explode(',', $_POST['authors']) : [];
             $categories = isset($_POST['categories']) ? explode(',', $_POST['categories']) : [];
-            $tags       = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
+            $tags = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
 
             if (empty($date)) {
                 $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
@@ -3442,7 +3441,7 @@ if (!class_exists('PP_Calendar')) {
                 $postType = 'post';
             }
 
-            if (!in_array($postType, $this->get_post_types_for_module($this->module))) {
+            if (! in_array($postType, $this->get_post_types_for_module($this->module))) {
                 $this->print_ajax_response(
                     'error',
                     __('The selected post type is not enabled for the calendar.', 'publishpress')
@@ -3470,16 +3469,16 @@ if (!class_exists('PP_Calendar')) {
                 $authors = apply_filters('publishpress_calendar_default_author', get_current_user_id());
             }
 
-            if (!is_array($authors)) {
+            if (! is_array($authors)) {
                 $authors = [$authors];
             }
 
-            if (!$this->isPostStatusValid($status)) {
+            if (! $this->isPostStatusValid($status)) {
                 $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
             }
 
             $categories = array_map('sanitize_text_field', $categories);
-            $tags       = array_map('sanitize_text_field', $tags);
+            $tags = array_map('sanitize_text_field', $tags);
 
             $dateTimestamp = strtotime($date);
 
@@ -3487,7 +3486,7 @@ if (!class_exists('PP_Calendar')) {
                 $time = $this->module->options->default_publish_time;
             }
 
-            if (!empty($time)) {
+            if (! empty($time)) {
                 $date = sprintf(
                     '%s %s',
                     $date,
@@ -3498,20 +3497,20 @@ if (!class_exists('PP_Calendar')) {
             }
 
             $dateTimeInstance = new DateTime($date);
-            if (!$dateTimeInstance) {
+            if (! $dateTimeInstance) {
                 $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
             }
             unset($dateTimeInstance);
 
             // Set new post parameters
             $postPlaceholder = [
-                'post_author'       => $authors[0],
-                'post_title'        => $title,
-                'post_content'      => $content,
-                'post_type'         => $postType,
-                'post_status'       => $status,
-                'post_date'         => $date,
-                'post_modified'     => current_time('mysql'),
+                'post_author' => $authors[0],
+                'post_title' => $title,
+                'post_content' => $content,
+                'post_type' => $postType,
+                'post_status' => $status,
+                'post_date' => $date,
+                'post_modified' => current_time('mysql'),
                 'post_modified_gmt' => current_time('mysql', 1),
             ];
 
@@ -3535,17 +3534,17 @@ if (!class_exists('PP_Calendar')) {
             do_action('publishpress_calendar_after_create_post', $postId, $authors);
 
             if ($postId) {
-                if (!empty($categories)) {
+                if (! empty($categories)) {
                     $categoriesIdList = [];
                     foreach ($categories as $categorySlug) {
                         $category = get_term_by('slug', $categorySlug, 'category');
 
-                        if (!$category || is_wp_error($category)) {
+                        if (! $category || is_wp_error($category)) {
                             $category = wp_create_category($categorySlug);
                             $category = get_term($category);
                         }
 
-                        if (!is_wp_error($category)) {
+                        if (! is_wp_error($category)) {
                             $categoriesIdList[] = $category->term_id;
                         }
                     }
@@ -3553,11 +3552,11 @@ if (!class_exists('PP_Calendar')) {
                     wp_set_post_terms($postId, $categoriesIdList, 'category');
                 }
 
-                if (!empty($tags)) {
+                if (! empty($tags)) {
                     foreach ($tags as $tagSlug) {
                         $tag = get_term_by('slug', $tagSlug, 'post_tag');
 
-                        if (!$tag || is_wp_error($tag)) {
+                        if (! $tag || is_wp_error($tag)) {
                             wp_create_tag($tagSlug);
                         }
                     }
@@ -3571,7 +3570,7 @@ if (!class_exists('PP_Calendar')) {
                     __('Post created successfully', 'publishpress'),
                     [
                         'postId' => $postId,
-                        'link'   => htmlspecialchars_decode(get_edit_post_link($postId)),
+                        'link' => htmlspecialchars_decode(get_edit_post_link($postId)),
                     ]
                 );
             } else {
@@ -3583,14 +3582,14 @@ if (!class_exists('PP_Calendar')) {
         {
             $post_query_args = [
                 'post_status' => null,
-                'post_type'   => null,
-                'cat'         => null,
-                'tag'         => null,
-                'author'      => null,
-                'date_query'  => [
-                    'column'    => 'post_date',
-                    'after'     => $beginningDate,
-                    'before'    => $endingDate,
+                'post_type' => null,
+                'cat' => null,
+                'tag' => null,
+                'author' => null,
+                'date_query' => [
+                    'column' => 'post_date',
+                    'after' => $beginningDate,
+                    'before' => $endingDate,
                     'inclusive' => true,
                 ]
             ];
@@ -3608,7 +3607,7 @@ if (!class_exists('PP_Calendar')) {
             $data = [];
 
             foreach ($postsList as $date => $posts) {
-                if (!isset($data[$date])) {
+                if (! isset($data[$date])) {
                     $data[$date] = [];
                 }
 
@@ -3635,7 +3634,7 @@ if (!class_exists('PP_Calendar')) {
             switch ($key) {
                 case 'post_status':
                     // Whitelist-based validation for this parameter
-                    $valid_statuses   = wp_list_pluck($this->get_post_statuses(), 'slug');
+                    $valid_statuses = wp_list_pluck($this->get_post_statuses(), 'slug');
                     $valid_statuses[] = 'future';
                     $valid_statuses[] = 'unpublish';
                     $valid_statuses[] = 'publish';
@@ -3647,7 +3646,7 @@ if (!class_exists('PP_Calendar')) {
                     }
                     break;
                 case 'cpt':
-                    $cpt                  = sanitize_key($dirty_value);
+                    $cpt = sanitize_key($dirty_value);
                     $supported_post_types = $this->get_post_types_for_module($this->module);
                     if ($cpt && in_array($cpt, $supported_post_types)) {
                         return $cpt;
@@ -3703,7 +3702,7 @@ if (!class_exists('PP_Calendar')) {
                         <option value=""><?php
                             esc_html_e('View all categories', 'publishpress'); ?></option>
                         <?php
-                        if (!empty($categoryId)) {
+                        if (! empty($categoryId)) {
                             $category = get_term($categoryId, 'category');
 
                             echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html(
@@ -3721,7 +3720,7 @@ if (!class_exists('PP_Calendar')) {
                         <option value=""><?php
                             esc_html_e('All tags', 'publishpress'); ?></option>
                         <?php
-                        if (!empty($tagId)) {
+                        if (! empty($tagId)) {
                             $tag = get_term($tagId, 'post_tag');
 
                             echo "<option value='" . esc_attr($tagId) . "' selected='selected'>" . esc_html(
@@ -3743,11 +3742,11 @@ if (!class_exists('PP_Calendar')) {
                             esc_html_e('All authors', 'publishpress'); ?>
                         </option>
                         <?php
-                        if (!empty($authorId)) {
+                        if (! empty($authorId)) {
                             $author = get_user_by('id', $authorId);
                             $option = '';
 
-                            if (!empty($author)) {
+                            if (! empty($author)) {
                                 $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html(
                                         $author->display_name
                                     ) . '</option>';
@@ -3781,7 +3780,7 @@ if (!class_exists('PP_Calendar')) {
                     }
                     break;
                 case 'weeks':
-                    if (!isset($filters['weeks'])) {
+                    if (! isset($filters['weeks'])) {
                         $filters['weeks'] = self::DEFAULT_NUM_WEEKS;
                     }
 
@@ -3863,7 +3862,7 @@ if (!class_exists('PP_Calendar')) {
             if ($this->module->options->show_posts_publish_time === 'on') {
                 $this->module->options->show_posts_publish_time = [
                     'publish' => 'on',
-                    'future'  => 'on',
+                    'future' => 'on',
                 ];
             }
 
@@ -3911,9 +3910,9 @@ if (!class_exists('PP_Calendar')) {
             foreach ($postAuthorIds as $authorId) {
                 $user = get_user_by('id', $authorId);
 
-                $isValid = is_object($user) && !is_wp_error($user) && $user->has_cap('edit_posts');
+                $isValid = is_object($user) && ! is_wp_error($user) && $user->has_cap('edit_posts');
 
-                if (!apply_filters('publishpress_author_can_edit_posts', $isValid, $authorId)) {
+                if (! apply_filters('publishpress_author_can_edit_posts', $isValid, $authorId)) {
                     throw new Exception(
                         esc_html__(
                             "The selected user doesn't have enough permissions to be set as the post author.",
@@ -3933,7 +3932,7 @@ if (!class_exists('PP_Calendar')) {
             $view_calendar_cap = 'pp_view_calendar';
             $view_calendar_cap = apply_filters('pp_view_calendar_cap', $view_calendar_cap);
 
-            if (!$role->has_cap($view_calendar_cap)) {
+            if (! $role->has_cap($view_calendar_cap)) {
                 $role->add_cap($view_calendar_cap);
             }
         }

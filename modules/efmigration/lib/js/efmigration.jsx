@@ -5,7 +5,7 @@
     const STEP_STATUS_ERROR = 'error';
 
     class ErrorRow extends React.Component {
-        render () {
+        render() {
             return (
                 <div className="error">
                     <p>{this.props.msg}</p>
@@ -15,7 +15,7 @@
     }
 
     class StepList extends React.Component {
-        render () {
+        render() {
             const finished = this.props.finished;
             const errors = this.props.errors;
             const started = this.props.started;
@@ -65,13 +65,13 @@
     }
 
     class StepListContainer extends React.Component {
-        render () {
+        render() {
             return <StepList started={this.props.started} finished={this.props.finished} errors={this.props.errors}/>;
         }
     }
 
     class MigrationForm extends React.Component {
-        constructor () {
+        constructor() {
             super();
 
             this.state = {
@@ -97,7 +97,7 @@
             this.eventStartMigration = this.eventStartMigration.bind(this);
         }
 
-        executeNextStep () {
+        executeNextStep() {
             // Go to the next step index.
             this.setState({currentStepIndex: this.state.currentStepIndex + 1}, () => {
                 // Check if we finished the step list to finish the process.
@@ -155,7 +155,7 @@
             });
         }
 
-        updateStep (newStep) {
+        updateStep(newStep) {
             var index = this.state.currentStepIndex;
 
             var newSteps = this.state.steps.map(step => {
@@ -165,18 +165,18 @@
             this.setState({steps: newSteps});
         }
 
-        appendError (msg) {
+        appendError(msg) {
             var errors = this.state.errors;
             errors.push({key: errors.length, msg: msg});
 
             this.setState({errors: errors});
         }
 
-        eventStartMigration () {
+        eventStartMigration() {
             this.executeNextStep();
         }
 
-        render () {
+        render() {
             const started = this.state.currentStepIndex > -1;
 
             return (

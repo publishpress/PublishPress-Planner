@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.6.1
+ * Version: 3.6.2
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -39,13 +39,14 @@
  * @copyright   Copyright (C) 2021 PublishPress. All rights reserved.
  */
 
+use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
 require_once 'includes.php';
 
 // Core class
-if (!class_exists('publishpress')) {
+if (! class_exists('publishpress')) {
     class publishpress
     {
         use Dependency_Injector, PublishPress_Module;
@@ -60,6 +61,16 @@ if (!class_exists('publishpress')) {
 
         public $options_group_name = 'publishpress_options';
 
+        /**
+         * @var stdClass
+         */
+        public $modules;
+
+        /**
+         * @var array
+         */
+        public $class_names;
+
         protected $added_menu_page = false;
 
         protected $menu_slug;
@@ -72,11 +83,11 @@ if (!class_exists('publishpress')) {
          * Insures that only one instance of PublishPress exists in memory at any one
          * time. Also prevents needing to define globals all over the place.
          *
-         * @return The one true PublishPress
+         * @return publishpress
          */
         public static function instance()
         {
-            if (!isset(self::$instance)) {
+            if (! isset(self::$instance)) {
                 self::$instance = new publishpress();
                 self::$instance->setup_globals();
                 self::$instance->setup_actions();
@@ -107,6 +118,7 @@ if (!class_exists('publishpress')) {
             add_action('init', [$this, 'action_ini_for_admin'], PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN);
             add_action('admin_menu', [$this, 'action_admin_menu'], 9);
 
+            add_filter('admin_body_class', [$this, 'adminBodyClass']);
             add_action('admin_enqueue_scripts', [$this, 'register_scripts_and_styles']);
 
             // Fix the order of the submenus
@@ -117,6 +129,21 @@ if (!class_exists('publishpress')) {
             add_filter('debug_information', [$this, 'filterDebugInformation']);
 
             add_filter('cme_publishpress_capabilities', [$this, 'filterCapabilities']);
+        }
+
+        /**
+         * @param string $classes
+         * @return string mixed
+         */
+        public function adminBodyClass($classes)
+        {
+            global $pagenow;
+
+            if ($pagenow === 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] === 'psppnotif_workflow') {
+                $classes = "$classes pressshack-admin-wrapper";
+            }
+
+            return $classes;
         }
 
         /**
@@ -143,9 +170,9 @@ if (!class_exists('publishpress')) {
 
             $roles = [
                 'administrator' => $genericCaps,
-                'editor'        => $genericCaps,
-                'author'        => $genericCaps,
-                'contributor'   => $genericCaps,
+                'editor' => $genericCaps,
+                'author' => $genericCaps,
+                'contributor' => $genericCaps,
             ];
 
             foreach ($roles as $role => $caps) {
@@ -193,7 +220,7 @@ if (!class_exists('publishpress')) {
         public function deactivate_editflow()
         {
             try {
-                if (!function_exists('get_plugins')) {
+                if (! function_exists('get_plugins')) {
                     require_once ABSPATH . 'wp-admin/includes/plugin.php';
                 }
 
@@ -227,12 +254,12 @@ if (!class_exists('publishpress')) {
         private function load_modules()
         {
             // We use the WP_List_Table API for some of the table gen
-            if (!class_exists('WP_List_Table')) {
+            if (! class_exists('WP_List_Table')) {
                 require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
             }
 
             // PublishPress base module
-            if (!class_exists('PP_Module')) {
+            if (! class_exists('PP_Module')) {
                 require_once(PUBLISHPRESS_BASE_PATH . '/common/php/class-module.php');
             }
 
@@ -245,16 +272,16 @@ if (!class_exists('publishpress')) {
                     include_once "{$base_path}/modules/{$module_dir}/{$module_dir}.php";
 
                     // Prepare the class name because it should be standardized
-                    $tmp        = explode('-', $module_dir);
+                    $tmp = explode('-', $module_dir);
                     $class_name = '';
-                    $slug_name  = '';
+                    $slug_name = '';
 
                     foreach ($tmp as $word) {
                         $class_name .= ucfirst($word) . '_';
-                        $slug_name  .= $word . '_';
+                        $slug_name .= $word . '_';
                     }
 
-                    $slug_name               = rtrim($slug_name, '_');
+                    $slug_name = rtrim($slug_name, '_');
                     $class_names[$slug_name] = 'PP_' . rtrim($class_name, '_');
                 }
             }
@@ -270,7 +297,7 @@ if (!class_exists('publishpress')) {
             // but make sure they exist too
             foreach ($class_names as $slug => $class_name) {
                 if (class_exists($class_name)) {
-                    $slug            = PublishPress\Legacy\Util::sanitize_module_name($slug);
+                    $slug = PublishPress\Legacy\Util::sanitize_module_name($slug);
                     $module_instance = new $class_name();
 
                     $this->$slug = $module_instance;
@@ -281,7 +308,7 @@ if (!class_exists('publishpress')) {
                         $args = $this->modules->$slug;
                     }
 
-                    if (!is_null($args) && !empty($args->settings_help_tab)) {
+                    if (! is_null($args) && ! empty($args->settings_help_tab)) {
                         add_action(
                             'load-publishpress_page_' . $args->settings_slug,
                             [$module_instance, 'action_settings_help_menu']
@@ -306,20 +333,21 @@ if (!class_exists('publishpress')) {
         {
             // Scan the modules directory and include any modules that exist there
             $defaultDirs = [
-                'modules-settings'       => PUBLISHPRESS_BASE_PATH,
-                'calendar'               => PUBLISHPRESS_BASE_PATH,
-                'editorial-metadata'     => PUBLISHPRESS_BASE_PATH,
-                'content-overview'       => PUBLISHPRESS_BASE_PATH,
-                'custom-status'          => PUBLISHPRESS_BASE_PATH,
-                'notifications'          => PUBLISHPRESS_BASE_PATH,
+                'modules-settings' => PUBLISHPRESS_BASE_PATH,
+                'calendar' => PUBLISHPRESS_BASE_PATH,
+                'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
+                'content-overview' => PUBLISHPRESS_BASE_PATH,
+                'custom-status' => PUBLISHPRESS_BASE_PATH,
+                'notifications' => PUBLISHPRESS_BASE_PATH,
                 'improved-notifications' => PUBLISHPRESS_BASE_PATH,
-                'async-notifications'    => PUBLISHPRESS_BASE_PATH,
-                'notifications-log'      => PUBLISHPRESS_BASE_PATH,
-                'dashboard'              => PUBLISHPRESS_BASE_PATH,
-                'editorial-comments'     => PUBLISHPRESS_BASE_PATH,
-                'settings'               => PUBLISHPRESS_BASE_PATH,
-                'efmigration'            => PUBLISHPRESS_BASE_PATH,
-                'debug'                  => PUBLISHPRESS_BASE_PATH,
+                'async-notifications' => PUBLISHPRESS_BASE_PATH,
+                'notifications-log' => PUBLISHPRESS_BASE_PATH,
+                'dashboard' => PUBLISHPRESS_BASE_PATH,
+                'editorial-comments' => PUBLISHPRESS_BASE_PATH,
+                'settings' => PUBLISHPRESS_BASE_PATH,
+                'efmigration' => PUBLISHPRESS_BASE_PATH,
+                'debug' => PUBLISHPRESS_BASE_PATH,
+                'reviews' => PUBLISHPRESS_BASE_PATH,
             ];
 
             // Add filters to extend the modules
@@ -338,7 +366,7 @@ if (!class_exists('publishpress')) {
                     new stdClass()
                 );
                 foreach ($mod_data->default_options as $default_key => $default_value) {
-                    if (!isset($this->modules->$mod_name->options->$default_key)) {
+                    if (! isset($this->modules->$mod_name->options->$default_key)) {
                         $this->modules->$mod_name->options->$default_key = $default_value;
                     }
                 }
@@ -368,55 +396,55 @@ if (!class_exists('publishpress')) {
         public function filterDebugInformation($debugInfo)
         {
             $debugInfo['publishpress'] = [
-                'label'       => 'PublishPress',
+                'label' => 'PublishPress',
                 'description' => '',
-                'show_count'  => false,
-                'fields'      => [
-                    'PUBLISHPRESS_VERSION'           => [
+                'show_count' => false,
+                'fields' => [
+                    'PUBLISHPRESS_VERSION' => [
                         'label' => __('PUBLISHPRESS_VERSION'),
                         'value' => PUBLISHPRESS_VERSION,
                     ],
-                    'PUBLISHPRESS_BASE_PATH'         => [
+                    'PUBLISHPRESS_BASE_PATH' => [
                         'label' => __('PUBLISHPRESS_BASE_PATH'),
                         'value' => PUBLISHPRESS_BASE_PATH,
                     ],
-                    'PUBLISHPRESS_FILE_PATH'         => [
+                    'PUBLISHPRESS_FILE_PATH' => [
                         'label' => __('PUBLISHPRESS_FILE_PATH'),
                         'value' => PUBLISHPRESS_FILE_PATH,
                     ],
-                    'PUBLISHPRESS_URL'               => [
+                    'PUBLISHPRESS_URL' => [
                         'label' => __('PUBLISHPRESS_URL'),
                         'value' => PUBLISHPRESS_URL,
                     ],
-                    'PUBLISHPRESS_SETTINGS_PAGE'     => [
+                    'PUBLISHPRESS_SETTINGS_PAGE' => [
                         'label' => __('PUBLISHPRESS_SETTINGS_PAGE'),
                         'value' => PUBLISHPRESS_SETTINGS_PAGE,
                     ],
-                    'PUBLISHPRESS_LIBRARIES_PATH'    => [
+                    'PUBLISHPRESS_LIBRARIES_PATH' => [
                         'label' => __('PUBLISHPRESS_LIBRARIES_PATH'),
                         'value' => PUBLISHPRESS_LIBRARIES_PATH,
                     ],
-                    'WP_CONTENT_DIR'                 => [
+                    'WP_CONTENT_DIR' => [
                         'label' => __('WP_CONTENT_DIR'),
                         'value' => WP_CONTENT_DIR,
                     ],
-                    'WP_CONTENT_URL'                 => [
+                    'WP_CONTENT_URL' => [
                         'label' => __('WP_CONTENT_URL'),
                         'value' => WP_CONTENT_URL,
                     ],
-                    'option::date_format'            => [
+                    'option::date_format' => [
                         'label' => __('WP Date Format'),
                         'value' => get_option('date_format'),
                     ],
-                    'option::time_format'            => [
+                    'option::time_format' => [
                         'label' => __('WP Time Format'),
                         'value' => get_option('time_format'),
                     ],
-                    'option::timezone_string'        => [
+                    'option::timezone_string' => [
                         'label' => __('WP Timezone String'),
                         'value' => get_option('timezone_string'),
                     ],
-                    'option::gmt_offset'             => [
+                    'option::gmt_offset' => [
                         'label' => __('WP GMT Offset'),
                         'value' => get_option('gmt_offset'),
                     ],
@@ -429,7 +457,7 @@ if (!class_exists('publishpress')) {
 
 
             // Modules
-            $modules     = [];
+            $modules = [];
             $modulesDirs = $this->getModulesDirs();
 
             foreach ($this->loadedModules as $module) {
@@ -444,10 +472,10 @@ if (!class_exists('publishpress')) {
             }
 
             $debugInfo['publishpress-modules'] = [
-                'label'       => 'PublishPress Modules',
+                'label' => 'PublishPress Modules',
                 'description' => '',
-                'show_count'  => true,
-                'fields'      => $modules,
+                'show_count' => true,
+                'fields' => $modules,
             ];
 
             return $debugInfo;
@@ -473,7 +501,7 @@ if (!class_exists('publishpress')) {
             // For each module that's been loaded, auto-load data if it's never been run before
             foreach ($this->modules as $mod_name => $mod_data) {
                 // If the module has never been loaded before, run the install method if there is one
-                if (!isset($mod_data->options->loaded_once) || !$mod_data->options->loaded_once) {
+                if (! isset($mod_data->options->loaded_once) || ! $mod_data->options->loaded_once) {
                     if (method_exists($this->$mod_name, 'install')) {
                         $this->$mod_name->install();
                     }
@@ -492,7 +520,7 @@ if (!class_exists('publishpress')) {
             }
 
             $this->modules->$mod_name->options->$key = $value;
-            $this->$mod_name->module                 = $this->modules->$mod_name;
+            $this->$mod_name->module = $this->modules->$mod_name;
 
             return update_option($this->options_group . $mod_name . '_options', $this->modules->$mod_name->options);
         }
@@ -523,7 +551,7 @@ if (!class_exists('publishpress')) {
             );
 
             $this->added_menu_page = true;
-            $this->menu_slug       = $menu_slug;
+            $this->menu_slug = $menu_slug;
         }
 
         /**
@@ -581,41 +609,41 @@ if (!class_exists('publishpress')) {
         public function register_module($name, $args = [])
         {
             // A title and name is required for every module
-            if (!isset($args['title'], $name)) {
+            if (! isset($args['title'], $name)) {
                 return false;
             }
 
             $defaults = [
-                'title'                => '',
-                'short_description'    => '',
+                'title' => '',
+                'short_description' => '',
                 'extended_description' => '',
-                'icon_class'           => 'dashicons dashicons-calendar-alt',
-                'slug'                 => '',
-                'post_type_support'    => '',
-                'default_options'      => [],
-                'options'              => false,
-                'configure_page_cb'    => false,
-                'configure_link_text'  => __('Configure', 'publishpress'),
+                'icon_class' => 'dashicons dashicons-calendar-alt',
+                'slug' => '',
+                'post_type_support' => '',
+                'default_options' => [],
+                'options' => false,
+                'configure_page_cb' => false,
+                'configure_link_text' => __('Configure', 'publishpress'),
                 // These messages are applied to modules and can be overridden if custom messages are needed
-                'messages'             => [
-                    'form-error'          => __('Please correct your form errors below and try again.', 'publishpress'),
-                    'nonce-failed'        => __('Cheatin&#8217; uh?', 'publishpress'),
+                'messages' => [
+                    'form-error' => __('Please correct your form errors below and try again.', 'publishpress'),
+                    'nonce-failed' => __('Cheatin&#8217; uh?', 'publishpress'),
                     'invalid-permissions' => __(
                         'You do not have necessary permissions to complete this action.',
                         'publishpress'
                     ),
-                    'missing-post'        => __('Post does not exist', 'publishpress'),
+                    'missing-post' => __('Post does not exist', 'publishpress'),
                 ],
-                'autoload'             => false, // autoloading a module will remove the ability to enable or disable it
+                'autoload' => false, // autoloading a module will remove the ability to enable or disable it
             ];
             if (isset($args['messages'])) {
                 $args['messages'] = array_merge((array)$args['messages'], $defaults['messages']);
             }
-            $args                       = array_merge($defaults, $args);
-            $args['name']               = $name;
+            $args = array_merge($defaults, $args);
+            $args['name'] = $name;
             $args['options_group_name'] = $this->options_group . $name . '_options';
 
-            if (!isset($args['settings_slug'])) {
+            if (! isset($args['settings_slug'])) {
                 $args['settings_slug'] = 'pp-' . $args['slug'] . '-settings';
             }
 
@@ -625,7 +653,7 @@ if (!class_exists('publishpress')) {
 
             // If there's a Help Screen registered for the module, make sure we
             // auto-load it
-            if (!empty($args['settings_help_tab'])) {
+            if (! empty($args['settings_help_tab'])) {
                 add_action(
                     'load-publishpress_page_' . $args['settings_slug'],
                     [&$this->$name, 'action_settings_help_menu']
@@ -685,7 +713,7 @@ if (!class_exists('publishpress')) {
             }
 
             $this->modules->$mod_name->options = $new_options;
-            $this->$mod_name->module           = $this->modules->$mod_name;
+            $this->$mod_name->module = $this->modules->$mod_name;
 
             return update_option($this->options_group . $mod_name . '_options', $this->modules->$mod_name->options);
         }
@@ -740,7 +768,7 @@ if (!class_exists('publishpress')) {
             // @compat 3.3
             // Register jQuery datepicker plugin if it doesn't already exist. Datepicker plugin was added in WordPress 3.3
             global $wp_scripts;
-            if (!isset($wp_scripts->registered['jquery-ui-datepicker'])) {
+            if (! isset($wp_scripts->registered['jquery-ui-datepicker'])) {
                 wp_register_script(
                     'jquery-ui-datepicker',
                     PUBLISHPRESS_URL . 'common/js/jquery.ui.datepicker.min.js',
@@ -762,36 +790,36 @@ if (!class_exists('publishpress')) {
             $parentMenuSlug = $publishpress->get_menu_slug();
 
             if (isset($submenu[$parentMenuSlug])) {
-                $currentSubmenu   = $submenu[$parentMenuSlug];
-                $newSubmenu       = [];
+                $currentSubmenu = $submenu[$parentMenuSlug];
+                $newSubmenu = [];
                 $upgradeMenuSlugs = [];
 
-                $menuItemCalendar         = 'pp-calendar';
-                $menuItemContentOverview  = 'pp-content-overview';
-                $menuItemNotifications    = 'edit.php?post_type=psppnotif_workflow';
+                $menuItemCalendar = 'pp-calendar';
+                $menuItemContentOverview = 'pp-content-overview';
+                $menuItemNotifications = 'edit.php?post_type=psppnotif_workflow';
                 $menuItemNotificationsLog = 'pp-notif-log';
-                $menuItemRoles            = 'pp-manage-roles';
-                $menuItemSettings         = 'pp-modules-settings';
+                $menuItemRoles = 'pp-manage-roles';
+                $menuItemSettings = 'pp-modules-settings';
 
                 // Get the index for the menus.
                 $itemsToSort = [
-                    $menuItemCalendar         => null,
-                    $menuItemContentOverview  => null,
-                    $menuItemNotifications    => null,
+                    $menuItemCalendar => null,
+                    $menuItemContentOverview => null,
+                    $menuItemNotifications => null,
                     $menuItemNotificationsLog => null,
-                    $menuItemRoles            => null,
-                    $menuItemSettings         => null,
+                    $menuItemRoles => null,
+                    $menuItemSettings => null,
                 ];
 
-                if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
-                    $suffix           = \PPVersionNotices\Module\MenuLink\Module::MENU_SLUG_SUFFIX;
+                if (! defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+                    $suffix = Module::MENU_SLUG_SUFFIX;
                     $upgradeMenuSlugs = [
-                        $menuItemCalendar . $suffix         => null,
-                        $menuItemContentOverview . $suffix  => null,
-                        $menuItemNotifications . $suffix    => null,
+                        $menuItemCalendar . $suffix => null,
+                        $menuItemContentOverview . $suffix => null,
+                        $menuItemNotifications . $suffix => null,
                         $menuItemNotificationsLog . $suffix => null,
-                        $menuItemRoles . $suffix            => null,
-                        $menuItemSettings . $suffix         => null,
+                        $menuItemRoles . $suffix => null,
+                        $menuItemSettings . $suffix => null,
                     ];
 
                     $itemsToSort = array_merge($itemsToSort, $upgradeMenuSlugs);
@@ -804,14 +832,16 @@ if (!class_exists('publishpress')) {
                 }
 
                 // Calendar
-                if (isset($itemsToSort[$menuItemCalendar]) && !is_null($itemsToSort[$menuItemCalendar])) {
+                if (isset($itemsToSort[$menuItemCalendar]) && ! is_null($itemsToSort[$menuItemCalendar])) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemCalendar]];
 
                     unset($currentSubmenu[$itemsToSort[$menuItemCalendar]]);
                 }
 
                 // Content Overview
-                if (isset($itemsToSort[$menuItemContentOverview]) && !is_null($itemsToSort[$menuItemContentOverview])) {
+                if (isset($itemsToSort[$menuItemContentOverview]) && ! is_null(
+                        $itemsToSort[$menuItemContentOverview]
+                    )) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemContentOverview]];
 
                     unset($currentSubmenu[$itemsToSort[$menuItemContentOverview]]);
@@ -820,13 +850,13 @@ if (!class_exists('publishpress')) {
                 // Notifications
                 // Check if we have the menu as a main menu
                 if (isset($submenu[$menuItemNotifications])) {
-                    $firstKey     = array_keys($submenu[$menuItemNotifications])[0];
+                    $firstKey = array_keys($submenu[$menuItemNotifications])[0];
                     $newSubmenu[] = $submenu[$menuItemNotifications][$firstKey];
 
                     unset($submenu[$menuItemNotifications]);
                     remove_menu_page($menuItemNotifications);
                 } else {
-                    if (isset($itemsToSort[$menuItemNotifications]) && !is_null(
+                    if (isset($itemsToSort[$menuItemNotifications]) && ! is_null(
                             $itemsToSort[$menuItemNotifications]
                         )) {
                         $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemNotifications]];
@@ -836,7 +866,7 @@ if (!class_exists('publishpress')) {
                 }
 
                 // Notification logs
-                if (isset($itemsToSort[$menuItemNotificationsLog]) && !is_null(
+                if (isset($itemsToSort[$menuItemNotificationsLog]) && ! is_null(
                         $itemsToSort[$menuItemNotificationsLog]
                     )) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemNotificationsLog]];
@@ -845,14 +875,16 @@ if (!class_exists('publishpress')) {
                 }
 
                 // Roles
-                if (isset($itemsToSort[$menuItemRoles]) && !is_null($itemsToSort[$menuItemRoles])) {
+                if (isset($itemsToSort[$menuItemRoles]) && ! is_null($itemsToSort[$menuItemRoles])) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemRoles]];
 
                     unset($currentSubmenu[$itemsToSort[$menuItemRoles]]);
                 }
 
                 // Permissions - Role Capabilities
-                if (isset($itemsToSort['pp-manage-capabilities']) && !is_null($itemsToSort['pp-manage-capabilities'])) {
+                if (isset($itemsToSort['pp-manage-capabilities']) && ! is_null(
+                        $itemsToSort['pp-manage-capabilities']
+                    )) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort['pp-manage-capabilities']];
 
                     unset($itemsToSort[$itemsToSort['pp-manage-capabilities']]);
@@ -860,23 +892,23 @@ if (!class_exists('publishpress')) {
 
                 // Add the additional items
                 foreach ($currentSubmenu as $index => $item) {
-                    if (!in_array($index, $itemsToSort)) {
+                    if (! in_array($index, $itemsToSort)) {
                         $newSubmenu[] = $item;
                         unset($currentSubmenu[$index]);
                     }
                 }
 
                 // Settings
-                if (isset($itemsToSort[$menuItemSettings]) && !is_null($itemsToSort[$menuItemSettings])) {
+                if (isset($itemsToSort[$menuItemSettings]) && ! is_null($itemsToSort[$menuItemSettings])) {
                     $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemSettings]];
 
                     unset($currentSubmenu[$itemsToSort[$menuItemSettings]]);
                 }
 
                 // Upgrade to Pro
-                if (!defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+                if (! defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
                     foreach ($upgradeMenuSlugs as $index => $item) {
-                        if (!is_null($itemsToSort[$index])) {
+                        if (! is_null($itemsToSort[$index])) {
                             $newSubmenu[] = $currentSubmenu[$itemsToSort[$index]];
                         }
                     }
@@ -892,7 +924,8 @@ if (!class_exists('publishpress')) {
         {
             ?>
             <div class="updated notice">
-                <p><?php _e(
+                <p><?php
+                    _e(
                         'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.',
                         'publishpress'
                     ); ?></p>
@@ -905,7 +938,7 @@ if (!class_exists('publishpress')) {
          */
         public function hasMissedRequirements()
         {
-            return $this->isBlockEditorActive() && !$this->isClassicEditorInstalled();
+            return $this->isBlockEditorActive() && ! $this->isClassicEditorInstalled();
         }
 
         /**
@@ -924,7 +957,7 @@ if (!class_exists('publishpress')) {
 
             $pluginsState = [
                 'classic-editor' => is_plugin_active('classic-editor/classic-editor.php'),
-                'gutenberg'      => is_plugin_active('gutenberg/gutenberg.php'),
+                'gutenberg' => is_plugin_active('gutenberg/gutenberg.php'),
                 'gutenberg-ramp' => is_plugin_active('gutenberg-ramp/gutenberg-ramp.php'),
             ];
 
@@ -933,7 +966,7 @@ if (!class_exists('publishpress')) {
                 $postType = get_post_type();
             }
 
-            if (!isset($postType) || empty($postType)) {
+            if (! isset($postType) || empty($postType)) {
                 $postType = 'post';
             }
 
@@ -957,14 +990,14 @@ if (!class_exists('publishpress')) {
              */
             // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
             $conditions[] = $this->isWp5()
-                && !$pluginsState['classic-editor']
-                && !$pluginsState['gutenberg-ramp']
+                && ! $pluginsState['classic-editor']
+                && ! $pluginsState['gutenberg-ramp']
                 && apply_filters('use_block_editor_for_post_type', true, $postType, PHP_INT_MAX);
 
             $conditions[] = $this->isWp5()
                 && $pluginsState['classic-editor']
                 && (get_option('classic-editor-replace') === 'block'
-                    && !isset($_GET['classic-editor__forget']));
+                    && ! isset($_GET['classic-editor__forget']));
 
             $conditions[] = $this->isWp5()
                 && $pluginsState['classic-editor']
@@ -974,7 +1007,7 @@ if (!class_exists('publishpress')) {
             /**
              * < 5.0 but Gutenberg plugin is active.
              */
-            $conditions[] = !$this->isWp5() && ($pluginsState['gutenberg'] || $pluginsState['gutenberg-ramp']);
+            $conditions[] = ! $this->isWp5() && ($pluginsState['gutenberg'] || $pluginsState['gutenberg-ramp']);
 
             // Returns true if at least one condition is true.
             return count(
@@ -1013,7 +1046,7 @@ if (!class_exists('publishpress')) {
         public function removeEditorMetaBox()
         {
             $isClassicEditor = isset($_GET['classic-editor']);
-            $postType        = $this->getCurrentPostType();
+            $postType = $this->getCurrentPostType();
 
             if ($this->isWp5() && $isClassicEditor && $this->postTypeRequiresClassicEditor($postType)) {
                 remove_meta_box('classic-editor-switch-editor', null, 'side');
@@ -1071,18 +1104,18 @@ if (!class_exists('publishpress')) {
             global $publishpress;
 
             $postTypes = [];
-            $modules   = [];
+            $modules = [];
 
             /**
              * @param array $modules
              */
             $modules = apply_filters('publishpress_modules_require_classic_editor', $modules);
 
-            if (!empty($modules)) {
+            if (! empty($modules)) {
                 // Get the post types activated for each module.
                 foreach ($modules as $module) {
                     // Check if the plugin is active.
-                    if (!isset($publishpress->{$module}) || $publishpress->{$module}->module->options->enabled != 'on') {
+                    if (! isset($publishpress->{$module}) || $publishpress->{$module}->module->options->enabled != 'on') {
                         continue;
                     }
 
@@ -1108,7 +1141,7 @@ if (!class_exists('publishpress')) {
         public function canUseBlockEditorForPostType($useBlockEditor, $postType)
         {
             // Short-circuit in case any other plugin disabled the block editor.
-            if (!$useBlockEditor) {
+            if (! $useBlockEditor) {
                 return false;
             }
 
@@ -1154,7 +1187,7 @@ if (!class_exists('publishpress')) {
     }
 }
 
-if (!function_exists('PublishPress')) {
+if (! function_exists('PublishPress')) {
     function PublishPress()
     {
         return publishpress::instance();
@@ -1167,7 +1200,7 @@ if (!function_exists('PublishPress')) {
  *
  * @since 1.9.8
  */
-if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
+if (! function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     function publishPressRegisterImprovedNotificationsPostTypes()
     {
         global $publishpress;
@@ -1175,45 +1208,45 @@ if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
         // Check if the notification module is enabled, before register the post type.
         $options = get_option('publishpress_improved_notifications_options', null);
 
-        if (!is_object($options)) {
+        if (! is_object($options)) {
             return;
         }
 
-        if (!isset($options->enabled) || $options->enabled !== 'on') {
+        if (! isset($options->enabled) || $options->enabled !== 'on') {
             return;
         }
 
         // Create the post type if not exists
-        if (!post_type_exists(PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW)) {
+        if (! post_type_exists(PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW)) {
             // Notification Workflows
             register_post_type(
                 PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
                 [
-                    'labels'              => [
-                        'name'               => __('Notifications', 'publishpress'),
-                        'singular_name'      => __('Notification', 'publishpress'),
-                        'add_new_item'       => __('Add New Notification', 'publishpress'),
-                        'edit_item'          => __('Edit Notification', 'publishpress'),
-                        'search_items'       => __('Search Notifications', 'publishpress'),
-                        'menu_name'          => __('Notifications', 'publishpress'),
-                        'name_admin_bar'     => __('Notification', 'publishpress'),
-                        'not_found'          => __('No notification found', 'publishpress'),
+                    'labels' => [
+                        'name' => __('Notifications', 'publishpress'),
+                        'singular_name' => __('Notification', 'publishpress'),
+                        'add_new_item' => __('Add New Notification', 'publishpress'),
+                        'edit_item' => __('Edit Notification', 'publishpress'),
+                        'search_items' => __('Search Notifications', 'publishpress'),
+                        'menu_name' => __('Notifications', 'publishpress'),
+                        'name_admin_bar' => __('Notification', 'publishpress'),
+                        'not_found' => __('No notification found', 'publishpress'),
                         'not_found_in_trash' => __('No notification found', 'publishpress'),
                     ],
-                    'public'              => false,
-                    'publicly_queryable'  => false,
-                    'has_archive'         => false,
-                    'rewrite'             => false,
-                    'show_ui'             => true,
-                    'query_var'           => true,
-                    'capability_type'     => 'pp_notif_workflow',
-                    'hierarchical'        => false,
-                    'can_export'          => true,
-                    'show_in_admin_bar'   => true,
+                    'public' => false,
+                    'publicly_queryable' => false,
+                    'has_archive' => false,
+                    'rewrite' => false,
+                    'show_ui' => true,
+                    'query_var' => true,
+                    'capability_type' => 'pp_notif_workflow',
+                    'hierarchical' => false,
+                    'can_export' => true,
+                    'show_in_admin_bar' => true,
                     'exclude_from_search' => true,
-                    'show_in_menu'        => $publishpress->get_menu_slug(),
-                    'menu_position'       => '30',
-                    'supports'            => [
+                    'show_in_menu' => $publishpress->get_menu_slug(),
+                    'menu_position' => '30',
+                    'supports' => [
                         'title',
                     ],
                 ]
@@ -1222,7 +1255,7 @@ if (!function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     }
 }
 
-if (!defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
+if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
     PublishPress();
     add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);

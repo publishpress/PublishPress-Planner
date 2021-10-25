@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
+if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
     require_once 'editorial-metadata-input-handler.php';
 
     class Editorial_Metadata_Input_Checkbox_Handler extends Editorial_Metadata_Input_Handler
@@ -28,8 +28,8 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          */
         protected function renderInput($inputOptions = array(), $value = null)
         {
-            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel($input_label, $input_name);
@@ -63,8 +63,8 @@ if (!class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
          */
         protected function renderInputPreview($inputOptions = array(), $value = null)
         {
-            $input_name        = isset($inputOptions['name']) ? $inputOptions['name'] : '';
-            $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(

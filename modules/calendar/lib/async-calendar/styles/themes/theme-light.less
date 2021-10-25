@@ -37,157 +37,157 @@
 
 
 .publishpress-calendar-theme-light {
-    > table {
-        border: 1px solid @outerBorderColor;
-        border-spacing: 0;
-        border-collapse: collapse;
+  > table {
+    border: 1px solid @outerBorderColor;
+    border-spacing: 0;
+    border-collapse: collapse;
 
-        > thead > tr > th,
-        > tbody > tr > td {
-            border: 1px solid @borderColor;
-            box-sizing: border-box;
-            border-collapse: separate;
-            background-clip: padding-box;
-        }
-
-        > thead > tr > th {
-            background: @backgroundColor;
-            border-bottom: 3px solid @weekDaysSeparatorColor;
-            color: @weekDaysColor;
-            height: 25px;
-        }
-
-        > tbody > tr > td {
-            vertical-align: top;
-        }
+    > thead > tr > th,
+    > tbody > tr > td {
+      border: 1px solid @borderColor;
+      box-sizing: border-box;
+      border-collapse: separate;
+      background-clip: padding-box;
     }
+
+    > thead > tr > th {
+      background: @backgroundColor;
+      border-bottom: 3px solid @weekDaysSeparatorColor;
+      color: @weekDaysColor;
+      height: 25px;
+    }
+
+    > tbody > tr > td {
+      vertical-align: top;
+    }
+  }
+
+  .publishpress-calendar-month-name {
+    color: @todayDateBackground;
+  }
+
+  .publishpress-calendar-loader {
+    background: @backgroundColor;
+  }
+
+  .publishpress-calendar-business-day {
+    background: @backgroundColor;
+  }
+
+  .publishpress-calendar-first-day-of-month {
+    background-image: linear-gradient(to right, @firstDayOfMonthStartBackground, 20%, @backgroundColor);
+  }
+
+  .publishpress-calendar-weekend-day {
+    background: @weekendCellBackground;
+
+    .publishpress-calendar-date {
+      color: @weekendDateColor;
+    }
+
+  }
+
+  .publishpress-calendar-weekend-day.publishpress-calendar-first-day-of-month {
+    background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnWeekend, 20%, @weekendCellBackground);
+  }
+
+
+  .publishpress-calendar-today {
+    background: @todayBackground;
 
     .publishpress-calendar-month-name {
-        color: @todayDateBackground;
+      margin-right: 2px;
     }
 
-    .publishpress-calendar-loader {
-        background: @backgroundColor;
+    .publishpress-calendar-date {
+      background: @todayDateBackground;
+      color: @todayDateColor;
+    }
+  }
+
+  .publishpress-calendar-today.publishpress-calendar-first-day-of-month {
+    background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnToday, 20%, @todayBackground);
+  }
+
+  .publishpress-calendar-item {
+    background: @itemBackground;
+    color: @itemColor;
+
+    .dashicons {
+      font-size: 16px;
+      color: @itemIconColor;
     }
 
-    .publishpress-calendar-business-day {
-        background: @backgroundColor;
+    .publishpress-calendar-item-time {
+      margin-right: 2px;
+      color: @itemTimeColor;
+      font-size: 11px;
+    }
+  }
+
+  .publishpress-calendar-popup {
+    color: @itemPopupColor;
+
+    .dashicons {
+      color: @itemPopupColor;
+      line-height: 20px;
     }
 
-    .publishpress-calendar-first-day-of-month {
-        background-image: linear-gradient(to right, @firstDayOfMonthStartBackground, 20%, @backgroundColor);
+    .publishpress-calendar-empty-value,
+    .dashicons-no,
+    .dashicons-no-alt {
+      color: @itemPopupNoColor;
     }
 
-    .publishpress-calendar-weekend-day {
-        background: @weekendCellBackground;
-
-        .publishpress-calendar-date {
-            color: @weekendDateColor;
-        }
-
+    .dashicons-yes,
+    .dashicons-yes-alt {
+      color: @itemPopupYesColor;
     }
+  }
 
-    .publishpress-calendar-weekend-day.publishpress-calendar-first-day-of-month {
-        background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnWeekend, 20%, @weekendCellBackground);
+  .publishpress-calendar-message-bar {
+    padding: 5px 5px;
+    height: 20px;
+    margin: 8px 0;
+    min-width: 100px;
+    color: @messageColor;
+
+    span {
+      line-height: 20px;
     }
+  }
 
+  .publishpress-calendar-day-hover {
+    background-color: @droppableBackground !important;
+    box-sizing: border-box;
+    border: 1px dashed @droppableBorderColor !important;
+  }
 
-    .publishpress-calendar-today {
-        background: @todayBackground;
+  .publishpress-calendar-day-hover .publishpress-calendar-date {
+    font-weight: bold;
+    color: @droppableColor;
+    z-index: 200;
+  }
 
-        .publishpress-calendar-month-name {
-            margin-right: 2px;
-        }
+  .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
+    color: @todayDateColor;
+  }
 
-        .publishpress-calendar-date {
-            background: @todayDateBackground;
-            color: @todayDateColor;
-        }
-    }
-
-    .publishpress-calendar-today.publishpress-calendar-first-day-of-month {
-        background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnToday, 20%, @todayBackground);
-    }
-
-    .publishpress-calendar-item {
-        background: @itemBackground;
-        color: @itemColor;
-
-        .dashicons {
-            font-size: 16px;
-            color: @itemIconColor;
-        }
-
-        .publishpress-calendar-item-time {
-            margin-right: 2px;
-            color: @itemTimeColor;
-            font-size: 11px;
-        }
-    }
-
-    .publishpress-calendar-popup {
-        color: @itemPopupColor;
-
-        .dashicons {
-            color: @itemPopupColor;
-            line-height: 20px;
-        }
-
-        .publishpress-calendar-empty-value,
-        .dashicons-no,
-        .dashicons-no-alt {
-            color: @itemPopupNoColor;
-        }
-
-        .dashicons-yes,
-        .dashicons-yes-alt {
-            color: @itemPopupYesColor;
-        }
-    }
-
-    .publishpress-calendar-message-bar {
-        padding: 5px 5px;
-        height: 20px;
-        margin: 8px 0;
-        min-width: 100px;
-        color: @messageColor;
-
-        span {
-            line-height: 20px;
-        }
-    }
-
-    .publishpress-calendar-day-hover {
-        background-color: @droppableBackground !important;
-        box-sizing: border-box;
-        border: 1px dashed @droppableBorderColor !important;
-    }
-
-    .publishpress-calendar-day-hover .publishpress-calendar-date {
-        font-weight: bold;
-        color: @droppableColor;
-        z-index: 200;
-    }
-
-    .publishpress-calendar-day-hover.publishpress-calendar-today .publishpress-calendar-date {
-        color: @todayDateColor;
-    }
-
-    .publishpress-calendar-day-hover.publishpress-calendar-first-day-of-month {
-        background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnDroppable, 20%, @droppableBackground);
-    }
+  .publishpress-calendar-day-hover.publishpress-calendar-first-day-of-month {
+    background-image: linear-gradient(to right, @firstDayOfMonthStartBackgroundOnDroppable, 20%, @droppableBackground);
+  }
 }
 
 .publishpress-calendar-button {
-    border: 1px solid @buttonBorder;
-    color: @buttonColor;
-    background: @buttonBackground;
+  border: 1px solid @buttonBorder;
+  color: @buttonColor;
+  background: @buttonBackground;
 }
 
 .publishpress-calendar-button:hover {
-    background: @buttonHoverBackground;
+  background: @buttonHoverBackground;
 }
 
 .publishpress-calendar-button:active {
-    background: @buttonActiveBackground;
+  background: @buttonActiveBackground;
 }

@@ -28,7 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!class_exists('PP_Modules_Settings')) {
+if (! class_exists('PP_Modules_Settings')) {
     /**
      * class PP_Modules_Settings
      * Threaded commenting in the admin for discussion between writers and editors
@@ -46,18 +46,18 @@ if (!class_exists('PP_Modules_Settings')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = [
-                'title'                => __('General', 'publishpress'),
-                'short_description'    => false,
+                'title' => __('General', 'publishpress'),
+                'short_description' => false,
                 'extended_description' => false,
-                'module_url'           => $this->module_url,
-                'icon_class'           => 'dashicons dashicons-admin-settings',
-                'slug'                 => 'modules-settings',
-                'default_options'      => [
+                'module_url' => $this->module_url,
+                'icon_class' => 'dashicons dashicons-admin-settings',
+                'slug' => 'modules-settings',
+                'default_options' => [
                     'enabled' => 'on',
                 ],
-                'configure_page_cb'    => 'print_configure_view',
-                'autoload'             => false,
-                'options_page'         => true,
+                'configure_page_cb' => 'print_configure_view',
+                'autoload' => false,
+                'options_page' => true,
             ];
 
             $this->module = PublishPress()->register_module($this->options_group_name, $args);
@@ -132,8 +132,8 @@ if (!class_exists('PP_Modules_Settings')) {
          */
         public function settings_save($new_options)
         {
-            if (!isset($_POST['_wpnonce'])
-                || !wp_verify_nonce(
+            if (! isset($_POST['_wpnonce'])
+                || ! wp_verify_nonce(
                     sanitize_text_field($_POST['_wpnonce']),
                     'edit-publishpress-settings'
                 )
@@ -141,7 +141,7 @@ if (!class_exists('PP_Modules_Settings')) {
                 return true;
             }
 
-            if (!isset($_POST['publishpress_options'])) {
+            if (! isset($_POST['publishpress_options'])) {
                 return true;
             }
 
@@ -176,9 +176,12 @@ if (!class_exists('PP_Modules_Settings')) {
         {
             global $publishpress; ?>
             <form class="basic-settings"
-                  action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
-                <?php settings_fields($this->module->options_group_name); ?>
-                <?php do_settings_sections($this->module->options_group_name); ?>
+                  action="<?php
+                  echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
+                <?php
+                settings_fields($this->module->options_group_name); ?>
+                <?php
+                do_settings_sections($this->module->options_group_name); ?>
 
                 <?php
                 foreach ($publishpress->class_names as $slug => $class_name) {
@@ -186,7 +189,7 @@ if (!class_exists('PP_Modules_Settings')) {
 
                     if ($mod_data->autoload
                         || $mod_data->slug === $this->module->slug
-                        || !isset($mod_data->general_options)
+                        || ! isset($mod_data->general_options)
                         || $mod_data->options->enabled != 'on') {
                         continue;
                     }
@@ -202,36 +205,48 @@ if (!class_exists('PP_Modules_Settings')) {
                 } ?>
 
                 <div id="modules-wrapper">
-                    <h3><?php echo esc_html_e('Features', 'publishpress'); ?></h3>
-                    <p><?php echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
+                    <h3><?php
+                        echo esc_html_e('Features', 'publishpress'); ?></h3>
+                    <p><?php
+                        echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
                     <table class="form-table">
                         <tbody>
                         <tr>
-                            <th scope="row"><?php echo esc_html_e('Enabled features', 'publishpress'); ?></th>
+                            <th scope="row"><?php
+                                echo esc_html_e('Enabled features', 'publishpress'); ?></th>
                             <td>
-                                <?php foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
+                                <?php
+                                foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
-                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
+                                    <?php
+                                    if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
                                         continue;
                                     } ?>
 
-                                    <label for="feature-<?php echo esc_attr($mod_data->slug); ?>">
-                                        <input id="feature-<?php echo esc_attr($mod_data->slug); ?>"
-                                               name="publishpress_options[features][<?php echo esc_attr(
+                                    <label for="feature-<?php
+                                    echo esc_attr($mod_data->slug); ?>">
+                                        <input id="feature-<?php
+                                        echo esc_attr($mod_data->slug); ?>"
+                                               name="publishpress_options[features][<?php
+                                               echo esc_attr(
                                                    $mod_data->slug
-                                               ); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
+                                               ); ?>]" <?php
+                                        echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
-                                        &nbsp;&nbsp;&nbsp;<?php echo esc_html($mod_data->title); ?>
+                                        &nbsp;&nbsp;&nbsp;<?php
+                                        echo esc_html($mod_data->title); ?>
                                     </label>
                                     <br>
-                                <?php endforeach; ?>
+                                <?php
+                                endforeach; ?>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <?php echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                    <?php
+                    echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
                             $this->module->name
                         ) . '" />'; ?>
                 </div>

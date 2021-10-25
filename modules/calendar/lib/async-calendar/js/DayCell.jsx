@@ -82,7 +82,8 @@ export default function DayCell(props) {
                     }
                     <span className="publishpress-calendar-date">{props.date.getDate()}</span>
                     {props.isHovering &&
-                        <span className="publishpress-calendar-cell-click-to-add">{__('Click to add', 'publishpress')}</span>
+                    <span
+                        className="publishpress-calendar-cell-click-to-add">{__('Click to add', 'publishpress')}</span>
                     }
                 </div>
 

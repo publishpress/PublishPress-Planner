@@ -270,7 +270,7 @@ export default function AsyncCalendar(props) {
 
         // Compensate the timezone for returning the correct date
         if (date.getHours() > 0) {
-            date.setTime(date.getTime() + (60*1000*date.getTimezoneOffset()));
+            date.setTime(date.getTime() + (60 * 1000 * date.getTimezoneOffset()));
         }
 
         return date;
@@ -525,16 +525,16 @@ export default function AsyncCalendar(props) {
             </table>
 
             {formDate &&
-                <ItemFormPopup
-                    date={formDate}
-                    ajaxUrl={props.ajaxUrl}
-                    dateFormat={props.dateFormat}
-                    postTypes={props.postTypesCanCreate}
-                    statuses={props.statuses}
-                    actionGetPostTypeFields={props.actionGetPostTypeFields}
-                    nonce={props.nonce}
-                    onCloseCallback={onCloseForm}
-                    allowAddingMultipleAuthors={props.allowAddingMultipleAuthors}/>
+            <ItemFormPopup
+                date={formDate}
+                ajaxUrl={props.ajaxUrl}
+                dateFormat={props.dateFormat}
+                postTypes={props.postTypesCanCreate}
+                statuses={props.statuses}
+                actionGetPostTypeFields={props.actionGetPostTypeFields}
+                nonce={props.nonce}
+                onCloseCallback={onCloseForm}
+                allowAddingMultipleAuthors={props.allowAddingMultipleAuthors}/>
             }
 
             <MessageBar showSpinner={isLoading} message={message}/>

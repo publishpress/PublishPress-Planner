@@ -1,387 +1,455 @@
 .publishpress-calendar-wrap .publishpress-calendar-loader {
-  display: block;
-  height: 500px;
-  width: 100%;
-  text-align: center;
-  padding-top: 150px;
-  box-sizing: border-box;
-  position: relative;
+    display: block;
+    height: 500px;
+    width: 100%;
+    text-align: center;
+    padding-top: 150px;
+    box-sizing: border-box;
+    position: relative;
 }
+
 .publishpress-calendar-wrap .publishpress-calendar-loader-delayed-tip {
-  color: #a9a9a9;
-  width: 50%;
-  padding-left: 50%;
-  margin-left: -25%;
-  animation: countdown_message 0s 10s forwards;
-  visibility: hidden;
+    color: #a9a9a9;
+    width: 50%;
+    padding-left: 50%;
+    margin-left: -25%;
+    animation: countdown_message 0s 10s forwards;
+    visibility: hidden;
 }
+
 @keyframes countdown_message {
-  to {
-    visibility: visible;
-  }
+    to {
+        visibility: visible;
+    }
 }
+
 /*
  * Spinner
  */
 .sk-cube-grid {
-  width: 40px;
-  height: 40px;
-  margin: 50px auto;
+    width: 40px;
+    height: 40px;
+    margin: 50px auto;
 }
+
 .sk-cube-grid .sk-cube {
-  width: 33%;
-  height: 33%;
-  background-color: #655997;
-  float: left;
-  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+    width: 33%;
+    height: 33%;
+    background-color: #655997;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
 }
+
 .sk-cube-grid .sk-cube1 {
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
 }
+
 .sk-cube-grid .sk-cube2 {
-  -webkit-animation-delay: 0.3s;
-  animation-delay: 0.3s;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
 }
+
 .sk-cube-grid .sk-cube3 {
-  -webkit-animation-delay: 0.4s;
-  animation-delay: 0.4s;
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
 }
+
 .sk-cube-grid .sk-cube4 {
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
+    -webkit-animation-delay: 0.1s;
+    animation-delay: 0.1s;
 }
+
 .sk-cube-grid .sk-cube5 {
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
 }
+
 .sk-cube-grid .sk-cube6 {
-  -webkit-animation-delay: 0.3s;
-  animation-delay: 0.3s;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
 }
+
 .sk-cube-grid .sk-cube7 {
-  -webkit-animation-delay: 0s;
-  animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
 }
+
 .sk-cube-grid .sk-cube8 {
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
+    -webkit-animation-delay: 0.1s;
+    animation-delay: 0.1s;
 }
+
 .sk-cube-grid .sk-cube9 {
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
 }
+
 @-webkit-keyframes sk-cubeGridScaleDelay {
-  0%,
-  70%,
-  100% {
-    -webkit-transform: scale3D(1, 1, 1);
-    transform: scale3D(1, 1, 1);
-  }
-  35% {
-    -webkit-transform: scale3D(0, 0, 1);
-    transform: scale3D(0, 0, 1);
-  }
+    0%,
+    70%,
+    100% {
+        -webkit-transform: scale3D(1, 1, 1);
+        transform: scale3D(1, 1, 1);
+    }
+    35% {
+        -webkit-transform: scale3D(0, 0, 1);
+        transform: scale3D(0, 0, 1);
+    }
 }
+
 @keyframes sk-cubeGridScaleDelay {
-  0%,
-  70%,
-  100% {
-    -webkit-transform: scale3D(1, 1, 1);
-    transform: scale3D(1, 1, 1);
-  }
-  35% {
-    -webkit-transform: scale3D(0, 0, 1);
-    transform: scale3D(0, 0, 1);
-  }
+    0%,
+    70%,
+    100% {
+        -webkit-transform: scale3D(1, 1, 1);
+        transform: scale3D(1, 1, 1);
+    }
+    35% {
+        -webkit-transform: scale3D(0, 0, 1);
+        transform: scale3D(0, 0, 1);
+    }
 }
+
 .publishpress-spinner {
-  animation: publishpress-spinner-animation 0.6s infinite reverse;
-  display: inline-block;
+    animation: publishpress-spinner-animation 0.6s infinite reverse;
+    display: inline-block;
 }
+
 @keyframes publishpress-spinner-animation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(359deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(359deg);
+    }
 }
+
 .publishpress-calendar-popup-screen-lock {
-  background-color: rgba(99, 89, 147, 0.6);
-  width: 200%;
-  height: 200%;
-  position: absolute;
-  left: -20px;
-  top: 0;
-  z-index: 980;
+    background-color: rgba(99, 89, 147, 0.6);
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    left: -20px;
+    top: 0;
+    z-index: 980;
 }
+
 .publishpress-calendar-popup {
-  background-color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-height: 50px;
-  width: 380px;
-  z-index: 999;
-  -moz-box-shadow: -1px 3px 10px 2px #838383;
-  -webkit-box-shadow: -1px 3px 10px 2px #838383;
-  box-shadow: -1px 3px 10px 2px #838383;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  color: #000;
-  padding: 10px;
-  cursor: default;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 50px;
+    width: 380px;
+    z-index: 999;
+    -moz-box-shadow: -1px 3px 10px 2px #838383;
+    -webkit-box-shadow: -1px 3px 10px 2px #838383;
+    box-shadow: -1px 3px 10px 2px #838383;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color: #000;
+    padding: 10px;
+    cursor: default;
 }
+
 .publishpress-calendar-popup table {
-  border: none;
-  border-collapse: inherit;
-  border-spacing: 0;
-  user-select: text !important;
+    border: none;
+    border-collapse: inherit;
+    border-spacing: 0;
+    user-select: text !important;
 }
+
 .publishpress-calendar-popup table th,
 .publishpress-calendar-popup table td {
-  border: none;
-  border-collapse: inherit;
-  border-spacing: 0;
-  text-align: left;
+    border: none;
+    border-collapse: inherit;
+    border-spacing: 0;
+    text-align: left;
 }
+
 .publishpress-calendar-popup table th {
-  font-weight: bold;
+    font-weight: bold;
 }
+
 .publishpress-calendar-popup table td {
-  word-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  padding-right: 35px;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    padding-right: 35px;
 }
+
 .publishpress-calendar-popup .publishpress-calendar-popup-title {
-  font-weight: bold;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  box-sizing: border-box;
-  color: #fff;
-  margin-bottom: 8px;
-  padding: 4px 23px 4px 4px;
+    font-weight: bold;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    color: #fff;
+    margin-bottom: 8px;
+    padding: 4px 23px 4px 4px;
 }
+
 .publishpress-calendar-popup .publishpress-calendar-popup-title .publishpress-calendar-icon {
-  margin-right: 5px;
-  color: #fff;
+    margin-right: 5px;
+    color: #fff;
 }
+
 .publishpress-calendar-popup .publishpress-calendar-popup-title .publishpress-calendar-popup-close {
-  position: absolute;
-  right: 14px;
-  cursor: pointer;
+    position: absolute;
+    right: 14px;
+    cursor: pointer;
 }
+
 .publishpress-calendar-popup .publishpress-calendar-popup-links > a,
 .publishpress-calendar-popup .publishpress-calendar-popup-links > a + span {
-  margin-right: 4px;
+    margin-right: 4px;
 }
+
 .publishpress-calendar-popup-form {
-  position: absolute;
-  padding-bottom: 48px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 400px;
-  max-width: 400px;
-  min-height: 420px;
-  height: auto;
-  background-color: white;
-  z-index: 999;
+    position: absolute;
+    padding-bottom: 48px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 420px;
+    height: auto;
+    background-color: white;
+    z-index: 999;
 }
+
 .publishpress-calendar-popup-form input[type="text"],
 .publishpress-calendar-popup-form textarea,
 .publishpress-calendar-popup-form select {
-  width: 300px;
+    width: 300px;
 }
+
 .publishpress-calendar-popup-form textarea {
-  height: 85px;
+    height: 85px;
 }
+
 .publishpress-calendar-popup-form .publishpress-spinner {
-  position: absolute;
-  right: 4px;
+    position: absolute;
+    right: 4px;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-title {
-  background-color: #a0a0a0;
-  padding-left: 8px;
+    background-color: #a0a0a0;
+    padding-left: 8px;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-close {
-  position: absolute;
-  right: 4px;
-  cursor: pointer;
+    position: absolute;
+    right: 4px;
+    cursor: pointer;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-links {
-  position: absolute;
-  bottom: 10px;
-  width: 98%;
-  box-sizing: border-box;
+    position: absolute;
+    bottom: 10px;
+    width: 98%;
+    box-sizing: border-box;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-loading-fields {
-  width: 400px;
-  height: 300px;
-  text-align: center;
-  display: table-cell;
-  vertical-align: middle;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-links-hr {
-  position: absolute;
-  bottom: 28px;
-  width: 96%;
+    position: absolute;
+    bottom: 28px;
+    width: 96%;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-error-message {
-  padding: 8px;
-  background: #f7d4d4;
-  border: 1px solid #ba9898;
-  margin-top: 10px;
-  border-radius: 5px;
+    padding: 8px;
+    background: #f7d4d4;
+    border: 1px solid #ba9898;
+    margin-top: 10px;
+    border-radius: 5px;
 }
+
 .publishpress-calendar-popup-form .publishpress-calendar-popup-error-message .dashicons {
-  margin-right: 5px;
-  color: #714646;
+    margin-right: 5px;
+    color: #714646;
 }
+
 .publishpress-calendar {
-  display: block;
-  width: 100%;
+    display: block;
+    width: 100%;
 }
+
 .publishpress-calendar > table {
-  table-layout: fixed;
-  width: 100%;
+    table-layout: fixed;
+    width: 100%;
 }
+
 .publishpress-calendar > table * {
-  user-select: none;
+    user-select: none;
 }
+
 .publishpress-calendar > table > thead > tr > th {
-  text-align: center;
+    text-align: center;
 }
+
 .publishpress-calendar > table > tbody > tr > td {
-  height: 110px;
+    height: 110px;
 }
+
 .publishpress-calendar > table > tbody > tr > td > div {
-  position: relative;
+    position: relative;
 }
+
 .publishpress-calendar .publishpress-calendar-cell-header {
-  display: block;
-  width: 100%;
-  height: 26px;
-  text-align: left;
-  padding-left: 2px;
-  padding-top: 2px;
+    display: block;
+    width: 100%;
+    height: 26px;
+    text-align: left;
+    padding-left: 2px;
+    padding-top: 2px;
 }
+
 .publishpress-calendar .publishpress-calendar-day-items {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 .publishpress-calendar .publishpress-calendar-date {
-  padding: 4px;
-  width: 16px !important;
-  display: inline-block;
-  height: 16px;
-  line-height: 16px;
+    padding: 4px;
+    width: 16px !important;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
 }
+
 .publishpress-calendar .publishpress-calendar-today .publishpress-calendar-date {
-  border-radius: 50%;
-  text-align: center;
+    border-radius: 50%;
+    text-align: center;
 }
+
 .publishpress-calendar .ui-draggable-dragging {
-  display: block !important;
+    display: block !important;
 }
+
 .publishpress-calendar .ui-draggable-target {
-  opacity: 50%;
+    opacity: 50%;
 }
+
 .publishpress-calendar .publishpress-calendar-item-collapse {
-  display: none !important;
+    display: none !important;
 }
+
 .publishpress-calendar .publishpress-calendar-uncollapse .publishpress-calendar-item-collapse {
-  display: block !important;
+    display: block !important;
 }
+
 .publishpress-calendar .publishpress-calendar-item {
-  display: block;
-  height: 20px;
-  max-height: 20px;
-  line-height: 18px;
-  box-sizing: border-box;
-  padding: 1px;
-  margin: 0 0 1px 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  cursor: pointer;
+    display: block;
+    height: 20px;
+    max-height: 20px;
+    line-height: 18px;
+    box-sizing: border-box;
+    padding: 1px;
+    margin: 0 0 1px 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
 }
+
 .publishpress-calendar .publishpress-calendar-item-opened-popup {
-  border: 1px dashed yellow;
+    border: 1px dashed yellow;
 }
+
 .publishpress-calendar .publishpress-calendar-month-name {
-  margin-right: 2px;
-  font-weight: bold;
+    margin-right: 2px;
+    font-weight: bold;
 }
+
 .publishpress-calendar .publishpress-calendar-hide-items,
 .publishpress-calendar .publishpress-calendar-show-more {
-  padding-left: 3px;
-  color: gray;
-  font-size: 11px;
-  cursor: pointer;
+    padding-left: 3px;
+    color: gray;
+    font-size: 11px;
+    cursor: pointer;
 }
+
 .publishpress-calendar .publishpress-calendar-hide-items .dashicons,
 .publishpress-calendar .publishpress-calendar-show-more .dashicons {
-  font-size: 15px;
-  padding-top: 2px;
+    font-size: 15px;
+    padding-top: 2px;
 }
+
 .publishpress-calendar .publishpress-calendar-hide-items:hover,
 .publishpress-calendar .publishpress-calendar-show-more:hover {
-  color: #acacac;
+    color: #acacac;
 }
+
 .publishpress-calendar .publishpress-calendar-loading::before {
-  font-family: dashicons, serif;
-  content: "\f113";
-  font-size: 17px;
-  font-weight: bold;
-  float: right;
-  margin-top: 4px;
-  margin-right: 4px;
-  animation: publishpress-spinner-animation 0.6s infinite reverse;
+    font-family: dashicons, serif;
+    content: "\f113";
+    font-size: 17px;
+    font-weight: bold;
+    float: right;
+    margin-top: 4px;
+    margin-right: 4px;
+    animation: publishpress-spinner-animation 0.6s infinite reverse;
 }
+
 .publishpress-calendar .publishpress-calendar-navigation-bar {
-  text-align: right;
+    text-align: right;
 }
+
 .publishpress-calendar .publishpress-calendar-hovering .publishpress-calendar-cell-click-to-add {
-  font-style: italic;
-  color: #b0b0b0;
-  margin-left: 5px;
-  font-size: 12px;
+    font-style: italic;
+    color: #b0b0b0;
+    margin-left: 5px;
+    font-size: 12px;
 }
+
 .publishpress-calendar .publishpress-calendar-hovering.publishpress-calendar-today .publishpress-calendar-cell-click-to-add {
-  color: #717171;
+    color: #717171;
 }
+
 .publishpress-calendar-button {
-  text-decoration: none;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  padding: 7px 10px;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 35px;
-  min-height: 28px;
-  margin-left: 3px;
-  vertical-align: middle;
+    text-decoration: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 35px;
+    min-height: 28px;
+    margin-left: 3px;
+    vertical-align: middle;
 }
+
 .publishpress-calendar-button .dashicons {
-  line-height: 30px;
+    line-height: 30px;
 }
+
 .publishpress-calendar-category-filter,
 .publishpress-calendar-tag-filter {
-  width: 120px;
+    width: 120px;
 }
+
 .publishpress-calendar.user-can-add-posts table tr td {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 .publishpress-calendar-popup table th,
 .publishpress-calendar-popup table td {
-  padding-bottom: 5px;
+    padding-bottom: 5px;
 }
+
 /*# sourceMappingURL=async-calendar.css.map */

@@ -114,5 +114,5 @@ div#side-sortables .pp_editorial_meta_checkbox input {
 }
 
 .block-editor-page .ui-datepicker {
-  z-index: 9999 !important;
+    z-index: 9999 !important;
 }

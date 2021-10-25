@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Example;
+use Codeception\Stub;
 
 require_once __DIR__ . '/../../common/php/class-module.php';
 
@@ -8,7 +9,6 @@ class classModuleCest
 {
     public function _before(WpunitTester $I)
     {
-
     }
 
     /**
@@ -16,10 +16,10 @@ class classModuleCest
      */
     public function get_module_urlForWindowsPath(WpunitTester $I, Example $example)
     {
-        $module = \Codeception\Stub::make(
+        $module = Stub::make(
             'PP_Module',
             [
-                'get_path_base'        => $example['path_base'],
+                'get_path_base' => $example['path_base'],
                 'get_publishpress_url' => $example['url'],
                 'dirname' => str_replace('module.php', '', $example['file_path']),
             ]
@@ -36,10 +36,10 @@ class classModuleCest
      */
     public function get_module_urlForUnixPath(WpunitTester $I, Example $example)
     {
-        $module = \Codeception\Stub::make(
+        $module = Stub::make(
             'PP_Module',
             [
-                'get_path_base'        => $example['plugin_path_base'],
+                'get_path_base' => $example['plugin_path_base'],
                 'get_publishpress_url' => $example['url'],
             ]
         );

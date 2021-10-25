@@ -1,12 +1,27 @@
 .publishpress-extended-post-status {
-  flex-flow: row wrap;
-}
-.publishpress-extended-post-status > * {
-  flex-basis: 48%;
-}
-.publishpress-extended-post-status .publishpress-extended-post-status-note {
-  flex-basis: 100%;
-  color: #545454;
+    flex-flow: row wrap;
 }
 
-/*# sourceMappingURL=custom-status-block-editor.css.map */
+.publishpress-extended-post-status > * {
+    flex-basis: 48%;
+}
+
+.publishpress-extended-post-status .publishpress-extended-post-status-note {
+    flex-basis: 100%;
+    color: #545454;
+}
+
+.block-editor button.components-button.editor-post-save-draft {
+    overflow: hidden;
+    text-indent: -99999px;
+}
+
+.block-editor button.components-button.editor-post-save-draft::before {
+    overflow: auto;
+    text-indent: 0;
+    content: attr(aria-label);
+}
+
+.block-editor button.components-button.editor-post-save-draft.has-icon::before {
+    content: none;
+}
