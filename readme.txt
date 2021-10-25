@@ -61,12 +61,6 @@ Metadata enables you to keep track of important requirements for your content. T
 
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
-= User Roles =
-
-For larger organizations with many people involved in the publishing process, user roles help keep your team organized. PublishPress allows you to send custom notifications to each user role.
-
-[Click here to read about the User Roles](https://publishpress.com/knowledge-base/user-groups/).
-
 = Slack Notifications =
 
 This PublishPress Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
