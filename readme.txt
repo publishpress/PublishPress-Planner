@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,13 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.6.2] - 25 Oct 2021 =
+
+* Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
+* Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
+* Fixed: Block editor crashing if we resize the window to a mobile device dimension, #960;
+* Added: Add a review request banner, #949;
 
 = [3.6.1] - 04 Oct 2021 =
 
