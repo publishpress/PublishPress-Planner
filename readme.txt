@@ -18,8 +18,10 @@ PublishPress has all the tools you need to manage WordPress content, including a
 
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
-> <strong>PublishPress Pro</strong><br />
-> This plugin is the free version of the PublishPress Pro plugin that comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+## PublishPress Pro ##
+
+> <strong>Upgrade to PublishPress Pro</strong><br />
+> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -77,27 +79,22 @@ This PublishPress Pro feature allows you to send notifications either before or 
 
 [Click here to read about the Reminder Notifications](https://publishpress.com/knowledge-base/reminders/).
 
-= Importing from Edit Flow =
-
-PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
-
-[Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
-
-= Join PublishPress and you’ll get access to Pro plugins and support =
+## Join PublishPress and get the Pro plugins ##
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you’ll get access to these 6 Pro plugins:
+Join PublishPress and you'll get access to these Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
+* [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
-* [PublishPress Permissions Pro](https://publishpress.com/presspermit) is the plugin for advanced WordPress permissions.
+* [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [Advanced Gutenberg](https://publishpress.com/advanced-gutenberg) has everything you need to build professional websites with the Gutenberg editor.
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series 
 
-Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
+Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
 = Bug Reports =
 
@@ -109,21 +106,28 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 == Screenshots ==
 
-1. Editorial Calendar
-2. Notifications
-3. Content Overview
-4. Custom Statuses
-5. Editorial Comments
-6. User Roles
-7. Slack Notifications - available in the Pro version
-8. Reminder Notifications - available in the Pro version
+1. Editorial Calendar: Using the PublishPress Calendar, you’re able to see when content is planned, and when it is published.
+2. Notifications: PublishPress Notifications keeps you and your team up to date on changes to important content.
+3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
+4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”. 
+5. Editorial Comments: PublishPress allows you to leave comments under each post you write.
+6. Reminder Notifications: The PublishPress Pro feature allows you to send notifications either before or after the publishing date for content.
+7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack. 
+
+== Frequently Asked Questions ==
+
+= How do I import from Edit Flow? =
+
+PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
+
+[Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
 == Changelog ==
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.6.2] - 25 Oct 2021 =
+= [3.6.2] - 20 Oct 2021 =
 
 * Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
 * Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
