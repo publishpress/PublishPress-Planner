@@ -100,7 +100,7 @@ class PP_Reviews extends PP_Module
      */
     public function init()
     {
-        add_filter('publishpress_wp_reviews_display_banner_publishpress', [$this, 'shouldDisplayBanner']);
+        add_filter('publishpress_wp_reviews_allow_display_notice', [$this, 'shouldDisplayBanner']);
 
         $this->reviewController->init();
     }
