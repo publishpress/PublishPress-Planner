@@ -118,7 +118,6 @@ if (! class_exists('publishpress')) {
             add_action('init', [$this, 'action_ini_for_admin'], PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN);
             add_action('admin_menu', [$this, 'action_admin_menu'], 9);
 
-            add_filter('admin_body_class', [$this, 'adminBodyClass']);
             add_action('admin_enqueue_scripts', [$this, 'register_scripts_and_styles']);
 
             // Fix the order of the submenus
@@ -129,21 +128,6 @@ if (! class_exists('publishpress')) {
             add_filter('debug_information', [$this, 'filterDebugInformation']);
 
             add_filter('cme_publishpress_capabilities', [$this, 'filterCapabilities']);
-        }
-
-        /**
-         * @param string $classes
-         * @return string mixed
-         */
-        public function adminBodyClass($classes)
-        {
-            global $pagenow;
-
-            if ($pagenow === 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] === 'psppnotif_workflow') {
-                $classes = "$classes pressshack-admin-wrapper";
-            }
-
-            return $classes;
         }
 
         /**
