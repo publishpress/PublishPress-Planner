@@ -68,8 +68,8 @@ let updateTheSaveAsButtonText = (status) => {
             label = __('Save as %s', 'publishpress').replace('%s', getStatusLabel(status));
         }
 
-        if (label !== node.ariaLabel) {
-            node.ariaLabel = label;
+        if (label !== node.getAttribute('aria-label')) {
+            node.setAttribute('aria-label', label);
         }
     }, 100);
 };
