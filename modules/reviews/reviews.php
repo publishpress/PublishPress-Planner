@@ -100,43 +100,6 @@ class PP_Reviews extends PP_Module
      */
     public function init()
     {
-        add_filter('publishpress_wp_reviews_display_banner_publishpress', [$this, 'shouldDisplayBanner']);
-
         $this->reviewController->init();
-    }
-
-    public function shouldDisplayBanner($shouldDisplay)
-    {
-        global $pagenow;
-
-        if (! is_admin() || ! current_user_can('edit_posts')) {
-            return false;
-        }
-
-        if ($pagenow === 'admin.php' && isset($_GET['page'])) {
-            if ($_GET['page'] === 'pp-calendar') {
-                return true;
-            }
-
-            if ($_GET['page'] === 'pp-content-overview') {
-                return true;
-            }
-
-            if ($_GET['page'] === 'pp-notif-log') {
-                return true;
-            }
-
-            if ($_GET['page'] === 'pp-modules-settings') {
-                return true;
-            }
-        }
-
-        if ($pagenow === 'edit.php' && isset($_GET['post_type'])) {
-            if ($_GET['post_type'] === 'psppnotif_workflow') {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

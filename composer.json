@@ -1,7 +1,7 @@
 {
   "name": "publishpress/publishpress",
   "type": "library",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "description": "WordPress plugin to accelerate your publishing workflow.",
   "homepage": "http://publishpress.com/",
   "authors": [
@@ -27,10 +27,6 @@
       "url": "https://github.com/publishpress/wp-browser"
     }
   ],
-  "dist": {
-    "url": "https://github.com/publishpress/PublishPress/releases/download/v3.6.2/publishpress-3.6.2.zip",
-    "type": "zip"
-  },
   "require": {
     "php": ">=5.6.20",
     "pimple/pimple": "3.2.3.*",

@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 5.8
-Stable tag: 3.6.2
+Stable tag: 3.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,7 +121,13 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.6.2] - 20 Oct 2021 =
+= [3.6.3] - UNRELEASED =
+
+* Fixed: Fix notifications page that tuns the WordPress admin area purple, #966;
+* Fixed: Fix "save draft" button has gone, #967;
+* Changed: Show the reviews banner on all admin pages;
+
+= [3.6.2] - 25 Oct 2021 =
 
 * Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
 * Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
