@@ -585,8 +585,8 @@ class PP_Content_Overview extends PP_Module
     {
         if (
             ! isset(
-                $_POST['pp-content-overview-number-days'],
                 $_POST['pp-content-overview-start-date_hidden'],
+                $_POST['pp-content-overview-end-date_hidden'],
                 $_POST['pp-content-overview-range-use-today']
             )
             || (
@@ -610,15 +610,15 @@ class PP_Content_Overview extends PP_Module
 
         $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
 
-        $start_date_format = 'Y-m-d';
+        $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
-            ? current_time($start_date_format)
-            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
+            ? current_time($date_format)
+            : date($date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
 
-        $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
+        $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
-        if ($user_filters['number_days'] <= 1) {
-            $user_filters['number_days'] = 1;
+        if ( (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date'])) ) {
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +1 day'));
         }
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -754,7 +754,7 @@ class PP_Content_Overview extends PP_Module
             'cat' => $this->filter_get_param('cat'),
             'author' => $this->filter_get_param('author'),
             'start_date' => $this->filter_get_param('start_date'),
-            'number_days' => $this->filter_get_param('number_days'),
+            'end_date' => $this->filter_get_param('end_date'),
             'ptype' => $this->filter_get_param('ptype'),
         ];
 
@@ -772,8 +772,8 @@ class PP_Content_Overview extends PP_Module
             $user_filters['start_date'] = date('Y-m-d');
         }
 
-        if (! $user_filters['number_days']) {
-            $user_filters['number_days'] = 10;
+        if (! $user_filters['end_date']) {
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +1 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
@@ -812,6 +812,9 @@ class PP_Content_Overview extends PP_Module
         $filtered_start_date = $this->user_filters['start_date'];
         $filtered_start_date_timestamp = strtotime($filtered_start_date);
 
+        $filtered_end_date = $this->user_filters['end_date'];
+        $filtered_end_date_timestamp = strtotime($filtered_end_date);
+
         $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
 
         $date_format = get_option('date_format');
@@ -827,22 +830,25 @@ class PP_Content_Overview extends PP_Module
         $start_date_value .= esc_html(date_i18n($date_format, $filtered_start_date_timestamp));
         $start_date_value .= '</span>';
 
-        $number_days_value = '<input type="text" id="pp-content-overview-number-days" name="pp-content-overview-number-days"'
-            . ' size="3" maxlength="3" value="'
-            . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html(
-                $this->user_filters['number_days']
-            )
-            . '</span>';
+        $end_date_value = '<input type="text" id="pp-content-overview-end-date" name="pp-content-overview-end-date"'
+            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-end-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker(
+                'Y-m-d'
+            ) . '" value="'
+            . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
+        $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
+        $end_date_value .= '<span class="form-value">';
+
+        $end_date_value .= esc_html(date_i18n($date_format, $filtered_end_date_timestamp));
+        $end_date_value .= '</span>';
 
         $output .= sprintf(
             _x(
-                'starting %1$s showing %2$s %3$s',
-                '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'',
+                'starting %1$s to %2$s',
+                '%1$s = start date, %2$s = end date',
                 'publishpress'
             ),
             $start_date_value,
-            $number_days_value,
-            _n('day', 'days', $this->user_filters['number_days'], 'publishpress')
+            $end_date_value
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
@@ -1391,8 +1397,7 @@ class PP_Content_Overview extends PP_Module
         global $wpdb;
 
         $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date']));
-        $end_day = $this->user_filters['number_days'];
-        $ending_date = date("Y-m-d", strtotime("+" . $end_day . " days", strtotime($beginning_date)));
+        $ending_date = date('Y-m-d', strtotime($this->user_filters['end_date']));
         $where = $where . $wpdb->prepare(
                 " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
                 $beginning_date,
