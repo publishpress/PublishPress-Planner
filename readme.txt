@@ -121,6 +121,10 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.7.0] - [===UNRELEASED===]
+
+* Added: Add a "Content Overview" settings tab #971
+
 = [3.6.3] - 18 Nov 2021 =
 
 * Fixed: Fix notifications page that tuns the WordPress admin area purple, #966;

@@ -41,6 +41,11 @@ class PP_Content_Overview extends PP_Module
     use Dependency_Injector;
 
     /**
+     * Settings slug
+     */
+    const SETTINGS_SLUG = 'pp-content-overview-settings';
+
+    /**
      * Screen id
      */
     const SCREEN_ID = 'dashboard_page_content-overview';
@@ -143,8 +148,8 @@ class PP_Content_Overview extends PP_Module
                     'page' => 'off',
                 ],
             ],
-            'general_options' => true,
-            'options_page' => false,
+            'configure_page_cb' => 'print_configure_view',
+            'options_page' => true,
             'autoload' => false,
             'add_menu' => true,
             'page_link' => admin_url('admin.php?page=content-overview'),
@@ -335,8 +340,27 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_configure_view()
     {
-        settings_fields($this->module->options_group_name);
-        do_settings_sections($this->module->options_group_name);
+        global $publishpress; ?>
+        <form class="basic-settings"
+              action="<?php
+              echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
+            <?php
+            settings_fields($this->module->options_group_name);
+            do_settings_sections($this->module->options_group_name); ?>
+            <?php
+            echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                    $this->module->name
+                ) . '" />'; ?>
+            <p class="submit"><?php
+                submit_button(null, 'primary', 'submit', false); ?></p>
+            <?php
+            echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                    $this->module->name
+                ) . '" />'; ?>
+            <?php
+            wp_nonce_field('edit-publishpress-settings'); ?>
+        </form>
+        <?php
     }
 
     /**
