@@ -718,6 +718,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'description' => '',
                     'viewable' => false,
                     'position' => false,
+                    'show_in_filters' => false,
                 ];
                 $term = array_merge($defaults, (array)$term);
                 if (is_array($unencoded_description)) {
@@ -1005,6 +1006,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'description' => $old_term->description,
                     'type' => $old_term->type,
                     'viewable' => $old_term->viewable,
+                    'show_in_filters' => $old_term->show_in_filters,
                 ];
             }
             $new_args = array_merge($old_args, $args);
@@ -1015,6 +1017,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'position' => $new_args['position'],
                 'type' => $new_args['type'],
                 'viewable' => $new_args['viewable'],
+                'show_in_filters' => $new_args['show_in_filters'],
             ];
             $encoded_description = $this->get_encoded_description($args_to_encode);
             $new_args['description'] = $encoded_description;
@@ -1046,6 +1049,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'description' => '',
                 'type' => '',
                 'viewable' => false,
+                'show_in_filters' => false,
             ];
             $args = array_merge($defaults, $args);
             $term_name = $args['name'];
@@ -1057,6 +1061,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'position' => $args['position'],
                 'type' => $args['type'],
                 'viewable' => $args['viewable'],
+                'show_in_filters' => $args['show_in_filters'],
             ];
             $encoded_description = $this->get_encoded_description($args_to_encode);
             $args['description'] = $encoded_description;
@@ -1217,6 +1222,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if ($_POST['metadata_viewable'] == 'yes') {
                 $term_viewable = true;
             }
+            
+            // Metadata show_in_filters needs to be a valid Yes or No
+            $term_show_in_filters = false;
+            if ($_POST['metadata_show_in_filters'] == 'yes') {
+                $term_show_in_filters = true;
+            }
 
             // Kick out if there are any errors
             if (! empty($_REQUEST['form-errors'])) {
@@ -1231,6 +1242,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'slug' => $term_slug,
                 'type' => $term_type,
                 'viewable' => $term_viewable,
+                'show_in_filters' => $term_show_in_filters,
             ];
             $return = $this->insert_editorial_metadata_term($args);
 
@@ -1328,6 +1340,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $new_viewable = true;
             }
 
+            // Make sure the show_in_filters state is valid
+            $new_show_in_filters = false;
+            if ($_POST['show_in_filters'] == 'yes') {
+                $new_show_in_filters = true;
+            }
+
             // Kick out if there are any errors
             if (! empty($_REQUEST['form-errors'])) {
                 $_REQUEST['error'] = 'form-error';
@@ -1339,6 +1357,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'name' => $new_name,
                 'description' => $new_description,
                 'viewable' => $new_viewable,
+                'show_in_filters' => $new_show_in_filters,
             ];
             $return = $this->update_editorial_metadata_term($existing_term->term_id, $args);
 
@@ -1576,7 +1595,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 } else {
                     $viewable = 'no';
                 }
-                $viewable = (isset($_POST['viewable'])) ? stripslashes($_POST['viewable']) : $viewable; ?>
+                $viewable = (isset($_POST['viewable'])) ? stripslashes($_POST['viewable']) : $viewable; 
+                if ($term->show_in_filters) {
+                    $show_in_filters = 'yes';
+                } else {
+                    $show_in_filters = 'no';
+                }
+                $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters; ?>
 
                 <form method='post' ; action="<?php
                 echo esc_url($edit_term_link); ?>">
@@ -1664,6 +1689,35 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     'viewable',
                                     __(
                                         'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                                        'publishpress'
+                                    )
+                                ); ?>
+                            </td>
+                        </tr>
+                        <tr class='form-field'>
+                            <th scope='row' ; valign='top'><?php
+                                _e('Show in filters', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                $metadata_show_in_filters_options = [
+                                    'no' => __('No', 'publishpress'),
+                                    'yes' => __('Yes', 'publishpress'),
+                                ]; ?>
+                                <select id='show_in_filters' ; name='show_in_filters'>
+                                    <?php
+                                    foreach ($metadata_show_in_filters_options as $metadata_show_in_filters_key => $metadata_show_in_filters_value) : ?>
+                                        <option value="<?php
+                                        echo esc_attr($metadata_show_in_filters_key); ?>" <?php
+                                        selected($show_in_filters, $metadata_show_in_filters_key); ?>><?php
+                                            echo esc_attr($metadata_show_in_filters_value); ?></option>
+                                    <?php
+                                    endforeach; ?>
+                                </select>
+                                <?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'show_in_filters',
+                                    __(
+                                        'When Show in filters, metadata will be available as filter option on content overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -1819,6 +1873,37 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                             )
                                         ); ?>
                                     </div>
+                                    <div class='form-field form-required'>
+                                        <label for='metadata_show_in_filters'><?php
+                                            _e('Show in filters', 'publishpress'); ?></label>
+                                        <?php
+                                        $metadata_show_in_filters_options = [
+                                            'no' => __('No', 'publishpress'),
+                                            'yes' => __('Yes', 'publishpress'),
+                                        ];
+                                        $current_metadata_show_in_filters = (isset($_POST['metadata_show_in_filters']) && in_array(
+                                                $_POST['metadata_show_in_filters'],
+                                                array_keys($metadata_show_in_filters_options)
+                                            )) ? $_POST['metadata_show_in_filters'] : 'no'; ?>
+                                        <select id="metadata_show_in_filters" ; name='metadata_show_in_filters'>
+                                            <?php
+                                            foreach ($metadata_show_in_filters_options as $metadata_show_in_filters_key => $metadata_show_in_filters_value) : ?>
+                                                <option value="<?php
+                                                echo esc_attr($metadata_show_in_filters_key); ?>" <?php
+                                                selected($current_metadata_show_in_filters, $metadata_show_in_filters_key); ?>><?php
+                                                    echo esc_attr($metadata_show_in_filters_value); ?></option>
+                                            <?php
+                                            endforeach; ?>
+                                        </select>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'show_in_filters',
+                                            __(
+                                                'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                                'publishpress'
+                                            )
+                                        ); ?>
+                                    </div>
                                     <?php
                                     wp_nonce_field('edit-publishpress-settings'); ?>
 
@@ -1960,6 +2045,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'type' => __('Metadata Type', 'publishpress'),
             'description' => __('Description', 'publishpress'),
             'viewable' => __('Viewable', 'publishpress'),
+            'show_in_filters' => __('Show in filters', 'publishpress'),
         ];
 
         return $columns;
@@ -2004,6 +2090,13 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
                 break;
             case 'viewable':
                 if ($item->viewable) {
+                    return __('Yes', 'publishpress');
+                } else {
+                    return __('No', 'publishpress');
+                }
+                break;
+            case 'show_in_filters':
+                if ($item->show_in_filters) {
                     return __('Yes', 'publishpress');
                 } else {
                     return __('No', 'publishpress');
