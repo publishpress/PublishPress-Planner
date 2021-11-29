@@ -742,6 +742,25 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
+     * Retrieve all metadata with filter option
+     */
+    public function get_filterable_metadata()
+    {
+        global $publishpress;
+
+        if (!class_exists('PP_Editorial_Metadata')) {
+            $filterable_metadata = [];
+        }else{
+            $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_filters' => true]);
+            foreach($editorial_metadata_terms as $term){
+                $filterable_metadata[$term->slug] = $term;
+            }
+        }
+
+        return $filterable_metadata;
+    }
+
+    /**
      * Update the current user's filters for content overview display with the filters in $_GET. The filters
      * in $_GET take precedence over the current users filters if they exist.
      */
@@ -757,6 +776,17 @@ class PP_Content_Overview extends PP_Module
             'number_days' => $this->filter_get_param('number_days'),
             'ptype' => $this->filter_get_param('ptype'),
         ];
+
+        //add metadata to filter
+        foreach($this->get_filterable_metadata() as $meta_key => $meta_term){
+            if($meta_term->type === 'checkbox'){
+                $user_filters[$meta_key] = absint($this->filter_get_param($meta_key));
+            }elseif($meta_term->type === 'date'){
+                $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
+            }else{
+                $user_filters[$meta_key] = $this->filter_get_param($meta_key);
+            }
+        }
 
         $current_user_filters = [];
         $current_user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
@@ -802,6 +832,26 @@ class PP_Content_Overview extends PP_Module
         return sanitize_key($_GET[$param]);
     }
 
+    /**
+     * This function is an alternative to filter_get_param() that's stripping out date characters
+     * 
+     * @param string $param The parameter to look for in $_GET
+     *
+     * @return null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
+     *                      or a sanitized version of the parameter from $_GET if set and not empty
+     */
+    public function filter_get_param_text($param)
+    {
+        // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
+        if (! isset($_GET[$param])) {
+            return null;
+        } elseif (empty($_GET[$param])) {
+            return '';
+        }
+
+        return sanitize_text_field($_GET[$param]);
+    }
+    
     /**
      * Allow the user to define the date range in a new and exciting way
      *
@@ -915,6 +965,7 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
                     } ?>
+                    <?php submit_button(__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
@@ -956,6 +1007,11 @@ class PP_Content_Overview extends PP_Module
 
         $select_filter_names['post_status'] = 'post_status';
 
+        //metadata field
+        foreach($this->get_filterable_metadata() as $meta_key => $meta_term){
+            $select_filter_names[$meta_key] = $meta_key;
+        }
+
         if (isset($this->module->options->post_types['post']) && $this->module->options->post_types['post'] == 'on') {
             $select_filter_names['cat'] = 'cat';
         }
@@ -968,6 +1024,11 @@ class PP_Content_Overview extends PP_Module
 
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
+
+        if(array_key_exists($select_id, $this->get_filterable_metadata())){
+            $select_id = 'metadata_key';
+        }
+
         switch ($select_id) {
             case 'post_status':
                 $post_statuses = $this->get_post_statuses();
@@ -1054,6 +1115,43 @@ class PP_Content_Overview extends PP_Module
                     ?>
                 </select>
                 <?php
+                break;
+
+            case 'metadata_key':
+                global $publishpress;
+                $metadata_value = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
+                $metadata_term  = $this->get_filterable_metadata()[$select_name];
+                $metadata_type  = $metadata_term->type;
+
+                if(in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date'])){ ?>
+                    <input 
+                        type="text" 
+                        id="metadata_key_<?php echo $select_name; ?>" 
+                        name="<?php echo $select_name; ?>" 
+                        value="<?php echo $metadata_value; ?>" 
+                        placeholder="<?php echo $metadata_term->name; ?>"
+                        />
+                <?php
+                }elseif($metadata_type === 'user'){ 
+                    $user_dropdown_args = [
+                        'show_option_all' => $metadata_term->name,
+                        'name' => $select_name,
+                        'selected' => $metadata_value,
+                        'class' => 'pp-custom-select2'
+                    ];
+                    $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
+                    wp_dropdown_users($user_dropdown_args);
+                }elseif($metadata_type === 'checkbox'){ ?>
+                    <input 
+                        type="checkbox" 
+                        id="metadata_key_<?php echo $select_name; ?>" 
+                        name="<?php echo $select_name; ?>" 
+                        value="1"
+                        <?php checked( $metadata_value, 1 ); ?>
+                        />
+                    <label for="metadata_key_<?php echo $select_name; ?>"><?php echo $metadata_term->name; ?></label>
+                <?php
+                }
                 break;
 
             default:
@@ -1193,6 +1291,28 @@ class PP_Content_Overview extends PP_Module
         ];
 
         $args = array_merge($defaults, $args);
+
+        //metadata field filter
+        $meta_query = array( 'relation' => 'AND' );
+        $metadata_filter = false;
+        foreach($this->get_filterable_metadata() as $meta_key => $metadata_term){
+            if(! empty($this->user_filters[$meta_key])){
+                if($metadata_term->type === 'date'){
+                    $meta_value = strtotime($this->user_filters[$meta_key]);
+                }else{
+                    $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
+                }
+                $metadata_filter = true;
+                $meta_query[] = array(
+					'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
+					'value' => $meta_value,
+                    'compare' => '='
+				);
+            }
+        }
+        if($metadata_filter){
+            $args['meta_query'] = $meta_query;
+        }
 
         if ($postType === 'post' && ! empty($term)) {
             // Filter to the term and any children if it's hierarchical
