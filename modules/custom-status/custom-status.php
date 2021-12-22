@@ -1116,12 +1116,10 @@ if (! class_exists('PP_Custom_Status')) {
          * @param int @status_id ID for the status
          * @param array $args Any arguments to be updated
          *
-         * @return object $updated_status Newly updated status object
+         * @return object|WP_Error|false $updated_status Newly updated status object
          */
         public function update_custom_status($status_id, $args = [])
         {
-            global $publishpress;
-
             $old_status = $this->get_custom_status_by('id', $status_id);
             if (! $old_status || is_wp_error($old_status)) {
                 return new WP_Error('invalid', __("Custom status doesn't exist.", 'publishpress'));
@@ -1148,6 +1146,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             $slug = isset($args['slug']) ? $args['slug'] : $old_status->slug;
 
+            $updatedStatusId = $status_id;
             if (is_numeric($status_id)) {
                 // We're encoding metadata that isn't supported by default in the term's description field
                 $args_to_encode = [];
@@ -1161,18 +1160,17 @@ if (! class_exists('PP_Custom_Status')) {
                 $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
 
                 if (is_wp_error($updated_status_array)) {
-                    return false;
+                    return $updated_status_array;
                 }
-            } else {
-                if (isset($args['position'])) {
-                    $slug = sanitize_key($slug);
 
-                    update_option('psppno_status_' . $slug . '_position', $args['position']);
-                }
+                $updatedStatusId = $updated_status_array['term_id'];
+            } elseif (isset($args['position'])) {
+                $slug = sanitize_key($slug);
+
+                update_option('psppno_status_' . $slug . '_position', $args['position']);
             }
 
-
-            return $this->get_custom_status_by('id', $updated_status_array['term_id']);
+            return $this->get_custom_status_by('id', $updatedStatusId);
         }
 
         /**
@@ -1323,7 +1321,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             // Sort the items numerically by key
             ksort($orderedStatusList, SORT_NUMERIC);
-            // Append all of the statuses that didn't have an existing position
+            // Append all the statuses that didn't have an existing position
             foreach ($hold_to_end as $unpositioned_status) {
                 $orderedStatusList[] = $unpositioned_status;
             }
@@ -1354,7 +1352,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @param string|int $string_or_int The status to search for, either by slug, name or ID
          *
-         * @return object|WP_Error $status The object for the matching status
+         * @return object|WP_Error|false $status The object for the matching status
          */
         public function get_custom_status_by($field, $value)
         {
@@ -1371,9 +1369,9 @@ if (! class_exists('PP_Custom_Status')) {
 
             if (! empty($custom_status)) {
                 return array_shift($custom_status);
-            } else {
-                return false;
             }
+
+            return false;
         }
 
         /**
