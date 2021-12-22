@@ -260,7 +260,7 @@ if (! class_exists('PP_Notifications')) {
             // Migrate Following Users
             $wpdb->query(
                 $wpdb->prepare(
-                    "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = %s WHERE taxonomy = following_users",
+                    "UPDATE {$wpdb->prefix}term_taxonomy SET taxonomy = %s WHERE taxonomy = 'following_users'",
                     $this->notify_user_taxonomy
                 )
             );
