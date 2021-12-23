@@ -384,6 +384,21 @@ if (! class_exists('publishpress')) {
                 $constDisableWpCron = DISABLE_WP_CRON;
             }
 
+            $constWpDebug = 'undefined';
+            if (defined('WP_DEBUG')) {
+                $constWpDebug = WP_DEBUG;
+            }
+
+            $constWpDebugLog = 'undefined';
+            if (defined('WP_DEBUG_LOG')) {
+                $constWpDebugLog = WP_DEBUG_LOG;
+            }
+
+            $constWpDisplay = 'undefined';
+            if (defined('WP_DEBUG_DISPLAY')) {
+                $constWpDisplay = WP_DEBUG_DISPLAY;
+            }
+
             $debugInfo['publishpress'] = [
                 'label' => 'PublishPress',
                 'description' => '',
@@ -424,6 +439,18 @@ if (! class_exists('publishpress')) {
                     'DISABLE_WP_CRON' => [
                         'label' => __('DISABLE_WP_CRON'),
                         'value' => $constDisableWpCron,
+                    ],
+                    'WP_DEBUG' => [
+                        'label' => __('WP_DEBUG'),
+                        'value' => $constWpDebug,
+                    ],
+                    'WP_DEBUG_LOG' => [
+                        'label' => __('WP_DEBUG_LOG'),
+                        'value' => $constWpDebugLog,
+                    ],
+                    'WP_DEBUG_DISPLAY' => [
+                        'label' => __('WP_DEBUG_DISPLAY'),
+                        'value' => $constWpDisplay,
                     ],
                     'option::date_format' => [
                         'label' => __('WP Date Format'),
