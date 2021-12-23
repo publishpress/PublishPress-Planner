@@ -379,6 +379,11 @@ if (! class_exists('publishpress')) {
          */
         public function filterDebugInformation($debugInfo)
         {
+            $constDisableWpCron = 'undefined';
+            if (defined('DISABLE_WP_CRON')) {
+                $constDisableWpCron = DISABLE_WP_CRON;
+            }
+
             $debugInfo['publishpress'] = [
                 'label' => 'PublishPress',
                 'description' => '',
@@ -415,6 +420,10 @@ if (! class_exists('publishpress')) {
                     'WP_CONTENT_URL' => [
                         'label' => __('WP_CONTENT_URL'),
                         'value' => WP_CONTENT_URL,
+                    ],
+                    'DISABLE_WP_CRON' => [
+                        'label' => __('DISABLE_WP_CRON'),
+                        'value' => $constDisableWpCron,
                     ],
                     'option::date_format' => [
                         'label' => __('WP Date Format'),
