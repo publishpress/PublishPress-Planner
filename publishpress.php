@@ -1094,7 +1094,7 @@ if (! class_exists('publishpress')) {
                 return sanitize_key($_REQUEST['post_type']);
             } elseif (isset($_REQUEST['post'])) {
                 // Lastly check if post ID is in query string.
-                return get_post_type($_REQUEST['post']);
+                return get_post_type((int)$_REQUEST['post']);
             } elseif ($pagenow === 'edit.php') {
                 // The edit page without post_type param is always "post".
                 return 'post';
