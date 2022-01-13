@@ -644,7 +644,7 @@ if (! class_exists('PP_Calendar')) {
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
-                    $postStatuses = $this->getPostStatusOptions();
+                    $postStatuses = $this->esc_array_of_options($this->getPostStatusOptions());
 
                     $postTypes = [];
                     $postTypesUserCanCreate = [];
@@ -652,23 +652,23 @@ if (! class_exists('PP_Calendar')) {
                         $postType = get_post_type_object($postTypeName);
 
                         $postTypes[] = [
-                            'value' => $postTypeName,
-                            'text' => $postType->label
+                            'value' => esc_attr($postTypeName),
+                            'text' => esc_html($postType->label)
                         ];
 
                         if (current_user_can($postType->cap->edit_posts)) {
                             $postTypesUserCanCreate[] = [
-                                'value' => $postTypeName,
-                                'text' => $postType->labels->singular_name
+                                'value' => esc_attr($postTypeName),
+                                'text' => esc_html($postType->labels->singular_name)
                             ];
                         }
                     }
 
-                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ? (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
+                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ?
+                        (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
 
-                    $firstDateToDisplay = (isset($_GET['start_date']) ? esc_js($_GET['start_date']) : date(
-                            'Y-m-d'
-                        )) . ' 00:00:00';
+                    $firstDateToDisplay = (isset($_GET['start_date']) ?
+                            sanitize_text_field($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00';
                     $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
                     $endDate = $this->get_ending_of_week(
                         $firstDateToDisplay,
@@ -678,21 +678,21 @@ if (! class_exists('PP_Calendar')) {
 
                     $params = [
                         'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
-                        'firstDateToDisplay' => $firstDateToDisplay,
+                        'firstDateToDisplay' => esc_js($firstDateToDisplay),
                         'theme' => 'light',
                         'weekStartsOnSunday' => (int)get_option('start_of_week') === 0,
-                        'todayDate' => date('Y-m-d 00:00:00'),
-                        'dateFormat' => get_option('date_format', 'Y-m-d H:i:s'),
-                        'timeFormat' => $this->getCalendarTimeFormat(),
+                        'todayDate' => esc_js(date('Y-m-d 00:00:00')),
+                        'dateFormat' => esc_js(get_option('date_format', 'Y-m-d H:i:s')),
+                        'timeFormat' => esc_js($this->getCalendarTimeFormat()),
                         'maxVisibleItems' => $maxVisibleItemsOption,
                         'statuses' => $postStatuses,
                         'postTypes' => $postTypes,
                         'postTypesCanCreate' => $postTypesUserCanCreate,
-                        'ajaxUrl' => admin_url('admin-ajax.php'),
+                        'ajaxUrl' => esc_url(admin_url('admin-ajax.php')),
                         'nonce' => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts' => count($postTypesUserCanCreate) > 0,
                         'items' => $this->getCalendarData($firstDateToDisplay, $endDate, []),
-                        'allowAddingMultipleAuthors' => apply_filters(
+                        'allowAddingMultipleAuthors' => (bool)apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
                             false
                         ),
@@ -716,6 +716,26 @@ if (! class_exists('PP_Calendar')) {
                     );
                 }
             }
+        }
+
+        /**
+         * Escape a list of options with value and text keys.
+         *
+         * @param $options
+         *
+         * @return array
+         */
+        protected function esc_array_of_options($options)
+        {
+            return array_map(
+                function($item) {
+                    $item['value'] = esc_attr($item['value']);
+                    $item['text'] = esc_html($item['text']);
+
+                    return $item;
+                },
+                $options
+            );
         }
 
         /**
@@ -3043,12 +3063,12 @@ if (! class_exists('PP_Calendar')) {
             $postTypeObject = $this->getPostTypeObject($post->post_type);
 
             return [
-                'label' => $post->post_title,
-                'id' => $post->ID,
-                'timestamp' => $post->post_date,
-                'icon' => $postTypeOptions['icon'],
-                'color' => $postTypeOptions['color'],
-                'showTime' => $this->showPostsPublishTime($post->post_status),
+                'label' => esc_html($post->post_title),
+                'id' => (int)$post->ID,
+                'timestamp' => esc_attr($post->post_date),
+                'icon' => esc_attr($postTypeOptions['icon']),
+                'color' => esc_attr($postTypeOptions['color']),
+                'showTime' => (bool)$this->showPostsPublishTime($post->post_status),
                 'canEdit' => current_user_can($postTypeObject->cap->edit_post, $post->ID),
             ];
         }
@@ -3426,11 +3446,13 @@ if (! class_exists('PP_Calendar')) {
             $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : null;
             $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
             $title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+            // Sanitized by the wp_filter_post_kses function.
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $content = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
             $time = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
-            $authors = isset($_POST['authors']) ? explode(',', $_POST['authors']) : [];
-            $categories = isset($_POST['categories']) ? explode(',', $_POST['categories']) : [];
-            $tags = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
+            $authors = isset($_POST['authors']) ? explode(',', sanitize_text_field($_POST['authors'])) : [];
+            $categories = isset($_POST['categories']) ? explode(',', sanitize_text_field($_POST['categories'])) : [];
+            $tags = isset($_POST['tags']) ? explode(',', sanitize_text_field($_POST['tags'])) : [];
 
             if (empty($date)) {
                 $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
@@ -3867,7 +3889,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             return isset($this->module->options->show_posts_publish_time[$status])
-                && $this->module->options->show_posts_publish_time[$status] == 'on';
+                && $this->module->options->show_posts_publish_time[$status] === 'on';
         }
 
         /**
