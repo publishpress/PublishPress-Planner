@@ -72,10 +72,9 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                         if (is_numeric($item)) {
                             $users[] = $item;
                         } elseif (strpos($item, '@') > 0) {
-                                $emails[] = $item;
-                            } else {
-                                $roles[] = $item;
-                            }
+                            $emails[] = $item;
+                        } else {
+                            $roles[] = $item;
                         }
                     }
                 }
