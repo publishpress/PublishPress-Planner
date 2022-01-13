@@ -2001,14 +2001,12 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             case 'type':
             case 'description':
                 return esc_html($item->$column_name);
-                break;
             case 'viewable':
                 if ($item->viewable) {
                     return __('Yes', 'publishpress');
                 } else {
                     return __('No', 'publishpress');
                 }
-                break;
             default:
                 break;
         }
