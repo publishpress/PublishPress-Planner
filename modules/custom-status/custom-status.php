@@ -1150,10 +1150,11 @@ if (! class_exists('PP_Custom_Status')) {
             if (is_numeric($status_id)) {
                 // We're encoding metadata that isn't supported by default in the term's description field
                 $args_to_encode = [];
-                $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
-                $args_to_encode['position'] = (isset($args['position'])) ? $args['position'] : $old_status->position;
-                $args_to_encode['color'] = (isset($args['color'])) ? $args['color'] : $old_status->color;
-                $args_to_encode['icon'] = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
+                $args_to_encode['description'] = (isset($args['description'])) ? sanitize_textarea_field($args['description']) : $old_status->description;
+                $args_to_encode['position'] = (isset($args['position'])) ? (int)$args['position'] : $old_status->position;
+                $args_to_encode['color'] = (isset($args['color'])) ? sanitize_text_field($args['color']) : $old_status->color;
+                $args_to_encode['icon'] = (isset($args['icon'])) ? sanitize_text_field($args['icon']) : $old_status->icon;
+
                 $encoded_description = $this->get_encoded_description($args_to_encode);
                 $args['description'] = $encoded_description;
 
