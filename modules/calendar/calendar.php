@@ -82,6 +82,8 @@ if (! class_exists('PP_Calendar')) {
          */
         const TIME_FORMAT_24H = 'H';
 
+        const VIEW_CAPABILITY = 'pp_view_calendar';
+
         /**
          * [$module description]
          *
@@ -222,7 +224,7 @@ if (! class_exists('PP_Calendar')) {
             $this->setDefaultCapabilities();
 
             // Can view the calendar?
-            if (! $this->check_capability()) {
+            if (! $this->currentUserCanViewCalendar()) {
                 return false;
             }
 
@@ -394,7 +396,7 @@ if (! class_exists('PP_Calendar')) {
 
             $publishpress->add_menu_page(
                 esc_html__('Calendar', 'publishpress'),
-                'pp_view_calendar',
+                $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page']
             );
@@ -412,7 +414,7 @@ if (! class_exists('PP_Calendar')) {
                 $publishpress->get_menu_slug(),
                 esc_html__('Calendar', 'publishpress'),
                 esc_html__('Calendar', 'publishpress'),
-                apply_filters('pp_view_calendar_cap', 'pp_view_calendar'),
+                $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page'],
                 5
@@ -501,12 +503,9 @@ if (! class_exists('PP_Calendar')) {
          *
          * @return bool
          */
-        protected function check_capability()
+        private function currentUserCanViewCalendar()
         {
-            $view_calendar_cap = 'pp_view_calendar';
-            $view_calendar_cap = apply_filters('pp_view_calendar_cap', $view_calendar_cap);
-
-            return current_user_can($view_calendar_cap);
+            return current_user_can($this->getViewCapability());
         }
 
         protected function getPostStatusOptions()
@@ -3951,12 +3950,23 @@ if (! class_exists('PP_Calendar')) {
         {
             $role = get_role('administrator');
 
-            $view_calendar_cap = 'pp_view_calendar';
-            $view_calendar_cap = apply_filters('pp_view_calendar_cap', $view_calendar_cap);
+            $viewCapability = $this->getViewCapability();
 
-            if (! $role->has_cap($view_calendar_cap)) {
-                $role->add_cap($view_calendar_cap);
+            if (! $role->has_cap($viewCapability)) {
+                $role->add_cap($viewCapability);
             }
+        }
+
+        private function getViewCapability()
+        {
+            $viewCapability = apply_filters_deprecated(
+                    'pp_view_calendar_cap',
+                    [self::VIEW_CAPABILITY],
+                '3.6.4',
+                'publishpress_calendar_cap_view_calendar'
+            );
+
+            return apply_filters('publishpress_calendar_cap_view_calendar', $viewCapability);;
         }
     }
 }
