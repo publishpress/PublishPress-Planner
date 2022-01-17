@@ -250,28 +250,26 @@ if (! class_exists('PP_Debug')) {
             foreach ($plugins as $plugin => $data) {
                 $pluginsData[$plugin] = (is_plugin_active(
                         $plugin
-                    ) ? 'ACTIVATED' : 'deactivated') . ' [' . $data['Version'] . ']';
+                    ) ? 'ACTIVATED' : 'deactivated') . ' [' . esc_html($data['Version']) . ']';
             }
 
-            // phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
             $debug_data = [
                 'php' => [
                     'version' => PHP_VERSION,
                     'os' => PHP_OS,
                     'date_default_timezone_get' => date_default_timezone_get(),
-                    'date(e)' => date('e'),
-                    'date(T)' => date('T'),
+                    'date(e)' => date('e'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                    'date(T)' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                 ],
                 'wordpress' => [
-                    'version' => $wp_version,
-                    'date_format' => get_option('date_format'),
-                    'time_format' => get_option('time_format'),
-                    'timezone_string' => get_option('timezone_string'),
-                    'gmt_offset' => get_option('gmt_offset'),
+                    'version' => esc_html($wp_version),
+                    'date_format' => esc_html(get_option('date_format')),
+                    'time_format' => esc_html(get_option('time_format')),
+                    'timezone_string' => esc_html(get_option('timezone_string')),
+                    'gmt_offset' => esc_html(get_option('gmt_offset')),
                     'plugins' => $pluginsData,
                 ],
             ];
-            // phpcs:enable
 
             $context = [
                 'label' => [
@@ -298,28 +296,28 @@ if (! class_exists('PP_Debug')) {
                     ),
                 ],
                 'contact_email' => 'help@publishpress.com',
-                'link_delete' => admin_url(
-                    sprintf(
-                        'admin.php?page=%s&action=%s&_wpnonce=%s',
-                        self::PAGE_SLUG,
-                        self::ACTION_DELETE_LOG,
-                        wp_create_nonce(self::ACTION_DELETE_LOG)
+                'link_delete' => esc_url(
+                    admin_url(
+                        sprintf(
+                            'admin.php?page=%s&action=%s&_wpnonce=%s',
+                            self::PAGE_SLUG,
+                            self::ACTION_DELETE_LOG,
+                            wp_create_nonce(self::ACTION_DELETE_LOG)
+                        )
                     )
                 ),
                 'is_log_found' => $is_log_found,
                 'file' => [
-                    'path' => $this->path,
+                    'path' => esc_html($this->path),
                     'size' => $is_log_found ? round(filesize($this->path) / 1024, 2) : 0,
                     'modification_time' => $is_log_found ? gmdate('Y-m-d H:i:s T O', filemtime($this->path)) : '',
-                    'content' => $is_log_found ? file_get_contents($this->path) : '',
+                    'content' => $is_log_found ? esc_html(file_get_contents($this->path)) : '',
                 ],
                 'debug_data' => print_r($debug_data, true), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 'messages' => $this->messages,
             ];
 
-            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo $this->twig->render('view_log.twig', $context);
-            // phpcs:enable
+            echo $this->twig->render('view_log.twig', $context); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
 
         protected function handle_actions()
@@ -338,14 +336,14 @@ if (! class_exists('PP_Debug')) {
 
             // Do we have a nonce?
             if (! array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
-                $this->messages[] = __('Action nonce not found.', 'publishpress');
+                $this->messages[] = esc_html__('Action nonce not found.', 'publishpress');
 
                 return;
             }
 
             // Check the nonce.
             if (! wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), $action)) {
-                $this->messages[] = __('Invalid action nonce.', 'publishpress');
+                $this->messages[] = esc_html__('Invalid action nonce.', 'publishpress');
 
                 return;
             }
