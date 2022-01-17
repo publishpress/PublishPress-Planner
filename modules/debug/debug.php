@@ -106,9 +106,18 @@ if (! class_exists('PP_Debug')) {
             $this->initialized = true;
         }
 
+        private function currentUserCanSeeDebugLog()
+        {
+            return current_user_can(self::REQUIRED_CAPABILITY);
+        }
+
         public function enqueue_admin_scripts()
         {
             if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                if (! $this->currentUserCanSeeDebugLog()) {
+                    return;
+                }
+
                 wp_enqueue_style(
                     'publishpress-debug',
                     PUBLISHPRESS_URL . 'modules/debug/assets/css/debug.css',
@@ -127,8 +136,8 @@ if (! class_exists('PP_Debug')) {
         }
 
         /**
-         * Register settings for notifications so we can partially use the Settings API
-         * (We use the Settings API for form generation, but not saving)
+         * Register settings for notifications, so we can partially use the Settings API
+         * (We use the Settings API for form generation, but not saving).
          *
          */
         public function register_settings()
@@ -142,6 +151,10 @@ if (! class_exists('PP_Debug')) {
          */
         public function settings_validate($new_options)
         {
+            if (! $this->currentUserCanSeeDebugLog()) {
+                return $new_options;
+            }
+
             // Follow whitelist validation for modules
             if (array_key_exists('post_status_widget', $new_options) && $new_options['post_status_widget'] != 'on') {
                 $new_options['post_status_widget'] = 'off';
@@ -206,7 +219,7 @@ if (! class_exists('PP_Debug')) {
 
         public function admin_bar_menu()
         {
-            if (! current_user_can(self::REQUIRED_CAPABILITY)) {
+            if (! $this->currentUserCanSeeDebugLog()) {
                 return;
             }
 
@@ -238,6 +251,10 @@ if (! class_exists('PP_Debug')) {
 
         public function view_log_page()
         {
+            if (! $this->currentUserCanSeeDebugLog()) {
+                return;
+            }
+
             $this->handle_actions();
 
             global $wp_version;
@@ -322,6 +339,10 @@ if (! class_exists('PP_Debug')) {
 
         protected function handle_actions()
         {
+            if (! $this->currentUserCanSeeDebugLog()) {
+                return;
+            }
+
             // Are we on the correct page?
             if (! array_key_exists('page', $_GET) || $_GET['page'] !== self::PAGE_SLUG) {
                 return;
