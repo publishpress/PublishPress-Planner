@@ -101,28 +101,28 @@ if (! class_exists('PP_Calendar')) {
         /**
          * [$current_week description]
          *
-         * @var integer
+         * @var int
          */
         public $current_week = 1;
 
         /**
          * Default number of weeks to show per screen
          *
-         * @var integer
+         * @var int
          */
         public $total_weeks = 6;
 
         /**
          * Counter of hidden posts per date square
          *
-         * @var integer
+         * @var int
          */
         public $hidden = 0;
 
         /**
          * Total number of posts to be shown per square before 'more' link
          *
-         * @var integer
+         * @var int
          */
         public $default_max_visible_posts_per_date = 4;
 
@@ -856,8 +856,8 @@ if (! class_exists('PP_Calendar')) {
          * with daylight transitions covering the given date range.
          *
          * @param string Timezone ID as used in PHP's Date functions
-         * @param integer Unix timestamp with first date/time in this timezone
-         * @param integer Unix timestap with last date/time in this timezone
+         * @param int Unix timestamp with first date/time in this timezone
+         * @param int Unix timestap with last date/time in this timezone
          *
          * @return mixed A Sabre\VObject\Component object representing a VTIMEZONE definition
          *               or false if no timezone information is available
@@ -1498,8 +1498,8 @@ if (! class_exists('PP_Calendar')) {
         /**
          * Generates the HTML for a single post item in the calendar
          *
-         * @param obj $post The WordPress post in question
-         * @param str $post_date The date of the post
+         * @param WP_Post $post The WordPress post in question
+         * @param string $post_date The date of the post
          * @param int $num The index of the post
          *
          * @return str HTML for a single post item
@@ -3906,11 +3906,11 @@ if (! class_exists('PP_Calendar')) {
         /**
          * Sanitizes a given author id.
          *
-         * @param string $authorsIds
+         * @param array $authorsIds
          *
          * @return  array
          */
-        public static function sanitize_author_input($authorsIds = '')
+        public static function sanitize_author_input($authorsIds = [])
         {
             return array_map('intval', $authorsIds);
         }
@@ -3966,7 +3966,7 @@ if (! class_exists('PP_Calendar')) {
                 'publishpress_calendar_cap_view_calendar'
             );
 
-            return apply_filters('publishpress_calendar_cap_view_calendar', $viewCapability);;
+            return apply_filters('publishpress_calendar_cap_view_calendar', $viewCapability);
         }
     }
 }
