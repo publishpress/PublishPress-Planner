@@ -106,7 +106,7 @@ if (! class_exists('PP_Debug')) {
 
         public function enqueue_admin_scripts()
         {
-            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) {
+            if (isset($_GET['page']) && $_GET['page'] === self::PAGE_SLUG) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_enqueue_style(
                     'publishpress-debug',
                     PUBLISHPRESS_URL . 'modules/debug/assets/css/debug.css',
@@ -183,7 +183,7 @@ if (! class_exists('PP_Debug')) {
                 if (is_bool($message)) {
                     $message = $message ? 'true' : 'false';
                 } else {
-                    $message = print_r($message, true);
+                    $message = print_r($message, true); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 }
             }
 
@@ -307,7 +307,7 @@ if (! class_exists('PP_Debug')) {
                     'modification_time' => $is_log_found ? gmdate('Y-m-d H:i:s T O', filemtime($this->path)) : '',
                     'content' => $is_log_found ? file_get_contents($this->path) : '',
                 ],
-                'debug_data' => print_r($debug_data, true),
+                'debug_data' => print_r($debug_data, true), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 'messages' => $this->messages,
             ];
 
@@ -346,9 +346,7 @@ if (! class_exists('PP_Debug')) {
 
             if ($action === self::ACTION_DELETE_LOG) {
                 if (file_exists($this->path)) {
-                    // phpcs:disable WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
-                    unlink($this->path);
-                    // phpcs:enable
+                    unlink($this->path); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
                 }
             }
 
