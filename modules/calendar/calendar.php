@@ -2944,9 +2944,9 @@ if (! class_exists('PP_Calendar')) {
         }
 
         /**
-         * Allow to alter modified date when creating posts. WordPress by default
+         * Allow altering modified date when creating posts. WordPress by default
          * doesn't allow that. We need it to fix an issue where the post_modified
-         * field is saved with the post_date value. That is a ptoblem when you save
+         * field is saved with the post_date value. That is a problem when you save
          * a post with post_date to the future. For scheduled posts.
          *
          * @param array $data
