@@ -217,9 +217,11 @@ if (! class_exists('PP_Debug')) {
 
         public function admin_menu()
         {
+            $publishpress = $this->get_service('publishpress');
+
             // Admin menu.
             add_submenu_page(
-                admin_url('admin.php?page=' . self::PAGE_SLUG),
+                $publishpress->get_menu_slug(),
                 esc_html__('Debug Log'),
                 esc_html__('Debug Log'),
                 'activate_plugins',
