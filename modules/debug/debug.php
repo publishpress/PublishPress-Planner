@@ -328,7 +328,7 @@ if (! class_exists('PP_Debug')) {
                 return;
             }
 
-            $action = preg_replace('/[^a-z0-9_\-]/i', '', sanitize_text_field($_GET['action']));
+            $action = sanitize_key($_GET['action']);
 
             // Do we have a nonce?
             if (! array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {
