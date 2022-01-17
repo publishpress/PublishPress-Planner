@@ -210,7 +210,7 @@ if (! class_exists('PP_Debug')) {
 
             $args = [
                 'id' => 'publishpress_debug',
-                'title' => __('PublishPress Debug Log', 'publishpress'),
+                'title' => esc_html__('PublishPress Debug Log', 'publishpress'),
                 'href' => admin_url('admin.php?page=' . self::PAGE_SLUG),
             ];
 
@@ -222,8 +222,8 @@ if (! class_exists('PP_Debug')) {
             // Admin menu.
             add_submenu_page(
                 admin_url('admin.php?page=' . self::PAGE_SLUG),
-                __('Debug Log'),
-                __('Debug Log'),
+                esc_html__('Debug Log'),
+                esc_html__('Debug Log'),
                 'activate_plugins',
                 'publishpress_debug_log',
                 [$this, 'view_log_page']
@@ -328,7 +328,7 @@ if (! class_exists('PP_Debug')) {
                 return;
             }
 
-            $action = preg_replace('/[^a-z0-9_\-]/i', '', sanitize_text_field($_GET['action']));
+            $action = sanitize_key($_GET['action']);
 
             // Do we have a nonce?
             if (! array_key_exists('_wpnonce', $_GET) || empty($_GET['_wpnonce'])) {

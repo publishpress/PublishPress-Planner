@@ -1150,10 +1150,11 @@ if (! class_exists('PP_Custom_Status')) {
             if (is_numeric($status_id)) {
                 // We're encoding metadata that isn't supported by default in the term's description field
                 $args_to_encode = [];
-                $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
-                $args_to_encode['position'] = (isset($args['position'])) ? $args['position'] : $old_status->position;
-                $args_to_encode['color'] = (isset($args['color'])) ? $args['color'] : $old_status->color;
-                $args_to_encode['icon'] = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
+                $args_to_encode['description'] = (isset($args['description'])) ? sanitize_textarea_field($args['description']) : $old_status->description;
+                $args_to_encode['position'] = (isset($args['position'])) ? (int)$args['position'] : $old_status->position;
+                $args_to_encode['color'] = (isset($args['color'])) ? sanitize_text_field($args['color']) : $old_status->color;
+                $args_to_encode['icon'] = (isset($args['icon'])) ? sanitize_text_field($args['icon']) : $old_status->icon;
+
                 $encoded_description = $this->get_encoded_description($args_to_encode);
                 $args['description'] = $encoded_description;
 
@@ -1163,9 +1164,24 @@ if (! class_exists('PP_Custom_Status')) {
                     return $updated_status_array;
                 }
 
+                if (! is_array($updated_status_array) || !isset($updated_status_array['term_id'])) {
+                    error_log(
+                        sprintf(
+                            '[PUBLISHPRESS] Error updating the status term. $status_id: %s, taxonomy: %s, $args: %s',
+                            $status_id,
+                            self::taxonomy_key,
+                            print_r($args, true)
+                        )
+                    );
+
+                    return new WP_Error('custom-status-term_id', esc_html__('Error while updating the status', 'publishpress'));
+                }
+
                 $updatedStatusId = $updated_status_array['term_id'];
             } elseif (isset($args['position'])) {
                 $slug = sanitize_key($slug);
+
+                $args['position'] = (int)$args['position'];
 
                 update_option('psppno_status_' . $slug . '_position', $args['position']);
             }
@@ -1690,7 +1706,9 @@ if (! class_exists('PP_Custom_Status')) {
                     'color' => $color,
                     'icon' => $icon,
                 ];
+
                 $return = $this->update_custom_status($existing_status->term_id, $args);
+
                 if (is_wp_error($return)) {
                     wp_die(__('Error updating post status.', 'publishpress'));
                 }
@@ -1808,8 +1826,11 @@ if (! class_exists('PP_Custom_Status')) {
                     'position' => (int)$position + 1,
                 ];
 
-                $this->update_custom_status($term_id, $args);
-                // @todo check that this was a valid return
+                $result = $this->update_custom_status($term_id, $args);
+
+                if (is_wp_error($result)) {
+                    $this->print_ajax_response('error', $result->get_error_message());
+                }
             }
             $this->print_ajax_response('success', $this->module->messages['status-position-updated']);
         }

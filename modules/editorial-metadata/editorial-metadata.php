@@ -147,7 +147,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
                 add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
 
-                add_action('save_post', [$this, 'save_meta_box'], 10, 2);
+                add_action('transition_post_status', [$this, 'save_meta_box'], 50, 3);
             }
 
             if ($this->checkEditCapability() || $this->checkViewCapability()) {
@@ -581,25 +581,31 @@ if (! class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * Save any values in the editorial metadata post meta box
+         * Save any values in the editorial metadata post meta box.
+         * We need to receive the old_status and new_status param because of the
+         * `transition_post_status` action, since this method has to be
+         * executed before notifications are triggered. See the issue #574.
          *
-         * @param int $id Unique ID for the post being saved
+         * @param $old_status
+         * @param $new_status
          * @param object $post Post object
+         *
+         * @return mixed|void
          */
-        public function save_meta_box($id, $post)
+        public function save_meta_box($old_status, $new_status, $post)
         {
             // Authentication checks: make sure data came from our meta box and that the current user is allowed to edit the post
             // TODO: switch to using check_admin_referrer? See core (e.g. edit.php) for usage
             if (! isset($_POST[self::metadata_taxonomy . "_nonce"])
                 || ! wp_verify_nonce(sanitize_key($_POST[self::metadata_taxonomy . "_nonce"]), __FILE__)) {
-                return $id;
+                return $post->ID;
             }
 
             if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
                 || ! in_array($post->post_type, $this->get_post_types_for_module($this->module))
-                || $post->post_type == 'post' && ! current_user_can('edit_post', $id)
-                || $post->post_type == 'page' && ! current_user_can('edit_page', $id)) {
-                return $id;
+                || $post->post_type == 'post' && ! current_user_can('edit_post', $post->ID)
+                || $post->post_type == 'page' && ! current_user_can('edit_page', $post->ID)) {
+                return $post->ID;
             }
 
             // Authentication passed, let's save the data
@@ -612,13 +618,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
                 // Get the current editorial metadata
                 // TODO: do we care about the current_metadata at all?
-                //$current_metadata = get_post_meta($id, $key, true);
+                //$current_metadata = get_post_meta($post->ID, $key, true);
 
                 $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
 
                 $type = $term->type;
                 if (empty($new_metadata)) {
-                    delete_post_meta($id, $key);
+                    delete_post_meta($post->ID, $key);
                 } else {
                     // TODO: Move this to a function
                     if ($type == 'date') {
@@ -632,12 +638,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     }
 
                     $new_metadata = strip_tags($new_metadata);
-                    update_post_meta($id, $key, $new_metadata);
+                    update_post_meta($post->ID, $key, $new_metadata);
 
                     // Add the slugs of the terms with non-empty new metadata to an array
                     $term_slugs[] = $term->slug;
                 }
-                do_action('pp_editorial_metadata_field_updated', $key, $new_metadata, $id, $type);
+
+                do_action('pp_editorial_metadata_field_updated', $key, $new_metadata, $post->ID, $type);
             }
 
             // Relate the post to the terms used and taxonomy type (wp_term_relationships table).
