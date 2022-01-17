@@ -199,9 +199,7 @@ if (! class_exists('PP_Debug')) {
             // Add the timestamp to the message.
             $message = sprintf('[%s] %s', gmdate('Y-m-d H:i:s T O'), $message) . "\n";
 
-            // phpcs:disable WordPress.PHP.DevelopmentFunctions
-            error_log($message, 3, $this->path);
-            // phpcs:enable
+            error_log($message, 3, $this->path); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
         }
 
         public function admin_bar_menu()
