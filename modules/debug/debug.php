@@ -79,7 +79,7 @@ if (! class_exists('PP_Debug')) {
         }
 
         /**
-         * Initialize all of the class' functionality if its enabled
+         * Initialize all the class' functionality.
          */
         public function init()
         {
@@ -93,13 +93,12 @@ if (! class_exists('PP_Debug')) {
 
             $this->path = $uploadDir . '/' . self::FILE;
 
-            // Admin bar.
-            add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);
+            if ($this->currentUserCanSeeDebugLog()) {
+                add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);
+                add_action('admin_menu', [$this, 'admin_menu']);
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+            }
 
-            // Admin menu.
-            add_action('admin_menu', [$this, 'admin_menu']);
-
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
             add_action('publishpress_debug_write_log', [$this, 'write'], 10, 3);
 
