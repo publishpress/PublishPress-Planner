@@ -44,6 +44,8 @@ if (! class_exists('PP_Debug')) {
 
         const ACTION_DELETE_LOG = 'delete_log';
 
+        const REQUIRED_CAPABILITY = 'activate_plugins';
+
         protected $path;
 
         protected $initialized = false;
@@ -204,6 +206,10 @@ if (! class_exists('PP_Debug')) {
 
         public function admin_bar_menu()
         {
+            if (! current_user_can(self::REQUIRED_CAPABILITY)) {
+                return;
+            }
+
             global $wp_admin_bar;
 
             $args = [
@@ -224,7 +230,7 @@ if (! class_exists('PP_Debug')) {
                 $publishpress->get_menu_slug(),
                 esc_html__('Debug Log'),
                 esc_html__('Debug Log'),
-                'activate_plugins',
+                self::REQUIRED_CAPABILITY,
                 'publishpress_debug_log',
                 [$this, 'view_log_page']
             );
