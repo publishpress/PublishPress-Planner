@@ -12,7 +12,6 @@ node_modules
 /vendor
 .idea
 /dist
-builder.yml
 .editorconfig
 
 !tests/_support/.gitkeep
