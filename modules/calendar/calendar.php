@@ -989,7 +989,7 @@ if (! class_exists('PP_Calendar')) {
             $user_key = sanitize_user($_GET['user_key']);
             $ics_secret_key = $this->module->options->ics_secret_key;
             if (! $ics_secret_key || md5($user . $ics_secret_key) !== $user_key) {
-                die($this->module->messages['nonce-failed']);
+                die(esc_html($this->module->messages['nonce-failed']));
             }
 
             // Set up the post data to be printed
