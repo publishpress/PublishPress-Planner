@@ -153,6 +153,11 @@ if (! class_exists('PP_Calendar')) {
         private $postTypeObjectCache = [];
 
         /**
+         * @var \PublishPress\Utility\Date
+         */
+        private $dateUtil;
+
+        /**
          * Construct the PP_Calendar class
          */
         public function __construct()
@@ -208,6 +213,8 @@ if (! class_exists('PP_Calendar')) {
                 'options_page' => true,
                 'page_link' => admin_url('admin.php?page=pp-calendar'),
             ];
+
+            $this->dateUtil = new \PublishPress\Utility\Date();
 
             $this->module = PublishPress()->register_module('calendar', $args);
         }
@@ -829,35 +836,14 @@ if (! class_exists('PP_Calendar')) {
             exit;
         }
 
-        private function getTimezoneString()
-        {
-            $timezoneString = get_option('timezone_string');
-
-            if (empty($timezoneString)) {
-                $offset = get_option('gmt_offset');
-
-                if ($offset > 0) {
-                    $offset = '+' . $offset;
-                }
-
-                if (2 === strlen($offset)) {
-                    $offset .= ':00';
-                }
-
-                $timezoneString = new DateTimeZone($offset);
-                $timezoneString = $timezoneString->getName();
-            }
-
-            return $timezoneString;
-        }
-
         /**
          * Returns a VTIMEZONE component for a Olson timezone identifier
          * with daylight transitions covering the given date range.
          *
-         * @param string Timezone ID as used in PHP's Date functions
-         * @param int Unix timestamp with first date/time in this timezone
-         * @param int Unix timestap with last date/time in this timezone
+         * @param \Sabre\VObject\Component\VCalendar
+         * @param string $tzid Timezone ID as used in PHP's Date functions
+         * @param int $from Unix timestamp with first date/time in this timezone
+         * @param int $to Unix timestap with last date/time in this timezone
          *
          * @return mixed A Sabre\VObject\Component object representing a VTIMEZONE definition
          *               or false if no timezone information is available
@@ -892,9 +878,13 @@ if (! class_exists('PP_Calendar')) {
             $daylight = null;
             $t_std = null;
             $t_dst = null;
+            $tzfrom = 0;
 
             foreach ($transitions as $i => $trans) {
-                $cmp = null;
+                if ($i == 0) {
+                    $tzfrom = $trans['offset'] / 3600;
+                    continue;
+                }
 
                 // daylight saving time definition
                 if ($trans['isdst']) {
@@ -903,7 +893,7 @@ if (! class_exists('PP_Calendar')) {
                     $offset = $trans['offset'] / 3600;
 
                     $daylight = $vTimeZone->add(
-                        'DAYLIGHTe',
+                        'DAYLIGHT',
                         [
                             'DTSTART' => $dt->format('Ymd\THis'),
                             'TZOFFSETFROM' => sprintf(
@@ -1032,7 +1022,7 @@ if (! class_exists('PP_Calendar')) {
                 ]
             );
 
-            $timezoneString = $this->getTimezoneString();
+            $timezoneString = $this->dateUtil->getTimezoneString();
 
             $this->generateVtimezone(
                 $vCalendar,
@@ -1253,15 +1243,7 @@ if (! class_exists('PP_Calendar')) {
         {
             global $publishpress;
 
-            $this->dropdown_taxonomies = [];
-
             $supported_post_types = $this->get_post_types_for_module($this->module);
-
-            $dotw = [
-                'Sat',
-                'Sun',
-            ];
-            $dotw = apply_filters('pp_calendar_weekend_days', $dotw);
 
             // Get filters either from $_GET or from user settings
             $filters = $this->get_filters();
@@ -1270,26 +1252,7 @@ if (! class_exists('PP_Calendar')) {
             // user's standard
             $this->total_weeks = empty($filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $filters['weeks'];
 
-            // For generating the WP Query objects later on
-            $post_query_args = [
-                'post_status' => $filters['post_status'],
-                'post_type' => $filters['cpt'],
-                'cat' => $filters['cat'],
-                'tag' => $filters['tag'],
-                'author' => $filters['author'],
-            ];
             $this->start_date = $filters['start_date'];
-
-            // We use this later to label posts if they need labeling
-            if (count($supported_post_types) > 1) {
-                $all_post_types = get_post_types(null, 'objects');
-            }
-            $dates = [];
-            $heading_date = $filters['start_date'];
-            for ($i = 0; $i < 7; $i++) {
-                $dates[$i] = $heading_date;
-                $heading_date = date('Y-m-d', strtotime('+1 day', strtotime($heading_date)));
-            }
 
             // Get the custom description for this page
             $description = '';

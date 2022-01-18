@@ -96,6 +96,7 @@ if (! defined('PP_LOADED')) {
     Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
     Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/libraries/Legacy');
     Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/libraries/Notifications');
+    Auto_loader::register('PublishPress\\Utility\\', __DIR__ . '/libraries/Utility');
 
     require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
