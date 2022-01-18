@@ -297,12 +297,12 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Confirm all of the arguments are present
-            if (! isset($_GET['user'], $_GET['user_key'], $_GET['pp_action'])) {
+            if (! isset($_GET['user'], $_GET['user_key'], $_GET['pp_action'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 return $original_template;
             }
 
             // Confirm the action
-            if ('pp_calendar_ics_feed' !== $_GET['pp_action']) {
+            if ('pp_calendar_ics_feed' !== $_GET['pp_action']) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 return $original_template;
             }
 
@@ -328,10 +328,10 @@ if (! class_exists('PP_Calendar')) {
          */
         public function filter_calendar_total_weeks_public_feed($weeks, $startDate, $context)
         {
-            if (! isset($_GET['end'])) {
+            if (! isset($_GET['end'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 $end = 'm2';
             } else {
-                $end = preg_replace('/[^wm0-9]/', '', sanitize_text_field($_GET['end']));
+                $end = preg_replace('/[^wm0-9]/', '', sanitize_text_field($_GET['end'])); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
 
             if (preg_match('/m[0-9]*/', $end)) {
@@ -341,7 +341,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Calculate the diff in weeks from start date until now
-            $today = date('Y-m-d');
+            $today = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
             $first = DateTime::createFromFormat('Y-m-d', $startDate);
             $second = DateTime::createFromFormat('Y-m-d', $today);
@@ -360,15 +360,15 @@ if (! class_exists('PP_Calendar')) {
          */
         public function filter_calendar_start_date_public_feed($startDate)
         {
-            if (! isset($_GET['start'])) {
+            if (! isset($_GET['start'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 // Current week
                 $start = 0;
             } else {
-                $start = (int)$_GET['start'];
+                $start = (int)$_GET['start']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             }
 
             if ($start > 0) {
-                $startDate = date('Y-m-d', strtotime('-' . $start . ' months', strtotime($startDate)));
+                $startDate = date('Y-m-d', strtotime('-' . $start . ' months', strtotime($startDate))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             }
 
             return $startDate;
@@ -472,7 +472,7 @@ if (! class_exists('PP_Calendar')) {
             global $pagenow;
 
             // Only load calendar styles on the calendar page
-            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') {
+            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_enqueue_style(
                     'publishpress-calendar-css',
                     $this->module_url . 'lib/calendar.css',
@@ -590,7 +590,7 @@ if (! class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION
                 );
 
-                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && ! isset($_GET['stop-the-calendar'])) {
+                if (is_admin() && isset($_GET['page']) && $_GET['page'] === 'pp-calendar' && ! isset($_GET['stop-the-calendar'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     global $wp_scripts;
 
                     if (! isset($wp_scripts->queue['react'])) {
@@ -670,11 +670,11 @@ if (! class_exists('PP_Calendar')) {
                         }
                     }
 
-                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ?
-                        (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS;
+                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                        (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-                    $firstDateToDisplay = (isset($_GET['start_date']) ?
-                            sanitize_text_field($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00';
+                    $firstDateToDisplay = (isset($_GET['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                            sanitize_text_field($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
                     $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
                     $endDate = $this->get_ending_of_week(
                         $firstDateToDisplay,
@@ -687,7 +687,7 @@ if (! class_exists('PP_Calendar')) {
                         'firstDateToDisplay' => esc_js($firstDateToDisplay),
                         'theme' => 'light',
                         'weekStartsOnSunday' => (int)get_option('start_of_week') === 0,
-                        'todayDate' => esc_js(date('Y-m-d 00:00:00')),
+                        'todayDate' => esc_js(date('Y-m-d 00:00:00')), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                         'dateFormat' => esc_js(get_option('date_format', 'Y-m-d H:i:s')),
                         'timeFormat' => esc_js($this->getCalendarTimeFormat()),
                         'maxVisibleItems' => $maxVisibleItemsOption,
@@ -788,10 +788,10 @@ if (! class_exists('PP_Calendar')) {
 
             // Persist the old timestamp because we can't manipulate the exact time on the calendar
             // Bump the last modified timestamps too
-            $existing_time = date('H:i:s', strtotime($post->post_date));
-            $existing_time_gmt = date('H:i:s', strtotime($post->post_date_gmt));
+            $existing_time = date('H:i:s', strtotime($post->post_date)); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            $existing_time_gmt = date('H:i:s', strtotime($post->post_date_gmt)); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             $new_values = [
-                'post_date' => date('Y-m-d', $next_date_full) . ' ' . $existing_time,
+                'post_date' => date('Y-m-d', $next_date_full) . ' ' . $existing_time, // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                 'post_modified' => current_time('mysql'),
                 'post_modified_gmt' => current_time('mysql', 1),
             ];
@@ -800,7 +800,7 @@ if (! class_exists('PP_Calendar')) {
             // If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
             // With how WordPress works internally, setting 'post_date_gmt' will set the timestamp
             if (apply_filters('pp_calendar_allow_ajax_to_set_timestamp', true)) {
-                $new_values['post_date_gmt'] = date('Y-m-d', $next_date_full) . ' ' . $existing_time_gmt;
+                $new_values['post_date_gmt'] = date('Y-m-d', $next_date_full) . ' ' . $existing_time_gmt; // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             }
 
             // Check that it's already published, and adjust the status.
@@ -817,6 +817,7 @@ if (! class_exists('PP_Calendar')) {
             // We have to do SQL unfortunately because of core bugginess
             // Note to those reading this: bug Nacin to allow us to finish the custom status API
             // See http://core.trac.wordpress.org/ticket/18362
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $response = $wpdb->update(
                 $wpdb->posts,
                 $new_values,
@@ -971,12 +972,14 @@ if (! class_exists('PP_Calendar')) {
          */
         public function handle_ics_subscription()
         {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
+
             // Only do .ics subscriptions when the option is active
             if ('on' != $this->module->options->ics_subscription) {
                 die();
             }
 
-            // Confirm all of the arguments are present
+            // Confirm all the arguments are present
             if (! isset($_GET['user'], $_GET['user_key'])) {
                 die();
             }
@@ -1006,7 +1009,7 @@ if (! class_exists('PP_Calendar')) {
             // Set the start date for the posts_where filter
             $this->start_date = apply_filters(
                 'pp_calendar_ics_subscription_start_date',
-                $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp')))
+                $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))) // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             );
 
             $this->total_weeks = apply_filters(
@@ -1042,7 +1045,7 @@ if (! class_exists('PP_Calendar')) {
                         $start_date = new DateTime($post->post_date_gmt);
                         $start_date->setTimezone($timeZone);
 
-                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($post->post_date_gmt) + (5 * 60)));
+                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($post->post_date_gmt) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                         $end_date->setTimezone($timeZone);
 
                         $last_modified = new DateTime($post->post_modified_gmt);
@@ -1085,6 +1088,7 @@ if (! class_exists('PP_Calendar')) {
             echo $vCalendar->serialize();
 
             die();
+            // phpcs:enable
         }
 
         /**
@@ -1152,6 +1156,8 @@ if (! class_exists('PP_Calendar')) {
          */
         public function get_filters()
         {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
+
             $current_user = wp_get_current_user();
             $filters = [];
             $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
@@ -1171,9 +1177,7 @@ if (! class_exists('PP_Calendar')) {
             foreach ($old_filters as $key => $old_value) {
                 if (isset($_GET[$key]) && false !== ($new_value = $this->sanitize_filter(
                         $key,
-                        sanitize_text_field(
-                            $_GET[$key]
-                        )
+                        sanitize_text_field($_GET[$key])
                     ))) {
                     $filters[$key] = $new_value;
                 } else {
@@ -1194,6 +1198,7 @@ if (! class_exists('PP_Calendar')) {
             $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $filters);
 
             return $filters;
+            // phpcs:enable
         }
 
         /**
@@ -1241,6 +1246,7 @@ if (! class_exists('PP_Calendar')) {
          */
         public function render_admin_page()
         {
+            // phpcs:disable WordPress.Security.NonceVerification.Recommended
             global $publishpress;
 
             $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -1457,6 +1463,7 @@ if (! class_exists('PP_Calendar')) {
 
             <?php
             $publishpress->settings->print_default_footer($publishpress->modules->calendar);
+            // phpcs:enable
         }
 
         /**
