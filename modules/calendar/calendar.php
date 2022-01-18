@@ -765,6 +765,10 @@ if (! class_exists('PP_Calendar')) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
 
+            if (!isset($_POST['post_id'])) {
+                $this->print_ajax_response('error', $this->module->messages['missing-post']);
+            }
+
             // Check that we got a proper post
             $post_id = (int)$_POST['post_id'];
             $post = get_post($post_id);
@@ -775,6 +779,13 @@ if (! class_exists('PP_Calendar')) {
             // Check that the user can modify the post
             if (! $this->current_user_can_modify_post($post)) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
+            }
+
+            if (!isset($_POST['next_date'])) {
+                $this->print_ajax_response(
+                    'error',
+                    esc_html__('Something is wrong with the format for the new date.', 'publishpress')
+                );
             }
 
             // Check that the new date passed is a valid one
