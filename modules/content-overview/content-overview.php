@@ -916,7 +916,7 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
-                        echo $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
+                        $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
                     } ?>
                 </form>
 
