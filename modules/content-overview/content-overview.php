@@ -1536,17 +1536,28 @@ class PP_Content_Overview extends PP_Module
 
         global $wpdb;
 
-        $queryResult = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+        $cacheKey = 'search_authors_result_' . md5($queryText);
+        $cacheGroup = 'content_overview';
+
+        $queryResult = wp_cache_get($cacheKey, $cacheGroup);
+
+        if (false === $queryResult) {
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
                 FROM {$wpdb->posts} as p
                 INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
                 WHERE u.display_name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                '%' . $wpdb->esc_like($queryText) . '%'
-            )
-        );
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
+
+            wp_cache_set($cacheKey, $queryResult, $cacheGroup);
+        }
+
 
         echo json_encode($queryResult);
         exit;
