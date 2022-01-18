@@ -587,7 +587,8 @@ class PP_Content_Overview extends PP_Module
             ! isset(
                 $_POST['pp-content-overview-number-days'],
                 $_POST['pp-content-overview-start-date_hidden'],
-                $_POST['pp-content-overview-range-use-today']
+                $_POST['pp-content-overview-range-use-today'],
+                $_POST['nonce']
             )
             || (
                 ! isset($_POST['pp-content-overview-range-submit'])
@@ -597,8 +598,8 @@ class PP_Content_Overview extends PP_Module
             return;
         }
 
-        if (! wp_verify_nonce($_POST['nonce'], 'change-date')) {
-            wp_die($this->module->messages['nonce-failed']);
+        if (! wp_verify_nonce(sanitize_key($_POST['nonce']), 'change-date')) {
+            wp_die(esc_html($this->module->messages['nonce-failed']));
         }
 
         $current_user = wp_get_current_user();
@@ -613,7 +614,7 @@ class PP_Content_Overview extends PP_Module
         $start_date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
             ? current_time($start_date_format)
-            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
+            : date($start_date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
         $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
@@ -771,7 +772,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['start_date']) {
-            $user_filters['start_date'] = date('Y-m-d');
+            $user_filters['start_date'] = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
         if (! $user_filters['number_days']) {
@@ -872,37 +873,33 @@ class PP_Content_Overview extends PP_Module
             echo '<div id="trashed-message" class="updated"><p>';
 
             // Following mostly stolen from edit.php
-
             if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                printf(
-                    _n('Item moved to the trash.', '%d items moved to the trash.', (int)$_GET['trashed']),
-                    number_format_i18n($_GET['trashed'])
-                );
-                $ids = isset($_GET['ids']) ? $_GET['ids'] : 0;
+                $count = (int)$_GET['trashed'];
+
+                echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
+                $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                 echo ' <a href="' . esc_url(
                         wp_nonce_url(
                             "edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
                             "bulk-posts"
                         )
-                    ) . '">' . __('Undo', 'publishpress') . '</a><br />';
+                    ) . '">' . esc_html__('Undo', 'publishpress') . '</a><br />';
                 unset($_GET['trashed']);
             }
 
             if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                printf(
-                    _n(
-                        'Item restored from the Trash.',
-                        '%d items restored from the Trash.',
-                        (int)$_GET['untrashed']
-                    ),
-                    number_format_i18n($_GET['untrashed'])
-                );
+                $count = (int)$_GET['untrashed'];
+
+                echo esc_html(_n(
+                    'Item restored from the Trash.',
+                    '%d items restored from the Trash.',
+                    $count
+                ));
                 unset($_GET['undeleted']);
             }
 
             echo '</p></div>';
         }
-
         // phpcs:enable
     }
 
