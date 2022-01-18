@@ -437,7 +437,7 @@ class PP_Content_Overview extends PP_Module
         global $pagenow;
 
         // Only load calendar styles on the calendar page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             $num_columns = $this->get_num_columns();
             echo '<script type="text/javascript"> var PP_Content_Overview_number_of_columns="' . esc_js(
                     $this->num_columns
@@ -477,7 +477,7 @@ class PP_Content_Overview extends PP_Module
         global $pagenow;
 
         // Only load calendar styles on the calendar page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
@@ -654,6 +654,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function render_admin_page()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         global $publishpress;
 
         // Update the current user's filters with the variables set in $_GET
@@ -724,6 +725,7 @@ class PP_Content_Overview extends PP_Module
         <?php
 
         $publishpress->settings->print_default_footer($publishpress->modules->content_overview);
+        // phpcs:enable
     }
 
     public function get_selected_post_types()
@@ -793,13 +795,13 @@ class PP_Content_Overview extends PP_Module
     public function filter_get_param($param)
     {
         // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (! isset($_GET[$param])) {
+        if (! isset($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             return null;
-        } elseif (empty($_GET[$param])) {
+        } elseif (empty($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             return '';
         }
 
-        return sanitize_key($_GET[$param]);
+        return sanitize_key($_GET[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     }
 
     /**
@@ -865,6 +867,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_messages()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
             echo '<div id="trashed-message" class="updated"><p>';
 
@@ -899,6 +902,8 @@ class PP_Content_Overview extends PP_Module
 
             echo '</p></div>';
         }
+
+        // phpcs:enable
     }
 
     /**
@@ -906,6 +911,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function table_navigation()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         ?>
         <div class="tablenav" id="pp-content-overview-tablenav">
             <div class="alignleft actions">
@@ -923,9 +929,8 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="cat" value=""/>
                     <input type="hidden" name="author" value=""/>
                     <input type="hidden" name="orderby" value="<?php
-                    echo (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ? esc_attr(
-                        $_GET['orderby']
-                    ) : 'post_date'; ?>"/>
+                    echo (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ?
+                        esc_attr($_GET['orderby']) : 'post_date'; ?>"/>
                     <input type="hidden" name="order" value="<?php
                     echo (isset($_GET['order']) && ! empty($_GET['order'])) ? esc_attr($_GET['order']) : 'ASC'; ?>"/>
                     <?php
@@ -947,6 +952,7 @@ class PP_Content_Overview extends PP_Module
             <div class="clear"></div>
         </div><!-- /tablenav -->
         <?php
+        // phpcs:enable
     }
 
     public function content_overview_filters()
@@ -1070,6 +1076,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function printPostForPostType($term, $postType)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $order = (isset($_GET['order']) && ! empty($_GET['order'])) ? $_GET['order'] : 'ASC';
         $orderBy = (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date';
 
@@ -1161,6 +1168,7 @@ class PP_Content_Overview extends PP_Module
             </div>
         </div>
         <?php
+        // phpcs:enable
     }
 
     private function getSortableColumns()
