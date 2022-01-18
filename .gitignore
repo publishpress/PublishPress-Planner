@@ -19,5 +19,4 @@ builder.yml
 tests/_support/*
 .php_cs.cache
 .sass-cache/*
-builder.yml
 /codeception.yml
