@@ -1264,6 +1264,7 @@ if (! class_exists('PP_Calendar')) {
                     'action' => 'pp_calendar_ics_subscription',
                     'user' => wp_get_current_user()->user_login,
                     'user_key' => md5(wp_get_current_user()->user_login . $this->module->options->ics_secret_key),
+                    '_wpnonce' => wp_create_nonce('publishpress_calendar_ics_sub'),
                 ];
 
                 // Prepare the subscribe link for the feed
