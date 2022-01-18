@@ -1087,8 +1087,7 @@ class PP_Content_Overview extends PP_Module
 
         <div class="postbox<?php
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
-            <div class="handlediv" title="<?php
-            esc_attr(_e('Click to toggle', 'publishpress')); ?>">
+            <div class="handlediv" title="<?php echo esc_attr(esc_html__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
             <h3 class=\'hndle\'><span><?php
                     echo $postTypeObject->label; ?></span></h3>
