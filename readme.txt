@@ -124,6 +124,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Fixed: Fix the admin menu Debug Log that was not being displayed, #992;
+* Fixed: Fix the fatal error while exporting the calendar as ICS file, #994;
 
 = [3.6.3] - 18 Nov 2021 =
 
