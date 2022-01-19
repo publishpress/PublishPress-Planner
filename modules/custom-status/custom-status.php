@@ -1118,7 +1118,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @return object|WP_Error|false $updated_status Newly updated status object
          */
-        public function update_custom_status($status_id, $args = [])
+        private function update_custom_status($status_id, $args = [])
         {
             $old_status = $this->get_custom_status_by('id', $status_id);
             if (! $old_status || is_wp_error($old_status)) {
@@ -1195,7 +1195,7 @@ if (! class_exists('PP_Custom_Status')) {
          * Partly a wrapper for the wp_delete_term function.
          * BUT, also reassigns posts that currently have the deleted status assigned.
          */
-        public function delete_custom_status($status_id, $args = [], $reassign = '')
+        private function delete_custom_status($status_id, $args = [], $reassign = '')
         {
             global $publishpress;
             // Reassign posts to alternate status
@@ -1396,7 +1396,7 @@ if (! class_exists('PP_Custom_Status')) {
          * @param string $old_status Slug for the old status
          * @param string $new_status Slug for the new status
          */
-        public function reassign_post_status($old_status, $new_status = '')
+        private function reassign_post_status($old_status, $new_status = '')
         {
             global $wpdb;
 
@@ -1467,7 +1467,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @return bool $restricted True if restricted, false if not
          */
-        public function is_restricted_status($slug)
+        private function is_restricted_status($slug)
         {
             switch ($slug) {
                 case 'publish':

@@ -282,7 +282,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return array $supported_metadata_types All of the supported metadata
          */
-        public function get_supported_metadata_types()
+        private function get_supported_metadata_types()
         {
             $supported_metadata_types = [
                 'checkbox' => esc_html__('Checkbox', 'publishpress'),
@@ -402,7 +402,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         /**
          * Register the post metadata taxonomy
          */
-        public function register_taxonomy()
+        private function register_taxonomy()
         {
             // We need to make sure taxonomy is registered for all of the post types that support it
             $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -428,12 +428,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
             );
         }
 
-        public function getViewCapability()
+        private function getViewCapability()
         {
             return apply_filters('publishpress_view_editorial_metadata_cap', self::CAP_VIEW_METADATA);
         }
 
-        public function getEditCapability()
+        private function getEditCapability()
         {
             return apply_filters('publishpress_edit_editorial_metadata_cap', self::CAP_EDIT_METADATA);
         }
@@ -468,12 +468,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
         }
 
-        public function checkViewCapability()
+        private function checkViewCapability()
         {
             return current_user_can($this->getViewCapability());
         }
 
-        public function checkEditCapability()
+        private function checkEditCapability()
         {
             /**
              * The capability "pp_editorial_metadata_user_can_edit" is deprecated in favor of "pp_edit_editorial_metadata".
@@ -662,7 +662,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return string $postmeta_key Unique key
          */
-        public function get_postmeta_key($term)
+        private function get_postmeta_key($term)
         {
             $key = self::metadata_postmeta_key;
             $type = $term->type;
@@ -677,7 +677,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          * @param object|string|int term The term object, slug or ID for the metadata field term
          * @param int post_id The ID of the post
          */
-        public function get_postmeta_value($term, $post_id)
+        private function get_postmeta_value($term, $post_id)
         {
             if (! is_object($term)) {
                 if (is_int($term)) {
@@ -767,7 +767,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return object $term Term's object representation
          */
-        public function get_editorial_metadata_term_by($field, $value)
+        private function get_editorial_metadata_term_by($field, $value)
         {
             if (! in_array($field, ['id', 'slug', 'name'])) {
                 return false;
@@ -1000,7 +1000,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          * @since 0.7
          *
          */
-        public function update_editorial_metadata_term($term_id, $args)
+        private function update_editorial_metadata_term($term_id, $args)
         {
             $new_args = [];
             $old_term = $this->get_editorial_metadata_term_by('id', $term_id);
@@ -1042,7 +1042,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @since 0.7
          */
-        public function insert_editorial_metadata_term($args)
+        private function insert_editorial_metadata_term($args)
         {
             // Term is always added to the end of the list
             $default_position = count($this->get_editorial_metadata_terms()) + 2;
@@ -1089,7 +1089,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          * @since 0.7
          *
          */
-        public function delete_editorial_metadata_term($term_id)
+        private function delete_editorial_metadata_term($term_id)
         {
             $result = wp_delete_term($term_id, self::metadata_taxonomy);
 
@@ -1887,7 +1887,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @since   1.20.0
          */
-        public function load_input_handlers()
+        private function load_input_handlers()
         {
             $handlers_base_path = dirname(__FILE__) . '/input-handlers';
 

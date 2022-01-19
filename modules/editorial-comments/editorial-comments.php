@@ -193,7 +193,7 @@ if (! class_exists('PP_Editorial_Comments')) {
          *
          * @return int $comment_count Number of editorial comments for a post
          */
-        public function get_editorial_comment_count($id)
+        private function get_editorial_comment_count($id)
         {
             global $wpdb;
             $comment_count = $wpdb->get_var(
@@ -267,7 +267,7 @@ if (! class_exists('PP_Editorial_Comments')) {
         /**
          * Displays the main commenting form
          */
-        public function the_comment_form()
+        private function the_comment_form()
         {
             global $post; ?>
             <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;"
