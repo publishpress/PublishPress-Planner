@@ -1084,7 +1084,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @return array|WP_Error $response The Term ID and Term Taxonomy ID
          */
-        public function add_custom_status($term, $args = [])
+        private function add_custom_status($term, $args = [])
         {
             $slug = (! empty($args['slug'])) ? $args['slug'] : sanitize_title($term);
             unset($args['slug']);
