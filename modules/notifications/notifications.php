@@ -434,7 +434,7 @@ if (! class_exists('PP_Notifications')) {
          * @todo  Think of a creative way to make this work
          *
          */
-        public function is_whitelisted_functional_view($module_name = null)
+        protected function is_whitelisted_functional_view($module_name = null)
         {
             global $current_screen;
 
@@ -1086,7 +1086,7 @@ if (! class_exists('PP_Notifications')) {
             do_action('pp_send_notification_comment', $args);
         }
 
-        public function get_notification_footer($post)
+        private function get_notification_footer($post)
         {
             $body = "";
             $body .= "\r\n--------------------\r\n";
@@ -1156,7 +1156,7 @@ if (! class_exists('PP_Notifications')) {
          * @param string $message_headers . (optional ) Message headers
          * @param int $time_offset (optional ) Delay in seconds per email
          */
-        public function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1)
+        private function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1)
         {
             $recipients = (array)$recipients;
 
@@ -1265,7 +1265,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_users_to_notify($post, $users, $append = true)
+        private function post_set_users_to_notify($post, $users, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1317,7 +1317,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_roles_to_notify($post, $roles, $append = true)
+        private function post_set_roles_to_notify($post, $roles, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1363,7 +1363,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_emails_to_notify($post, $emails, $append = true)
+        private function post_set_emails_to_notify($post, $emails, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1418,7 +1418,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_users_stop_notify($post, $users)
+        private function post_set_users_stop_notify($post, $users)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1514,7 +1514,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return WP_error if insert fails, true otherwise
          */
-        public function add_term_if_not_exists($term, $taxonomy)
+        private function add_term_if_not_exists($term, $taxonomy)
         {
             if (! term_exists($term, $taxonomy)) {
                 $args = ['slug' => sanitize_title($term)];
@@ -1930,7 +1930,6 @@ if (! class_exists('PP_Notifications')) {
             $current_user = wp_get_current_user();
 
             $post_author = get_userdata($post->post_author);
-            //$duedate = $publishpress->post_metadata->get_post_meta( $post->ID, 'duedate', true );
 
             $blogname = get_option('blogname');
 

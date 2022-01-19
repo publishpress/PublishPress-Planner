@@ -450,7 +450,7 @@ if (!class_exists('PP_Module')) {
          * @todo  Think of a creative way to make this work
          *
          */
-        public function is_whitelisted_functional_view($module_name = null)
+        protected function is_whitelisted_functional_view($module_name = null)
         {
             return true;
         }

@@ -281,7 +281,7 @@ if (! class_exists('PP_Notifications_Log')) {
          *
          * @since 0.7
          */
-        public function is_whitelisted_functional_view($module_name = null)
+        protected function is_whitelisted_functional_view($module_name = null)
         {
             global $current_screen;
 
