@@ -256,7 +256,7 @@ if (! class_exists('PP_Efmigration')) {
 
         /**
          * Check if the Edit Flow plugin is installed, looking for its options.
-         * We don't check if it is activate or deactivate because we would like
+         * We don't check if it is activated or deactivated because we would like
          * to be able to recover the settings, even if the files aren't there
          * anymore.
          *
