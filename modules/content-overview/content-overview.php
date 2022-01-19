@@ -179,8 +179,8 @@ class PP_Content_Overview extends PP_Module
 
         add_action('admin_init', [$this, 'register_columns']);
 
-        add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'searchAuthors']);
-        add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'searchCategories']);
+        add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'sendJsonSearchAuthors']);
+        add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'sendJsonSearchCategories']);
 
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
@@ -1517,7 +1517,7 @@ class PP_Content_Overview extends PP_Module
         return $user_filters;
     }
 
-    public function searchAuthors()
+    public function sendJsonSearchAuthors()
     {
         if (
             (! isset($_GET['nonce']))
@@ -1543,8 +1543,7 @@ class PP_Content_Overview extends PP_Module
         $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
 
         if (! empty($results)) {
-            echo wp_json_encode($results);
-            exit;
+            wp_send_json($results);
         }
 
         global $wpdb;
@@ -1576,7 +1575,7 @@ class PP_Content_Overview extends PP_Module
         wp_send_json($queryResult);
     }
 
-    public function searchCategories()
+    public function sendJsonSearchCategories()
     {
         if (
             (! isset($_GET['nonce']))
