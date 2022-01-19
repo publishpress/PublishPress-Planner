@@ -1519,13 +1519,19 @@ class PP_Content_Overview extends PP_Module
 
     public function searchAuthors()
     {
-        header('Content-type: application/json;');
-
         if (
             (! isset($_GET['nonce']))
             || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
         ) {
-            return '[]';
+            $error = new WP_Error('0', esc_html__('Invalid nonce'));
+
+            wp_send_json_error($error, 403);
+        }
+
+        if (! $this->currentUserCanViewContentOverview()) {
+            $error = new WP_Error('0', esc_html__('Access denied'));
+
+            wp_send_json_error($error, 403);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -1567,20 +1573,24 @@ class PP_Content_Overview extends PP_Module
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 
-
-        echo wp_json_encode($queryResult);
-        exit;
+        wp_send_json($queryResult);
     }
 
     public function searchCategories()
     {
-        header('Content-type: application/json;');
-
         if (
             (! isset($_GET['nonce']))
             || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
         ) {
-            return '[]';
+            $error = new WP_Error('0', esc_html__('Invalid nonce'));
+
+            wp_send_json_error($error, 403);
+        }
+
+        if (! $this->currentUserCanViewContentOverview()) {
+            $error = new WP_Error('0', esc_html__('Access denied'));
+
+            wp_send_json_error($error, 403);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -1609,7 +1619,6 @@ class PP_Content_Overview extends PP_Module
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 
-        echo wp_json_encode($queryResult);
-        exit;
+        wp_send_json($queryResult);
     }
 }
