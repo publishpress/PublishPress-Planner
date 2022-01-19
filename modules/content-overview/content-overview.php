@@ -130,7 +130,7 @@ class PP_Content_Overview extends PP_Module
 
         // Register the module with PublishPress
         $args = [
-            'title' => __('Content Overview', 'publishpress'),
+            'title' => esc_html__('Content Overview', 'publishpress'),
             'short_description' => false,
             'extended_description' => false,
             'module_url' => $this->module_url,
@@ -254,7 +254,7 @@ class PP_Content_Overview extends PP_Module
         if (function_exists('add_screen_options_panel')) {
             add_screen_options_panel(
                 self::USERMETA_KEY_PREFIX . 'screen_columns',
-                __('Screen Layout', 'publishpress'),
+                esc_html__('Screen Layout', 'publishpress'),
                 [$this, 'print_column_prefs'],
                 self::SCREEN_ID,
                 [$this, 'save_column_prefs'],
@@ -281,7 +281,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'post_types',
-            __('Add to these post types:', 'publishpress'),
+            esc_html__('Add to these post types:', 'publishpress'),
             [$this, 'settings_post_types_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -527,11 +527,11 @@ class PP_Content_Overview extends PP_Module
     public function register_columns()
     {
         $columns = [
-            'post_title' => __('Title', 'publishpress'),
-            'post_status' => __('Status', 'publishpress'),
-            'post_author' => __('Author', 'publishpress'),
-            'post_date' => __('Post Date', 'publishpress'),
-            'post_modified' => __('Last Modified', 'publishpress'),
+            'post_title' => esc_html__('Title', 'publishpress'),
+            'post_status' => esc_html__('Status', 'publishpress'),
+            'post_author' => esc_html__('Author', 'publishpress'),
+            'post_date' => esc_html__('Post Date', 'publishpress'),
+            'post_modified' => esc_html__('Last Modified', 'publishpress'),
         ];
 
         /**
@@ -641,7 +641,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_column_prefs()
     {
-        $return_val = __('Number of Columns: ', 'publishpress');
+        $return_val = esc_html__('Number of Columns: ', 'publishpress');
 
         for ($i = 1; $i <= $this->max_num_columns; ++$i) {
             $return_val .= "<label><input type='radio' name='" . esc_attr(
@@ -857,14 +857,14 @@ class PP_Content_Overview extends PP_Module
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
-        $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
+        $output .= ' class="button button-primary hidden" value="' . esc_html__('Change', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
-        $output .= ' class="button button-secondary hidden" value="' . __('Reset', 'publishpress') . '" />';
+        $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';
         $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
-        $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
-        $output .= '<a class="change-date" href="#">' . __('Change', 'publishpress') . '</a>';
+        $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
+        $output .= '<a class="change-date" href="#">' . esc_html__('Change', 'publishpress') . '</a>';
         $output .= wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
         $output .= '</span></form>';
 
@@ -943,7 +943,7 @@ class PP_Content_Overview extends PP_Module
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
                     <input type="submit" id="post-query-clear" value="<?php
-                    echo esc_attr(esc_html__('Reset', 'publishpress')); ?>"
+                    echo esc_attr(__('Reset', 'publishpress')); ?>"
                            class="button-secondary button"/>
                 </form>
             </div><!-- /alignleft actions -->
@@ -951,7 +951,7 @@ class PP_Content_Overview extends PP_Module
             <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
                 <a href="#" id="print_link"><span
                             class="pp-icon pp-icon-print"></span>&nbsp;<?php
-                    echo esc_attr(esc_html__('Print', 'publishpress')); ?>
+                    echo esc_attr(__('Print', 'publishpress')); ?>
                 </a>
             </div>
             <div class="clear"></div>
@@ -1098,7 +1098,7 @@ class PP_Content_Overview extends PP_Module
 
         <div class="postbox<?php
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
-            <div class="handlediv" title="<?php echo esc_attr(esc_html__('Click to toggle', 'publishpress')); ?>">
+            <div class="handlediv" title="<?php echo esc_attr(__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
             <h3 class=\'hndle\'><span><?php echo esc_html($postTypeObject->label); ?></span></h3>
             <div class="inside">
@@ -1337,7 +1337,7 @@ class PP_Content_Overview extends PP_Module
             $column_value = get_post_meta($post->ID, $column_name, true);
 
             if (empty($column_value)) {
-                return '<span>' . __('None', 'publishpress') . '</span>';
+                return '<span>' . esc_html__('None', 'publishpress') . '</span>';
             }
 
             return $column_value;
@@ -1435,7 +1435,7 @@ class PP_Content_Overview extends PP_Module
 
         if ($can_edit_post) {
             $item_actions['edit'] = '<a title="' . esc_attr(
-                    __(
+                    esc_html__(
                         'Edit this post',
                         'publishpress'
                     )
@@ -1447,7 +1447,7 @@ class PP_Content_Overview extends PP_Module
 
         if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $post->ID)) {
             $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
-                    __(
+                    esc_html__(
                         'Move this item to the Trash',
                         'publishpress'
                     )
@@ -1467,7 +1467,7 @@ class PP_Content_Overview extends PP_Module
                         ),
                         $post_title
                     )
-                ) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
+                ) . '" rel="permalink">' . esc_html__('View', 'publishpress') . '</a>';
         } elseif ($can_edit_post) {
             $item_actions['previewpost'] = '<a href="' . esc_url(
                     apply_filters(
@@ -1480,7 +1480,7 @@ class PP_Content_Overview extends PP_Module
                         __('Preview &#8220;%s&#8221;', 'publishpress'),
                         $post_title
                     )
-                ) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
+                ) . '" rel="permalink">' . esc_html__('Preview', 'publishpress') . '</a>';
         }
 
         $item_actions = apply_filters('PP_Content_Overview_item_actions', $item_actions, $post->ID);
