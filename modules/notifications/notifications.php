@@ -950,53 +950,6 @@ if (! class_exists('PP_Notifications')) {
         }
 
         /**
-         * Sets users to be notified for the specified post
-         *
-         * @param int $post ID of the post
-         */
-        public function save_post_notify_users($post, $users = null)
-        {
-            if (! is_array($users)) {
-                $users = [];
-            }
-
-            // Add current user to notify list
-            $user = wp_get_current_user();
-            if ($user && apply_filters(
-                    'pp_notification_auto_subscribe_current_user',
-                    true,
-                    'subscription_action'
-                )) {
-                $users[] = $user->ID;
-            }
-
-            // Add post author to notify list
-            if (apply_filters('pp_notification_auto_subscribe_post_author', true, 'subscription_action')) {
-                $users[] = $post->post_author;
-            }
-
-            $users = array_unique(array_map('intval', $users));
-
-            $this->post_set_users_to_notify($post, $users, false);
-        }
-
-        /**
-         * Sets roles to be notified for the specified post
-         *
-         * @param int $post ID of the post
-         * @param array $roles Roles to be notified for posts
-         */
-        public function save_post_notify_roles($post, $roles = null)
-        {
-            if (! is_array($roles)) {
-                $roles = [];
-            }
-            $roles = array_map('intval', $roles);
-
-            $this->add_role_to_notify($post, $roles, false);
-        }
-
-        /**
          * Set up and send post status change a notification
          */
         public function notification_status_change($new_status, $old_status, $post)
@@ -1458,27 +1411,6 @@ if (! class_exists('PP_Notifications')) {
             } else {
                 return true;
             }
-        }
-
-        /**
-         * add_role_to_notify()
-         *
-         */
-        public function add_role_to_notify($post, $roles = 0, $append = true)
-        {
-            $post_id = (is_int($post)) ? $post : $post->ID;
-            if (! is_array($roles)) {
-                $roles = [$roles];
-            }
-
-            // make sure each role id is an integer and not a number stored as a string
-            foreach ($roles as $key => $role) {
-                $roles[$key] = intval($role);
-            }
-
-            wp_set_object_terms($post_id, $roles, $this->notify_role_taxonomy, $append);
-
-            return;
         }
 
         /**
