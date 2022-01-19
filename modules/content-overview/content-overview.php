@@ -160,8 +160,7 @@ class PP_Content_Overview extends PP_Module
     {
         $this->setDefaultCapabilities();
 
-        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
-        if (! current_user_can($view_content_overview_cap)) {
+        if (! $this->currentUserCanViewContentOverview()) {
             return;
         }
 
@@ -193,12 +192,21 @@ class PP_Content_Overview extends PP_Module
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
     }
 
+    private function getViewCapability()
+    {
+        return apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
+    }
+
+    private function currentUserCanViewContentOverview()
+    {
+        return current_user_can($this->getViewCapability());
+    }
+
     public function setDefaultCapabilities()
     {
         $role = get_role('administrator');
 
-        $view_content_overview_cap = 'pp_view_content_overview';
-        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', $view_content_overview_cap);
+        $view_content_overview_cap = $this->getViewCapability();
 
         if (! $role->has_cap($view_content_overview_cap)) {
             $role->add_cap($view_content_overview_cap);
