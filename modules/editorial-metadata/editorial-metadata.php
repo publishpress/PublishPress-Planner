@@ -256,28 +256,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * Generate <select> HTML for all of the metadata types
-         */
-        public function get_select_html($description)
-        {
-            $current_metadata_type = $description->type;
-            $metadata_types = $this->get_supported_metadata_types(); ?>
-            <select id="<?php
-            echo esc_attr(self::metadata_taxonomy); ?>'_type" name="<?php
-            echo esc_attr(self::metadata_taxonomy); ?>'_type">
-                <?php
-                foreach ($metadata_types as $metadata_type => $metadata_type_name) : ?>
-                    <option value="<?php
-                    echo esc_attr($metadata_type); ?>" <?php
-                    selected($metadata_type, $current_metadata_type); ?>><?php
-                        echo esc_html($metadata_type_name); ?></option>
-                <?php
-                endforeach; ?>
-            </select>
-            <?php
-        }
-
-        /**
          * Prepare an array of supported editorial metadata types
          *
          * @return array $supported_metadata_types All of the supported metadata
@@ -483,13 +461,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 );
         }
 
-        protected function echo_not_set_span()
-        {
-            echo '<span class="pp_editorial_metadata_not_set">';
-            esc_html_e('Not set', 'default');
-            echo '</span>';
-        }
-
         /**
          * Displays HTML output for Editorial Metadata post meta box
          *
@@ -561,23 +532,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
 
             echo "</div>";
-        }
-
-        /**
-         * Show date or datetime
-         *
-         * @param int $current_date
-         *
-         * @return string
-         * @since 0.8
-         */
-        private function show_date_or_datetime($current_date)
-        {
-            if (date('Hi', $current_date) == '0000') {
-                return date(esc_html__('M d Y', 'publishpress'), $current_date);
-            } else {
-                return date(esc_html__('M d Y H:i', 'publishpress'), $current_date);
-            }
         }
 
         /**
