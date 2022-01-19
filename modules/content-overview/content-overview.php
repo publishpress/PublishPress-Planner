@@ -1513,11 +1513,10 @@ class PP_Content_Overview extends PP_Module
     {
         header('Content-type: application/json;');
 
-        if (! isset($_GET['nonce'])) {
-            return '[]';
-        }
-
-        if (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce')) {
+        if (
+            (! isset($_GET['nonce']))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
+        ) {
             return '[]';
         }
 
@@ -1536,13 +1535,14 @@ class PP_Content_Overview extends PP_Module
 
         global $wpdb;
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
         $cacheKey = 'search_authors_result_' . md5($queryText);
         $cacheGroup = 'content_overview';
 
         $queryResult = wp_cache_get($cacheKey, $cacheGroup);
 
         if (false === $queryResult) {
+            // phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $queryResult = $wpdb->get_results(
                 $wpdb->prepare(
                     "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
@@ -1554,12 +1554,13 @@ class PP_Content_Overview extends PP_Module
                     '%' . $wpdb->esc_like($queryText) . '%'
                 )
             );
+            // phpcs:enable
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 
 
-        echo json_encode($queryResult);
+        echo wp_json_encode($queryResult);
         exit;
     }
 
@@ -1567,26 +1568,40 @@ class PP_Content_Overview extends PP_Module
     {
         header('Content-type: application/json;');
 
-        if (! wp_verify_nonce($_GET['nonce'], 'content_overview_filter_nonce')) {
+        if (
+            (! isset($_GET['nonce']))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
+        ) {
             return '[]';
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-        global $wpdb;
 
-        $queryResult = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT DISTINCT t.term_id AS id, t.name AS text
+        $cacheKey = 'search_categories_result_' . md5($queryText);
+        $cacheGroup = 'content_overview';
+
+        $queryResult = wp_cache_get($cacheKey, $cacheGroup);
+
+        if (false === $queryResult) {
+            global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
                 WHERE taxonomy = 'category' AND t.name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                '%' . $wpdb->esc_like($queryText) . '%'
-            )
-        );
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
 
-        echo json_encode($queryResult);
+            wp_cache_set($cacheKey, $queryResult, $cacheGroup);
+        }
+
+        echo wp_json_encode($queryResult);
         exit;
     }
 }
