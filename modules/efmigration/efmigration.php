@@ -414,6 +414,7 @@ if (! class_exists('PP_Efmigration')) {
             check_ajax_referer(self::NONCE_KEY);
 
             if (! current_user_can('manage_options')) {
+                // todo: Replace with WP_Error and wp_send_json_error
                 $this->accessDenied();
             }
 
