@@ -1801,9 +1801,7 @@ if (! class_exists('PP_Custom_Status')) {
          */
         public function handle_ajax_update_status_positions()
         {
-            if (! wp_verify_nonce($_POST['custom_status_sortable_nonce'], 'custom-status-sortable')) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
+            check_ajax_referer('custom-status-sortable');
 
             if (! current_user_can('manage_options')) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
