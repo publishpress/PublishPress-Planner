@@ -582,9 +582,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Save any values in the editorial metadata post meta box.
-         * We need to receive the old_status and new_status param because of the
+         *
+         * We don't use them, but we receive the old_status and new_status param because of the
          * `transition_post_status` action, since this method has to be
-         * executed before notifications are triggered. See the issue #574.
+         * executed before notifications are triggered. See issue #574.
          *
          * @param $old_status
          * @param $new_status
@@ -613,12 +614,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $term_slugs = [];
 
             foreach ($terms as $term) {
-                // Setup the key for this editorial metadata term (same as what's in $_POST)
+                // Set up the key for this editorial metadata term (same as what's in $_POST)
                 $key = $this->get_postmeta_key($term);
-
-                // Get the current editorial metadata
-                // TODO: do we care about the current_metadata at all?
-                //$current_metadata = get_post_meta($post->ID, $key, true);
 
                 $new_metadata = isset($_POST[$key]) ? $_POST[$key] : '';
 
