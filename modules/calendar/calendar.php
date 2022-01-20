@@ -2975,14 +2975,13 @@ if (! class_exists('PP_Calendar')) {
 
             $post = get_post($postId);
 
-            // Check if the user can edit the post
-            $postTypeObject = $this->getPostTypeObject($post->post_type);
-            if (! current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
-                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
-            }
-
             if (empty($post) || is_wp_error($post)) {
                 wp_send_json(['error' => __('Post not found', 'publishpress')], 404);
+            }
+
+            // Check that the user can modify the post
+            if (! $this->current_user_can_modify_post($post)) {
+                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
             }
 
             $postDate = null;
