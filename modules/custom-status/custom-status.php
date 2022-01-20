@@ -1503,9 +1503,7 @@ if (! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if (! wp_verify_nonce($_POST['_wpnonce'], 'custom-status-add-nonce')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
+            check_admin_referer('custom-status-add-nonce');
 
             // Validate and sanitize the form data
             $status_name = sanitize_text_field(trim($_POST['status_name']));
@@ -1589,7 +1587,7 @@ if (! class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Handles a POST request to edit an custom status
+         * Handles a POST request to edit a custom status
          *
          * @since 0.7
          */
@@ -1600,9 +1598,7 @@ if (! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if (! wp_verify_nonce($_POST['_wpnonce'], 'edit-status')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
+            check_admin_referer('edit-status');
 
             if (! current_user_can('manage_options')) {
                 wp_die($this->module->messages['invalid-permissions']);
@@ -1735,15 +1731,13 @@ if (! class_exists('PP_Custom_Status')) {
         public function handle_delete_custom_status()
         {
             // Check that this GET request is our GET request
-            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['_wpnonce'])
                 || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-status') {
                 return;
             }
 
             // Check for proper nonce
-            if (! wp_verify_nonce($_GET['nonce'], 'delete-status')) {
-                wp_die(__('Invalid nonce for submission.', 'publishpress'));
-            }
+            check_admin_referer('delete-status');
 
             // Only allow users with the proper caps
             if (! current_user_can('manage_options')) {
@@ -1791,7 +1785,7 @@ if (! class_exists('PP_Custom_Status')) {
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'delete-status':
-                    $args['nonce'] = wp_create_nonce($args['action']);
+                    $args['_wpnonce'] = wp_create_nonce($args['action']);
                     break;
                 default:
                     break;
@@ -1807,9 +1801,7 @@ if (! class_exists('PP_Custom_Status')) {
          */
         public function handle_ajax_update_status_positions()
         {
-            if (! wp_verify_nonce($_POST['custom_status_sortable_nonce'], 'custom-status-sortable')) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
+            check_ajax_referer('custom-status-sortable');
 
             if (! current_user_can('manage_options')) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);

@@ -253,9 +253,6 @@ if (! class_exists('PP_Calendar')) {
             add_action('admin_print_styles', [$this, 'add_admin_styles']);
             add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
-            // Ajax manipulation for the calendar
-            add_action('wp_ajax_pp_calendar_drag_and_drop', [$this, 'handle_ajax_drag_and_drop']);
-
             // Ajax insert post placeholder for a specific date
             add_action('wp_ajax_pp_insert_post', [$this, 'handle_ajax_insert_post']);
 
@@ -724,128 +721,26 @@ if (! class_exists('PP_Calendar')) {
             }
         }
 
-        /**
-         * Escape a list of options with value and text keys.
-         *
-         * @param $options
-         *
-         * @return array
-         */
-        protected function esc_array_of_options($options)
+        private function getTimezoneString()
         {
-            return array_map(
-                function($item) {
-                    $item['value'] = esc_attr($item['value']);
-                    $item['text'] = esc_html($item['text']);
+            $timezoneString = get_option('timezone_string');
 
-                    return $item;
-                },
-                $options
-            );
-        }
+            if (empty($timezoneString)) {
+                $offset = get_option('gmt_offset');
 
-        /**
-         * Handle an AJAX request from the calendar to update a post's timestamp.
-         * Notes:
-         * - For Post Time, if the post is unpublished, the change sets the publication timestamp
-         * - If the post was published or scheduled for the future, the change will change the timestamp. 'publish' posts
-         * will become scheduled if moved past today and 'future' posts will be published if moved before today
-         * - Need to respect user permissions. Editors can move all, authors can move their own, and contributors can't move at all
-         *
-         * @since 0.7
-         * @todo Check if this method is still needed
-         */
-        public function handle_ajax_drag_and_drop()
-        {
-            global $wpdb;
-
-            if (! isset($_POST['nonce'])
-                || ! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'pp-calendar-modify')
-            ) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
-
-            if (!isset($_POST['post_id'])) {
-                $this->print_ajax_response('error', $this->module->messages['missing-post']);
-            }
-
-            // Check that we got a proper post
-            $post_id = (int)$_POST['post_id'];
-            $post = get_post($post_id);
-            if (! $post) {
-                $this->print_ajax_response('error', $this->module->messages['missing-post']);
-            }
-
-            // Check that the user can modify the post
-            if (! $this->current_user_can_modify_post($post)) {
-                $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
-            }
-
-            if (!isset($_POST['next_date'])) {
-                $this->print_ajax_response(
-                    'error',
-                    esc_html__('Something is wrong with the format for the new date.', 'publishpress')
-                );
-            }
-
-            // Check that the new date passed is a valid one
-            $next_date_full = strtotime(sanitize_text_field($_POST['next_date']));
-            if (! $next_date_full) {
-                $this->print_ajax_response(
-                    'error',
-                    esc_html__('Something is wrong with the format for the new date.', 'publishpress')
-                );
-            }
-
-            // Persist the old timestamp because we can't manipulate the exact time on the calendar
-            // Bump the last modified timestamps too
-            $existing_time = date('H:i:s', strtotime($post->post_date)); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-            $existing_time_gmt = date('H:i:s', strtotime($post->post_date_gmt)); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-            $new_values = [
-                'post_date' => date('Y-m-d', $next_date_full) . ' ' . $existing_time, // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-                'post_modified' => current_time('mysql'),
-                'post_modified_gmt' => current_time('mysql', 1),
-            ];
-
-            // By default, adding a post to the calendar will set the timestamp.
-            // If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
-            // With how WordPress works internally, setting 'post_date_gmt' will set the timestamp
-            if (apply_filters('pp_calendar_allow_ajax_to_set_timestamp', true)) {
-                $new_values['post_date_gmt'] = date('Y-m-d', $next_date_full) . ' ' . $existing_time_gmt; // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-            }
-
-            // Check that it's already published, and adjust the status.
-            // If is in the past or today, set as published. If future, as scheduled.
-            $new_values['post_status'] = $post->post_status;
-            if (in_array($post->post_status, $this->published_statuses) || $post->post_status === 'future') {
-                if ($next_date_full <= time()) {
-                    $new_values['post_status'] = 'publish';
-                } else {
-                    $new_values['post_status'] = 'future';
+                if ($offset > 0) {
+                    $offset = '+' . $offset;
                 }
+
+                if (2 === strlen($offset)) {
+                    $offset .= ':00';
+                }
+
+                $timezoneString = new DateTimeZone($offset);
+                $timezoneString = $timezoneString->getName();
             }
 
-            // We have to do SQL unfortunately because of core bugginess
-            // Note to those reading this: bug Nacin to allow us to finish the custom status API
-            // See http://core.trac.wordpress.org/ticket/18362
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $response = $wpdb->update(
-                $wpdb->posts,
-                $new_values,
-                [
-                    'ID' => $post->ID,
-                ]
-            );
-            clean_post_cache($post->ID);
-            if (! $response) {
-                $this->print_ajax_response('error', $this->module->messages['update-error']);
-            }
-
-            $data = [
-                'post_status' => $new_values['post_status'],
-            ];
-            $this->print_ajax_response('success', $this->module->messages['post-date-updated'], $data);
-            exit;
+            return $timezoneString;
         }
 
         /**
@@ -3071,14 +2966,13 @@ if (! class_exists('PP_Calendar')) {
 
             $post = get_post($postId);
 
-            // Check if the user can edit the post
-            $postTypeObject = $this->getPostTypeObject($post->post_type);
-            if (! current_user_can($postTypeObject->cap->edit_post, $post->ID)) {
-                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
-            }
-
             if (empty($post) || is_wp_error($post)) {
                 wp_send_json(['error' => __('Post not found', 'publishpress')], 404);
+            }
+
+            // Check that the user can modify the post
+            if (! $this->current_user_can_modify_post($post)) {
+                wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
             }
 
             $postDate = null;

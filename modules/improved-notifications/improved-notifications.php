@@ -462,9 +462,8 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'channels_options' => $channels_options,
             ];
 
-            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $twig->render('settings_notification_channels.twig', $context);
-            // phpcs:enable
         }
 
         /**

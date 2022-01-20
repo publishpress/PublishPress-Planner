@@ -696,7 +696,7 @@ if (! class_exists('PP_Notifications_Log')) {
             $currentAction = null;
 
             if (wp_doing_ajax() || wp_doing_cron()) {
-                return false;
+                return;
             }
 
             if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
@@ -711,17 +711,15 @@ if (! class_exists('PP_Notifications_Log')) {
                 return;
             }
 
+            check_admin_referer('publishpress_notification_log_actions');
+
             $shouldRedirect = false;
 
             if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
-                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
-                // phpcs:enable
+                $ids = isset($_GET['notification_log']) ? array_map('intaval', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
-                        $id = (int)$id;
-
                         $logComment = get_comment($id);
 
                         if (! empty($logComment)) {
@@ -755,9 +753,7 @@ if (! class_exists('PP_Notifications_Log')) {
 
                 $shouldRedirect = true;
             } elseif (NotificationsLogTable::BULK_ACTION_TRY_AGAIN === $currentAction) {
-                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
-                // phpcs:enable
+                $ids = isset($_GET['notification_log']) ? array_map('intaval', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
@@ -781,6 +777,8 @@ if (! class_exists('PP_Notifications_Log')) {
                 wp_redirect(admin_url('admin.php?page=pp-notif-log'));
                 exit();
             }
+
+            return;
         }
 
         public function ajaxViewNotification()
