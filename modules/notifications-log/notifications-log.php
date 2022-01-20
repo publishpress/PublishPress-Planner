@@ -696,7 +696,7 @@ if (! class_exists('PP_Notifications_Log')) {
             $currentAction = null;
 
             if (wp_doing_ajax() || wp_doing_cron()) {
-                return false;
+                return;
             }
 
             if (isset($_REQUEST['action']) && -1 != $_REQUEST['action']) {
@@ -720,8 +720,6 @@ if (! class_exists('PP_Notifications_Log')) {
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
-                        $id = (int)$id;
-
                         $logComment = get_comment($id);
 
                         if (! empty($logComment)) {
@@ -779,6 +777,8 @@ if (! class_exists('PP_Notifications_Log')) {
                 wp_redirect(admin_url('admin.php?page=pp-notif-log'));
                 exit();
             }
+
+            return;
         }
 
         public function ajaxViewNotification()
