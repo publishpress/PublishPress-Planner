@@ -282,7 +282,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return array $supported_metadata_types All of the supported metadata
          */
-        public function get_supported_metadata_types()
+        private function get_supported_metadata_types()
         {
             $supported_metadata_types = [
                 'checkbox' => __('Checkbox', 'publishpress'),
@@ -402,7 +402,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         /**
          * Register the post metadata taxonomy
          */
-        public function register_taxonomy()
+        private function register_taxonomy()
         {
             // We need to make sure taxonomy is registered for all of the post types that support it
             $supported_post_types = $this->get_post_types_for_module($this->module);
@@ -428,17 +428,17 @@ if (! class_exists('PP_Editorial_Metadata')) {
             );
         }
 
-        public function getViewCapability()
+        private function getViewCapability()
         {
             return apply_filters('publishpress_view_editorial_metadata_cap', self::CAP_VIEW_METADATA);
         }
 
-        public function getEditCapability()
+        private function getEditCapability()
         {
             return apply_filters('publishpress_edit_editorial_metadata_cap', self::CAP_EDIT_METADATA);
         }
 
-        public function setDefaultCapabilities()
+        private function setDefaultCapabilities()
         {
             $roles = ['administrator', 'editor', 'author'];
 
@@ -659,7 +659,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return string $postmeta_key Unique key
          */
-        public function get_postmeta_key($term)
+        private function get_postmeta_key($term)
         {
             $key = self::metadata_postmeta_key;
             $type = $term->type;
@@ -674,7 +674,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          * @param object|string|int term The term object, slug or ID for the metadata field term
          * @param int post_id The ID of the post
          */
-        public function get_postmeta_value($term, $post_id)
+        private function get_postmeta_value($term, $post_id)
         {
             if (! is_object($term)) {
                 if (is_int($term)) {
