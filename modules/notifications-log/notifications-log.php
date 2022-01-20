@@ -711,6 +711,8 @@ if (! class_exists('PP_Notifications_Log')) {
                 return;
             }
 
+            check_admin_referer('publishpress_notification_log_actions');
+
             $shouldRedirect = false;
 
             if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
