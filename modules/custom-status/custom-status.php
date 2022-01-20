@@ -1503,9 +1503,7 @@ if (! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if (! wp_verify_nonce($_POST['_wpnonce'], 'custom-status-add-nonce')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
+            check_admin_referer('custom-status-add-nonce');
 
             // Validate and sanitize the form data
             $status_name = sanitize_text_field(trim($_POST['status_name']));
