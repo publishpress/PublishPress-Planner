@@ -716,9 +716,7 @@ if (! class_exists('PP_Notifications_Log')) {
             $shouldRedirect = false;
 
             if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
-                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
-                // phpcs:enable
+                $ids = isset($_GET['notification_log']) ? array_map('intVal', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
@@ -757,9 +755,7 @@ if (! class_exists('PP_Notifications_Log')) {
 
                 $shouldRedirect = true;
             } elseif (NotificationsLogTable::BULK_ACTION_TRY_AGAIN === $currentAction) {
-                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $ids = isset($_GET['notification_log']) ? (array)$_GET['notification_log'] : [];
-                // phpcs:enable
+                $ids = isset($_GET['notification_log']) ? array_map('intVal', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
