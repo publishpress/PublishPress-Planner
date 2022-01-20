@@ -553,7 +553,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 } // Done iterating through metadata terms
             }
 
-            if (current_user_can('manage_options')) {
+            if ($this->checkEditCapability()) {
                 // Make the metabox title include a link to edit the Editorial Metadata terms. Logic similar to how Core dashboard widgets work.
                 echo '<span class="postbox-title-action"><a href="' . esc_url($this->get_link()) . '">' . __(
                         'Configure'
