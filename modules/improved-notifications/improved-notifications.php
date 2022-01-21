@@ -228,7 +228,6 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function install()
         {
-            // Check if we any other workflow before create, avoiding duplicated registers
             if (false === $this->has_default_workflows()) {
                 $this->create_default_workflow_post_save();
                 $this->create_default_workflow_editorial_comment();
@@ -1084,6 +1083,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         {
             $hash = md5(maybe_serialize($meta_query));
 
+            // todo: Use WP Cache instead?
             if (! isset($this->workflows[$hash])) {
                 $postsPerPage = $this->isWPVIPEnvironment() ? 100 : -1;
 
@@ -1105,8 +1105,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
-         * Add extra fields to the user profile to allow them choose where to
-         * receive notifications per workflow.
+         * Add extra fields to the user profile for selecting where to receive notifications per workflow.
          *
          * @param WP_User $user
          */
