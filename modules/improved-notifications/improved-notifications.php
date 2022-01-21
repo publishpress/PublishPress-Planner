@@ -1180,7 +1180,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          *
          * @return array
          */
-        public function get_user_workflow_channels($user)
+        private function get_user_workflow_channels($user)
         {
             $workflows = $this->get_published_workflows();
             $channels = [];
@@ -1206,7 +1206,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             return $channels;
         }
 
-        public function get_workflow_default_channel($workflowId)
+        private function get_workflow_default_channel($workflowId)
         {
             $channels = $this->module->options->default_channels;
 
@@ -1251,7 +1251,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          *
          * @return array
          */
-        public function get_user_workflow_channel_options($user)
+        private function get_user_workflow_channel_options($user)
         {
             $workflows = $this->get_published_workflows();
             $options = [];
