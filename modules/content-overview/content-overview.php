@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Core\Ajax;
+use PublishPress\Core\Error;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -1519,19 +1521,17 @@ class PP_Content_Overview extends PP_Module
 
     public function sendJsonSearchAuthors()
     {
+        $ajax = Ajax::getInstance();
+
         if (
             (! isset($_GET['nonce']))
             || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
         ) {
-            $error = new WP_Error('0', esc_html__('Invalid nonce'));
-
-            wp_send_json_error($error, 403);
+            $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
         }
 
         if (! $this->currentUserCanViewContentOverview()) {
-            $error = new WP_Error('0', esc_html__('Access denied'));
-
-            wp_send_json_error($error, 403);
+            $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -1543,7 +1543,7 @@ class PP_Content_Overview extends PP_Module
         $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
 
         if (! empty($results)) {
-            wp_send_json($results);
+            $ajax->sendJson($results);
         }
 
         global $wpdb;
@@ -1572,24 +1572,22 @@ class PP_Content_Overview extends PP_Module
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 
-        wp_send_json($queryResult);
+        $ajax->sendJson($queryResult);
     }
 
     public function sendJsonSearchCategories()
     {
+        $ajax = Ajax::getInstance();
+
         if (
             (! isset($_GET['nonce']))
             || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
         ) {
-            $error = new WP_Error('0', esc_html__('Invalid nonce'));
-
-            wp_send_json_error($error, 403);
+            $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
         }
 
         if (! $this->currentUserCanViewContentOverview()) {
-            $error = new WP_Error('0', esc_html__('Access denied'));
-
-            wp_send_json_error($error, 403);
+            $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -1618,6 +1616,6 @@ class PP_Content_Overview extends PP_Module
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 
-        wp_send_json($queryResult);
+        $ajax->sendJson($queryResult);
     }
 }
