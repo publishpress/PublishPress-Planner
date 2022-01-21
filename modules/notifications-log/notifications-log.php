@@ -613,6 +613,10 @@ if (! class_exists('PP_Notifications_Log')) {
                 $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
             }
 
+            if (false === $this->currentUserCanReadWorkflows()) {
+                $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
+            }
+
             global $wpdb;
 
             $commentType = NotificationsLogModel::COMMENT_TYPE;
@@ -662,6 +666,10 @@ if (! class_exists('PP_Notifications_Log')) {
                     'notifications-log-admin'
                 )) {
                 $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
+            }
+
+            if (false === $this->currentUserCanReadWorkflows()) {
+                $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
             }
 
             global $wpdb;
