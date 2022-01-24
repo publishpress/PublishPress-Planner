@@ -89,7 +89,7 @@ if (! class_exists('PP_Efmigration')) {
          */
         public function init()
         {
-            if (! current_user_can('manage_options')) {
+            if (false === current_user_can('manage_options') || false === is_admin()) {
                 return;
             }
 
