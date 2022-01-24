@@ -25,7 +25,6 @@
     <exclude-pattern>/twig/*</exclude-pattern>
     <exclude-pattern>/RoboFile.php</exclude-pattern>
 
-    <rule ref="PSR12"/>
     <rule ref="WordPressVIPMinimum"/>
     <rule ref="WordPress-VIP-Go"/>
     <rule ref="VariableAnalysis"/>

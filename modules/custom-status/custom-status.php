@@ -1925,7 +1925,7 @@ if (! class_exists('PP_Custom_Status')) {
             if (isset($_GET['action'], $_GET['term-id']) && $_GET['action'] == 'edit-status'): ?>
                 <?php
                 // Check whether the term exists
-                $term_id = $_GET['term-id'];
+                $term_id = (int)$_GET['term-id'];
                 $status = $this->get_custom_status_by('id', $term_id);
                 if (! $status) {
                     echo '<div class="error"><p>' . $this->module->messages['status-missing'] . '</p></div>';
