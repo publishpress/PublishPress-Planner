@@ -517,8 +517,8 @@ if (! class_exists('PP_Calendar')) {
             $postStatuses = [];
             foreach ($this->get_post_statuses() as $status) {
                 $postStatuses[] = [
-                    'value' => $status->slug,
-                    'text' => $status->name,
+                    'value' => esc_attr($status->slug),
+                    'text' => esc_html($status->name),
                 ];
             }
 
@@ -647,7 +647,7 @@ if (! class_exists('PP_Calendar')) {
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
-                    $postStatuses = $this->esc_array_of_options($this->getPostStatusOptions());
+                    $postStatuses = $this->getPostStatusOptions();
 
                     $postTypes = [];
                     $postTypesUserCanCreate = [];
