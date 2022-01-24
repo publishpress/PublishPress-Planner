@@ -1925,7 +1925,7 @@ if (! class_exists('PP_Custom_Status')) {
             if (isset($_GET['action'], $_GET['term-id']) && $_GET['action'] == 'edit-status'): ?>
                 <?php
                 // Check whether the term exists
-                $term_id = (int)$_GET['term-id'];
+                $term_id = sanitize_text_field($_GET['term-id']);
                 $status = $this->get_custom_status_by('id', $term_id);
                 if (! $status) {
                     echo '<div class="error"><p>' . $this->module->messages['status-missing'] . '</p></div>';
@@ -1934,12 +1934,11 @@ if (! class_exists('PP_Custom_Status')) {
                 }
                 $edit_status_link = $this->get_link(['action' => 'edit-status', 'term-id' => $term_id]);
 
-                $name = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $status->name;
-                $description = (isset($_POST['description'])) ? strip_tags(
-                    stripslashes($_POST['description'])
-                ) : $status->description;
-                $color = (isset($_POST['color'])) ? stripslashes($_POST['color']) : $status->color;
-                $icon = (isset($_POST['icon'])) ? stripslashes($_POST['icon']) : $status->icon;
+                $name = (isset($_POST['name'])) ? sanitize_text_field($_POST['name']) : $status->name;
+                $description = (isset($_POST['description'])) ? sanitize_textarea_field($_POST['description'])
+                    : $status->description;
+                $color = (isset($_POST['color'])) ? sanitize_text_field($_POST['color']) : $status->color;
+                $icon = (isset($_POST['icon'])) ? sanitize_text_field($_POST['icon']) : $status->icon;
                 $icon = str_replace('dashicons|', '', $icon); ?>
 
                 <div id="ajax-response"></div>
@@ -2116,7 +2115,7 @@ if (! class_exists('PP_Custom_Status')) {
                                                id='status_name' name='status_name'
                                                value="<?php
                                                if (! empty($_POST['status_name'])) {
-                                                   echo esc_attr($_POST['status_name']);
+                                                   echo esc_attr(sanitize_text_field($_POST['status_name']));
                                                } ?>"/>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
@@ -2136,7 +2135,7 @@ if (! class_exists('PP_Custom_Status')) {
                                         <textarea cols="40" rows='5' id='status_description'
                                                   name='status_description'><?php
                                             if (! empty($_POST['status_description'])) {
-                                                echo esc_textarea($_POST['status_description']);
+                                                echo esc_textarea(sanitize_textarea_field($_POST['status_description']));
                                             } ?></textarea>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
@@ -2152,7 +2151,7 @@ if (! class_exists('PP_Custom_Status')) {
                                             _e('Color', 'publishpress'); ?></label>
 
                                         <?php
-                                        $status_color = isset($_POST['status_color']) ? $_POST['status_color'] : '';
+                                        $status_color = isset($_POST['status_color']) ? sanitize_text_field($_POST['status_color']) : '';
                                         echo $this->pp_color_picker(esc_attr($status_color), 'status_color') ?>
 
                                         <?php
@@ -2166,7 +2165,7 @@ if (! class_exists('PP_Custom_Status')) {
                                             _e('Icon', 'publishpress'); ?></label>
 
                                         <?php
-                                        $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
+                                        $status_icon = isset($_POST['icon']) ? sanitize_text_field($_POST['icon']) : 'dashicons-yes'; ?>
                                         <input class='regular-text' type='hidden' id='status_icon' name='icon'
                                                value="<?php
                                                if (isset($status_icon)) {
