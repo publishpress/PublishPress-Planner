@@ -83,9 +83,6 @@ if (! class_exists('PP_Debug')) {
          */
         public function init()
         {
-            // Register our settings
-            add_action('admin_init', [$this, 'register_settings']);
-
             $uploadDir = wp_get_upload_dir();
             if (is_array($uploadDir) && isset($uploadDir['path'])) {
                 $uploadDir = $uploadDir['path'];
@@ -93,7 +90,8 @@ if (! class_exists('PP_Debug')) {
 
             $this->path = $uploadDir . '/' . self::FILE;
 
-            if ($this->currentUserCanSeeDebugLog()) {
+            if ($this->currentUserCanSeeDebugLog() && is_admin()) {
+                add_action('admin_init', [$this, 'register_settings']);
                 add_action('admin_bar_menu', [$this, 'admin_bar_menu'], 99);
                 add_action('admin_menu', [$this, 'admin_menu']);
                 add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
