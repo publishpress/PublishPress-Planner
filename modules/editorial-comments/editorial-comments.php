@@ -84,6 +84,10 @@ if (! class_exists('PP_Editorial_Comments')) {
          */
         public function init()
         {
+            if (false === is_admin()) {
+                return;
+            }
+
             add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
