@@ -516,6 +516,10 @@ if (! class_exists('PP_Notifications_Log')) {
          */
         public function action_admin_submenu()
         {
+            if (false === $this->getReadWorkflowsCapability()) {
+                return;
+            }
+
             $publishpress = $this->get_service('publishpress');
 
             // Main Menu
