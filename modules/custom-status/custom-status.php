@@ -133,29 +133,31 @@ if (! class_exists('PP_Custom_Status')) {
             // Register custom statuses as a taxonomy
             $this->register_custom_statuses();
 
-            // Register our settings
-            add_action('admin_init', [$this, 'register_settings']);
+            if (is_admin()) {
+                // Register our settings
+                add_action('admin_init', [$this, 'register_settings']);
 
-            // Load CSS and JS resources that we probably need
-            add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
-            add_action('admin_notices', [$this, 'no_js_notice']);
-            add_action('admin_print_scripts', [$this, 'post_admin_header']);
-            add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
+                // Load CSS and JS resources that we probably need
+                add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
+                add_action('admin_notices', [$this, 'no_js_notice']);
+                add_action('admin_print_scripts', [$this, 'post_admin_header']);
+                add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
-            // Methods for handling the actions of creating, making default, and deleting post stati
-            add_action('admin_init', [$this, 'handle_add_custom_status']);
-            add_action('admin_init', [$this, 'handle_edit_custom_status']);
-            add_action('admin_init', [$this, 'handle_delete_custom_status']);
-            add_action('wp_ajax_update_status_positions', [$this, 'handle_ajax_update_status_positions']);
+                // Methods for handling the actions of creating, making default, and deleting post stati
+                add_action('admin_init', [$this, 'handle_add_custom_status']);
+                add_action('admin_init', [$this, 'handle_edit_custom_status']);
+                add_action('admin_init', [$this, 'handle_delete_custom_status']);
+                add_action('wp_ajax_update_status_positions', [$this, 'handle_ajax_update_status_positions']);
 
-            // Hook to add the status column to Manage Posts
+                // Hook to add the status column to Manage Posts
 
-            add_filter('manage_posts_columns', [$this, '_filter_manage_posts_columns']);
-            add_action('manage_posts_custom_column', [$this, '_filter_manage_posts_custom_column']);
+                add_filter('manage_posts_columns', [$this, '_filter_manage_posts_columns']);
+                add_action('manage_posts_custom_column', [$this, '_filter_manage_posts_custom_column']);
 
-            // We need these for pages (http://core.trac.wordpress.org/browser/tags/3.3.1/wp-admin/includes/class-wp-posts-list-table.php#L283)
-            add_filter('manage_pages_columns', [$this, '_filter_manage_posts_columns']);
-            add_action('manage_pages_custom_column', [$this, '_filter_manage_posts_custom_column']);
+                // We need these for pages (http://core.trac.wordpress.org/browser/tags/3.3.1/wp-admin/includes/class-wp-posts-list-table.php#L283)
+                add_filter('manage_pages_columns', [$this, '_filter_manage_posts_columns']);
+                add_action('manage_pages_custom_column', [$this, '_filter_manage_posts_custom_column']);
+            }
 
             // These seven-ish methods are temporary fixes for solving bugs in WordPress core
             add_filter('preview_post_link', [$this, 'fix_preview_link_part_one']);
