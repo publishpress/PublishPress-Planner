@@ -743,7 +743,7 @@ if (! class_exists('PP_Notifications_Log')) {
             $shouldRedirect = false;
 
             if (NotificationsLogTable::BULK_ACTION_DELETE === $currentAction) {
-                $ids = isset($_GET['notification_log']) ? array_map('intaval', (array)$_GET['notification_log']) : [];
+                $ids = isset($_GET['notification_log']) ? array_map('intval', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
@@ -780,7 +780,7 @@ if (! class_exists('PP_Notifications_Log')) {
 
                 $shouldRedirect = true;
             } elseif (NotificationsLogTable::BULK_ACTION_TRY_AGAIN === $currentAction) {
-                $ids = isset($_GET['notification_log']) ? array_map('intaval', (array)$_GET['notification_log']) : [];
+                $ids = isset($_GET['notification_log']) ? array_map('intval', (array)$_GET['notification_log']) : [];
 
                 if (! empty($ids)) {
                     foreach ($ids as $id) {
