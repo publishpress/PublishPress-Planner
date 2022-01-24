@@ -133,58 +133,60 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // Load the chain of input-type handlers.
             $this->load_input_handlers();
 
-            // Anything that needs to happen in the admin
-            add_action('admin_init', [$this, 'action_admin_init']);
+            if (is_admin()) {
+                // Anything that needs to happen in the admin
+                add_action('admin_init', [$this, 'action_admin_init']);
 
-            // Register our settings
-            add_action('admin_init', [$this, 'register_settings']);
+                // Register our settings
+                add_action('admin_init', [$this, 'register_settings']);
 
-            if ($this->checkEditCapability()) {
-                // Actions relevant to the configuration view (adding, editing, or sorting existing Editorial Metadata)
-                add_action('admin_init', [$this, 'handle_add_editorial_metadata']);
-                add_action('admin_init', [$this, 'handle_edit_editorial_metadata']);
-                add_action('admin_init', [$this, 'handle_change_editorial_metadata_visibility']);
-                add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
-                add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
+                if ($this->checkEditCapability()) {
+                    // Actions relevant to the configuration view (adding, editing, or sorting existing Editorial Metadata)
+                    add_action('admin_init', [$this, 'handle_add_editorial_metadata']);
+                    add_action('admin_init', [$this, 'handle_edit_editorial_metadata']);
+                    add_action('admin_init', [$this, 'handle_change_editorial_metadata_visibility']);
+                    add_action('admin_init', [$this, 'handle_delete_editorial_metadata']);
+                    add_action('wp_ajax_update_term_positions', [$this, 'handle_ajax_update_term_positions']);
 
-                add_action('transition_post_status', [$this, 'save_meta_box'], 50, 3);
+                    add_action('transition_post_status', [$this, 'save_meta_box'], 50, 3);
+                }
+
+                if ($this->checkEditCapability() || $this->checkViewCapability()) {
+                    add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
+
+                    // Add Editorial Metadata columns to the Manage Posts view
+                    $supported_post_types = $this->get_post_types_for_module($this->module);
+                    foreach ($supported_post_types as $post_type) {
+                        add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
+                        add_action(
+                            "manage_{$post_type}_posts_custom_column",
+                            [$this, 'action_manage_posts_custom_column'],
+                            10,
+                            2
+                        );
+                    }
+
+                    // Add Editorial Metadata to the calendar if the calendar is activated
+                    if ($this->module_enabled('calendar')) {
+                        add_filter('publishpress_calendar_get_post_data', [$this, 'filterCalendarPostData'], 10, 2);
+                    }
+
+                    // Add Editorial Metadata columns to the Content Overview if it exists
+                    if ($this->module_enabled('story_budget')) {
+                        add_filter('pp_story_budget_term_columns', [$this, 'filter_story_budget_term_columns']);
+                        // Register an action to handle this data later
+                        add_filter(
+                            'pp_story_budget_term_column_value',
+                            [$this, 'filter_story_budget_term_column_values'],
+                            10,
+                            3
+                        );
+                    }
+                }
+
+                // Load necessary scripts and stylesheets
+                add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
             }
-
-            if ($this->checkEditCapability() || $this->checkViewCapability()) {
-                add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
-
-                // Add Editorial Metadata columns to the Manage Posts view
-                $supported_post_types = $this->get_post_types_for_module($this->module);
-                foreach ($supported_post_types as $post_type) {
-                    add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
-                    add_action(
-                        "manage_{$post_type}_posts_custom_column",
-                        [$this, 'action_manage_posts_custom_column'],
-                        10,
-                        2
-                    );
-                }
-
-                // Add Editorial Metadata to the calendar if the calendar is activated
-                if ($this->module_enabled('calendar')) {
-                    add_filter('publishpress_calendar_get_post_data', [$this, 'filterCalendarPostData'], 10, 2);
-                }
-
-                // Add Editorial Metadata columns to the Content Overview if it exists
-                if ($this->module_enabled('story_budget')) {
-                    add_filter('pp_story_budget_term_columns', [$this, 'filter_story_budget_term_columns']);
-                    // Register an action to handle this data later
-                    add_filter(
-                        'pp_story_budget_term_column_value',
-                        [$this, 'filter_story_budget_term_column_values'],
-                        10,
-                        3
-                    );
-                }
-            }
-
-            // Load necessary scripts and stylesheets
-            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
         }
 
         /**
