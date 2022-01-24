@@ -134,7 +134,7 @@ if (! class_exists('PP_Modules_Settings')) {
         {
             if (! isset($_POST['_wpnonce'])
                 || ! wp_verify_nonce(
-                    sanitize_text_field($_POST['_wpnonce']),
+                    sanitize_key($_POST['_wpnonce']),
                     'edit-publishpress-settings'
                 )
             ) {

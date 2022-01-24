@@ -183,11 +183,11 @@ if (! class_exists('PP_Settings')) {
 
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
-                $message = $_GET['message'];
+                $message = sanitize_text_field($_GET['message']);
             } elseif (isset($_REQUEST['message'])) {
-                $message = $_REQUEST['message'];
+                $message = sanitize_text_field($_REQUEST['message']);
             } elseif (isset($_POST['message'])) {
-                $message = $_POST['message'];
+                $message = sanitize_text_field($_POST['message']);
             } else {
                 $message = false;
             }
@@ -198,11 +198,11 @@ if (! class_exists('PP_Settings')) {
 
             // If there's been an error, let's display it
             if (isset($_GET['error'])) {
-                $error = $_GET['error'];
+                $error = sanitize_text_field($_GET['error']);
             } elseif (isset($_REQUEST['error'])) {
-                $error = $_REQUEST['error'];
+                $error = sanitize_text_field($_REQUEST['error']);
             } elseif (isset($_POST['error'])) {
-                $error = $_POST['error'];
+                $error = sanitize_text_field($_POST['error']);
             } else {
                 $error = false;
             }
@@ -396,7 +396,7 @@ if (! class_exists('PP_Settings')) {
                 return false;
             }
 
-            if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'edit-publishpress-settings')) {
+            if (!current_user_can('manage_options') || !wp_verify_nonce(sanitize_key($_POST['_wpnonce']), 'edit-publishpress-settings')) {
                 wp_die(__('Cheatin&#8217; uh?'));
             }
 
@@ -441,17 +441,17 @@ if (! class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? $_GET['settings_module'] : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
 
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
-                $message = $_GET['message'];
+                $message = sanitize_text_field($_GET['message']);
             } elseif (isset($_REQUEST['message'])) {
-                $message = $_REQUEST['message'];
+                $message = sanitize_text_field($_REQUEST['message']);
             } elseif (isset($_POST['message'])) {
-                $message = $_POST['message'];
+                $message = sanitize_text_field($_POST['message']);
             } else {
                 $message = false;
             }
@@ -461,11 +461,11 @@ if (! class_exists('PP_Settings')) {
 
             // If there's been an error, let's display it
             if (isset($_GET['error'])) {
-                $error = $_GET['error'];
+                $error = sanitize_text_field($_GET['error']);
             } elseif (isset($_REQUEST['error'])) {
-                $error = $_REQUEST['error'];
+                $error = sanitize_text_field($_REQUEST['error']);
             } elseif (isset($_POST['error'])) {
-                $error = $_POST['error'];
+                $error = sanitize_text_field($_POST['error']);
             } else {
                 $error = false;
             }

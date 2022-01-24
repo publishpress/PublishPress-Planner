@@ -427,7 +427,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(
@@ -560,7 +560,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(
@@ -616,7 +616,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             }
 
             // Verify that comment was actually entered
-            $comment_content = esc_html(trim($_POST['content']));
+            $comment_content = trim(sanitize_text_field($_POST['content']));
             if (! $comment_content) {
                 wp_die(
                     esc_html__("Please enter a comment.", 'publishpress'),
@@ -688,7 +688,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(

@@ -783,7 +783,7 @@ if (! class_exists('PP_Notifications')) {
         public function action_save_post($postId)
         {
             if (! isset($_POST['pp_notifications_nonce']) || ! wp_verify_nonce(
-                    $_POST['pp_notifications_nonce'],
+                    sanitize_text_field($_POST['pp_notifications_nonce']),
                     'save_roles'
                 )) {
                 return;
@@ -857,7 +857,7 @@ if (! class_exists('PP_Notifications')) {
         public function handle_user_post_subscription()
         {
             if (! isset($_GET['_wpnonce'])
-                || ! wp_verify_nonce($_GET['_wpnonce'], 'pp_notifications_user_post_subscription')
+                || ! wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'pp_notifications_user_post_subscription')
             ) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }

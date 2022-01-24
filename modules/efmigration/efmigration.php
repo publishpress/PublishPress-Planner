@@ -337,7 +337,7 @@ if (! class_exists('PP_Efmigration')) {
             ];
 
             // Get and validate the step
-            $step = $_POST['step'];
+            $step = sanitize_text_field($_POST['step']);
             if (! in_array($step, $allowedSteps)) {
                 $result->error = __('Unknown step', self::PLUGIN_NAMESPACE);
             }
