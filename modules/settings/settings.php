@@ -78,15 +78,17 @@ if (! class_exists('PP_Settings')) {
          */
         public function init()
         {
-            add_action('admin_init', [$this, 'helper_settings_validate_and_save'], 100);
+            if (is_admin()) {
+                add_action('admin_init', [$this, 'helper_settings_validate_and_save'], 100);
 
-            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 990);
-            add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 990);
-            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 990);
+                add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 990);
+                add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 990);
+                add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 990);
 
-            add_action('admin_print_styles', [$this, 'action_admin_print_styles']);
-            add_action('admin_print_scripts', [$this, 'action_admin_print_scripts']);
-            add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
+                add_action('admin_print_styles', [$this, 'action_admin_print_styles']);
+                add_action('admin_print_scripts', [$this, 'action_admin_print_scripts']);
+                add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
+            }
         }
 
         /**

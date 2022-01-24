@@ -68,8 +68,10 @@ if (! class_exists('PP_Modules_Settings')) {
          */
         public function init()
         {
-            add_action('admin_init', [$this, 'register_settings']);
-            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            if (is_admin()) {
+                add_action('admin_init', [$this, 'register_settings']);
+                add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            }
         }
 
         /**
