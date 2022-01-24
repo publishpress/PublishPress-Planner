@@ -237,50 +237,52 @@ if (! class_exists('PP_Calendar')) {
                 return false;
             }
 
-            // Menu
-            add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug']);
-            add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page']);
-            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu']);
+            if (is_admin()) {
+                // Menu
+                add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug']);
+                add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page']);
+                add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu']);
 
-            // .ics calendar subscriptions
-            add_action('wp_ajax_pp_calendar_ics_subscription', [$this, 'handle_ics_subscription']);
-            add_action('wp_ajax_nopriv_pp_calendar_ics_subscription', [$this, 'handle_ics_subscription']);
+                // .ics calendar subscriptions
+                add_action('wp_ajax_pp_calendar_ics_subscription', [$this, 'handle_ics_subscription']);
+                add_action('wp_ajax_nopriv_pp_calendar_ics_subscription', [$this, 'handle_ics_subscription']);
 
-            // Define the create-post capability
-            $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
+                // Define the create-post capability
+                $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
 
-            require_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
+                require_once PUBLISHPRESS_BASE_PATH . '/common/php/' . 'screen-options.php';
 
-            add_action('admin_init', [$this, 'register_settings']);
-            add_action('admin_print_styles', [$this, 'add_admin_styles']);
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+                add_action('admin_init', [$this, 'register_settings']);
+                add_action('admin_print_styles', [$this, 'add_admin_styles']);
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 
-            // Ajax insert post placeholder for a specific date
-            add_action('wp_ajax_pp_insert_post', [$this, 'handle_ajax_insert_post']);
+                // Ajax insert post placeholder for a specific date
+                add_action('wp_ajax_pp_insert_post', [$this, 'handle_ajax_insert_post']);
 
-            add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
-            add_action('wp_ajax_publishpress_calendar_search_terms', [$this, 'searchTerms']);
-            add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
-            add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
-            add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
-            add_action('wp_ajax_publishpress_calendar_get_post_type_fields', [$this, 'getPostTypeFields']);
-            add_action('wp_ajax_publishpress_calendar_create_item', [$this, 'createItem']);
+                add_action('wp_ajax_publishpress_calendar_search_authors', [$this, 'searchAuthors']);
+                add_action('wp_ajax_publishpress_calendar_search_terms', [$this, 'searchTerms']);
+                add_action('wp_ajax_publishpress_calendar_get_data', [$this, 'fetchCalendarDataJson']);
+                add_action('wp_ajax_publishpress_calendar_move_item', [$this, 'moveCalendarItemToNewDate']);
+                add_action('wp_ajax_publishpress_calendar_get_post_data', [$this, 'getPostData']);
+                add_action('wp_ajax_publishpress_calendar_get_post_type_fields', [$this, 'getPostTypeFields']);
+                add_action('wp_ajax_publishpress_calendar_create_item', [$this, 'createItem']);
+
+                // Action to regenerate the calendar feed secret
+                add_action('admin_init', [$this, 'handle_regenerate_calendar_feed_secret']);
+
+                add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
+
+                add_filter('pp_calendar_after_form_submission_sanitize_title', [$this, 'sanitize_text_input'], 10, 1);
+                add_filter('pp_calendar_after_form_submission_sanitize_content', [$this, 'sanitize_text_input'], 10, 1);
+                add_filter('pp_calendar_after_form_submission_sanitize_author', [$this, 'sanitize_author_input'], 10, 1);
+                add_filter('pp_calendar_after_form_submission_validate_author', [$this, 'validateAuthorForPost'], 10, 1);
+            }
 
             // Clear li cache for a post when post cache is cleared
             add_action('clean_post_cache', [$this, 'action_clean_li_html_cache']);
 
-            // Action to regenerate the calendar feed secret
-            add_action('admin_init', [$this, 'handle_regenerate_calendar_feed_secret']);
-
-            add_filter('post_date_column_status', [$this, 'filter_post_date_column_status'], 12, 4);
-
             // Cache WordPress default date/time formats.
             $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
-
-            add_filter('pp_calendar_after_form_submission_sanitize_title', [$this, 'sanitize_text_input'], 10, 1);
-            add_filter('pp_calendar_after_form_submission_sanitize_content', [$this, 'sanitize_text_input'], 10, 1);
-            add_filter('pp_calendar_after_form_submission_sanitize_author', [$this, 'sanitize_author_input'], 10, 1);
-            add_filter('pp_calendar_after_form_submission_validate_author', [$this, 'validateAuthorForPost'], 10, 1);
         }
 
         /**
