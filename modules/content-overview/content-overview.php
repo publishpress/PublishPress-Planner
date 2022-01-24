@@ -160,6 +160,10 @@ class PP_Content_Overview extends PP_Module
      */
     public function init()
     {
+        if (false === is_admin()) {
+            return;
+        }
+
         $this->setDefaultCapabilities();
 
         if (! $this->currentUserCanViewContentOverview()) {
