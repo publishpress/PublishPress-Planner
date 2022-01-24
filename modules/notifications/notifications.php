@@ -120,8 +120,38 @@ if (! class_exists('PP_Notifications')) {
                 $this->edit_post_subscriptions_cap
             );
 
-            // Set up metabox and related actions
-            add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
+            if (is_admin()) {
+                // Set up metabox and related actions
+                add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
+
+                add_action('admin_init', [$this, 'register_settings']);
+
+                // Javascript and CSS if we need it
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_styles']);
+
+                // Add a "Notify" link to posts
+                if (apply_filters('pp_notifications_show_notify_link', true)) {
+                    // A little extra JS for the Notify button
+                    add_action('admin_head', [$this, 'action_admin_head_notify_js']);
+                    // Manage Posts
+                    add_filter('post_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    add_filter('page_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    // Calendar and Content Overview
+                    add_filter('pp_calendar_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    add_filter('pp_story_budget_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                }
+
+                add_filter(
+                    'publishpress_calendar_get_post_data',
+                    [$this, 'filterCalendarGetPostData'],
+                    10,
+                    2
+                );
+
+                // Ajax for saving notification updates
+                add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
+            }
 
             // Saving post actions
             // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure role data
@@ -132,27 +162,6 @@ if (! class_exists('PP_Notifications')) {
                 PP_NOTIFICATION_PRIORITY_STATUS_CHANGE,
                 3
             );
-            add_action('pp_post_insert_editorial_comment', [$this, 'notification_comment']);
-            add_action('delete_user', [$this, 'delete_user_action']);
-            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 4);
-
-            add_action('admin_init', [$this, 'register_settings']);
-
-            // Javascript and CSS if we need it
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_styles']);
-
-            // Add a "Notify" link to posts
-            if (apply_filters('pp_notifications_show_notify_link', true)) {
-                // A little extra JS for the Notify button
-                add_action('admin_head', [$this, 'action_admin_head_notify_js']);
-                // Manage Posts
-                add_filter('post_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                add_filter('page_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                // Calendar and Content Overview
-                add_filter('pp_calendar_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                add_filter('pp_story_budget_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
-            }
 
             add_filter(
                 'pp_notification_auto_subscribe_post_author',
@@ -167,17 +176,11 @@ if (! class_exists('PP_Notifications')) {
                 2
             );
 
-            add_filter(
-                'publishpress_calendar_get_post_data',
-                [$this, 'filterCalendarGetPostData'],
-                10,
-                2
-            );
+            add_action('pp_post_insert_editorial_comment', [$this, 'notification_comment']);
+            add_action('delete_user', [$this, 'delete_user_action']);
+            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 4);
 
             add_action('save_post', [$this, 'action_save_post'], 10);
-
-            // Ajax for saving notification updates
-            add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
 
             add_action('pp_send_notification_status_update', [$this, 'send_notification_status_update']);
             add_action('pp_send_notification_comment', [$this, 'send_notification_comment']);
