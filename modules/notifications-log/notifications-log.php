@@ -158,8 +158,18 @@ if (! class_exists('PP_Notifications_Log')) {
          */
         public function init()
         {
-            add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
-            add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
+            if (is_admin()) {
+                add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
+                add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
+                add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
+
+                add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);
+                add_action('wp_ajax_publishpress_search_post', [$this, 'ajaxSearchPost']);
+                add_action('wp_ajax_publishpress_search_workflow', [$this, 'ajaxSearchWorkflow']);
+                add_action('wp_ajax_publishpress_view_notification', [$this, 'ajaxViewNotification']);
+                add_action('admin_init', [$this, 'processLogTableActions']);
+            }
+
             add_action('publishpress_notif_notification_sending', [$this, 'actionNotificationSending'], 10, 7);
             add_action(
                 'publishpress_notifications_skipped_duplicated',
@@ -167,15 +177,10 @@ if (! class_exists('PP_Notifications_Log')) {
                 10,
                 6
             );
+
             add_filter('publishpress_notifications_scheduled_data', [$this, 'registerAsyncNotificationLogAndAddLogId']);
             add_action('publishpress_notifications_scheduled_cron_task', [$this, 'registerCronIdToLog'], 10, 2);
             add_action('publishpress_notifications_async_notification_sent', [$this, 'removeAsyncNotificationLog']);
-            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
-            add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);
-            add_action('wp_ajax_publishpress_search_post', [$this, 'ajaxSearchPost']);
-            add_action('wp_ajax_publishpress_search_workflow', [$this, 'ajaxSearchWorkflow']);
-            add_action('wp_ajax_publishpress_view_notification', [$this, 'ajaxViewNotification']);
-            add_action('admin_init', [$this, 'processLogTableActions']);
 
             if (class_exists('WP_Cli')) {
                 new CliHandler();
