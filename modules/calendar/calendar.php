@@ -228,7 +228,9 @@ if (! class_exists('PP_Calendar')) {
         {
             add_action('template_include', [$this, 'handle_public_calendar_feed']);
 
-            $this->setDefaultCapabilities();
+            if (is_admin()) {
+                $this->setDefaultCapabilities();
+            }
 
             // Can view the calendar?
             if (! $this->currentUserCanViewCalendar()) {
