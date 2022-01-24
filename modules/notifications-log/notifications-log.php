@@ -367,9 +367,7 @@ if (! class_exists('PP_Notifications_Log')) {
                 $comment = get_comment($params['log_id']);
                 $log = new NotificationsLogModel($comment);
 
-                if (is_object($log)) {
-                    $log->archive();
-                }
+                $log->archive();
             }
         }
 
