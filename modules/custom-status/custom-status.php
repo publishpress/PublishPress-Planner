@@ -1406,7 +1406,7 @@ if (! class_exists('PP_Custom_Status')) {
                 $new_status = self::DEFAULT_STATUS;
             }
 
-            // Make the database call
+            // todo: Why the query argument is %s?
             $result = $wpdb->update(
                 $wpdb->posts,
                 ['post_status' => $new_status],
