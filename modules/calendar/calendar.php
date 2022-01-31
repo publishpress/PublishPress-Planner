@@ -917,16 +917,20 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Set the start date for the posts_where filter
-            $this->start_date = apply_filters(
-                'pp_calendar_ics_subscription_start_date',
-                $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))) // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            $this->start_date = sanitize_text_field(
+                apply_filters(
+                    'pp_calendar_ics_subscription_start_date',
+                    $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))) // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                )
             );
 
-            $this->total_weeks = apply_filters(
-                'pp_calendar_total_weeks',
-                $this->total_weeks,
-                $this->start_date,
-                'ics_subscription'
+            $this->total_weeks = sanitize_text_field(
+                apply_filters(
+                    'pp_calendar_total_weeks',
+                    $this->total_weeks,
+                    $this->start_date,
+                    'ics_subscription'
+                )
             );
 
             $vCalendar = new Sabre\VObject\Component\VCalendar(
