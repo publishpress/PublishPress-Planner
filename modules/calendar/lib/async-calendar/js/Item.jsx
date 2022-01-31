@@ -11,7 +11,7 @@ export default function Item(props) {
     const calendarItem = React.useRef(null);
 
     const getHourString = () => {
-        let timestampDate = new Date(Date.parse(props.timestamp));
+        let timestampDate = new Date(props.timestamp.replace(/-/g, "/"));
 
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
