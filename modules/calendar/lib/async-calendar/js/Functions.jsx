@@ -181,3 +181,8 @@ export function getTodayMidnight() {
 
     return today;
 }
+
+export function getDateInstanceFromString(dateString) {
+    // The "-" char is replaced to make it compatible to Safari browser. Issue #1001.
+    return new Date(String(dateString).replace(/-/g, "/"));
+}

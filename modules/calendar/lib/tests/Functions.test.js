@@ -401,3 +401,14 @@ test('getDateWithNoTimezoneOffset', () => {
     expect(date.getMinutes()).toStrictEqual(0);
     expect(date.getSeconds()).toStrictEqual(0);
 })
+
+test('getDateInstanceFromString', () => {
+    const date = getDateInstanceFromString('2021-06-03');
+
+    expect(date.getFullYear()).toStrictEqual(2021);
+    expect(date.getMonth()).toStrictEqual(5);
+    expect(date.getDate()).toStrictEqual(3);
+    expect(date.getHours()).toStrictEqual(0);
+    expect(date.getMinutes()).toStrictEqual(0);
+    expect(date.getSeconds()).toStrictEqual(0);
+})
