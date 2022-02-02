@@ -89,7 +89,7 @@ if (! class_exists('PP_Efmigration')) {
          */
         public function init()
         {
-            if (! current_user_can('manage_options')) {
+            if (false === current_user_can('manage_options') || false === is_admin()) {
                 return;
             }
 
@@ -256,7 +256,7 @@ if (! class_exists('PP_Efmigration')) {
 
         /**
          * Check if the Edit Flow plugin is installed, looking for its options.
-         * We don't check if it is activate or deactivate because we would like
+         * We don't check if it is activated or deactivated because we would like
          * to be able to recover the settings, even if the files aren't there
          * anymore.
          *
@@ -337,7 +337,7 @@ if (! class_exists('PP_Efmigration')) {
             ];
 
             // Get and validate the step
-            $step = $_POST['step'];
+            $step = sanitize_text_field($_POST['step']);
             if (! in_array($step, $allowedSteps)) {
                 $result->error = __('Unknown step', self::PLUGIN_NAMESPACE);
             }
@@ -414,6 +414,7 @@ if (! class_exists('PP_Efmigration')) {
             check_ajax_referer(self::NONCE_KEY);
 
             if (! current_user_can('manage_options')) {
+                // todo: Replace with WP_Error and wp_send_json_error
                 $this->accessDenied();
             }
 

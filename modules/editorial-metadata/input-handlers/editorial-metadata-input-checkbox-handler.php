@@ -46,8 +46,8 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
                     value="1"
                     %s
                 />',
-                $input_name,
-                $input_name,
+                esc_attr($input_name),
+                esc_attr($input_name),
                 checked($value, 1, false)
             );
         }
@@ -68,16 +68,18 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             if (mb_strlen((string)$value) > 0) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
                     (empty($value)
-                        ? __('No', 'publishpress-editorial-metadata')
-                        : __('Yes', 'publishpress-editorial-metadata')
+                        ? esc_html__('No', 'publishpress-editorial-metadata')
+                        : esc_html__('Yes', 'publishpress-editorial-metadata')
                     )
                 );
             } else {
@@ -87,12 +89,12 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
             printf(
                 '<input
                     type="hidden"
-                    id="%s"
+                    id="%1$s"
                     name="%1$s"
                     value="%2$s"
                 />',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_attr($value)
             );
         }
 
@@ -109,8 +111,8 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
         public static function getMetaValueHtml($value = null)
         {
             return $value
-                ? __('Yes', 'publishpress')
-                : __('No', 'publishpress');
+                ? esc_html__('Yes', 'publishpress')
+                : esc_html__('No', 'publishpress');
         }
     }
 }

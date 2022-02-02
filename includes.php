@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (! defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.6.3');
+    define('PUBLISHPRESS_VERSION', '3.7.0');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
@@ -96,6 +96,7 @@ if (! defined('PP_LOADED')) {
     Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
     Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/libraries/Legacy');
     Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/libraries/Notifications');
+    Auto_loader::register('PublishPress\\Utility\\', __DIR__ . '/libraries/Utility');
 
     require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 

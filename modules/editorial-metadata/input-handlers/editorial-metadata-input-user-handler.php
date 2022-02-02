@@ -33,9 +33,11 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             $user_dropdown_args = [
                 'show_option_all' => self::getOptionShowAll(),
@@ -57,7 +59,7 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
          */
         protected static function getOptionShowAll()
         {
-            return __('-- Select a user --', 'publishpress');
+            return esc_html('-- Select a user --', 'publishpress');
         }
 
         /**
@@ -76,15 +78,17 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             $user = get_user_by('ID', $value);
             if (is_object($user)) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
-                    $user->user_nicename
+                    esc_html($user->user_nicename)
                 );
             } else {
                 self::renderValuePlaceholder();
@@ -97,8 +101,8 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
                     name="%1$s"
                     value="%2$s"
                 />',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_attr($value)
             );
         }
 

@@ -70,7 +70,10 @@ class Post_Type extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type'])) {
             $values = [];
         } else {
-            $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type'];
+            $values = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_type']
+            );
         }
 
         $this->update_metadata_array($id, static::META_KEY_POST_TYPE, $values);

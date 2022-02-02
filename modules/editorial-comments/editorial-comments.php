@@ -84,6 +84,10 @@ if (! class_exists('PP_Editorial_Comments')) {
          */
         public function init()
         {
+            if (false === is_admin()) {
+                return;
+            }
+
             add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
             add_action('admin_init', [$this, 'register_settings']);
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
@@ -193,7 +197,7 @@ if (! class_exists('PP_Editorial_Comments')) {
          *
          * @return int $comment_count Number of editorial comments for a post
          */
-        public function get_editorial_comment_count($id)
+        private function get_editorial_comment_count($id)
         {
             global $wpdb;
             $comment_count = $wpdb->get_var(
@@ -267,7 +271,7 @@ if (! class_exists('PP_Editorial_Comments')) {
         /**
          * Displays the main commenting form
          */
-        public function the_comment_form()
+        private function the_comment_form()
         {
             global $post; ?>
             <a href="#" id="pp-comment_respond" onclick="editorialCommentReply.open();return false;"
@@ -427,7 +431,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(
@@ -560,7 +564,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(
@@ -616,7 +620,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             }
 
             // Verify that comment was actually entered
-            $comment_content = esc_html(trim($_POST['content']));
+            $comment_content = trim(sanitize_text_field($_POST['content']));
             if (! $comment_content) {
                 wp_die(
                     esc_html__("Please enter a comment.", 'publishpress'),
@@ -688,7 +692,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             // Verify nonce
             if (! isset($_POST['_nonce'])
-                || ! wp_verify_nonce($_POST['_nonce'], 'comment')
+                || ! wp_verify_nonce(sanitize_key($_POST['_nonce']), 'comment')
             ) {
                 wp_die(
                     esc_html__(

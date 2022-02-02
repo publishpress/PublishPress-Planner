@@ -2,7 +2,7 @@ import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import MessageBar from "./MessageBar";
 import DayCell from "./DayCell";
-import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat} from "./Functions";
+import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat, getDateInstanceFromString} from "./Functions";
 import FilterBar from "./FilterBar";
 import ItemFormPopup from "./ItemFormPopup";
 
@@ -88,7 +88,7 @@ export default function AsyncCalendar(props) {
         }
 
         if (filterPostType) {
-            dataUrl += '&post_author=' + filterPostType;
+            dataUrl += '&post_type=' + filterPostType;
         }
 
         if (filterWeeks) {
@@ -194,7 +194,7 @@ export default function AsyncCalendar(props) {
     const handleOnDropItemCallback = (event, ui) => {
         const $dayCell = $(event.target);
         const $item = $(ui.draggable[0]);
-        const dateTime = getDateAsStringInWpFormat(new Date($item.data('datetime')));
+        const dateTime = getDateAsStringInWpFormat(getDateInstanceFromString($item.data('datetime')));
 
         $(event.target).addClass('publishpress-calendar-loading');
 
@@ -266,7 +266,7 @@ export default function AsyncCalendar(props) {
     }
 
     const getCellDate = (cell) => {
-        let date = new Date(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
+        let date = getDateInstanceFromString(cell.data('year') + '-' + cell.data('month') + '-' + cell.data('day'));
 
         // Compensate the timezone for returning the correct date
         if (date.getHours() > 0) {

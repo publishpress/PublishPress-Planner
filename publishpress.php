@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.6.3
+ * Version: 3.7.0
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -379,6 +379,26 @@ if (! class_exists('publishpress')) {
          */
         public function filterDebugInformation($debugInfo)
         {
+            $constDisableWpCron = 'undefined';
+            if (defined('DISABLE_WP_CRON')) {
+                $constDisableWpCron = DISABLE_WP_CRON;
+            }
+
+            $constWpDebug = 'undefined';
+            if (defined('WP_DEBUG')) {
+                $constWpDebug = WP_DEBUG;
+            }
+
+            $constWpDebugLog = 'undefined';
+            if (defined('WP_DEBUG_LOG')) {
+                $constWpDebugLog = WP_DEBUG_LOG;
+            }
+
+            $constWpDisplay = 'undefined';
+            if (defined('WP_DEBUG_DISPLAY')) {
+                $constWpDisplay = WP_DEBUG_DISPLAY;
+            }
+
             $debugInfo['publishpress'] = [
                 'label' => 'PublishPress',
                 'description' => '',
@@ -415,6 +435,22 @@ if (! class_exists('publishpress')) {
                     'WP_CONTENT_URL' => [
                         'label' => __('WP_CONTENT_URL'),
                         'value' => WP_CONTENT_URL,
+                    ],
+                    'DISABLE_WP_CRON' => [
+                        'label' => __('DISABLE_WP_CRON'),
+                        'value' => $constDisableWpCron,
+                    ],
+                    'WP_DEBUG' => [
+                        'label' => __('WP_DEBUG'),
+                        'value' => $constWpDebug,
+                    ],
+                    'WP_DEBUG_LOG' => [
+                        'label' => __('WP_DEBUG_LOG'),
+                        'value' => $constWpDebugLog,
+                    ],
+                    'WP_DEBUG_DISPLAY' => [
+                        'label' => __('WP_DEBUG_DISPLAY'),
+                        'value' => $constWpDisplay,
                     ],
                     'option::date_format' => [
                         'label' => __('WP Date Format'),
@@ -1058,7 +1094,7 @@ if (! class_exists('publishpress')) {
                 return sanitize_key($_REQUEST['post_type']);
             } elseif (isset($_REQUEST['post'])) {
                 // Lastly check if post ID is in query string.
-                return get_post_type($_REQUEST['post']);
+                return get_post_type((int)$_REQUEST['post']);
             } elseif ($pagenow === 'edit.php') {
                 // The edit page without post_type param is always "post".
                 return 'post';

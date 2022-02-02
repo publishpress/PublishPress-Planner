@@ -167,17 +167,33 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function init()
         {
-            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            if (is_admin()) {
+                add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
 
-            add_action('admin_init', [$this, 'register_settings']);
+                add_action('admin_init', [$this, 'register_settings']);
 
-            // Workflow form
-            add_filter('get_sample_permalink_html', [$this, 'filter_get_sample_permalink_html_workflow'], 9, 5);
-            add_filter('post_row_actions', [$this, 'filter_row_actions'], 10, 2);
-            add_action(
-                'add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
-                [$this, 'action_meta_boxes_workflow']
-            );
+                // Workflow form
+                add_filter('get_sample_permalink_html', [$this, 'filter_get_sample_permalink_html_workflow'], 9, 5);
+                add_filter('post_row_actions', [$this, 'filter_row_actions'], 10, 2);
+                add_action(
+                    'add_meta_boxes_' . PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW,
+                    [$this, 'action_meta_boxes_workflow']
+                );
+
+                // Add fields to the user's profile screen to select notification channels
+                add_action('show_user_profile', [$this, 'user_profile_fields']);
+                add_action('edit_user_profile', [$this, 'user_profile_fields']);
+                // Add action to save data from the user's profile screen
+                add_action('personal_options_update', [$this, 'save_user_profile_fields']);
+                add_action('edit_user_profile_update', [$this, 'save_user_profile_fields']);
+                // Load CSS
+                add_action('admin_print_styles', [$this, 'add_admin_styles']);
+
+                // Inject the PublishPress footer
+                add_filter('admin_footer_text', [$this, 'update_footer_admin']);
+                add_action('admin_head', [$this, 'show_icon_on_title']);
+            }
+
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
 
             // Cancel the PublishPress and PublishPress Slack Notifications, since they will be sent by the cron task.
@@ -193,19 +209,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
 
-            // Add fields to the user's profile screen to select notification channels
-            add_action('show_user_profile', [$this, 'user_profile_fields']);
-            add_action('edit_user_profile', [$this, 'user_profile_fields']);
-
-            // Add action to save data from the user's profile screen
-            add_action('personal_options_update', [$this, 'save_user_profile_fields']);
-            add_action('edit_user_profile_update', [$this, 'save_user_profile_fields']);
-
-            // Load CSS
-            add_action('admin_print_styles', [$this, 'add_admin_styles']);
-
-            // Inject the PublishPress footer
-            add_filter('admin_footer_text', [$this, 'update_footer_admin']);
 
             add_filter(
                 'pp_notification_send_email_message_headers',
@@ -217,8 +220,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
-
-            add_action('admin_head', [$this, 'show_icon_on_title']);
         }
 
         /**
@@ -228,7 +229,6 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function install()
         {
-            // Check if we any other workflow before create, avoiding duplicated registers
             if (false === $this->has_default_workflows()) {
                 $this->create_default_workflow_post_save();
                 $this->create_default_workflow_editorial_comment();
@@ -462,9 +462,8 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'channels_options' => $channels_options,
             ];
 
-            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo $twig->render('settings_notification_channels.twig', $context);
-            // phpcs:enable
         }
 
         /**
@@ -1085,6 +1084,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         {
             $hash = md5(maybe_serialize($meta_query));
 
+            // todo: Use WP Cache instead?
             if (! isset($this->workflows[$hash])) {
                 $postsPerPage = $this->isWPVIPEnvironment() ? 100 : -1;
 
@@ -1106,8 +1106,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
-         * Add extra fields to the user profile to allow them choose where to
-         * receive notifications per workflow.
+         * Add extra fields to the user profile for selecting where to receive notifications per workflow.
          *
          * @param WP_User $user
          */
@@ -1181,7 +1180,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          *
          * @return array
          */
-        public function get_user_workflow_channels($user)
+        private function get_user_workflow_channels($user)
         {
             $workflows = $this->get_published_workflows();
             $channels = [];
@@ -1207,7 +1206,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             return $channels;
         }
 
-        public function get_workflow_default_channel($workflowId)
+        private function get_workflow_default_channel($workflowId)
         {
             $channels = $this->module->options->default_channels;
 
@@ -1252,7 +1251,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          *
          * @return array
          */
-        public function get_user_workflow_channel_options($user)
+        private function get_user_workflow_channel_options($user)
         {
             $workflows = $this->get_published_workflows();
             $options = [];

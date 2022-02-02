@@ -81,7 +81,7 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
             if (! $this->canHandle($type)) {
                 return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handleHtmlRendering($type, $inputOptions, $value)
-                    : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
+                    : printf("<p>" . esc_html__('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
 
             return $this->renderInput($inputOptions, $value);
@@ -103,7 +103,7 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
             if (! $this->canHandle($type)) {
                 return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handlePreviewRendering($type, $inputOptions, $value)
-                    : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
+                    : printf("<p>" . esc_html__('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
 
             return $this->renderInputPreview($inputOptions, $value);
@@ -123,7 +123,7 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
             if (! $this->canHandle($type)) {
                 return ! is_null($this->nextHandler)
                     ? $this->nextHandler->handleMetaValueHtmling($type, $value)
-                    : printf("<p>" . __('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
+                    : printf("<p>" . esc_html__('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
 
             return static::getMetaValueHtml($value);
@@ -167,8 +167,8 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
         {
             printf(
                 '<label for="%s">%s</label>',
-                $related_input_id,
-                $content
+                esc_attr($related_input_id),
+                esc_html($content)
             );
         }
 
@@ -192,7 +192,7 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
             return sprintf(
                 '<span class="%s">%s</span>',
                 'description',
-                $description
+                esc_html($description)
             );
         }
 

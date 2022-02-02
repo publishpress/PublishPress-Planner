@@ -1,4 +1,4 @@
-import {getHourStringOnFormat} from './Functions';
+import {getHourStringOnFormat, getDateInstanceFromString} from './Functions';
 import ItemPopup from './ItemPopup';
 
 const {__} = wp.i18n;
@@ -11,7 +11,7 @@ export default function Item(props) {
     const calendarItem = React.useRef(null);
 
     const getHourString = () => {
-        let timestampDate = new Date(Date.parse(props.timestamp));
+        let timestampDate = getDateInstanceFromString(props.timestamp);
 
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
