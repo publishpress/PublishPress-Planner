@@ -34,6 +34,8 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
                 'psalm.xml',
                 'jest.config.ts',
                 '.phpcs.xml',
+                'builder.yml.dist',
+                'vendor/publishpress/wordpress-reviews/phpcs.xml.dist',
             ]
         );
     }
