@@ -33,17 +33,19 @@ if (! class_exists('Editorial_Metadata_Input_Paragraph_Handler')) {
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             printf(
                 '<textarea
                     id="%s"
                     name="%1$s"
                 >%2$s</textarea>',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_html($value)
             );
         }
 
@@ -63,14 +65,16 @@ if (! class_exists('Editorial_Metadata_Input_Paragraph_Handler')) {
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             if (mb_strlen((string)$value) > 0) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
-                    $value
+                    esc_html($value)
                 );
             } else {
                 self::renderValuePlaceholder();
@@ -83,8 +87,8 @@ if (! class_exists('Editorial_Metadata_Input_Paragraph_Handler')) {
                     name="%1$s"
                     value="%2$s"
                 />',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_attr($value)
             );
         }
 

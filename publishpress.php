@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.6.4-beta.2
+ * Version: 3.7.0-rc.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -1094,7 +1094,7 @@ if (! class_exists('publishpress')) {
                 return sanitize_key($_REQUEST['post_type']);
             } elseif (isset($_REQUEST['post'])) {
                 // Lastly check if post ID is in query string.
-                return get_post_type($_REQUEST['post']);
+                return get_post_type((int)$_REQUEST['post']);
             } elseif ($pagenow === 'edit.php') {
                 // The edit page without post_type param is always "post".
                 return 'post';

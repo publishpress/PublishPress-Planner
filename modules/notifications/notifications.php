@@ -120,8 +120,38 @@ if (! class_exists('PP_Notifications')) {
                 $this->edit_post_subscriptions_cap
             );
 
-            // Set up metabox and related actions
-            add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
+            if (is_admin()) {
+                // Set up metabox and related actions
+                add_action('add_meta_boxes', [$this, 'add_post_meta_box']);
+
+                add_action('admin_init', [$this, 'register_settings']);
+
+                // Javascript and CSS if we need it
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+                add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_styles']);
+
+                // Add a "Notify" link to posts
+                if (apply_filters('pp_notifications_show_notify_link', true)) {
+                    // A little extra JS for the Notify button
+                    add_action('admin_head', [$this, 'action_admin_head_notify_js']);
+                    // Manage Posts
+                    add_filter('post_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    add_filter('page_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    // Calendar and Content Overview
+                    add_filter('pp_calendar_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                    add_filter('pp_story_budget_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
+                }
+
+                add_filter(
+                    'publishpress_calendar_get_post_data',
+                    [$this, 'filterCalendarGetPostData'],
+                    10,
+                    2
+                );
+
+                // Ajax for saving notification updates
+                add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
+            }
 
             // Saving post actions
             // self::save_post_subscriptions() is hooked into transition_post_status so we can ensure role data
@@ -132,27 +162,6 @@ if (! class_exists('PP_Notifications')) {
                 PP_NOTIFICATION_PRIORITY_STATUS_CHANGE,
                 3
             );
-            add_action('pp_post_insert_editorial_comment', [$this, 'notification_comment']);
-            add_action('delete_user', [$this, 'delete_user_action']);
-            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 4);
-
-            add_action('admin_init', [$this, 'register_settings']);
-
-            // Javascript and CSS if we need it
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_styles']);
-
-            // Add a "Notify" link to posts
-            if (apply_filters('pp_notifications_show_notify_link', true)) {
-                // A little extra JS for the Notify button
-                add_action('admin_head', [$this, 'action_admin_head_notify_js']);
-                // Manage Posts
-                add_filter('post_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                add_filter('page_row_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                // Calendar and Content Overview
-                add_filter('pp_calendar_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
-                add_filter('pp_story_budget_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
-            }
 
             add_filter(
                 'pp_notification_auto_subscribe_post_author',
@@ -167,17 +176,11 @@ if (! class_exists('PP_Notifications')) {
                 2
             );
 
-            add_filter(
-                'publishpress_calendar_get_post_data',
-                [$this, 'filterCalendarGetPostData'],
-                10,
-                2
-            );
+            add_action('pp_post_insert_editorial_comment', [$this, 'notification_comment']);
+            add_action('delete_user', [$this, 'delete_user_action']);
+            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 4);
 
             add_action('save_post', [$this, 'action_save_post'], 10);
-
-            // Ajax for saving notification updates
-            add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
 
             add_action('pp_send_notification_status_update', [$this, 'send_notification_status_update']);
             add_action('pp_send_notification_comment', [$this, 'send_notification_comment']);
@@ -434,7 +437,7 @@ if (! class_exists('PP_Notifications')) {
          * @todo  Think of a creative way to make this work
          *
          */
-        public function is_whitelisted_functional_view($module_name = null)
+        protected function is_whitelisted_functional_view($module_name = null)
         {
             global $current_screen;
 
@@ -783,7 +786,7 @@ if (! class_exists('PP_Notifications')) {
         public function action_save_post($postId)
         {
             if (! isset($_POST['pp_notifications_nonce']) || ! wp_verify_nonce(
-                    $_POST['pp_notifications_nonce'],
+                    sanitize_text_field($_POST['pp_notifications_nonce']),
                     'save_roles'
                 )) {
                 return;
@@ -857,7 +860,7 @@ if (! class_exists('PP_Notifications')) {
         public function handle_user_post_subscription()
         {
             if (! isset($_GET['_wpnonce'])
-                || ! wp_verify_nonce($_GET['_wpnonce'], 'pp_notifications_user_post_subscription')
+                || ! wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'pp_notifications_user_post_subscription')
             ) {
                 $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
             }
@@ -950,53 +953,6 @@ if (! class_exists('PP_Notifications')) {
         }
 
         /**
-         * Sets users to be notified for the specified post
-         *
-         * @param int $post ID of the post
-         */
-        public function save_post_notify_users($post, $users = null)
-        {
-            if (! is_array($users)) {
-                $users = [];
-            }
-
-            // Add current user to notify list
-            $user = wp_get_current_user();
-            if ($user && apply_filters(
-                    'pp_notification_auto_subscribe_current_user',
-                    true,
-                    'subscription_action'
-                )) {
-                $users[] = $user->ID;
-            }
-
-            // Add post author to notify list
-            if (apply_filters('pp_notification_auto_subscribe_post_author', true, 'subscription_action')) {
-                $users[] = $post->post_author;
-            }
-
-            $users = array_unique(array_map('intval', $users));
-
-            $this->post_set_users_to_notify($post, $users, false);
-        }
-
-        /**
-         * Sets roles to be notified for the specified post
-         *
-         * @param int $post ID of the post
-         * @param array $roles Roles to be notified for posts
-         */
-        public function save_post_notify_roles($post, $roles = null)
-        {
-            if (! is_array($roles)) {
-                $roles = [];
-            }
-            $roles = array_map('intval', $roles);
-
-            $this->add_role_to_notify($post, $roles, false);
-        }
-
-        /**
          * Set up and send post status change a notification
          */
         public function notification_status_change($new_status, $old_status, $post)
@@ -1086,7 +1042,7 @@ if (! class_exists('PP_Notifications')) {
             do_action('pp_send_notification_comment', $args);
         }
 
-        public function get_notification_footer($post)
+        private function get_notification_footer($post)
         {
             $body = "";
             $body .= "\r\n--------------------\r\n";
@@ -1156,7 +1112,7 @@ if (! class_exists('PP_Notifications')) {
          * @param string $message_headers . (optional ) Message headers
          * @param int $time_offset (optional ) Delay in seconds per email
          */
-        public function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1)
+        private function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1)
         {
             $recipients = (array)$recipients;
 
@@ -1265,7 +1221,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_users_to_notify($post, $users, $append = true)
+        private function post_set_users_to_notify($post, $users, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1317,7 +1273,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_roles_to_notify($post, $roles, $append = true)
+        private function post_set_roles_to_notify($post, $roles, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1363,7 +1319,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_emails_to_notify($post, $emails, $append = true)
+        private function post_set_emails_to_notify($post, $emails, $append = true)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1418,7 +1374,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return true|WP_Error     $response  True on success, WP_Error on failure
          */
-        public function post_set_users_stop_notify($post, $users)
+        private function post_set_users_stop_notify($post, $users)
         {
             $post = get_post($post);
             if (! $post) {
@@ -1461,27 +1417,6 @@ if (! class_exists('PP_Notifications')) {
         }
 
         /**
-         * add_role_to_notify()
-         *
-         */
-        public function add_role_to_notify($post, $roles = 0, $append = true)
-        {
-            $post_id = (is_int($post)) ? $post : $post->ID;
-            if (! is_array($roles)) {
-                $roles = [$roles];
-            }
-
-            // make sure each role id is an integer and not a number stored as a string
-            foreach ($roles as $key => $role) {
-                $roles[$key] = intval($role);
-            }
-
-            wp_set_object_terms($post_id, $roles, $this->notify_role_taxonomy, $append);
-
-            return;
-        }
-
-        /**
          * Removes users that are deleted from receiving future notifications (i.e. makes them out of notify list for posts FOREVER! )
          *
          * @param $id int ID of the user
@@ -1514,7 +1449,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return WP_error if insert fails, true otherwise
          */
-        public function add_term_if_not_exists($term, $taxonomy)
+        private function add_term_if_not_exists($term, $taxonomy)
         {
             if (! term_exists($term, $taxonomy)) {
                 $args = ['slug' => sanitize_title($term)];
@@ -1930,7 +1865,6 @@ if (! class_exists('PP_Notifications')) {
             $current_user = wp_get_current_user();
 
             $post_author = get_userdata($post->post_author);
-            //$duedate = $publishpress->post_metadata->get_post_meta( $post->ID, 'duedate', true );
 
             $blogname = get_option('blogname');
 

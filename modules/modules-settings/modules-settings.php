@@ -68,8 +68,10 @@ if (! class_exists('PP_Modules_Settings')) {
          */
         public function init()
         {
-            add_action('admin_init', [$this, 'register_settings']);
-            add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            if (is_admin()) {
+                add_action('admin_init', [$this, 'register_settings']);
+                add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            }
         }
 
         /**
@@ -134,7 +136,7 @@ if (! class_exists('PP_Modules_Settings')) {
         {
             if (! isset($_POST['_wpnonce'])
                 || ! wp_verify_nonce(
-                    sanitize_text_field($_POST['_wpnonce']),
+                    sanitize_key($_POST['_wpnonce']),
                     'edit-publishpress-settings'
                 )
             ) {

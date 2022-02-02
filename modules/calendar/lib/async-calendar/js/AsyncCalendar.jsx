@@ -88,7 +88,7 @@ export default function AsyncCalendar(props) {
         }
 
         if (filterPostType) {
-            dataUrl += '&post_author=' + filterPostType;
+            dataUrl += '&post_type=' + filterPostType;
         }
 
         if (filterWeeks) {

@@ -88,7 +88,11 @@ class Term extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term'])) {
             $values = [];
         } else {
-            $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['term'];
+            // TODO: Should we sanitize with parseInt instead?
+            $values = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['term']
+            );
         }
 
         $this->update_metadata_array($id, static::META_KEY_TERM, $values);

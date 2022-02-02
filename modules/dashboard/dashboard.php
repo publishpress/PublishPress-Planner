@@ -77,6 +77,10 @@ if (! class_exists('PP_Dashboard')) {
          */
         public function init()
         {
+            if (false === is_admin()) {
+                return;
+            }
+
             $this->widgets = new stdClass;
 
             if ('on' == $this->module->options->notepad_widget) {

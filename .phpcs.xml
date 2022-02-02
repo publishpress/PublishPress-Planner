@@ -9,7 +9,7 @@
     <ini name="memory_limit" value="256M"/>
     <arg name="basepath" value="./"/>
     <arg name="parallel" value="20"/>
-    <arg name="severity" value="6"/>
+    <arg name="severity" value="5"/>
     <arg value="ps"/>
 
     <file>.</file>
@@ -25,10 +25,7 @@
     <exclude-pattern>/twig/*</exclude-pattern>
     <exclude-pattern>/RoboFile.php</exclude-pattern>
 
-    <rule ref="WordPressVIPMinimum">
-
-    </rule>
+    <rule ref="WordPressVIPMinimum"/>
     <rule ref="WordPress-VIP-Go"/>
     <rule ref="VariableAnalysis"/>
-
 </ruleset>
