@@ -2,6 +2,7 @@ import {callAjaxAction, callAjaxPostAction, getDateAsStringInWpFormat, getPostLi
 import Select from "./Select";
 import DateTimeField from "./fields/DateTimeField";
 import AuthorsField from "./fields/AuthorsField";
+import SelectField from "./fields/SelectField";
 import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
@@ -88,6 +89,28 @@ export default function ItemFormPopup(props) {
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
                                           multiple={props.allowAddingMultipleAuthors}
+                                          onSelect={(e, elem, data) => {
+                                              let values = [];
+                                              for (let i = 0; i < data.length; i++) {
+                                                  values.push(data[i].id);
+                                              }
+
+                                              updateGlobalFormFieldData(dataPropertyName, values);
+                                          }}
+                                          onClear={(e, elem) => {
+                                              updateGlobalFormFieldData(dataPropertyName, null);
+                                          }}/>;
+                    break;
+
+                case 'select':
+                    field = <SelectField value={dataProperty.value}
+                                          isEditing={true}
+                                          name={dataPropertyName}
+                                          id={fieldId}
+                                          nonce={props.nonce}
+                                          ajaxUrl={props.ajaxUrl}
+                                          ajaxAction={dataProperty.ajaxAction}
+                                          multiple={dataProperty.multiple}
                                           onSelect={(e, elem, data) => {
                                               let values = [];
                                               for (let i = 0; i < data.length; i++) {
