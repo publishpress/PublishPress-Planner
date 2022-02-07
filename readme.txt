@@ -121,6 +121,10 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= UNRELEASED =
+
+* Added: Add select field for the custom fields API to the calendar popup, #1010;
+
 = [3.7.0] - 02 fev 2022 =
 
 * Fixed: Fix the admin menu Debug Log that was not being displayed, #992;
