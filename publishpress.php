@@ -1281,4 +1281,24 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
     define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
+} else {
+    $message = __('PublishPress tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
+
+    error_log($message);
+
+    if (is_admin() ) {
+        add_action(
+            'admin_notices',
+            function () use ($message) {
+                $msg = sprintf(
+                    '<strong>%s:</strong> %s',
+                    esc_html__('Warning', 'publishpress'),
+                    esc_html($message)
+                );
+
+                echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
+            },
+            5
+        );
+    }
 }
