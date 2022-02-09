@@ -124,6 +124,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = UNRELEASED =
 
 * Added: Add select field for the custom fields API to the calendar popup, #1010;
+* Added: Add admin notice and error log if the plugin is loaded multiple times;
 
 = [3.7.0] - 02 fev 2022 =
 
