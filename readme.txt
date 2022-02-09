@@ -144,11 +144,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Improved capability check on diverse functions and modules;
 * Fixed: Only load admin assets and the admin menu action if the user has permission for seeing that;
 * Fixed: Added nonce check for missed places;
-* Fixed: Added cache to the user, author and category searchs in the content_overview module;
+* Fixed: Added cache to the user, author and category searches in the content_overview module;
 * Fixed: Fix the capability check for the configure button on editorial metadata metabox. It was only looking for the capability manage_options, which is customizable;
 * Fixed: Added a missed capability check before showing search results in the notifications log filters;
 * Fixed: Fixed PHP warning about function not defined: esc_array_of_options;
-* Fixed: Only look for default capabilitys on the calendar module if in the admin;
+* Fixed: Only look for default capabilities on the calendar module if in the admin;
 * Fixed: Only add admin hooks if in the admin;
 * Fixed: Fix the delete action for notification log items;
 * Added: Add the value of the global constant DISABLE_WP_CRON to the debug info, #987;
