@@ -5,7 +5,7 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.7.1-alpha.1
+ * Version: 3.7.1-alpha.debug.2
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -179,8 +179,6 @@ if (! class_exists('publishpress')) {
          */
         public function action_init()
         {
-            $this->deactivate_editflow();
-
             load_plugin_textdomain('publishpress', null, plugin_basename(PUBLISHPRESS_BASE_PATH) . '/languages/');
 
             $this->load_modules();
@@ -199,37 +197,6 @@ if (! class_exists('publishpress')) {
             }
 
             do_action('pp_init');
-        }
-
-        public function deactivate_editflow()
-        {
-            try {
-                if (! function_exists('get_plugins')) {
-                    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-                }
-
-                $all_plugins = get_plugins();
-
-                // Check if Edit Flow is installed. The folder changes sometimes.
-                foreach ($all_plugins as $pluginFile => $data) {
-                    if (
-                        (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain'])
-                        && is_plugin_active($pluginFile)
-                    ) {
-                        // Is it activated?
-                        deactivate_plugins($pluginFile);
-                        add_action('admin_notices', [$this, 'notice_editflow_deactivated']);
-                    }
-                }
-            } catch (Exception $e) {
-                error_log(
-                    sprintf(
-                        '%s: %s',
-                        __FUNCTION__,
-                        $e->getMessage()
-                    )
-                );
-            }
         }
 
         /**
@@ -938,19 +905,6 @@ if (! class_exists('publishpress')) {
             }
 
             return $menu_ord;
-        }
-
-        public function notice_editflow_deactivated()
-        {
-            ?>
-            <div class="updated notice">
-                <p><?php
-                    _e(
-                        'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.',
-                        'publishpress'
-                    ); ?></p>
-            </div>
-            <?php
         }
 
         /**
