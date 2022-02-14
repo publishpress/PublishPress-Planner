@@ -123,8 +123,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = UNRELEASED =
 
-* Added: Add select field for the custom fields API to the calendar popup, #1010;
 * Fixed: Fix performance, removing automatic deactivation of Edit Flow, replacing it by a simple admin notice, #998;
+* Fixed: Fix PHP error on customizer, due to a inline JS script added by mistake out of the head tag, #562;
+* Added: Add select field for the custom fields API to the calendar popup, #1010;
 * Added: Add admin notice and error log if the plugin is loaded multiple times;
 
 = [3.7.0] - 02 fev 2022 =
