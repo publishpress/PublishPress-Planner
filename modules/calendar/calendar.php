@@ -2998,6 +2998,7 @@ if (! class_exists('PP_Calendar')) {
                     'ID' => $postId,
                     'post_date' => $newDate,
                     'post_date_gmt' => get_gmt_from_date($newDate),
+                    'edit_date' => true,
 
                 ]
             );
