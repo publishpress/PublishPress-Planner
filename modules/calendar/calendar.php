@@ -2983,6 +2983,7 @@ if (! class_exists('PP_Calendar')) {
                 wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
             }
 
+            $oldPostDate = $post->post_date;
             $postDate = null;
             try {
                 $postDate = new DateTime($post->post_date);
@@ -3002,6 +3003,12 @@ if (! class_exists('PP_Calendar')) {
 
                 ]
             );
+
+            /**
+             * @param int $postId
+             * @param string $newDate
+             */
+            do_action('publishpress_after_moving_calendar_item', $postId, $newDate, $oldPostDate);
 
             wp_send_json(
                 true,

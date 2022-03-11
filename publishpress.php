@@ -299,6 +299,7 @@ if (! class_exists('publishpress')) {
                 'efmigration' => PUBLISHPRESS_BASE_PATH,
                 'debug' => PUBLISHPRESS_BASE_PATH,
                 'reviews' => PUBLISHPRESS_BASE_PATH,
+                'theeventscalendar-integration' => PUBLISHPRESS_BASE_PATH,
             ];
 
             // Add filters to extend the modules
