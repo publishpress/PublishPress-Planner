@@ -3515,6 +3515,15 @@ if (! class_exists('PP_Calendar')) {
                 $post_query_args['orderby'] = ['post_date' => 'ASC'];
             }
 
+            /**
+             * @param array $post_query_args The array with args passed to post query
+             * @param string $beginningDate The beginning date showed in the calendar
+             * @param string $endingDate The ending date showed in the calendar
+             *
+             * @return array
+             */
+            $post_query_args = apply_filters('publishpress_calendar_data_args', $post_query_args, $beginningDate, $endingDate);
+
             $postsList = $this->getCalendarDataForMultipleWeeks($post_query_args);
 
             $data = [];
