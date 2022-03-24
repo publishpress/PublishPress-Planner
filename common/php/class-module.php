@@ -632,7 +632,6 @@ if (!class_exists('PP_Module')) {
             extract($parsed_args, EXTR_SKIP);
 
             $args = [
-                'who'     => 'authors',
                 'fields'  => [
                     'ID',
                     'display_name',
