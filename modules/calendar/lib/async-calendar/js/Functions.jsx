@@ -1,5 +1,3 @@
-import {__} from '@wordpress/i18n';
-
 /**
  * Base on :
  *     https://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
@@ -109,19 +107,21 @@ export function calculateWeeksInMilliseconds(weeks) {
 }
 
 export function getMonthNameByMonthIndex(month) {
+    const strings = publishpressCalendarParams.strings;
+
     const monthNames = [
-        __('Jan', 'publishpress'),
-        __('Feb', 'publishpress'),
-        __('Mar', 'publishpress'),
-        __('Apr', 'publishpress'),
-        __('May', 'publishpress'),
-        __('Jun', 'publishpress'),
-        __('Jul', 'publishpress'),
-        __('Aug', 'publishpress'),
-        __('Sep', 'publishpress'),
-        __('Oct', 'publishpress'),
-        __('Nov', 'publishpress'),
-        __('Dec', 'publishpress')
+        strings.monthJan,
+        strings.monthFeb,
+        strings.monthMar,
+        strings.monthApr,
+        strings.monthMay,
+        strings.monthJun,
+        strings.monthJul,
+        strings.monthAug,
+        strings.monthSep,
+        strings.monthOct,
+        strings.monthNov,
+        strings.monthDec
     ];
 
     return monthNames[month];

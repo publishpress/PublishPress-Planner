@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress\n"
-"POT-Creation-Date: 2022-03-24T11:04:16-03:00\n"
-"PO-Revision-Date: 2022-03-24 11:27-0300\n"
+"POT-Creation-Date: 2022-03-24T12:31:36-03:00\n"
+"PO-Revision-Date: 2022-03-24 12:33-0300\n"
 "Last-Translator: Anderson Grudtner Martins <anderson@publishpress.com>\n"
 "Language-Team: Douglas Araujo de Moura <douglas.ademoura@gmail.com>\n"
 "Language: pt_BR\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Author of the plugin
-#: modules/calendar/calendar.php:1208 modules/settings/settings.php:59
+#: modules/calendar/calendar.php:1247 modules/settings/settings.php:59
 #: modules/settings/settings.php:266 publishpress.php:533
 msgid "PublishPress"
 msgstr "PublishPress"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "https://publishpress.com"
 msgstr "https://publishpress.com"
 
-#: common/php/class-module.php:273 modules/calendar/calendar.php:1846
+#: common/php/class-module.php:273 modules/calendar/calendar.php:1885
 #: modules/custom-status/custom-status.php:956
 #: modules/custom-status/lib/custom-status-block.jsx:111
 msgid "Published"
@@ -53,7 +53,7 @@ msgstr "Publicado"
 msgid "Draft"
 msgstr "Projeto"
 
-#: common/php/class-module.php:275 modules/calendar/calendar.php:1841
+#: common/php/class-module.php:275 modules/calendar/calendar.php:1880
 #: modules/custom-status/custom-status.php:918
 #: modules/notifications-log/library/NotificationsLogTable.php:523
 #: modules/custom-status/lib/custom-status-block.jsx:116
@@ -68,8 +68,8 @@ msgstr "Privado"
 msgid "Pending Review"
 msgstr "Pendente de revisão"
 
-#: common/php/class-module.php:278 modules/calendar/calendar.php:1690
-#: modules/calendar/calendar.php:3223
+#: common/php/class-module.php:278 modules/calendar/calendar.php:1729
+#: modules/calendar/calendar.php:3262
 #: modules/content-overview/content-overview.php:1460
 msgid "Trash"
 msgstr "Lixo"
@@ -100,13 +100,25 @@ msgstr "(sem título)"
 msgid "Undefined error found"
 msgstr "Um erro não definido foi encontrado"
 
-#: core/Error.php:80 modules/calendar/calendar.php:2968
+#: core/Error.php:80 modules/calendar/calendar.php:3007
 msgid "Invalid nonce"
 msgstr "Nonce inválido"
 
 #: core/Error.php:81
 msgid "Access denied"
 msgstr "Acesso Negado"
+
+#: includes.php:127
+msgid ""
+"You're using PublishPress Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
+msgstr ""
+"Você está utilizando a versão gratuita do PublishPress. A versão Pro tem "
+"mais funcionalidades e suporte. %sAtualize para o Pro%s"
+
+#: includes.php:156
+msgid "Upgrade to Pro"
+msgstr "Atualize para a versão Pro"
 
 #: libraries/Notifications/Plugin.php:57
 #: modules/improved-notifications/improved-notifications.php:818
@@ -134,7 +146,7 @@ msgstr "Não filtrado"
 
 #: libraries/Notifications/Table/Notifications.php:156
 #: libraries/Notifications/Table/Workflows.php:142
-#: modules/calendar/calendar.php:3262
+#: modules/calendar/calendar.php:3301
 #: modules/content-overview/content-overview.php:536
 msgid "Title"
 msgstr "Título"
@@ -144,7 +156,7 @@ msgid "Message"
 msgstr "Mensagem"
 
 #: libraries/Notifications/Table/Notifications.php:158
-#: modules/calendar/calendar.php:3183
+#: modules/calendar/calendar.php:3222
 #: modules/editorial-metadata/editorial-metadata.php:269
 #: modules/notifications-log/library/NotificationsLogTable.php:490
 msgid "Date"
@@ -152,7 +164,7 @@ msgstr "Data"
 
 #: libraries/Notifications/Table/Notifications.php:159
 #: libraries/Notifications/Table/Workflows.php:143
-#: modules/calendar/calendar.php:3178
+#: modules/calendar/calendar.php:3217
 msgid "ID"
 msgstr "ID"
 
@@ -177,7 +189,7 @@ msgid "Email"
 msgstr "E-mail"
 
 #: libraries/Notifications/Workflow/Step/Content/Main.php:28
-#: modules/calendar/calendar.php:3309
+#: modules/calendar/calendar.php:3348
 #: modules/improved-notifications/improved-notifications.php:975
 msgid "Content"
 msgstr "Conteúdo"
@@ -239,14 +251,14 @@ msgid "When the content is updated"
 msgstr "Quando o conteúdo é atualizado"
 
 #: libraries/Notifications/Workflow/Step/Event_Content/Category.php:24
-#: modules/calendar/calendar.php:3199
+#: modules/calendar/calendar.php:3238
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoria"
 msgstr[1] "Categoria"
 
 #: libraries/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
-#: modules/calendar/calendar.php:3292
+#: modules/calendar/calendar.php:3331
 msgid "Categories"
 msgstr "Categories"
 
@@ -388,129 +400,290 @@ msgstr "Carregando..."
 msgid "Loading item..."
 msgstr "Carregando item..."
 
-#: modules/calendar/calendar.php:709
-#: modules/calendar/lib/async-calendar/js/DayCell.jsx:86
+#: modules/calendar/calendar.php:709 modules/calendar/calendar.php:711
 msgid "Click to add"
 msgstr "Clique para adicionar"
 
-#: modules/calendar/calendar.php:1210
+#: modules/calendar/calendar.php:710
+msgid "Moving the item..."
+msgstr "Movendo o item..."
+
+#: modules/calendar/calendar.php:712 modules/calendar/calendar.php:3410
+msgid "Untitled"
+msgstr "Sem título"
+
+#: modules/calendar/calendar.php:713
+msgid "Close"
+msgstr "Fechar"
+
+#: modules/calendar/calendar.php:714 modules/calendar/calendar.php:1769
+#: modules/editorial-comments/lib/editorial-comments.js:244
+msgid "Save"
+msgstr "Salvar"
+
+#: modules/calendar/calendar.php:715
+msgid "Saving..."
+msgstr "Salvando..."
+
+#: modules/calendar/calendar.php:716
+msgid "Save and edit"
+msgstr "Salvar e editar"
+
+#: modules/calendar/calendar.php:717
+msgid "Add content for %s"
+msgstr "Adicionar conteúdo para %s"
+
+#: modules/calendar/calendar.php:718
+msgid "Post type not found"
+msgstr "Tipo de post não encontrado"
+
+#: modules/calendar/calendar.php:719
+msgid "Post type:"
+msgstr "Tipo de post:"
+
+#: modules/calendar/calendar.php:720
+msgid "Please, wait! Loading the form fields..."
+msgstr "Por favor, aguarde! Carregando os campos do formulário..."
+
+#: modules/calendar/calendar.php:721
+msgid "Sun"
+msgstr "Dom"
+
+#: modules/calendar/calendar.php:722
+msgid "Mon"
+msgstr "Seg"
+
+#: modules/calendar/calendar.php:723
+msgid "Tue"
+msgstr "Ter"
+
+#: modules/calendar/calendar.php:724
+msgid "Wed"
+msgstr "Qua"
+
+#: modules/calendar/calendar.php:725
+msgid "Thu"
+msgstr "Qui"
+
+#: modules/calendar/calendar.php:726
+msgid "Fri"
+msgstr "Sex"
+
+#: modules/calendar/calendar.php:727
+msgid "Sat"
+msgstr "Sáb"
+
+#: modules/calendar/calendar.php:728
+msgid "Jan"
+msgstr "Jan"
+
+#: modules/calendar/calendar.php:729
+msgid "Feb"
+msgstr "Fev"
+
+#: modules/calendar/calendar.php:730
+msgid "Mar"
+msgstr "Mar"
+
+#: modules/calendar/calendar.php:731
+msgid "Apr"
+msgstr "Abr"
+
+#: modules/calendar/calendar.php:732
+msgid "May"
+msgstr "Mai"
+
+#: modules/calendar/calendar.php:733
+msgid "Jun"
+msgstr "Jun"
+
+#: modules/calendar/calendar.php:734
+msgid "Jul"
+msgstr "Jul"
+
+#: modules/calendar/calendar.php:735
+msgid "Aug"
+msgstr "Ago"
+
+#: modules/calendar/calendar.php:736
+msgid "Sep"
+msgstr "Set"
+
+#: modules/calendar/calendar.php:737
+msgid "Oct"
+msgstr "Out"
+
+#: modules/calendar/calendar.php:738
+msgid "Nov"
+msgstr "Nov"
+
+#: modules/calendar/calendar.php:739
+msgid "Dec"
+msgstr "Dez"
+
+#: modules/calendar/calendar.php:740 modules/calendar/calendar.php:3652
+msgid "All statuses"
+msgstr "Todos os status"
+
+#: modules/calendar/calendar.php:741
+msgid "All categories"
+msgstr "Todas as categorias"
+
+#: modules/calendar/calendar.php:742 modules/calendar/calendar.php:3687
+msgid "All tags"
+msgstr "Todas as tags"
+
+#: modules/calendar/calendar.php:743 modules/calendar/calendar.php:3708
+#: modules/content-overview/content-overview.php:1033
+msgid "All authors"
+msgstr "Todos os autores"
+
+#: modules/calendar/calendar.php:744 modules/calendar/calendar.php:3735
+msgid "All types"
+msgstr "Todos os tipos"
+
+#: modules/calendar/calendar.php:745
+msgid "%d week"
+msgstr "%d semana"
+
+#: modules/calendar/calendar.php:746
+msgid "%d weeks"
+msgstr "%d semanas"
+
+#: modules/calendar/calendar.php:747 modules/calendar/calendar.php:2039
+msgid "Today"
+msgstr "Hoje"
+
+#: modules/calendar/calendar.php:748
+msgid "No terms"
+msgstr "Sem termos"
+
+#: modules/calendar/calendar.php:1249
 msgid "Subscribe in iCal or Google Calendar"
 msgstr "Assinar no iCal ou Google Calendar"
 
-#: modules/calendar/calendar.php:1215
+#: modules/calendar/calendar.php:1254
 msgid "Start date"
 msgstr "Data de início"
 
-#: modules/calendar/calendar.php:1219
+#: modules/calendar/calendar.php:1258
 msgid "Current week"
 msgstr "Semana atual"
 
-#: modules/calendar/calendar.php:1221
+#: modules/calendar/calendar.php:1260
 msgid "One month ago"
 msgstr "Um mês atrás"
 
-#: modules/calendar/calendar.php:1223
+#: modules/calendar/calendar.php:1262
 msgid "Two months ago"
 msgstr "Dois meses atrás"
 
-#: modules/calendar/calendar.php:1225
+#: modules/calendar/calendar.php:1264
 msgid "Three months ago"
 msgstr "Três meses atrás"
 
-#: modules/calendar/calendar.php:1227
+#: modules/calendar/calendar.php:1266
 msgid "Four months ago"
 msgstr "Quatro meses atrás"
 
-#: modules/calendar/calendar.php:1229
+#: modules/calendar/calendar.php:1268
 msgid "Five months ago"
 msgstr "Cinco meses atrás"
 
-#: modules/calendar/calendar.php:1231
+#: modules/calendar/calendar.php:1270
 msgid "Six months ago"
 msgstr "Seis meses atrás"
 
-#: modules/calendar/calendar.php:1237
+#: modules/calendar/calendar.php:1276
 msgid "End date"
 msgstr "Data final"
 
-#: modules/calendar/calendar.php:1242
+#: modules/calendar/calendar.php:1281
 msgid "One week"
 msgstr "Uma semana"
 
-#: modules/calendar/calendar.php:1244
+#: modules/calendar/calendar.php:1283
 msgid "Two weeks"
 msgstr "Duas semanas"
 
-#: modules/calendar/calendar.php:1246
+#: modules/calendar/calendar.php:1285
 msgid "Three weeks"
 msgstr "Três semanas"
 
-#: modules/calendar/calendar.php:1248
+#: modules/calendar/calendar.php:1287
 msgid "Four weeks"
 msgstr "Quatro semanas"
 
-#: modules/calendar/calendar.php:1254
+#: modules/calendar/calendar.php:1293
 msgid "One month"
 msgstr "Um mês"
 
-#: modules/calendar/calendar.php:1257
+#: modules/calendar/calendar.php:1296
 msgid "Two months"
 msgstr "Dois meses"
 
-#: modules/calendar/calendar.php:1259
+#: modules/calendar/calendar.php:1298
 msgid "Three months"
 msgstr "Três meses"
 
-#: modules/calendar/calendar.php:1261
+#: modules/calendar/calendar.php:1300
 msgid "Four months"
 msgstr "Quatro meses"
 
-#: modules/calendar/calendar.php:1263
+#: modules/calendar/calendar.php:1302
 msgid "Five months"
 msgstr "Cinco meses"
 
-#: modules/calendar/calendar.php:1265
+#: modules/calendar/calendar.php:1304
 msgid "Six months"
 msgstr "Seis meses"
 
-#: modules/calendar/calendar.php:1267
+#: modules/calendar/calendar.php:1306
 msgid "Seven months"
 msgstr "Sete meses"
 
-#: modules/calendar/calendar.php:1269
+#: modules/calendar/calendar.php:1308
 msgid "Eight months"
 msgstr "Oito meses"
 
-#: modules/calendar/calendar.php:1271
+#: modules/calendar/calendar.php:1310
 msgid "Nine months"
 msgstr "Nove meses"
 
-#: modules/calendar/calendar.php:1273
+#: modules/calendar/calendar.php:1312
 msgid "Ten months"
 msgstr "Dez meses"
 
-#: modules/calendar/calendar.php:1275
+#: modules/calendar/calendar.php:1314
 msgid "Eleven months"
 msgstr "Onze meses"
 
-#: modules/calendar/calendar.php:1277
+#: modules/calendar/calendar.php:1316
 msgid "Twelve months"
 msgstr "Doze meses"
 
-#: modules/calendar/calendar.php:1302
+#: modules/calendar/calendar.php:1328
+msgid "Download .ics file"
+msgstr "Baixar o arquivo .ics"
+
+#: modules/calendar/calendar.php:1335
+msgid "Copy to the clipboard"
+msgstr "Copie para a área de transferência"
+
+#: modules/calendar/calendar.php:1341
 msgid "Click here to Subscribe in iCal or Google Calendar"
 msgstr "Clique aqui para assinar no iCal ou Google Calendar"
 
-#: modules/calendar/calendar.php:1333
+#: modules/calendar/calendar.php:1372
 #: modules/content-overview/content-overview.php:900
 msgid "Undo"
 msgstr "Desfazer"
 
-#: modules/calendar/calendar.php:1370
+#: modules/calendar/calendar.php:1409
 msgid "Initializing the calendar. Please wait..."
 msgstr "Inicializando o calendário. Por favor aguarde…"
 
-#: modules/calendar/calendar.php:1374
+#: modules/calendar/calendar.php:1413
 msgid ""
 "It seems like it is taking too long. Please, try reloading the page again "
 "and check the browser console looking for errors."
@@ -518,16 +691,16 @@ msgstr ""
 "Parece que está demorando muito. Por favor, tente atualizar a página "
 "novamente e verifique se há erros no console do navegador."
 
-#: modules/calendar/calendar.php:1660
+#: modules/calendar/calendar.php:1699
 #: modules/content-overview/content-overview.php:1346
 msgid "None"
 msgstr "Nenhum"
 
-#: modules/calendar/calendar.php:1680
+#: modules/calendar/calendar.php:1719
 msgid "Edit this item"
 msgstr "Editar este item"
 
-#: modules/calendar/calendar.php:1680 modules/calendar/calendar.php:3216
+#: modules/calendar/calendar.php:1719 modules/calendar/calendar.php:3255
 #: modules/content-overview/content-overview.php:1448
 #: modules/custom-status/custom-status.php:2911
 #: modules/editorial-comments/editorial-comments.php:351
@@ -535,128 +708,118 @@ msgstr "Editar este item"
 msgid "Edit"
 msgstr "Editar"
 
-#: modules/calendar/calendar.php:1701
+#: modules/calendar/calendar.php:1740
 #: modules/content-overview/content-overview.php:1486
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Pré-visualizar &#8220; %s&#8221;"
 
-#: modules/calendar/calendar.php:1704 modules/calendar/calendar.php:3233
+#: modules/calendar/calendar.php:1743 modules/calendar/calendar.php:3272
 #: modules/content-overview/content-overview.php:1489
 msgid "Preview"
 msgstr "Pré-visualizar"
 
-#: modules/calendar/calendar.php:1708
+#: modules/calendar/calendar.php:1747
 #: modules/content-overview/content-overview.php:1470
 msgid "View &#8220;%s&#8221;"
 msgstr "Ver &#8220;%s&#8221;"
 
-#: modules/calendar/calendar.php:1714 modules/calendar/calendar.php:3230
+#: modules/calendar/calendar.php:1753 modules/calendar/calendar.php:3269
 #: modules/content-overview/content-overview.php:1476
 msgid "View"
 msgstr "Ver"
 
-#: modules/calendar/calendar.php:1724
+#: modules/calendar/calendar.php:1763
 msgid "Save &#8220;%s&#8221;"
 msgstr "Salvar &#8220;%s&#8221;"
 
-#: modules/calendar/calendar.php:1730
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:327
-#: modules/editorial-comments/lib/editorial-comments.js:244
-msgid "Save"
-msgstr "Salvar"
-
-#: modules/calendar/calendar.php:1825 modules/calendar/calendar.php:3194
-#: modules/calendar/calendar.php:3282
+#: modules/calendar/calendar.php:1864 modules/calendar/calendar.php:3233
+#: modules/calendar/calendar.php:3321
 #: modules/content-overview/content-overview.php:538
 msgid "Author"
 msgid_plural "Authors"
 msgstr[0] "Autor"
 msgstr[1] "Autor"
 
-#: modules/calendar/calendar.php:1833 modules/calendar/calendar.php:3173
+#: modules/calendar/calendar.php:1872 modules/calendar/calendar.php:3212
 msgid "Post Type"
 msgstr "Tipo de post"
 
-#: modules/calendar/calendar.php:1952
+#: modules/calendar/calendar.php:1991
 #: modules/content-overview/content-overview.php:869
 #: modules/content-overview/content-overview.php:952
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: modules/calendar/calendar.php:1960
+#: modules/calendar/calendar.php:1999
 msgid "Forward 1 week"
 msgstr "Avançar 1 semana"
 
-#: modules/calendar/calendar.php:1969
+#: modules/calendar/calendar.php:2008
 msgid "&rsaquo;"
 msgstr "&rsaquo;"
 
-#: modules/calendar/calendar.php:1975
+#: modules/calendar/calendar.php:2014
 msgid "Forward %d weeks"
 msgstr "Avançar %d semanas"
 
-#: modules/calendar/calendar.php:1986
+#: modules/calendar/calendar.php:2025
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: modules/calendar/calendar.php:1994
+#: modules/calendar/calendar.php:2033
 msgid "Today is %s"
 msgstr "Hoje é %s"
 
-#: modules/calendar/calendar.php:2000
-msgid "Today"
-msgstr "Hoje"
-
-#: modules/calendar/calendar.php:2009
+#: modules/calendar/calendar.php:2048
 msgid "Back %d weeks"
 msgstr "Voltar %d semanas"
 
-#: modules/calendar/calendar.php:2017
+#: modules/calendar/calendar.php:2056
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: modules/calendar/calendar.php:2021
+#: modules/calendar/calendar.php:2060
 msgid "Back 1 week"
 msgstr "Voltar 1 semana"
 
-#: modules/calendar/calendar.php:2030
+#: modules/calendar/calendar.php:2069
 msgid "&lsaquo;"
 msgstr "&lsaquo;"
 
-#: modules/calendar/calendar.php:2396
+#: modules/calendar/calendar.php:2435
 msgid "Post types to show"
 msgstr "Tipos de publicação para exibir"
 
-#: modules/calendar/calendar.php:2404
+#: modules/calendar/calendar.php:2443
 msgid "Subscription in iCal or Google Calendar"
 msgstr "Assinar no iCal ou Google Calendar"
 
-#: modules/calendar/calendar.php:2412
+#: modules/calendar/calendar.php:2451
 msgid "Statuses to display publish time"
 msgstr "Status para exibir tempo de publicação"
 
-#: modules/calendar/calendar.php:2420
+#: modules/calendar/calendar.php:2459
 msgid "Posts publish time format"
 msgstr "Formato de hora de publicação de Posts"
 
-#: modules/calendar/calendar.php:2428
+#: modules/calendar/calendar.php:2467
 msgid "Default publish time for items created in the calendar"
 msgstr "Tempo de publicação padrão para itens criados no calendário"
 
-#: modules/calendar/calendar.php:2436
+#: modules/calendar/calendar.php:2475
 msgid "Field used for sorting the calendar items in a day cell"
 msgstr ""
 "Campo usado para classificar os itens do calendário em uma célula do dia"
 
-#: modules/calendar/calendar.php:2444
+#: modules/calendar/calendar.php:2483
 msgid "Max visible posts per date"
 msgstr "Máximo de postagens visíveis por data"
 
-#: modules/calendar/calendar.php:2463
+#: modules/calendar/calendar.php:2502
 msgid "At least one post type must be selected"
 msgstr "Pelo menos um tipo de postagem deve ser selecionado"
 
-#: modules/calendar/calendar.php:2480
+#: modules/calendar/calendar.php:2519
 msgid ""
 "The number of weeks shown on the calendar can be changed on a user-by-user "
 "basis using the calendar's screen options."
@@ -664,130 +827,104 @@ msgstr ""
 "O número de semanas mostradas no calendário pode mudar para cada usuário "
 "usando as opções de visualização do calendário."
 
-#: modules/calendar/calendar.php:2494
+#: modules/calendar/calendar.php:2533
 #: modules/custom-status/custom-status.php:1881
 #: modules/dashboard/dashboard.php:367 modules/dashboard/dashboard.php:390
 #: modules/dashboard/dashboard.php:424
 msgid "Disabled"
 msgstr "Desativado"
 
-#: modules/calendar/calendar.php:2495
+#: modules/calendar/calendar.php:2534
 #: modules/custom-status/custom-status.php:1882
 #: modules/dashboard/dashboard.php:368 modules/dashboard/dashboard.php:391
 #: modules/dashboard/dashboard.php:425
 msgid "Enabled"
 msgstr "Ativado"
 
-#: modules/calendar/calendar.php:2513
+#: modules/calendar/calendar.php:2552
 msgid "Regenerate calendar feed secret"
 msgstr "Regenerar o feed secreto do calendário"
 
-#: modules/calendar/calendar.php:2645
+#: modules/calendar/calendar.php:2684
 msgid "Publishing Time"
 msgstr "Hora de publicação"
 
-#: modules/calendar/calendar.php:2646 modules/calendar/calendar.php:3189
-#: modules/calendar/calendar.php:3267
+#: modules/calendar/calendar.php:2685 modules/calendar/calendar.php:3228
+#: modules/calendar/calendar.php:3306
 #: modules/custom-status/lib/custom-status-block.jsx:144
 msgid "Post Status"
 msgstr "Status do post"
 
-#: modules/calendar/calendar.php:2701
+#: modules/calendar/calendar.php:2740
 msgid "All posts"
 msgstr "Todos os posts"
 
-#: modules/calendar/calendar.php:2977
+#: modules/calendar/calendar.php:3016
 msgid "Invalid input"
 msgstr "Entrada inválida"
 
-#: modules/calendar/calendar.php:2983
+#: modules/calendar/calendar.php:3022
 msgid "Post not found"
 msgstr "Artigo não encontrado"
 
-#: modules/calendar/calendar.php:2988
+#: modules/calendar/calendar.php:3027
 msgid "No enough permissions"
 msgstr "Sem permissões suficientes"
 
-#: modules/calendar/calendar.php:2997
+#: modules/calendar/calendar.php:3036
 msgid "Invalid date"
 msgstr "Data inválida"
 
-#: modules/calendar/calendar.php:3204
+#: modules/calendar/calendar.php:3243
 msgid "Tag"
 msgid_plural "Tags"
 msgstr[0] "Etiqueta"
 msgstr[1] "Etiquetas"
 
-#: modules/calendar/calendar.php:3273
+#: modules/calendar/calendar.php:3312
 msgid "Publish Time"
 msgstr "Tempo de publicação"
 
-#: modules/calendar/calendar.php:3301
+#: modules/calendar/calendar.php:3340
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: modules/calendar/calendar.php:3354
+#: modules/calendar/calendar.php:3393
 msgid "No date supplied."
 msgstr "Nenhuma data informada."
 
-#: modules/calendar/calendar.php:3365
+#: modules/calendar/calendar.php:3404
 msgid "The selected post type is not enabled for the calendar."
 msgstr "O tipo de post não está configurado para o calendário."
 
-#: modules/calendar/calendar.php:3371
-#: modules/calendar/lib/async-calendar/js/Item.jsx:9
-msgid "Untitled"
-msgstr "Sem título"
-
-#: modules/calendar/calendar.php:3395
+#: modules/calendar/calendar.php:3434
 msgid "Invalid Status supplied."
 msgstr "Status inválido fornecido."
 
-#: modules/calendar/calendar.php:3419
+#: modules/calendar/calendar.php:3458
 msgid "Invalid Publish Date supplied."
 msgstr "Data de publicação inválida fornecida."
 
-#: modules/calendar/calendar.php:3488
+#: modules/calendar/calendar.php:3527
 msgid "Post created successfully"
 msgstr "Post criado com sucesso"
 
-#: modules/calendar/calendar.php:3495
+#: modules/calendar/calendar.php:3534
 msgid "Post could not be created"
 msgstr "Post não pôde ser criado"
 
-#: modules/calendar/calendar.php:3613
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:56
-msgid "All statuses"
-msgstr "Todos os status"
-
-#: modules/calendar/calendar.php:3630
+#: modules/calendar/calendar.php:3669
 #: modules/content-overview/content-overview.php:1012
 msgid "View all categories"
 msgstr "Ver todas as categorias"
 
-#: modules/calendar/calendar.php:3648
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:71
-msgid "All tags"
-msgstr "Todas as tags"
-
-#: modules/calendar/calendar.php:3669
-#: modules/content-overview/content-overview.php:1033
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:82
-msgid "All authors"
-msgstr "Todos os autores"
-
-#: modules/calendar/calendar.php:3696
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:90
-msgid "All types"
-msgstr "Todos os tipos"
-
-#: modules/calendar/calendar.php:3721
+#: modules/calendar/calendar.php:3760
 msgid "%s week"
 msgid_plural "%s weeks"
 msgstr[0] "%s semana"
 msgstr[1] "%s semanas"
 
-#: modules/calendar/calendar.php:3844
+#: modules/calendar/calendar.php:3883
 msgid ""
 "The selected user doesn't have enough permissions to be set as the post "
 "author."
@@ -2728,131 +2865,6 @@ msgstr ""
 msgid "Warning"
 msgstr "Aviso"
 
-#: modules/calendar/lib/async-calendar/js/AsyncCalendar.jsx:177
-msgid "Moving the item..."
-msgstr "Movendo o item..."
-
-#: modules/calendar/lib/async-calendar/js/fields/TaxonomyField.jsx:27
-msgid "No terms"
-msgstr "Sem termos"
-
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:39
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] "%s semana"
-msgstr[1] "%s semanas"
-
-#: modules/calendar/lib/async-calendar/js/FilterBar.jsx:61
-msgid "All categories"
-msgstr "Todas as categorias"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:113
-msgid "Jan"
-msgstr "Jan"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:114
-msgid "Feb"
-msgstr "Fev"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:115
-msgid "Mar"
-msgstr "Mar"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:116
-msgid "Apr"
-msgstr "Abr"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:117
-msgid "May"
-msgstr "Mai"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:118
-msgid "Jun"
-msgstr "Jun"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:119
-msgid "Jul"
-msgstr "Jul"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:120
-msgid "Aug"
-msgstr "Ago"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:121
-msgid "Sep"
-msgstr "Set"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:122
-msgid "Oct"
-msgstr "Out"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:123
-msgid "Nov"
-msgstr "Nov"
-
-#: modules/calendar/lib/async-calendar/js/Functions.jsx:124
-msgid "Dec"
-msgstr "Dez"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:328
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:334
-msgid "Saving..."
-msgstr "Salvando..."
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:333
-msgid "Save and edit"
-msgstr "Salvar e editar"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:377
-msgid "Add content for %s"
-msgstr "Adicionar conteúdo para %s"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:391
-msgid "Post type not found"
-msgstr "Tipo de post não encontrado"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:434
-#: modules/calendar/lib/async-calendar/js/ItemPopup.jsx:179
-msgid "Close"
-msgstr "Fechar"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:441
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:454
-msgid "Post type:"
-msgstr "Tipo de post:"
-
-#: modules/calendar/lib/async-calendar/js/ItemFormPopup.jsx:468
-msgid "Please, wait! Loading the form fields..."
-msgstr "Por favor, aguarde! Carregando os campos do formulário..."
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:6
-msgid "Sun"
-msgstr "Dom"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:7
-msgid "Mon"
-msgstr "Seg"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:8
-msgid "Tue"
-msgstr "Ter"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:9
-msgid "Wed"
-msgstr "Qua"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:10
-msgid "Thu"
-msgstr "Qui"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:11
-msgid "Fri"
-msgstr "Sex"
-
-#: modules/calendar/lib/async-calendar/js/WeekDays.jsx:12
-msgid "Sat"
-msgstr "Sáb"
-
 #: modules/custom-status/lib/custom-status-block.jsx:63
 msgid "Unschedule and Save as %s"
 msgstr "Desprogramar e Salvar como %s"
@@ -3069,12 +3081,6 @@ msgstr "por"
 
 #~ msgid "Weeks"
 #~ msgstr "Semanas"
-
-#~ msgid "Download .ics file"
-#~ msgstr "Baixar o arquivo .ics"
-
-#~ msgid "Copy to the clipboard"
-#~ msgstr "Copie para a área de transferência"
 
 #~ msgid "Post moved to the trash."
 #~ msgid_plural "%d posts moved to the trash."
