@@ -70,6 +70,7 @@ if (! class_exists('PP_Theeventscalendar_Integration')) {
         public function init()
         {
             add_action('publishpress_after_moving_calendar_item', [$this, 'afterMovingCalendarItem'], 10, 2);
+            add_filter('pp_calendar_posts_query_args', [$this, 'disablePluginQueryFilters']);
         }
 
         public function afterMovingCalendarItem($postId, $newDate)
@@ -90,6 +91,22 @@ if (! class_exists('PP_Theeventscalendar_Integration')) {
 
             update_post_meta($postId, '_EventEndDate', $endDate);
             update_post_meta($postId, '_EventEndDateUTC', get_gmt_from_date($endDate));
+        }
+
+        /**
+         * We suppress the query filters for the plugin because it was messing
+         * with the calendar data, showing events on different dates depending
+         * on the post type filtering. For more details, check the issue #1020.
+         *
+         * @param $args
+         * @return mixed
+         */
+        public function disablePluginQueryFilters($args)
+        {
+            // @todo: Instead of suppressing the filters, maybe we should apply the same filters even if the post type is not set in the query?
+            $args['tribe_suppress_query_filters'] = true;
+
+            return $args;
         }
     }
 }
