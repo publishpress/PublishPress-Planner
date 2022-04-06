@@ -617,7 +617,7 @@ class PP_Content_Overview extends PP_Module
 
         $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
-        if ( (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date'])) ) {
+        if ((empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
             $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +1 day'));
         }
 
