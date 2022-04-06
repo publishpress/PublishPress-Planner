@@ -303,15 +303,16 @@ class PP_Content_Overview extends PP_Module
         
         foreach ($taxonomies as $taxonomy) {
             $value = $taxonomy->name;
-            $label = $taxonomy->label . '('.$value.')';//some taxonomy can have same public name, so we should put unique name in bracket
+            $label = $taxonomy->label . '(' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
-            if($value ==='post_status'){
+            if ($value ==='post_status') {
                 continue;
             }
 
-            echo '<label for="taxonomy-'.esc_attr($value).'">';
-            echo '<input id="taxonomy-'.esc_attr($value).'" name="' . esc_attr($this->module->options_group_name) . '[taxonomies]['.esc_attr( $value ).']"';
+            echo '<label for="' . esc_attr('taxonomy-' . $value) . '">';
+            echo '<input id="' . esc_attr('taxonomy-' . $value) . '" 
+                        name="' . esc_attr($this->module->options_group_name . '[taxonomies][' . $value . ']') . '"';
             if (isset($this->module->options->taxonomies[$value])) {
                 checked($this->module->options->taxonomies[$value], 'on');
             }
@@ -386,7 +387,7 @@ class PP_Content_Overview extends PP_Module
             $this->module->post_type_support
         );
 
-        if (! isset($new_options['taxonomies'])) {
+        if (!isset($new_options['taxonomies'])) {
             $new_options['taxonomies'] = [];
         }
 
@@ -823,8 +824,8 @@ class PP_Content_Overview extends PP_Module
         ];
 
         //add taxonomies to filter
-        foreach($this->module->options->taxonomies as $taxonomy => $status){
-            if($status == 'on'){
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
                 $user_filters[$taxonomy] = $this->filter_get_param($taxonomy);
             }
         }
@@ -1027,8 +1028,8 @@ class PP_Content_Overview extends PP_Module
 
         $select_filter_names['post_status'] = 'post_status';
         //taxonomies
-        foreach($this->module->options->taxonomies as $taxonomy => $status){
-            if($status == 'on'){
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
                 $select_filter_names[$taxonomy] = $taxonomy;
             }
         }
@@ -1041,7 +1042,7 @@ class PP_Content_Overview extends PP_Module
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
 
-        if(array_key_exists($select_id, $this->module->options->taxonomies) && taxonomy_exists($select_id)){
+        if (array_key_exists($select_id, $this->module->options->taxonomies) && taxonomy_exists($select_id)) {
             $select_id = 'taxonomy';
         }
 
@@ -1070,13 +1071,15 @@ class PP_Content_Overview extends PP_Module
                 ?>
                 <select 
                     class="filter_taxonomy" 
-                    id="filter_taxonomy_<?php echo $select_name; ?>" 
-                    data-taxonomy="<?php echo $select_name; ?>" 
-                    name="<?php echo $select_name; ?>"
+                    id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
+                    data-taxonomy="<?php echo esc_attr($select_name); ?>" 
+                    name="<?php echo esc_attr($select_name); ?>"
                     >
-                    <option value=""><?php echo sprintf(__( 'View all %s', 'publishpress' ), $taxonomy->label); ?></option>
+                    <option value="">
+                        <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
+                    </option>
                     <?php
-                    if (! empty($taxonomyiD)) {
+                    if (!empty($taxonomyiD)) {
                         $term = get_term($taxonomyiD, $select_name);
 
                         echo "<option value='" . esc_attr($taxonomyiD) . "' selected='selected'>" . esc_html(
@@ -1279,27 +1282,26 @@ class PP_Content_Overview extends PP_Module
         //taxonomy filter
         $tax_query = array( 'relation' => 'AND' );
         $taxonomy_filter = false;
-        foreach($this->module->options->taxonomies as $taxonomy => $status){
-            if($status == 'on' && ! empty($this->user_filters[$taxonomy])){
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on' && ! empty($this->user_filters[$taxonomy])) {
                 $taxonomy_filter = true;
                 $tax_query[] = array(
-					'taxonomy' => $taxonomy,
-					'field'    => 'term_id',
-					'terms' => $this->user_filters[$taxonomy],
-                    'include_children' => true,
-                    'operator' => 'IN',
-				);
+                      'taxonomy' => $taxonomy,
+                      'field'     => 'term_id',
+                      'terms'    => $this->user_filters[$taxonomy],
+                      'include_children' => true,
+                      'operator' => 'IN',
+                );
             }
         }
 
-        if($taxonomy_filter){
+        if ($taxonomy_filter) {
             $args['tax_query'] = $tax_query;
         }
 
         /**
          *  I don't know if we need this again since we're now 
          *  considering dynamic and multiple taxonomies ?
-         * 
          **/
         /*if ($postType === 'post' && ! empty($term)) {
             // Filter to the term and any children if it's hierarchical
@@ -1664,7 +1666,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-        $taxonomy  = ( isset($_GET['taxonomy']) && !empty(trim($_GET['taxonomy'])) ) ? sanitize_text_field($_GET['taxonomy']) : 'category';
+        $taxonomy  = (isset($_GET['taxonomy']) && !empty(trim($_GET['taxonomy']))) ? sanitize_text_field($_GET['taxonomy']) : 'category';
         
         global $wpdb;
 
