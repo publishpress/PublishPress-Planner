@@ -1060,8 +1060,8 @@ class PP_Content_Overview extends PP_Module
                 
                 case 'search_box':
                     ?>
-                    <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php _e('Search box', 'publishpress'); ?>" />
-                    <?php submit_button(__('Search', 'publishpress'), '', '', false, ['id' => $select_id . 'search-submit']); ?>
+                    <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
+                    <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => esc_attr($select_id) . 'search-submit']); ?>
                     <?php
                     break;
 
