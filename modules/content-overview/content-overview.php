@@ -750,9 +750,9 @@ class PP_Content_Overview extends PP_Module
 
         if (!class_exists('PP_Editorial_Metadata')) {
             $filterable_metadata = [];
-        }else{
+        } else {
             $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_filters' => true]);
-            foreach($editorial_metadata_terms as $term){
+            foreach ($editorial_metadata_terms as $term) {
                 $filterable_metadata[$term->slug] = $term;
             }
         }
@@ -778,12 +778,12 @@ class PP_Content_Overview extends PP_Module
         ];
 
         //add metadata to filter
-        foreach($this->get_filterable_metadata() as $meta_key => $meta_term){
-            if($meta_term->type === 'checkbox'){
+        foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
+            if ($meta_term->type === 'checkbox') {
                 $user_filters[$meta_key] = absint($this->filter_get_param($meta_key));
-            }elseif($meta_term->type === 'date'){
+            } elseif ($meta_term->type === 'date') {
                 $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
-            }else{
+            } else {
                 $user_filters[$meta_key] = $this->filter_get_param($meta_key);
             }
         }
@@ -965,7 +965,7 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
                     } ?>
-                    <?php submit_button(__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
+                    <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
@@ -1008,7 +1008,7 @@ class PP_Content_Overview extends PP_Module
         $select_filter_names['post_status'] = 'post_status';
 
         //metadata field
-        foreach($this->get_filterable_metadata() as $meta_key => $meta_term){
+        foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             $select_filter_names[$meta_key] = $meta_key;
         }
 
@@ -1025,7 +1025,7 @@ class PP_Content_Overview extends PP_Module
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
 
-        if(array_key_exists($select_id, $this->get_filterable_metadata())){
+        if (array_key_exists($select_id, $this->get_filterable_metadata())) {
             $select_id = 'metadata_key';
         }
 
@@ -1123,16 +1123,16 @@ class PP_Content_Overview extends PP_Module
                 $metadata_term  = $this->get_filterable_metadata()[$select_name];
                 $metadata_type  = $metadata_term->type;
 
-                if(in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date'])){ ?>
+                if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date'])) { ?>
                     <input 
                         type="text" 
-                        id="metadata_key_<?php echo $select_name; ?>" 
-                        name="<?php echo $select_name; ?>" 
-                        value="<?php echo $metadata_value; ?>" 
-                        placeholder="<?php echo $metadata_term->name; ?>"
+                        id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                        name="<?php echo esc_attr($select_name); ?>" 
+                        value="<?php echo esc_attr($metadata_value); ?>" 
+                        placeholder="<?php echo esc_attr($metadata_term->name); ?>"
                         />
                 <?php
-                }elseif($metadata_type === 'user'){ 
+                } elseif ($metadata_type === 'user') { 
                     $user_dropdown_args = [
                         'show_option_all' => $metadata_term->name,
                         'name' => $select_name,
@@ -1141,15 +1141,17 @@ class PP_Content_Overview extends PP_Module
                     ];
                     $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
                     wp_dropdown_users($user_dropdown_args);
-                }elseif($metadata_type === 'checkbox'){ ?>
+                } elseif ($metadata_type === 'checkbox') { ?>
                     <input 
                         type="checkbox" 
-                        id="metadata_key_<?php echo $select_name; ?>" 
-                        name="<?php echo $select_name; ?>" 
+                        id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                        name="<?php echo esc_attr($select_name); ?>" 
                         value="1"
-                        <?php checked( $metadata_value, 1 ); ?>
+                        <?php checked($metadata_value, 1); ?>
                         />
-                    <label for="metadata_key_<?php echo $select_name; ?>"><?php echo $metadata_term->name; ?></label>
+                    <label for="<?php echo esc_attr('metadata_key_' . $select_name); ?>">
+                        <?php echo $metadata_term->name; ?>
+                    </label>
                 <?php
                 }
                 break;
@@ -1295,22 +1297,22 @@ class PP_Content_Overview extends PP_Module
         //metadata field filter
         $meta_query = array( 'relation' => 'AND' );
         $metadata_filter = false;
-        foreach($this->get_filterable_metadata() as $meta_key => $metadata_term){
-            if(! empty($this->user_filters[$meta_key])){
-                if($metadata_term->type === 'date'){
+        foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
+            if (! empty($this->user_filters[$meta_key])) {
+                if ($metadata_term->type === 'date') {
                     $meta_value = strtotime($this->user_filters[$meta_key]);
-                }else{
+                } else {
                     $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
                 }
                 $metadata_filter = true;
                 $meta_query[] = array(
-					'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
-					'value' => $meta_value,
+                    'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
+                    'value' => $meta_value,
                     'compare' => '='
-				);
+                );
             }
         }
-        if($metadata_filter){
+        if ($metadata_filter) {
             $args['meta_query'] = $meta_query;
         }
 

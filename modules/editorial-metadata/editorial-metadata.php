@@ -1601,7 +1601,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 } else {
                     $show_in_filters = 'no';
                 }
-                $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters; ?>
+                $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters; 
+                ?>
 
                 <form method='post' ; action="<?php
                 echo esc_url($edit_term_link); ?>">
@@ -1696,12 +1697,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field'>
                             <th scope='row' ; valign='top'><?php
-                                _e('Show in filters', 'publishpress'); ?></th>
+                                esc_html_e('Show in filters', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $metadata_show_in_filters_options = [
-                                    'no' => __('No', 'publishpress'),
-                                    'yes' => __('Yes', 'publishpress'),
+                                    'no' => esc_html__('No', 'publishpress'),
+                                    'yes' => esc_html__('Yes', 'publishpress'),
                                 ]; ?>
                                 <select id='show_in_filters' ; name='show_in_filters'>
                                     <?php
@@ -1716,7 +1717,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_filters',
-                                    __(
+                                    esc_html__(
                                         'When Show in filters, metadata will be available as filter option on content overview screen.',
                                         'publishpress'
                                     )
@@ -1875,11 +1876,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     </div>
                                     <div class='form-field form-required'>
                                         <label for='metadata_show_in_filters'><?php
-                                            _e('Show in filters', 'publishpress'); ?></label>
+                                            esc_html_e('Show in filters', 'publishpress'); ?></label>
                                         <?php
                                         $metadata_show_in_filters_options = [
-                                            'no' => __('No', 'publishpress'),
-                                            'yes' => __('Yes', 'publishpress'),
+                                            'no' => esc_html__('No', 'publishpress'),
+                                            'yes' => esc_html__('Yes', 'publishpress'),
                                         ];
                                         $current_metadata_show_in_filters = (isset($_POST['metadata_show_in_filters']) && in_array(
                                                 $_POST['metadata_show_in_filters'],
@@ -1898,7 +1899,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_filters',
-                                            __(
+                                            esc_html__(
                                                 'When Show in filters, metadata will be available as filter option on content overview screen.',
                                                 'publishpress'
                                             )
