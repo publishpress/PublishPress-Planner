@@ -27,6 +27,7 @@ To release the Free plugin please make sure to check all the checkboxes below.
 - [ ] Create the Github release (make sure it is based on the `master` branch and correct tag)
 
 #### SVN Repo
+- [ ] Update your working copy using `$ svn update`
 - [ ] Cleanup the `trunk` directory.
 - [ ] Unzip the built package and move files to the `trunk`
 - [ ] Remove any eventual file that shouldn't be released in the package (if you find anything, make sure to create an issue to fix the build script)
