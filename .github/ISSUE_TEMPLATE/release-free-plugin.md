@@ -34,5 +34,5 @@ To release the Free plugin please make sure to check all the checkboxes below.
 - [ ] Look for new files `$ svn status | grep \?` and add them using `$ svn add <each_file_path>`
 - [ ] Look for removed files `$ svn status | grep !` and remove them `$ svn rm <each_file_path>`
 - [ ] Create the new tag `$ svn cp trunk tags/<version>`
-- [ ] Commit the changes `$ svn ci 'Releasing <version>'`
+- [ ] Commit the changes `$ svn ci -m 'Releasing <version>'`
 - [ ] Wait until WordPress updates the version number and make the final test updating the plugin in a staging site
