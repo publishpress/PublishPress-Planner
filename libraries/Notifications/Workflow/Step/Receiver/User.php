@@ -64,7 +64,6 @@ class User extends Simple_Checkbox implements Receiver_Interface
     {
         // Get Users
         $args  = [
-            'who'     => 'authors',
             'fields'  => [
                 'ID',
                 'display_name',
