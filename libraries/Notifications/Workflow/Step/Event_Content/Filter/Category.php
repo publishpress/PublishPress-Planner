@@ -78,7 +78,10 @@ class Category extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['category'])) {
             $values = [];
         } else {
-            $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['category'];
+            $values = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['category']
+            );
         }
 
         $this->update_metadata_array($id, static::META_KEY_CATEGORY, $values);

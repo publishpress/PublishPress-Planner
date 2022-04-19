@@ -82,7 +82,8 @@ class Base extends Base_Step
             update_post_meta($id, static::META_KEY_SELECTED, false);
         }
 
-        $params = $_POST['publishpress_notif'];
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $params = $this->sanitize_metabox_data($_POST['publishpress_notif']);
 
         if (isset($params[$this->attr_prefix])) {
             // Is selected in the events?
@@ -97,6 +98,17 @@ class Base extends Base_Step
                 $filter->save_metabox_data($id, $post);
             }
         }
+    }
+
+    protected function sanitize_metabox_data($data)
+    {
+        if (isset($data[$this->attr_prefix])) {
+            $data[$this->attr_prefix] = array_values($data[$this->attr_prefix]);
+            $data[$this->attr_prefix] = array_map('sanitize_key', $data[$this->attr_prefix]);
+        }
+
+        // Additional sanitization is made inside the Filter classes.
+        return $data;
     }
 
     /**

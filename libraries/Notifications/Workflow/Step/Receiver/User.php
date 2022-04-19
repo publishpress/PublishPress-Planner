@@ -46,7 +46,10 @@ class User extends Simple_Checkbox implements Receiver_Interface
             // Assume it is disabled
             $values = [];
         } else {
-            $values = $_POST['publishpress_notif']['receiver_user'];
+            $values = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']['receiver_user']
+            );
         }
 
         $this->update_metadata_array($id, static::META_LIST_KEY, $values);

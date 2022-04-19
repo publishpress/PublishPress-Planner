@@ -1,15 +1,13 @@
-const {__} = wp.i18n;
-
 export default function WeekDays(props) {
     const DAYS_ON_A_WEEK = 7;
     const weekDayLabels = [
-        __('Sun', 'publishpress'),
-        __('Mon', 'publishpress'),
-        __('Tue', 'publishpress'),
-        __('Wed', 'publishpress'),
-        __('Thu', 'publishpress'),
-        __('Fri', 'publishpress'),
-        __('Sat', 'publishpress'),
+        props.strings.weekDaySun,
+        props.strings.weekDayMon,
+        props.strings.weekDayTue,
+        props.strings.weekDayWed,
+        props.strings.weekDayThu,
+        props.strings.weekDayFri,
+        props.strings.weekDaySat,
     ];
 
     let weekDays = [];

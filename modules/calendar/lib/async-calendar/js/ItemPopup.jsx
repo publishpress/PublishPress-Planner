@@ -12,7 +12,6 @@ import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
 import TimeField from "./fields/TimeField";
 
-const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function ItemPopup(props) {
@@ -176,7 +175,7 @@ export default function ItemPopup(props) {
                 {props.title}
 
                 <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
-                      title={__('Close', 'publishpress')} onClick={closePopup}/>
+                      title={props.strings.close} onClick={closePopup}/>
             </div>
             <table>
                 <tbody>

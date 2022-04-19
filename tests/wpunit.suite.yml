@@ -8,6 +8,7 @@ modules:
     - WPLoader
     - \Helper\Wpunit
     - Asserts
+    - WPDb
   config:
     WPLoader:
       wpRootFolder: "%WP_ROOT_FOLDER%"
@@ -22,4 +23,16 @@ modules:
       plugins: [ 'publishpress/publishpress.php' ]
       activatePlugins: [ 'publishpress/publishpress.php' ]
       isolatedInstall: true
+    WPDb:
+      dsn: '%TEST_SITE_DB_DSN%'
+      user: '%TEST_SITE_DB_USER%'
+      password: '%TEST_SITE_DB_PASSWORD%'
+      dump: 'tests/_data/dump.sql'
+      populate: true
+      cleanup: false
+      waitlock: 10
+      url: '%TEST_SITE_WP_URL%'
+      urlReplacement: true #replace the hardcoded dump URL with the one above
+      tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
+      originalUrl: '%TEST_SITE_WP_URL%'
 bootstrap: _bootstrap.php

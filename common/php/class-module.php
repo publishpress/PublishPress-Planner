@@ -299,11 +299,6 @@ if (!class_exists('PP_Module')) {
          */
         public function enqueue_datepicker_resources()
         {
-            // Add the first day of the week as an available variable to wp_head
-            echo '<script type="text/javascript">var pp_week_first_day="' . esc_attr(
-                    get_option('start_of_week')
-                ) . '";</script>';
-
             // Datepicker is available WordPress 3.3. We have to register it ourselves for previous versions of WordPress
             wp_enqueue_script('jquery-ui-datepicker');
 
@@ -352,6 +347,7 @@ if (!class_exists('PP_Module')) {
                 'objectL10ndate',
                 [
                     'date_format' => pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format')),
+                    'week_first_day' => esc_js(get_option('start_of_week')),
                 ]
             );
         }
@@ -450,7 +446,7 @@ if (!class_exists('PP_Module')) {
          * @todo  Think of a creative way to make this work
          *
          */
-        public function is_whitelisted_functional_view($module_name = null)
+        protected function is_whitelisted_functional_view($module_name = null)
         {
             return true;
         }
@@ -490,56 +486,6 @@ if (!class_exists('PP_Module')) {
                 if (isset($_GET['settings_module']) && $_GET['settings_module'] === 'pp-' . $slug . '-settings') {
                     return true;
                 }
-            }
-
-            return false;
-        }
-
-        /**
-         * Remove term(s) associated with a given object(s). Core doesn't have this as of 3.2
-         *
-         * @see    http://core.trac.wordpress.org/ticket/15475
-         *
-         * @author ericmann
-         * @compat 3.3?
-         *
-         * @param int|array $object_ids The ID(s) of the object(s) to retrieve.
-         * @param int|array $terms The ids of the terms to remove.
-         * @param string|array $taxonomies The taxonomies to retrieve terms from.
-         *
-         * @return bool|WP_Error Affected Term IDs
-         */
-        public function remove_object_terms($object_id, $terms, $taxonomy)
-        {
-            global $wpdb;
-
-            if (!taxonomy_exists($taxonomy)) {
-                return new WP_Error('invalid_taxonomy', __('Invalid Taxonomy'));
-            }
-
-            if (!is_array($object_id)) {
-                $object_id = [$object_id];
-            }
-
-            if (!is_array($terms)) {
-                $terms = [$terms];
-            }
-
-            $delete_objects = array_map('intval', $object_id);
-            $delete_terms   = array_map('intval', $terms);
-
-            if ($delete_terms) {
-                $in_delete_terms   = "'" . implode("', '", $delete_terms) . "'";
-                $in_delete_objects = "'" . implode("', '", $delete_objects) . "'";
-                $return            = $wpdb->query(
-                    $wpdb->prepare(
-                        "DELETE FROM $wpdb->term_relationships WHERE object_id IN ($in_delete_objects) AND term_taxonomy_id IN ($in_delete_terms)",
-                        $object_id
-                    )
-                );
-                wp_update_term_count($delete_terms, $taxonomy);
-
-                return true;
             }
 
             return false;
@@ -686,7 +632,6 @@ if (!class_exists('PP_Module')) {
             extract($parsed_args, EXTR_SKIP);
 
             $args = [
-                'who'     => 'authors',
                 'fields'  => [
                     'ID',
                     'display_name',
