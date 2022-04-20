@@ -18,7 +18,7 @@
  *
  * @package     PublishPress
  * @author      PublishPress
- * @copyright   Copyright (C) 2020 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  */
 
 class RoboFile extends \PublishPressBuilder\PackageBuilderTasks

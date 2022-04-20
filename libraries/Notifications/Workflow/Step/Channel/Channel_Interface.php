@@ -2,7 +2,7 @@
 /**
  * @package     PublishPress\Slack
  * @author      PublishPress <help@publishpress.com>
- * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */

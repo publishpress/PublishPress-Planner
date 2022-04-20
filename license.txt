@@ -1,6 +1,6 @@
 PublishPress - Editorial workflow for WordPress
 
-Copyright 2017 by the contributors
+Copyright 2022 by the contributors
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ and
 
   PublishPress - Editorial workflow for WordPress
 
-  PublishPress is Copyright (c) 2018 PublishPress
+  PublishPress is Copyright (c) 2022 PublishPress
 
   PublishPress is released under the GPL
 

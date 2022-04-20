@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -1073,7 +1073,7 @@ class PP_Content_Overview extends PP_Module
                 </select>
                 <?php
                 break;
-                
+
                 case 'search_box':
                     ?>
                     <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
