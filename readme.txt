@@ -86,7 +86,7 @@ Join PublishPress and you'll get access to these Pro plugins:
 * [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series 
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
@@ -103,10 +103,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 1. Editorial Calendar: Using the PublishPress Calendar, you’re able to see when content is planned, and when it is published.
 2. Notifications: PublishPress Notifications keeps you and your team up to date on changes to important content.
 3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
-4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”. 
+4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”.
 5. Editorial Comments: PublishPress allows you to leave comments under each post you write.
 6. Reminder Notifications: The PublishPress Pro feature allows you to send notifications either before or after the publishing date for content.
-7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack. 
+7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack.
 
 == Frequently Asked Questions ==
 
@@ -125,9 +125,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed: Fix performance, removing automatic deactivation of Edit Flow, replacing it by a simple admin notice, #998;
 * Fixed: Fix PHP error on customizer, due to a inline JS script added by mistake out of the head tag, #562;
+* Fixed: Fix drag and drop of pending posts, #1015;
+* Fixed: Fix integration with The Events Calendar for moving events in the calendar, #1016;
+* Fixed: Updated POT file, pt_BR, es_ES, fr_FR and it_IT translations;
+* Fixed: Fix warning about WP_User_Query being called with an argument that is deprecated, #1014;
+* Fixed: Fix conflict with The Events Calendar query, forcing to display event items in the calendar based on the post_date, #1020;
+* Fixed: Removed duplicated `event` param from the workflow action;
+* Fixed: Change the action used to trigger post status transition notifications, from `transition_post_status` to `wp_after_insert_post`, #940, #671;
+* Fixed: Fix the nonce check for the bulk actions on the notifications log, #1019;
 * Added: Add select field for the custom fields API to the calendar popup, #1010;
-* Added: Add admin notice and error log if the plugin is loaded multiple times;
+* Added: Add admin notice and error log if the plugin is loaded multiple times, #808;
 * Added: Add a search box to content overview screen #972;
+* Added: Add filter "publishpress_calendar_data_args" allowing to customize the query of posts on the calendar, #1017;
 
 = [3.7.0] - 02 fev 2022 =
 
