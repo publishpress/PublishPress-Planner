@@ -134,7 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Fixed: Change the action used to trigger post status transition notifications, from `transition_post_status` to `wp_after_insert_post`, #940, #671;
 * Fixed: Fix the nonce check for the bulk actions on the notifications log, #1019;
 * Added: Add select field for the custom fields API to the calendar popup, #1010;
-* Added: Add admin notice and error log if the plugin is loaded multiple times, #808;
+* Fixed: Fix performance issue with file i/o usage when trying to disable deprecated plugins on every request, #808;
 * Added: Add a search box to content overview screen #972;
 * Added: Add filter "publishpress_calendar_data_args" allowing to customize the query of posts on the calendar, #1017;
 
