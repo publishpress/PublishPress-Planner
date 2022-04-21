@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -703,6 +703,50 @@ if (! class_exists('PP_Calendar')) {
                             'publishpress_calendar_allow_multiple_authors',
                             false
                         ),
+                        'strings' => [
+                            'loading' => esc_js(__('Loading...', 'publishpress')),
+                            'loadingItem' => esc_js(__('Loading item...', 'publishpress')),
+                            'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
+                            'movingTheItem' => esc_js(__('Moving the item...', 'publishpress')),
+                            'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
+                            'untitled' => esc_js(__('Untitled', 'publishpress')),
+                            'close' => esc_js(__('Close', 'publishpress')),
+                            'save' => esc_js(__('Save', 'publishpress')),
+                            'saving' => esc_js(__('Saving...', 'publishpress')),
+                            'saveAndEdit' => esc_js(__('Save and edit', 'publishpress')),
+                            'addContentFor' => esc_js(__('Add content for %s', 'publishpress')),
+                            'postTypeNotFound' => esc_js(__('Post type not found', 'publishpress')),
+                            'postType' => esc_js(__('Post type:', 'publishpress')),
+                            'pleaseWaitLoadingFormFields' => esc_js(__('Please, wait! Loading the form fields...', 'publishpress')),
+                            'weekDaySun' => esc_js(__('Sun', 'publishpress')),
+                            'weekDayMon' => esc_js(__('Mon', 'publishpress')),
+                            'weekDayTue' => esc_js(__('Tue', 'publishpress')),
+                            'weekDayWed' => esc_js(__('Wed', 'publishpress')),
+                            'weekDayThu' => esc_js(__('Thu', 'publishpress')),
+                            'weekDayFri' => esc_js(__('Fri', 'publishpress')),
+                            'weekDaySat' => esc_js(__('Sat', 'publishpress')),
+                            'monthJan' => esc_js(__('Jan', 'publishpress')),
+                            'monthFeb' => esc_js(__('Feb', 'publishpress')),
+                            'monthMar' => esc_js(__('Mar', 'publishpress')),
+                            'monthApr' => esc_js(__('Apr', 'publishpress')),
+                            'monthMay' => esc_js(__('May', 'publishpress')),
+                            'monthJun' => esc_js(__('Jun', 'publishpress')),
+                            'monthJul' => esc_js(__('Jul', 'publishpress')),
+                            'monthAug' => esc_js(__('Aug', 'publishpress')),
+                            'monthSep' => esc_js(__('Sep', 'publishpress')),
+                            'monthOct' => esc_js(__('Oct', 'publishpress')),
+                            'monthNov' => esc_js(__('Nov', 'publishpress')),
+                            'monthDec' => esc_js(__('Dec', 'publishpress')),
+                            'allStatuses' => esc_js(__('All statuses', 'publishpress')),
+                            'allCategories' => esc_js(__('All categories', 'publishpress')),
+                            'allTags' => esc_js(__('All tags', 'publishpress')),
+                            'allAuthors' => esc_js(__('All authors', 'publishpress')),
+                            'allTypes' => esc_js(__('All types', 'publishpress')),
+                            'xWeek' => esc_js(__('%d week', 'publishpress')),
+                            'xWeeks' => esc_js(__('%d weeks', 'publishpress')),
+                            'today' => esc_js(__('Today', 'publishpress')),
+                            'noTerms' => esc_js(__('No terms', 'publishpress')),
+                        ]
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
 
@@ -1281,14 +1325,14 @@ if (! class_exists('PP_Calendar')) {
                        style="margin-right: 20px;" class="button">
                         <span class="dashicons dashicons-download" style="text-decoration: none"></span>
                         <?php
-                        echo esc_html__('Download .ics file'); ?></a>
+                        echo esc_html__('Download .ics file', 'publishpress'); ?></a>
 
                     <button data-clipboard-text="<?php
                     echo esc_attr($subscription_link); ?>" id="publishpress-ics-copy"
                             class="button-primary">
                         <span class="dashicons dashicons-clipboard" style="text-decoration: none"></span>
                         <?php
-                        echo esc_html__('Copy to the clipboard'); ?>
+                        echo esc_html__('Copy to the clipboard', 'publishpress'); ?>
                     </button>
                 </div>
 
@@ -2983,6 +3027,7 @@ if (! class_exists('PP_Calendar')) {
                 wp_send_json(['error' => __('No enough permissions', 'publishpress')], 403);
             }
 
+            $oldPostDate = $post->post_date;
             $postDate = null;
             try {
                 $postDate = new DateTime($post->post_date);
@@ -2998,9 +3043,16 @@ if (! class_exists('PP_Calendar')) {
                     'ID' => $postId,
                     'post_date' => $newDate,
                     'post_date_gmt' => get_gmt_from_date($newDate),
+                    'edit_date' => true,
 
                 ]
             );
+
+            /**
+             * @param int $postId
+             * @param string $newDate
+             */
+            do_action('publishpress_after_moving_calendar_item', $postId, $newDate, $oldPostDate);
 
             wp_send_json(
                 true,
@@ -3506,6 +3558,15 @@ if (! class_exists('PP_Calendar')) {
             } else {
                 $post_query_args['orderby'] = ['post_date' => 'ASC'];
             }
+
+            /**
+             * @param array $post_query_args The array with args passed to post query
+             * @param string $beginningDate The beginning date showed in the calendar
+             * @param string $endingDate The ending date showed in the calendar
+             *
+             * @return array
+             */
+            $post_query_args = apply_filters('publishpress_calendar_data_args', $post_query_args, $beginningDate, $endingDate);
 
             $postsList = $this->getCalendarDataForMultipleWeeks($post_query_args);
 

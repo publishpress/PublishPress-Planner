@@ -6,7 +6,6 @@ import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringI
 import FilterBar from "./FilterBar";
 import ItemFormPopup from "./ItemFormPopup";
 
-const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function AsyncCalendar(props) {
@@ -67,7 +66,7 @@ export default function AsyncCalendar(props) {
 
     const fetchCalendarData = () => {
         setIsLoading(true);
-        setMessage(__('Loading...', 'publishpress'));
+        setMessage(props.strings.loading);
 
         let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay);
 
@@ -117,7 +116,7 @@ export default function AsyncCalendar(props) {
         }
 
         setIsLoading(true);
-        setMessage(__('Loading item...', 'publishpress'));
+        setMessage(props.strings.loadingItem);
 
         const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + openedItemId;
         fetch(dataUrl)
@@ -174,7 +173,7 @@ export default function AsyncCalendar(props) {
         let item = itemsByDate[itemDate][itemIndex];
 
         setIsLoading(true);
-        setMessage(__('Moving the item...', 'publishpress'));
+        setMessage(props.strings.movingTheItem);
 
         const dataUrl = getUrl(props.actionMoveItem);
 
@@ -426,7 +425,8 @@ export default function AsyncCalendar(props) {
                     getOpenedItemDataCallback={getOpenedItemData}
                     ajaxUrl={props.ajaxUrl}
                     onClickItemCallback={onClickItem}
-                    onItemActionClickCallback={onPopupItemActionClick}/>
+                    onItemActionClickCallback={onPopupItemActionClick}
+                    strings={props.strings}/>
             );
 
             dayIndexInTheRow++;
@@ -503,7 +503,8 @@ export default function AsyncCalendar(props) {
                 numberOfWeeksToDisplay={numberOfWeeksToDisplay}
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
-                onChange={onFilterEventCallback}/>
+                onChange={onFilterEventCallback}
+                strings={props.strings}/>
 
             <NavigationBar
                 refreshOnClickCallback={handleRefreshOnClick}
@@ -511,12 +512,13 @@ export default function AsyncCalendar(props) {
                 backOnClickCallback={handleBackOnClick}
                 forwardOnClickCallback={handleForwardOnClick}
                 forwardPageOnClickCallback={handleForwardPageOnClick}
-                todayOnClickCallback={handleTodayOnClick}/>
+                todayOnClickCallback={handleTodayOnClick}
+                strings={props.strings}/>
 
             <table>
                 <thead>
                 <tr>
-                    <WeekDays weekStartsOnSunday={props.weekStartsOnSunday}/>
+                    <WeekDays weekStartsOnSunday={props.weekStartsOnSunday} strings={props.strings}/>
                 </tr>
                 </thead>
                 <tbody>
@@ -534,7 +536,8 @@ export default function AsyncCalendar(props) {
                 actionGetPostTypeFields={props.actionGetPostTypeFields}
                 nonce={props.nonce}
                 onCloseCallback={onCloseForm}
-                allowAddingMultipleAuthors={props.allowAddingMultipleAuthors}/>
+                allowAddingMultipleAuthors={props.allowAddingMultipleAuthors}
+                strings={props.strings}/>
             }
 
             <MessageBar showSpinner={isLoading} message={message}/>

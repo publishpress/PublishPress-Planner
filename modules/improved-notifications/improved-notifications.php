@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,6 +36,7 @@ use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
 use PublishPress\Notifications\Workflow\Step\Event\Post_StatusTransition;
+use PublishPress\Notifications\Workflow\Step\Event\Post_Update;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Filter\Post_Type as Post_Type_Filter;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
@@ -203,8 +204,8 @@ if (! class_exists('PP_Improved_Notifications')) {
 
 
             // Add action to intercept transition between post status - post save
-            add_action('transition_post_status', [$this, 'action_transition_post_status'], 999, 3);
-            add_action('transition_post_status', [$this, 'action_update_post'], 995, 3);
+            add_action('wp_after_insert_post', [$this, 'action_transition_post_status'], 999, 4);
+            add_action('wp_after_insert_post', [$this, 'action_update_post'], 995, 4);
 
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
@@ -567,13 +568,13 @@ if (! class_exists('PP_Improved_Notifications')) {
          * Action called on transitioning a post. Used to trigger the
          * controller of workflows to filter and execute them.
          *
-         * @param string $new_status
-         * @param string $old_status
+         * @param int $postId
          * @param WP_Post $post
-         *
-         * @throws Exception
+         * @param bool $update
+         * @param null|WP_Post $postBefore
+         * @return void
          */
-        public function action_transition_post_status($new_status, $old_status, $post)
+        public function action_transition_post_status($postId, $post, $update, $postBefore)
         {
             if (! $this->is_supported_post_type($post->post_type)) {
                 return;
@@ -584,20 +585,24 @@ if (! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
+            $oldStatus = 'new';
+            if (is_object($postBefore)) {
+                $oldStatus = $postBefore->post_status;
+            }
+
             // Ignores if it is saved with the same status, avoiding multiple notifications on some situations.
-            if ($old_status === $new_status) {
+            if ($oldStatus === $post->post_status) {
                 return;
             }
 
             // Go ahead and do the action to run workflows
             $params = [
-                'event' => 'transition_post_status',
                 'event' => Post_StatusTransition::EVENT_NAME,
                 'user_id' => get_current_user_id(),
                 'params' => [
-                    'post_id' => (int)$post->ID,
-                    'new_status' => $new_status,
-                    'old_status' => $old_status,
+                    'post_id' => (int)$postId,
+                    'new_status' => $post->post_status,
+                    'old_status' => $oldStatus,
                 ],
             ];
 
@@ -608,13 +613,15 @@ if (! class_exists('PP_Improved_Notifications')) {
          * Action called on updating a post. Used to trigger the
          * controller of workflows to filter and execute them.
          *
-         * @param string $new_status
-         * @param string $old_status
+         * @param int $postId
          * @param WP_Post $post
+         * @param bool $update
+         * @param null|WP_Post $postBefore
+         * @return void
          *
          * @throws Exception
          */
-        public function action_update_post($new_status, $old_status, $post)
+        public function action_update_post($postId, $post, $update, $postBefore)
         {
             if (! $this->is_supported_post_type($post->post_type)) {
                 return;
@@ -626,18 +633,23 @@ if (! class_exists('PP_Improved_Notifications')) {
             }
 
             // Ignores trashed posts, we have the status transition event.
-            if ('trash' === $new_status) {
+            if ('trash' === $post->post_status) {
                 return;
+            }
+
+            $oldStatus = 'new';
+            if (is_object($postBefore)) {
+                $oldStatus = $postBefore->post_status;
             }
 
             // Go ahead and do the action to run workflows
             $params = [
-                'event' => 'post_update',
+                'event' => Post_Update::EVENT_NAME,
                 'user_id' => get_current_user_id(),
                 'params' => [
-                    'post_id' => (int)$post->ID,
-                    'new_status' => $new_status,
-                    'old_status' => $old_status,
+                    'post_id' => (int)$postId,
+                    'new_status' => $post->post_status,
+                    'old_status' => $oldStatus,
                 ],
             ];
 

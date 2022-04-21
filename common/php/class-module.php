@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -299,11 +299,6 @@ if (!class_exists('PP_Module')) {
          */
         public function enqueue_datepicker_resources()
         {
-            // Add the first day of the week as an available variable to wp_head
-            echo '<script type="text/javascript">var pp_week_first_day="' . esc_attr(
-                    get_option('start_of_week')
-                ) . '";</script>';
-
             // Datepicker is available WordPress 3.3. We have to register it ourselves for previous versions of WordPress
             wp_enqueue_script('jquery-ui-datepicker');
 
@@ -352,6 +347,7 @@ if (!class_exists('PP_Module')) {
                 'objectL10ndate',
                 [
                     'date_format' => pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format')),
+                    'week_first_day' => esc_js(get_option('start_of_week')),
                 ]
             );
         }
@@ -636,7 +632,6 @@ if (!class_exists('PP_Module')) {
             extract($parsed_args, EXTR_SKIP);
 
             $args = [
-                'who'     => 'authors',
                 'fields'  => [
                     'ID',
                     'display_name',

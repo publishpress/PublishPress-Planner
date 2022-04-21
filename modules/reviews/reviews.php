@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2021 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * This file is part of PublishPress
  *

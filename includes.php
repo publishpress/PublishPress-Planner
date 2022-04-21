@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (! defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.7.0');
+    define('PUBLISHPRESS_VERSION', '3.7.1');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
@@ -124,7 +124,7 @@ if (! defined('PP_LOADED')) {
                         \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                         function ($settings) {
                             $settings['publishpress'] = [
-                                'message' => 'You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                                'message' => __('You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
                                 'link' => 'https://publishpress.com/links/publishpress-banner',
                                 'screens' => [
                                     ['base' => 'publishpress_page_pp-modules-settings',],
@@ -153,7 +153,7 @@ if (! defined('PP_LOADED')) {
                                     'pp-manage-roles',
                                     'pp-modules-settings',
                                 ],
-                                'label' => 'Upgrade to Pro',
+                                'label' => __('Upgrade to Pro', 'publishpress'),
                                 'link' => 'https://publishpress.com/links/publishpress-menu',
                             ];
 

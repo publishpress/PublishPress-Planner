@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -738,7 +738,7 @@ if (! class_exists('PP_Notifications_Log')) {
                 return;
             }
 
-            check_admin_referer('publishpress_notification_log_actions');
+            check_admin_referer('bulk-notifications_log');
 
             $shouldRedirect = false;
 

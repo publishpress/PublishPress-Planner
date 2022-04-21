@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -767,6 +767,7 @@ class PP_Content_Overview extends PP_Module
         $current_user = wp_get_current_user();
 
         $user_filters = [
+            'search_box' => $this->filter_get_param('s'),
             'post_status' => $this->filter_get_param('post_status'),
             'cat' => $this->filter_get_param('cat'),
             'author' => $this->filter_get_param('author'),
@@ -979,6 +980,7 @@ class PP_Content_Overview extends PP_Module
 
         $select_filter_names['author'] = 'author';
         $select_filter_names['ptype'] = 'ptype';
+        $select_filter_names['search_box']  = 'search_box';
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
@@ -1072,6 +1074,13 @@ class PP_Content_Overview extends PP_Module
                 <?php
                 break;
 
+                case 'search_box':
+                    ?>
+                    <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
+                    <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => esc_attr($select_id) . 'search-submit']); ?>
+                    <?php
+                    break;
+
             default:
                 do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
                 break;
@@ -1089,9 +1098,11 @@ class PP_Content_Overview extends PP_Module
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $order = (isset($_GET['order']) && ! empty($_GET['order'])) ? sanitize_key($_GET['order']) : 'ASC';
         $orderBy = (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ? sanitize_key($_GET['orderby']) : 'post_date';
+        $search = (isset($_GET['s']) && ! empty($_GET['s'])) ? sanitize_text_field($_GET['s']) : '';
 
         $this->user_filters['orderby'] = $orderBy;
         $this->user_filters['order'] = $order;
+        $this->user_filters['s']     = $search;
 
         $posts = $this->getPostsForPostType($term, $postType, $this->user_filters);
         $postTypeObject = get_post_type_object($postType);

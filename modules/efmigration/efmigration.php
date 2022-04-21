@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -94,7 +94,7 @@ if (! class_exists('PP_Efmigration')) {
             }
 
             add_action('admin_menu', [$this, 'action_register_page']);
-            add_action('admin_notices', [$this, 'action_admin_notice']);
+            add_action('admin_notices', [$this, 'action_admin_notice_migration']);
             add_action('admin_init', [$this, 'action_editflow_migrate']);
             add_action('wp_ajax_pp_migrate_ef_data', [$this, 'migrate_data']);
             add_action('wp_ajax_pp_finish_migration', [$this, 'migrate_data_finish']);
@@ -103,6 +103,8 @@ if (! class_exists('PP_Efmigration')) {
                 add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
                 add_action('admin_print_styles', [$this, 'enqueue_admin_styles']);
             }
+
+            add_action('admin_init', [$this, 'checkEditFlowIsInstalledAndShowWarning'], 999);
         }
 
         /**
@@ -269,10 +271,30 @@ if (! class_exists('PP_Efmigration')) {
             return ! empty($editFlowVersion);
         }
 
+        public function checkEditFlowIsInstalledAndShowWarning()
+        {
+            if (defined('EDIT_FLOW_VERSION')) {
+                add_action('admin_notices', [$this, 'noticeEditFlowIsInstalled']);
+            }
+        }
+
+        public function noticeEditFlowIsInstalled()
+        {
+            ?>
+            <div class="updated notice">
+                <p><?php
+                    _e(
+                        'Edit Flow should not be used alongside PublishPress. If you want to use it, deactive PublishPress first.',
+                        'publishpress'
+                    ); ?></p>
+            </div>
+            <?php
+        }
+
         /**
          * Show a notice for admins giving the option to migrate data from EditFlow
          */
-        public function action_admin_notice()
+        public function action_admin_notice_migration()
         {
             // Check if EditFlow is installed
             if ($this->checkEditFlowIsInstalled()) {
