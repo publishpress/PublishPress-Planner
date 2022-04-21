@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -1378,8 +1378,13 @@ if (! class_exists('PP_Custom_Status')) {
                 return false;
             }
 
-            if ('id' == $field) {
+            if ('id' === $field) {
                 $field = 'term_id';
+            }
+
+            // New and auto-draft do not exists as status. So we map them to draft for now.
+            if ('slug' === $field && in_array($value, ['new', 'auto-draft'])) {
+                $value = 'draft';
             }
 
             $custom_statuses = $this->get_custom_statuses();

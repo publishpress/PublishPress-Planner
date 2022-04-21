@@ -52,5 +52,10 @@
     "codeception/module-cli": "^1.0",
     "codeception/util-universalframework": "^1.0",
     "mustache/mustache": "2.14.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
