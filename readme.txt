@@ -121,7 +121,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= UNRELEASED =
+= [3.7.1] - 21 apr 2022 =
 
 * Fixed: Fix performance, removing automatic deactivation of Edit Flow, replacing it by a simple admin notice, #998;
 * Fixed: Fix PHP error on customizer, due to a inline JS script added by mistake out of the head tag, #562;
