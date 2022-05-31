@@ -5,11 +5,11 @@
  * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.6.3
+ * Version: 3.7.1
  * Text Domain: publishpress
  * Domain Path: /languages
  *
- * Copyright (c) 2021 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,7 +36,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2021 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2022 PublishPress. All rights reserved.
  */
 
 use PPVersionNotices\Module\MenuLink\Module;
@@ -179,8 +179,6 @@ if (! class_exists('publishpress')) {
          */
         public function action_init()
         {
-            $this->deactivate_editflow();
-
             load_plugin_textdomain('publishpress', null, plugin_basename(PUBLISHPRESS_BASE_PATH) . '/languages/');
 
             $this->load_modules();
@@ -199,37 +197,6 @@ if (! class_exists('publishpress')) {
             }
 
             do_action('pp_init');
-        }
-
-        public function deactivate_editflow()
-        {
-            try {
-                if (! function_exists('get_plugins')) {
-                    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-                }
-
-                $all_plugins = get_plugins();
-
-                // Check if Edit Flow is installed. The folder changes sometimes.
-                foreach ($all_plugins as $pluginFile => $data) {
-                    if (
-                        (isset($data['TextDomain']) && 'edit-flow' === $data['TextDomain'])
-                        && is_plugin_active($pluginFile)
-                    ) {
-                        // Is it activated?
-                        deactivate_plugins($pluginFile);
-                        add_action('admin_notices', [$this, 'notice_editflow_deactivated']);
-                    }
-                }
-            } catch (Exception $e) {
-                error_log(
-                    sprintf(
-                        '%s: %s',
-                        __FUNCTION__,
-                        $e->getMessage()
-                    )
-                );
-            }
         }
 
         /**
@@ -332,6 +299,7 @@ if (! class_exists('publishpress')) {
                 'efmigration' => PUBLISHPRESS_BASE_PATH,
                 'debug' => PUBLISHPRESS_BASE_PATH,
                 'reviews' => PUBLISHPRESS_BASE_PATH,
+                'theeventscalendar-integration' => PUBLISHPRESS_BASE_PATH,
             ];
 
             // Add filters to extend the modules
@@ -379,6 +347,26 @@ if (! class_exists('publishpress')) {
          */
         public function filterDebugInformation($debugInfo)
         {
+            $constDisableWpCron = 'undefined';
+            if (defined('DISABLE_WP_CRON')) {
+                $constDisableWpCron = DISABLE_WP_CRON;
+            }
+
+            $constWpDebug = 'undefined';
+            if (defined('WP_DEBUG')) {
+                $constWpDebug = WP_DEBUG;
+            }
+
+            $constWpDebugLog = 'undefined';
+            if (defined('WP_DEBUG_LOG')) {
+                $constWpDebugLog = WP_DEBUG_LOG;
+            }
+
+            $constWpDisplay = 'undefined';
+            if (defined('WP_DEBUG_DISPLAY')) {
+                $constWpDisplay = WP_DEBUG_DISPLAY;
+            }
+
             $debugInfo['publishpress'] = [
                 'label' => 'PublishPress',
                 'description' => '',
@@ -415,6 +403,22 @@ if (! class_exists('publishpress')) {
                     'WP_CONTENT_URL' => [
                         'label' => __('WP_CONTENT_URL'),
                         'value' => WP_CONTENT_URL,
+                    ],
+                    'DISABLE_WP_CRON' => [
+                        'label' => __('DISABLE_WP_CRON'),
+                        'value' => $constDisableWpCron,
+                    ],
+                    'WP_DEBUG' => [
+                        'label' => __('WP_DEBUG'),
+                        'value' => $constWpDebug,
+                    ],
+                    'WP_DEBUG_LOG' => [
+                        'label' => __('WP_DEBUG_LOG'),
+                        'value' => $constWpDebugLog,
+                    ],
+                    'WP_DEBUG_DISPLAY' => [
+                        'label' => __('WP_DEBUG_DISPLAY'),
+                        'value' => $constWpDisplay,
                     ],
                     'option::date_format' => [
                         'label' => __('WP Date Format'),
@@ -904,19 +908,6 @@ if (! class_exists('publishpress')) {
             return $menu_ord;
         }
 
-        public function notice_editflow_deactivated()
-        {
-            ?>
-            <div class="updated notice">
-                <p><?php
-                    _e(
-                        'Edit Flow was deactivated by PublishPress. If you want to activate it, deactive PublishPress first.',
-                        'publishpress'
-                    ); ?></p>
-            </div>
-            <?php
-        }
-
         /**
          * @return bool
          */
@@ -1058,7 +1049,7 @@ if (! class_exists('publishpress')) {
                 return sanitize_key($_REQUEST['post_type']);
             } elseif (isset($_REQUEST['post'])) {
                 // Lastly check if post ID is in query string.
-                return get_post_type($_REQUEST['post']);
+                return get_post_type((int)$_REQUEST['post']);
             } elseif ($pagenow === 'edit.php') {
                 // The edit page without post_type param is always "post".
                 return 'post';
@@ -1245,4 +1236,24 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
     define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
+} else {
+    $message = __('PublishPress tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
+
+    error_log($message);
+
+    if (is_admin() ) {
+        add_action(
+            'admin_notices',
+            function () use ($message) {
+                $msg = sprintf(
+                    '<strong>%s:</strong> %s',
+                    esc_html__('Warning', 'publishpress'),
+                    esc_html($message)
+                );
+
+                echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
+            },
+            5
+        );
+    }
 }

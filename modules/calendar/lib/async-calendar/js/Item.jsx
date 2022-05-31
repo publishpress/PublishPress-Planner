@@ -1,17 +1,16 @@
-import {getHourStringOnFormat} from './Functions';
+import {getHourStringOnFormat, getDateInstanceFromString} from './Functions';
 import ItemPopup from './ItemPopup';
 
-const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function Item(props) {
     const DEFAULT_TIME_FORMAT = 'g:i a';
-    const DEFAULT_LABEL = __('Untitled', 'publishpress');
+    const DEFAULT_LABEL = props.strings.untitled;
 
     const calendarItem = React.useRef(null);
 
     const getHourString = () => {
-        let timestampDate = new Date(Date.parse(props.timestamp));
+        let timestampDate = getDateInstanceFromString(props.timestamp);
 
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
@@ -74,7 +73,8 @@ export default function Item(props) {
                        color={props.color}
                        data={props.isPopupOpened ? props.getPopupItemDataCallback() : null}
                        onItemActionClickCallback={props.onItemActionClickCallback}
-                       ajaxUrl={props.ajaxUrl}/>
+                       ajaxUrl={props.ajaxUrl}
+                       strings={props.strings}/>
             }
         </li>
     )

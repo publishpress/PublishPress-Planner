@@ -1,7 +1,6 @@
 import Select from "./Select";
 import TaxonomyField from "./fields/TaxonomyField";
 
-const __ = wp.i18n.__;
 const _n = wp.i18n._n;
 
 export default function FilterBar(props) {
@@ -36,7 +35,7 @@ export default function FilterBar(props) {
     }
 
     const getWeeksFilterLabel = (numberOfWeeks) => {
-        return _n('%d week', '%d weeks', numberOfWeeks, 'publishpress')
+        return _n(props.strings.xWeek, props.strings.xWeeks, numberOfWeeks, 'publishpress')
             .replace('%d', numberOfWeeks);
     }
 
@@ -53,12 +52,12 @@ export default function FilterBar(props) {
     return (
         <div className="publishpress-calendar-filter-bar">
             <Select
-                placeholder={__('All statuses', 'publishpress')}
+                placeholder={props.strings.allStatuses}
                 options={props.statuses}
                 onSelect={handleStatusChange}
                 onClear={handleStatusChange}/>
 
-            <TaxonomyField placeholder={__('All categories', 'publishpress')}
+            <TaxonomyField placeholder={props.strings.allCategories}
                            isEditing={true}
                            ajaxUrl={props.ajaxUrl}
                            nonce={props.nonce}
@@ -68,7 +67,7 @@ export default function FilterBar(props) {
                            multiple={false}
                            className={'publishpress-calendar-category-filter'}/>
 
-            <TaxonomyField placeholder={__('All tags', 'publishpress')}
+            <TaxonomyField placeholder={props.strings.allTags}
                            isEditing={true}
                            ajaxUrl={props.ajaxUrl}
                            nonce={props.nonce}
@@ -79,7 +78,7 @@ export default function FilterBar(props) {
                            className={'publishpress-calendar-tag-filter'}/>
 
             <Select
-                placeholder={__('All authors', 'publishpress')}
+                placeholder={props.strings.allAuthors}
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_authors'}
@@ -87,7 +86,7 @@ export default function FilterBar(props) {
                 onClear={handleAuthorsChange}/>
 
             <Select
-                placeholder={__('All types', 'publishpress')}
+                placeholder={props.strings.allTypes}
                 options={props.postTypes}
                 onSelect={handlePostTypeChange}
                 onClear={handlePostTypeChange}/>

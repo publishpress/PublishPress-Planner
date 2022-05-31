@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -77,6 +77,10 @@ if (! class_exists('PP_Dashboard')) {
          */
         public function init()
         {
+            if (false === is_admin()) {
+                return;
+            }
+
             $this->widgets = new stdClass;
 
             if ('on' == $this->module->options->notepad_widget) {

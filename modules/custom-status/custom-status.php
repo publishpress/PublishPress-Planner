@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -133,29 +133,31 @@ if (! class_exists('PP_Custom_Status')) {
             // Register custom statuses as a taxonomy
             $this->register_custom_statuses();
 
-            // Register our settings
-            add_action('admin_init', [$this, 'register_settings']);
+            if (is_admin()) {
+                // Register our settings
+                add_action('admin_init', [$this, 'register_settings']);
 
-            // Load CSS and JS resources that we probably need
-            add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
-            add_action('admin_notices', [$this, 'no_js_notice']);
-            add_action('admin_print_scripts', [$this, 'post_admin_header']);
-            add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
+                // Load CSS and JS resources that we probably need
+                add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
+                add_action('admin_notices', [$this, 'no_js_notice']);
+                add_action('admin_print_scripts', [$this, 'post_admin_header']);
+                add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
-            // Methods for handling the actions of creating, making default, and deleting post stati
-            add_action('admin_init', [$this, 'handle_add_custom_status']);
-            add_action('admin_init', [$this, 'handle_edit_custom_status']);
-            add_action('admin_init', [$this, 'handle_delete_custom_status']);
-            add_action('wp_ajax_update_status_positions', [$this, 'handle_ajax_update_status_positions']);
+                // Methods for handling the actions of creating, making default, and deleting post stati
+                add_action('admin_init', [$this, 'handle_add_custom_status']);
+                add_action('admin_init', [$this, 'handle_edit_custom_status']);
+                add_action('admin_init', [$this, 'handle_delete_custom_status']);
+                add_action('wp_ajax_update_status_positions', [$this, 'handle_ajax_update_status_positions']);
 
-            // Hook to add the status column to Manage Posts
+                // Hook to add the status column to Manage Posts
 
-            add_filter('manage_posts_columns', [$this, '_filter_manage_posts_columns']);
-            add_action('manage_posts_custom_column', [$this, '_filter_manage_posts_custom_column']);
+                add_filter('manage_posts_columns', [$this, '_filter_manage_posts_columns']);
+                add_action('manage_posts_custom_column', [$this, '_filter_manage_posts_custom_column']);
 
-            // We need these for pages (http://core.trac.wordpress.org/browser/tags/3.3.1/wp-admin/includes/class-wp-posts-list-table.php#L283)
-            add_filter('manage_pages_columns', [$this, '_filter_manage_posts_columns']);
-            add_action('manage_pages_custom_column', [$this, '_filter_manage_posts_custom_column']);
+                // We need these for pages (http://core.trac.wordpress.org/browser/tags/3.3.1/wp-admin/includes/class-wp-posts-list-table.php#L283)
+                add_filter('manage_pages_columns', [$this, '_filter_manage_posts_columns']);
+                add_action('manage_pages_custom_column', [$this, '_filter_manage_posts_custom_column']);
+            }
 
             // These seven-ish methods are temporary fixes for solving bugs in WordPress core
             add_filter('preview_post_link', [$this, 'fix_preview_link_part_one']);
@@ -1084,7 +1086,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @return array|WP_Error $response The Term ID and Term Taxonomy ID
          */
-        public function add_custom_status($term, $args = [])
+        private function add_custom_status($term, $args = [])
         {
             $slug = (! empty($args['slug'])) ? $args['slug'] : sanitize_title($term);
             unset($args['slug']);
@@ -1116,12 +1118,10 @@ if (! class_exists('PP_Custom_Status')) {
          * @param int @status_id ID for the status
          * @param array $args Any arguments to be updated
          *
-         * @return object $updated_status Newly updated status object
+         * @return object|WP_Error|false $updated_status Newly updated status object
          */
-        public function update_custom_status($status_id, $args = [])
+        private function update_custom_status($status_id, $args = [])
         {
-            global $publishpress;
-
             $old_status = $this->get_custom_status_by('id', $status_id);
             if (! $old_status || is_wp_error($old_status)) {
                 return new WP_Error('invalid', __("Custom status doesn't exist.", 'publishpress'));
@@ -1148,31 +1148,47 @@ if (! class_exists('PP_Custom_Status')) {
 
             $slug = isset($args['slug']) ? $args['slug'] : $old_status->slug;
 
+            $updatedStatusId = $status_id;
             if (is_numeric($status_id)) {
                 // We're encoding metadata that isn't supported by default in the term's description field
                 $args_to_encode = [];
-                $args_to_encode['description'] = (isset($args['description'])) ? $args['description'] : $old_status->description;
-                $args_to_encode['position'] = (isset($args['position'])) ? $args['position'] : $old_status->position;
-                $args_to_encode['color'] = (isset($args['color'])) ? $args['color'] : $old_status->color;
-                $args_to_encode['icon'] = (isset($args['icon'])) ? $args['icon'] : $old_status->icon;
+                $args_to_encode['description'] = (isset($args['description'])) ? sanitize_textarea_field($args['description']) : $old_status->description;
+                $args_to_encode['position'] = (isset($args['position'])) ? (int)$args['position'] : $old_status->position;
+                $args_to_encode['color'] = (isset($args['color'])) ? sanitize_text_field($args['color']) : $old_status->color;
+                $args_to_encode['icon'] = (isset($args['icon'])) ? sanitize_text_field($args['icon']) : $old_status->icon;
+
                 $encoded_description = $this->get_encoded_description($args_to_encode);
                 $args['description'] = $encoded_description;
 
                 $updated_status_array = wp_update_term($status_id, self::taxonomy_key, $args);
 
                 if (is_wp_error($updated_status_array)) {
-                    return false;
+                    return $updated_status_array;
                 }
-            } else {
-                if (isset($args['position'])) {
-                    $slug = sanitize_key($slug);
 
-                    update_option('psppno_status_' . $slug . '_position', $args['position']);
+                if (! is_array($updated_status_array) || !isset($updated_status_array['term_id'])) {
+                    error_log(
+                        sprintf(
+                            '[PUBLISHPRESS] Error updating the status term. $status_id: %s, taxonomy: %s, $args: %s',
+                            $status_id,
+                            self::taxonomy_key,
+                            print_r($args, true)
+                        )
+                    );
+
+                    return new WP_Error('custom-status-term_id', esc_html__('Error while updating the status', 'publishpress'));
                 }
+
+                $updatedStatusId = $updated_status_array['term_id'];
+            } elseif (isset($args['position'])) {
+                $slug = sanitize_key($slug);
+
+                $args['position'] = (int)$args['position'];
+
+                update_option('psppno_status_' . $slug . '_position', $args['position']);
             }
 
-
-            return $this->get_custom_status_by('id', $updated_status_array['term_id']);
+            return $this->get_custom_status_by('id', $updatedStatusId);
         }
 
         /**
@@ -1181,7 +1197,7 @@ if (! class_exists('PP_Custom_Status')) {
          * Partly a wrapper for the wp_delete_term function.
          * BUT, also reassigns posts that currently have the deleted status assigned.
          */
-        public function delete_custom_status($status_id, $args = [], $reassign = '')
+        private function delete_custom_status($status_id, $args = [], $reassign = '')
         {
             global $publishpress;
             // Reassign posts to alternate status
@@ -1323,7 +1339,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             // Sort the items numerically by key
             ksort($orderedStatusList, SORT_NUMERIC);
-            // Append all of the statuses that didn't have an existing position
+            // Append all the statuses that didn't have an existing position
             foreach ($hold_to_end as $unpositioned_status) {
                 $orderedStatusList[] = $unpositioned_status;
             }
@@ -1354,7 +1370,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @param string|int $string_or_int The status to search for, either by slug, name or ID
          *
-         * @return object|WP_Error $status The object for the matching status
+         * @return object|WP_Error|false $status The object for the matching status
          */
         public function get_custom_status_by($field, $value)
         {
@@ -1362,8 +1378,13 @@ if (! class_exists('PP_Custom_Status')) {
                 return false;
             }
 
-            if ('id' == $field) {
+            if ('id' === $field) {
                 $field = 'term_id';
+            }
+
+            // New and auto-draft do not exists as status. So we map them to draft for now.
+            if ('slug' === $field && in_array($value, ['new', 'auto-draft'])) {
+                $value = 'draft';
             }
 
             $custom_statuses = $this->get_custom_statuses();
@@ -1371,9 +1392,9 @@ if (! class_exists('PP_Custom_Status')) {
 
             if (! empty($custom_status)) {
                 return array_shift($custom_status);
-            } else {
-                return false;
             }
+
+            return false;
         }
 
         /**
@@ -1382,7 +1403,7 @@ if (! class_exists('PP_Custom_Status')) {
          * @param string $old_status Slug for the old status
          * @param string $new_status Slug for the new status
          */
-        public function reassign_post_status($old_status, $new_status = '')
+        private function reassign_post_status($old_status, $new_status = '')
         {
             global $wpdb;
 
@@ -1390,7 +1411,7 @@ if (! class_exists('PP_Custom_Status')) {
                 $new_status = self::DEFAULT_STATUS;
             }
 
-            // Make the database call
+            // todo: Why the query argument is %s?
             $result = $wpdb->update(
                 $wpdb->posts,
                 ['post_status' => $new_status],
@@ -1453,7 +1474,7 @@ if (! class_exists('PP_Custom_Status')) {
          *
          * @return bool $restricted True if restricted, false if not
          */
-        public function is_restricted_status($slug)
+        private function is_restricted_status($slug)
         {
             switch ($slug) {
                 case 'publish':
@@ -1489,9 +1510,7 @@ if (! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if (! wp_verify_nonce($_POST['_wpnonce'], 'custom-status-add-nonce')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
+            check_admin_referer('custom-status-add-nonce');
 
             // Validate and sanitize the form data
             $status_name = sanitize_text_field(trim($_POST['status_name']));
@@ -1575,7 +1594,7 @@ if (! class_exists('PP_Custom_Status')) {
         }
 
         /**
-         * Handles a POST request to edit an custom status
+         * Handles a POST request to edit a custom status
          *
          * @since 0.7
          */
@@ -1586,9 +1605,7 @@ if (! class_exists('PP_Custom_Status')) {
                 return;
             }
 
-            if (! wp_verify_nonce($_POST['_wpnonce'], 'edit-status')) {
-                wp_die($this->module->messages['nonce-failed']);
-            }
+            check_admin_referer('edit-status');
 
             if (! current_user_can('manage_options')) {
                 wp_die($this->module->messages['invalid-permissions']);
@@ -1692,7 +1709,9 @@ if (! class_exists('PP_Custom_Status')) {
                     'color' => $color,
                     'icon' => $icon,
                 ];
+
                 $return = $this->update_custom_status($existing_status->term_id, $args);
+
                 if (is_wp_error($return)) {
                     wp_die(__('Error updating post status.', 'publishpress'));
                 }
@@ -1719,15 +1738,13 @@ if (! class_exists('PP_Custom_Status')) {
         public function handle_delete_custom_status()
         {
             // Check that this GET request is our GET request
-            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['_wpnonce'])
                 || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-status') {
                 return;
             }
 
             // Check for proper nonce
-            if (! wp_verify_nonce($_GET['nonce'], 'delete-status')) {
-                wp_die(__('Invalid nonce for submission.', 'publishpress'));
-            }
+            check_admin_referer('delete-status');
 
             // Only allow users with the proper caps
             if (! current_user_can('manage_options')) {
@@ -1775,7 +1792,7 @@ if (! class_exists('PP_Custom_Status')) {
             // Add other things we may need depending on the action
             switch ($args['action']) {
                 case 'delete-status':
-                    $args['nonce'] = wp_create_nonce($args['action']);
+                    $args['_wpnonce'] = wp_create_nonce($args['action']);
                     break;
                 default:
                     break;
@@ -1791,9 +1808,7 @@ if (! class_exists('PP_Custom_Status')) {
          */
         public function handle_ajax_update_status_positions()
         {
-            if (! wp_verify_nonce($_POST['custom_status_sortable_nonce'], 'custom-status-sortable')) {
-                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
-            }
+            check_ajax_referer('custom-status-sortable');
 
             if (! current_user_can('manage_options')) {
                 $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
@@ -1810,8 +1825,11 @@ if (! class_exists('PP_Custom_Status')) {
                     'position' => (int)$position + 1,
                 ];
 
-                $this->update_custom_status($term_id, $args);
-                // @todo check that this was a valid return
+                $result = $this->update_custom_status($term_id, $args);
+
+                if (is_wp_error($result)) {
+                    $this->print_ajax_response('error', $result->get_error_message());
+                }
             }
             $this->print_ajax_response('success', $this->module->messages['status-position-updated']);
         }
@@ -1914,7 +1932,7 @@ if (! class_exists('PP_Custom_Status')) {
             if (isset($_GET['action'], $_GET['term-id']) && $_GET['action'] == 'edit-status'): ?>
                 <?php
                 // Check whether the term exists
-                $term_id = $_GET['term-id'];
+                $term_id = sanitize_text_field($_GET['term-id']);
                 $status = $this->get_custom_status_by('id', $term_id);
                 if (! $status) {
                     echo '<div class="error"><p>' . $this->module->messages['status-missing'] . '</p></div>';
@@ -1923,12 +1941,11 @@ if (! class_exists('PP_Custom_Status')) {
                 }
                 $edit_status_link = $this->get_link(['action' => 'edit-status', 'term-id' => $term_id]);
 
-                $name = (isset($_POST['name'])) ? stripslashes($_POST['name']) : $status->name;
-                $description = (isset($_POST['description'])) ? strip_tags(
-                    stripslashes($_POST['description'])
-                ) : $status->description;
-                $color = (isset($_POST['color'])) ? stripslashes($_POST['color']) : $status->color;
-                $icon = (isset($_POST['icon'])) ? stripslashes($_POST['icon']) : $status->icon;
+                $name = (isset($_POST['name'])) ? sanitize_text_field($_POST['name']) : $status->name;
+                $description = (isset($_POST['description'])) ? sanitize_textarea_field($_POST['description'])
+                    : $status->description;
+                $color = (isset($_POST['color'])) ? sanitize_text_field($_POST['color']) : $status->color;
+                $icon = (isset($_POST['icon'])) ? sanitize_text_field($_POST['icon']) : $status->icon;
                 $icon = str_replace('dashicons|', '', $icon); ?>
 
                 <div id="ajax-response"></div>
@@ -2105,7 +2122,7 @@ if (! class_exists('PP_Custom_Status')) {
                                                id='status_name' name='status_name'
                                                value="<?php
                                                if (! empty($_POST['status_name'])) {
-                                                   echo esc_attr($_POST['status_name']);
+                                                   echo esc_attr(sanitize_text_field($_POST['status_name']));
                                                } ?>"/>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
@@ -2125,7 +2142,7 @@ if (! class_exists('PP_Custom_Status')) {
                                         <textarea cols="40" rows='5' id='status_description'
                                                   name='status_description'><?php
                                             if (! empty($_POST['status_description'])) {
-                                                echo esc_textarea($_POST['status_description']);
+                                                echo esc_textarea(sanitize_textarea_field($_POST['status_description']));
                                             } ?></textarea>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
@@ -2141,7 +2158,7 @@ if (! class_exists('PP_Custom_Status')) {
                                             _e('Color', 'publishpress'); ?></label>
 
                                         <?php
-                                        $status_color = isset($_POST['status_color']) ? $_POST['status_color'] : '';
+                                        $status_color = isset($_POST['status_color']) ? sanitize_text_field($_POST['status_color']) : '';
                                         echo $this->pp_color_picker(esc_attr($status_color), 'status_color') ?>
 
                                         <?php
@@ -2155,7 +2172,7 @@ if (! class_exists('PP_Custom_Status')) {
                                             _e('Icon', 'publishpress'); ?></label>
 
                                         <?php
-                                        $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
+                                        $status_icon = isset($_POST['icon']) ? sanitize_text_field($_POST['icon']) : 'dashicons-yes'; ?>
                                         <input class='regular-text' type='hidden' id='status_icon' name='icon'
                                                value="<?php
                                                if (isset($status_icon)) {
