@@ -2930,6 +2930,7 @@ if (! class_exists('PP_Calendar')) {
             $user_args = [
                 'number' => 20,
                 'orderby' => 'display_name',
+                'capability' => 'edit_posts',
             ];
 
             if (! empty($queryText)) {
