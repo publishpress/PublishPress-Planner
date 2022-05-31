@@ -43,6 +43,22 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
+
+$includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
+if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
+    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
+}
+
+if (class_exists('PublishPressInstanceProtection\\Config')) {
+    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
+    $pluginCheckerConfig->pluginSlug    = 'publishpress';
+    $pluginCheckerConfig->pluginName    = 'PublishPress';
+
+    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
+}
+
+require_once 'includes.php';
+
 // Core class
 if (! class_exists('publishpress')) {
     class publishpress
@@ -1228,21 +1244,7 @@ if (! function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     }
 }
 
-$includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
-if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
-    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
-}
-
-if (class_exists('PublishPressInstanceProtection\\Config')) {
-    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug    = 'publishpress';
-    $pluginCheckerConfig->pluginName    = 'PublishPress';
-
-    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
-}
-
 if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
-    require_once 'includes.php';
     PublishPress();
     add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
     register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
