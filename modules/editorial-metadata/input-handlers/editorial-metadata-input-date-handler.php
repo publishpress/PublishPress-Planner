@@ -105,9 +105,11 @@ if (! class_exists('Editorial_Metadata_Input_Date_Handler')) {
             $value = ! empty($value) ? self::show_date_or_datetime(intval($value)) : $value;
 
             self::renderLabel(
-                $input_label . self::generateDescriptionHtml($input_description),
+                $input_label,
                 $input_name
             );
+
+            echo self::generateDescriptionHtml($input_description);
 
             if (! empty($value)) {
                 printf(

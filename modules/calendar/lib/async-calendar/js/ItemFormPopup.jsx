@@ -2,6 +2,7 @@ import {callAjaxAction, callAjaxPostAction, getDateAsStringInWpFormat, getPostLi
 import Select from "./Select";
 import DateTimeField from "./fields/DateTimeField";
 import AuthorsField from "./fields/AuthorsField";
+import SelectField from "./fields/SelectField";
 import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
@@ -12,7 +13,6 @@ import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
 import TimeField from "./fields/TimeField";
 
-const {__} = wp.i18n;
 const $ = jQuery;
 
 export default function ItemFormPopup(props) {
@@ -88,6 +88,28 @@ export default function ItemFormPopup(props) {
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
                                           multiple={props.allowAddingMultipleAuthors}
+                                          onSelect={(e, elem, data) => {
+                                              let values = [];
+                                              for (let i = 0; i < data.length; i++) {
+                                                  values.push(data[i].id);
+                                              }
+
+                                              updateGlobalFormFieldData(dataPropertyName, values);
+                                          }}
+                                          onClear={(e, elem) => {
+                                              updateGlobalFormFieldData(dataPropertyName, null);
+                                          }}/>;
+                    break;
+
+                case 'select':
+                    field = <SelectField value={dataProperty.value}
+                                          isEditing={true}
+                                          name={dataPropertyName}
+                                          id={fieldId}
+                                          nonce={props.nonce}
+                                          ajaxUrl={props.ajaxUrl}
+                                          ajaxAction={dataProperty.ajaxAction}
+                                          multiple={dataProperty.multiple}
                                           onSelect={(e, elem, data) => {
                                               let values = [];
                                               for (let i = 0; i < data.length; i++) {
@@ -301,14 +323,14 @@ export default function ItemFormPopup(props) {
         const formLinks = [
             {
                 'id': 'create',
-                'label': __('Save', 'publishpress'),
-                'labelLoading': __('Saving...', 'publishpress'),
+                'label': props.strings.save,
+                'labelLoading': props.strings.saving,
                 'action': 'publishpress_calendar_create_item'
             },
             {
                 'id': 'edit',
-                'label': __('Save and edit', 'publishpress'),
-                'labelLoading': __('Saving...', 'publishpress'),
+                'label': props.strings.saveAndEdit,
+                'labelLoading': props.strings.saving,
                 'action': 'publishpress_calendar_create_item'
             }
         ];
@@ -351,7 +373,7 @@ export default function ItemFormPopup(props) {
         if (props.postId) {
             title = '';
         } else {
-            title = __('Add content for %s', 'publishpress');
+            title = props.strings.addContentFor;
             title = title.replace('%s', date_i18n(props.dateFormat, props.date));
         }
 
@@ -365,7 +387,7 @@ export default function ItemFormPopup(props) {
             }
         }
 
-        return __('Post type not found', 'publishpress');
+        return props.strings.postTypeNotFound;
     }
 
     const fetchFieldsForSelectedPostType = () => {
@@ -408,14 +430,14 @@ export default function ItemFormPopup(props) {
                 <div className={'publishpress-calendar-popup-title'}>
                     {getFormPopupTitle()}
                     <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
-                          title={__('Close', 'publishpress')} onClick={props.onCloseCallback}/>
+                          title={props.strings.close} onClick={props.onCloseCallback}/>
                 </div>
                 <hr/>
                 <table>
                     <tbody>
                     {props.postTypes.length > 1 &&
                     <tr>
-                        <th><label>{__('Post type:', 'publishpress')}</label></th>
+                        <th><label>{props.strings.postType}</label></th>
                         <td>
                             <Select
                                 options={props.postTypes}
@@ -428,7 +450,7 @@ export default function ItemFormPopup(props) {
 
                     {props.postTypes.length === 1 &&
                     <tr>
-                        <th><label>{__('Post type:', 'publishpress')}</label></th>
+                        <th><label>{props.strings.postType}</label></th>
                         <td>{getPostTypeNameBySlug(postType)}</td>
                     </tr>
                     }
@@ -442,7 +464,7 @@ export default function ItemFormPopup(props) {
 
                 {fieldTableRows.length === 0 &&
                 <div
-                    className={'publishpress-calendar-popup-loading-fields'}>{__('Please, wait! Loading the form fields...', 'publishpress')}</div>
+                    className={'publishpress-calendar-popup-loading-fields'}>{props.strings.pleaseWaitLoadingFormFields}</div>
                 }
 
                 {errorMessage &&

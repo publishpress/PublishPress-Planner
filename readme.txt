@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.8
-Stable tag: 3.6.3
+Tested up to: 6.0
+Stable tag: 3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,7 +86,7 @@ Join PublishPress and you'll get access to these Pro plugins:
 * [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series 
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
@@ -103,10 +103,10 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 1. Editorial Calendar: Using the PublishPress Calendar, you’re able to see when content is planned, and when it is published.
 2. Notifications: PublishPress Notifications keeps you and your team up to date on changes to important content.
 3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
-4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”. 
+4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”.
 5. Editorial Comments: PublishPress allows you to leave comments under each post you write.
 6. Reminder Notifications: The PublishPress Pro feature allows you to send notifications either before or after the publishing date for content.
-7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack. 
+7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack.
 
 == Frequently Asked Questions ==
 
@@ -121,9 +121,53 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.7.0] - [===UNRELEASED===]
+= [3.7.1] - 21 apr 2022 =
 
-* Added: Add a "Content Overview" settings tab #971
+* Fixed: Fix performance, removing automatic deactivation of Edit Flow, replacing it by a simple admin notice, #998;
+* Fixed: Fix PHP error on customizer, due to a inline JS script added by mistake out of the head tag, #562;
+* Fixed: Fix drag and drop of pending posts, #1015;
+* Fixed: Fix integration with The Events Calendar for moving events in the calendar, #1016;
+* Fixed: Updated POT file, pt_BR, es_ES, fr_FR and it_IT translations;
+* Fixed: Fix warning about WP_User_Query being called with an argument that is deprecated, #1014;
+* Fixed: Fix conflict with The Events Calendar query, forcing to display event items in the calendar based on the post_date, #1020;
+* Fixed: Removed duplicated `event` param from the workflow action;
+* Fixed: Change the action used to trigger post status transition notifications, from `transition_post_status` to `wp_after_insert_post`, #940, #671;
+* Fixed: Fix the nonce check for the bulk actions on the notifications log, #1019;
+* Added: Add select field for the custom fields API to the calendar popup, #1010;
+* Fixed: Fix performance issue with file i/o usage when trying to disable deprecated plugins on every request, #808;
+* Added: Add a search box to content overview screen #972;
+* Added: Add filter "publishpress_calendar_data_args" allowing to customize the query of posts on the calendar, #1017;
+
+= [3.7.0] - 02 fev 2022 =
+
+* Fixed: Fix the admin menu Debug Log that was not being displayed, #992;
+* Fixed: Fix the fatal error while exporting the calendar as ICS file, #994;
+* Fixed: Fix the post type filter in the calendar, #995;
+* Fixed: Fix fatal error: [Unknown column 'following_users' in 'where clause'], #982;
+* Fixed: Fix drag and drop of custom statuses for reordering, #986;
+* Fixed: Fix the time displayed in the calendar items on Safari, #1001;
+* Fixed: Fix moving items and date navigation on the calendar in Safari, #1002;
+* Fixed: Fix input sanitization in all the modules, HTML and SQL scaping in all the plugin;
+* Fixed: Fix an unopened script HTML tag in the editorial metadata module;
+* Fixed: Fix metadata in the notifications body for new posts, #574;
+* Fixed: Added better feedback on errors while ordering statuses in the admin;
+* Fixed: Fix the debug button to only display it for those who has permissions. The debug info were still safe, but the button was displayed, #993;
+* Fixed: Improved capability check on diverse functions and modules;
+* Fixed: Only load admin assets and the admin menu action if the user has permission for seeing that;
+* Fixed: Added nonce check for missed places;
+* Fixed: Added cache to the user, author and category searches in the content_overview module;
+* Fixed: Fix the capability check for the configure button on editorial metadata metabox. It was only looking for the capability manage_options, which is customizable;
+* Fixed: Added a missed capability check before showing search results in the notifications log filters;
+* Fixed: Fixed PHP warning about function not defined: esc_array_of_options;
+* Fixed: Only look for default capabilities on the calendar module if in the admin;
+* Fixed: Only add admin hooks if in the admin;
+* Fixed: Fix the delete action for notification log items;
+* Added: Add the value of the global constant DISABLE_WP_CRON to the debug info, #987;
+* Added: Add the value of the global debug constants WP_DEBUG_DISPLAY, WP_DEBUG_LOGv, and WP_DEBUG to the debug info, #998;
+* Changed: Removed not used and deprecated methods in the calendar module: save_post_notify_users, save_post_notify_roles, add_role_to_notify, handle_ajax_drag_and_drop;
+* Changed: Improved error handling on Ajax requests on the notifications log;
+* Changed: WP version updated to 5.9;
+* Changed: Removed not used method remove_object_terms of the calendar module class;
 
 = [3.6.3] - 18 Nov 2021 =
 

@@ -2,7 +2,7 @@
 /**
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
- * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */
@@ -112,13 +112,11 @@ class Post_Status extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'])) {
             $from = [];
         } else {
-            $from = (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from'];
-
-            foreach ($from as &$status) {
-                $status = sanitize_key($status);
-            }
+            $from = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['from']
+            );
         }
-
 
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_FROM, $from);
 
@@ -126,11 +124,10 @@ class Post_Status extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'])) {
             $to = [];
         } else {
-            $to = (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to'];
-
-            foreach ($to as &$status) {
-                $status = sanitize_key($status);
-            }
+            $to = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['post_status']['to']
+            );
         }
         $this->update_metadata_array($id, static::META_KEY_POST_STATUS_TO, $to);
     }

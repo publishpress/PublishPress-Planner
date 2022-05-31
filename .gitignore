@@ -19,3 +19,7 @@ builder.yml
 tests/_support/*
 .php_cs.cache
 .sass-cache/*
+/codeception.yml
+
+.vscode/*
+*.code-workspace

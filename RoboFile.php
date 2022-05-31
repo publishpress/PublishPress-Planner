@@ -18,7 +18,7 @@
  *
  * @package     PublishPress
  * @author      PublishPress
- * @copyright   Copyright (C) 2020 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  */
 
 class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
@@ -29,7 +29,14 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
 
         $this->setVersionConstantName('PUBLISHPRESS_VERSION');
         $this->setVersionConstantFiles(['includes.php']);
-        $this->appendToFileToIgnore(['psalm.xml']);
-        $this->appendToFileToIgnore(['jest.config.ts']);
+        $this->appendToFileToIgnore(
+            [
+                'psalm.xml',
+                'jest.config.ts',
+                '.phpcs.xml',
+                'builder.yml.dist',
+                'vendor/publishpress/wordpress-reviews/phpcs.xml.dist',
+            ]
+        );
     }
 }
