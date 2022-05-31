@@ -2,7 +2,7 @@
 /**
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
- * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */
@@ -64,18 +64,17 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
             $emails = [];
 
             if ('POST' === $method && (isset($_POST['action']) && 'editpost' === $_POST['action'])) {
-                $toNotify = isset($_POST['to_notify']) ? (array)$_POST['to_notify'] : false;
+                $toNotify = isset($_POST['to_notify']) ?
+                    array_map('sanitize_text_field', (array)$_POST['to_notify']) : false;
 
                 if (!empty($toNotify)) {
                     foreach ($toNotify as $item) {
                         if (is_numeric($item)) {
                             $users[] = $item;
+                        } elseif (strpos($item, '@') > 0) {
+                            $emails[] = $item;
                         } else {
-                            if (strpos($item, '@') > 0) {
-                                $emails[] = $item;
-                            } else {
-                                $roles[] = $item;
-                            }
+                            $roles[] = $item;
                         }
                     }
                 }

@@ -152,7 +152,7 @@
                 var params = {
                     action: 'update_status_positions',
                     status_positions: terms,
-                    custom_status_sortable_nonce: $('#custom-status-sortable').val()
+                    _wpnonce: $('#custom-status-sortable').val()
                 };
                 // Inform WordPress of our updated positions
                 jQuery.post(ajaxurl, params, function (retval) {
@@ -163,6 +163,9 @@
                     } else {
                         var message = '<div class="is-dismissible notice notice-error"><p>' + retval.message + '</p></div>';
                     }
+                    $('.publishpress-admin header').after(message);
+                }).fail(function() {
+                    var message = '<div class="is-dismissible notice notice-error"><p>Error</p></div>';
                     $('.publishpress-admin header').after(message);
                 });
             }

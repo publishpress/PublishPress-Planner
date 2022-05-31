@@ -3,13 +3,13 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2020 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
  * Author: Daniel Bachhuber, Scott Bressler, Mohammad Jangda, Automattic, and
  * others
- * Copyright (c ) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
+ * Copyright (c) 2009-2016 Mohammad Jangda, Daniel Bachhuber, et al.
  * ------------------------------------------------------------------------------
  *
  * This file is part of PublishPress and should be automatically loaded by composer.

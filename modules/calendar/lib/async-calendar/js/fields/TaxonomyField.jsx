@@ -1,7 +1,5 @@
 import Select from "../Select";
 
-const __ = wp.i18n.__;
-
 export default function TaxonomyField(props) {
     const editField = () => {
         return (
@@ -24,7 +22,7 @@ export default function TaxonomyField(props) {
         if (typeof props.value === 'undefined' || props.value.length === 0) {
             return (
                 <span id={props.id}
-                      className="publishpress-calendar-empty-value">{__('No terms', 'publishpress')}</span>
+                      className="publishpress-calendar-empty-value">{publishpressCalendarParams.strings.noTerms}</span>
             );
         }
 
