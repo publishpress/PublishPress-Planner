@@ -2,7 +2,7 @@
 /**
  * @package     PublishPress\Notifications
  * @author      PublishPress <help@publishpress.com>
- * @copyright   Copyright (c) 2018 PublishPress. All rights reserved.
+ * @copyright   Copyright (c) 2022 PublishPress. All rights reserved.
  * @license     GPLv2 or later
  * @since       1.0.0
  */
@@ -88,7 +88,11 @@ class Term extends Base implements Filter_Interface
         if (!isset($_POST['publishpress_notif']["{$this->step_name}_filters"]['term'])) {
             $values = [];
         } else {
-            $values = $_POST['publishpress_notif']["{$this->step_name}_filters"]['term'];
+            // TODO: Should we sanitize with parseInt instead?
+            $values = array_map(
+                'sanitize_key',
+                (array)$_POST['publishpress_notif']["{$this->step_name}_filters"]['term']
+            );
         }
 
         $this->update_metadata_array($id, static::META_KEY_TERM, $values);

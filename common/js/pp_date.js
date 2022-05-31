@@ -2,7 +2,7 @@
  * @package PublishPress
  * @author PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
   function getOptions (self, custom_options) {
     var default_options = {
       dateFormat: objectL10ndate.date_format,
-      firstDay: pp_week_first_day
+      firstDay: objectL10ndate.week_first_day
     };
 
     var options = $.extend({}, default_options, custom_options);

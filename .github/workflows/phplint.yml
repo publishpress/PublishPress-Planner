@@ -9,8 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ ubuntu-latest, windows-latest, macOS-latest ]
-        php-versions: [ '7.4' ]
+        operating-system: [ ubuntu-latest ]
+        php-versions: [ '8.0' ]
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout

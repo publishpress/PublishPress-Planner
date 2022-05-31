@@ -71,10 +71,6 @@ header h2 a.change-date-cancel {
     width: 100px;
 }
 
-#wpbody-content .metabox-holder {
-    overflow: hidden;
-}
-
 #pp-content-filters-hidden,
 #pp-content-filters {
     float: left;

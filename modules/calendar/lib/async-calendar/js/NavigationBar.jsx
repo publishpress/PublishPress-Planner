@@ -6,7 +6,7 @@ export default function NavigationBar(props) {
             <Button icon={'update-alt'} onClick={props.refreshOnClickCallback}/>
             <Button label={'«'} onClick={props.backPageOnClickCallback}/>
             <Button label={'‹'} onClick={props.backOnClickCallback}/>
-            <Button label={'Today'} onClick={props.todayOnClickCallback}/>
+            <Button label={props.strings.today} onClick={props.todayOnClickCallback}/>
             <Button label={'›'} onClick={props.forwardOnClickCallback}/>
             <Button label={'»'} onClick={props.forwardPageOnClickCallback}/>
         </div>

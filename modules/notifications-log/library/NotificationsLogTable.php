@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2018 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * This file is part of PublishPress
  *
@@ -338,6 +338,7 @@ class NotificationsLogTable extends WP_List_Table
     {
         $actions = [];
         $log = new NotificationsLogModel($item);
+        $nonce = wp_create_nonce('bulk-notifications_log');
 
         if ('scheduled' === $log->status || 'error' === $log->status) {
             $actions['try_again'] = sprintf(
@@ -347,6 +348,7 @@ class NotificationsLogTable extends WP_List_Table
                         [
                             'action' => 'try_again',
                             $this->_args['singular'] => $log->id,
+                            '_wpnonce' => $nonce,
                         ]
                     )
                 ),
@@ -361,6 +363,7 @@ class NotificationsLogTable extends WP_List_Table
                     [
                         'action' => 'delete',
                         $this->_args['singular'] => $log->id,
+                        '_wpnonce' => $nonce,
                     ]
                 )
             ),
