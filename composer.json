@@ -25,6 +25,10 @@
     {
       "type": "git",
       "url": "https://github.com/publishpress/wp-browser"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/publishpress-instance-protection"
     }
   ],
   "require": {
@@ -35,7 +39,8 @@
     "publishpress/wordpress-version-notices": "^1",
     "publishpress/wordpress-reviews":  "^1.1",
     "sabre/vobject": "^3.4",
-    "psr/container": "1.0.0"
+    "psr/container": "1.0.0",
+    "publishpress/publishpress-instance-protection": "^1.0"
   },
   "require-dev": {
     "publishpress/publishpress-plugin-builder": "^1.2",

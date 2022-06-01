@@ -89,14 +89,15 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#pp-content-filters select#filter_category').pp_select2({
+    $('#pp-content-filters select.filter_taxonomy').pp_select2({
         ajax: {
             url: ajaxurl,
             dataType: 'json',
             delay: 0,
-            data: function (params) {
+        data: function (params) {
                 return {
                     action: 'publishpress_content_overview_search_categories',
+                    taxonomy: $(this).attr('data-taxonomy'),
                     nonce: PPContentOverview.nonce,
                     q: params.term
                 };

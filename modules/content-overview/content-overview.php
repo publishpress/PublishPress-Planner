@@ -43,6 +43,11 @@ class PP_Content_Overview extends PP_Module
     use Dependency_Injector;
 
     /**
+     * Settings slug
+     */
+    const SETTINGS_SLUG = 'pp-content-overview-settings';
+
+    /**
      * Screen id
      */
     const SCREEN_ID = 'dashboard_page_content-overview';
@@ -144,9 +149,12 @@ class PP_Content_Overview extends PP_Module
                     'post' => 'on',
                     'page' => 'off',
                 ],
+                'taxonomies' => [
+                    'category' => 'on'
+                ],
             ],
-            'general_options' => true,
-            'options_page' => false,
+            'configure_page_cb' => 'print_configure_view',
+            'options_page' => true,
             'autoload' => false,
             'add_menu' => true,
             'page_link' => admin_url('admin.php?page=content-overview'),
@@ -292,6 +300,65 @@ class PP_Content_Overview extends PP_Module
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
         );
+
+        add_settings_field(
+            'taxonomies',
+            __('Taxonomies:', 'publishpress'),
+            [$this, 'settings_taxonomies_option'],
+            $this->module->options_group_name,
+            $this->module->options_group_name . '_general'
+        );
+    }
+
+    /**
+     * Choose the taxonomies
+     *
+     * @since 3.7.0
+     */
+    public function settings_taxonomies_option()
+    {
+
+        $taxonomies = $this->get_all_taxonomies();
+        
+        foreach ($taxonomies as $taxonomy) {
+            $value = $taxonomy->name;
+            $label = $taxonomy->label . '(' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
+
+            //let skip status from filter list since we already have it seperately
+            if ($value ==='post_status') {
+                continue;
+            }
+
+            echo '<label for="' . esc_attr('taxonomy-' . $value) . '">';
+            echo '<input id="' . esc_attr('taxonomy-' . $value) . '" 
+                        name="' . esc_attr($this->module->options_group_name . '[taxonomies][' . $value . ']') . '"';
+            if (isset($this->module->options->taxonomies[$value])) {
+                checked($this->module->options->taxonomies[$value], 'on');
+            }
+            echo 'type="checkbox"> &nbsp;&nbsp;&nbsp; ' . esc_html($label) . '</label> <br />';
+        }
+        
+    }
+
+    /**
+     * Retrieve wordpress registered taxonomy
+     * 
+     * Private taxonomy are excluded
+     *
+     * @since 3.7.0
+     */
+    public function get_all_taxonomies()
+    {
+
+        //category and post tag are not included in public taxonomy
+        $category   = get_taxonomies(['name' => 'category'], 'objects');
+        $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
+
+        $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
+
+        $taxonomies = array_merge($category, $post_tag, $public);
+    
+        return $taxonomies;
     }
 
     /**
@@ -339,6 +406,10 @@ class PP_Content_Overview extends PP_Module
             $this->module->post_type_support
         );
 
+        if (!isset($new_options['taxonomies'])) {
+            $new_options['taxonomies'] = [];
+        }
+
         return $new_options;
     }
 
@@ -349,8 +420,27 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_configure_view()
     {
-        settings_fields($this->module->options_group_name);
-        do_settings_sections($this->module->options_group_name);
+        global $publishpress; ?>
+        <form class="basic-settings"
+              action="<?php
+              echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
+            <?php
+            settings_fields($this->module->options_group_name);
+            do_settings_sections($this->module->options_group_name); ?>
+            <?php
+            echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                    $this->module->name
+                ) . '" />'; ?>
+            <p class="submit"><?php
+                submit_button(null, 'primary', 'submit', false); ?></p>
+            <?php
+            echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                    $this->module->name
+                ) . '" />'; ?>
+            <?php
+            wp_nonce_field('edit-publishpress-settings'); ?>
+        </form>
+        <?php
     }
 
     /**
@@ -599,7 +689,6 @@ class PP_Content_Overview extends PP_Module
     {
         if (
             ! isset(
-                $_POST['pp-content-overview-number-days'],
                 $_POST['pp-content-overview-start-date_hidden'],
                 $_POST['pp-content-overview-range-use-today'],
                 $_POST['nonce']
@@ -625,15 +714,15 @@ class PP_Content_Overview extends PP_Module
 
         $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
 
-        $start_date_format = 'Y-m-d';
+        $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
             ? current_time($start_date_format)
             : date($start_date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
-        $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
+        $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
-        if ($user_filters['number_days'] <= 1) {
-            $user_filters['number_days'] = 1;
+        if ((empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +1 day'));
         }
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -788,10 +877,9 @@ class PP_Content_Overview extends PP_Module
         $user_filters = [
             'search_box' => $this->filter_get_param('s'),
             'post_status' => $this->filter_get_param('post_status'),
-            'cat' => $this->filter_get_param('cat'),
             'author' => $this->filter_get_param('author'),
             'start_date' => $this->filter_get_param('start_date'),
-            'number_days' => $this->filter_get_param('number_days'),
+            'end_date' => $this->filter_get_param('end_date'),
             'ptype' => $this->filter_get_param('ptype'),
         ];
 
@@ -803,6 +891,13 @@ class PP_Content_Overview extends PP_Module
                 $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
             } else {
                 $user_filters[$meta_key] = $this->filter_get_param($meta_key);
+            }
+        }
+        
+        //add taxonomies to filter
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
+                $user_filters[$taxonomy] = $this->filter_get_param($taxonomy);
             }
         }
 
@@ -820,8 +915,8 @@ class PP_Content_Overview extends PP_Module
             $user_filters['start_date'] = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
-        if (! $user_filters['number_days']) {
-            $user_filters['number_days'] = 10;
+        if (! $user_filters['end_date']) {
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +1 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
@@ -880,6 +975,9 @@ class PP_Content_Overview extends PP_Module
         $filtered_start_date = $this->user_filters['start_date'];
         $filtered_start_date_timestamp = strtotime($filtered_start_date);
 
+        $filtered_end_date = $this->user_filters['end_date'];
+        $filtered_end_date_timestamp = strtotime($filtered_end_date);
+
         $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
 
         $date_format = get_option('date_format');
@@ -895,22 +993,25 @@ class PP_Content_Overview extends PP_Module
         $start_date_value .= esc_html(date_i18n($date_format, $filtered_start_date_timestamp));
         $start_date_value .= '</span>';
 
-        $number_days_value = '<input type="text" id="pp-content-overview-number-days" name="pp-content-overview-number-days"'
-            . ' size="3" maxlength="3" value="'
-            . esc_attr($this->user_filters['number_days']) . '" /><span class="form-value">' . esc_html(
-                $this->user_filters['number_days']
-            )
-            . '</span>';
+        $end_date_value = '<input type="text" id="pp-content-overview-end-date" name="pp-content-overview-end-date"'
+            . ' size="10" class="date-pick" data-alt-field="pp-content-overview-end-date_hidden" data-alt-format="' . pp_convert_date_format_to_jqueryui_datepicker(
+                'Y-m-d'
+            ) . '" value="'
+            . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
+        $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
+        $end_date_value .= '<span class="form-value">';
+
+        $end_date_value .= esc_html(date_i18n($date_format, $filtered_end_date_timestamp));
+        $end_date_value .= '</span>';
 
         $output .= sprintf(
             _x(
-                'starting %1$s showing %2$s %3$s',
-                '%1$s = start date, %2$s = number of days, %3$s = translation of \'Days\'',
+                'starting %1$s to %2$s',
+                '%1$s = start date, %2$s = end date',
                 'publishpress'
             ),
             $start_date_value,
-            $number_days_value,
-            _n('day', 'days', $this->user_filters['number_days'], 'publishpress')
+            $end_date_value
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
@@ -1024,16 +1125,16 @@ class PP_Content_Overview extends PP_Module
 
 
         $select_filter_names['post_status'] = 'post_status';
-
         //metadata field
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             $select_filter_names[$meta_key] = $meta_key;
         }
-
-        if (isset($this->module->options->post_types['post']) && $this->module->options->post_types['post'] == 'on') {
-            $select_filter_names['cat'] = 'cat';
+        //taxonomies
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
+                $select_filter_names[$taxonomy] = $taxonomy;
+            }
         }
-
         $select_filter_names['author'] = 'author';
         $select_filter_names['ptype'] = 'ptype';
         $select_filter_names['search_box']  = 'search_box';
@@ -1043,9 +1144,13 @@ class PP_Content_Overview extends PP_Module
 
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
-
+        
         if (array_key_exists($select_id, $this->get_filterable_metadata())) {
             $select_id = 'metadata_key';
+        }
+
+        if (array_key_exists($select_id, $this->module->options->taxonomies) && taxonomy_exists($select_id)) {
+            $select_id = 'taxonomy';
         }
 
         switch ($select_id) {
@@ -1067,18 +1172,25 @@ class PP_Content_Overview extends PP_Module
                 <?php
                 break;
 
-            case 'cat':
-                $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
+            case 'taxonomy':
+                $taxonomyiD = isset($filters[$select_name]) ? (int)$filters[$select_name] : 0;
+                $taxonomy = get_taxonomy($select_name);
                 ?>
-                <select id="filter_category" name="cat">
-                    <option value=""><?php
-                        _e('View all categories', 'publishpress'); ?></option>
+                <select 
+                    class="filter_taxonomy" 
+                    id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
+                    data-taxonomy="<?php echo esc_attr($select_name); ?>" 
+                    name="<?php echo esc_attr($select_name); ?>"
+                    >
+                    <option value="">
+                        <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
+                    </option>
                     <?php
-                    if (! empty($categoryId)) {
-                        $category = get_term($categoryId, 'category');
+                    if (!empty($taxonomyiD)) {
+                        $term = get_term($taxonomyiD, $select_name);
 
-                        echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html(
-                                $category->name
+                        echo "<option value='" . esc_attr($taxonomyiD) . "' selected='selected'>" . esc_html(
+                                $term->name
                             ) . "</option>";
                     }
                     ?>
@@ -1325,29 +1437,53 @@ class PP_Content_Overview extends PP_Module
 
         $args = array_merge($defaults, $args);
 
-        //metadata field filter
-        $meta_query = array( 'relation' => 'AND' );
-        $metadata_filter = false;
-        foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
-            if (! empty($this->user_filters[$meta_key])) {
-                if ($metadata_term->type === 'date') {
-                    $meta_value = strtotime($this->user_filters[$meta_key]);
-                } else {
-                    $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
-                }
-                $metadata_filter = true;
-                $meta_query[] = array(
-                    'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
-                    'value' => $meta_value,
-                    'compare' => '='
+         //metadata field filter
+         $meta_query = array( 'relation' => 'AND' );
+         $metadata_filter = false;
+         foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
+             if (! empty($this->user_filters[$meta_key])) {
+                 if ($metadata_term->type === 'date') {
+                     $meta_value = strtotime($this->user_filters[$meta_key]);
+                 } else {
+                     $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
+                 }
+                 $metadata_filter = true;
+                 $meta_query[] = array(
+                     'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
+                     'value' => $meta_value,
+                     'compare' => '='
+                 );
+             }
+         }
+         if ($metadata_filter) {
+             $args['meta_query'] = $meta_query;
+         }
+
+        //taxonomy filter
+        $tax_query = array( 'relation' => 'AND' );
+        $taxonomy_filter = false;
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on' && ! empty($this->user_filters[$taxonomy])) {
+                $taxonomy_filter = true;
+                $tax_query[] = array(
+                      'taxonomy' => $taxonomy,
+                      'field'     => 'term_id',
+                      'terms'    => $this->user_filters[$taxonomy],
+                      'include_children' => true,
+                      'operator' => 'IN',
                 );
             }
         }
-        if ($metadata_filter) {
-            $args['meta_query'] = $meta_query;
+
+        if ($taxonomy_filter) {
+            $args['tax_query'] = $tax_query;
         }
 
-        if ($postType === 'post' && ! empty($term)) {
+        /**
+         *  I don't know if we need this again since we're now 
+         *  considering dynamic and multiple taxonomies ?
+         **/
+        /*if ($postType === 'post' && ! empty($term)) {
             // Filter to the term and any children if it's hierarchical
             $arg_terms = [
                 $term->term_id,
@@ -1366,7 +1502,7 @@ class PP_Content_Overview extends PP_Module
                     'operator' => 'IN',
                 ],
             ];
-        }
+        }*/
 
         $args['post_type'] = $postType;
 
@@ -1715,6 +1851,13 @@ class PP_Content_Overview extends PP_Module
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
+        
+        foreach ($queryResult as $key => $author) {
+            if (!user_can($author->id, 'edit_posts')) {
+                unset($queryResult[$key]);
+            }
+        }
+        $queryResult = array_values($queryResult);//re-order the key
 
         $ajax->sendJson($queryResult);
     }
@@ -1735,6 +1878,9 @@ class PP_Content_Overview extends PP_Module
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+        $taxonomy  = (isset($_GET['taxonomy']) && !empty(trim($_GET['taxonomy']))) ? sanitize_text_field($_GET['taxonomy']) : 'category';
+        
+        global $wpdb;
 
         $cacheKey = 'search_categories_result_' . md5($queryText);
         $cacheGroup = 'content_overview';
@@ -1750,12 +1896,13 @@ class PP_Content_Overview extends PP_Module
                     "SELECT DISTINCT t.term_id AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                WHERE taxonomy = 'category' AND t.name LIKE %s
+                WHERE taxonomy = '%s' AND t.name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
+                $taxonomy,
+                '%' . $wpdb->esc_like($queryText) . '%'
+            )
+        );
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
