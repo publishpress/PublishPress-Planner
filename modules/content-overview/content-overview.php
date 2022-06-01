@@ -149,6 +149,9 @@ class PP_Content_Overview extends PP_Module
                     'post' => 'on',
                     'page' => 'off',
                 ],
+                'taxonomies' => [
+                    'category' => 'on'
+                ],
             ],
             'configure_page_cb' => 'print_configure_view',
             'options_page' => true,
@@ -297,6 +300,65 @@ class PP_Content_Overview extends PP_Module
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
         );
+
+        add_settings_field(
+            'taxonomies',
+            __('Taxonomies:', 'publishpress'),
+            [$this, 'settings_taxonomies_option'],
+            $this->module->options_group_name,
+            $this->module->options_group_name . '_general'
+        );
+    }
+
+    /**
+     * Choose the taxonomies
+     *
+     * @since 3.7.0
+     */
+    public function settings_taxonomies_option()
+    {
+
+        $taxonomies = $this->get_all_taxonomies();
+        
+        foreach ($taxonomies as $taxonomy) {
+            $value = $taxonomy->name;
+            $label = $taxonomy->label . '(' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
+
+            //let skip status from filter list since we already have it seperately
+            if ($value ==='post_status') {
+                continue;
+            }
+
+            echo '<label for="' . esc_attr('taxonomy-' . $value) . '">';
+            echo '<input id="' . esc_attr('taxonomy-' . $value) . '" 
+                        name="' . esc_attr($this->module->options_group_name . '[taxonomies][' . $value . ']') . '"';
+            if (isset($this->module->options->taxonomies[$value])) {
+                checked($this->module->options->taxonomies[$value], 'on');
+            }
+            echo 'type="checkbox"> &nbsp;&nbsp;&nbsp; ' . esc_html($label) . '</label> <br />';
+        }
+        
+    }
+
+    /**
+     * Retrieve wordpress registered taxonomy
+     * 
+     * Private taxonomy are excluded
+     *
+     * @since 3.7.0
+     */
+    public function get_all_taxonomies()
+    {
+
+        //category and post tag are not included in public taxonomy
+        $category   = get_taxonomies(['name' => 'category'], 'objects');
+        $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
+
+        $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
+
+        $taxonomies = array_merge($category, $post_tag, $public);
+    
+        return $taxonomies;
     }
 
     /**
@@ -343,6 +405,10 @@ class PP_Content_Overview extends PP_Module
             $new_options['post_types'],
             $this->module->post_type_support
         );
+
+        if (!isset($new_options['taxonomies'])) {
+            $new_options['taxonomies'] = [];
+        }
 
         return $new_options;
     }
@@ -792,12 +858,18 @@ class PP_Content_Overview extends PP_Module
         $user_filters = [
             'search_box' => $this->filter_get_param('s'),
             'post_status' => $this->filter_get_param('post_status'),
-            'cat' => $this->filter_get_param('cat'),
             'author' => $this->filter_get_param('author'),
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'ptype' => $this->filter_get_param('ptype'),
         ];
+
+        //add taxonomies to filter
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
+                $user_filters[$taxonomy] = $this->filter_get_param($taxonomy);
+            }
+        }
 
         $current_user_filters = [];
         $current_user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
@@ -1002,11 +1074,12 @@ class PP_Content_Overview extends PP_Module
 
 
         $select_filter_names['post_status'] = 'post_status';
-
-        if (isset($this->module->options->post_types['post']) && $this->module->options->post_types['post'] == 'on') {
-            $select_filter_names['cat'] = 'cat';
+        //taxonomies
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
+                $select_filter_names[$taxonomy] = $taxonomy;
+            }
         }
-
         $select_filter_names['author'] = 'author';
         $select_filter_names['ptype'] = 'ptype';
         $select_filter_names['search_box']  = 'search_box';
@@ -1016,6 +1089,11 @@ class PP_Content_Overview extends PP_Module
 
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
+
+        if (array_key_exists($select_id, $this->module->options->taxonomies) && taxonomy_exists($select_id)) {
+            $select_id = 'taxonomy';
+        }
+
         switch ($select_id) {
             case 'post_status':
                 $post_statuses = $this->get_post_statuses();
@@ -1035,18 +1113,25 @@ class PP_Content_Overview extends PP_Module
                 <?php
                 break;
 
-            case 'cat':
-                $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
+            case 'taxonomy':
+                $taxonomyiD = isset($filters[$select_name]) ? (int)$filters[$select_name] : 0;
+                $taxonomy = get_taxonomy($select_name);
                 ?>
-                <select id="filter_category" name="cat">
-                    <option value=""><?php
-                        _e('View all categories', 'publishpress'); ?></option>
+                <select 
+                    class="filter_taxonomy" 
+                    id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
+                    data-taxonomy="<?php echo esc_attr($select_name); ?>" 
+                    name="<?php echo esc_attr($select_name); ?>"
+                    >
+                    <option value="">
+                        <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
+                    </option>
                     <?php
-                    if (! empty($categoryId)) {
-                        $category = get_term($categoryId, 'category');
+                    if (!empty($taxonomyiD)) {
+                        $term = get_term($taxonomyiD, $select_name);
 
-                        echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html(
-                                $category->name
+                        echo "<option value='" . esc_attr($taxonomyiD) . "' selected='selected'>" . esc_html(
+                                $term->name
                             ) . "</option>";
                     }
                     ?>
@@ -1254,7 +1339,31 @@ class PP_Content_Overview extends PP_Module
 
         $args = array_merge($defaults, $args);
 
-        if ($postType === 'post' && ! empty($term)) {
+        //taxonomy filter
+        $tax_query = array( 'relation' => 'AND' );
+        $taxonomy_filter = false;
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on' && ! empty($this->user_filters[$taxonomy])) {
+                $taxonomy_filter = true;
+                $tax_query[] = array(
+                      'taxonomy' => $taxonomy,
+                      'field'     => 'term_id',
+                      'terms'    => $this->user_filters[$taxonomy],
+                      'include_children' => true,
+                      'operator' => 'IN',
+                );
+            }
+        }
+
+        if ($taxonomy_filter) {
+            $args['tax_query'] = $tax_query;
+        }
+
+        /**
+         *  I don't know if we need this again since we're now 
+         *  considering dynamic and multiple taxonomies ?
+         **/
+        /*if ($postType === 'post' && ! empty($term)) {
             // Filter to the term and any children if it's hierarchical
             $arg_terms = [
                 $term->term_id,
@@ -1273,7 +1382,7 @@ class PP_Content_Overview extends PP_Module
                     'operator' => 'IN',
                 ],
             ];
-        }
+        }*/
 
         $args['post_type'] = $postType;
 
@@ -1649,6 +1758,9 @@ class PP_Content_Overview extends PP_Module
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+        $taxonomy  = (isset($_GET['taxonomy']) && !empty(trim($_GET['taxonomy']))) ? sanitize_text_field($_GET['taxonomy']) : 'category';
+        
+        global $wpdb;
 
         $cacheKey = 'search_categories_result_' . md5($queryText);
         $cacheGroup = 'content_overview';
@@ -1664,12 +1776,13 @@ class PP_Content_Overview extends PP_Module
                     "SELECT DISTINCT t.term_id AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
-                WHERE taxonomy = 'category' AND t.name LIKE %s
+                WHERE taxonomy = '%s' AND t.name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
+                $taxonomy,
+                '%' . $wpdb->esc_like($queryText) . '%'
+            )
+        );
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
