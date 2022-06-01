@@ -1593,6 +1593,13 @@ class PP_Content_Overview extends PP_Module
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
+        
+        foreach ($queryResult as $key => $author) {
+            if (!user_can($author->id, 'edit_posts')) {
+                unset($queryResult[$key]);
+            }
+        }
+        $queryResult = array_values($queryResult);//re-order the key
 
         $ajax->sendJson($queryResult);
     }
