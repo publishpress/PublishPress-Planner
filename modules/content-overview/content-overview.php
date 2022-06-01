@@ -854,15 +854,14 @@ class PP_Content_Overview extends PP_Module
     {
         global $publishpress;
 
-        if (!class_exists('PP_Editorial_Metadata')) {
-            $filterable_metadata = [];
-        } else {
+        $filterable_metadata = [];
+        if (class_exists('PP_Editorial_Metadata')) {
             $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_filters' => true]);
             foreach ($editorial_metadata_terms as $term) {
                 $filterable_metadata[$term->slug] = $term;
             }
         }
-
+        
         return $filterable_metadata;
     }
 
