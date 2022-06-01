@@ -43,6 +43,20 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
+
+$includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
+if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
+    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
+}
+
+if (class_exists('PublishPressInstanceProtection\\Config')) {
+    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
+    $pluginCheckerConfig->pluginSlug    = 'publishpress';
+    $pluginCheckerConfig->pluginName    = 'PublishPress';
+
+    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
+}
+
 require_once 'includes.php';
 
 // Core class
