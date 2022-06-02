@@ -121,7 +121,7 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.8.0] - 1 Jun 2022 =
+= [3.8.0] - 2 Jun 2022 =
 
 * Update: Improve content overview date filter, #969;
 * Update: Move content overview from general settings to it own tab, #971;
