@@ -1083,7 +1083,10 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         $this->content_overview_filter_options($select_id, $select_name, $this->user_filters); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     } ?>
-                    <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
+                   <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
+                   <input type="submit" id="post-query-clear" value="<?php
+                    echo esc_attr(__('Reset', 'publishpress')); ?>"
+                           class="button-secondary button"/>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
@@ -1100,13 +1103,10 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
-                    <input type="submit" id="post-query-clear" value="<?php
-                    echo esc_attr(__('Reset', 'publishpress')); ?>"
-                           class="button-secondary button"/>
                 </form>
             </div><!-- /alignleft actions -->
 
-            <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
+            <div class="print-box" style="float:right; margin-right: 30px;margin-top:10px;"><!-- Print link -->
                 <a href="#" id="print_link"><span
                             class="pp-icon pp-icon-print"></span>&nbsp;<?php
                     echo esc_attr(__('Print', 'publishpress')); ?>
@@ -1172,7 +1172,7 @@ class PP_Content_Overview extends PP_Module
                 break;
 
             case 'taxonomy':
-                $taxonomyiD = isset($filters[$select_name]) ? (int)$filters[$select_name] : 0;
+                $taxonomySlug = isset($filters[$select_name]) ? sanitize_key($filters[$select_name]) : '';
                 $taxonomy = get_taxonomy($select_name);
                 ?>
                 <select 
@@ -1185,10 +1185,10 @@ class PP_Content_Overview extends PP_Module
                         <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
                     </option>
                     <?php
-                    if (!empty($taxonomyiD)) {
-                        $term = get_term($taxonomyiD, $select_name);
+                    if ($taxonomySlug) {
+                        $term = get_term_by('slug', $taxonomySlug, $select_name);
 
-                        echo "<option value='" . esc_attr($taxonomyiD) . "' selected='selected'>" . esc_html(
+                        echo "<option value='" . esc_attr($taxonomySlug) . "' selected='selected'>" . esc_html(
                                 $term->name
                             ) . "</option>";
                     }
@@ -1246,13 +1246,6 @@ class PP_Content_Overview extends PP_Module
                 <?php
                 break;
                 
-                case 'search_box':
-                    ?>
-                    <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
-                    <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => esc_attr($select_id) . 'search-submit']); ?>
-                    <?php
-                    break;
-
                 case 'search_box':
                     ?>
                     <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
@@ -1466,8 +1459,8 @@ class PP_Content_Overview extends PP_Module
                 $taxonomy_filter = true;
                 $tax_query[] = array(
                       'taxonomy' => $taxonomy,
-                      'field'     => 'term_id',
-                      'terms'    => $this->user_filters[$taxonomy],
+                      'field'     => 'slug',
+                      'terms'    => [$this->user_filters[$taxonomy]],
                       'include_children' => true,
                       'operator' => 'IN',
                 );
@@ -1478,30 +1471,6 @@ class PP_Content_Overview extends PP_Module
             $args['tax_query'] = $tax_query;
         }
 
-        /**
-         *  I don't know if we need this again since we're now 
-         *  considering dynamic and multiple taxonomies ?
-         **/
-        /*if ($postType === 'post' && ! empty($term)) {
-            // Filter to the term and any children if it's hierarchical
-            $arg_terms = [
-                $term->term_id,
-            ];
-
-            if (is_object($term) && property_exists($term, 'term_id')) {
-                $arg_terms = array_merge($arg_terms, get_term_children($term->term_id, $this->taxonomy_used));
-            }
-
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-            $args['tax_query'] = [
-                [
-                    'taxonomy' => $this->taxonomy_used,
-                    'field' => 'id',
-                    'terms' => $arg_terms,
-                    'operator' => 'IN',
-                ],
-            ];
-        }*/
 
         $args['post_type'] = $postType;
 
@@ -1891,7 +1860,7 @@ class PP_Content_Overview extends PP_Module
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $queryResult = $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT DISTINCT t.term_id AS id, t.name AS text
+                    "SELECT DISTINCT t.slug AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
                 WHERE taxonomy = '%s' AND t.name LIKE %s
@@ -1901,7 +1870,6 @@ class PP_Content_Overview extends PP_Module
                 '%' . $wpdb->esc_like($queryText) . '%'
             )
         );
-
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
 

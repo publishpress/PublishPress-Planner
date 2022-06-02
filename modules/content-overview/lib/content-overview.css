@@ -1,9 +1,4 @@
 /** Content Overview **/
-#post-query-clear {
-    margin-top: -2px;
-    margin-left: 4px;
-}
-
 header h2 span {
     color: #999999;
 }
@@ -78,6 +73,20 @@ header h2 a.change-date-cancel {
 
 #pp-content-overview-wrap .handlediv {
     height: 6px;
+}
+
+.publishpress_page_pp-content-overview input[type="submit"] {
+    margin: 0 8px 0 0;
+}
+
+.publishpress_page_pp-content-overview #pp-content-filters input {
+    margin-top: 5px;
+}
+
+.publishpress_page_pp-content-overview #post-query-clear {
+    margin-bottom: 0;
+    margin-left: 4px;
+    float: right;
 }
 
 @media (max-width: 782px) {
