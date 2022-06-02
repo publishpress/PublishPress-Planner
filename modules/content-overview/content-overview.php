@@ -716,8 +716,8 @@ class PP_Content_Overview extends PP_Module
 
         $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
-            ? current_time($start_date_format)
-            : date($start_date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            ? current_time($date_format)
+            : date($date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
         $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
@@ -854,15 +854,14 @@ class PP_Content_Overview extends PP_Module
     {
         global $publishpress;
 
-        if (!class_exists('PP_Editorial_Metadata')) {
-            $filterable_metadata = [];
-        } else {
+        $filterable_metadata = [];
+        if (class_exists('PP_Editorial_Metadata')) {
             $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_filters' => true]);
             foreach ($editorial_metadata_terms as $term) {
                 $filterable_metadata[$term->slug] = $term;
             }
         }
-
+        
         return $filterable_metadata;
     }
 
@@ -1681,8 +1680,7 @@ class PP_Content_Overview extends PP_Module
         global $wpdb;
 
         $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date'])); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        $end_day = $this->user_filters['number_days'];
-        $ending_date = date("Y-m-d", strtotime("+" . $end_day . " days", strtotime($beginning_date))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $ending_date = date('Y-m-d', strtotime($this->user_filters['end_date'])); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         $where = $where . $wpdb->prepare(
                 " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
                 $beginning_date,
