@@ -798,11 +798,13 @@ class PP_Content_Overview extends PP_Module
         }
 
         $description = sprintf(
-            '%s <span class="time-range">%s</span>',
+            '<div>%s <span class="time-range">%s</span></div> %s',
             esc_html__('Content Overview', 'publishpress'),
-            $this->content_overview_time_range()
+            $this->content_overview_time_range(),
+            $this->content_overview_search_box(),
         );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
+                    
         <div class="wrap" id="pp-content-overview-wrap">
             <?php
             $this->print_messages(); ?>
@@ -1029,6 +1031,23 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
+     * Content overview search box
+     *
+     */
+    public function content_overview_search_box()
+    {
+        ob_start();
+        ?>
+        <div class="co-top-searchbox">
+            <input type="search" id="co-searchbox-search-input" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
+            <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => 'co-searchbox-search-submit']); ?>
+        </div>
+        <?php
+
+        return ob_get_clean();
+    }
+
+    /**
      * Print any messages that should appear based on the action performed
      */
     public function print_messages()
@@ -1248,8 +1267,7 @@ class PP_Content_Overview extends PP_Module
                 
                 case 'search_box':
                     ?>
-                    <input type="search" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
-                    <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => esc_attr($select_id) . 'search-submit']); ?>
+                    <input type="hidden" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
                     <?php
                     break;
 
