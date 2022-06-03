@@ -295,7 +295,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'post_types',
-            esc_html__('Add to these post types:', 'publishpress'),
+            esc_html__('Post types to show:', 'publishpress'),
             [$this, 'settings_post_types_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -303,7 +303,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'taxonomies',
-            __('Taxonomies:', 'publishpress'),
+            __('Taxonomies to show:', 'publishpress'),
             [$this, 'settings_taxonomies_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -322,7 +322,7 @@ class PP_Content_Overview extends PP_Module
         
         foreach ($taxonomies as $taxonomy) {
             $value = $taxonomy->name;
-            $label = $taxonomy->label . '(' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
+            $label = $taxonomy->label . ' (' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
             if ($value ==='post_status') {
@@ -335,7 +335,7 @@ class PP_Content_Overview extends PP_Module
             if (isset($this->module->options->taxonomies[$value])) {
                 checked($this->module->options->taxonomies[$value], 'on');
             }
-            echo 'type="checkbox"> &nbsp;&nbsp;&nbsp; ' . esc_html($label) . '</label> <br />';
+            echo 'type="checkbox"> &nbsp; ' . esc_html($label) . '</label> <br />';
         }
         
     }
