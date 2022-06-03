@@ -721,8 +721,8 @@ class PP_Content_Overview extends PP_Module
 
         $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
-        if ((empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +1 day'));
+        if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
         }
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -915,7 +915,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['end_date']) {
-            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +1 day'));
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +10 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
