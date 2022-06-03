@@ -295,7 +295,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'post_types',
-            esc_html__('Add to these post types:', 'publishpress'),
+            esc_html__('Post types to show:', 'publishpress'),
             [$this, 'settings_post_types_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -303,7 +303,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'taxonomies',
-            __('Taxonomies:', 'publishpress'),
+            __('Taxonomies to show:', 'publishpress'),
             [$this, 'settings_taxonomies_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -322,7 +322,7 @@ class PP_Content_Overview extends PP_Module
         
         foreach ($taxonomies as $taxonomy) {
             $value = $taxonomy->name;
-            $label = $taxonomy->label . '(' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
+            $label = $taxonomy->label . ' (' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
             if ($value ==='post_status') {
@@ -335,7 +335,7 @@ class PP_Content_Overview extends PP_Module
             if (isset($this->module->options->taxonomies[$value])) {
                 checked($this->module->options->taxonomies[$value], 'on');
             }
-            echo 'type="checkbox"> &nbsp;&nbsp;&nbsp; ' . esc_html($label) . '</label> <br />';
+            echo 'type="checkbox"> &nbsp; ' . esc_html($label) . '</label> <br />';
         }
         
     }
@@ -721,8 +721,8 @@ class PP_Content_Overview extends PP_Module
 
         $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
 
-        if ((empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +1 day'));
+        if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
         }
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -915,7 +915,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['end_date']) {
-            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +1 day'));
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +10 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
