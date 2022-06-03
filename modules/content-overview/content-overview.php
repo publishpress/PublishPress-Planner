@@ -1199,7 +1199,7 @@ class PP_Content_Overview extends PP_Module
                     id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
                     data-taxonomy="<?php echo esc_attr($select_name); ?>" 
                     name="<?php echo esc_attr($select_name); ?>"
-                    data-placeholder="<?php printf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
+                    data-placeholder="<?php printf(esc_attr__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
                     >
                     <option value="">
                         <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
