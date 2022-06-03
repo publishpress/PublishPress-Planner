@@ -69,6 +69,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#pp-content-filters select#filter_author').pp_select2({
+        allowClear: true,
         ajax: {
             url: ajaxurl,
             dataType: 'json',
@@ -90,6 +91,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#pp-content-filters select.filter_taxonomy').pp_select2({
+        allowClear: true,
         ajax: {
             url: ajaxurl,
             dataType: 'json',

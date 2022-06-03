@@ -1199,6 +1199,7 @@ class PP_Content_Overview extends PP_Module
                     id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
                     data-taxonomy="<?php echo esc_attr($select_name); ?>" 
                     name="<?php echo esc_attr($select_name); ?>"
+                    data-placeholder="<?php printf(esc_attr__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
                     >
                     <option value="">
                         <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
@@ -1220,7 +1221,7 @@ class PP_Content_Overview extends PP_Module
                 $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
                 $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
                 ?>
-                <select id="filter_author" name="author">
+                <select id="filter_author" name="author" data-placeholder="<?php esc_attr_e('All authors', 'publishpress'); ?>">
                     <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     <option value="" <?php echo $selectedOptionAll; ?>>
                         <?php esc_html_e('All authors', 'publishpress'); ?>
