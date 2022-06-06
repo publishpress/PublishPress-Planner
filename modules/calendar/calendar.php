@@ -519,7 +519,17 @@ if (! class_exists('PP_Calendar')) {
         protected function getPostStatusOptions()
         {
             $postStatuses = [];
+            $post_statuses_terms       = get_terms('post_status', ['hide_empty' => false]);
+            $post_statuses_terms_slugs = array_column($post_statuses_terms, 'slug');
             foreach ($this->get_post_statuses() as $status) {
+                //add support for capabilities custom statuses
+                if (defined('PUBLISHPRESS_CAPS_PRO_VERSION')
+                    && !empty(get_option('cme_custom_status_control'))
+                    && in_array($status->slug, $post_statuses_terms_slugs)
+                    && !current_user_can('status_change_' . $status->slug)
+                ) {
+                    continue;
+                }
                 $postStatuses[] = [
                     'value' => esc_attr($status->slug),
                     'text' => esc_html($status->name),
@@ -2930,6 +2940,7 @@ if (! class_exists('PP_Calendar')) {
             $user_args = [
                 'number' => 20,
                 'orderby' => 'display_name',
+                'capability' => 'edit_posts',
             ];
 
             if (! empty($queryText)) {

@@ -1,9 +1,4 @@
 /** Content Overview **/
-#post-query-clear {
-    margin-top: -2px;
-    margin-left: 4px;
-}
-
 header h2 span {
     color: #999999;
 }
@@ -80,7 +75,40 @@ header h2 a.change-date-cancel {
     height: 6px;
 }
 
+.publishpress_page_pp-content-overview input[type="submit"] {
+    margin: 0 8px 0 0;
+}
+
+.publishpress_page_pp-content-overview #pp-content-filters input {
+    margin-top: 5px;
+}
+
+.publishpress_page_pp-content-overview #post-query-clear {
+    margin-bottom: 0;
+    margin-left: 4px;
+    float: right;
+}
+
+.publishpress_page_pp-content-overview .publishpress-admin header h2 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0;
+    margin-right: 25px;
+}
+
+.publishpress_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
+    margin-top: 0;
+}
+
 @media (max-width: 782px) {
+
+    .publishpress_page_pp-content-overview .publishpress-admin header h2 {
+        display: block;
+    }
+
+    .publishpress_page_pp-content-overview .publishpress-admin header h2 .co-top-searchbox {
+        margin-top: 10px;
+    }
 
     #post-query-clear {
         margin-top: 5px;
