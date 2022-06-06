@@ -62,5 +62,9 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "build": "vendor/bin/robo build --ansi",
+    "build-unpacked": "vendor/bin/robo build:unpacked --ansi"
   }
 }
