@@ -53,3 +53,5 @@ RoboFile.php export-ignore
 Thumbs.db export-ignore
 webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
+.phpcs.xml
+jest.config.ts
