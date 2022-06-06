@@ -40,6 +40,7 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
                 '.env.testing.mac.dist',
                 '.env.testing.linux.dist',
                 '.gitattributes',
+                'phpcs.xml',
             ]
         );
     }
