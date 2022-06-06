@@ -7,15 +7,16 @@
 .github export-ignore
 .gitignore export-ignore
 .gitlab-ci.yml export-ignore
+.phpcs.xml export-ignore
 .phplint.yml export-ignore
 .travis.yml export-ignore
 .vscode export-ignore
 *.bash export-ignore
 *.cache export-ignore
 *.code-workspace export-ignore
-*.env export-ignore
 *.dist export-ignore
 *.dist.yml export-ignore
+*.env export-ignore
 *.exe export-ignore
 *.sh export-ignore
 *.sql export-ignore
@@ -25,6 +26,7 @@
 /dist export-ignore
 /screenshot-*.png export-ignore
 /tests export-ignore
+assets_wp export-ignore
 behat.yml export-ignore
 bin export-ignore
 builder.yml export-ignore
@@ -35,6 +37,7 @@ composer.lock export-ignore
 docker-compose.yml export-ignore
 Gruntfile.js export-ignore
 Gruntfile.js export-ignore
+jest.config.ts export-ignore
 jsconfig.json export-ignore
 multisite.xml export-ignore
 multisite.xml.dist export-ignore
@@ -53,5 +56,3 @@ RoboFile.php export-ignore
 Thumbs.db export-ignore
 webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
-.phpcs.xml export-ignore
-jest.config.ts export-ignore
