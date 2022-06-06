@@ -32,8 +32,6 @@ bin export-ignore
 builder.yml export-ignore
 circle.yml export-ignore
 codeception.yml export-ignore
-composer.json export-ignore
-composer.lock export-ignore
 docker-compose.yml export-ignore
 Gruntfile.js export-ignore
 Gruntfile.js export-ignore
