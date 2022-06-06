@@ -39,6 +39,7 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
                 '.distignore',
                 '.env.testing.mac.dist',
                 '.env.testing.linux.dist',
+                '.gitattributes',
             ]
         );
     }
