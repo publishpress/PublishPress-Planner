@@ -36,6 +36,9 @@ class RoboFile extends \PublishPressBuilder\PackageBuilderTasks
                 '.phpcs.xml',
                 'builder.yml.dist',
                 'vendor/publishpress/wordpress-reviews/phpcs.xml.dist',
+                '.distignore',
+                '.env.testing.mac.dist',
+                '.env.testing.linux.dist',
             ]
         );
     }
