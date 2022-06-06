@@ -19,15 +19,15 @@
   },
   "repositories": [
     {
-      "type": "git",
+      "type": "vcs",
       "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
     },
     {
-      "type": "git",
+      "type": "vcs",
       "url": "https://github.com/publishpress/wp-browser"
     },
     {
-      "type": "git",
+      "type": "vcs",
       "url": "https://github.com/publishpress/publishpress-instance-protection"
     }
   ],
