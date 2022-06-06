@@ -13,6 +13,7 @@
 *.bash export-ignore
 *.cache export-ignore
 *.code-workspace export-ignore
+*.env export-ignore
 *.dist export-ignore
 *.dist.yml export-ignore
 *.exe export-ignore
