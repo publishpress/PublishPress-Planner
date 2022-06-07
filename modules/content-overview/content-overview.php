@@ -801,7 +801,7 @@ class PP_Content_Overview extends PP_Module
             '<div>%s <span class="time-range">%s</span></div> %s',
             esc_html__('Content Overview', 'publishpress'),
             $this->content_overview_time_range(),
-            $this->content_overview_search_box(),
+            $this->content_overview_search_box()
         );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
                     
