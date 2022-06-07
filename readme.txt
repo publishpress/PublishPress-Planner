@@ -121,6 +121,10 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.8.1] - 7 Jun 2022 =
+
+* Fixed: Uncaught Error: syntax error, unexpected ')' in lower php version, #1071
+
 = [3.8.0] - 6 Jun 2022 =
 
 * Update: Improve content overview date filter, #969;
