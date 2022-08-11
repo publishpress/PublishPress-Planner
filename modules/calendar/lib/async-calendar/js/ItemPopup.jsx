@@ -172,7 +172,7 @@ export default function ItemPopup(props) {
                 {props.icon &&
                 <span className={'dashicons ' + props.icon + ' publishpress-calendar-icon'}/>
                 }
-                {props.title}
+                <span dangerouslySetInnerHTML={{__html: props.title}}></span>
 
                 <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
                       title={props.strings.close} onClick={closePopup}/>
