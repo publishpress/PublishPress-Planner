@@ -63,7 +63,7 @@ export default function Item(props) {
             onClick={dispatchClickEvent}>
 
             {iconElement}{timeElement}
-            {label}
+            <span dangerouslySetInnerHTML={{__html: label}}></span>
             {props.isPopupOpened &&
             <ItemPopup target={calendarItem}
                        id={props.id}
