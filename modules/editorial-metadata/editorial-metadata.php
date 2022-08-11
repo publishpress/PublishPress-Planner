@@ -604,7 +604,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // This will allow us to update and display the count of metadata in posts in use per term.
             // TODO: Core only correlates posts with terms if the post_status is publish. Do we care what it is?
             if ($post->post_status === 'publish') {
-                wp_set_object_terms($id, $term_slugs, self::metadata_taxonomy);
+                wp_set_object_terms($post->ID, $term_slugs, self::metadata_taxonomy);
             }
         }
 
