@@ -480,7 +480,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (! count($terms)) {
                 $message = esc_html__('No editorial metadata available.');
                 if (current_user_can('manage_options')) {
-                    $message .= sprintf(esc_html__(' <a href="%s">Add fields to get started</a>.'), esc_url($this->get_link()));
+                    $message .= sprintf(' <a href="%s">Add fields to get started</a>.', esc_url($this->get_link()));
                 } else {
                     $message .= esc_html__(
                         ' Encourage your site administrator to configure your editorial workflow by adding editorial metadata.'
