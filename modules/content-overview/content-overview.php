@@ -888,10 +888,8 @@ class PP_Content_Overview extends PP_Module
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             if ($meta_term->type === 'checkbox') {
                 $user_filters[$meta_key] = absint($this->filter_get_param($meta_key));
-            } elseif ($meta_term->type === 'date') {
-                $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
             } else {
-                $user_filters[$meta_key] = $this->filter_get_param($meta_key);
+                $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
             }
         }
         
