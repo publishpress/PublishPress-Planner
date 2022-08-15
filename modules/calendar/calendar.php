@@ -180,6 +180,7 @@ if (! class_exists('PP_Calendar')) {
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
+                    'show_calendar_posts_full_title' => 'off',
                 ],
                 'messages' => [
                     'post-date-updated' => __('Post date updated.', 'publishpress'),
@@ -494,6 +495,15 @@ if (! class_exists('PP_Calendar')) {
                     ['publishpress-async-calendar-theme-light-css'],
                     PUBLISHPRESS_VERSION
                 );
+
+                if (isset($this->module->options->show_calendar_posts_full_title) && 'on' === $this->module->options->show_calendar_posts_full_title) {
+                    $inline_style = '.publishpress-calendar .publishpress-calendar-item {
+                        height: auto;
+                        max-height: max-content;
+                        white-space: break-spaces;
+                    }';
+                    wp_add_inline_style('publishpress-async-calendar-css', $inline_style);
+                }
 
                 wp_enqueue_style(
                     'publishpress-select2',
@@ -2495,6 +2505,14 @@ if (! class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'show_calendar_posts_full_title',
+                __('Show calendar posts full title', 'publishpress'),
+                [$this, 'settings_show_calendar_posts_full_title_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -2688,6 +2706,19 @@ if (! class_exists('PP_Calendar')) {
             echo '</div>';
         }
 
+        public function settings_show_calendar_posts_full_title_option()
+        {
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[show_calendar_posts_full_title]',
+                'on' === $this->module->options->show_calendar_posts_full_title ? 'checked' : ''
+            );
+
+            echo '</div>';
+        }
+
         public function settings_sort_by_option()
         {
             $fields = [
@@ -2822,6 +2853,12 @@ if (! class_exists('PP_Calendar')) {
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
                 : self::TIME_FORMAT_12H_NO_LEADING_ZEROES;
+
+            if (isset($new_options['show_calendar_posts_full_title'])) {
+                $options['show_calendar_posts_full_title'] = 'on';
+            } else {
+                $options['show_calendar_posts_full_title'] = 'off';
+            }
 
             // Default publish time
             if (isset($new_options['default_publish_time'])) {
