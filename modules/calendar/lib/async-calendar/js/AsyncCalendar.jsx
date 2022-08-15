@@ -11,18 +11,38 @@ const $ = jQuery;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
+
+    let statusValue   = (props.requestFilter.post_status) ? props.requestFilter.post_status : '';
+    let typesValue    = (props.requestFilter.post_type) ? props.requestFilter.post_type : '';
+    let weeksValue    = (props.requestFilter.weeks) ? props.requestFilter.weeks : props.numberOfWeeksToDisplay;
+    
+    let categoryValue   = '';
+    if (props.requestFilter.category && props.requestFilter.category.value) {
+        categoryValue   = props.requestFilter.category.value;
+    }
+
+    let postTagValue   = '';
+    if (props.requestFilter.post_tag && props.requestFilter.post_tag.value) {
+        postTagValue   = props.requestFilter.post_tag.value;
+    }
+    
+    let authorValue   = '';
+    if (props.requestFilter.post_author && props.requestFilter.post_author.value) {
+        authorValue = props.requestFilter.post_author.value;
+    }
+    
     const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay, props.weekStartsOnSunday));
-    const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(props.numberOfWeeksToDisplay);
+    const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(weeksValue);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
     const [isLoading, setIsLoading] = React.useState(false);
     const [isDragging, setIsDragging] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filterStatus, setFilterStatus] = React.useState();
-    const [filterCategory, setFilterCategory] = React.useState();
-    const [filterTag, setFilterTag] = React.useState();
-    const [filterAuthor, setFilterAuthor] = React.useState();
-    const [filterPostType, setFilterPostType] = React.useState();
-    const [filterWeeks, setFilterWeeks] = React.useState(props.numberOfWeeksToDisplay);
+    const [filterStatus, setFilterStatus] = React.useState(statusValue);
+    const [filterCategory, setFilterCategory] = React.useState(categoryValue);
+    const [filterTag, setFilterTag] = React.useState(postTagValue);
+    const [filterAuthor, setFilterAuthor] = React.useState(authorValue);
+    const [filterPostType, setFilterPostType] = React.useState(typesValue);
+    const [filterWeeks, setFilterWeeks] = React.useState(weeksValue);
     const [openedItemId, setOpenedItemId] = React.useState();
     const [openedItemData, setOpenedItemData] = React.useState([]);
     const [openedItemRefreshCount, setOpenedItemRefreshCount] = React.useState(0);
@@ -504,6 +524,7 @@ export default function AsyncCalendar(props) {
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
                 onChange={onFilterEventCallback}
+                requestFilter={props.requestFilter}
                 strings={props.strings}/>
 
             <NavigationBar

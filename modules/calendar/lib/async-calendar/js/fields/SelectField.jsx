@@ -8,6 +8,7 @@ export default function SelectField(props) {
                 nonce={props.nonce}
                 multiple={props.multiple}
                 ajaxAction={props.ajaxAction}
+                options={props.options}
                 value={props.value}
                 name={props.name}
                 id={props.id}
