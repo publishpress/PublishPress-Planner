@@ -2698,7 +2698,7 @@ if (! class_exists('PP_Calendar')) {
             echo '<div class="c-input-group">';
 
             echo sprintf(
-                '<input type="time" name="%s" value="%s">',
+                '<input type="text" name="%s" value="%s" class="time-pick" readonly>',
                 esc_attr($this->module->options_group_name) . '[default_publish_time]',
                 $this->module->options->default_publish_time
             );
