@@ -49,11 +49,37 @@ export default function FilterBar(props) {
         });
     }
 
+    let statusValue   = (props.requestFilter.post_status) ? props.requestFilter.post_status : '';
+    let typesValue    = (props.requestFilter.post_type) ? props.requestFilter.post_type : '';
+    let weeksValue    = (props.requestFilter.weeks) ? props.requestFilter.weeks : '';
+    
+    let categoryOptions = [];
+    let categoryValue   = '';
+    if (props.requestFilter.category && props.requestFilter.category.value) {
+        categoryOptions = [props.requestFilter.category];
+        categoryValue   = props.requestFilter.category.value;
+    }
+
+    let postTagOptions = [];
+    let postTagValue   = '';
+    if (props.requestFilter.post_tag && props.requestFilter.post_tag.value) {
+        postTagOptions = [props.requestFilter.post_tag];
+        postTagValue   = props.requestFilter.post_tag.value;
+    }
+    
+    let authorOptions = [];
+    let authorValue   = '';
+    if (props.requestFilter.post_author && props.requestFilter.post_author.value) {
+        authorOptions = [props.requestFilter.post_author];
+        authorValue = props.requestFilter.post_author.value;
+    }
+
     return (
         <div className="publishpress-calendar-filter-bar">
             <Select
                 placeholder={props.strings.allStatuses}
                 options={props.statuses}
+                value={statusValue}
                 onSelect={handleStatusChange}
                 onClear={handleStatusChange}/>
 
@@ -61,6 +87,8 @@ export default function FilterBar(props) {
                            isEditing={true}
                            ajaxUrl={props.ajaxUrl}
                            nonce={props.nonce}
+                           options={categoryOptions}
+                           value={categoryValue}
                            taxonomy={'category'}
                            onSelect={handleCategoriesChange}
                            onClear={handleCategoriesChange}
@@ -71,6 +99,8 @@ export default function FilterBar(props) {
                            isEditing={true}
                            ajaxUrl={props.ajaxUrl}
                            nonce={props.nonce}
+                           options={postTagOptions}
+                           value={postTagValue}
                            taxonomy={'post_tag'}
                            onSelect={handleTagsChange}
                            onClear={handleTagsChange}
@@ -81,6 +111,8 @@ export default function FilterBar(props) {
                 placeholder={props.strings.allAuthors}
                 ajaxUrl={props.ajaxUrl}
                 nonce={props.nonce}
+                options={authorOptions}
+                value={authorValue}
                 ajaxAction={'publishpress_calendar_search_authors'}
                 onSelect={handleAuthorsChange}
                 onClear={handleAuthorsChange}/>
@@ -88,12 +120,14 @@ export default function FilterBar(props) {
             <Select
                 placeholder={props.strings.allTypes}
                 options={props.postTypes}
+                value={typesValue}
                 onSelect={handlePostTypeChange}
                 onClear={handlePostTypeChange}/>
 
             <Select
                 placeholder={weeksFilterPlaceholder}
                 options={weeksOptions}
+                value={weeksValue}
                 onSelect={handleWeeksChange}
                 onClear={handleWeeksChange}/>
         </div>
