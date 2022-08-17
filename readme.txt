@@ -1,5 +1,5 @@
 === PublishPress: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
-Contributors: publishpress, kevinB, stevejburge, andergmartins
+Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
