@@ -24,6 +24,7 @@ jQuery(() => {
             userCanAddPosts={publishpressCalendarParams.userCanAddPosts}
             items={publishpressCalendarParams.items}
             allowAddingMultipleAuthors={publishpressCalendarParams.allowAddingMultipleAuthors}
+            requestFilter={publishpressCalendarParams.requestFilter}
             strings={publishpressCalendarParams.strings}/>,
         document.getElementById('publishpress-calendar-wrap')
     );

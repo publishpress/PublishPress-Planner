@@ -480,7 +480,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (! count($terms)) {
                 $message = esc_html__('No editorial metadata available.');
                 if (current_user_can('manage_options')) {
-                    $message .= sprintf(esc_html__(' <a href="%s">Add fields to get started</a>.'), esc_url($this->get_link()));
+                    $message .= sprintf(' <a href="%s">Add fields to get started</a>.', esc_url($this->get_link()));
                 } else {
                     $message .= esc_html__(
                         ' Encourage your site administrator to configure your editorial workflow by adding editorial metadata.'
@@ -604,7 +604,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // This will allow us to update and display the count of metadata in posts in use per term.
             // TODO: Core only correlates posts with terms if the post_status is publish. Do we care what it is?
             if ($post->post_status === 'publish') {
-                wp_set_object_terms($id, $term_slugs, self::metadata_taxonomy);
+                wp_set_object_terms($post->ID, $term_slugs, self::metadata_taxonomy);
             }
         }
 

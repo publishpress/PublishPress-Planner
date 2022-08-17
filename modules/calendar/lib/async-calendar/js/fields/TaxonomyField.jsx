@@ -10,6 +10,7 @@ export default function TaxonomyField(props) {
                 nonce={props.nonce}
                 ajaxAction={'publishpress_calendar_search_terms'}
                 ajaxArgs={{taxonomy: props.taxonomy}}
+                options={props.options}
                 value={props.value}
                 multiple={props.multiple}
                 onSelect={props.onSelect}

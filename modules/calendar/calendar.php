@@ -180,6 +180,7 @@ if (! class_exists('PP_Calendar')) {
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
+                    'show_calendar_posts_full_title' => 'off',
                 ],
                 'messages' => [
                     'post-date-updated' => __('Post date updated.', 'publishpress'),
@@ -495,6 +496,15 @@ if (! class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION
                 );
 
+                if (isset($this->module->options->show_calendar_posts_full_title) && 'on' === $this->module->options->show_calendar_posts_full_title) {
+                    $inline_style = '.publishpress-calendar .publishpress-calendar-item {
+                        height: auto;
+                        max-height: max-content;
+                        white-space: break-spaces;
+                    }';
+                    wp_add_inline_style('publishpress-async-calendar-css', $inline_style);
+                }
+
                 wp_enqueue_style(
                     'publishpress-select2',
                     PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
@@ -658,6 +668,69 @@ if (! class_exists('PP_Calendar')) {
                         true
                     );
 
+                    /*
+                     * Filters
+                     */
+                    $userFilters            = $this->get_filters();
+                    $calendar_request_args  = [];
+                    $calendar_request_filter = [];
+
+                    if (isset($userFilters['post_status'])) {
+                        $postStatus = sanitize_text_field($userFilters['post_status']);
+
+                        if (! empty($postStatus)) {
+                            $calendar_request_args['post_status'] = $postStatus;
+                            $calendar_request_filter['post_status'] = $postStatus;
+                        }
+                    }
+
+                    if (isset($userFilters['cat']) && !empty($userFilters['cat'])) {
+                        $category     = (int) $userFilters['cat'];
+                        $categoryData = get_term_by('ID', $category, 'category');
+
+                        if (isset($categoryData->slug)) {
+                            $calendar_request_args = $this->addTaxQueryToArgs('category', $categoryData->slug, $calendar_request_args);
+                            $calendar_request_filter['category'] = ['value' => $categoryData->slug, 'text' => $categoryData->name];
+                        }
+                    }
+
+                    if (isset($userFilters['tag']) && !empty($userFilters['tag'])) {
+                        $postTag = (int) $userFilters['tag'];
+                        $tagData = get_term_by('ID', $postTag, 'post_tag');
+
+                        if (isset($tagData->slug)) {
+                            $calendar_request_args = $this->addTaxQueryToArgs('post_tag', $tagData->slug, $calendar_request_args);
+                            $calendar_request_filter['post_tag'] = ['value' => $tagData->slug, 'text' => $tagData->name];
+                        }
+                    }
+
+                    if (isset($userFilters['author']) && !empty($userFilters['author'])) {
+                        $postAuthor = (int)$userFilters['author'];
+                        $authorData = get_user_by('ID', $postAuthor);
+
+                        if (isset($authorData->ID)) {
+                            $calendar_request_args['author'] = $authorData->ID;
+                            $calendar_request_filter['post_author'] = ['value' => $authorData->ID, 'text' => $authorData->display_name];
+                        }
+                    }
+
+                    if (isset($userFilters['cpt'])) {
+                        $postType     = sanitize_key($userFilters['cpt']);
+
+                        if (!empty($postType)) {
+                            $calendar_request_args['post_type'] = $postType;
+                            $calendar_request_filter['post_type'] = $postType;
+                        }
+                    }
+                    
+                    if (isset($userFilters['weeks'])) {
+                        $weeks = sanitize_key($userFilters['weeks']);
+
+                        if (! empty($weeks)) {
+                            $calendar_request_filter['weeks'] = $weeks;
+                        }
+                    }
+
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
 
@@ -681,11 +754,11 @@ if (! class_exists('PP_Calendar')) {
                         }
                     }
 
-                    $numberOfWeeksToDisplay = isset($_GET['weeks']) && ! empty($_GET['weeks']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                        (int)$_GET['weeks'] : self::DEFAULT_NUM_WEEKS; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                    $numberOfWeeksToDisplay = isset($calendar_request_filter['weeks']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                        (int)$calendar_request_filter['weeks'] : self::DEFAULT_NUM_WEEKS; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-                    $firstDateToDisplay = (isset($_GET['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                            sanitize_text_field($_GET['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
+                    $firstDateToDisplay = (isset($calendar_request_filter['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                            sanitize_text_field($calendar_request_filter['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
                     $firstDateToDisplay = $this->get_beginning_of_week($firstDateToDisplay);
                     $endDate = $this->get_ending_of_week(
                         $firstDateToDisplay,
@@ -694,6 +767,7 @@ if (! class_exists('PP_Calendar')) {
                     );
 
                     $params = [
+                        'requestFilter' => $calendar_request_filter,
                         'numberOfWeeksToDisplay' => $numberOfWeeksToDisplay,
                         'firstDateToDisplay' => esc_js($firstDateToDisplay),
                         'theme' => 'light',
@@ -708,7 +782,7 @@ if (! class_exists('PP_Calendar')) {
                         'ajaxUrl' => esc_url(admin_url('admin-ajax.php')),
                         'nonce' => wp_create_nonce('publishpress-calendar-get-data'),
                         'userCanAddPosts' => count($postTypesUserCanCreate) > 0,
-                        'items' => $this->getCalendarData($firstDateToDisplay, $endDate, []),
+                        'items' => $this->getCalendarData($firstDateToDisplay, $endDate, $calendar_request_args),
                         'allowAddingMultipleAuthors' => (bool)apply_filters(
                             'publishpress_calendar_allow_multiple_authors',
                             false
@@ -2169,7 +2243,7 @@ if (! class_exists('PP_Calendar')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-
+            
             $post_results = new WP_Query($args);
 
             $posts = [];
@@ -2495,6 +2569,14 @@ if (! class_exists('PP_Calendar')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+
+            add_settings_field(
+                'show_calendar_posts_full_title',
+                __('Always show complete post titles', 'publishpress'),
+                [$this, 'settings_show_calendar_posts_full_title_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -2680,9 +2762,22 @@ if (! class_exists('PP_Calendar')) {
             echo '<div class="c-input-group">';
 
             echo sprintf(
-                '<input type="time" name="%s" value="%s">',
+                '<input type="text" name="%s" value="%s" class="time-pick" readonly>',
                 esc_attr($this->module->options_group_name) . '[default_publish_time]',
                 $this->module->options->default_publish_time
+            );
+
+            echo '</div>';
+        }
+
+        public function settings_show_calendar_posts_full_title_option()
+        {
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[show_calendar_posts_full_title]',
+                'on' === $this->module->options->show_calendar_posts_full_title ? 'checked' : ''
             );
 
             echo '</div>';
@@ -2822,6 +2917,12 @@ if (! class_exists('PP_Calendar')) {
             $options['posts_publish_time_format'] = isset($new_options['posts_publish_time_format'])
                 ? $new_options['posts_publish_time_format']
                 : self::TIME_FORMAT_12H_NO_LEADING_ZEROES;
+
+            if (isset($new_options['show_calendar_posts_full_title'])) {
+                $options['show_calendar_posts_full_title'] = 'on';
+            } else {
+                $options['show_calendar_posts_full_title'] = 'off';
+            }
 
             // Default publish time
             if (isset($new_options['default_publish_time'])) {
@@ -3095,7 +3196,16 @@ if (! class_exists('PP_Calendar')) {
             $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
             $endingDate = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
 
-            $args = [];
+            $args          = [];
+            $request_filter = [
+                'weeks' => self::DEFAULT_NUM_WEEKS,
+                'post_status' => '',
+                'cpt' => '',
+                'cat' => '',
+                'tag' => '',
+                'author' => '',
+                'start_date' => date('Y-m-d', current_time('timestamp')),
+            ];
 
             /*
              * Filters
@@ -3105,6 +3215,7 @@ if (! class_exists('PP_Calendar')) {
 
                 if (! empty($postStatus)) {
                     $args['post_status'] = $postStatus;
+                    $request_filter['post_status'] = $postStatus;
                 }
             }
 
@@ -3112,7 +3223,9 @@ if (! class_exists('PP_Calendar')) {
                 $category = sanitize_key($_GET['category']);
 
                 if (! empty($category)) {
+                    $categoryData = get_term_by('slug', $category, 'category');
                     $args = $this->addTaxQueryToArgs('category', $category, $args);
+                    $request_filter['cat'] = isset($categoryData->term_id) ? $categoryData->term_id : '';
                 }
             }
 
@@ -3120,7 +3233,9 @@ if (! class_exists('PP_Calendar')) {
                 $postTag = sanitize_key($_GET['post_tag']);
 
                 if (! empty($postTag)) {
+                    $tag = get_term_by('slug', $postTag, 'post_tag');
                     $args = $this->addTaxQueryToArgs('post_tag', $postTag, $args);
+                    $request_filter['tag'] = isset($tag->term_id) ? $tag->term_id : '';
                 }
             }
 
@@ -3129,6 +3244,7 @@ if (! class_exists('PP_Calendar')) {
 
                 if (! empty($postAuthor)) {
                     $args['author'] = $postAuthor;
+                    $request_filter['author'] = $postAuthor;
                 }
             }
 
@@ -3137,13 +3253,77 @@ if (! class_exists('PP_Calendar')) {
 
                 if (! empty($postType)) {
                     $args['post_type'] = $postType;
+                    $request_filter['cpt'] = $postType;
                 }
             }
+
+            if (isset($_GET['weeks'])) {
+                $weeks = sanitize_key($_GET['weeks']);
+
+                if (! empty($weeks)) {
+                    $request_filter['weeks'] = $weeks;
+                }
+            }
+            $request_filter['start_date'] = $beginningDate;
+
+            //update filters
+            $this->update_user_filters($request_filter);
 
             wp_send_json(
                 $this->getCalendarData($beginningDate, $endingDate, $args),
                 200
             );
+        }
+
+        /**
+         * Update the current user's filters for calendar display with the filters in $_GET($request_filter). The filters
+         * in $_GET($request_filter) take precedence over the current users filters if they exist.
+         * @param array $request_filter
+         * 
+         * @return array $filters updated filter
+         */
+        public function update_user_filters($request_filter)
+        {
+            $current_user  = wp_get_current_user();
+            $filters        = [];
+            $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
+
+            $default_filters = [
+                'weeks'       => self::DEFAULT_NUM_WEEKS,
+                'post_status' => '',
+                'cpt'         => '',
+                'cat'         => '',
+                'tag'         => '',
+                'author'      => '',
+                'start_date'  => date('Y-m-d', current_time('timestamp')),
+            ];
+            $old_filters = array_merge($default_filters, (array)$old_filters);
+
+            // Sanitize and validate any newly added filters
+            foreach ($old_filters as $key => $old_value) {
+                if (isset($request_filter[$key]) && false !== ($new_value = $this->sanitize_filter(
+                        $key,
+                        sanitize_text_field($request_filter[$key])
+                    ))) {
+                    $filters[$key] = $new_value;
+                } else {
+                    $filters[$key] = $old_value;
+                }
+            }
+
+            // Fix start_date, if no specific date was set
+            if (! isset($request_filter['start_date'])) {
+                $filters['start_date'] = $default_filters['start_date'];
+            }
+
+            // Set the start date as the beginning of the week, according to blog settings
+            $filters['start_date'] = $this->get_beginning_of_week($filters['start_date']);
+
+            $filters = apply_filters('pp_calendar_filter_values', $filters, $old_filters);
+
+            $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $filters);
+
+            return $filters;
         }
 
         private function getPostTypeName($postType)

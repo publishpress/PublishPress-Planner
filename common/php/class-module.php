@@ -448,7 +448,13 @@ if (!class_exists('PP_Module')) {
          */
         protected function is_whitelisted_functional_view($module_name = null)
         {
-            return true;
+            $whitelisted_pages = ['pp-calendar', 'pp-content-overview', 'pp-notif-log', 'pp-modules-settings'];
+            
+            if (isset($_GET['page']) &&  in_array($_GET['page'], $whitelisted_pages)) {
+                return true;
+            }
+            
+            return false;
         }
 
         /**

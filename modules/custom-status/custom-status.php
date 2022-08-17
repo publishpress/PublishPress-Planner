@@ -2384,7 +2384,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             $ptype = get_post_type_object($post->post_type);
 
-            if ($ptype->hierarchical) {
+            if ($ptype->hierarchical && !in_array($post->post_status, array( 'draft', 'auto-draft'))) {
                 $post->filter = 'sample';
 
                 $uri = get_page_uri($post->ID) . $post_name;

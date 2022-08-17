@@ -62,4 +62,55 @@ jQuery(document).ready(function ($) {
     var options = getOptions(self, {});
     self.datepicker(options);
   });
+
+  $('.time-pick').each(function () {
+    var self = $(this);
+    var options = getOptions(self, {
+      showOn: 'focus',
+      showButtonPanel: true,
+      timeFormat: 'HH:mm',// TT
+      showSecond: false,
+      ampm: false,//true
+      closeText: 'Close',
+      alwaysSetTime: false,
+      controlType: 'select',
+      altFieldTimeOnly: false,
+      beforeShow : function(inst,elem){
+        addClearBtnToCalendar(null,null,elem);
+     },
+      onChangeMonthYear: addClearBtnToCalendar
+    });
+    self.timepicker(options);
+  }).on('changeDate', function(e){
+    $(this).datepicker('hide');
+  });
+
+  function addClearBtnToCalendar(year,month,elem){
+    var afterShow = function(){
+      var d = new $.Deferred();
+      var cnt = 0;
+      setTimeout(function () {
+        if (elem.dpDiv[0].style.display === "block") {
+          d.resolve();
+        }
+        if (cnt >= 500) {
+          d.reject("datepicker show timeout");
+        }
+        cnt++;
+      }, 10);
+      return d.promise();
+    }();
+
+    afterShow.done(function () {
+      $('.ui-datepicker').css('z-index', 2000);
+      var buttonPane = $(elem).datepicker("widget").find(".ui-datepicker-buttonpane");
+      var btn = $('<button class="ui-datepicker-current ui-state-default ui-priority-primary ui-corner-all" type="button">Clear</button>');
+      btn.off("click").on("click", function () {
+        $.datepicker._clearDate(elem.input[0]);
+      });
+      btn.appendTo(buttonPane);
+    });
+  }
+  
 });
+
