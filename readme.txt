@@ -121,6 +121,17 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.8.2] - 17 Aug 2022 =
+
+* Update: Sticky filters on the Calendar, #1088
+* Update: Allow users to choose whether or not to show the whole page title, #1089
+* Fixed: Double slug on hierarchical page when in draft mode, #1087
+* Fixed: Metadata box shows errors if there are no fields, #1085
+* Fixed: Problem with html characters on calendar, #1037
+* Fixed: Metadata filters don't work on Content Overview, #1070
+* Fixed: Fix calendar time picker time picker, #914
+* Update: Stop loading assets on non-PublishPress /wp-admin/ pages, #330
+
 = [3.8.1] - 7 Jun 2022 =
 
 * Fixed: Uncaught Error: syntax error, unexpected ')' in lower php version, #1071
