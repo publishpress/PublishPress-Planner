@@ -2572,7 +2572,7 @@ if (! class_exists('PP_Calendar')) {
 
             add_settings_field(
                 'show_calendar_posts_full_title',
-                __('Show calendar posts full title', 'publishpress'),
+                __('Always show complete post titles', 'publishpress'),
                 [$this, 'settings_show_calendar_posts_full_title_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
