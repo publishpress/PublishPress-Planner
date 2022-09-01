@@ -625,7 +625,6 @@ class PP_Content_Overview extends PP_Module
         $columns = [
             'post_title' => esc_html__('Title', 'publishpress'),
             'post_status' => esc_html__('Status', 'publishpress'),
-            'post_type' => esc_html__('Post Type', 'publishpress'),
             'post_author' => esc_html__('Author', 'publishpress'),
             'post_date' => esc_html__('Post Date', 'publishpress'),
             'post_modified' => esc_html__('Last Modified', 'publishpress'),
@@ -820,9 +819,11 @@ class PP_Content_Overview extends PP_Module
                     $selectedPostTypes = $this->get_selected_post_types();
                 }
 
-                echo '<div class="postbox-container">';
-                $this->printPostForPostType(null, $selectedPostTypes);
-                echo '</div>';
+                foreach ($selectedPostTypes as $postType) {
+                    echo '<div class="postbox-container">';
+                    $this->printPostForPostType(null, $postType);
+                    echo '</div>';
+                }
                 ?>
             </div>
         </div>
@@ -1332,6 +1333,7 @@ class PP_Content_Overview extends PP_Module
         $this->user_filters['s']     = $search;
 
         $posts = $this->getPostsForPostType($term, $postType, $this->user_filters);
+        $postTypeObject = get_post_type_object($postType);
         $sortableColumns = $this->getSortableColumns();
 
         if (! empty($posts)) {
@@ -1343,6 +1345,7 @@ class PP_Content_Overview extends PP_Module
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
             <div class="handlediv" title="<?php echo esc_attr(__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
+            <h3 class=\'hndle\'><span><?php echo esc_html($postTypeObject->label); ?></span></h3>
             <div class="inside">
                 <?php
                 if (! empty($posts)) : ?>
@@ -1612,11 +1615,6 @@ class PP_Content_Overview extends PP_Module
                 $status_name = $this->get_post_status_friendly_name($post->post_status);
 
                 return $status_name;
-                break;
-            case 'post_type':
-                $post_type_object = get_post_type_object($post->post_type);
-
-                return $post_type_object->label;
                 break;
             case 'post_author':
                 $post_author = get_userdata($post->post_author);
