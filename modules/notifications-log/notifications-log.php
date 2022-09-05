@@ -80,7 +80,7 @@ if (! class_exists('PP_Notifications_Log')) {
                 'default_options' => [
                     'enabled' => 'on',
                 ],
-                'general_options' => false,
+                'notification_options' => true,
             ];
 
             // Apply a filter to the default options

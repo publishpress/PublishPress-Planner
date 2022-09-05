@@ -67,7 +67,7 @@ if (! class_exists('PP_Dashboard')) {
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'configure_link_text' => __('Widget Options', 'publishpress'),
-                'general_options' => true,
+                'options_page' => true,
             ];
             $this->module = PublishPress()->register_module('dashboard', $args);
         }
