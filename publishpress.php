@@ -298,22 +298,22 @@ if (! class_exists('publishpress')) {
         {
             // Scan the modules directory and include any modules that exist there
             $defaultDirs = [
-                'modules-settings' => PUBLISHPRESS_BASE_PATH,
                 'calendar' => PUBLISHPRESS_BASE_PATH,
-                'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
                 'content-overview' => PUBLISHPRESS_BASE_PATH,
-                'custom-status' => PUBLISHPRESS_BASE_PATH,
                 'notifications' => PUBLISHPRESS_BASE_PATH,
                 'improved-notifications' => PUBLISHPRESS_BASE_PATH,
                 'async-notifications' => PUBLISHPRESS_BASE_PATH,
                 'notifications-log' => PUBLISHPRESS_BASE_PATH,
-                'dashboard' => PUBLISHPRESS_BASE_PATH,
+                'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
+                'custom-status' => PUBLISHPRESS_BASE_PATH,
                 'editorial-comments' => PUBLISHPRESS_BASE_PATH,
-                'settings' => PUBLISHPRESS_BASE_PATH,
                 'efmigration' => PUBLISHPRESS_BASE_PATH,
                 'debug' => PUBLISHPRESS_BASE_PATH,
                 'reviews' => PUBLISHPRESS_BASE_PATH,
                 'theeventscalendar-integration' => PUBLISHPRESS_BASE_PATH,
+                'dashboard' => PUBLISHPRESS_BASE_PATH,
+                'modules-settings' => PUBLISHPRESS_BASE_PATH,
+                'settings' => PUBLISHPRESS_BASE_PATH,
             ];
 
             // Add filters to extend the modules
