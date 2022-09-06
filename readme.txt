@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable tag: 3.8.2
+Stable tag: 3.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,14 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.8.3] - 6 Sep 2022 =
+
+* Fixed: Custom Status Conflict – PublishPress, #1105
+* Update: Show Content Overview Post Types Content Together, #1062
+* Update: Change to Content Overview "Start Date" and "End Date" filter, #1064
+* Update: Update to Settings tabs #443
+* Update: Publishpress-ES-FR-IT-translation-update_August2022, #1104
 
 = [3.8.2] - 17 Aug 2022 =
 

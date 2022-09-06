@@ -625,6 +625,7 @@ class PP_Content_Overview extends PP_Module
         $columns = [
             'post_title' => esc_html__('Title', 'publishpress'),
             'post_status' => esc_html__('Status', 'publishpress'),
+            'post_type' => esc_html__('Post Type', 'publishpress'),
             'post_author' => esc_html__('Author', 'publishpress'),
             'post_date' => esc_html__('Post Date', 'publishpress'),
             'post_modified' => esc_html__('Last Modified', 'publishpress'),
@@ -819,11 +820,9 @@ class PP_Content_Overview extends PP_Module
                     $selectedPostTypes = $this->get_selected_post_types();
                 }
 
-                foreach ($selectedPostTypes as $postType) {
-                    echo '<div class="postbox-container">';
-                    $this->printPostForPostType(null, $postType);
-                    echo '</div>';
-                }
+                echo '<div class="postbox-container">';
+                $this->printPostForPostType(null, $selectedPostTypes);
+                echo '</div>';
                 ?>
             </div>
         </div>
@@ -987,7 +986,7 @@ class PP_Content_Overview extends PP_Module
             ) . '" value="'
             . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
         $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
-        $start_date_value .= '<span class="form-value">';
+        $start_date_value .= '<span class="form-value hidden">';
 
         $start_date_value .= esc_html(date_i18n($date_format, $filtered_start_date_timestamp));
         $start_date_value .= '</span>';
@@ -998,7 +997,7 @@ class PP_Content_Overview extends PP_Module
             ) . '" value="'
             . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
         $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
-        $end_date_value .= '<span class="form-value">';
+        $end_date_value .= '<span class="form-value hidden">';
 
         $end_date_value .= esc_html(date_i18n($date_format, $filtered_end_date_timestamp));
         $end_date_value .= '</span>';
@@ -1014,14 +1013,14 @@ class PP_Content_Overview extends PP_Module
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
-        $output .= ' class="button button-primary hidden" value="' . esc_html__('Change', 'publishpress') . '" />';
+        $output .= ' class="button button-primary" value="' . esc_html__('Apply', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
         $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';
         $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
-        $output .= '<a class="change-date" href="#">' . esc_html__('Change', 'publishpress') . '</a>';
+        $output .= '<a class="change-date hidden" href="#">' . esc_html__('Change', 'publishpress') . '</a>';
         $output .= wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
         $output .= '</span></form>';
 
@@ -1333,7 +1332,6 @@ class PP_Content_Overview extends PP_Module
         $this->user_filters['s']     = $search;
 
         $posts = $this->getPostsForPostType($term, $postType, $this->user_filters);
-        $postTypeObject = get_post_type_object($postType);
         $sortableColumns = $this->getSortableColumns();
 
         if (! empty($posts)) {
@@ -1345,7 +1343,6 @@ class PP_Content_Overview extends PP_Module
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
             <div class="handlediv" title="<?php echo esc_attr(__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
-            <h3 class=\'hndle\'><span><?php echo esc_html($postTypeObject->label); ?></span></h3>
             <div class="inside">
                 <?php
                 if (! empty($posts)) : ?>
@@ -1615,6 +1612,11 @@ class PP_Content_Overview extends PP_Module
                 $status_name = $this->get_post_status_friendly_name($post->post_status);
 
                 return $status_name;
+                break;
+            case 'post_type':
+                $post_type_object = get_post_type_object($post->post_type);
+
+                return $post_type_object->label;
                 break;
             case 'post_author':
                 $post_author = get_userdata($post->post_author);

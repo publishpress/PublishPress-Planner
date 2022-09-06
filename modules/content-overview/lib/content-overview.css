@@ -8,12 +8,8 @@ header h2 form {
     position: relative;
 }
 
-header h2 form input {
-    display: none;
-}
-
-header h2 a.change-date {
-    display: inline-block;
+header h2 form input.date-pick {
+    width: 160px;
 }
 
 header h2 a.change-date,

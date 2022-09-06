@@ -73,7 +73,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                     '<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/editorial-comments/">Editorial Comments Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>',
                     'publishpress'
                 ),
-                'general_options' => true,
+                'options_page' => true,
             ];
 
             $this->module = PublishPress()->register_module('editorial_comments', $args);
