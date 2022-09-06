@@ -1837,10 +1837,6 @@ if (! class_exists('PP_Notifications')) {
                   action="<?php
                   echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
                 <?php
-                echo sprintf('<h3>%s</h3>', esc_html($this->module->title));
-                echo sprintf('<p>%s</p>', esc_html($this->module->short_description));
-                ?>
-                <?php
                 settings_fields($this->module->options_group_name); ?>
                 <?php
                 do_settings_sections($this->module->options_group_name); ?>
@@ -1855,9 +1851,6 @@ if (! class_exists('PP_Notifications')) {
                         || $mod_data->options->enabled != 'on') {
                         continue;
                     }
-
-                    echo sprintf('<h3>%s</h3>', esc_html($mod_data->title));
-                    echo sprintf('<p>%s</p>', esc_html($mod_data->short_description));
 
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
                             $mod_data->name
