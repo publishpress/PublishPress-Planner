@@ -530,7 +530,7 @@ if (! class_exists('PP_Calendar')) {
         {
             $postStatuses = [];
             $post_statuses_terms       = get_terms('post_status', ['hide_empty' => false]);
-            $post_statuses_terms_slugs = array_column($post_statuses_terms, 'slug');
+            $post_statuses_terms_slugs = (!is_wp_error($post_statuses_terms)) ? array_column($post_statuses_terms, 'slug') : [];
             foreach ($this->get_post_statuses() as $status) {
                 //add support for capabilities custom statuses
                 if (defined('PUBLISHPRESS_CAPS_PRO_VERSION')
