@@ -143,7 +143,8 @@ if (! class_exists('PP_Modules_Settings')) {
                 return true;
             }
 
-            if (! isset($_POST['publishpress_options'])) {
+            
+            if (!isset($_POST['publishpress_options']) && !isset($_POST['publishpress_module_name']) ) {
                 return true;
             }
 
@@ -247,6 +248,7 @@ if (! class_exists('PP_Modules_Settings')) {
                         </tbody>
                     </table>
 
+                    <input name="publishpress_options[settings]" type="hidden" value="1" />
                     <?php
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
                             $this->module->name
