@@ -143,7 +143,8 @@ if (! class_exists('PP_Modules_Settings')) {
                 return true;
             }
 
-            if (! isset($_POST['publishpress_options'])) {
+            
+            if (!isset($_POST['publishpress_options']) && !isset($_POST['publishpress_module_name']) ) {
                 return true;
             }
 
@@ -207,8 +208,6 @@ if (! class_exists('PP_Modules_Settings')) {
                 } ?>
 
                 <div id="modules-wrapper">
-                    <h3><?php
-                        echo esc_html_e('Features', 'publishpress'); ?></h3>
                     <p><?php
                         echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
@@ -237,7 +236,11 @@ if (! class_exists('PP_Modules_Settings')) {
                                         echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
                                         &nbsp;&nbsp;&nbsp;<?php
-                                        echo esc_html($mod_data->title); ?>
+                                        if ($mod_data->slug === 'notifications') {
+                                            echo esc_html_e('Basic Notifications', 'publishpress');
+                                        } else {
+                                            echo esc_html($mod_data->title);
+                                        } ?>
                                     </label>
                                     <br>
                                 <?php
@@ -247,6 +250,7 @@ if (! class_exists('PP_Modules_Settings')) {
                         </tbody>
                     </table>
 
+                    <input name="publishpress_options[settings]" type="hidden" value="1" />
                     <?php
                     echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
                             $this->module->name
