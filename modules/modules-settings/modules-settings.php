@@ -208,8 +208,6 @@ if (! class_exists('PP_Modules_Settings')) {
                 } ?>
 
                 <div id="modules-wrapper">
-                    <h3><?php
-                        echo esc_html_e('Features', 'publishpress'); ?></h3>
                     <p><?php
                         echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
@@ -238,7 +236,11 @@ if (! class_exists('PP_Modules_Settings')) {
                                         echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
                                         &nbsp;&nbsp;&nbsp;<?php
-                                        echo esc_html($mod_data->title); ?>
+                                        if ($mod_data->slug === 'notifications') {
+                                            echo esc_html_e('Basic Notifications', 'publishpress');
+                                        } else {
+                                            echo esc_html($mod_data->title);
+                                        } ?>
                                     </label>
                                     <br>
                                 <?php

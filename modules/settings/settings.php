@@ -496,10 +496,19 @@ if (! class_exists('PP_Settings')) {
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
 
+            $all_modules = (array)$publishpress->modules;
+            //force notification tab if dependent tab is enabled
+            foreach ($all_modules as $mod_name => $mod_data) {
+                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
+                    $all_modules['notifications']->options->enabled = 'on';
+                    break;
+                }
+            }
+
             echo $this->twig->render(
                 'settings.twig',
                 [
-                    'modules'        => (array)$publishpress->modules,
+                    'modules'        => $all_modules,
                     'settings_slug'  => $module_settings_slug,
                     'slug'           => PP_Modules_Settings::SETTINGS_SLUG,
                     'module_output'  => $module_output,

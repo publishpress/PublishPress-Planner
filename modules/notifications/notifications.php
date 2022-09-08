@@ -86,7 +86,7 @@ if (! class_exists('PP_Notifications')) {
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'post_type_support' => 'pp_notification',
-                'autoload' => true,
+                'autoload' => false,
                 'settings_help_tab' => [
                     'id' => 'pp-notifications-overview',
                     'title' => __('Overview', 'publishpress'),
