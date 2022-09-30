@@ -13,9 +13,7 @@ use Pimple\Container;
 use PP_Debug;
 use PublishPress\AsyncNotifications\SchedulerInterface;
 use PublishPress\AsyncNotifications\WPCronAdapter;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
-use Twig_SimpleFunction;
+use PublishPress\Core\View;
 
 class Pimple_Container extends Container
 {
@@ -31,50 +29,8 @@ class Pimple_Container extends Container
 
             // Define the services
 
-            $instance['twig_function_checked'] = function ($c) {
-                return new Twig_SimpleFunction(
-                    'checked', function ($checked, $current = true, $echo = true) {
-                    return checked($checked, $current, $echo);
-                }
-                );
-            };
-
-            $instance['twig_function_selected'] = function ($c) {
-                return new Twig_SimpleFunction(
-                    'selected', function ($selected, $current = true, $echo = true) {
-                    return selected($selected, $current, $echo);
-                }
-                );
-            };
-
-            $instance['twig_function_editor'] = function ($c) {
-                return new Twig_SimpleFunction(
-                    'editor', function ($content, $editor_id, $attrs = []) {
-                    wp_editor($content, $editor_id, $attrs);
-
-                    return '';
-                }
-                );
-            };
-
-            $instance['twig_loader_filesystem'] = function ($c) {
-                return new Twig_Loader_Filesystem(PUBLISHPRESS_NOTIF_TWIG_PATH);
-            };
-
-            $instance['twig'] = function ($c) {
-                $twig = new Twig_Environment(
-                    $c['twig_loader_filesystem'],
-                    // array('debug' => true)
-                    []
-                );
-
-                $twig->addFunction($c['twig_function_checked']);
-                $twig->addFunction($c['twig_function_selected']);
-                $twig->addFunction($c['twig_function_editor']);
-
-                // $twig->addExtension(new \Twig_Extension_Debug());
-
-                return $twig;
+            $instance['view'] = function ($c) {
+                return new View();
             };
 
             $instance['publishpress'] = function ($c) {

@@ -22,7 +22,6 @@
     <exclude-pattern>/dist/*</exclude-pattern>
     <exclude-pattern>/languages/*</exclude-pattern>
     <exclude-pattern>/node_modules/*</exclude-pattern>
-    <exclude-pattern>/twig/*</exclude-pattern>
     <exclude-pattern>/RoboFile.php</exclude-pattern>
 
     <rule ref="WordPressVIPMinimum"/>

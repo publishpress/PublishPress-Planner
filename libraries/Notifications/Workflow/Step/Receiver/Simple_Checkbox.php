@@ -22,13 +22,13 @@ class Simple_Checkbox extends Base implements Receiver_Interface
      */
     public function __construct()
     {
-        $this->twig_template = 'workflow_receiver_checkbox_field.twig';
+        $this->view_name = 'workflow_receiver_checkbox_field';
 
         parent::__construct();
     }
 
     /**
-     * Filters the context sent to the twig template in the metabox
+     * Filters the context sent to the view template in the metabox
      *
      * @param array $template_context
      */

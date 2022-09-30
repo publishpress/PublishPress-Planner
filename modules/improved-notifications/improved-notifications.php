@@ -77,18 +77,13 @@ if (! class_exists('PP_Improved_Notifications')) {
         protected $published_workflows;
 
         /**
-         * Flag to assist conditional loading
-         */
-        private $twig_configured = false;
-
-        /**
          * Construct the Notifications class
          */
         public function __construct()
         {
             global $publishpress;
 
-            $this->twigPath = dirname(dirname(dirname(__FILE__))) . '/twig';
+            $this->viewsPath = dirname(dirname(dirname(__FILE__))) . '/views';
 
             $this->module_url = $this->get_module_url(__FILE__);
 
@@ -117,50 +112,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             );
 
             parent::__construct();
-        }
-
-        protected function configure_twig()
-        {
-            if ($this->twig_configured) {
-                return;
-            }
-
-            $function = new Twig_SimpleFunction(
-                'settings_fields', function () {
-                return settings_fields($this->module->options_group_name);
-            }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'nonce_field', function ($context) {
-                return wp_nonce_field($context);
-            }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'submit_button', function () {
-                return submit_button();
-            }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                '__', function ($id) {
-                return __($id, 'publishpress');
-            }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'do_settings_sections', function ($section) {
-                return do_settings_sections($section);
-            }
-            );
-            $this->twig->addFunction($function);
-
-            $this->twig_configured = true;
         }
 
         /**
@@ -297,9 +248,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         protected function create_default_workflow_post_save()
         {
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             // Get post statuses
             $statuses = $this->get_post_statuses();
@@ -326,10 +275,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                     Post_StatusTransition::META_KEY_SELECTED => '1',
                     Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish',
                     Content_Main::META_KEY_SUBJECT => '&quot;[psppno_post title]&quot; was published',
-                    Content_Main::META_KEY_BODY => $twig->render(
-                        'workflow_default_content_post_save.twig',
-                        []
-                    ),
+                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_post_save'),
                     Receiver_Site_Admin::META_KEY => 1,
                     Post_Type_Filter::META_KEY_POST_TYPE => 'post',
                     Post_Type::META_KEY_SELECTED => 1,
@@ -351,9 +297,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         protected function create_default_workflow_editorial_comment()
         {
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             // Post Save
             $workflow = [
@@ -364,10 +308,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                     static::META_KEY_IS_DEFAULT_WORKFLOW => '1',
                     Event_Editorial_Comment::META_KEY_SELECTED => '1',
                     Content_Main::META_KEY_SUBJECT => 'New editorial comment to &quot;[psppno_post title]&quot;',
-                    Content_Main::META_KEY_BODY => $twig->render(
-                        'workflow_default_content_editorial_comment.twig',
-                        []
-                    ),
+                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_editorial_comment'),
                     Receiver_Site_Admin::META_KEY => 1,
                     Post_Type_Filter::META_KEY_POST_TYPE => 'post',
                     Post_Type::META_KEY_SELECTED => 1,
@@ -414,9 +355,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function settings_default_channels_option()
         {
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             /**
              * Filters the list of notification channels to display in the
@@ -463,8 +402,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'channels_options' => $channels_options,
             ];
 
-            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo $twig->render('settings_notification_channels.twig', $context);
+            echo $this->get_service('view')->render('settings_notification_channels', $context);
         }
 
         /**
@@ -818,9 +756,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Adds the nonce field
             wp_nonce_field('publishpress_notif_save_metabox', 'publishpress_notif_metabox_events_nonce');
 
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             $main_context = [];
 
@@ -832,7 +768,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'class' => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3',
             ];
 
-            $main_context['section_event'] = $twig->render('workflow_metabox_section.twig', $context);
+            $main_context['section_event'] = $view->render('workflow_metabox_section', $context);
 
             // Renders the event content filter section
             $context = [
@@ -842,7 +778,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'class' => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
 
-            $main_context['section_event_content'] = $twig->render('workflow_metabox_section.twig', $context);
+            $main_context['section_event_content'] = $view->render('workflow_metabox_section', $context);
 
             // Renders the receiver section
             $context = [
@@ -852,7 +788,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'class' => 'pure-u-1-3 pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-3',
             ];
 
-            $main_context['section_receiver'] = $twig->render('workflow_metabox_section.twig', $context);
+            $main_context['section_receiver'] = $view->render('workflow_metabox_section', $context);
 
             // Renders the content section
             $context = [
@@ -862,7 +798,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'class' => 'pure-u-1',
             ];
 
-            $main_context['section_content'] = $twig->render('workflow_metabox_section.twig', $context);
+            $main_context['section_content'] = $view->render('workflow_metabox_section', $context);
 
             // Renders the channel section
             $context = [
@@ -870,23 +806,22 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'html' => apply_filters('publishpress_notif_render_metabox_section_channel', ''),
             ];
 
-            $main_context['section_channel'] = $twig->render('workflow_metabox_section.twig', $context);
+            $main_context['section_channel'] = $view->render('workflow_metabox_section', $context);
 
-            echo $twig->render('workflow_metabox.twig', $main_context);
+            echo $view->render('workflow_metabox', $main_context, $this->viewsPath);
         }
 
         public function publishpress_notif_workflow_options_metabox()
         {
             $post = get_post();
 
-            $this->configure_twig();
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             $context = [
-                'options' => apply_filters('publishpress_notif_workflow_options', [], $post, $twig),
+                'options' => apply_filters('publishpress_notif_workflow_options', [], $post, $view),
             ];
 
-            echo $twig->render('workflow_metabox_options.twig', $context);
+            echo $view->render('workflow_metabox_options', $context);
         }
 
         private function getShortcodePostFields()
@@ -976,7 +911,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         {
             $context = [
                 'labels' => [
-                    'validation_help' => esc_html__(
+                    'validation_help' => __(
                         'Select at least one option for each section.',
                         'publishpress'
                     ),
@@ -1010,11 +945,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'psppno_receiver_fields_list' => esc_html(implode(', ', $this->getShortcodeReceiverFields())),
             ];
 
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
-
-            echo $twig->render('workflow_help.twig', $context);
+            echo $this->get_service('view')->render('workflow_help', $context);
         }
 
         /**
@@ -1129,9 +1060,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
-            $this->configure_twig();
-
-            $twig = $this->get_service('twig');
+            $view = $this->get_service('view');
 
             // Adds the nonce field
             wp_nonce_field('psppno_user_profile', 'psppno_user_profile_nonce');
@@ -1181,7 +1110,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'channels_options' => $channels_options,
             ];
 
-            echo $twig->render('user_profile_notification_channels.twig', $context);
+            echo $this->get_service('view')->render('user_profile_notification_channels', $context);
         }
 
         /**

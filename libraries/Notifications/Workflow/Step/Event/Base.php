@@ -29,7 +29,7 @@ class Base extends Base_Step
             $this->attr_prefix = 'event';
         }
 
-        $this->twig_template = 'workflow_event_field.twig';
+        $this->view_name = 'workflow_event_field';
 
         parent::__construct();
 
@@ -49,7 +49,7 @@ class Base extends Base_Step
     }
 
     /**
-     * Filters the context sent to the twig template in the metabox
+     * Filters the context sent to the view template in the metabox
      *
      * @param array $template_context
      */

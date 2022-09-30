@@ -57,7 +57,7 @@ if (! class_exists('PP_Debug')) {
          */
         public function __construct()
         {
-            $this->twigPath = __DIR__ . '/twig';
+            $this->viewsPath = __DIR__ . '/views';
 
             parent::__construct();
 
@@ -331,7 +331,7 @@ if (! class_exists('PP_Debug')) {
                 'messages' => $this->messages,
             ];
 
-            echo $this->twig->render('view_log.twig', $context); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $this->view->render('view_log', $context, $this->viewsPath); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
 
         protected function handle_actions()

@@ -33,8 +33,8 @@ class Base extends Base_Step
             $this->attr_prefix = 'channel';
         }
 
-        if (empty($this->twig_template)) {
-            $this->twig_template = 'workflow_channel_field.twig';
+        if (empty($this->view_name)) {
+            $this->view_name = 'workflow_channel_field';
         }
 
         if (empty($this->name)) {

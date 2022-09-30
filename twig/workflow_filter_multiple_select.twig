@@ -1,9 +1,0 @@
-{% if options %}
-    <select multiple="multiple" class="{{ list_class }}" name="{{ name }}[]" id="{{ id }}">
-        {% for option in options %}
-            <option
-                    value="{{ option.value }}"
-                    {{ selected( option.selected, true ) }} >{{ option.label }}</option>
-        {% endfor %}
-    </select>
-{% endif %}

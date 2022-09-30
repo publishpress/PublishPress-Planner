@@ -12,7 +12,7 @@ namespace PublishPress\Notifications\Workflow\Step\Receiver;
 interface Receiver_Interface
 {
     /**
-     * Filters the context sent to the twig template in the metabox
+     * Filters the context sent to the view template in the metabox
      *
      * @param array $template_context
      */
