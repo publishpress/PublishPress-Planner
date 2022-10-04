@@ -49,7 +49,7 @@ if (! class_exists('PP_Settings')) {
          */
         public function __construct()
         {
-            $this->twigPath = __DIR__ . '/twig';
+            $this->viewsPath = __DIR__ . '/views';
 
             parent::__construct();
 
@@ -259,15 +259,16 @@ if (! class_exists('PP_Settings')) {
         public function print_default_footer($current_module, $echo = true)
         {
             if (apply_filters('publishpress_show_footer', true)) {
-                $html = $this->twig->render(
-                    'footer-base.twig',
+                $html = $this->view->render(
+                    'footer-base',
                     [
                         'current_module' => $current_module,
                         'plugin_name'    => __('PublishPress', 'publishpress'),
                         'plugin_slug'    => 'publishpress',
                         'plugin_url'     => PUBLISHPRESS_URL,
                         'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
-                    ]
+                    ],
+                    $this->viewsPath
                 );
 
                 if (! $echo) {
@@ -303,8 +304,8 @@ if (! class_exists('PP_Settings')) {
                             $url = $mod_data->page_link;
                         }
 
-                        echo $this->twig->render(
-                            'module.twig',
+                        echo $this->view->render(
+                            'module',
                             [
                                 'has_config_link' => isset($mod_data->configure_page_cb) && !empty($mod_data->configure_page_cb),
                                 'slug'            => $mod_data->slug,
@@ -313,7 +314,8 @@ if (! class_exists('PP_Settings')) {
                                 'title'           => $mod_data->title,
                                 'description'     => wp_kses($mod_data->short_description, 'a'),
                                 'url'             => $url,
-                            ]
+                            ],
+                            $this->viewsPath
                         );
                     }
                 }
@@ -505,8 +507,8 @@ if (! class_exists('PP_Settings')) {
                 }
             }
 
-            echo $this->twig->render(
-                'settings.twig',
+            echo $this->view->render(
+                'settings',
                 [
                     'modules'        => $all_modules,
                     'settings_slug'  => $module_settings_slug,
@@ -515,7 +517,8 @@ if (! class_exists('PP_Settings')) {
                     'sidebar_output' => '',
                     'text'           => $display_text,
                     'show_sidebar'   => false,
-                ]
+                ],
+                $this->viewsPath
             );
 
             $this->print_default_footer($requested_module);

@@ -25,17 +25,16 @@ class Term extends Base implements Filter_Interface
      */
     public function render()
     {
-        echo $this->get_service('twig')->render(
-            'workflow_filter_multiple_select.twig',
-            [
-                'name'    => esc_attr("publishpress_notif[{$this->step_name}_filters][term]"),
-                'id'      => esc_attr("publishpress_notif_{$this->step_name}_filters_term"),
-                'options' => $this->get_options(),
-                'labels'  => [
-                    'label' => esc_html__('Terms', 'publishpress'),
-                ],
-            ]
-        );
+        $context = [
+            'name'    => esc_attr("publishpress_notif[{$this->step_name}_filters][term]"),
+            'id'      => esc_attr("publishpress_notif_{$this->step_name}_filters_term"),
+            'options' => $this->get_options(),
+            'labels'  => [
+                'label' => esc_html__('Terms', 'publishpress'),
+            ],
+        ];
+
+        echo $this->get_service('view')->render('workflow_filter_multiple_select', $context);
     }
 
     /**

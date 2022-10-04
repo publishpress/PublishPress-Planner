@@ -9,16 +9,16 @@
 
 namespace PublishPress\Notifications\Workflow\Option;
 
+use PublishPress\Core\ViewInterface;
 use PublishPress\Notifications\Workflow\Workflow;
-use Twig_Environment;
 use WP_Post;
 
 abstract class OptionCheckboxAbstract
 {
     /**
-     * @var Twig_Environment
+     * @var ViewInterface
      */
-    protected $twig;
+    protected $view;
 
     /**
      * @var WP_Post
@@ -30,9 +30,9 @@ abstract class OptionCheckboxAbstract
         $this->addHooks();
     }
 
-    protected function setTwig($twig)
+    protected function setView($view)
     {
-        $this->twig = $twig;
+        $this->view = $view;
     }
 
     protected function setPost($post)
@@ -53,9 +53,9 @@ abstract class OptionCheckboxAbstract
         add_action('publishpress_notif_save_workflow_metadata', [$this, 'setValue'], 10, 2);
     }
 
-    public function addToOptionsList($options, $post, $twig)
+    public function addToOptionsList($options, $post, $view)
     {
-        $this->setTwig($twig);
+        $this->setView($view);
         $this->setPost($post);
 
         $options[] = $this;
@@ -112,7 +112,7 @@ abstract class OptionCheckboxAbstract
             'value'       => $this->getValue(),
         ];
 
-        return $this->twig->render('workflow_metabox_option_checkbox.twig', $context);
+        return $this->view->render('workflow_metabox_option_checkbox', $context);
     }
 
     public function setValue($postId, $post)

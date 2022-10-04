@@ -75,11 +75,11 @@ class Base
      */
     public function render_metabox_section($html)
     {
-        if (empty($this->twig_template)) {
-            throw new Exception('Undefined twig template for the workflow metabox: ' . $this->name);
+        if (empty($this->view_name)) {
+            throw new Exception('Undefined view template for the workflow metabox: ' . $this->name);
         }
 
-        $template_context = [
+        $context = [
             'name'  => esc_attr("publishpress_notif[{$this->attr_prefix}_{$this->name}]"),
             'id'    => esc_attr("publishpress_notif_{$this->attr_prefix}_{$this->name}"),
             'value' => esc_attr($this->name),
@@ -87,17 +87,17 @@ class Base
         ];
 
         /**
-         * Filters the template context for the twig template which will be
+         * Filters the template context for the view template which will be
          * rendered in the metabox.
          *
-         * @param array $template_context
+         * @param array $context
          */
-        $template_context = apply_filters(
+        $context = apply_filters(
             "publishpress_notif_workflow_metabox_context_{$this->attr_prefix}_{$this->name}",
-            $template_context
+            $context
         );
 
-        $html .= $this->get_service('twig')->render($this->twig_template, $template_context);
+        $html .= $this->get_service('view')->render($this->view_name, $context);
 
         return $html;
     }

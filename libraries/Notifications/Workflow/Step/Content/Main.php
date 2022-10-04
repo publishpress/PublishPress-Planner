@@ -23,7 +23,7 @@ class Main extends Base_Step
     public function __construct()
     {
         $this->attr_prefix   = 'content';
-        $this->twig_template = 'workflow_content_main_field.twig';
+        $this->view_name = 'workflow_content_main_field';
         $this->name          = 'main';
         $this->label         = __('Content', 'publishpress');
 
@@ -40,7 +40,7 @@ class Main extends Base_Step
     }
 
     /**
-     * Filters the context sent to the twig template in the metabox
+     * Filters the context sent to the view template in the metabox
      *
      * @param array $template_context
      */

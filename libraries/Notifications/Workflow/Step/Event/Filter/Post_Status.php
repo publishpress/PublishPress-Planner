@@ -23,8 +23,8 @@ class Post_Status extends Base implements Filter_Interface
      */
     public function render()
     {
-        echo $this->get_service('twig')->render(
-            'workflow_filter_post_status.twig',
+        echo $this->get_service('view')->render(
+            'workflow_filter_post_status',
             [
                 'name'         => esc_attr("publishpress_notif[{$this->step_name}_filters][post_status]"),
                 'id'           => esc_attr("publishpress_notif_{$this->step_name}_filters_post_status"),
