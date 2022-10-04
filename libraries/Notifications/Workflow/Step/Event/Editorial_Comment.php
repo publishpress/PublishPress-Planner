@@ -9,8 +9,6 @@
 
 namespace PublishPress\Notifications\Workflow\Step\Event;
 
-use PublishPress\Notifications\Workflow\Filter;
-
 class Editorial_Comment extends Base
 {
     const META_KEY_SELECTED = '_psppno_evtedcomment';

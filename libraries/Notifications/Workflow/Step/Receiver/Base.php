@@ -15,6 +15,8 @@ class Base extends Base_Step
 {
     const META_KEY_SELECTED = '_psppno_toundefined';
 
+    protected $view_name;
+
     /**
      * The constructor
      */

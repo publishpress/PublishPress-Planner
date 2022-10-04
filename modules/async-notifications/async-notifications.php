@@ -62,7 +62,7 @@ if (! class_exists('PP_Async_Notifications')) {
         {
             global $publishpress;
 
-            $this->twigPath = dirname(dirname(dirname(__FILE__))) . '/twig';
+            $this->viewsPath = dirname(dirname(dirname(__FILE__))) . '/views';
 
             $this->module_url = $this->get_module_url(__FILE__);
 

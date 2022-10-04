@@ -33,8 +33,9 @@ use PublishPress\Legacy\Auto_loader;
 
 if (! defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.8.3');
+    define('PUBLISHPRESS_VERSION', '3.8.4');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
+    define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
     define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/libraries');
 
@@ -102,7 +103,7 @@ if (! defined('PP_LOADED')) {
 
 
     define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
-    define('PUBLISHPRESS_NOTIF_TWIG_PATH', PUBLISHPRESS_BASE_PATH . '/twig');
+    define('PUBLISHPRESS_NOTIF_VIEWS_PATH', PUBLISHPRESS_BASE_PATH . '/views');
     define('PUBLISHPRESS_NOTIF_LOADED', 1);
 
     // Load the improved notifications

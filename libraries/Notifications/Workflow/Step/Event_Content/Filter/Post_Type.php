@@ -24,8 +24,8 @@ class Post_Type extends Base implements Filter_Interface
      */
     public function render()
     {
-        echo $this->get_service('twig')->render(
-            'workflow_filter_multiple_select.twig',
+        echo $this->get_service('view')->render(
+            'workflow_filter_multiple_select',
             [
                 'name'    => esc_attr("publishpress_notif[{$this->step_name}_filters][post_type]"),
                 'id'      => esc_attr("publishpress_notif_{$this->step_name}_filters_post_type"),

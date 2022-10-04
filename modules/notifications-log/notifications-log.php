@@ -65,7 +65,7 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             global $publishpress;
 
-            $this->twigPath = dirname(dirname(dirname(__FILE__))) . '/twig';
+            $this->viewsPath = dirname(dirname(dirname(__FILE__))) . '/views';
 
             $this->module_url = $this->get_module_url(__FILE__);
 
@@ -102,55 +102,6 @@ if (! class_exists('PP_Notifications_Log')) {
             Error::getInstance()->registerModuleErrors(ModuleErrors::getInstance());
 
             parent::__construct();
-        }
-
-        protected function configure_twig()
-        {
-            if ($this->twig_configured) {
-                return;
-            }
-
-            $function = new Twig_SimpleFunction(
-                'settings_fields',
-                function () {
-                    return settings_fields($this->module->options_group_name);
-                }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'nonce_field',
-                function ($context) {
-                    return wp_nonce_field($context);
-                }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'submit_button',
-                function () {
-                    return submit_button();
-                }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                '__',
-                function ($id) {
-                    return __($id, 'publishpress');
-                }
-            );
-            $this->twig->addFunction($function);
-
-            $function = new Twig_SimpleFunction(
-                'do_settings_sections',
-                function ($section) {
-                    return do_settings_sections($section);
-                }
-            );
-            $this->twig->addFunction($function);
-
-            $this->twig_configured = true;
         }
 
         /**
