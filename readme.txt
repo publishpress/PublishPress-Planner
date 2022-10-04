@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 6.0
-Stable tag: 3.8.3
+Stable tag: 3.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,10 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.8.4] - 3 Oct 2022 =
+
+* Changed: Removed Twig dependency, refactoring the views for using plain PHP templates, #1125;
 
 = [3.8.3] - 8 Sep 2022 =
 
