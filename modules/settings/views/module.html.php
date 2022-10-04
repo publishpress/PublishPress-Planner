@@ -4,7 +4,7 @@
 
     <div
             class="publishpress-module module-enabled <?php echo esc_attr($context['has_config_link'] ? 'has-configure-link' : ''); ?>"
-            id="<?php esc esc_attr($context['slug']); ?>">
+            id="<?php echo esc_attr($context['slug']); ?>">
 
         <?php if (! empty($context['icon_class'])) : ?>
         <span class="<?php echo esc_attr($context['icon_class']); ?> float-right module-icon"></span>
