@@ -121,6 +121,10 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.8.4] - 3 Oct 2022 =
+
+* Changed: Removed Twig dependency, refactoring the views for using plain PHP templates, #1125;
+
 = [3.8.3] - 8 Sep 2022 =
 
 * Fixed: Custom Status Conflict – PublishPress, #1105
