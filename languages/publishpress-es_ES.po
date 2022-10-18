@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress: Editorial Calendar, Workflow, Comments, Notifications and Statuses - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-09 12:13-0500\n"
+"PO-Revision-Date: 2022-10-05 12:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -14,11 +14,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: modules/settings/views/footer-base.html.php:27
+msgid "Contact"
+msgstr "Contacto"
+
+#: modules/settings/views/footer-base.html.php:23
+msgid "Documentation"
+msgstr "Documentación"
+
+#: modules/settings/views/footer-base.html.php:19
+msgid "About"
+msgstr "Acerca de"
+
 #: modules/modules-settings/modules-settings.php:240
 msgid "Basic Notifications"
 msgstr "Avisos básicos"
 
-#: modules/improved-notifications/improved-notifications.php:97
+#: modules/improved-notifications/improved-notifications.php:92
 msgid "Advanced Notifications"
 msgstr "Avisos avanzados"
 
@@ -88,11 +100,11 @@ msgstr "Caja de búsqueda"
 msgid "%d weeks"
 msgstr "%d semanas"
 
-#: includes.php:156
+#: includes.php:157
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
-#: includes.php:127
+#: includes.php:128
 msgid "You're using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s"
 msgstr "Estás usando PublishPress Free. La versión Pro tiene más características y soporte. %sActualizar a Pro%s"
 
@@ -656,11 +668,11 @@ msgstr "No hay entradas en el rango o filtro especificado."
 msgid "View all post types"
 msgstr "Ver todos los tipos de contenido"
 
-#: modules/improved-notifications/improved-notifications.php:409
+#: modules/improved-notifications/improved-notifications.php:350
 msgid "minutes"
 msgstr "minutos"
 
-#: modules/improved-notifications/improved-notifications.php:269
+#: modules/improved-notifications/improved-notifications.php:220
 msgid "Duplicated notification threshold:"
 msgstr "Umbral para los avisos duplicados:"
 
@@ -747,19 +759,19 @@ msgstr "Flujo de trabajo: %s"
 msgid "Notification log not found"
 msgstr "No se ha encontrado el registro de los avisos"
 
-#: modules/notifications-log/notifications-log.php:879
+#: modules/notifications-log/notifications-log.php:830
 msgid "This is a preview of the scheduled message. The content can still change until the notification is sent."
 msgstr "Esta es una vista previa del mensaje programado. Todavía se puede cambiar el contenido hasta que se envíe el aviso."
 
-#: modules/notifications-log/notifications-log.php:869
+#: modules/notifications-log/notifications-log.php:820
 msgid "Content:"
 msgstr "Contenido:"
 
-#: modules/notifications-log/notifications-log.php:861
+#: modules/notifications-log/notifications-log.php:812
 msgid "Subject:"
 msgstr "Asunto:"
 
-#: modules/notifications-log/notifications-log.php:486
+#: modules/notifications-log/notifications-log.php:437
 msgid "This notification is very similar to another one sent less than %d minutes ago for the same receiver"
 msgstr "Este aviso es muy parecido a otro enviado al mismo destinatario hace menos de %d minutos"
 
@@ -776,7 +788,7 @@ msgstr "usuario"
 msgid "role:%s"
 msgstr "perfil: %s"
 
-#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:94
+#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:92
 msgid "Comment: %s (%d)"
 msgstr "Comentario: %s (%d)"
 
@@ -851,45 +863,45 @@ msgstr "Editar aviso"
 msgid "Add New Notification"
 msgstr "Añadir nuevo aviso"
 
-#: modules/notifications-log/notifications-log.php:331
+#: modules/notifications-log/notifications-log.php:282
 msgid "No notifications found."
 msgstr "No se ha encontrado ningún aviso."
 
-#: modules/notifications-log/notifications-log.php:319
+#: modules/notifications-log/notifications-log.php:270
 msgid "%s notification found."
 msgid_plural "%s notifications found."
 msgstr[0] "%s aviso encontrado."
 msgstr[1] "%s avisos encontrados."
 
 #: modules/calendar/calendar.php:791
-#: modules/notifications-log/notifications-log.php:258
+#: modules/notifications-log/notifications-log.php:209
 msgid "Loading..."
 msgstr "Cargando…"
 
-#: modules/notifications-log/notifications-log.php:256
+#: modules/notifications-log/notifications-log.php:207
 msgid "All Statuses"
 msgstr "Todos los estados"
 
-#: modules/notifications-log/notifications-log.php:255
+#: modules/notifications-log/notifications-log.php:206
 msgid "All Channels"
 msgstr "Todos los canales"
 
-#: modules/notifications-log/notifications-log.php:254
+#: modules/notifications-log/notifications-log.php:205
 msgid "All Actions"
 msgstr "Todas las acciones"
 
-#: modules/notifications-log/notifications-log.php:253
+#: modules/notifications-log/notifications-log.php:204
 msgid "All Workflows"
 msgstr "Todos los flujos de trabajo"
 
-#: modules/notifications-log/notifications-log.php:252
+#: modules/notifications-log/notifications-log.php:203
 msgid "All Posts"
 msgstr "Todas las entradas"
 
 #: modules/notifications-log/notifications-log.php:74
-#: modules/notifications-log/notifications-log.php:310
-#: modules/notifications-log/notifications-log.php:533
-#: modules/notifications-log/notifications-log.php:534
+#: modules/notifications-log/notifications-log.php:261
+#: modules/notifications-log/notifications-log.php:484
+#: modules/notifications-log/notifications-log.php:485
 msgid "Notifications Log"
 msgstr "Registro de avisos"
 
@@ -973,7 +985,7 @@ msgstr "PUBLISHPRESS_BASE_PATH"
 msgid "PUBLISHPRESS_VERSION"
 msgstr "PUBLISHPRESS_VERSION"
 
-#: modules/improved-notifications/improved-notifications.php:1000
+#: modules/improved-notifications/improved-notifications.php:935
 msgid "Meta fields"
 msgstr "Campos meta"
 
@@ -1031,11 +1043,11 @@ msgstr "Para seleccionar un estado personalizado, por favor, primero cancela la 
 msgid "Post Status"
 msgstr "Estado de la entrada"
 
-#: modules/improved-notifications/improved-notifications.php:277
+#: modules/improved-notifications/improved-notifications.php:228
 msgid "Default notification channels:"
 msgstr "Canales de aviso por defecto:"
 
-#: common/php/class-module.php:706
+#: common/php/class-module.php:700
 msgid "E-mails"
 msgstr "Correos electrónicos"
 
@@ -1051,7 +1063,7 @@ msgstr "Avisos activos"
 msgid "Enter any users, roles, or email address that should receive notifications from workflows."
 msgstr "Introduce los usuarios, perfiles o direcciones de correo electrónico que deberían recibir avisos de los flujos de trabajo."
 
-#: modules/improved-notifications/improved-notifications.php:992
+#: modules/improved-notifications/improved-notifications.php:927
 msgid "Receiver"
 msgstr "Destinatario"
 
@@ -1127,7 +1139,7 @@ msgstr "Depuración"
 msgid "Taxonomy"
 msgstr "Taxonomía"
 
-#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Term.php:35
+#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
 msgid "Terms"
 msgstr "Términos"
 
@@ -1143,11 +1155,11 @@ msgstr "Avisar siempre a los usuarios que han editado el contenido:"
 msgid "Always notify the author of the content:"
 msgstr "Avisar siempre al autor del contenido:"
 
-#: modules/improved-notifications/improved-notifications.php:979
+#: modules/improved-notifications/improved-notifications.php:914
 msgid "Select at least one option for each section."
 msgstr "Selecciona al menos una opción para cada sección."
 
-#: modules/improved-notifications/improved-notifications.php:840
+#: modules/improved-notifications/improved-notifications.php:776
 #: modules/notifications-log/library/NotificationsLogTable.php:492
 msgid "For which content?"
 msgstr "¿Para qué contenido?"
@@ -1282,11 +1294,11 @@ msgid_plural "%d Roles"
 msgstr[0] "%d perfil"
 msgstr[1] "%d perfiles"
 
-#: common/php/class-module.php:688
+#: common/php/class-module.php:682
 msgid "Role"
 msgstr "Perfil"
 
-#: common/php/class-module.php:685
+#: common/php/class-module.php:679
 #: libraries/Notifications/Workflow/Step/Receiver/Role.php:31
 msgid "Roles"
 msgstr "Perfiles"
@@ -1368,7 +1380,7 @@ msgstr "Deja de avisarme"
 msgid "Click to stop being notified on updates for this post"
 msgstr "Haz clic para dejar de ser avisado sobre actualizaciones de este contenido"
 
-#: modules/improved-notifications/improved-notifications.php:1001
+#: modules/improved-notifications/improved-notifications.php:936
 msgid "Click here to read more about shortcode options..."
 msgstr "Haz clic aquí para leer más acerca de las opciones de shortcode..."
 
@@ -1380,7 +1392,7 @@ msgstr "Mis avisos de contenido"
 msgid "Please select at least one event"
 msgstr "Por favor selecciona por lo menos un evento"
 
-#: modules/improved-notifications/improved-notifications.php:322
+#: modules/improved-notifications/improved-notifications.php:271
 msgid "Notify when content is published"
 msgstr "Avisar cuando se publique contenido"
 
@@ -1447,93 +1459,97 @@ msgstr "Aviso de flujo de trabajo publicado."
 msgid "M j, Y @ H:i"
 msgstr "M j, Y @ H:i"
 
-#: modules/improved-notifications/improved-notifications.php:458
-#: modules/improved-notifications/improved-notifications.php:1176
+#: modules/improved-notifications/improved-notifications.php:397
+#: modules/improved-notifications/improved-notifications.php:1105
+#: views/user_profile_notification_channels.html.php:15
 msgid "Channels"
 msgstr "Canales"
 
-#: modules/improved-notifications/improved-notifications.php:457
-#: modules/improved-notifications/improved-notifications.php:1175
+#: modules/improved-notifications/improved-notifications.php:396
+#: modules/improved-notifications/improved-notifications.php:1104
+#: views/user_profile_notification_channels.html.php:14
 msgid "Workflows"
 msgstr "Flujos de trabajo"
 
-#: modules/improved-notifications/improved-notifications.php:452
-#: modules/improved-notifications/improved-notifications.php:1170
+#: modules/improved-notifications/improved-notifications.php:391
+#: modules/improved-notifications/improved-notifications.php:1099
+#: views/user_profile_notification_channels.html.php:6
 msgid "Choose the channels where each workflow will send notifications to:"
 msgstr "Elige los canales a los que cada flujo de trabajo enviará avisos:"
 
-#: modules/improved-notifications/improved-notifications.php:451
-#: modules/improved-notifications/improved-notifications.php:1169
+#: modules/improved-notifications/improved-notifications.php:390
+#: modules/improved-notifications/improved-notifications.php:1098
+#: views/user_profile_notification_channels.html.php:1
 msgid "Editorial Notifications"
 msgstr "Avisos editoriales"
 
-#: modules/improved-notifications/improved-notifications.php:456
-#: modules/improved-notifications/improved-notifications.php:1157
-#: modules/improved-notifications/improved-notifications.php:1174
+#: modules/improved-notifications/improved-notifications.php:395
+#: modules/improved-notifications/improved-notifications.php:1086
+#: modules/improved-notifications/improved-notifications.php:1103
 msgid "Muted"
 msgstr "Silenciado"
 
-#: modules/improved-notifications/improved-notifications.php:999
+#: modules/improved-notifications/improved-notifications.php:934
 msgid "Available fields"
 msgstr "Campos disponibles"
 
-#: modules/improved-notifications/improved-notifications.php:995
+#: modules/improved-notifications/improved-notifications.php:930
 msgid "On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by \", \"."
 msgstr "En cada shortcode, puedes seleccionar uno o más campos. Si hay más de uno, se mostrarán separados por \",\"."
 
-#: modules/improved-notifications/improved-notifications.php:994
+#: modules/improved-notifications/improved-notifications.php:929
 msgid "field"
 msgstr "campo"
 
-#: modules/improved-notifications/improved-notifications.php:993
+#: modules/improved-notifications/improved-notifications.php:928
 msgid "shortcode"
 msgstr "shortcode"
 
-#: modules/improved-notifications/improved-notifications.php:991
+#: modules/improved-notifications/improved-notifications.php:926
 msgid "Format"
 msgstr "Formato"
 
-#: modules/improved-notifications/improved-notifications.php:990
+#: modules/improved-notifications/improved-notifications.php:925
 msgid "Workflow"
 msgstr "Flujo de trabajo"
 
-#: modules/improved-notifications/improved-notifications.php:989
+#: modules/improved-notifications/improved-notifications.php:924
 msgid "User making changes or comments"
 msgstr "Usuario haciendo cambios o comentarios"
 
-#: modules/improved-notifications/improved-notifications.php:988
+#: modules/improved-notifications/improved-notifications.php:923
 msgid "Editorial Comment"
 msgstr "Comentario editorial"
 
-#: modules/improved-notifications/improved-notifications.php:983
+#: modules/improved-notifications/improved-notifications.php:918
 msgid "You can add dynamic information to the Subject or Body text using the following shortcodes:"
 msgstr "Puedes agregar información dinámica al texto del asunto o del cuerpo con los siguientes shortcodes:"
 
-#: modules/improved-notifications/improved-notifications.php:860
+#: modules/improved-notifications/improved-notifications.php:796
 msgid "What to say?"
 msgstr "¿Qué decir?"
 
 #: libraries/Notifications/Plugin.php:59
-#: modules/improved-notifications/improved-notifications.php:850
+#: modules/improved-notifications/improved-notifications.php:786
 #: modules/notifications-log/library/NotificationsLogTable.php:493
 msgid "Who to notify?"
 msgstr "¿A quién avisar?"
 
 #: libraries/Notifications/Plugin.php:57
-#: modules/improved-notifications/improved-notifications.php:830
+#: modules/improved-notifications/improved-notifications.php:766
 #: modules/notifications-log/library/NotificationsLogTable.php:491
 msgid "When to notify?"
 msgstr "¿Cuándo avisar?"
 
-#: modules/improved-notifications/improved-notifications.php:808
+#: modules/improved-notifications/improved-notifications.php:746
 msgid "Help"
 msgstr "Ayuda"
 
-#: modules/improved-notifications/improved-notifications.php:790
+#: modules/improved-notifications/improved-notifications.php:728
 msgid "Workflow Settings"
 msgstr "Ajustes de los flujos de trabajo"
 
-#: modules/improved-notifications/improved-notifications.php:361
+#: modules/improved-notifications/improved-notifications.php:305
 msgid "Notify on editorial comments"
 msgstr "Avisos sobre comentarios editoriales"
 
@@ -1629,7 +1645,7 @@ msgid_plural "Categories"
 msgstr[0] "Categoría"
 msgstr[1] "Categorías"
 
-#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:26
+#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
 msgid "When an editorial comment is added"
 msgstr "Cuando se añade un comentario editorial"
 
@@ -1643,7 +1659,7 @@ msgstr "Asunto"
 
 #: libraries/Notifications/Workflow/Step/Content/Main.php:28
 #: modules/calendar/calendar.php:3539
-#: modules/improved-notifications/improved-notifications.php:987
+#: modules/improved-notifications/improved-notifications.php:922
 msgid "Content"
 msgstr "Contenido"
 
@@ -1798,7 +1814,7 @@ msgstr "Vista de lista"
 msgid "Notification workflow updated."
 msgstr "Aviso de flujo de trabajo actualizado."
 
-#: modules/notifications-log/notifications-log.php:257 publishpress.php:1216
+#: modules/notifications-log/notifications-log.php:208 publishpress.php:1216
 #: publishpress.php:1221
 msgid "Notification"
 msgstr "Aviso"
@@ -1879,23 +1895,23 @@ msgstr "Diseño de pantalla"
 msgid "Content Overview"
 msgstr "Resumen del contenido"
 
-#: modules/settings/settings.php:402 publishpress.php:632
+#: modules/settings/settings.php:404 publishpress.php:632
 msgid "Cheatin&#8217; uh?"
 msgstr "¡Haciendo trampas! ¿eh?"
 
-#: modules/settings/settings.php:378
+#: modules/settings/settings.php:380
 msgid "Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded file."
 msgstr "Desactivado porque add_post_type_support('%1$s', '%2$s') está incluido en un archivo cargado."
 
-#: modules/settings/settings.php:356
+#: modules/settings/settings.php:358
 msgid "Pages"
 msgstr "Páginas"
 
-#: modules/settings/settings.php:355
+#: modules/settings/settings.php:357
 msgid "Posts"
 msgstr "Entradas"
 
-#: modules/settings/settings.php:288
+#: modules/settings/settings.php:289
 msgid "There are no PublishPress modules registered"
 msgstr "No hay módulos de PublishPress registrados"
 
@@ -2039,7 +2055,7 @@ msgstr "[%1$s] Nueva %2$s creada: «%3$s»"
 msgid "WordPress Scheduler"
 msgstr "Programador de WordPress"
 
-#: common/php/class-module.php:696
+#: common/php/class-module.php:690
 #: libraries/Notifications/Workflow/Step/Receiver/User.php:26
 msgid "Users"
 msgstr "Usuarios"
@@ -2608,7 +2624,7 @@ msgstr "Por favor, ten en cuenta que marcando la casilla se aplicarán todos los
 
 #: modules/custom-status/custom-status.php:2104
 #: modules/editorial-metadata/editorial-metadata.php:1723
-#: modules/improved-notifications/improved-notifications.php:799
+#: modules/improved-notifications/improved-notifications.php:737
 msgid "Options"
 msgstr "Opciones"
 
@@ -3073,17 +3089,17 @@ msgstr "Calendario"
 msgid "(no title)"
 msgstr "(sin título)"
 
-#: common/php/class-module.php:278 modules/calendar/calendar.php:1813
+#: common/php/class-module.php:272 modules/calendar/calendar.php:1813
 #: modules/calendar/calendar.php:3453
 #: modules/content-overview/content-overview.php:1722
 msgid "Trash"
 msgstr "Papelera"
 
-#: common/php/class-module.php:276
+#: common/php/class-module.php:270
 msgid "Private"
 msgstr "Privado"
 
-#: common/php/class-module.php:275 modules/calendar/calendar.php:1964
+#: common/php/class-module.php:269 modules/calendar/calendar.php:1964
 #: modules/calendar/calendar.php:2669 modules/calendar/calendar.php:3996
 #: modules/custom-status/custom-status.php:918
 #: modules/notifications-log/library/NotificationsLogTable.php:523
@@ -3091,7 +3107,7 @@ msgstr "Privado"
 msgid "Scheduled"
 msgstr "Programado"
 
-#: common/php/class-module.php:229 common/php/class-module.php:273
+#: common/php/class-module.php:223 common/php/class-module.php:267
 #: libraries/Notifications/Traits/PublishPress_Module.php:75
 #: modules/calendar/calendar.php:1969 modules/calendar/calendar.php:4001
 #: modules/custom-status/custom-status.php:956
@@ -3099,22 +3115,22 @@ msgstr "Programado"
 msgid "Published"
 msgstr "Publicado"
 
-#: common/php/class-module.php:223 common/php/class-module.php:277
+#: common/php/class-module.php:217 common/php/class-module.php:271
 #: libraries/Notifications/Traits/PublishPress_Module.php:69
 msgid "Pending Review"
 msgstr "Pendiente de revisión"
 
-#: common/php/class-module.php:217 common/php/class-module.php:274
+#: common/php/class-module.php:211 common/php/class-module.php:268
 #: libraries/Notifications/Traits/PublishPress_Module.php:63
 #: modules/custom-status/custom-status.php:880
 #: modules/custom-status/custom-status.php:994
 msgid "Draft"
 msgstr "Borrador"
 
-#: common/php/class-module.php:98
+#: common/php/class-module.php:92
 msgid "Page"
 msgstr "Página"
 
-#: common/php/class-module.php:97
+#: common/php/class-module.php:91
 msgid "Post"
 msgstr "Entrada"
