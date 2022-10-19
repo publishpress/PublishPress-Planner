@@ -185,7 +185,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                     [$this, 'editorial_comments_meta_box'],
                     $post_type,
                     'normal',
-                    'high'
+                    apply_filters('pp_editorial_comments_metabox_priority', 'high')
                 );
             }
         }
