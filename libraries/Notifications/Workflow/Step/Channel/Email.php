@@ -84,6 +84,24 @@ class Email extends Base implements Channel_Interface
         $body = apply_filters('publishpress_notifications_the_content', $body);
         $body = str_replace(']]>', ']]&gt;', $body);
 
+        $attachments = [];
+        if ($action === 'comment' 
+            && isset($workflow->event_args['event']) 
+            && $workflow->event_args['event'] === 'editorial_comment'
+        ) {
+            $comment_files = get_comment_meta($workflow->event_args['params']['comment_id'], '_pp_editorial_comment_files', true);
+            if (!empty($comment_files)) {
+                $comment_files = explode(" ", $comment_files);
+                $comment_files = array_filter($comment_files);
+                foreach ($comment_files as $comment_file_id) {
+                    $media_file = wp_get_attachment_url($comment_file_id);
+                    if (!is_wp_error($media_file) && !empty($media_file)) {
+                        $attachments[] = $media_file;
+                    }
+                }
+            }
+        }
+
         // Call the legacy notification module
         // Split the name and email, if set.
         $separatorPos = strpos($emailAddress, '/');
@@ -97,7 +115,8 @@ class Email extends Base implements Channel_Interface
             $subject,
             $body,
             '',
-            $emailAddress
+            $emailAddress,
+            $attachments
         );
 
         /**

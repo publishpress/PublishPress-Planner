@@ -178,7 +178,7 @@ if (! class_exists('PP_Notifications')) {
 
             add_action('pp_post_insert_editorial_comment', [$this, 'notification_comment']);
             add_action('delete_user', [$this, 'delete_user_action']);
-            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 4);
+            add_action('pp_send_scheduled_notification', [$this, 'send_single_email'], 10, 5);
 
             add_action('save_post', [$this, 'action_save_post'], 10);
 
@@ -1065,7 +1065,7 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return array
          */
-        public function send_email($action, $post, $subject, $message, $message_headers = '', $recipients = null)
+        public function send_email($action, $post, $subject, $message, $message_headers = '', $recipients = null, $attachments = [])
         {
             $deliveryResult = [];
 
@@ -1088,14 +1088,15 @@ if (! class_exists('PP_Notifications')) {
             );
 
             if (PP_NOTIFICATION_USE_CRON) {
-                $this->schedule_emails($recipients, $subject, $message, $message_headers);
+                $this->schedule_emails($recipients, $subject, $message, $message_headers, 1, $attachments);
             } elseif (! empty($recipients)) {
                 foreach ($recipients as $recipient) {
                     $deliveryResult[$recipient] = $this->send_single_email(
                         $recipient,
                         $subject,
                         $message,
-                        $message_headers
+                        $message_headers,
+                        $attachments
                     );
                 }
             }
@@ -1111,8 +1112,9 @@ if (! class_exists('PP_Notifications')) {
          * @param string $message Body of the email
          * @param string $message_headers . (optional ) Message headers
          * @param int $time_offset (optional ) Delay in seconds per email
+         * @param array $attachments . (optional ) Message attachments
          */
-        private function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1)
+        private function schedule_emails($recipients, $subject, $message, $message_headers = '', $time_offset = 1, $attachments = [])
         {
             $recipients = (array)$recipients;
 
@@ -1122,7 +1124,7 @@ if (! class_exists('PP_Notifications')) {
                 wp_schedule_single_event(
                     $send_time,
                     'pp_send_scheduled_notification',
-                    [$recipient, $subject, $message, $message_headers]
+                    [$recipient, $subject, $message, $message_headers, $attachments]
                 );
                 $send_time += $time_offset;
             }
@@ -1135,12 +1137,13 @@ if (! class_exists('PP_Notifications')) {
          * @param string $subject Subject of the email
          * @param string $message Body of the email
          * @param string $message_headers . (optional ) Message headers
+         * @param array $attachments . (optional ) Message attachments
          *
          * @return bool
          */
-        public function send_single_email($to, $subject, $message, $message_headers = '')
+        public function send_single_email($to, $subject, $message, $message_headers = '', $attachments = [])
         {
-            return wp_mail($to, $subject, $message, $message_headers);
+            return wp_mail($to, $subject, $message, $message_headers, $attachments);
         }
 
         /**
@@ -2149,7 +2152,21 @@ if (! class_exists('PP_Notifications')) {
 
             $body .= $this->get_notification_footer($args['post']);
 
-            $this->send_email('comment', $args['post'], $subject, $body);
+            //attach files to email
+            $attachments = [];
+            $comment_files = get_comment_meta($args['comment']->comment_ID, '_pp_editorial_comment_files', true);
+            if (!empty($comment_files)) {
+                $comment_files = explode(" ", $comment_files);
+                $comment_files = array_filter($comment_files);
+                foreach ($comment_files as $comment_file_id) {
+                    $media_file = wp_get_attachment_url($comment_file_id);
+                    if (!is_wp_error($media_file) && !empty($media_file)) {
+                        $attachments[] = $media_file;
+                    }
+                }
+            }
+
+            $this->send_email('comment', $args['post'], $subject, $body, '', null, $attachments);
         }
 
         public static function getOption($option_name)

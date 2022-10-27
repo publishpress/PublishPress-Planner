@@ -159,6 +159,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 'publishpressEditorialCommentsParams',
                 [
                     'loadingImgSrc' => esc_url(admin_url('/images/wpspin_light.gif')),
+                    'removeText'    => __('Remove', 'publishpress'),
                 ]
             );
 
@@ -284,11 +285,18 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             <!-- Reply form, hidden until reply clicked by user -->
             <div id="pp-replyrow" style="display: none;">
+                <div class="pp-replyattachment">
+                    <a href="#" class="button editorial-comment-file-upload">
+                        <?php _e('Attach file', 'publishpress') ?>
+                    </a>
+                </div>
+
                 <div id="pp-replycontainer">
                     <textarea id="pp-replycontent" name="replycontent" cols="40" rows="5"></textarea>
                 </div>
 
                 <div id="pp-replysubmit">
+                    <div class="editorial-attachments"></div>
                     <a class="button pp-replysave button-primary alignright" href="#comments-form">
                         <span id="pp-replybtn"><?php
                             _e('Add Comment', 'publishpress') ?></span>
@@ -304,6 +312,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 </div>
 
                 <input type="hidden" value="" id="pp-comment_parent" name="pp-comment_parent"/>
+                <input type="hidden" value="" id="pp-comment_files" name="pp-comment_files"/>
                 <input type="hidden" name="pp-post_id" id="pp-post_id" value="<?php
                 echo esc_attr($post->ID); ?>"/>
 
@@ -415,6 +424,35 @@ if (! class_exists('PP_Editorial_Comments')) {
 
                     <div class="comment-content"><?php
                         comment_text(); ?></div>
+                        <?php
+                        $comment_files = get_comment_meta($theComment->comment_ID, '_pp_editorial_comment_files', true);
+                        if (!empty($comment_files)) {
+                            $comment_files = explode(" ", $comment_files);
+                        }
+                        ?>
+                    <div class="comment-files">
+                        <?php if (is_array($comment_files)) : ?>
+                            <?php foreach ($comment_files as $comment_file_id) : ?>
+                                <?php 
+                                $media_file = wp_get_attachment_url($comment_file_id);
+                                if (!is_wp_error($media_file) && !empty($media_file)) {
+                                    $file_name = explode('/', $media_file);
+                                    ?>
+                                    <div class="editorial-single-file" data-file_id="<?php echo esc_attr($comment_file_id); ?>"> 
+                                        &dash;
+                                        <a href="<?php echo esc_url($media_file); ?>" target="blank">
+                                            <?php echo esc_html(end($file_name)); ?>
+                                        </a>
+                                        <span class="editorial-comment-edit-file-remove">
+                                            <?php echo __('Remove', 'publishpress'); ?>
+                                        </span>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                     <div class="row-actions"><?php
                         echo $actions_string_escaped; ?></div>
                 </div>
@@ -449,6 +487,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             $post_id = absint($_POST['post_id']);
             $parent = absint($_POST['parent']);
+            $comment_files = sanitize_text_field($_POST['comment_files']);
 
             // Only allow the comment if user can edit post
             // @TODO: allow contributors to add comments as well (?)
@@ -521,6 +560,10 @@ if (! class_exists('PP_Editorial_Comments')) {
                 // Insert Comment
                 $comment_id = wp_insert_comment($data);
                 $comment = get_comment($comment_id);
+                // Add comment files
+                if (!empty(trim($comment_files))) {
+                    update_comment_meta($comment_id, '_pp_editorial_comment_files', rtrim($comment_files));
+                }
 
                 // Register actions -- will be used to set up notifications and other modules can hook into this
                 if ($comment_id) {
@@ -588,6 +631,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             $comment_id = absint($_POST['comment_id']);
             $post_id = absint($_POST['post_id']);
+            $comment_files = sanitize_text_field($_POST['comment_files']);
 
             // Only allow the comment if user can edit post
             if (! current_user_can('edit_post', $post_id)) {
@@ -655,6 +699,9 @@ if (! class_exists('PP_Editorial_Comments')) {
                 $data = apply_filters('pp_pre_edit_editorial_comment', $data);
 
                 $status = wp_update_comment($data);
+
+                // update comment files
+                update_comment_meta((int)$comment_id, '_pp_editorial_comment_files', rtrim($comment_files));
 
                 if ($status == 1) {
                     do_action('pp_post_edit_editorial_comment', $comment_id);
