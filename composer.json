@@ -20,10 +20,6 @@
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
-    },
-    {
-      "type": "git",
       "url": "https://github.com/publishpress/wp-browser"
     },
     {
@@ -50,7 +46,6 @@
     "publishpress/publishpress-instance-protection": "^1.0"
   },
   "require-dev": {
-    "publishpress/publishpress-plugin-builder": "^1.2",
     "bartlett/php-compatinfo": "^5.2",
     "overtrue/phplint": "^2.1",
     "automattic/vipwpcs": "^2.2",
@@ -77,13 +72,18 @@
     }
   },
   "scripts": {
-    "build": "vendor/bin/robo build --ansi",
-    "build-unpacked": "vendor/bin/robo build:unpacked --ansi",
+    "build": "builder/docker/scripts/build build",
+    "build-unpacked": "builder/docker/scripts/build build-dir",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ]
+  },
+  "extra": {
+    "plugin-name": "publishpress",
+    "plugin-slug": "publishpress",
+    "plugin-folder": "publishpress"
   }
 }

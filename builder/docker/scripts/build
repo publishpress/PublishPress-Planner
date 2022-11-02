@@ -1,0 +1,224 @@
+#!/usr/bin/env bash
+start_time=$(date +%s)
+
+script_version="1.1.1"
+
+command=${1}
+source_path=$(pwd)
+scripts_path="${source_path}/builder/docker/scripts"
+dist_path="${source_path}/dist"
+cols=$(tput cols)
+
+
+#######################################
+# Get the plugin name from composer.json file.
+# Globals:
+#   scripts_path
+#   source_path
+# Returns:
+#   The plugin name.
+#######################################
+get_plugin_name() {
+    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" "extra.plugin-name"
+}
+plugin_name=$(get_plugin_name)
+
+#######################################
+# Get the plugin slug from composer.json file.
+# Globals:
+#   scripts_path
+#   source_path
+# Returns:
+#   The plugin slug.
+#######################################
+get_plugin_slug() {
+    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" "extra.plugin-slug"
+}
+plugin_slug=$(get_plugin_slug)
+
+#######################################
+# Get the plugin folder from composer.json file.
+# Globals:
+#   scripts_path
+#   source_path
+# Returns:
+#   The plugin folder.
+#######################################
+get_plugin_folder() {
+    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" "extra.plugin-folder"
+}
+plugin_folder=$(get_plugin_folder)
+
+#######################################
+# Get the plugin version from the main plugin file.
+# Returns:
+#   The plugin version.
+#######################################
+get_plugin_version() {
+    # TODO: Remove the hardcoded plugin slug
+    cat $plugin_slug.php | grep "* Version:" | sed 's/ //g' | awk -F: '{print $NF}'
+}
+plugin_version=$(get_plugin_version)
+
+tmp_build_dir="${dist_path}/${plugin_folder}"
+
+#######################################
+# Echo the string as an step in the output.
+# Arguments:
+#   The message to display.
+# Outputs:
+#   The passed string after an arrow.
+#######################################
+echo_step() {
+    echo "▶ ${1}"
+}
+
+#######################################
+# Delete the temporary plugin folder in the dist dir.
+# Globals:
+#   plugin_name
+#   tmp_build_dir
+# Outputs:
+#   The current step message.
+#######################################
+clean_dist() {
+    echo_step "Removing the folder ${tmp_build_dir} if exists"
+    rm -rf "${tmp_build_dir}"
+}
+
+#######################################
+# Build the plugin code to a subdir named
+# as the plugin name in the dist dir.
+# Globals:
+#   tmp_build_dir
+#   source_path
+# Outputs:
+#   Step messages.
+#######################################
+build_to_dir() {
+    clean_dist
+
+    echo_step "Copying plugin files to the dist dir"
+    mkdir -p "${tmp_build_dir}"
+    rsync -r -f 'merge .builder-rsync-filters' "${source_path}/" "${tmp_build_dir}"
+
+    echo_step "Running composer install"
+    echo ""
+    composer install --no-dev --working-dir="${tmp_build_dir}"
+
+    echo ""
+}
+
+#######################################
+# Build the plugin code to a subdir named
+# as the plugin name in the dist dir and
+# pack the folder in a zip file stored
+# in the dist dir, by default.
+# Globals:
+#   dist_path
+#   plugin_name
+#   plugin_version
+# Outputs:
+#   Step messages.
+#######################################
+pack_built_dir() {
+    zip_filename="${plugin_name}-${plugin_version}.zip"
+    zip_path="${dist_path}/${zip_filename}"
+    echo_step "Removing old zip file, if exists"
+    rm -f "${zip_path}"
+    pushd "${dist_path}" > /dev/null 2>&1
+    echo_step "Creating the zip file on dist/${zip_filename}"
+    zip -qr "${zip_path}" ./${plugin_folder}
+    popd > /dev/null 2>&1
+}
+
+#######################################
+# Show the elapsed time since the script started.
+# Globals:
+#   start_time
+# Outputs:
+#   The runtime in seconds.
+#######################################
+show_time() {
+    if [ "${HIDE_HEADER}" != "1" ]
+    then
+        end_time=$(date +%s)
+        runtime=$((end_time-start_time))
+        echo ""
+        echo "Runtime $runtime sec"
+    fi
+}
+
+#######################################
+# Repeats a string "n" times.
+# Arguments:
+#   The string to be repeated.
+#   The number of times to repeat.
+# Outputs:
+#   The repeated string.
+#######################################
+repeat(){
+	for (( c=1; c<="${2}"; c++ ))
+    do
+        echo -n "${1}"
+    done
+}
+
+#######################################
+# Show the header for the script, showing
+# a few details of the plugin.
+# Globals:
+#   script_version
+#   plugin_name
+#   plugin_version
+#   plugin_slug
+# Outputs:
+#   The formatted header.
+#######################################
+echo_header() {
+    repeat "=" $cols
+    line=$(repeat "-" $(($cols-16)))
+    echo "      __        PUBLISHPRESS PLUGIN BUILDER - v${script_version}"
+    echo "   -=(o '.      ${line}"
+    echo "     '.-.\      Name: ${plugin_name}"
+    echo "     /|  \\\     Slug: ${plugin_slug}"
+    echo "     '|  ||     Folder: ${plugin_folder}"
+    echo "      _\_):,_   Version: ${plugin_version}"
+    echo ""
+    repeat "=" $cols
+    echo ""
+}
+
+#######################################
+if [ "${HIDE_HEADER}" != "1" ]
+then
+    echo_header
+fi
+
+case "${command}" in
+    "build-dir")
+        echo "Building to dist dir:"
+        echo ""
+        build_to_dir
+        echo ""
+        echo "Plugin successfully built to the dist dir!"
+        show_time
+        ;;
+    "build")
+        echo "Building to zip file:"
+        echo ""
+        build_to_dir
+        pack_built_dir
+        echo ""
+        echo "Plugin successfully built to a zip file!"
+        show_time
+        ;;
+    "clean")
+        echo "Cleaning directory on dist dir:"
+        echo ""
+        clean_dist
+        ;;
+    *)
+        echo "invalid option ${command}"
+        ;;
+esac
