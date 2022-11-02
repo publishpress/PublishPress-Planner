@@ -17,6 +17,45 @@ jQuery(function ($) {
         }
     });
     
+    $('.editorial-comment-filter-posts').pp_select2({
+      placeholder: publishpressEditorialCommentsParams.allPosts,
+      allowClear: true,
+      ajax: {
+          url: ajaxurl,
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+              var query = {
+                  search: params.term,
+                  page: params.page || 1,
+                  action: 'publishpress_editorial_search_post',
+                  nonce: publishpressEditorialCommentsParams.nonce
+              };
+
+              return query;
+          }
+      }
+    });
+    
+    $('.editorial-comment-filter-users').pp_select2({
+      placeholder: publishpressEditorialCommentsParams.allUsers,
+      allowClear: true,
+      ajax: {
+          url: ajaxurl,
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+              var query = {
+                  search: params.term,
+                  page: params.page || 1,
+                  action: 'publishpress_editorial_search_user',
+                  nonce: publishpressEditorialCommentsParams.nonce
+              };
+
+              return query;
+          }
+      }
+    });
 
     /**
      * Editorial Comment image upload button click

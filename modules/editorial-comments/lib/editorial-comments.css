@@ -148,6 +148,33 @@
   display: none;
 }
 
+.pressshack-admin-wrapper .search-box .button#search-submit,
+.pressshack-admin-wrapper .tablenav .button#post-query-submit {
+    display: inline-block !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    line-height: 2.15384615 !important;
+    min-height: 30px !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    cursor: pointer !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    -webkit-appearance: none !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+}
+
+.publishpress_page_pp-editorial-comments .editorial-comment-filter-posts,
+.publishpress_page_pp-editorial-comments .editorial-comment-filter-users {
+    width: 190px;
+}
+
+.publishpress_page_pp-editorial-comments .tablenav .select2-container {
+    margin-right: 7px;
+}
+
 #pp-editrow #pp-editcontent {
     box-sizing: border-box;
     width: calc(100% - 70px);
