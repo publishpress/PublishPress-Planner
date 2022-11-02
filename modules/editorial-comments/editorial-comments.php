@@ -28,6 +28,12 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\EditorialComments\EditorialCommentsTable;
+use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Legacy\Auto_loader;
+use PublishPress\Core\Error;
+use PublishPress\Core\Ajax;
+
 if (! class_exists('PP_Editorial_Comments')) {
     /**
      * class PP_Editorial_Comments
@@ -37,6 +43,13 @@ if (! class_exists('PP_Editorial_Comments')) {
      */
     class PP_Editorial_Comments extends PP_Module
     {
+        use Dependency_Injector;
+
+        /**
+         * @var string
+         */
+        const MENU_SLUG = 'pp-editorial-comments';
+
         // This is comment type used to differentiate editorial comments
         const comment_type = 'editorial-comment';
 
@@ -77,6 +90,10 @@ if (! class_exists('PP_Editorial_Comments')) {
             ];
 
             $this->module = PublishPress()->register_module('editorial_comments', $args);
+
+            Auto_loader::register('\\PublishPress\\EditorialComments\\', __DIR__ . '/library');
+
+            parent::__construct();
         }
 
         /**
@@ -94,6 +111,10 @@ if (! class_exists('PP_Editorial_Comments')) {
             add_action('wp_ajax_publishpress_ajax_insert_comment', [$this, 'ajax_insert_comment']);
             add_action('wp_ajax_publishpress_ajax_edit_comment', [$this, 'ajax_edit_comment']);
             add_action('wp_ajax_publishpress_ajax_delete_comment', [$this, 'ajax_delete_comment']);
+            add_action('wp_ajax_publishpress_editorial_search_post', [$this, 'ajaxSearchPost']);
+            add_action('wp_ajax_publishpress_editorial_search_user', [$this, 'ajaxSearchUser']);
+
+            add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
             // Add Editorial Comments to the calendar if the calendar is activated
             if ($this->module_enabled('calendar')) {
@@ -124,13 +145,14 @@ if (! class_exists('PP_Editorial_Comments')) {
         {
             global $pagenow;
 
+            $editorial_comment_page = (isset($_GET['page']) && $_GET['page'] === 'pp-editorial-comments') ? true : false;
             $post_type = $this->get_current_post_type();
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            if (! in_array($post_type, $supported_post_types)) {
+            if (! in_array($post_type, $supported_post_types) && !$editorial_comment_page) {
                 return;
             }
 
-            if (! in_array($pagenow, ['post.php', 'page.php', 'post-new.php', 'page-new.php'])) {
+            if (! in_array($pagenow, ['post.php', 'page.php', 'post-new.php', 'page-new.php']) && !$editorial_comment_page) {
                 return;
             }
 
@@ -140,9 +162,16 @@ if (! class_exists('PP_Editorial_Comments')) {
             }
 
             wp_enqueue_script(
+                'publishpress-select2',
+                PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
+
+            wp_enqueue_script(
                 'publishpress-editorial-comments',
                 $this->module_url . 'lib/editorial-comments.js',
-                ['jquery', 'wp-ajax-response'],
+                ['jquery', 'wp-ajax-response', 'publishpress-select2'],
                 PUBLISHPRESS_VERSION,
                 true
             );
@@ -154,12 +183,30 @@ if (! class_exists('PP_Editorial_Comments')) {
                 'all'
             );
 
+            wp_enqueue_style(
+                'publishpress-select2-css',
+                plugins_url('common/libs/select2-v4.0.13.1/css/select2.min.css', PUBLISHPRESS_FILE_PATH),
+                false,
+                PUBLISHPRESS_VERSION,
+                'all'
+            );
+
+            wp_enqueue_script(
+                'publishpress-select2',
+                plugins_url('common/libs/select2-v4.0.13.1/js/select2.full.min.js', PUBLISHPRESS_FILE_PATH),
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
+
             wp_localize_script(
                 'publishpress-editorial-comments',
                 'publishpressEditorialCommentsParams',
                 [
                     'loadingImgSrc' => esc_url(admin_url('/images/wpspin_light.gif')),
                     'removeText'    => __('Remove', 'publishpress'),
+                    'allPosts'      => __('All Posts', 'publishpress'),
+                    'allUsers'      => __('All Users', 'publishpress'),
+                    'nonce'         => wp_create_nonce('editorial-comments-admin'),
                 ]
             );
 
@@ -168,6 +215,197 @@ if (! class_exists('PP_Editorial_Comments')) {
                 var pp_thread_comments = <?php echo ($thread_comments) ? esc_html__($thread_comments) : 0; ?>;
             </script>
             <?php
+        }
+    
+        /**
+         * Add necessary things to the admin menu
+         */
+        public function action_admin_submenu()
+        {
+            $publishpress = $this->get_service('publishpress');
+    
+            // Main Menu
+            $hook = add_submenu_page(
+                $publishpress->get_menu_slug(),
+                esc_html__('Editorial Comments', 'publishpress'),
+                esc_html__('Editorial Comments', 'publishpress'),
+                'edit_posts',
+                self::MENU_SLUG,
+                [$this, 'render_admin_page'],
+                20
+            );
+
+            add_action('load-' . $hook, [$this, 'addScreenOptions']);
+        }
+
+        public function addScreenOptions()
+        {
+            $option = 'per_page';
+            $args = [
+                'label' => 'Number of items per page',
+                'default' => EditorialCommentsTable::POSTS_PER_PAGE,
+                'option' => 'editorial_comments_per_page',
+            ];
+            add_screen_option($option, $args);
+        }
+
+        /**
+         * Create the content overview view. This calls lots of other methods to do its work. This will
+         * output any messages, create the table navigation, then print the columns based on
+         * get_num_columns(), which will in turn print the stories themselves.
+         */
+        public function render_admin_page()
+        {
+            $publishpress = $this->get_service('publishpress');
+            $publishpress->settings->print_default_header($publishpress->modules->editorial_comments);
+
+            $commentTable = new EditorialCommentsTable();
+            $commentTable->views();
+         
+            if (isset($_REQUEST['s']) && $search_str = esc_attr(wp_unslash(sanitize_text_field($_REQUEST['s'])))) {
+                /* translators: %s: search keywords */
+                printf(' <span class="description">' . esc_html__('Search results for &#8220;%s&#8221;', 'publishpress') . '</span>', esc_html($search_str));
+            }
+            //Fetch, prepare, sort, and filter our data...
+            $commentTable->prepare_items();
+
+            $page = '';
+            if (isset($_REQUEST['page'])) {
+                $page = sanitize_text_field($_REQUEST['page']);
+            } ?>
+            <form class="search-form wp-clearfix" method="get">
+                    <input type="hidden" name="page" value="<?php
+                    echo esc_attr($page) ?>"/>
+                <?php $commentTable->search_box(esc_html__('Search Comments', 'publishpress'), 'editorial-comments'); ?>
+            </form>
+            <div class="wrap">
+                <!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
+                <form id="log-filter" method="get">
+                    <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                    <input type="hidden" name="page" value="<?php
+                    echo esc_attr($page) ?>"/>
+
+                    <!-- Now we can render the completed list table -->
+                    <?php
+                    $commentTable->display() ?>
+                </form>
+
+            </div>
+            <?php
+
+            $publishpress->settings->print_default_footer($publishpress->modules->editorial_comments);
+        }
+
+        public function ajaxSearchPost()
+        {
+            $ajax = Ajax::getInstance();
+
+            if (! isset($_GET['nonce']) || ! wp_verify_nonce(
+                    sanitize_text_field($_GET['nonce']),
+                    'editorial-comments-admin'
+                )) {
+                $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
+            }
+
+            if (!current_user_can('edit_posts')) {
+                $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
+            }
+
+            global $wpdb;
+
+            $commentType = self::comment_type;
+            $search = isset($_GET['search']) ? $wpdb->esc_like(sanitize_text_field($_GET['search'])) : '';
+            $search = '%' . $search . '%';
+
+            $posts = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT c.comment_post_id AS 'ID', p.post_title AS 'post_title'
+                FROM {$wpdb->comments} AS c
+                LEFT JOIN {$wpdb->posts} AS p ON (c.comment_post_id = p.ID)
+                WHERE c.comment_type = %s
+                AND (p.post_title LIKE %s OR p.ID LIKE %s)",
+                    $commentType,
+                    $search,
+                    $search
+                )
+            );
+
+
+            $output = [
+                'results' => [],
+            ];
+
+            if (! empty($posts)) {
+                foreach ($posts as $post) {
+                    $output['results'][] = [
+                        'id' => $post->ID,
+                        'text' => $post->post_title,
+                    ];
+                }
+            }
+
+            $output['pagination'] = [
+                'more' => false,
+            ];
+
+            $ajax->sendJson($output);
+        }
+
+        public function ajaxSearchUser()
+        {
+            $ajax = Ajax::getInstance();
+
+            if (! isset($_GET['nonce']) || ! wp_verify_nonce(
+                    sanitize_text_field($_GET['nonce']),
+                    'editorial-comments-admin'
+                )) {
+                $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
+            }
+
+            if (!current_user_can('edit_posts')) {
+                $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
+            }
+
+            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+
+            $output = [
+                'results' => [],
+            ];
+            $output['pagination'] = [
+                'more' => false,
+            ];
+
+            /**
+             * @param array $results
+             * @param string $searchText
+             */
+            $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+
+            if (! empty($results)) {
+                $output['results'] = $results;
+                $ajax->sendJson($output);
+            }
+
+            $user_args = [
+                'number' => 20,
+                'orderby' => 'display_name',
+                'capability' => 'edit_posts',
+            ];
+            if (! empty($queryText)) {
+                $user_args['search'] = '*' . $queryText . '*';
+            }
+
+            $users = get_users($user_args);
+
+            foreach ($users as $user) {
+                $results[] = [
+                    'id' => $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
+    
+            $output['results'] = $results;
+            $ajax->sendJson($output);
         }
 
         /**
