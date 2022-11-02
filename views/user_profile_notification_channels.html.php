@@ -30,7 +30,7 @@
                                             name="psppno_workflow_channel[<?php echo esc_attr($workflow->ID); ?>]"
                                             value="<?php echo esc_attr($channel->name); ?>"
                                             data-workflow-id="<?php echo esc_attr($workflow->ID); ?>"
-                                            <?php checked( $channel->name, $workflow_channels[$workflow->ID]); ?> />
+                                            <?php checked( $channel->name, $context['workflow_channels'][$workflow->ID]); ?> />
 
                                     <label for="psppno_workflow_channel_<?php echo esc_attr($workflow->ID); ?>_<?php echo esc_attr($channel->name); ?>">
                                         <img src="<?php echo esc_url($channel->icon); ?>"/>
