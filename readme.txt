@@ -121,6 +121,21 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.9.0] - 3 Nov 2022 =
+
+* Update: Add Editorial Comments menu, #319
+* Update: Add file upload option to Editorial Comments, #757
+* Fixed: Notification User Role Keeps Reverting, #1136
+* Fixed: No Save Button on Editorial Comment Setting, #1134
+* Fixed: Error on console when accessing Widget, #1135
+* Fixed: Fatal error preventing user update, #1152
+* Fixed: Editorial Notifications channel not updating when user is updated, #1151
+* Fixed: PHP Notice: Undefined property warning on notification add/edit screen, #1147
+* Fixed: Add editorial comments metabox priority filter, #1084
+* Fixed: Extra "General" heading in "Slack" and "Reminders", #1122
+* Fixed: Publishpress-v3.8.4-ES-FR-IT_TranslationUpdate-5_October2022, #1133
+* Fixed: Press-ES-FR-IT-Translation-Update-September2022, #1124
+
 = [3.8.4] - 3 Oct 2022 =
 
 * Changed: Removed Twig dependency, refactoring the views for using plain PHP templates, #1125;
