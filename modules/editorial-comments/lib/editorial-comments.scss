@@ -102,7 +102,8 @@
   font-style: normal;
 }
 
-#pp-comments .comment-content {
+#pp-comments .comment-content,
+#pp-comments .comment-files {
   margin-left: 67px;
 }
 
@@ -117,6 +118,62 @@
   width: 100%;
   height: 150px;
   padding: 5px;
+}
+
+#pp-replyrow .pp-replyattachment {
+  margin-bottom: 6px;
+}
+
+#pp-replyrow .editorial-attachments {
+  display: inline-block;
+}
+
+#pp-replyrow .editorial-uploaded-file,
+.editorial-single-file {
+  margin-bottom: 5px;
+}
+
+#pp-replyrow .editorial-uploaded-file .file {
+  color: green;
+  margin-right: 5px;
+}
+
+#pp-replyrow .editorial-uploaded-file .editorial-comment-file-remove,
+.editorial-comment-edit-file-remove {
+  color: red;
+  cursor: pointer;
+}
+
+.editorial-comment-edit-file-remove {
+  margin-left: 5px;
+  display: none;
+}
+
+.pressshack-admin-wrapper .search-box .button#search-submit,
+.pressshack-admin-wrapper .tablenav .button#post-query-submit {
+    display: inline-block !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    line-height: 2.15384615 !important;
+    min-height: 30px !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    cursor: pointer !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    -webkit-appearance: none !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+}
+
+.publishpress_page_pp-editorial-comments .editorial-comment-filter-posts,
+.publishpress_page_pp-editorial-comments .editorial-comment-filter-users {
+    width: 190px;
+}
+
+.publishpress_page_pp-editorial-comments .tablenav .select2-container {
+    margin-right: 7px;
 }
 
 #pp-editrow #pp-editcontent {
@@ -142,6 +199,7 @@
   margin: 6px 6px 0 0;
   line-height: 1.2em;
   padding: 4px 10px;
+  color: red;
 }
 
 #pp-editrow #pp-editsubmit {
@@ -191,7 +249,8 @@ body.gutenberg-editor-page {
     margin-bottom: 7px;
   }
 
-  #pp-comments .comment-content {
+  #pp-comments .comment-content,
+  #pp-comments .comment-files {
     margin-left: 0;
   }
 

@@ -16,6 +16,103 @@ jQuery(function ($) {
             $('html, body').animate({scrollTop: scrollto}, 0);
         }
     });
+    
+    $('.editorial-comment-filter-posts').pp_select2({
+      placeholder: publishpressEditorialCommentsParams.allPosts,
+      allowClear: true,
+      ajax: {
+          url: ajaxurl,
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+              var query = {
+                  search: params.term,
+                  page: params.page || 1,
+                  action: 'publishpress_editorial_search_post',
+                  nonce: publishpressEditorialCommentsParams.nonce
+              };
+
+              return query;
+          }
+      }
+    });
+    
+    $('.editorial-comment-filter-users').pp_select2({
+      placeholder: publishpressEditorialCommentsParams.allUsers,
+      allowClear: true,
+      ajax: {
+          url: ajaxurl,
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+              var query = {
+                  search: params.term,
+                  page: params.page || 1,
+                  action: 'publishpress_editorial_search_user',
+                  nonce: publishpressEditorialCommentsParams.nonce
+              };
+
+              return query;
+          }
+      }
+    });
+
+    /**
+     * Editorial Comment image upload button click
+     */
+     $('body').on( 'click', '.editorial-comment-file-upload', function(event){
+      event.preventDefault();
+      
+      const button = $(this)
+      const imageId = button.next().next().val();
+      
+      const custom_uploader = wp.media({
+        multiple: false
+      }).on('select', function () {
+        const attachment = custom_uploader.state().get('selection').first().toJSON();
+        const file_html   = '<div class="editorial-uploaded-file" data-file_id="' + attachment.id + '" data-file_id="' + attachment.id + '"> &dash; <span class="file">' + attachment.filename
+        + '</span><span class="editorial-comment-file-remove">' + publishpressEditorialCommentsParams.removeText + '</span></div>';
+        $('.editorial-attachments').append(file_html);
+        processEditorialCommentFiles();
+      });
+      
+      custom_uploader.on('open', function () {
+        if (imageId) {
+          const selection = custom_uploader.state().get('selection');
+          attachment = wp.media.attachment(imageId);
+          attachment.fetch();
+          selection.add(attachment ? [attachment] : []);
+        }
+      });
+
+      custom_uploader.open();
+    });
+
+    /**
+     * Editorial Comment image remove button click
+     */
+    $('body').on('click', '.editorial-comment-file-remove', function(event){
+      event.preventDefault();
+      const button = $(this);
+      button.closest('.editorial-uploaded-file').remove();
+      processEditorialCommentFiles();
+    });
+    $('body').on('click', '.editorial-comment-edit-file-remove', function(event){
+      event.preventDefault();
+      const button = $(this);
+      button.closest('.editorial-single-file').remove();
+    });
+  
+    function processEditorialCommentFiles() {
+      var uploaded_files    = '';
+      $('.editorial-uploaded-file').each(function () {
+        var current_file_html = $(this);
+        var current_file_id   = current_file_html.attr('data-file_id');
+        uploaded_files += current_file_id + ' ';
+      });
+      $('#pp-comment_files').val(uploaded_files);
+    }
+    
 });
 
 /**
@@ -114,6 +211,7 @@ editorialCommentReply = {
         post.parent = (jQuery('#pp-comment_parent').val() == '') ? 0 : jQuery('#pp-comment_parent').val();
         post._nonce = jQuery('#pp_comment_nonce').val();
         post.post_id = jQuery('#pp-post_id').val();
+        post.comment_files = jQuery('#pp-comment_files').val();
 
         // Send the request
         jQuery.ajax({
@@ -121,7 +219,9 @@ editorialCommentReply = {
             url: (ajaxurl) ? ajaxurl : wpListL10n.url,
             data: post,
             success: function (x) {
-                editorialCommentReply.show(x);
+              jQuery('#pp-comment_files').val('');
+              jQuery('.editorial-attachments').html('');
+              editorialCommentReply.show(x);
             },
             error: function (r) {
                 editorialCommentReply.error(r);
@@ -212,6 +312,8 @@ editorialCommentEdit = {
         var id = $editRow.data('id');
         this.$('#comment-' + id + ' .comment-content').show();
 
+        this.$('.editorial-comment-edit-file-remove').hide();
+
         $editRow.remove();
     },
 
@@ -226,6 +328,9 @@ editorialCommentEdit = {
             return false;
         }
 
+        this.$('.editorial-comment-edit-file-remove').hide();
+        this.$('#comment-' + id + ' .post-comment-wrap .editorial-comment-edit-file-remove').show();
+        
         var $rowActions = this.$('#comment-' + id + ' .post-comment-wrap .row-actions');
         var $content = this.$('#comment-' + id + ' .comment-content');
 
@@ -271,19 +376,29 @@ editorialCommentEdit = {
         this.$('#pp-comment_loading').remove();
         var $loading = this.$('<img alt="' + wp.i18n.__('Sending content...', 'publishpress') + '" src="' + publishpressEditorialCommentsParams.loadingImgSrc + '" class="alignright" id="pp-comment_loading"/>');
         this.$('#pp-editcontainer').append($loading);
-
+        
+        var uploaded_files    = '';
+        $li.find('.editorial-single-file').each(function () {
+          var current_file_html = jQuery(this);
+          var current_file_id   = current_file_html.attr('data-file_id');
+          uploaded_files += current_file_id + ' ';
+        });
+      
         // Prepare data
         post.action = 'publishpress_ajax_edit_comment';
         post._nonce = this.$('#pp_comment_nonce').val();
         post.comment_id = $li.data('id');
         post.post_id = $li.data('post-id');
-
+        post.comment_files = uploaded_files;
+        
         // Send the request
         this.$.ajax({
             type: 'POST',
             url: (ajaxurl) ? ajaxurl : wpListL10n.url,
             data: post,
             success: function (x) {
+                jQuery('#pp-comment_files').val('');
+                jQuery('.editorial-attachments').html('');
                 self.$('#comment-' + post.comment_id + ' .comment-content').html(x.content);
                 self.close();
             },

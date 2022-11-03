@@ -9,7 +9,8 @@
         <select multiple="multiple" class="<?php echo esc_attr($context['list_class']); ?>"
                 name="<?php echo esc_attr($context['input_name']); ?>" id="<?php echo esc_attr($context['input_id']); ?>">
             <?php foreach ($context['roles'] as $role => $role_object) : ?>
-                <option value="<?php echo esc_attr($role); ?>" <?php selected($context['meta']['selected'], true); ?>><?php echo $role_object->name; ?></option>
+                <?php $selected = isset($role_object->selected) ? $role_object->selected : false; ?>
+                <option value="<?php echo esc_attr($role); ?>" <?php selected($selected, true); ?>><?php echo $role_object->name; ?></option>
             <?php endforeach; ?>
         </select>
     <?php endif; ?>

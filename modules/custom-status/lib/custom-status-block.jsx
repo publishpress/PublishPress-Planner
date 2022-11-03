@@ -8,7 +8,7 @@
  */
 
 let {__} = wp.i18n;
-let {PluginPostStatusInfo} = wp.editPost;
+let {PluginPostStatusInfo} = wp.hasOwnProperty('editPost') ? wp.editPost : '';
 let {registerPlugin} = wp.plugins;
 let {withSelect, withDispatch, subscribe} = wp.data;
 let {compose} = wp.compose;
@@ -80,22 +80,24 @@ let updateTheSaveAsButtonText = (status) => {
  *
  * @see
  */
-var lastStatus = wp.data.select('core/editor').getCurrentPost().status;
-setInterval(() => {
-    let currentStatus = wp.data.select('core/editor').getCurrentPost().status;
-    let editedStatus = wp.data.select('core/editor').getEditedPostAttribute('status');
+if (PluginPostStatusInfo) {
+    var lastStatus = wp.data.select('core/editor').getCurrentPost().status;
+    setInterval(() => {
+        let currentStatus = wp.data.select('core/editor').getCurrentPost().status;
+        let editedStatus = wp.data.select('core/editor').getEditedPostAttribute('status');
 
-    updateTheSaveAsButtonText(editedStatus);
+        updateTheSaveAsButtonText(editedStatus);
 
-    if (lastStatus !== editedStatus) {
+        if (lastStatus !== editedStatus) {
 
-        // Force to render after a post status change
-        wp.data.dispatch('core/editor').editPost({status: '!'});
-        wp.data.dispatch('core/editor').editPost({status: editedStatus});
+            // Force to render after a post status change
+            wp.data.dispatch('core/editor').editPost({ status: '!' });
+            wp.data.dispatch('core/editor').editPost({ status: editedStatus });
 
-        lastStatus = editedStatus;
-    }
-}, 100);
+            lastStatus = editedStatus;
+        }
+    }, 100);
+}
 
 
 /**
@@ -170,7 +172,9 @@ let plugin = compose(
     }))
 )(PPCustomPostStatusInfo);
 
-registerPlugin('publishpress-custom-status-block', {
-    icon: 'admin-site',
-    render: plugin
-});
+if (PluginPostStatusInfo) {
+    registerPlugin('publishpress-custom-status-block', {
+        icon: 'admin-site',
+        render: plugin
+    });
+}

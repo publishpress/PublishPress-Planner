@@ -8,7 +8,8 @@
     <?php if (! empty($context['users'])) : ?>
         <select multiple="multiple" class="<?php echo esc_attr($context['list_class']); ?>" name="<?php echo esc_attr($context['input_name']); ?>" id="<?php echo esc_attr($context['input_id']); ?>">
             <?php foreach ($context['users'] as $user) : ?>
-                <option value="<?php echo esc_attr($user->ID); ?>" <?php selected($context['meta']['selected'], true ); ?>><?php echo esc_html($user->display_name); ?></option>
+                <?php $selected = isset($user->selected) ? $user->selected : false; ?>
+                <option value="<?php echo esc_attr($user->ID); ?>" <?php selected($selected, true ); ?>><?php echo esc_html($user->display_name); ?></option>
             <?php endforeach; ?>
         </select>
     <?php endif; ?>
