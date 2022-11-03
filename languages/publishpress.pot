@@ -1,5 +1,6 @@
 # Copyright (C) 2022 PublishPress
 # This file is distributed under the same license as the PublishPress plugin.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress 3.7.1-beta.1\n"
@@ -9,296 +10,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-24T12:31:36-03:00\n"
+"POT-Creation-Date: 2022-11-03 08:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Domain: publishpress\n"
+"\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
-#. Plugin Name of the plugin
-#. Author of the plugin
-#: modules/calendar/calendar.php:1247
-#: modules/settings/settings.php:59
-#: modules/settings/settings.php:266
-#: publishpress.php:533
-msgid "PublishPress"
+#: modules/notifications-log/library/NotificationsLogTable.php:257
+msgid " Scheduled"
 msgstr ""
 
-#. Plugin URI of the plugin
-msgid "https://publishpress.com/"
-msgstr ""
-
-#. Description of the plugin
-msgid "PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses."
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://publishpress.com"
-msgstr ""
-
-#: common/php/class-module.php:273
-#: modules/calendar/calendar.php:1885
-#: modules/custom-status/custom-status.php:956
-#: modules/custom-status/lib/custom-status-block.jsx:111
-msgid "Published"
-msgstr ""
-
-#: common/php/class-module.php:274
-#: modules/custom-status/custom-status.php:880
-#: modules/custom-status/custom-status.php:994
-msgid "Draft"
-msgstr ""
-
-#: common/php/class-module.php:275
-#: modules/calendar/calendar.php:1880
-#: modules/custom-status/custom-status.php:918
-#: modules/notifications-log/library/NotificationsLogTable.php:523
-#: modules/custom-status/lib/custom-status-block.jsx:116
-msgid "Scheduled"
-msgstr ""
-
-#: common/php/class-module.php:276
-msgid "Private"
-msgstr ""
-
-#: common/php/class-module.php:277
-msgid "Pending Review"
-msgstr ""
-
-#: common/php/class-module.php:278
-#: modules/calendar/calendar.php:1729
-#: modules/calendar/calendar.php:3262
-#: modules/content-overview/content-overview.php:1460
-msgid "Trash"
-msgstr ""
-
-#: common/php/class-module.php:680
-#: libraries/Notifications/Workflow/Step/Receiver/Role.php:31
-msgid "Roles"
-msgstr ""
-
-#: common/php/class-module.php:683
-msgid "Role"
-msgstr ""
-
-#: common/php/class-module.php:691
-#: libraries/Notifications/Workflow/Step/Receiver/User.php:26
-msgid "Users"
-msgstr ""
-
-#: common/php/class-module.php:701
-msgid "E-mails"
-msgstr ""
-
-#: common/php/util.php:46
-msgid "(no title)"
-msgstr ""
-
-#: core/Error.php:79
-msgid "Undefined error found"
-msgstr ""
-
-#: core/Error.php:80
-#: modules/calendar/calendar.php:3007
-msgid "Invalid nonce"
-msgstr ""
-
-#: core/Error.php:81
-msgid "Access denied"
-msgstr ""
-
-#: includes.php:127
-msgid "You're using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s"
-msgstr ""
-
-#: includes.php:156
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: libraries/Notifications/Plugin.php:57
-#: modules/improved-notifications/improved-notifications.php:818
-#: modules/notifications-log/library/NotificationsLogTable.php:491
-msgid "When to notify?"
-msgstr ""
-
-#: libraries/Notifications/Plugin.php:58
-msgid "Filter the content?"
-msgstr ""
-
-#: libraries/Notifications/Plugin.php:59
-#: modules/improved-notifications/improved-notifications.php:838
-#: modules/notifications-log/library/NotificationsLogTable.php:493
-msgid "Who to notify?"
-msgstr ""
-
-#: libraries/Notifications/Plugin.php:188
-msgid "Please select at least one event"
-msgstr ""
-
-#: libraries/Notifications/Plugin.php:221
-msgid "Not filtered"
-msgstr ""
-
-#: libraries/Notifications/Table/Notifications.php:156
-#: libraries/Notifications/Table/Workflows.php:142
-#: modules/calendar/calendar.php:3301
-#: modules/content-overview/content-overview.php:536
-msgid "Title"
-msgstr ""
-
-#: libraries/Notifications/Table/Notifications.php:157
-msgid "Message"
-msgstr ""
-
-#: libraries/Notifications/Table/Notifications.php:158
-#: modules/calendar/calendar.php:3222
-#: modules/editorial-metadata/editorial-metadata.php:269
-#: modules/notifications-log/library/NotificationsLogTable.php:490
-msgid "Date"
-msgstr ""
-
-#: libraries/Notifications/Table/Notifications.php:159
-#: libraries/Notifications/Table/Workflows.php:143
-#: modules/calendar/calendar.php:3217
-msgid "ID"
-msgstr ""
-
-#: libraries/Notifications/Table/Notifications.php:235
-msgid "You don't have any notifications"
-msgstr ""
-
-#: libraries/Notifications/Table/Workflows.php:217
-msgid "No workflows found."
-msgstr ""
-
-#: libraries/Notifications/Workflow/Option/SkipUser.php:26
-msgid "Skip current user"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Option/SkipUser.php:31
-msgid "Skip notifications for the user who triggered the action"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Channel/Email.php:31
-msgid "Email"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Content/Main.php:28
-#: modules/calendar/calendar.php:3348
-#: modules/improved-notifications/improved-notifications.php:975
-msgid "Content"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Content/Main.php:52
-msgid "Subject"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Content/Main.php:53
-msgid "Body"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:26
-msgid "When an editorial comment is added"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:94
-msgid "Comment: %s (%d)"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
-msgid "When the status is changed"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
-msgid "Previous status"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
-msgid "New status"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
-msgid "- any status -"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
-msgid "New"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
-msgid "Auto-draft"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
-msgid "When the content is moved to a new status"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:114
-msgid "Old post status: %s"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
-msgid "New post status: %s"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event/Post_Update.php:26
-msgid "When the content is updated"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Category.php:24
-#: modules/calendar/calendar.php:3238
-msgid "Category"
-msgid_plural "Categories"
-msgstr[0] ""
-msgstr[1] ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
-#: modules/calendar/calendar.php:3331
-msgid "Categories"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
-msgid "Post Types"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Term.php:35
-msgid "Terms"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
-msgid "Post type"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24
-msgid "Taxonomy"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Author.php:26
-msgid "Authors of the content"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Author.php:92
-msgid "Authors"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:30
-msgid "Users who selected \"Notify me\" for the content"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:100
-#: libraries/Notifications/Workflow/Step/Receiver/Role.php:147
-msgid "role:%s"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:120
-msgid "user"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:135
-msgid "email"
+#: modules/notifications-log/library/NotificationsLogTable.php:255
+msgid " Scheduled, but late"
 msgstr ""
 
 #: libraries/Notifications/Workflow/Step/Receiver/Follower.php:177
 msgid "\"Notify me\""
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:1950
+msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:1997
+msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:1967
+msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:2014
+msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
+msgstr ""
+
+#. 1: comment author, 2: author email, 3: date, 4: time
+#: modules/notifications/notifications.php:2113
+msgid "%1$s (%2$s ) said on %3$s at %4$s:"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1006
+#, php-format
+msgctxt "%1$s = start date, %2$s = end date"
+msgid "starting %1$s to %2$s"
+msgstr ""
+
+#. 1: old status, 2: new status
+#: modules/notifications/notifications.php:2055
+msgid "%1$s => %2$s"
+msgstr ""
+
+#. 1: Comment date, 2: Comment time.
+#: modules/notifications/notifications.php:1891
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:157
+#: modules/editorial-comments/library/EditorialCommentsTable.php:329
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: modules/dashboard/widgets/dashboard-notepad.php:140
+msgid "%1$s last updated on %2$s"
 msgstr ""
 
 #: libraries/Notifications/Workflow/Step/Receiver/Role.php:176
@@ -307,1060 +83,1168 @@ msgid_plural "%d Roles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libraries/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
-#: libraries/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
-msgid "Site Administrator"
-msgstr ""
-
-#: libraries/Notifications/Workflow/Step/Receiver/User.php:153
+#: libraries/Notifications/Workflow/Step/Receiver/User.php:152
 msgid "%d User"
 msgid_plural "%d Users"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/async-notifications/async-notifications.php:71
-msgid "Async Notifications"
-msgstr ""
-
-#: modules/async-notifications/async-notifications.php:172
-msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
-msgstr ""
-
-#: modules/calendar/calendar.php:169
-#: modules/calendar/calendar.php:406
-#: modules/calendar/calendar.php:423
-#: modules/calendar/calendar.php:424
-msgid "Calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:185
-msgid "Post date updated."
-msgstr ""
-
-#: modules/calendar/calendar.php:186
-msgid "There was an error updating the post. Please try again."
-msgstr ""
-
-#: modules/calendar/calendar.php:190
-msgid "Updating the post date dynamically doesn't work for published content. Please <a href='%s'>edit the post</a>."
-msgstr ""
-
-#: modules/calendar/calendar.php:194
-msgid "iCal secret key regenerated. Please inform all users they will need to resubscribe."
-msgstr ""
-
-#: modules/calendar/calendar.php:202
-#: modules/custom-status/custom-status.php:111
-#: modules/editorial-comments/editorial-comments.php:66
-#: modules/editorial-metadata/editorial-metadata.php:110
-#: modules/notifications/notifications.php:92
-msgid "Overview"
-msgstr ""
-
-#: modules/calendar/calendar.php:203
-msgid "<p>The calendar is a convenient week-by-week or month-by-month view into your content. Quickly see which stories are on track to being published on time, and which will need extra effort.</p>"
-msgstr ""
-
-#: modules/calendar/calendar.php:208
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr ""
-
-#: modules/calendar/calendar.php:707
-#: modules/notifications-log/notifications-log.php:258
-msgid "Loading..."
-msgstr ""
-
-#: modules/calendar/calendar.php:708
-msgid "Loading item..."
-msgstr ""
-
-#: modules/calendar/calendar.php:709
-#: modules/calendar/calendar.php:711
-msgid "Click to add"
-msgstr ""
-
-#: modules/calendar/calendar.php:710
-msgid "Moving the item..."
-msgstr ""
-
-#: modules/calendar/calendar.php:712
-#: modules/calendar/calendar.php:3410
-msgid "Untitled"
-msgstr ""
-
-#: modules/calendar/calendar.php:713
-msgid "Close"
-msgstr ""
-
-#: modules/calendar/calendar.php:714
-#: modules/calendar/calendar.php:1769
-#: modules/editorial-comments/lib/editorial-comments.js:244
-msgid "Save"
-msgstr ""
-
-#: modules/calendar/calendar.php:715
-msgid "Saving..."
-msgstr ""
-
-#: modules/calendar/calendar.php:716
-msgid "Save and edit"
-msgstr ""
-
-#: modules/calendar/calendar.php:717
-msgid "Add content for %s"
-msgstr ""
-
-#: modules/calendar/calendar.php:718
-msgid "Post type not found"
-msgstr ""
-
-#: modules/calendar/calendar.php:719
-msgid "Post type:"
-msgstr ""
-
-#: modules/calendar/calendar.php:720
-msgid "Please, wait! Loading the form fields..."
-msgstr ""
-
-#: modules/calendar/calendar.php:721
-msgid "Sun"
-msgstr ""
-
-#: modules/calendar/calendar.php:722
-msgid "Mon"
-msgstr ""
-
-#: modules/calendar/calendar.php:723
-msgid "Tue"
-msgstr ""
-
-#: modules/calendar/calendar.php:724
-msgid "Wed"
-msgstr ""
-
-#: modules/calendar/calendar.php:725
-msgid "Thu"
-msgstr ""
-
-#: modules/calendar/calendar.php:726
-msgid "Fri"
-msgstr ""
-
-#: modules/calendar/calendar.php:727
-msgid "Sat"
-msgstr ""
-
-#: modules/calendar/calendar.php:728
-msgid "Jan"
-msgstr ""
-
-#: modules/calendar/calendar.php:729
-msgid "Feb"
-msgstr ""
-
-#: modules/calendar/calendar.php:730
-msgid "Mar"
-msgstr ""
-
-#: modules/calendar/calendar.php:731
-msgid "Apr"
-msgstr ""
-
-#: modules/calendar/calendar.php:732
-msgid "May"
-msgstr ""
-
-#: modules/calendar/calendar.php:733
-msgid "Jun"
-msgstr ""
-
-#: modules/calendar/calendar.php:734
-msgid "Jul"
-msgstr ""
-
-#: modules/calendar/calendar.php:735
-msgid "Aug"
-msgstr ""
-
-#: modules/calendar/calendar.php:736
-msgid "Sep"
-msgstr ""
-
-#: modules/calendar/calendar.php:737
-msgid "Oct"
-msgstr ""
-
-#: modules/calendar/calendar.php:738
-msgid "Nov"
-msgstr ""
-
-#: modules/calendar/calendar.php:739
-msgid "Dec"
-msgstr ""
-
-#: modules/calendar/calendar.php:740
-#: modules/calendar/calendar.php:3652
-msgid "All statuses"
-msgstr ""
-
-#: modules/calendar/calendar.php:741
-msgid "All categories"
-msgstr ""
-
-#: modules/calendar/calendar.php:742
-#: modules/calendar/calendar.php:3687
-msgid "All tags"
-msgstr ""
-
-#: modules/calendar/calendar.php:743
-#: modules/calendar/calendar.php:3708
-#: modules/content-overview/content-overview.php:1033
-msgid "All authors"
-msgstr ""
-
-#: modules/calendar/calendar.php:744
-#: modules/calendar/calendar.php:3735
-msgid "All types"
-msgstr ""
-
-#: modules/calendar/calendar.php:745
+#: modules/calendar/calendar.php:829
 msgid "%d week"
 msgstr ""
 
-#: modules/calendar/calendar.php:746
+#: modules/calendar/calendar.php:830
 msgid "%d weeks"
 msgstr ""
 
-#: modules/calendar/calendar.php:747
-#: modules/calendar/calendar.php:2039
-msgid "Today"
-msgstr ""
-
-#: modules/calendar/calendar.php:748
-msgid "No terms"
-msgstr ""
-
-#: modules/calendar/calendar.php:1249
-msgid "Subscribe in iCal or Google Calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:1254
-msgid "Start date"
-msgstr ""
-
-#: modules/calendar/calendar.php:1258
-msgid "Current week"
-msgstr ""
-
-#: modules/calendar/calendar.php:1260
-msgid "One month ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1262
-msgid "Two months ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1264
-msgid "Three months ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1266
-msgid "Four months ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1268
-msgid "Five months ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1270
-msgid "Six months ago"
-msgstr ""
-
-#: modules/calendar/calendar.php:1276
-msgid "End date"
-msgstr ""
-
-#: modules/calendar/calendar.php:1281
-msgid "One week"
-msgstr ""
-
-#: modules/calendar/calendar.php:1283
-msgid "Two weeks"
-msgstr ""
-
-#: modules/calendar/calendar.php:1285
-msgid "Three weeks"
-msgstr ""
-
-#: modules/calendar/calendar.php:1287
-msgid "Four weeks"
-msgstr ""
-
-#: modules/calendar/calendar.php:1293
-msgid "One month"
-msgstr ""
-
-#: modules/calendar/calendar.php:1296
-msgid "Two months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1298
-msgid "Three months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1300
-msgid "Four months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1302
-msgid "Five months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1304
-msgid "Six months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1306
-msgid "Seven months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1308
-msgid "Eight months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1310
-msgid "Nine months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1312
-msgid "Ten months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1314
-msgid "Eleven months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1316
-msgid "Twelve months"
-msgstr ""
-
-#: modules/calendar/calendar.php:1328
-msgid "Download .ics file"
-msgstr ""
-
-#: modules/calendar/calendar.php:1335
-msgid "Copy to the clipboard"
-msgstr ""
-
-#: modules/calendar/calendar.php:1341
-msgid "Click here to Subscribe in iCal or Google Calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:1372
-#: modules/content-overview/content-overview.php:900
-msgid "Undo"
-msgstr ""
-
-#: modules/calendar/calendar.php:1409
-msgid "Initializing the calendar. Please wait..."
-msgstr ""
-
-#: modules/calendar/calendar.php:1413
-msgid "It seems like it is taking too long. Please, try reloading the page again and check the browser console looking for errors."
-msgstr ""
-
-#: modules/calendar/calendar.php:1699
-#: modules/content-overview/content-overview.php:1346
-msgid "None"
-msgstr ""
-
-#: modules/calendar/calendar.php:1719
-msgid "Edit this item"
-msgstr ""
-
-#: modules/calendar/calendar.php:1719
-#: modules/calendar/calendar.php:3255
-#: modules/content-overview/content-overview.php:1448
-#: modules/custom-status/custom-status.php:2911
-#: modules/editorial-comments/editorial-comments.php:351
-#: modules/editorial-metadata/editorial-metadata.php:2030
-msgid "Edit"
-msgstr ""
-
-#: modules/calendar/calendar.php:1740
-#: modules/content-overview/content-overview.php:1486
-msgid "Preview &#8220;%s&#8221;"
-msgstr ""
-
-#: modules/calendar/calendar.php:1743
-#: modules/calendar/calendar.php:3272
-#: modules/content-overview/content-overview.php:1489
-msgid "Preview"
-msgstr ""
-
-#: modules/calendar/calendar.php:1747
-#: modules/content-overview/content-overview.php:1470
-msgid "View &#8220;%s&#8221;"
-msgstr ""
-
-#: modules/calendar/calendar.php:1753
-#: modules/calendar/calendar.php:3269
-#: modules/content-overview/content-overview.php:1476
-msgid "View"
-msgstr ""
-
-#: modules/calendar/calendar.php:1763
-msgid "Save &#8220;%s&#8221;"
-msgstr ""
-
-#: modules/calendar/calendar.php:1864
-#: modules/calendar/calendar.php:3233
-#: modules/calendar/calendar.php:3321
-#: modules/content-overview/content-overview.php:538
-msgid "Author"
-msgid_plural "Authors"
+#: modules/notifications-log/notifications-log.php:270
+msgid "%s notification found."
+msgid_plural "%s notifications found."
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/calendar/calendar.php:1872
-#: modules/calendar/calendar.php:3212
-msgid "Post Type"
-msgstr ""
-
-#: modules/calendar/calendar.php:1991
-#: modules/content-overview/content-overview.php:869
-#: modules/content-overview/content-overview.php:952
-msgid "Reset"
-msgstr ""
-
-#: modules/calendar/calendar.php:1999
-msgid "Forward 1 week"
-msgstr ""
-
-#: modules/calendar/calendar.php:2008
-msgid "&rsaquo;"
-msgstr ""
-
-#: modules/calendar/calendar.php:2014
-msgid "Forward %d weeks"
-msgstr ""
-
-#: modules/calendar/calendar.php:2025
-msgid "&raquo;"
-msgstr ""
-
-#: modules/calendar/calendar.php:2033
-msgid "Today is %s"
-msgstr ""
-
-#: modules/calendar/calendar.php:2048
-msgid "Back %d weeks"
-msgstr ""
-
-#: modules/calendar/calendar.php:2056
-msgid "&laquo;"
-msgstr ""
-
-#: modules/calendar/calendar.php:2060
-msgid "Back 1 week"
-msgstr ""
-
-#: modules/calendar/calendar.php:2069
-msgid "&lsaquo;"
-msgstr ""
-
-#: modules/calendar/calendar.php:2435
-msgid "Post types to show"
-msgstr ""
-
-#: modules/calendar/calendar.php:2443
-msgid "Subscription in iCal or Google Calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:2451
-msgid "Statuses to display publish time"
-msgstr ""
-
-#: modules/calendar/calendar.php:2459
-msgid "Posts publish time format"
-msgstr ""
-
-#: modules/calendar/calendar.php:2467
-msgid "Default publish time for items created in the calendar"
-msgstr ""
-
-#: modules/calendar/calendar.php:2475
-msgid "Field used for sorting the calendar items in a day cell"
-msgstr ""
-
-#: modules/calendar/calendar.php:2483
-msgid "Max visible posts per date"
-msgstr ""
-
-#: modules/calendar/calendar.php:2502
-msgid "At least one post type must be selected"
-msgstr ""
-
-#: modules/calendar/calendar.php:2519
-msgid "The number of weeks shown on the calendar can be changed on a user-by-user basis using the calendar's screen options."
-msgstr ""
-
-#: modules/calendar/calendar.php:2533
-#: modules/custom-status/custom-status.php:1881
-#: modules/dashboard/dashboard.php:367
-#: modules/dashboard/dashboard.php:390
-#: modules/dashboard/dashboard.php:424
-msgid "Disabled"
-msgstr ""
-
-#: modules/calendar/calendar.php:2534
-#: modules/custom-status/custom-status.php:1882
-#: modules/dashboard/dashboard.php:368
-#: modules/dashboard/dashboard.php:391
-#: modules/dashboard/dashboard.php:425
-msgid "Enabled"
-msgstr ""
-
-#: modules/calendar/calendar.php:2552
-msgid "Regenerate calendar feed secret"
-msgstr ""
-
-#: modules/calendar/calendar.php:2684
-msgid "Publishing Time"
-msgstr ""
-
-#: modules/calendar/calendar.php:2685
-#: modules/calendar/calendar.php:3228
-#: modules/calendar/calendar.php:3306
-#: modules/custom-status/lib/custom-status-block.jsx:144
-msgid "Post Status"
-msgstr ""
-
-#: modules/calendar/calendar.php:2740
-msgid "All posts"
-msgstr ""
-
-#: modules/calendar/calendar.php:3016
-msgid "Invalid input"
-msgstr ""
-
-#: modules/calendar/calendar.php:3022
-msgid "Post not found"
-msgstr ""
-
-#: modules/calendar/calendar.php:3027
-msgid "No enough permissions"
-msgstr ""
-
-#: modules/calendar/calendar.php:3036
-msgid "Invalid date"
-msgstr ""
-
-#: modules/calendar/calendar.php:3243
-msgid "Tag"
-msgid_plural "Tags"
-msgstr[0] ""
-msgstr[1] ""
-
-#: modules/calendar/calendar.php:3312
-msgid "Publish Time"
-msgstr ""
-
-#: modules/calendar/calendar.php:3340
-msgid "Tags"
-msgstr ""
-
-#: modules/calendar/calendar.php:3393
-msgid "No date supplied."
-msgstr ""
-
-#: modules/calendar/calendar.php:3404
-msgid "The selected post type is not enabled for the calendar."
-msgstr ""
-
-#: modules/calendar/calendar.php:3434
-msgid "Invalid Status supplied."
-msgstr ""
-
-#: modules/calendar/calendar.php:3458
-msgid "Invalid Publish Date supplied."
-msgstr ""
-
-#: modules/calendar/calendar.php:3527
-msgid "Post created successfully"
-msgstr ""
-
-#: modules/calendar/calendar.php:3534
-msgid "Post could not be created"
-msgstr ""
-
-#: modules/calendar/calendar.php:3669
-#: modules/content-overview/content-overview.php:1012
-msgid "View all categories"
-msgstr ""
-
-#: modules/calendar/calendar.php:3760
+#: modules/calendar/calendar.php:3951
 msgid "%s week"
 msgid_plural "%s weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: modules/calendar/calendar.php:3883
-msgid "The selected user doesn't have enough permissions to be set as the post author."
+#: modules/calendar/calendar.php:2140
+msgid "&laquo;"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:135
-#: modules/content-overview/content-overview.php:418
-#: modules/content-overview/content-overview.php:435
-#: modules/content-overview/content-overview.php:436
-#: modules/content-overview/content-overview.php:713
-msgid "Content Overview"
+#: modules/calendar/calendar.php:2153
+msgid "&lsaquo;"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:263
-msgid "Screen Layout"
+#: modules/calendar/calendar.php:2109
+msgid "&raquo;"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:290
-#: modules/editorial-metadata/editorial-metadata.php:1450
-msgid "Add to these post types:"
+#: modules/calendar/calendar.php:2092
+msgid "&rsaquo;"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:537
-#: modules/custom-status/custom-status.php:1442
-#: modules/notifications-log/library/NotificationsLogTable.php:494
-msgid "Status"
+#: common/php/util.php:46
+msgid "(no title)"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:539
-msgid "Post Date"
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
+msgid "- any status -"
 msgstr ""
 
-#: modules/content-overview/content-overview.php:540
-msgid "Last Modified"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:650
-msgid "Number of Columns: "
-msgstr ""
-
-#: modules/content-overview/content-overview.php:855
-msgctxt "%1$s = start date, %2$s = number of days, %3$s = translation of 'Days'"
-msgid "starting %1$s showing %2$s %3$s"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:862
-msgid "day"
-msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: modules/content-overview/content-overview.php:866
-#: modules/content-overview/content-overview.php:873
-msgid "Change"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:872
-#: modules/custom-status/custom-status.php:2070
-#: modules/editorial-comments/editorial-comments.php:298
-#: modules/editorial-metadata/editorial-metadata.php:1649
-#: modules/editorial-comments/lib/editorial-comments.js:245
-msgid "Cancel"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:960
-msgid "Print"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:994
-msgid "View all statuses"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:1060
-msgid "View all post types"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:1107
-msgid "Click to toggle"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:1167
-msgid "There are no posts in the range or filter specified."
-msgstr ""
-
-#: modules/content-overview/content-overview.php:1444
-#: modules/dashboard/dashboard.php:298
-msgid "Edit this post"
-msgstr ""
-
-#: modules/content-overview/content-overview.php:1456
-msgid "Move this item to the Trash"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:82
-#: modules/custom-status/custom-status.php:303
-msgid "Statuses"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:98
-msgid "Edit Statuses"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:100
-msgid "Post status created."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:101
-#: modules/custom-status/custom-status.php:104
-msgid "Post status updated."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:102
-msgid "Post status doesn't exist."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:103
-msgid "Default post status has been changed."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:105
-msgid "Post status deleted."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:106
-msgid "Status order updated."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:112
-msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and content overview, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
+#: modules/calendar/calendar.php:209
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"https:"
+"//publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
 msgstr ""
 
 #: modules/custom-status/custom-status.php:117
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"https:"
+"//publishpress.com/features/custom-statuses/\">Custom Status "
+"Documentation</a></p><p><a href=\"https://github."
+"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:184
-msgid "Pitch"
+#: modules/editorial-comments/editorial-comments.php:85
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"https:"
+"//publishpress.com/features/editorial-comments/\">Editorial Comments "
+"Documentation</a></p><p><a href=\"https://github."
+"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:187
-msgid "Idea proposed; waiting for acceptance."
+#: modules/editorial-metadata/editorial-metadata.php:116
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"https:"
+"//publishpress.com/features/editorial-metadata/\">Editorial Metadata "
+"Documentation</a></p><p><a href=\"https://github."
+"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+msgstr ""
+
+#: modules/notifications/notifications.php:98
+msgid ""
+"<p><strong>For more information:</strong></p><p><a href=\"https:"
+"//publishpress.com/features/notifications/\">Notifications Documentation</a>"
+"</p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"on Github</a></p>"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:80
+msgid ""
+"<p>Editorial comments help you cut down on email overload and keep the "
+"conversation close to where it matters: your content. Threaded commenting in "
+"the admin, similar to what you find at the end of a blog post, allows "
+"writers and editors to privately leave feedback and discuss what needs to be "
+"changed before publication.</p><p>Anyone with access to view the story in "
+"progress will also have the ability to comment on it. If you have "
+"notifications enabled, those following the post will receive an email every "
+"time a comment is left.</p>"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid ""
+"<p>Keep track of important details about your content with editorial "
+"metadata. This feature allows you to create as many date, text, number, etc. "
+"fields as you like, and then use them to store information like contact "
+"details or the location of an interview.</p><p>Once you’ve set your fields "
+"up, editorial metadata integrates with both the calendar and the content "
+"overview. Make an editorial metadata item visible to have it appear to the "
+"rest of your team. Keep it hidden to restrict the information between the "
+"writer and their editor.</p>"
+msgstr ""
+
+#: modules/notifications/notifications.php:93
+msgid ""
+"<p>Notifications ensure you keep up to date with progress your most "
+"important content. Users can be subscribed to notifications on a post one by "
+"one or by selecting roles.</p><p>When enabled, notifications can be sent "
+"when a post changes status or an editorial comment is left by a writer or an "
+"editor.</p>"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:112
+msgid ""
+"<p>PublishPress’s custom statuses allow you to define the most important "
+"stages of your editorial workflow. Out of the box, WordPress only offers "
+"“Draft” and “Pending Review” as post states. With custom statuses, you can "
+"create your own post states like “In Progress”, “Pitch”, or “Waiting for "
+"Edit” and keep or delete the originals. You can also drag and drop statuses "
+"to set the best order for your workflow.</p><p>Custom statuses are fully "
+"integrated into the rest of PublishPress and the WordPress admin. On the "
+"calendar and content overview, you can filter your view to see only posts of "
+"a specific post state. Furthermore, email notifications can be sent to a "
+"specific group of users when a post changes state.</p>"
+msgstr ""
+
+#: modules/calendar/calendar.php:204
+msgid ""
+"<p>The calendar is a convenient week-by-week or month-by-month view into "
+"your content. Quickly see which stories are on track to being published on "
+"time, and which will need extra effort.</p>"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:517
+msgid ""
+"<strong>Note:</strong> Your browser does not support JavaScript or has "
+"JavaScript disabled. You will not be able to access or change the post "
+"status."
+msgstr ""
+
+#: modules/notifications/notifications.php:2063
+msgid "== %s Details =="
+msgstr ""
+
+#: modules/notifications/notifications.php:2082
+#: modules/notifications/notifications.php:2135
+msgid "== Actions =="
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:1990
+msgid "[%1$s] %2$s Published: \"%3$s\""
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:1960
+msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:2024
+msgid "[%1$s] %2$s Status Changed for \"%3$s\""
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:1943
+msgid "[%1$s] %2$s Trashed: \"%3$s\""
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:2007
+msgid "[%1$s] %2$s Unpublished: \"%3$s\""
+msgstr ""
+
+#. 1: site name, 2: post type, 3. post title
+#: modules/notifications/notifications.php:1926
+msgid "[%1$s] New %2$s Created: \"%3$s\""
+msgstr ""
+
+#. 1: blog name, 2: post title
+#: modules/notifications/notifications.php:2099
+msgid "[%1$s] New Editorial Comment: \"%2$s\""
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:1933
+msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+msgstr ""
+
+#. 1: post id, 2: post title, 3. post type
+#: modules/notifications/notifications.php:2106
+msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
+msgstr ""
+
+#: modules/settings/views/footer-base.html.php:19
+msgid "About"
+msgstr ""
+
+#: core/Error.php:81
+msgid "Access denied"
+msgstr ""
+
+#: modules/debug/debug.php:357
+msgid "Action nonce not found."
+msgstr ""
+
+#: modules/notifications/notifications.php:675
+msgid "Active Notifications"
+msgstr ""
+
+#: modules/notifications/notifications.php:1784
+msgid ""
+"Add a list of taxonomy-slugs separated by comma that should not be loaded by "
+"the Taxonomy content filter when adding a new Notification Workflow."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:518
+#: modules/editorial-comments/editorial-comments.php:522
+msgid "Add an editorial comment"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:540
+msgid "Add Comment"
+msgstr ""
+
+#: modules/calendar/calendar.php:801
+msgid "Add content for %s"
+msgstr ""
+
+#: modules/notifications/notifications.php:2084
+#: modules/notifications/notifications.php:2141
+msgid "Add editorial comment: %s"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1729
+#: modules/custom-status/custom-status.php:2111
+msgid "Add New"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:403
+msgid "Add New Editorial Metadata"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1882
+msgid "Add New Metadata Term"
+msgstr ""
+
+#: publishpress.php:1217
+msgid "Add New Notification"
+msgstr ""
+
+#: modules/notifications/notifications.php:381
+msgid "Add New Notify Email"
+msgstr ""
+
+#: modules/notifications/notifications.php:346
+msgid "Add New Notify Role"
+msgstr ""
+
+#: modules/notifications/notifications.php:311
+msgid "Add New Notify User"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2207
+msgid "Add New Status"
+msgstr ""
+
+#: modules/notifications/notifications.php:384
+msgid "Add or remove notify emails"
+msgstr ""
+
+#: modules/notifications/notifications.php:349
+msgid "Add or remove notify roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:314
+msgid "Add or remove notify users"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1469
+msgid "Add to these post types:"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:92
+msgid "Advanced Notifications"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:511
+msgid "All"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:205
+msgid "All Actions"
+msgstr ""
+
+#: modules/calendar/calendar.php:827 modules/calendar/calendar.php:3899
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1224
+msgid "All authors"
+msgstr ""
+
+#: modules/calendar/calendar.php:825
+msgid "All categories"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:206
+msgid "All Channels"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:601
+msgid "All channels"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:400
+msgid "All Editorial Metadata"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:584
+msgid "All events"
+msgstr ""
+
+#: modules/notifications/notifications.php:375
+msgid "All Notify Emails"
+msgstr ""
+
+#: modules/notifications/notifications.php:340
+msgid "All Notify Roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:305
+msgid "All Notify Users"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:203
+#: modules/editorial-comments/editorial-comments.php:207
+#: modules/editorial-comments/library/EditorialCommentsTable.php:182
+msgid "All Posts"
+msgstr ""
+
+#: modules/calendar/calendar.php:2845
+msgid "All posts"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:634
+msgid "All Receivers"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:207
+msgid "All Statuses"
+msgstr ""
+
+#: modules/calendar/calendar.php:824 modules/calendar/calendar.php:3843
+msgid "All statuses"
+msgstr ""
+
+#: modules/calendar/calendar.php:826 modules/calendar/calendar.php:3878
+msgid "All tags"
+msgstr ""
+
+#: modules/calendar/calendar.php:828 modules/calendar/calendar.php:3926
+msgid "All types"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:208
+#: modules/editorial-comments/library/EditorialCommentsTable.php:197
+msgid "All Users"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:204
+msgid "All Workflows"
+msgstr ""
+
+#: modules/notifications/notifications.php:1648
+msgid "Always notify the author of the content:"
+msgstr ""
+
+#: modules/notifications/notifications.php:1656
+msgid "Always notify users who have edited the content:"
+msgstr ""
+
+#: modules/calendar/calendar.php:2575
+msgid "Always show complete post titles"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1016
+msgid "Apply"
+msgstr ""
+
+#: modules/calendar/calendar.php:815
+msgid "Apr"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:408
+msgid ""
+"Are you sure you want to delete the post status? All posts with this status "
+"will be assigned to the default status."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:373
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will "
+"remain but will not be visible unless this term is re-added."
 msgstr ""
 
 #: modules/custom-status/custom-status.php:194
 msgid "Assigned"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:197
-msgid "Post idea assigned to writer."
+#: modules/editorial-metadata/editorial-metadata.php:208
+msgid "Assignment"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:204
-msgid "In Progress"
+#: modules/async-notifications/async-notifications.php:71
+msgid "Async Notifications"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:207
-msgid "Writer is working on the post."
+#: modules/notifications-log/library/NotificationsLogTable.php:298
+msgid "asynchronous"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:408
-msgid "Are you sure you want to delete the post status? All posts with this status will be assigned to the default status."
+#: modules/calendar/calendar.php:2594
+msgid "At least one post type must be selected"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:517
-msgid "<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript disabled. You will not be able to access or change the post status."
+#: modules/editorial-comments/editorial-comments.php:528
+msgid "Attach file"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:899
-#: modules/custom-status/lib/custom-status-block.jsx:121
-msgid "Pending review"
+#: modules/calendar/calendar.php:819
+msgid "Aug"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:937
-#: modules/custom-status/lib/custom-status-block.jsx:127
-msgid "Privately Published"
+#: modules/calendar/calendar.php:1948 modules/calendar/calendar.php:3424
+#: modules/calendar/calendar.php:3512
+#: modules/content-overview/content-overview.php:629
+#: modules/editorial-comments/library/EditorialCommentsTable.php:229
+msgid "Author"
+msgid_plural "Authors"
+msgstr[0] ""
+msgstr[1] ""
+
+#. 1: author name, 2: author email
+#: modules/notifications/notifications.php:2068
+msgid "Author: %1$s (%2$s )"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1127
-msgid "Custom status doesn't exist."
+#: libraries/Notifications/Workflow/Step/Receiver/Author.php:92
+msgid "Authors"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1179
-msgid "Error while updating the status"
+#: libraries/Notifications/Workflow/Step/Receiver/Author.php:26
+msgid "Authors of the content"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1209
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
+msgid "Auto-draft"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:934
+msgid "Available fields"
+msgstr ""
+
+#: modules/calendar/calendar.php:2132
+msgid "Back %d weeks"
+msgstr ""
+
+#: modules/calendar/calendar.php:2144
+msgid "Back 1 week"
+msgstr ""
+
+#: modules/notifications/notifications.php:392
+msgid "Back to notify emails"
+msgstr ""
+
+#: modules/notifications/notifications.php:357
+msgid "Back to notify roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:322
+msgid "Back to notify users"
+msgstr ""
+
+#: modules/modules-settings/modules-settings.php:240
+msgid "Basic Notifications"
+msgstr ""
+
+#: modules/notifications/notifications.php:1664
+msgid "Blacklisted taxonomies for Notifications"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:157
+msgid "Blog ID: %d"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:377
+msgid "Blog: "
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Content/Main.php:53
+msgid "Body"
+msgstr ""
+
+#: modules/calendar/calendar.php:169 modules/calendar/calendar.php:407
+#: modules/calendar/calendar.php:424 modules/calendar/calendar.php:425
+msgid "Calendar"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1704
+#: modules/custom-status/custom-status.php:2077
+#: modules/content-overview/content-overview.php:1022
+#: modules/editorial-comments/editorial-comments.php:544
+msgid "Cancel"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1211
 msgid "Cannot reassign to the status you want to delete"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1237
-msgid "Restricted status "
+#: modules/calendar/calendar.php:3522
+#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
+msgid "Categories"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1525
-#: modules/custom-status/custom-status.php:1635
-msgid "Please enter a name for the status"
+#: modules/calendar/calendar.php:3429
+#: libraries/Notifications/Workflow/Step/Event_Content/Category.php:24
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/content-overview/content-overview.php:1023
+msgid "Change"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1529
-#: modules/custom-status/custom-status.php:1639
-msgid "Please enter a valid, non-numeric name for the status."
+#: views/user_profile_notification_channels.html.php:15
+#: modules/improved-notifications/improved-notifications.php:397
+#: modules/improved-notifications/improved-notifications.php:1105
+msgid "Channels"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1546
-#: modules/custom-status/custom-status.php:1656
-msgid "Status name cannot exceed 20 characters. Please try a shorter name."
+#: publishpress.php:632
+msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1554
-#: modules/custom-status/custom-status.php:1670
-msgid "Status name conflicts with existing term. Please choose another."
+#: modules/editorial-metadata/editorial-metadata.php:268
+msgid "Checkbox"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1561
-#: modules/custom-status/custom-status.php:1686
-msgid "Status name is restricted. Please choose another name."
+#: modules/notifications/notifications.php:385
+msgid "Choose from the most used notify emails"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1583
-msgid "Could not add status: "
+#: modules/notifications/notifications.php:350
+msgid "Choose from the most used notify roles"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1679
-msgid "Status name conflicts with existing status. Please choose another."
+#: modules/notifications/notifications.php:315
+msgid "Choose from the most used notify users"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1711
-msgid "Error updating post status."
+#: modules/editorial-comments/editorial-comments.php:75
+msgid "Choose Post Types"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1746
-msgid "Sorry, you do not have permission to edit custom statuses."
+#: views/user_profile_notification_channels.html.php:6
+#: modules/improved-notifications/improved-notifications.php:391
+#: modules/improved-notifications/improved-notifications.php:1099
+msgid "Choose the channels where each workflow will send notifications to:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1753
-msgid "Status does not exist."
+#: modules/improved-notifications/improved-notifications.php:936
+msgid "Click here to read more about shortcode options..."
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1758
-msgid "Could not delete the status: "
+#: modules/calendar/calendar.php:1425
+msgid "Click here to Subscribe in iCal or Google Calendar"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1813
-#: modules/editorial-metadata/editorial-metadata.php:1384
-msgid "Terms not set."
+#: modules/calendar/calendar.php:793 modules/calendar/calendar.php:795
+msgid "Click to add"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1848
-msgid "Use on these post types:"
+#: modules/debug/debug.php:307
+msgid ""
+"Click to delete the log file. Be careful, this operation can not be undone. "
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1855
-msgid "Show the status dropdown menu on the post editing screen:"
+#: modules/notifications/notifications.php:572
+#: modules/notifications/notifications.php:942
+msgid "Click to start being notified on updates for this post"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1957
-msgid "Custom Status"
+#: modules/notifications/notifications.php:568
+#: modules/notifications/notifications.php:936
+msgid "Click to stop being notified on updates for this post"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1969
-#: modules/custom-status/custom-status.php:2125
-msgid "The name is used to identify the status. (Max: 20 characters)"
+#: modules/content-overview/content-overview.php:1344
+msgid "Click to toggle"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1978
-#: modules/editorial-metadata/editorial-metadata.php:1573
-#: modules/editorial-metadata/editorial-metadata.php:1701
-msgid "Slug"
+#: modules/calendar/calendar.php:797
+msgid "Close"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:1990
-msgid "The slug is the unique ID for the status and is changed when the name is changed."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1999
-#: modules/custom-status/custom-status.php:2133
-#: modules/custom-status/custom-status.php:2769
-#: modules/editorial-metadata/editorial-metadata.php:1586
-#: modules/editorial-metadata/editorial-metadata.php:1718
-#: modules/editorial-metadata/editorial-metadata.php:1929
-msgid "Description"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2012
-#: modules/custom-status/custom-status.php:2145
-msgid "The description is primarily for administrative use, to give you some context on what the custom status is to be used for."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2021
-#: modules/custom-status/custom-status.php:2153
+#: modules/custom-status/custom-status.php:2028
+#: modules/custom-status/custom-status.php:2160
 msgid "Color"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2033
-#: modules/custom-status/custom-status.php:2162
-msgid "The color is used to identify the status."
+#: modules/editorial-comments/library/EditorialCommentsTable.php:230
+msgid "Comment"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2039
-#: modules/custom-status/custom-status.php:2167
-#: modules/custom-status/custom-status.php:2770
-msgid "Icon"
+#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:92
+msgid "Comment: %s (%d)"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2053
-#: modules/custom-status/custom-status.php:2182
-msgid "Select Icon"
+#: publishpress.php:628
+msgid "Configure"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2059
-#: modules/custom-status/custom-status.php:2188
-msgid "The icon is used to visually represent the status."
+#: modules/settings/views/footer-base.html.php:27
+msgid "Contact"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2066
-msgid "Update Status"
+#: modules/calendar/calendar.php:3539
+#: modules/improved-notifications/improved-notifications.php:922
+#: libraries/Notifications/Workflow/Step/Content/Main.php:28
+msgid "Content"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2097
-#: modules/editorial-metadata/editorial-metadata.php:1668
-msgid "Options"
+#: modules/content-overview/content-overview.php:140
+#: modules/content-overview/content-overview.php:508
+#: modules/content-overview/content-overview.php:525
+#: modules/content-overview/content-overview.php:526
+#: modules/content-overview/content-overview.php:803
+msgid "Content Overview"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2104
-#: modules/editorial-metadata/editorial-metadata.php:1674
-msgid "Add New"
+#: modules/notifications-log/notifications-log.php:820
+msgid "Content:"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2115
-#: modules/custom-status/custom-status.php:2768
-#: modules/editorial-metadata/editorial-metadata.php:1687
-#: modules/editorial-metadata/editorial-metadata.php:1927
-msgid "Name"
+#: modules/calendar/calendar.php:1419
+msgid "Copy to the clipboard"
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2200
-msgid "Add New Status"
+#: modules/custom-status/custom-status.php:1590
+msgid "Could not add status: "
 msgstr ""
 
-#: modules/custom-status/custom-status.php:2214
-msgid "Please note that checking a box will apply all statuses to that post type."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2767
-#: modules/editorial-metadata/editorial-metadata.php:1926
-msgid "Position"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2792
-msgid "No custom statuses found."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2898
-msgid "Default"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2915
-#: modules/editorial-comments/editorial-comments.php:362
-#: modules/editorial-metadata/editorial-metadata.php:2050
-#: modules/notifications-log/library/NotificationsLogTable.php:370
-#: modules/notifications-log/library/NotificationsLogTable.php:401
-msgid "Delete"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:55
-msgid "Dashboard"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:69
-msgid "Widget Options"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:164
-msgid "Unpublished Content"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:173
-#: modules/dashboard/dashboard.php:352
-msgid "Notepad"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:182
-#: modules/dashboard/dashboard.php:345
-msgid "My Content Notifications"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:210
-msgid "Posts at a Glance"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:304
-msgid "This post was last updated on "
-msgstr ""
-
-#: modules/dashboard/dashboard.php:315
-msgid "Sorry! You're not subscribed to any posts!"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:338
-msgid "Post Status Widget"
-msgstr ""
-
-#: modules/dashboard/dashboard.php:409
-msgid "The notifications module will need to be enabled for this widget to display."
-msgstr ""
-
-#: modules/dashboard/widgets/dashboard-notepad.php:50
-msgid "Dashboard Note"
-msgstr ""
-
-#: modules/dashboard/widgets/dashboard-notepad.php:140
-msgid "%1$s last updated on %2$s"
-msgstr ""
-
-#: modules/dashboard/widgets/dashboard-notepad.php:168
-msgid "Update Note"
-msgstr ""
-
-#: modules/debug/debug.php:67
-msgid "Debug"
-msgstr ""
-
-#: modules/debug/debug.php:227
-#: modules/debug/debug.php:290
-msgid "PublishPress Debug Log"
-msgstr ""
-
-#: modules/debug/debug.php:291
-msgid "File info"
-msgstr ""
-
-#: modules/debug/debug.php:292
-msgid "Path"
-msgstr ""
-
-#: modules/debug/debug.php:293
-msgid "Log content"
-msgstr ""
-
-#: modules/debug/debug.php:294
-msgid "Size"
+#: modules/custom-status/custom-status.php:1765
+msgid "Could not delete the status: "
 msgstr ""
 
 #: modules/debug/debug.php:295
 msgid "Created on"
 msgstr ""
 
-#: modules/debug/debug.php:296
-msgid "Modified on"
+#: modules/calendar/calendar.php:1342
+msgid "Current week"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1964
+msgid "Custom Status"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1129
+msgid "Custom status doesn't exist."
+msgstr ""
+
+#: modules/dashboard/dashboard.php:55
+msgid "Dashboard"
+msgstr ""
+
+#: modules/dashboard/widgets/dashboard-notepad.php:50
+msgid "Dashboard Note"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:269
+#: modules/calendar/calendar.php:3413
+#: libraries/Notifications/Table/Notifications.php:158
+#: modules/notifications-log/library/NotificationsLogTable.php:490
+msgid "Date"
+msgstr ""
+
+#: modules/debug/debug.php:67
+msgid "Debug"
+msgstr ""
+
+#: modules/debug/debug.php:298
+msgid "Debug data"
+msgstr ""
+
+#: modules/calendar/calendar.php:823
+msgid "Dec"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2905
+msgid "Default"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:228
+msgid "Default notification channels:"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:103
+msgid "Default post status has been changed."
+msgstr ""
+
+#: modules/calendar/calendar.php:2551
+msgid "Default publish time for items created in the calendar"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2145
+#: modules/custom-status/custom-status.php:2922
+#: modules/editorial-comments/editorial-comments.php:609
+#: modules/notifications-log/library/NotificationsLogTable.php:370
+#: modules/notifications-log/library/NotificationsLogTable.php:401
+msgid "Delete"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:402
+msgid "Delete All"
 msgstr ""
 
 #: modules/debug/debug.php:297
 msgid "Delete file"
 msgstr ""
 
-#: modules/debug/debug.php:298
-msgid "Debug data"
+#: modules/editorial-metadata/editorial-metadata.php:1612
+#: modules/editorial-metadata/editorial-metadata.php:1773
+#: modules/editorial-metadata/editorial-metadata.php:2015
+#: modules/custom-status/custom-status.php:2006
+#: modules/custom-status/custom-status.php:2140
+#: modules/custom-status/custom-status.php:2776
+msgid "Description"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1888
+#: modules/calendar/calendar.php:2625 modules/dashboard/dashboard.php:367
+#: modules/dashboard/dashboard.php:390 modules/dashboard/dashboard.php:424
+msgid "Disabled"
+msgstr ""
+
+#: modules/settings/settings.php:380
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+
+#: modules/settings/views/footer-base.html.php:23
+msgid "Documentation"
+msgstr ""
+
+#: modules/calendar/calendar.php:1412
+msgid "Download .ics file"
+msgstr ""
+
+#: common/php/class-module.php:268 modules/custom-status/custom-status.php:880
+#: modules/custom-status/custom-status.php:994
+msgid "Draft"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:220
+msgid "Duplicated notification threshold:"
+msgstr ""
+
+#: common/php/class-module.php:700
+msgid "E-mails"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2125
+#: modules/custom-status/custom-status.php:2918
+#: modules/calendar/calendar.php:1803 modules/calendar/calendar.php:3446
+#: modules/content-overview/content-overview.php:1710
+#: modules/editorial-comments/editorial-comments.php:598
+msgid "Edit"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:401
+msgid "Edit Editorial Metadata"
+msgstr ""
+
+#: modules/efmigration/efmigration.php:286
+msgid ""
+"Edit Flow should not be used alongside PublishPress. If you want to use it, "
+"deactive PublishPress first."
+msgstr ""
+
+#: publishpress.php:1218
+msgid "Edit Notification"
+msgstr ""
+
+#: modules/notifications/notifications.php:378
+msgid "Edit Notify Email"
+msgstr ""
+
+#: modules/notifications/notifications.php:343
+msgid "Edit Notify Role"
+msgstr ""
+
+#: modules/notifications/notifications.php:308
+msgid "Edit Notify User"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:98
+msgid "Edit Statuses"
+msgstr ""
+
+#: modules/calendar/calendar.php:1803
+msgid "Edit this item"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1706
+#: modules/dashboard/dashboard.php:298
+msgid "Edit this post"
+msgstr ""
+
+#: modules/notifications/notifications.php:2087
+#: modules/notifications/notifications.php:2144
+msgid "Edit: %s"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:923
+msgid "Editorial Comment"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:61
+#: modules/editorial-comments/editorial-comments.php:230
+#: modules/editorial-comments/editorial-comments.php:231
+#: modules/editorial-comments/editorial-comments.php:423
+msgid "Editorial Comments"
+msgstr ""
+
+#: views/user_profile_notification_channels.html.php:1
+#: modules/improved-notifications/improved-notifications.php:390
+#: modules/improved-notifications/improved-notifications.php:1098
+msgid "Editorial Notifications"
+msgstr ""
+
+#: modules/calendar/calendar.php:1392
+msgid "Eight months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1398
+msgid "Eleven months"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Channel/Email.php:31
+msgid "Email"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:135
+msgid "email"
+msgstr ""
+
+#: modules/notifications/notifications.php:1640
+msgid "Email from:"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:1097
+msgid "Enable for these post types:"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1889
+#: modules/calendar/calendar.php:2626 modules/dashboard/dashboard.php:368
+#: modules/dashboard/dashboard.php:391 modules/dashboard/dashboard.php:425
+msgid "Enabled"
+msgstr ""
+
+#: modules/modules-settings/modules-settings.php:218
+msgid "Enabled features"
+msgstr ""
+
+#: modules/calendar/calendar.php:1360
+msgid "End date"
+msgstr ""
+
+#: modules/notifications/notifications.php:635
+msgid ""
+"Enter any users, roles, or email address that should receive notifications "
+"from workflows."
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:276
+#: modules/notifications-log/library/NotificationsLogTable.php:527
+msgid "Error"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1213
+msgid "Error adding term."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1444
+msgid "Error deleting term."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1718
+msgid "Error updating post status."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1330
+#: modules/editorial-metadata/editorial-metadata.php:1378
+msgid "Error updating term."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1181
+msgid "Error while updating the status"
+msgstr ""
+
+#: modules/async-notifications/async-notifications.php:172
+msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:271
+#: modules/notifications-log/library/NotificationsLogTable.php:287
+msgid "Failed"
+msgstr ""
+
+#: modules/modules-settings/modules-settings.php:49
+msgid "Features"
+msgstr ""
+
+#: modules/calendar/calendar.php:813
+msgid "Feb"
+msgstr ""
+
+#: modules/modules-settings/modules-settings.php:212
+msgid "Feel free to select only the features you need."
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:929
+msgid "field"
+msgstr ""
+
+#: modules/calendar/calendar.php:2559
+msgid "Field used for sorting the calendar items in a day cell"
+msgstr ""
+
+#: modules/debug/debug.php:291
+msgid "File info"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1102
+#: modules/notifications-log/library/NotificationsLogTable.php:640
+#: modules/editorial-comments/library/EditorialCommentsTable.php:211
+msgid "Filter"
+msgstr ""
+
+#: modules/notifications/notifications.php:388
+msgid "Filter by notify email"
+msgstr ""
+
+#: modules/notifications/notifications.php:353
+msgid "Filter by notify role"
+msgstr ""
+
+#: modules/notifications/notifications.php:318
+msgid "Filter by notify user"
+msgstr ""
+
+#: libraries/Notifications/Plugin.php:58
+msgid "Filter the content?"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:202
+msgid "First Draft Date"
+msgstr ""
+
+#: modules/calendar/calendar.php:1386
+msgid "Five months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1352
+msgid "Five months ago"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:776
+#: modules/notifications-log/library/NotificationsLogTable.php:492
+msgid "For which content?"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:926
+msgid "Format"
+msgstr ""
+
+#: modules/calendar/calendar.php:2098
+msgid "Forward %d weeks"
+msgstr ""
+
+#: modules/calendar/calendar.php:2083
+msgid "Forward 1 week"
+msgstr ""
+
+#: modules/calendar/calendar.php:1384
+msgid "Four months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1350
+msgid "Four months ago"
+msgstr ""
+
+#: modules/calendar/calendar.php:1371
+msgid "Four weeks"
+msgstr ""
+
+#: modules/calendar/calendar.php:810
+msgid "Fri"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:620
+msgid "From date"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2128
+msgid "Hidden metadata can only be viewed on the edit post view."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://publishpress.com/"
+msgstr ""
+
+#: modules/calendar/calendar.php:195
+msgid ""
+"iCal secret key regenerated. Please inform all users they will need to "
+"resubscribe."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2046
+#: modules/custom-status/custom-status.php:2174
+#: modules/custom-status/custom-status.php:2777
+msgid "Icon"
+msgstr ""
+
+#: modules/calendar/calendar.php:3408
+#: libraries/Notifications/Table/Workflows.php:143
+#: libraries/Notifications/Table/Notifications.php:159
+msgid "ID"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:187
+msgid "Idea proposed; waiting for acceptance."
+msgstr ""
+
+#: modules/settings/settings.php:269
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr ""
+
+#: modules/debug/debug.php:303
+msgid ""
+"If you see any error or look for information regarding PublishPress, please "
+"don't hesitate to contact the support team. E-mail us:"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:204
+msgid "In Progress"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1811
+msgid "Indicate the type of editorial metadata."
+msgstr ""
+
+#: modules/calendar/calendar.php:1493
+msgid "Initializing the calendar. Please wait..."
+msgstr ""
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
+msgid "Integrate with the The Events Calendar plugin"
+msgstr ""
+
+#: modules/debug/debug.php:364
+msgid "Invalid action nonce."
+msgstr ""
+
+#: modules/notifications-log/library/ModuleErrors.php:55
+msgid "Invalid channel for the notification"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:721
+#: modules/editorial-comments/editorial-comments.php:862
+#: modules/editorial-comments/editorial-comments.php:994
+msgid "Invalid comment data"
+msgstr ""
+
+#: modules/calendar/calendar.php:3148
+msgid "Invalid date"
+msgstr ""
+
+#: modules/calendar/calendar.php:3128
+msgid "Invalid input"
+msgstr ""
+
+#: core/Error.php:80 modules/calendar/calendar.php:3119
+msgid "Invalid nonce"
+msgstr ""
+
+#: modules/calendar/calendar.php:3649
+msgid "Invalid Publish Date supplied."
+msgstr ""
+
+#: modules/notifications-log/library/ModuleErrors.php:54
+msgid "Invalid receiver for the notification"
+msgstr ""
+
+#: modules/calendar/calendar.php:3625
+msgid "Invalid Status supplied."
+msgstr ""
+
+#: modules/calendar/calendar.php:1497
+msgid ""
+"It seems like it is taking too long. Please, try reloading the page again "
+"and check the browser console looking for errors."
+msgstr ""
+
+#: modules/calendar/calendar.php:812
+msgid "Jan"
+msgstr ""
+
+#: modules/calendar/calendar.php:818
+msgid "Jul"
+msgstr ""
+
+#: modules/calendar/calendar.php:817
+msgid "Jun"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:631
+msgid "Last Modified"
+msgstr ""
+
+#: modules/calendar/calendar.php:792
+msgid "Loading item..."
+msgstr ""
+
+#: modules/calendar/calendar.php:791
+#: modules/notifications-log/notifications-log.php:209
+msgid "Loading..."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:270
+msgid "Location"
+msgstr ""
+
+#: modules/debug/debug.php:293
+msgid "Log content"
 msgstr ""
 
 #: modules/debug/debug.php:299
@@ -1371,113 +1255,32 @@ msgstr ""
 msgid "Log file not found."
 msgstr ""
 
-#: modules/debug/debug.php:303
-msgid "If you see any error or look for information regarding PublishPress, please don't hesitate to contact the support team. E-mail us:"
+#: modules/editorial-metadata/editorial-metadata.php:2132
+msgid "Make Hidden"
 msgstr ""
 
-#: modules/debug/debug.php:307
-msgid "Click to delete the log file. Be careful, this operation can not be undone. "
+#: modules/editorial-metadata/editorial-metadata.php:2143
+msgid "Make Viewable"
 msgstr ""
 
-#: modules/debug/debug.php:357
-msgid "Action nonce not found."
+#: modules/calendar/calendar.php:814
+msgid "Mar"
 msgstr ""
 
-#: modules/debug/debug.php:364
-msgid "Invalid action nonce."
+#: modules/calendar/calendar.php:2567
+msgid "Max visible posts per date"
 msgstr ""
 
-#: modules/editorial-comments/editorial-comments.php:48
-#: modules/editorial-comments/editorial-comments.php:184
-msgid "Editorial Comments"
+#: modules/calendar/calendar.php:816
+msgid "May"
 msgstr ""
 
-#: modules/editorial-comments/editorial-comments.php:62
-msgid "Choose Post Types"
+#: libraries/Notifications/Table/Notifications.php:157
+msgid "Message"
 msgstr ""
 
-#: modules/editorial-comments/editorial-comments.php:67
-msgid "<p>Editorial comments help you cut down on email overload and keep the conversation close to where it matters: your content. Threaded commenting in the admin, similar to what you find at the end of a blog post, allows writers and editors to privately leave feedback and discuss what needs to be changed before publication.</p><p>Anyone with access to view the story in progress will also have the ability to comment on it. If you have notifications enabled, those following the post will receive an email every time a comment is left.</p>"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:72
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/editorial-comments/\">Editorial Comments Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:259
-msgid "You can add editorial comments to a post once you've saved it for the first time."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:279
-#: modules/editorial-comments/editorial-comments.php:283
-msgid "Add an editorial comment"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:294
-msgid "Add Comment"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:339
-msgid "Reply to this comment"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:342
-msgid "Reply"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:408
-msgid "said on %1$s at %2$s"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:437
-msgid "Nonce check failed. Please ensure you're supposed to be adding editorial comments."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:445
-#: modules/editorial-comments/editorial-comments.php:581
-#: modules/editorial-comments/editorial-comments.php:709
-msgid "Invalid comment data"
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:457
-msgid "Sorry, you don't have the privileges to add editorial comments. Please talk to your Administrator."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:467
-#: modules/editorial-comments/editorial-comments.php:626
-msgid "Please enter a comment."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:550
-#: modules/editorial-comments/editorial-comments.php:676
-#: modules/editorial-comments/editorial-comments.php:786
-msgid "There was a problem of some sort. Try again or contact your administrator."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:570
-#: modules/editorial-comments/editorial-comments.php:698
-msgid "Nonce check failed. Please ensure you're supposed to be editing editorial comments."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:595
-#: modules/editorial-comments/editorial-comments.php:724
-msgid "Sorry, you don't have the privileges to edit editorial comments. Please talk to your Administrator."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:613
-msgid "Sorry, you don't have the privileges to edit this editorial comment. Please talk to your Administrator."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:740
-msgid "Sorry, you don't have the privileges to delete this editorial comment. Please talk to your Administrator."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:761
-msgid "Sorry, you can't delete this editorial comment because it has some replies."
-msgstr ""
-
-#: modules/editorial-comments/editorial-comments.php:812
-msgid "Enable for these post types:"
+#: modules/improved-notifications/improved-notifications.php:935
+msgid "Meta fields"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:86
@@ -1485,758 +1288,176 @@ msgstr ""
 msgid "Metadata"
 msgstr ""
 
+#: modules/editorial-metadata/editorial-metadata.php:1275
+msgid "Metadata name conflicts with existing term. Please choose another."
+msgstr ""
+
 #: modules/editorial-metadata/editorial-metadata.php:100
 msgid "Metadata term added."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:101
-msgid "Metadata term updated."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:102
-msgid "Metadata term doesn't exist."
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:103
 msgid "Metadata term deleted."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:104
-msgid "Term order updated."
+#: modules/editorial-metadata/editorial-metadata.php:102
+msgid "Metadata term doesn't exist."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:105
-msgid "Term visibility changed."
+#: modules/editorial-metadata/editorial-metadata.php:101
+msgid "Metadata term updated."
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:111
-msgid "<p>Keep track of important details about your content with editorial metadata. This feature allows you to create as many date, text, number, etc. fields as you like, and then use them to store information like contact details or the location of an interview.</p><p>Once you’ve set your fields up, editorial metadata integrates with both the calendar and the content overview. Make an editorial metadata item visible to have it appear to the rest of your team. Keep it hidden to restrict the information between the writer and their editor.</p>"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:116
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/editorial-metadata/\">Editorial Metadata Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:202
-msgid "First Draft Date"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:205
-msgid "When the first draft needs to be ready."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:208
-msgid "Assignment"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:211
-msgid "What the post needs to cover."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:268
-msgid "Checkbox"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:270
-msgid "Location"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:271
-msgid "Number"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:272
-msgid "Paragraph"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:273
-msgid "Text"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:274
-msgid "User"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:373
-msgid "Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:396
-msgctxt "taxonomy general name"
-msgid "Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:397
-msgctxt "taxonomy singular name"
-msgid "Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:398
-msgid "Search Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:399
-msgid "Popular Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:400
-msgid "All Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:401
-msgid "Edit Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:402
-msgid "Update Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:403
-msgid "Add New Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:404
-msgid "New Editorial Metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1129
-msgid "Please enter a name for the editorial metadata."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1136
-msgid "Please enter a slug for the editorial metadata."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1142
-msgid "Name conflicts with existing term. Please choose another."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1149
-#: modules/editorial-metadata/editorial-metadata.php:1272
-msgid "Name already in use. Please choose another."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1153
-msgid "Slug already in use. Please choose another."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1159
-#: modules/editorial-metadata/editorial-metadata.php:1166
-#: modules/editorial-metadata/editorial-metadata.php:1285
-msgid "Name cannot exceed 200 characters. Please try a shorter name."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1176
-msgid "Please select a valid metadata type."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1201
-msgid "Error adding term."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1249
-msgid "Please enter a name for the editorial metadata"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1254
-msgid "Please enter a valid, non-numeric name for the editorial metadata."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1263
-msgid "Metadata name conflicts with existing term. Please choose another."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1277
-msgid "Name conflicts with slug for another term. Please choose something else."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1311
-#: modules/editorial-metadata/editorial-metadata.php:1359
-msgid "Error updating term."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1425
-msgid "Error deleting term."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1568
-#: modules/editorial-metadata/editorial-metadata.php:1696
-msgid "The name is for labeling the metadata field."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1578
-msgid "The slug cannot be changed once the term has been created."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1594
-#: modules/editorial-metadata/editorial-metadata.php:1727
-msgid "The description can be used to communicate with your team about what the metadata is for."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1603
-#: modules/editorial-metadata/editorial-metadata.php:1735
-msgid "Type"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1608
-msgid "The metadata type cannot be changed once created."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1613
-#: modules/editorial-metadata/editorial-metadata.php:1761
-#: modules/editorial-metadata/editorial-metadata.php:1930
-msgid "Viewable"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1617
-#: modules/editorial-metadata/editorial-metadata.php:1764
-#: modules/editorial-metadata/editorial-metadata.php:1976
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:115
-msgid "No"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1618
-#: modules/editorial-metadata/editorial-metadata.php:1765
-#: modules/editorial-metadata/editorial-metadata.php:1974
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:114
-msgid "Yes"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1633
-#: modules/editorial-metadata/editorial-metadata.php:1784
-#: modules/editorial-metadata/editorial-metadata.php:2040
-msgid "When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1646
-msgid "Update Metadata Term"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1710
-msgid "The \"slug\" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1756
-msgid "Indicate the type of editorial metadata."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1796
-msgid "Add New Metadata Term"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1810
-msgid "Please note that checking a box will apply all metadata to that post type."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:1928
+#: modules/editorial-metadata/editorial-metadata.php:2014
 msgid "Metadata Type"
 msgstr ""
 
-#: modules/editorial-metadata/editorial-metadata.php:2006
-msgid "No editorial metadata found."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:2033
-msgid "Hidden metadata can only be viewed on the edit post view."
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:2037
-msgid "Make Hidden"
-msgstr ""
-
-#: modules/editorial-metadata/editorial-metadata.php:2048
-msgid "Make Viewable"
-msgstr ""
-
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:157
-#: modules/notifications/notifications.php:1855
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:126
-msgid "This editorial metadata type is not yet supported."
-msgstr ""
-
-#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:56
-msgid "View &#8220;%s&#8221; on Google Maps"
-msgstr ""
-
-#: modules/efmigration/efmigration.php:286
-msgid "Edit Flow should not be used alongside PublishPress. If you want to use it, deactive PublishPress first."
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:96
-msgid "Notification Workflows"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:268
-msgid "Duplicated notification threshold:"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:276
-msgid "Default notification channels:"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:321
-msgid "Notify when content is published"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:360
-msgid "Notify on editorial comments"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:408
+#: modules/improved-notifications/improved-notifications.php:350
 msgid "minutes"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:450
-#: modules/improved-notifications/improved-notifications.php:1157
-msgid "Editorial Notifications"
+#: modules/debug/debug.php:296
+msgid "Modified on"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:451
-#: modules/improved-notifications/improved-notifications.php:1158
-msgid "Choose the channels where each workflow will send notifications to:"
+#: modules/calendar/calendar.php:806
+msgid "Mon"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:455
-#: modules/improved-notifications/improved-notifications.php:1145
-#: modules/improved-notifications/improved-notifications.php:1162
-msgid "Muted"
+#: modules/notifications/notifications.php:391
+msgid "Most Used Notify Email"
 msgstr ""
 
-#: modules/improved-notifications/improved-notifications.php:456
-#: modules/improved-notifications/improved-notifications.php:1163
-msgid "Workflows"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:457
-#: modules/improved-notifications/improved-notifications.php:1164
-msgid "Channels"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:778
-msgid "Workflow Settings"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:828
-#: modules/notifications-log/library/NotificationsLogTable.php:492
-msgid "For which content?"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:848
-msgid "What to say?"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:967
-msgid "Select at least one option for each section."
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:971
-msgid "You can add dynamic information to the Subject or Body text using the following shortcodes:"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:976
-msgid "Editorial Comment"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:977
-msgid "User making changes or comments"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:978
-msgid "Workflow"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:979
-msgid "Format"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:980
-msgid "Receiver"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:981
-msgid "shortcode"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:982
-msgid "field"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:983
-msgid "On each shortcode, you can select one or more fields. If more than one, they will be displayed separated by \", \"."
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:987
-msgid "Available fields"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:988
-msgid "Meta fields"
-msgstr ""
-
-#: modules/improved-notifications/improved-notifications.php:989
-msgid "Click here to read more about shortcode options..."
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:49
-msgid "General"
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:211
-msgid "Features"
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:213
-msgid "Feel free to select only the features you need."
-msgstr ""
-
-#: modules/modules-settings/modules-settings.php:219
-msgid "Enabled features"
-msgstr ""
-
-#: modules/notifications-log/library/ModuleErrors.php:54
-msgid "Invalid receiver for the notification"
-msgstr ""
-
-#: modules/notifications-log/library/ModuleErrors.php:55
-msgid "Invalid channel for the notification"
-msgstr ""
-
-#: modules/notifications-log/library/ModuleErrors.php:56
-msgid "Notification log not found"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogModel.php:264
-msgid "The parent log was deleted or probably rescheduled"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:110
-msgid "Workflow: %s"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:122
-msgid "User: %s (%d)"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:151
-msgid "Post type: %s"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:154
-msgid "Post ID: %d"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:157
-msgid "Blog ID: %d"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:227
-msgid "Scheduled for %d receivers. Click here to display them."
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:255
-msgid " Scheduled, but late"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:257
-msgid " Scheduled"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:271
-#: modules/notifications-log/library/NotificationsLogTable.php:287
-msgid "Failed"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:276
-#: modules/notifications-log/library/NotificationsLogTable.php:527
-msgid "Error"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:277
-msgid "The notification was set as \"Scheduled\" but the cron task is not found"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:282
-msgid "Sent"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:285
-#: modules/notifications-log/library/NotificationsLogTable.php:519
-msgid "Skipped"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:298
-msgid "asynchronous"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:298
-msgid "synchronous"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:355
-#: modules/notifications-log/library/NotificationsLogTable.php:400
-msgid "Reschedule"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:377
-msgid "Blog: "
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:402
-msgid "Delete All"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:511
-msgid "All"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:515
-msgid "Success"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:584
-msgid "All events"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:601
-msgid "All channels"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:620
-msgid "From date"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:626
-msgid "To date"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:634
-msgid "All Receivers"
-msgstr ""
-
-#: modules/notifications-log/library/NotificationsLogTable.php:640
-msgid "Filter"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:74
-#: modules/notifications-log/notifications-log.php:310
-#: modules/notifications-log/notifications-log.php:533
-#: modules/notifications-log/notifications-log.php:534
-msgid "Notifications Log"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:252
-msgid "All Posts"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:253
-msgid "All Workflows"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:254
-msgid "All Actions"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:255
-msgid "All Channels"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:256
-msgid "All Statuses"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:257
-#: publishpress.php:1202
-#: publishpress.php:1207
-msgid "Notification"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:319
-msgid "%s notification found."
-msgid_plural "%s notifications found."
-msgstr[0] ""
-msgstr[1] ""
-
-#: modules/notifications-log/notifications-log.php:331
-msgid "No notifications found."
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:486
-msgid "This notification is very similar to another one sent less than %d minutes ago for the same receiver"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:861
-msgid "Subject:"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:869
-msgid "Content:"
-msgstr ""
-
-#: modules/notifications-log/notifications-log.php:879
-msgid "This is a preview of the scheduled message. The content can still change until the notification is sent."
-msgstr ""
-
-#: modules/notifications/notifications.php:71
-#: modules/notifications/notifications.php:599
-#: publishpress.php:1201
-#: publishpress.php:1206
-msgid "Notifications"
-msgstr ""
-
-#: modules/notifications/notifications.php:93
-msgid "<p>Notifications ensure you keep up to date with progress your most important content. Users can be subscribed to notifications on a post one by one or by selecting roles.</p><p>When enabled, notifications can be sent when a post changes status or an editorial comment is left by a writer or an editor.</p>"
-msgstr ""
-
-#: modules/notifications/notifications.php:98
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/notifications/\">Notifications Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr ""
-
-#: modules/notifications/notifications.php:299
-#: modules/notifications/notifications.php:302
-#: modules/notifications/notifications.php:319
-#: modules/notifications/notifications.php:320
-msgid "Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:301
-msgid "Notify Users"
-msgstr ""
-
-#: modules/notifications/notifications.php:303
-msgid "Search Notify Users"
-msgstr ""
-
-#: modules/notifications/notifications.php:304
-msgid "Popular Notify Users"
-msgstr ""
-
-#: modules/notifications/notifications.php:305
-msgid "All Notify Users"
-msgstr ""
-
-#: modules/notifications/notifications.php:306
-msgid "Parent Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:307
-msgid "Parent Notify User:"
-msgstr ""
-
-#: modules/notifications/notifications.php:308
-msgid "Edit Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:309
-msgid "View Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:310
-msgid "Update Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:311
-msgid "Add New Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:312
-msgid "New Notify User"
-msgstr ""
-
-#: modules/notifications/notifications.php:313
-msgid "Separate notify users with commas"
-msgstr ""
-
-#: modules/notifications/notifications.php:314
-msgid "Add or remove notify users"
-msgstr ""
-
-#: modules/notifications/notifications.php:315
-msgid "Choose from the most used notify users"
-msgstr ""
-
-#: modules/notifications/notifications.php:316
-#: modules/notifications/notifications.php:317
-msgid "No notify users"
-msgstr ""
-
-#: modules/notifications/notifications.php:318
-msgid "Filter by notify user"
+#: modules/notifications/notifications.php:356
+msgid "Most Used Notify Role"
 msgstr ""
 
 #: modules/notifications/notifications.php:321
 msgid "Most Used Notify User"
 msgstr ""
 
-#: modules/notifications/notifications.php:322
-msgid "Back to notify users"
+#: modules/content-overview/content-overview.php:1718
+msgid "Move this item to the Trash"
 msgstr ""
 
-#: modules/notifications/notifications.php:334
-#: modules/notifications/notifications.php:337
-#: modules/notifications/notifications.php:354
-#: modules/notifications/notifications.php:355
-msgid "Notify Role"
+#: modules/calendar/calendar.php:794
+msgid "Moving the item..."
 msgstr ""
 
-#: modules/notifications/notifications.php:336
-msgid "Notify Roles"
+#: modules/improved-notifications/improved-notifications.php:395
+#: modules/improved-notifications/improved-notifications.php:1086
+#: modules/improved-notifications/improved-notifications.php:1103
+msgid "Muted"
 msgstr ""
 
-#: modules/notifications/notifications.php:338
-msgid "Search Notify Roles"
+#: modules/dashboard/dashboard.php:182 modules/dashboard/dashboard.php:345
+msgid "My Content Notifications"
 msgstr ""
 
-#: modules/notifications/notifications.php:339
-msgid "Popular Notify Roles"
+#: modules/editorial-metadata/editorial-metadata.php:1742
+#: modules/editorial-metadata/editorial-metadata.php:2013
+#: modules/custom-status/custom-status.php:2122
+#: modules/custom-status/custom-status.php:2775
+msgid "Name"
 msgstr ""
 
-#: modules/notifications/notifications.php:340
-msgid "All Notify Roles"
+#: modules/editorial-metadata/editorial-metadata.php:1154
+#: modules/editorial-metadata/editorial-metadata.php:1284
+msgid "Name already in use. Please choose another."
 msgstr ""
 
-#: modules/notifications/notifications.php:341
-msgid "Parent Notify Role"
+#: modules/editorial-metadata/editorial-metadata.php:1164
+#: modules/editorial-metadata/editorial-metadata.php:1171
+#: modules/editorial-metadata/editorial-metadata.php:1297
+msgid "Name cannot exceed 200 characters. Please try a shorter name."
 msgstr ""
 
-#: modules/notifications/notifications.php:342
-msgid "Parent Notify Role:"
+#: modules/editorial-metadata/editorial-metadata.php:1147
+msgid "Name conflicts with existing term. Please choose another."
 msgstr ""
 
-#: modules/notifications/notifications.php:343
-msgid "Edit Notify Role"
+#: modules/editorial-metadata/editorial-metadata.php:1289
+msgid ""
+"Name conflicts with slug for another term. Please choose something else."
 msgstr ""
 
-#: modules/notifications/notifications.php:344
-msgid "View Notify Role"
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
+msgid "New"
 msgstr ""
 
-#: modules/notifications/notifications.php:345
-msgid "Update Notify Role"
+#: modules/editorial-metadata/editorial-metadata.php:404
+msgid "New Editorial Metadata"
 msgstr ""
 
-#: modules/notifications/notifications.php:346
-msgid "Add New Notify Role"
+#: modules/notifications/notifications.php:382
+msgid "New Notify Email"
 msgstr ""
 
 #: modules/notifications/notifications.php:347
 msgid "New Notify Role"
 msgstr ""
 
-#: modules/notifications/notifications.php:348
-msgid "Separate notify roles with commas"
+#: modules/notifications/notifications.php:312
+msgid "New Notify User"
 msgstr ""
 
-#: modules/notifications/notifications.php:349
-msgid "Add or remove notify roles"
+#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
+msgid "New post status: %s"
 msgstr ""
 
-#: modules/notifications/notifications.php:350
-msgid "Choose from the most used notify roles"
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
+msgid "New status"
+msgstr ""
+
+#: modules/calendar/calendar.php:1394
+msgid "Nine months"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1643
+#: modules/editorial-metadata/editorial-metadata.php:1672
+#: modules/editorial-metadata/editorial-metadata.php:1819
+#: modules/editorial-metadata/editorial-metadata.php:1850
+#: modules/editorial-metadata/editorial-metadata.php:2063
+#: modules/editorial-metadata/editorial-metadata.php:2070
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:115
+msgid "No"
+msgstr ""
+
+#: modules/notifications/notifications.php:704
+msgid "No active notifications found for this %s."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2799
+msgid "No custom statuses found."
+msgstr ""
+
+#: modules/calendar/calendar.php:3584
+msgid "No date supplied."
+msgstr ""
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:159
+msgid "No editorial comments."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2101
+msgid "No editorial metadata found."
+msgstr ""
+
+#: modules/calendar/calendar.php:3139
+msgid "No enough permissions"
+msgstr ""
+
+#: publishpress.php:1222 publishpress.php:1223
+msgid "No notification found"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:282
+msgid "No notifications found."
+msgstr ""
+
+#: modules/notifications/notifications.php:386
+#: modules/notifications/notifications.php:387
+msgid "No notify emails"
 msgstr ""
 
 #: modules/notifications/notifications.php:351
@@ -2244,16 +1465,65 @@ msgstr ""
 msgid "No notify roles"
 msgstr ""
 
-#: modules/notifications/notifications.php:353
-msgid "Filter by notify role"
+#: modules/notifications/notifications.php:316
+#: modules/notifications/notifications.php:317
+msgid "No notify users"
 msgstr ""
 
-#: modules/notifications/notifications.php:356
-msgid "Most Used Notify Role"
+#: modules/calendar/calendar.php:832
+msgid "No terms"
 msgstr ""
 
-#: modules/notifications/notifications.php:357
-msgid "Back to notify roles"
+#: libraries/Notifications/Table/Workflows.php:217
+msgid "No workflows found."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:713
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be adding editorial "
+"comments."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:851
+#: modules/editorial-comments/editorial-comments.php:983
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be editing editorial "
+"comments."
+msgstr ""
+
+#: modules/calendar/calendar.php:1783
+#: modules/content-overview/content-overview.php:1604
+msgid "None"
+msgstr ""
+
+#: libraries/Notifications/Plugin.php:221
+msgid "Not filtered"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:173 modules/dashboard/dashboard.php:352
+msgid "Notepad"
+msgstr ""
+
+#: publishpress.php:1216 publishpress.php:1221
+#: modules/notifications-log/notifications-log.php:208
+msgid "Notification"
+msgstr ""
+
+#: modules/notifications-log/library/ModuleErrors.php:56
+msgid "Notification log not found"
+msgstr ""
+
+#: publishpress.php:1215 publishpress.php:1220
+#: modules/notifications/notifications.php:71
+#: modules/notifications/notifications.php:599
+msgid "Notifications"
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:74
+#: modules/notifications-log/notifications-log.php:261
+#: modules/notifications-log/notifications-log.php:484
+#: modules/notifications-log/notifications-log.php:485
+msgid "Notifications Log"
 msgstr ""
 
 #: modules/notifications/notifications.php:369
@@ -2267,16 +1537,94 @@ msgstr ""
 msgid "Notify Emails"
 msgstr ""
 
-#: modules/notifications/notifications.php:373
-msgid "Search Notify Emails"
+#: modules/notifications/notifications.php:573
+#: modules/notifications/notifications.php:941
+msgid "Notify me"
 msgstr ""
 
-#: modules/notifications/notifications.php:374
-msgid "Popular Notify Emails"
+#: modules/improved-notifications/improved-notifications.php:305
+msgid "Notify on editorial comments"
 msgstr ""
 
-#: modules/notifications/notifications.php:375
-msgid "All Notify Emails"
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+#: modules/notifications/notifications.php:354
+#: modules/notifications/notifications.php:355
+msgid "Notify Role"
+msgstr ""
+
+#: modules/notifications/notifications.php:336
+msgid "Notify Roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:299
+#: modules/notifications/notifications.php:302
+#: modules/notifications/notifications.php:319
+#: modules/notifications/notifications.php:320
+msgid "Notify User"
+msgstr ""
+
+#: modules/notifications/notifications.php:301
+msgid "Notify Users"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:271
+msgid "Notify when content is published"
+msgstr ""
+
+#: modules/calendar/calendar.php:822
+msgid "Nov"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:271
+msgid "Number"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:740
+msgid "Number of Columns: "
+msgstr ""
+
+#: modules/calendar/calendar.php:821
+msgid "Oct"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:114
+msgid "Old post status: %s"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:930
+msgid ""
+"On each shortcode, you can select one or more fields. If more than one, they "
+"will be displayed separated by \", \"."
+msgstr ""
+
+#: modules/calendar/calendar.php:1377
+msgid "One month"
+msgstr ""
+
+#: modules/calendar/calendar.php:1344
+msgid "One month ago"
+msgstr ""
+
+#: modules/calendar/calendar.php:1365
+msgid "One week"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1723
+#: modules/custom-status/custom-status.php:2104
+msgid "Options"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+#: modules/custom-status/custom-status.php:111
+#: modules/calendar/calendar.php:203
+#: modules/editorial-comments/editorial-comments.php:79
+#: modules/notifications/notifications.php:92
+msgid "Overview"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:272
+msgid "Paragraph"
 msgstr ""
 
 #: modules/notifications/notifications.php:376
@@ -2287,58 +1635,607 @@ msgstr ""
 msgid "Parent Notify Email:"
 msgstr ""
 
-#: modules/notifications/notifications.php:378
-msgid "Edit Notify Email"
+#: modules/notifications/notifications.php:341
+msgid "Parent Notify Role"
 msgstr ""
 
-#: modules/notifications/notifications.php:379
-msgid "View Notify Email"
+#: modules/notifications/notifications.php:342
+msgid "Parent Notify Role:"
 msgstr ""
 
-#: modules/notifications/notifications.php:380
-msgid "Update Notify Email"
+#: modules/notifications/notifications.php:306
+msgid "Parent Notify User"
 msgstr ""
 
-#: modules/notifications/notifications.php:381
-msgid "Add New Notify Email"
+#: modules/notifications/notifications.php:307
+msgid "Parent Notify User:"
 msgstr ""
 
-#: modules/notifications/notifications.php:382
-msgid "New Notify Email"
+#: modules/debug/debug.php:292
+msgid "Path"
+msgstr ""
+
+#: common/php/class-module.php:271
+msgid "Pending Review"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:899
+msgid "Pending review"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:184
+msgid "Pitch"
+msgstr ""
+
+#: publishpress.php:631
+msgid "Please correct your form errors below and try again."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:744
+#: modules/editorial-comments/editorial-comments.php:908
+msgid "Please enter a comment."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1261
+msgid "Please enter a name for the editorial metadata"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1134
+msgid "Please enter a name for the editorial metadata."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1532
+#: modules/custom-status/custom-status.php:1642
+msgid "Please enter a name for the status"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1141
+msgid "Please enter a slug for the editorial metadata."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1266
+msgid "Please enter a valid, non-numeric name for the editorial metadata."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1536
+#: modules/custom-status/custom-status.php:1646
+msgid "Please enter a valid, non-numeric name for the status."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1896
+msgid ""
+"Please note that checking a box will apply all metadata to that post type."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2221
+msgid ""
+"Please note that checking a box will apply all statuses to that post type."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1181
+msgid "Please select a valid metadata type."
+msgstr ""
+
+#: libraries/Notifications/Plugin.php:188
+msgid "Please select at least one event"
+msgstr ""
+
+#: modules/calendar/calendar.php:804
+msgid "Please, wait! Loading the form fields..."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:399
+msgid "Popular Editorial Metadata"
+msgstr ""
+
+#: modules/notifications/notifications.php:374
+msgid "Popular Notify Emails"
+msgstr ""
+
+#: modules/notifications/notifications.php:339
+msgid "Popular Notify Roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:304
+msgid "Popular Notify Users"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2012
+#: modules/custom-status/custom-status.php:2774
+msgid "Position"
+msgstr ""
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:232
+msgid "Post"
+msgstr ""
+
+#: modules/calendar/calendar.php:3725
+msgid "Post could not be created"
+msgstr ""
+
+#: modules/calendar/calendar.php:3718
+msgid "Post created successfully"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:630
+msgid "Post Date"
+msgstr ""
+
+#: modules/calendar/calendar.php:186
+msgid "Post date updated."
+msgstr ""
+
+#: publishpress.php:637
+msgid "Post does not exist"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:154
+msgid "Post ID: %d"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:197
+msgid "Post idea assigned to writer."
+msgstr ""
+
+#: modules/calendar/calendar.php:3134
+msgid "Post not found"
+msgstr ""
+
+#: modules/calendar/calendar.php:2790 modules/calendar/calendar.php:3419
+#: modules/calendar/calendar.php:3497
+msgid "Post Status"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:100
+msgid "Post status created."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:105
+msgid "Post status deleted."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:102
+msgid "Post status doesn't exist."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:101
+#: modules/custom-status/custom-status.php:104
+msgid "Post status updated."
+msgstr ""
+
+#: modules/dashboard/dashboard.php:338
+msgid "Post Status Widget"
+msgstr ""
+
+#: modules/calendar/calendar.php:1956 modules/calendar/calendar.php:3403
+#: modules/content-overview/content-overview.php:628
+msgid "Post Type"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
+msgid "Post type"
+msgstr ""
+
+#: modules/calendar/calendar.php:802
+msgid "Post type not found"
+msgstr ""
+
+#: modules/calendar/calendar.php:803
+msgid "Post type:"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:151
+msgid "Post type: %s"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
+msgid "Post Types"
+msgstr ""
+
+#: modules/calendar/calendar.php:2519
+msgid "Post types to show"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:298
+msgid "Post types to show:"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:210
+msgid "Posts at a Glance"
+msgstr ""
+
+#: modules/calendar/calendar.php:2543
+msgid "Posts publish time format"
+msgstr ""
+
+#: modules/calendar/calendar.php:1827 modules/calendar/calendar.php:3463
+#: modules/content-overview/content-overview.php:1751
+msgid "Preview"
+msgstr ""
+
+#: modules/calendar/calendar.php:1824
+#: modules/content-overview/content-overview.php:1748
+msgid "Preview &#8220;%s&#8221;"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
+msgid "Previous status"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1128
+msgid "Print"
+msgstr ""
+
+#: common/php/class-module.php:270
+msgid "Private"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:937
+msgid "Privately Published"
+msgstr ""
+
+#: modules/calendar/calendar.php:3503
+msgid "Publish Time"
+msgstr ""
+
+#: common/php/class-module.php:267 modules/custom-status/custom-status.php:956
+#: modules/calendar/calendar.php:1969
+msgid "Published"
+msgstr ""
+
+#: modules/calendar/calendar.php:2789
+msgid "Publishing Time"
+msgstr ""
+
+#. Name of the plugin
+#. Author of the plugin
+#: publishpress.php:547 modules/settings/settings.php:59
+#: modules/settings/settings.php:266 modules/calendar/calendar.php:1331
+msgid "PublishPress"
+msgstr ""
+
+#: modules/debug/debug.php:227 modules/debug/debug.php:290
+msgid "PublishPress Debug Log"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"PublishPress helps you plan and publish content with WordPress. Features "
+"include a content calendar, notifications, and custom statuses."
+msgstr ""
+
+#: modules/settings/settings.php:139
+msgid "PublishPress Settings"
+msgstr ""
+
+#: publishpress.php:1254
+msgid ""
+"PublishPress tried to load multiple times. Please, deactivate and remove "
+"other instances of PublishPress, specially if you are using PublishPress Pro."
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:927
+msgid "Receiver"
+msgstr ""
+
+#: modules/calendar/calendar.php:2644
+msgid "Regenerate calendar feed secret"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:206
+#: modules/editorial-comments/editorial-comments.php:685
+msgid "Remove"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:589
+msgid "Reply"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:586
+msgid "Reply to this comment"
+msgstr ""
+
+#: modules/notifications/notifications.php:2137
+msgid "Reply: %s"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:355
+#: modules/notifications-log/library/NotificationsLogTable.php:400
+msgid "Reschedule"
+msgstr ""
+
+#: modules/calendar/calendar.php:2075
+#: modules/content-overview/content-overview.php:1019
+#: modules/content-overview/content-overview.php:1104
+msgid "Reset"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1239
+msgid "Restricted status "
+msgstr ""
+
+#: modules/reviews/reviews.php:65
+msgid "Reviews"
+msgstr ""
+
+#: common/php/class-module.php:682
+msgid "Role"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Receiver/Role.php:147
+#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:100
+msgid "role:%s"
+msgstr ""
+
+#: common/php/class-module.php:679
+#: libraries/Notifications/Workflow/Step/Receiver/Role.php:31
+msgid "Roles"
+msgstr ""
+
+#: modules/calendar/calendar.php:811
+msgid "Sat"
+msgstr ""
+
+#: modules/calendar/calendar.php:798 modules/calendar/calendar.php:1853
+msgid "Save"
+msgstr ""
+
+#: modules/calendar/calendar.php:1847
+msgid "Save &#8220;%s&#8221;"
+msgstr ""
+
+#: modules/calendar/calendar.php:800
+msgid "Save and edit"
+msgstr ""
+
+#: modules/calendar/calendar.php:799
+msgid "Saving..."
+msgstr ""
+
+#: common/php/class-module.php:269 modules/custom-status/custom-status.php:918
+#: modules/calendar/calendar.php:1964
+#: modules/notifications-log/library/NotificationsLogTable.php:523
+msgid "Scheduled"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:227
+msgid "Scheduled for %d receivers. Click here to display them."
+msgstr ""
+
+#: modules/content-overview/content-overview.php:271
+msgid "Screen Layout"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1040
+msgid "Search"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1039
+#: modules/content-overview/content-overview.php:1268
+msgid "Search box"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:279
+msgid "Search Comments"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:398
+msgid "Search Editorial Metadata"
+msgstr ""
+
+#: publishpress.php:1219
+msgid "Search Notifications"
+msgstr ""
+
+#: modules/notifications/notifications.php:373
+msgid "Search Notify Emails"
+msgstr ""
+
+#: modules/notifications/notifications.php:338
+msgid "Search Notify Roles"
+msgstr ""
+
+#: modules/notifications/notifications.php:303
+msgid "Search Notify Users"
+msgstr ""
+
+#. %s: search keywords
+#: modules/editorial-comments/editorial-comments.php:267
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:914
+msgid "Select at least one option for each section."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2060
+#: modules/custom-status/custom-status.php:2189
+msgid "Select Icon"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:282
+msgid "Sent"
+msgstr ""
+
+#: modules/calendar/calendar.php:820
+msgid "Sep"
 msgstr ""
 
 #: modules/notifications/notifications.php:383
 msgid "Separate notify emails with commas"
 msgstr ""
 
-#: modules/notifications/notifications.php:384
-msgid "Add or remove notify emails"
+#: modules/notifications/notifications.php:348
+msgid "Separate notify roles with commas"
 msgstr ""
 
-#: modules/notifications/notifications.php:385
-msgid "Choose from the most used notify emails"
+#: modules/notifications/notifications.php:313
+msgid "Separate notify users with commas"
 msgstr ""
 
-#: modules/notifications/notifications.php:386
-#: modules/notifications/notifications.php:387
-msgid "No notify emails"
+#: modules/settings/settings.php:140
+msgid "Settings"
 msgstr ""
 
-#: modules/notifications/notifications.php:388
-msgid "Filter by notify email"
+#: modules/settings/settings.php:122
+msgid "settings"
 msgstr ""
 
-#: modules/notifications/notifications.php:391
-msgid "Most Used Notify Email"
+#: modules/calendar/calendar.php:1390
+msgid "Seven months"
 msgstr ""
 
-#: modules/notifications/notifications.php:392
-msgid "Back to notify emails"
+#: modules/improved-notifications/improved-notifications.php:928
+msgid "shortcode"
 msgstr ""
 
-#: modules/notifications/notifications.php:568
-#: modules/notifications/notifications.php:936
-msgid "Click to stop being notified on updates for this post"
+#: modules/editorial-metadata/editorial-metadata.php:1668
+#: modules/editorial-metadata/editorial-metadata.php:1847
+#: modules/editorial-metadata/editorial-metadata.php:2017
+msgid "Show in filters"
+msgstr ""
+
+#: modules/notifications/notifications.php:1632
+msgid ""
+"Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1862
+msgid "Show the status dropdown menu on the post editing screen:"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
+#: libraries/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
+msgid "Site Administrator"
+msgstr ""
+
+#: modules/calendar/calendar.php:1388
+msgid "Six months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1354
+msgid "Six months ago"
+msgstr ""
+
+#: modules/debug/debug.php:294
+msgid "Size"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Option/SkipUser.php:26
+msgid "Skip current user"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Option/SkipUser.php:31
+msgid "Skip notifications for the user who triggered the action"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:285
+#: modules/notifications-log/library/NotificationsLogTable.php:519
+msgid "Skipped"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1599
+#: modules/editorial-metadata/editorial-metadata.php:1756
+#: modules/custom-status/custom-status.php:1985
+msgid "Slug"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1158
+msgid "Slug already in use. Please choose another."
+msgstr ""
+
+#: modules/notifications/notifications.php:1778
+msgid "slug1,slug2"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:315
+msgid "Sorry! You're not subscribed to any posts!"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:1046
+msgid ""
+"Sorry, you can't delete this editorial comment because it has some replies."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1753
+msgid "Sorry, you do not have permission to edit custom statuses."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:734
+msgid ""
+"Sorry, you don't have the privileges to add editorial comments. Please talk "
+"to your Administrator."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:1025
+msgid ""
+"Sorry, you don't have the privileges to delete this editorial comment. "
+"Please talk to your Administrator."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:877
+#: modules/editorial-comments/editorial-comments.php:1009
+msgid ""
+"Sorry, you don't have the privileges to edit editorial comments. Please talk "
+"to your Administrator."
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:895
+msgid ""
+"Sorry, you don't have the privileges to edit this editorial comment. Please "
+"talk to your Administrator."
+msgstr ""
+
+#: modules/calendar/calendar.php:1338
+msgid "Start date"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1449
+#: modules/content-overview/content-overview.php:627
+#: modules/notifications-log/library/NotificationsLogTable.php:494
+msgid "Status"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1760
+msgid "Status does not exist."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1553
+#: modules/custom-status/custom-status.php:1663
+msgid "Status name cannot exceed 20 characters. Please try a shorter name."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1686
+msgid "Status name conflicts with existing status. Please choose another."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1561
+#: modules/custom-status/custom-status.php:1677
+msgid "Status name conflicts with existing term. Please choose another."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1568
+#: modules/custom-status/custom-status.php:1693
+msgid "Status name is restricted. Please choose another name."
+msgstr ""
+
+#: modules/custom-status/custom-status.php:106
+msgid "Status order updated."
+msgstr ""
+
+#. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
+#: modules/notifications/notifications.php:2031
+msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:82
+#: modules/custom-status/custom-status.php:303
+msgid "Statuses"
+msgstr ""
+
+#: modules/calendar/calendar.php:2535
+msgid "Statuses to display publish time"
 msgstr ""
 
 #: modules/notifications/notifications.php:569
@@ -2346,302 +2243,577 @@ msgstr ""
 msgid "Stop notifying me"
 msgstr ""
 
-#: modules/notifications/notifications.php:572
-#: modules/notifications/notifications.php:942
-msgid "Click to start being notified on updates for this post"
+#: libraries/Notifications/Workflow/Step/Content/Main.php:52
+msgid "Subject"
 msgstr ""
 
-#: modules/notifications/notifications.php:573
-#: modules/notifications/notifications.php:941
-msgid "Notify me"
+#: modules/notifications-log/notifications-log.php:812
+msgid "Subject:"
 msgstr ""
 
-#: modules/notifications/notifications.php:635
-msgid "Enter any users, roles, or email address that should receive notifications from workflows."
+#: modules/editorial-comments/library/EditorialCommentsTable.php:234
+msgid "Submitted on"
 msgstr ""
 
-#: modules/notifications/notifications.php:661
-msgid "This won't have any effect unless you have at least one workflow targeting the \"Notify me\" box."
+#: modules/calendar/calendar.php:1333
+msgid "Subscribe in iCal or Google Calendar"
 msgstr ""
 
-#: modules/notifications/notifications.php:675
-msgid "Active Notifications"
+#: modules/calendar/calendar.php:2527
+msgid "Subscription in iCal or Google Calendar"
 msgstr ""
 
-#: modules/notifications/notifications.php:704
-msgid "No active notifications found for this %s."
+#: modules/notifications-log/library/NotificationsLogTable.php:515
+msgid "Success"
 msgstr ""
 
-#: modules/notifications/notifications.php:1050
-msgid "You are receiving this email because you are subscribed to \"%s\"."
+#: modules/calendar/calendar.php:805
+msgid "Sun"
 msgstr ""
 
-#: modules/notifications/notifications.php:1055
-msgid "This email was sent %s."
+#: modules/notifications-log/library/NotificationsLogTable.php:298
+msgid "synchronous"
 msgstr ""
 
-#: modules/notifications/notifications.php:1629
-msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+#: modules/calendar/calendar.php:3434
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/calendar/calendar.php:3531
+msgid "Tags"
 msgstr ""
 
-#: modules/notifications/notifications.php:1637
-msgid "Email from:"
+#: modules/content-overview/content-overview.php:306
+msgid "Taxonomies to show:"
 msgstr ""
 
-#: modules/notifications/notifications.php:1645
-msgid "Always notify the author of the content:"
+#: libraries/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24
+msgid "Taxonomy"
 msgstr ""
 
-#: modules/notifications/notifications.php:1653
-msgid "Always notify users who have edited the content:"
+#: modules/editorial-metadata/editorial-metadata.php:396
+msgctxt "taxonomy general name"
+msgid "Metadata"
 msgstr ""
 
-#: modules/notifications/notifications.php:1661
-msgid "Blacklisted taxonomies for Notifications"
+#: modules/editorial-metadata/editorial-metadata.php:397
+msgctxt "taxonomy singular name"
+msgid "Metadata"
 msgstr ""
 
-#: modules/notifications/notifications.php:1775
-msgid "slug1,slug2"
+#: modules/calendar/calendar.php:1396
+msgid "Ten months"
 msgstr ""
 
-#: modules/notifications/notifications.php:1781
-msgid "Add a list of taxonomy-slugs separated by comma that should not be loaded by the Taxonomy content filter when adding a new Notification Workflow."
+#: modules/editorial-metadata/editorial-metadata.php:104
+msgid "Term order updated."
 msgstr ""
 
-#: modules/notifications/notifications.php:1881
-msgid "WordPress Scheduler"
+#: modules/editorial-metadata/editorial-metadata.php:105
+msgid "Term visibility changed."
 msgstr ""
 
-#: modules/notifications/notifications.php:1890
-msgid "[%1$s] New %2$s Created: \"%3$s\""
+#: libraries/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
+msgid "Terms"
 msgstr ""
 
-#: modules/notifications/notifications.php:1897
-msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+#: modules/editorial-metadata/editorial-metadata.php:1403
+#: modules/custom-status/custom-status.php:1820
+msgid "Terms not set."
 msgstr ""
 
-#: modules/notifications/notifications.php:1907
-msgid "[%1$s] %2$s Trashed: \"%3$s\""
+#: modules/editorial-metadata/editorial-metadata.php:273
+msgid "Text"
 msgstr ""
 
-#: modules/notifications/notifications.php:1914
-msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+#: modules/editorial-metadata/editorial-metadata.php:1765
+msgid ""
+"The \"slug\" is the URL-friendly version of the name. It is usually all "
+"lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
-#: modules/notifications/notifications.php:1924
-msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+#: modules/custom-status/custom-status.php:2040
+#: modules/custom-status/custom-status.php:2169
+msgid "The color is used to identify the status."
 msgstr ""
 
-#: modules/notifications/notifications.php:1931
-msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+#: modules/editorial-metadata/editorial-metadata.php:1620
+#: modules/editorial-metadata/editorial-metadata.php:1782
+msgid ""
+"The description can be used to communicate with your team about what the "
+"metadata is for."
 msgstr ""
 
-#: modules/notifications/notifications.php:1954
-msgid "[%1$s] %2$s Published: \"%3$s\""
-msgstr ""
-
-#: modules/notifications/notifications.php:1961
-msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
-msgstr ""
-
-#: modules/notifications/notifications.php:1971
-msgid "[%1$s] %2$s Unpublished: \"%3$s\""
-msgstr ""
-
-#: modules/notifications/notifications.php:1978
-msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
-msgstr ""
-
-#: modules/notifications/notifications.php:1988
-msgid "[%1$s] %2$s Status Changed for \"%3$s\""
-msgstr ""
-
-#: modules/notifications/notifications.php:1995
-msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2006
-msgid "This action was taken on %1$s at %2$s %3$s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2019
-msgid "%1$s => %2$s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2027
-msgid "== %s Details =="
-msgstr ""
-
-#: modules/notifications/notifications.php:2028
-msgid "Title: %s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2032
-msgid "Author: %1$s (%2$s )"
-msgstr ""
-
-#: modules/notifications/notifications.php:2046
-#: modules/notifications/notifications.php:2099
-msgid "== Actions =="
-msgstr ""
-
-#: modules/notifications/notifications.php:2048
-#: modules/notifications/notifications.php:2105
-msgid "Add editorial comment: %s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2051
-#: modules/notifications/notifications.php:2108
-msgid "Edit: %s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2052
-#: modules/notifications/notifications.php:2109
-msgid "View: %s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2063
-msgid "[%1$s] New Editorial Comment: \"%2$s\""
-msgstr ""
-
-#: modules/notifications/notifications.php:2070
-msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
-msgstr ""
-
-#: modules/notifications/notifications.php:2077
-msgid "%1$s (%2$s ) said on %3$s at %4$s:"
-msgstr ""
-
-#: modules/notifications/notifications.php:2101
-msgid "Reply: %s"
-msgstr ""
-
-#: modules/notifications/notifications.php:2112
-msgid "You can see all editorial comments on this %s here: "
-msgstr ""
-
-#: modules/reviews/reviews.php:65
-msgid "Reviews"
-msgstr ""
-
-#: modules/settings/settings.php:122
-msgid "settings"
-msgstr ""
-
-#: modules/settings/settings.php:139
-msgid "PublishPress Settings"
-msgstr ""
-
-#: modules/settings/settings.php:140
-msgid "Settings"
-msgstr ""
-
-#: modules/settings/settings.php:269
-msgid "If you like %s please leave us a %s rating. Thank you!"
-msgstr ""
-
-#: modules/settings/settings.php:288
-msgid "There are no PublishPress modules registered"
-msgstr ""
-
-#: modules/settings/settings.php:378
-msgid "Disabled because add_post_type_support('%1$s', '%2$s') is included in a loaded file."
+#: modules/custom-status/custom-status.php:2019
+#: modules/custom-status/custom-status.php:2152
+msgid ""
+"The description is primarily for administrative use, to give you some "
+"context on what the custom status is to be used for."
 msgstr ""
 
 #: modules/theeventscalendar-integration/theeventscalendar-integration.php:51
 msgid "The Events Calendar Integration"
 msgstr ""
 
-#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
-msgid "Integrate with the The Events Calendar plugin"
+#: modules/custom-status/custom-status.php:2066
+#: modules/custom-status/custom-status.php:2195
+msgid "The icon is used to visually represent the status."
 msgstr ""
 
-#: publishpress.php:614
-msgid "Configure"
+#: modules/editorial-metadata/editorial-metadata.php:1634
+msgid "The metadata type cannot be changed once created."
 msgstr ""
 
-#: publishpress.php:617
-msgid "Please correct your form errors below and try again."
+#: modules/editorial-metadata/editorial-metadata.php:1594
+#: modules/editorial-metadata/editorial-metadata.php:1751
+msgid "The name is for labeling the metadata field."
 msgstr ""
 
-#: publishpress.php:618
-msgid "Cheatin&#8217; uh?"
+#: modules/custom-status/custom-status.php:1976
+#: modules/custom-status/custom-status.php:2132
+msgid "The name is used to identify the status. (Max: 20 characters)"
 msgstr ""
 
-#: publishpress.php:619
-msgid "You do not have necessary permissions to complete this action."
+#: modules/notifications-log/library/NotificationsLogTable.php:277
+msgid ""
+"The notification was set as \"Scheduled\" but the cron task is not found"
 msgstr ""
 
-#: publishpress.php:623
-msgid "Post does not exist"
+#: modules/dashboard/dashboard.php:409
+msgid ""
+"The notifications module will need to be enabled for this widget to display."
 msgstr ""
 
-#: publishpress.php:1203
-msgid "Add New Notification"
+#: modules/calendar/calendar.php:2611
+msgid ""
+"The number of weeks shown on the calendar can be changed on a user-by-user "
+"basis using the calendar's screen options."
 msgstr ""
 
-#: publishpress.php:1204
-msgid "Edit Notification"
+#: modules/notifications-log/library/NotificationsLogModel.php:264
+msgid "The parent log was deleted or probably rescheduled"
 msgstr ""
 
-#: publishpress.php:1205
-msgid "Search Notifications"
+#: modules/calendar/calendar.php:3595
+msgid "The selected post type is not enabled for the calendar."
 msgstr ""
 
-#: publishpress.php:1208
-#: publishpress.php:1209
-msgid "No notification found"
+#: modules/calendar/calendar.php:4074
+msgid ""
+"The selected user doesn't have enough permissions to be set as the post "
+"author."
 msgstr ""
 
-#: publishpress.php:1240
-msgid "PublishPress tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro."
+#: modules/editorial-metadata/editorial-metadata.php:1604
+msgid "The slug cannot be changed once the term has been created."
 msgstr ""
 
-#: publishpress.php:1250
+#: modules/custom-status/custom-status.php:1997
+msgid ""
+"The slug is the unique ID for the status and is changed when the name is "
+"changed."
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1403
+msgid "There are no posts in the range or filter specified."
+msgstr ""
+
+#: modules/settings/settings.php:289
+msgid "There are no PublishPress modules registered"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:831
+#: modules/editorial-comments/editorial-comments.php:961
+#: modules/editorial-comments/editorial-comments.php:1071
+msgid ""
+"There was a problem of some sort. Try again or contact your administrator."
+msgstr ""
+
+#: modules/calendar/calendar.php:187
+msgid "There was an error updating the post. Please try again."
+msgstr ""
+
+#. 1: date, 2: time, 3: timezone
+#: modules/notifications/notifications.php:2042
+msgid "This action was taken on %1$s at %2$s %3$s"
+msgstr ""
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:126
+msgid "This editorial metadata type is not yet supported."
+msgstr ""
+
+#: modules/notifications/notifications.php:1055
+msgid "This email was sent %s."
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:830
+msgid ""
+"This is a preview of the scheduled message. The content can still change "
+"until the notification is sent."
+msgstr ""
+
+#: modules/notifications-log/notifications-log.php:437
+msgid ""
+"This notification is very similar to another one sent less than %d minutes "
+"ago for the same receiver"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:304
+msgid "This post was last updated on "
+msgstr ""
+
+#: modules/notifications/notifications.php:661
+msgid ""
+"This won't have any effect unless you have at least one workflow targeting "
+"the \"Notify me\" box."
+msgstr ""
+
+#: modules/calendar/calendar.php:1382
+msgid "Three months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1348
+msgid "Three months ago"
+msgstr ""
+
+#: modules/calendar/calendar.php:1369
+msgid "Three weeks"
+msgstr ""
+
+#: modules/calendar/calendar.php:809
+msgid "Thu"
+msgstr ""
+
+#: modules/calendar/calendar.php:3492
+#: modules/content-overview/content-overview.php:626
+#: libraries/Notifications/Table/Workflows.php:142
+#: libraries/Notifications/Table/Notifications.php:156
+msgid "Title"
+msgstr ""
+
+#: modules/notifications/notifications.php:2064
+msgid "Title: %s"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:626
+msgid "To date"
+msgstr ""
+
+#: modules/calendar/calendar.php:831 modules/calendar/calendar.php:2123
+msgid "Today"
+msgstr ""
+
+#: modules/calendar/calendar.php:2117
+msgid "Today is %s"
+msgstr ""
+
+#: common/php/class-module.php:272 modules/calendar/calendar.php:1813
+#: modules/calendar/calendar.php:3453
+#: modules/content-overview/content-overview.php:1722
+msgid "Trash"
+msgstr ""
+
+#: modules/calendar/calendar.php:807
+msgid "Tue"
+msgstr ""
+
+#: modules/calendar/calendar.php:1400
+msgid "Twelve months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1380
+msgid "Two months"
+msgstr ""
+
+#: modules/calendar/calendar.php:1346
+msgid "Two months ago"
+msgstr ""
+
+#: modules/calendar/calendar.php:1367
+msgid "Two weeks"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1629
+#: modules/editorial-metadata/editorial-metadata.php:1790
+msgid "Type"
+msgstr ""
+
+#: core/Error.php:79
+msgid "Undefined error found"
+msgstr ""
+
+#: modules/calendar/calendar.php:1456
+#: modules/content-overview/content-overview.php:1067
+msgid "Undo"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:164
+msgid "Unpublished Content"
+msgstr ""
+
+#: modules/calendar/calendar.php:796 modules/calendar/calendar.php:3601
+msgid "Untitled"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:402
+msgid "Update Editorial Metadata"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1701
+msgid "Update Metadata Term"
+msgstr ""
+
+#: modules/dashboard/widgets/dashboard-notepad.php:168
+msgid "Update Note"
+msgstr ""
+
+#: modules/notifications/notifications.php:380
+msgid "Update Notify Email"
+msgstr ""
+
+#: modules/notifications/notifications.php:345
+msgid "Update Notify Role"
+msgstr ""
+
+#: modules/notifications/notifications.php:310
+msgid "Update Notify User"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:2073
+msgid "Update Status"
+msgstr ""
+
+#: modules/calendar/calendar.php:191
+msgid ""
+"Updating the post date dynamically doesn't work for published content. "
+"Please <a href='%s'>edit the post</a>."
+msgstr ""
+
+#: includes.php:157
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:1855
+msgid "Use on these post types:"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:274
+msgid "User"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:120
+msgid "user"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:924
+msgid "User making changes or comments"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:122
+msgid "User: %s (%d)"
+msgstr ""
+
+#: common/php/class-module.php:690
+#: libraries/Notifications/Workflow/Step/Receiver/User.php:26
+msgid "Users"
+msgstr ""
+
+#: libraries/Notifications/Workflow/Step/Receiver/Follower.php:30
+msgid "Users who selected \"Notify me\" for the content"
+msgstr ""
+
+#: modules/calendar/calendar.php:1837 modules/calendar/calendar.php:3460
+#: modules/content-overview/content-overview.php:1738
+msgid "View"
+msgstr ""
+
+#: modules/calendar/calendar.php:1831
+#: modules/content-overview/content-overview.php:1732
+msgid "View &#8220;%s&#8221;"
+msgstr ""
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:56
+msgid "View &#8220;%s&#8221; on Google Maps"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1199
+#: modules/content-overview/content-overview.php:1202
+#, php-format
+msgid "View all %s"
+msgstr ""
+
+#: modules/calendar/calendar.php:3860
+msgid "View all categories"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1251
+msgid "View all post types"
+msgstr ""
+
+#: modules/content-overview/content-overview.php:1177
+msgid "View all statuses"
+msgstr ""
+
+#: modules/notifications/notifications.php:379
+msgid "View Notify Email"
+msgstr ""
+
+#: modules/notifications/notifications.php:344
+msgid "View Notify Role"
+msgstr ""
+
+#: modules/notifications/notifications.php:309
+msgid "View Notify User"
+msgstr ""
+
+#: modules/notifications/notifications.php:2088
+#: modules/notifications/notifications.php:2145
+msgid "View: %s"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1639
+#: modules/editorial-metadata/editorial-metadata.php:1816
+#: modules/editorial-metadata/editorial-metadata.php:2016
+msgid "Viewable"
+msgstr ""
+
+#: publishpress.php:1264
 msgid "Warning"
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:63
-msgid "Unschedule and Save as %s"
+#: modules/calendar/calendar.php:808
+msgid "Wed"
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:65
-msgid "Unpublish and Save as %s"
+#: modules/editorial-metadata/editorial-metadata.php:211
+msgid "What the post needs to cover."
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:68
-msgid "Save as %s"
+#: modules/improved-notifications/improved-notifications.php:796
+msgid "What to say?"
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:113
-#: modules/custom-status/lib/custom-status-block.jsx:129
-msgid "To select a custom status, please unpublish the content first."
+#: libraries/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
+msgid "When an editorial comment is added"
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:118
-msgid "To select a custom status, please unschedule the content first."
+#: modules/editorial-metadata/editorial-metadata.php:1688
+#: modules/editorial-metadata/editorial-metadata.php:1870
+msgid ""
+"When Show in filters, metadata will be available as filter option on content "
+"overview screen."
 msgstr ""
 
-#: modules/custom-status/lib/custom-status-block.jsx:123
-msgid "To select a custom status, please uncheck the \"Pending Review\" checkbox first."
+#: libraries/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
+msgid "When the content is moved to a new status"
 msgstr ""
 
-#: modules/editorial-comments/lib/editorial-comments.js:272
-msgid "Sending content..."
+#: libraries/Notifications/Workflow/Step/Event/Post_Update.php:26
+msgid "When the content is updated"
 msgstr ""
 
-#: modules/editorial-comments/lib/editorial-comments.js:319
-msgid "This comment can't be deleted because it has one or more replies. Before deleting it make sure to delete all the replies first."
+#: modules/editorial-metadata/editorial-metadata.php:205
+msgid "When the first draft needs to be ready."
 msgstr ""
 
-#: modules/editorial-comments/lib/editorial-comments.js:323
-msgid "Are you sure you want to delete this comment?"
+#: libraries/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
+msgid "When the status is changed"
 msgstr ""
 
-#: modules/notifications-log/assets/js/admin.js:73
-msgid "for"
+#: libraries/Notifications/Plugin.php:57
+#: modules/improved-notifications/improved-notifications.php:766
+#: modules/notifications-log/library/NotificationsLogTable.php:491
+msgid "When to notify?"
 msgstr ""
 
-#: modules/notifications-log/assets/js/admin.js:73
-msgid "by"
+#: modules/editorial-metadata/editorial-metadata.php:1659
+#: modules/editorial-metadata/editorial-metadata.php:1839
+#: modules/editorial-metadata/editorial-metadata.php:2135
+msgid ""
+"When viewable, metadata can be seen on views other than the edit post view "
+"(e.g. calendar, manage posts, content overview, etc.)"
+msgstr ""
+
+#: libraries/Notifications/Plugin.php:59
+#: modules/improved-notifications/improved-notifications.php:786
+#: modules/notifications-log/library/NotificationsLogTable.php:493
+msgid "Who to notify?"
+msgstr ""
+
+#: modules/dashboard/dashboard.php:69
+msgid "Widget Options"
+msgstr ""
+
+#: modules/notifications/notifications.php:1917
+msgid "WordPress Scheduler"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:925
+msgid "Workflow"
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:728
+msgid "Workflow Settings"
+msgstr ""
+
+#: modules/notifications-log/library/NotificationsLogTable.php:110
+msgid "Workflow: %s"
+msgstr ""
+
+#: views/user_profile_notification_channels.html.php:14
+#: modules/improved-notifications/improved-notifications.php:396
+#: modules/improved-notifications/improved-notifications.php:1104
+msgid "Workflows"
+msgstr ""
+
+#: modules/custom-status/custom-status.php:207
+msgid "Writer is working on the post."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1644
+#: modules/editorial-metadata/editorial-metadata.php:1673
+#: modules/editorial-metadata/editorial-metadata.php:1820
+#: modules/editorial-metadata/editorial-metadata.php:1851
+#: modules/editorial-metadata/editorial-metadata.php:2061
+#: modules/editorial-metadata/editorial-metadata.php:2068
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:114
+msgid "Yes"
+msgstr ""
+
+#: modules/notifications/notifications.php:1050
+msgid "You are receiving this email because you are subscribed to \"%s\"."
+msgstr ""
+
+#: modules/improved-notifications/improved-notifications.php:918
+msgid ""
+"You can add dynamic information to the Subject or Body text using the "
+"following shortcodes:"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:498
+msgid ""
+"You can add editorial comments to a post once you've saved it for the first "
+"time."
+msgstr ""
+
+#: modules/notifications/notifications.php:2148
+msgid "You can see all editorial comments on this %s here: "
+msgstr ""
+
+#: publishpress.php:633
+msgid "You do not have necessary permissions to complete this action."
+msgstr ""
+
+#: libraries/Notifications/Table/Notifications.php:235
+msgid "You don't have any notifications"
+msgstr ""
+
+#: includes.php:128
+msgid ""
+"You're using PublishPress Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
 msgstr ""
