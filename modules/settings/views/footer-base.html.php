@@ -1,8 +1,10 @@
 <?php
 $plugin_name_markup = "<strong>{$context['plugin_name']}</strong>";
 $rating_stars_markup = "
-        <span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span>
-        <span class=\"dashicons dashicons-star-filled\"></span><span class=\"dashicons dashicons-star-filled\"></span>
+        <span class=\"dashicons dashicons-star-filled\"></span>
+        <span class=\"dashicons dashicons-star-filled\"></span>
+        <span class=\"dashicons dashicons-star-filled\"></span>
+        <span class=\"dashicons dashicons-star-filled\"></span>
         <span class=\"dashicons dashicons-star-filled\"></span>";
 ?>
 <br style="clear: both;">
