@@ -175,6 +175,10 @@
     margin-right: 7px;
 }
 
+.publishpress_page_pp-editorial-comments .fixed .column-author {
+    width: 15%;
+}
+
 #pp-editrow #pp-editcontent {
     box-sizing: border-box;
     width: calc(100% - 70px);
