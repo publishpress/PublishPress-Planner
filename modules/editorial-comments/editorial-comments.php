@@ -70,6 +70,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                         'post' => 'on',
                         'page' => 'on',
                     ],
+                    'editorial_comment_name_field' => 'display_name',
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'configure_link_text' => __('Choose Post Types', 'publishpress'),
@@ -1099,6 +1100,13 @@ if (! class_exists('PP_Editorial_Comments')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+            add_settings_field(
+                'editorial_comment_name_field',
+                esc_html__('Comment author name field:', 'publishpress'),
+                [$this, 'settings_editorial_comment_name_field_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -1110,6 +1118,32 @@ if (! class_exists('PP_Editorial_Comments')) {
         {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type($this->module);
+        }
+
+        /**
+         * Editorial comment name field
+         *
+         */
+        public function settings_editorial_comment_name_field_option()
+        {
+            $options = [
+                'user_login'    => __('Nickname', 'publishpress'),
+                'user_nicename' => __('Username', 'publishpress'),
+                'display_name'  => __('Display Name', 'publishpress'),
+                'first_name'     => __('First Name', 'publishpress'),
+                'last_name'     => __('Last Name', 'publishpress'),
+                'user_email'    => __('Email', 'publishpress'),
+                'user_url'      => __('User Url', 'publishpress'),
+            ];
+            echo '<select id="editorial_comment_name_field" name="' . esc_attr(
+                    $this->module->options_group_name
+                ) . '[editorial_comment_name_field]">';
+            foreach ($options as $value => $label) {
+                echo '<option value="' . esc_attr($value) . '"';
+                echo selected($this->module->options->editorial_comment_name_field, $value);
+                echo '>' . esc_html($label) . '</option>';
+            }
+            echo '</select>';
         }
 
         /**
