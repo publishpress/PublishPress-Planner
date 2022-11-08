@@ -51,6 +51,11 @@
     margin-top: 6px;
 }
 
+.pp_editorial_meta_user .select2-container {
+    width: -webkit-fill-available !important;
+    width: -moz-available !important;
+}
+
 /*
  * If editorial metadata is in the main post column, allow the metadata to be laid out in
  * multiple columns in browsers that support it.
