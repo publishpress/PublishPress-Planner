@@ -95,6 +95,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         'post' => 'on',
                         'page' => 'off',
                     ],
+                    'post_types_column' => [
+                        'post' => 'on',
+                        'page' => 'off',
+                    ],
                 ],
                 'messages' => [
                     'term-added' => esc_html__("Metadata term added.", 'publishpress'),
@@ -155,7 +159,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
 
                     // Add Editorial Metadata columns to the Manage Posts view
-                    $supported_post_types = $this->get_post_types_for_module($this->module);
+                    $supported_post_types = $this->get_editorial_metadata_post_types_column();
                     foreach ($supported_post_types as $post_type) {
                         add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
                         add_action(
@@ -1471,6 +1475,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
+            add_settings_field(
+                'post_types_column',
+                esc_html__('Add to these post types filter column:', 'publishpress'),
+                [$this, 'settings_post_types_column_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
         }
 
         /**
@@ -1482,6 +1493,64 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type($this->module);
+        }
+
+        /**
+         * Choose the post types column for editorial metadata
+         *
+         * @since 0.7
+         */
+        public function settings_post_types_column_option()
+        {
+           $this->helper_option_column_custom_post_type();
+        }
+
+        /**
+         * Generate an option field to turn post type support on/off
+         */
+        public function helper_option_column_custom_post_type()
+        {
+            $post_types = [
+                'post' => __('Posts', 'publishpress'),
+                'page' => __('Pages', 'publishpress'),
+            ];
+            
+            $custom_post_types = $this->get_supported_post_types_for_module($this->module);
+            if (count($custom_post_types)) {
+                foreach ($custom_post_types as $custom_post_type => $args) {
+                    $post_types[$custom_post_type] = $args->label;
+                }
+            }
+
+            foreach ($post_types as $post_type => $title) {
+                echo '<label for="' . esc_attr($post_type) . '-' . $this->module->slug . '">';
+                echo '<input id="' . esc_attr($post_type) . '-' . $this->module->slug . '" name="'
+                    . $this->module->options_group_name . '[post_types_column][' . esc_attr($post_type) . ']"';
+                if (isset($this->module->options->post_types_column[$post_type])) {
+                    checked($this->module->options->post_types_column[$post_type], 'on');
+                }
+                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
+                echo '<br />';
+            }
+        }
+
+        /**
+         * Collect editorial metatdata active post types column.
+         *
+         * @return void
+         */
+        public function get_editorial_metadata_post_types_column() {
+
+            $post_types = [];
+            if (isset($this->module->options->post_types_column) && is_array($this->module->options->post_types_column)) {
+                foreach ($this->module->options->post_types_column as $post_type => $value) {
+                    if ('on' == $value) {
+                        $post_types[] = $post_type;
+                    }
+                }
+            }
+    
+            return $post_types;
         }
 
         /**
@@ -1501,6 +1570,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
             $new_options['post_types'] = $this->clean_post_type_options(
                 $new_options['post_types'],
+                $this->module->post_type_support
+            );
+            if (! isset($new_options['post_types_column'])) {
+                $new_options['post_types_column'] = [];
+            }
+            $new_options['post_types_column'] = $this->clean_post_type_options(
+                $new_options['post_types_column'],
                 $this->module->post_type_support
             );
 
