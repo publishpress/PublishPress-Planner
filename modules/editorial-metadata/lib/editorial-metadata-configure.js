@@ -61,5 +61,8 @@
         });
 
         $('#the-list tr.term-static').disableSelection();
+        if ($('.pp_editorial_meta_user').length > 0) {
+          $('.pp_editorial_meta_user select').select2();
+        }
     });
 })(jQuery);

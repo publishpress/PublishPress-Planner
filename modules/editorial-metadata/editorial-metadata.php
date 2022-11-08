@@ -290,7 +290,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // Add the metabox date picker JS and CSS
             $current_post_type = $this->get_current_post_type();
             $supported_post_types = $this->get_post_types_for_module($this->module);
-            if (in_array($current_post_type, $supported_post_types)) {
+            if (in_array($current_post_type, $supported_post_types) || $this->is_whitelisted_settings_view($this->module->name)) {
                 $this->enqueue_datepicker_resources();
 
                 // Now add the rest of the metabox CSS
@@ -300,6 +300,42 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
+                );
+
+                wp_enqueue_style(
+                    'publishpress-select2-css',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    false,
+                    PUBLISHPRESS_VERSION,
+                    'all'
+                );
+
+                wp_enqueue_script('jquery-ui-sortable');
+    
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
+                    'publishpress-editorial-metadata-configure',
+                    PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js',
+                    ['jquery', 'jquery-ui-sortable', 'publishpress-select2'],
+                    PUBLISHPRESS_VERSION,
+                    true
+                );
+
+                wp_localize_script(
+                    'publishpress-editorial-metadata-configure',
+                    'objectL10nMetadata',
+                    [
+                        'pp_confirm_delete_term_string' => esc_html__(
+                            'Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.',
+                            'publishpress'
+                        ),
+                    ]
                 );
             }
             // A bit of custom CSS for the Manage Posts view if we have viewable metadata
@@ -357,29 +393,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     }
                     echo '</style>';
                 }
-            }
-
-            // Load Javascript specific to the editorial metadata configuration view
-            if ($this->is_whitelisted_settings_view($this->module->name)) {
-                wp_enqueue_script('jquery-ui-sortable');
-                wp_enqueue_script(
-                    'publishpress-editorial-metadata-configure',
-                    PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js',
-                    ['jquery', 'jquery-ui-sortable'],
-                    PUBLISHPRESS_VERSION,
-                    true
-                );
-
-                wp_localize_script(
-                    'publishpress-editorial-metadata-configure',
-                    'objectL10nMetadata',
-                    [
-                        'pp_confirm_delete_term_string' => esc_html__(
-                            'Are you sure you want to delete this term? Any metadata for this term will remain but will not be visible unless this term is re-added.',
-                            'publishpress'
-                        ),
-                    ]
-                );
             }
         }
 
