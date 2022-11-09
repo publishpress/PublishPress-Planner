@@ -59,10 +59,28 @@
                 });
             }
         });
+      
+        //show matched fields when meta data type is changed
+        $(document).on('change', '#metadata_type', function (e) {
+          var selected_type = $(this).val();
+          //hide all optional field
+          $('.pp-editorial-optional-field').hide();
+          //show type applicable field
+          $('.pp-editorial-'+ selected_type +'-field').show();
+       });
 
         $('#the-list tr.term-static').disableSelection();
+        //load select2
         if ($('.pp_editorial_meta_user').length > 0) {
           $('.pp_editorial_meta_user select').select2();
+        }
+        if ($('.pp_editorial_meta_multi_select2').length > 0) {
+          $('.pp_editorial_meta_multi_select2').select2({
+            placeholder: function(){
+              $(this).data('placeholder');
+            },
+            multiple: true
+          });
         }
     });
 })(jQuery);

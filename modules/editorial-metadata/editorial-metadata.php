@@ -281,6 +281,27 @@ if (! class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
+         * Prepare an array of supported editorial metadata user roles
+         *
+         * @return array $supported_metadata_user_roles All of the supported metadata
+         */
+        private function get_supported_metadata_user_roles()
+        {
+            global $wp_roles;
+            if (!isset($wp_roles)) {
+                $wp_roles = new WP_Roles();
+            }
+
+            $supported_metadata_user_roles = [];
+
+            foreach ($wp_roles->roles as $role => $details) {
+                $supported_metadata_user_roles[$role] = translate_user_role($details['name']);
+            }
+
+            return $supported_metadata_user_roles;
+        }
+
+        /**
          * Enqueue relevant admin Javascript
          */
         public function add_admin_scripts()
@@ -304,7 +325,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
                 wp_enqueue_style(
                     'publishpress-select2-css',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.1.0-rc.0/css/select2.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
@@ -313,8 +334,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_enqueue_script('jquery-ui-sortable');
     
                 wp_enqueue_script(
-                    'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    'publishpress-editorial-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.1.0-rc.0/js/select2.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -322,7 +343,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_enqueue_script(
                     'publishpress-editorial-metadata-configure',
                     PUBLISHPRESS_URL . 'modules/editorial-metadata/lib/editorial-metadata-configure.js',
-                    ['jquery', 'jquery-ui-sortable', 'publishpress-select2'],
+                    ['jquery', 'jquery-ui-sortable', 'publishpress-editorial-select2'],
                     PUBLISHPRESS_VERSION,
                     true
                 );
@@ -516,6 +537,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     // Check if the user can edit the metadata
                     $can_edit = $this->checkEditCapability();
 
+                    $term_options = $this->get_editorial_metadata_term_by('id', $term->term_id);
                     if ($can_edit) {
                         $this->editorial_metadata_input_handler->handleHtmlRendering(
                             $term->type,
@@ -523,6 +545,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 'name' => $postmeta_key,
                                 'label' => $term->name,
                                 'description' => $term->description,
+                                'term_options' => $term_options,
                             ],
                             $current_metadata
                         );
@@ -533,6 +556,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 'name' => $postmeta_key,
                                 'label' => $term->name,
                                 'description' => $term->description,
+                                'term_options' => $term_options,
                             ],
                             $current_metadata
                         );
@@ -982,6 +1006,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'slug' => $old_term->slug,
                     'description' => $old_term->description,
                     'type' => $old_term->type,
+                    'user_role' => isset($old_term->user_role) ? $old_term->user_role : '',
                     'viewable' => $old_term->viewable,
                     'show_in_filters' => $old_term->show_in_filters,
                 ];
@@ -993,6 +1018,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'description' => $new_args['description'],
                 'position' => $new_args['position'],
                 'type' => $new_args['type'],
+                'user_role' => $new_args['user_role'],
                 'viewable' => $new_args['viewable'],
                 'show_in_filters' => $new_args['show_in_filters'],
             ];
@@ -1025,6 +1051,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'slug' => '',
                 'description' => '',
                 'type' => '',
+                'user_role' => '',
                 'viewable' => false,
                 'show_in_filters' => false,
             ];
@@ -1037,6 +1064,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'description' => $args['description'],
                 'position' => $args['position'],
                 'type' => $args['type'],
+                'user_role' => $args['user_role'],
                 'viewable' => $args['viewable'],
                 'show_in_filters' => $args['show_in_filters'],
             ];
@@ -1136,6 +1164,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $term_description = trim(stripslashes(wp_filter_post_kses($_POST['metadata_description'])));
             $term_type = sanitize_key($_POST['metadata_type']);
+            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
+                ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
 
             $_REQUEST['form-errors'] = [];
 
@@ -1221,6 +1251,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'description' => $term_description,
                 'slug' => $term_slug,
                 'type' => $term_type,
+                'user_role' => $term_user_role,
                 'viewable' => $term_viewable,
                 'show_in_filters' => $term_show_in_filters,
             ];
@@ -1328,6 +1359,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $new_show_in_filters = true;
             }
 
+            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
+                ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
+
             // Kick out if there are any errors
             if (! empty($_REQUEST['form-errors'])) {
                 $_REQUEST['error'] = 'form-error';
@@ -1338,6 +1372,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $args = [
                 'name' => $new_name,
                 'description' => $new_description,
+                'user_role' => $term_user_role,
                 'viewable' => $new_viewable,
                 'show_in_filters' => $new_show_in_filters,
             ];
@@ -1641,6 +1676,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 }
                 $metadata_types = $this->get_supported_metadata_types();
                 $type = $term->type;
+                $term_user_role = isset($term->user_role) ? (array)$term->user_role : [];
                 $edit_term_link = $this->get_link(['action' => 'edit-term', 'term-id' => $term->term_id]);
 
                 $name = (isset($_POST['name'])) ? stripslashes(sanitize_text_field($_POST['name'])) : $term->name;
@@ -1721,6 +1757,32 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 echo esc_attr($metadata_types[$type]); ?>"/>
                                 <p class='description'><?php
                                     esc_html_e('The metadata type cannot be changed once created.', 'publishpress'); ?></p>
+                            </td>
+                        </tr>
+                        <tr class='form-field pp-editorial-optional-field pp-editorial-user-field pp-select2-field' 
+                            style="<?php echo ($type === 'user' ? '' : 'display:none'); ?>">
+                            <th scope='row' valign='top'><?php
+                                esc_html_e('User role', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                    $metadata_user_roles = $this->get_supported_metadata_user_roles();
+                                    $current_metadata_user_role = $term_user_role; ?>
+                                    <select id="metadata_user_role"
+                                        class="pp_editorial_meta_multi_select2" 
+                                        name="metadata_user_role[]"
+                                        data-placeholder="<?php echo esc_attr__('Select roles...', 'publishpress'); ?>"
+                                        multiple="multiple">
+                                        <?php
+                                        foreach ($metadata_user_roles as $metadata_user_role => $metadata_user_role_name) : ?>
+                                            <option value="<?php
+                                            echo esc_attr($metadata_user_role); ?>" <?php
+                                            selected(in_array($metadata_user_role, $current_metadata_user_role), true); ?>><?php
+                                                echo esc_html($metadata_user_role_name); ?></option>
+                                        <?php
+                                        endforeach; ?>
+                                    </select>
+                                <p class='description'><?php
+                                    esc_html_e('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress'); ?></p>
                             </td>
                         </tr>
                         <tr class='form-field'>
@@ -1898,6 +1960,33 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'type',
                                             esc_html__('Indicate the type of editorial metadata.', 'publishpress')
+                                        ); ?>
+                                    </div>
+                                    <div class='form-field pp-editorial-optional-field pp-editorial-user-field pp-select2-field' style="display:none;">
+                                        <label for='metadata_user_role'><?php
+                                            esc_html_e('User role', 'publishpress'); ?></label>
+                                        <?php
+                                        $metadata_user_roles = $this->get_supported_metadata_user_roles();
+                                        $current_metadata_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
+                                            ? array_map('sanitize_key', $_POST['metadata_user_role']) : []; ?>
+                                        <select id="metadata_user_role"
+                                            class="pp_editorial_meta_multi_select2" 
+                                            name="metadata_user_role[]"
+                                            data-placeholder="<?php echo esc_attr__('Select roles...', 'publishpress'); ?>"
+                                            multiple="multiple">
+                                            <?php
+                                            foreach ($metadata_user_roles as $metadata_user_role => $metadata_user_role_name) : ?>
+                                                <option value="<?php
+                                                echo esc_attr($metadata_user_role); ?>" <?php
+                                                selected(in_array($metadata_user_role, $current_metadata_user_role), true); ?>><?php
+                                                    echo esc_html($metadata_user_role_name); ?></option>
+                                            <?php
+                                            endforeach; ?>
+                                        </select>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'user_role',
+                                            esc_html__('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress')
                                         ); ?>
                                     </div>
                                     <div class='form-field form-required'>

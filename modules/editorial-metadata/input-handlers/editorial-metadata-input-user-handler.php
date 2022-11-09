@@ -31,6 +31,7 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
             $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
+            $input_term_options = isset($inputOptions['term_options']) ? $inputOptions['term_options'] : false;
 
             self::renderLabel(
                 $input_label,
@@ -44,6 +45,10 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
                 'name' => $input_name,
                 'selected' => $value,
             ];
+
+            if ($input_term_options && isset($input_term_options->user_role) && is_array($input_term_options->user_role)) {
+                $user_dropdown_args['role__in'] = $input_term_options->user_role;
+            }
 
             $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
             wp_dropdown_users($user_dropdown_args);

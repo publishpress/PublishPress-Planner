@@ -56,6 +56,18 @@
     width: -moz-available !important;
 }
 
+.pp-select2-field .select2-container {
+    width: 95% !important;
+}
+.pp-select2-field .select2-selection--multiple{
+    overflow: hidden !important;
+    height: auto !important;
+}
+
+.pp-select2-field .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    padding-bottom: 9px !important;
+}
+
 /*
  * If editorial metadata is in the main post column, allow the metadata to be laid out in
  * multiple columns in browsers that support it.
