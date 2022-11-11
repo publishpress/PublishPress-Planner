@@ -270,6 +270,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             $supported_metadata_types = [
                 'checkbox' => esc_html__('Checkbox', 'publishpress'),
+                'select' => esc_html__('Dropdown Select', 'publishpress'),
                 'date' => esc_html__('Date', 'publishpress'),
                 'location' => esc_html__('Location', 'publishpress'),
                 'number' => esc_html__('Number', 'publishpress'),
@@ -528,7 +529,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             } else {
                 foreach ($terms as $term) {
                     $postmeta_key = esc_attr($this->get_postmeta_key($term));
-                    $current_metadata = esc_attr($this->get_postmeta_value($term, $post->ID));
+                    $current_metadata = $this->get_postmeta_value($term, $post->ID);
 
                     echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(
                             self::metadata_taxonomy
@@ -614,7 +615,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 // Set up the key for this editorial metadata term (same as what's in $_POST)
                 $key = $this->get_postmeta_key($term);
 
-                $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
+                if (isset($_POST[$key]) && is_array($_POST[$key])) {
+                    $new_metadata = array_map('sanitize_text_field', $_POST[$key]);
+                } else {
+                    $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
+                }
 
                 $type = $term->type;
                 if (empty($new_metadata)) {
@@ -630,10 +635,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     } elseif ($type == 'number') {
                         $new_metadata = (int)$new_metadata;
                     }
-
-                    $new_metadata = strip_tags($new_metadata);
+                    if (is_array($new_metadata)) {
+                        $new_metadata = array_filter($new_metadata);
+                    } else {
+                        $new_metadata = strip_tags($new_metadata);
+                    }
                     update_post_meta($post->ID, $key, $new_metadata);
-
                     // Add the slugs of the terms with non-empty new metadata to an array
                     $term_slugs[] = $term->slug;
                 }
@@ -981,7 +988,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             return $this->editorial_metadata_input_handler->handleMetaValueHtmling(
                 $term->type,
-                $pm_value
+                $pm_value,
+                $term
             );
         }
 
@@ -1007,6 +1015,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'description' => $old_term->description,
                     'type' => $old_term->type,
                     'user_role' => isset($old_term->user_role) ? $old_term->user_role : '',
+                    'select_type' => isset($old_term->select_type) ? $old_term->select_type : '',
+                    'select_default' => isset($old_term->select_default) ? $old_term->select_default : '',
+                    'select_options' => isset($old_term->select_options) ? $old_term->select_options : '',
                     'viewable' => $old_term->viewable,
                     'show_in_filters' => $old_term->show_in_filters,
                 ];
@@ -1019,6 +1030,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'position' => $new_args['position'],
                 'type' => $new_args['type'],
                 'user_role' => $new_args['user_role'],
+                'select_type' => $new_args['select_type'],
+                'select_default' => $new_args['select_default'],
+                'select_options' => $new_args['select_options'],
                 'viewable' => $new_args['viewable'],
                 'show_in_filters' => $new_args['show_in_filters'],
             ];
@@ -1052,6 +1066,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'description' => '',
                 'type' => '',
                 'user_role' => '',
+                'select_type' => '',
+                'select_default' => '',
+                'select_options' => '',
                 'viewable' => false,
                 'show_in_filters' => false,
             ];
@@ -1065,6 +1082,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'position' => $args['position'],
                 'type' => $args['type'],
                 'user_role' => $args['user_role'],
+                'select_type' => $args['select_type'],
+                'select_default' => $args['select_default'],
+                'select_options' => $args['select_options'],
                 'viewable' => $args['viewable'],
                 'show_in_filters' => $args['show_in_filters'],
             ];
@@ -1154,6 +1174,15 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die($this->module->messages['invalid-permissions']);
             }
 
+            /**
+             * Form validation for adding new editorial metadata term
+             *
+             * Details
+             * - "name", "slug", and "type" are required fields
+             * - "description" can accept a limited amount of HTML, and is optional
+             */
+            $_REQUEST['form-errors'] = [];
+
             // Sanitize all of the user-entered values
             $term_name = trim(sanitize_text_field($_POST['metadata_name']));
             $term_slug = (! empty($_POST['metadata_slug'])) ? sanitize_title($_POST['metadata_slug']) : sanitize_title(
@@ -1166,16 +1195,31 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $term_type = sanitize_key($_POST['metadata_type']);
             $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
                 ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
+            $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
+            $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
+            $term_select_options = '';
+            if ($term_type === 'select' && is_array($metadata_select_options) && isset($metadata_select_options['values'])) {
+                $sanitized_option_values       = array_map('sanitize_text_field', $metadata_select_options['values']);
+                $sanitized_option_labels       = array_map('sanitize_text_field', $metadata_select_options['labels']);
+                $term_select_options           = [];
+                $term_select_options['values'] = $sanitized_option_values;
+                $term_select_options['labels'] = $sanitized_option_labels;
 
-            $_REQUEST['form-errors'] = [];
+                /**
+                 * Validate option entries
+                 */
+                if (count($sanitized_option_values) > count(array_filter(array_values($sanitized_option_values)))
+                    || count($sanitized_option_labels) > count(array_filter(array_values($sanitized_option_labels)))
+                ) {
+                    $_REQUEST['form-errors']['select_options'] = esc_html__(
+                        'All options value and labels are required.',
+                        'publishpress'
+                    );
+                }
+            }
 
-            /**
-             * Form validation for adding new editorial metadata term
-             *
-             * Details
-             * - "name", "slug", and "type" are required fields
-             * - "description" can accept a limited amount of HTML, and is optional
-             */
             // Field is required
             if (empty($term_name)) {
                 $_REQUEST['form-errors']['name'] = esc_html__(
@@ -1252,6 +1296,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'slug' => $term_slug,
                 'type' => $term_type,
                 'user_role' => $term_user_role,
+                'select_type' => $term_select_type,
+                'select_default' => $term_select_default,
+                'select_options' => $term_select_options,
                 'viewable' => $term_viewable,
                 'show_in_filters' => $term_show_in_filters,
             ];
@@ -1303,6 +1350,32 @@ if (! class_exists('PP_Editorial_Metadata')) {
              * - "description" can accept a limited amount of HTML, and is optional
              */
             $_REQUEST['form-errors'] = [];
+
+
+            $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
+            $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
+            $term_select_options = '';
+            if ($existing_term->type === 'select' && is_array($metadata_select_options) && isset($metadata_select_options['values'])) {
+                $sanitized_option_values       = array_map('sanitize_text_field', $metadata_select_options['values']);
+                $sanitized_option_labels       = array_map('sanitize_text_field', $metadata_select_options['labels']);
+                $term_select_options           = [];
+                $term_select_options['values'] = $sanitized_option_values;
+                $term_select_options['labels'] = $sanitized_option_labels;
+
+                /**
+                 * Validate option entries
+                 */
+                if (count($sanitized_option_values) > count(array_filter(array_values($sanitized_option_values)))
+                    || count($sanitized_option_labels) > count(array_filter(array_values($sanitized_option_labels)))
+                ) {
+                    $_REQUEST['form-errors']['select_options'] = esc_html__(
+                        'All options value and labels are required.',
+                        'publishpress'
+                    );
+                }
+            }
 
             // Check if name field was filled in
             if (empty($new_name)) {
@@ -1373,6 +1446,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'name' => $new_name,
                 'description' => $new_description,
                 'user_role' => $term_user_role,
+                'select_type' => $term_select_type,
+                'select_default' => $term_select_default,
+                'select_options' => $term_select_options,
                 'viewable' => $new_viewable,
                 'show_in_filters' => $new_show_in_filters,
             ];
@@ -1677,7 +1753,14 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $metadata_types = $this->get_supported_metadata_types();
                 $type = $term->type;
                 $term_user_role = isset($term->user_role) ? (array)$term->user_role : [];
+                $term_select_type = isset($term->select_type) ? $term->select_type : '';
+                $term_select_default = isset($term->select_default) ? $term->select_default : '';
+                $term_select_options = isset($term->select_options) ? $term->select_options : '';
                 $edit_term_link = $this->get_link(['action' => 'edit-term', 'term-id' => $term->term_id]);
+
+                $term_select_type = (isset($_POST['metadata_select_type'])) ? sanitize_key($_POST['metadata_select_type']) : $term_select_type;
+                $term_select_default  = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : $term_select_default;
+                $term_select_options = (isset($_POST['metadata_select_options']) && is_array($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : $term_select_options; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
                 $name = (isset($_POST['name'])) ? stripslashes(sanitize_text_field($_POST['name'])) : $term->name;
                 $description = (isset($_POST['description'])) ? stripslashes(
@@ -1785,6 +1868,124 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     esc_html_e('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress'); ?></p>
                             </td>
                         </tr>
+
+                        <tr class='form-field pp-editorial-optional-field pp-editorial-select-field' style="<?php echo ($type === 'select' ? '' : 'display:none'); ?>">
+                            <th scope='row' valign='top'><?php
+                                esc_html_e('Select Type', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                $metadata_select_types = [
+                                    ''         => esc_html__('Single Select', 'publishpress'),
+                                    'multiple' => esc_html__('Multiple Select', 'publishpress'),
+                                ];
+                                $current_metadata_select_type = $term_select_type; ?>
+                                <select id="metadata_select_type"
+                                    name="metadata_select_type">
+                                    <?php
+                                    foreach ($metadata_select_types as $metadata_select_type => $metadata_select_type_name) : ?>
+                                        <option value="<?php
+                                            echo esc_attr($metadata_select_type); ?>" <?php
+                                            selected($metadata_select_type, $current_metadata_select_type); ?>><?php
+                                            echo esc_html($metadata_select_type_name); ?></option>
+                                    <?php
+                                    endforeach; ?>
+                                </select>
+                                <p class='description'><?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'select_type',
+                                    esc_html__('Indicate the select type.', 'publishpress')
+                                ); ?></p>
+                            </td>
+                        </tr>
+
+                        <tr class='form-field pp-editorial-optional-field pp-editorial-select-field' style="<?php echo ($type === 'select' ? '' : 'display:none'); ?>">
+                            <th scope='row' valign='top'><?php
+                                esc_html_e('Dropdown Option', 'publishpress'); ?></th>
+                            <td>
+                            <p class='description'><?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'select_options',
+                                    esc_html__('Enter the dropdown option value and label. You can move options to change their order.', 'publishpress')
+                                ); ?></p>
+                                <?php
+                                $current_metadata_select_options = $term_select_options;
+                                ?>
+                                <div class="postbox">
+                                    <div class="inside">
+                                        <div class="pp-select-options-wrap">
+                                            <?php
+                                            if (!empty($current_metadata_select_options)) {
+                                            $option_values     = $current_metadata_select_options['values'];
+                                            $option_labels     = $current_metadata_select_options['labels'];
+                                            $default_dropdown  = $term_select_default;
+                                            foreach ($option_values as $index => $value) {
+                                                ?>
+                                                <div class="pp-select-options-box">
+                                                    <span class="pp-option-icon move"></span>
+                                                    <input class="entry-field value-field"
+                                                        autocomplete="off"
+                                                        type="text" 
+                                                        name="metadata_select_options[values][]" 
+                                                        value="<?php echo esc_attr($value); ?>"
+                                                        placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                    />
+                                                    <input class="entry-field label-field" 
+                                                        autocomplete="off"
+                                                        type="text" name="metadata_select_options[labels][]" 
+                                                        value="<?php echo esc_attr($option_labels[$index]); ?>"
+                                                        placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                    />
+                                                    <label class="select_dropdown_default_label">
+                                                        <input type="radio"
+                                                            class="select_dropdown_default"
+                                                            name="select_dropdown_default" 
+                                                            value="<?php echo (int)$index; ?>"
+                                                            <?php checked($default_dropdown, $index); ?>
+                                                        />
+                                                            <?php esc_html_e('Default option', 'publishpress'); ?>
+                                                    </label>
+                                                    <div class="delete-button" style="<?php echo ($index === 0 ? 'display:none' : ''); ?>">
+                                                        <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                        } else { ?>
+                                            <div class="pp-select-options-box">
+                                                <span class="pp-option-icon move"></span>
+                                                <input class="entry-field value-field" 
+                                                    autocomplete="off"
+                                                    type="text" 
+                                                    name="metadata_select_options[values][]" 
+                                                    value=""
+                                                    placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                />
+                                                <input class="entry-field label-field" 
+                                                    autocomplete="off"
+                                                    type="text" name="metadata_select_options[labels][]" 
+                                                    value=""
+                                                    placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                />
+                                                <label class="select_dropdown_default_label">
+                                                    <input type="radio"
+                                                        class="select_dropdown_default"
+                                                        name="select_dropdown_default" 
+                                                        value="0"
+                                                    />
+                                                        <?php esc_html_e('Default option', 'publishpress'); ?>
+                                                </label>
+                                                <div class="delete-button" style="display:none;">
+                                                    <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <p class="pp-add-new-paragraph"><a class="pp-add-new-option" href="#"><?php esc_html_e('Add Another Option', 'publishpress'); ?></a></p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
                         <tr class='form-field'>
                             <th scope='row' valign='top'><?php
                                 esc_html_e('Viewable', 'publishpress'); ?></th>
@@ -1989,6 +2190,120 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                             esc_html__('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress')
                                         ); ?>
                                     </div>
+                                    <div class='form-field pp-editorial-optional-field pp-editorial-select-field' style="display:none;">
+                                        <label for='metadata_select_type'><?php
+                                            esc_html_e('Select Type', 'publishpress'); ?></label>
+                                        <?php
+                                        $metadata_select_types = [
+                                            ''         => esc_html__('Single Select', 'publishpress'),
+                                            'multiple' => esc_html__('Multiple Select', 'publishpress'),
+                                        ];
+                                        $current_metadata_select_type = (isset($_POST['metadata_select_type']) && in_array(
+                                            $_POST['metadata_select_type'],
+                                            array_keys($metadata_select_types)
+                                        )) ? sanitize_key($_POST['metadata_select_type']) : false; ?>
+                                        <select id="metadata_select_type"
+                                            name="metadata_select_type">
+                                            <?php
+                                            foreach ($metadata_select_types as $metadata_select_type => $metadata_select_type_name) : ?>
+                                                <option value="<?php
+                                                echo esc_attr($metadata_select_type); ?>" <?php
+                                                selected($metadata_select_type, $current_metadata_select_type); ?>><?php
+                                                    echo esc_html($metadata_select_type_name); ?></option>
+                                            <?php
+                                            endforeach; ?>
+                                        </select>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'select_type',
+                                            esc_html__('Indicate the select type.', 'publishpress')
+                                        ); ?>
+                                    </div>
+                                    <div class='form-field pp-editorial-optional-field pp-editorial-select-field' style="display:none;">
+                                        <label for='metadata_select_options'><?php
+                                            esc_html_e('Dropdown Option', 'publishpress'); ?></label><?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'select_options',
+                                            esc_html__('Enter the dropdown option value and label. You can move options to change their order.', 'publishpress')
+                                        ); ?>
+                                        <?php
+                                        $current_metadata_select_options = (isset($_POST['metadata_select_options']) && is_array($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                                        ?>
+                                        <div class="postbox">
+                                            <div class="inside">
+                                                <div class="pp-select-options-wrap">
+                                                    <?php
+                                                    if (!empty($current_metadata_select_options)) {
+                                                        $option_values     = $current_metadata_select_options['values'];
+                                                        $option_labels     = $current_metadata_select_options['labels'];
+                                                        $default_dropdown  = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
+                                                        foreach ($option_values as $index => $value) {
+                                                            ?>
+                                                            <div class="pp-select-options-box">
+                                                                <span class="pp-option-icon move"></span>
+                                                                <input class="entry-field value-field"
+                                                                    autocomplete="off"
+                                                                    type="text" 
+                                                                    name="metadata_select_options[values][]" 
+                                                                    value="<?php echo esc_attr($value); ?>"
+                                                                    placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                                />
+                                                                <input class="entry-field label-field" 
+                                                                    autocomplete="off"
+                                                                    type="text" name="metadata_select_options[labels][]" 
+                                                                    value="<?php echo esc_attr($option_labels[$index]); ?>"
+                                                                    placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                                />
+                                                                <label class="select_dropdown_default_label">
+                                                                    <input type="radio"
+                                                                        class="select_dropdown_default"
+                                                                        name="select_dropdown_default" 
+                                                                        value="<?php echo (int)$index; ?>"
+                                                                        <?php checked($default_dropdown, $index); ?>
+                                                                    />
+                                                                        <?php esc_html_e('Default option', 'publishpress'); ?>
+                                                                </label>
+                                                                <div class="delete-button" style="<?php echo ($index === 0 ? 'display:none' : ''); ?>">
+                                                                    <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
+                                                                </div>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                    } else { ?>
+                                                        <div class="pp-select-options-box">
+                                                            <span class="pp-option-icon move"></span>
+                                                            <input class="entry-field value-field" 
+                                                                autocomplete="off"
+                                                                type="text" 
+                                                                name="metadata_select_options[values][]" 
+                                                                value=""
+                                                                placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                            />
+                                                            <input class="entry-field label-field" 
+                                                                autocomplete="off"
+                                                                type="text" name="metadata_select_options[labels][]" 
+                                                                value=""
+                                                                placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                            />
+                                                            <label class="select_dropdown_default_label">
+                                                                <input type="radio"
+                                                                    class="select_dropdown_default"
+                                                                    name="select_dropdown_default" 
+                                                                    value="0"
+                                                                />
+                                                                    <?php esc_html_e('Default option', 'publishpress'); ?>
+                                                            </label>
+                                                            <div class="delete-button" style="display:none;">
+                                                                <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                                <p class="pp-add-new-paragraph"><a class="pp-add-new-option" href="#"><?php esc_html_e('Add Another Option', 'publishpress'); ?></a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
                                     <div class='form-field form-required'>
                                         <label for='metadata_viewable'><?php
                                             esc_html_e('Viewable', 'publishpress'); ?></label>
@@ -2115,6 +2430,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             require_once "{$handlers_base_path}/editorial-metadata-input-checkbox-handler.php";
             require_once "{$handlers_base_path}/editorial-metadata-input-user-handler.php";
             require_once "{$handlers_base_path}/editorial-metadata-input-location-handler.php";
+            require_once "{$handlers_base_path}/editorial-metadata-input-select-handler.php";
 
             $handlers = [
                 new Editorial_Metadata_Input_Paragraph_Handler(),
@@ -2124,6 +2440,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 new Editorial_Metadata_Input_Checkbox_Handler(),
                 new Editorial_Metadata_Input_User_Handler(),
                 new Editorial_Metadata_Input_Location_Handler(),
+                new Editorial_Metadata_Input_Select_Handler(),
             ];
 
             foreach ($handlers as $handler) {

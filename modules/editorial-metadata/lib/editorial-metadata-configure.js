@@ -60,20 +60,69 @@
             }
         });
       
-        //show matched fields when meta data type is changed
+        /**
+         * clone select type drop down field
+         */
+        $(document).on('click', '.pp-add-new-option', function (e) {
+          e.preventDefault();
+          var new_option_html = $('.pp-select-options-wrap .pp-select-options-box:first-child').clone();
+          new_option_html.find('.entry-field').val('');
+          new_option_html.find('.select_dropdown_default').removeAttr('checked').val($('.pp-select-options-wrap .pp-select-options-box').length);
+          new_option_html.find('.delete-button').show();
+          $(".pp-select-options-wrap").append(new_option_html);
+          setSelectOptionChanges();
+        });
+      
+        /**
+         * delete select type fields
+         */
+        $(document).on('click', '.pp-select-options-box .delete-button', function (e) {
+          e.preventDefault();
+          $(this).closest('.pp-select-options-box').remove();
+          setSelectOptionChanges();
+        });
+      
+        /**
+         * show matched fields when meta data type is changed
+         */
         $(document).on('change', '#metadata_type', function (e) {
           var selected_type = $(this).val();
           //hide all optional field
           $('.pp-editorial-optional-field').hide();
           //show type applicable field
           $('.pp-editorial-'+ selected_type +'-field').show();
-       });
+        });
+        if ($('#metadata_type').length > 0) {
+          var selected_type = $('#metadata_type').val();
+          //hide all optional field
+          $('.pp-editorial-optional-field').hide();
+          //show type applicable field
+          $('.pp-editorial-'+ selected_type +'-field').show();
+        }
 
+      /**
+       * disable table static term selection
+       */
         $('#the-list tr.term-static').disableSelection();
-        //load select2
+        
+        /**
+         * load select2
+         */
         if ($('.pp_editorial_meta_user').length > 0) {
           $('.pp_editorial_meta_user select').select2();
         }
+      
+        if ($('.pp_editorial_single_select2').length > 0) {
+          $('.pp_editorial_single_select2').select2(
+            {
+              allowClear: true,
+              placeholder: function(){
+                $(this).data('placeholder');
+              }
+            }
+          );
+        }
+      
         if ($('.pp_editorial_meta_multi_select2').length > 0) {
           $('.pp_editorial_meta_multi_select2').select2({
             placeholder: function(){
@@ -82,5 +131,28 @@
             multiple: true
           });
         }
+      
+      /**
+       * make dropdown options sortable
+       */
+      if ($('.pp-select-options-wrap').length > 0) {
+        $(".pp-select-options-wrap").sortable({
+          axis: "y",
+        }).on("sortupdate", function (event, ui) { setSelectOptionChanges(); } );
+      }
+
+      /**
+       * Set options after position change
+       */
+      function setSelectOptionChanges() {
+        $('.pp-select-options-wrap .pp-select-options-box').each(function (index) {
+          if (index === 0) {
+            $(this).find('.delete-button').hide();
+          } else {
+            $(this).find('.delete-button').show();
+          }
+          $(this).find('.select_dropdown_default').val(index);
+        });
+      }
     });
 })(jQuery);
