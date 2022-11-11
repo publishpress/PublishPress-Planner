@@ -1,4 +1,4 @@
-=== PublishPress: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
+=== PublishPress Planner: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
 Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
@@ -10,18 +10,18 @@ Stable tag: 3.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
+PublishPress Planner has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
 == Description ==
 
-[PublishPress](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
+[PublishPress Planner](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
-PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+PublishPress Planner is ideal for WordPress sites that publish high-quality content. With PublishPress Planner, you can collaborate much more effectively. This makes PublishPress Planner a great solution for any site with multiple users. PublishPress Planner is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
-## PublishPress Pro ##
+## PublishPress Planner Pro ##
 
-> <strong>Upgrade to PublishPress Pro</strong><br />
-> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+> <strong>Upgrade to PublishPress Planner Pro</strong><br />
+> This plugin is the free version of the PublishPress Planner plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Planner Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -31,7 +31,7 @@ The calendar gives you a powerful overview of your publishing schedule. Using th
 
 = Content Notifications =
 
-Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress allows you to create powerful notification workflows based on post types, categories, status changes and much more.
+Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
 [Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
 
@@ -45,31 +45,31 @@ The Content Overview screen is a companion to the Calendar screen. Whereas the C
 
 This feature allows you to create custom post statuses such as “In Progress” or “Pending Review”. You can define statuses to match the stages of your team’s publishing workflow.
 
-By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress you’ll see a much wider range of options. When you first install PublishPress, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
+By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress Planner you’ll see a much wider range of options. When you first install PublishPress Planner, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
 
 [Click here to read about the Custom Statuses](https://publishpress.com/knowledge-base/custom-statuses/).
 
 = Editorial Comments =
 
-A very important feature in PublishPress is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
+A very important feature in PublishPress Planner is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
 
 [Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
 
 = Editorial Metadata =
 
-Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress provides 4 examples of metadata, but you can add your own to meet your team’s needs.
+Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
 
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
 = Slack Notifications =
 
-This PublishPress Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
+This PublishPress Planner Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
 
 [Click here to read about the Slack Notifications](https://publishpress.com/knowledge-base/slack/).
 
 = Reminder Notifications =
 
-This PublishPress Pro feature allows you to send notifications either before or after the publishing date for content. For example, before publication, you can send a reminder to editors, asking them to proof-read the post for publication. Or two or three days after publication, you can send a reminder to various team members, asking them to promote the post on social media.
+This PublishPress Planner Pro feature allows you to send notifications either before or after the publishing date for content. For example, before publication, you can send a reminder to editors, asking them to proof-read the post for publication. Or two or three days after publication, you can send a reminder to various team members, asking them to promote the post on social media.
 
 [Click here to read about the Reminder Notifications](https://publishpress.com/knowledge-base/reminders/).
 
@@ -92,7 +92,7 @@ Together, these plugins are a suite of powerful publishing tools for WordPress. 
 
 = Bug Reports =
 
-Bug reports for PublishPress are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that are not properly qualified as bugs will be closed.
+Bug reports for PublishPress Planner are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress). Please note that GitHub is not a support forum, and that issues that are not properly qualified as bugs will be closed.
 
 = Follow the PublishPress team =
 
@@ -100,19 +100,19 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 == Screenshots ==
 
-1. Editorial Calendar: Using the PublishPress Calendar, you’re able to see when content is planned, and when it is published.
-2. Notifications: PublishPress Notifications keeps you and your team up to date on changes to important content.
+1. Editorial Calendar: Using the PublishPress Planner Calendar, you’re able to see when content is planned, and when it is published.
+2. Notifications: PublishPress Planner Notifications keeps you and your team up to date on changes to important content.
 3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
-4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”.
-5. Editorial Comments: PublishPress allows you to leave comments under each post you write.
-6. Reminder Notifications: The PublishPress Pro feature allows you to send notifications either before or after the publishing date for content.
-7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack.
+4. Custom Statuses: PublishPress Planner enables you to create custom post statuses such as “In Progress” or “Pending Review”.
+5. Editorial Comments: PublishPress Planner allows you to leave comments under each post you write.
+6. Reminder Notifications: The PublishPress Planner Pro feature allows you to send notifications either before or after the publishing date for content.
+7.  Slack Notifications: This PublishPress Planner Pro feature integrates your notifications with Slack.
 
 == Frequently Asked Questions ==
 
 = How do I import from Edit Flow? =
 
-PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
+PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
 
 [Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 

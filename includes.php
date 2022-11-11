@@ -125,7 +125,7 @@ if (! defined('PP_LOADED')) {
                         \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                         function ($settings) {
                             $settings['publishpress'] = [
-                                'message' => __('You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
+                                'message' => __('You\'re using PublishPress Planner Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
                                 'link' => 'https://publishpress.com/links/publishpress-banner',
                                 'screens' => [
                                     ['base' => 'publishpress_page_pp-modules-settings',],

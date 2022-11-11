@@ -1,9 +1,9 @@
-# PublishPress
+# PublishPress Planner
 
 
 ## Description
 
-PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
 
 Based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
 
