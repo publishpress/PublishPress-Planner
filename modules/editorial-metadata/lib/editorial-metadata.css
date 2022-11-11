@@ -51,7 +51,8 @@
     margin-top: 6px;
 }
 
-.pp_editorial_meta_user .select2-container {
+.pp_editorial_meta_user .select2-container,
+.pp-editorial-select2-wrapper .select2-container {
     width: -webkit-fill-available !important;
     width: -moz-available !important;
 }
@@ -59,13 +60,64 @@
 .pp-select2-field .select2-container {
     width: 95% !important;
 }
-.pp-select2-field .select2-selection--multiple{
+.pp-select2-field .select2-selection--multiple, 
+.pp-editorial-select2-wrapper .select2-selection--multiple {
     overflow: hidden !important;
     height: auto !important;
 }
 
 .pp-select2-field .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     padding-bottom: 9px !important;
+}
+
+.pp-select-options-wrap {
+    cursor: move;
+}
+
+.pp-editorial-select-field .pp-select-options-box {
+    display: flex;
+    background: #fafafa;
+    border: 1px solid #dfdfdf;
+    margin: 10px 0;
+    margin-top: 15px;
+    padding: 10px 5px;
+}
+
+.pp-select-options-box .entry-field {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.pp-editorial-select-field .delete-button {
+    margin-left: auto;
+}
+
+.select_dropdown_default_label {
+    margin-top: 8px;
+}
+
+.pp-editorial-select-field .delete-button .delete {
+    color: #a00;
+    border-bottom: 1px solid #a00;
+    text-decoration: none;
+    padding: 0;
+}
+
+.pp-option-icon {
+    font: 400 20px/1 dashicons;
+    speak: none;
+    display: inline-block;
+    padding: 0 0 0 2px;
+    top: 5px;
+    position: relative;
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: none!important;
+    color: #888;
+}
+.pp-option-icon.move:before {
+    content: "\f329";
 }
 
 /*
