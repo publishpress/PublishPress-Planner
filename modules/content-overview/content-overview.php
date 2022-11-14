@@ -1275,7 +1275,7 @@ class PP_Content_Overview extends PP_Module
                 $metadata_term  = $this->get_filterable_metadata()[$select_name];
                 $metadata_type  = $metadata_term->type;
 
-                if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date'])) { ?>
+                if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date', 'select'])) { ?>
                     <input 
                         type="text" 
                         id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
@@ -1453,11 +1453,16 @@ class PP_Content_Overview extends PP_Module
                  } else {
                      $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
                  }
+
+                 $compare = '=';
+                 if ($metadata_term->type === 'select' && isset($metadata_term->select_type) && $metadata_term->select_type === 'multiple') {
+                    $compare = 'LIKE';
+                 }
                  $metadata_filter = true;
                  $meta_query[] = array(
                      'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
                      'value' => $meta_value,
-                     'compare' => '='
+                     'compare' => $compare
                  );
              }
          }
@@ -1484,7 +1489,6 @@ class PP_Content_Overview extends PP_Module
         if ($taxonomy_filter) {
             $args['tax_query'] = $tax_query;
         }
-
 
         $args['post_type'] = $postType;
 
@@ -1653,7 +1657,7 @@ class PP_Content_Overview extends PP_Module
         $column_type = $meta_options['type'];
         $column_value = get_post_meta($post->ID, "_pp_editorial_meta_{$column_type}_{$column_name}", true);
 
-        return apply_filters("pp_editorial_metadata_{$column_type}_render_value_html", $column_value);
+        return apply_filters("pp_editorial_metadata_{$column_type}_render_value_html", $column_value, $meta_options);
     }
 
     /**

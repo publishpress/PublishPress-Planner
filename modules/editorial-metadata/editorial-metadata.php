@@ -2455,7 +2455,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
                 add_filter(
                     "pp_editorial_metadata_{$handler_type}_render_value_html",
-                    [get_class($handler), 'getMetaValueHtml']
+                    [get_class($handler), 'getMetaValueHtml'],
+                    10, 2
                 );
             }
         }

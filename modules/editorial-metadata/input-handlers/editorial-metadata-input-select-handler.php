@@ -258,14 +258,15 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
          * @since   1.20.0
          *
          */
-        public static function getMetaValueHtml($value = null, $term)
+        public static function getMetaValueHtml($value = null, $term = false)
         {
-            if (empty($value)) {
+            if (empty($value) || !$term) {
                 return '';
             }
 
-            $select_options = (isset($term->select_options) && is_array($term->select_options)) 
-                ? $term->select_options : [];
+            $term           = (array) $term;
+            $select_options = (isset($term['select_options']) && is_array($term['select_options'])) 
+                ? $term['select_options'] : [];
             $option_values     = isset($select_options['values']) ? $select_options['values'] : false;
             $option_labels     = isset($select_options['labels']) ? $select_options['labels'] : false;
 
