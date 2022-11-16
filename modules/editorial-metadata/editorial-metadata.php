@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Notifications\Traits\Dependency_Injector;
+
 if (! class_exists('PP_Editorial_Metadata')) {
     /**
      * class PP_Editorial_Metadata
@@ -50,6 +52,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
      */
     class PP_Editorial_Metadata extends PP_Module
     {
+        use Dependency_Injector;
 
         /**
          * The name of the taxonomy we're going to register for editorial metadata.
@@ -67,6 +70,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
         const CAP_VIEW_METADATA = 'pp_view_editorial_metadata';
 
         const CAP_EDIT_METADATA = 'pp_edit_editorial_metadata';
+
+        /**
+         * @var string
+         */
+        const MENU_SLUG = 'pp-editorial-metadata';
 
         /**
          * Stores a chain of input-type handlers.
@@ -95,10 +103,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         'post' => 'on',
                         'page' => 'off',
                     ],
-                    'post_types_column' => [
-                        'post' => 'on',
-                        'page' => 'off',
-                    ],
                 ],
                 'messages' => [
                     'term-added' => esc_html__("Metadata term added.", 'publishpress'),
@@ -122,8 +126,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'publishpress'
                 ),
                 'options_page' => true,
+                'add_menu' => true,
             ];
-            PublishPress()->register_module($this->module_name, $args);
+
+            $this->module = PublishPress()->register_module($this->module_name, $args);
         }
 
         /**
@@ -157,18 +163,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
                 if ($this->checkEditCapability() || $this->checkViewCapability()) {
                     add_action('add_meta_boxes', [$this, 'handle_post_metaboxes']);
-
                     // Add Editorial Metadata columns to the Manage Posts view
-                    $supported_post_types = $this->get_editorial_metadata_post_types_column();
-                    foreach ($supported_post_types as $post_type) {
-                        add_filter("manage_{$post_type}_posts_columns", [$this, 'filter_manage_posts_columns']);
-                        add_action(
-                            "manage_{$post_type}_posts_custom_column",
-                            [$this, 'action_manage_posts_custom_column'],
-                            10,
-                            2
-                        );
-                    }
+                    add_filter("manage_posts_columns", [$this, 'filter_manage_posts_columns'], 10, 2);
+                    add_filter("manage_pages_columns", [$this, 'filter_manage_posts_columns']);
+                    add_action("manage_pages_custom_column", [$this, 'action_manage_posts_custom_column'], 10, 2);
+                    add_action("manage_posts_custom_column", [$this, 'action_manage_posts_custom_column'], 10, 2);
 
                     // Add Editorial Metadata to the calendar if the calendar is activated
                     if ($this->module_enabled('calendar')) {
@@ -187,6 +186,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         );
                     }
                 }
+                //admin menu
+                add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
                 // Load necessary scripts and stylesheets
                 add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
@@ -207,12 +208,16 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'slug' => 'first-draft-date',
                     'type' => 'date',
                     'description' => esc_html__('When the first draft needs to be ready.', 'publishpress'),
+                    'post_types' => ['post'],
+                    'post_types_column' => ['post'],
                 ],
                 [
                     'name' => esc_html__('Assignment', 'publishpress'),
                     'slug' => 'assignment',
                     'type' => 'paragraph',
                     'description' => esc_html__('What the post needs to cover.', 'publishpress'),
+                    'post_types' => ['post'],
+                    'post_types_column' => ['post'],
                 ],
             ];
             // Load the metadata fields if the slugs don't conflict
@@ -247,6 +252,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             if (version_compare($previousVersion, '3.0.1', '<=')) {
                 $this->setDefaultCapabilities();
+            }
+
+            if (version_compare($previousVersion, '3.10.0', '<=')) {
+                $this->migrateMetadataPostTypes();
             }
         }
 
@@ -311,7 +320,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             // Add the metabox date picker JS and CSS
             $current_post_type = $this->get_current_post_type();
-            $supported_post_types = $this->get_post_types_for_module($this->module);
+            $supported_post_types = $this->get_all_terms_post_types();
             if (in_array($current_post_type, $supported_post_types) || $this->is_whitelisted_settings_view($this->module->name)) {
                 $this->enqueue_datepicker_resources();
 
@@ -474,6 +483,19 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
         }
 
+        public function get_all_terms_post_types() {
+            $post_type = [];
+            $terms = $this->get_editorial_metadata_terms();
+            foreach ($terms as $term) {
+                if (isset($term->post_types) && is_array($term->post_types)) {
+                    $post_type = array_merge($post_type, $term->post_types);
+                }
+            }
+            $post_type = array_unique($post_type);
+
+            return $post_type;
+        }
+
         /**
          * Load the post metaboxes for all of the post types that are supported
          */
@@ -481,7 +503,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             $title = esc_html__('Metadata', 'publishpress');
 
-            $supported_post_types = $this->get_post_types_for_module($this->module);
+            $supported_post_types = $this->get_all_terms_post_types();
             foreach ($supported_post_types as $post_type) {
                 add_meta_box(self::metadata_taxonomy, $title, [$this, 'display_meta_box'], $post_type, 'side');
             }
@@ -527,44 +549,47 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 }
                 echo '<p>' . $message . '</p>';
             } else {
+                $post_type = $post->post_type;
                 foreach ($terms as $term) {
-                    $postmeta_key = esc_attr($this->get_postmeta_key($term));
-                    $current_metadata = $this->get_postmeta_value($term, $post->ID);
+                    if (isset($term->post_types) && is_array($term->post_types) && in_array($post_type, $term->post_types)) {
+                        $postmeta_key = esc_attr($this->get_postmeta_key($term));
+                        $current_metadata = $this->get_postmeta_value($term, $post->ID);
 
-                    echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(
+                        echo "<div class='" . esc_attr(self::metadata_taxonomy) . " " . esc_attr(
                             self::metadata_taxonomy
                         ) . "_$term->type'>";
 
-                    // Check if the user can edit the metadata
-                    $can_edit = $this->checkEditCapability();
+                        // Check if the user can edit the metadata
+                        $can_edit = $this->checkEditCapability();
 
-                    $term_options = $this->get_editorial_metadata_term_by('id', $term->term_id);
-                    if ($can_edit) {
-                        $this->editorial_metadata_input_handler->handleHtmlRendering(
-                            $term->type,
-                            [
+                        $term_options = $this->get_editorial_metadata_term_by('id', $term->term_id);
+                        if ($can_edit) {
+                            $this->editorial_metadata_input_handler->handleHtmlRendering(
+                                $term->type,
+                                [
                                 'name' => $postmeta_key,
                                 'label' => $term->name,
                                 'description' => $term->description,
                                 'term_options' => $term_options,
                             ],
-                            $current_metadata
-                        );
-                    } else {
-                        $this->editorial_metadata_input_handler->handlePreviewRendering(
-                            $term->type,
-                            [
+                                $current_metadata
+                            );
+                        } else {
+                            $this->editorial_metadata_input_handler->handlePreviewRendering(
+                                $term->type,
+                                [
                                 'name' => $postmeta_key,
                                 'label' => $term->name,
                                 'description' => $term->description,
                                 'term_options' => $term_options,
                             ],
-                            $current_metadata
-                        );
+                                $current_metadata
+                            );
+                        }
+
+                        echo "</div>";
+                        echo "<div class='clear'></div>";
                     }
-
-                    echo "</div>";
-                    echo "<div class='clear'></div>";
                 } // Done iterating through metadata terms
             }
 
@@ -601,7 +626,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
 
             if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-                || ! in_array($post->post_type, $this->get_post_types_for_module($this->module))
+                || ! in_array($post->post_type, $this->get_all_terms_post_types())
                 || $post->post_type == 'post' && ! current_user_can('edit_post', $post->ID)
                 || $post->post_type == 'page' && ! current_user_can('edit_page', $post->ID)) {
                 return $post->ID;
@@ -610,42 +635,44 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // Authentication passed, let's save the data
             $terms = $this->get_editorial_metadata_terms();
             $term_slugs = [];
-
+            $post_type = $post->post_type;
             foreach ($terms as $term) {
-                // Set up the key for this editorial metadata term (same as what's in $_POST)
-                $key = $this->get_postmeta_key($term);
+                if (isset($term->post_types) && is_array($term->post_types) && in_array($post_type, $term->post_types)) {
+                    // Set up the key for this editorial metadata term (same as what's in $_POST)
+                    $key = $this->get_postmeta_key($term);
 
-                if (isset($_POST[$key]) && is_array($_POST[$key])) {
-                    $new_metadata = array_map('sanitize_text_field', $_POST[$key]);
-                } else {
-                    $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
-                }
-
-                $type = $term->type;
-                if (empty($new_metadata)) {
-                    delete_post_meta($post->ID, $key);
-                } else {
-                    // TODO: Move this to a function
-                    if ($type == 'date') {
-                        $new_metadata = isset($_POST[$key . '_hidden']) ? sanitize_text_field($_POST[$key . '_hidden']) : '';
-                        $date = DateTime::createFromFormat('Y-m-d H:i', $new_metadata);
-                        if (false !== $date) {
-                            $new_metadata = $date->getTimestamp();
-                        }
-                    } elseif ($type == 'number') {
-                        $new_metadata = (int)$new_metadata;
-                    }
-                    if (is_array($new_metadata)) {
-                        $new_metadata = array_filter($new_metadata);
+                    if (isset($_POST[$key]) && is_array($_POST[$key])) {
+                        $new_metadata = array_map('sanitize_text_field', $_POST[$key]);
                     } else {
-                        $new_metadata = strip_tags($new_metadata);
+                        $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
                     }
-                    update_post_meta($post->ID, $key, $new_metadata);
-                    // Add the slugs of the terms with non-empty new metadata to an array
-                    $term_slugs[] = $term->slug;
-                }
 
-                do_action('pp_editorial_metadata_field_updated', $key, $new_metadata, $post->ID, $type);
+                    $type = $term->type;
+                    if (empty($new_metadata)) {
+                        delete_post_meta($post->ID, $key);
+                    } else {
+                        // TODO: Move this to a function
+                        if ($type == 'date') {
+                            $new_metadata = isset($_POST[$key . '_hidden']) ? sanitize_text_field($_POST[$key . '_hidden']) : '';
+                            $date = DateTime::createFromFormat('Y-m-d H:i', $new_metadata);
+                            if (false !== $date) {
+                                $new_metadata = $date->getTimestamp();
+                            }
+                        } elseif ($type == 'number') {
+                            $new_metadata = (int)$new_metadata;
+                        }
+                        if (is_array($new_metadata)) {
+                            $new_metadata = array_filter($new_metadata);
+                        } else {
+                            $new_metadata = strip_tags($new_metadata);
+                        }
+                        update_post_meta($post->ID, $key, $new_metadata);
+                        // Add the slugs of the terms with non-empty new metadata to an array
+                        $term_slugs[] = $term->slug;
+                    }
+
+                    do_action('pp_editorial_metadata_field_updated', $key, $new_metadata, $post->ID, $type);
+                }
             }
 
             // Relate the post to the terms used and taxonomy type (wp_term_relationships table).
@@ -791,7 +818,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Register editorial metadata fields as columns in the manage posts view
-         * Only adds columns for the currently active post types - logic controlled in $this->init()
+         * Only adds columns for the currently active post types
          *
          * @param array $posts_columns Existing post columns prepared by WP_List_Table
          * @param array $posts_columns Previous post columns with the new values
@@ -800,16 +827,18 @@ if (! class_exists('PP_Editorial_Metadata')) {
          * @uses apply_filters('manage_posts_columns') in wp-admin/includes/class-wp-posts-list-table.php
          *
          */
-        public function filter_manage_posts_columns($posts_columns)
+        public function filter_manage_posts_columns($posts_columns = '', $post_type = 'page')
         {
             $screen = get_current_screen();
             if ($screen) {
                 add_filter("manage_{$screen->id}_sortable_columns", [$this, 'filter_manage_posts_sortable_columns']);
                 $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
                 foreach ($terms as $term) {
-                    // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
-                    $key = $this->module->slug . '-' . $term->slug;
-                    $posts_columns[$key] = $term->name;
+                    if (isset($term->post_types_column) && is_array($term->post_types_column) && in_array($post_type, $term->post_types_column)) {
+                        // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
+                        $key = $this->module->slug . '-' . $term->slug;
+                        $posts_columns[$key] = $term->name;
+                    }
                 }
             }
             return $posts_columns;
@@ -853,7 +882,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Handle the output of an editorial metadata custom column
-         * Logic for the post types this is called on is controlled in $this->init()
          *
          * @param string $column_name Unique string for the column
          * @param int $post_id ID for the post of the row
@@ -865,15 +893,18 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function action_manage_posts_custom_column($column_name, $post_id)
         {
             $terms = $this->get_editorial_metadata_terms();
+            $post_type = get_post_type($post_id);
             // We're looking for the proper term to display its saved value
             foreach ($terms as $term) {
-                $key = $this->module->slug . '-' . $term->slug;
-                if ($column_name != $key) {
-                    continue;
-                }
+                if (isset($term->post_types_column) && is_array($term->post_types_column) && in_array($post_type, $term->post_types_column)) {
+                    $key = $this->module->slug . '-' . $term->slug;
+                    if ($column_name != $key) {
+                        continue;
+                    }
 
-                $current_metadata = $this->get_postmeta_value($term, $post_id);
-                echo $this->generate_editorial_metadata_term_output($term, $current_metadata);
+                    $current_metadata = $this->get_postmeta_value($term, $post_id);
+                    echo $this->generate_editorial_metadata_term_output($term, $current_metadata);
+                }
             }
         }
 
@@ -888,32 +919,35 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function filterCalendarPostData($data, $post)
         {
             // Make sure we respect which post type we're on
-            if (! in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
+            if (! in_array($post->post_type, $this->get_all_terms_post_types())) {
                 return $data;
             }
 
             $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
 
+            $post_type = $post->post_type;
             foreach ($terms as $term) {
-                $currentMetadata = $this->get_postmeta_value($term, $post->ID);
-                $value = $this->generate_editorial_metadata_term_output($term, $currentMetadata);
+                if (isset($term->post_type) && is_array($term->post_type) && in_array($post_type, $term->post_type)) {
+                    $currentMetadata = $this->get_postmeta_value($term, $post->ID);
+                    $value = $this->generate_editorial_metadata_term_output($term, $currentMetadata);
 
-                if (apply_filters(
+                    if (apply_filters(
                         'pp_calendar_hide_empty_item_information_fields',
                         true,
                         $post->ID
                     )
                     && (is_null($value) || '' === $value)
                 ) {
-                    continue;
-                }
+                        continue;
+                    }
 
-                $data['fields'][$term->slug] = [
+                    $data['fields'][$term->slug] = [
                     'label' => $term->name,
                     'value' => $value,
                     'editable' => true,
                     'type' => $term->type,
                 ];
+                }
             }
 
             return $data;
@@ -1020,6 +1054,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'select_options' => isset($old_term->select_options) ? $old_term->select_options : '',
                     'viewable' => $old_term->viewable,
                     'show_in_filters' => $old_term->show_in_filters,
+                    'post_types' => isset($old_term->post_types) ? $old_term->post_types : '',
+                    'post_types_column' => isset($old_term->post_types_column) ? $old_term->post_types_column : '',
                 ];
             }
             $new_args = array_merge($old_args, $args);
@@ -1035,6 +1071,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $new_args['select_options'],
                 'viewable' => $new_args['viewable'],
                 'show_in_filters' => $new_args['show_in_filters'],
+                'post_types' => $new_args['post_types'],
+                'post_types_column' => $new_args['post_types_column'],
             ];
             $encoded_description = $this->get_encoded_description($args_to_encode);
             $new_args['description'] = $encoded_description;
@@ -1071,6 +1109,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => '',
                 'viewable' => false,
                 'show_in_filters' => false,
+                'post_types' => [],
+                'post_types_column' => [],
             ];
             $args = array_merge($defaults, $args);
             $term_name = $args['name'];
@@ -1087,6 +1127,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $args['select_options'],
                 'viewable' => $args['viewable'],
                 'show_in_filters' => $args['show_in_filters'],
+                'post_types' => $args['post_types'],
+                'post_types_column' => $args['post_types_column'],
             ];
             $encoded_description = $this->get_encoded_description($args_to_encode);
             $args['description'] = $encoded_description;
@@ -1137,10 +1179,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $args['action'] = '';
             }
             if (! isset($args['page'])) {
-                $args['page'] = PP_Modules_Settings::SETTINGS_SLUG;
-            }
-            if (! isset($args['settings_module'])) {
-                $args['settings_module'] = self::SETTINGS_SLUG;
+                $args['page'] = self::MENU_SLUG;
             }
 
             // Add other things we may need depending on the action
@@ -1161,8 +1200,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_add_editorial_metadata()
         {
-            if (! isset($_POST['submit'], $_POST['form-action'], $_GET['page'], $_GET['settings_module'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_POST['form-action'] != 'add-term') {
+            if (! isset($_POST['submit'], $_POST['form-action'], $_GET['page'])
+                || ($_GET['page'] != self::MENU_SLUG) || $_POST['form-action'] != 'add-term') {
                 return;
             }
 
@@ -1197,6 +1236,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
             $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
             $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
+            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
+                ? array_map('sanitize_key', $_POST['post_types']) : [];
+            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
+                ? array_map('sanitize_key', $_POST['post_types_column']) : [];
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
             $term_select_options = '';
@@ -1301,6 +1344,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $term_select_options,
                 'viewable' => $term_viewable,
                 'show_in_filters' => $term_show_in_filters,
+                'post_types' => $term_post_types,
+                'post_types_column' => $term_post_types_column,
             ];
             $return = $this->insert_editorial_metadata_term($args);
 
@@ -1308,7 +1353,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error adding term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-added', 'action' => 'add-new']);
+            $redirect_url = $this->get_link(['message' => 'term-added']);
             wp_redirect($redirect_url);
 
             exit;
@@ -1319,8 +1364,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_edit_editorial_metadata()
         {
-            if (! isset($_POST['submit'], $_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'])
-                || ! ($_GET['page'] === PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] === self::SETTINGS_SLUG)
+            if (!isset($_POST['submit'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != self::MENU_SLUG)
                 || $_GET['action'] != 'edit-term') {
                 return;
             }
@@ -1354,6 +1399,10 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
             $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
+            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
+                ? array_map('sanitize_key', $_POST['post_types']) : [];
+            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
+                ? array_map('sanitize_key', $_POST['post_types_column']) : [];
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
             $term_select_options = '';
@@ -1451,6 +1500,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $term_select_options,
                 'viewable' => $new_viewable,
                 'show_in_filters' => $new_show_in_filters,
+                'post_types' => $term_post_types,
+                'post_types_column' => $term_post_types_column,
             ];
             $return = $this->update_editorial_metadata_term($existing_term->term_id, $args);
 
@@ -1458,7 +1509,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-updated', 'action' => 'add-new']);
+            $redirect_url = $this->get_link(['message' => 'term-updated']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1471,8 +1522,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function handle_change_editorial_metadata_visibility()
         {
             // Check that the current GET request is our GET request
-            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || ! in_array(
+            if (! isset($_GET['page'], $_GET['action'], $_GET['term-id'], $_GET['nonce'])
+                || ($_GET['page'] != self::MENU_SLUG) || ! in_array(
                     $_GET['action'],
                     ['make-viewable', 'make-hidden']
                 )) {
@@ -1506,7 +1557,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-visibility-changed', 'action' => 'add-new']);
+            $redirect_url = $this->get_link(['message' => 'term-visibility-changed']);
 
             wp_redirect($redirect_url);
             exit;
@@ -1550,8 +1601,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function handle_delete_editorial_metadata()
         {
-            if (! isset($_GET['page'], $_GET['settings_module'], $_GET['action'], $_GET['term-id'])
-                || ($_GET['page'] != PP_Modules_Settings::SETTINGS_SLUG && $_GET['settings_module'] != self::SETTINGS_SLUG) || $_GET['action'] != 'delete-term') {
+            if (! isset($_GET['page'], $_GET['action'], $_GET['term-id'])
+                || ($_GET['page'] != self::MENU_SLUG) || $_GET['action'] != 'delete-term') {
                 return;
             }
 
@@ -1572,9 +1623,31 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error deleting term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-deleted', 'action' => 'add-new']);
+            $redirect_url = $this->get_link(['message' => 'term-deleted']);
             wp_redirect($redirect_url);
             exit;
+        }
+
+        /**
+         * Migrate metadata post type to individual terms from settings
+         *
+         * @return void
+         */
+        private function migrateMetadataPostTypes() {
+
+            $editorial_metadata_terms = $this->get_editorial_metadata_terms();
+            $supported_post_types     = $this->get_post_types_for_module($this->module);
+
+            foreach ($editorial_metadata_terms as $editorial_metadata_term) {
+                $this->update_editorial_metadata_term(
+                    $editorial_metadata_term->term_id, 
+                    [
+                        'post_types'        => $supported_post_types,
+                        'post_types_column' => $supported_post_types
+                    ]
+                );
+            }
+
         }
 
         /**
@@ -1594,15 +1667,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             );
             add_settings_field(
                 'post_types',
-                esc_html__('Add to these post types:', 'publishpress'),
+                esc_html__('Register metadata for these post types:', 'publishpress'),
                 [$this, 'settings_post_types_option'],
-                $this->module->options_group_name,
-                $this->module->options_group_name . '_general'
-            );
-            add_settings_field(
-                'post_types_column',
-                esc_html__('Add to these post types filter column:', 'publishpress'),
-                [$this, 'settings_post_types_column_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -1617,64 +1683,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             global $publishpress;
             $publishpress->settings->helper_option_custom_post_type($this->module);
-        }
-
-        /**
-         * Choose the post types column for editorial metadata
-         *
-         * @since 0.7
-         */
-        public function settings_post_types_column_option()
-        {
-           $this->helper_option_column_custom_post_type();
-        }
-
-        /**
-         * Generate an option field to turn post type support on/off
-         */
-        public function helper_option_column_custom_post_type()
-        {
-            $post_types = [
-                'post' => __('Posts', 'publishpress'),
-                'page' => __('Pages', 'publishpress'),
-            ];
-            
-            $custom_post_types = $this->get_supported_post_types_for_module($this->module);
-            if (count($custom_post_types)) {
-                foreach ($custom_post_types as $custom_post_type => $args) {
-                    $post_types[$custom_post_type] = $args->label;
-                }
-            }
-
-            foreach ($post_types as $post_type => $title) {
-                echo '<label for="' . esc_attr($post_type) . '-' . $this->module->slug . '">';
-                echo '<input id="' . esc_attr($post_type) . '-' . $this->module->slug . '" name="'
-                    . $this->module->options_group_name . '[post_types_column][' . esc_attr($post_type) . ']"';
-                if (isset($this->module->options->post_types_column[$post_type])) {
-                    checked($this->module->options->post_types_column[$post_type], 'on');
-                }
-                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
-                echo '<br />';
-            }
-        }
-
-        /**
-         * Collect editorial metatdata active post types column.
-         *
-         * @return void
-         */
-        public function get_editorial_metadata_post_types_column() {
-
-            $post_types = [];
-            if (isset($this->module->options->post_types_column) && is_array($this->module->options->post_types_column)) {
-                foreach ($this->module->options->post_types_column as $post_type => $value) {
-                    if ('on' == $value) {
-                        $post_types[] = $post_type;
-                    }
-                }
-            }
-    
-            return $post_types;
         }
 
         /**
@@ -1696,15 +1704,58 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $new_options['post_types'],
                 $this->module->post_type_support
             );
-            if (! isset($new_options['post_types_column'])) {
-                $new_options['post_types_column'] = [];
-            }
-            $new_options['post_types_column'] = $this->clean_post_type_options(
-                $new_options['post_types_column'],
-                $this->module->post_type_support
-            );
 
             return $new_options;
+        }
+
+        /**
+         * Settings page for editorial metadata
+         *
+         * @since 0.7
+         */
+        public function print_configure_view()
+        {
+            global $publishpress; ?>
+            <form class="basic-settings"
+                  action="<?php
+                  echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
+                <?php
+                settings_fields($this->module->options_group_name); ?>
+                <?php
+                do_settings_sections($this->module->options_group_name); ?>
+                <?php
+                echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                        $this->module->name
+                    ) . '" />'; ?>
+                <p class="submit"><?php
+                    submit_button(null, 'primary', 'submit', false); ?></p>
+                <?php
+                echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                        $this->module->name
+                    ) . '" />'; ?>
+                <?php
+                wp_nonce_field('edit-publishpress-settings'); ?>
+            </form>
+            <?php
+        }
+
+        /**
+         * Add necessary things to the admin menu
+         */
+        public function action_admin_submenu()
+        {
+            $publishpress = $this->get_service('publishpress');
+    
+            // Main Menu
+            add_submenu_page(
+                $publishpress->get_menu_slug(),
+                esc_html__('Metadata', 'publishpress'),
+                esc_html__('Metadata', 'publishpress'),
+                $this->getViewCapability(),
+                self::MENU_SLUG,
+                [$this, 'render_admin_page'],
+                20
+            );
         }
 
         /**
@@ -1717,15 +1768,34 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @since 0.7
          */
-        public function print_configure_view()
+        public function render_admin_page()
         {
-            global $publishpress;
+            $publishpress = $this->get_service('publishpress');
+            $publishpress->settings->print_default_header($publishpress->modules->editorial_metadata);
             $wp_list_table = new PP_Editorial_Metadata_List_Table();
-            $wp_list_table->prepare_items(); ?>
+            $wp_list_table->prepare_items();
 
+            $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
+            if (! isset($_GET['action']) || $_GET['action'] != 'edit-term') {
+                ?>
+                <h3 class='nav-tab-wrapper'>
+                    <a href="<?php
+                    echo esc_url($this->get_link()); ?>" class="nav-tab<?php
+                    echo $showOptionsTab ? ' nav-tab-active' : ''; ?>">
+                        <?php
+                        esc_html_e('All Metadata', 'publishpress'); ?>
+                    </a>
+                    <a href="<?php
+                    echo esc_url($this->get_link(['action' => 'add-new'])); ?>" class="nav-tab<?php
+                    echo ! $showOptionsTab ? ' nav-tab-active' : ''; ?>">
+                        <?php
+                        esc_html_e('Add New', 'publishpress'); ?>
+                    </a>
+                </h3>
             <?php
-            if (! isset($_GET['action']) || (isset($_GET['action']) && $_GET['action'] != 'edit-term')): ?>
-                <div id='col-right'>
+            }
+            if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
+                <div>
                     <div class='col-wrap'>
                         <form id='posts-filter' action='' method='post'>
                             <?php
@@ -1734,7 +1804,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                             wp_nonce_field('editorial-metadata-sortable', 'editorial-metadata-sortable'); ?>
                         </form>
                     </div>
-                </div><!-- /col-right -->
+                </div>
             <?php
             endif; ?>
 
@@ -1756,11 +1826,15 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $term_select_type = isset($term->select_type) ? $term->select_type : '';
                 $term_select_default = isset($term->select_default) ? $term->select_default : '';
                 $term_select_options = isset($term->select_options) ? $term->select_options : '';
+                $term_post_types= isset($term->post_types) ? $term->post_types : [];
+                $term_post_types_column = isset($term->post_types_column) ? $term->post_types_column : [];
                 $edit_term_link = $this->get_link(['action' => 'edit-term', 'term-id' => $term->term_id]);
 
                 $term_select_type = (isset($_POST['metadata_select_type'])) ? sanitize_key($_POST['metadata_select_type']) : $term_select_type;
                 $term_select_default  = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : $term_select_default;
                 $term_select_options = (isset($_POST['metadata_select_options']) && is_array($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : $term_select_options; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) ? array_map('sanitize_key', $_POST['post_types']) : $term_post_types;
+                $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) ? array_map('sanitize_key', $_POST['post_types_column']) : $term_post_types_column;
 
                 $name = (isset($_POST['name'])) ? stripslashes(sanitize_text_field($_POST['name'])) : $term->name;
                 $description = (isset($_POST['description'])) ? stripslashes(
@@ -1777,7 +1851,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 } else {
                     $show_in_filters = 'no';
                 }
-                $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters; 
+                $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters;
+
+                $valid_post_types = $this->get_all_post_types($this->module);
                 ?>
 
                 <form method='post' action="<?php
@@ -2044,6 +2120,54 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 ); ?>
                             </td>
                         </tr>
+                        <tr class='form-field pp-select2-field'>
+                            <th scope='row' ; valign='top'><?php
+                                esc_html_e('Add to post types', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'post_types',
+                                    esc_html__(
+                                        'Select post types this metadata term should be added to.',
+                                        'publishpress'
+                                    )
+                                ); ?>
+                                <?php
+                                foreach ($valid_post_types as $post_type => $post_types_name) : ?>
+                                    <?php
+                                    echo '<label for="post_types-' . esc_attr($post_type) . '" class="post-type-label">';
+                                    echo '<input id="post_types-' . esc_attr($post_type) . '" name="post_types[]"';
+                                    checked(in_array($post_type, $term_post_types), true);
+                                    echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
+                                    echo '<br />';
+                                    ?>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                        <tr class='form-field pp-select2-field'>
+                            <th scope='row' ; valign='top'><?php
+                                esc_html_e('Add to post types column.', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'post_types_column',
+                                    esc_html__(
+                                        'Enable term in the selected post types column.',
+                                        'publishpress'
+                                    )
+                                ); ?>
+                                <?php
+                                foreach ($valid_post_types as $post_type => $post_types_name) : ?>
+                                    <?php
+                                    echo '<label for="post_types_column-' . esc_attr($post_type) . '" class="post-type-label">';
+                                    echo '<input id="post_types_column-' . esc_attr($post_type) . '" name="post_types_column[]"';
+                                    checked(in_array($post_type, $term_post_types_column), true);
+                                    echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
+                                    echo '<br />';
+                                    ?>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
                         <input type='hidden' ; name="<?php
                         echo esc_attr(self::metadata_taxonomy); ?>'_type" ; value="<?php
                         echo esc_attr($type); ?>"/>
@@ -2059,35 +2183,15 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             <?php
             else: ?>
-                <?php
-                /** If not in full-screen edit term mode, we can create new terms or change options **/ ?>
-                <?php
-                $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
-                ?>
-                <div id='col-left'>
+                <div>
                     <div class='col-wrap'>
                         <div class='form-wrap'>
-                            <h3 class='nav-tab-wrapper'>
-                                <a href="<?php
-                                echo esc_url($this->get_link()); ?>" class="nav-tab<?php
-                                echo $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                                    <?php
-                                    esc_html_e('Options', 'publishpress'); ?>
-                                </a>
-                                <a href="<?php
-                                echo esc_url($this->get_link(['action' => 'add-new'])); ?>" class="nav-tab<?php
-                                echo ! $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                                    <?php
-                                    esc_html_e('Add New', 'publishpress'); ?>
-                                </a>
-                            </h3>
-
                             <?php
                             if (! $showOptionsTab): ?>
                                 <?php
                                 /** Custom form for adding a new Editorial Metadata term **/ ?>
                                 <form class='add:the-list:' action="<?php
-                                echo esc_url($this->get_link()); ?>" method='post' id='addmetadata'
+                                echo esc_url($this->get_link(['action' => 'add-new'])); ?>" method='post' id='addmetadata'
                                       name='addmetadata'>
                                     <div class='form-field form-required'>
                                         <label for='metadata_name'><?php
@@ -2366,6 +2470,51 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                             )
                                         ); ?>
                                     </div>
+                                    <div class='form-field'">
+                                        <label for='post_types'><?php
+                                            esc_html_e('Add to post types', 'publishpress'); ?></label>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'post_types',
+                                            esc_html__('Select post types this metadata term should be added to.', 'publishpress')
+                                        ); ?>
+                                        <?php
+                                        $valid_post_types = $this->get_all_post_types($this->module);
+                                        $current_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
+                                            ? array_map('sanitize_key', $_POST['post_types']) : ['post']; ?>
+                                            <?php
+                                            foreach ($valid_post_types as $post_type => $post_types_name) : ?>
+                                                <?php
+                                                echo '<label for="post_types-' . esc_attr($post_type) . '" class="post-type-label">';
+                                                echo '<input id="post_types-' . esc_attr($post_type) . '" name="post_types[]"';
+                                                checked(in_array($post_type, $current_post_types), true);
+                                                echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
+                                                echo '<br />';
+                                                ?>
+                                            <?php endforeach; ?>
+                                    </div>
+                                    <div class='form-field pp-select2-field'">
+                                        <label for='post_types_column'><?php
+                                            esc_html_e('Add to post types column.', 'publishpress'); ?></label>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'post_types_column',
+                                            esc_html__('Enable term in the selected post types column.', 'publishpress')
+                                        ); ?>
+                                        <?php
+                                        $current_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
+                                            ? array_map('sanitize_key', $_POST['post_types_column']) : ['post']; ?>
+                                            <?php
+                                            foreach ($valid_post_types as $post_type => $post_types_name) : ?>
+                                                <?php
+                                                echo '<label for="post_types_column-' . esc_attr($post_type) . '" class="post-type-label">';
+                                                echo '<input id="post_types_column-' . esc_attr($post_type) . '" name="post_types_column[]"';
+                                                checked(in_array($post_type, $current_post_types_column), true);
+                                                echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
+                                                echo '<br />';
+                                                ?>
+                                            <?php endforeach; ?>
+                                    </div>
                                     <?php
                                     wp_nonce_field('edit-publishpress-settings'); ?>
 
@@ -2379,32 +2528,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         ); ?>&nbsp;</p>
                                 </form>
                             <?php
-                            else: ?>
-                                <?php
-                                /** Basic form built on WP Settings API for outputting Editorial Metadata options **/ ?>
-                                <form class='basic-settings' action="<?php
-                                echo esc_url($this->get_link(['action' => 'change-options'])); ?>" method='post'>
-                                    <br/>
-                                    <p><?php
-                                        echo esc_html__(
-                                            'Please note that checking a box will apply all metadata to that post type.',
-                                            'publishpress'
-                                        ); ?></p>
-                                    <?php
-                                    settings_fields($this->module->options_group_name); ?>
-                                    <?php
-                                    do_settings_sections($this->module->options_group_name); ?>
-                                    <?php
-                                    echo '<input id="publishpress_module_name" name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
-                                            $this->module->name
-                                        ) . '" />'; ?>
-                                    <?php
-                                    wp_nonce_field('edit-publishpress-settings'); ?>
-
-                                    <?php
-                                    submit_button(); ?>
-                                </form>
-                            <?php
                             endif; ?>
                         </div>
                     </div>
@@ -2412,6 +2535,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             <?php
             endif;
+            $publishpress->settings->print_default_footer($publishpress->modules->editorial_metadata);
         }
 
         /**
@@ -2507,6 +2631,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         $columns = [
             'position' => esc_html__('Position', 'publishpress'),
             'name' => esc_html__('Name', 'publishpress'),
+            'post_types' => esc_html__('Post Types', 'publishpress'),
             'type' => esc_html__('Metadata Type', 'publishpress'),
             'description' => esc_html__('Description', 'publishpress'),
             'viewable' => esc_html__('Viewable', 'publishpress'),
@@ -2547,11 +2672,27 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
+        global $publishpress;
+
         switch ($column_name) {
             case 'position':
             case 'type':
             case 'description':
                 return esc_html($item->$column_name);
+            case 'post_types':
+                $post_types = (isset($item->post_types) && !empty(($item->post_types))) ? (array) $item->post_types : [];
+                if (!empty($post_types)) {
+                    $valid_post_types = $publishpress->editorial_metadata->get_all_post_types($publishpress->editorial_metadata->module);
+                    $post_type_names = [];
+                    foreach ($valid_post_types as $post_type => $post_types_name) {
+                        if (in_array($post_type, $post_types)) {
+                            $post_type_names[] = $post_types_name;
+                        }
+                    }
+                    return join(', ', $post_type_names);
+                } else {
+                    return '-';
+                }
             case 'viewable':
                 if ($item->viewable) {
                     return esc_html__('Yes', 'publishpress');
