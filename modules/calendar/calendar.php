@@ -3027,12 +3027,25 @@ if (! class_exists('PP_Calendar')) {
             }
 
             $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+            $user_roles = (isset($_GET['user_role']) && is_array($_GET['user_role'])) ? array_map('sanitize_text_field', $_GET['user_role']) : [];
 
-            /**
-             * @param array $results
-             * @param string $searchText
-             */
-            $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+            if (empty($user_roles)) {
+                /**
+                 * @param array $results
+                 * @param string $searchText
+                 */
+                $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
+            } else {
+                /**
+                 * @param array $results
+                 * @param array $args
+                 */
+                $results = apply_filters(
+                    'publishpress_search_authors_with_args_results_pre_search', 
+                    [], 
+                    ['search' => $queryText, 'role__in' => $user_roles]
+                );
+            }
 
             if (! empty($results)) {
                 wp_send_json($results);
@@ -3041,8 +3054,13 @@ if (! class_exists('PP_Calendar')) {
             $user_args = [
                 'number' => 20,
                 'orderby' => 'display_name',
-                'capability' => 'edit_posts',
             ];
+
+            if (!empty($user_roles)) {
+                $user_args['role__in'] = $user_roles;
+            } else {
+                $user_args['capability'] = 'edit_posts';
+            }
 
             if (! empty($queryText)) {
                 $user_args['search'] = '*' . $queryText . '*';
@@ -3477,6 +3495,8 @@ if (! class_exists('PP_Calendar')) {
 
         public function getPostTypeFields()
         {
+            global $publishpress;
+            
             if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
@@ -3540,6 +3560,62 @@ if (! class_exists('PP_Calendar')) {
                 'value' => null,
                 'type' => 'html'
             ];
+
+            if (class_exists('PP_Editorial_Metadata')) {
+                $editorial_metadata_class = new PP_Editorial_Metadata;
+                $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_calendar_form' => true]);
+                foreach ($editorial_metadata_terms as $term) {
+                    if (isset($term->post_types) && is_array($term->post_types) && in_array($postType, $term->post_types)) {
+                        $term_options = $editorial_metadata_class->get_editorial_metadata_term_by('id', $term->term_id);
+                        $postmeta_key = esc_attr($editorial_metadata_class->get_postmeta_key($term));
+                        $post_types = (isset($term->post_types) && is_array($term->post_types)) ? array_values($term->post_types) : [];
+                        $post_types = join(" ", $post_types);
+                        $term_data = [
+                        'name' => $postmeta_key,
+                        'label' => $term->name,
+                        'description' => $term->description,
+                        'term_options' => $term_options,
+                    ];
+                        $term_type = $term->type;
+                        if ($term_type === 'user') {
+                            $ajaxArgs    = [];
+                            if (isset($term->user_role)) {
+                                $ajaxArgs['user_role'] = $term->user_role;
+                            }
+                            $fields[$term_data['name']] = [
+                            'metadata' => true,
+                            'term'     => $term,
+                            'label'    => $term->name,
+                            'value'    => '',
+                            'ajaxArgs' => $ajaxArgs,
+                            'post_types' => $post_types,
+                            'type'     => 'authors',
+                            'multiple' => ''
+                        ];
+                        } elseif ($term_type === 'paragraph') {
+                            $fields[$term_data['name']] = [
+                            'metadata' => true,
+                            'term'     => $term,
+                            'label'    => $term->name,
+                            'post_types' => $post_types,
+                            'value'    => '',
+                            'type'     => 'html'
+                        ];
+                        } else {
+                            $html = apply_filters("pp_editorial_metadata_{$term->type}_get_input_html", $term_data, '');
+                            $fields[$term_data['name']] = [
+                            'metadata' => true,
+                            'post_types' => $post_types,
+                            'html'     => (is_object($html) || is_array($html)) ? '' : '<div class="pp-calendar-form-metafied '. $post_types .'">' . $html . '</div>',
+                            'term'     => $term,
+                            'label'    => $term->name,
+                            'value'    => '',
+                            'type'     => 'metafield'
+                        ];
+                        }
+                    }
+                }
+            }
 
             $fields = apply_filters('publishpress_calendar_get_post_type_fields', $fields, $postType);
 

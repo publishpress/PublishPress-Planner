@@ -18,6 +18,34 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+            
+            ob_start();
+
+            printf(
+                '<input
+                    type="checkbox"
+                    class="pp-calendar-form-metafied-input"
+                    id="%s"
+                    name="%s"
+                    value="1"
+                    %s
+                />',
+                esc_attr($input_name),
+                esc_attr($input_name),
+                checked($value, 1, false)
+            );
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input html.
          *
          * @access  protected

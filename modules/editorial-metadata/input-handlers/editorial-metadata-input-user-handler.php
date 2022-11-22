@@ -18,6 +18,18 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            ob_start();
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input html.
          *
          * @access  protected
@@ -26,7 +38,7 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
          * @since   1.20.0
          *
          */
-        protected function renderInput($inputOptions = array(), $value = null)
+        protected function renderInput($inputOptions = array(), $value = null, $input_only = false)
         {
             $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
