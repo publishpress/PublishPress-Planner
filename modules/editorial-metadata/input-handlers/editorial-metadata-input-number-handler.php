@@ -18,6 +18,32 @@ if (! class_exists('Editorial_Metadata_Input_Number_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+
+            ob_start();
+
+            printf(
+                '<input
+                    type="number"
+                    class="pp-calendar-form-metafied-input"
+                    id="%s"
+                    name="%1$s"
+                    value="%2$s"
+                />',
+                esc_attr($input_name),
+                esc_attr($value)
+            );
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input-preview html.
          *
          * @access  protected

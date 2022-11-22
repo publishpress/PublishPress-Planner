@@ -620,8 +620,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
         {
             // Authentication checks: make sure data came from our meta box and that the current user is allowed to edit the post
             // TODO: switch to using check_admin_referrer? See core (e.g. edit.php) for usage
-            if (! isset($_POST[self::metadata_taxonomy . "_nonce"])
-                || ! wp_verify_nonce(sanitize_key($_POST[self::metadata_taxonomy . "_nonce"]), __FILE__)) {
+            if ((! isset($_POST[self::metadata_taxonomy . "_nonce"])
+                || ! wp_verify_nonce(sanitize_key($_POST[self::metadata_taxonomy . "_nonce"]), __FILE__)
+                )
+                && (! isset($_POST["nonce"])
+                || ! wp_verify_nonce(sanitize_key($_POST['nonce']), 'publishpress-calendar-get-data'))
+                ) {
                 return $post->ID;
             }
 
@@ -640,13 +644,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 if (isset($term->post_types) && is_array($term->post_types) && in_array($post_type, $term->post_types)) {
                     // Set up the key for this editorial metadata term (same as what's in $_POST)
                     $key = $this->get_postmeta_key($term);
-
                     if (isset($_POST[$key]) && is_array($_POST[$key])) {
                         $new_metadata = array_map('sanitize_text_field', $_POST[$key]);
                     } else {
                         $new_metadata = isset($_POST[$key]) ? sanitize_text_field($_POST[$key]) : '';
                     }
-
                     $type = $term->type;
                     if (empty($new_metadata)) {
                         delete_post_meta($post->ID, $key);
@@ -690,7 +692,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return string $postmeta_key Unique key
          */
-        private function get_postmeta_key($term)
+        public function get_postmeta_key($term)
         {
             $key = self::metadata_postmeta_key;
             $type = $term->type;
@@ -754,6 +756,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'viewable' => false,
                     'position' => false,
                     'show_in_filters' => false,
+                    'show_in_calendar_form' => false,
                 ];
                 $term = array_merge($defaults, (array)$term);
                 if (is_array($unencoded_description)) {
@@ -796,7 +799,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          *
          * @return object $term Term's object representation
          */
-        private function get_editorial_metadata_term_by($field, $value)
+        public function get_editorial_metadata_term_by($field, $value)
         {
             if (! in_array($field, ['id', 'slug', 'name'])) {
                 return false;
@@ -1055,6 +1058,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'viewable' => $old_term->viewable,
                     'show_in_filters' => $old_term->show_in_filters,
                     'post_types' => isset($old_term->post_types) ? $old_term->post_types : '',
+                    'show_in_calendar_form' => isset($old_term->show_in_calendar_form) ? $old_term->show_in_calendar_form : false,
                     'post_types_column' => isset($old_term->post_types_column) ? $old_term->post_types_column : '',
                 ];
             }
@@ -1071,6 +1075,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $new_args['select_options'],
                 'viewable' => $new_args['viewable'],
                 'show_in_filters' => $new_args['show_in_filters'],
+                'show_in_calendar_form' => $new_args['show_in_calendar_form'],
                 'post_types' => $new_args['post_types'],
                 'post_types_column' => $new_args['post_types_column'],
             ];
@@ -1109,6 +1114,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => '',
                 'viewable' => false,
                 'show_in_filters' => false,
+                'show_in_calendar_form' => false,
                 'post_types' => [],
                 'post_types_column' => [],
             ];
@@ -1127,6 +1133,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $args['select_options'],
                 'viewable' => $args['viewable'],
                 'show_in_filters' => $args['show_in_filters'],
+                'show_in_calendar_form' => $args['show_in_calendar_form'],
                 'post_types' => $args['post_types'],
                 'post_types_column' => $args['post_types_column'],
             ];
@@ -1325,6 +1332,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if ($_POST['metadata_show_in_filters'] == 'yes') {
                 $term_show_in_filters = true;
             }
+            
+            // Metadata show_in_calendar_form needs to be a valid Yes or No
+            $term_show_in_calendar_form = false;
+            if ($_POST['show_in_calendar_form'] == 'yes') {
+                $term_show_in_calendar_form = true;
+            }
 
             // Kick out if there are any errors
             if (! empty($_REQUEST['form-errors'])) {
@@ -1344,6 +1357,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $term_select_options,
                 'viewable' => $term_viewable,
                 'show_in_filters' => $term_show_in_filters,
+                'show_in_calendar_form' => $term_show_in_calendar_form,
                 'post_types' => $term_post_types,
                 'post_types_column' => $term_post_types_column,
             ];
@@ -1481,6 +1495,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $new_show_in_filters = true;
             }
 
+            // Make sure the show_in_calendar_form state is valid
+            $new_show_in_calendar_form = false;
+            if ($_POST['show_in_calendar_form'] == 'yes') {
+                $new_show_in_calendar_form = true;
+            }
+
             $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
                 ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
 
@@ -1500,6 +1520,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_options' => $term_select_options,
                 'viewable' => $new_viewable,
                 'show_in_filters' => $new_show_in_filters,
+                'show_in_calendar_form' => $new_show_in_calendar_form,
                 'post_types' => $term_post_types,
                 'post_types_column' => $term_post_types_column,
             ];
@@ -1853,6 +1874,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 }
                 $show_in_filters = (isset($_POST['show_in_filters'])) ? stripslashes($_POST['show_in_filters']) : $show_in_filters;
 
+                if ($term->show_in_calendar_form) {
+                    $show_in_calendar_form = 'yes';
+                } else {
+                    $show_in_calendar_form = 'no';
+                }
+                $show_in_calendar_form = (isset($_POST['show_in_calendar_form'])) ? stripslashes($_POST['show_in_calendar_form']) : $show_in_calendar_form;
+
                 $valid_post_types = $this->get_all_post_types($this->module);
                 ?>
 
@@ -2115,6 +2143,35 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     'show_in_filters',
                                     esc_html__(
                                         'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                        'publishpress'
+                                    )
+                                ); ?>
+                            </td>
+                        </tr>
+                        <tr class='form-field'>
+                            <th scope='row' ; valign='top'><?php
+                                esc_html_e('Show in calendar form', 'publishpress'); ?></th>
+                            <td>
+                                <?php
+                                $show_in_calendar_form_options = [
+                                    'no' => esc_html__('No', 'publishpress'),
+                                    'yes' => esc_html__('Yes', 'publishpress'),
+                                ]; ?>
+                                <select id='show_in_calendar_form' ; name='show_in_calendar_form'>
+                                    <?php
+                                    foreach ($show_in_calendar_form_options as $show_in_calendar_form_key => $show_in_calendar_form_value) : ?>
+                                        <option value="<?php
+                                        echo esc_attr($show_in_calendar_form_key); ?>" <?php
+                                        selected($show_in_calendar_form, $show_in_calendar_form_key); ?>><?php
+                                            echo esc_attr($show_in_calendar_form_value); ?></option>
+                                    <?php
+                                    endforeach; ?>
+                                </select>
+                                <?php
+                                $publishpress->settings->helper_print_error_or_description(
+                                    'show_in_calendar_form',
+                                    esc_html__(
+                                        'When Show in calendar form, metadata will be available in calendar new post form.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2470,6 +2527,37 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                             )
                                         ); ?>
                                     </div>
+                                    <div class='form-field form-required'>
+                                        <label for='show_in_calendar_form'><?php
+                                            esc_html_e('Show in calendar form', 'publishpress'); ?></label>
+                                        <?php
+                                        $show_in_calendar_form_options = [
+                                            'no' => esc_html__('No', 'publishpress'),
+                                            'yes' => esc_html__('Yes', 'publishpress'),
+                                        ];
+                                        $current_show_in_calendar_form = (isset($_POST['show_in_calendar_form']) && in_array(
+                                                $_POST['show_in_calendar_form'],
+                                                array_keys($show_in_calendar_form_options)
+                                            )) ? $_POST['show_in_calendar_form'] : 'no'; ?>
+                                        <select id="show_in_calendar_form" ; name='show_in_calendar_form'>
+                                            <?php
+                                            foreach ($show_in_calendar_form_options as $show_in_calendar_form_key => $show_in_calendar_form_value) : ?>
+                                                <option value="<?php
+                                                echo esc_attr($show_in_calendar_form_key); ?>" <?php
+                                                selected($current_show_in_calendar_form, $show_in_calendar_form_key); ?>><?php
+                                                    echo esc_attr($show_in_calendar_form_value); ?></option>
+                                            <?php
+                                            endforeach; ?>
+                                        </select>
+                                        <?php
+                                        $publishpress->settings->helper_print_error_or_description(
+                                            'show_in_calendar_form',
+                                            esc_html__(
+                                                'When Show in calendar form, metadata will be available in calendar new post form.',
+                                                'publishpress'
+                                            )
+                                        ); ?>
+                                    </div>
                                     <div class='form-field'">
                                         <label for='post_types'><?php
                                             esc_html_e('Add to post types', 'publishpress'); ?></label>
@@ -2582,6 +2670,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     [get_class($handler), 'getMetaValueHtml'],
                     10, 2
                 );
+
+                add_filter(
+                    "pp_editorial_metadata_{$handler_type}_get_input_html",
+                    [get_class($handler), 'getInputHtml'],
+                    10, 2
+                );
             }
         }
     }
@@ -2636,6 +2730,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'description' => esc_html__('Description', 'publishpress'),
             'viewable' => esc_html__('Viewable', 'publishpress'),
             'show_in_filters' => esc_html__('Show in filters', 'publishpress'),
+            'show_in_calendar_form' => esc_html__('Show in calendar form', 'publishpress'),
         ];
 
         return $columns;
@@ -2702,6 +2797,13 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
                 break;
             case 'show_in_filters':
                 if ($item->show_in_filters) {
+                    return esc_html__('Yes', 'publishpress');
+                } else {
+                    return esc_html__('No', 'publishpress');
+                }
+                break;
+            case 'show_in_calendar_form':
+                if ($item->show_in_calendar_form) {
                     return esc_html__('Yes', 'publishpress');
                 } else {
                     return esc_html__('No', 'publishpress');

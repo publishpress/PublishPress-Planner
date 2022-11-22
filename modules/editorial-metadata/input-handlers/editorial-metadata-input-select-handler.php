@@ -18,6 +18,62 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            $dropdown_data = self::get_dropdown_data($inputOptions, $value);
+
+            $input_id = $dropdown_data['input_id'];
+            $input_class = $dropdown_data['input_class'] . ' pp-calendar-form-metafied-input';
+            $input_name = $dropdown_data['input_name'];
+            $select_type = $dropdown_data['select_type'];
+            $option_values = $dropdown_data['option_values'];
+            $option_labels = $dropdown_data['option_labels'];
+            $input_label = $dropdown_data['input_label'];
+            $input_description = $dropdown_data['input_description'];
+            $default_option_label = '';
+            $select_default = $dropdown_data['select_default'];
+            
+            ob_start();
+
+            if (!$dropdown_data) {
+                return;
+            }
+
+            $html = '<div class="pp-editorial-select2-wrapper">';
+            $html .= sprintf(
+                '<select id="%1$s" class="%2$s" name="%3$s" placeholder="%4$s" data-placeholder="%5$s" %6$s>',
+                esc_attr($input_id),
+                esc_attr($input_class),
+                esc_attr($input_name),
+                esc_attr($default_option_label),
+                esc_attr($default_option_label),
+                esc_attr($select_type)
+            );
+            $html .= self::generate_option('', '');
+
+            foreach ($option_values as $index => $option_value) {
+                if (!$value && $select_default !== '') {
+                    $selected = selected($index, $select_default, false);
+                } else {
+                    $selected = (is_array($value)) ? selected(in_array($option_value, $value), true, false) : selected($value, $option_value, false);
+                }
+                $html .= self::generate_option($option_value, $option_labels[$index], $selected);
+            }
+    
+            $html .= '</select>';
+            $html .= '</div>';
+
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo $html;
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input html.
          *
          * @access  protected
@@ -28,7 +84,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
          */
         protected function renderInput($inputOptions = array(), $value = null)
         {
-            $dropdown_data = $this->get_dropdown_data($inputOptions, $value);
+            $dropdown_data = self::get_dropdown_data($inputOptions, $value);
 
             $input_id = $dropdown_data['input_id'];
             $input_class = $dropdown_data['input_class'];
@@ -62,7 +118,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
                 esc_attr($default_option_label),
                 esc_attr($select_type)
             );
-            $html .= $this->generate_option('', '');
+            $html .= self::generate_option('', '');
 
             foreach ($option_values as $index => $option_value) {
                 if (!$value && $select_default !== '') {
@@ -70,7 +126,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
                 } else {
                     $selected = (is_array($value)) ? selected(in_array($option_value, $value), true, false) : selected($value, $option_value, false);
                 }
-                $html .= $this->generate_option($option_value, $option_labels[$index], $selected);
+                $html .= self::generate_option($option_value, $option_labels[$index], $selected);
             }
     
             $html .= '</select>';
@@ -91,7 +147,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
          */
         protected function renderInputPreview($inputOptions = array(), $value = null)
         {
-            $dropdown_data = $this->get_dropdown_data($inputOptions, $value);
+            $dropdown_data = self::get_dropdown_data($inputOptions, $value);
 
             $input_id = $dropdown_data['input_id'];
             $input_class = $dropdown_data['input_class'];
@@ -152,7 +208,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
                 esc_attr($default_option_label),
                 esc_attr($select_type)
             );
-            $html .= $this->generate_option('', '');
+            $html .= self::generate_option('', '');
 
             foreach ($option_values as $index => $option_value) {
                 if (!$value && $select_default !== '') {
@@ -160,7 +216,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
                 } else {
                     $selected = (is_array($value)) ? selected(in_array($option_value, $value), true, false) : selected($value, $option_value, false);
                 }
-                $html .= $this->generate_option($option_value, $option_labels[$index], $selected);
+                $html .= self::generate_option($option_value, $option_labels[$index], $selected);
             }
     
             $html .= '</select>';
@@ -178,7 +234,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
          *
          * @return array $inputOptions.
          */
-        protected function get_dropdown_data($inputOptions, $value)
+        protected static function get_dropdown_data($inputOptions, $value)
         {
             $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
@@ -242,7 +298,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
          *
          * @return string The generated <option> element.
          */
-        protected function generate_option($value, $label, $selected = '')
+        protected static function generate_option($value, $label, $selected = '')
         {
             return '<option value="' . esc_attr($value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
         }

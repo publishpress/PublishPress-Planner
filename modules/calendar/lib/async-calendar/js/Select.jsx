@@ -18,7 +18,7 @@ export default function Select(props) {
             allowClear: getAllowClearProp()
         };
 
-        if (props.ajaxUrl) {
+        if (props.ajaxUrl && props.ajaxAction) {
             params.ajax = {
                 delay: 250,
                 url: props.ajaxUrl,
@@ -95,13 +95,16 @@ export default function Select(props) {
         className += ' ' + props.className;
     }
 
+    className += props.metadata ? 'pp-calendar-form-metafied ' + props.post_types : '';
     return (
-        <select className={className}
-                id={props.id}
-                multiple={props.multiple}
-                ref={selectRef}>
-            {blankOption()}
-            {options}
-        </select>
+            <select className={className}
+                    type="select"
+                    name={props.name}
+                    id={props.id}
+                    multiple={props.multiple}
+                    ref={selectRef}>
+                {blankOption()}
+                {options}
+            </select>
     )
 }

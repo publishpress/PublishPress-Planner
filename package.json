@@ -40,5 +40,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "test": "jest",
     "makepot": "wp i18n make-pot . ./languages/publishpress.pot --domain=publishpress"
+  },
+  "dependencies": {
+    "dompurify": "^2.4.1"
   }
 }
