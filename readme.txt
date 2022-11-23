@@ -121,6 +121,21 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.10.0] - 23 Nov 2022 =
+
+* Update: Rename the plugin to "PublishPress Planner", #1077
+* Update: Add Metadata top level menu link, #666
+* Update: Add a Dropdown Select type to metadata, #564
+* Update: Show and Add metadata on the Calendar, #284
+* Update: Add Role filter for editorial metadata of User type, #801
+* Update: Allow to choose post type where the metadata is displayed, #464
+* Update: Notification threshold description, #1179
+* Fixed: "User" metadata metabox doesn't scale well, #563
+* Update: A setting to change the name showing in editorial comments, #1162
+* Fixed: Rating stars in PublishPress footer are unevenly spaced, #1150
+* Update: PublishPress-PRO ES-FR-IT Translation Updates November 4, 2022, #1164
+* Update: PublishPress-FREE-TranslationUpdates_FR-IT_November3_2022, #1163
+
 = [3.9.0] - 3 Nov 2022 =
 
 * Update: Add Editorial Comments menu, #319
