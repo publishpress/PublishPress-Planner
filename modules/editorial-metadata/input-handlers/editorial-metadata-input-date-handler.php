@@ -49,6 +49,7 @@ if (! class_exists('Editorial_Metadata_Input_Date_Handler')) {
 
             printf(
                 '<input
+                    class="pp-calendar-form-metafied-input"
                     type="hidden"
                     name="%s_hidden"
                     value="%s"
