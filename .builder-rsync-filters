@@ -58,7 +58,6 @@
 - .env.testing.dist
 - CONTRIBUTING.md
 - assets_wp
-- modules/editorial-comments/library
 - phpunit.xml
 - vendor/bin
 - vendor/pimple/pimple/CHANGELOG
