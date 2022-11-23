@@ -348,6 +348,16 @@ if (! class_exists('PP_Improved_Notifications')) {
                     step="1"
                     name="' . esc_attr($this->module->options_group_name) . '[duplicated_notification_threshold]"
                     value="' . esc_attr($value) . '"/> ' . esc_html__('minutes', 'publishpress');
+            ?>
+            <div style="max-width: 300px;">
+                <p><?php
+                    esc_html_e(
+                        'This will prevent too many notifications being sent for the same or similar events. Set this to a higher number if you are receiving duplicate emails.',
+                        'publishpress'
+                    ); ?>
+                </p>
+            </div>
+            <?php
         }
 
         /**
