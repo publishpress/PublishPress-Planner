@@ -1792,29 +1792,16 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function render_admin_page()
         {
             $publishpress = $this->get_service('publishpress');
-            $publishpress->settings->print_default_header($publishpress->modules->editorial_metadata);
+            $editorial_metadata = $publishpress->modules->editorial_metadata;
+            if (! isset($_GET['action']) || !in_array($_GET['action'], ['edit-term', 'add-new'])) {
+                $editorial_metadata->title = $editorial_metadata->title . ' <a href="'. esc_url(esc_url($this->get_link(['action' => 'add-new']))) .'" class="page-title-action">'. esc_html__('Add New', 'publishpress') .'</a>';
+            }
+            $publishpress->settings->print_default_header($editorial_metadata);
             $wp_list_table = new PP_Editorial_Metadata_List_Table();
             $wp_list_table->prepare_items();
 
             $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
-            if (! isset($_GET['action']) || $_GET['action'] != 'edit-term') {
-                ?>
-                <h3 class='nav-tab-wrapper'>
-                    <a href="<?php
-                    echo esc_url($this->get_link()); ?>" class="nav-tab<?php
-                    echo $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                        <?php
-                        esc_html_e('All Metadata', 'publishpress'); ?>
-                    </a>
-                    <a href="<?php
-                    echo esc_url($this->get_link(['action' => 'add-new'])); ?>" class="nav-tab<?php
-                    echo ! $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                        <?php
-                        esc_html_e('Add New', 'publishpress'); ?>
-                    </a>
-                </h3>
-            <?php
-            }
+   
             if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
                 <div>
                     <div class='col-wrap'>
