@@ -404,7 +404,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             $publishpress->add_menu_page(
-                esc_html__('Calendar', 'publishpress'),
+                esc_html__('Content Calendar', 'publishpress'),
                 $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page']
@@ -421,8 +421,8 @@ if (! class_exists('PP_Calendar')) {
             // Main Menu
             add_submenu_page(
                 $publishpress->get_menu_slug(),
-                esc_html__('Calendar', 'publishpress'),
-                esc_html__('Calendar', 'publishpress'),
+                esc_html__('Content Calendar', 'publishpress'),
+                esc_html__('Content Calendar', 'publishpress'),
                 $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page'],

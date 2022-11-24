@@ -91,7 +91,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = [
-                'title' => esc_html__('Metadata', 'publishpress'),
+                'title' => esc_html__('Editorial Metadata', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -1770,8 +1770,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // Main Menu
             add_submenu_page(
                 $publishpress->get_menu_slug(),
-                esc_html__('Metadata', 'publishpress'),
-                esc_html__('Metadata', 'publishpress'),
+                esc_html__('Editorial Metadata', 'publishpress'),
+                esc_html__('Editorial Metadata', 'publishpress'),
                 $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page'],
