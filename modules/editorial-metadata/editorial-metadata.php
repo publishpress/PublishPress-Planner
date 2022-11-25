@@ -2100,7 +2100,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'viewable',
                                     esc_html__(
-                                        'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                                        'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2108,7 +2108,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show in filters', 'publishpress'); ?></th>
+                                esc_html_e('Show as Content Overview filters', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $metadata_show_in_filters_options = [
@@ -2129,7 +2129,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_filters',
                                     esc_html__(
-                                        'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                        'If enabled, this metadata will be available as filter option on the Content Overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2137,7 +2137,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show in calendar form', 'publishpress'); ?></th>
+                                esc_html_e('Show on Content Calendar form', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $show_in_calendar_form_options = [
@@ -2158,7 +2158,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_calendar_form',
                                     esc_html__(
-                                        'When Show in calendar form, metadata will be available in calendar new post form.',
+                                        'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2172,7 +2172,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'post_types',
                                     esc_html__(
-                                        'Select post types this metadata term should be added to.',
+                                        'This metadata will be available for these post types.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2190,13 +2190,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field pp-select2-field'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Add to post types column.', 'publishpress'); ?></th>
+                                esc_html_e('Show on Post Types screen', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'post_types_column',
                                     esc_html__(
-                                        'Enable term in the selected post types column.',
+                                        'This metadata will be viewable on the overview screens for these post types.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2478,14 +2478,14 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'viewable',
                                             esc_html__(
-                                                'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                                                'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                                                 'publishpress'
                                             )
                                         ); ?>
                                     </div>
                                     <div class='form-field form-required'>
                                         <label for='metadata_show_in_filters'><?php
-                                            esc_html_e('Show in filters', 'publishpress'); ?></label>
+                                            esc_html_e('Show as Content Overview filters', 'publishpress'); ?></label>
                                         <?php
                                         $metadata_show_in_filters_options = [
                                             'no' => esc_html__('No', 'publishpress'),
@@ -2509,14 +2509,14 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_filters',
                                             esc_html__(
-                                                'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                                'If enabled, this metadata will be available as filter option on the Content Overview screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
                                     </div>
                                     <div class='form-field form-required'>
                                         <label for='show_in_calendar_form'><?php
-                                            esc_html_e('Show in calendar form', 'publishpress'); ?></label>
+                                            esc_html_e('Show on Content Calendar form', 'publishpress'); ?></label>
                                         <?php
                                         $show_in_calendar_form_options = [
                                             'no' => esc_html__('No', 'publishpress'),
@@ -2540,7 +2540,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_calendar_form',
                                             esc_html__(
-                                                'When Show in calendar form, metadata will be available in calendar new post form.',
+                                                'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
@@ -2551,7 +2551,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'post_types',
-                                            esc_html__('Select post types this metadata term should be added to.', 'publishpress')
+                                            esc_html__('This metadata will be available for these post types.', 'publishpress')
                                         ); ?>
                                         <?php
                                         $valid_post_types = $this->get_all_post_types($this->module);
@@ -2570,11 +2570,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     </div>
                                     <div class='form-field pp-select2-field'">
                                         <label for='post_types_column'><?php
-                                            esc_html_e('Add to post types column.', 'publishpress'); ?></label>
+                                            esc_html_e('Show on Post Types screen', 'publishpress'); ?></label>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'post_types_column',
-                                            esc_html__('Enable term in the selected post types column.', 'publishpress')
+                                            esc_html__('This metadata will be viewable on the overview screens for these post types.', 'publishpress')
                                         ); ?>
                                         <?php
                                         $current_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
@@ -2716,8 +2716,8 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'type' => esc_html__('Metadata Type', 'publishpress'),
             'description' => esc_html__('Description', 'publishpress'),
             'viewable' => esc_html__('Viewable', 'publishpress'),
-            'show_in_filters' => esc_html__('Show in filters', 'publishpress'),
-            'show_in_calendar_form' => esc_html__('Show in calendar form', 'publishpress'),
+            'show_in_filters' => esc_html__('Show as Content Overview filters', 'publishpress'),
+            'show_in_calendar_form' => esc_html__('Show on Content Calendar form', 'publishpress'),
         ];
 
         return $columns;
@@ -2859,7 +2859,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         } else {
             $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(
                     esc_html__(
-                        'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                        'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                         'publishpress'
                     )
                 ) . '" href="' . esc_url(
