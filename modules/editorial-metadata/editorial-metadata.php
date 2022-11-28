@@ -2715,9 +2715,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'post_types' => esc_html__('Post Types', 'publishpress'),
             'type' => esc_html__('Metadata Type', 'publishpress'),
             'description' => esc_html__('Description', 'publishpress'),
-            'viewable' => esc_html__('Viewable', 'publishpress'),
-            'show_in_filters' => esc_html__('Show as Content Overview filters', 'publishpress'),
-            'show_in_calendar_form' => esc_html__('Show on Content Calendar form', 'publishpress'),
+            'viewable' => esc_html__('Viewable', 'publishpress')
         ];
 
         return $columns;
@@ -2777,20 +2775,6 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
                 }
             case 'viewable':
                 if ($item->viewable) {
-                    return esc_html__('Yes', 'publishpress');
-                } else {
-                    return esc_html__('No', 'publishpress');
-                }
-                break;
-            case 'show_in_filters':
-                if ($item->show_in_filters) {
-                    return esc_html__('Yes', 'publishpress');
-                } else {
-                    return esc_html__('No', 'publishpress');
-                }
-                break;
-            case 'show_in_calendar_form':
-                if ($item->show_in_calendar_form) {
                     return esc_html__('Yes', 'publishpress');
                 } else {
                     return esc_html__('No', 'publishpress');
