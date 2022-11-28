@@ -1446,29 +1446,31 @@ class PP_Content_Overview extends PP_Module
          //metadata field filter
          $meta_query = array( 'relation' => 'AND' );
          $metadata_filter = false;
-         foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
-             if (! empty($this->user_filters[$meta_key])) {
-                 if ($metadata_term->type === 'date') {
-                     $meta_value = strtotime($this->user_filters[$meta_key]);
-                 } else {
-                     $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
-                 }
+        foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
+            if (! empty($this->user_filters[$meta_key])) {
+                if ($metadata_term->type === 'date') {
+                    $meta_value = strtotime($this->user_filters[$meta_key]);
+                } else {
+                    $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
+                }
 
                  $compare = '=';
-                 if ($metadata_term->type === 'select' && isset($metadata_term->select_type) && $metadata_term->select_type === 'multiple') {
+                if ($metadata_term->type === 'paragraph'
+                    || ($metadata_term->type === 'select' && isset($metadata_term->select_type) && $metadata_term->select_type === 'multiple')
+                ) {
                     $compare = 'LIKE';
-                 }
-                 $metadata_filter = true;
-                 $meta_query[] = array(
-                     'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
-                     'value' => $meta_value,
-                     'compare' => $compare
-                 );
-             }
-         }
-         if ($metadata_filter) {
-             $args['meta_query'] = $meta_query;
-         }
+                }
+                $metadata_filter = true;
+                $meta_query[] = array(
+                    'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
+                    'value' => $meta_value,
+                    'compare' => $compare
+                );
+            }
+        }
+        if ($metadata_filter) {
+            $args['meta_query'] = $meta_query;
+        }
 
         //taxonomy filter
         $tax_query = array( 'relation' => 'AND' );
