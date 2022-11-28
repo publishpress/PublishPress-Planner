@@ -800,7 +800,7 @@ class PP_Content_Overview extends PP_Module
 
         $description = sprintf(
             '<div>%s <span class="time-range">%s</span></div> %s',
-            esc_html__('Content Overview', 'publishpress'),
+            esc_html__('Show content from', 'publishpress'),
             $this->content_overview_time_range(),
             $this->content_overview_search_box()
         );
@@ -1004,7 +1004,7 @@ class PP_Content_Overview extends PP_Module
 
         $output .= sprintf(
             _x(
-                'starting %1$s to %2$s',
+                ' %1$s to %2$s',
                 '%1$s = start date, %2$s = end date',
                 'publishpress'
             ),
@@ -1013,7 +1013,7 @@ class PP_Content_Overview extends PP_Module
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
-        $output .= ' class="button button-primary" value="' . esc_html__('Apply', 'publishpress') . '" />';
+        $output .= ' class="button" value="' . esc_html__('Apply', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
         $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';

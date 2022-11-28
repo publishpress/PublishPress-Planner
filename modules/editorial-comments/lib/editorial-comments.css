@@ -166,16 +166,16 @@
     box-sizing: border-box !important;
 }
 
-.publishpress_page_pp-editorial-comments .editorial-comment-filter-posts,
-.publishpress_page_pp-editorial-comments .editorial-comment-filter-users {
+.planner_page_pp-editorial-comments .editorial-comment-filter-posts,
+.planner_page_pp-editorial-comments .editorial-comment-filter-users {
     width: 190px;
 }
 
-.publishpress_page_pp-editorial-comments .tablenav .select2-container {
+.planner_page_pp-editorial-comments .tablenav .select2-container {
     margin-right: 7px;
 }
 
-.publishpress_page_pp-editorial-comments .fixed .column-author {
+.planner_page_pp-editorial-comments .fixed .column-author {
     width: 15%;
 }
 
