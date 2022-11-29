@@ -862,7 +862,6 @@ class PP_Content_Overview extends PP_Module
                 $filterable_metadata[$term->slug] = $term;
             }
         }
-        
         return $filterable_metadata;
     }
 
@@ -887,6 +886,12 @@ class PP_Content_Overview extends PP_Module
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             if ($meta_term->type === 'checkbox') {
                 $user_filters[$meta_key] = absint($this->filter_get_param($meta_key));
+            } elseif ($meta_term->type === 'date') {
+                $user_filters[$meta_key]                   = $this->filter_get_param_text($meta_key);
+                $user_filters[$meta_key . '_start']        = $this->filter_get_param_text($meta_key . '_start');
+                $user_filters[$meta_key . '_end']          = $this->filter_get_param_text($meta_key . '_end');
+                $user_filters[$meta_key . '_start_hidden'] = $this->filter_get_param_text($meta_key . '_start_hidden');
+                $user_filters[$meta_key . '_end_hidden']   = $this->filter_get_param_text($meta_key . '_end_hidden');
             } else {
                 $user_filters[$meta_key] = $this->filter_get_param_text($meta_key);
             }
@@ -1142,6 +1147,13 @@ class PP_Content_Overview extends PP_Module
         $select_filter_names['post_status'] = 'post_status';
         //metadata field
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
+            if ($meta_term->type === 'date') {
+                $select_filter_names[$meta_key . '_start']        = $meta_key . '_start';
+                $select_filter_names[$meta_key . '_end']          = $meta_key . '_end';
+                $select_filter_names[$meta_key . '_start_hidden'] = $meta_key . '_start_hidden';
+                $select_filter_names[$meta_key . '_end_hidden']   = $meta_key . '_end_hidden';
+            }
+            
             $select_filter_names[$meta_key] = $meta_key;
         }
         //taxonomies
@@ -1274,8 +1286,7 @@ class PP_Content_Overview extends PP_Module
                 $metadata_value = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
                 $metadata_term  = $this->get_filterable_metadata()[$select_name];
                 $metadata_type  = $metadata_term->type;
-
-                if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'date', 'select'])) { ?>
+                if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'select'])) { ?>
                     <input 
                         type="text" 
                         id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
@@ -1283,6 +1294,76 @@ class PP_Content_Overview extends PP_Module
                         value="<?php echo esc_attr($metadata_value); ?>" 
                         placeholder="<?php echo esc_attr($metadata_term->name); ?>"
                         />
+                <?php
+                } elseif ($metadata_type === 'date') { ?>
+                    <?php 
+
+                    $metadata_start_value           = isset($filters[$select_name . '_start']) ? sanitize_text_field($filters[$select_name . '_start']) : '';
+                    $metadata_end_value             = isset($filters[$select_name . '_end']) ? sanitize_text_field($filters[$select_name . '_end']) : '';
+
+                    $metadata_start_value_hidden    = isset($filters[$select_name . '_start_hidden']) ? sanitize_text_field($filters[$select_name . '_start_hidden']) : '';
+                    $metadata_end_value_hidden      = isset($filters[$select_name . '_end_hidden']) ? sanitize_text_field($filters[$select_name . '_end_hidden']) : '';
+
+                    $metadata_start_name            = $select_name . '_start';
+                    $metadata_end_name              = $select_name . '_end';
+                    ?>
+                    <?php echo esc_html($metadata_term->name); ?> 
+                    <?php 
+                    printf(
+                        '<input
+                            type="text"
+                            id="%s"
+                            name="%1$s"
+                            value="%2$s"
+                            class="date-time-pick"
+                            data-alt-field="%1$s_hidden"
+                            data-alt-format="%3$s"
+                            placeholder="%4$s"
+                            autocomplete="off"
+                        />',
+                        esc_attr($metadata_start_name),
+                        esc_attr($metadata_start_value),
+                        esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                        esc_attr__('From', 'publishpress')
+                    );
+                    printf(
+                        '<input
+                            type="hidden"
+                            name="%s_hidden"
+                            value="%s"
+                        />',
+                        esc_attr($metadata_start_name),
+                        esc_attr($metadata_start_value_hidden)
+                    ); 
+                    ?>
+                    <?php 
+                    printf(
+                        '<input
+                            type="text"
+                            id="%s"
+                            name="%1$s"
+                            value="%2$s"
+                            class="date-time-pick"
+                            data-alt-field="%1$s_hidden"
+                            data-alt-format="%3$s"
+                            placeholder="%4$s"
+                            autocomplete="off"
+                        />',
+                        esc_attr($metadata_end_name),
+                        esc_attr($metadata_end_value),
+                        esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                        esc_attr__('To', 'publishpress')
+                    );
+                    printf(
+                        '<input
+                            type="hidden"
+                            name="%s_hidden"
+                            value="%s"
+                        />',
+                        esc_attr($metadata_end_name),
+                        esc_attr($metadata_end_value_hidden)
+                    ); 
+                    ?>
                 <?php
                 } elseif ($metadata_type === 'user') { 
                     $user_dropdown_args = [
@@ -1447,9 +1528,35 @@ class PP_Content_Overview extends PP_Module
          $meta_query = array( 'relation' => 'AND' );
          $metadata_filter = false;
         foreach ($this->get_filterable_metadata() as $meta_key => $metadata_term) {
-            if (! empty($this->user_filters[$meta_key])) {
+            if ($metadata_term->type === 'date') {
+                $date_type_metaquery = [];
+                if (! empty($this->user_filters[$meta_key . '_start'])) {
+                    $date_type_metaquery[] = strtotime($this->user_filters[$meta_key . '_start_hidden']);
+                }
+                if (! empty($this->user_filters[$meta_key . '_end'])) {
+                    $date_type_metaquery[] = strtotime($this->user_filters[$meta_key . '_end_hidden']);
+                }
+                if (count($date_type_metaquery) === 2) {
+                    $metadata_filter = true;
+                    $compare        = 'BETWEEN';
+                    $meta_value     = $date_type_metaquery;
+                } elseif (count($date_type_metaquery) === 1) {
+                    $metadata_filter = true;
+                    $compare        = '=';
+                    $meta_value     = $date_type_metaquery[0];
+                }
+                if (!empty($date_type_metaquery)) {
+                    $metadata_filter = true;
+                    $meta_query[] = array(
+                        'key' => '_pp_editorial_meta_' . $metadata_term->type . '_' . $metadata_term->slug,
+                        'value' => $meta_value,
+                        'compare' => $compare
+                    );
+                }
+            
+            } elseif (! empty($this->user_filters[$meta_key])) {
                 if ($metadata_term->type === 'date') {
-                    $meta_value = strtotime($this->user_filters[$meta_key]);
+                    continue;
                 } else {
                     $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
                 }
