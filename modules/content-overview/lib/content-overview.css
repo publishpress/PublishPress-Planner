@@ -98,7 +98,10 @@ header h2 a.change-date-cancel {
 #pp-content-overview-tablenav, 
 #pp-content-overview-tablenav input[type="text"], 
 .planner_page_pp-content-overview .publishpress-admin header h2 input[type="text"],
-#pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered {
+.planner_page_pp-content-overview .publishpress-admin header h2 input[type="search"],
+#pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered,
+#pp-content-overview-tablenav ::-webkit-input-placeholder, 
+.planner_page_pp-content-overview .publishpress-admin header h2 ::-webkit-input-placeholder {
     color: #999999;
 }
 
@@ -108,6 +111,25 @@ header h2 a.change-date-cancel {
 
 .planner_page_pp-content-overview #pp-content-filters input#filter-submit {
     margin: 0 8px 0 0;
+}
+
+.planner_page_pp-content-overview #pp-content-filters input#post-query-clear,
+.planner_page_pp-content-overview #pp-content-filters input#filter-submit,
+#pp-content-overview-range-submit,
+#co-searchbox-search-submit {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-weight: initial;
 }
 
 @media (max-width: 782px) {
