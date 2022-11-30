@@ -92,10 +92,22 @@ header h2 a.change-date-cancel {
     justify-content: space-between;
     margin-bottom: 0;
     margin-right: 25px;
+    color: #999999;
+}
+
+#pp-content-overview-tablenav, 
+#pp-content-overview-tablenav input[type="text"], 
+.planner_page_pp-content-overview .publishpress-admin header h2 input[type="text"],
+#pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #999999;
 }
 
 .planner_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
     margin-top: 0;
+}
+
+.planner_page_pp-content-overview #pp-content-filters input#filter-submit {
+    margin: 0 8px 0 0;
 }
 
 @media (max-width: 782px) {
