@@ -1192,7 +1192,7 @@ class PP_Content_Overview extends PP_Module
                 ?>
                 <select id="post_status" name="post_status"><!-- Status selectors -->
                     <option value=""><?php
-                        _e('View all statuses', 'publishpress'); ?></option>
+                        _e('All statuses', 'publishpress'); ?></option>
                     <?php
                     foreach ($post_statuses as $post_status) {
                         echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
@@ -1214,10 +1214,10 @@ class PP_Content_Overview extends PP_Module
                     id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
                     data-taxonomy="<?php echo esc_attr($select_name); ?>" 
                     name="<?php echo esc_attr($select_name); ?>"
-                    data-placeholder="<?php printf(esc_attr__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
+                    data-placeholder="<?php printf(esc_attr__('All %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
                     >
                     <option value="">
-                        <?php echo sprintf(esc_html__('View all %s', 'publishpress'), esc_html($taxonomy->label)); ?>
+                        <?php echo sprintf(esc_html__('All %s', 'publishpress'), esc_html($taxonomy->label)); ?>
                     </option>
                     <?php
                     if ($taxonomySlug) {
@@ -1266,7 +1266,7 @@ class PP_Content_Overview extends PP_Module
                 ?>
                 <select id="filter_post_type" name="ptype">
                     <option value=""><?php
-                        _e('View all post types', 'publishpress'); ?></option>
+                        _e('All post types', 'publishpress'); ?></option>
                     <?php
                     $postTypes = $this->get_selected_post_types();
                     foreach ($postTypes as $postType) {
