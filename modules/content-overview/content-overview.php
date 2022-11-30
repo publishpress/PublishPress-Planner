@@ -1425,7 +1425,7 @@ class PP_Content_Overview extends PP_Module
             $this->no_matching_posts = false;
         } ?>
 
-        <div class="postbox<?php
+        <div class="postbox-1<?php
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
             <div class="handlediv" title="<?php echo esc_attr(__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
