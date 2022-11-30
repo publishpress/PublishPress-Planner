@@ -1101,9 +1101,13 @@ class PP_Content_Overview extends PP_Module
                 <form method="GET" id="pp-content-filters">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
+                    $filter_content = '';
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
-                        $this->content_overview_filter_options($select_id, $select_name, $this->user_filters); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    } ?>
+                        $filter_content .= $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
+                    } 
+                    $filter_content = preg_replace('~>\s+<~', '><', $filter_content);//remove whitespace
+                    echo $filter_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    ?>
                    <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
                    <input type="submit" id="post-query-clear" value="<?php
                     echo esc_attr(__('Reset', 'publishpress')); ?>"
@@ -1145,6 +1149,14 @@ class PP_Content_Overview extends PP_Module
 
 
         $select_filter_names['post_status'] = 'post_status';
+        //taxonomies
+        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+            if ($status == 'on') {
+                $select_filter_names[$taxonomy] = $taxonomy;
+            }
+        }
+        $select_filter_names['author'] = 'author';
+        $select_filter_names['ptype'] = 'ptype';
         //metadata field
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             if ($meta_term->type === 'date') {
@@ -1156,14 +1168,6 @@ class PP_Content_Overview extends PP_Module
             
             $select_filter_names[$meta_key] = $meta_key;
         }
-        //taxonomies
-        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
-            if ($status == 'on') {
-                $select_filter_names[$taxonomy] = $taxonomy;
-            }
-        }
-        $select_filter_names['author'] = 'author';
-        $select_filter_names['ptype'] = 'ptype';
         $select_filter_names['search_box']  = 'search_box';
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
@@ -1179,6 +1183,8 @@ class PP_Content_Overview extends PP_Module
         if (array_key_exists($select_id, $this->module->options->taxonomies) && taxonomy_exists($select_id)) {
             $select_id = 'taxonomy';
         }
+
+        ob_start();
 
         switch ($select_id) {
             case 'post_status':
@@ -1274,7 +1280,7 @@ class PP_Content_Overview extends PP_Module
                 </select>
                 <?php
                 break;
-                
+
                 case 'search_box':
                     ?>
                     <input type="hidden" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
@@ -1296,8 +1302,7 @@ class PP_Content_Overview extends PP_Module
                         />
                 <?php
                 } elseif ($metadata_type === 'date') { ?>
-                    <?php 
-
+                    <?php
                     $metadata_start_value           = isset($filters[$select_name . '_start']) ? sanitize_text_field($filters[$select_name . '_start']) : '';
                     $metadata_end_value             = isset($filters[$select_name . '_end']) ? sanitize_text_field($filters[$select_name . '_end']) : '';
 
@@ -1306,9 +1311,7 @@ class PP_Content_Overview extends PP_Module
 
                     $metadata_start_name            = $select_name . '_start';
                     $metadata_end_name              = $select_name . '_end';
-                    ?>
-                    <?php echo esc_html($metadata_term->name); ?> 
-                    <?php 
+                    ?><?php echo esc_html($metadata_term->name); ?><?php 
                     printf(
                         '<input
                             type="text"
@@ -1375,6 +1378,7 @@ class PP_Content_Overview extends PP_Module
                     $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
                     wp_dropdown_users($user_dropdown_args);
                 } elseif ($metadata_type === 'checkbox') { ?>
+                    <label for="<?php echo esc_attr('metadata_key_' . $select_name); ?>"><?php echo $metadata_term->name; ?></label>
                     <input 
                         type="checkbox" 
                         id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
@@ -1382,9 +1386,6 @@ class PP_Content_Overview extends PP_Module
                         value="1"
                         <?php checked($metadata_value, 1); ?>
                         />
-                    <label for="<?php echo esc_attr('metadata_key_' . $select_name); ?>">
-                        <?php echo $metadata_term->name; ?>
-                    </label>
                 <?php
                 }
                 break;
@@ -1393,6 +1394,10 @@ class PP_Content_Overview extends PP_Module
                 do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
                 break;
         }
+
+        $filter_content = ob_get_clean();
+        
+        return $filter_content;
     }
 
     /**

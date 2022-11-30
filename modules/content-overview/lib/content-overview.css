@@ -77,6 +77,8 @@ header h2 a.change-date-cancel {
 
 .planner_page_pp-content-overview #pp-content-filters input {
     margin-top: 5px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .planner_page_pp-content-overview #post-query-clear {
