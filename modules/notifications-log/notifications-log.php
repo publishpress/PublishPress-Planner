@@ -246,7 +246,7 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             global $current_screen;
 
-            return $current_screen->base === 'publishpress_page_pp-notif-log';
+            return $current_screen->base === 'planner_page_pp-notif-log';
         }
 
         /**

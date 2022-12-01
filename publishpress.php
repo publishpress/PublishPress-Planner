@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: PublishPress
+ * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
- * Description: PublishPress helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+ * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.9.0
+ * Version: 3.10.0
  * Text Domain: publishpress
  * Domain Path: /languages
  *
@@ -382,7 +382,7 @@ if (! class_exists('publishpress')) {
             }
 
             $debugInfo['publishpress'] = [
-                'label' => 'PublishPress',
+                'label' => 'PublishPress Planner',
                 'description' => '',
                 'show_count' => false,
                 'fields' => [
@@ -544,7 +544,7 @@ if (! class_exists('publishpress')) {
 
             add_menu_page(
                 $page_title,
-                esc_html__('PublishPress', 'publishpress'),
+                esc_html__('Planner', 'publishpress'),
                 $capability,
                 $menu_slug,
                 $function,
@@ -1251,7 +1251,7 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
 
     define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
 } else {
-    $message = __('PublishPress tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
+    $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
 
     error_log($message);
 

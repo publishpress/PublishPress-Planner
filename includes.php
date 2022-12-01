@@ -33,7 +33,7 @@ use PublishPress\Legacy\Auto_loader;
 
 if (! defined('PP_LOADED')) {
     // Define constants
-    define('PUBLISHPRESS_VERSION', '3.9.0');
+    define('PUBLISHPRESS_VERSION', '3.10.0');
     define('PUBLISHPRESS_BASE_PATH', __DIR__);
     define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
     define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
@@ -125,7 +125,7 @@ if (! defined('PP_LOADED')) {
                         \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                         function ($settings) {
                             $settings['publishpress'] = [
-                                'message' => __('You\'re using PublishPress Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
+                                'message' => __('You\'re using PublishPress Planner Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
                                 'link' => 'https://publishpress.com/links/publishpress-banner',
                                 'screens' => [
                                     ['base' => 'publishpress_page_pp-modules-settings',],

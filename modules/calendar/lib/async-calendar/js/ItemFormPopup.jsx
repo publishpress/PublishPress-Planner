@@ -12,6 +12,7 @@ import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
 import TimeField from "./fields/TimeField";
+import MetaField from "./fields/MetaField";
 
 const $ = jQuery;
 
@@ -87,7 +88,10 @@ export default function ItemFormPopup(props) {
                                           id={fieldId}
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
-                                          multiple={props.allowAddingMultipleAuthors}
+                                          ajaxArgs={dataProperty.ajaxArgs}
+                                          metadata = {dataProperty.metadata ? true : false}
+                                          post_types = {dataProperty.post_types ? dataProperty.post_types : ''}
+                                          multiple={dataProperty.metadata ? dataProperty.multiple : props.allowAddingMultipleAuthors}
                                           onSelect={(e, elem, data) => {
                                               let values = [];
                                               for (let i = 0; i < data.length; i++) {
@@ -109,6 +113,7 @@ export default function ItemFormPopup(props) {
                                           nonce={props.nonce}
                                           ajaxUrl={props.ajaxUrl}
                                           ajaxAction={dataProperty.ajaxAction}
+                                          ajaxArgs={dataProperty.ajaxArgs}
                                           multiple={dataProperty.multiple}
                                           onSelect={(e, elem, data) => {
                                               let values = [];
@@ -180,6 +185,9 @@ export default function ItemFormPopup(props) {
 
                 case 'html':
                     field = <TextArea value={dataProperty.value}
+                                      name={dataPropertyName}
+                                      metadata = {dataProperty.metadata ? true : false}
+                                      post_types = {dataProperty.post_types ? dataProperty.post_types : ''}
                                       isEditing={true}
                                       id={fieldId}
                                       onChange={(e, value) => {
@@ -220,6 +228,11 @@ export default function ItemFormPopup(props) {
                                        onChange={(e, value) => {
                                            updateGlobalFormFieldData(dataPropertyName, value);
                                        }}/>;
+                    break;
+
+                case 'metafield':
+                    dataProperty.isEditing = true;
+                    field = MetaField(dataProperty);
                     break;
 
                 default:
@@ -284,6 +297,36 @@ export default function ItemFormPopup(props) {
                 formData.append(fieldName, window.publishpressCalendarGlobalData.formFieldsData[fieldName]);
             }
         }
+
+        //add metafield
+        let field_name  = '',
+            field_value = '',
+            field_type  = '',
+            skip_field  = false;
+        document.querySelectorAll('.pp-calendar-form-metafied-input').forEach(function (metafield) {
+            field_name  = metafield.getAttribute('name');
+            field_type  = metafield.getAttribute('type');
+            field_value = metafield.value;
+            skip_field  = false;
+            if (field_type === 'checkbox' && !metafield.checked) {
+                skip_field  = true;
+            }
+            if (metafield.classList.contains('pp_editorial_meta_multi_select2')) {
+                skip_field            = true;
+                var selected_options = metafield.selectedOptions
+                var selected_key = '';
+                for (selected_key in selected_options) {
+                    if (!selected_options.hasOwnProperty(selected_key)) {
+                        continue;
+                    }
+                    formData.append(field_name, selected_options[selected_key].value);
+                }
+            }
+
+            if (!skip_field) {
+                formData.append(field_name, field_value);
+            }
+        });
 
         return formData;
     }

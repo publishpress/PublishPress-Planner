@@ -111,7 +111,7 @@ jQuery(function ($) {
     $('.filter-date-begin').datepicker();
     $('.filter-date-end').datepicker();
 
-    $('.publishpress_page_pp-notif-log .slide-closed-text').on('click', function () {
+    $('.planner_page_pp-notif-log .slide-closed-text').on('click', function () {
         $(this).next().slideDown();
         $(this).remove();
     });

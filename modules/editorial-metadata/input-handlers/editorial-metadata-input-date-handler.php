@@ -18,6 +18,50 @@ if (! class_exists('Editorial_Metadata_Input_Date_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
+
+            $value_formatted = ! empty($value) ? self::show_date_or_datetime(intval($value)) : '';
+
+            ob_start();
+
+            printf(
+                '<input
+                    type="text"
+                    id="%s"
+                    name="%1$s"
+                    value="%2$s"
+                    class="date-time-pick pp-calendar-form-metafied-input"
+                    data-alt-field="%1$s_hidden"
+                    data-alt-format="%3$s"
+                />',
+                esc_attr($input_name),
+                esc_attr($value_formatted),
+                esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d'))
+            );
+
+            $field_value = empty($value) ? '' : gmdate('Y-m-d H:i', $value);
+
+            printf(
+                '<input
+                    class="pp-calendar-form-metafied-input"
+                    type="hidden"
+                    name="%s_hidden"
+                    value="%s"
+                />',
+                esc_attr($input_name),
+                esc_attr($field_value)
+            );
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input html.
          *
          * @access  protected

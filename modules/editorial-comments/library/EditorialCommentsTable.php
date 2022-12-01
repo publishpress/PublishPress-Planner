@@ -52,7 +52,7 @@ class EditorialCommentsTable extends WP_List_Table
         //Set parent defaults
         parent::__construct(
             [
-                'singular' => 'editorial_comment',     //singular name of the listed records
+                'singular' => 'editorial_comment',    //singular name of the listed records
                 'plural' => 'editorial_comments',    //plural name of the listed records
                 'ajax' => true        //does this table support ajax?
             ]
@@ -304,8 +304,16 @@ class EditorialCommentsTable extends WP_List_Table
      */
     public function column_author( $comment )
     {
-        $avatar  = get_avatar($comment->user_id, 32, 'mystery');
-        $author_name  = get_comment_author($comment);
+        global $publishpress;
+        if (isset($publishpress->modules->editorial_comments->options->editorial_comment_name_field)) {
+            $field = $publishpress->modules->editorial_comments->options->editorial_comment_name_field;
+        } else {
+            $field = 'display_name';
+        }
+
+        $avatar       = get_avatar($comment->user_id, 32, 'mystery');
+        $user_data    = get_userdata($comment->user_id);
+        $author_name  = !empty($user_data->$field) ? $user_data->$field : $user_data->display_name;
         $author_name_url = add_query_arg(
             array(
                 'page' => PP_Editorial_Comments::MENU_SLUG,

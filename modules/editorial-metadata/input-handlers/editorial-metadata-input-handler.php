@@ -115,18 +115,18 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
          *
          * @param string $type Input type
          * @param mixed $value Actual input value
+         * @param mixed $term
          * @since   1.20.0
          *
          */
-        final public function handleMetaValueHtmling($type, $value = null)
+        final public function handleMetaValueHtmling($type, $value = null, $term = false)
         {
             if (! $this->canHandle($type)) {
                 return ! is_null($this->nextHandler)
-                    ? $this->nextHandler->handleMetaValueHtmling($type, $value)
+                    ? $this->nextHandler->handleMetaValueHtmling($type, $value, $term)
                     : printf("<p>" . esc_html__('This editorial metadata type is not yet supported.', 'publishpress') . "</p>");
             }
-
-            return static::getMetaValueHtml($value);
+            return static::getMetaValueHtml($value, $term);
         }
 
         /**

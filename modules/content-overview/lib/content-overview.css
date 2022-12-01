@@ -71,38 +71,111 @@ header h2 a.change-date-cancel {
     height: 6px;
 }
 
-.publishpress_page_pp-content-overview input[type="submit"] {
+.planner_page_pp-content-overview input[type="submit"] {
     margin: 0 8px 0 0;
 }
 
-.publishpress_page_pp-content-overview #pp-content-filters input {
+.planner_page_pp-content-overview #pp-content-filters input {
     margin-top: 5px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
-.publishpress_page_pp-content-overview #post-query-clear {
+.planner_page_pp-content-overview #post-query-clear {
     margin-bottom: 0;
     margin-left: 4px;
     float: right;
 }
 
-.publishpress_page_pp-content-overview .publishpress-admin header h2 {
-    display: flex;
-    justify-content: space-between;
+.planner_page_pp-content-overview .publishpress-admin header h2 {
+    display: inline-block;
+    float: right;
     margin-bottom: 0;
     margin-right: 25px;
+    color: #999999;
 }
 
-.publishpress_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
+#pp-content-overview-tablenav, 
+#pp-content-overview-tablenav input[type="text"], 
+.planner_page_pp-content-overview .publishpress-admin header h2 input[type="text"],
+.planner_page_pp-content-overview .publishpress-admin header h2 input[type="search"],
+#pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered,
+#pp-content-overview-tablenav ::-webkit-input-placeholder, 
+.planner_page_pp-content-overview .publishpress-admin header h2 ::-webkit-input-placeholder,
+.pp-co-metadata-filter-row .form-table {
+    color: #999999;
+}
+
+.planner_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
     margin-top: 0;
+}
+
+.planner_page_pp-content-overview #pp-content-filters input#filter-submit {
+    margin: 5px 8px 0 0;
+}
+
+.planner_page_pp-content-overview #pp-content-filters input#post-query-clear,
+.planner_page_pp-content-overview #pp-content-filters input#filter-submit,
+#pp-content-overview-range-submit,
+#co-searchbox-search-submit {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-weight: initial;
+}
+
+.pp-co-metadata-filter-row .form-table th {
+    width: 155px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #999999;
+    vertical-align: middle;
+}
+
+.pp-co-metadata-filter-row .form-table td {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #999999;
+}
+
+.pp-co-metadata-filter-row .form-table td .select2-container {
+    min-width: 172px;
+    margin-top: 5px;
+}
+
+.pp-co-metadata-filter-row .form-table td input[type=text] {
+    width: 172px;
+}
+
+.pp-co-metadata-filter-row .time-ranger-row .input-divider {
+    margin-right: 2px;
 }
 
 @media (max-width: 782px) {
 
-    .publishpress_page_pp-content-overview .publishpress-admin header h2 {
+    .pp-co-metadata-filter-row .form-table th {
+        width: initial;
+    }
+    .pp-co-metadata-filter-row .form-table td .select2-container {
+        min-width: 100%;
+    }
+
+    .planner_page_pp-content-overview .publishpress-admin header h2 {
         display: block;
     }
 
-    .publishpress_page_pp-content-overview .publishpress-admin header h2 .co-top-searchbox {
+    .planner_page_pp-content-overview .publishpress-admin header h2 .co-top-searchbox {
         margin-top: 10px;
     }
 

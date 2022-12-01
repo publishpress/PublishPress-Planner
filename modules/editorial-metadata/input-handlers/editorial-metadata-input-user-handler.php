@@ -18,6 +18,18 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
         }
 
         /**
+         * Get input html for public access
+         * @param array $inputOptions Input options
+         * @param mixed $value Actual input value
+         */
+        public static function getInputHtml($inputOptions = array(), $value = null)
+        {
+            ob_start();
+
+            return ob_get_clean();
+        }
+
+        /**
          * Render input html.
          *
          * @access  protected
@@ -26,11 +38,12 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
          * @since   1.20.0
          *
          */
-        protected function renderInput($inputOptions = array(), $value = null)
+        protected function renderInput($inputOptions = array(), $value = null, $input_only = false)
         {
             $input_name = isset($inputOptions['name']) ? $inputOptions['name'] : '';
             $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
             $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
+            $input_term_options = isset($inputOptions['term_options']) ? $inputOptions['term_options'] : false;
 
             self::renderLabel(
                 $input_label,
@@ -44,6 +57,10 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
                 'name' => $input_name,
                 'selected' => $value,
             ];
+
+            if ($input_term_options && isset($input_term_options->user_role) && is_array($input_term_options->user_role)) {
+                $user_dropdown_args['role__in'] = $input_term_options->user_role;
+            }
 
             $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
             wp_dropdown_users($user_dropdown_args);

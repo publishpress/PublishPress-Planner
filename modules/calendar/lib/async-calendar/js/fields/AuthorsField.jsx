@@ -8,7 +8,11 @@ export default function AuthorsField(props) {
                 nonce={props.nonce}
                 multiple={props.multiple}
                 ajaxAction={'publishpress_calendar_search_authors'}
+                ajaxArgs={props.ajaxArgs}
                 value={props.value}
+                metadata={props.metadata}
+                post_types={props.post_types}
+                className={props.metadata ? 'pp-calendar-form-metafied-input' : ''}
                 name={props.name}
                 id={props.id}
                 onSelect={props.onSelect}

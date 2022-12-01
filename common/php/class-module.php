@@ -471,13 +471,14 @@ if (!class_exists('PP_Module')) {
                 return false;
             }
 
-            if (isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings') {
+            if (isset($_GET['page']) && ($_GET['page'] === 'pp-modules-settings' || $_GET['page'] === 'pp-editorial-metadata')) {
+
                 if (empty($module_name)) {
                     return true;
                 }
 
                 if (!isset($_GET['settings_module']) || $_GET['settings_module'] === 'pp-modules-settings-settings') {
-                    if (in_array($module_name, ['editorial_comments', 'notifications', 'dashboard'])) {
+                    if (in_array($module_name, ['editorial_comments', 'notifications', 'dashboard', 'editorial_metadata'])) {
                         return true;
                     }
                 }
@@ -737,7 +738,7 @@ if (!class_exists('PP_Module')) {
                 return;
             }
 
-            if ($screen->id != 'publishpress_page_' . $this->module->settings_slug) {
+            if ($screen->id != 'planner_page_' . $this->module->settings_slug) {
                 return;
             }
 
