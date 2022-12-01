@@ -129,6 +129,14 @@ body.planner_page_pp-editorial-metadata h3.nav-tab-wrapper {
     content: "\f329";
 }
 
+.checkbox-row p.description {
+    display: inline-block;
+}
+
+td.checkbox-row input {
+    vertical-align: text-top;
+}
+
 /*
  * If editorial metadata is in the main post column, allow the metadata to be laid out in
  * multiple columns in browsers that support it.

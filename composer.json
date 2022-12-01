@@ -28,10 +28,6 @@
     },
     {
       "type": "vcs",
-      "url": "https://github.com/andergmartins/wordpress-ray"
-    },
-    {
-      "type": "vcs",
       "url": "https://github.com/publishpress/publishpress-phpcs-standards"
     }
   ],
@@ -59,8 +55,6 @@
     "codeception/module-cli": "^1.0",
     "codeception/util-universalframework": "^1.0",
     "mustache/mustache": "2.14.1",
-    "spatie/ray": "*",
-    "spatie/wordpress-ray": "dev-patch-1",
     "squizlabs/php_codesniffer": "3.*",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "publishpress/publishpress-phpcs-standards": "dev-main",

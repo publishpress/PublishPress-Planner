@@ -738,7 +738,7 @@ if (!class_exists('PP_Module')) {
                 return;
             }
 
-            if ($screen->id != 'publishpress_page_' . $this->module->settings_slug) {
+            if ($screen->id != 'planner_page_' . $this->module->settings_slug) {
                 return;
             }
 

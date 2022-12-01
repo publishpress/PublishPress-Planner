@@ -52,7 +52,7 @@ class EditorialCommentsTable extends WP_List_Table
         //Set parent defaults
         parent::__construct(
             [
-                'singular' => 'editorial_comment',     //singular name of the listed records
+                'singular' => 'editorial_comment',    //singular name of the listed records
                 'plural' => 'editorial_comments',    //plural name of the listed records
                 'ajax' => true        //does this table support ajax?
             ]

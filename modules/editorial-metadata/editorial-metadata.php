@@ -91,7 +91,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $this->module_url = $this->get_module_url(__FILE__);
             // Register the module with PublishPress
             $args = [
-                'title' => esc_html__('Metadata', 'publishpress'),
+                'title' => esc_html__('Editorial Metadata', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -1323,19 +1323,19 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
             // Metadata viewable needs to be a valid Yes or No
             $term_viewable = false;
-            if ($_POST['metadata_viewable'] == 'yes') {
+            if (isset($_POST['metadata_viewable']) && $_POST['metadata_viewable'] == 'yes') {
                 $term_viewable = true;
             }
             
             // Metadata show_in_filters needs to be a valid Yes or No
             $term_show_in_filters = false;
-            if ($_POST['metadata_show_in_filters'] == 'yes') {
+            if (isset($_POST['metadata_show_in_filters']) && $_POST['metadata_show_in_filters'] == 'yes') {
                 $term_show_in_filters = true;
             }
             
             // Metadata show_in_calendar_form needs to be a valid Yes or No
             $term_show_in_calendar_form = false;
-            if ($_POST['show_in_calendar_form'] == 'yes') {
+            if (isset($_POST['show_in_calendar_form']) && $_POST['show_in_calendar_form'] == 'yes') {
                 $term_show_in_calendar_form = true;
             }
 
@@ -1485,19 +1485,19 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
             // Make sure the viewable state is valid
             $new_viewable = false;
-            if ($_POST['viewable'] == 'yes') {
+            if (isset($_POST['viewable']) && $_POST['viewable'] == 'yes') {
                 $new_viewable = true;
             }
 
             // Make sure the show_in_filters state is valid
             $new_show_in_filters = false;
-            if ($_POST['show_in_filters'] == 'yes') {
+            if (isset($_POST['show_in_filters']) && $_POST['show_in_filters'] == 'yes') {
                 $new_show_in_filters = true;
             }
 
             // Make sure the show_in_calendar_form state is valid
             $new_show_in_calendar_form = false;
-            if ($_POST['show_in_calendar_form'] == 'yes') {
+            if (isset($_POST['show_in_calendar_form']) && $_POST['show_in_calendar_form'] == 'yes') {
                 $new_show_in_calendar_form = true;
             }
 
@@ -1770,8 +1770,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // Main Menu
             add_submenu_page(
                 $publishpress->get_menu_slug(),
-                esc_html__('Metadata', 'publishpress'),
-                esc_html__('Metadata', 'publishpress'),
+                esc_html__('Editorial Metadata', 'publishpress'),
+                esc_html__('Editorial Metadata', 'publishpress'),
                 $this->getViewCapability(),
                 self::MENU_SLUG,
                 [$this, 'render_admin_page'],
@@ -1792,29 +1792,16 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function render_admin_page()
         {
             $publishpress = $this->get_service('publishpress');
-            $publishpress->settings->print_default_header($publishpress->modules->editorial_metadata);
+            $editorial_metadata = $publishpress->modules->editorial_metadata;
+            if (! isset($_GET['action']) || !in_array($_GET['action'], ['edit-term', 'add-new'])) {
+                $editorial_metadata->title = $editorial_metadata->title . ' <a href="'. esc_url(esc_url($this->get_link(['action' => 'add-new']))) .'" class="page-title-action">'. esc_html__('Add New', 'publishpress') .'</a>';
+            }
+            $publishpress->settings->print_default_header($editorial_metadata);
             $wp_list_table = new PP_Editorial_Metadata_List_Table();
             $wp_list_table->prepare_items();
 
             $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
-            if (! isset($_GET['action']) || $_GET['action'] != 'edit-term') {
-                ?>
-                <h3 class='nav-tab-wrapper'>
-                    <a href="<?php
-                    echo esc_url($this->get_link()); ?>" class="nav-tab<?php
-                    echo $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                        <?php
-                        esc_html_e('All Metadata', 'publishpress'); ?>
-                    </a>
-                    <a href="<?php
-                    echo esc_url($this->get_link(['action' => 'add-new'])); ?>" class="nav-tab<?php
-                    echo ! $showOptionsTab ? ' nav-tab-active' : ''; ?>">
-                        <?php
-                        esc_html_e('Add New', 'publishpress'); ?>
-                    </a>
-                </h3>
-            <?php
-            }
+   
             if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
                 <div>
                     <div class='col-wrap'>
@@ -2090,7 +2077,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </td>
                     </tr>
 
-                        <tr class='form-field'>
+                        <tr class='form-field checkbox-row'>
                             <th scope='row' valign='top'><?php
                                 esc_html_e('Viewable', 'publishpress'); ?></th>
                             <td>
@@ -2099,79 +2086,64 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     'no' => esc_html__('No', 'publishpress'),
                                     'yes' => esc_html__('Yes', 'publishpress'),
                                 ]; ?>
-                                <select id='viewable' name='viewable'>
-                                    <?php
-                                    foreach ($metadata_viewable_options as $metadata_viewable_key => $metadata_viewable_value) : ?>
-                                        <option value="<?php
-                                        echo esc_attr($metadata_viewable_key); ?>" <?php
-                                        selected($viewable, $metadata_viewable_key); ?>><?php
-                                            echo esc_attr($metadata_viewable_value); ?></option>
-                                    <?php
-                                    endforeach; ?>
-                                </select>
+                                <?php
+                                echo '<input id="viewable" name="viewable"';
+                                checked($viewable, 'yes', true);
+                                echo ' type="checkbox" value="yes" />';
+                                ?>
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'viewable',
                                     esc_html__(
-                                        'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                                        'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                                         'publishpress'
                                     )
                                 ); ?>
                             </td>
                         </tr>
-                        <tr class='form-field'>
+                        <tr class='form-field checkbox-row'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show in filters', 'publishpress'); ?></th>
+                                esc_html_e('Show as Content Overview filters', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $metadata_show_in_filters_options = [
                                     'no' => esc_html__('No', 'publishpress'),
                                     'yes' => esc_html__('Yes', 'publishpress'),
                                 ]; ?>
-                                <select id='show_in_filters' ; name='show_in_filters'>
-                                    <?php
-                                    foreach ($metadata_show_in_filters_options as $metadata_show_in_filters_key => $metadata_show_in_filters_value) : ?>
-                                        <option value="<?php
-                                        echo esc_attr($metadata_show_in_filters_key); ?>" <?php
-                                        selected($show_in_filters, $metadata_show_in_filters_key); ?>><?php
-                                            echo esc_attr($metadata_show_in_filters_value); ?></option>
-                                    <?php
-                                    endforeach; ?>
-                                </select>
+                                <?php
+                                echo '<input id="show_in_filters" name="show_in_filters"';
+                                checked($show_in_filters, 'yes', true);
+                                echo ' type="checkbox" value="yes" />';
+                                ?>
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_filters',
                                     esc_html__(
-                                        'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                        'If enabled, this metadata will be available as filter option on the Content Overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
                             </td>
                         </tr>
-                        <tr class='form-field'>
+                        <tr class='form-field checkbox-row'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show in calendar form', 'publishpress'); ?></th>
+                                esc_html_e('Show on Content Calendar form', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $show_in_calendar_form_options = [
                                     'no' => esc_html__('No', 'publishpress'),
                                     'yes' => esc_html__('Yes', 'publishpress'),
                                 ]; ?>
-                                <select id='show_in_calendar_form' ; name='show_in_calendar_form'>
-                                    <?php
-                                    foreach ($show_in_calendar_form_options as $show_in_calendar_form_key => $show_in_calendar_form_value) : ?>
-                                        <option value="<?php
-                                        echo esc_attr($show_in_calendar_form_key); ?>" <?php
-                                        selected($show_in_calendar_form, $show_in_calendar_form_key); ?>><?php
-                                            echo esc_attr($show_in_calendar_form_value); ?></option>
-                                    <?php
-                                    endforeach; ?>
-                                </select>
+                                <?php
+                                echo '<input id="show_in_calendar_form" name="show_in_calendar_form"';
+                                checked($show_in_calendar_form, 'yes', true);
+                                echo ' type="checkbox" value="yes" />';
+                                ?>
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_calendar_form',
                                     esc_html__(
-                                        'When Show in calendar form, metadata will be available in calendar new post form.',
+                                        'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2185,7 +2157,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'post_types',
                                     esc_html__(
-                                        'Select post types this metadata term should be added to.',
+                                        'This metadata will be available for these post types.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2203,13 +2175,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field pp-select2-field'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Add to post types column.', 'publishpress'); ?></th>
+                                esc_html_e('Show on Post Types screen', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $publishpress->settings->helper_print_error_or_description(
                                     'post_types_column',
                                     esc_html__(
-                                        'Enable term in the selected post types column.',
+                                        'This metadata will be viewable on the overview screens for these post types.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2465,7 +2437,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         </div>
                                     </div>
                                         
-                                    <div class='form-field form-required'>
+                                    <div class='form-field form-required checkbox-row'>
                                         <label for='metadata_viewable'><?php
                                             esc_html_e('Viewable', 'publishpress'); ?></label>
                                         <?php
@@ -2477,28 +2449,24 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                 $_POST['metadata_viewable'],
                                                 array_keys($metadata_viewable_options)
                                             )) ? sanitize_key($_POST['metadata_viewable']) : 'no'; ?>
-                                        <select id="metadata_viewable" name='metadata_viewable'>
-                                            <?php
-                                            foreach ($metadata_viewable_options as $metadata_viewable_key => $metadata_viewable_value) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($metadata_viewable_key); ?>" <?php
-                                                selected($current_metadata_viewable, $metadata_viewable_key); ?>><?php
-                                                    echo esc_html($metadata_viewable_value); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
+                                        
+                                        <?php
+                                        echo '<input id="metadata_viewable" name="metadata_viewable"';
+                                        checked($current_metadata_viewable, 'yes', true);
+                                        echo ' type="checkbox" value="yes" />';
+                                        ?>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'viewable',
                                             esc_html__(
-                                                'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                                                'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                                                 'publishpress'
                                             )
                                         ); ?>
                                     </div>
-                                    <div class='form-field form-required'>
+                                    <div class='form-field form-required checkbox-row'>
                                         <label for='metadata_show_in_filters'><?php
-                                            esc_html_e('Show in filters', 'publishpress'); ?></label>
+                                            esc_html_e('Show as Content Overview filters', 'publishpress'); ?></label>
                                         <?php
                                         $metadata_show_in_filters_options = [
                                             'no' => esc_html__('No', 'publishpress'),
@@ -2508,28 +2476,23 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                 $_POST['metadata_show_in_filters'],
                                                 array_keys($metadata_show_in_filters_options)
                                             )) ? $_POST['metadata_show_in_filters'] : 'no'; ?>
-                                        <select id="metadata_show_in_filters" ; name='metadata_show_in_filters'>
-                                            <?php
-                                            foreach ($metadata_show_in_filters_options as $metadata_show_in_filters_key => $metadata_show_in_filters_value) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($metadata_show_in_filters_key); ?>" <?php
-                                                selected($current_metadata_show_in_filters, $metadata_show_in_filters_key); ?>><?php
-                                                    echo esc_attr($metadata_show_in_filters_value); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
+                                        <?php
+                                        echo '<input id="metadata_show_in_filters" name="metadata_show_in_filters"';
+                                        checked($current_metadata_show_in_filters, 'yes', true);
+                                        echo ' type="checkbox" value="yes" />';
+                                        ?>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_filters',
                                             esc_html__(
-                                                'When Show in filters, metadata will be available as filter option on content overview screen.',
+                                                'If enabled, this metadata will be available as filter option on the Content Overview screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
                                     </div>
-                                    <div class='form-field form-required'>
+                                    <div class='form-field form-required checkbox-row'>
                                         <label for='show_in_calendar_form'><?php
-                                            esc_html_e('Show in calendar form', 'publishpress'); ?></label>
+                                            esc_html_e('Show on Content Calendar form', 'publishpress'); ?></label>
                                         <?php
                                         $show_in_calendar_form_options = [
                                             'no' => esc_html__('No', 'publishpress'),
@@ -2539,21 +2502,16 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                 $_POST['show_in_calendar_form'],
                                                 array_keys($show_in_calendar_form_options)
                                             )) ? $_POST['show_in_calendar_form'] : 'no'; ?>
-                                        <select id="show_in_calendar_form" ; name='show_in_calendar_form'>
-                                            <?php
-                                            foreach ($show_in_calendar_form_options as $show_in_calendar_form_key => $show_in_calendar_form_value) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($show_in_calendar_form_key); ?>" <?php
-                                                selected($current_show_in_calendar_form, $show_in_calendar_form_key); ?>><?php
-                                                    echo esc_attr($show_in_calendar_form_value); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
+                                        <?php
+                                        echo '<input id="show_in_calendar_form" name="show_in_calendar_form"';
+                                        checked($current_show_in_calendar_form, 'yes', true);
+                                        echo ' type="checkbox" value="yes" />';
+                                        ?>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_calendar_form',
                                             esc_html__(
-                                                'When Show in calendar form, metadata will be available in calendar new post form.',
+                                                'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
@@ -2564,7 +2522,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'post_types',
-                                            esc_html__('Select post types this metadata term should be added to.', 'publishpress')
+                                            esc_html__('This metadata will be available for these post types.', 'publishpress')
                                         ); ?>
                                         <?php
                                         $valid_post_types = $this->get_all_post_types($this->module);
@@ -2583,11 +2541,11 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     </div>
                                     <div class='form-field pp-select2-field'">
                                         <label for='post_types_column'><?php
-                                            esc_html_e('Add to post types column.', 'publishpress'); ?></label>
+                                            esc_html_e('Show on Post Types screen', 'publishpress'); ?></label>
                                         <?php
                                         $publishpress->settings->helper_print_error_or_description(
                                             'post_types_column',
-                                            esc_html__('Enable term in the selected post types column.', 'publishpress')
+                                            esc_html__('This metadata will be viewable on the overview screens for these post types.', 'publishpress')
                                         ); ?>
                                         <?php
                                         $current_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
@@ -2728,9 +2686,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'post_types' => esc_html__('Post Types', 'publishpress'),
             'type' => esc_html__('Metadata Type', 'publishpress'),
             'description' => esc_html__('Description', 'publishpress'),
-            'viewable' => esc_html__('Viewable', 'publishpress'),
-            'show_in_filters' => esc_html__('Show in filters', 'publishpress'),
-            'show_in_calendar_form' => esc_html__('Show in calendar form', 'publishpress'),
+            'viewable' => esc_html__('Viewable', 'publishpress')
         ];
 
         return $columns;
@@ -2790,20 +2746,6 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
                 }
             case 'viewable':
                 if ($item->viewable) {
-                    return esc_html__('Yes', 'publishpress');
-                } else {
-                    return esc_html__('No', 'publishpress');
-                }
-                break;
-            case 'show_in_filters':
-                if ($item->show_in_filters) {
-                    return esc_html__('Yes', 'publishpress');
-                } else {
-                    return esc_html__('No', 'publishpress');
-                }
-                break;
-            case 'show_in_calendar_form':
-                if ($item->show_in_calendar_form) {
                     return esc_html__('Yes', 'publishpress');
                 } else {
                     return esc_html__('No', 'publishpress');
@@ -2872,7 +2814,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
         } else {
             $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(
                     esc_html__(
-                        'When viewable, metadata can be seen on views other than the edit post view (e.g. calendar, manage posts, content overview, etc.)',
+                        'If enabled, this metadata can be seen on the Content Calendar and Content Overview screens.',
                         'publishpress'
                     )
                 ) . '" href="' . esc_url(
