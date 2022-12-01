@@ -88,8 +88,8 @@ header h2 a.change-date-cancel {
 }
 
 .planner_page_pp-content-overview .publishpress-admin header h2 {
-    display: flex;
-    justify-content: space-between;
+    display: inline-block;
+    float: right;
     margin-bottom: 0;
     margin-right: 25px;
     color: #999999;
@@ -101,7 +101,8 @@ header h2 a.change-date-cancel {
 .planner_page_pp-content-overview .publishpress-admin header h2 input[type="search"],
 #pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered,
 #pp-content-overview-tablenav ::-webkit-input-placeholder, 
-.planner_page_pp-content-overview .publishpress-admin header h2 ::-webkit-input-placeholder {
+.planner_page_pp-content-overview .publishpress-admin header h2 ::-webkit-input-placeholder,
+.pp-co-metadata-filter-row .form-table {
     color: #999999;
 }
 
@@ -110,7 +111,7 @@ header h2 a.change-date-cancel {
 }
 
 .planner_page_pp-content-overview #pp-content-filters input#filter-submit {
-    margin: 0 8px 0 0;
+    margin: 5px 8px 0 0;
 }
 
 .planner_page_pp-content-overview #pp-content-filters input#post-query-clear,
@@ -132,7 +133,43 @@ header h2 a.change-date-cancel {
     font-weight: initial;
 }
 
+.pp-co-metadata-filter-row .form-table th {
+    width: 155px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #999999;
+    vertical-align: middle;
+}
+
+.pp-co-metadata-filter-row .form-table td {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #999999;
+}
+
+.pp-co-metadata-filter-row .form-table td .select2-container {
+    min-width: 172px;
+    margin-top: 5px;
+}
+
+.pp-co-metadata-filter-row .form-table td input[type=text] {
+    width: 172px;
+}
+
+.pp-co-metadata-filter-row .time-ranger-row .input-divider {
+    margin-right: 2px;
+}
+
 @media (max-width: 782px) {
+
+    .pp-co-metadata-filter-row .form-table th {
+        width: initial;
+    }
+    .pp-co-metadata-filter-row .form-table td .select2-container {
+        min-width: 100%;
+    }
 
     .planner_page_pp-content-overview .publishpress-admin header h2 {
         display: block;

@@ -185,7 +185,6 @@ class PP_Content_Overview extends PP_Module
         $this->taxonomy_used = apply_filters('PP_Content_Overview_taxonomy_used', $this->taxonomy_used);
 
         add_action('admin_init', [$this, 'handle_form_date_range_change']);
-
         add_action('admin_init', [$this, 'handle_screen_options']);
 
         // Register our settings
@@ -682,57 +681,6 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Handle a form submission to change the user's date range on the budget
-     *
-     * @since 0.7
-     */
-    public function handle_form_date_range_change()
-    {
-        if (
-            ! isset(
-                $_POST['pp-content-overview-start-date_hidden'],
-                $_POST['pp-content-overview-range-use-today'],
-                $_POST['nonce']
-            )
-            || (
-                ! isset($_POST['pp-content-overview-range-submit'])
-                && $_POST['pp-content-overview-range-use-today'] == '0'
-            )
-        ) {
-            return;
-        }
-
-        if (! wp_verify_nonce(sanitize_key($_POST['nonce']), 'change-date')) {
-            wp_die(esc_html($this->module->messages['nonce-failed']));
-        }
-
-        $current_user = wp_get_current_user();
-        $user_filters = $this->get_user_meta(
-            $current_user->ID,
-            self::USERMETA_KEY_PREFIX . 'filters',
-            true
-        );
-
-        $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
-
-        $date_format = 'Y-m-d';
-        $user_filters['start_date'] = $use_today_as_start_date
-            ? current_time($date_format)
-            : date($date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-
-        $user_filters['end_date'] = $_POST['pp-content-overview-end-date_hidden'];
-
-        if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
-        }
-
-        $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
-        wp_redirect(menu_page_url('pp-content-overview', false));
-
-        exit;
-    }
-
-    /**
      * Print column number preferences for screen options
      */
     public function print_column_prefs()
@@ -800,8 +748,8 @@ class PP_Content_Overview extends PP_Module
 
         $description = sprintf(
             '<div>%s <span class="time-range">%s</span></div> %s',
-            esc_html__('Show content from', 'publishpress'),
-            $this->content_overview_time_range(),
+            '',
+            '',
             $this->content_overview_search_box()
         );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
@@ -930,6 +878,54 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
+    * Handle a form submission to change the user's date range on the budget
+    *
+    * @since 0.7
+    */
+    public function handle_form_date_range_change()
+    {
+        if (
+            ! isset(
+                $_REQUEST['pp-content-overview-start-date_hidden'],
+                $_REQUEST['pp-content-overview-range-use-today'],
+                $_REQUEST['nonce']
+            )
+            || (
+                ! isset($_REQUEST['pp-content-overview-range-submit'])
+                && $_REQUEST['pp-content-overview-range-use-today'] == '0'
+            )
+        ) {
+            return;
+        }
+ 
+        if (! wp_verify_nonce(sanitize_key($_REQUEST['nonce']), 'change-date')) {
+            return;
+        }
+ 
+        $current_user = wp_get_current_user();
+        $user_filters = $this->get_user_meta(
+            $current_user->ID,
+            self::USERMETA_KEY_PREFIX . 'filters',
+            true
+        );
+ 
+        $use_today_as_start_date = (bool)$_REQUEST['pp-content-overview-range-use-today'];
+ 
+        $date_format = 'Y-m-d';
+        $user_filters['start_date'] = $use_today_as_start_date
+            ? current_time($date_format)
+            : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+ 
+        $user_filters['end_date'] = $_REQUEST['pp-content-overview-end-date_hidden'];
+ 
+        if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
+        }
+ 
+        $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+    }
+
+    /**
      *
      * @param string $param The parameter to look for in $_GET
      *
@@ -981,7 +977,11 @@ class PP_Content_Overview extends PP_Module
         $filtered_end_date = $this->user_filters['end_date'];
         $filtered_end_date_timestamp = strtotime($filtered_end_date);
 
-        $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
+        $output = '<tr class="time-ranger-row">';
+        $output .= '<th scope="row">';
+        $output .= esc_html__('Show content from', 'publishpress');
+        $output .= '</th>';
+        $output .= '<td>';
 
         $date_format = get_option('date_format');
 
@@ -1009,7 +1009,7 @@ class PP_Content_Overview extends PP_Module
 
         $output .= sprintf(
             _x(
-                ' %1$s to %2$s',
+                ' %1$s <span class="input-divider">to</span> %2$s',
                 '%1$s = start date, %2$s = end date',
                 'publishpress'
             ),
@@ -1017,7 +1017,7 @@ class PP_Content_Overview extends PP_Module
             $end_date_value
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
-        $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
+        $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="hidden" value="1"';
         $output .= ' class="button" value="' . esc_html__('Apply', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
@@ -1027,7 +1027,10 @@ class PP_Content_Overview extends PP_Module
         $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
         $output .= '<a class="change-date hidden" href="#">' . esc_html__('Change', 'publishpress') . '</a>';
         $output .= wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
-        $output .= '</span></form>';
+        $output .= '</span>';
+
+        $output .= '</td>';
+        $output .= '</tr>';
 
         return $output;
     }
@@ -1100,14 +1103,43 @@ class PP_Content_Overview extends PP_Module
             <div class="alignleft actions">
                 <form method="GET" id="pp-content-filters">
                     <input type="hidden" name="page" value="pp-content-overview"/>
-                    <?php
-                    $filter_content = '';
-                    foreach ($this->content_overview_filters() as $select_id => $select_name) {
-                        $filter_content .= $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
-                    } 
-                    $filter_content = preg_replace('~>\s+<~', '><', $filter_content);//remove whitespace
-                    echo $filter_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                    ?>
+                    <div class="pp-co-default-filter-row">
+                        <?php
+                        /**
+                         * Output default filter
+                         */
+                        $default_filter = '';
+                        foreach ($this->content_overview_filters(['default']) as $select_id => $select_name) {
+                            $default_filter .= $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
+                        } 
+                        $default_filter = preg_replace('~>\s+<~', '><', $default_filter);//remove whitespace
+                        echo $default_filter; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        ?>
+                    </div>
+                    <div class="pp-co-metadata-filter-row">
+                        <table class="form-table" role="presentation">
+                            <tbody>
+                            <?php 
+                            /**
+                             * Output date filter
+                             */
+                            echo $this->content_overview_time_range();  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            <?php
+                            /**
+                             * Output metadata filter
+                             */
+                            $metadata_filter = '';
+                            foreach ($this->content_overview_filters(['metadata']) as $select_id => $select_name) {
+                                $filter_html      = $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
+                                if (!empty($filter_html)) {
+                                    $metadata_filter .= '<div class="filter-item">' . $filter_html . '</div>';
+                                }
+                            } 
+                            echo $metadata_filter; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
                    <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
                    <input type="submit" id="post-query-clear" value="<?php
                     echo esc_attr(__('Reset', 'publishpress')); ?>"
@@ -1143,32 +1175,36 @@ class PP_Content_Overview extends PP_Module
         // phpcs:enable
     }
 
-    public function content_overview_filters()
+    public function content_overview_filters($filter = ['default', 'metadata'])
     {
         $select_filter_names = [];
 
 
-        $select_filter_names['post_status'] = 'post_status';
-        //taxonomies
-        foreach ($this->module->options->taxonomies as $taxonomy => $status) {
-            if ($status == 'on') {
-                $select_filter_names[$taxonomy] = $taxonomy;
+        if (in_array('default', $filter)) {
+            $select_filter_names['post_status'] = 'post_status';
+            //taxonomies
+            foreach ($this->module->options->taxonomies as $taxonomy => $status) {
+                if ($status == 'on') {
+                    $select_filter_names[$taxonomy] = $taxonomy;
+                }
+            }
+            $select_filter_names['author'] = 'author';
+            $select_filter_names['ptype'] = 'ptype';
+            $select_filter_names['search_box']  = 'search_box';
+        }
+
+        if (in_array('metadata', $filter)) {
+            //metadata field
+            foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
+                if ($meta_term->type === 'date') {
+                    $select_filter_names[$meta_key . '_start']        = $meta_key . '_start';
+                    $select_filter_names[$meta_key . '_end']          = $meta_key . '_end';
+                    $select_filter_names[$meta_key . '_start_hidden'] = $meta_key . '_start_hidden';
+                    $select_filter_names[$meta_key . '_end_hidden']   = $meta_key . '_end_hidden';
+                }
+                $select_filter_names[$meta_key] = $meta_key;
             }
         }
-        $select_filter_names['author'] = 'author';
-        $select_filter_names['ptype'] = 'ptype';
-        //metadata field
-        foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
-            if ($meta_term->type === 'date') {
-                $select_filter_names[$meta_key . '_start']        = $meta_key . '_start';
-                $select_filter_names[$meta_key . '_end']          = $meta_key . '_end';
-                $select_filter_names[$meta_key . '_start_hidden'] = $meta_key . '_start_hidden';
-                $select_filter_names[$meta_key . '_end_hidden']   = $meta_key . '_end_hidden';
-            }
-            
-            $select_filter_names[$meta_key] = $meta_key;
-        }
-        $select_filter_names['search_box']  = 'search_box';
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
@@ -1292,14 +1328,22 @@ class PP_Content_Overview extends PP_Module
                 $metadata_value = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
                 $metadata_term  = $this->get_filterable_metadata()[$select_name];
                 $metadata_type  = $metadata_term->type;
+                ?>
+                <tr>
+                    <th scope="row">
+                        <?php echo esc_html($metadata_term->name); ?>
+                    </th>
+                <?php
                 if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number', 'select'])) { ?>
-                    <input 
-                        type="text" 
-                        id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
-                        name="<?php echo esc_attr($select_name); ?>" 
-                        value="<?php echo esc_attr($metadata_value); ?>" 
-                        placeholder="<?php echo esc_attr($metadata_term->name); ?>"
-                        />
+                    <td>
+                        <input 
+                            type="text" 
+                            id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                            name="<?php echo esc_attr($select_name); ?>" 
+                            value="<?php echo esc_attr($metadata_value); ?>" 
+                            placeholder=""
+                            />
+                    </td>
                 <?php
                 } elseif ($metadata_type === 'date') { ?>
                     <?php
@@ -1311,62 +1355,66 @@ class PP_Content_Overview extends PP_Module
 
                     $metadata_start_name            = $select_name . '_start';
                     $metadata_end_name              = $select_name . '_end';
-                    ?><?php echo esc_html($metadata_term->name); ?><?php 
-                    printf(
-                        '<input
-                            type="text"
-                            id="%s"
-                            name="%1$s"
-                            value="%2$s"
-                            class="date-time-pick"
-                            data-alt-field="%1$s_hidden"
-                            data-alt-format="%3$s"
-                            placeholder="%4$s"
-                            autocomplete="off"
-                        />',
-                        esc_attr($metadata_start_name),
-                        esc_attr($metadata_start_value),
-                        esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
-                        esc_attr__('From', 'publishpress')
-                    );
-                    printf(
-                        '<input
-                            type="hidden"
-                            name="%s_hidden"
-                            value="%s"
-                        />',
-                        esc_attr($metadata_start_name),
-                        esc_attr($metadata_start_value_hidden)
-                    ); 
                     ?>
-                    <?php 
-                    printf(
-                        '<input
-                            type="text"
-                            id="%s"
-                            name="%1$s"
-                            value="%2$s"
-                            class="date-time-pick"
-                            data-alt-field="%1$s_hidden"
-                            data-alt-format="%3$s"
-                            placeholder="%4$s"
-                            autocomplete="off"
-                        />',
-                        esc_attr($metadata_end_name),
-                        esc_attr($metadata_end_value),
-                        esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
-                        esc_attr__('To', 'publishpress')
-                    );
-                    printf(
-                        '<input
-                            type="hidden"
-                            name="%s_hidden"
-                            value="%s"
-                        />',
-                        esc_attr($metadata_end_name),
-                        esc_attr($metadata_end_value_hidden)
-                    ); 
-                    ?>
+                    <td>
+                        <?php 
+                        printf(
+                            '<input
+                                type="text"
+                                id="%s"
+                                name="%1$s"
+                                value="%2$s"
+                                class="date-time-pick"
+                                data-alt-field="%1$s_hidden"
+                                data-alt-format="%3$s"
+                                placeholder="%4$s"
+                                autocomplete="off"
+                            />',
+                            esc_attr($metadata_start_name),
+                            esc_attr($metadata_start_value),
+                            esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                            ''
+                        );
+                        printf(
+                            '<input
+                                type="hidden"
+                                name="%s_hidden"
+                                value="%s"
+                            />',
+                            esc_attr($metadata_start_name),
+                            esc_attr($metadata_start_value_hidden)
+                        ); 
+                        ?>
+                        <span class="input-divider"><?php echo esc_html__('to', 'publishpress'); ?></div>
+                        <?php 
+                        printf(
+                            '<input
+                                type="text"
+                                id="%s"
+                                name="%1$s"
+                                value="%2$s"
+                                class="date-time-pick"
+                                data-alt-field="%1$s_hidden"
+                                data-alt-format="%3$s"
+                                placeholder="%4$s"
+                                autocomplete="off"
+                            />',
+                            esc_attr($metadata_end_name),
+                            esc_attr($metadata_end_value),
+                            esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                            ''
+                        );
+                        printf(
+                            '<input
+                                type="hidden"
+                                name="%s_hidden"
+                                value="%s"
+                            />',
+                            esc_attr($metadata_end_name),
+                            esc_attr($metadata_end_value_hidden)
+                        ); 
+                        ?>
+                    </td>
                 <?php
                 } elseif ($metadata_type === 'user') { 
                     $user_dropdown_args = [
@@ -1376,28 +1424,30 @@ class PP_Content_Overview extends PP_Module
                         'class' => 'pp-custom-select2'
                     ];
                     $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
-                    wp_dropdown_users($user_dropdown_args);
+                    echo '<td>';
+                        wp_dropdown_users($user_dropdown_args);
+                    echo '</td>';
                 } elseif ($metadata_type === 'checkbox') { ?>
-                    <label for="<?php echo esc_attr('metadata_key_' . $select_name); ?>"><?php echo $metadata_term->name; ?></label>
-                    <input 
-                        type="checkbox" 
-                        id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
-                        name="<?php echo esc_attr($select_name); ?>" 
-                        value="1"
-                        <?php checked($metadata_value, 1); ?>
-                        />
+                    <td>
+                        <input 
+                            type="checkbox" 
+                            id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                            name="<?php echo esc_attr($select_name); ?>" 
+                            value="1"
+                            <?php checked($metadata_value, 1); ?>
+                            />
+                    </td>
                 <?php
                 }
+                echo '</tr>';
                 break;
 
             default:
                 do_action('PP_Content_Overview_filter_display', $select_id, $select_name, $filters);
                 break;
         }
-
-        $filter_content = ob_get_clean();
         
-        return $filter_content;
+        return ob_get_clean();
     }
 
     /**
