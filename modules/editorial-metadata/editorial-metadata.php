@@ -1042,7 +1042,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         private function update_editorial_metadata_term($term_id, $args)
         {
-            $new_args = [];
+            $old_args = [];
             $old_term = $this->get_editorial_metadata_term_by('id', $term_id);
             if ($old_term) {
                 $old_args = [
