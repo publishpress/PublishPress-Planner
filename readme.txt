@@ -121,7 +121,7 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.10.0] - 28 Nov 2022 =
+= [3.10.0] - 01 Dec 2022 =
 
 * Update: Rename the plugin to "PublishPress Planner", #1077
 * Update: Add Metadata top level menu link, #666
