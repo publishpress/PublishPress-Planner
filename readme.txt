@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 6.1
-Stable tag: 3.10.0
+Stable tag: 3.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,10 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.10.1] - 02 Dec 2022 =
+
+* Fixed: Fatal Error caused by 3.10.0 update, #1204
 
 = [3.10.0] - 01 Dec 2022 =
 
