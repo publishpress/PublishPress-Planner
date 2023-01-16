@@ -2301,6 +2301,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             if (! is_object($post)) {
                 //Should we be doing anything at all?
+                return $permalink;
             }
 
             if (! in_array($post->post_type, $this->get_post_types_for_module($this->module))) {
