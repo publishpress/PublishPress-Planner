@@ -2119,7 +2119,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_filters',
                                     esc_html__(
-                                        'If enabled, this metadata will be available as filter option on the Content Overview screen.',
+                                        'If enabled, this metadata will be available as a filter option on the Content Overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2485,7 +2485,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_filters',
                                             esc_html__(
-                                                'If enabled, this metadata will be available as filter option on the Content Overview screen.',
+                                                'If enabled, this metadata will be available as a filter option on the Content Overview screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
