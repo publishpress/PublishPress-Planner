@@ -68,7 +68,8 @@
           var new_option_html = $('.pp-select-options-wrap .pp-select-options-box:first-child').clone();
           new_option_html.find('.entry-field').val('');
           new_option_html.find('.select_dropdown_default').removeAttr('checked').val($('.pp-select-options-wrap .pp-select-options-box').length);
-          new_option_html.find('.delete-button').show();
+          new_option_html.find('.delete-button').css('visibility', 'visible');
+          new_option_html.find('.delete-button').css('display', '');
           $(".pp-select-options-wrap").append(new_option_html);
           setSelectOptionChanges();
         });
@@ -147,9 +148,11 @@
       function setSelectOptionChanges() {
         $('.pp-select-options-wrap .pp-select-options-box').each(function (index) {
           if (index === 0) {
-            $(this).find('.delete-button').hide();
+            $(this).find('.delete-button').css('visibility', 'hidden');
+            $(this).find('.delete-button').css('display', '');
           } else {
-            $(this).find('.delete-button').show();
+            $(this).find('.delete-button').css('visibility', 'visible');
+            $(this).find('.delete-button').css('display', '');
           }
           $(this).find('.select_dropdown_default').val(index);
         });

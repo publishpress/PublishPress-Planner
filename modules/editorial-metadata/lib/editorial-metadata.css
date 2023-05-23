@@ -93,7 +93,6 @@ body.planner_page_pp-editorial-metadata h3.nav-tab-wrapper {
 }
 
 .pp-select-options-box .entry-field {
-    max-width: 100px;
     margin-right: 10px;
 }
 
@@ -101,7 +100,8 @@ body.planner_page_pp-editorial-metadata h3.nav-tab-wrapper {
     margin-left: auto;
 }
 
-.select_dropdown_default_label {
+.pp-editorial-select-field .pp-select-options-box .select_dropdown_default_label {
+    flex-basis: 100%;
     margin-top: 8px;
 }
 
