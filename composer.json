@@ -66,8 +66,10 @@
     }
   },
   "scripts": {
-    "build": "builder/docker/scripts/build build",
-    "build-unpacked": "builder/docker/scripts/build build-dir",
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],
