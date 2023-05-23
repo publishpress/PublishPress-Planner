@@ -9,6 +9,9 @@
 - vendor/publishpress/wordpress-version-notices/codeception.dist.yml
 - vendor/publishpress/wordpress-version-notices/codeception.yml
 - vendor/publishpress/wordpress-version-notices/tests
+- vendor/publishpress/publishpress-instance-protection/.gitignore
+- vendor/publishpress/publishpress-instance-protection/.gitattributes
+- vendor/publishpress/publishpress-instance-protection/.git
 - vendor/sabre/vobject/.gitignore
 - vendor/sabre/vobject/README.md
 - vendor/sabre/vobject/bin
@@ -17,3 +20,6 @@
 - vendor/symfony/polyfill-ctype/README.md
 - vendor/woocommerce/action-scheduler/README.md
 - vendor/woocommerce/action-scheduler/changelog.txt
+- vendor/pimple/pimple/ext/pimple/.gitignore
+- vendor/pimple/pimple/.gitignore
+- vendor/psr/container/.gitignore
