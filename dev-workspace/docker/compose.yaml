@@ -1,0 +1,23 @@
+name: devworkspace_future_free
+services:
+    terminal:
+        build: ./docker
+        image: publishpress/dev-workspace-terminal:planner-free
+        command: ["zsh"]
+        stdin_open: true
+        tty: true
+        working_dir: "/project"
+        volumes:
+            - ../../:/project
+            - ../cache/.zsh_history:/root/.zsh_history
+            - ../cache/.bash_history:/root/.bash_history
+            - ../cache/.npm/_cacache:/root/.npm/_cacache
+            - ../cache/.npm/_logs:/root/.npm/_logs
+            - ../cache/.oh-my-zsh/log:/root/.oh-my-zsh/log
+            - ../cache/.composer/cache:/root/.composer/cache
+            - ../cache/.composer/auth.json:/root/.composer/auth.json
+            - /var/run/docker.sock:/var/run/docker.sock
+        extra_hosts:
+            - "dockerhost:${DOCKER_HOST_IP}"
+        environment:
+            - DOCKER_HOST_IP=${DOCKER_HOST_IP}
