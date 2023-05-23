@@ -78,7 +78,7 @@
     ]
   },
   "extra": {
-    "plugin-name": "publishpress",
+    "plugin-name": "publishpress-planner",
     "plugin-slug": "publishpress",
     "plugin-folder": "publishpress"
   }
