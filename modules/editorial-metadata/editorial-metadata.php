@@ -109,8 +109,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'term-updated' => esc_html__("Metadata term updated.", 'publishpress'),
                     'term-missing' => esc_html__("Metadata term doesn't exist.", 'publishpress'),
                     'term-deleted' => esc_html__("Metadata term deleted.", 'publishpress'),
-                    'term-position-updated' => esc_html__("Term order updated.", 'publishpress'),
-                    'term-visibility-changed' => esc_html__("Term visibility changed.", 'publishpress'),
+                    'term-position-updated' => esc_html__("Metadata order updated.", 'publishpress'),
+                    'term-visibility-changed' => esc_html__("Metadata visibility changed.", 'publishpress'),
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'settings_help_tab' => [
@@ -1604,7 +1604,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
 
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $term_positions = array_map('parseInt', (array)$_POST['term_positions']);
+            $term_positions = array_map('absint', (array)$_POST['term_positions']);
 
             foreach ($term_positions as $position => $term_id) {
                 // Have to add 1 to the position because the index started with zero
