@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
+
 start_time=$(date +%s)
 
-script_version="1.1.1"
+script_version="1.1.3"
 
 command=${1}
 source_path=$(pwd)
-scripts_path="${source_path}/builder/docker/scripts"
+scripts_path="${source_path}/dev-workspace/docker/scripts"
 dist_path="${source_path}/dist"
 cols=$(tput cols)
-
 
 #######################################
 # Get the plugin name from composer.json file.
@@ -83,7 +83,7 @@ echo_step() {
 #######################################
 clean_dist() {
     echo_step "Removing the folder ${tmp_build_dir} if exists"
-    rm -rf "${tmp_build_dir}"
+    rm -rf "${tmp_build_dir}" "${tmp_build_dir}-tmp"
 }
 
 #######################################
@@ -106,6 +106,11 @@ build_to_dir() {
     echo ""
     composer install --no-dev --working-dir="${tmp_build_dir}"
 
+    echo_step "Removing files listed on the file .builder-post-rsync-filters-post"
+    rsync -r -f 'merge .builder-post-rsync-filters-post' "${tmp_build_dir}/" "${tmp_build_dir}-tmp"
+    rm -rf "${tmp_build_dir}"
+    mv "${tmp_build_dir}-tmp" "${tmp_build_dir}"
+
     echo ""
 }
 
@@ -126,10 +131,10 @@ pack_built_dir() {
     zip_path="${dist_path}/${zip_filename}"
     echo_step "Removing old zip file, if exists"
     rm -f "${zip_path}"
-    pushd "${dist_path}" > /dev/null 2>&1
+    pushd "${dist_path}" >/dev/null 2>&1
     echo_step "Creating the zip file on dist/${zip_filename}"
     zip -qr "${zip_path}" ./${plugin_folder}
-    popd > /dev/null 2>&1
+    popd >/dev/null 2>&1
 }
 
 #######################################
@@ -140,10 +145,9 @@ pack_built_dir() {
 #   The runtime in seconds.
 #######################################
 show_time() {
-    if [ "${HIDE_HEADER}" != "1" ]
-    then
+    if [ "${HIDE_HEADER}" != "1" ]; then
         end_time=$(date +%s)
-        runtime=$((end_time-start_time))
+        runtime=$((end_time - start_time))
         echo ""
         echo "Runtime $runtime sec"
     fi
@@ -157,9 +161,8 @@ show_time() {
 # Outputs:
 #   The repeated string.
 #######################################
-repeat(){
-	for (( c=1; c<="${2}"; c++ ))
-    do
+repeat() {
+    for ((c = 1; c <= "${2}"; c++)); do
         echo -n "${1}"
     done
 }
@@ -177,7 +180,7 @@ repeat(){
 #######################################
 echo_header() {
     repeat "=" $cols
-    line=$(repeat "-" $(($cols-16)))
+    line=$(repeat "-" $(($cols - 16)))
     echo "      __        PUBLISHPRESS PLUGIN BUILDER - v${script_version}"
     echo "   -=(o '.      ${line}"
     echo "     '.-.\      Name: ${plugin_name}"
@@ -190,35 +193,38 @@ echo_header() {
 }
 
 #######################################
-if [ "${HIDE_HEADER}" != "1" ]
-then
+if [ "${HIDE_HEADER}" != "1" ]; then
     echo_header
 fi
 
 case "${command}" in
-    "build-dir")
-        echo "Building to dist dir:"
-        echo ""
-        build_to_dir
-        echo ""
-        echo "Plugin successfully built to the dist dir!"
-        show_time
-        ;;
-    "build")
-        echo "Building to zip file:"
-        echo ""
-        build_to_dir
-        pack_built_dir
-        echo ""
-        echo "Plugin successfully built to a zip file!"
-        show_time
-        ;;
-    "clean")
-        echo "Cleaning directory on dist dir:"
-        echo ""
-        clean_dist
-        ;;
-    *)
-        echo "invalid option ${command}"
-        ;;
+"build-dir")
+    echo "Building to dist dir:"
+    echo ""
+    build_to_dir
+    echo ""
+    echo "Plugin successfully built to the dist dir!"
+    show_time
+    ;;
+"build")
+    echo "Building to zip file:"
+    echo ""
+    build_to_dir
+    pack_built_dir
+    clean_dist
+    echo ""
+    echo "Plugin successfully built to a zip file!"
+    show_time
+    ;;
+"clean")
+    echo "Cleaning directory on dist dir:"
+    echo ""
+    clean_dist
+    ;;
+"version")
+    echo "${plugin_version}" > version.txt
+    ;;
+*)
+    echo "invalid option ${command}"
+    ;;
 esac
