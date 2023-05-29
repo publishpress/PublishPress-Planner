@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 6.1
-Stable tag: 3.10.1
+Stable tag: 3.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,18 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.10.2] - 29 May 2022 =
+
+* Fixed: Metadata reorder not working, #1228
+* Fixed: Content Overview Date Filter not working for 1 day date range, #1225
+* Fixed: Content Overview Modified Date Toggle not working, #1233
+* Fixed: Dropdown Select metadata type update, #1214
+* Fixed: Tiny typo in metadata settings, #1221
+* Update: Add the new "PublishPress Planner" name in the footer, #1215
+* Fixed: User profile notification channel setting not updating, #1218
+* Update: ES-FR-IT Translation Updates January 2023, #1241
+* Update: Italian translation Update December 6, #1217
 
 = [3.10.1] - 02 Dec 2022 =
 
