@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ $(uname) == "Linux" ]]; then
+  export DOCKER_HOST_IP=$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -f1 -d'/')
+elif [[ $(uname) == "Darwin" ]]; then
+  export DOCKER_HOST_IP=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}')
+else
+  echo "Unsupported operating system"
+  exit 1
+fi
+
+echo "$DOCKER_HOST_IP"

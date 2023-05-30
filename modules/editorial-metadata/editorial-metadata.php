@@ -109,8 +109,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'term-updated' => esc_html__("Metadata term updated.", 'publishpress'),
                     'term-missing' => esc_html__("Metadata term doesn't exist.", 'publishpress'),
                     'term-deleted' => esc_html__("Metadata term deleted.", 'publishpress'),
-                    'term-position-updated' => esc_html__("Term order updated.", 'publishpress'),
-                    'term-visibility-changed' => esc_html__("Term visibility changed.", 'publishpress'),
+                    'term-position-updated' => esc_html__("Metadata order updated.", 'publishpress'),
+                    'term-visibility-changed' => esc_html__("Metadata visibility changed.", 'publishpress'),
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'settings_help_tab' => [
@@ -1604,7 +1604,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
 
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $term_positions = array_map('parseInt', (array)$_POST['term_positions']);
+            $term_positions = array_map('absint', (array)$_POST['term_positions']);
 
             foreach ($term_positions as $position => $term_id) {
                 // Have to add 1 to the position because the index started with zero
@@ -2018,13 +2018,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                         type="text" 
                                                         name="metadata_select_options[values][]" 
                                                         value="<?php echo esc_attr($value); ?>"
-                                                        placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                        placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
                                                     />
                                                     <input class="entry-field label-field" 
                                                         autocomplete="off"
                                                         type="text" name="metadata_select_options[labels][]" 
                                                         value="<?php echo esc_attr($option_labels[$index]); ?>"
-                                                        placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                        placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
                                                     />
                                                     <label class="select_dropdown_default_label">
                                                         <input type="radio"
@@ -2049,13 +2049,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                     type="text" 
                                                     name="metadata_select_options[values][]" 
                                                     value=""
-                                                    placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                    placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
                                                 />
                                                 <input class="entry-field label-field" 
                                                     autocomplete="off"
                                                     type="text" name="metadata_select_options[labels][]" 
                                                     value=""
-                                                    placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                    placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
                                                 />
                                                 <label class="select_dropdown_default_label">
                                                     <input type="radio"
@@ -2119,7 +2119,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_filters',
                                     esc_html__(
-                                        'If enabled, this metadata will be available as filter option on the Content Overview screen.',
+                                        'If enabled, this metadata will be available as a filter option on the Content Overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2379,13 +2379,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                                     type="text" 
                                                                     name="metadata_select_options[values][]" 
                                                                     value="<?php echo esc_attr($value); ?>"
-                                                                    placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                                    placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
                                                                 />
                                                                 <input class="entry-field label-field" 
                                                                     autocomplete="off"
                                                                     type="text" name="metadata_select_options[labels][]" 
                                                                     value="<?php echo esc_attr($option_labels[$index]); ?>"
-                                                                    placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                                    placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
                                                                 />
                                                                 <label class="select_dropdown_default_label">
                                                                     <input type="radio"
@@ -2410,13 +2410,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                                                 type="text" 
                                                                 name="metadata_select_options[values][]" 
                                                                 value=""
-                                                                placeholder="<?php esc_html_e('Option value', 'publishpress'); ?>"
+                                                                placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
                                                             />
                                                             <input class="entry-field label-field" 
                                                                 autocomplete="off"
                                                                 type="text" name="metadata_select_options[labels][]" 
                                                                 value=""
-                                                                placeholder="<?php esc_html_e('Option label', 'publishpress'); ?>"
+                                                                placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
                                                             />
                                                             <label class="select_dropdown_default_label">
                                                                 <input type="radio"
@@ -2485,7 +2485,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_filters',
                                             esc_html__(
-                                                'If enabled, this metadata will be available as filter option on the Content Overview screen.',
+                                                'If enabled, this metadata will be available as a filter option on the Content Overview screen.',
                                                 'publishpress'
                                             )
                                         ); ?>

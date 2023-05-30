@@ -263,7 +263,7 @@ if (! class_exists('PP_Settings')) {
                     'footer-base',
                     [
                         'current_module' => $current_module,
-                        'plugin_name'    => __('PublishPress', 'publishpress'),
+                        'plugin_name'    => __('PublishPress Planner', 'publishpress'),
                         'plugin_slug'    => 'publishpress',
                         'plugin_url'     => PUBLISHPRESS_URL,
                         'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),

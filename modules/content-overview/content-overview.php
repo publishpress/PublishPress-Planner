@@ -833,7 +833,7 @@ class PP_Content_Overview extends PP_Module
         //add metadata to filter
         foreach ($this->get_filterable_metadata() as $meta_key => $meta_term) {
             if ($meta_term->type === 'checkbox') {
-                $user_filters[$meta_key] = absint($this->filter_get_param($meta_key));
+                $user_filters[$meta_key] = !empty($this->filter_get_param($meta_key)) ? absint($this->filter_get_param($meta_key)) : '';
             } elseif ($meta_term->type === 'date') {
                 $user_filters[$meta_key]                   = $this->filter_get_param_text($meta_key);
                 $user_filters[$meta_key . '_start']        = $this->filter_get_param_text($meta_key . '_start');
@@ -1459,7 +1459,7 @@ class PP_Content_Overview extends PP_Module
     public function printPostForPostType($term, $postType)
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        $order = (isset($_GET['order']) && ! empty($_GET['order'])) ? sanitize_key($_GET['order']) : 'ASC';
+        $order = (isset($_GET['order']) && ! empty($_GET['order'])) ? strtoupper(sanitize_key($_GET['order'])) : 'ASC';
         $orderBy = (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ? sanitize_key($_GET['orderby']) : 'post_date';
         $search = (isset($_GET['s']) && ! empty($_GET['s'])) ? sanitize_text_field($_GET['s']) : '';
 
@@ -1835,8 +1835,9 @@ class PP_Content_Overview extends PP_Module
     {
         global $wpdb;
 
-        $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date'])); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        $ending_date = date('Y-m-d', strtotime($this->user_filters['end_date'])); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date'])) . ' 00:00:00'; // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $ending_date = date('Y-m-d', strtotime($this->user_filters['end_date'])) . ' 23:59:59'; // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+
         $where = $where . $wpdb->prepare(
                 " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
                 $beginning_date,

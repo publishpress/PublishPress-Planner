@@ -1,4 +1,4 @@
-=== PublishPress Planner: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
+=== PublishPress Planner: Organize and Schedule Your WordPress Content ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
@@ -6,15 +6,15 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 4.6
 Requires PHP: 5.6
 Tested up to: 6.1
-Stable tag: 3.10.1
+Stable tag: 3.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress Planner has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
+PublishPress Planner has all the tools you need to plan WordPress content including a Content Calendar, content notifications, editorial comments, and editorial metadata.
 
 == Description ==
 
-[PublishPress Planner](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
+[PublishPress Planner](https://publishpress.com/publishpress/) has all the tools you need to plan WordPress content including a Content Calendar, content notifications, editorial comments, and editorial metadata.
 
 PublishPress Planner is ideal for WordPress sites that publish high-quality content. With PublishPress Planner, you can collaborate much more effectively. This makes PublishPress Planner a great solution for any site with multiple users. PublishPress Planner is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
 
@@ -23,17 +23,11 @@ PublishPress Planner is ideal for WordPress sites that publish high-quality cont
 > <strong>Upgrade to PublishPress Planner Pro</strong><br />
 > This plugin is the free version of the PublishPress Planner plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Planner Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
-= Editorial Calendar =
+= Content Calendar =
 
-The calendar gives you a powerful overview of your publishing schedule. Using the Editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
+The Content Calendar gives you a powerful overview of your publishing schedule. Using this editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
-[Click here to read about the Editorial Calendar](https://publishpress.com/knowledge-base/calendar/).
-
-= Content Notifications =
-
-Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
-
-[Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
+[Click here to read about the Content Calendar](https://publishpress.com/knowledge-base/calendar/).
 
 = Content Overview =
 
@@ -41,13 +35,11 @@ The Content Overview screen is a companion to the Calendar screen. Whereas the C
 
 [Click here to read about the Content Overview](https://publishpress.com/knowledge-base/content-overview/).
 
-= Custom Statuses =
+= Content Notifications =
 
-This feature allows you to create custom post statuses such as “In Progress” or “Pending Review”. You can define statuses to match the stages of your team’s publishing workflow.
+Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
-By default, WordPress provides you with a very limited set of status choices: Draft and Pending Review. With PublishPress Planner you’ll see a much wider range of options. When you first install PublishPress Planner, you’ll see these extra statuses: Pitch, Assigned, and In Progress. You can then create more custom post statuses to define the stages of your publishing workflow.
-
-[Click here to read about the Custom Statuses](https://publishpress.com/knowledge-base/custom-statuses/).
+[Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
 
 = Editorial Comments =
 
@@ -120,6 +112,18 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.10.2] - 29 May 2022 =
+
+* Fixed: Metadata reorder not working, #1228
+* Fixed: Content Overview Date Filter not working for 1 day date range, #1225
+* Fixed: Content Overview Modified Date Toggle not working, #1233
+* Fixed: Dropdown Select metadata type update, #1214
+* Fixed: Tiny typo in metadata settings, #1221
+* Update: Add the new "PublishPress Planner" name in the footer, #1215
+* Fixed: User profile notification channel setting not updating, #1218
+* Update: ES-FR-IT Translation Updates January 2023, #1241
+* Update: Italian translation Update December 6, #1217
 
 = [3.10.1] - 02 Dec 2022 =
 

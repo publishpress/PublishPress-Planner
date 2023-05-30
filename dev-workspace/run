@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Create empty cache files if not exists.
+[[ -d cache/.npm/_cacache ]] || mkdir -p cache/.npm/_cacache
+[[ -d cache/.npm/_logs ]] || mkdir -p cache/.npm/_logs
+[[ -d cache/.composer/cache ]] || mkdir -p cache/.composer/cache
+[[ -d cache/.oh-my-zsh/log ]] || mkdir -p cache/.oh-my-zsh/log
+[[ -f cache/.zsh_history ]] || touch cache/.zsh_history
+[[ -f cache/.bash_history ]] || touch cache/.bash_history
+[[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
+
+DOCKER_HOST_IP=$(./docker/scripts/host-ip)
+
+# Run the terminal service.
+DOCKER_HOST_IP=$DOCKER_HOST_IP docker compose -f docker/compose.yaml run --rm terminal "$@"
