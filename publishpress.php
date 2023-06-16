@@ -5,9 +5,11 @@
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.10.2
+ * Version: 3.11.0-beta
  * Text Domain: publishpress
  * Domain Path: /languages
+ * Requires at least: 5.5
+ * Requires PHP: 7.2.5
  *
  * Copyright (c) 2022 PublishPress
  *
@@ -43,10 +45,22 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
+global $wp_version;
+
+$min_php_version = '7.2.5';
+$min_wp_version  = '5.5';
+
+$invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
+$invalid_wp_version = version_compare($wp_version, $min_wp_version, '<');
+
+if ($invalid_php_version || $invalid_wp_version) {
+    return;
+}
+
 
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
-if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
-    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
+if (file_exists(__DIR__ . '/libraries/internal-vendor' . $includeFilebRelativePath)) {
+    require_once __DIR__ . '/libraries/internal-vendor' . $includeFilebRelativePath;
 }
 
 if (class_exists('PublishPressInstanceProtection\\Config')) {
@@ -59,6 +73,8 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 
 require_once 'includes.php';
 
+
+add_action('plugins_loaded', function () {
 // Core class
 if (! class_exists('publishpress')) {
     class publishpress
@@ -1244,6 +1260,7 @@ if (! function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     }
 }
 
+
 if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
     PublishPress();
     add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
@@ -1271,3 +1288,4 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
         );
     }
 }
+}, -10);

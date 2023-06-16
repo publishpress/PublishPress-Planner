@@ -10,9 +10,12 @@ node_modules
 
 /packages
 /vendor
+/libraries/**/.git
+/builder
 .idea
 /dist
 builder.yml
+builder.yml.dist
 .editorconfig
 
 !tests/_support/.gitkeep

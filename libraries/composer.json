@@ -1,0 +1,33 @@
+{
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "files": [
+      "../defines-free-plugin-path.php"
+    ]
+  },
+  "config": {
+    "vendor-dir": "internal-vendor",
+    "preferred-install": {
+      "*": "dist"
+    },
+    "platform-check": false,
+    "autoloader-suffix": "PublishPressPlanner"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/publishpress-instance-protection"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.5",
+    "publishpress/pimple-pimple": "^3.5.0.9",
+    "symfony/polyfill-ctype": "1.19.*",
+    "publishpress/wordpress-version-notices": "^2.1",
+    "publishpress/wordpress-reviews": "^1.1",
+    "sabre/vobject": "^3.4",
+    "publishpress/psr-container": "^2.0.1.9",
+    "publishpress/instance-protection": "^2.0"
+  }
+}
