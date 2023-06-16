@@ -6,15 +6,22 @@
             "version_normalized": "2.0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/publishpress/publishpress-instance-protection",
+                "url": "https://github.com/publishpress/library-instance-protection.git",
                 "reference": "4193f84a8a680bf4c0d40cc64976ddcadd92158a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/library-instance-protection/zipball/4193f84a8a680bf4c0d40cc64976ddcadd92158a",
+                "reference": "4193f84a8a680bf4c0d40cc64976ddcadd92158a",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5"
             },
             "time": "2023-04-18T17:50:38+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
@@ -29,6 +36,10 @@
             "keywords": [
                 "wordpress plugin"
             ],
+            "support": {
+                "issues": "https://github.com/publishpress/library-instance-protection/issues",
+                "source": "https://github.com/publishpress/library-instance-protection/tree/2.0.1"
+            },
             "install-path": "../publishpress/instance-protection"
         },
         {

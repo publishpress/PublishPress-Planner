@@ -4,20 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5f1eb23ff51480ee0a96501c97a2ae4",
+    "content-hash": "a618a860b905ad084bb98e4f0ac26b5e",
     "packages": [
         {
             "name": "publishpress/instance-protection",
             "version": "2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/publishpress/publishpress-instance-protection",
+                "url": "https://github.com/publishpress/library-instance-protection.git",
                 "reference": "4193f84a8a680bf4c0d40cc64976ddcadd92158a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/library-instance-protection/zipball/4193f84a8a680bf4c0d40cc64976ddcadd92158a",
+                "reference": "4193f84a8a680bf4c0d40cc64976ddcadd92158a",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5"
             },
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
@@ -32,6 +39,10 @@
             "keywords": [
                 "wordpress plugin"
             ],
+            "support": {
+                "issues": "https://github.com/publishpress/library-instance-protection/issues",
+                "source": "https://github.com/publishpress/library-instance-protection/tree/2.0.1"
+            },
             "time": "2023-04-18T17:50:38+00:00"
         },
         {

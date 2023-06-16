@@ -18,10 +18,6 @@
       "url": "https://github.com/publishpress/wp-browser"
     },
     {
-      "type": "git",
-      "url": "https://github.com/publishpress/publishpress-instance-protection"
-    },
-    {
       "type": "vcs",
       "url": "https://github.com/publishpress/publishpress-phpcs-standards"
     }

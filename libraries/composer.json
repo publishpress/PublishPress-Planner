@@ -14,12 +14,6 @@
     "platform-check": false,
     "autoloader-suffix": "PublishPressPlanner"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/publishpress-instance-protection"
-    }
-  ],
   "require": {
     "php": ">=7.2.5",
     "publishpress/pimple-pimple": "^3.5.0.9",
