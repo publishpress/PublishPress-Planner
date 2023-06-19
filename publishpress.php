@@ -1288,4 +1288,5 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
         );
     }
 }
+do_action('publishpress_planner_loaded');
 }, -9);

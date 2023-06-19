@@ -32,63 +32,65 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Legacy\Auto_loader;
 
 if (! defined('PP_LOADED')) {
-    // Define constants
-    define('PUBLISHPRESS_VERSION', '3.11.0-beta');
-    define('PUBLISHPRESS_BASE_PATH', __DIR__);
-    define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
-    define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
-    define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/lib');
-    define('PUBLISHPRESS_INTERNAL_VENDORPATH', PUBLISHPRESS_BASE_PATH . '/libraries/internal-vendor');
+    if (! defined('PUBLISHPRESS_VERSION')) {
+        // Define constants
+        define('PUBLISHPRESS_VERSION', '3.11.0-beta');
+        define('PUBLISHPRESS_BASE_PATH', __DIR__);
+        define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
+        define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
+        define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/lib');
+        define('PUBLISHPRESS_INTERNAL_VENDORPATH', PUBLISHPRESS_BASE_PATH . '/libraries/internal-vendor');
 
-    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
-        define('PUBLISHPRESS_ACTION_PRIORITY_INIT', 10);
-    }
+        if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
+            define('PUBLISHPRESS_ACTION_PRIORITY_INIT', 10);
+        }
 
-    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE')) {
-        define('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE', 1100);
-    }
+        if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE')) {
+            define('PUBLISHPRESS_ACTION_PRIORITY_INIT_LATE', 1100);
+        }
 
-    if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN')) {
-        define('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN', 1010);
-    }
+        if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN')) {
+            define('PUBLISHPRESS_ACTION_PRIORITY_INIT_ADMIN', 1010);
+        }
 
-    $relativePath = PUBLISHPRESS_BASE_PATH;
+        $relativePath = PUBLISHPRESS_BASE_PATH;
 
-    if (defined('PUBLISHPRESS_CUSTOM_VENDOR_PATH') && defined('PUBLISHPRESS_CUSTOM_VENDOR_URL')) {
-        $relativePath = str_replace(PUBLISHPRESS_CUSTOM_VENDOR_PATH, '', $relativePath);
-        define('PUBLISHPRESS_URL', PUBLISHPRESS_CUSTOM_VENDOR_URL . $relativePath . '/');
-    } else {
-        define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
-    }
+        if (defined('PUBLISHPRESS_CUSTOM_VENDOR_PATH') && defined('PUBLISHPRESS_CUSTOM_VENDOR_URL')) {
+            $relativePath = str_replace(PUBLISHPRESS_CUSTOM_VENDOR_PATH, '', $relativePath);
+            define('PUBLISHPRESS_URL', PUBLISHPRESS_CUSTOM_VENDOR_URL . $relativePath . '/');
+        } else {
+            define('PUBLISHPRESS_URL', plugins_url('/', __FILE__));
+        }
 
-    $settingsPage = add_query_arg(
-        [
-            'page' => 'pp-modules-settings',
-            'settings_module' => 'pp-modules-settings-settings',
-        ],
-        get_admin_url(null, 'admin.php')
-    );
-    define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
+        $settingsPage = add_query_arg(
+            [
+                'page' => 'pp-modules-settings',
+                'settings_module' => 'pp-modules-settings-settings',
+            ],
+            get_admin_url(null, 'admin.php')
+        );
+        define('PUBLISHPRESS_SETTINGS_PAGE', $settingsPage);
 
-    /**
-     * Use PUBLISHPRESS_BASE_PATH instead.
-     *
-     * @deprecated
-     */
-    define('PUBLISHPRESS_ROOT', PUBLISHPRESS_BASE_PATH);
+        /**
+         * Use PUBLISHPRESS_BASE_PATH instead.
+         *
+         * @deprecated
+         */
+        define('PUBLISHPRESS_ROOT', PUBLISHPRESS_BASE_PATH);
 
-    // Define the Priority for the notification/notification_status_change method
-    // Added to allow users select a custom priority
-    if (! defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE')) {
-        define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
-    }
+        // Define the Priority for the notification/notification_status_change method
+        // Added to allow users select a custom priority
+        if (! defined('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE')) {
+            define('PP_NOTIFICATION_PRIORITY_STATUS_CHANGE', 10);
+        }
 
-    define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
+        define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
 
-    if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
-        && file_exists(PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php')
-    ) {
-        require_once PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php';
+        if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
+            && file_exists(PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php')
+        ) {
+            require_once PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php';
+        }
     }
 
     add_action('plugins_loaded', function () {
@@ -107,9 +109,11 @@ if (! defined('PP_LOADED')) {
         require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
 
-        define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
-        define('PUBLISHPRESS_NOTIF_VIEWS_PATH', PUBLISHPRESS_BASE_PATH . '/views');
-        define('PUBLISHPRESS_NOTIF_LOADED', 1);
+        if (! defined('PUBLISHPRESS_NOTIF_LOADED')) {
+            define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
+            define('PUBLISHPRESS_NOTIF_VIEWS_PATH', PUBLISHPRESS_BASE_PATH . '/views');
+            define('PUBLISHPRESS_NOTIF_LOADED', 1);
+        }
 
         // Load the improved notifications
         $plugin = new PublishPress\Notifications\Plugin();
@@ -174,7 +178,9 @@ if (! defined('PP_LOADED')) {
             );
         }
 
-        define('PP_LOADED', 1);
+        if (! defined('PUBLISHPRESS_NOTIF_LOADED')) {
+            define('PP_LOADED', 1);
+        }
 
     }, -10);
 }
