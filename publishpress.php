@@ -1288,4 +1288,4 @@ if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
         );
     }
 }
-}, -10);
+}, -9);
