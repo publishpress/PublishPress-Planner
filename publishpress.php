@@ -73,8 +73,6 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 
 require_once 'includes.php';
 
-
-add_action('plugins_loaded', function () {
 // Core class
 if (! class_exists('publishpress')) {
     class publishpress
@@ -1192,13 +1190,6 @@ if (! class_exists('publishpress')) {
     }
 }
 
-if (! function_exists('PublishPress')) {
-    function PublishPress()
-    {
-        return publishpress::instance();
-    }
-}
-
 /**
  * Registered here so the Notifications submenu is displayed right after the
  * plugin is activate.
@@ -1261,32 +1252,50 @@ if (! function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
 }
 
 
-if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
-    PublishPress();
-    add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
-    register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
-    define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
-} else {
-    $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
-
-    error_log($message);
-
-    if (is_admin() ) {
-        add_action(
-            'admin_notices',
-            function () use ($message) {
-                $msg = sprintf(
-                    '<strong>%s:</strong> %s',
-                    esc_html__('Warning', 'publishpress'),
-                    esc_html($message)
-                );
-
-                echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
-            },
-            5
-        );
+if (! function_exists('PublishPress')) {
+    function PublishPress()
+    {
+        return publishpress::instance();
     }
 }
-do_action('publishpress_planner_loaded');
-}, -9);
+
+if (! function_exists('publishpress_planner_init')) {
+    function publishpress_planner_init()
+    {
+        if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
+            PublishPress();
+            add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
+            register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
+
+            define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
+        } else {
+            $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
+
+            error_log($message);
+
+            if (is_admin()) {
+                add_action(
+                    'admin_notices',
+                    function () use ($message) {
+                        $msg = sprintf(
+                            '<strong>%s:</strong> %s',
+                            esc_html__('Warning', 'publishpress'),
+                            esc_html($message)
+                        );
+
+                        echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
+                    },
+                    5
+                );
+            }
+        }
+    }
+}
+
+
+if (doing_action('plugins_loaded')) {
+    publishpress_planner_init();
+} else {
+    add_action('plugins_loaded', 'publishpress_planner_init', -9);
+}
