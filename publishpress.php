@@ -5,9 +5,11 @@
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.10.2
+ * Version: 3.11.0
  * Text Domain: publishpress
  * Domain Path: /languages
+ * Requires at least: 5.5
+ * Requires PHP: 7.2.5
  *
  * Copyright (c) 2022 PublishPress
  *
@@ -43,10 +45,22 @@ use PPVersionNotices\Module\MenuLink\Module;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Notifications\Traits\PublishPress_Module;
 
+global $wp_version;
+
+$min_php_version = '7.2.5';
+$min_wp_version  = '5.5';
+
+$invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
+$invalid_wp_version = version_compare($wp_version, $min_wp_version, '<');
+
+if ($invalid_php_version || $invalid_wp_version) {
+    return;
+}
+
 
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
-if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
-    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
+if (file_exists(__DIR__ . '/libraries/internal-vendor' . $includeFilebRelativePath)) {
+    require_once __DIR__ . '/libraries/internal-vendor' . $includeFilebRelativePath;
 }
 
 if (class_exists('PublishPressInstanceProtection\\Config')) {
@@ -1176,13 +1190,6 @@ if (! class_exists('publishpress')) {
     }
 }
 
-if (! function_exists('PublishPress')) {
-    function PublishPress()
-    {
-        return publishpress::instance();
-    }
-}
-
 /**
  * Registered here so the Notifications submenu is displayed right after the
  * plugin is activate.
@@ -1244,30 +1251,51 @@ if (! function_exists('publishPressRegisterImprovedNotificationsPostTypes')) {
     }
 }
 
-if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
-    PublishPress();
-    add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
-    register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
 
-    define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
-} else {
-    $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
 
-    error_log($message);
-
-    if (is_admin() ) {
-        add_action(
-            'admin_notices',
-            function () use ($message) {
-                $msg = sprintf(
-                    '<strong>%s:</strong> %s',
-                    esc_html__('Warning', 'publishpress'),
-                    esc_html($message)
-                );
-
-                echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
-            },
-            5
-        );
+if (! function_exists('PublishPress')) {
+    function PublishPress()
+    {
+        return publishpress::instance();
     }
+}
+
+if (! function_exists('publishpress_planner_init')) {
+    function publishpress_planner_init()
+    {
+        if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
+            PublishPress();
+            add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
+            register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
+
+            define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
+        } else {
+            $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
+
+            error_log($message);
+
+            if (is_admin()) {
+                add_action(
+                    'admin_notices',
+                    function () use ($message) {
+                        $msg = sprintf(
+                            '<strong>%s:</strong> %s',
+                            esc_html__('Warning', 'publishpress'),
+                            esc_html($message)
+                        );
+
+                        echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
+                    },
+                    5
+                );
+            }
+        }
+    }
+}
+
+
+if (doing_action('plugins_loaded')) {
+    publishpress_planner_init();
+} else {
+    add_action('plugins_loaded', 'publishpress_planner_init', -9);
 }

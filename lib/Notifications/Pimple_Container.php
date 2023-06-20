@@ -9,7 +9,7 @@
 
 namespace PublishPress\Notifications;
 
-use Pimple\Container;
+use PublishPress\Pimple\Container;
 use PP_Debug;
 use PublishPress\AsyncNotifications\SchedulerInterface;
 use PublishPress\AsyncNotifications\WPCronAdapter;
