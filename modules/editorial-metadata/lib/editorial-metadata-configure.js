@@ -9,18 +9,18 @@
         /**
          * Instantiate the drag and drop sorting functionality
          */
-        $('#the-list').sortable({
+        $('.pp-editorial-metadata-wrap #the-list').sortable({
             items: 'tr.term-static',
             placeholder: 'test',
             update: function (event, ui) {
                 var affected_item = ui.item;
 
                 // Reset the position indicies for all terms
-                $('#the-list tr').removeClass('alternate');
+                $('.pp-editorial-metadata-wrap #the-list tr').removeClass('alternate');
 
                 var terms = [];
 
-                $('#the-list tr.term-static').each(function (index, value) {
+                $('.pp-editorial-metadata-wrap #the-list tr.term-static').each(function (index, value) {
                     var term_id = $(this).attr('id').replace('term-', '');
                     terms[index] = term_id;
 
@@ -104,7 +104,7 @@
       /**
        * disable table static term selection
        */
-        $('#the-list tr.term-static').disableSelection();
+        $('.pp-editorial-metadata-wrap #the-list tr.term-static').disableSelection();
         
         /**
          * load select2

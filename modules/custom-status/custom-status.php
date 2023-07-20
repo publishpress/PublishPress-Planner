@@ -2083,7 +2083,7 @@ if (! class_exists('PP_Custom_Status')) {
                 $wp_list_table = new PP_Custom_Status_List_Table();
                 $wp_list_table->prepare_items(); ?>
 
-                <div id='col-right'>
+                <div id='col-right' class='pp-custom-status-wrap'>
                     <div class='col-wrap' style="overflow: auto;">
                         <?php
                         $wp_list_table->display(); ?>
