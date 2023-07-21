@@ -1803,7 +1803,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
    
             if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
-                <div>
+                <div class="pp-editorial-metadata-wrap">
                     <div class='col-wrap'>
                         <form id='posts-filter' action='' method='post'>
                             <?php
