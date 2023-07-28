@@ -9,7 +9,5 @@
 [[ -f cache/.bash_history ]] || touch cache/.bash_history
 [[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
 
-DOCKER_HOST_IP=$(./docker/scripts/host-ip)
-
 # Run the terminal service.
-DOCKER_HOST_IP=$DOCKER_HOST_IP docker compose -f docker/compose.yaml run --rm terminal "$@"
+DOCKER_HOST_IP=$(php ./scripts/getip) docker compose -f docker/compose.yaml run --rm terminal "$@"

@@ -1,7 +1,7 @@
 - *.code-workspace
 - .babelrc
-- .builder-post-rsync-filters-post
-- .builder-rsync-filters
+- .rsync-filters-post-build
+- .rsync-filters-pre-build
 - .distignore
 - .env.testing
 - .env.testing.dist
