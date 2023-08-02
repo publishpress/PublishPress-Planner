@@ -874,7 +874,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function action_parse_query($query)
         {
-            if (is_admin() && false !== stripos(get_query_var('orderby'), $this->module->slug)) {
+            if (is_admin() && is_string(get_query_var('orderby')) && false !== stripos(get_query_var('orderby'), $this->module->slug)) {
                 $term_slug = sanitize_key(str_replace($this->module->slug . '-', '', get_query_var('orderby')));
                 $term = $this->get_editorial_metadata_term_by('slug', $term_slug);
                 $meta_key = $this->get_postmeta_key($term);
