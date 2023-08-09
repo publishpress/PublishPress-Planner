@@ -7,7 +7,7 @@
  * Options:
  *  -h, --help    Display this help text.
  *
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 /**
@@ -23,12 +23,23 @@ function print_usage()
 }
 
 /**
+ * Function to check if we are online.
+ */
+function is_online(): bool {
+    return (bool) @fsockopen("www.google.com", 80);
+}
+
+/**
  * Return the IP address based on the operating system.
  *
  * @return string|void
  */
 function get_docker_host_ip()
 {
+    if (! is_online()) {
+        return '127.0.0.1';
+    }
+
     if (php_uname('s') === 'Linux') {
         $output = shell_exec("ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print \$2}' | cut -f1 -d'/'");
     } elseif (php_uname('s') === 'Darwin') {
