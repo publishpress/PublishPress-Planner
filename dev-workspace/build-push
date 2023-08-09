@@ -2,4 +2,4 @@
 
 # This command requires to be logged in on Docker Hub. Check `docker login --help` for more information.
 
-docker buildx build --platform linux/amd64,linux/arm64 --push -t publishpress/dev-workspace-terminal:planner-free ./docker
+DOCKER_HOST_IP=$(php ./scripts/getip) docker buildx build --platform linux/amd64,linux/arm64 --push -t publishpress/dev-workspace-terminal:planner-free-2.0 ./docker
