@@ -2,13 +2,13 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: 'bug'
+labels: 'unconfirmed bug'
 assignees: ''
 
 ---
 
-Your issue may already be reported!
-Please search on the [issue track](../) before creating one.
+<!--- Your issue may already be reported!
+Please search on the [issue track](../) before creating one. -->
 
 ## Expected Behavior
 
