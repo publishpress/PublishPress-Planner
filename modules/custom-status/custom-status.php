@@ -40,6 +40,7 @@ if (! class_exists('PP_Custom_Status')) {
      * - Thoroughly test what happens when the default post statuses 'Draft' and 'Pending Review' no longer exist
      * - Ensure all of the form processing uses our messages functionality
      */
+    #[\AllowDynamicProperties]
     class PP_Custom_Status extends PP_Module
     {
         use Dependency_Injector;

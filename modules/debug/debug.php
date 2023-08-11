@@ -34,6 +34,7 @@ if (! class_exists('PP_Debug')) {
     /**
      * Class PP_Debug
      */
+    #[\AllowDynamicProperties]
     class PP_Debug extends PP_Module
     {
         use Dependency_Injector;

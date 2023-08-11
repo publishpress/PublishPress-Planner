@@ -33,6 +33,7 @@
  */
 
 if (! class_exists('PP_Efmigration')) {
+    #[\AllowDynamicProperties]
     class PP_Efmigration extends PP_Module
     {
         const OPTION_PREFIX = 'publishpress_';
@@ -247,7 +248,7 @@ if (! class_exists('PP_Efmigration')) {
         public function action_register_page()
         {
             add_submenu_page(
-                null,
+                '',
                 'PublishPress',
                 'PublishPress',
                 'manage_options',

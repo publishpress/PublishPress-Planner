@@ -11,6 +11,7 @@ namespace PublishPress\Notifications\Workflow\Step\Content;
 
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
+#[\AllowDynamicProperties]
 class Main extends Base_Step
 {
     const META_KEY_SUBJECT = '_psppno_contsubject';

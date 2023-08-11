@@ -33,6 +33,7 @@ if (! defined('ABSPATH')) {
  *
  * This class adds a review request system for your plugin or theme to the WP dashboard.
  */
+#[\AllowDynamicProperties]
 class PP_Reviews extends PP_Module
 {
     /**
