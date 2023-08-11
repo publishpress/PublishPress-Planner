@@ -61,20 +61,25 @@ if (! defined('PP_LIB_VENDOR_PATH')) {
     define('PP_LIB_VENDOR_PATH', __DIR__ . '/lib/vendor');
 }
 
+$instanceProtectionIncPath = PP_LIB_VENDOR_PATH . '/publishpress/instance-protection/include.php';
+if (is_file($instanceProtectionIncPath) && is_readable($instanceProtectionIncPath)) {
+    require_once $instanceProtectionIncPath;
+}
+
+if (class_exists('PublishPressInstanceProtection\\Config')) {
+    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
+    $pluginCheckerConfig->pluginSlug    = 'publishpress';
+    $pluginCheckerConfig->pluginName    = 'PublishPress Planner';
+
+    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
+}
+
 $autoloadFilePath = PP_LIB_VENDOR_PATH . '/autoload.php';
 if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
     && is_file($autoloadFilePath)
     && is_readable($autoloadFilePath)
 ) {
     require_once $autoloadFilePath;
-}
-
-if (class_exists('PublishPressInstanceProtection\\Config')) {
-    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug    = 'publishpress';
-    $pluginCheckerConfig->pluginName    = 'PublishPress';
-
-    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
 }
 
 add_action('plugins_loaded', function () {
