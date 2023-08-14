@@ -23,3 +23,5 @@
 - vendor/pimple/pimple/ext/pimple/.gitignore
 - vendor/pimple/pimple/.gitignore
 - vendor/psr/container/.gitignore
+- .rsync-filters-pre-build
+- .rsync-filters-pro-build

@@ -50,3 +50,10 @@ RoboFile.php export-ignore
 Thumbs.db export-ignore
 webpack.config.js export-ignore
 wp-cli.local.yml export-ignore
+.rsync-filters-pre-build export-ignore
+.rsync-filters-post-build export-ignore
+jest.config.js export-ignore
+jest.config.ts export-ignore
+.phpcs.xml export-ignore
+/dev-workspace export-ignore
+/assets_wp export-ignore
