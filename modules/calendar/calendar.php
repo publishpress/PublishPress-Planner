@@ -37,6 +37,7 @@ if (! class_exists('PP_Calendar')) {
      *
      * @author batmoo
      */
+    #[\AllowDynamicProperties]
     class PP_Calendar extends PP_Module
     {
         use Dependency_Injector;

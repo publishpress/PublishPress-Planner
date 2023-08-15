@@ -636,12 +636,8 @@ class NotificationsLogTable extends WP_List_Table
                 'publishpress'
             ) . '" name="receiver" value="' . esc_attr($receiver) . '" />';
 
-        echo wp_kses(
-            submit_button(esc_html__('Filter', 'publishpress'), 'secondary', 'submit', false),
-            [
-                'input' => "type"
-            ]
-        );
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo get_submit_button(esc_html__('Filter', 'publishpress'), 'secondary', 'submit', false);
 
         echo '</div>';
         echo '<br>';

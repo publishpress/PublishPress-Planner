@@ -35,6 +35,7 @@ if (! class_exists('PP_Modules_Settings')) {
      *
      * @author batmoo
      */
+    #[\AllowDynamicProperties]
     class PP_Modules_Settings extends PP_Module
     {
         const SETTINGS_SLUG = 'pp-modules-settings';

@@ -40,6 +40,7 @@ if (! class_exists('PP_Dashboard')) {
      * @todo for 0.7
      * - Update the My Content Notifications widget to use new activity class
      */
+    #[\AllowDynamicProperties]
     class PP_Dashboard extends PP_Module
     {
         public $widgets;

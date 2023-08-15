@@ -33,6 +33,7 @@
  */
 
 if (! class_exists('PP_Theeventscalendar_Integration')) {
+    #[\AllowDynamicProperties]
     class PP_Theeventscalendar_Integration extends PP_Module
     {
         public $module;

@@ -10,7 +10,7 @@ node_modules
 
 /packages
 /vendor
-/libraries/**/.git
+/lib/**/.git
 /builder
 .idea
 /dist

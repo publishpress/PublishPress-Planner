@@ -50,6 +50,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
      * Improvements to make:
      * @todo Abstract the permissions check for management to class level
      */
+    #[\AllowDynamicProperties]
     class PP_Editorial_Metadata extends PP_Module
     {
         use Dependency_Injector;

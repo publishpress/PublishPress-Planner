@@ -45,6 +45,7 @@ if (! class_exists('PP_Improved_Notifications')) {
     /**
      * class Notifications
      */
+    #[\AllowDynamicProperties]
     class PP_Improved_Notifications extends PP_Module
     {
         use Dependency_Injector, PublishPress_Module;
