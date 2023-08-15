@@ -43,6 +43,7 @@ if (! class_exists('PP_Notifications_Log')) {
     /**
      * class PP_Notifications_Log
      */
+    #[\AllowDynamicProperties]
     class PP_Notifications_Log extends PP_Module
     {
         use Dependency_Injector;

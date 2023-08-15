@@ -130,10 +130,15 @@ class NotificationsLogHandler
         $args = [
             'type' => NotificationsLogModel::COMMENT_TYPE,
             'orderby' => $orderBy,
-            'order' => $order,
             'count' => (bool)$returnTotal,
             'status' => NotificationsLogModel::COMMENT_ACTIVE,
         ];
+
+        if (!empty($order)) {
+            $args['order'] = $order;
+        } else {
+            $args['order'] = 'desc';
+        }
 
         if (! empty($postID)) {
             $args['post_id'] = $postID;
@@ -225,7 +230,7 @@ class NotificationsLogHandler
                 'inclusive' => true,
             ];
         }
-
+        
         return get_comments($args);
     }
 }

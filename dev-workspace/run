@@ -9,7 +9,38 @@
 [[ -f cache/.bash_history ]] || touch cache/.bash_history
 [[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
 
-DOCKER_HOST_IP=$(./docker/scripts/host-ip)
+export DOCKER_HOST_IP=$(php ./scripts/getip)
 
-# Run the terminal service.
-DOCKER_HOST_IP=$DOCKER_HOST_IP docker compose -f docker/compose.yaml run --rm terminal "$@"
+is_online() {
+    echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
+
+    if [ $? -eq 0 ]; then
+        echo 1
+    else
+        echo 0
+    fi
+}
+
+pull_image() {
+    docker compose -f docker/compose.yaml pull
+}
+
+run_terminal_service() {
+    docker compose -f docker/compose.yaml run --rm terminal "$@"
+}
+
+if [ "$(is_online)" -eq 1 ]; then
+    # Check and update the image if needed, but do not display anything if there is any argument passed.
+    if [[ $# -eq 0 ]]; then
+        echo "Checking if the image is up to date..."
+        pull_image
+    else
+        pull_image > /dev/null 2>&1
+    fi
+else
+    if [[ $# -eq 0 ]]; then
+        echo "Offline mode detected, ignoring image update."
+    fi
+fi
+
+run_terminal_service "$@"

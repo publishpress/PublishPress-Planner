@@ -12,6 +12,7 @@ namespace PublishPress\Notifications\Workflow\Step\Event;
 use PublishPress\Notifications\Traits\Metadata;
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 
+#[\AllowDynamicProperties]
 class Base extends Base_Step
 {
     use Metadata;

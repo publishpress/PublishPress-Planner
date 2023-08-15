@@ -31,6 +31,7 @@
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 if (! class_exists('PP_Settings')) {
+    #[\AllowDynamicProperties]
     class PP_Settings extends PP_Module
     {
         use Dependency_Injector;

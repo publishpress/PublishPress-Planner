@@ -13,6 +13,7 @@ use Exception;
 use PublishPress\Notifications\Workflow\Step\Base as Base_Step;
 use WP_User;
 
+#[\AllowDynamicProperties]
 class Base extends Base_Step
 {
     const META_KEY_EMAIL = '_psppno_chnbase';

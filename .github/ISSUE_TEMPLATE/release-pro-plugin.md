@@ -1,31 +1,38 @@
 ---
-name: Release the Pro version (team only)
-about: Describes default checklist for releasing the Pro plugin;
-title: Release PublishPress Pro v[VERSION]
+name: Release the Pro Version (Team Only)
+about: Default checklist for the plugin's release process.
+title: Release PublishPress Planner Pro v[VERSION]
 labels: release
 assignees: ''
-
 ---
 
-To release the Pro plugin please make sure to check all the checkboxes below.
+To release the Pro plugin, ensure you complete all the tasks below.
 
 ### Pre-release Checklist
-
-- [ ] Create the release branch as `release-<version>` based on the development branch
-- [ ] Make sure to directly merge or use Pull Requests to merge hotfixes or features branches into the release branch
-- [ ] Update publishpress.pot language file
-- [ ] Update the `composer.json` file changing the version constraint to the Free plugin to use the most recent stable release tag
-- [ ] Run `composer update` and check if there is any relevant update. Check if you need to lock the current version for any dependency. The `--no-dev` argument is optional here, since the build script will make sure to run the build with that argument.
-- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct
-- [ ] Update the version number to the next stable version. Use `$ vendor/bin/robo version <version-number>`
-- [ ] Commit the changes to the release branch
-- [ ] Build the zip package using `$ vendor/bin/robo build`. It should create a package in the `./dist` dir.
-- [ ] Send to the team for testing
+- [ ] Create a release branch named `release-<version>` from the development branch.
+- [ ] Review and merge all relevant Pull Requests into the release branch.
+- [ ] Start a dev-workspace session.
+- [ ] Verify the correct version of the free plugin is referenced in the `lib/composer.json` file. Prefer stable versions.
+- [ ] Execute `composer update` to update the root and lib vendors.
+- [ ] Review the updated packages and mention any production library updates in the changelog.
+- [ ] Check if all dependencies are synced from Free into the Pro plugin with `composer check:deps`. If required, merge dependencies using `composer fix:deps` and run `composer update` again.
+- [ ] Check if the free plugin uses Composer's autoload and copy the autoload definition from the free plugin to the pro plugin refactoring the relative paths, on `/lib/composer.json`. Execute `composer dumpautoload` to update the autoload files. Commit the changes.
+- [ ] Inspect GitHub's Dependabot warnings or Pull Requests for relevant issues. Resolve any false positives first, then fix and commit the remaining issues.
+- [ ] If necessary, build JS files for production using `composer build:js` and commit the changes.
+- [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
+- [ ] Update the `.pot` file executing `composer gen:pot` and include a note in the changelog.
+- [ ] Especially for minor and patch releases, maintain backward compatibility for changes like renamed or moved classes, namespaces, functions, etc. Include deprecation comments and mention this in the changelog. Major releases may remove deprecated code, but always note this in the changelog.
+- [ ] Revise the changelog to include all changes with user-friendly descriptions and ensure the release date is accurate.
+  -- [ ] Update the version number in the main plugin file and `readme.txt`, adhering to specifications from our [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
+- [ ] Confirm there are no uncommitted changes.
+- [ ] Build the zip package with `composer build`, creating a new package in the `./dist` directory.
+- [ ] Distribute the new package to the team for testing.
 
 ### Release Checklist
+- [ ] Create and merge a Pull Request for the release branch into the `main` branch.
+- [ ] Merge the `main` branch into the `development` branch.
+- [ ] Establish the GitHub release on the `main` branch with the correct tag.
 
-- [ ] Create a Pull Request and merge the release branch it into the `master` branch
-- [ ] Merge the `master` branch into the `development` branch
-- [ ] Create the Github release (make sure it is based on the `master` branch and correct tag)
-- [ ] Update EDD registry and upload the new package
-- [ ] Make the final test updating the plugin in a staging site
+#### PublishPress.com Deployment
+- [ ] Update the EDD registry on the Downloads menu, uploading the new package.
+- [ ] Perform a final test by updating the plugin on a staging site.

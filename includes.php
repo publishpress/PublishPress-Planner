@@ -34,12 +34,19 @@ use PublishPress\Legacy\Auto_loader;
 if (! defined('PP_LOADED')) {
     if (! defined('PUBLISHPRESS_VERSION')) {
         // Define constants
-        define('PUBLISHPRESS_VERSION', '3.11.0');
+        define('PUBLISHPRESS_VERSION', '3.12.0');
         define('PUBLISHPRESS_BASE_PATH', __DIR__);
         define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
         define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
         define('PUBLISHPRESS_LIBRARIES_PATH', PUBLISHPRESS_BASE_PATH . '/lib');
-        define('PUBLISHPRESS_INTERNAL_VENDORPATH', PUBLISHPRESS_BASE_PATH . '/libraries/internal-vendor');
+
+
+        if (! defined('PUBLISHPRESS_INTERNAL_VENDORPATH')) {
+            /**
+             * @deprecated 3.12.0 Use PP_LIB_VENDOR_PATH instead.
+             */
+            define('PUBLISHPRESS_INTERNAL_VENDORPATH', PP_LIB_VENDOR_PATH);
+        }
 
         if (! defined('PUBLISHPRESS_ACTION_PRIORITY_INIT')) {
             define('PUBLISHPRESS_ACTION_PRIORITY_INIT', 10);
@@ -85,112 +92,78 @@ if (! defined('PP_LOADED')) {
         }
 
         define('PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW', 'psppnotif_workflow');
-
-        if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
-            && file_exists(PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php')
-        ) {
-            require_once PUBLISHPRESS_INTERNAL_VENDORPATH . '/autoload.php';
-        }
     }
-    if (!function_exists('publishpress_planner_includes')) {
-        function publishpress_planner_includes()
-        {
-
-            // Register the legacy autoloader
-            if (! class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
-                require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
-            }
+    
+    // Register the legacy autoloader
+    if (! class_exists('\\PublishPress\\Legacy\\Auto_loader')) {
+        require_once PUBLISHPRESS_LIBRARIES_PATH . '/Legacy/Auto_loader.php';
+    }
 
 
-            Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
-            Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/lib/Legacy');
-            Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/lib/Notifications');
-            Auto_loader::register('PublishPress\\Utility\\', __DIR__ . '/lib/Utility');
+    Auto_loader::register('PublishPress\\Core\\', __DIR__ . '/core/');
+    Auto_loader::register('PublishPress\\Legacy\\', __DIR__ . '/lib/Legacy');
+    Auto_loader::register('PublishPress\\Notifications\\', __DIR__ . '/lib/Notifications');
+    Auto_loader::register('PublishPress\\Utility\\', __DIR__ . '/lib/Utility');
 
-            require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
+    require_once PUBLISHPRESS_BASE_PATH . '/deprecated.php';
 
 
-            if (! defined('PUBLISHPRESS_NOTIF_LOADED')) {
-                define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
-                define('PUBLISHPRESS_NOTIF_VIEWS_PATH', PUBLISHPRESS_BASE_PATH . '/views');
-                define('PUBLISHPRESS_NOTIF_LOADED', 1);
-            }
+    if (! defined('PUBLISHPRESS_NOTIF_LOADED')) {
+        define('PUBLISHPRESS_NOTIF_MODULE_PATH', __DIR__ . '/modules/improved-notifications');
+        define('PUBLISHPRESS_NOTIF_VIEWS_PATH', PUBLISHPRESS_BASE_PATH . '/views');
+        define('PUBLISHPRESS_NOTIF_LOADED', 1);
+    }
 
-            // Load the improved notifications
-            $plugin = new PublishPress\Notifications\Plugin();
-            $plugin->init();
+    // Load the improved notifications
+    $plugin = new PublishPress\Notifications\Plugin();
+    $plugin->init();
 
-            if (is_admin() && ! defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
-                $includesFile = __DIR__ . '/libraries/internal-vendor/publishpress/wordpress-version-notices/includes.php';
+    if (is_admin() && ! defined('PUBLISHPRESS_SKIP_VERSION_NOTICES')) {
+        if (current_user_can('install_plugins')) {
+            add_filter(
+                \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
+                function ($settings) {
+                    $settings['publishpress'] = [
+                        'message' => __('You\'re using PublishPress Planner Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
+                        'link' => 'https://publishpress.com/links/publishpress-banner',
+                        'screens' => [
+                            ['base' => 'planner_page_pp-modules-settings'],
+                            ['base' => 'planner_page_pp-manage-roles'],
+                            ['base' => 'planner_page_pp-editorial-metadata'],
+                            ['base' => 'planner_page_pp-editorial-comments'],
+                            ['base' => 'planner_page_publishpress_debug_log'],
+                            ['base' => 'planner_page_pp-notif-log'],
+                            ['base' => 'edit', 'id' => 'edit-psppnotif_workflow'],
+                            ['base' => 'post', 'id' => 'psppnotif_workflow'],
+                            ['base' => 'planner_page_pp-content-overview'],
+                            ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar'],
+                        ]
+                    ];
 
-                if (file_exists($includesFile)) {
-                    require_once $includesFile;
+                    return $settings;
                 }
+            );
 
-                if (doing_action('plugins_loaded')) {
-                    publishpress_planner_banner_include();
-                } else {
-                    add_action('plugins_loaded', 'publishpress_planner_banner_include');
+            add_filter(
+                Module::SETTINGS_FILTER,
+                function ($settings) {
+                    $settings['publishpress'] = [
+                        'parent' => [
+                            'pp-calendar',
+                            'pp-content-overview',
+                            'edit.php?post_type=psppnotif_workflow',
+                            'pp-notif-log',
+                            'pp-manage-roles',
+                            'pp-modules-settings',
+                        ],
+                        'label' => __('Upgrade to Pro', 'publishpress'),
+                        'link' => 'https://publishpress.com/links/publishpress-menu',
+                    ];
+
+                    return $settings;
                 }
-            }
+            );
         }
-    }
-
-    if (!function_exists('publishpress_planner_banner_include')) {
-        function publishpress_planner_banner_include()
-        {
-            if (current_user_can('install_plugins')) {
-                add_filter(
-                    \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
-                    function ($settings) {
-                        $settings['publishpress'] = [
-                            'message' => __('You\'re using PublishPress Planner Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'publishpress'),
-                            'link' => 'https://publishpress.com/links/publishpress-banner',
-                            'screens' => [
-                                ['base' => 'planner_page_pp-modules-settings'],
-                                ['base' => 'planner_page_pp-manage-roles'],
-                                ['base' => 'planner_page_pp-editorial-metadata'],
-                                ['base' => 'planner_page_pp-editorial-comments'],
-                                ['base' => 'planner_page_publishpress_debug_log'],
-                                ['base' => 'planner_page_pp-notif-log'],
-                                ['base' => 'edit', 'id' => 'edit-psppnotif_workflow'],
-                                ['base' => 'post', 'id' => 'psppnotif_workflow'],
-                                ['base' => 'planner_page_pp-content-overview'],
-                                ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar'],
-                            ]
-                        ];
-
-                        return $settings;
-                    }
-                );
-
-                add_filter(
-                    Module::SETTINGS_FILTER,
-                    function ($settings) {
-                        $settings['publishpress'] = [
-                            'parent' => [
-                                'pp-calendar',
-                                'pp-content-overview',
-                                'edit.php?post_type=psppnotif_workflow',
-                                'pp-notif-log',
-                                'pp-manage-roles',
-                                'pp-modules-settings',
-                            ],
-                            'label' => __('Upgrade to Pro', 'publishpress'),
-                            'link' => 'https://publishpress.com/links/publishpress-menu',
-                        ];
-
-                        return $settings;
-                    }
-                );
-            }
-        }
-    }
-
-    if (doing_action('plugins_loaded') || !did_action('publishpress_pro_load_base_plugin')) {
-       publishpress_planner_includes();
-    } else {
-       add_action('plugins_loaded', 'publishpress_planner_includes', -10);
     }
 
     define('PP_LOADED', 1);

@@ -41,6 +41,7 @@ if (! class_exists('PP_Editorial_Comments')) {
      *
      * @author batmoo
      */
+    #[\AllowDynamicProperties]
     class PP_Editorial_Comments extends PP_Module
     {
         use Dependency_Injector;

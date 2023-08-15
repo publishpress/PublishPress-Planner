@@ -1,6 +1,6 @@
 {
   "name": "publishpress/publishpress",
-  "type": "library",
+  "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "description": "WordPress plugin to accelerate your publishing workflow.",
   "homepage": "http://publishpress.com/",
@@ -49,10 +49,14 @@
     }
   },
   "scripts": {
-    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
-    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
-    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
-    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
+    "build": "ppbuild build",
+    "build:dir": "ppbuild build-dir",
+    "build:clean": "ppbuild clean",
+    "get-version": "ppbuild version",
+    "check:longpath": "longpath .",
+    "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
+    "pre-update-cmd": "composer update --working-dir=./lib",
+    "pre-install-cmd": "composer install --working-dir=./lib",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],

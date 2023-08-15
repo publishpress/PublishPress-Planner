@@ -38,6 +38,7 @@ use PublishPress\Notifications\Traits\Dependency_Injector;
  *
  * @author sbressler
  */
+#[\AllowDynamicProperties]
 class PP_Content_Overview extends PP_Module
 {
     use Dependency_Injector;

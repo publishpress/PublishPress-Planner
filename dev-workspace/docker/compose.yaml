@@ -1,8 +1,8 @@
-name: devworkspace_future_free
+name: devworkspace_planner_free
 services:
     terminal:
         build: ./docker
-        image: publishpress/dev-workspace-terminal:planner-free
+        image: publishpress/dev-workspace-terminal:planner-free-2
         command: ["zsh"]
         stdin_open: true
         tty: true

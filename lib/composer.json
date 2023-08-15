@@ -1,0 +1,25 @@
+{
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "files": [
+      "../defines-free-plugin-path.php"
+    ]
+  },
+  "config": {
+    "vendor-dir": "vendor",
+    "preferred-install": {
+      "*": "dist"
+    },
+    "platform-check": false,
+    "autoloader-suffix": "PublishPressPlanner"
+  },
+  "require": {
+    "php": ">=7.2.5",
+    "publishpress/pimple-pimple": "^3.5.0.9",
+    "publishpress/wordpress-version-notices": "^2.1",
+    "publishpress/wordpress-reviews": "^1.1",
+    "publishpress/psr-container": "^2.0.1.9",
+    "publishpress/instance-protection": "^2.0"
+  }
+}

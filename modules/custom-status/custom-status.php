@@ -40,6 +40,7 @@ if (! class_exists('PP_Custom_Status')) {
      * - Thoroughly test what happens when the default post statuses 'Draft' and 'Pending Review' no longer exist
      * - Ensure all of the form processing uses our messages functionality
      */
+    #[\AllowDynamicProperties]
     class PP_Custom_Status extends PP_Module
     {
         use Dependency_Injector;
@@ -2083,7 +2084,7 @@ if (! class_exists('PP_Custom_Status')) {
                 $wp_list_table = new PP_Custom_Status_List_Table();
                 $wp_list_table->prepare_items(); ?>
 
-                <div id='col-right'>
+                <div id='col-right' class='pp-custom-status-wrap'>
                     <div class='col-wrap' style="overflow: auto;">
                         <?php
                         $wp_list_table->display(); ?>

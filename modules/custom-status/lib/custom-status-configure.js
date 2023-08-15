@@ -133,14 +133,14 @@
         /**
          * Instantiate the drag and drop sorting functionality
          */
-        $('#the-list').sortable({
+        $('.pp-custom-status-wrap #the-list').sortable({
             items: 'tr.term-static',
             update: function (event, ui) {
                 var affected_item = ui.item;
                 // Reset the position indicies for all terms
-                $('#the-list tr').removeClass('alternate');
+                $('.pp-custom-status-wrap #the-list tr').removeClass('alternate');
                 var terms = [];
-                $('#the-list tr.term-static').each(function (index, value) {
+                $('.pp-custom-status-wrap #the-list tr.term-static').each(function (index, value) {
                     var term_id = $(this).attr('id').replace('term-', '');
                     terms[index] = term_id;
                     $('td.position', this).html(index + 1);
@@ -170,6 +170,6 @@
                 });
             }
         });
-        $('#the-list tr.term-static').disableSelection();
+        $('.pp-custom-status-wrap #the-list tr.term-static').disableSelection();
     });
 })(jQuery);

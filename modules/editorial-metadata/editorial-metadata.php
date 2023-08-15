@@ -50,6 +50,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
      * Improvements to make:
      * @todo Abstract the permissions check for management to class level
      */
+    #[\AllowDynamicProperties]
     class PP_Editorial_Metadata extends PP_Module
     {
         use Dependency_Injector;
@@ -874,7 +875,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function action_parse_query($query)
         {
-            if (is_admin() && false !== stripos(get_query_var('orderby'), $this->module->slug)) {
+            if (is_admin() && is_string(get_query_var('orderby')) && false !== stripos(get_query_var('orderby'), $this->module->slug)) {
                 $term_slug = sanitize_key(str_replace($this->module->slug . '-', '', get_query_var('orderby')));
                 $term = $this->get_editorial_metadata_term_by('slug', $term_slug);
                 $meta_key = $this->get_postmeta_key($term);
@@ -1803,7 +1804,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
    
             if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
-                <div>
+                <div class="pp-editorial-metadata-wrap">
                     <div class='col-wrap'>
                         <form id='posts-filter' action='' method='post'>
                             <?php
