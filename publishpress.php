@@ -1282,8 +1282,6 @@ add_action('plugins_loaded', function () {
     } else {
         $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
 
-        error_log($message);
-
         if (is_admin()) {
             add_action(
                 'admin_notices',
