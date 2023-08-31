@@ -70,6 +70,7 @@ let updateTheSaveAsButtonText = (status) => {
 
         if (label !== node.getAttribute('aria-label')) {
             node.setAttribute('aria-label', label);
+            node.innerHTML = '&nbsp;';
         }
     }, 100);
 };
