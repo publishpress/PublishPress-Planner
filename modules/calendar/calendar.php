@@ -3104,6 +3104,8 @@ if (! class_exists('PP_Calendar')) {
                 )
             );
 
+            $queryResult = map_deep($queryResult, 'html_entity_decode');
+
             wp_send_json($queryResult);
         }
 
