@@ -2213,7 +2213,7 @@ if (! class_exists('PP_Calendar')) {
                 }
                 $args['post_status'] = rtrim($args['post_status'], ', ');
                 // Optional filter to include scheduled content as unpublished
-                if (apply_filters('pp_show_scheduled_as_unpublished', false)) {
+                if (apply_filters('pp_show_scheduled_as_unpublished', true)) {
                     $args['post_status'] .= ', future';
                 }
             }
@@ -2305,10 +2305,11 @@ if (! class_exists('PP_Calendar')) {
                 }
                 $args['post_status'] = rtrim($args['post_status'], ', ');
                 // Optional filter to include scheduled content as unpublished
-                if (apply_filters('pp_show_scheduled_as_unpublished', false)) {
+                if (apply_filters('pp_show_scheduled_as_unpublished', true)) {
                     $args['post_status'] .= ', future';
                 }
             }
+
             // The WP functions for printing the category and author assign a value of 0 to the default
             // options, but passing this to the query is bad (trashed and auto-draft posts appear!), so
             // unset those arguments.
@@ -3103,6 +3104,8 @@ if (! class_exists('PP_Calendar')) {
                     '%' . $wpdb->esc_like($queryText) . '%'
                 )
             );
+
+            $queryResult = map_deep($queryResult, 'html_entity_decode');
 
             wp_send_json($queryResult);
         }

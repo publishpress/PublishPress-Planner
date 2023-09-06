@@ -2374,13 +2374,15 @@ if (! class_exists('PP_Custom_Status')) {
                 return $permalink;
             }
 
+            $original_permalink = $permalink;
+
             list($permalink, $post_name) = $permalink;
 
             $post_name = $post->post_name ? $post->post_name : sanitize_title($post->post_title);
 
             // If the post name is still empty, we can't use it to fix the permalink. So, don't do anything.
             if (empty($post_name)) {
-                return $permalink;
+                return $original_permalink;
             }
 
             // Apply the fix
@@ -2388,7 +2390,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             $ptype = get_post_type_object($post->post_type);
 
-            if ($ptype->hierarchical && !in_array($post->post_status, array( 'draft', 'auto-draft'))) {
+            if ($ptype->hierarchical && !in_array($post->post_status, array( 'draft', 'auto-draft', 'future'))) {
                 $post->filter = 'sample';
 
                 $uri = get_page_uri($post->ID) . $post_name;

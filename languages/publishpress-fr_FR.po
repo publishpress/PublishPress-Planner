@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress: Editorial Calendar, Workflow, "
 "Comments, Notifications and Statuses - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-15 14:38+0000\n"
+"PO-Revision-Date: 2023-08-17 17:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: French (France)\n"
 "Language: fr_FR\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Poedit 3.3\n"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:257
 msgid " Scheduled"
@@ -131,63 +131,63 @@ msgstr "- tout statut -"
 
 #: modules/calendar/calendar.php:210
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https:"
-"//publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
-"Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://"
+"publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</"
+"a></p>"
 msgstr ""
-"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https:"
-"//publishpress.com/features/calendar/\">Documentation du calendrier </a></p>"
-"<p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress sur "
+"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https://"
+"publishpress.com/features/calendar/\">Documentation du calendrier </a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress sur "
 "Github</a></p>"
 
 #: modules/custom-status/custom-status.php:118
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https:"
-"//publishpress.com/features/custom-statuses/\">Custom Status "
-"Documentation</a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://"
+"publishpress.com/features/custom-statuses/\">Custom Status Documentation</"
+"a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"on Github</a></p>"
 msgstr ""
-"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https:"
-"//publishpress.com/features/custom-statuses/\">Documentation des états "
-"pérsonnalisés </a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress sur Github</a></p>"
+"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https://"
+"publishpress.com/features/custom-statuses/\">Documentation des états "
+"pérsonnalisés </a></p><p><a href=\"https://github.com/ostraining/"
+"PublishPress\">PublishPress sur Github</a></p>"
 
 #: modules/editorial-comments/editorial-comments.php:87
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https:"
-"//publishpress.com/features/editorial-comments/\">Editorial Comments "
-"Documentation</a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://"
+"publishpress.com/features/editorial-comments/\">Editorial Comments "
+"Documentation</a></p><p><a href=\"https://github.com/ostraining/"
+"PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https:"
-"//publishpress.com/features/editorial-comments/\">Documentation des "
-"commentaires éditoriaux </a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress sur Github</a></p>"
+"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https://"
+"publishpress.com/features/editorial-comments/\">Documentation des "
+"commentaires éditoriaux </a></p><p><a href=\"https://github.com/ostraining/"
+"PublishPress\">PublishPress sur Github</a></p>"
 
 #: modules/editorial-metadata/editorial-metadata.php:125
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https:"
-"//publishpress.com/features/editorial-metadata/\">Editorial Metadata "
-"Documentation</a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress on Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://"
+"publishpress.com/features/editorial-metadata/\">Editorial Metadata "
+"Documentation</a></p><p><a href=\"https://github.com/ostraining/"
+"PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
-"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https:"
-"//publishpress.com/features/editorial-metadata/\">Documentation des "
-"métadonnées éditoriales </a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress sur Github</a></p>"
+"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https://"
+"publishpress.com/features/editorial-metadata/\">Documentation des "
+"métadonnées éditoriales </a></p><p><a href=\"https://github.com/ostraining/"
+"PublishPress\">PublishPress sur Github</a></p>"
 
 #: modules/notifications/notifications.php:99
 msgid ""
-"<p><strong>For more information:</strong></p><p><a href=\"https:"
-"//publishpress.com/features/notifications/\">Notifications Documentation</a>"
-"</p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
-"on Github</a></p>"
+"<p><strong>For more information:</strong></p><p><a href=\"https://"
+"publishpress.com/features/notifications/\">Notifications Documentation</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
 msgstr ""
-"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https:"
-"//publishpress.com/features/notifications/\">Documentation des "
-"notifications</a></p><p><a href=\"https://github."
-"com/ostraining/PublishPress\">PublishPress sur Github</a></p>"
+"<p><strong>Pour plus d’informations : </strong></p><p><a href=\"https://"
+"publishpress.com/features/notifications/\">Documentation des notifications</"
+"a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"sur Github</a></p>"
 
 #: modules/editorial-comments/editorial-comments.php:82
 msgid ""
@@ -972,7 +972,7 @@ msgstr ""
 #: modules/editorial-metadata/editorial-metadata.php:2389
 #: modules/editorial-metadata/editorial-metadata.php:2420
 msgid "Display Label"
-msgstr ""
+msgstr "Afficher le libellé"
 
 #: modules/editorial-comments/editorial-comments.php:1133
 msgid "Display Name"
@@ -1309,8 +1309,8 @@ msgid ""
 "iCal secret key regenerated. Please inform all users they will need to "
 "resubscribe."
 msgstr ""
-"Clé secrète iCal régénérée. Veuillez informer tous les "
-"utilisateurs/utilisatrices qu’ils devront se réinscrire."
+"Clé secrète iCal régénérée. Veuillez informer tous les utilisateurs/"
+"utilisatrices qu’ils devront se réinscrire."
 
 #: modules/custom-status/custom-status.php:2047
 #: modules/custom-status/custom-status.php:2175
@@ -1342,16 +1342,12 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:2122
 #: modules/editorial-metadata/editorial-metadata.php:2488
-#, fuzzy
-#| msgid ""
-#| "If enabled, this metadata will be available as filter option on the "
-#| "Content Overview screen."
 msgid ""
 "If enabled, this metadata will be available as a filter option on the "
 "Content Overview screen."
 msgstr ""
-"Si cette option est activée, ces métadonnées seront disponibles en tant "
-"qu’option de filtre sur l’écran d’aperçu du contenu."
+"Quand il est activée, ces métadonnées seront disponibles en tant qu’option "
+"de filtre sur l’écran d’aperçu du contenu."
 
 #: modules/editorial-metadata/editorial-metadata.php:2146
 #: modules/editorial-metadata/editorial-metadata.php:2514
@@ -1523,7 +1519,7 @@ msgstr "Champs métas"
 #: modules/editorial-metadata/editorial-metadata.php:2383
 #: modules/editorial-metadata/editorial-metadata.php:2414
 msgid "Meta Value"
-msgstr ""
+msgstr "Valeur de méta"
 
 #: modules/editorial-metadata/editorial-metadata.php:505
 msgid "Metadata"
@@ -1537,7 +1533,7 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:113
 msgid "Metadata order updated."
-msgstr ""
+msgstr "L'ordre des métadonnées a été mis à jour."
 
 #: modules/editorial-metadata/editorial-metadata.php:109
 msgid "Metadata term added."
@@ -1561,7 +1557,7 @@ msgstr "Type de métadonnées"
 
 #: modules/editorial-metadata/editorial-metadata.php:114
 msgid "Metadata visibility changed."
-msgstr ""
+msgstr "La visibilité des métadonnées a été modifiée."
 
 #: modules/improved-notifications/improved-notifications.php:351
 msgid "minutes"

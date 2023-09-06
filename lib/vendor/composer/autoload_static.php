@@ -14,6 +14,20 @@ class ComposerStaticInitPublishPressPlanner
         '59941b7e758a3c420e04e0d83d11f4a0' => __DIR__ . '/../..' . '/../defines-free-plugin-path.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Sabre\\VObject\\' => 14,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Sabre\\VObject\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabre/vobject/lib',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -21,6 +35,8 @@ class ComposerStaticInitPublishPressPlanner
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitPublishPressPlanner::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitPublishPressPlanner::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitPublishPressPlanner::$classMap;
 
         }, null, ClassLoader::class);

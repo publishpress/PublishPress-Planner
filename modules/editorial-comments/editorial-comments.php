@@ -115,6 +115,8 @@ if (! class_exists('PP_Editorial_Comments')) {
             add_action('wp_ajax_publishpress_ajax_delete_comment', [$this, 'ajax_delete_comment']);
             add_action('wp_ajax_publishpress_editorial_search_post', [$this, 'ajaxSearchPost']);
             add_action('wp_ajax_publishpress_editorial_search_user', [$this, 'ajaxSearchUser']);
+            add_action('admin_init', [$this, 'action_delete_comment']);
+            add_filter('removable_query_args', [$this, 'filter_removable_query_args']);
 
             add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
@@ -1078,6 +1080,107 @@ if (! class_exists('PP_Editorial_Comments')) {
                     ['response' => 403]
                 );
             }
+        }
+
+        /**
+         * Handles action delete comment
+         */
+        public function action_delete_comment()
+        {
+
+            if (
+                (!is_admin() || !is_user_logged_in())
+                || (!isset($_GET['page']) || (isset($_GET['page']) && $_GET['page'] !== 'pp-editorial-comments'))
+                || (!isset($_GET['pp_planner_action']) || (isset($_GET['pp_planner_action']) && $_GET['pp_planner_action'] !== 'delete_comment'))
+            ) {
+                return;
+            }
+
+            // Verify nonce
+            if (! isset($_GET['_nonce'])
+                || ! wp_verify_nonce(sanitize_key($_GET['_nonce']), 'editorial-comments-delete')
+            ) {
+                add_action('admin_notices', function () {
+                    echo '<div class="notice error"><p>' . esc_html__(
+                        "Nonce check failed. Please ensure you're supposed to be editing editorial comments.",
+                        'publishpress'
+                    ) . '</p></div>';
+                });
+                return;
+            }
+
+            if (! isset($_GET['comment_id'])) {
+                add_action('admin_notices', function () {
+                    echo '<div class="notice error"><p>' . esc_html__('Invalid comment data', 'publishpress') . '</p></div>';
+                });
+                return;
+            }
+
+            $current_user = wp_get_current_user();
+
+            $comment_id = absint($_GET['comment_id']);
+
+            $theComment = get_comment($comment_id);
+
+
+            if (
+                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                        'pp_delete_editorial_comment'
+                    ))
+                && ! current_user_can('pp_delete_others_editorial_comment')
+            ) {
+                add_action('admin_notices', function () {
+                    echo '<div class="notice error"><p>' . esc_html__(
+                        'Sorry, you don\'t have the privileges to delete this editorial comment. Please talk to your Administrator.',
+                        'publishpress'
+                    ) . '</p></div>';
+                });
+                return;
+            }
+
+            if ($comment_id) {
+                do_action('pp_pre_delete_editorial_comment', $comment_id);
+
+                $deleted = wp_delete_comment($comment_id, true);
+
+                if ($deleted) {
+                    do_action('pp_post_delete_editorial_comment', $comment_id);
+                }
+                
+                add_action('admin_notices', function () {
+                    echo '<div class="notice updated"><p>' . esc_html__(
+                        'Comment deleted successfully.',
+                        'publishpress'
+                    ) . '</p></div>';
+                });
+                return;
+            } else {
+                add_action('admin_notices', function () {
+                    echo '<div class="notice error"><p>' . esc_html__(
+                        'There was a problem of some sort. Try again or contact your administrator.',
+                        'publishpress'
+                    ) . '</p></div>';
+                });
+                return;
+            }
+        }
+
+        /**
+         * Filter removable args
+         *
+         * @param array $args
+         * @return array
+         */
+        public function filter_removable_query_args (array $args) {
+
+            return array_merge(
+                $args,
+                [
+                    'pp_planner_action',
+                    'comment_id',
+                    '_nonce'
+                ]
+            );
         }
 
         /**
