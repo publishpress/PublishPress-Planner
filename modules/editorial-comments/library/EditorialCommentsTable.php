@@ -398,4 +398,44 @@ class EditorialCommentsTable extends WP_List_Table
          */
         do_action('manage_comments_custom_column', $column_name, $item->comment_ID);
     }
+
+    /**
+     * Generates and display row actions links for the list table.
+     *
+     * @param object $item The item being acted upon.
+     * @param string $column_name Current column name.
+     * @param string $primary Primary column name.
+     *
+     * @return string The row actions HTML, or an empty string if the current column is the primary column.
+     */
+    protected function handle_row_actions($item, $column_name, $primary)
+    {
+
+        $current_user = wp_get_current_user();
+
+        $actions = [];
+        
+        if (
+            ($current_user->user_nicename == $item->comment_author && current_user_can('pp_delete_editorial_comment'))
+            || (current_user_can('pp_delete_others_editorial_comment'))
+            ) {
+            $actions['edit'] = sprintf(
+                '<span class="delete"><a href="%s">%s</a></span>',
+                esc_url(
+                    add_query_arg(
+                        [
+                            'page'              => PP_Editorial_Comments::MENU_SLUG, 
+                            'pp_planner_action' => 'delete_comment', 
+                            'comment_id'        => esc_attr($item->comment_ID),
+                            '_nonce'            => wp_create_nonce('editorial-comments-delete')
+                        ],
+                        admin_url('admin.php')
+                    )
+                ),
+                esc_html__('Delete', 'publishpress')
+            );
+        }
+
+        return $column_name === $primary ? $this->row_actions($actions, false) : '';
+    }
 }
