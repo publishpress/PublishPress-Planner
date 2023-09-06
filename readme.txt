@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.3
-Stable tag: 3.12.0
+Stable tag: 3.12.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,20 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.12.1] - 06 Sept 2023 =
+
+* Fixed: Editorial comments delete capability issue, #1420
+* Feature: Added deleting button on Editorial Comment Page, #1386
+* Fixed: Update notification not showing under the Dashboard Updates screen or the Plugins screen, #1454
+* Update: Include scheduled post in Export to Calendar, #1372
+* Fixed: Issue with "&" in calendar category filter, #1446
+* Fixed: Issue with fix_get_sample_permalink method, #1431
+* Fixed: Deprecations notice on PHP 8.1, #1414
+* Fixed: Double slug on schedule page, #1429
+* Fixed: action_parse_query hook generates fatal error, #1410
+* Fixed: PublishPress Planner conflect with Series Order, #1424
+* Fixed: Planner FREE -ES-FR-IT Translation Updates August 2023, #1439
+
 = [3.12.0] - 15 Aug 2023 =
 
 * Changed: Replaced Pimple library with a prefixed version of the library to avoid conflicts with other plugins;
@@ -120,7 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Changed: Change min PHP version to 7.2.5. If not compatible, the plugin will not execute;
 * Changed: Change min WP version to 5.5. If not compatible, the plugin will not execute;
 * Changed: Updated internal libraries to latest versions;
-* Changed: Refactor some occurrences of "plugins_loaded" replacing it by a new action: "plublishpress_<name>_loaded" which runs after the requirements and libraries are loaded, but before the plugin is initialized;
+* Changed: Refactor some occurrences of "plugins_loaded" replacing it by a new action: "publishpress_planner_loaded" which runs after the requirements and libraries are loaded, but before the plugin is initialized;
 
 = [3.11.0] - 20 June 2023 =
 
