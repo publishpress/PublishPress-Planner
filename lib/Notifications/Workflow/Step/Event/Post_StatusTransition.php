@@ -111,11 +111,11 @@ class Post_StatusTransition extends Base
 
             $paramsString = '';
             if (is_object($oldStatus)) {
-                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
+                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->label) . '</div>';
             }
 
             if (is_object($newStatus)) {
-                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
+                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->label) . '</div>';
             }
         }
 

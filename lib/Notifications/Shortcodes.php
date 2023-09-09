@@ -437,7 +437,7 @@ class Shortcodes
                     break;
                 }
 
-                $result = $status->name;
+                $result = $status->label;
                 break;
 
             case 'content':

@@ -77,6 +77,10 @@ if (!class_exists('PP_Module')) {
         {
             global $publishpress;
 
+            if (('custom_status' == $slug) && class_exists('PublishPress_Statuses')) {
+                return true;
+            }
+
             return isset($publishpress->$slug) && $publishpress->$slug->module->options->enabled == 'on';
         }
 
@@ -191,7 +195,11 @@ if (!class_exists('PP_Module')) {
             global $publishpress;
 
             if ($this->module_enabled('custom_status')) {
-                return $publishpress->custom_status->get_custom_statuses();
+                if (class_exists('PublishPress_Statuses')) {
+                    return PublishPress_Statuses::getPostStati([], 'object');
+                } else {
+                    return $publishpress->custom_status->get_custom_statuses();
+                }
             } else {
                 return $this->get_core_post_statuses();
             }
@@ -277,7 +285,7 @@ if (!class_exists('PP_Module')) {
                 && !in_array($status, ['publish', 'future', 'private', 'trash'])) {
                 $status_object = $publishpress->custom_status->get_custom_status_by('slug', $status);
                 if ($status_object && !is_wp_error($status_object)) {
-                    $status_friendly_name = $status_object->name;
+                    $status_friendly_name = $status_object->label;
                 }
             } elseif (array_key_exists($status, $builtin_stati)) {
                 $status_friendly_name = $builtin_stati[$status];

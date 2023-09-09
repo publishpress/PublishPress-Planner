@@ -124,8 +124,6 @@ div.pp-icon img {
 Status color box */
 
 .pp-status-color {
-    width: 10px;
-    height: 10px;
     display: inline-block;
     border-radius: 3px;
     -moz-border-radius: 3px;

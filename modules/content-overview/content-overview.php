@@ -325,7 +325,7 @@ class PP_Content_Overview extends PP_Module
             $label = $taxonomy->label . ' (' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
-            if ($value ==='post_status') {
+            if (in_array($value, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
                 continue;
             }
 
@@ -1235,7 +1235,7 @@ class PP_Content_Overview extends PP_Module
                         echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                 $post_status->slug,
                                 $filters['post_status']
-                            ) . ">" . esc_html($post_status->name) . "</option>";
+                            ) . ">" . esc_html($post_status->label) . "</option>";
                     }
                     ?>
                 </select>

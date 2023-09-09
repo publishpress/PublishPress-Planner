@@ -238,7 +238,7 @@ if (! class_exists('PP_Dashboard')) {
                                 <a href="<?php
                                 echo esc_url($filter_link); ?>">
                                     <?php
-                                    echo esc_html($status->name); ?>
+                                    echo esc_html($status->label); ?>
                                 </a>
                             </td>
                         </tr>

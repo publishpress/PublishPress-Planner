@@ -5,13 +5,13 @@
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.12.1
+ * Version: 4.0-beta3
  * Text Domain: publishpress
  * Domain Path: /languages
  * Requires at least: 5.5
  * Requires PHP: 7.2.5
  *
- * Copyright (c) 2022 PublishPress
+ * Copyright (c) 2023 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -38,7 +38,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2022 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2023 PublishPress. All rights reserved.
  */
 
 use PPVersionNotices\Module\MenuLink\Module;
