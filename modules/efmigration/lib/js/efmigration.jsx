@@ -87,6 +87,12 @@
                         label: objectL10n.usermeta,
                         status: STEP_STATUS_IDLE,
                         error: null
+                    },
+                    {
+                        key: 'metadata',
+                        label: objectL10n.metadata,
+                        status: STEP_STATUS_IDLE,
+                        error: null
                     }
                 ],
                 currentStepIndex: -1,
