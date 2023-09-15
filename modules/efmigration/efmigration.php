@@ -36,21 +36,21 @@ if (! class_exists('PP_Efmigration')) {
     #[\AllowDynamicProperties]
     class PP_Efmigration extends PP_Module
     {
-        public const OPTION_PREFIX = 'publishpress_';
+        const OPTION_PREFIX = 'publishpress_';
 
-        public const OPTION_DISMISS_MIGRATION = 'publishpress_dismiss_migration';
+        const OPTION_DISMISS_MIGRATION = 'publishpress_dismiss_migration';
 
-        public const OPTION_MIGRATED_OPTIONS = 'publishpress_efmigration_migrated_options';
+        const OPTION_MIGRATED_OPTIONS = 'publishpress_efmigration_migrated_options';
 
-        public const OPTION_MIGRATED_USERMETA = 'publishpress_efmigration_migrated_usermeta';
+        const OPTION_MIGRATED_USERMETA = 'publishpress_efmigration_migrated_usermeta';
 
-        public const EDITFLOW_MIGRATION_URL_FLAG = 'publishpress_import_editflow';
+        const EDITFLOW_MIGRATION_URL_FLAG = 'publishpress_import_editflow';
 
-        public const PAGE_SLUG = 'pp-efmigration';
+        const PAGE_SLUG = 'pp-efmigration';
 
-        public const NONCE_KEY = 'pp-efmigration';
+        const NONCE_KEY = 'pp-efmigration';
 
-        public const PLUGIN_NAMESPACE = 'publishpress';
+        const PLUGIN_NAMESPACE = 'publishpress';
 
         public $module;
 
@@ -384,7 +384,6 @@ if (! class_exists('PP_Efmigration')) {
          */
         protected function migrate_data_options()
         {
-
             if (! get_site_option(self::OPTION_MIGRATED_OPTIONS, false)) {
                 $optionsToMigrate = [
                     'calendar_options',
@@ -407,7 +406,6 @@ if (! class_exists('PP_Efmigration')) {
 
                 update_site_option(self::OPTION_MIGRATED_OPTIONS, 1, true);
             }
-            
         }
 
         protected function migrate_data_usermeta()
