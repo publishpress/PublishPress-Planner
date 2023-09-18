@@ -144,7 +144,6 @@ if (! class_exists('PP_Improved_Notifications')) {
 
                 // Inject the PublishPress footer
                 add_filter('admin_footer_text', [$this, 'update_footer_admin']);
-                add_action('admin_head', [$this, 'show_icon_on_title']);
             }
 
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
@@ -1353,30 +1352,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             }
 
             return $channel;
-        }
-
-        public function show_icon_on_title()
-        {
-            global $pagenow;
-
-            if ('edit.php' !== $pagenow || ! (isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === sanitize_key(
-                        $_GET['post_type']
-                    ))) {
-                return;
-            }
-            ?>
-            <img
-                    src="<?php
-                    echo esc_url(PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png') ?>"
-                    alt="" class="logo-header"/>
-
-            <script>
-                // Move the logo to the correct place since we don't have other hook to add it inside the .wrap element.
-                jQuery(function ($) {
-                    $('.wp-heading-inline').before($('.logo-header'));
-                });
-            </script>
-            <?php
         }
     }
 }
