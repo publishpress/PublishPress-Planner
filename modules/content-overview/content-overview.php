@@ -1141,10 +1141,12 @@ class PP_Content_Overview extends PP_Module
                             </tbody>
                         </table>
                     </div>
-                   <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
-                   <input type="submit" id="post-query-clear" value="<?php
-                    echo esc_attr(__('Reset', 'publishpress')); ?>"
-                           class="button-secondary button"/>
+                    <div class="co-submit-wrap">
+                        <?php submit_button(esc_html__('Filter', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                        <input type="submit" id="post-query-clear" value="<?php
+                            echo esc_attr(__('Reset', 'publishpress')); ?>"
+                                class="button-secondary button"/>
+                    </div>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
