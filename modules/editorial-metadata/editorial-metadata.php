@@ -931,7 +931,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $post_type = $post->post_type;
             foreach ($terms as $term) {
-                if (isset($term->post_type) && is_array($term->post_type) && in_array($post_type, $term->post_type)) {
+                if (isset($term->post_types) && is_array($term->post_types) && in_array($post_type, $term->post_types)) {
                     $currentMetadata = $this->get_postmeta_value($term, $post->ID);
                     $value = $this->generate_editorial_metadata_term_output($term, $currentMetadata);
 
