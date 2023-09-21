@@ -919,79 +919,80 @@ if (! class_exists('PP_Calendar')) {
             $t_std = null;
             $t_dst = null;
             $tzfrom = 0;
-
-            foreach ($transitions as $i => $trans) {
-                if ($i == 0) {
-                    $tzfrom = $trans['offset'] / 3600;
-                    continue;
-                }
-
-                // daylight saving time definition
-                if ($trans['isdst']) {
-                    $t_dst = $trans['ts'];
-                    $dt = new DateTime($trans['time']);
-                    $offset = $trans['offset'] / 3600;
-
-                    $daylight = $vTimeZone->add(
-                        'DAYLIGHT',
-                        [
-                            'DTSTART' => $dt->format('Ymd\THis'),
-                            'TZOFFSETFROM' => sprintf(
-                                '%s%02d%02d',
-                                $tzfrom >= 0 ? '+' : '',
-                                floor($tzfrom),
-                                ($tzfrom - floor($tzfrom)) * 60
-                            ),
-                            'TZOFFSETTO' => sprintf(
-                                '%s%02d%02d',
-                                $offset >= 0 ? '+' : '',
-                                floor($offset),
-                                ($offset - floor($offset)) * 60
-                            ),
-                        ]
-                    );
-
-                    // add abbreviated timezone name if available
-                    if (! empty($trans['abbr'])) {
-                        $daylight->add('TZNAME', [$trans['abbr']]);
+            if (is_array($transitions) || is_object($transitions)) {
+                foreach ($transitions as $i => $trans) {
+                    if ($i == 0) {
+                        $tzfrom = $trans['offset'] / 3600;
+                        continue;
                     }
 
-                    $tzfrom = $offset;
-                } else {
-                    $t_std = $trans['ts'];
-                    $dt = new DateTime($trans['time']);
-                    $offset = $trans['offset'] / 3600;
+                    // daylight saving time definition
+                    if ($trans['isdst']) {
+                        $t_dst = $trans['ts'];
+                        $dt = new DateTime($trans['time']);
+                        $offset = $trans['offset'] / 3600;
 
-                    $standard = $vTimeZone->add(
-                        'STANDARD',
-                        [
-                            'DTSTART' => $dt->format('Ymd\THis'),
-                            'TZOFFSETFROM' => sprintf(
-                                '%s%02d%02d',
-                                $tzfrom >= 0 ? '+' : '',
-                                floor($tzfrom),
-                                ($tzfrom - floor($tzfrom)) * 60
-                            ),
-                            'TZOFFSETTO' => sprintf(
-                                '%s%02d%02d',
-                                $offset >= 0 ? '+' : '',
-                                floor($offset),
-                                ($offset - floor($offset)) * 60
-                            ),
-                        ]
-                    );
+                        $daylight = $vTimeZone->add(
+                            'DAYLIGHT',
+                            [
+                                'DTSTART' => $dt->format('Ymd\THis'),
+                                'TZOFFSETFROM' => sprintf(
+                                    '%s%02d%02d',
+                                    $tzfrom >= 0 ? '+' : '',
+                                    floor($tzfrom),
+                                    ($tzfrom - floor($tzfrom)) * 60
+                                ),
+                                'TZOFFSETTO' => sprintf(
+                                    '%s%02d%02d',
+                                    $offset >= 0 ? '+' : '',
+                                    floor($offset),
+                                    ($offset - floor($offset)) * 60
+                                ),
+                            ]
+                        );
 
-                    // add abbreviated timezone name if available
-                    if (! empty($trans['abbr'])) {
-                        $standard->add('TZNAME', [$trans['abbr']]);
+                        // add abbreviated timezone name if available
+                        if (! empty($trans['abbr'])) {
+                            $daylight->add('TZNAME', [$trans['abbr']]);
+                        }
+
+                        $tzfrom = $offset;
+                    } else {
+                        $t_std = $trans['ts'];
+                        $dt = new DateTime($trans['time']);
+                        $offset = $trans['offset'] / 3600;
+
+                        $standard = $vTimeZone->add(
+                            'STANDARD',
+                            [
+                                'DTSTART' => $dt->format('Ymd\THis'),
+                                'TZOFFSETFROM' => sprintf(
+                                    '%s%02d%02d',
+                                    $tzfrom >= 0 ? '+' : '',
+                                    floor($tzfrom),
+                                    ($tzfrom - floor($tzfrom)) * 60
+                                ),
+                                'TZOFFSETTO' => sprintf(
+                                    '%s%02d%02d',
+                                    $offset >= 0 ? '+' : '',
+                                    floor($offset),
+                                    ($offset - floor($offset)) * 60
+                                ),
+                            ]
+                        );
+
+                        // add abbreviated timezone name if available
+                        if (! empty($trans['abbr'])) {
+                            $standard->add('TZNAME', [$trans['abbr']]);
+                        }
+
+                        $tzfrom = $offset;
                     }
 
-                    $tzfrom = $offset;
-                }
-
-                // we covered the entire date range
-                if ($standard && $daylight && min($t_std, $t_dst) < $from && max($t_std, $t_dst) > $to) {
-                    break;
+                    // we covered the entire date range
+                    if ($standard && $daylight && min($t_std, $t_dst) < $from && max($t_std, $t_dst) > $to) {
+                        break;
+                    }
                 }
             }
 
@@ -1085,10 +1086,12 @@ if (! class_exists('PP_Calendar')) {
                 $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
-                        $start_date = new DateTime($post->post_date_gmt);
+                        $calendar_date = get_gmt_from_date($post->post_date);
+
+                        $start_date = new DateTime($calendar_date);
                         $start_date->setTimezone($timeZone);
 
-                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($post->post_date_gmt) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($calendar_date) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                         $end_date->setTimezone($timeZone);
 
                         $last_modified = new DateTime($post->post_modified_gmt);
