@@ -132,7 +132,7 @@ if (! defined('PP_LOADED')) {
                             ['base' => 'planner_page_pp-editorial-metadata'],
                             ['base' => 'planner_page_pp-editorial-comments'],
                             ['base' => 'planner_page_publishpress_debug_log'],
-                            ['base' => 'planner_page_pp-notif-log'],
+                            ['base' => 'admin_page_pp-notif-log'],
                             ['base' => 'edit', 'id' => 'edit-psppnotif_workflow'],
                             ['base' => 'post', 'id' => 'psppnotif_workflow'],
                             ['base' => 'planner_page_pp-content-overview'],

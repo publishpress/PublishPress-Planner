@@ -707,6 +707,31 @@ if (! class_exists('PP_Improved_Notifications')) {
                     );
                 }
             }
+
+            if (in_array($hook_suffix, ['edit.php'])) {
+                if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === get_post_type()) {
+            
+                    wp_enqueue_script(
+                        'improved-notifications-js',
+                        plugin_dir_url(__FILE__) . 'assets/js/improved-notifications.js',
+                        [
+                            'jquery'
+                        ],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+            
+                    wp_localize_script(
+                        'improved-notifications-js',
+                        'ppNotif',
+                        [
+                            'log_url'  => ($this->module_enabled('notifications_log')) ? admin_url('admin.php?page=pp-notif-log') : '',
+                            'log_text' => esc_html__('Notifications Log', 'publishpress'),
+                        ]
+                    );
+                }
+            
+            }
         }
 
         /**

@@ -111,8 +111,25 @@ jQuery(function ($) {
     $('.filter-date-begin').datepicker();
     $('.filter-date-end').datepicker();
 
-    $('.planner_page_pp-notif-log .slide-closed-text').on('click', function () {
+    $('.admin_page_pp-notif-log .slide-closed-text').on('click', function () {
         $(this).next().slideDown();
         $(this).remove();
     });
+
+    if ($('body').hasClass('admin_page_pp-notif-log')) {
+        $("#toplevel_page_pp-calendar")
+            .removeClass("wp-not-current-submenu")
+            .addClass(
+                "wp-has-current-submenu wp-menu-open toplevel_page_pp-calendar"
+        );
+        $('#toplevel_page_pp-calendar > a')
+            .removeClass("wp-not-current-submenu")
+            .addClass(
+                "wp-has-current-submenu wp-menu-open open-if-no-js menu-top-first"
+        );
+        $('#toplevel_page_pp-calendar li a[href="edit.php?post_type=psppnotif_workflow"]')
+            .closest('li')
+            .addClass('current'
+        );
+    }
 });
