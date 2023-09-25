@@ -446,15 +446,6 @@ if (! class_exists('PP_Settings')) {
 
             $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
 
-            if ($publishpress->modules && is_object($publishpress->modules) && !empty($publishpress->modules)) {
-                foreach ($publishpress->modules as $mod_name => $mod_data) {
-                    if (!$mod_data->autoload && $mod_data->options->enabled !== 'off') {
-                        $default_module = 'pp-' . $mod_data->slug . '-settings';
-                        break;
-                    }
-                }
-            }
-
             $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
