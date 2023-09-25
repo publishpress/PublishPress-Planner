@@ -40,6 +40,7 @@ use PublishPress\Notifications\Workflow\Step\Event\Post_Update;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Filter\Post_Type as Post_Type_Filter;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
+use PublishPress\NotificationsLog\NotificationsLogHandler;
 
 if (! class_exists('PP_Improved_Notifications')) {
     /**
@@ -720,13 +721,24 @@ if (! class_exists('PP_Improved_Notifications')) {
                         PUBLISHPRESS_VERSION,
                         true
                     );
+
+                    if ($this->module_enabled('notifications_log')) {
+                        $logHandler = new NotificationsLogHandler();
+                        $log_url    = admin_url('admin.php?page=pp-notif-log');
+                        $log_total  = number_format_i18n($logHandler->getNotificationLogEntries(null, null, null, true));
+                    } else {
+                        $log_url    = '';
+                        $log_total  = '';
+                        
+                    }
             
                     wp_localize_script(
                         'improved-notifications-js',
                         'ppNotif',
                         [
-                            'log_url'  => ($this->module_enabled('notifications_log')) ? admin_url('admin.php?page=pp-notif-log') : '',
-                            'log_text' => esc_html__('Notifications Log', 'publishpress'),
+                            'log_total' => $log_total,
+                            'log_url'   => $log_url,
+                            'log_text'  => esc_html__('Notifications Log', 'publishpress'),
                         ]
                     );
                 }
