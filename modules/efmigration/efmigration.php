@@ -66,7 +66,7 @@ if (! class_exists('PP_Efmigration')) {
             // Register the User Groups module with PublishPress
             $args = [
                 'title' => __('Edit Flow Migration', self::PLUGIN_NAMESPACE),
-                'short_description' => __('Migrate data from Edit Flow into PublishPress', self::PLUGIN_NAMESPACE),
+                'short_description' => __('Migrate data from Edit Flow into PublishPress Planner', self::PLUGIN_NAMESPACE),
                 'module_url' => $this->module_url,
                 'icon_class' => 'dashicons dashicons-groups',
                 'slug' => 'efmigration',
@@ -157,7 +157,7 @@ if (! class_exists('PP_Efmigration')) {
 
                 wp_enqueue_script(
                     'pp-efmigration',
-                    $this->module_url . 'lib/js/efmigration.js',
+                    $this->module_url . 'lib/js/efmigration.min.js',
                     ['react', 'react-dom'],
                     PUBLISHPRESS_VERSION,
                     true
@@ -175,11 +175,11 @@ if (! class_exists('PP_Efmigration')) {
                     'objectL10n',
                     [
                         'intro_text' => esc_html__(
-                            'This migration will import all of your data and settings from Edit Flow.',
+                            'This migration will import all your data and settings from Edit Flow.',
                             self::PLUGIN_NAMESPACE
                         ),
                         'migration_warning' => esc_html__(
-                            'Heads up! Importing data from EditFlow will overwrite any current data in PublishPress.',
+                            'Heads up! Importing data from EditFlow will overwrite any current data in PublishPress Planner.',
                             self::PLUGIN_NAMESPACE
                         ),
                         'start_migration' => esc_html__('Start', self::PLUGIN_NAMESPACE),
@@ -197,7 +197,7 @@ if (! class_exists('PP_Efmigration')) {
                         'error' => esc_html__('Error', self::PLUGIN_NAMESPACE),
                         'error_msg_intro' => esc_html__('If needed, feel free to', self::PLUGIN_NAMESPACE),
                         'error_msg_contact' => esc_html__('contact the support team', self::PLUGIN_NAMESPACE),
-                        'back_to_publishpress_label' => esc_html__('Back to PublishPress', self::PLUGIN_NAMESPACE),
+                        'back_to_publishpress_label' => esc_html__('Back to Planner', self::PLUGIN_NAMESPACE),
                         'back_to_publishpress_url' => $publishPressUrl,
                         'wpnonce' => wp_create_nonce(self::NONCE_KEY),
                     ]
@@ -286,7 +286,7 @@ if (! class_exists('PP_Efmigration')) {
             <div class="updated notice">
                 <p><?php
                     _e(
-                        'Edit Flow should not be used alongside PublishPress. If you want to use it, deactive PublishPress first.',
+                        'Edit Flow should not be used alongside PublishPress Planner. If you want to use PublishPress Planner, please complete Edit Flow data migration and then deactivate Edit Flow.',
                         'publishpress'
                     ); ?></p>
             </div>
@@ -452,8 +452,13 @@ if (! class_exists('PP_Efmigration')) {
                 $pp_editorial_meta         = PP_Editorial_Metadata::metadata_taxonomy;
                 $pp_metadata_postmeta_key  = PP_Editorial_Metadata::metadata_postmeta_key;
 
-                $ef_editorial_meta         = EF_Editorial_Metadata::metadata_taxonomy;
-                $ef_metadata_postmeta_key  = EF_Editorial_Metadata::metadata_postmeta_key;
+                if (class_exists('EF_Editorial_Metadata')) {
+                    $ef_editorial_meta         = EF_Editorial_Metadata::metadata_taxonomy;
+                    $ef_metadata_postmeta_key  = EF_Editorial_Metadata::metadata_postmeta_key;
+                } else {
+                    $ef_editorial_meta         = 'ef_editorial_meta';
+                    $ef_metadata_postmeta_key  = '_ef_editorial_meta';
+                }
 
                 /**
                  * Post types are added to each metadata in Planner unlike Edit Flow
