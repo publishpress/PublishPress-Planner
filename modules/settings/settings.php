@@ -216,8 +216,6 @@ if (! class_exists('PP_Settings')) {
 
 			<div class="publishpress-admin pressshack-admin-wrapper wrap">
 				<header>
-                    <img src="<?php echo PUBLISHPRESS_URL . 'common/img/publishpress-logo-icon.png';?>" alt="" class="logo-header" />
-
 					<h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
 					<?php echo !empty($display_text) ? $display_text : ''; ?>
@@ -447,15 +445,6 @@ if (! class_exists('PP_Settings')) {
             global $publishpress;
 
             $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
-
-            if ($publishpress->modules && is_object($publishpress->modules) && !empty($publishpress->modules)) {
-                foreach ($publishpress->modules as $mod_name => $mod_data) {
-                    if (!$mod_data->autoload && $mod_data->options->enabled !== 'off') {
-                        $default_module = 'pp-' . $mod_data->slug . '-settings';
-                        break;
-                    }
-                }
-            }
 
             $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);

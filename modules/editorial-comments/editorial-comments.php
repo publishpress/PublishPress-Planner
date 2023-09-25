@@ -357,6 +357,8 @@ if (! class_exists('PP_Editorial_Comments')) {
 
         public function ajaxSearchUser()
         {
+            global $wpdb;
+
             $ajax = Ajax::getInstance();
 
             if (! isset($_GET['nonce']) || ! wp_verify_nonce(
@@ -370,7 +372,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
             }
 
-            $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+            $queryText = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
 
             $output = [
                 'results' => [],
@@ -390,16 +392,33 @@ if (! class_exists('PP_Editorial_Comments')) {
                 $ajax->sendJson($output);
             }
 
-            $user_args = [
-                'number' => 20,
-                'orderby' => 'display_name',
-                'capability' => 'edit_posts',
-            ];
-            if (! empty($queryText)) {
-                $user_args['search'] = '*' . $queryText . '*';
+            // Define the custom SQL query to get users who have written comments
+            $commentType = self::comment_type;
+
+            $userSql = "SELECT DISTINCT u.ID, u.display_name
+            FROM {$wpdb->users} AS u
+            INNER JOIN {$wpdb->comments} AS c 
+            ON u.ID = c.user_id
+            WHERE c.comment_type = %s";
+            
+            if (!empty($queryText)) {
+                $userSql .= $wpdb->prepare(
+                    " AND (user_login LIKE %s
+                    OR user_url LIKE %s
+                    OR user_email LIKE %s
+                    OR user_nicename LIKE %s
+                    OR display_name LIKE %s)",
+                    '%' . $wpdb->esc_like($queryText) . '%',
+                    '%' . $wpdb->esc_like($queryText) . '%',
+                    '%' . $wpdb->esc_like($queryText) . '%',
+                    '%' . $wpdb->esc_like($queryText) . '%',
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                );
             }
 
-            $users = get_users($user_args);
+            $userSql .= " ORDER BY u.display_name LIMIT 20";
+
+            $users = $wpdb->get_results($wpdb->prepare($userSql, $commentType));
 
             foreach ($users as $user) {
                 $results[] = [

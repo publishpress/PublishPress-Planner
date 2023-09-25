@@ -71,20 +71,16 @@ header h2 a.change-date-cancel {
     height: 6px;
 }
 
+.planner_page_pp-content-overview #pp-content-filters .co-submit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 25px;
+    margin-top: 10px;
+}
+
+.planner_page_pp-content-overview #post-query-clear,
 .planner_page_pp-content-overview input[type="submit"] {
-    margin: 0 8px 0 0;
-}
-
-.planner_page_pp-content-overview #pp-content-filters input {
-    margin-top: 5px;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-.planner_page_pp-content-overview #post-query-clear {
-    margin-bottom: 0;
-    margin-left: 4px;
-    float: right;
+    margin-left: 10px !important;
 }
 
 .planner_page_pp-content-overview .publishpress-admin header h2 {
@@ -108,10 +104,6 @@ header h2 a.change-date-cancel {
 
 .planner_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
     margin-top: 0;
-}
-
-.planner_page_pp-content-overview #pp-content-filters input#filter-submit {
-    margin: 5px 8px 0 0;
 }
 
 .planner_page_pp-content-overview #pp-content-filters input#post-query-clear,

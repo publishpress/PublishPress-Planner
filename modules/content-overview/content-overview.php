@@ -1022,7 +1022,7 @@ class PP_Content_Overview extends PP_Module
         $output .= ' class="button" value="' . esc_html__('Apply', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
-        $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';
+        $output .= ' class="button button-secondary hidden" value="' . esc_attr__('Reset', 'publishpress') . '" />';
         $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
@@ -1141,10 +1141,12 @@ class PP_Content_Overview extends PP_Module
                             </tbody>
                         </table>
                     </div>
-                   <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
-                   <input type="submit" id="post-query-clear" value="<?php
-                    echo esc_attr(__('Reset', 'publishpress')); ?>"
-                           class="button-secondary button"/>
+                    <div class="co-submit-wrap">
+                        <?php submit_button(esc_html__('Filter', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                        <input type="submit" id="post-query-clear" value="<?php
+                            echo esc_attr(__('Reset', 'publishpress')); ?>"
+                                class="button-secondary button"/>
+                    </div>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
@@ -1161,6 +1163,28 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
+                    <?php 
+                    $date_format = 'Y-m-d';
+                    $reset_start_date = current_time($date_format);
+                    $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +10 day'));
+
+                    $filtered_start_date = $reset_start_date;
+                    $filtered_start_date_timestamp = strtotime($filtered_start_date);
+            
+                    $filtered_end_date = $reset_end_date;
+                    $filtered_end_date_timestamp = strtotime($filtered_end_date);
+
+                    $start_date_value = '<input type="hidden" name="pp-content-overview-start-date" value="' . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
+                    $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
+            
+                    $end_date_value = '<input type="hidden" name="pp-content-overview-end-date" value="' . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
+                    $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
+
+                    $nonce = wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
+
+                    echo $start_date_value . $end_date_value . $nonce;
+                    ?>
+                    <input type="hidden" name="pp-content-overview-range-use-today" value="1"/>
                 </form>
             </div><!-- /alignleft actions -->
 

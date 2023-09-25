@@ -20,7 +20,7 @@ export default function SelectField(props) {
 
     const viewField = () => {
         return (
-            <span id={props.id}>{props.value.join(', ')}</span>
+            <span id={props.id}>{props.value}</span>
         );
     }
 
