@@ -29,6 +29,7 @@
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Legacy\Util;
 
 if (! class_exists('PP_Settings')) {
     #[\AllowDynamicProperties]
@@ -507,6 +508,8 @@ if (! class_exists('PP_Settings')) {
                     'sidebar_output' => '',
                     'text'           => $display_text,
                     'show_sidebar'   => false,
+                    'pro_active'     => Util::isPlannersProActive(),
+                    'pro_sidebar'    => Util::pp_pro_sidebar(false),
                 ],
                 $this->viewsPath
             );
