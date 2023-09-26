@@ -29,6 +29,7 @@
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Legacy\Util;
 
 if (! class_exists('PP_Editorial_Metadata')) {
     /**
@@ -1806,12 +1807,21 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
                 <div class="pp-editorial-metadata-wrap">
                     <div class='col-wrap'>
-                        <form id='posts-filter' action='' method='post'>
-                            <?php
-                            $wp_list_table->display(); ?>
-                            <?php
-                            wp_nonce_field('editorial-metadata-sortable', 'editorial-metadata-sortable'); ?>
-                        </form>
+                        <div class="pp-columns-wrapper<?php echo (!Util::isPlannersProActive()) ? ' pp-enable-sidebar' : '' ?>">
+                            <div class="pp-column-left">
+                                <form id='posts-filter' action='' method='post'>
+                                    <?php
+                                    $wp_list_table->display(); ?>
+                                    <?php
+                                    wp_nonce_field('editorial-metadata-sortable', 'editorial-metadata-sortable'); ?>
+                                </form>
+                            </div><!-- .pp-column-left -->
+                            <?php if (!Util::isPlannersProActive()) { ?>
+                                <div class="pp-column-right">
+                                    <?php Util::pp_pro_sidebar(); ?>
+                                </div><!-- .pp-column-right -->
+                            <?php } ?>
+                        </div><!-- .pp-columns-wrapper -->
                     </div>
                 </div>
             <?php

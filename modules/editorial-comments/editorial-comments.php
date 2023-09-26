@@ -31,6 +31,7 @@
 use PublishPress\EditorialComments\EditorialCommentsTable;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use PublishPress\Legacy\Auto_loader;
+use PublishPress\Legacy\Util;
 use PublishPress\Core\Error;
 use PublishPress\Core\Ajax;
 
@@ -265,35 +266,45 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             $commentTable = new EditorialCommentsTable();
             $commentTable->views();
-         
-            if (isset($_REQUEST['s']) && $search_str = esc_attr(wp_unslash(sanitize_text_field($_REQUEST['s'])))) {
-                /* translators: %s: search keywords */
-                printf(' <span class="description">' . esc_html__('Search results for &#8220;%s&#8221;', 'publishpress') . '</span>', esc_html($search_str));
-            }
-            //Fetch, prepare, sort, and filter our data...
-            $commentTable->prepare_items();
-
-            $page = '';
-            if (isset($_REQUEST['page'])) {
-                $page = sanitize_text_field($_REQUEST['page']);
-            } ?>
-            <form class="search-form wp-clearfix" method="get">
-                    <input type="hidden" name="page" value="<?php
-                    echo esc_attr($page) ?>"/>
-                <?php $commentTable->search_box(esc_html__('Search Comments', 'publishpress'), 'editorial-comments'); ?>
-            </form>
+            ?>
             <div class="wrap">
-                <!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-                <form id="log-filter" method="get">
-                    <!-- For plugins, we also need to ensure that the form posts back to our current page -->
-                    <input type="hidden" name="page" value="<?php
-                    echo esc_attr($page) ?>"/>
+                <div class="pp-columns-wrapper<?php echo (!Util::isPlannersProActive()) ? ' pp-enable-sidebar' : '' ?>">
+                    <div class="pp-column-left">
+                        <?php 
+                        if (isset($_REQUEST['s']) && $search_str = esc_attr(wp_unslash(sanitize_text_field($_REQUEST['s'])))) {
+                            /* translators: %s: search keywords */
+                            printf(' <span class="description">' . esc_html__('Search results for &#8220;%s&#8221;', 'publishpress') . '</span>', esc_html($search_str));
+                        }
+                        //Fetch, prepare, sort, and filter our data...
+                        $commentTable->prepare_items();
 
-                    <!-- Now we can render the completed list table -->
-                    <?php
-                    $commentTable->display() ?>
-                </form>
+                        $page = '';
+                        if (isset($_REQUEST['page'])) {
+                            $page = sanitize_text_field($_REQUEST['page']);
+                        } 
+                        ?>
+                        <form class="search-form wp-clearfix" method="get">
+                                <input type="hidden" name="page" value="<?php
+                                echo esc_attr($page) ?>"/>
+                            <?php $commentTable->search_box(esc_html__('Search Comments', 'publishpress'), 'editorial-comments'); ?>
+                        </form>
+                        <!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
+                        <form id="log-filter" method="get">
+                            <!-- For plugins, we also need to ensure that the form posts back to our current page -->
+                            <input type="hidden" name="page" value="<?php
+                                echo esc_attr($page) ?>"/>
 
+                            <!-- Now we can render the completed list table -->
+                            <?php
+                            $commentTable->display() ?>
+                        </form>
+                    </div><!-- .pp-column-left -->
+                    <?php if (!Util::isPlannersProActive()) { ?>
+                        <div class="pp-column-right">
+                            <?php Util::pp_pro_sidebar(); ?>
+                        </div><!-- .pp-column-right -->
+                    <?php } ?>
+                </div><!-- .pp-columns-wrapper -->
             </div>
             <?php
 
