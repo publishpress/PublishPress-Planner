@@ -128,12 +128,6 @@
                 currentStep.status = STEP_STATUS_RUNNING;
                 this.updateStep(currentStep);
 
-                // Hide migration intro text pp-migration-intro-text
-                const introDiv = document.querySelector('.pp-migration-intro-text');
-                if (introDiv) {
-                    introDiv.style.display = 'none';
-                }
-
                 // Call the method to migrate and wait for the response
                 const data = {
                     'action': 'pp_migrate_ef_data',
@@ -193,13 +187,13 @@
 
             return (
                 <div>
-                    <div>
-                        <p className="pp-migration-intro-text">{objectL10n.intro_text}</p>
-                    </div>
 
                     {!started
                     &&
-                    <h4 className="pp-warning">{objectL10n.migration_warning}</h4>
+                    <>
+                        <p>{objectL10n.intro_text}</p>
+                        <h4 className="pp-warning">{objectL10n.migration_warning}</h4>
+                    </>
                     }
 
                     <div>
