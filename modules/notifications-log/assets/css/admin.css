@@ -1,43 +1,43 @@
-.planner_page_pp-notif-log .column-post {
+.admin_page_pp-notif-log .column-post {
     max-width: 180px;
 }
 
-.planner_page_pp-notif-log .column-action {
+.admin_page_pp-notif-log .column-action {
     width: 150px;
 }
 
-.planner_page_pp-notif-log .column-status .dashicons-yes-alt,
-.planner_page_pp-notif-log tr.success {
+.admin_page_pp-notif-log .column-status .dashicons-yes-alt,
+.admin_page_pp-notif-log tr.success {
     color: #789a55;
 }
 
-.planner_page_pp-notif-log .column-status .dashicons-no,
-.planner_page_pp-notif-log .column-status .error,
-.planner_page_pp-notif-log .column-status .status-error,
-.planner_page_pp-notif-log tr.error {
+.admin_page_pp-notif-log .column-status .dashicons-no,
+.admin_page_pp-notif-log .column-status .error,
+.admin_page_pp-notif-log .column-status .status-error,
+.admin_page_pp-notif-log tr.error {
     color: #d0393b;
 }
 
-.planner_page_pp-notif-log .column-status .dashicons-warning {
+.admin_page_pp-notif-log .column-status .dashicons-warning {
     color: #f1a23b;
 }
 
-.planner_page_pp-notif-log .filter-posts,
-.planner_page_pp-notif-log .filter-workflows {
+.admin_page_pp-notif-log .filter-posts,
+.admin_page_pp-notif-log .filter-workflows {
     width: 190px;
 }
 
-.planner_page_pp-notif-log .tablenav .select2-container {
+.admin_page_pp-notif-log .tablenav .select2-container {
     margin-right: 7px;
 }
 
 
-.planner_page_pp-notif-log pre {
+.admin_page_pp-notif-log pre {
     line-height: 14px;
 }
 
 .notif-log-modal .user,
-.planner_page_pp-notif-log .wp-list-table .user {
+.admin_page_pp-notif-log .wp-list-table .user {
     color: silver;
 }
 
@@ -63,12 +63,12 @@
     margin-left: 25px;
 }
 
-.planner_page_pp-notif-log .ui-dialog-titlebar {
+.admin_page_pp-notif-log .ui-dialog-titlebar {
     background: #655997;
     color: #fff;
 }
 
-.planner_page_pp-notif-log .ui-button.ui-dialog-titlebar-close {
+.admin_page_pp-notif-log .ui-button.ui-dialog-titlebar-close {
     color: #fff !important;
 }
 
@@ -80,24 +80,24 @@
     margin-right: 5px;
 }
 
-.planner_page_pp-notif-log .tablenav {
+.admin_page_pp-notif-log .tablenav {
     min-height: 70px;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers {
+.admin_page_pp-notif-log .publishpress-notifications-receivers {
     margin: 0;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers li {
+.admin_page_pp-notif-log .publishpress-notifications-receivers li {
     list-style: none;
     margin-left: 9px;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers .user-details {
+.admin_page_pp-notif-log .publishpress-notifications-receivers .user-details {
     margin-left: 5px;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title {
+.admin_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title {
     list-style: none;
     margin-left: 0;
     border-top: 1px solid silver;
@@ -106,60 +106,60 @@
     color: gray;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title:nth-child(1) {
+.admin_page_pp-notif-log .publishpress-notifications-receivers li.receiver-title:nth-child(1) {
     border-top: none;
     padding-top: 0;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup {
+.admin_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup {
     list-style: none;
     margin-left: 10px;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup span {
+.admin_page_pp-notif-log .publishpress-notifications-receivers .receiver-subgroup span {
     padding: 5px 6px;
     background: rgba(143, 133, 224, 0.25);
     border-radius: 4px;
     color: gray;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers .channel-icon {
+.admin_page_pp-notif-log .publishpress-notifications-receivers .channel-icon {
     color: rgba(101, 88, 151, 0.40);
     font-size: 18px;
     margin-right: 5px;
 }
 
-.planner_page_pp-notif-log .publishpress-notifications-receivers .view-log {
+.admin_page_pp-notif-log .publishpress-notifications-receivers .view-log {
     color: rgb(101, 88, 151);
     font-size: 18px;
     margin-right: 3px;
     cursor: pointer;
 }
 
-.planner_page_pp-notif-log .slide-closed-text {
+.admin_page_pp-notif-log .slide-closed-text {
     color: rgba(143, 133, 224, 0.65);
     font-style: italic;
 }
 
-.planner_page_pp-notif-log .slide {
+.admin_page_pp-notif-log .slide {
     display: none;
 }
 
-.planner_page_pp-notif-log .dashicons-clock {
+.admin_page_pp-notif-log .dashicons-clock {
     color: #0094ff;
 }
 
-.planner_page_pp-notif-log .muted {
+.admin_page_pp-notif-log .muted {
     color: #c0c0c0;
     font-weight: normal;
 }
 
-.planner_page_pp-notif-log .scheduled-wrapper,
-.planner_page_pp-notif-log .scheduled-wrapper * {
+.admin_page_pp-notif-log .scheduled-wrapper,
+.admin_page_pp-notif-log .scheduled-wrapper * {
     font-style: italic !important;
 }
 
-.planner_page_pp-notif-log .scheduled-wrapper i {
+.admin_page_pp-notif-log .scheduled-wrapper i {
     font-style: normal !important;
 }
 
