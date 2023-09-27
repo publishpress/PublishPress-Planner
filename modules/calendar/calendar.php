@@ -178,6 +178,7 @@ if (! class_exists('PP_Calendar')) {
                     'enabled' => 'on',
                     'post_types' => $this->pre_select_all_post_types(),
                     'ics_subscription' => 'on',
+                    'ics_subscription_public_visibility' => 'off',
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
@@ -2310,7 +2311,7 @@ if (! class_exists('PP_Calendar')) {
             $args = array_merge($defaults, $args);
 
             // Unpublished as a status is just an array of everything but 'publish'
-            if ($args['post_status'] == 'unpublish') {
+            if ($args['post_status'] == 'unpublish' || $context == 'ics_subscription') {
                 $args['post_status'] = '';
                 $post_statuses = $this->get_post_statuses();
                 foreach ($post_statuses as $post_status) {
@@ -2320,6 +2321,13 @@ if (! class_exists('PP_Calendar')) {
                 // Optional filter to include scheduled content as unpublished
                 if (apply_filters('pp_show_scheduled_as_unpublished', true)) {
                     $args['post_status'] .= ', future';
+                }
+                if ($context == 'ics_subscription') {
+                    $args['post_status'] .= ', publish';
+                }
+
+                if (isset($this->module->options->ics_subscription_public_visibility) && 'on' === $this->module->options->ics_subscription_public_visibility) {
+                    $args['suppress_filters'] = true;
                 }
             }
 
@@ -2539,8 +2547,16 @@ if (! class_exists('PP_Calendar')) {
 
             add_settings_field(
                 'ics_subscription',
-                __('Subscription in iCal or Google Calendar', 'publishpress'),
+                __('Enable subscriptions in iCal or Google Calendar', 'publishpress'),
                 [$this, 'settings_ics_subscription_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'ics_subscription_public_visibility',
+                __('Allow public access to subscriptions in iCal or Google Calendar', 'publishpress'),
+                [$this, 'settings_ics_subscription_public_visibility_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2665,6 +2681,26 @@ if (! class_exists('PP_Calendar')) {
             if (empty($this->module->options->ics_secret_key)) {
                 PublishPress()->update_module_option($this->module->name, 'ics_secret_key', wp_generate_password());
             }
+        }
+
+        /**
+         * Enable calendar subscriptions via .ics in iCal or Google Calendar
+         *
+         * @since 0.8
+         */
+        public function settings_ics_subscription_public_visibility_option()
+        {
+
+
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[ics_subscription_public_visibility]',
+                'on' === $this->module->options->ics_subscription_public_visibility ? 'checked' : ''
+            );
+
+            echo '</div>';
         }
 
         /**
@@ -2937,6 +2973,12 @@ if (! class_exists('PP_Calendar')) {
                 $options['show_calendar_posts_full_title'] = 'on';
             } else {
                 $options['show_calendar_posts_full_title'] = 'off';
+            }
+
+            if (isset($new_options['ics_subscription_public_visibility'])) {
+                $options['ics_subscription_public_visibility'] = 'on';
+            } else {
+                $options['ics_subscription_public_visibility'] = 'off';
             }
 
             // Default publish time
