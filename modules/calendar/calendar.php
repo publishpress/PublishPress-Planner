@@ -1086,7 +1086,11 @@ if (! class_exists('PP_Calendar')) {
                 $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
-                        $calendar_date = get_gmt_from_date($post->post_date);
+                        if (empty($post->post_date_gmt) || $post->post_date_gmt == '0000-00-00 00:00:00') {
+                            $calendar_date = get_gmt_from_date($post->post_date);
+                        } else {
+                            $calendar_date = $post->post_date_gmt;
+                        }
 
                         $start_date = new DateTime($calendar_date);
                         $start_date->setTimezone($timeZone);
@@ -1094,7 +1098,13 @@ if (! class_exists('PP_Calendar')) {
                         $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($calendar_date) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                         $end_date->setTimezone($timeZone);
 
-                        $last_modified = new DateTime($post->post_modified_gmt);
+                        if (empty($post->post_modified_gmt) || $post->post_modified_gmt == '0000-00-00 00:00:00') {
+                            $calendar_modified_date = get_gmt_from_date($post->post_modified);
+                        } else {
+                            $calendar_modified_date = $post->post_modified_gmt;
+                        }
+
+                        $last_modified = new DateTime($calendar_modified_date);
                         $last_modified->setTimezone($timeZone);
 
                         // Remove the convert chars and wptexturize filters from the title
