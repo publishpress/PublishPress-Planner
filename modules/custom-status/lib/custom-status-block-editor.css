@@ -12,14 +12,18 @@
 }
 
 .block-editor button.components-button.editor-post-save-draft {
+    /* Hide the main text */
     overflow: hidden;
     text-indent: -99999px;
+    font-size: 0;
 }
 
-.block-editor button.components-button.editor-post-save-draft::before {
+.block-editor button.components-button.editor-post-save-draft:before {
+    content: attr(aria-label);
+    /* Reset styles to make the text visible */
     overflow: auto;
     text-indent: 0;
-    content: attr(aria-label);
+    font-size: initial;
 }
 
 .block-editor button.components-button.editor-post-save-draft.has-icon::before {
