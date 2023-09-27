@@ -2755,7 +2755,7 @@ if (! class_exists('PP_Calendar')) {
                         )
                     );
             
-                    echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                    echo ' <a href="' . $item_edit_link . '" target="status-edit">' . __('edit') . '</a>';
 
                     echo '</div>';
                 }
