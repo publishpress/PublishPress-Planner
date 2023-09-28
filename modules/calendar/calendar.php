@@ -167,7 +167,7 @@ if (! class_exists('PP_Calendar')) {
 
             // Register the module with PublishPress
             $args = [
-                'title' => __('Calendar', 'publishpress'),
+                'title' => __('Content Calendar', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -1437,7 +1437,7 @@ if (! class_exists('PP_Calendar')) {
 
                 <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
                     <?php
-                    echo esc_html__('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    echo esc_html__('Click here to subscribe in iCal or Google Calendar', 'publishpress'); ?>
                 </a>
                 <?php
                 $description .= ob_get_clean();
