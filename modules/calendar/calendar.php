@@ -167,7 +167,7 @@ if (! class_exists('PP_Calendar')) {
 
             // Register the module with PublishPress
             $args = [
-                'title' => __('Calendar', 'publishpress'),
+                'title' => __('Content Calendar', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -178,6 +178,7 @@ if (! class_exists('PP_Calendar')) {
                     'enabled' => 'on',
                     'post_types' => $this->pre_select_all_post_types(),
                     'ics_subscription' => 'on',
+                    'ics_subscription_public_visibility' => 'off',
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
@@ -1086,7 +1087,11 @@ if (! class_exists('PP_Calendar')) {
                 $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
                 foreach ($week_posts as $date => $day_posts) {
                     foreach ($day_posts as $num => $post) {
-                        $calendar_date = get_gmt_from_date($post->post_date);
+                        if (empty($post->post_date_gmt) || $post->post_date_gmt == '0000-00-00 00:00:00') {
+                            $calendar_date = get_gmt_from_date($post->post_date);
+                        } else {
+                            $calendar_date = $post->post_date_gmt;
+                        }
 
                         $start_date = new DateTime($calendar_date);
                         $start_date->setTimezone($timeZone);
@@ -1094,7 +1099,13 @@ if (! class_exists('PP_Calendar')) {
                         $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($calendar_date) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
                         $end_date->setTimezone($timeZone);
 
-                        $last_modified = new DateTime($post->post_modified_gmt);
+                        if (empty($post->post_modified_gmt) || $post->post_modified_gmt == '0000-00-00 00:00:00') {
+                            $calendar_modified_date = get_gmt_from_date($post->post_modified);
+                        } else {
+                            $calendar_modified_date = $post->post_modified_gmt;
+                        }
+
+                        $last_modified = new DateTime($calendar_modified_date);
                         $last_modified->setTimezone($timeZone);
 
                         // Remove the convert chars and wptexturize filters from the title
@@ -1426,7 +1437,7 @@ if (! class_exists('PP_Calendar')) {
 
                 <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
                     <?php
-                    echo esc_html__('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    echo esc_html__('Click here to subscribe in iCal or Google Calendar', 'publishpress'); ?>
                 </a>
                 <?php
                 $description .= ob_get_clean();
@@ -2300,7 +2311,7 @@ if (! class_exists('PP_Calendar')) {
             $args = array_merge($defaults, $args);
 
             // Unpublished as a status is just an array of everything but 'publish'
-            if ($args['post_status'] == 'unpublish') {
+            if ($args['post_status'] == 'unpublish' || $context == 'ics_subscription') {
                 $args['post_status'] = '';
                 $post_statuses = $this->get_post_statuses();
                 foreach ($post_statuses as $post_status) {
@@ -2310,6 +2321,13 @@ if (! class_exists('PP_Calendar')) {
                 // Optional filter to include scheduled content as unpublished
                 if (apply_filters('pp_show_scheduled_as_unpublished', true)) {
                     $args['post_status'] .= ', future';
+                }
+                if ($context == 'ics_subscription') {
+                    $args['post_status'] .= ', publish';
+                }
+
+                if (isset($this->module->options->ics_subscription_public_visibility) && 'on' === $this->module->options->ics_subscription_public_visibility) {
+                    $args['suppress_filters'] = true;
                 }
             }
 
@@ -2529,8 +2547,16 @@ if (! class_exists('PP_Calendar')) {
 
             add_settings_field(
                 'ics_subscription',
-                __('Subscription in iCal or Google Calendar', 'publishpress'),
+                __('Enable subscriptions in iCal or Google Calendar', 'publishpress'),
                 [$this, 'settings_ics_subscription_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'ics_subscription_public_visibility',
+                __('Allow public access to subscriptions in iCal or Google Calendar', 'publishpress'),
+                [$this, 'settings_ics_subscription_public_visibility_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2655,6 +2681,26 @@ if (! class_exists('PP_Calendar')) {
             if (empty($this->module->options->ics_secret_key)) {
                 PublishPress()->update_module_option($this->module->name, 'ics_secret_key', wp_generate_password());
             }
+        }
+
+        /**
+         * Enable calendar subscriptions via .ics in iCal or Google Calendar
+         *
+         * @since 0.8
+         */
+        public function settings_ics_subscription_public_visibility_option()
+        {
+
+
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[ics_subscription_public_visibility]',
+                'on' === $this->module->options->ics_subscription_public_visibility ? 'checked' : ''
+            );
+
+            echo '</div>';
         }
 
         /**
@@ -2927,6 +2973,12 @@ if (! class_exists('PP_Calendar')) {
                 $options['show_calendar_posts_full_title'] = 'on';
             } else {
                 $options['show_calendar_posts_full_title'] = 'off';
+            }
+
+            if (isset($new_options['ics_subscription_public_visibility'])) {
+                $options['ics_subscription_public_visibility'] = 'on';
+            } else {
+                $options['ics_subscription_public_visibility'] = 'off';
             }
 
             // Default publish time

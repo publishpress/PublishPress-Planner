@@ -215,7 +215,7 @@ if (! class_exists('PP_Settings')) {
             }
             ?>
 
-			<div class="publishpress-admin pressshack-admin-wrapper wrap">
+			<div class="publishpress-admin pressshack-admin-wrapper wrap <?php echo esc_attr($current_module->slug); ?>">
 				<header>
 					<h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
