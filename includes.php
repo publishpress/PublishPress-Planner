@@ -34,7 +34,7 @@ use PublishPress\Legacy\Auto_loader;
 if (! defined('PP_LOADED')) {
     if (! defined('PUBLISHPRESS_VERSION')) {
         // Define constants
-        define('PUBLISHPRESS_VERSION', '3.12.1');
+        define('PUBLISHPRESS_VERSION', '3.12.2');
         define('PUBLISHPRESS_BASE_PATH', __DIR__);
         define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
         define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
@@ -132,7 +132,7 @@ if (! defined('PP_LOADED')) {
                             ['base' => 'planner_page_pp-editorial-metadata'],
                             ['base' => 'planner_page_pp-editorial-comments'],
                             ['base' => 'planner_page_publishpress_debug_log'],
-                            ['base' => 'planner_page_pp-notif-log'],
+                            ['base' => 'admin_page_pp-notif-log'],
                             ['base' => 'edit', 'id' => 'edit-psppnotif_workflow'],
                             ['base' => 'post', 'id' => 'psppnotif_workflow'],
                             ['base' => 'planner_page_pp-content-overview'],

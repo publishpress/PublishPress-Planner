@@ -209,6 +209,7 @@ if (! class_exists('PP_Notifications_Log')) {
                             'dialogTitle' => __('Notification', 'publishpress'),
                             'loading' => __('Loading...', 'publishpress'),
                         ],
+                        'page_url' => admin_url('admin.php?page=pp-notif-log'),
                     ]
                 );
 
@@ -247,7 +248,7 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             global $current_screen;
 
-            return $current_screen->base === 'planner_page_pp-notif-log';
+            return $current_screen->base === 'admin_page_pp-notif-log';
         }
 
         /**
@@ -481,7 +482,7 @@ if (! class_exists('PP_Notifications_Log')) {
 
             // Main Menu
             $hook = add_submenu_page(
-                $publishpress->get_menu_slug(),
+                '',
                 esc_html__('Notifications Log', 'publishpress'),
                 esc_html__('Notifications Log', 'publishpress'),
                 $this->getReadWorkflowsCapability(),

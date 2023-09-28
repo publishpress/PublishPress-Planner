@@ -2,6 +2,7 @@ import {callAjaxAction} from "./Functions";
 import DateTimeField from "./fields/DateTimeField";
 import AuthorsField from "./fields/AuthorsField";
 import PostTypeField from "./fields/PostTypeField";
+import SelectField from "./fields/SelectField";
 import PostStatusField from "./fields/PostStatusField";
 import TaxonomyField from "./fields/TaxonomyField";
 import CheckboxField from "./fields/CheckboxField";
@@ -74,6 +75,10 @@ export default function ItemPopup(props) {
 
                 case 'authors':
                     field = <AuthorsField value={dataProperty.value} isEditing={false}/>;
+                    break;
+
+                case 'select':
+                    field = <SelectField value={dataProperty.value} isEditing={false}/>;
                     break;
 
                 case 'type':

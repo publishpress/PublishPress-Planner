@@ -167,4 +167,88 @@ class Util
 
         return 'GET';
     }
+
+    /**
+     * Check if Planner's pro is active
+     */
+    public static function isPlannersProActive()
+    {
+        if (class_exists('PublishPressPro\\PluginInitializer')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Load pro sidebar
+     *
+     * @param boolean $echo
+     * 
+     * @return mixed
+     */
+    public static function pp_pro_sidebar($echo = true)
+    {
+        ob_start();
+        ?>
+        <div class="pp-advertisement-right-sidebar">
+            <div class="advertisement-box-content postbox pp-advert">
+                <div class="postbox-header pp-advert">
+                    <h3 class="advertisement-box-header hndle is-non-sortable">
+                        <span><?php echo esc_html__('Upgrade to PublishPress Planner Pro', 'publishpress'); ?></span>
+                    </h3>
+                </div>
+
+                <div class="inside pp-advert">
+                    <p><?php echo esc_html__('Enhance the power of PublishPress Planner with the Pro version:', 'publishpress'); ?>
+                    </p>
+                    <ul>
+                        <li><?php echo esc_html__('Slack integration for notifications', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Send reminder notifications', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Use post meta in notifications', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Remove PublishPress ads and branding', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Fast, professional support', 'publishpress'); ?></li>
+                    </ul>
+                    <div class="upgrade-btn">
+                        <a href="https://publishpress.com/links/publishpress-banner" target="__blank"><?php echo esc_html__('Upgrade to Pro', 'publishpress'); ?></a>
+                    </div>
+                </div>
+            </div>
+            <div class="advertisement-box-content postbox pp-advert">
+                <div class="postbox-header pp-advert">
+                    <h3 class="advertisement-box-header hndle is-non-sortable">
+                        <span><?php echo esc_html__('Need PublishPress Planner Support?', 'publishpress'); ?></span>
+                    </h3>
+                </div>
+
+                <div class="inside pp-advert">
+                    <p><?php echo esc_html__('If you need help or have a new feature request, let us know.', 'publishpress'); ?>
+                        <a class="advert-link" href="https://wordpress.org/support/plugin/publishpress/" target="_blank">
+                        <?php echo esc_html__('Request Support', 'publishpress'); ?> 
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="linkIcon">
+                                <path
+                                    d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"
+                                ></path>
+                            </svg>
+                        </a>
+                    </p>
+                    <p>
+                    <?php echo esc_html__('Detailed documentation is also available on the plugin website.', 'publishpress'); ?> 
+                        <a class="advert-link" href="https://publishpress.com/knowledge-base/start-planner/" target="_blank">
+                        <?php echo esc_html__('View Knowledge Base', 'publishpress'); ?> 
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="linkIcon">
+                                <path
+                                    d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"
+                                ></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <?php
+        if (!$echo) {
+            return ob_get_clean();
+        }
+    }
 }

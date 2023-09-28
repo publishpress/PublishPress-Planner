@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.3
-Stable tag: 3.12.1
+Stable tag: 3.12.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,23 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.12.2] - 28 Sept 2023 =
+
+* Update: Show only users who have written a comment in Editorial Comment User filtter, #1220
+* Fixed: "Save as" button contains duplicated text in Safari, #1389
+* Fixed: Migration from Edit-Flow not importing Editorial Metadata fields, #1459
+* Update: Remove the Dashboard Widgets, #1449
+* Update: Add a promo sidebar in the Free version, #1203
+* Fixed: Critial Error on the plugin settings page when some features are disabled, #1469
+* Update: Move the Notifications Log to a button, #1407
+* Fixed: Post without post_date_gmt or post_modified_date_gmt not showing in google calendar export, #1461
+* Fixed: Metadata not showing on the Calendar when viewable is enabled, #1216
+* Fixed: Content Overview dates filter reset not working, #1378
+* Update: Adjust Content Overview Filter and Reset buttons, #1406
+* Update: Replace the penguins with normal page headers, #1402
+* Update: PLANNER PRO: ES-FR-IT_Transaltions Updates September 2023, #1457
+* Update: PLANNER FREE- Translation Updates September 10, 2023, #1458
 
 = [3.12.1] - 06 Sept 2023 =
 
