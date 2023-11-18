@@ -1717,9 +1717,10 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Color
-            $color = PP_Custom_Status::DEFAULT_COLOR;
             if (! empty($term->color)) {
                 $color = $term->color;
+            } else {
+                $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
             }
 
             return [
@@ -2787,24 +2788,22 @@ if (! class_exists('PP_Calendar')) {
                     . '</span>'
                     . '</label>';
 
-                    $_args = [
-                        'action' => 'edit-status',
-                        'return_module' => 'pp-calendar-settings',
-                    ];
-
                     if (class_exists('PublishPress_Statuses')) {
-                        $_args['name'] = $arr_status['status_obj']->name;
-                    } else {
-                        $_args['term-id'] = $arr_status['status_obj']->term_id;
-                    }
+                        $_args = [
+                            'action' => 'edit-status',
+                            'return_module' => 'pp-calendar-settings',
+                        ];
 
-                    $item_edit_link = esc_url(
-                        PP_Custom_Status::get_link(
-                            $_args
-                        )
-                    );
-            
-                    echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                        $_args['name'] = $arr_status['status_obj']->name;
+
+                        $item_edit_link = esc_url(
+                            PublishPress_Statuses::get_link(
+                                $_args
+                            )
+                        );
+                
+                        echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                    }
 
                     echo '</div>';
                 }
