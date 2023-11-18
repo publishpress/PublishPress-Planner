@@ -323,9 +323,12 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             if (isset($params['log_id'])) {
                 $comment = get_comment($params['log_id']);
-                $log = new NotificationsLogModel($comment);
+                
+                if ($comment instanceof WP_Comment) {
+                    $log = new NotificationsLogModel($comment);
 
-                $log->archive();
+                    $log->archive();
+                }
             }
         }
 
