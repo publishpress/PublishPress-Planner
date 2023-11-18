@@ -129,7 +129,7 @@ Status color box */
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -o-border-radius: 3px;
-    padding: 3px;
+    padding: 2px 5px 2px 5px;
 }
 
 .pp-status-color + strong {

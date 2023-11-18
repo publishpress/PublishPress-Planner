@@ -5,13 +5,13 @@
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.12.2
+ * Version: 4.0.0-rc
  * Text Domain: publishpress
  * Domain Path: /languages
  * Requires at least: 5.5
  * Requires PHP: 7.2.5
  *
- * Copyright (c) 2022 PublishPress
+ * Copyright (c) 2023 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -38,7 +38,7 @@
  * @package     PublishPress
  * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2022 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2023 PublishPress. All rights reserved.
  */
 
 use PPVersionNotices\Module\MenuLink\Module;
@@ -107,6 +107,8 @@ add_action('plugins_loaded', function () {
              * @var stdClass
              */
             public $modules;
+
+            public $custom_status; // back compat
 
             /**
              * @var array
@@ -313,6 +315,13 @@ add_action('plugins_loaded', function () {
                 }
 
                 $this->class_names = $class_names;
+
+                // back compat for any existing $publishpress->custom_status->get_custom_status_by() calls
+                if (class_exists('PublishPress_Statuses')) {
+                    $this->custom_status = \PublishPress_Statuses::instance();
+                } else {
+                    $this->custom_status = new \PP_Module();
+                }
 
                 // Supplementary plugins can hook into this, include their own modules
                 // and add them to the $publishpress object
@@ -1201,6 +1210,84 @@ add_action('plugins_loaded', function () {
 
                 return $capabilities;
             }
+
+            /**
+             * Returns the a single status object based on ID, title, or slug
+             *
+             * @param string|int $string_or_int The status to search for, either by slug, name or ID
+             *
+             * @return object|WP_Error|false $status The object for the matching status
+             */
+            public function getPostStatusBy($field, $value) {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::getStatusBy($field, $value);
+                } 
+
+                if (! in_array($field, ['id', 'slug', 'name', 'label'])) {
+                    return false;
+                }
+        
+                if (in_array($field, ['id', 'slug'])) {
+                    $field = 'name';
+                }
+    
+                // New and auto-draft do not exists as status. So we map them to draft for now.
+                if ('name' === $field && in_array($value, ['new', 'auto-draft'])) {
+                    $value = 'draft';
+                }
+
+                $status = wp_filter_object_list($this->getCorePostStatuses(), [$field => $value]);
+    
+                if (!empty($status)) {
+                    return array_shift($status);
+                }
+    
+                return false;
+            }
+
+            public function getPostStatuses()
+            {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::instance()->getPostStatuses([], 'object');   // note: static method is getPostStati()
+                } else {
+                    return $this->getCorePostStatuses();
+                }
+            }
+
+            public function getCustomStatuses() {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::getCustomStatuses([], 'object');
+                } else {
+                    return [];
+                }
+            }
+
+            public function getCorePostStatuses() {
+                return [
+                    (object)[
+                        'label'        => __('Draft'),
+                        'description' => '',
+                        'name'        => 'draft',
+                        'slug'        => 'draft',  // include slug property as a back compat fallback
+                        'position'    => 1,
+                    ],
+                    (object)[
+                        'label'        => __('Pending Review'),
+                        'description' => '',
+                        'name'        => 'pending',
+                        'slug'        => 'pending',
+                        'position'    => 2,
+                    ],
+                    (object)[
+                        'label'        => __('Published'),
+                        'description' => '',
+                        'name'        => 'publish',
+                        'slug'        => 'publish',
+                        'position'    => 3,
+                    ],
+                ];
+            }
+
         }
     }
 

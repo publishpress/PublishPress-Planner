@@ -1696,7 +1696,7 @@ if (! class_exists('PP_Calendar')) {
             global $publishpress;
 
             // Check if we have a custom icon for this post_status
-            $term = $publishpress->custom_status->get_custom_status_by('slug', $post_status);
+            $term = $publishpress->getPostStatusBy('slug', $post_status);
 
             // Icon
             $icon = null;
@@ -2714,7 +2714,7 @@ if (! class_exists('PP_Calendar')) {
 
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $customStatuses = (!empty($publishpress->custom_status)) ? $publishpress->custom_status->getPostStatuses([], 'object') : false;
+            $customStatuses = $publishpress->getCustomStatuses();
 
             if (empty($customStatuses)) {
                 $statuses = [
@@ -2804,7 +2804,7 @@ if (! class_exists('PP_Calendar')) {
                         )
                     );
             
-                    echo ' <a href="' . $item_edit_link . '" target="status-edit">' . __('edit') . '</a>';
+                    echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
 
                     echo '</div>';
                 }
