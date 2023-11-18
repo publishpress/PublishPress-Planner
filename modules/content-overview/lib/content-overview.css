@@ -71,23 +71,19 @@ header h2 a.change-date-cancel {
     height: 6px;
 }
 
-.planner_page_pp-content-overview input[type="submit"] {
-    margin: 0 8px 0 0;
+.publishpress-admin.content-overview #pp-content-filters .co-submit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 25px;
+    margin-top: 10px;
 }
 
-.planner_page_pp-content-overview #pp-content-filters input {
-    margin-top: 5px;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+.publishpress-admin.content-overview #post-query-clear,
+.publishpress-admin.content-overview input[type="submit"] {
+    margin-left: 10px !important;
 }
 
-.planner_page_pp-content-overview #post-query-clear {
-    margin-bottom: 0;
-    margin-left: 4px;
-    float: right;
-}
-
-.planner_page_pp-content-overview .publishpress-admin header h2 {
+.publishpress-admin.content-overview .publishpress-admin header h2 {
     display: inline-block;
     float: right;
     margin-bottom: 0;
@@ -97,25 +93,21 @@ header h2 a.change-date-cancel {
 
 #pp-content-overview-tablenav, 
 #pp-content-overview-tablenav input[type="text"], 
-.planner_page_pp-content-overview .publishpress-admin header h2 input[type="text"],
-.planner_page_pp-content-overview .publishpress-admin header h2 input[type="search"],
+.publishpress-admin.content-overview .publishpress-admin header h2 input[type="text"],
+.publishpress-admin.content-overview .publishpress-admin header h2 input[type="search"],
 #pp-content-overview-tablenav .select2-container--default .select2-selection--single .select2-selection__rendered,
 #pp-content-overview-tablenav ::-webkit-input-placeholder, 
-.planner_page_pp-content-overview .publishpress-admin header h2 ::-webkit-input-placeholder,
+.publishpress-admin.content-overview .publishpress-admin header h2 ::-webkit-input-placeholder,
 .pp-co-metadata-filter-row .form-table {
     color: #999999;
 }
 
-.planner_page_pp-content-overview .publishpress-admin .pp-content-overview-wrap {
+.publishpress-admin.content-overview .publishpress-admin .pp-content-overview-wrap {
     margin-top: 0;
 }
 
-.planner_page_pp-content-overview #pp-content-filters input#filter-submit {
-    margin: 5px 8px 0 0;
-}
-
-.planner_page_pp-content-overview #pp-content-filters input#post-query-clear,
-.planner_page_pp-content-overview #pp-content-filters input#filter-submit,
+.publishpress-admin.content-overview #pp-content-filters input#post-query-clear,
+.publishpress-admin.content-overview #pp-content-filters input#filter-submit,
 #pp-content-overview-range-submit,
 #co-searchbox-search-submit {
     display: inline-block;
@@ -134,12 +126,13 @@ header h2 a.change-date-cancel {
 }
 
 .pp-co-metadata-filter-row .form-table th {
-    width: 155px;
+    width: auto;
     padding-right: 0;
     padding-top: 0;
     padding-bottom: 0;
     color: #999999;
     vertical-align: middle;
+    min-width: 155px;
 }
 
 .pp-co-metadata-filter-row .form-table td {
@@ -171,11 +164,11 @@ header h2 a.change-date-cancel {
         min-width: 100%;
     }
 
-    .planner_page_pp-content-overview .publishpress-admin header h2 {
+    .publishpress-admin.content-overview .publishpress-admin header h2 {
         display: block;
     }
 
-    .planner_page_pp-content-overview .publishpress-admin header h2 .co-top-searchbox {
+    .publishpress-admin.content-overview .publishpress-admin header h2 .co-top-searchbox {
         margin-top: 10px;
     }
 

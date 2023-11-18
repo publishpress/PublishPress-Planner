@@ -87,6 +87,12 @@
                         label: objectL10n.usermeta,
                         status: STEP_STATUS_IDLE,
                         error: null
+                    },
+                    {
+                        key: 'metadata',
+                        label: objectL10n.metadata,
+                        status: STEP_STATUS_IDLE,
+                        error: null
                     }
                 ],
                 currentStepIndex: -1,
@@ -181,13 +187,13 @@
 
             return (
                 <div>
-                    <div>
-                        <p>{objectL10n.intro_text}</p>
-                    </div>
 
                     {!started
                     &&
-                    <h4 className="pp-warning">{objectL10n.migration_warning}</h4>
+                    <>
+                        <p>{objectL10n.intro_text}</p>
+                        <h4 className="pp-warning">{objectL10n.migration_warning}</h4>
+                    </>
                     }
 
                     <div>

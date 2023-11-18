@@ -40,6 +40,7 @@ use PublishPress\Notifications\Workflow\Step\Event\Post_Update;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Filter\Post_Type as Post_Type_Filter;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type;
 use PublishPress\Notifications\Workflow\Step\Receiver\Site_Admin as Receiver_Site_Admin;
+use PublishPress\NotificationsLog\NotificationsLogHandler;
 
 if (! class_exists('PP_Improved_Notifications')) {
     /**
@@ -144,7 +145,6 @@ if (! class_exists('PP_Improved_Notifications')) {
 
                 // Inject the PublishPress footer
                 add_filter('admin_footer_text', [$this, 'update_footer_admin']);
-                add_action('admin_head', [$this, 'show_icon_on_title']);
             }
 
             add_action('save_post', [$this, 'save_meta_boxes'], 10, 2);
@@ -707,6 +707,42 @@ if (! class_exists('PP_Improved_Notifications')) {
                         ]
                     );
                 }
+            }
+
+            if (in_array($hook_suffix, ['edit.php'])) {
+                if (PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === get_post_type()) {
+            
+                    wp_enqueue_script(
+                        'improved-notifications-js',
+                        plugin_dir_url(__FILE__) . 'assets/js/improved-notifications.js',
+                        [
+                            'jquery'
+                        ],
+                        PUBLISHPRESS_VERSION,
+                        true
+                    );
+
+                    if ($this->module_enabled('notifications_log')) {
+                        $logHandler = new NotificationsLogHandler();
+                        $log_url    = admin_url('admin.php?page=pp-notif-log');
+                        $log_total  = number_format_i18n($logHandler->getNotificationLogEntries(null, null, null, true));
+                    } else {
+                        $log_url    = '';
+                        $log_total  = '';
+                        
+                    }
+            
+                    wp_localize_script(
+                        'improved-notifications-js',
+                        'ppNotif',
+                        [
+                            'log_total' => $log_total,
+                            'log_url'   => $log_url,
+                            'log_text'  => esc_html__('Notifications Log', 'publishpress'),
+                        ]
+                    );
+                }
+            
             }
         }
 
@@ -1353,30 +1389,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             }
 
             return $channel;
-        }
-
-        public function show_icon_on_title()
-        {
-            global $pagenow;
-
-            if ('edit.php' !== $pagenow || ! (isset($_GET['post_type']) && PUBLISHPRESS_NOTIF_POST_TYPE_WORKFLOW === sanitize_key(
-                        $_GET['post_type']
-                    ))) {
-                return;
-            }
-            ?>
-            <img
-                    src="<?php
-                    echo esc_url(PUBLISHPRESS_URL . '/common/img/publishpress-logo-icon.png') ?>"
-                    alt="" class="logo-header"/>
-
-            <script>
-                // Move the logo to the correct place since we don't have other hook to add it inside the .wrap element.
-                jQuery(function ($) {
-                    $('.wp-heading-inline').before($('.logo-header'));
-                });
-            </script>
-            <?php
         }
     }
 }
