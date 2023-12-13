@@ -63,7 +63,7 @@ class Module
     public function init()
     {
         add_action('admin_head', [$this, 'adminHeadAddStyle']);
-        add_action('init', [$this, 'collectTheSettings'], 5);
+        add_action('init', [$this, 'collectTheSettings'], 50);
         add_action('admin_menu', [$this, 'addMenuLink'], 20);
         add_action('admin_print_scripts', [$this, 'setUpgradeMenuLink'], 9999);
     }
