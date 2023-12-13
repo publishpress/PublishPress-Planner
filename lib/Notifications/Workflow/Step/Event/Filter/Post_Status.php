@@ -70,7 +70,7 @@ class Post_Status extends Base implements Filter_Interface
         foreach ($statuses as $status) {
             $options[] = [
                 'value'    => esc_attr($status->slug),
-                'label'    => esc_html($status->name),
+                'label'    => esc_html($status->label),
                 'selected' => in_array($status->slug, $metadata[$group]),
             ];
         }

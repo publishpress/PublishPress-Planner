@@ -186,6 +186,7 @@ if (! class_exists('PP_Calendar')) {
                 ],
                 'messages' => [
                     'post-date-updated' => __('Post date updated.', 'publishpress'),
+                    'status-updated' => __('Post status updated.', 'publishpress'),
                     'update-error' => __(
                         'There was an error updating the post. Please try again.',
                         'publishpress'
@@ -544,7 +545,7 @@ if (! class_exists('PP_Calendar')) {
                 }
                 $postStatuses[] = [
                     'value' => esc_attr($status->slug),
-                    'text' => esc_html($status->name),
+                    'text' => esc_html($status->label),
                 ];
             }
 
@@ -1695,7 +1696,7 @@ if (! class_exists('PP_Calendar')) {
             global $publishpress;
 
             // Check if we have a custom icon for this post_status
-            $term = $publishpress->custom_status->get_custom_status_by('slug', $post_status);
+            $term = $publishpress->getPostStatusBy('slug', $post_status);
 
             // Icon
             $icon = null;
@@ -1716,9 +1717,10 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Color
-            $color = PP_Custom_Status::DEFAULT_COLOR;
             if (! empty($term->color)) {
                 $color = $term->color;
+            } else {
+                $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
             }
 
             return [
@@ -2330,7 +2332,6 @@ if (! class_exists('PP_Calendar')) {
                     $args['suppress_filters'] = true;
                 }
             }
-
             // The WP functions for printing the category and author assign a value of 0 to the default
             // options, but passing this to the query is bad (trashed and auto-draft posts appear!), so
             // unset those arguments.
@@ -2710,9 +2711,11 @@ if (! class_exists('PP_Calendar')) {
          */
         public function settings_show_posts_publish_time_option()
         {
+            global $publishpress;
+
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $customStatuses = PP_Custom_Status::getCustomStatuses();
+            $customStatuses = $publishpress->getCustomStatuses();
 
             if (empty($customStatuses)) {
                 $statuses = [
@@ -2723,7 +2726,7 @@ if (! class_exists('PP_Calendar')) {
                 $statuses = [];
 
                 foreach ($customStatuses as $status) {
-                    $statuses[$status->slug] = $status->name;
+                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status];
                 }
             }
 
@@ -2735,21 +2738,77 @@ if (! class_exists('PP_Calendar')) {
                 ];
             }
 
-            foreach ($statuses as $status => $title) {
-                $id = esc_attr($status) . '-display-publish-time';
+            if (empty($customStatuses)) {
+                foreach ($statuses as $status) {
+                    $id = esc_attr($status) . '-display-publish-time';
+    
+                    echo '<div><label for="' . $id . '">';
+                    echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
+    
+                    if (isset($this->module->options->show_posts_publish_time[$status])) {
+                        checked($this->module->options->show_posts_publish_time[$status], 'on');
+                    }
+    
+                    // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                    disabled(post_type_supports($status, $this->module->post_type_support), true);
+    
+                    echo ' type="checkbox" value="on" />&nbsp;'
+                    . esc_html($status)
+                    . '</span>'
+                    . '</label>';
+    
+                    echo '</div>';
+                }
+            } else {
+                echo '<style>div.pp-calendar-settings div {padding: 4px 0 8px 0;} div.pp-calendar-settings a {vertical-align: bottom}</style>';
 
-                echo '<label for="' . $id . '">';
-                echo '<input id="' . $id . '" name="'
-                    . $field_name . '[' . esc_attr($status) . ']"';
+                echo '<div class="pp-calendar-settings">';
 
-                if (isset($this->module->options->show_posts_publish_time[$status])) {
-                    checked($this->module->options->show_posts_publish_time[$status], 'on');
+                foreach ($statuses as $status => $arr_status) {
+                    $id = esc_attr($status) . '-display-publish-time';
+
+                    echo '<div><label for="' . $id . '">';
+                    echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
+
+                    if (isset($this->module->options->show_posts_publish_time[$status])) {
+                        checked($this->module->options->show_posts_publish_time[$status], 'on');
+                    }
+
+                    // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                    disabled(post_type_supports($status, $this->module->post_type_support), true);
+                    
+                    echo ' type="checkbox" value="on" />&nbsp;';
+                    
+                    echo '<span class="dashicons ' . esc_html($arr_status['status_obj']->icon) . '"></span>&nbsp;';
+                    
+                    $style = 'background:' . $arr_status['status_obj']->color . '; color:white';
+
+                    echo '<span class="pp-status-color pp-status-color-title" style="' . esc_attr($style) . '">'
+                    . esc_html($arr_status['title'])
+                    . '</span>'
+                    . '</label>';
+
+                    if (class_exists('PublishPress_Statuses')) {
+                        $_args = [
+                            'action' => 'edit-status',
+                            'return_module' => 'pp-calendar-settings',
+                        ];
+
+                        $_args['name'] = $arr_status['status_obj']->name;
+
+                        $item_edit_link = esc_url(
+                            PublishPress_Statuses::get_link(
+                                $_args
+                            )
+                        );
+                
+                        echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                    }
+
+                    echo '</div>';
                 }
 
-                // Defining post_type_supports in the functions.php file or similar should disable the checkbox
-                disabled(post_type_supports($status, $this->module->post_type_support), true);
-                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
-                echo '<br />';
+                echo '</div>';
             }
         }
 
@@ -3416,7 +3475,7 @@ if (! class_exists('PP_Calendar')) {
 
             foreach ($postStatuses as $postStatus) {
                 if ($postStatus->slug === $postStatusSlug) {
-                    return $postStatus->name;
+                    return $postStatus->label;
                 }
             }
 
@@ -3981,7 +4040,7 @@ if (! class_exists('PP_Calendar')) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                     $post_status->slug,
                                     $filters['post_status']
-                                ) . '>' . esc_html($post_status->name) . '</option>';
+                                ) . '>' . esc_html($post_status->label) . '</option>';
                         }
                         ?>
                     </select>

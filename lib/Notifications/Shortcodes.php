@@ -428,7 +428,7 @@ class Shortcodes
 
             case 'old_status':
             case 'new_status':
-                $status = $publishpress->custom_status->get_custom_status_by(
+                $status = $publishpress->getPostStatusBy(
                     'slug',
                     $this->event_args['params'][$field]
                 );
@@ -437,7 +437,7 @@ class Shortcodes
                     break;
                 }
 
-                $result = $status->name;
+                $result = $status->label;
                 break;
 
             case 'content':

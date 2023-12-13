@@ -124,13 +124,12 @@ div.pp-icon img {
 Status color box */
 
 .pp-status-color {
-    width: 10px;
-    height: 10px;
     display: inline-block;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -o-border-radius: 3px;
+    padding: 2px 5px 2px 5px;
 }
 
 .pp-status-color + strong {
