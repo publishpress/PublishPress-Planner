@@ -448,6 +448,12 @@ if (! class_exists('PP_Settings')) {
             $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
 
             $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
+
+            // Custom Statuses are no longer defined by a Planner module
+            if ('pp-custom-status-settings' == $module_settings_slug) {
+                $module_settings_slug = $default_module;
+            }
+
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
 
