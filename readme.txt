@@ -113,9 +113,10 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [4.0.0] - 13 Dec 2023 =
+= [4.0.0] - 14 Dec 2023 =
 
 * Compat: PublishPress Statuses plugin integration
+* Update: Add first name and last name to Notification shortcode, #1500
 
 = [3.12.2] - 28 Sept 2023 =
 
