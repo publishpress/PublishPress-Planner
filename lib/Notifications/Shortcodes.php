@@ -117,6 +117,8 @@ class Shortcodes
      *   - login
      *   - url
      *   - display_name
+     *   - first_name
+     *   - last_name
      *   - email
      *   - separator
      *
@@ -183,6 +185,14 @@ class Shortcodes
             case 'name':
             case 'display_name':
                 $result = $user->display_name;
+                break;
+
+            case 'first_name':
+                $result = $user->first_name;
+                break;
+
+            case 'last_name':
+                $result = $user->last_name;
                 break;
 
             case 'email':
