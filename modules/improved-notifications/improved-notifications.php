@@ -903,6 +903,8 @@ if (! class_exists('PP_Improved_Notifications')) {
                     'login',
                     'url',
                     'display_name',
+                    'first_name',
+                    'last_name',
                     'email',
                 ]
             );
