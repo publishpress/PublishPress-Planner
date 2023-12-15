@@ -1221,27 +1221,27 @@ add_action('plugins_loaded', function () {
             public function getPostStatusBy($field, $value) {
                 if (class_exists('PublishPress_Statuses')) {
                     return \PublishPress_Statuses::getStatusBy($field, $value);
-                } 
+                }
 
                 if (! in_array($field, ['id', 'slug', 'name', 'label'])) {
                     return false;
                 }
-        
+
                 if (in_array($field, ['id', 'slug'])) {
                     $field = 'name';
                 }
-    
+
                 // New and auto-draft do not exists as status. So we map them to draft for now.
                 if ('name' === $field && in_array($value, ['new', 'auto-draft'])) {
                     $value = 'draft';
                 }
 
                 $status = wp_filter_object_list($this->getCorePostStatuses(), [$field => $value]);
-    
+
                 if (!empty($status)) {
                     return array_shift($status);
                 }
-    
+
                 return false;
             }
 

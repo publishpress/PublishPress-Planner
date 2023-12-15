@@ -727,7 +727,7 @@ if (! class_exists('PP_Calendar')) {
                             $calendar_request_filter['post_type'] = $postType;
                         }
                     }
-                    
+
                     if (isset($userFilters['weeks'])) {
                         $weeks = sanitize_key($userFilters['weeks']);
 
@@ -2262,7 +2262,7 @@ if (! class_exists('PP_Calendar')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-            
+
             $post_results = new WP_Query($args);
 
             $posts = [];
@@ -2743,22 +2743,22 @@ if (! class_exists('PP_Calendar')) {
             if (empty($customStatuses)) {
                 foreach ($statuses as $status) {
                     $id = esc_attr($status) . '-display-publish-time';
-    
+
                     echo '<div><label for="' . $id . '">';
                     echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
-    
+
                     if (isset($this->module->options->show_posts_publish_time[$status])) {
                         checked($this->module->options->show_posts_publish_time[$status], 'on');
                     }
-    
+
                     // Defining post_type_supports in the functions.php file or similar should disable the checkbox
                     disabled(post_type_supports($status, $this->module->post_type_support), true);
-    
+
                     echo ' type="checkbox" value="on" />&nbsp;'
                     . esc_html($status)
                     . '</span>'
                     . '</label>';
-    
+
                     echo '</div>';
                 }
             } else {
@@ -2778,11 +2778,11 @@ if (! class_exists('PP_Calendar')) {
 
                     // Defining post_type_supports in the functions.php file or similar should disable the checkbox
                     disabled(post_type_supports($status, $this->module->post_type_support), true);
-                    
+
                     echo ' type="checkbox" value="on" />&nbsp;';
-                    
+
                     echo '<span class="dashicons ' . esc_html($arr_status['status_obj']->icon) . '"></span>&nbsp;';
-                    
+
                     $style = 'background:' . $arr_status['status_obj']->color . '; color:white';
 
                     echo '<span class="pp-status-color pp-status-color-title" style="' . esc_attr($style) . '">'
@@ -2803,7 +2803,7 @@ if (! class_exists('PP_Calendar')) {
                                 $_args
                             )
                         );
-                
+
                         echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
                     }
 
@@ -3159,8 +3159,8 @@ if (! class_exists('PP_Calendar')) {
                  * @param array $args
                  */
                 $results = apply_filters(
-                    'publishpress_search_authors_with_args_results_pre_search', 
-                    [], 
+                    'publishpress_search_authors_with_args_results_pre_search',
+                    [],
                     ['search' => $queryText, 'role__in' => $user_roles]
                 );
             }
@@ -3417,7 +3417,7 @@ if (! class_exists('PP_Calendar')) {
          * Update the current user's filters for calendar display with the filters in $_GET($request_filter). The filters
          * in $_GET($request_filter) take precedence over the current users filters if they exist.
          * @param array $request_filter
-         * 
+         *
          * @return array $filters updated filter
          */
         public function update_user_filters($request_filter)
@@ -3616,7 +3616,7 @@ if (! class_exists('PP_Calendar')) {
         public function getPostTypeFields()
         {
             global $publishpress;
-            
+
             if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
