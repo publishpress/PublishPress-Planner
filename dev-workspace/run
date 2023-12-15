@@ -9,8 +9,6 @@
 [[ -f cache/.bash_history ]] || touch cache/.bash_history
 [[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
 
-export DOCKER_HOST_IP=$(php ./scripts/getip)
-
 is_online() {
     echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
 
