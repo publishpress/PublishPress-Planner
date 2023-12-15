@@ -159,7 +159,7 @@ export default function ItemPopup(props) {
                 );
             } else if (linkData.action) {
                 links.push(
-                    <a key={`links-popup-${links.length}`} href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
+                    <a key={`links-popup-${links.length}`} onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
                 );
             }
 
