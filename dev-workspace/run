@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Make sure we are inside dev-workspace subdirectory. If not, enter it.
+if [[ ! "$PWD" =~ dev-workspace$ ]]; then
+    cd dev-workspace
+fi
+
 # Create empty cache files if not exists.
 [[ -d cache/.npm/_cacache ]] || mkdir -p cache/.npm/_cacache
 [[ -d cache/.npm/_logs ]] || mkdir -p cache/.npm/_logs
