@@ -652,6 +652,7 @@ if (! class_exists('PP_Calendar')) {
                         true
                     );
 
+                    // TODO: Replace react and react-dom with the wp.element dependency
                     wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
@@ -665,6 +666,7 @@ if (! class_exists('PP_Calendar')) {
                             'jquery-ui-droppable',
                             'jquery-inputmask',
                             'wp-i18n',
+                            'wp-element',
                             'date_i18n',
                         ],
                         PUBLISHPRESS_VERSION,

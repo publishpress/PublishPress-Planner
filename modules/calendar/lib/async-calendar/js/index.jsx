@@ -1,8 +1,12 @@
 import AsyncCalendar from "./AsyncCalendar";
-import {getDateWithNoTimezoneOffset, getDateInstanceFromString} from "./Functions";
+import { getDateWithNoTimezoneOffset, getDateInstanceFromString } from "./Functions";
+import { createRoot } from "@wp.element";
 
 jQuery(() => {
-    ReactDOM.render(
+    const container = document.getElementById('publishpress-calendar-wrap');
+    const root = createRoot(container);
+
+    root.render(
         <AsyncCalendar
             firstDateToDisplay={getDateWithNoTimezoneOffset(publishpressCalendarParams.firstDateToDisplay)}
             weekStartsOnSunday={parseInt(publishpressCalendarParams.weekStartsOnSunday) === 1}
@@ -25,7 +29,6 @@ jQuery(() => {
             items={publishpressCalendarParams.items}
             allowAddingMultipleAuthors={publishpressCalendarParams.allowAddingMultipleAuthors}
             requestFilter={publishpressCalendarParams.requestFilter}
-            strings={publishpressCalendarParams.strings}/>,
-        document.getElementById('publishpress-calendar-wrap')
+            strings={publishpressCalendarParams.strings} />
     );
 });

@@ -26,5 +26,8 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx']
+    },
+    externals: {
+        "@wp.element": "wp.element"
     }
 };
