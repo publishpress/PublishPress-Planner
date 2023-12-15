@@ -28,6 +28,7 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     externals: {
-        "@wp.element": "wp.element"
+        "&wp.element": "wp.element",
+        "&ReactDOM": "ReactDOM"
     }
 };
