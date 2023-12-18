@@ -505,7 +505,7 @@ class Shortcodes
                                 if (!empty($rel_post) && !is_wp_error($rel_post)) {
                                     $result = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
                                 }
-                            } elseif ('meta-user' == $arr[0]) {
+                            } elseif ('meta-user' == $arr[0] || strpos($meta_name, '_pp_editorial_meta_user') === 0) {
                                 $rel_user = get_user_by('ID', (int)$meta);
 
                                 if (!empty($rel_user) && !is_wp_error($rel_user)) {
