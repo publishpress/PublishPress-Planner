@@ -136,9 +136,9 @@ export function getDateWithNoTimezoneOffset(dateString) {
 
 export function getPostLinksElement(linkData, handleOnClick) {
     if (linkData.url) {
-        return (<a href={linkData.url}>{linkData.label}</a>);
+        return (<a key={`link-${linkData.url}-${linkData.label}`} href={linkData.url}>{linkData.label}</a>);
     } else if (linkData.action) {
-        return (<a href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>);
+        return (<a key={`link-${linkData.url}-${linkData.label}`} onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>);
     }
 }
 

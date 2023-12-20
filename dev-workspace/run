@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Make sure we are inside dev-workspace subdirectory. If not, enter it.
+if [[ ! "$PWD" =~ dev-workspace$ ]]; then
+    cd dev-workspace
+fi
+
 # Create empty cache files if not exists.
 [[ -d cache/.npm/_cacache ]] || mkdir -p cache/.npm/_cacache
 [[ -d cache/.npm/_logs ]] || mkdir -p cache/.npm/_logs
@@ -8,8 +13,6 @@
 [[ -f cache/.zsh_history ]] || touch cache/.zsh_history
 [[ -f cache/.bash_history ]] || touch cache/.bash_history
 [[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
-
-export DOCKER_HOST_IP=$(php ./scripts/getip)
 
 is_online() {
     echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1

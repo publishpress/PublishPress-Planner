@@ -55,7 +55,6 @@ export default function DayCell(props) {
 
             return (
                 <a
-                    href="javascript:void(0);"
                     className={className}
                     onClick={toggleUncollapseItems}><span className={'dashicons dashicons-' + iconClass}/> {label}</a>
             );

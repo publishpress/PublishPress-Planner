@@ -17,6 +17,7 @@ node_modules
 builder.yml
 builder.yml.dist
 .editorconfig
+/cache
 
 !tests/_support/.gitkeep
 tests/_support/*
