@@ -218,7 +218,7 @@ if (!class_exists('PP_Module')) {
          * @since 4.0
          */
         public function get_custom_status_by($field, $value) {
-            global $publishpres;
+            global $publishpress;
 
             return $publishpress->getPostStatusBy($field, $value);
         }
@@ -269,8 +269,7 @@ if (!class_exists('PP_Module')) {
 
             // Custom statuses only handles workflow statuses
             if (!in_array($status, ['publish', 'future', 'private', 'trash'])) {
-                
-                $status_object = $publishpress->getStatusBy('slug', $status);
+                $status_object = $publishpress->getPostStatusBy('slug', $status);
 
                 if ($status_object && !is_wp_error($status_object)) {
                     $status_friendly_name = $status_object->label;
