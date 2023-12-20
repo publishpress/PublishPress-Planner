@@ -249,17 +249,19 @@ if (! class_exists('PP_Modules_Settings')) {
 
                                 <?php if (!defined('PUBLISHPRESS_STATUSES_VERSION')) :?>
                                 <br />
-                                <p>
-                                <?php
-                                printf(
-                                    esc_html__('For custom post statuses, install the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s', 'publishpress'),
-                                    '<a href="https://wordpress.org/plugins/publishpress-statuses" target="_blank">',
-                                    '</a>',
-                                    '<a href="https://publishpress.com/blog/publishpress-statuses/statuses-launch/" target="_blank">',
-                                    '</a>'
-                                );
-                                ?>
-                                </p>
+                                <div class="pp-notice"> 
+                                    <p>
+                                    <?php
+                                    printf(
+                                        esc_html__('For custom post statuses, install the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s', 'publishpress'),
+                                        '<a href="https://wordpress.org/plugins/publishpress-statuses" target="_blank">',
+                                        '</a>',
+                                        '<a href="https://publishpress.com/blog/publishpress-statuses/statuses-launch/" target="_blank">',
+                                        '</a>'
+                                    );
+                                    ?>
+                                    </p>
+                                </div>
                                 <?php endif;?>
                             </td>
                         </tr>
