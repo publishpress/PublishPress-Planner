@@ -117,6 +117,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Compat: PublishPress Statuses plugin integration
 * Update: Add first name and last name to Notification shortcode, #1500
+* Update: Make Content Overview default date filters to 1 month back and 1 month ahead, #1503
+* Update: Remove javascript from href attributes on components, #1511
+* Fixed: User type metadata displaying user id instead of display name in notification, #1515
+* Fixed: Invalid use of props on select component in the calendar screen, #1508
+* Fixed: Warning on console: Each child in a list should have a unique "key" prop, #1507
+* Fixed: Warning on console: ReactDOM.render is no longer supported in React 18, #1506
+* Update: Planner FREE V4.0.0 Translation Updates ES-FR-IT, #1512
 
 = [3.12.2] - 28 Sept 2023 =
 
