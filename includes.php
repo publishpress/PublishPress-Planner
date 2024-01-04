@@ -166,5 +166,9 @@ if (! defined('PP_LOADED')) {
         }
     }
 
+    if (is_admin() && !defined('PUBLISHPRESS_STATUSES_VERSION')) {
+        require_once PUBLISHPRESS_BASE_PATH . '/statuses-intro.php';
+    }
+
     define('PP_LOADED', 1);
 }
