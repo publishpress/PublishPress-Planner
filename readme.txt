@@ -115,6 +115,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [4.0.2] - 04 Jan 2024 =
 
+* Fixed : Calendar did not show status colors if PublishPress Statuses plugin is not activated
 * Compat: PublishPress Statuses - iframe Install Now button did not work
 
 = [4.0.1] - 04 Jan 2024 =
