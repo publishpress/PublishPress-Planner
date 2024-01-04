@@ -343,7 +343,6 @@ add_action('plugins_loaded', function () {
                     'async-notifications' => PUBLISHPRESS_BASE_PATH,
                     'notifications-log' => PUBLISHPRESS_BASE_PATH,
                     'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
-                    'custom-status' => PUBLISHPRESS_BASE_PATH,
                     'editorial-comments' => PUBLISHPRESS_BASE_PATH,
                     'efmigration' => PUBLISHPRESS_BASE_PATH,
                     'debug' => PUBLISHPRESS_BASE_PATH,
