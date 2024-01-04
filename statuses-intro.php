@@ -24,10 +24,10 @@ function publishpress_statuses_info() {
         if (current_user_can('activate_plugins')) {
             if ($statuses_installed) {
                 $_url = "plugins.php";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $info_url = self_admin_url($_url);
             } else {
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
                 $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&TB_iframe=true&width=600&height=800";
+                $info_url = self_admin_url($_url);
             }
         } else {
             $info_url = 'https://wordpress.org/plugins/publishpress-statuses';
@@ -36,10 +36,10 @@ function publishpress_statuses_info() {
         if (current_user_can('install_plugins')) {
             if ($statuses_installed) {
                 $_url = "plugins.php";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $info_url = self_admin_url($_url);
             } else {
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
                 $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&TB_iframe=true&width=600&height=800";
+                $info_url = self_admin_url($_url);
             }
         } else {
             $info_url = 'https://wordpress.org/plugins/publishpress-statuses';
