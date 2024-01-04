@@ -60,11 +60,10 @@ if (is_admin()) {
             if (!empty($package->skin) && !empty($package->skin->result) & !empty($package->skin->result['destination_name']) 
             && ('publishpress-statuses' == $package->skin->result['destination_name'])
             ) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
-                if (!empty($_REQUEST['action']) && ('install-plugin' == $_REQUEST['action'])
-                && !empty($_SERVER['HTTP_REFERER']) 
-                && false === strpos($_SERVER['HTTP_REFERER'], 'plugins.php')
-                && false === strpos($_SERVER['HTTP_REFERER'], 'plugin-install.php')
+                if (!empty($_REQUEST['action']) && ('install-plugin' == $_REQUEST['action'])  // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && !empty($_SERVER['HTTP_REFERER'])                                           // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && false === strpos($_SERVER['HTTP_REFERER'], 'plugins.php')                  // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && false === strpos($_SERVER['HTTP_REFERER'], 'plugin-install.php')           // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
                 ) {
                     activate_plugin('publishpress-statuses/publishpress-statuses.php');
                 }
