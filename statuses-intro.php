@@ -64,7 +64,12 @@ if (is_admin()) {
                 $statuses_info = publishpress_statuses_info();
                 
                 if (empty($statuses_info['statuses_installed'])) {
-                    add_thickbox();
+                    add_action(
+                        'wp_enqueue_scripts', 
+                        function() {
+                            add_thickbox();
+                        }
+                    );
                 }
             }
         }
@@ -86,7 +91,12 @@ if (is_admin()) {
                             $statuses_info = publishpress_statuses_info();
                             
                             if (empty($statuses_info['statuses_installed'])) {
-                                add_thickbox();
+                                add_action(
+                                    'wp_enqueue_scripts', 
+                                    function() {
+                                        add_thickbox();
+                                    }
+                                );
                             }
 
                             add_action(
