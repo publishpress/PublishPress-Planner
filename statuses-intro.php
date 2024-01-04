@@ -24,10 +24,10 @@ function publishpress_statuses_info() {
         if (current_user_can('activate_plugins')) {
             if ($statuses_installed) {
                 $_url = "plugins.php";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $info_url = self_admin_url($_url);
             } else {
-                $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&section=changelog&TB_iframe=true&width=600&height=800";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&TB_iframe=true&width=600&height=800";
+                $info_url = self_admin_url($_url);
             }
         } else {
             $info_url = 'https://wordpress.org/plugins/publishpress-statuses';
@@ -36,10 +36,10 @@ function publishpress_statuses_info() {
         if (current_user_can('install_plugins')) {
             if ($statuses_installed) {
                 $_url = "plugins.php";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $info_url = self_admin_url($_url);
             } else {
-                $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&section=changelog&TB_iframe=true&width=600&height=800";
-                $info_url = (is_multisite()) ? network_admin_url($_url) : admin_url($_url);
+                $_url = "plugin-install.php?tab=plugin-information&plugin=publishpress-statuses&TB_iframe=true&width=600&height=800";
+                $info_url = self_admin_url($_url);
             }
         } else {
             $info_url = 'https://wordpress.org/plugins/publishpress-statuses';
@@ -56,6 +56,20 @@ if (is_admin()) {
 
     // Ensure any user sees one-time display of PublishPress Statuses notice on Posts / Pages screen
     if (!defined('PUBLISHPRESS_STATUSES_VERSION')) {
+        add_action('upgrader_process_complete', function($package, $extra) {
+            if (!empty($package->skin) && !empty($package->skin->result) & !empty($package->skin->result['destination_name']) 
+            && ('publishpress-statuses' == $package->skin->result['destination_name'])
+            ) {
+                if (!empty($_REQUEST['action']) && ('install-plugin' == $_REQUEST['action'])  // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && !empty($_SERVER['HTTP_REFERER'])                                           // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && false === strpos($_SERVER['HTTP_REFERER'], 'plugins.php')                  // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                && false === strpos($_SERVER['HTTP_REFERER'], 'plugin-install.php')           // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+                ) {
+                    activate_plugin('publishpress-statuses/publishpress-statuses.php');
+                }
+            }
+        }, 10, 2);
+
         if ('admin.php' == $pagenow) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
             if (!empty($_REQUEST['page']) && ('pp-modules-settings' == $_REQUEST['page'])) {
@@ -65,9 +79,21 @@ if (is_admin()) {
                 
                 if (empty($statuses_info['statuses_installed'])) {
                     add_action(
-                        'wp_enqueue_scripts', 
+                        'admin_enqueue_scripts', 
                         function() {
                             add_thickbox();
+                            wp_enqueue_script('updates');
+                            
+                            // @todo
+                            /*
+                            wp_enqueue_script(
+                                'publishpress-statuses-installer-js',
+                                PUBLISHPRESS_URL . 'common/js/pp_statuses_installer.js',
+                                ['jquery'],
+                                PUBLISHPRESS_VERSION,
+                                true
+                            );
+                            */
                         }
                     );
                 }
@@ -92,9 +118,10 @@ if (is_admin()) {
                             
                             if (empty($statuses_info['statuses_installed'])) {
                                 add_action(
-                                    'admin_head', 
+                                    'admin_enqueue_scripts', 
                                     function() {
                                         add_thickbox();
+                                        wp_enqueue_script('updates');
                                     }
                                 );
                             }
