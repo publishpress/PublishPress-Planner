@@ -65,7 +65,7 @@ if (is_admin()) {
                 
                 if (empty($statuses_info['statuses_installed'])) {
                     add_action(
-                        'wp_enqueue_scripts', 
+                        'admin_enqueue_scripts', 
                         function() {
                             add_thickbox();
                         }
@@ -92,7 +92,7 @@ if (is_admin()) {
                             
                             if (empty($statuses_info['statuses_installed'])) {
                                 add_action(
-                                    'admin_head', 
+                                    'admin_enqueue_scripts', 
                                     function() {
                                         add_thickbox();
                                     }
