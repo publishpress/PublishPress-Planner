@@ -1,15 +1,15 @@
 # Copyright (C) 2024 PublishPress
-# This file is distributed under the GPLv3.
+# This file is distributed under the same license as the PublishPress Planner plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Planner 4.0.0\n"
+"Project-Id-Version: PublishPress Planner 4.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-04T06:38:29+00:00\n"
+"POT-Creation-Date: 2024-01-04T15:45:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: publishpress\n"
@@ -39,22 +39,16 @@ msgstr ""
 
 #: common/php/class-module.php:262
 #: modules/calendar/calendar.php:1988
-#: modules/custom-status/custom-status.php:957
-#: modules/custom-status/lib/custom-status-block.jsx:113
 msgid "Published"
 msgstr ""
 
 #: common/php/class-module.php:263
-#: modules/custom-status/custom-status.php:881
-#: modules/custom-status/custom-status.php:995
 msgid "Draft"
 msgstr ""
 
 #: common/php/class-module.php:264
 #: modules/calendar/calendar.php:1983
-#: modules/custom-status/custom-status.php:919
 #: modules/notifications-log/library/NotificationsLogTable.php:523
-#: modules/custom-status/lib/custom-status-block.jsx:118
 msgid "Scheduled"
 msgstr ""
 
@@ -391,8 +385,6 @@ msgid "Post date updated."
 msgstr ""
 
 #: modules/calendar/calendar.php:189
-#: modules/custom-status/custom-status.php:102
-#: modules/custom-status/custom-status.php:105
 msgid "Post status updated."
 msgstr ""
 
@@ -409,7 +401,6 @@ msgid "iCal secret key regenerated. Please inform all users they will need to re
 msgstr ""
 
 #: modules/calendar/calendar.php:206
-#: modules/custom-status/custom-status.php:112
 #: modules/editorial-comments/editorial-comments.php:82
 #: modules/editorial-metadata/editorial-metadata.php:120
 #: modules/notifications/notifications.php:93
@@ -742,7 +733,6 @@ msgstr ""
 #: modules/calendar/calendar.php:1822
 #: modules/calendar/calendar.php:3584
 #: modules/content-overview/content-overview.php:1904
-#: modules/custom-status/custom-status.php:2922
 #: modules/editorial-comments/editorial-comments.php:632
 #: modules/editorial-metadata/editorial-metadata.php:2817
 msgid "Edit"
@@ -877,12 +867,10 @@ msgid "The number of weeks shown on the calendar can be changed on a user-by-use
 msgstr ""
 
 #: modules/calendar/calendar.php:2659
-#: modules/custom-status/custom-status.php:1889
 msgid "Disabled"
 msgstr ""
 
 #: modules/calendar/calendar.php:2660
-#: modules/custom-status/custom-status.php:1890
 msgid "Enabled"
 msgstr ""
 
@@ -897,7 +885,6 @@ msgstr ""
 #: modules/calendar/calendar.php:2902
 #: modules/calendar/calendar.php:3557
 #: modules/calendar/calendar.php:3637
-#: modules/custom-status/lib/custom-status-block.jsx:146
 msgid "Post Status"
 msgstr ""
 
@@ -993,7 +980,6 @@ msgid "Taxonomies to show:"
 msgstr ""
 
 #: modules/content-overview/content-overview.php:627
-#: modules/custom-status/custom-status.php:1450
 #: modules/notifications-log/library/NotificationsLogTable.php:494
 msgid "Status"
 msgstr ""
@@ -1024,7 +1010,6 @@ msgid "Apply"
 msgstr ""
 
 #: modules/content-overview/content-overview.php:1028
-#: modules/custom-status/custom-status.php:2078
 #: modules/editorial-comments/editorial-comments.php:578
 #: modules/editorial-metadata/editorial-metadata.php:2220
 #: modules/editorial-comments/lib/editorial-comments.js:350
@@ -1081,276 +1066,6 @@ msgstr ""
 
 #: modules/content-overview/content-overview.php:1912
 msgid "Move this item to the Trash"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:83
-#: modules/custom-status/custom-status.php:304
-msgid "Statuses"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:99
-msgid "Edit Statuses"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:101
-msgid "Post status created."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:103
-msgid "Post status doesn't exist."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:104
-msgid "Default post status has been changed."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:106
-msgid "Post status deleted."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:107
-msgid "Status order updated."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:113
-msgid "<p>PublishPress’s custom statuses allow you to define the most important stages of your editorial workflow. Out of the box, WordPress only offers “Draft” and “Pending Review” as post states. With custom statuses, you can create your own post states like “In Progress”, “Pitch”, or “Waiting for Edit” and keep or delete the originals. You can also drag and drop statuses to set the best order for your workflow.</p><p>Custom statuses are fully integrated into the rest of PublishPress and the WordPress admin. On the calendar and content overview, you can filter your view to see only posts of a specific post state. Furthermore, email notifications can be sent to a specific group of users when a post changes state.</p>"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:118
-msgid "<p><strong>For more information:</strong></p><p><a href=\"https://publishpress.com/features/custom-statuses/\">Custom Status Documentation</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress on Github</a></p>"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:185
-msgid "Pitch"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:188
-msgid "Idea proposed; waiting for acceptance."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:195
-msgid "Assigned"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:198
-msgid "Post idea assigned to writer."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:205
-msgid "In Progress"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:208
-msgid "Writer is working on the post."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:409
-msgid "Are you sure you want to delete the post status? All posts with this status will be assigned to the default status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:518
-msgid "<strong>Note:</strong> Your browser does not support JavaScript or has JavaScript disabled. You will not be able to access or change the post status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:900
-#: modules/custom-status/lib/custom-status-block.jsx:123
-msgid "Pending review"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:938
-#: modules/custom-status/lib/custom-status-block.jsx:129
-msgid "Privately Published"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1130
-msgid "Custom status doesn't exist."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1182
-msgid "Error while updating the status"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1212
-msgid "Cannot reassign to the status you want to delete"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1240
-msgid "Restricted status "
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1533
-#: modules/custom-status/custom-status.php:1643
-msgid "Please enter a name for the status"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1537
-#: modules/custom-status/custom-status.php:1647
-msgid "Please enter a valid, non-numeric name for the status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1554
-#: modules/custom-status/custom-status.php:1664
-msgid "Status name cannot exceed 20 characters. Please try a shorter name."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1562
-#: modules/custom-status/custom-status.php:1678
-msgid "Status name conflicts with existing term. Please choose another."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1569
-#: modules/custom-status/custom-status.php:1694
-msgid "Status name is restricted. Please choose another name."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1591
-msgid "Could not add status: "
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1687
-msgid "Status name conflicts with existing status. Please choose another."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1719
-msgid "Error updating post status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1754
-msgid "Sorry, you do not have permission to edit custom statuses."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1761
-msgid "Status does not exist."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1766
-msgid "Could not delete the status: "
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1821
-#: modules/editorial-metadata/editorial-metadata.php:1605
-msgid "Terms not set."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1856
-msgid "Use on these post types:"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1863
-msgid "Show the status dropdown menu on the post editing screen:"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1965
-msgid "Custom Status"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1977
-#: modules/custom-status/custom-status.php:2133
-msgid "The name is used to identify the status. (Max: 20 characters)"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1986
-#: modules/editorial-metadata/editorial-metadata.php:1909
-#: modules/editorial-metadata/editorial-metadata.php:2252
-msgid "Slug"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:1998
-msgid "The slug is the unique ID for the status and is changed when the name is changed."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2007
-#: modules/custom-status/custom-status.php:2141
-#: modules/custom-status/custom-status.php:2780
-#: modules/editorial-metadata/editorial-metadata.php:1922
-#: modules/editorial-metadata/editorial-metadata.php:2269
-#: modules/editorial-metadata/editorial-metadata.php:2699
-msgid "Description"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2020
-#: modules/custom-status/custom-status.php:2153
-msgid "The description is primarily for administrative use, to give you some context on what the custom status is to be used for."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2029
-#: modules/custom-status/custom-status.php:2161
-msgid "Color"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2041
-#: modules/custom-status/custom-status.php:2170
-msgid "The color is used to identify the status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2047
-#: modules/custom-status/custom-status.php:2175
-#: modules/custom-status/custom-status.php:2781
-msgid "Icon"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2061
-#: modules/custom-status/custom-status.php:2190
-msgid "Select Icon"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2067
-#: modules/custom-status/custom-status.php:2196
-msgid "The icon is used to visually represent the status."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2074
-msgid "Update Status"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2105
-msgid "Options"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2112
-#: modules/editorial-metadata/editorial-metadata.php:1799
-msgid "Add New"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2123
-#: modules/custom-status/custom-status.php:2779
-#: modules/editorial-metadata/editorial-metadata.php:2238
-#: modules/editorial-metadata/editorial-metadata.php:2696
-msgid "Name"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2208
-msgid "Add New Status"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2222
-msgid "Please note that checking a box will apply all statuses to that post type."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2778
-#: modules/editorial-metadata/editorial-metadata.php:2695
-msgid "Position"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2803
-msgid "No custom statuses found."
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2909
-msgid "Default"
-msgstr ""
-
-#: modules/custom-status/custom-status.php:2926
-#: modules/editorial-comments/editorial-comments.php:643
-#: modules/editorial-comments/library/EditorialCommentsTable.php:435
-#: modules/editorial-metadata/editorial-metadata.php:2050
-#: modules/editorial-metadata/editorial-metadata.php:2080
-#: modules/editorial-metadata/editorial-metadata.php:2411
-#: modules/editorial-metadata/editorial-metadata.php:2441
-#: modules/editorial-metadata/editorial-metadata.php:2837
-#: modules/notifications-log/library/NotificationsLogTable.php:370
-#: modules/notifications-log/library/NotificationsLogTable.php:401
-msgid "Delete"
 msgstr ""
 
 #: modules/debug/debug.php:68
@@ -1485,6 +1200,18 @@ msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:623
 msgid "Reply"
+msgstr ""
+
+#: modules/editorial-comments/editorial-comments.php:643
+#: modules/editorial-comments/library/EditorialCommentsTable.php:435
+#: modules/editorial-metadata/editorial-metadata.php:2050
+#: modules/editorial-metadata/editorial-metadata.php:2080
+#: modules/editorial-metadata/editorial-metadata.php:2411
+#: modules/editorial-metadata/editorial-metadata.php:2441
+#: modules/editorial-metadata/editorial-metadata.php:2837
+#: modules/notifications-log/library/NotificationsLogTable.php:370
+#: modules/notifications-log/library/NotificationsLogTable.php:401
+msgid "Delete"
 msgstr ""
 
 #: modules/editorial-comments/editorial-comments.php:689
@@ -1790,6 +1517,10 @@ msgstr ""
 msgid "Error updating term."
 msgstr ""
 
+#: modules/editorial-metadata/editorial-metadata.php:1605
+msgid "Terms not set."
+msgstr ""
+
 #: modules/editorial-metadata/editorial-metadata.php:1646
 msgid "Error deleting term."
 msgstr ""
@@ -1798,13 +1529,28 @@ msgstr ""
 msgid "Register metadata for these post types:"
 msgstr ""
 
+#: modules/editorial-metadata/editorial-metadata.php:1799
+msgid "Add New"
+msgstr ""
+
 #: modules/editorial-metadata/editorial-metadata.php:1904
 #: modules/editorial-metadata/editorial-metadata.php:2247
 msgid "The name is for labeling the metadata field."
 msgstr ""
 
+#: modules/editorial-metadata/editorial-metadata.php:1909
+#: modules/editorial-metadata/editorial-metadata.php:2252
+msgid "Slug"
+msgstr ""
+
 #: modules/editorial-metadata/editorial-metadata.php:1914
 msgid "The slug cannot be changed once the term has been created."
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:1922
+#: modules/editorial-metadata/editorial-metadata.php:2269
+#: modules/editorial-metadata/editorial-metadata.php:2699
+msgid "Description"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:1930
@@ -1970,6 +1716,11 @@ msgstr ""
 msgid "Update Metadata Term"
 msgstr ""
 
+#: modules/editorial-metadata/editorial-metadata.php:2238
+#: modules/editorial-metadata/editorial-metadata.php:2696
+msgid "Name"
+msgstr ""
+
 #: modules/editorial-metadata/editorial-metadata.php:2261
 msgid "The \"slug\" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
@@ -1980,6 +1731,10 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:2581
 msgid "Add New Metadata Term"
+msgstr ""
+
+#: modules/editorial-metadata/editorial-metadata.php:2695
+msgid "Position"
 msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:2698
@@ -2163,11 +1918,11 @@ msgstr ""
 msgid "Basic Notifications"
 msgstr ""
 
-#: modules/modules-settings/modules-settings.php:263
+#: modules/modules-settings/modules-settings.php:260
 msgid "For custom post statuses, activate the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s"
 msgstr ""
 
-#: modules/modules-settings/modules-settings.php:271
+#: modules/modules-settings/modules-settings.php:268
 msgid "For custom post statuses, install the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s"
 msgstr ""
 
@@ -2308,8 +2063,8 @@ msgid "All Statuses"
 msgstr ""
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1327
-#: publishpress.php:1332
+#: publishpress.php:1324
+#: publishpress.php:1329
 msgid "Notification"
 msgstr ""
 
@@ -2341,8 +2096,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:72
 #: modules/notifications/notifications.php:600
-#: publishpress.php:1326
-#: publishpress.php:1331
+#: publishpress.php:1323
+#: publishpress.php:1328
 msgid "Notifications"
 msgstr ""
 
@@ -2826,86 +2581,61 @@ msgstr ""
 msgid "Integrate with the The Events Calendar plugin"
 msgstr ""
 
-#: publishpress.php:587
+#: publishpress.php:584
 msgid "Planner"
 msgstr ""
 
-#: publishpress.php:668
+#: publishpress.php:665
 msgid "Configure"
 msgstr ""
 
-#: publishpress.php:671
+#: publishpress.php:668
 msgid "Please correct your form errors below and try again."
 msgstr ""
 
-#: publishpress.php:672
+#: publishpress.php:669
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: publishpress.php:673
+#: publishpress.php:670
 msgid "You do not have necessary permissions to complete this action."
 msgstr ""
 
-#: publishpress.php:677
+#: publishpress.php:674
 msgid "Post does not exist"
 msgstr ""
 
-#: publishpress.php:1328
+#: publishpress.php:1325
 msgid "Add New Notification"
 msgstr ""
 
-#: publishpress.php:1329
+#: publishpress.php:1326
 msgid "Edit Notification"
 msgstr ""
 
-#: publishpress.php:1330
+#: publishpress.php:1327
 msgid "Search Notifications"
 msgstr ""
 
-#: publishpress.php:1333
-#: publishpress.php:1334
+#: publishpress.php:1330
+#: publishpress.php:1331
 msgid "No notification found"
 msgstr ""
 
-#: publishpress.php:1373
+#: publishpress.php:1370
 msgid "PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro."
 msgstr ""
 
-#: publishpress.php:1381
+#: publishpress.php:1378
 msgid "Warning"
 msgstr ""
 
-#: statuses-intro.php:105
+#: statuses-intro.php:115
 msgid "Custom statuses are disabled until you activate the %1$sPublishPress Statuses%2$s plugin. See %3$sPlanner > Settings%4$s for details."
 msgstr ""
 
-#: statuses-intro.php:113
+#: statuses-intro.php:123
 msgid "Custom statuses are disabled until you install the %1$sPublishPress Statuses%2$s plugin. See %3$sPlanner > Settings%4$s for details."
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:63
-msgid "Unschedule and Save as %s"
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:65
-msgid "Unpublish and Save as %s"
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:68
-msgid "Save as %s"
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:115
-#: modules/custom-status/lib/custom-status-block.jsx:131
-msgid "To select a custom status, please unpublish the content first."
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:120
-msgid "To select a custom status, please unschedule the content first."
-msgstr ""
-
-#: modules/custom-status/lib/custom-status-block.jsx:125
-msgid "To select a custom status, please uncheck the \"Pending Review\" checkbox first."
 msgstr ""
 
 #: modules/editorial-comments/lib/editorial-comments.js:377
