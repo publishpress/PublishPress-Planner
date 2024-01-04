@@ -106,16 +106,16 @@ class Post_StatusTransition extends Base
         if ($log->event === static::EVENT_NAME) {
             global $publishpress;
 
-            $oldStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->oldStatus);
-            $newStatus = $publishpress->custom_status->get_custom_status_by('slug', $log->newStatus);
+            $oldStatus = $publishpress->getPostStatusBy('slug', $log->oldStatus);
+            $newStatus = $publishpress->getPostStatusBy('slug', $log->newStatus);
 
             $paramsString = '';
             if (is_object($oldStatus)) {
-                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->name) . '</div>';
+                $paramsString .= '<div>' . sprintf(__('Old post status: %s', 'publishpress'), $oldStatus->label) . '</div>';
             }
 
             if (is_object($newStatus)) {
-                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->name) . '</div>';
+                $paramsString .= '<div>' . sprintf(__('New post status: %s', 'publishpress'), $newStatus->label) . '</div>';
             }
         }
 

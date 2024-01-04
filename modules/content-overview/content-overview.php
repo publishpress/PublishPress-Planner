@@ -325,7 +325,7 @@ class PP_Content_Overview extends PP_Module
             $label = $taxonomy->label . ' (' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
-            if ($value ==='post_status') {
+            if (in_array($value, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
                 continue;
             }
 
@@ -864,11 +864,11 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['start_date']) {
-            $user_filters['start_date'] = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            $user_filters['start_date'] = date('Y-m-d', strtotime('-30 days')); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
         if (! $user_filters['end_date']) {
-            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +10 day'));
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +30 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
@@ -914,13 +914,13 @@ class PP_Content_Overview extends PP_Module
  
         $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
-            ? current_time($date_format)
+            ? date($date_format, strtotime('-30 days'))
             : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
  
         $user_filters['end_date'] = $_REQUEST['pp-content-overview-end-date_hidden'];
  
         if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +30 day'));
         }
  
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -1165,8 +1165,8 @@ class PP_Content_Overview extends PP_Module
                     } ?>
                     <?php 
                     $date_format = 'Y-m-d';
-                    $reset_start_date = current_time($date_format);
-                    $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +10 day'));
+                    $reset_start_date = date($date_format, strtotime('-30 days'));
+                    $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +30 day'));
 
                     $filtered_start_date = $reset_start_date;
                     $filtered_start_date_timestamp = strtotime($filtered_start_date);
@@ -1259,7 +1259,7 @@ class PP_Content_Overview extends PP_Module
                         echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                 $post_status->slug,
                                 $filters['post_status']
-                            ) . ">" . esc_html($post_status->name) . "</option>";
+                            ) . ">" . esc_html($post_status->label) . "</option>";
                     }
                     ?>
                 </select>

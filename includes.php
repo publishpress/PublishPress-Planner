@@ -34,7 +34,7 @@ use PublishPress\Legacy\Auto_loader;
 if (! defined('PP_LOADED')) {
     if (! defined('PUBLISHPRESS_VERSION')) {
         // Define constants
-        define('PUBLISHPRESS_VERSION', '3.12.2');
+        define('PUBLISHPRESS_VERSION', '4.0.1');
         define('PUBLISHPRESS_BASE_PATH', __DIR__);
         define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
         define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
@@ -164,6 +164,10 @@ if (! defined('PP_LOADED')) {
                 }
             );
         }
+    }
+
+    if (is_admin() && !defined('PUBLISHPRESS_STATUSES_VERSION')) {
+        require_once PUBLISHPRESS_BASE_PATH . '/statuses-intro.php';
     }
 
     define('PP_LOADED', 1);

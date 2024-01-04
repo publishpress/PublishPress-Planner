@@ -77,6 +77,10 @@ if (!class_exists('PP_Module')) {
         {
             global $publishpress;
 
+            if ('custom_status' == $slug) {
+                return class_exists('PublishPress_Statuses');
+            }
+
             return isset($publishpress->$slug) && $publishpress->$slug->module->options->enabled == 'on';
         }
 
@@ -180,7 +184,6 @@ if (!class_exists('PP_Module')) {
 
         /**
          * Get all of the currently available post statuses
-         * This should be used in favor of calling $publishpress->custom_status->get_custom_statuses() directly
          *
          * @return array $post_statuses All of the post statuses that aren't a published state
          *
@@ -190,11 +193,7 @@ if (!class_exists('PP_Module')) {
         {
             global $publishpress;
 
-            if ($this->module_enabled('custom_status')) {
-                return $publishpress->custom_status->get_custom_statuses();
-            } else {
-                return $this->get_core_post_statuses();
-            }
+            return $publishpress->getPostStatuses();
         }
 
         /**
@@ -206,26 +205,22 @@ if (!class_exists('PP_Module')) {
          */
         protected function get_core_post_statuses()
         {
-            return [
-                (object)[
-                    'name'        => __('Draft'),
-                    'description' => '',
-                    'slug'        => 'draft',
-                    'position'    => 1,
-                ],
-                (object)[
-                    'name'        => __('Pending Review'),
-                    'description' => '',
-                    'slug'        => 'pending',
-                    'position'    => 2,
-                ],
-                (object)[
-                    'name'        => __('Published'),
-                    'description' => '',
-                    'slug'        => 'publish',
-                    'position'    => 3,
-                ],
-            ];
+            global $publishpress;
+
+            return $publishpress->getCorePostStatuses();
+        }
+
+        /**
+         * Back compat for existing code calling $publishpress->custom_status->get_custom_status_by()
+         *
+         * @return object
+         *
+         * @since 4.0
+         */
+        public function get_custom_status_by($field, $value) {
+            global $publishpress;
+
+            return $publishpress->getPostStatusBy($field, $value);
         }
 
         /**
@@ -273,11 +268,11 @@ if (!class_exists('PP_Module')) {
             ];
 
             // Custom statuses only handles workflow statuses
-            if ($this->module_enabled('custom_status')
-                && !in_array($status, ['publish', 'future', 'private', 'trash'])) {
-                $status_object = $publishpress->custom_status->get_custom_status_by('slug', $status);
+            if (!in_array($status, ['publish', 'future', 'private', 'trash'])) {
+                $status_object = $publishpress->getPostStatusBy('slug', $status);
+
                 if ($status_object && !is_wp_error($status_object)) {
-                    $status_friendly_name = $status_object->name;
+                    $status_friendly_name = $status_object->label;
                 }
             } elseif (array_key_exists($status, $builtin_stati)) {
                 $status_friendly_name = $builtin_stati[$status];

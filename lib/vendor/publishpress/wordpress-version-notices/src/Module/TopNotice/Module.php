@@ -64,7 +64,7 @@ class Module implements AdInterface
     {
         add_action(self::DISPLAY_ACTION, [$this, 'display'], 10, 2);
         add_action('in_admin_header', [$this, 'displayTopNotice']);
-        add_action('admin_init', [$this, 'collectTheSettings'], 5);
+        add_action('admin_init', [$this, 'collectTheSettings'], 50);
         add_action('admin_head', [$this, 'adminHeadAddStyle']);
     }
 

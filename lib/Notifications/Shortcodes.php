@@ -117,6 +117,8 @@ class Shortcodes
      *   - login
      *   - url
      *   - display_name
+     *   - first_name
+     *   - last_name
      *   - email
      *   - separator
      *
@@ -183,6 +185,14 @@ class Shortcodes
             case 'name':
             case 'display_name':
                 $result = $user->display_name;
+                break;
+
+            case 'first_name':
+                $result = $user->first_name;
+                break;
+
+            case 'last_name':
+                $result = $user->last_name;
                 break;
 
             case 'email':
@@ -428,7 +438,7 @@ class Shortcodes
 
             case 'old_status':
             case 'new_status':
-                $status = $publishpress->custom_status->get_custom_status_by(
+                $status = $publishpress->getPostStatusBy(
                     'slug',
                     $this->event_args['params'][$field]
                 );
@@ -437,7 +447,7 @@ class Shortcodes
                     break;
                 }
 
-                $result = $status->name;
+                $result = $status->label;
                 break;
 
             case 'content':
@@ -495,7 +505,7 @@ class Shortcodes
                                 if (!empty($rel_post) && !is_wp_error($rel_post)) {
                                     $result = $this->get_post_field($rel_post, $meta_sub_field, $attrs);
                                 }
-                            } elseif ('meta-user' == $arr[0]) {
+                            } elseif ('meta-user' == $arr[0] || strpos($meta_name, '_pp_editorial_meta_user') === 0) {
                                 $rel_user = get_user_by('ID', (int)$meta);
 
                                 if (!empty($rel_user) && !is_wp_error($rel_user)) {

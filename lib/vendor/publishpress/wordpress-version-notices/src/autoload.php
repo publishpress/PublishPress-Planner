@@ -10,7 +10,7 @@ if (! function_exists('untrailingslashit') || ! function_exists('plugin_dir_url'
 
 add_action('plugins_loaded', function () {
     if (! defined('PP_VERSION_NOTICES_LOADED')) {
-        define('PP_VERSION_NOTICES_VERSION', '2.1.1');
+        define('PP_VERSION_NOTICES_VERSION', '2.1.3');
         define('PP_VERSION_NOTICES_BASE_PATH', __DIR__ . '/../');
         define('PP_VERSION_NOTICES_SRC_PATH', __DIR__);
 

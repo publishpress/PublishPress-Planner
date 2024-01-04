@@ -19,14 +19,9 @@ trait PublishPress_Module
      */
     public function get_post_statuses()
     {
-        if ($this->is_module_enabled('custom_status')) {
-            $publishpress = $this->get_service('publishpress');
-            $statuses     = $publishpress->custom_status->get_custom_statuses();
+        $publishpress = $this->get_service('publishpress');
 
-            return $statuses;
-        } else {
-            return $this->get_core_post_statuses();
-        }
+        return $publishpress->getPostStatuses();
     }
 
     /**
@@ -36,6 +31,10 @@ trait PublishPress_Module
      */
     public function is_module_enabled($slug)
     {
+        if ('custom_status' == $slug) {
+            return class_exists('PublishPress_Statuses');
+        }
+
         $publishpress = $this->get_service('publishpress');
 
         if (isset($publishpress->$slug)) {
@@ -58,26 +57,9 @@ trait PublishPress_Module
      */
     protected function get_core_post_statuses()
     {
-        return [
-            (object)[
-                'name'        => __('Draft'),
-                'description' => '',
-                'slug'        => 'draft',
-                'position'    => 1,
-            ],
-            (object)[
-                'name'        => __('Pending Review'),
-                'description' => '',
-                'slug'        => 'pending',
-                'position'    => 2,
-            ],
-            (object)[
-                'name'        => __('Published'),
-                'description' => '',
-                'slug'        => 'publish',
-                'position'    => 3,
-            ],
-        ];
+        $publishpress = $this->get_service('publishpress');
+
+        return $publishpress->getCorePostStatuses();
     }
 
     /**

@@ -124,13 +124,12 @@ div.pp-icon img {
 Status color box */
 
 .pp-status-color {
-    width: 10px;
-    height: 10px;
     display: inline-block;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -o-border-radius: 3px;
+    padding: 2px 5px 2px 5px;
 }
 
 .pp-status-color + strong {
@@ -243,6 +242,12 @@ Status color box */
 .pp-columns-wrapper.pp-enable-sidebar .pp-column-left,
 .pp-columns-wrapper.pp-enable-sidebar .pp-column-right {
 	float: left;
+}
+
+.pp-admin-notice {
+    padding: 10px !important;
+    line-height: 18px;
+    position: relative;
 }
 
 @media (max-width: 1199px) {
