@@ -3,15 +3,15 @@
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+ * Version: 4.0.1
  * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 4.0.0
  * Text Domain: publishpress
  * Domain Path: /languages
  * Requires at least: 5.5
  * Requires PHP: 7.2.5
  *
- * Copyright (c) 2023 PublishPress
+ * Copyright (c) 2024 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,9 +36,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package     PublishPress
- * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2023 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2024 PublishPress. All rights reserved.
+ * @link        https://publishpress.com/
+ * 
  */
 
 use PPVersionNotices\Module\MenuLink\Module;
@@ -342,7 +343,6 @@ add_action('plugins_loaded', function () {
                     'async-notifications' => PUBLISHPRESS_BASE_PATH,
                     'notifications-log' => PUBLISHPRESS_BASE_PATH,
                     'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
-                    'custom-status' => PUBLISHPRESS_BASE_PATH,
                     'editorial-comments' => PUBLISHPRESS_BASE_PATH,
                     'efmigration' => PUBLISHPRESS_BASE_PATH,
                     'debug' => PUBLISHPRESS_BASE_PATH,
@@ -1221,27 +1221,27 @@ add_action('plugins_loaded', function () {
             public function getPostStatusBy($field, $value) {
                 if (class_exists('PublishPress_Statuses')) {
                     return \PublishPress_Statuses::getStatusBy($field, $value);
-                } 
+                }
 
                 if (! in_array($field, ['id', 'slug', 'name', 'label'])) {
                     return false;
                 }
-        
+
                 if (in_array($field, ['id', 'slug'])) {
                     $field = 'name';
                 }
-    
+
                 // New and auto-draft do not exists as status. So we map them to draft for now.
                 if ('name' === $field && in_array($value, ['new', 'auto-draft'])) {
                     $value = 'draft';
                 }
 
                 $status = wp_filter_object_list($this->getCorePostStatuses(), [$field => $value]);
-    
+
                 if (!empty($status)) {
                     return array_shift($status);
                 }
-    
+
                 return false;
             }
 

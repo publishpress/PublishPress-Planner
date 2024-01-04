@@ -15,7 +15,7 @@ export default function AsyncCalendar(props) {
     let statusValue   = (props.requestFilter.post_status) ? props.requestFilter.post_status : '';
     let typesValue    = (props.requestFilter.post_type) ? props.requestFilter.post_type : '';
     let weeksValue    = (props.requestFilter.weeks) ? props.requestFilter.weeks : props.numberOfWeeksToDisplay;
-    
+
     let categoryValue   = '';
     if (props.requestFilter.category && props.requestFilter.category.value) {
         categoryValue   = props.requestFilter.category.value;
@@ -25,12 +25,12 @@ export default function AsyncCalendar(props) {
     if (props.requestFilter.post_tag && props.requestFilter.post_tag.value) {
         postTagValue   = props.requestFilter.post_tag.value;
     }
-    
+
     let authorValue   = '';
     if (props.requestFilter.post_author && props.requestFilter.post_author.value) {
         authorValue = props.requestFilter.post_author.value;
     }
-    
+
     const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay, props.weekStartsOnSunday));
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(weeksValue);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
@@ -454,7 +454,7 @@ export default function AsyncCalendar(props) {
             if (dayIndexInTheRow === 7) {
                 dayIndexInTheRow = 0;
                 tableRows.push(
-                    <tr>{rowCells}</tr>
+                    <tr key={`calendar-row-${tableRows.length}`}>{rowCells}</tr>
                 );
             }
 

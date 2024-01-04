@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.4
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,9 +113,17 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [4.0.0] - 13 Dec 2023 =
+= [4.0.1] - 04 Jan 2024 =
 
 * Compat: PublishPress Statuses plugin integration
+* Update: Add first name and last name to Notification shortcode, #1500
+* Update: Make Content Overview default date filters to 1 month back and 1 month ahead, #1503
+* Update: Remove javascript from href attributes on components, #1511
+* Fixed: User type metadata displaying user id instead of display name in notification, #1515
+* Fixed: Invalid use of props on select component in the calendar screen, #1508
+* Fixed: Warning on console: Each child in a list should have a unique "key" prop, #1507
+* Fixed: Warning on console: ReactDOM.render is no longer supported in React 18, #1506
+* Update: Planner FREE V4.0.0 Translation Updates ES-FR-IT, #1512
 
 = [3.12.2] - 28 Sept 2023 =
 

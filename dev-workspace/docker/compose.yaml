@@ -1,7 +1,7 @@
 name: devworkspace_planner_free
 services:
     terminal:
-        build: ./docker
+        build: ./
         image: publishpress/dev-workspace-terminal:planner-free-2
         command: ["zsh"]
         stdin_open: true
@@ -17,7 +17,3 @@ services:
             - ../cache/.composer/cache:/root/.composer/cache
             - ../cache/.composer/auth.json:/root/.composer/auth.json
             - /var/run/docker.sock:/var/run/docker.sock
-        extra_hosts:
-            - "dockerhost:${DOCKER_HOST_IP}"
-        environment:
-            - DOCKER_HOST_IP=${DOCKER_HOST_IP}

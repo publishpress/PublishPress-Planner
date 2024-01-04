@@ -241,7 +241,7 @@ export default function ItemFormPopup(props) {
             }
 
             fieldRows.push(
-                <tr>
+                <tr key={`field-rows-${fieldRows.length}`}>
                     <th><label htmlFor={fieldId}>{dataProperty.label}:</label></th>
                     <td>{field}</td>
                 </tr>
@@ -389,11 +389,11 @@ export default function ItemFormPopup(props) {
             linkData = formLinks[linkName];
 
             if (savingLink === linkData.id) {
-                links.push(<span>{linkData.labelLoading}</span>);
+                links.push(<span key={linkData.id}>{linkData.labelLoading}</span>);
             } else {
                 links.push(getPostLinksElement(linkData, handleLinkOnClick));
             }
-            links.push(<span>|</span>);
+            links.push(<span key={`link-separator-${links.length}`}>|</span>);
         }
 
         links.pop();

@@ -86,7 +86,7 @@ export default function Select(props) {
 
     if (props.options) {
         options = props.options.map(option => {
-            return <option value={option.value} selected={option.value === props.value}>{option.text}</option>
+            return <option key={`select-option-${option.value}`} value={option.value}>{option.text}</option>
         });
     }
 
@@ -98,6 +98,7 @@ export default function Select(props) {
     className += props.metadata ? 'pp-calendar-form-metafied ' + props.post_types : '';
     return (
             <select className={className}
+                    defaultValue={props.value}
                     type="select"
                     name={props.name}
                     id={props.id}

@@ -123,7 +123,7 @@ export default function ItemPopup(props) {
             }
 
             fieldRows.push(
-                <tr>
+                <tr key={`field-rows-popup-${fieldRows.length}`}>
                     <th>{dataProperty.label}:</th>
                     <td>{field}</td>
                 </tr>
@@ -155,15 +155,15 @@ export default function ItemPopup(props) {
 
             if (linkData.url) {
                 links.push(
-                    <a href={linkData.url}>{linkData.label}</a>
+                    <a key={`links-popup-${links.length}`} href={linkData.url}>{linkData.label}</a>
                 );
             } else if (linkData.action) {
                 links.push(
-                    <a href="javascript:void(0);" onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
+                    <a key={`links-popup-${links.length}`} onClick={(e) => handleOnClick(e, linkData)}>{linkData.label}</a>
                 );
             }
 
-            links.push(<span>|</span>);
+            links.push(<span key={`links-popup-${links.length}`}>|</span>);
         }
 
         links.pop();

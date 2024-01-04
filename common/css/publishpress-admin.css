@@ -244,6 +244,12 @@ Status color box */
 	float: left;
 }
 
+.pp-admin-notice {
+    padding: 10px !important;
+    line-height: 18px;
+    position: relative;
+}
+
 @media (max-width: 1199px) {
 
 	.pp-columns-wrapper.pp-enable-sidebar .pp-column-left,
