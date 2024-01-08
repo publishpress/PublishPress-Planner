@@ -1729,6 +1729,8 @@ if (! class_exists('PP_Calendar')) {
                     'draft' => '#f91d84',
                     'pending' => '#d87200',
                     'private' => '#000000',
+                    'future' => '#655997',
+                    'publish' => '#655997',
                 ];
 
                 if (isset($default_status_colors[$post_status])) {
