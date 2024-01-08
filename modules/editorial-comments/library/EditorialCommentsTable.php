@@ -118,7 +118,6 @@ class EditorialCommentsTable extends WP_List_Table
 
         if (is_array($_comments) ) {
             $this->items       = array_slice($_comments, 0, $comments_per_page);
-            $this->extra_items = array_slice($_comments, $comments_per_page);
         }
 
         $total_comments = get_comments(
