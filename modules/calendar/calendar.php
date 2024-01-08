@@ -1722,7 +1722,20 @@ if (! class_exists('PP_Calendar')) {
             if (! empty($term->color)) {
                 $color = $term->color;
             } else {
-                $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
+                $default_status_colors = [
+                    'pitch' => '#cc0000',
+                    'assigned' => '#00bcc5',
+                    'in-progress' => '#ccc500',
+                    'draft' => '#f91d84',
+                    'pending' => '#d87200',
+                    'private' => '#000000',
+                ];
+
+                if (isset($default_status_colors[$post_status])) {
+                    $color = $default_status_colors[$post_status];
+                } else {
+                    $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
+                }
             }
 
             return [
