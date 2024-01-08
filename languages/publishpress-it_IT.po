@@ -6,7 +6,7 @@ msgstr ""
 "Your WordPress Content - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress\n"
 "POT-Creation-Date: 2023-09-28 15:49+0000\n"
-"PO-Revision-Date: 2023-12-15 17:33+0100\n"
+"PO-Revision-Date: 2023-09-29 17:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.3\n"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:257
 msgid " Scheduled"
@@ -571,7 +571,8 @@ msgstr "Tutti i workflows"
 
 #: modules/calendar/calendar.php:2558
 msgid "Allow public access to subscriptions in iCal or Google Calendar"
-msgstr "Permetti l'accesso pubblico agli abbonamenti a iCal o Google Calendar"
+msgstr ""
+"Consentire l'accesso pubblico alle sottoscrizioni in iCal o Google Calendar"
 
 #: modules/notifications/notifications.php:1649
 msgid "Always notify the author of the content:"
@@ -968,8 +969,7 @@ msgstr "Descrizione"
 
 #: lib/Legacy/Util.php:236
 msgid "Detailed documentation is also available on the plugin website."
-msgstr ""
-"Una documentazione dettagliata è disponibile anche sul sito del plugin."
+msgstr "Una documentazione dettagliata è disponibile sul sito del plugin."
 
 #: modules/custom-status/custom-status.php:1889
 #: modules/calendar/calendar.php:2656
@@ -1045,8 +1045,8 @@ msgid ""
 "deactivate Edit Flow."
 msgstr ""
 "Edit Flow non deve essere utilizzato insieme a PublishPress Planner. Se vuoi "
-"usare PublishPress Planner, completa prima la migrazione dei dati da Edit "
-"Flow e poi disattiva Edit Flow."
+"usare PublishPress Planner, completa la migrazione dei dati di Edit Flow e "
+"poi disattiva Edit Flow."
 
 #: publishpress.php:1239
 msgid "Edit Notification"
@@ -1132,7 +1132,7 @@ msgstr "Abilita per questi tipi di contenuti:"
 
 #: modules/calendar/calendar.php:2550
 msgid "Enable subscriptions in iCal or Google Calendar"
-msgstr "Abilita gli abbonamenti a iCal o Google Calendar"
+msgstr "Abilita gli abbonamento a iCal o Google Calendar"
 
 #: modules/custom-status/custom-status.php:1890
 #: modules/calendar/calendar.php:2657
@@ -1391,8 +1391,8 @@ msgstr "Se ti piace %s, lasciaci una valutazione di %s!"
 #: lib/Legacy/Util.php:225
 msgid "If you need help or have a new feature request, let us know."
 msgstr ""
-"Se hai bisogno di aiuto o hai una richiesta di una nuova funzionalità, "
-"faccelo sapere."
+"Se hai bisogno di aiuto o vuoi richiedere una nuova funzionalità, faccelo "
+"sapere."
 
 #: modules/debug/debug.php:304
 msgid ""
@@ -2233,7 +2233,7 @@ msgstr "Rimuovi"
 
 #: lib/Legacy/Util.php:209
 msgid "Remove PublishPress ads and branding"
-msgstr "Rimuovi la pubblicità e il marchio di PublishPress"
+msgstr "Rimuovi la pubblicità e i loghi di PublishPress"
 
 #: modules/editorial-comments/editorial-comments.php:623
 msgid "Reply"
@@ -2250,7 +2250,7 @@ msgstr "Rispondi: %s"
 
 #: lib/Legacy/Util.php:227
 msgid "Request Support"
-msgstr "Richiesta di supporto"
+msgstr "Richiesta supporto"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:355
 #: modules/notifications-log/library/NotificationsLogTable.php:400
@@ -2487,7 +2487,7 @@ msgstr "Saltato"
 
 #: lib/Legacy/Util.php:206
 msgid "Slack integration for notifications"
-msgstr "Integrazioni con Slack per le notifiche"
+msgstr "Integrazione con Slack per le notifiche"
 
 #: modules/editorial-metadata/editorial-metadata.php:1909
 #: modules/editorial-metadata/editorial-metadata.php:2252
@@ -2994,15 +2994,16 @@ msgstr "Aggiorna a Pro"
 
 #: lib/Legacy/Util.php:198
 msgid "Upgrade to PublishPress Planner Pro"
-msgstr "Aggiorna a PublishPress Planner Pro"
+msgstr "Passa a PublishPress Planner Pro"
 
 #: modules/custom-status/custom-status.php:1856
 msgid "Use on these post types:"
 msgstr "Usa in questi tipi di articoli:"
 
 #: lib/Legacy/Util.php:208
+#| msgid "You don't have any notifications"
 msgid "Use post meta in notifications"
-msgstr "Utilizza i metadati dell'articolo nelle notifiche"
+msgstr "Usare i meta degli articoli nelle notifiche"
 
 #: modules/editorial-metadata/editorial-metadata.php:290
 msgid "User"
