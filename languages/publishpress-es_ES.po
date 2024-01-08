@@ -6,7 +6,7 @@ msgstr ""
 "Your WordPress Content - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress\n"
 "POT-Creation-Date: 2023-09-28 15:49+0000\n"
-"PO-Revision-Date: 2023-12-15 18:10+0100\n"
+"PO-Revision-Date: 2023-09-29 17:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.3\n"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:257
 msgid " Scheduled"
@@ -569,7 +569,7 @@ msgstr "Todos los flujos de trabajo"
 #: modules/calendar/calendar.php:2558
 msgid "Allow public access to subscriptions in iCal or Google Calendar"
 msgstr ""
-"Permite el acceso público a las suscripciones en iCal o Google Calendar"
+"Permitir el acceso público a las suscripciones en iCal o Google Calendar"
 
 #: modules/notifications/notifications.php:1649
 msgid "Always notify the author of the content:"
@@ -1040,8 +1040,8 @@ msgid ""
 "deactivate Edit Flow."
 msgstr ""
 "Edit Flow no puede utilizarse junto con PublishPress Planner. Si quieres "
-"usar PublishPress Planner, primero completa la migración de los datos de "
-"Edit Flow y luego desactiva Edit Flow."
+"usar PublishPress Planner, por favor completa la migración de datos de Edit "
+"Flow y luego desactiva Edit Flow."
 
 #: publishpress.php:1239
 msgid "Edit Notification"
@@ -1127,7 +1127,7 @@ msgstr "Activar para estos tipos de publicación:"
 
 #: modules/calendar/calendar.php:2550
 msgid "Enable subscriptions in iCal or Google Calendar"
-msgstr "Activa las suscripciones en iCal o Google Calendar"
+msgstr "Activar las suscripciones en iCal o Google Calendar"
 
 #: modules/custom-status/custom-status.php:1890
 #: modules/calendar/calendar.php:2657
@@ -1663,8 +1663,9 @@ msgstr ""
 "otro diferente."
 
 #: lib/Legacy/Util.php:220
+#| msgid "PublishPress Planner"
 msgid "Need PublishPress Planner Support?"
-msgstr "¿Necesitas soporte para PublishPress Planner?"
+msgstr "¿Necesitas asistencia para PublishPress Planner?"
 
 #: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
 msgid "New"
@@ -2238,7 +2239,7 @@ msgstr "Eliminar"
 
 #: lib/Legacy/Util.php:209
 msgid "Remove PublishPress ads and branding"
-msgstr "Eliminar los anuncios y la marca de PublishPress"
+msgstr "Elimina los anuncios y la marca de PublishPress"
 
 #: modules/editorial-comments/editorial-comments.php:623
 msgid "Reply"
@@ -3000,7 +3001,6 @@ msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
 #: lib/Legacy/Util.php:198
-#| msgid "PublishPress Planner"
 msgid "Upgrade to PublishPress Planner Pro"
 msgstr "Actualiza a PublishPress Planner Pro"
 
@@ -3011,7 +3011,7 @@ msgstr "Utilizar en estos tipos de contenido:"
 #: lib/Legacy/Util.php:208
 #| msgid "You don't have any notifications"
 msgid "Use post meta in notifications"
-msgstr "Utiliza los metadatos de la entrada en los avisos"
+msgstr "Usa la meta de la entrada en los avisos"
 
 #: modules/editorial-metadata/editorial-metadata.php:290
 msgid "User"
