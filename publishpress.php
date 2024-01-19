@@ -172,7 +172,7 @@ add_action('plugins_loaded', function () {
 
                 add_filter('debug_information', [$this, 'filterDebugInformation']);
 
-                add_filter('cme_publishpress_capabilities', [$this, 'filterCapabilities']);
+                add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities']);
             }
 
             /**
@@ -1179,23 +1179,10 @@ add_action('plugins_loaded', function () {
              *
              * @return array
              */
-            public function filterCapabilities($capabilities)
+            public function filterCapabilities($pluginCaps)
             {
-                $deprecatedCapabilities = [
-                    'edit_metadata',
-                    'ppma_edit_orphan_post',
-                    'pp_editorial_metadata_user_can_edit',
-                ];
 
-                foreach ($deprecatedCapabilities as $capability) {
-                    $key = array_search($capability, $capabilities, true);
-
-                    if (false !== $key) {
-                        unset($capabilities[$key]);
-                    }
-                }
-
-                $newCapabilities = [
+                $caps = [
                     'pp_edit_editorial_metadata',
                     'pp_view_editorial_metadata',
                     'pp_delete_editorial_comment',
@@ -1203,12 +1190,10 @@ add_action('plugins_loaded', function () {
                     'pp_edit_editorial_comment',
                     'pp_edit_others_editorial_comment',
                 ];
+                
+                $pluginCaps['PublishPress Planner'] = $caps;
 
-                foreach ($newCapabilities as $capability) {
-                    $capabilities[] = $capability;
-                }
-
-                return $capabilities;
+                return $pluginCaps;
             }
 
             /**
