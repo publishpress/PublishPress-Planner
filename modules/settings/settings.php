@@ -445,7 +445,22 @@ if (! class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+            $default_module = '';
+
+
+            $all_modules = (array)$publishpress->modules;
+            foreach ($all_modules as $mod_name => $mod_data) {
+                // Set first module as default module
+                if (empty($default_module) && !empty($mod_data->options_page) && $mod_data->options->enabled === 'on') {
+                    $default_module = $mod_data->settings_slug;
+                }
+
+                //force notification tab if dependent tab is enabled
+                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
+                    $all_modules['notifications']->options->enabled = 'on';
+                    break;
+                }
+            }
 
             $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
 
@@ -494,15 +509,6 @@ if (! class_exists('PP_Settings')) {
 
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
-
-            $all_modules = (array)$publishpress->modules;
-            //force notification tab if dependent tab is enabled
-            foreach ($all_modules as $mod_name => $mod_data) {
-                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
-                    $all_modules['notifications']->options->enabled = 'on';
-                    break;
-                }
-            }
 
             echo $this->view->render(
                 'settings',
