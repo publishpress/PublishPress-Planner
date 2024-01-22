@@ -2757,7 +2757,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             if (empty($customStatuses)) {
-                foreach ($statuses as $status) {
+                foreach ($statuses as $status => $title) {
                     $id = esc_attr($status) . '-display-publish-time';
 
                     echo '<div><label for="' . $id . '">';
@@ -2771,7 +2771,7 @@ if (! class_exists('PP_Calendar')) {
                     disabled(post_type_supports($status, $this->module->post_type_support), true);
 
                     echo ' type="checkbox" value="on" />&nbsp;'
-                    . esc_html($status)
+                    . esc_html($title)
                     . '</span>'
                     . '</label>';
 
