@@ -797,7 +797,8 @@ if (! class_exists('PP_Calendar')) {
                             'loadingItem' => esc_js(__('Loading item...', 'publishpress')),
                             'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
                             'movingTheItem' => esc_js(__('Moving the item...', 'publishpress')),
-                            'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
+                            'hideItems' => esc_js(__('Hide the %s last items', 'publishpress')),
+                            'showMore' => esc_js(__('Show %s more', 'publishpress')),
                             'untitled' => esc_js(__('Untitled', 'publishpress')),
                             'close' => esc_js(__('Close', 'publishpress')),
                             'save' => esc_js(__('Save', 'publishpress')),
@@ -1729,6 +1730,8 @@ if (! class_exists('PP_Calendar')) {
                     'draft' => '#f91d84',
                     'pending' => '#d87200',
                     'private' => '#000000',
+                    'future' => '#655997',
+                    'publish' => '#655997',
                 ];
 
                 if (isset($default_status_colors[$post_status])) {
@@ -2754,7 +2757,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             if (empty($customStatuses)) {
-                foreach ($statuses as $status) {
+                foreach ($statuses as $status => $title) {
                     $id = esc_attr($status) . '-display-publish-time';
 
                     echo '<div><label for="' . $id . '">';
@@ -2768,7 +2771,7 @@ if (! class_exists('PP_Calendar')) {
                     disabled(post_type_supports($status, $this->module->post_type_support), true);
 
                     echo ' type="checkbox" value="on" />&nbsp;'
-                    . esc_html($status)
+                    . esc_html($title)
                     . '</span>'
                     . '</label>';
 

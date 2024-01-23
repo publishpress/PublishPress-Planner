@@ -15,3 +15,7 @@
     margin-top: 4px;
     margin-right: 2px;
 }
+
+.publishpress-admin .select2-container {
+    min-width: 150px;
+}
