@@ -6,7 +6,7 @@ Tags: editorial calendar, notifications, custom statuses, editorial comments, wo
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.4
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,18 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.0.3] - 23 Jan 2024 =
+
+* Fixed : Time no longer showing on the calendar for some statuses, #1533
+* Update : Update Content Calendar statuses default color, #1523
+* Fixed : Fix missing translation string for calendar “view X more” and “hide the X last items”, #1536
+* Fixed : Calendar filters too cramped with the X, #1535
+* Fixed : Settings default to "Features" instead of first tab, #1524
+* Fixed : Deprecation issue, #1540
+* Fixed : Cannot use object of type WP_Error as array, #1525
+* Update : Re-enable Dashboard Widgets, #1505
+* Update : Translation Updates Planner, January 2024, #1522
 
 = [4.0.2] - 04 Jan 2024 =
 
