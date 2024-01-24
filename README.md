@@ -7,14 +7,6 @@ PublishPress Planner helps you plan and publish content with WordPress. Features
 
 Based on Edit Flow. Edit Flow is produced by Daniel Bachhuber, Mo Jangda, and Scott Bressler, with special help from Andrew Spittle and Andrew Witherspoon.
 
-## Documentation
-
-https://publishpress.com/docs/
-
-## How to report bugs or send suggestions
-
-Feel free to email us via [help@publishpress.com](mailto:help@publishpress.com). We would love to hear you, and will work hard to help you.
-
 ### Guidelines
 
 * Write a clear summary
