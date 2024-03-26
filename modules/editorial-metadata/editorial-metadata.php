@@ -2138,7 +2138,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </tr>
                         <tr class='form-field checkbox-row'>
                             <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show on Content Calendar form', 'publishpress'); ?></th>
+                                esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 $show_in_calendar_form_options = [
@@ -2154,7 +2154,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                 $publishpress->settings->helper_print_error_or_description(
                                     'show_in_calendar_form',
                                     esc_html__(
-                                        'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
+                                        'If enabled, this metadata will be available when adding new posts on the Content Calendar and Overview screen.',
                                         'publishpress'
                                     )
                                 ); ?>
@@ -2503,7 +2503,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                     </div>
                                     <div class='form-field form-required checkbox-row'>
                                         <label for='show_in_calendar_form'><?php
-                                            esc_html_e('Show on Content Calendar form', 'publishpress'); ?></label>
+                                            esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></label>
                                         <?php
                                         $show_in_calendar_form_options = [
                                             'no' => esc_html__('No', 'publishpress'),
@@ -2522,7 +2522,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                         $publishpress->settings->helper_print_error_or_description(
                                             'show_in_calendar_form',
                                             esc_html__(
-                                                'If enabled, this metadata will be available when adding new posts on the Content Calendar screen.',
+                                                'If enabled, this metadata will be available when adding new posts on the Content Calendar and Overview screen.',
                                                 'publishpress'
                                             )
                                         ); ?>
