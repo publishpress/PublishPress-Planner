@@ -138,6 +138,62 @@ table.content-overview thead td {
     max-width: unset;
 }
 
+.content-overview-form-table {
+    text-align: left;
+    border: none;
+    border-collapse: inherit;
+    border-spacing: 0;
+    user-select: text !important;
+}
+
+.content-overview-form-table th, 
+.content-overview-form-table td {
+    border: none;
+    border-collapse: inherit;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.content-overview-form-table th {
+    font-weight: bold;
+}
+
+.content-overview-form-table th, 
+.content-overview-form-table td {
+    padding-bottom: 5px;
+}
+
+.content-overview-form-table input[type="text"], 
+.content-overview-form-table textarea, 
+.content-overview-form-table select {
+    width: 250px;
+}
+
+.content-overview-form-table input[type=number] {
+    width: 100%;
+}
+
+.content-overview-form-table .form-title {
+    font-weight: bold;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    padding: 4px 23px 4px 4px;
+}
+
+.content-overview-form-table textarea {
+    height: 85px;
+}
+
+.content-overview-form-table td {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    padding-right: 35px;
+}
+
 .co-border-red {
     border-color: red !important;
 }
@@ -290,6 +346,10 @@ table.content-overview thead td {
     max-width: 300px;
 }
 
+.customize-customize-item-modal.new-post-modal .content-overview-modal-content {
+    min-width: 420px;
+}
+
 .co-cc-content .customize-content .fixed-header {
     width: 100%;
     background-color: #fafbfc;
@@ -301,10 +361,14 @@ table.content-overview thead td {
     margin-bottom: 5px;
 }
 
+.co-cc-content .customize-content .fixed-header {
+    display: none;
+}
+
 .co-cc-content .customize-content .scrollable-content {
     flex: 0 1 auto;
     position: relative;
-    max-height: min(100vh - 176px, 300px);
+    max-height: min(100vh - 176px, 335px);
     background: rgb(255, 255, 255);
     overflow: auto;
     scrollbar-color: rgb(173, 179, 189) rgb(255, 255, 255);
@@ -318,10 +382,15 @@ table.content-overview thead td {
     line-height: 1;
     padding: 10px;
     margin-top: 12px;
-    text-align: center;
     border-radius: 3px;
-    border: 1px solid #d8d8d8;
+    border: 1px solid rgb(232, 234, 237);
     cursor: pointer;
+    background-color: #655997;
+    color: rgb(255, 255, 255);
+    width: -moz-max-content; /* Firefox */
+    width: -webkit-max-content; /* Safari/Chrome */
+    width: max-content; /* Standard */
+    float: right;
 }
 
 .co-cc-content .customize-group-title,
@@ -779,6 +848,25 @@ header h2 a.change-date-cancel {
 
 .pp-co-metadata-filter-row .time-ranger-row .input-divider {
     margin-right: 2px;
+}
+
+.content-overview-form-loader {
+    display: none;
+}
+
+.content-overview-form-loader span {
+    position: absolute;
+    font-weight: normal;
+    top: 40%;
+    margin-left: -100px;
+    left: 50%;
+    margin-top: 20px;
+    color: #212121;
+}
+
+.content-overview-form-loader span.spinner {
+    margin-left: 0;
+    margin-top: 40px;
 }
 
 @keyframes dropdownMenuAnimation {

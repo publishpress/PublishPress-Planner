@@ -198,6 +198,7 @@ class PP_Content_Overview extends PP_Module
 
         add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'sendJsonSearchAuthors']);
         add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'sendJsonSearchCategories']);
+        add_action('wp_ajax_publishpress_content_overview_get_form_fields', [$this, 'getFormFieldAjaxHandler']);
 
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
@@ -945,6 +946,68 @@ class PP_Content_Overview extends PP_Module
             
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+        } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && !empty($_POST['ptype']) && $_POST['co_form_action'] == 'post_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_post_form_nonce')) {
+            $postType = sanitize_text_field($_POST['ptype']);
+            $postTypeObject = get_post_type_object($postType);
+            if (current_user_can($postTypeObject->cap->edit_posts)) {
+                $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+                $title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+                // Sanitized by the wp_filter_post_kses function.
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $content = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
+                $authors = isset($_POST['authors']) ? (int) $_POST['authors'] : get_current_user_id();
+                $categories = isset($_POST['category']) ? array_map('sanitize_text_field', $_POST['category']) : [];
+                $tags = isset($_POST['post_tag']) ? array_map('sanitize_text_field', $_POST['post_tag']) : [];
+
+                $postArgs = [
+                    'post_author' => $authors,
+                    'post_title' => $title,
+                    'post_content' => $content,
+                    'post_type' => $postType,
+                    'post_status' => $status
+                ];
+
+                $postId = wp_insert_post($postArgs);
+
+                if ($postId) {
+                    if (! empty($categories)) {
+                        $categoriesIdList = [];
+                        foreach ($categories as $categorySlug) {
+                            $category = get_term_by('slug', $categorySlug, 'category');
+    
+                            if (! $category || is_wp_error($category)) {
+                                $category = wp_create_category($categorySlug);
+                                $category = get_term($category);
+                            }
+    
+                            if (! is_wp_error($category)) {
+                                $categoriesIdList[] = $category->term_id;
+                            }
+                        }
+                        wp_set_post_terms($postId, $categoriesIdList, 'category');
+                    }
+    
+                    if (! empty($tags)) {
+                        foreach ($tags as $tagSlug) {
+                            $tag = get_term_by('slug', $tagSlug, 'post_tag');
+    
+                            if (! $tag || is_wp_error($tag)) {
+                                wp_create_tag($tagSlug);
+                            }
+                        }
+                        wp_set_post_terms($postId, $tags);
+                    }
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo pp_planner_admin_notice(sprintf(__('%s created successfully. <a href="%s" target="_blank">Edit %s</a>', 'publishpress'), esc_html($postTypeObject->labels->singular_name), esc_url(get_edit_post_link($postId)), esc_html($postTypeObject->labels->singular_name)));
+                } else {
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo pp_planner_admin_notice(sprintf(esc_html__('%s could not be created', 'publishpress'), esc_html($postTypeObject->labels->singular_name)), false);
+                }
+
+            } else {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo pp_planner_admin_notice(sprintf(esc_html__('You do not have permission to add new %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)), false);
+            }
         }
 
     }
@@ -1063,7 +1126,7 @@ class PP_Content_Overview extends PP_Module
         // custom columns
         $columns['custom'] = [
             'title'     => esc_html__('Custom Columns', 'publishpress'),
-            'message'   => esc_html__('You do not have any custom column. Use the button above to add new custom column', 'publishpress'),
+            'message'   => esc_html__('You do not have any custom column. Use this area to add new custom column', 'publishpress'),
             'columns'   => is_array($content_overview_datas['content_overview_custom_columns']) ? $content_overview_datas['content_overview_custom_columns'] : []
         ];
 
@@ -1125,7 +1188,7 @@ class PP_Content_Overview extends PP_Module
         // custom filters
         $filters['custom'] = [
             'title'     => esc_html__('Custom filters', 'publishpress'),
-            'message'   => esc_html__('You do not have any custom filter. Use the button above to add new custom filter', 'publishpress'),
+            'message'   => esc_html__('You do not have any custom filter. Use this area to add new custom filter', 'publishpress'),
             'filters'   => $content_overview_datas['content_overview_custom_filters']
         ];
 
@@ -1463,12 +1526,326 @@ class PP_Content_Overview extends PP_Module
         
     }
 
+    public function getFormFieldAjaxHandler() {
+        $response['status']  = 'error';
+        $response['content'] = esc_html__('An error occured', 'publishpress-authors');
+
+
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_overview_filter_nonce')) {
+            $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
+        } elseif (empty($_POST['post_type'])) {
+            $response['content'] = esc_html__('Invalid form request.', 'publishpress');
+        } else {
+            $post_type = sanitize_text_field($_POST['post_type']);
+            $response['status']  = 'success';
+            $response['content'] = $this->content_overview_get_post_form($post_type);
+        }
+        
+        wp_send_json($response);
+    }
+
+    public function content_overview_get_post_form($post_type) {
+        
+        ob_start();
+
+        $postTypeObject = get_post_type_object($post_type);
+        $post_fields = $this->getPostTypeFields($post_type);
+        ?>
+        <form method="POST" class="pp-content-overview-post-form" id="pp-content-overview-post-form">
+            <input type="hidden" name="co_form_action" value="post_form"/>
+            <input type="hidden" name="_nonce" value="<?php echo esc_attr(wp_create_nonce('content_overview_post_form_nonce')); ?>"/>
+            <div class="form-title">
+                <?php echo sprintf(esc_html__('Add New %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)); ?>
+            </div>
+            <hr />
+            <div class="co-cc-content">
+                <div class="customize-content new-post">
+                    <div class="scrollable-content">
+                    <table class="content-overview-form-table fixed">
+                        <tbody>
+                            <?php foreach ($post_fields as $field_key => $field_options) : ?>
+                                <tr>
+                                    <th>
+                                        <label for="publishpress-content-overview-field-<?php echo esc_attr($field_key); ?>">
+                                            <?php echo esc_html($field_options['label']); ?>
+                                        </label>
+                                    </th>
+                                    <td>
+                                        <?php if (!empty($field_options['html'])) : ?>
+                                            <?php echo $field_options['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                                        <?php else : ?>
+                                            <?php
+                                            switch ($field_options['type']) {
+                                                case 'status':
+                                                    ?>
+                                                    <select id="form_post_status" name="<?php echo esc_attr($field_key); ?>">
+                                                        <?php
+                                                        foreach ($field_options['options'] as $post_status) {
+                                                            echo "<option value='" . esc_attr($post_status['value']) . "' " . selected(
+                                                                    $post_status['value'],
+                                                                    $field_options['value']
+                                                                ) . ">" . esc_html($post_status['text']) . "</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                    <?php
+                                                    break;
+
+                                                    case 'taxonomy':
+                                                        $taxonomy_name = $field_options['taxonomy'];
+                                                        $taxonomySlug = $field_options['value'];
+                                                        ?>
+                                                        <select 
+                                                            class="post_form_taxonomy" 
+                                                            id="<?php echo esc_attr('post_form_taxonomy_' . $taxonomy_name); ?>" 
+                                                            data-taxonomy="<?php echo esc_attr($taxonomy_name); ?>" 
+                                                            name="<?php echo esc_attr($taxonomy_name); ?>[]"
+                                                            multiple
+                                                            >
+                                                            <?php
+                                                            if ($taxonomySlug) {
+                                                                $term = get_term_by('slug', $taxonomySlug, $taxonomy_name);
+                                        
+                                                                echo "<option value='" . esc_attr($taxonomySlug) . "' selected='selected'>" . esc_html(
+                                                                        $term->name
+                                                                    ) . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <?php
+                                                        break;
+                                        
+                                                    case 'authors':
+                                                        $authorId = (int) $field_options['value'];
+                                                        ?>
+                                                        <select id="post_form_author_<?php echo esc_attr($field_key); ?>" class="post_form_author <?php echo esc_attr($field_key); ?>" name="<?php echo esc_attr($field_key); ?>">
+                                                            <?php
+                                                            if (! empty($authorId)) {
+                                                                $author = get_user_by('id', $authorId);
+                                                                $option = '';
+                                        
+                                                                if (! empty($author)) {
+                                                                    $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html(
+                                                                            $author->display_name
+                                                                        ) . '</option>';
+                                                                }
+                                        
+                                                                $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+                                        
+                                                                echo $option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <?php
+                                                        break;
+                                        
+                                                    case 'post_type':
+                                                        ?>
+                                                        <select id="post_form_post_type" name="<?php echo esc_attr($field_key); ?>">
+                                                            <?php
+                                                            foreach ($field_options['options'] as $option_key => $option_label) {
+                                                                echo '<option value="' . esc_attr($option_key) . '" ' . selected(
+                                                                        $field_options['value'],
+                                                                        $option_key
+                                                                    ) . '>' . esc_html($option_label) . '</option>';
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <?php
+                                                        break;
+                                        
+                                                    case 'html':
+                                                            ?>
+                                                            <textarea 
+                                                                name="<?php echo esc_attr($field_key); ?>"><?php echo stripslashes_deep($field_options['value']); ?></textarea>
+                                                            <?php
+                                                    break;
+
+                                                    default:
+                                                        ?>
+                                                        <input 
+                                                            type="<?php echo esc_attr($field_options['type']); ?>" 
+                                                            name="<?php echo esc_attr($field_key); ?>" 
+                                                            value="<?php echo esc_attr($field_options['value']); ?>"
+                                                        >
+                                                        <?php
+                                                    break;
+                                            }
+                                            ?>
+                                            
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="fixed-footer">
+                    <div class="save-cc-changes save-new-post-form">
+                        <?php echo sprintf(esc_html__('Create %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)); ?>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="content-overview-form-loader">
+            <span class="text">
+                <?php esc_html_e('Please, wait! Loading the form fields...', 'publishpress'); ?>
+            </span>
+            <span class="spinner is-active"></span>
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
+
+    
+    public function getPostTypeFields($postType)
+    {
+        global $publishpress;
+
+        $postTypeObject = get_post_type_object($postType);
+
+        $fields = [
+            'ptype' => [
+                'label' => __('Post Type', 'publishpress'),
+                'value' => $postType,
+                'type' => 'post_type',
+                'options' => $this->get_editable_post_types(),
+            ],
+            'title' => [
+                'label' => __('Title', 'publishpress'),
+                'value' => null,
+                'type' => 'text',
+            ],
+            'status' => [
+                'label' => __('Post Status', 'publishpress'),
+                'value' => 'draft',
+                'type' => 'status',
+                'options' => $this->getUserAuthorizedPostStatusOptions($postType)
+            ]
+        ];
+
+        if (current_user_can($postTypeObject->cap->edit_others_posts)) {
+            $fields['authors'] = [
+                'label' => __('Author', 'publishpress'),
+                'value' => get_current_user_id(),
+                'type' => 'authors',
+            ];
+        }
+
+        $taxonomies = get_object_taxonomies($postType);
+
+        if (in_array('category', $taxonomies)) {
+            $fields['categories'] = [
+                'label' => __('Categories', 'publishpress'),
+                'value' => null,
+                'type' => 'taxonomy',
+                'taxonomy' => 'category',
+            ];
+        }
+
+        if (in_array('post_tag', $taxonomies)) {
+            $fields['tags'] = [
+                'label' => __('Tags', 'publishpress'),
+                'value' => null,
+                'type' => 'taxonomy',
+                'taxonomy' => 'post_tag',
+            ];
+        }
+
+        $fields['content'] = [
+            'label' => __('Content', 'publishpress'),
+            'value' => null,
+            'type' => 'html'
+        ];
+
+        if (class_exists('PP_Editorial_Metadata')) {
+            $editorial_metadata_class = new PP_Editorial_Metadata;
+            $editorial_metadata_terms = $publishpress->editorial_metadata->get_editorial_metadata_terms(['show_in_calendar_form' => true]);
+            foreach ($editorial_metadata_terms as $term) {
+                if (isset($term->post_types) && is_array($term->post_types) && in_array($postType, $term->post_types)) {
+                    $term_options = $editorial_metadata_class->get_editorial_metadata_term_by('id', $term->term_id);
+                    $postmeta_key = esc_attr($editorial_metadata_class->get_postmeta_key($term));
+                    $post_types = (isset($term->post_types) && is_array($term->post_types)) ? array_values($term->post_types) : [];
+                    $post_types = join(" ", $post_types);
+                    $term_data = [
+                    'name' => $postmeta_key,
+                    'label' => $term->name,
+                    'description' => $term->description,
+                    'term_options' => $term_options,
+                ];
+                    $term_type = $term->type;
+                    if ($term_type === 'user') {
+                        $ajaxArgs    = [];
+                        if (isset($term->user_role)) {
+                            $ajaxArgs['user_role'] = $term->user_role;
+                        }
+                        $fields[$term_data['name']] = [
+                        'metadata' => true,
+                        'term'     => $term,
+                        'label'    => $term->name,
+                        'value'    => '',
+                        'ajaxArgs' => $ajaxArgs,
+                        'post_types' => $post_types,
+                        'type'     => 'authors',
+                        'multiple' => ''
+                    ];
+                    } elseif ($term_type === 'paragraph') {
+                        $fields[$term_data['name']] = [
+                        'metadata' => true,
+                        'term'     => $term,
+                        'label'    => $term->name,
+                        'post_types' => $post_types,
+                        'value'    => '',
+                        'type'     => 'html'
+                    ];
+                    } else {
+                        $html = apply_filters("pp_editorial_metadata_{$term->type}_get_input_html", $term_data, '');
+                        $fields[$term_data['name']] = [
+                        'metadata' => true,
+                        'post_types' => $post_types,
+                        'html'     => (is_object($html) || is_array($html)) ? '' : '<div class="pp-calendar-form-metafied '. $post_types .'">' . $html . '</div>',
+                        'term'     => $term,
+                        'label'    => $term->name,
+                        'value'    => '',
+                        'type'     => 'metafield'
+                    ];
+                    }
+                }
+            }
+        }
+
+        $fields = apply_filters('publishpress_content_overview_get_post_type_fields', $fields, $postType);
+
+        return $fields;
+    }
+
+    /**
+     * Get post types user has capability to edit posts in
+     */
+    public function get_editable_post_types() {
+        $editable_post_types = [];
+        $postTypes = $this->get_selected_post_types();
+        foreach ($postTypes as $postType) {
+            $postTypeObject = get_post_type_object($postType);
+            if (!empty($postTypeObject->cap->edit_posts) && current_user_can($postTypeObject->cap->edit_posts)) {
+                $editable_post_types[$postTypeObject->name] = $postTypeObject->labels->singular_name;
+            }
+        }
+            
+        return $editable_post_types;
+    }
+
     /**
      * Print the table navigation and filter controls, using the current user's filters if any are set.
      */
     public function table_navigation()
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
+
+        $editable_post_types = $this->get_editable_post_types();
         ?>
         <div class="pp-content-overview-manage">
             <div class="left-items">
@@ -1504,9 +1881,21 @@ class PP_Content_Overview extends PP_Module
                 </div>
             </div>
             <div class="right-items">
-                <div class="item action new-post" style="display: none;">
-                    <span class="dashicons dashicons-plus-alt"></span> <?php esc_html_e('New Post', 'publishpress'); ?>
-                </div>
+                <?php if (!empty($editable_post_types)) :
+                    $default_post_type = array_keys($editable_post_types)[0]; ?>
+                    <?php $modal_id++; ?>
+                    <div class="item action co-filter new-post" data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>">
+                        <span class="dashicons dashicons-plus-alt"></span> <?php esc_html_e('New Post', 'publishpress'); ?>
+                    </div>
+                    <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-overview-modal new-post-modal" style="display: none;">
+                        <div class="content-overview-modal-content">
+                            <span class="close">&times;</span>
+                            <div class="content-overview-modal-form">
+                                <?php echo $this->content_overview_get_post_form($default_post_type); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div class="item">
                     <div class="search-bar">
                         <input type="search" id="co-searchbox-search-input" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />

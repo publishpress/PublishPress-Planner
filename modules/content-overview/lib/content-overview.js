@@ -145,6 +145,7 @@ jQuery(document).ready(function ($) {
         var modalID = $(this).attr("data-target");
         var modalDisplay = $(modalID).css('display');
         var isCustomModal = $(modalID).hasClass('customize-customize-item-modal');
+        var isPostModal = $(modalID).hasClass('new-post-modal');
         
         $('.content-overview-modal').hide();
     
@@ -157,33 +158,10 @@ jQuery(document).ready(function ($) {
     
                 $(modalID).css({
                     top: $('.pp-version-notice-bold-purple').length > 0 ? -32 : 0,
-                    left: $(this).position().left + $(this).outerWidth() + 5,
+                    left: isPostModal ? $(this).position().left - $(modalID).outerWidth() - 5 : $(this).position().left + $(this).outerWidth() + 5,
                     //'max-height': maxModalHeight
                 }).show();
     
-            } else {
-                $(modalID).css({
-                    top: $(this).position().top + 28, 
-                    left: $(this).position().left
-                }).show();
-            }
-        }
-    });
-    
-    $(document).on('click', '.pp-content-overview-filters2 .co-filter, .pp-content-overview-manage2 .co-filter', function (e) {
-        e.preventDefault();
-        var modalID = $(this).attr("data-target");
-        var modalDisplay = $(modalID).css('display');
-        var isCustomModal = $(modalID).hasClass('customize-customize-item-modal');
-        
-        $('.content-overview-modal').hide();
-
-        if (modalDisplay !== 'block') {
-            if (isCustomModal) {
-                $(modalID).css({
-                    top: $('#wpadminbar').outerHeight() || 0,
-                    left: $(this).position().left + $(this).outerWidth() + 5
-                }).show();
             } else {
                 $(modalID).css({
                     top: $(this).position().top + 28, 
@@ -258,6 +236,10 @@ jQuery(document).ready(function ($) {
         $(".co-cc-content .customize-content.reorder-content .scrollable-content").sortable({
             axis: "y"
         });
+    }
+
+    if ($("#pp-content-overview-post-form").length > 0) {
+        initFormSelect2();
     }
 
     $(document).on('click', '.co-cc-content .entry-item.form-item .new-submit', function (e) {
@@ -341,8 +323,76 @@ jQuery(document).ready(function ($) {
         $(this).removeClass('co-border-red');
     });
 
+    $(document).on('change', '#pp-content-overview-post-form select#post_form_post_type', function (e) {
+        var select = $(this);
+        select.closest('form').css("visibility", "hidden");
+        select.closest('.content-overview-modal-form').find('.content-overview-form-loader').show();
+
+        var data = {
+            action: "publishpress_content_overview_get_form_fields",
+            nonce: PPContentOverview.nonce,
+            post_type: select.val()
+        };
+
+        $.post(ajaxurl, data, function (response) {
+            select.closest('.content-overview-modal-form').html(response.content);
+            initFormSelect2();
+        });
+
+    });
+
     function isEmptyOrSpaces(str) {
         return str == '' || str === null || str.match(/^ *$/) !== null;
+    }
+
+    function initFormSelect2() {
+        $('#pp-content-overview-post-form select.post_form_author').pp_select2({
+            allowClear: true,
+            ajax: {
+                url: ajaxurl,
+                dataType: 'json',
+                delay: 0,
+                data: function (params) {
+                    return {
+                        action: 'publishpress_content_overview_search_authors',
+                        nonce: PPContentOverview.nonce,
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: false
+            }
+        });
+
+        $('#pp-content-overview-post-form select.post_form_taxonomy').pp_select2({
+            allowClear: true,
+            ajax: {
+                url: ajaxurl,
+                dataType: 'json',
+                delay: 0,
+            data: function (params) {
+                    return {
+                        action: 'publishpress_content_overview_search_categories',
+                        taxonomy: $(this).attr('data-taxonomy'),
+                        nonce: PPContentOverview.nonce,
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: false
+            }
+        });
+
+        $('#pp-content-overview-post-form select#post_form_post_type').pp_select2();
+        $('#pp-content-overview-post-form select#form_post_status').pp_select2();
     }
     
 });
