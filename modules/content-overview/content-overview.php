@@ -1126,7 +1126,7 @@ class PP_Content_Overview extends PP_Module
         // custom columns
         $columns['custom'] = [
             'title'     => esc_html__('Custom Columns', 'publishpress'),
-            'message'   => esc_html__('You do not have any custom column. Use this area to add new custom column', 'publishpress'),
+            'message'   => esc_html__('Click the "Add New" button to create new columns.', 'publishpress'),
             'columns'   => is_array($content_overview_datas['content_overview_custom_columns']) ? $content_overview_datas['content_overview_custom_columns'] : []
         ];
 
@@ -1188,7 +1188,7 @@ class PP_Content_Overview extends PP_Module
         // custom filters
         $filters['custom'] = [
             'title'     => esc_html__('Custom filters', 'publishpress'),
-            'message'   => esc_html__('You do not have any custom filter. Use this area to add new custom filter', 'publishpress'),
+            'message'   => esc_html__('Click the "Add New" button to create new filters.', 'publishpress'),
             'filters'   => $content_overview_datas['content_overview_custom_filters']
         ];
 
