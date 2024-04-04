@@ -529,46 +529,6 @@ if (! class_exists('PP_Calendar')) {
             return current_user_can($this->getViewCapability());
         }
 
-        protected function getPostStatusOptions()
-        {
-            $postStatuses = [];
-            $post_statuses_terms       = get_terms('post_status', ['hide_empty' => false]);
-            $post_statuses_terms_slugs = (!is_wp_error($post_statuses_terms)) ? array_column($post_statuses_terms, 'slug') : [];
-            foreach ($this->get_post_statuses() as $status) {
-                //add support for capabilities custom statuses
-                if (defined('PUBLISHPRESS_CAPS_PRO_VERSION')
-                    && !empty(get_option('cme_custom_status_control'))
-                    && in_array($status->slug, $post_statuses_terms_slugs)
-                    && !current_user_can('status_change_' . $status->slug)
-                ) {
-                    continue;
-                }
-                $postStatuses[] = [
-                    'value' => esc_attr($status->slug),
-                    'text' => esc_html($status->label),
-                ];
-            }
-
-            return $postStatuses;
-        }
-
-        protected function getUserAuthorizedPostStatusOptions($postType)
-        {
-            $postStatuses = $this->getPostStatusOptions();
-
-            foreach ($postStatuses as $index => $status) {
-                // Filter publishing posts if the post type is set
-                if (in_array($status['value'], ['publish', 'future', 'private'])) {
-                    $postTypeObj = get_post_type_object($postType);
-                    if (! current_user_can($postTypeObj->cap->publish_posts)) {
-                        unset($postStatuses[$index]);
-                    }
-                }
-            }
-
-            return $postStatuses;
-        }
-
         /**
          * Add any necessary JS to the WordPress admin
          *

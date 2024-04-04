@@ -15,7 +15,10 @@
 .row-actions,
 #wpfooter,
 footer,
-.change-date {
+.change-date,
+#pp-content-filters .clear-filter,
+.pp-content-overview-manage,
+.pp-version-notice-bold-purple {
     display: none;
 }
 
@@ -99,4 +102,76 @@ a {
     font-size: 20px;
     font-weight: normal;
     text-shadow: none;
+}
+
+table.content-overview {
+    background: white;
+    padding: 15px;
+    border: 1px solid rgb( 101, 111, 125 );
+    border-radius: 0.5rem;
+    border-left-width: 1px;
+    margin-top: 10px;
+    padding-top: 5px;
+}
+
+table.content-overview tr td {
+    border-top: 1px solid rgb(240, 241, 243);
+    border-bottom: 1px solid rgb(240, 241, 243);
+}
+
+.pp-content-overview-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.pp-content-overview-filters button.clear-filter, .pp-content-overview-filters button.co-filter {
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.5rem;
+    border: 1px solid rgb(232, 234, 237);
+    background-color: rgb(255, 255, 255);
+    color: rgb(101, 111, 125);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.pp-content-overview-manage .item.action.active-filter, .pp-content-overview-filters button.active-filter {
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.5rem;
+    border: 1px solid rgb(204, 201, 250);
+    background-color: rgb(242, 241, 254);
+    color: rgb(84, 77, 201);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.content-overview-inside .column-icon {
+    margin-left: 0;
+    margin-right: 5px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    flex-grow: 0;
+    width: 16px;
+    height: 16px;
+    fill: green;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.content-overview-inside .column-icon.red {
+    fill: red;
+}
+
+.content-overview-inside .column-icon.black {
+    fill: rgb( 101, 111, 125 );
 }

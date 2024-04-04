@@ -119,3 +119,41 @@ if (!function_exists('pp_get_users_with_author_permissions')) {
         return apply_filters('pp_get_users_eligible_to_be_authors', $authors);
     }
 }
+
+if (!function_exists('pp_planner_admin_notice')) {
+    /**
+     * Show admin notices function for use with admin_notices hook.
+     *
+     * Constructs admin notice HTML.
+     *
+     * @param string $message Message to use in admin notice. Optional. Default empty string.
+     * @param bool $success Whether or not a success. Optional. Default true.
+     * @return mixed
+     */
+    function pp_planner_admin_notice($message = '', $success = true)
+    {
+
+        $class   = [];
+        $class[] = $success ? 'updated' : 'error';
+        $class[] = 'notice is-dismissible';
+
+        $messagewrapstart = '<div id="message" class="' . esc_attr(implode(' ', $class)) . '"><p>';
+
+        $messagewrapend = '</p></div>';
+
+        $action = '';
+
+        /**
+         * Filters the custom admin notice for ppma.
+         *
+         *
+         * @param string $value Complete HTML output for notice.
+         * @param string $action Action whose message is being generated.
+         * @param string $message The message to be displayed.
+         * @param string $messagewrapstart Beginning wrap HTML.
+         * @param string $messagewrapend Ending wrap HTML.
+         */
+        return apply_filters('ppch_admin_notice', $messagewrapstart . $message . $messagewrapend, $action, $message,
+            $messagewrapstart, $messagewrapend);
+    }
+}
