@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 5.5
 Requires PHP: 7.2.5
-Tested up to: 6.4
+Tested up to: 6.5
 Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -112,6 +112,14 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.1.0] - 04 April 2024 =
+
+* Update : Improve the Content Overview screen with selectable columns, #1538
+* Update : Clean up Content Overview Filters, #1558
+* Update : Add "New Post" modal to Content Overview, #1557
+* Update : Turkish Translation for Planner, #1568
+* Update : Planner translation Updates from v4.0.3, #1549
 
 = [4.0.3] - 23 Jan 2024 =
 
