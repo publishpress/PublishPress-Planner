@@ -35,6 +35,6 @@ jQuery(() => {
     if (createRoot) {
         createRoot(container).render(component);
     } else {
-        render(component);
+        render(component, container);
     }
 });
