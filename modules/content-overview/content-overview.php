@@ -1090,8 +1090,7 @@ class PP_Content_Overview extends PP_Module
         $content_overview_custom_filters = $this->module->options->content_overview_custom_filters;
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
-            'post_status' => esc_html__('Status', 'publishpress'), 
-            'category' => esc_html__('Categories', 'publishpress'), 
+            'post_status' => esc_html__('Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'), 
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
@@ -1868,7 +1867,7 @@ class PP_Content_Overview extends PP_Module
                 </div>
                 <?php $modal_id++; ?>
                 <div class="item action co-filter" data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>">
-                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Manage Filters', 'publishpress'); ?>
+                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Customize Filters', 'publishpress'); ?>
                 </div>
                 <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-overview-modal" style="display: none;">
                     <div class="content-overview-modal-content">
