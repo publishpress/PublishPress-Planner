@@ -1090,8 +1090,7 @@ class PP_Content_Overview extends PP_Module
         $content_overview_custom_filters = $this->module->options->content_overview_custom_filters;
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
-            'post_status' => esc_html__('Status', 'publishpress'), 
-            'category' => esc_html__('Categories', 'publishpress'), 
+            'post_status' => esc_html__('Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'), 
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
