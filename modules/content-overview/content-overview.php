@@ -1867,7 +1867,7 @@ class PP_Content_Overview extends PP_Module
                 </div>
                 <?php $modal_id++; ?>
                 <div class="item action co-filter" data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>">
-                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Manage Filters', 'publishpress'); ?>
+                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Customize Filters', 'publishpress'); ?>
                 </div>
                 <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-overview-modal" style="display: none;">
                     <div class="content-overview-modal-content">
