@@ -791,6 +791,8 @@ class PP_Content_Overview extends PP_Module
         // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
         if (! isset($_GET[$param])) {
             return null;
+        } elseif ($_GET[$param] == '0') {
+            return 0;
         } elseif (empty($_GET[$param])) {
             return '';
         }
@@ -2018,15 +2020,15 @@ class PP_Content_Overview extends PP_Module
 
     private function meta_query_operator($operator = false) {
         $operators = [
-            'equals' => '=',
-            'not_equals' => '!=',
-            'greater_than' => '>',
-            'greater_than_or_equals' => '>=',
-            'less_than' => '<',
-            'less_than_or_equals' => '<=',
-            'like' => 'LIKE',
-            'not_like' => 'NOT LIKE',
-            'not_exists' => 'NOT EXISTS'
+            'equals'                    => '=',
+            'not_equals'                => '!=',
+            'greater_than'              => '>',
+            'greater_than_or_equals'    => '>=',
+            'less_than'                 => '<', 
+            'less_than_or_equals'       => '<=', 
+            'like'                      => 'LIKE',
+            'not_like'                  => 'NOT LIKE',
+            'not_exists'                => 'NOT EXISTS/EMPTY',
         ];
 
         if ($operator) {
@@ -2401,7 +2403,11 @@ class PP_Content_Overview extends PP_Module
                             <?php
                             $all_options = $this->meta_query_operator();
                             foreach ($all_options as $option_key => $option_label) {
-                                if ($operator_value == $option_key && !empty($selected_value)) {
+                                if (
+                                    ($operator_value == $option_key && !empty($selected_value))
+                                    || ($operator_value == $option_key && $selected_value == '0')
+                                    || ($operator_value == $option_key && 'not_exists' === $option_key)
+                                ) {
                                     $selected_value = $option_label . $selected_value;
                                 }
                                 echo '<option value="' . esc_attr($option_key) . '" ' . selected(
@@ -2650,7 +2656,21 @@ class PP_Content_Overview extends PP_Module
                     );
                 }
 
-            } elseif(in_array($enabled_filter, $this->content_overview_datas['meta_keys']) && !empty($this->user_filters[$enabled_filter])) {
+            } elseif(
+                in_array($enabled_filter, $this->content_overview_datas['meta_keys']) 
+                && (
+                    isset($this->user_filters[$enabled_filter])
+                    && 
+                        (
+                            !empty($this->user_filters[$enabled_filter]) 
+                            || $this->user_filters[$enabled_filter] == '0'
+                            || (
+                                !empty($this->user_filters[$enabled_filter . '_operator'])
+                                && $this->user_filters[$enabled_filter . '_operator'] === 'not_exists'
+                                )
+                        )
+                    )
+                ) {
                 // metakey filter
                 unset($args[$enabled_filter]);
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
@@ -2658,11 +2678,27 @@ class PP_Content_Overview extends PP_Module
                 $compare = $this->meta_query_operator($meta_operator);
                 
                 $metadata_filter = true;
-                $meta_query[] = array(
-                    'key' => $enabled_filter,
-                    'value' => $meta_value,
-                    'compare' => $compare
-                );
+
+                if ($meta_operator == 'not_exists') {
+                    $meta_query[] = array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => $enabled_filter,
+                            'compare' => 'NOT EXISTS'
+                        ),
+                        array(
+                            'key' => $enabled_filter,
+                            'value' => '',
+                            'compare' => '='
+                        )
+                    );
+                } else {
+                    $meta_query[] = array(
+                        'key' => $enabled_filter,
+                        'value' => $meta_value,
+                        'compare' => $compare
+                    );
+                }
             } elseif (in_array($enabled_filter, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score']) && !empty($this->user_filters[$enabled_filter]) && array_key_exists($enabled_filter, $this->form_filter_list) && class_exists('WPSEO_Meta')) {
                 // yoast seo filter
                 unset($args[$enabled_filter]);
