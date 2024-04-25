@@ -2020,15 +2020,15 @@ class PP_Content_Overview extends PP_Module
 
     private function meta_query_operator($operator = false) {
         $operators = [
-            'equals'                    => '=',
-            'not_equals'                => '!=',
-            'greater_than'              => '>',
-            'greater_than_or_equals'    => '>=',
-            'less_than'                 => '<', 
-            'less_than_or_equals'       => '<=', 
-            'like'                      => 'LIKE',
-            'not_like'                  => 'NOT LIKE',
-            'not_exists'                => 'NOT EXISTS/EMPTY',
+            'equals'                    => 'Equals (=)',
+            'not_equals'                => 'Does not equal (!=)',
+            'greater_than'              => 'Greater than (>)',
+            'greater_than_or_equals'    => 'Greater than or equals (>=)',
+            'less_than'                 => 'Less than (<)', 
+            'less_than_or_equals'       => 'Less than or equals (<=)', 
+            'like'                      => 'Like/Contains',
+            'not_like'                  => 'Not Like',
+            'not_exists'                => 'Not Exists/Empty',
         ];
 
         if ($operator) {
