@@ -188,7 +188,7 @@ if (! class_exists('PP_Efmigration')) {
                             self::PLUGIN_NAMESPACE
                         ),
                         'usermeta' => esc_html__('User Meta-data', self::PLUGIN_NAMESPACE),
-                        'metadata' => esc_html__('Editorial Metadata', self::PLUGIN_NAMESPACE),
+                        'metadata' => esc_html__('Editorial Fields', self::PLUGIN_NAMESPACE),
                         'success_msg' => esc_html__('Finished!', self::PLUGIN_NAMESPACE),
                         'header_msg' => esc_html__(
                             'Please, wait while we migrate your legacy data...',

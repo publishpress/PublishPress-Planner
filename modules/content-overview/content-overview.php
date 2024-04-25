@@ -278,7 +278,7 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Choose the post types for editorial metadata
+     * Choose the post types for editorial fields
      *
      * @since 0.7
      */
@@ -289,7 +289,7 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Get the post types for editorial metadata
+     * Get the post types for editorial fields
      *
      * @return array $post_types All existing post types
      *
@@ -1032,7 +1032,7 @@ class PP_Content_Overview extends PP_Module
         // add all meta keys
         $datas['meta_keys'] = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 ORDER BY meta_key ASC");
 
-        // add editorial metadata
+        // add editorial fields
         if (class_exists('PP_Editorial_Metadata')) {
             $additional_terms = get_terms(
                 [
@@ -1143,11 +1143,11 @@ class PP_Content_Overview extends PP_Module
             ]
         ];
 
-        // editorial metadata columns
+        // editorial fields columns
         if (isset($content_overview_datas['editorial_metadata'])) {
             $columns['editorial_metadata'] = [
-                'title'     => esc_html__('Editorial Metadata', 'publishpress'),
-                'message'   => esc_html__('You do not have any editorial metadata enabled', 'publishpress'),
+                'title'     => esc_html__('Editorial Fields', 'publishpress'),
+                'message'   => esc_html__('You do not have any editorial fields enabled', 'publishpress'),
                 'columns'   => is_array($content_overview_datas['editorial_metadata']) ? $content_overview_datas['editorial_metadata'] : []
             ];
         }
@@ -1203,11 +1203,11 @@ class PP_Content_Overview extends PP_Module
             ]
         ];
         
-        // editorial metadata filters
+        // editorial fields filters
         if (isset($content_overview_datas['editorial_metadata'])) {
             $filters['editorial_metadata'] = [
-                'title'     => esc_html__('Editorial Metadata', 'publishpress'),
-                'message'   => esc_html__('You do not have any editorial metadata enabled', 'publishpress'),
+                'title'     => esc_html__('Editorial Fields', 'publishpress'),
+                'message'   => esc_html__('You do not have any editorial fields enabled', 'publishpress'),
                 'filters'   => $content_overview_datas['editorial_metadata']
             ];
         }

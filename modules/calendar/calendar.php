@@ -1992,7 +1992,7 @@ if (! class_exists('PP_Calendar')) {
                 } else {
                     $value = '';
                 }
-                // Used when editing editorial metadata and post meta
+                // Used when editing editorial fields and post meta
                 if (is_taxonomy_hierarchical($taxonomy->name)) {
                     $type = 'taxonomy hierarchical';
                 } else {
