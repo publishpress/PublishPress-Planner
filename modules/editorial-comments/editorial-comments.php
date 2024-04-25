@@ -1336,7 +1336,7 @@ if (! class_exists('PP_Editorial_Comments')) {
          * @param array $data Additional data fields to include on the calendar
          * @param WP_Post $post
          *
-         * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
+         * @return array $calendar_fields Calendar fields with our viewable Editorial Fields added
          * @uses  apply_filters('publishpress_calendar_get_post_data')
          *
          * @since 0.7
