@@ -2437,7 +2437,6 @@ class PP_Content_Board extends PP_Module
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
         <div class="content-board-table-wrap">
             <div class="content-board-inside inside" data-fl-scrolls>
-                <div class="statuses-contents">
                 <?php
                 if (! empty($posts)) :
                     $post_statuses = $this->get_post_statuses();
@@ -2448,6 +2447,7 @@ class PP_Content_Board extends PP_Module
                         return $result;
                     }, []);
                 ?>
+                <div class="statuses-contents">
                 <?php foreach ($post_statuses as $post_status_object) : ?>
                     <?php if (!empty($grouped_posts[$post_status_object->slug])) : 
                         $status_posts = $grouped_posts[$post_status_object->slug]; 
@@ -2586,6 +2586,7 @@ class PP_Content_Board extends PP_Module
 
                     <?php endif; ?>
                 <?php endforeach; ?>
+                </div>
                 <?php else: ?>
                     <div class="message info">
                         <svg width="170" height="170" viewBox="0 0 170 170" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2606,7 +2607,6 @@ class PP_Content_Board extends PP_Module
                     </div>
                 <?php
                 endif; ?>
-            </div>
             </div>
             </div>
         </div>
