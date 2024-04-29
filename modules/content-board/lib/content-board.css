@@ -134,6 +134,7 @@
     color: #bcc0c7;
     font-size: 13px;
     color: #50575e;
+    column-gap: 15px;
 }
 
 .content-board-table-wrap .board-content .content-item .content-item-post .post-meta:last-child {
