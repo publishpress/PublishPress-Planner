@@ -244,6 +244,10 @@ Status color box */
 	float: left;
 }
 
+.wrap.publishpress-admin .nav-tab-wrapper a {
+    margin-top: 10px;
+}
+
 .pp-admin-notice {
     padding: 10px !important;
     line-height: 18px;
