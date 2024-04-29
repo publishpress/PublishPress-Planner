@@ -2509,6 +2509,30 @@ class PP_Content_Board extends PP_Module
                                         
                                                 $item_actions = [];
 
+                                                if ($can_edit_post) {
+                                                    $item_actions['edit'] = '<a target="_blank" title="' . esc_attr(
+                                                            esc_html__(
+                                                                'Edit this post',
+                                                                'publishpress'
+                                                            )
+                                                        ) . '" href="' . esc_url(get_edit_post_link($status_post->ID)) . '">' . esc_html__(
+                                                            'Edit',
+                                                            'publishpress'
+                                                        ) . '</a>';
+                                                }
+
+                                                if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $status_post->ID)) {
+                                                    $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
+                                                            esc_html__(
+                                                                'Move this item to the Trash',
+                                                                'publishpress'
+                                                            )
+                                                        ) . '" href="' . esc_url(get_delete_post_link($status_post->ID)) . '">' . esc_html__(
+                                                            'Trash',
+                                                            'publishpress'
+                                                        ) . '</a>';
+                                                }
+
                                                 // Display a View or a Preview link depending on whether the post has been published or not
                                                 if (in_array($status_post->post_status, ['publish'])) {
                                                     $item_actions['view'] = '<a target="_blank" href="' . esc_url(get_permalink($status_post->ID)) . '" title="' . esc_attr(
@@ -2535,18 +2559,6 @@ class PP_Content_Board extends PP_Module
                                                         ) . '" rel="permalink">' . esc_html__('Preview', 'publishpress') . '</a>';
                                                 }
 
-                                                if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $status_post->ID)) {
-                                                    $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
-                                                            esc_html__(
-                                                                'Move this item to the Trash',
-                                                                'publishpress'
-                                                            )
-                                                        ) . '" href="' . esc_url(get_delete_post_link($status_post->ID)) . '">' . esc_html__(
-                                                            'Trash',
-                                                            'publishpress'
-                                                        ) . '</a>';
-                                                }
-
                                                 $item_actions = apply_filters('PP_Content_Board_item_actions', $item_actions, $status_post->ID);
                                                 ?>
                                             </div>
@@ -2557,8 +2569,9 @@ class PP_Content_Board extends PP_Module
                                                         <?php 
                                                         $html = '';
                                                         foreach ($item_actions as $class => $item_action) :
-                                                            $html .= '<span class="' . esc_attr($class) . '">' . $item_action . '</span>';
+                                                            $html .= '<span class="' . esc_attr($class) . '">' . $item_action . '</span> | ';
                                                         endforeach; 
+                                                        $html = rtrim($html, '| ');
                                                         echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                                         ?>
                                                     </div>
