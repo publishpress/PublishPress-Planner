@@ -1098,14 +1098,14 @@ class PP_Content_Board extends PP_Module
         $columns = [];
         // custom columns
         $columns['custom'] = [
-            'title'     => esc_html__('Custom Columns', 'publishpress'),
-            'message'   => esc_html__('Click the "Add New" button to create new columns.', 'publishpress'),
+            'title'     => esc_html__('Custom Items', 'publishpress'),
+            'message'   => esc_html__('Click the "Add New" button to create new card data.', 'publishpress'),
             'columns'   => is_array($content_board_datas['content_board_custom_columns']) ? $content_board_datas['content_board_custom_columns'] : []
         ];
 
         // default columns
         $columns['default'] = [
-            'title'     => esc_html__('Inbuilt Columns', 'publishpress'),
+            'title'     => esc_html__('Inbuilt Card Data', 'publishpress'),
             'columns'   => [
                 'post_type' => esc_html__('Post Type', 'publishpress'),
                 'post_author' => esc_html__('Author', 'publishpress')
@@ -1216,13 +1216,13 @@ class PP_Content_Board extends PP_Module
             <input type="hidden" name="co_form_action" value="column_form"/>
             <input type="hidden" name="_nonce" value="<?php echo esc_attr(wp_create_nonce('content_board_column_form_nonce')); ?>"/>
             <div class="co-customize-tabs">
-                <div class="customize-tab enable-tab cc-active-tab" data-tab="enable-content"><?php esc_html_e('Enable Columns', 'publishpress'); ?></div>
-                <div class="customize-tab reorder-tab" data-tab="reorder-content"> <?php esc_html_e('Reorder Columns', 'publishpress'); ?> </div>
+                <div class="customize-tab enable-tab cc-active-tab" data-tab="enable-content"><?php esc_html_e('Enable or Disable', 'publishpress'); ?></div>
+                <div class="customize-tab reorder-tab" data-tab="reorder-content"> <?php esc_html_e('Reorder', 'publishpress'); ?> </div>
             </div>
             <div class="co-cc-content">
                 <div class="customize-content enable-content">
                     <div class="fixed-header">
-                        <p class="description"><?php esc_html_e('Enable or Disable Content Board table column.', 'publishpress'); ?></p>
+                        <p class="description"><?php esc_html_e('Enable or Disable Content Board Card Data.', 'publishpress'); ?></p>
                     </div>
                     <div class="scrollable-content">
                         <?php 
@@ -1242,7 +1242,7 @@ class PP_Content_Board extends PP_Module
                                 <div class="entry-item enable-item form-item" style="display: none;">
                                     <div class="new-fields">
                                         <div class="field">
-                                            <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Column Title', 'publishpress'); ?>" />
+                                            <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Title', 'publishpress'); ?>" />
                                         </div>
                                         <div class="field">
                                         <select class="new-item-metakey">
@@ -1254,7 +1254,7 @@ class PP_Content_Board extends PP_Module
                                         </div>
                                     </div>
                                     <div class="new-submit">
-                                        <?php esc_html_e('Add Column', 'publishpress'); ?>
+                                        <?php esc_html_e('Add New', 'publishpress'); ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -1297,7 +1297,7 @@ class PP_Content_Board extends PP_Module
                 </div>
                 <div class="customize-content reorder-content" style="display: none;">
                     <div class="fixed-header">
-                        <p class="description"><?php esc_html_e('Drag to change enabled columns order.', 'publishpress'); ?></p>
+                        <p class="description"><?php esc_html_e('Drag to change enabled card data order.', 'publishpress'); ?></p>
                     </div>
                     <div class="scrollable-content">
                         <?php 
@@ -1828,7 +1828,7 @@ class PP_Content_Board extends PP_Module
                     <span class="dashicons dashicons-admin-users"></span> <?php esc_html_e('Me Mode', 'publishpress'); ?>
                 </div>
                 <div class="item action co-filter" data-target="#content_board_modal_<?php echo esc_attr($modal_id); ?>">
-                    <span class="dashicons dashicons-editor-table"></span> <?php esc_html_e('Customize Columns', 'publishpress'); ?>
+                    <span class="dashicons dashicons-editor-table"></span> <?php esc_html_e('Customize Card Data', 'publishpress'); ?>
                 </div>
                 <div id="content_board_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-board-modal" style="display: none;">
                     <div class="content-board-modal-content">
