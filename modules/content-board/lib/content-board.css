@@ -80,6 +80,10 @@
     border-end-end-radius: .25rem;
 }
 
+.content-board-table-wrap .board-content .content-item.empty-card {
+    padding: 7px 10px 2px;
+}
+
 .content-board-table-wrap .board-content .content-item .content-item-post {
     padding: 7px 10px 2px;
     min-width: 0;

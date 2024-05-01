@@ -2448,12 +2448,31 @@ class PP_Content_Board extends PP_Module
                     }, []);
                 ?>
                 <div class="statuses-contents">
-                <?php foreach ($post_statuses as $post_status_object) : ?>
-                    <?php if (!empty($grouped_posts[$post_status_object->slug])) : 
+                <?php 
+                $empty_statuses_markup = '';
+                foreach ($post_statuses as $post_status_object) :
+                    $post_status_options = $this->get_post_status_options($post_status_object->slug); ?>
+                    <?php if (empty($grouped_posts[$post_status_object->slug])) :
+                    $empty_statuses_markup .= '<div class="status-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
+                    <div class="board-title" style="border-top-color: '. esc_attr($post_status_options['color']). '">
+                        <div class="board-title-content">
+                            <span class="status-title-count" style="color: '. esc_attr($post_status_options['color']). '">
+                                <span class="dashicons '. esc_attr($post_status_options['icon']). '"></span> &nbsp;
+                                0
+                            </span>
+                            <span class="title-text">
+                                '. esc_html($post_status_object->label). '
+                            </span>
+                        </div>
+                        </div>
+                        <div class="board-content">
+                            <div class="content-item empty-card">'. esc_html__('This status does not have any posts. You can drag posts here from other status to change their status.', 'publishpress') .'</div>
+                        </div>
+                    </div>';
+                    else :
                         $status_posts = $grouped_posts[$post_status_object->slug]; 
-                        $post_status_options = $this->get_post_status_options($post_status_object->slug);
                     ?>
-                        <div class="status-content status-<?php echo esc_attr($post_status_object->slug); ?>">
+                        <div class="status-content status-<?php echo esc_attr($post_status_object->slug); ?>" data-slug="<?php echo esc_attr($post_status_object->slug); ?>" data-counts="<?php echo esc_attr(count($status_posts)); ?>">
                             <div class="board-title" style="border-top-color: <?php echo esc_attr($post_status_options['color']); ?>">
                                 <div class="board-title-content">
                                     <span class="status-title-count" style="color: <?php echo esc_attr($post_status_options['color']); ?>">
@@ -2466,6 +2485,9 @@ class PP_Content_Board extends PP_Module
                                 </div>
                             </div>
                             <div class="board-content">
+                                <div class="content-item empty-card" style="display: none;">
+                                    <?php echo esc_html__('This status does not have any posts. You can drag posts here from other status to change their status.', 'publishpress'); ?>
+                                </div>
                                 <?php foreach ($status_posts as $status_post) : ?>
                                     <div class="content-item">
                                         <div class="content-item-post">
@@ -2583,9 +2605,9 @@ class PP_Content_Board extends PP_Module
                             </div>
 
                         </div>
-
                     <?php endif; ?>
                 <?php endforeach; ?>
+                <?php echo $empty_statuses_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 </div>
                 <?php else: ?>
                     <div class="message info">
