@@ -2440,6 +2440,18 @@ class PP_Content_Board extends PP_Module
                 <?php
                 if (! empty($posts)) :
                     $post_statuses = $this->get_post_statuses();
+                    $post_statuses_slugs = array_column($post_statuses, 'slug');
+                    if (!in_array('future', $post_statuses_slugs)) {
+                        // Add Scheduled status
+                        $post_statuses[] = (object) [
+                            'label'         => __('Scheduled', 'publishpress'),
+                            'description'   => '',
+                            'name'          => 'future',
+                            'slug'          => 'future',
+                            'position'      => count($post_statuses) + 1
+                        ];
+                    }
+
                     // Group posts by status
                     $grouped_posts = array_reduce($posts, function($result, $post) {
                         $status = $post->post_status;
