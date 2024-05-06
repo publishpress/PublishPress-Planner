@@ -215,6 +215,8 @@ if (! class_exists('PP_Editorial_Comments')) {
                 ]
             );
 
+            wp_set_script_translations( 'publishpress-editorial-comments', 'publishpress' );
+
             $thread_comments = (int)get_option('thread_comments'); ?>
             <script type="text/javascript">
                 var pp_thread_comments = <?php echo ($thread_comments) ? esc_html__($thread_comments) : 0; ?>;
