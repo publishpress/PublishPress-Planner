@@ -1,6 +1,47 @@
 // Content Board specific JS, assumes that pp_date.js has already been included
 
 jQuery(document).ready(function ($) {
+    var adminBarHeight  = $('#wpadminbar').outerHeight();
+    var stickyHeader    = $('.content-board-table-wrap .statuses-contents .content-wrap.header-content');
+    var contentDiv      = $('.content-board-table-wrap .statuses-contents .content-wrap.main-content');
+    var stickyHeaderOffset = stickyHeader.offset().top;
+
+    // synch fixed header scroll to main scroll
+    $('.content-board-inside').on('scroll', function() {
+        stickyHeader.scrollLeft($(this).scrollLeft());
+    });
+
+    // stick status header to the top when scroll reach admin bar
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if (scroll >= stickyHeaderOffset - 25) {
+            stickyHeader.addClass('sticky');
+            stickyHeader.css('top', adminBarHeight + 'px');
+            stickyHeader.css('width', contentDiv.width() + 'px');
+            contentDiv.addClass('header-sticky');
+            stickyHeader.scrollLeft($('.content-board-inside').scrollLeft());
+        } else {
+            stickyHeader.removeClass('sticky');
+            stickyHeader.css('top', 'auto');
+            stickyHeader.css('width', '100%');
+            contentDiv.removeClass('header-sticky');
+        }
+    });
+
+    if ($('.content-board-table-wrap .board-content .content-item'.length > 0)) {
+        // make content dragable
+        sortedPostCardsList($(".content-board-table-wrap .board-content"));
+        // update empty card height
+        var card_selector = $('.content-board-table-wrap .board-content .content-item:not(.empty-card');
+        var card_height = card_selector.height();
+        var card_padding_top = parseInt(card_selector.css("padding-top"));
+        var card_padding_bottom = parseInt(card_selector.css("padding-bottom"));
+        var card_margin_top = parseInt(card_selector.css("margin-top"));
+        var card_margin_bottom = parseInt(card_selector.css("margin-bottom"));
+    
+        var empty_card_height = card_height - (card_padding_top + card_padding_bottom + card_margin_top + card_margin_bottom);
+        $('.content-board-table-wrap .board-content .content-item.empty-card').height(empty_card_height);
+    }
 
     // Hide all post details when directed
     $('#toggle_details').on('click', function () {
@@ -340,6 +381,81 @@ jQuery(document).ready(function ($) {
         });
 
     });
+
+ 
+    function sortedPostCardsList(selector) {
+        var senderContainer = null;
+        var senderNextEmptyCard = null;
+        var senderPrevEmptyCard = null;
+    
+        selector.sortable({
+            connectWith: ".content-board-table-wrap .board-content",
+            items: "> .content-item:not(.no-drag)",
+            placeholder: "sortable-placeholder",
+            start: function(event, ui) {
+                // Store the sender container when item move starts
+                senderContainer = ui.item.parent();
+                // Set sender's next and previous empty cards
+                senderNextEmptyCard = ui.item.next('.content-item.empty-card:hidden').first();
+                senderPrevEmptyCard = ui.item.prev('.content-item.empty-card:hidden').first();
+            },
+            receive: function (event, ui) {
+               
+                // Get the previous parent before sorting
+                var receivedItem = ui.item || $(this);
+    
+                // Show the empty card immediately before or after the previous position of the item within the sender container
+                if (senderPrevEmptyCard.length) {
+                    senderPrevEmptyCard.show();
+                } else if (senderNextEmptyCard.length) {
+                    senderNextEmptyCard.show();
+                } else if (senderContainer.length) {
+                    senderContainer.find('.content-item.empty-card:hidden:first').show();
+                }
+    
+                // Check if there are any non-hidden empty cards before or after the new location in the receiver container
+                var receiverNextEmptyCard = receivedItem.next('.content-item.empty-card:not(:hidden)').first();
+                var receiverPrevEmptyCard = receivedItem.prev('.content-item.empty-card:not(:hidden)').first();
+    
+                if (receiverNextEmptyCard.length) {
+                    receiverNextEmptyCard.hide();
+                } else if (receiverPrevEmptyCard.length) {
+                    receiverPrevEmptyCard.hide();
+                } else if (receivedItem.length) {
+                    receivedItem.parent().find('.content-item.empty-card:not(:hidden)').first().hide();
+                }
+    
+                // update post status
+                var post_id = receivedItem.attr('data-post_id');
+                var post_status = receivedItem.closest('.status-content.board-main-content').attr('data-slug');
+                var data = {
+                    action: "publishpress_content_board_update_post_status",
+                    post_id: post_id,
+                    post_status: post_status,
+                    nonce: PPContentBoard.nonce
+                };
+        
+                $.post(ajaxurl, data, function (response) {
+                    ppcTimerStatus(response.status, response.content);
+                });
+            },
+        });
+    }
+  
+    function ppcTimerStatus(type = "success", message = '') {
+        setTimeout(function () {
+            var uniqueClass = "pp-floating-msg-" + Math.round(new Date().getTime() + Math.random() * 100);
+            var instances = $(".pp-floating-status").length;
+            $("#wpbody-content").after('<span class="pp-floating-status pp-floating-status--' + type + " " + uniqueClass + '">' + message + "</span>");
+            $("." + uniqueClass)
+                .css("bottom", instances * 45)
+                .fadeIn(1e3)
+                .delay(1e4)
+                .fadeOut(1e3, function () {
+                    $(this).remove();
+                });
+        }, 500);
+    }
 
     function isEmptyOrSpaces(str) {
         return str == '' || str === null || str.match(/^ *$/) !== null;

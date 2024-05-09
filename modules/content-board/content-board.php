@@ -189,6 +189,7 @@ class PP_Content_Board extends PP_Module
         add_action('wp_ajax_publishpress_content_board_search_authors', [$this, 'sendJsonSearchAuthors']);
         add_action('wp_ajax_publishpress_content_board_search_categories', [$this, 'sendJsonSearchCategories']);
         add_action('wp_ajax_publishpress_content_board_get_form_fields', [$this, 'getFormFieldAjaxHandler']);
+        add_action('wp_ajax_publishpress_content_board_update_post_status', [$this, 'updatePostStatus']);
 
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
@@ -430,6 +431,9 @@ class PP_Content_Board extends PP_Module
         if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-board') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
             $this->enqueue_datepicker_resources();
+
+            wp_enqueue_script('jquery-ui-sortable');
+            
             wp_enqueue_script(
                 'publishpress-content_board',
                 $this->module_url . 'lib/content-board.js',
@@ -457,7 +461,7 @@ class PP_Content_Board extends PP_Module
                 'publishpress-content_board',
                 'PPContentBoard',
                 [
-                    'nonce' => wp_create_nonce('content_board_filter_nonce'),
+                    'nonce' => wp_create_nonce('content_board_action_nonce'),
                     'moduleUrl' => $this->module_url
                 ]
             );
@@ -1495,13 +1499,58 @@ class PP_Content_Board extends PP_Module
         return ob_get_clean();
         
     }
+    public function updatePostStatus() {
+        $response['status']  = 'error';
+        $response['content'] = esc_html__('An error occured', 'publishpress');
+
+
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_action_nonce')) {
+            $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
+        } elseif (empty($_POST['post_id']) || empty($_POST['post_status'])) {
+            $response['content'] = esc_html__('Invalid form request.', 'publishpress');
+        } else {
+            $post_status  = sanitize_text_field($_POST['post_status']);
+            $post_id      = (int) $_POST['post_id'];
+            $post_data    = get_post($post_id);
+            if (!is_object($post_data) || !isset($post_data->post_type)) {
+                $response['content'] = esc_html__('Error fetching post data.', 'publishpress');
+            } else {
+                $post_type_object = get_post_type_object($post_data->post_type);
+                if (empty($post_type_object->cap->edit_posts) || !current_user_can($post_type_object->cap->edit_posts)) {
+                    $response['content'] = esc_html__('You do not have permission to edit selected post.', 'publishpress');
+                } else {
+                    $post_args = [
+                        'ID' => $post_id,
+                        'post_status' => $post_status
+                    ];
+                    if ($post_data->post_status === 'future') {
+                        $current_date_time = current_time('mysql');
+                        $post_args['post_date'] = $current_date_time;
+                        $post_args['post_date_gmt'] = get_gmt_from_date($current_date_time);
+                        //wp_publish_post($post_id);
+                    }
+                    wp_update_post($post_args);
+
+                    if ($post_data->post_status === 'future') {
+                        //wp_publish_post($post_id);
+                    }
+
+                    $response['status']  = 'success';
+                    $response['content'] = esc_html__('Changes saved!', 'publishpress');
+                }
+            }
+
+        }
+        
+        wp_send_json($response);
+    }
 
     public function getFormFieldAjaxHandler() {
         $response['status']  = 'error';
-        $response['content'] = esc_html__('An error occured', 'publishpress-authors');
+        $response['content'] = esc_html__('An error occured', 'publishpress');
 
 
-        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_filter_nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_action_nonce')) {
             $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
         } elseif (empty($_POST['post_type'])) {
             $response['content'] = esc_html__('Invalid form request.', 'publishpress');
@@ -2458,14 +2507,22 @@ class PP_Content_Board extends PP_Module
                         $result[$status][] = $post;
                         return $result;
                     }, []);
+                    $top_posts_count = 0;
+                    $top_posts_count = array_map('count', $grouped_posts);
+                    $max_top_posts_count = max($top_posts_count);
                 ?>
                 <div class="statuses-contents">
                 <?php 
-                $empty_statuses_markup = '';
+                $statuses_header_markup  = '';
+                $statuses_content_markup = '';
+                $empty_statuses_header_markup  = '';
+                $empty_statuses_content_markup = '';
                 foreach ($post_statuses as $post_status_object) :
                     $post_status_options = $this->get_post_status_options($post_status_object->slug); ?>
+
                     <?php if (empty($grouped_posts[$post_status_object->slug])) :
-                    $empty_statuses_markup .= '<div class="status-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
+
+                    $empty_statuses_header_markup  .= '<div class="status-content board-top-header status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
                     <div class="board-title" style="border-top-color: '. esc_attr($post_status_options['color']). '">
                         <div class="board-title-content">
                             <span class="status-title-count" style="color: '. esc_attr($post_status_options['color']). '">
@@ -2477,149 +2534,179 @@ class PP_Content_Board extends PP_Module
                             </span>
                         </div>
                         </div>
-                        <div class="board-content">
-                            <div class="content-item empty-card">'. esc_html__('This status does not have any posts. You can drag posts here from other status to change their status.', 'publishpress') .'</div>
-                        </div>
                     </div>';
+                    $empty_statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
+                        <div class="board-content">';
+                        // show empty card placeholder
+                        $status_post_counts = 0;
+                        if ($max_top_posts_count > $status_post_counts) :
+                            $counter = $status_post_counts;
+                            while ($counter <= $max_top_posts_count) {
+                                $empty_statuses_content_markup .= '
+                                    <div class="content-item empty-card sortable-placeholder">
+                                        <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                    </div>';
+                                $counter++;
+                            }
+                        endif;
+                        $empty_statuses_content_markup .= '</div>
+                    </div>';
+                    
                     else :
                         $status_posts = $grouped_posts[$post_status_object->slug]; 
-                    ?>
-                        <div class="status-content status-<?php echo esc_attr($post_status_object->slug); ?>" data-slug="<?php echo esc_attr($post_status_object->slug); ?>" data-counts="<?php echo esc_attr(count($status_posts)); ?>">
-                            <div class="board-title" style="border-top-color: <?php echo esc_attr($post_status_options['color']); ?>">
+
+                        $statuses_header_markup  .= '<div class="status-content board-top-header status-'. esc_attr($post_status_object->slug) .'" data-slug="'. esc_attr($post_status_object->slug) .'" data-counts="'. esc_attr(count($status_posts)) .'">
+                        <div class="board-title" style="border-top-color: '. esc_attr($post_status_options["color"]) .'">
                                 <div class="board-title-content">
-                                    <span class="status-title-count" style="color: <?php echo esc_attr($post_status_options['color']); ?>">
-                                        <span class="dashicons <?php echo esc_attr($post_status_options['icon']); ?>"></span> &nbsp;
-                                        <?php echo esc_html(count($status_posts)); ?>
+                                    <span class="status-title-count" style="color: '. esc_attr($post_status_options["color"]) .'">
+                                        <span class="dashicons '. esc_attr($post_status_options["icon"]) .'"></span> &nbsp;
+                                        '. esc_html(count($status_posts)) .'
                                     </span>
                                     <span class="title-text">
-                                        <?php echo esc_html($post_status_object->label); ?>
+                                        '. esc_html($post_status_object->label) .'
                                     </span>
                                 </div>
                             </div>
-                            <div class="board-content">
-                                <div class="content-item empty-card" style="display: none;">
-                                    <?php echo esc_html__('This status does not have any posts. You can drag posts here from other status to change their status.', 'publishpress'); ?>
-                                </div>
-                                <?php foreach ($status_posts as $status_post) : ?>
-                                    <div class="content-item">
-                                        <div class="content-item-post">
-                                            <div class="post-date">
-                                                <?php echo esc_html(get_the_time(get_option('date_format'), $status_post->ID) . ' ' . get_the_time(get_option('time_format'), $status_post->ID)); ?>
-                                            </div>
-                                            <div class="post-title">
-                                                <?php 
-                                                    $post_title = _draft_or_post_title($status_post->ID);
+                        </div>';
 
-                                                    $post_type_object = get_post_type_object($status_post->post_type);
-                                                    $can_edit_post = current_user_can($post_type_object->cap->edit_post, $status_post->ID);
-                                                    if ($can_edit_post) {
-                                                        $title_output = '<strong class="post-title-text"><a href="' . esc_url(get_edit_post_link($status_post->ID)) . '" title="'. esc_attr($post_title) .'">' . esc_html(
-                                                                $post_title
-                                                            ) . '</a></strong>';
-                                                    } else {
-                                                        $title_output = '<strong class="post-title-text" title="'. esc_attr($post_title) .'">' . esc_html($post_title) . '</strong>';
-                                                    }
-                                                    ?>
-                                                <?php echo $title_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                                            </div>
+                        $statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug) .'" data-slug="'. esc_attr($post_status_object->slug) .'" data-counts="'. esc_attr(count($status_posts)) .'">
+                            <div class="board-content">';
+                            foreach ($status_posts as $status_post) :
+                                $statuses_content_markup .= '
+                                <div class="content-item empty-card sortable-placeholder" style="display: none;">
+                                    <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                </div>';
 
-                                            <?php
-                                            foreach ((array)$this->columns as $key => $name):
-                                                if (!array_key_exists($key, $this->form_column_list)) {
-                                                    continue;
-                                                }
-                                                $key = sanitize_key($key);
-                                                ?>
-                                                <div class="post-meta post-meta-<?php echo esc_attr($key); ?>">
-                                                <div class="post-meta-title">
-                                                    <?php echo esc_html($name); ?>
-                                                </div>
-                                                <div class="post-meta-content">
-                                                    <?php echo $this->column_default($status_post, $key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                                                </div>
-                                                </div>
-                                            <?php endforeach; ?>
-                                            <?php 
-                                        
-                                                $item_actions = [];
+                                $post_type_object = get_post_type_object($status_post->post_type);
+                                $can_edit_post = current_user_can($post_type_object->cap->edit_post, $status_post->ID);
+                                $dragable_class = ($can_edit_post) ? 'dragable' : 'no-drag'; 
+                                $statuses_content_markup .= '<div class="content-item '. esc_attr($dragable_class) .'" data-post_id="'. esc_attr($status_post->ID) .'">
+                                    <div class="content-item-post">
+                                        <div class="post-date">
+                                            '. esc_html(get_the_time(get_option("date_format"), $status_post->ID) . " " . get_the_time(get_option("time_format"), $status_post->ID)) .'
+                                        </div>
+                                        <div class="post-title">';
+                                                $post_title = _draft_or_post_title($status_post->ID);
 
                                                 if ($can_edit_post) {
-                                                    $item_actions['edit'] = '<a target="_blank" title="' . esc_attr(
-                                                            esc_html__(
-                                                                'Edit this post',
-                                                                'publishpress'
-                                                            )
-                                                        ) . '" href="' . esc_url(get_edit_post_link($status_post->ID)) . '">' . esc_html__(
-                                                            'Edit',
-                                                            'publishpress'
-                                                        ) . '</a>';
+                                                    $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="". esc_attr($post_title) ."">'. esc_html(
+                                                            $post_title
+                                                        ) . '</a></strong>';
+                                                } else {
+                                                    $title_output = '<strong class="post-title-text" title="". esc_attr($post_title) ."">'. esc_html($post_title) . '</strong>';
                                                 }
+                                                $statuses_content_markup .= $title_output;
+                                            $statuses_content_markup .= '</div>';
 
-                                                if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $status_post->ID)) {
-                                                    $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
-                                                            esc_html__(
-                                                                'Move this item to the Trash',
-                                                                'publishpress'
-                                                            )
-                                                        ) . '" href="' . esc_url(get_delete_post_link($status_post->ID)) . '">' . esc_html__(
-                                                            'Trash',
-                                                            'publishpress'
-                                                        ) . '</a>';
-                                                }
-
-                                                // Display a View or a Preview link depending on whether the post has been published or not
-                                                if (in_array($status_post->post_status, ['publish'])) {
-                                                    $item_actions['view'] = '<a target="_blank" href="' . esc_url(get_permalink($status_post->ID)) . '" title="' . esc_attr(
-                                                            sprintf(
-                                                                __(
-                                                                    'View &#8220;%s&#8221;',
-                                                                    'publishpress'
-                                                                ),
-                                                                $post_title
-                                                            )
-                                                        ) . '" rel="permalink">' . esc_html__('View', 'publishpress') . '</a>';
-                                                } elseif ($can_edit_post) {
-                                                    $item_actions['previewpost'] = '<a target="_blank" href="' . esc_url(
-                                                            apply_filters(
-                                                                'preview_post_link',
-                                                                add_query_arg('preview', 'true', get_permalink($status_post->ID)),
-                                                                $status_post
-                                                            )
-                                                        ) . '" title="' . esc_attr(
-                                                            sprintf(
-                                                                __('Preview &#8220;%s&#8221;', 'publishpress'),
-                                                                $post_title
-                                                            )
-                                                        ) . '" rel="permalink">' . esc_html__('Preview', 'publishpress') . '</a>';
-                                                }
-
-                                                $item_actions = apply_filters('PP_Content_Board_item_actions', $item_actions, $status_post->ID);
-                                                ?>
+                                        foreach ((array)$this->columns as $key => $name):
+                                            if (!array_key_exists($key, $this->form_column_list)) {
+                                                continue;
+                                            }
+                                            $key = sanitize_key($key);
+                                            $statuses_content_markup .= '<div class="post-meta post-meta-'. esc_attr($key) .'">
+                                            <div class="post-meta-title">
+                                                '. esc_html($name) .'
                                             </div>
-                                            
-                                            <?php if (count($item_actions) > 0) : ?>
-                                                <div class="post-action row-actions">
-                                                    <div class="action-items">
-                                                        <?php 
-                                                        $html = '';
-                                                        foreach ($item_actions as $class => $item_action) :
-                                                            $html .= '<span class="' . esc_attr($class) . '">' . $item_action . '</span> | ';
-                                                        endforeach; 
-                                                        $html = rtrim($html, '| ');
-                                                        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            <?php endif; ?>
-                                    </div>
+                                            <div class="post-meta-content">
+                                                '. $this->column_default($status_post, $key) .'
+                                            </div>
+                                            </div>';
+                                        endforeach;
+                                    
+                                            $item_actions = [];
 
-                                <?php endforeach; ?>
-                            </div>
+                                            if ($can_edit_post) {
+                                                $item_actions["edit"] = '<a target="_blank" title="'. esc_attr(
+                                                        esc_html__(
+                                                            "Edit this post",
+                                                            "publishpress"
+                                                        )
+                                                    ) . '" href="'. esc_url(get_edit_post_link($status_post->ID)) . '">'. esc_html__(
+                                                        "Edit",
+                                                        "publishpress"
+                                                    ) . '</a>';
+                                            }
 
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <?php echo $empty_statuses_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                                            if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $status_post->ID)) {
+                                                $item_actions["trash"] = '<a class="submitdelete" title="'. esc_attr(
+                                                        esc_html__(
+                                                            "Move this item to the Trash",
+                                                            "publishpress"
+                                                        )
+                                                    ) . '" href="'. esc_url(get_delete_post_link($status_post->ID)) . '">'. esc_html__(
+                                                        "Trash",
+                                                        "publishpress"
+                                                    ) . '</a>';
+                                            }
+
+                                            // Display a View or a Preview link depending on whether the post has been published or not
+                                            if (in_array($status_post->post_status, ["publish"])) {
+                                                $item_actions["view"] = '<a target="_blank" href="'. esc_url(get_permalink($status_post->ID)) . '" title="'. esc_attr(
+                                                        sprintf(
+                                                            __(
+                                                                "View &#8220;%s&#8221;",
+                                                                "publishpress"
+                                                            ),
+                                                            $post_title
+                                                        )
+                                                    ) . '" rel="permalink">'. esc_html__("View", "publishpress") . '</a>';
+                                            } elseif ($can_edit_post) {
+                                                $item_actions["previewpost"] = '<a target="_blank" href="'. esc_url(
+                                                        apply_filters(
+                                                            "preview_post_link",
+                                                            add_query_arg("preview", "true", get_permalink($status_post->ID)),
+                                                            $status_post
+                                                        )
+                                                    ) . '" title="'. esc_attr(
+                                                        sprintf(
+                                                            __("Preview &#8220;%s&#8221;", "publishpress"),
+                                                            $post_title
+                                                        )
+                                                    ) . '" rel="permalink">'. esc_html__("Preview", "publishpress") . '</a>';
+                                            }
+
+                                            $item_actions = apply_filters("PP_Content_Board_item_actions", $item_actions, $status_post->ID);
+                                          
+                                            $statuses_content_markup .= '</div>';
+                                        
+                                       if (count($item_actions) > 0) :
+                                        $statuses_content_markup .= '<div class="post-action row-actions">
+                                                <div class="action-items">'; 
+                                                    $html = "";
+                                                    foreach ($item_actions as $class => $item_action) :
+                                                        $html .= '<span class="'. esc_attr($class) . '">'. $item_action . '</span> | ';
+                                                    endforeach; 
+                                                    $html = rtrim($html, "| ");
+                                                    $statuses_content_markup .= $html;
+                                                    $statuses_content_markup .= '</div></div>';
+                                        endif;
+                                    $statuses_content_markup .= '</div>';
+                                endforeach;
+                                // show empty card placeholder
+                                $status_post_counts = count($status_posts);
+                                if ($max_top_posts_count > $status_post_counts) :
+                                    $counter = $status_post_counts;
+                                    while ($counter <= $max_top_posts_count) {
+                                        $statuses_content_markup .= '
+                                            <div class="content-item empty-card sortable-placeholder">
+                                                <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                            </div>';
+                                        $counter++;
+                                    }
+                                endif;
+                            $statuses_content_markup .= '</div>
+                            </div>';
+                     endif;
+                    endforeach; ?>
+                    <div class="header-placeholder"></div>
+                    <div class="content-wrap header-content">
+                        <?php echo $statuses_header_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <?php echo $empty_statuses_header_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
+                    <div class="content-wrap main-content">
+                        <?php echo $statuses_content_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <?php echo $empty_statuses_content_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    </div>
                 </div>
                 <?php else: ?>
                     <div class="message info">
@@ -3063,7 +3150,7 @@ class PP_Content_Board extends PP_Module
 
         if (
             (! isset($_GET['nonce']))
-            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_board_filter_nonce'))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_board_action_nonce'))
         ) {
             $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
         }
@@ -3126,7 +3213,7 @@ class PP_Content_Board extends PP_Module
 
         if (
             (! isset($_GET['nonce']))
-            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_board_filter_nonce'))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_board_action_nonce'))
         ) {
             $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
         }
