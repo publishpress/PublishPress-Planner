@@ -179,7 +179,7 @@ class Base
 
         if (empty($this->modes)) {
             $this->modes = [
-                'list'    => __('List View', 'publishpress'),
+                'list'    => __('List View'),
                 'excerpt' => __('Excerpt View', 'publishpress'),
             ];
         }
@@ -654,11 +654,10 @@ class Base
         }
 
         echo '<label for="bulk-action-selector-' . esc_attr($which) . '" class="screen-reader-text">' . esc_html__(
-                'Select bulk action',
-                'publishpress'
+                'Select bulk action'
             ) . '</label>';
         echo '<select name="action' . esc_attr($two) . '" id="bulk-action-selector-' . esc_attr($which) . "\">\n";
-        echo '<option value="-1">' . esc_html__('Bulk Actions', 'publishpress') . "</option>\n";
+        echo '<option value="-1">' . esc_html__('Bulk actions') . "</option>\n";
 
         foreach ($this->_actions as $name => $title) {
             $class = 'edit' === $name ? ' class="hide-if-no-js"' : '';
@@ -728,7 +727,7 @@ class Base
         }
 
         $output = '<span class="displaying-num">' . sprintf(
-                _n('%s item', '%s items', $total_items, 'publishpress'),
+                _n('%s item', '%s items', $total_items),
                 number_format_i18n($total_items)
             ) . '</span>';
 
@@ -771,7 +770,7 @@ class Base
             $page_links[] = sprintf(
                 "<a class='first-page' href='%s'><span class='screen-reader-text'>%s</span><span aria-hidden='true'>%s</span></a>",
                 esc_url(remove_query_arg('paged', $current_url)),
-                __('First page', 'publishpress'),
+                __('First page'),
                 '&laquo;'
             );
         }
@@ -782,7 +781,7 @@ class Base
             $page_links[] = sprintf(
                 "<a class='prev-page' href='%s'><span class='screen-reader-text'>%s</span><span aria-hidden='true'>%s</span></a>",
                 esc_url(add_query_arg('paged', max(1, $current - 1), $current_url)),
-                __('Previous page', 'publishpress'),
+                __('Previous page'),
                 '&lsaquo;'
             );
         }
@@ -790,20 +789,19 @@ class Base
         if ('bottom' === $which) {
             $html_current_page  = $current;
             $total_pages_before = '<span class="screen-reader-text">' . __(
-                    'Current Page',
-                    'publishpress'
+                    'Current Page'
                 ) . '</span><span id="table-paging" class="paging-input"><span class="tablenav-paging-text">';
         } else {
             $html_current_page = sprintf(
                 "%s<input class='current-page' id='current-page-selector' type='text' name='paged' value='%s' size='%d' aria-describedby='table-paging' /><span class='tablenav-paging-text'>",
-                '<label for="current-page-selector" class="screen-reader-text">' . __('Current Page', 'publishpress') . '</label>',
+                '<label for="current-page-selector" class="screen-reader-text">' . __('Current Page') . '</label>',
                 esc_attr($current),
                 strlen($total_pages)
             );
         }
         $html_total_pages = sprintf("<span class='total-pages'>%s</span>", number_format_i18n($total_pages));
         $page_links[]     = $total_pages_before . sprintf(
-                _x('%1$s of %2$s', 'paging', 'publishpress'),
+                _x('%1$s of %2$s', 'paging'),
                 $html_current_page,
                 $html_total_pages
             ) . $total_pages_after;
@@ -814,7 +812,7 @@ class Base
             $page_links[] = sprintf(
                 "<a class='next-page' href='%s'><span class='screen-reader-text'>%s</span><span aria-hidden='true'>%s</span></a>",
                 esc_url(add_query_arg('paged', min($total_pages, $current + 1), $current_url)),
-                __('Next page', 'publishpress'),
+                __('Next page'),
                 '&rsaquo;'
             );
         }
@@ -825,7 +823,7 @@ class Base
             $page_links[] = sprintf(
                 "<a class='last-page' href='%s'><span class='screen-reader-text'>%s</span><span aria-hidden='true'>%s</span></a>",
                 esc_url(add_query_arg('paged', $total_pages, $current_url)),
-                __('Last page', 'publishpress'),
+                __('Last page'),
                 '&raquo;'
             );
         }
@@ -896,7 +894,7 @@ class Base
             static $cb_counter = 1;
             $columns['cb'] = '<label class="screen-reader-text" for="cb-select-all-' . esc_attr(
                     $cb_counter
-                ) . '">' . __('Select All', 'publishpress') . '</label>'
+                ) . '">' . __('Select All') . '</label>'
                 . '<input id="cb-select-all-' . esc_attr($cb_counter) . '" type="checkbox" />';
             $cb_counter++;
         }
@@ -1161,8 +1159,7 @@ class Base
     protected function handle_row_actions($item, $column_name, $primary)
     {
         return $column_name === $primary ? '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __(
-                'Show more details',
-                'publishpress'
+                'Show more details'
             ) . '</span></button>' : '';
     }
 
@@ -1199,7 +1196,7 @@ class Base
      */
     public function no_items()
     {
-        _e('No items found.', 'publishpress');
+        _e('No items found.');
     }
 
     /**
@@ -1225,7 +1222,7 @@ class Base
 
         if (isset($this->_pagination_args['total_items'])) {
             $response['total_items_i18n'] = sprintf(
-                _n('%s item', '%s items', $this->_pagination_args['total_items'], 'publishpress'),
+                _n('%s item', '%s items', $this->_pagination_args['total_items']),
                 number_format_i18n($this->_pagination_args['total_items'])
             );
         }
@@ -1332,8 +1329,7 @@ class Base
         $out .= '</div>';
 
         $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __(
-                'Show more details',
-                'publishpress'
+                'Show more details'
             ) . '</span></button>';
 
         return $out;
@@ -1388,13 +1384,13 @@ class Base
         $approved_comments_number = number_format_i18n($approved_comments);
         $pending_comments_number  = number_format_i18n($pending_comments);
 
-        $approved_only_phrase = sprintf(_n('%s comment', '%s comments', $approved_comments, 'publishpress'), $approved_comments_number);
+        $approved_only_phrase = sprintf(_n('%s comment', '%s comments', $approved_comments), $approved_comments_number);
         $approved_phrase      = sprintf(
-            _n('%s approved comment', '%s approved comments', $approved_comments, 'publishpress'),
+            _n('%s approved comment', '%s approved comments', $approved_comments),
             $approved_comments_number
         );
         $pending_phrase       = sprintf(
-            _n('%s pending comment', '%s pending comments', $pending_comments, 'publishpress'),
+            _n('%s pending comment', '%s pending comments', $pending_comments),
             $pending_comments_number
         );
 
@@ -1402,7 +1398,7 @@ class Base
         if (!$approved_comments && !$pending_comments) {
             printf(
                 '<span aria-hidden="true">—</span><span class="screen-reader-text">%s</span>',
-                esc_html__('No comments', 'publishpress')
+                esc_html__('No comments')
             );
             // Approved comments have different display depending on some conditions.
         } elseif ($approved_comments) {
@@ -1421,7 +1417,7 @@ class Base
             printf(
                 '<span class="post-com-count post-com-count-no-comments"><span class="comment-count comment-count-no-comments" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
                 esc_html($approved_comments_number),
-                $pending_comments ? esc_html__('No approved comments', 'publishpress') : esc_html__('No comments', 'publishpress')
+                $pending_comments ? esc_html__('No approved comments') : esc_html__('No comments')
             );
         }
 
@@ -1441,7 +1437,7 @@ class Base
             printf(
                 '<span class="post-com-count post-com-count-pending post-com-count-no-pending"><span class="comment-count comment-count-no-pending" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
                 esc_html($approved_comments_number),
-                $approved_comments ? esc_html__('No pending comments', 'publishpress') : esc_html__('No comments', 'publishpress')
+                $approved_comments ? esc_html__('No pending comments') : esc_html__('No comments')
             );
         }
     }
