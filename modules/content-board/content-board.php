@@ -2502,22 +2502,17 @@ class PP_Content_Board extends PP_Module
                         $result[$status][] = $post;
                         return $result;
                     }, []);
-                    $top_posts_count = 0;
-                    $top_posts_count = array_map('count', $grouped_posts);
-                    $max_top_posts_count = max($top_posts_count);
                 ?>
                 <div class="statuses-contents">
                 <?php 
                 $statuses_header_markup  = '';
                 $statuses_content_markup = '';
-                $empty_statuses_header_markup  = '';
-                $empty_statuses_content_markup = '';
                 foreach ($post_statuses as $post_status_object) :
                     $post_status_options = $this->get_post_status_options($post_status_object->slug); ?>
 
                     <?php if (empty($grouped_posts[$post_status_object->slug])) :
 
-                    $empty_statuses_header_markup  .= '<div class="status-content board-top-header status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
+                    $statuses_header_markup  .= '<div class="status-content board-top-header status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
                     <div class="board-title" style="border-top-color: '. esc_attr($post_status_options['color']). '">
                         <div class="board-title-content">
                             <span class="status-title-count" style="color: '. esc_attr($post_status_options['color']). '">
@@ -2530,14 +2525,14 @@ class PP_Content_Board extends PP_Module
                         </div>
                         </div>
                     </div>';
-                    $empty_statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
+                    $statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
                         <div class="board-content">';
                         // show empty card placeholder
-                        $empty_statuses_content_markup .= '
+                        $statuses_content_markup .= '
                                     <div class="content-item empty-card sortable-placeholder">
                                         <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                     </div>';
-                        $empty_statuses_content_markup .= '</div>
+                        $statuses_content_markup .= '</div>
                     </div>';
                     
                     else :
@@ -2678,11 +2673,9 @@ class PP_Content_Board extends PP_Module
                     <div class="header-placeholder"></div>
                     <div class="content-wrap header-content">
                         <?php echo $statuses_header_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                        <?php echo $empty_statuses_header_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     </div>
                     <div class="content-wrap main-content">
                         <?php echo $statuses_content_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                        <?php echo $empty_statuses_content_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     </div>
                 </div>
                 <?php else: ?>

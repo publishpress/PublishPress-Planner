@@ -406,8 +406,6 @@ jQuery(document).ready(function ($) {
                 // Get the previous parent before sorting
                 var receivedItem = ui.item || $(this);
                 var senderUi = ui.sender;
-                console.log(receivedItem);
-                console.log(senderUi);
 
                 if (receivedItem.parent().children().length === 1) {
                     receivedItem.parent().find('.sortable-placeholder').show();
