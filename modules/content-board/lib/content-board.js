@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
         // make content dragable
         sortedPostCardsList($(".content-board-table-wrap .board-content"));
         // update empty card height
-        var card_selector = $('.content-board-table-wrap .board-content .content-item:not(.empty-card');
+        var card_selector = $('.content-board-table-wrap .board-content .content-item:not(.empty-card)');
         var card_height = card_selector.height();
         var card_padding_top = parseInt(card_selector.css("padding-top"));
         var card_padding_bottom = parseInt(card_selector.css("padding-bottom"));
@@ -41,6 +41,18 @@ jQuery(document).ready(function ($) {
     
         var empty_card_height = card_height - (card_padding_top + card_padding_bottom + card_margin_top + card_margin_bottom);
         $('.content-board-table-wrap .board-content .content-item.empty-card').height(empty_card_height);
+
+        // update status cards height for drag and drop
+        var parent_card_selector = $('.content-board-table-wrap .content-wrap.main-content');
+        var parent_card_height = parent_card_selector.height();
+        var parent_card_padding_top = parseInt(parent_card_selector.css("padding-top"));
+        var parent_card_padding_bottom = parseInt(parent_card_selector.css("padding-bottom"));
+        var parent_card_margin_top = parseInt(parent_card_selector.css("margin-top"));
+        var parent_card_margin_bottom = parseInt(parent_card_selector.css("margin-bottom"));
+    
+        var all_parent_card_height = parent_card_height - (parent_card_padding_top + parent_card_padding_bottom + parent_card_margin_top + parent_card_margin_bottom);
+
+        $('.content-board-table-wrap .status-content.board-main-content .board-content').css('min-height', all_parent_card_height);
     }
 
     // Hide all post details when directed
@@ -384,47 +396,30 @@ jQuery(document).ready(function ($) {
 
  
     function sortedPostCardsList(selector) {
-        var senderContainer = null;
-        var senderNextEmptyCard = null;
-        var senderPrevEmptyCard = null;
     
         selector.sortable({
             connectWith: ".content-board-table-wrap .board-content",
             items: "> .content-item:not(.no-drag)",
             placeholder: "sortable-placeholder",
-            start: function(event, ui) {
-                // Store the sender container when item move starts
-                senderContainer = ui.item.parent();
-                // Set sender's next and previous empty cards
-                senderNextEmptyCard = ui.item.next('.content-item.empty-card:hidden').first();
-                senderPrevEmptyCard = ui.item.prev('.content-item.empty-card:hidden').first();
-            },
             receive: function (event, ui) {
                
                 // Get the previous parent before sorting
                 var receivedItem = ui.item || $(this);
-    
-                // Show the empty card immediately before or after the previous position of the item within the sender container
-                if (senderPrevEmptyCard.length) {
-                    senderPrevEmptyCard.show();
-                } else if (senderNextEmptyCard.length) {
-                    senderNextEmptyCard.show();
-                } else if (senderContainer.length) {
-                    senderContainer.find('.content-item.empty-card:hidden:first').show();
+                var senderUi = ui.sender;
+                console.log(receivedItem);
+                console.log(senderUi);
+
+                if (receivedItem.parent().children().length === 1) {
+                    receivedItem.parent().find('.sortable-placeholder').show();
+                } else {
+                    receivedItem.parent().find('.sortable-placeholder').hide();
                 }
-    
-                // Check if there are any non-hidden empty cards before or after the new location in the receiver container
-                var receiverNextEmptyCard = receivedItem.next('.content-item.empty-card:not(:hidden)').first();
-                var receiverPrevEmptyCard = receivedItem.prev('.content-item.empty-card:not(:hidden)').first();
-    
-                if (receiverNextEmptyCard.length) {
-                    receiverNextEmptyCard.hide();
-                } else if (receiverPrevEmptyCard.length) {
-                    receiverPrevEmptyCard.hide();
-                } else if (receivedItem.length) {
-                    receivedItem.parent().find('.content-item.empty-card:not(:hidden)').first().hide();
+
+                if (senderUi.children().length === 1) {
+                    senderUi.find('.sortable-placeholder').show();
+                } else {
+                    senderUi.find('.sortable-placeholder').hide();
                 }
-    
                 // update post status
                 var post_id = receivedItem.attr('data-post_id');
                 var post_status = receivedItem.closest('.status-content.board-main-content').attr('data-slug');

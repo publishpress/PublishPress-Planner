@@ -1527,13 +1527,8 @@ class PP_Content_Board extends PP_Module
                         $current_date_time = current_time('mysql');
                         $post_args['post_date'] = $current_date_time;
                         $post_args['post_date_gmt'] = get_gmt_from_date($current_date_time);
-                        //wp_publish_post($post_id);
                     }
                     wp_update_post($post_args);
-
-                    if ($post_data->post_status === 'future') {
-                        //wp_publish_post($post_id);
-                    }
 
                     $response['status']  = 'success';
                     $response['content'] = esc_html__('Changes saved!', 'publishpress');
@@ -2538,17 +2533,10 @@ class PP_Content_Board extends PP_Module
                     $empty_statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
                         <div class="board-content">';
                         // show empty card placeholder
-                        $status_post_counts = 0;
-                        if ($max_top_posts_count > $status_post_counts) :
-                            $counter = $status_post_counts;
-                            while ($counter <= $max_top_posts_count) {
-                                $empty_statuses_content_markup .= '
+                        $empty_statuses_content_markup .= '
                                     <div class="content-item empty-card sortable-placeholder">
                                         <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                     </div>';
-                                $counter++;
-                            }
-                        endif;
                         $empty_statuses_content_markup .= '</div>
                     </div>';
                     
@@ -2572,10 +2560,6 @@ class PP_Content_Board extends PP_Module
                         $statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug) .'" data-slug="'. esc_attr($post_status_object->slug) .'" data-counts="'. esc_attr(count($status_posts)) .'">
                             <div class="board-content">';
                             foreach ($status_posts as $status_post) :
-                                $statuses_content_markup .= '
-                                <div class="content-item empty-card sortable-placeholder" style="display: none;">
-                                    <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
-                                </div>';
 
                                 $post_type_object = get_post_type_object($status_post->post_type);
                                 $can_edit_post = current_user_can($post_type_object->cap->edit_post, $status_post->ID);
@@ -2683,17 +2667,10 @@ class PP_Content_Board extends PP_Module
                                     $statuses_content_markup .= '</div>';
                                 endforeach;
                                 // show empty card placeholder
-                                $status_post_counts = count($status_posts);
-                                if ($max_top_posts_count > $status_post_counts) :
-                                    $counter = $status_post_counts;
-                                    while ($counter <= $max_top_posts_count) {
-                                        $statuses_content_markup .= '
-                                            <div class="content-item empty-card sortable-placeholder">
+                                $statuses_content_markup .= '
+                                            <div class="content-item empty-card sortable-placeholder" style="display: none;">
                                                 <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                             </div>';
-                                        $counter++;
-                                    }
-                                endif;
                             $statuses_content_markup .= '</div>
                             </div>';
                      endif;
