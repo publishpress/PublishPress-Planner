@@ -2508,6 +2508,10 @@ class PP_Content_Board extends PP_Module
                 $statuses_header_markup  = '';
                 $statuses_content_markup = '';
                 foreach ($post_statuses as $post_status_object) :
+                    if (!empty($post_status_object->alternate)) {
+                        continue;
+                    }
+
                     $post_status_options = $this->get_post_status_options($post_status_object->slug); ?>
 
                     <?php if (empty($grouped_posts[$post_status_object->slug])) :
