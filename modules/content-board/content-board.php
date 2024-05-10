@@ -2534,7 +2534,7 @@ class PP_Content_Board extends PP_Module
                         // show empty card placeholder
                         $statuses_content_markup .= '
                                     <div class="content-item empty-card sortable-placeholder">
-                                        <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                        <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Move posts here to change their status", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                     </div>';
                         $statuses_content_markup .= '</div>
                     </div>';
@@ -2668,7 +2668,7 @@ class PP_Content_Board extends PP_Module
                                 // show empty card placeholder
                                 $statuses_content_markup .= '
                                             <div class="content-item empty-card sortable-placeholder" style="display: none;">
-                                                <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Drag post here to change status.", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                                <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Move posts here to change their status", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                             </div>';
                             $statuses_content_markup .= '</div>
                             </div>';
