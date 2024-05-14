@@ -1,12 +1,12 @@
-=== PublishPress Planner: Organize and Schedule Your WordPress Content ===
+=== Editorial Calendar and Marketing Content Overview - PublishPress Planner ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
-Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
+Tags: editorial calendar, marketing calendar, schedule, editorial comments, content organizer
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.5
-Stable tag: 4.0.3
+Stable tag: 4.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,45 +21,45 @@ PublishPress Planner is ideal for WordPress sites that publish high-quality cont
 ## PublishPress Planner Pro ##
 
 > <strong>Upgrade to PublishPress Planner Pro</strong><br />
-> This plugin is the free version of the PublishPress Planner plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Planner Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+> This plugin is the free version of the PublishPress Planner plugin. The Pro version comes with all the features you need to plan and schedule WordPress content. <a href="https://publishpress.com/publishpress"  title="PublishPress Planner Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
-= Content Calendar =
+## Editorial Content Calendar ##
 
-The Content Calendar gives you a powerful overview of your publishing schedule. Using this editorial Calendar, you can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
+The Content Calendar gives you a powerful overview of your publishing schedule. This screen works as a marketing calendar and an editorial calendar. You can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
 [Click here to read about the Content Calendar](https://publishpress.com/knowledge-base/calendar/).
 
-= Content Overview =
+## Marketing Content Overview ##
 
-The Content Overview screen is a companion to the Calendar screen. Whereas the Calendar allows you to see content organized by dates, Content Overview allows you to drill down and see content organized by status, categories, or users. In the top-right corner is a “Print” button. Click this to get a printable overview of all your planned content.
+The Content Overview screen is a companion to the Calendar screen. Whereas the Calendar allows you to see content organized by dates, Content Overview allows you to drill down and see content organized by status, categories, or users. This content organizer allows to choose any data from WordPress to show in columns. In the top-right corner is a “Print” button. Click this to get a printable overview of all your planned content.
 
 [Click here to read about the Content Overview](https://publishpress.com/knowledge-base/content-overview/).
 
-= Content Notifications =
+## Content Update Notifications ##
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
 [Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
 
-= Editorial Comments =
+## Editorial Comments ##
 
 A very important feature in PublishPress Planner is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
 
 [Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
 
-= Editorial Metadata =
+## Editorial Metadata ##
 
 Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
 
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
-= Slack Notifications =
+## Slack Notifications ##
 
 This PublishPress Planner Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
 
 [Click here to read about the Slack Notifications](https://publishpress.com/knowledge-base/slack/).
 
-= Reminder Notifications =
+## Reminder Notifications ##
 
 This PublishPress Planner Pro feature allows you to send notifications either before or after the publishing date for content. For example, before publication, you can send a reminder to editors, asking them to proof-read the post for publication. Or two or three days after publication, you can send a reminder to various team members, asking them to promote the post on social media.
 
@@ -75,12 +75,17 @@ Join PublishPress and you'll get access to these Pro plugins:
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
-* [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
-* [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
+* [PublishPress Future Pro](https://publishpress.com/future) allows you to schedule changes to WordPress Posts.
+* [PublishPress Permissions Pro](https://publishpress.com/permissions) is the plugin for advanced WordPress permissions.
+* [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
+
+= How Does Planner Compare to Other Plugins? =
+
+There are other Editorial Options for WordPress including SchedulePress, Nelio Content, Edit Flow, Coschedule and more. PublishPress Planner is significantly cheaper than CoSchedule with is a hosted SaaS service. Most people use Planner for free, whereas Coschedule costs for more than just 1 user. When compared to WordPress plugins, Planner stands out for its power and flexibility. Our aim is to give you all the power of a SaaS service, directly inside your WordPress site. PublishPress Planner was originally based on the Edit Flow plugin but has had more updates in recent years.
 
 = Bug Reports =
 
@@ -112,6 +117,19 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.2.0] - 14 May 2024 =
+
+* Feature : Add a kanban board to display posts by status(Content Board), #1379
+* Update : Change "Editorial Metadata" to "Editorial Fields", #1577
+* Update : Remove Categories as a default Filters, #1581
+* Update : Change Content Overview "Manage Filters" label to "Customize Filters", #1580
+* Update : Add a way to find empty data in content overview filters, #1578
+* Update : Update filters default date, #1602
+* Update : Update content overview filters compare labels, #1582
+* Update : Fixed text domain in improved-notifications.php file, #1615
+* Update : Made string translatable in Base.php file, #1614
+* Update : Planner FREE v.4.1.0 Translation Updates ES-FR-IT, #1586
 
 = [4.1.0] - 04 April 2024 =
 
