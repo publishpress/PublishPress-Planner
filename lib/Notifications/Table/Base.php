@@ -180,7 +180,7 @@ class Base
         if (empty($this->modes)) {
             $this->modes = [
                 'list'    => __('List View'),
-                'excerpt' => __('Excerpt View'),
+                'excerpt' => __('Excerpt View', 'publishpress'),
             ];
         }
     }
@@ -657,7 +657,7 @@ class Base
                 'Select bulk action'
             ) . '</label>';
         echo '<select name="action' . esc_attr($two) . '" id="bulk-action-selector-' . esc_attr($which) . "\">\n";
-        echo '<option value="-1">' . esc_html__('Bulk Actions') . "</option>\n";
+        echo '<option value="-1">' . esc_html__('Bulk actions') . "</option>\n";
 
         foreach ($this->_actions as $name => $title) {
             $class = 'edit' === $name ? ' class="hide-if-no-js"' : '';
