@@ -200,7 +200,7 @@ editorialCommentReply = {
         // Validation: check to see if comment entered
         post.content = jQuery.trim(jQuery('#pp-replycontent').val());
         if (!post.content) {
-            jQuery('#pp-replyrow .error').text('Please enter a comment').show();
+            jQuery('#pp-replyrow .error').text(wp.i18n.__('Please enter a comment', 'publishpress')).show();
             return;
         }
 
@@ -368,7 +368,7 @@ editorialCommentEdit = {
         // Validation: check to see if comment entered
         post.content = this.$.trim(this.$('#pp-editcontent').val());
         if (!post.content) {
-            var $errorLine = this.$('<div class="pp-error">').text('Please enter a comment');
+            var $errorLine = this.$('<div class="pp-error">').text(wp.i18n.__('Please enter a comment', 'publishpress'));
             this.$('#pp-editcontainer').append($errorLine);
             return;
         }
