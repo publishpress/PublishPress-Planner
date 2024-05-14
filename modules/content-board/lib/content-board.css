@@ -85,6 +85,10 @@
     margin-right: 20px;
 }
 
+.content-board-table-wrap .status-future .board-title {
+    overflow: visible;
+}
+
 .content-board-table-wrap .board-title .board-title-content {
     display: flex;
     justify-content: space-between;
@@ -356,6 +360,22 @@
     vertical-align: middle;
     max-height: 1.5rem;
     border: 1px solid rgb(232, 234, 237);
+    background-color: rgb(255, 255, 255);
+    color: rgb(101, 111, 125);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.board-title-content .co-filter {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.5rem;
     background-color: rgb(255, 255, 255);
     color: rgb(101, 111, 125);
     font-size: .75rem;
@@ -812,71 +832,6 @@
     height: 100%;
 }
 
-table.content-board tbody td {
-    border: 1px solid rgb(232, 234, 237);
-    border-radius: 0.5rem;
-    border: 0;
-    border-top: 1px solid rgb(240, 241, 243);
-    border-bottom: 1px solid rgb(240, 241, 243);
-    line-height: unset;
-    vertical-align: middle;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-table.content-board tbody td .column-content,
-table.content-board tbody th .column-content {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 60px;
-    max-width: 300px;
-}
-
-table.content-board tbody td .column-content .expanded {
-  max-height: none;
-  overflow: visible;
-}
-table.content-board tbody td .column-content .read-more {
-  cursor: pointer;
-  color: blue;
-}
-
-
-
-table.content-board thead th {
-    border-bottom: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: .75rem;
-    font-weight: 400;
-    line-height: 1.334;
-    -webkit-user-select: none;
-    user-select: none;
-    color: rgb(101, 111, 125);
-}
-
-
-table.content-board th:first-child,
-table.content-board td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    border: 0;
-    border-top: 1px solid rgb(240, 241, 243);
-    border-bottom: 1px solid rgb(240, 241, 243);
-    margin: -1px 0 0;
-    z-index: 35;
-    background-color: rgb(255, 255, 255);
-    border-block-start: 1px solid transparent;
-    margin-block-start: calc(-1* 1px);
-    max-width: 280px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .content-board-inside {
     scrollbar-color: rgb(173, 179, 189) rgb(255, 255, 255);
     scrollbar-width: thin;
@@ -947,21 +902,6 @@ table.content-board td:first-child {
 
 .content-board-inside .column-icon.black {
     fill: rgb(101, 111, 125);
-}
-
-.title-column a {
-    font-size: .875rem;
-    font-weight: 500;
-    line-height: 1.5;
-    margin-right: 4px;
-    min-width: 5ch;
-    padding: 0 0 0 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-left: -5px;
-    border-radius: 4px;
-    color: rgb(42, 46, 52);
 }
 
 header h2 span {
@@ -1183,13 +1123,6 @@ header h2 a.change-date-cancel {
     #pp-content-filters-hidden,
     #pp-content-filters {
         float: none;
-    }
-
-    table.content-board .column-post_date,
-    table.content-board .column-post_modified,
-    table.content-board tr.alternate td:nth-child(4),
-    table.content-board tr.alternate td:nth-child(5) {
-        display: none;
     }
 
     .fixed .column-author,

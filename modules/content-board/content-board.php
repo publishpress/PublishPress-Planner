@@ -1510,6 +1510,7 @@ class PP_Content_Board extends PP_Module
             $response['content'] = esc_html__('Invalid form request.', 'publishpress');
         } else {
             $post_status  = sanitize_text_field($_POST['post_status']);
+            $schedule_date = sanitize_text_field($_POST['schedule_date']);
             $post_id      = (int) $_POST['post_id'];
             $post_data    = get_post($post_id);
             if (!is_object($post_data) || !isset($post_data->post_type)) {
@@ -1524,10 +1525,18 @@ class PP_Content_Board extends PP_Module
                         'post_status' => $post_status
                     ];
                     if ($post_data->post_status === 'future') {
+                        // set current date as published date if old post status is schedule
                         $current_date_time = current_time('mysql');
                         $post_args['post_date'] = $current_date_time;
                         $post_args['post_date_gmt'] = get_gmt_from_date($current_date_time);
+                    } elseif ($post_status === 'future') {
+                        // set future date if new status is schedule
+                        $timestamp = strtotime($schedule_date);
+                        $future_date = date('Y-m-d H:i:s', $timestamp);
+                        $post_args['post_date'] = $future_date;
+                        $post_args['post_date_gmt'] = get_gmt_from_date($future_date);
                     }
+
                     wp_update_post($post_args);
 
                     $response['status']  = 'success';
@@ -2512,7 +2521,55 @@ class PP_Content_Board extends PP_Module
                         continue;
                     }
 
-                    $post_status_options = $this->get_post_status_options($post_status_object->slug); ?>
+                    $post_status_options = $this->get_post_status_options($post_status_object->slug); 
+                    if ($post_status_object->slug === 'future') {
+                        $current_time = current_time('timestamp');
+                        $time_in_two_weeks = strtotime('+1 weeks', $current_time); 
+                        $formatted_date = date_i18n('F j, Y H:i', $time_in_two_weeks);
+                        
+                        $metadata_start_name = 'content_board_scheduled_date';
+                        $date_markup = 
+                        sprintf(
+                            '<input
+                                type="text"
+                                id="%s"
+                                name="%1$s"
+                                value="%2$s"
+                                class="date-time-pick future-date"
+                                data-alt-field="%1$s_hidden"
+                                data-alt-format="%3$s"
+                                placeholder="%4$s"
+                                autocomplete="off"
+                            />',
+                            esc_attr($metadata_start_name),
+                            esc_attr($formatted_date),
+                            esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d H:i:s')),
+                            ''
+                        );
+                        $date_markup .= sprintf(
+                            '<input
+                                type="hidden"
+                                name="%s_hidden"
+                                value="%s"
+                            />',
+                            esc_attr($metadata_start_name),
+                            esc_attr($formatted_date)
+                        );
+
+                        $modal_id = time();
+                        $output_markup = '&nbsp; <div data-target="#content_board_modal_'. esc_attr($modal_id) .'" class="co-filter">
+                        '. esc_html__("Schedule Date", "publishpress") .'
+                    </div>
+                    <div id="content_board_modal_'. esc_attr($modal_id) .'" class="content-board-modal" style="display: none;">
+                        <div class="content-board-modal-content">
+                            <span class="close">&times;</span>
+                            <div>'. $date_markup .'</div>
+                        </div>
+                    </div>';
+                    } else {
+                        $output_markup = '';
+                    }
+                    ?>
 
                     <?php if (empty($grouped_posts[$post_status_object->slug])) :
 
@@ -2520,8 +2577,9 @@ class PP_Content_Board extends PP_Module
                     <div class="board-title" style="border-top-color: '. esc_attr($post_status_options['color']). '">
                         <div class="board-title-content">
                             <span class="status-title-count" style="color: '. esc_attr($post_status_options['color']). '">
-                                <span class="dashicons '. esc_attr($post_status_options['icon']). '"></span> &nbsp;
-                                0
+                            0 &nbsp; <span class="dashicons '. esc_attr($post_status_options['icon']). '"></span>
+                            '. $output_markup .'
+                               
                             </span>
                             <span class="title-text">
                                 '. esc_html($post_status_object->label). '
@@ -2546,8 +2604,8 @@ class PP_Content_Board extends PP_Module
                         <div class="board-title" style="border-top-color: '. esc_attr($post_status_options["color"]) .'">
                                 <div class="board-title-content">
                                     <span class="status-title-count" style="color: '. esc_attr($post_status_options["color"]) .'">
-                                        <span class="dashicons '. esc_attr($post_status_options["icon"]) .'"></span> &nbsp;
-                                        '. esc_html(count($status_posts)) .'
+                                    '. esc_html(count($status_posts)) .' &nbsp; <span class="dashicons '. esc_attr($post_status_options["icon"]) .'"></span>
+                                        '. $output_markup .'
                                     </span>
                                     <span class="title-text">
                                         '. esc_html($post_status_object->label) .'

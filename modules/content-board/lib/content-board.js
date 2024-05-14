@@ -15,6 +15,7 @@ jQuery(document).ready(function ($) {
     $(window).scroll(function() {
         var scroll = $(window).scrollTop();
         if (scroll >= stickyHeaderOffset - 25) {
+            $('.content-board-modal').hide();
             stickyHeader.addClass('sticky');
             stickyHeader.css('top', adminBarHeight + 'px');
             stickyHeader.css('width', contentDiv.width() + 'px');
@@ -193,7 +194,7 @@ jQuery(document).ready(function ($) {
       }
     });
 
-    $(document).on('click', '.pp-content-board-filters .co-filter, .pp-content-board-manage .co-filter', function (e) {
+    $(document).on('click', '.pp-content-board-filters .co-filter, .pp-content-board-manage .co-filter, .board-title-content .co-filter', function (e) {
         e.preventDefault();
         var modalID = $(this).attr("data-target");
         var modalDisplay = $(modalID).css('display');
@@ -201,7 +202,7 @@ jQuery(document).ready(function ($) {
         var isPostModal = $(modalID).hasClass('new-post-modal');
         
         $('.content-board-modal').hide();
-    
+
         if (modalDisplay !== 'block') {
             if (isCustomModal) {
                 var adminBarHeight = $('#wpadminbar').outerHeight() || 0;
@@ -224,7 +225,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $(document).on('click', '.pp-content-board-filters .content-board-modal-content .close, .pp-content-board-manage .content-board-modal-content .close', function (e) {
+    $(document).on('click', '.pp-content-board-filters .content-board-modal-content .close, .pp-content-board-manage .content-board-modal-content .close, .board-title-content .content-board-modal-content .close', function (e) {
         e.preventDefault();
         $('.content-board-modal').hide();
     });
@@ -421,10 +422,12 @@ jQuery(document).ready(function ($) {
                 // update post status
                 var post_id = receivedItem.attr('data-post_id');
                 var post_status = receivedItem.closest('.status-content.board-main-content').attr('data-slug');
+                var schedule_date = $('#content_board_scheduled_date').val();
                 var data = {
                     action: "publishpress_content_board_update_post_status",
                     post_id: post_id,
                     post_status: post_status,
+                    schedule_date: schedule_date,
                     nonce: PPContentBoard.nonce
                 };
         
