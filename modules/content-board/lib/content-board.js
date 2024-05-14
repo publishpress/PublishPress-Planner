@@ -1,33 +1,36 @@
 // Content Board specific JS, assumes that pp_date.js has already been included
 
 jQuery(document).ready(function ($) {
-    var adminBarHeight  = $('#wpadminbar').outerHeight();
-    var stickyHeader    = $('.content-board-table-wrap .statuses-contents .content-wrap.header-content');
-    var contentDiv      = $('.content-board-table-wrap .statuses-contents .content-wrap.main-content');
-    var stickyHeaderOffset = stickyHeader.offset().top;
 
-    // synch fixed header scroll to main scroll
-    $('.content-board-inside').on('scroll', function() {
-        stickyHeader.scrollLeft($(this).scrollLeft());
-    });
+    if ($('.content-board-table-wrap .statuses-contents .content-wrap.header-content').length > 0) {
+        var adminBarHeight  = $('#wpadminbar').outerHeight();
+        var stickyHeader    = $('.content-board-table-wrap .statuses-contents .content-wrap.header-content');
+        var contentDiv      = $('.content-board-table-wrap .statuses-contents .content-wrap.main-content');
+        var stickyHeaderOffset = stickyHeader.offset().top;
 
-    // stick status header to the top when scroll reach admin bar
-    $(window).scroll(function() {
-        var scroll = $(window).scrollTop();
-        if (scroll >= stickyHeaderOffset - 25) {
-            $('.content-board-modal').hide();
-            stickyHeader.addClass('sticky');
-            stickyHeader.css('top', adminBarHeight + 'px');
-            stickyHeader.css('width', contentDiv.width() + 'px');
-            contentDiv.addClass('header-sticky');
-            stickyHeader.scrollLeft($('.content-board-inside').scrollLeft());
-        } else {
-            stickyHeader.removeClass('sticky');
-            stickyHeader.css('top', 'auto');
-            stickyHeader.css('width', '100%');
-            contentDiv.removeClass('header-sticky');
-        }
-    });
+        // synch fixed header scroll to main scroll
+        $('.content-board-inside').on('scroll', function() {
+            stickyHeader.scrollLeft($(this).scrollLeft());
+        });
+
+        // stick status header to the top when scroll reach admin bar
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            if (scroll >= stickyHeaderOffset - 25) {
+                $('.content-board-modal').hide();
+                stickyHeader.addClass('sticky');
+                stickyHeader.css('top', adminBarHeight + 'px');
+                stickyHeader.css('width', contentDiv.width() + 'px');
+                contentDiv.addClass('header-sticky');
+                stickyHeader.scrollLeft($('.content-board-inside').scrollLeft());
+            } else {
+                stickyHeader.removeClass('sticky');
+                stickyHeader.css('top', 'auto');
+                stickyHeader.css('width', '100%');
+                contentDiv.removeClass('header-sticky');
+            }
+        });
+    }
 
     if ($('.content-board-table-wrap .board-content .content-item'.length > 0)) {
         // make content dragable
