@@ -54,6 +54,9 @@ jQuery(document).ready(function ($) {
       controlType: 'select',
       altFieldTimeOnly: false
     });
+    if (self.hasClass('future-date')) {
+      options.minDate = new Date();
+    }
     self.datetimepicker(options);
   });
 
