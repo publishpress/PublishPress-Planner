@@ -177,7 +177,9 @@
 }
 
 .content-board-table-wrap .board-content .content-item.empty-card .drag-message p {
-    padding: 15px 5px 15px;
+    font-weight: 400;
+    color: grey;
+    max-width: 120px;
 }
 
 .content-board-table-wrap .board-content .content-item.empty-card .drag-permission-message {
