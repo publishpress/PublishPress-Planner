@@ -363,7 +363,6 @@ jQuery(document).ready(function ($) {
 
         $(formClass + ' .entry-item.custom.customize-item-' + entryMetaKey).remove();
     });
-    
 
     $(document).on('click', '.co-cc-content .save-cc-changes', function (e) {
         e.preventDefault();
@@ -403,6 +402,23 @@ jQuery(document).ready(function ($) {
 
     });
 
+    $(document).on('click', '.content-board-modal.schedule-date-modal #filter-submit', function (e) {
+        e.preventDefault();
+        
+        $('.content-board-modal').hide();
+        
+        var schedule_number = $('.schedule-content-number').val();
+        var schedule_period = $('.schedule-content-period').val();
+        var data = {
+            action: "publishpress_content_board_update_schedule_period",
+            schedule_number: schedule_number,
+            schedule_period: schedule_period,
+            nonce: PPContentBoard.nonce
+        };
+
+        $.post(ajaxurl, data);
+    });
+
  
     function sortedPostCardsList(selector) {
     
@@ -430,12 +446,14 @@ jQuery(document).ready(function ($) {
                 // update post status
                 var post_id = receivedItem.attr('data-post_id');
                 var post_status = receivedItem.closest('.status-content.board-main-content').attr('data-slug');
-                var schedule_date = $('#content_board_scheduled_date').val();
+                var schedule_number = $('.schedule-content-number').val();
+                var schedule_period = $('.schedule-content-period').val();
                 var data = {
                     action: "publishpress_content_board_update_post_status",
                     post_id: post_id,
                     post_status: post_status,
-                    schedule_date: schedule_date,
+                    schedule_number: schedule_number,
+                    schedule_period: schedule_period,
                     nonce: PPContentBoard.nonce
                 };
         

@@ -18,7 +18,11 @@ footer,
 .change-date,
 #pp-content-filters .clear-filter,
 .pp-content-board-manage,
-.pp-version-notice-bold-purple {
+.pp-version-notice-bold-purple,
+.board-title-content .co-filter,
+.board-title-content .content-board-modal,
+.content-board-table-wrap .statuses-contents .status-content[data-counts="0"],
+.content-board-table-wrap .board-content .content-item .post-action {
     display: none;
 }
 
@@ -104,19 +108,22 @@ a {
     text-shadow: none;
 }
 
-table.content-board {
+.content-board-table-wrap {
     background: white;
-    padding: 15px;
-    border: 1px solid rgb( 101, 111, 125 );
-    border-radius: 0.5rem;
-    border-left-width: 1px;
     margin-top: 10px;
     padding-top: 5px;
 }
 
-table.content-board tr td {
-    border-top: 1px solid rgb(240, 241, 243);
-    border-bottom: 1px solid rgb(240, 241, 243);
+.content-board-table-wrap .statuses-contents .content-wrap {
+    display: flex;
+    column-gap: 30px;
+}
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
 }
 
 .pp-content-board-filters {
@@ -126,6 +133,142 @@ table.content-board tr td {
     gap: 8px;
     width: 100%;
 }
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
+}
+
+.content-board-table-wrap .board-title {
+    width: 100%;
+    border-radius: .25rem .25rem;
+    box-shadow: 0 .0625rem .1875rem rgba(0, 0, 0, .106), 0 .0625rem .125rem -.0625rem rgba(0, 0, 0, .106);
+    background-color: rgb(255, 255, 255);
+    border-top: 2px solid;
+    border-top-color: rgb(135, 144, 158);
+    position: relative;
+    align-items: center;
+    flex-basis: 169px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    margin-right: 20px;
+}
+
+.content-board-table-wrap .board-title .board-title-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    padding-left: 0;
+}
+
+.content-board-table-wrap .board-title .status-title-count {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    height: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    min-width: 25px;
+    background-color: transparent;
+}
+
+.content-board-table-wrap .board-title .title-text {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-right: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0;
+    color: rgb(42, 46, 52);
+    text-transform: uppercase;
+}
+
+.content-board-table-wrap .statuses-contents .content-wrap {
+    display: flex;
+    column-gap: 30px;
+}
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
+}
+
+.content-board-table-wrap .board-content {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-board-table-wrap .board-content .content-item {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, .055), 0 .0625rem .125rem rgba(0, 0, 0, .055);
+    border-radius: .25rem;
+    border: 1px solid rgb(232, 234, 237);
+    margin: 6px 0 6px 0;
+    border-end-start-radius: .25rem;
+    border-end-end-radius: .25rem;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post {
+    padding: 7px 10px 2px;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-date {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    margin: 0 0 7px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #544d61;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title {
+    margin: 0;
+    color: #544d61;
+    font-size: 0;
+    position: relative;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title .post-title-text {
+    cursor: pointer;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-right: 4px;
+    border-radius: 4px;
+    color: rgb(42, 46, 52);
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-meta {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(240, 241, 243);
+    padding: 5px 0 5px 0;
+    color: #bcc0c7;
+    font-size: 13px;
+    color: #50575e;
+    column-gap: 15px;
+}
+
 
 .pp-content-board-filters button.clear-filter, .pp-content-board-filters button.co-filter {
     white-space: nowrap;

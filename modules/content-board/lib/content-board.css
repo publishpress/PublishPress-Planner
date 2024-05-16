@@ -554,6 +554,15 @@
     margin-bottom: 5px;
 }
 
+.content-board-modal.schedule-date-modal .schedule-date-options {
+    display: flex;
+    min-width: 200px;
+}
+
+.content-board-modal.schedule-date-modal .schedule-date-options select {
+    flex: 1;
+}
+
 .metadata-item-filter .filter-title {
     font-weight: 500;
     font-size: 1rem;

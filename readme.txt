@@ -118,7 +118,7 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [4.2.0] - 14 May 2024 =
+= [4.2.0] - 16 May 2024 =
 
 * Feature : Add a kanban board to display posts by status(Content Board), #1379
 * Update : Change "Editorial Metadata" to "Editorial Fields", #1577

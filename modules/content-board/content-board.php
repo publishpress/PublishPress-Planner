@@ -117,7 +117,7 @@ class PP_Content_Board extends PP_Module
     /**
      * Custom methods
      *
-     * @var Array
+     * @var array
      */
     private $terms_options = [];
 
@@ -150,6 +150,11 @@ class PP_Content_Board extends PP_Module
                 'content_board_custom_columns' => '',
                 'content_board_filters' => '',
                 'content_board_custom_filters' => '',
+                
+                'content_board_scheduled_date' => [
+                    'number' => 1,
+                    'period' => 'weeks'
+                ],
 
                 'post_types' => [
                     'post' => 'on',
@@ -190,6 +195,7 @@ class PP_Content_Board extends PP_Module
         add_action('wp_ajax_publishpress_content_board_search_categories', [$this, 'sendJsonSearchCategories']);
         add_action('wp_ajax_publishpress_content_board_get_form_fields', [$this, 'getFormFieldAjaxHandler']);
         add_action('wp_ajax_publishpress_content_board_update_post_status', [$this, 'updatePostStatus']);
+        add_action('wp_ajax_publishpress_content_board_update_schedule_period', [$this, 'updateSchedulePeriod']);
 
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
@@ -1499,7 +1505,36 @@ class PP_Content_Board extends PP_Module
         return ob_get_clean();
         
     }
+
+    public function updateSchedulePeriod() {
+        global $publishpress;
+
+        $response['status']  = 'error';
+        $response['content'] = esc_html__('An error occured', 'publishpress');
+
+
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_action_nonce')) {
+            $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
+        } elseif (empty($_POST['schedule_number']) || empty($_POST['schedule_period'])) {
+            $response['content'] = esc_html__('Invalid form request.', 'publishpress');
+        } else {
+            $schedule_number = (int) $_POST['schedule_number'];
+            $schedule_period = sanitize_text_field($_POST['schedule_period']);
+            $content_board_scheduled_date = [
+                'number' => $schedule_number,
+                'period' => $schedule_period
+            ];
+            $publishpress->update_module_option($this->module->name, 'content_board_scheduled_date', $content_board_scheduled_date);
+            $response['status']  = 'success';
+            $response['content'] = esc_html__('Changes saved!', 'publishpress');
+        }
+        
+        wp_send_json($response);
+    }
+
     public function updatePostStatus() {
+        global $publishpress;
+
         $response['status']  = 'error';
         $response['content'] = esc_html__('An error occured', 'publishpress');
 
@@ -1510,7 +1545,8 @@ class PP_Content_Board extends PP_Module
             $response['content'] = esc_html__('Invalid form request.', 'publishpress');
         } else {
             $post_status  = sanitize_text_field($_POST['post_status']);
-            $schedule_date = sanitize_text_field($_POST['schedule_date']);
+            $schedule_number = (int) $_POST['schedule_number'];
+            $schedule_period = sanitize_text_field($_POST['schedule_period']);
             $post_id      = (int) $_POST['post_id'];
             $post_data    = get_post($post_id);
             if (!is_object($post_data) || !isset($post_data->post_type)) {
@@ -1531,8 +1567,16 @@ class PP_Content_Board extends PP_Module
                         $post_args['post_date_gmt'] = get_gmt_from_date($current_date_time);
                     } elseif ($post_status === 'future') {
                         // set future date if new status is schedule
-                        $timestamp = strtotime($schedule_date);
+                        $current_timestamp = time();
+                        $timestamp         = strtotime($schedule_number . ' ' . $schedule_period, $current_timestamp);
+                        $content_board_scheduled_date = [
+                            'number' => $schedule_number,
+                            'period' => $schedule_period
+                        ];
+                        $publishpress->update_module_option($this->module->name, 'content_board_scheduled_date', $content_board_scheduled_date);
+                
                         $future_date = date('Y-m-d H:i:s', $timestamp);
+
                         $post_args['post_date'] = $future_date;
                         $post_args['post_date_gmt'] = get_gmt_from_date($future_date);
                     }
@@ -2504,13 +2548,20 @@ class PP_Content_Board extends PP_Module
                     $post_statuses_slugs = array_column($post_statuses, 'slug');
                     if (!in_array('future', $post_statuses_slugs)) {
                         // Add Scheduled status
-                        $post_statuses[] = (object) [
+                        /*$post_statuses[] = (object) [
                             'label'         => __('Scheduled', 'publishpress'),
                             'description'   => '',
                             'name'          => 'future',
                             'slug'          => 'future',
                             'position'      => count($post_statuses) + 1
-                        ];
+                        ];*/
+                        $post_statuses = array_merge([(object) [
+                            'label'         => __('Scheduled', 'publishpress'),
+                            'description'   => '',
+                            'name'          => 'future',
+                            'slug'          => 'future',
+                            'position'      => count($post_statuses) + 1
+                        ]], $post_statuses);
                     }
 
                     // Group posts by status
@@ -2531,44 +2582,41 @@ class PP_Content_Board extends PP_Module
 
                     $post_status_options = $this->get_post_status_options($post_status_object->slug); 
                     if ($post_status_object->slug === 'future') {
-                        $current_time = current_time('timestamp');
-                        $time_in_two_weeks = strtotime('+1 weeks', $current_time); 
-                        $formatted_date = date_i18n('F j, Y H:i', $time_in_two_weeks);
-                        
-                        $metadata_start_name = 'content_board_scheduled_date';
-                        $date_markup = 
-                        sprintf(
-                            '<input
-                                type="text"
-                                id="%s"
-                                name="%1$s"
-                                value="%2$s"
-                                class="date-time-pick future-date"
-                                data-alt-field="%1$s_hidden"
-                                data-alt-format="%3$s"
-                                placeholder="%4$s"
-                                autocomplete="off"
-                            />',
-                            esc_attr($metadata_start_name),
-                            esc_attr($formatted_date),
-                            esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d H:i:s')),
-                            ''
-                        );
-                        $date_markup .= sprintf(
-                            '<input
-                                type="hidden"
-                                name="%s_hidden"
-                                value="%s"
-                            />',
-                            esc_attr($metadata_start_name),
-                            esc_attr($formatted_date)
-                        );
+                        $content_board_scheduled_date = $this->module->options->content_board_scheduled_date;
+                        $number_select = '<select class="schedule-content-number">';
+                        for ($i = 1; $i <= 31; $i++) {
+                            $number_select .= '<option value="'. $i .'" '. selected($i, $content_board_scheduled_date['number'], false).'>'. $i .'</option>';
+                        }
+                        $number_select .= '<select>';
+
+                        $period_options = ['days', 'weeks', 'months', 'years'];
+                        $period_select = '<select class="schedule-content-period">';
+                        foreach ($period_options as $period_option) {
+                            $period_select .= '<option value="'. $period_option .'" '. selected($period_option, $content_board_scheduled_date['period'], false).'>'. ucfirst($period_option) .'</option>';
+                        }
+                        $period_select .= '<select>';
+
+                        $date_markup = '<div class="metadata-item-filter">
+                        <div class="filter-title">'. esc_html__("Default Date", "publishpress") .'</div>
+                        <div class="filter-content"> 
+                            <div class="schedule-date-options">
+                            '. $number_select .'
+                            '. $period_select .'
+                            </div>
+
+                            <p class="description">'. esc_html__("This is the default publish date from today for posts moving to the Scheduled status.", "publishpress") .'</p>
+                       
+                            <div class="filter-apply">
+                                <input type="submit" id="filter-submit" class="button button-primary" value="'. esc_html__("Apply", "publishpress") .'">
+                            </div>
+                        </div>
+                    </div>';
 
                         $modal_id = time();
                         $output_markup = '&nbsp; <div data-target="#content_board_modal_'. esc_attr($modal_id) .'" class="co-filter">
-                        '. esc_html__("Schedule Date", "publishpress") .'
+                        '. esc_html__("Default Date", "publishpress") .'
                     </div>
-                    <div id="content_board_modal_'. esc_attr($modal_id) .'" class="content-board-modal" style="display: none;">
+                    <div id="content_board_modal_'. esc_attr($modal_id) .'" class="content-board-modal schedule-date-modal" style="display: none;">
                         <div class="content-board-modal-content">
                             <span class="close">&times;</span>
                             <div>'. $date_markup .'</div>
@@ -2638,11 +2686,11 @@ class PP_Content_Board extends PP_Module
                                                 $post_title = _draft_or_post_title($status_post->ID);
 
                                                 if ($can_edit_post) {
-                                                    $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="". esc_attr($post_title) ."">'. esc_html(
+                                                    $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="'. esc_attr($post_title) .'">'. esc_html(
                                                             $post_title
                                                         ) . '</a></strong>';
                                                 } else {
-                                                    $title_output = '<strong class="post-title-text" title="". esc_attr($post_title) ."">'. esc_html($post_title) . '</strong>';
+                                                    $title_output = '<strong class="post-title-text" title="'. esc_attr($post_title) .'">'. esc_html($post_title) . '</strong>';
                                                 }
                                                 $statuses_content_markup .= $title_output;
                                             $statuses_content_markup .= '</div>';
