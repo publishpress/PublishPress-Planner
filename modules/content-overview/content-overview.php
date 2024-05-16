@@ -1569,6 +1569,9 @@ class PP_Content_Overview extends PP_Module
                                     <th>
                                         <label for="publishpress-content-overview-field-<?php echo esc_attr($field_key); ?>">
                                             <?php echo esc_html($field_options['label']); ?>
+                                            <?php if (!empty($field_options['required'])) : ?>
+                                                <span class="required">*</span>
+                                            <?php endif; ?>
                                         </label>
                                     </th>
                                     <td>
@@ -1663,11 +1666,13 @@ class PP_Content_Overview extends PP_Module
                                                     break;
 
                                                     default:
+                                                    $required_html = !empty($field_options['required']) ? 'required' : '';
                                                         ?>
                                                         <input 
                                                             type="<?php echo esc_attr($field_options['type']); ?>" 
                                                             name="<?php echo esc_attr($field_key); ?>" 
                                                             value="<?php echo esc_attr($field_options['value']); ?>"
+                                                            <?php echo esc_html($required_html); ?>
                                                         >
                                                         <?php
                                                     break;
@@ -1686,6 +1691,7 @@ class PP_Content_Overview extends PP_Module
                     <div class="save-cc-changes save-new-post-form">
                         <?php echo sprintf(esc_html__('Create %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)); ?>
                     </div>
+                    <input type="submit" name="submit" class="form-submit-button" value="<?php esc_html_e('Submit', 'publishpress'); ?>" style="display: none;"/>
                 </div>
             </div>
         </form>
@@ -1719,6 +1725,7 @@ class PP_Content_Overview extends PP_Module
                 'label' => __('Title', 'publishpress'),
                 'value' => null,
                 'type' => 'text',
+                'required' => 1,
             ],
             'status' => [
                 'label' => __('Post Status', 'publishpress'),

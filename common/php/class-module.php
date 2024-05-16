@@ -225,8 +225,8 @@ if (!class_exists('PP_Module')) {
                     'publish' => 'dashicons-yes',
                     'future' => 'dashicons-calendar-alt',
                     'private' => 'dashicons-lock',
-                    'draft' => 'dashicons-edit',
-                    'pending' => 'dashicons-edit',
+                    'draft' => 'dashicons-media-default',
+                    'pending' => 'dashicons-clock',
                     'auto-draft' => 'dashicons-edit',
                 ];
 

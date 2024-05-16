@@ -177,7 +177,9 @@
 }
 
 .content-board-table-wrap .board-content .content-item.empty-card .drag-message p {
-    padding: 15px 5px 15px;
+    font-weight: 400;
+    color: grey;
+    max-width: 120px;
 }
 
 .content-board-table-wrap .board-content .content-item.empty-card .drag-permission-message {
@@ -550,6 +552,15 @@
     justify-content: end;
     font-size: large;
     margin-bottom: 5px;
+}
+
+.content-board-modal.schedule-date-modal .schedule-date-options {
+    display: flex;
+    min-width: 200px;
+}
+
+.content-board-modal.schedule-date-modal .schedule-date-options select {
+    flex: 1;
 }
 
 .metadata-item-filter .filter-title {
