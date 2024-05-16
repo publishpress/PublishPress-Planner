@@ -152,7 +152,7 @@ class PP_Content_Board extends PP_Module
                 'content_board_custom_filters' => '',
 
                 'content_board_scheduled_date' => [
-                    'number' => 1,
+                    'number' => 2,
                     'period' => 'weeks'
                 ],
 

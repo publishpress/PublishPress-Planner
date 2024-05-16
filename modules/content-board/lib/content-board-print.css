@@ -20,10 +20,10 @@ footer,
 .pp-content-board-manage,
 .pp-version-notice-bold-purple,
 .board-title-content .co-filter,
-.board-title-content .content-board-modal,
+.content-board-modal,
 .content-board-table-wrap .statuses-contents .status-content[data-counts="0"],
 .content-board-table-wrap .board-content .content-item .post-action {
-    display: none;
+    display: none !important;
 }
 
 #pp-content-board-wrap .time-range form {
