@@ -178,7 +178,7 @@ jQuery(document).ready(function ($) {
 
     $(document).on('click', '#pp-content-filters .clear-filter', function (e) {
         e.preventDefault();
-        $('#pp-content-filters #post-query-clear').trigger('click');
+        $('#pp-content-filters-hidden').submit();
     });
 
     $(document).on('click', '.pp-content-overview-manage .me-mode-action', function (e) {
@@ -310,7 +310,12 @@ jQuery(document).ready(function ($) {
 
     $(document).on('click', '.co-cc-content .save-cc-changes', function (e) {
         e.preventDefault();
-        $(this).closest('form').trigger('submit');
+        var button = $(this);
+        if (button.hasClass('save-new-post-form')) {
+            button.closest('form').find('.form-submit-button').trigger('click');
+        } else {
+            $(button).closest('form').trigger('submit');
+        }
     });
 
     $(document).on('keypress', '.co-cc-content .entry-item input', function (e) {
