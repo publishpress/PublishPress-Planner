@@ -3,7 +3,7 @@
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
- * Version: 4.1.0
+ * Version: 4.2.0
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -338,6 +338,7 @@ add_action('plugins_loaded', function () {
                 $defaultDirs = [
                     'calendar' => PUBLISHPRESS_BASE_PATH,
                     'content-overview' => PUBLISHPRESS_BASE_PATH,
+                    'content-board' => PUBLISHPRESS_BASE_PATH,
                     'notifications' => PUBLISHPRESS_BASE_PATH,
                     'improved-notifications' => PUBLISHPRESS_BASE_PATH,
                     'async-notifications' => PUBLISHPRESS_BASE_PATH,
@@ -835,6 +836,7 @@ add_action('plugins_loaded', function () {
 
                     $menuItemCalendar = 'pp-calendar';
                     $menuItemContentOverview = 'pp-content-overview';
+                    $menuItemContentBoard = 'pp-content-board';
                     $menuItemNotifications = 'edit.php?post_type=psppnotif_workflow';
                     $menuItemNotificationsLog = 'pp-notif-log';
                     $menuItemRoles = 'pp-manage-roles';
@@ -844,6 +846,7 @@ add_action('plugins_loaded', function () {
                     $itemsToSort = [
                         $menuItemCalendar => null,
                         $menuItemContentOverview => null,
+                        $menuItemContentBoard => null,
                         $menuItemNotifications => null,
                         $menuItemNotificationsLog => null,
                         $menuItemRoles => null,
@@ -855,6 +858,7 @@ add_action('plugins_loaded', function () {
                         $upgradeMenuSlugs = [
                             $menuItemCalendar . $suffix => null,
                             $menuItemContentOverview . $suffix => null,
+                            $menuItemContentBoard . $suffix => null,
                             $menuItemNotifications . $suffix => null,
                             $menuItemNotificationsLog . $suffix => null,
                             $menuItemRoles . $suffix => null,
@@ -884,6 +888,15 @@ add_action('plugins_loaded', function () {
                         $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemContentOverview]];
 
                         unset($currentSubmenu[$itemsToSort[$menuItemContentOverview]]);
+                    }
+
+                    // Content Board
+                    if (isset($itemsToSort[$menuItemContentBoard]) && ! is_null(
+                            $itemsToSort[$menuItemContentBoard]
+                        )) {
+                        $newSubmenu[] = $currentSubmenu[$itemsToSort[$menuItemContentBoard]];
+
+                        unset($currentSubmenu[$itemsToSort[$menuItemContentBoard]]);
                     }
 
                     // Notifications

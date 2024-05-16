@@ -1645,69 +1645,6 @@ if (! class_exists('PP_Calendar')) {
         }
 
         /**
-         * Returns the CSS class name and color for the given custom status.
-         * It reutrns an array with the following keys:
-         *     - icon
-         *     - color
-         *
-         * @param string $post_status
-         *
-         * @return array
-         */
-        protected function get_post_status_options($post_status)
-        {
-            global $publishpress;
-
-            // Check if we have a custom icon for this post_status
-            $term = $publishpress->getPostStatusBy('slug', $post_status);
-
-            // Icon
-            $icon = null;
-            if (! empty($term->icon)) {
-                $icon = $term->icon;
-            } else {
-                // Add an icon for the items
-                $default_icons = [
-                    'publish' => 'dashicons-yes',
-                    'future' => 'dashicons-calendar-alt',
-                    'private' => 'dashicons-lock',
-                    'draft' => 'dashicons-edit',
-                    'pending' => 'dashicons-edit',
-                    'auto-draft' => 'dashicons-edit',
-                ];
-
-                $icon = isset($default_icons[$post_status]) ? $default_icons[$post_status] : 'dashicons-edit';
-            }
-
-            // Color
-            if (! empty($term->color)) {
-                $color = $term->color;
-            } else {
-                $default_status_colors = [
-                    'pitch' => '#cc0000',
-                    'assigned' => '#00bcc5',
-                    'in-progress' => '#ccc500',
-                    'draft' => '#f91d84',
-                    'pending' => '#d87200',
-                    'private' => '#000000',
-                    'future' => '#655997',
-                    'publish' => '#655997',
-                ];
-
-                if (isset($default_status_colors[$post_status])) {
-                    $color = $default_status_colors[$post_status];
-                } else {
-                    $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
-                }
-            }
-
-            return [
-                'color' => $color,
-                'icon' => $icon,
-            ];
-        }
-
-        /**
          * get_inner_information description
          * Functionality for generating the inner html elements on the calendar
          * has been separated out so various ajax functions can reload certain
@@ -1992,7 +1929,7 @@ if (! class_exists('PP_Calendar')) {
                 } else {
                     $value = '';
                 }
-                // Used when editing editorial metadata and post meta
+                // Used when editing editorial fields and post meta
                 if (is_taxonomy_hierarchical($taxonomy->name)) {
                     $type = 'taxonomy hierarchical';
                 } else {

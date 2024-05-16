@@ -1,4 +1,4 @@
-/** Editorial Metadata **/
+/** Editorial Fields **/
 
 #pp_editorial_meta h3 {
     padding-left: 22px;
@@ -138,7 +138,7 @@ td.checkbox-row input {
 }
 
 /*
- * If editorial metadata is in the main post column, allow the metadata to be laid out in
+ * If editorial fields is in the main post column, allow the metadata to be laid out in
  * multiple columns in browsers that support it.
  */
 div#normal-sortables #pp_editorial_meta_meta_box {

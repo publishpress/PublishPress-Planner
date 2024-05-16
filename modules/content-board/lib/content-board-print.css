@@ -1,0 +1,320 @@
+/* Print styles for PublishPress's Content Board view */
+
+/* Hide the styles that we don't need */
+#pp-content-board-tablenav,
+#adminmenu,
+#wpadminbar,
+#adminmenuback,
+#screen-meta-links,
+#wphead,
+#footer,
+#screen-meta,
+#pp-content-board-wrap .change-date-buttons,
+#pp-content-board-wrap .time-range input,
+#pp-content-board-wrap .module-icon,
+.row-actions,
+#wpfooter,
+footer,
+.change-date,
+#pp-content-filters .clear-filter,
+.pp-content-board-manage,
+.pp-version-notice-bold-purple,
+.board-title-content .co-filter,
+.content-board-modal,
+.content-board-table-wrap .statuses-contents .status-content[data-counts="0"],
+.content-board-table-wrap .board-content .content-item .post-action {
+    display: none !important;
+}
+
+#pp-content-board-wrap .time-range form {
+    display: inline;
+}
+
+body {
+    font: 12pt/16pt Georgia, Times, serif;
+    padding: 10px;
+}
+
+a {
+    color: #000000;
+}
+
+#wpbody {
+    margin-left: 0px;
+    margin-top: -20px;
+}
+
+#wpcontent {
+    margin-left: 1em;
+    margin-right: 2em;
+}
+
+#wpbody #wpbody-content,
+#wpbody #wpbody-content .postbox-container,
+.postbox,
+.inside,
+.widefat,
+.meta-box-sortables {
+    float: none !important; /* Prevent Gecko from cutting off floated elements in print */
+}
+
+.icon32 {
+    display: block;
+    float: none;
+}
+
+.wrap h2 {
+    font-style: normal;
+}
+
+.meta-box-sortables .postbox {
+    width: 100% !important; /* Important rule to override the inline styles applied to .postbox */
+}
+
+.postbox,
+.widefat,
+.widefat td {
+    border-color: #ffffff;
+}
+
+.widefat td {
+    padding-top: 10px !important;
+}
+
+.widefat td,
+.widefat th,
+.row-title {
+    font-size: 13px !important;
+    line-height: 17px;
+}
+
+.widefat td p {
+    color: #3d3d3d;
+}
+
+.postbox {
+    margin-bottom: 30px;
+}
+
+.postbox .hndle {
+    background-image: none;
+}
+
+.meta-box-sortables .postbox h3 {
+    border-bottom: 1px solid #e1e1e1;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+.content-board-table-wrap {
+    background: white;
+    margin-top: 10px;
+    padding-top: 5px;
+}
+
+.content-board-table-wrap .statuses-contents .content-wrap {
+    display: flex;
+    column-gap: 30px;
+}
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
+}
+
+.pp-content-board-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
+}
+
+.content-board-table-wrap .board-title {
+    width: 100%;
+    border-radius: .25rem .25rem;
+    box-shadow: 0 .0625rem .1875rem rgba(0, 0, 0, .106), 0 .0625rem .125rem -.0625rem rgba(0, 0, 0, .106);
+    background-color: rgb(255, 255, 255);
+    border-top: 2px solid;
+    border-top-color: rgb(135, 144, 158);
+    position: relative;
+    align-items: center;
+    flex-basis: 169px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    margin-right: 20px;
+}
+
+.content-board-table-wrap .board-title .board-title-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    padding-left: 0;
+}
+
+.content-board-table-wrap .board-title .status-title-count {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    height: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    min-width: 25px;
+    background-color: transparent;
+}
+
+.content-board-table-wrap .board-title .title-text {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-right: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0;
+    color: rgb(42, 46, 52);
+    text-transform: uppercase;
+}
+
+.content-board-table-wrap .statuses-contents .content-wrap {
+    display: flex;
+    column-gap: 30px;
+}
+
+.content-board-table-wrap .statuses-contents .status-content {
+    width: 100%;
+    min-width: 234px;
+    max-width: 234px;
+    margin-right: 15px;
+}
+
+.content-board-table-wrap .board-content {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-board-table-wrap .board-content .content-item {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, .055), 0 .0625rem .125rem rgba(0, 0, 0, .055);
+    border-radius: .25rem;
+    border: 1px solid rgb(232, 234, 237);
+    margin: 6px 0 6px 0;
+    border-end-start-radius: .25rem;
+    border-end-end-radius: .25rem;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post {
+    padding: 7px 10px 2px;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-date {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    margin: 0 0 7px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #544d61;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title {
+    margin: 0;
+    color: #544d61;
+    font-size: 0;
+    position: relative;
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title .post-title-text {
+    cursor: pointer;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-right: 4px;
+    border-radius: 4px;
+    color: rgb(42, 46, 52);
+}
+
+.content-board-table-wrap .board-content .content-item .content-item-post .post-meta {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(240, 241, 243);
+    padding: 5px 0 5px 0;
+    color: #bcc0c7;
+    font-size: 13px;
+    color: #50575e;
+    column-gap: 15px;
+}
+
+
+.pp-content-board-filters button.clear-filter, .pp-content-board-filters button.co-filter {
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.5rem;
+    border: 1px solid rgb(232, 234, 237);
+    background-color: rgb(255, 255, 255);
+    color: rgb(101, 111, 125);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.pp-content-board-manage .item.action.active-filter, .pp-content-board-filters button.active-filter {
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    max-height: 1.5rem;
+    border: 1px solid rgb(204, 201, 250);
+    background-color: rgb(242, 241, 254);
+    color: rgb(84, 77, 201);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.content-board-inside .column-icon {
+    margin-left: 0;
+    margin-right: 5px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    flex-grow: 0;
+    width: 16px;
+    height: 16px;
+    fill: green;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.content-board-inside .column-icon.red {
+    fill: red;
+}
+
+.content-board-inside .column-icon.black {
+    fill: rgb( 101, 111, 125 );
+}

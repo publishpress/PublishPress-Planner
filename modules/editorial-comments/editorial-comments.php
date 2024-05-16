@@ -215,6 +215,8 @@ if (! class_exists('PP_Editorial_Comments')) {
                 ]
             );
 
+            wp_set_script_translations( 'publishpress-editorial-comments', 'publishpress' );
+
             $thread_comments = (int)get_option('thread_comments'); ?>
             <script type="text/javascript">
                 var pp_thread_comments = <?php echo ($thread_comments) ? esc_html__($thread_comments) : 0; ?>;
@@ -1336,7 +1338,7 @@ if (! class_exists('PP_Editorial_Comments')) {
          * @param array $data Additional data fields to include on the calendar
          * @param WP_Post $post
          *
-         * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
+         * @return array $calendar_fields Calendar fields with our viewable Editorial Fields added
          * @uses  apply_filters('publishpress_calendar_get_post_data')
          *
          * @since 0.7

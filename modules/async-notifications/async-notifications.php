@@ -109,7 +109,7 @@ if (! class_exists('PP_Async_Notifications')) {
         }
 
         /**
-         * Load default editorial metadata the first time the module is loaded
+         * Load default editorial fields the first time the module is loaded
          *
          * @since 0.7
          */

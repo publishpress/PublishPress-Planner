@@ -34,7 +34,7 @@ use PublishPress\Legacy\Auto_loader;
 if (! defined('PP_LOADED')) {
     if (! defined('PUBLISHPRESS_VERSION')) {
         // Define constants
-        define('PUBLISHPRESS_VERSION', '4.1.0');
+        define('PUBLISHPRESS_VERSION', '4.2.0');
         define('PUBLISHPRESS_BASE_PATH', __DIR__);
         define('PUBLISHPRESS_VIEWS_PATH', __DIR__ . '/views');
         define('PUBLISHPRESS_FILE_PATH', PUBLISHPRESS_BASE_PATH . '/publishpress.php');
@@ -136,6 +136,7 @@ if (! defined('PP_LOADED')) {
                             ['base' => 'edit', 'id' => 'edit-psppnotif_workflow'],
                             ['base' => 'post', 'id' => 'psppnotif_workflow'],
                             ['base' => 'planner_page_pp-content-overview'],
+                            ['base' => 'planner_page_pp-content-board'],
                             ['base' => 'toplevel_page_pp-calendar', 'id' => 'toplevel_page_pp-calendar'],
                         ]
                     ];
@@ -151,6 +152,7 @@ if (! defined('PP_LOADED')) {
                         'parent' => [
                             'pp-calendar',
                             'pp-content-overview',
+                            'pp-content-board',
                             'edit.php?post_type=psppnotif_workflow',
                             'pp-notif-log',
                             'pp-manage-roles',

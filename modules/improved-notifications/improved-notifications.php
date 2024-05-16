@@ -176,7 +176,7 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
-         * Load default editorial metadata the first time the module is loaded
+         * Load default editorial fields the first time the module is loaded
          *
          * @since 0.7
          */
@@ -781,7 +781,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             add_meta_box(
                 'publishpress_notif_workflow_options_div',
-                __('Options', 'publishpress-notifications'),
+                __('Options', 'publishpress'),
                 [$this, 'publishpress_notif_workflow_options_metabox'],
                 null,
                 'side',
@@ -790,7 +790,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             add_meta_box(
                 'publishpress_notif_workflow_help_div',
-                __('Help', 'publishpress-notifications'),
+                __('Help', 'publishpress'),
                 [$this, 'publishpress_notif_workflow_help_metabox'],
                 null,
                 'side',

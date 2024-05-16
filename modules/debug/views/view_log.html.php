@@ -48,4 +48,3 @@
         <pre id="upstream-debug-log"><?php echo esc_html($context['file']['content']); ?></pre>
     <?php endif; ?>
 </div>
-wh
