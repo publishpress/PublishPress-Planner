@@ -150,7 +150,7 @@ class PP_Content_Board extends PP_Module
                 'content_board_custom_columns' => '',
                 'content_board_filters' => '',
                 'content_board_custom_filters' => '',
-                
+
                 'content_board_scheduled_date' => [
                     'number' => 1,
                     'period' => 'weeks'
@@ -2548,20 +2548,13 @@ class PP_Content_Board extends PP_Module
                     $post_statuses_slugs = array_column($post_statuses, 'slug');
                     if (!in_array('future', $post_statuses_slugs)) {
                         // Add Scheduled status
-                        /*$post_statuses[] = (object) [
+                        $post_statuses[] = (object) [
                             'label'         => __('Scheduled', 'publishpress'),
                             'description'   => '',
                             'name'          => 'future',
                             'slug'          => 'future',
                             'position'      => count($post_statuses) + 1
-                        ];*/
-                        $post_statuses = array_merge([(object) [
-                            'label'         => __('Scheduled', 'publishpress'),
-                            'description'   => '',
-                            'name'          => 'future',
-                            'slug'          => 'future',
-                            'position'      => count($post_statuses) + 1
-                        ]], $post_statuses);
+                        ];
                     }
 
                     // Group posts by status
