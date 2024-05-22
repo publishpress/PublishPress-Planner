@@ -2092,7 +2092,7 @@ class PP_Content_Board extends PP_Module
         return apply_filters('PP_Content_Board_filter_names', $select_filter_names);
     }
 
-    private function meta_query_operator($operator = false) {
+    private function meta_query_operator_label($operator = false) {
         $operators = [
             'equals'                    => 'Equals (=)',
             'not_equals'                => 'Does not equal (!=)',
@@ -2103,6 +2103,28 @@ class PP_Content_Board extends PP_Module
             'like'                      => 'Like/Contains',
             'not_like'                  => 'Not Like',
             'not_exists'                => 'Not Exists/Empty',
+        ];
+
+        if ($operator) {
+            $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
+        } else {
+            $return = $operators;
+        }
+
+        return $return;
+    }
+
+    private function meta_query_operator_symbol($operator = false) {
+        $operators = [
+            'equals'                    => '=',
+            'not_equals'                => '!=',
+            'greater_than'              => '>',
+            'greater_than_or_equals'    => '>=',
+            'less_than'                 => '<', 
+            'less_than_or_equals'       => '<=', 
+            'like'                      => 'LIKE',
+            'not_like'                  => 'NOT LIKE',
+            'not_exists'                => 'NOT EXISTS',
         ];
 
         if ($operator) {
@@ -2475,7 +2497,7 @@ class PP_Content_Board extends PP_Module
                             <div class="filter-content">
                             <select class="non-trigger-select" id="filter_<?php echo esc_attr($select_name); ?>_operator" name="<?php echo esc_attr($select_name); ?>_operator">
                             <?php
-                            $all_options = $this->meta_query_operator();
+                            $all_options = $this->meta_query_operator_label();
                             foreach ($all_options as $option_key => $option_label) {
                                 if (
                                     ($operator_value == $option_key && !empty($selected_value))
@@ -2923,7 +2945,7 @@ class PP_Content_Board extends PP_Module
                 unset($args[$enabled_filter]);
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
                 $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
-                $compare = $this->meta_query_operator($meta_operator);
+                $compare = $this->meta_query_operator_symbol($meta_operator);
                 
                 $metadata_filter = true;
 
@@ -2953,7 +2975,7 @@ class PP_Content_Board extends PP_Module
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
                 $meta_key = str_replace('ppch_co_yoast_seo_', '', $enabled_filter);
                 $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
-                $compare = $this->meta_query_operator($meta_operator);
+                $compare = $this->meta_query_operator_symbol($meta_operator);
                 $metadata_filter = true;
                 $meta_query[] = array(
                     'key' => $meta_key,
