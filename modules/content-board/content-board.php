@@ -918,7 +918,7 @@ class PP_Content_Board extends PP_Module
             $publishpress->update_module_option($this->module->name, 'content_board_custom_columns', $content_board_custom_columns);
             
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-            echo pp_planner_admin_notice(esc_html__('Column updated successfully.', 'publishpress'));
+            echo pp_planner_admin_notice(esc_html__('Card Data updated successfully.', 'publishpress'));
         } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'filter_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_filter_form_nonce')) {
             // Content Board filter form
             $content_board_filters = !empty($_POST['content_board_filters']) ? array_map('sanitize_text_field', $_POST['content_board_filters']) : [];
