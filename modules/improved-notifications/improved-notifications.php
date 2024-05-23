@@ -104,6 +104,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                     'duplicated_notification_threshold' => Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD_IN_MINUTES,
                 ],
                 'notification_options' => true,
+                'autoload' => true,
             ];
 
             // Apply a filter to the default options
