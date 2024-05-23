@@ -237,44 +237,12 @@ if (! class_exists('PP_Modules_Settings')) {
                                         echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
                                                type="checkbox">
                                         &nbsp;&nbsp;&nbsp;<?php
-                                        if ($mod_data->slug === 'notifications') {
-                                            echo esc_html_e('Basic Notifications', 'publishpress');
-                                        } else {
-                                            echo esc_html($mod_data->title);
-                                        } ?>
+                                        echo esc_html($mod_data->title);
+                                        ?>
                                     </label>
                                     <br>
                                 <?php
                                 endforeach; ?>
-
-                                <?php if (!defined('PUBLISHPRESS_STATUSES_VERSION')) :?>
-                                <br />
-                                <div class="pp-notice"> 
-                                    <?php
-                                    $statuses_info = function_exists('publishpress_statuses_info') ? publishpress_statuses_info() : [];
-
-                                    $info_url = (!empty($statuses_info['info_url'])) ? $statuses_info['info_url'] : 'https://wordpress.org/plugins/publishpress-statuses';
-
-                                    if (!empty($statuses_info['statuses_installed'])) {
-                                        printf(
-                                            esc_html__('For custom post statuses, activate the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s', 'publishpress'),
-                                            '<a href="' . $info_url . '">',
-                                            '</a>',
-                                            '<a href="https://publishpress.com/blog/publishpress-statuses/statuses-available/" target="_blank">',
-                                            '</a>'
-                                        );
-                                    } else {
-                                        printf(
-                                            esc_html__('For custom post statuses, install the %1$sPublishPress Statuses%2$s plugin. %3$sLearn more...%4$s', 'publishpress'),
-                                            '<a href="' . $info_url . '" class="thickbox" target="_blank">',
-                                            '</a>',
-                                            '<a href="https://publishpress.com/blog/publishpress-statuses/statuses-available/" target="_blank">',
-                                            '</a>'
-                                        );
-                                    }
-                                    ?>
-                                </div>
-                                <?php endif;?>
                             </td>
                         </tr>
                         </tbody>
