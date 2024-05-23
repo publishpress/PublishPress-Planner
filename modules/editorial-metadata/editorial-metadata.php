@@ -1674,7 +1674,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             );
             add_settings_field(
                 'post_types',
-                esc_html__('Register metadata for these post types:', 'publishpress'),
+                esc_html__('Register editorial fields for these post types:', 'publishpress'),
                 [$this, 'settings_post_types_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
