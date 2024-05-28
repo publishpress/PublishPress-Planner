@@ -440,6 +440,16 @@ if (! class_exists('PP_Calendar')) {
          */
         public function install()
         {
+            
+            $viewCapability = $this->getViewCapability();
+            $eligible_roles = ['administrator', 'editor', 'author'];
+
+            foreach ($eligible_roles as $eligible_role) {
+                $role = get_role($eligible_role);
+                if (is_object($role) && !$role->has_cap($viewCapability)) {
+                    $role->add_cap($viewCapability);
+                }
+            }
         }
 
         /**

@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Planner: Organize and Schedule "
 "Your WordPress Content - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2024-04-04 04:10+0000\n"
-"PO-Revision-Date: 2024-04-13 12:37+0200\n"
+"POT-Creation-Date: 2024-05-14 09:04+0000\n"
+"PO-Revision-Date: 2024-05-21 10:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:257
 msgid " Scheduled"
@@ -58,10 +58,9 @@ msgstr "%1$s #%2$s «%3$s» fue despublicada por %4$s %5$s"
 msgid "%1$s (%2$s ) said on %3$s at %4$s:"
 msgstr "%1$s (%2$s) dijo en %3$s a las %4$s:"
 
-#: modules/content-overview/content-overview.php:845
+#: modules/content-board/content-board.php:826
+#: modules/content-overview/content-overview.php:847
 #, php-format
-#| msgctxt "%1$s = start date, %2$s = end date"
-#| msgid " %1$s <span class=\"input-divider\">to</span> %2$s"
 msgctxt "%1$s = start date, %2$s = end date"
 msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
 msgstr " %1$s <div class=\"input-divider\">a</div> %2$s"
@@ -105,12 +104,14 @@ msgstr "%d semana"
 msgid "%d weeks"
 msgstr "%d semanas"
 
-#: modules/content-overview/content-overview.php:1004
+#: modules/content-board/content-board.php:985
+#: modules/content-overview/content-overview.php:1006
 #, php-format
 msgid "%s could not be created"
 msgstr "%s no pudo ser creada"
 
-#: modules/content-overview/content-overview.php:1001
+#: modules/content-board/content-board.php:982
+#: modules/content-overview/content-overview.php:1003
 #, php-format
 msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
 msgstr ""
@@ -123,26 +124,26 @@ msgid_plural "%s notifications found."
 msgstr[0] "%s aviso encontrado."
 msgstr[1] "%s avisos encontrados."
 
-#: modules/calendar/calendar.php:4123
+#: modules/calendar/calendar.php:4060
 #, php-format
 msgid "%s week"
 msgid_plural "%s weeks"
 msgstr[0] "%s semana"
 msgstr[1] "%s semanas"
 
-#: modules/calendar/calendar.php:2135
+#: modules/calendar/calendar.php:2072
 msgid "&laquo;"
 msgstr "&laquo;"
 
-#: modules/calendar/calendar.php:2148
+#: modules/calendar/calendar.php:2085
 msgid "&lsaquo;"
 msgstr "&lsaquo;"
 
-#: modules/calendar/calendar.php:2104
+#: modules/calendar/calendar.php:2041
 msgid "&raquo;"
 msgstr "&raquo;"
 
-#: modules/calendar/calendar.php:2087
+#: modules/calendar/calendar.php:2024
 msgid "&rsaquo;"
 msgstr "&rsaquo;"
 
@@ -181,14 +182,14 @@ msgstr ""
 #: modules/editorial-metadata/editorial-metadata.php:126
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://"
-"publishpress.com/features/editorial-metadata/\">Editorial Metadata "
+"publishpress.com/features/editorial-metadata/\">Editorial Fields "
 "Documentation</a></p><p><a href=\"https://github.com/ostraining/"
 "PublishPress\">PublishPress on Github</a></p>"
 msgstr ""
 "<p><strong>Más información:</strong></p><p><a href=\"https://publishpress."
-"com/features/editorial-metadata/\">Documentación de metadatos editoriales</"
-"a></p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress "
-"en Github</a></p>"
+"com/features/editorial-metadata/\">Documentación de campos editoriales</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress en "
+"Github</a></p>"
 
 #: modules/notifications/notifications.php:99
 msgid ""
@@ -225,24 +226,24 @@ msgstr ""
 
 #: modules/editorial-metadata/editorial-metadata.php:121
 msgid ""
-"<p>Keep track of important details about your content with editorial "
-"metadata. This feature allows you to create as many date, text, number, etc. "
-"fields as you like, and then use them to store information like contact "
-"details or the location of an interview.</p><p>Once you’ve set your fields "
-"up, editorial metadata integrates with both the calendar and the content "
-"overview. Make an editorial metadata item visible to have it appear to the "
-"rest of your team. Keep it hidden to restrict the information between the "
-"writer and their editor.</p>"
+"<p>Keep track of important details about your content with editorial fields. "
+"This feature allows you to create as many date, text, number, etc. fields as "
+"you like, and then use them to store information like contact details or the "
+"location of an interview.</p><p>Once you’ve set your fields up, editorial "
+"fields integrates with both the calendar and the content overview. Make an "
+"editorial fields item visible to have it appear to the rest of your team. "
+"Keep it hidden to restrict the information between the writer and their "
+"editor.</p>"
 msgstr ""
 "<p>Haz un seguimiento de los detalles importantes sobre tu contenido con los "
-"metadatos editoriales. Esta característica te permite crear tantos campos de "
+"campos editoriales. Esta característica te permite crear tantos campos de "
 "fecha, texto, número, etc, como quieras, y después utilizarlos para guardar "
 "información como detalles de contacto o la ubicación de una entrevista.</"
-"p><p>Una vez has establecido tus campos, los metadatos editoriales se "
-"integran tanto con el calendario como con el resumen de contenido. Haz un "
-"elemento de metadatos editoriales visible para que aparezcan al resto de tu "
-"equipo. Mantenlo oculto para restringir la información entre el escritor y "
-"el editor.</p>"
+"p><p>Una vez has establecido tus campos, los campos editoriales se integran "
+"tanto con el calendario como con el resumen de contenido. Haz un elemento de "
+"campos editoriales visible para que aparezcan al resto de tu equipo. "
+"Mantenlo oculto para restringir la información entre el escritor y el editor."
+"</p>"
 
 #: modules/notifications/notifications.php:94
 msgid ""
@@ -357,8 +358,8 @@ msgstr ""
 "cargarse mediante el filtro de contenido de taxonomías al añadir un nuevo "
 "flujo de trabajo de avisos."
 
-#: modules/editorial-comments/editorial-comments.php:552
-#: modules/editorial-comments/editorial-comments.php:556
+#: modules/editorial-comments/editorial-comments.php:554
+#: modules/editorial-comments/editorial-comments.php:558
 msgid "Add an editorial comment"
 msgstr "Añadir un comentario editorial"
 
@@ -367,11 +368,11 @@ msgstr "Añadir un comentario editorial"
 msgid "Add Another Option"
 msgstr "Añadir otra opción"
 
-#: modules/content-overview/content-overview.php:1287
+#: modules/content-overview/content-overview.php:1288
 msgid "Add Column"
 msgstr "Añadir columna"
 
-#: modules/editorial-comments/editorial-comments.php:574
+#: modules/editorial-comments/editorial-comments.php:576
 msgid "Add Comment"
 msgstr "Añadir comentario"
 
@@ -386,30 +387,35 @@ msgstr "Añadir contenido para %s"
 msgid "Add editorial comment: %s"
 msgstr "Añadir comentario editorial: %s"
 
-#: modules/content-overview/content-overview.php:1435
+#: modules/content-board/content-board.php:1409
+#: modules/content-overview/content-overview.php:1436
 msgid "Add Filter"
 msgstr "Añadir filtro"
 
-#: modules/content-overview/content-overview.php:1267
-#: modules/content-overview/content-overview.php:1415
+#: modules/content-board/content-board.php:1241
+#: modules/content-board/content-board.php:1261
+#: modules/content-board/content-board.php:1389
+#: modules/content-overview/content-overview.php:1268
+#: modules/content-overview/content-overview.php:1416
 #: modules/editorial-metadata/editorial-metadata.php:1783
 msgid "Add New"
 msgstr "Añadir nuevo"
 
-#: modules/content-overview/content-overview.php:1558
+#: modules/content-board/content-board.php:1581
+#: modules/content-overview/content-overview.php:1559
 #, php-format
 msgid "Add New %s"
 msgstr "Añadir nuevo %s"
 
 #: modules/editorial-metadata/editorial-metadata.php:453
-msgid "Add New Editorial Metadata"
-msgstr "Añadir nuevos metadatos editoriales"
+msgid "Add New Editorial Fields"
+msgstr "Añadir nuevos campos editoriales"
 
 #: modules/editorial-metadata/editorial-metadata.php:2509
-msgid "Add New Metadata Term"
-msgstr "Añadir nuevo término de metadatos"
+msgid "Add New Editorial fields term"
+msgstr "Añadir nuevo término de campos editoriales"
 
-#: publishpress.php:1310
+#: publishpress.php:1323
 msgid "Add New Notification"
 msgstr "Añadir nuevo aviso"
 
@@ -450,8 +456,10 @@ msgstr "Avisos avanzados"
 msgid "All"
 msgstr "Todo"
 
-#: modules/content-overview/content-overview.php:2091
-#: modules/content-overview/content-overview.php:2094
+#: modules/content-board/content-board.php:2114
+#: modules/content-board/content-board.php:2117
+#: modules/content-overview/content-overview.php:2092
+#: modules/content-overview/content-overview.php:2095
 #, php-format
 msgid "All %s"
 msgstr "Todas %s"
@@ -460,9 +468,11 @@ msgstr "Todas %s"
 msgid "All Actions"
 msgstr "Todas las acciones"
 
-#: modules/calendar/calendar.php:793 modules/calendar/calendar.php:4071
-#: modules/content-overview/content-overview.php:2116
-#: modules/content-overview/content-overview.php:2119
+#: modules/calendar/calendar.php:793 modules/calendar/calendar.php:4008
+#: modules/content-board/content-board.php:2139
+#: modules/content-board/content-board.php:2142
+#: modules/content-overview/content-overview.php:2117
+#: modules/content-overview/content-overview.php:2120
 msgid "All authors"
 msgstr "Todos los autores"
 
@@ -479,8 +489,8 @@ msgid "All channels"
 msgstr "Todos los canales"
 
 #: modules/editorial-metadata/editorial-metadata.php:450
-msgid "All Editorial Metadata"
-msgstr "Todos los metadatos editoriales"
+msgid "All Editorial Fields"
+msgstr "Todos los campos editoriales"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:584
 msgid "All events"
@@ -503,7 +513,8 @@ msgstr "Todos los avisos de usuarios"
 msgid "All options value and labels are required."
 msgstr "Todas las opciones de valor y las etiquetas son obligatorios."
 
-#: modules/content-overview/content-overview.php:2148
+#: modules/content-board/content-board.php:2171
+#: modules/content-overview/content-overview.php:2149
 msgid "All post types"
 msgstr "Todos los tipos de contenido"
 
@@ -513,7 +524,7 @@ msgstr "Todos los tipos de contenido"
 msgid "All Posts"
 msgstr "Todas las entradas"
 
-#: modules/calendar/calendar.php:2933
+#: modules/calendar/calendar.php:2870
 msgid "All posts"
 msgstr "Todas las entradas"
 
@@ -521,7 +532,8 @@ msgstr "Todas las entradas"
 msgid "All Receivers"
 msgstr "Todos los destinatarios"
 
-#: modules/content-overview/content-overview.php:2363
+#: modules/content-board/content-board.php:2386
+#: modules/content-overview/content-overview.php:2364
 msgid "All status"
 msgstr "Todos los estados"
 
@@ -529,16 +541,17 @@ msgstr "Todos los estados"
 msgid "All Statuses"
 msgstr "Todos los estados"
 
-#: modules/calendar/calendar.php:790 modules/calendar/calendar.php:4015
-#: modules/content-overview/content-overview.php:2065
+#: modules/calendar/calendar.php:790 modules/calendar/calendar.php:3952
+#: modules/content-board/content-board.php:2088
+#: modules/content-overview/content-overview.php:2066
 msgid "All statuses"
 msgstr "Todos los estados"
 
-#: modules/calendar/calendar.php:792 modules/calendar/calendar.php:4050
+#: modules/calendar/calendar.php:792 modules/calendar/calendar.php:3987
 msgid "All tags"
 msgstr "Todas las etiquetas"
 
-#: modules/calendar/calendar.php:794 modules/calendar/calendar.php:4098
+#: modules/calendar/calendar.php:794 modules/calendar/calendar.php:4035
 msgid "All types"
 msgstr "Todos los tipos"
 
@@ -551,7 +564,7 @@ msgstr "Todos los usuarios"
 msgid "All Workflows"
 msgstr "Todos los flujos de trabajo"
 
-#: modules/calendar/calendar.php:2537
+#: modules/calendar/calendar.php:2474
 msgid "Allow public access to subscriptions in iCal or Google Calendar"
 msgstr ""
 "Permite el acceso público a las suscripciones en iCal o Google Calendar"
@@ -564,22 +577,34 @@ msgstr "Avisar siempre al autor del contenido:"
 msgid "Always notify users who have edited the content:"
 msgstr "Avisar siempre a los usuarios que han editado el contenido:"
 
-#: modules/calendar/calendar.php:2585
+#: modules/calendar/calendar.php:2522
 msgid "Always show complete post titles"
 msgstr "Muestra siempre los títulos completos de las entradas"
 
-#: modules/content-overview/content-overview.php:855
-#: modules/content-overview/content-overview.php:865
-#: modules/content-overview/content-overview.php:2197
-#: modules/content-overview/content-overview.php:2308
-#: modules/content-overview/content-overview.php:2346
-#: modules/content-overview/content-overview.php:2423
+#: modules/content-board/content-board.php:1504
+#: modules/content-board/content-board.php:1554
+msgid "An error occured"
+msgstr "Ha ocurrido un error"
+
+#: modules/content-board/content-board.php:836
+#: modules/content-board/content-board.php:846
+#: modules/content-board/content-board.php:2220
+#: modules/content-board/content-board.php:2331
+#: modules/content-board/content-board.php:2369
+#: modules/content-board/content-board.php:2450
+#: modules/content-overview/content-overview.php:857
+#: modules/content-overview/content-overview.php:867
+#: modules/content-overview/content-overview.php:2198
+#: modules/content-overview/content-overview.php:2309
+#: modules/content-overview/content-overview.php:2347
+#: modules/content-overview/content-overview.php:2428
 msgid "Apply"
 msgstr "Aplicar"
 
-#: modules/content-overview/content-overview.php:1371
-#: modules/content-overview/content-overview.php:1519
-#| msgid "All Channels"
+#: modules/content-board/content-board.php:1345
+#: modules/content-board/content-board.php:1493
+#: modules/content-overview/content-overview.php:1372
+#: modules/content-overview/content-overview.php:1520
 msgid "Apply Changes"
 msgstr "Aplicar los cambios"
 
@@ -608,11 +633,11 @@ msgstr "Avisos asíncronos"
 msgid "asynchronous"
 msgstr "asíncrono"
 
-#: modules/calendar/calendar.php:2604
+#: modules/calendar/calendar.php:2541
 msgid "At least one post type must be selected"
 msgstr "Se debe seleccionar por lo menos un tipo de contenido"
 
-#: modules/editorial-comments/editorial-comments.php:562
+#: modules/editorial-comments/editorial-comments.php:564
 msgid "Attach file"
 msgstr "Adjuntar archivo"
 
@@ -620,14 +645,20 @@ msgstr "Adjuntar archivo"
 msgid "Aug"
 msgstr "Ago"
 
-#: modules/calendar/calendar.php:1943 modules/calendar/calendar.php:3538
-#: modules/calendar/calendar.php:3628
-#: modules/content-overview/content-overview.php:1081
-#: modules/content-overview/content-overview.php:1095
-#: modules/content-overview/content-overview.php:1139
-#: modules/content-overview/content-overview.php:1200
-#: modules/content-overview/content-overview.php:1732
-#: modules/content-overview/content-overview.php:2114
+#: modules/calendar/calendar.php:1880 modules/calendar/calendar.php:3475
+#: modules/calendar/calendar.php:3565
+#: modules/content-board/content-board.php:1061
+#: modules/content-board/content-board.php:1072
+#: modules/content-board/content-board.php:1115
+#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1755
+#: modules/content-board/content-board.php:2137
+#: modules/content-overview/content-overview.php:1083
+#: modules/content-overview/content-overview.php:1096
+#: modules/content-overview/content-overview.php:1140
+#: modules/content-overview/content-overview.php:1201
+#: modules/content-overview/content-overview.php:1733
+#: modules/content-overview/content-overview.php:2115
 #: modules/editorial-comments/library/EditorialCommentsTable.php:228
 msgid "Author"
 msgid_plural "Authors"
@@ -656,11 +687,11 @@ msgstr "Borrador automático"
 msgid "Available fields"
 msgstr "Campos disponibles"
 
-#: modules/calendar/calendar.php:2127
+#: modules/calendar/calendar.php:2064
 msgid "Back %d weeks"
 msgstr "Ir %d semanas hacia detrás"
 
-#: modules/calendar/calendar.php:2139
+#: modules/calendar/calendar.php:2076
 msgid "Back 1 week"
 msgstr "1 semana atrás"
 
@@ -696,29 +727,35 @@ msgstr "Blog: "
 msgid "Body"
 msgstr "Cuerpo"
 
-#: modules/content-overview/content-overview.php:861
-#: modules/editorial-comments/editorial-comments.php:578
+#: modules/content-board/content-board.php:842
+#: modules/content-overview/content-overview.php:863
+#: modules/editorial-comments/editorial-comments.php:580
 #: modules/editorial-metadata/editorial-metadata.php:2174
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: modules/calendar/calendar.php:3638
-#: modules/content-overview/content-overview.php:1094
-#: modules/content-overview/content-overview.php:1742
+#: modules/calendar/calendar.php:3575
+#: modules/content-board/content-board.php:1765
+#: modules/content-overview/content-overview.php:1743
 #: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
 msgid "Categories"
 msgstr "Categorías"
 
-#: modules/calendar/calendar.php:3543
+#: modules/calendar/calendar.php:3480
 #: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoría"
 msgstr[1] "Categorías"
 
-#: modules/content-overview/content-overview.php:862
+#: modules/content-board/content-board.php:843
+#: modules/content-overview/content-overview.php:864
 msgid "Change"
 msgstr "Cambiar"
+
+#: modules/content-board/content-board.php:1543
+msgid "Changes saved!"
+msgstr "¡Cambios guardado!"
 
 #: views/user_profile_notification_channels.html.php:15
 #: modules/improved-notifications/improved-notifications.php:408
@@ -726,7 +763,7 @@ msgstr "Cambiar"
 msgid "Channels"
 msgstr "Canales"
 
-#: publishpress.php:669
+#: publishpress.php:670
 msgid "Cheatin&#8217; uh?"
 msgstr "¡Haciendo trampas! ¿eh?"
 
@@ -734,7 +771,8 @@ msgstr "¡Haciendo trampas! ¿eh?"
 msgid "Checkbox"
 msgstr "Casilla de verificación"
 
-#: modules/content-overview/content-overview.php:2328
+#: modules/content-board/content-board.php:2351
+#: modules/content-overview/content-overview.php:2329
 msgid "Checked"
 msgstr "Seleccionado"
 
@@ -768,11 +806,17 @@ msgstr "Haz clic aquí para leer más acerca de las opciones de shortcode..."
 msgid "Click here to subscribe in iCal or Google Calendar"
 msgstr "Haz clic aquí para suscribirte en iCal o Google Calendar"
 
-#: modules/content-overview/content-overview.php:1129
+#: modules/content-board/content-board.php:1106
+msgid "Click the \"Add New\" button to create new card data."
+msgstr ""
+"Haz clic en el botón «Añadir nuevo» para crear nuevos datos de tarjeta."
+
+#: modules/content-overview/content-overview.php:1130
 msgid "Click the \"Add New\" button to create new columns."
 msgstr "Haz clic en el botón «Añadir nuevo» para crear nuevas columnas."
 
-#: modules/content-overview/content-overview.php:1191
+#: modules/content-board/content-board.php:1165
+#: modules/content-overview/content-overview.php:1192
 msgid "Click the \"Add New\" button to create new filters."
 msgstr "Haz clic en el botón «Añadir nuevo» para crear nuevos filtros."
 
@@ -803,12 +847,12 @@ msgstr ""
 msgid "Close"
 msgstr "Cerrar"
 
-#: modules/content-overview/content-overview.php:1275
+#: modules/content-overview/content-overview.php:1276
 msgid "Column Title"
 msgstr "Título de la columna"
 
-#: modules/content-overview/content-overview.php:934
-#| msgid "Comment deleted successfully."
+#: modules/content-board/content-board.php:915
+#: modules/content-overview/content-overview.php:936
 msgid "Column updated successfully."
 msgstr "Columna actualizada correctamente."
 
@@ -816,11 +860,11 @@ msgstr "Columna actualizada correctamente."
 msgid "Comment"
 msgstr "Comentario"
 
-#: modules/editorial-comments/editorial-comments.php:1239
+#: modules/editorial-comments/editorial-comments.php:1241
 msgid "Comment author name field:"
 msgstr "Campo del nombre del autor del comentario:"
 
-#: modules/editorial-comments/editorial-comments.php:1181
+#: modules/editorial-comments/editorial-comments.php:1183
 msgid "Comment deleted successfully."
 msgstr "El commentario ha sido borrado con éxito."
 
@@ -829,7 +873,7 @@ msgstr "El commentario ha sido borrado con éxito."
 msgid "Comment: %s (%d)"
 msgstr "Comentario: %s (%d)"
 
-#: publishpress.php:665
+#: publishpress.php:666
 msgid "Configure"
 msgstr "Configurar"
 
@@ -837,12 +881,20 @@ msgstr "Configurar"
 msgid "Contact"
 msgstr "Contacto"
 
-#: modules/calendar/calendar.php:3655
-#: modules/content-overview/content-overview.php:1759
+#: modules/calendar/calendar.php:3592
+#: modules/content-board/content-board.php:1782
+#: modules/content-overview/content-overview.php:1760
 #: modules/improved-notifications/improved-notifications.php:971
 #: lib/Notifications/Workflow/Step/Content/Main.php:29
 msgid "Content"
 msgstr "Contenido"
+
+#: modules/content-board/content-board.php:140
+#: modules/content-board/content-board.php:395
+#: modules/content-board/content-board.php:412
+#: modules/content-board/content-board.php:413
+msgid "Content Board"
+msgstr "Tablón de contenidos"
 
 #: modules/calendar/calendar.php:170 modules/calendar/calendar.php:410
 #: modules/calendar/calendar.php:427 modules/calendar/calendar.php:428
@@ -864,7 +916,8 @@ msgstr "Contenido:"
 msgid "Copy to the clipboard"
 msgstr "Copiar al portapapeles"
 
-#: modules/content-overview/content-overview.php:1686
+#: modules/content-board/content-board.php:1709
+#: modules/content-overview/content-overview.php:1687
 #, php-format
 msgid "Create %s"
 msgstr "Crear %s"
@@ -877,14 +930,18 @@ msgstr "Creado el"
 msgid "Current week"
 msgstr "Semana actual"
 
-#: modules/content-overview/content-overview.php:1128
-#| msgid "Custom Status"
+#: modules/content-overview/content-overview.php:1129
 msgid "Custom Columns"
 msgstr "Columnas personalizadas"
 
-#: modules/content-overview/content-overview.php:1190
+#: modules/content-board/content-board.php:1164
+#: modules/content-overview/content-overview.php:1191
 msgid "Custom filters"
 msgstr "Filtros personalizados"
+
+#: modules/content-board/content-board.php:1105
+msgid "Custom Items"
+msgstr "Elementos personalizados"
 
 #: statuses-intro.php:142
 #, php-format
@@ -906,10 +963,18 @@ msgstr ""
 "%1$sPublishPress Statuses%2$s. Consulta %3$sPlanificación > Ajustes%4$s para "
 "más detalles."
 
-#: modules/content-overview/content-overview.php:1861
-#| msgid "Number of Columns: "
+#: modules/content-board/content-board.php:1884
+msgid "Customize Card Data"
+msgstr "Personalizar los datos de la tarjeta"
+
+#: modules/content-overview/content-overview.php:1862
 msgid "Customize Columns"
 msgstr "Personalizar columnas"
+
+#: modules/content-board/content-board.php:1894
+#: modules/content-overview/content-overview.php:1872
+msgid "Customize Filters"
+msgstr "Personalizar filtros"
 
 #: modules/dashboard/dashboard.php:56
 msgid "Dashboard"
@@ -919,8 +984,9 @@ msgstr "Escritorio"
 msgid "Dashboard Note"
 msgstr "Notas de escritorio"
 
-#: modules/calendar/calendar.php:3527
-#: modules/content-overview/content-overview.php:1919
+#: modules/calendar/calendar.php:3464
+#: modules/content-board/content-board.php:1942
+#: modules/content-overview/content-overview.php:1920
 #: modules/editorial-metadata/editorial-metadata.php:285
 #: lib/Notifications/Table/Notifications.php:158
 #: modules/notifications-log/library/NotificationsLogTable.php:490
@@ -950,12 +1016,12 @@ msgstr "Canales de aviso por defecto:"
 msgid "Default option"
 msgstr "Opción por defecto"
 
-#: modules/calendar/calendar.php:2561
+#: modules/calendar/calendar.php:2498
 msgid "Default publish time for items created in the calendar"
 msgstr ""
 "Hora de publicación por defecto para elementos creados en el calendario"
 
-#: modules/editorial-comments/editorial-comments.php:643
+#: modules/editorial-comments/editorial-comments.php:645
 #: modules/editorial-metadata/editorial-metadata.php:2028
 #: modules/editorial-metadata/editorial-metadata.php:2058
 #: modules/editorial-metadata/editorial-metadata.php:2365
@@ -985,7 +1051,7 @@ msgstr "Descripción"
 msgid "Detailed documentation is also available on the plugin website."
 msgstr "También hay disponible documentación detallada en la web del plugin."
 
-#: modules/calendar/calendar.php:2635 modules/dashboard/dashboard.php:368
+#: modules/calendar/calendar.php:2572 modules/dashboard/dashboard.php:368
 #: modules/dashboard/dashboard.php:391 modules/dashboard/dashboard.php:425
 msgid "Disabled"
 msgstr "Desactivado"
@@ -1006,7 +1072,7 @@ msgstr ""
 msgid "Display Label"
 msgstr "Muestra etiqueta"
 
-#: modules/editorial-comments/editorial-comments.php:1266
+#: modules/editorial-comments/editorial-comments.php:1268
 msgid "Display Name"
 msgstr "Nombre a mostrar"
 
@@ -1018,15 +1084,20 @@ msgstr "Documentación"
 msgid "Download .ics file"
 msgstr "Descargar archivo .ics"
 
-#: common/php/class-module.php:263
+#: common/php/class-module.php:328
 msgid "Draft"
 msgstr "Borrador"
 
-#: modules/content-overview/content-overview.php:1330
+#: modules/content-board/content-board.php:1304
+msgid "Drag to change enabled card data order."
+msgstr "Arrastra para cambiar el orden de los datos de la tarjeta activada."
+
+#: modules/content-overview/content-overview.php:1331
 msgid "Drag to change enabled columns order."
 msgstr "Arrastra para cambiar el orden de las columnas activadas."
 
-#: modules/content-overview/content-overview.php:1478
+#: modules/content-board/content-board.php:1452
+#: modules/content-overview/content-overview.php:1479
 msgid "Drag to change enabled filters order."
 msgstr "Arrastra para cambiar el orden de los filtros activados."
 
@@ -1043,20 +1114,21 @@ msgstr "Selección desplegable"
 msgid "Duplicated notification threshold:"
 msgstr "Umbral para los avisos duplicados:"
 
-#: common/php/class-module.php:696
+#: common/php/class-module.php:761
 msgid "E-mails"
 msgstr "Correos electrónicos"
 
-#: modules/calendar/calendar.php:1798 modules/calendar/calendar.php:3560
-#: modules/content-overview/content-overview.php:2982
-#: modules/editorial-comments/editorial-comments.php:632
+#: modules/calendar/calendar.php:1735 modules/calendar/calendar.php:3497
+#: modules/content-board/content-board.php:2665
+#: modules/content-overview/content-overview.php:3017
+#: modules/editorial-comments/editorial-comments.php:634
 #: modules/editorial-metadata/editorial-metadata.php:2745
 msgid "Edit"
 msgstr "Editar"
 
 #: modules/editorial-metadata/editorial-metadata.php:451
-msgid "Edit Editorial Metadata"
-msgstr "Editar metadatos editoriales"
+msgid "Edit Editorial Fields"
+msgstr "Editar campos editoriales"
 
 #: modules/efmigration/efmigration.php:288
 msgid ""
@@ -1068,7 +1140,7 @@ msgstr ""
 "usar PublishPress Planner, primero completa la migración de los datos de "
 "Edit Flow y luego desactiva Edit Flow."
 
-#: publishpress.php:1311
+#: publishpress.php:1324
 msgid "Edit Notification"
 msgstr "Editar aviso"
 
@@ -1084,11 +1156,12 @@ msgstr "Editar el aviso de perfil"
 msgid "Edit Notify User"
 msgstr "Editar el aviso de usuario"
 
-#: modules/calendar/calendar.php:1798
+#: modules/calendar/calendar.php:1735
 msgid "Edit this item"
 msgstr "Editar este elemento"
 
-#: modules/content-overview/content-overview.php:2978
+#: modules/content-board/content-board.php:2661
+#: modules/content-overview/content-overview.php:3013
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Editar esta publicación"
@@ -1104,19 +1177,46 @@ msgid "Editorial Comment"
 msgstr "Comentario editorial"
 
 #: modules/editorial-comments/editorial-comments.php:63
-#: modules/editorial-comments/editorial-comments.php:235
-#: modules/editorial-comments/editorial-comments.php:236
-#: modules/editorial-comments/editorial-comments.php:457
+#: modules/editorial-comments/editorial-comments.php:237
+#: modules/editorial-comments/editorial-comments.php:238
+#: modules/editorial-comments/editorial-comments.php:459
 msgid "Editorial Comments"
 msgstr "Comentarios editoriales"
 
-#: modules/content-overview/content-overview.php:1148
-#: modules/content-overview/content-overview.php:1208
+#: modules/content-board/content-board.php:1122
+#: modules/content-board/content-board.php:1182
+#: modules/content-overview/content-overview.php:1149
+#: modules/content-overview/content-overview.php:1209
 #: modules/editorial-metadata/editorial-metadata.php:96
+#: modules/editorial-metadata/editorial-metadata.php:506
 #: modules/editorial-metadata/editorial-metadata.php:1759
 #: modules/editorial-metadata/editorial-metadata.php:1760
-msgid "Editorial Metadata"
-msgstr "Metadatos editoriales"
+msgid "Editorial Fields"
+msgstr "Campos editoriales"
+
+#: modules/editorial-metadata/editorial-metadata.php:114
+msgid "Editorial fields order updated."
+msgstr "Orden de los campos editoriales actualizado."
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+msgid "Editorial fields term added."
+msgstr "Término de campos editoriales añadido."
+
+#: modules/editorial-metadata/editorial-metadata.php:113
+msgid "Editorial fields term deleted."
+msgstr "Término de campos editoriales eliminado."
+
+#: modules/editorial-metadata/editorial-metadata.php:112
+msgid "Editorial fields term doesn't exist."
+msgstr "El término de campos editoriales no existe."
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid "Editorial fields term updated."
+msgstr "Término de campos editoriales actualizado."
+
+#: modules/editorial-metadata/editorial-metadata.php:115
+msgid "Editorial fields visibility changed."
+msgstr "Visibilidad de los campos editoriales cambiada."
 
 #: views/user_profile_notification_channels.html.php:1
 #: modules/improved-notifications/improved-notifications.php:401
@@ -1132,7 +1232,7 @@ msgstr "Ocho meses"
 msgid "Eleven months"
 msgstr "Once meses"
 
-#: modules/editorial-comments/editorial-comments.php:1269
+#: modules/editorial-comments/editorial-comments.php:1271
 #: lib/Notifications/Workflow/Step/Channel/Email.php:31
 msgid "Email"
 msgstr "Correo electrónico"
@@ -1145,33 +1245,45 @@ msgstr "correo electrónico"
 msgid "Email from:"
 msgstr "Correo electrónico de:"
 
-#: modules/content-overview/content-overview.php:1249
-#| msgid "Number of Columns: "
+#: modules/content-overview/content-overview.php:1250
 msgid "Enable Columns"
 msgstr "Activar columnas"
 
-#: modules/content-overview/content-overview.php:1397
+#: modules/content-board/content-board.php:1371
+#: modules/content-overview/content-overview.php:1398
 msgid "Enable Filters"
 msgstr "Activar filtros"
 
-#: modules/editorial-comments/editorial-comments.php:1232
+#: modules/editorial-comments/editorial-comments.php:1234
 msgid "Enable for these post types:"
 msgstr "Activar para estos tipos de publicación:"
 
-#: modules/content-overview/content-overview.php:1403
-#| msgid "Show as Content Overview filters"
+#: modules/content-board/content-board.php:1223
+msgid "Enable or Disable"
+msgstr "Activar o desactivar"
+
+#: modules/content-board/content-board.php:1229
+msgid "Enable or Disable Content Board Card Data."
+msgstr ""
+"Activar o desactivar los datos de la tarjeta del «Tablón de contenidos»."
+
+#: modules/content-board/content-board.php:1377
+msgid "Enable or Disable Content Board filter."
+msgstr "Activar o desactivar el filtro «Tablón de contenidos»."
+
+#: modules/content-overview/content-overview.php:1404
 msgid "Enable or Disable Content Overview filter."
 msgstr "Activar o desactivar el filtro «Resumen de contenidos»."
 
-#: modules/content-overview/content-overview.php:1255
+#: modules/content-overview/content-overview.php:1256
 msgid "Enable or Disable Content Overview table column."
 msgstr "Activar o desactivar la columna de la tabla «Resumen de contenidos»."
 
-#: modules/calendar/calendar.php:2529
+#: modules/calendar/calendar.php:2466
 msgid "Enable subscriptions in iCal or Google Calendar"
 msgstr "Activa las suscripciones en iCal o Google Calendar"
 
-#: modules/calendar/calendar.php:2636 modules/dashboard/dashboard.php:369
+#: modules/calendar/calendar.php:2573 modules/dashboard/dashboard.php:369
 #: modules/dashboard/dashboard.php:392 modules/dashboard/dashboard.php:426
 msgid "Enabled"
 msgstr "Activado"
@@ -1218,12 +1330,18 @@ msgstr "Error añadiendo el término."
 msgid "Error deleting term."
 msgstr "Error al borrar el término."
 
+#: modules/content-board/content-board.php:1517
+msgid "Error fetching post data."
+msgstr "Error al obtener los datos de la entrada."
+
 #: modules/editorial-metadata/editorial-metadata.php:1516
 #: modules/editorial-metadata/editorial-metadata.php:1564
 msgid "Error updating term."
 msgstr "Error al actualizar el término."
 
-#: modules/content-overview/content-overview.php:1535
+#: modules/content-board/content-board.php:1508
+#: modules/content-board/content-board.php:1558
+#: modules/content-overview/content-overview.php:1536
 msgid "Error validating nonce. Please reload this page and try again."
 msgstr ""
 "Error al validar el nonce. Por favor, recarga esta página e inténtalo de "
@@ -1236,7 +1354,8 @@ msgstr ""
 "Evento: %s, ID del flujo de trabajo: %s, ID de la entrada: %s, ID de "
 "usuario: %s"
 
-#: modules/content-overview/content-overview.php:2367
+#: modules/content-board/content-board.php:2390
+#: modules/content-overview/content-overview.php:2368
 #: modules/notifications-log/library/NotificationsLogTable.php:271
 #: modules/notifications-log/library/NotificationsLogTable.php:287
 msgid "Failed"
@@ -1262,7 +1381,11 @@ msgstr "Siéntete libre de seleccionar solo las características que necesites."
 msgid "field"
 msgstr "campo"
 
-#: modules/calendar/calendar.php:2569
+#: modules/editorial-metadata/editorial-metadata.php:2626
+msgid "Field Type"
+msgstr "Tipo de campo"
+
+#: modules/calendar/calendar.php:2506
 msgid "Field used for sorting the calendar items in a day cell"
 msgstr ""
 "Campo utilizado para clasificar los elementos del calendario en una celda "
@@ -1302,12 +1425,13 @@ msgstr ""
 "Filtra la lista de usuarios en la meta editorial para los usuarios en los "
 "roles seleccionados."
 
-#: modules/content-overview/content-overview.php:1423
+#: modules/content-board/content-board.php:1397
+#: modules/content-overview/content-overview.php:1424
 msgid "Filter Title"
 msgstr "Titulo del filtro"
 
-#: modules/content-overview/content-overview.php:948
-#| msgid "Post created successfully"
+#: modules/content-board/content-board.php:929
+#: modules/content-overview/content-overview.php:950
 msgid "Filter updated successfully."
 msgstr "Filtro actualizado correctamente."
 
@@ -1315,7 +1439,7 @@ msgstr "Filtro actualizado correctamente."
 msgid "First Draft Date"
 msgstr "Fecha del primer borrador"
 
-#: modules/editorial-comments/editorial-comments.php:1267
+#: modules/editorial-comments/editorial-comments.php:1269
 msgid "First Name"
 msgstr "Nombre"
 
@@ -1354,11 +1478,11 @@ msgstr "¿Para qué contenido?"
 msgid "Format"
 msgstr "Formato"
 
-#: modules/calendar/calendar.php:2093
+#: modules/calendar/calendar.php:2030
 msgid "Forward %d weeks"
 msgstr "Ir %d semanas hacia adelante"
 
-#: modules/calendar/calendar.php:2078
+#: modules/calendar/calendar.php:2015
 msgid "Forward 1 week"
 msgstr "Ir 1 semana adelante"
 
@@ -1382,10 +1506,14 @@ msgstr "Vie"
 msgid "From date"
 msgstr "Fecha inicial"
 
+#: modules/improved-notifications/improved-notifications.php:793
+msgid "Help"
+msgstr "Ayuda"
+
 #: modules/editorial-metadata/editorial-metadata.php:2748
-msgid "Hidden metadata can only be viewed on the edit post view."
+msgid "Hidden field can only be viewed on the edit post view."
 msgstr ""
-"Los metadatos ocultos solo se pueden ver en la vista de edición de la "
+"Los campos ocultos solo se pueden ver en la vista de edición de la "
 "publicación."
 
 #: modules/calendar/calendar.php:760
@@ -1409,7 +1537,7 @@ msgstr ""
 "Clave secreta de iCal regenerada. Por favor, informa a todos los usuarios de "
 "que tendrán que volver a suscribirse."
 
-#: modules/calendar/calendar.php:3522
+#: modules/calendar/calendar.php:3459
 #: lib/Notifications/Table/Notifications.php:159
 #: lib/Notifications/Table/Workflows.php:143
 msgid "ID"
@@ -1418,19 +1546,19 @@ msgstr "ID"
 #: modules/editorial-metadata/editorial-metadata.php:2086
 #: modules/editorial-metadata/editorial-metadata.php:2426
 #: modules/editorial-metadata/editorial-metadata.php:2755
-msgid "If enabled, this metadata can be seen on the Content Calendar screens."
+msgid "If enabled, this field can be seen on the Content Calendar screens."
 msgstr ""
-"Si se activa, estos metadatos pueden verse en las pantallas «Calendario de "
+"Si se activa, esto campo puede verse en las pantallas «Calendario de "
 "contenidos»"
 
 #: modules/editorial-metadata/editorial-metadata.php:2110
 #: modules/editorial-metadata/editorial-metadata.php:2452
 msgid ""
-"If enabled, this metadata will be available when adding new posts on the "
+"If enabled, this field will be available when adding new posts on the "
 "Content Calendar and Overview screen."
 msgstr ""
-"Si se activa, estos metadatos estarán disponibles al añadir nuevas entradas "
-"en la pantalla «Calendario de contenidos» y «Resumen de contenidos»."
+"Si se activa, esto campo estará disponible al añadir nuevas entradas en la "
+"pantalla de «Calendario de contenidos» y «Resumen de contenidos»."
 
 #: modules/settings/settings.php:269
 #, php-format
@@ -1452,11 +1580,16 @@ msgstr ""
 "no dudes en contactar con el equipo de soporte. Envíanos un correo "
 "electrónico:"
 
-#: modules/content-overview/content-overview.php:1135
+#: modules/content-board/content-board.php:1112
+msgid "Inbuilt Card Data"
+msgstr "Datos de tarjeta integrados"
+
+#: modules/content-overview/content-overview.php:1136
 msgid "Inbuilt Columns"
 msgstr "Columnas integradas"
 
-#: modules/content-overview/content-overview.php:1197
+#: modules/content-board/content-board.php:1171
+#: modules/content-overview/content-overview.php:1198
 msgid "Inbuilt filters"
 msgstr "Filtros integrados"
 
@@ -1466,8 +1599,8 @@ msgid "Indicate the select type."
 msgstr "Indica el tipo de selección."
 
 #: modules/editorial-metadata/editorial-metadata.php:2261
-msgid "Indicate the type of editorial metadata."
-msgstr "Indicar el tipo de metadatos editoriales."
+msgid "Indicate the type of editorial fields."
+msgstr "Indicar el tipo de campos editoriales."
 
 #: modules/calendar/calendar.php:1472
 msgid "Initializing the calendar. Please wait..."
@@ -1485,30 +1618,32 @@ msgstr "Nonce de acción no válido."
 msgid "Invalid channel for the notification"
 msgstr "Canal no válido para el aviso"
 
-#: modules/editorial-comments/editorial-comments.php:755
-#: modules/editorial-comments/editorial-comments.php:896
-#: modules/editorial-comments/editorial-comments.php:1028
-#: modules/editorial-comments/editorial-comments.php:1144
+#: modules/editorial-comments/editorial-comments.php:757
+#: modules/editorial-comments/editorial-comments.php:898
+#: modules/editorial-comments/editorial-comments.php:1030
+#: modules/editorial-comments/editorial-comments.php:1146
 msgid "Invalid comment data"
 msgstr "Datos del comentario no válidos"
 
-#: modules/calendar/calendar.php:3262
+#: modules/calendar/calendar.php:3199
 msgid "Invalid date"
 msgstr "Fecha no válida"
 
-#: modules/content-overview/content-overview.php:1537
+#: modules/content-board/content-board.php:1510
+#: modules/content-board/content-board.php:1560
+#: modules/content-overview/content-overview.php:1538
 msgid "Invalid form request."
 msgstr "Solicitud de formulario no válida."
 
-#: modules/calendar/calendar.php:3242
+#: modules/calendar/calendar.php:3179
 msgid "Invalid input"
 msgstr "Entrada no válida"
 
-#: core/Error.php:80 modules/calendar/calendar.php:3233
+#: core/Error.php:80 modules/calendar/calendar.php:3170
 msgid "Invalid nonce"
 msgstr "Nonce no válido"
 
-#: modules/calendar/calendar.php:3821
+#: modules/calendar/calendar.php:3758
 msgid "Invalid Publish Date supplied."
 msgstr "Fecha de publicación facilitada no válida."
 
@@ -1516,7 +1651,7 @@ msgstr "Fecha de publicación facilitada no válida."
 msgid "Invalid receiver for the notification"
 msgstr "Destinatario no válido para el aviso"
 
-#: modules/calendar/calendar.php:3797
+#: modules/calendar/calendar.php:3734
 msgid "Invalid Status supplied."
 msgstr "Estado facilitado no válido."
 
@@ -1540,12 +1675,12 @@ msgstr "Jul"
 msgid "Jun"
 msgstr "Jun"
 
-#: modules/content-overview/content-overview.php:1083
-#: modules/content-overview/content-overview.php:1141
+#: modules/content-overview/content-overview.php:1085
+#: modules/content-overview/content-overview.php:1142
 msgid "Last Modified"
 msgstr "Última modificación"
 
-#: modules/editorial-comments/editorial-comments.php:1268
+#: modules/editorial-comments/editorial-comments.php:1270
 msgid "Last Name"
 msgstr "Apellido"
 
@@ -1582,15 +1717,11 @@ msgstr "Hacer oculto"
 msgid "Make Viewable"
 msgstr "Hacer visible"
 
-#: modules/content-overview/content-overview.php:1871
-msgid "Manage Filters"
-msgstr "Gestionar filtros"
-
 #: modules/calendar/calendar.php:780
 msgid "Mar"
 msgstr "Mar"
 
-#: modules/calendar/calendar.php:2577
+#: modules/calendar/calendar.php:2514
 msgid "Max visible posts per date"
 msgstr "Máximo de entradas visibles por fecha"
 
@@ -1598,7 +1729,8 @@ msgstr "Máximo de entradas visibles por fecha"
 msgid "May"
 msgstr "May"
 
-#: modules/content-overview/content-overview.php:1858
+#: modules/content-board/content-board.php:1881
+#: modules/content-overview/content-overview.php:1859
 msgid "Me Mode"
 msgstr "Modo Me"
 
@@ -1617,43 +1749,11 @@ msgstr "Campos meta"
 msgid "Meta Value"
 msgstr "Valor meta"
 
-#: modules/editorial-metadata/editorial-metadata.php:506
-msgid "Metadata"
-msgstr "Metadatos"
-
 #: modules/editorial-metadata/editorial-metadata.php:1452
 msgid "Metadata name conflicts with existing term. Please choose another."
 msgstr ""
 "El nombre de los metadatos entra en conflicto con otro término ya existente. "
 "Por favor, elige otro diferente."
-
-#: modules/editorial-metadata/editorial-metadata.php:114
-msgid "Metadata order updated."
-msgstr "Orden de los metadatos actualizado."
-
-#: modules/editorial-metadata/editorial-metadata.php:110
-msgid "Metadata term added."
-msgstr "Término de metadatos agregado."
-
-#: modules/editorial-metadata/editorial-metadata.php:113
-msgid "Metadata term deleted."
-msgstr "Término de metadatos eliminado."
-
-#: modules/editorial-metadata/editorial-metadata.php:112
-msgid "Metadata term doesn't exist."
-msgstr "El término de metadatos no existe."
-
-#: modules/editorial-metadata/editorial-metadata.php:111
-msgid "Metadata term updated."
-msgstr "Término de metadatos actualizado."
-
-#: modules/editorial-metadata/editorial-metadata.php:2626
-msgid "Metadata Type"
-msgstr "Tipo de metadatos"
-
-#: modules/editorial-metadata/editorial-metadata.php:115
-msgid "Metadata visibility changed."
-msgstr "Visibilidad de los metadatos cambiado."
 
 #: modules/improved-notifications/improved-notifications.php:351
 msgid "minutes"
@@ -1679,7 +1779,13 @@ msgstr "Aviso de perfil más usado"
 msgid "Most Used Notify User"
 msgstr "Avisos de usuarios más usados"
 
-#: modules/content-overview/content-overview.php:2990
+#: modules/content-board/content-board.php:2595
+#: modules/content-board/content-board.php:2729
+msgid "Move posts here to change their status"
+msgstr "Mover las entradas aquí para cambiar su estado"
+
+#: modules/content-board/content-board.php:2673
+#: modules/content-overview/content-overview.php:3025
 msgid "Move this item to the Trash"
 msgstr "Mover este elemento a la papelera"
 
@@ -1742,8 +1848,8 @@ msgid "New"
 msgstr "Nueva"
 
 #: modules/editorial-metadata/editorial-metadata.php:454
-msgid "New Editorial Metadata"
-msgstr "Nuevos metadatos editoriales"
+msgid "New Editorial Fields"
+msgstr "Nuevos campos editoriales"
 
 #: modules/notifications/notifications.php:383
 msgid "New Notify Email"
@@ -1757,7 +1863,8 @@ msgstr "Nuevo aviso de perfil"
 msgid "New Notify User"
 msgstr "Nuevo aviso de usuario"
 
-#: modules/content-overview/content-overview.php:1888
+#: modules/content-board/content-board.php:1911
+#: modules/content-overview/content-overview.php:1889
 msgid "New Post"
 msgstr "Nueva entrada"
 
@@ -1770,7 +1877,7 @@ msgstr "Nuevo estado de la entrada: %s"
 msgid "New status"
 msgstr "Nuevo estado"
 
-#: modules/editorial-comments/editorial-comments.php:1264
+#: modules/editorial-comments/editorial-comments.php:1266
 msgid "Nickname"
 msgstr "Alias"
 
@@ -1792,7 +1899,7 @@ msgstr "No"
 msgid "No active notifications found for this %s."
 msgstr "No se ha encontrado ningún aviso activo para esta %s."
 
-#: modules/calendar/calendar.php:3756
+#: modules/calendar/calendar.php:3693
 msgid "No date supplied."
 msgstr "No se proprocionó fecha."
 
@@ -1801,14 +1908,14 @@ msgid "No editorial comments."
 msgstr "Sin comentarios editoriales"
 
 #: modules/editorial-metadata/editorial-metadata.php:2721
-msgid "No editorial metadata found."
-msgstr "No se encontraron metadatos editoriales."
+msgid "No editorial fields found."
+msgstr "No se encontraron campos editoriales."
 
-#: modules/calendar/calendar.php:3253
+#: modules/calendar/calendar.php:3190
 msgid "No enough permissions"
 msgstr "No tienes los permisos necesarios"
 
-#: publishpress.php:1315 publishpress.php:1316
+#: publishpress.php:1328 publishpress.php:1329
 msgid "No notification found"
 msgstr "No se ha encontrado ningún aviso"
 
@@ -1831,8 +1938,8 @@ msgstr "No hay avisos de perfiles"
 msgid "No notify users"
 msgstr "No hay avisos de usuarios"
 
-#: modules/content-overview/content-overview.php:2534
-#| msgid "No workflows found."
+#: modules/content-board/content-board.php:2750
+#: modules/content-overview/content-overview.php:2539
 msgid "No results found"
 msgstr "No se han encontrado resultados"
 
@@ -1844,7 +1951,7 @@ msgstr "No hay términos"
 msgid "No workflows found."
 msgstr "Ningún flujo de trabajo encontrado."
 
-#: modules/editorial-comments/editorial-comments.php:747
+#: modules/editorial-comments/editorial-comments.php:749
 msgid ""
 "Nonce check failed. Please ensure you're supposed to be adding editorial "
 "comments."
@@ -1852,9 +1959,9 @@ msgstr ""
 "Falló la comprobación del nonce. Por favor, asegúrate si deberías estar "
 "añadiendo comentarios editoriales."
 
-#: modules/editorial-comments/editorial-comments.php:885
-#: modules/editorial-comments/editorial-comments.php:1017
-#: modules/editorial-comments/editorial-comments.php:1134
+#: modules/editorial-comments/editorial-comments.php:887
+#: modules/editorial-comments/editorial-comments.php:1019
+#: modules/editorial-comments/editorial-comments.php:1136
 msgid ""
 "Nonce check failed. Please ensure you're supposed to be editing editorial "
 "comments."
@@ -1862,8 +1969,9 @@ msgstr ""
 "Ha fallado la comprobación del nonce. Por favor, asegúrate de que estás "
 "editando los comentarios editoriales."
 
-#: modules/calendar/calendar.php:1778
-#: modules/content-overview/content-overview.php:2857
+#: modules/calendar/calendar.php:1715
+#: modules/content-board/content-board.php:3062
+#: modules/content-overview/content-overview.php:2892
 msgid "None"
 msgstr "Ninguno"
 
@@ -1875,7 +1983,7 @@ msgstr "Sin filtrar"
 msgid "Notepad"
 msgstr "Cuaderno de notas"
 
-#: publishpress.php:1309 publishpress.php:1314
+#: publishpress.php:1322 publishpress.php:1327
 #: modules/notifications-log/notifications-log.php:209
 msgid "Notification"
 msgstr "Aviso"
@@ -1884,7 +1992,7 @@ msgstr "Aviso"
 msgid "Notification log not found"
 msgstr "No se ha encontrado el registro de los avisos"
 
-#: publishpress.php:1308 publishpress.php:1313
+#: publishpress.php:1321 publishpress.php:1326
 #: modules/notifications/notifications.php:72
 #: modules/notifications/notifications.php:600
 msgid "Notifications"
@@ -1981,6 +2089,15 @@ msgstr "Hace un mes"
 msgid "One week"
 msgstr "Una semana"
 
+#: modules/content-board/content-board.php:2595
+#: modules/content-board/content-board.php:2729
+msgid "Only editable posts will be moveable."
+msgstr "Solo las entradas editables serán movibles."
+
+#: modules/improved-notifications/improved-notifications.php:784
+msgid "Options"
+msgstr "Opciones"
+
 #: modules/calendar/calendar.php:206
 #: modules/editorial-comments/editorial-comments.php:82
 #: modules/editorial-metadata/editorial-metadata.php:120
@@ -2016,7 +2133,8 @@ msgstr "Aviso de usuario superior"
 msgid "Parent Notify User:"
 msgstr "Aviso de usuario superior:"
 
-#: modules/content-overview/content-overview.php:2366
+#: modules/content-board/content-board.php:2389
+#: modules/content-overview/content-overview.php:2367
 msgid "Passed"
 msgstr "Aprobado"
 
@@ -2024,40 +2142,40 @@ msgstr "Aprobado"
 msgid "Path"
 msgstr "Ruta"
 
-#: common/php/class-module.php:266
+#: common/php/class-module.php:331
 msgid "Pending Review"
 msgstr "Pendiente de revisión"
 
-#: publishpress.php:584
+#: publishpress.php:585
 msgid "Planner"
 msgstr "Planificación"
 
-#: publishpress.php:668
+#: publishpress.php:669
 msgid "Please correct your form errors below and try again."
 msgstr ""
 "Por favor, corrige los errores del formulario de debajo e inténtalo de nuevo."
 
-#: modules/editorial-comments/editorial-comments.php:778
-#: modules/editorial-comments/editorial-comments.php:942
+#: modules/editorial-comments/editorial-comments.php:780
+#: modules/editorial-comments/editorial-comments.php:944
 msgid "Please enter a comment."
 msgstr "Por favor, introduce un comentario."
 
 #: modules/editorial-metadata/editorial-metadata.php:1438
-msgid "Please enter a name for the editorial metadata"
-msgstr "Por favor, introduce un nombre para los metadatos editoriales"
+msgid "Please enter a name for the editorial fields"
+msgstr "Por favor, introduce un nombre para los campos editoriales"
 
 #: modules/editorial-metadata/editorial-metadata.php:1275
-msgid "Please enter a name for the editorial metadata."
-msgstr "Por favor, introduce un nombre para los metadatos editoriales."
+msgid "Please enter a name for the editorial fields."
+msgstr "Por favor, introduce un nombre para los campos editoriales."
 
 #: modules/editorial-metadata/editorial-metadata.php:1282
-msgid "Please enter a slug for the editorial metadata."
-msgstr "Por favor, introduce un slug para los metadatos editoriales."
+msgid "Please enter a slug for the editorial fields."
+msgstr "Por favor, introduce un slug para los campos editoriales."
 
 #: modules/editorial-metadata/editorial-metadata.php:1443
-msgid "Please enter a valid, non-numeric name for the editorial metadata."
+msgid "Please enter a valid, non-numeric name for the editorial fields."
 msgstr ""
-"Por favor, introduce un nombre válido y no númerico para los metadatos "
+"Por favor, introduce un nombre válido y no númerico para los campos "
 "editoriales."
 
 #: modules/editorial-metadata/editorial-metadata.php:1322
@@ -2069,13 +2187,14 @@ msgid "Please select at least one event"
 msgstr "Por favor selecciona por lo menos un evento"
 
 #: modules/calendar/calendar.php:770
-#: modules/content-overview/content-overview.php:1694
+#: modules/content-board/content-board.php:1717
+#: modules/content-overview/content-overview.php:1695
 msgid "Please, wait! Loading the form fields..."
 msgstr "¡Por favor, espera! Cargando los campos del formulario..."
 
 #: modules/editorial-metadata/editorial-metadata.php:449
-msgid "Popular Editorial Metadata"
-msgstr "Metadatos editoriales populares"
+msgid "Popular Editorial Fields"
+msgstr "Campos editoriales populares"
 
 #: modules/notifications/notifications.php:375
 msgid "Popular Notify Emails"
@@ -2097,16 +2216,16 @@ msgstr "Posición"
 msgid "Post"
 msgstr "Entrada"
 
-#: modules/calendar/calendar.php:3897
+#: modules/calendar/calendar.php:3834
 msgid "Post could not be created"
 msgstr "La publicación no pudo ser creada"
 
-#: modules/calendar/calendar.php:3890
+#: modules/calendar/calendar.php:3827
 msgid "Post created successfully"
 msgstr "Entrada creada correctamente"
 
-#: modules/content-overview/content-overview.php:1082
-#: modules/content-overview/content-overview.php:1140
+#: modules/content-overview/content-overview.php:1084
+#: modules/content-overview/content-overview.php:1141
 msgid "Post Date"
 msgstr "Fecha de publicación"
 
@@ -2114,7 +2233,7 @@ msgstr "Fecha de publicación"
 msgid "Post date updated."
 msgstr "Fecha de publicación actualizada."
 
-#: publishpress.php:674
+#: publishpress.php:675
 msgid "Post does not exist"
 msgstr "La entrada no existe"
 
@@ -2122,15 +2241,18 @@ msgstr "La entrada no existe"
 msgid "Post ID: %d"
 msgstr "ID de la entrada: %d"
 
-#: modules/calendar/calendar.php:3248
+#: modules/calendar/calendar.php:3185
 msgid "Post not found"
 msgstr "Entrada no encontrada"
 
-#: modules/calendar/calendar.php:2878 modules/calendar/calendar.php:3533
-#: modules/calendar/calendar.php:3613
-#: modules/content-overview/content-overview.php:1199
-#: modules/content-overview/content-overview.php:1723
-#: modules/content-overview/content-overview.php:2061
+#: modules/calendar/calendar.php:2815 modules/calendar/calendar.php:3470
+#: modules/calendar/calendar.php:3550
+#: modules/content-board/content-board.php:1173
+#: modules/content-board/content-board.php:1746
+#: modules/content-board/content-board.php:2084
+#: modules/content-overview/content-overview.php:1200
+#: modules/content-overview/content-overview.php:1724
+#: modules/content-overview/content-overview.php:2062
 msgid "Post Status"
 msgstr "Estado de la entrada"
 
@@ -2142,13 +2264,19 @@ msgstr "Estado de la publicación actualizado."
 msgid "Post Status Widget"
 msgstr "Widget de estado de publicación"
 
-#: modules/calendar/calendar.php:1951 modules/calendar/calendar.php:3517
-#: modules/content-overview/content-overview.php:1080
-#: modules/content-overview/content-overview.php:1096
-#: modules/content-overview/content-overview.php:1138
-#: modules/content-overview/content-overview.php:1201
-#: modules/content-overview/content-overview.php:1712
-#: modules/content-overview/content-overview.php:2144
+#: modules/calendar/calendar.php:1888 modules/calendar/calendar.php:3454
+#: modules/content-board/content-board.php:1060
+#: modules/content-board/content-board.php:1073
+#: modules/content-board/content-board.php:1114
+#: modules/content-board/content-board.php:1175
+#: modules/content-board/content-board.php:1735
+#: modules/content-board/content-board.php:2167
+#: modules/content-overview/content-overview.php:1082
+#: modules/content-overview/content-overview.php:1097
+#: modules/content-overview/content-overview.php:1139
+#: modules/content-overview/content-overview.php:1202
+#: modules/content-overview/content-overview.php:1713
+#: modules/content-overview/content-overview.php:2145
 msgid "Post Type"
 msgstr "Tipo de contenido"
 
@@ -2174,10 +2302,11 @@ msgstr "Tipo de contenido: %s"
 msgid "Post Types"
 msgstr "Tipos de contenido"
 
-#: modules/calendar/calendar.php:2521
+#: modules/calendar/calendar.php:2458
 msgid "Post types to show"
 msgstr "Tipos de contenidos a mostrar"
 
+#: modules/content-board/content-board.php:243
 #: modules/content-overview/content-overview.php:252
 msgid "Post types to show:"
 msgstr "Tipos de contenido a mostrar:"
@@ -2186,17 +2315,19 @@ msgstr "Tipos de contenido a mostrar:"
 msgid "Posts at a Glance"
 msgstr "Publicaciones de un vistazo"
 
-#: modules/calendar/calendar.php:2553
+#: modules/calendar/calendar.php:2490
 msgid "Posts publish time format"
 msgstr "Formato de hora de las entradas publicadas"
 
-#: modules/calendar/calendar.php:1822 modules/calendar/calendar.php:3577
-#: modules/content-overview/content-overview.php:3023
+#: modules/calendar/calendar.php:1759 modules/calendar/calendar.php:3514
+#: modules/content-board/content-board.php:2706
+#: modules/content-overview/content-overview.php:3058
 msgid "Preview"
 msgstr "Vista previa"
 
-#: modules/calendar/calendar.php:1819
-#: modules/content-overview/content-overview.php:3020
+#: modules/calendar/calendar.php:1756
+#: modules/content-board/content-board.php:2703
+#: modules/content-overview/content-overview.php:3055
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Vista previa &#8220;%s&#8221;"
@@ -2205,23 +2336,24 @@ msgstr "Vista previa &#8220;%s&#8221;"
 msgid "Previous status"
 msgstr "Estado anterior"
 
-#: modules/content-overview/content-overview.php:1880
+#: modules/content-board/content-board.php:1903
+#: modules/content-overview/content-overview.php:1881
 msgid "Print"
 msgstr "Imprimir"
 
-#: common/php/class-module.php:265
+#: common/php/class-module.php:330
 msgid "Private"
 msgstr "Privado"
 
-#: modules/calendar/calendar.php:3619
+#: modules/calendar/calendar.php:3556
 msgid "Publish Time"
 msgstr "Hora de publicación"
 
-#: common/php/class-module.php:262 modules/calendar/calendar.php:1964
+#: common/php/class-module.php:327 modules/calendar/calendar.php:1901
 msgid "Published"
 msgstr "Publicado"
 
-#: modules/calendar/calendar.php:2877
+#: modules/calendar/calendar.php:2814
 msgid "Publishing Time"
 msgstr "Hora de la publicación"
 
@@ -2248,7 +2380,7 @@ msgstr ""
 "WordPress. Entre sus características se incluyen un calendario de "
 "contenidos, avisos y estados personalizados."
 
-#: publishpress.php:1355
+#: publishpress.php:1368
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -2266,7 +2398,7 @@ msgstr "Ajustes de PublishPress"
 msgid "Receiver"
 msgstr "Destinatario"
 
-#: modules/calendar/calendar.php:2654
+#: modules/calendar/calendar.php:2591
 msgid "Regenerate calendar feed secret"
 msgstr "Regenerar clave secreta del feed del calendario"
 
@@ -2275,7 +2407,7 @@ msgid "Register metadata for these post types:"
 msgstr "Registrar metadatos para estos tipos de contenido:"
 
 #: modules/editorial-comments/editorial-comments.php:211
-#: modules/editorial-comments/editorial-comments.php:719
+#: modules/editorial-comments/editorial-comments.php:721
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -2283,19 +2415,24 @@ msgstr "Eliminar"
 msgid "Remove PublishPress ads and branding"
 msgstr "Eliminar los anuncios y la marca de PublishPress"
 
-#: modules/content-overview/content-overview.php:1250
+#: modules/content-board/content-board.php:1224
+msgid "Reorder"
+msgstr "Reordenar"
+
+#: modules/content-overview/content-overview.php:1251
 msgid "Reorder Columns"
 msgstr "Reordenar columnas"
 
-#: modules/content-overview/content-overview.php:1398
+#: modules/content-board/content-board.php:1372
+#: modules/content-overview/content-overview.php:1399
 msgid "Reorder Filters"
 msgstr "Reordenar filtros"
 
-#: modules/editorial-comments/editorial-comments.php:623
+#: modules/editorial-comments/editorial-comments.php:625
 msgid "Reply"
 msgstr "Responder"
 
-#: modules/editorial-comments/editorial-comments.php:620
+#: modules/editorial-comments/editorial-comments.php:622
 msgid "Reply to this comment"
 msgstr "Responder a este comentario"
 
@@ -2313,14 +2450,16 @@ msgstr "Solicitar soporte"
 msgid "Reschedule"
 msgstr "Reprogramar"
 
-#: modules/calendar/calendar.php:2070
-#: modules/content-overview/content-overview.php:858
-#: modules/content-overview/content-overview.php:1954
+#: modules/calendar/calendar.php:2007
+#: modules/content-board/content-board.php:839
+#: modules/content-board/content-board.php:1977
+#: modules/content-overview/content-overview.php:860
+#: modules/content-overview/content-overview.php:1955
 msgid "Reset"
 msgstr "Restablecer"
 
-#: modules/content-overview/content-overview.php:1953
-#| msgid "Filter"
+#: modules/content-board/content-board.php:1976
+#: modules/content-overview/content-overview.php:1954
 msgid "Reset Filters"
 msgstr "Restablecer filtros"
 
@@ -2328,7 +2467,7 @@ msgstr "Restablecer filtros"
 msgid "Reviews"
 msgstr "Reseñas"
 
-#: common/php/class-module.php:678
+#: common/php/class-module.php:743
 msgid "Role"
 msgstr "Perfil"
 
@@ -2338,7 +2477,7 @@ msgstr "Perfil"
 msgid "role:%s"
 msgstr "perfil: %s"
 
-#: common/php/class-module.php:675
+#: common/php/class-module.php:740
 #: lib/Notifications/Workflow/Step/Receiver/Role.php:31
 msgid "Roles"
 msgstr "Perfiles"
@@ -2347,11 +2486,11 @@ msgstr "Perfiles"
 msgid "Sat"
 msgstr "Sáb"
 
-#: modules/calendar/calendar.php:764 modules/calendar/calendar.php:1848
+#: modules/calendar/calendar.php:764 modules/calendar/calendar.php:1785
 msgid "Save"
 msgstr "Guardar"
 
-#: modules/calendar/calendar.php:1842
+#: modules/calendar/calendar.php:1779
 #, php-format
 msgid "Save &#8220;%s&#8221;"
 msgstr "Guardar &#8220;%s&#8221;"
@@ -2364,7 +2503,12 @@ msgstr "Guardar y editar"
 msgid "Saving..."
 msgstr "Guardando..."
 
-#: common/php/class-module.php:264 modules/calendar/calendar.php:1959
+#: modules/content-board/content-board.php:2561
+msgid "Schedule Date"
+msgstr "Fecha de programación"
+
+#: common/php/class-module.php:329 modules/calendar/calendar.php:1896
+#: modules/content-board/content-board.php:2500
 #: modules/notifications-log/library/NotificationsLogTable.php:523
 msgid "Scheduled"
 msgstr "Programado"
@@ -2373,24 +2517,27 @@ msgstr "Programado"
 msgid "Scheduled for %d receivers. Click here to display them."
 msgstr "Programado para %d destinatarios. Haz clic aquí para mostrarlos."
 
-#: modules/content-overview/content-overview.php:1902
+#: modules/content-board/content-board.php:1925
+#: modules/content-overview/content-overview.php:1903
 msgid "Search"
 msgstr "Buscar"
 
-#: modules/content-overview/content-overview.php:1901
-#: modules/content-overview/content-overview.php:2168
+#: modules/content-board/content-board.php:1924
+#: modules/content-board/content-board.php:2191
+#: modules/content-overview/content-overview.php:1902
+#: modules/content-overview/content-overview.php:2169
 msgid "Search box"
 msgstr "Caja de búsqueda"
 
-#: modules/editorial-comments/editorial-comments.php:289
+#: modules/editorial-comments/editorial-comments.php:291
 msgid "Search Comments"
 msgstr "Buscar comentarios"
 
 #: modules/editorial-metadata/editorial-metadata.php:448
-msgid "Search Editorial Metadata"
-msgstr "Buscar metadatos editoriales"
+msgid "Search Editorial Fields"
+msgstr "Buscar campos editoriales"
 
-#: publishpress.php:1312
+#: publishpress.php:1325
 msgid "Search Notifications"
 msgstr "Buscar avisos"
 
@@ -2407,7 +2554,7 @@ msgid "Search Notify Users"
 msgstr "Buscar avisos de usuarios"
 
 #. %s: search keywords
-#: modules/editorial-comments/editorial-comments.php:276
+#: modules/editorial-comments/editorial-comments.php:278
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Resultados de la búsqueda de «%s»"
@@ -2416,12 +2563,15 @@ msgstr "Resultados de la búsqueda de «%s»"
 msgid "Select at least one option for each section."
 msgstr "Selecciona al menos una opción para cada sección."
 
-#: modules/content-overview/content-overview.php:1279
-#: modules/content-overview/content-overview.php:1427
+#: modules/content-board/content-board.php:1253
+#: modules/content-board/content-board.php:1401
+#: modules/content-overview/content-overview.php:1280
+#: modules/content-overview/content-overview.php:1428
 msgid "Select Metakey"
 msgstr "Seleccionar Metakey"
 
-#: modules/content-overview/content-overview.php:2210
+#: modules/content-board/content-board.php:2233
+#: modules/content-overview/content-overview.php:2211
 msgid "Select option..."
 msgstr "Seleccionar option…"
 
@@ -2480,7 +2630,8 @@ msgstr "shortcode"
 msgid "Show %s more"
 msgstr "Mostrar %s más"
 
-#: modules/content-overview/content-overview.php:816
+#: modules/content-board/content-board.php:797
+#: modules/content-overview/content-overview.php:818
 msgid "Show content from"
 msgstr "Mostrar contenido desde"
 
@@ -2558,14 +2709,14 @@ msgstr "slug1,slug2"
 msgid "Sorry! You're not subscribed to any posts!"
 msgstr "¡Lo siento! ¡No estás suscrito a ninguna publicación!"
 
-#: modules/editorial-comments/editorial-comments.php:1080
+#: modules/editorial-comments/editorial-comments.php:1082
 msgid ""
 "Sorry, you can't delete this editorial comment because it has some replies."
 msgstr ""
 "Lo siento, no puedes borrar este comentario editorial porque tiene algunas "
 "respuestas."
 
-#: modules/editorial-comments/editorial-comments.php:768
+#: modules/editorial-comments/editorial-comments.php:770
 msgid ""
 "Sorry, you don't have the privileges to add editorial comments. Please talk "
 "to your Administrator."
@@ -2573,8 +2724,8 @@ msgstr ""
 "Lo siento, no tienes privilegios para añadir comentarios editoriales. Por "
 "favor habla con tu administrador."
 
-#: modules/editorial-comments/editorial-comments.php:1059
-#: modules/editorial-comments/editorial-comments.php:1163
+#: modules/editorial-comments/editorial-comments.php:1061
+#: modules/editorial-comments/editorial-comments.php:1165
 msgid ""
 "Sorry, you don't have the privileges to delete this editorial comment. "
 "Please talk to your Administrator."
@@ -2582,8 +2733,8 @@ msgstr ""
 "Lo siento, pero no tienes los privilegios para borrar este comentario "
 "editorial. Por favor, habla con tu administrador."
 
-#: modules/editorial-comments/editorial-comments.php:911
-#: modules/editorial-comments/editorial-comments.php:1043
+#: modules/editorial-comments/editorial-comments.php:913
+#: modules/editorial-comments/editorial-comments.php:1045
 msgid ""
 "Sorry, you don't have the privileges to edit editorial comments. Please talk "
 "to your Administrator."
@@ -2591,7 +2742,7 @@ msgstr ""
 "Lo siento, pero no tienes los privilegios para editar estos comentarios "
 "editoriales. Por favor, habla con tu administrador."
 
-#: modules/editorial-comments/editorial-comments.php:929
+#: modules/editorial-comments/editorial-comments.php:931
 msgid ""
 "Sorry, you don't have the privileges to edit this editorial comment. Please "
 "talk to your Administrator."
@@ -2603,9 +2754,10 @@ msgstr ""
 msgid "Start date"
 msgstr "Fecha de inicio"
 
-#: modules/content-overview/content-overview.php:1079
-#: modules/content-overview/content-overview.php:1093
-#: modules/content-overview/content-overview.php:1137
+#: modules/content-board/content-board.php:1071
+#: modules/content-overview/content-overview.php:1081
+#: modules/content-overview/content-overview.php:1095
+#: modules/content-overview/content-overview.php:1138
 #: modules/notifications-log/library/NotificationsLogTable.php:494
 msgid "Status"
 msgstr "Estado"
@@ -2616,7 +2768,7 @@ msgstr "Estado"
 msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
 msgstr "El estado se cambió de %1$s #%2$s «%3$s» por %4$s %5$s"
 
-#: modules/calendar/calendar.php:2545
+#: modules/calendar/calendar.php:2482
 msgid "Statuses to display publish time"
 msgstr "Estados para mostrar la hora de publicación"
 
@@ -2653,19 +2805,22 @@ msgstr "Dom"
 msgid "synchronous"
 msgstr "síncrono"
 
-#: modules/calendar/calendar.php:3548
+#: modules/calendar/calendar.php:3485
 msgid "Tag"
 msgid_plural "Tags"
 msgstr[0] "Etiqueta"
 msgstr[1] "Etiquetas"
 
-#: modules/calendar/calendar.php:3647
-#: modules/content-overview/content-overview.php:1751
+#: modules/calendar/calendar.php:3584
+#: modules/content-board/content-board.php:1774
+#: modules/content-overview/content-overview.php:1752
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: modules/content-overview/content-overview.php:1155
-#: modules/content-overview/content-overview.php:1215
+#: modules/content-board/content-board.php:1129
+#: modules/content-board/content-board.php:1189
+#: modules/content-overview/content-overview.php:1156
+#: modules/content-overview/content-overview.php:1216
 msgid "Taxonomies"
 msgstr "Taxonomías"
 
@@ -2675,13 +2830,13 @@ msgstr "Taxonomía"
 
 #: modules/editorial-metadata/editorial-metadata.php:446
 msgctxt "taxonomy general name"
-msgid "Metadata"
-msgstr "Metadatos"
+msgid "Editorial Field"
+msgstr "Campo editorial"
 
 #: modules/editorial-metadata/editorial-metadata.php:447
 msgctxt "taxonomy singular name"
-msgid "Metadata"
-msgstr "Metadatos"
+msgid "Editorial Field"
+msgstr "Campo editorial"
 
 #: modules/calendar/calendar.php:1375
 msgid "Ten months"
@@ -2708,6 +2863,13 @@ msgstr ""
 "minúsculas y contiene solo letras, números y guiones altos."
 
 #: modules/editorial-metadata/editorial-metadata.php:1908
+msgid ""
+"The description can be used to communicate with your team about what the "
+"field is for."
+msgstr ""
+"La descripción se puede usar para comunicarte con tu equipo acerca de para "
+"qué es el campo."
+
 #: modules/editorial-metadata/editorial-metadata.php:2232
 msgid ""
 "The description can be used to communicate with your team about what the "
@@ -2721,13 +2883,13 @@ msgid "The Events Calendar Integration"
 msgstr "La integración The Events Calendar "
 
 #: modules/editorial-metadata/editorial-metadata.php:1922
-msgid "The metadata type cannot be changed once created."
-msgstr "El tipo de metadatos no se puede cambiar una vez creado."
+msgid "The field type cannot be changed once created."
+msgstr "El tipo de campos no se puede cambiar una vez creado."
 
 #: modules/editorial-metadata/editorial-metadata.php:1882
 #: modules/editorial-metadata/editorial-metadata.php:2201
-msgid "The name is for labeling the metadata field."
-msgstr "El nombre es para etiquetar el campo de metadatos."
+msgid "The name is for labeling the editorial fields."
+msgstr "El nombre es para etiquetar los campos editoriales."
 
 #: modules/notifications-log/library/NotificationsLogTable.php:277
 msgid ""
@@ -2743,7 +2905,7 @@ msgstr ""
 "El módulo de avisos necesitará estar activado para que se muestre este "
 "widget."
 
-#: modules/calendar/calendar.php:2621
+#: modules/calendar/calendar.php:2558
 msgid ""
 "The number of weeks shown on the calendar can be changed on a user-by-user "
 "basis using the calendar's screen options."
@@ -2755,11 +2917,11 @@ msgstr ""
 msgid "The parent log was deleted or probably rescheduled"
 msgstr "El registro superior ha sido borrado o probablemente reprogramado"
 
-#: modules/calendar/calendar.php:3767
+#: modules/calendar/calendar.php:3704
 msgid "The selected post type is not enabled for the calendar."
 msgstr "El tipo de contenido seleccionado no está activado para el calendario."
 
-#: modules/calendar/calendar.php:4246
+#: modules/calendar/calendar.php:4183
 msgid ""
 "The selected user doesn't have enough permissions to be set as the post "
 "author."
@@ -2771,7 +2933,8 @@ msgstr ""
 msgid "The slug cannot be changed once the term has been created."
 msgstr "El slug no puede cambiarse una vez el término ha sido creado."
 
-#: modules/content-overview/content-overview.php:2539
+#: modules/content-board/content-board.php:2755
+#: modules/content-overview/content-overview.php:2544
 msgid "There are no posts in the range or filter specified."
 msgstr "No hay entradas en el rango o filtro especificado."
 
@@ -2779,10 +2942,10 @@ msgstr "No hay entradas en el rango o filtro especificado."
 msgid "There are no PublishPress modules registered"
 msgstr "No hay módulos de PublishPress registrados"
 
-#: modules/editorial-comments/editorial-comments.php:865
-#: modules/editorial-comments/editorial-comments.php:995
-#: modules/editorial-comments/editorial-comments.php:1105
-#: modules/editorial-comments/editorial-comments.php:1189
+#: modules/editorial-comments/editorial-comments.php:867
+#: modules/editorial-comments/editorial-comments.php:997
+#: modules/editorial-comments/editorial-comments.php:1107
+#: modules/editorial-comments/editorial-comments.php:1191
 msgid ""
 "There was a problem of some sort. Try again or contact your administrator."
 msgstr ""
@@ -2802,13 +2965,26 @@ msgstr "Esta acción se realizó el %1$s a las %2$s %3$s"
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:127
-msgid "This editorial metadata type is not yet supported."
-msgstr "Este tipo de metadatos editoriales todavía no es compatible."
+msgid "This editorial fields type is not yet supported."
+msgstr "Este tipo de campos editoriales todavía no es compatible."
 
 #: modules/notifications/notifications.php:1056
 #, php-format
 msgid "This email was sent %s."
 msgstr "Este correo electrónico fue enviado el %s."
+
+#: modules/editorial-metadata/editorial-metadata.php:2124
+#: modules/editorial-metadata/editorial-metadata.php:2464
+msgid "This field will be available for these post types."
+msgstr "Esto campo estará disponibles para estos tipos de contenido."
+
+#: modules/editorial-metadata/editorial-metadata.php:2148
+#: modules/editorial-metadata/editorial-metadata.php:2487
+msgid ""
+"This field will be viewable on the overview screens for these post types."
+msgstr ""
+"Esto campo se podrá ver en las pantallas de resumen de estos tipos de "
+"contenido."
 
 #: modules/notifications-log/notifications-log.php:835
 msgid ""
@@ -2817,19 +2993,6 @@ msgid ""
 msgstr ""
 "Esta es una vista previa del mensaje programado. Todavía se puede cambiar el "
 "contenido hasta que se envíe el aviso."
-
-#: modules/editorial-metadata/editorial-metadata.php:2124
-#: modules/editorial-metadata/editorial-metadata.php:2464
-msgid "This metadata will be available for these post types."
-msgstr "Estos metadatos estarán disponibles para estos tipos de contenido."
-
-#: modules/editorial-metadata/editorial-metadata.php:2148
-#: modules/editorial-metadata/editorial-metadata.php:2487
-msgid ""
-"This metadata will be viewable on the overview screens for these post types."
-msgstr ""
-"Estos metadatos se podrán ver en las pantallas de resumen de estos tipos de "
-"contenido."
 
 #: modules/notifications-log/notifications-log.php:442
 msgid ""
@@ -2875,9 +3038,12 @@ msgstr "Tres semanas"
 msgid "Thu"
 msgstr "Jue"
 
-#: modules/calendar/calendar.php:3608
+#: modules/calendar/calendar.php:3545
+#: modules/content-board/content-board.php:536
+#: modules/content-board/content-board.php:1249
+#: modules/content-board/content-board.php:1741
 #: modules/content-overview/content-overview.php:557
-#: modules/content-overview/content-overview.php:1718
+#: modules/content-overview/content-overview.php:1719
 #: lib/Notifications/Table/Notifications.php:156
 #: lib/Notifications/Table/Workflows.php:142
 msgid "Title"
@@ -2888,9 +3054,12 @@ msgstr "Título"
 msgid "Title: %s"
 msgstr "Título: %s"
 
-#: modules/content-overview/content-overview.php:1915
-#: modules/content-overview/content-overview.php:2244
-#: modules/content-overview/content-overview.php:2278
+#: modules/content-board/content-board.php:1938
+#: modules/content-board/content-board.php:2267
+#: modules/content-board/content-board.php:2301
+#: modules/content-overview/content-overview.php:1916
+#: modules/content-overview/content-overview.php:2245
+#: modules/content-overview/content-overview.php:2279
 msgid "to"
 msgstr "a"
 
@@ -2898,18 +3067,19 @@ msgstr "a"
 msgid "To date"
 msgstr "Fecha final"
 
-#: modules/calendar/calendar.php:797 modules/calendar/calendar.php:2118
+#: modules/calendar/calendar.php:797 modules/calendar/calendar.php:2055
 msgid "Today"
 msgstr "Hoy"
 
-#: modules/calendar/calendar.php:2112
+#: modules/calendar/calendar.php:2049
 #, php-format
 msgid "Today is %s"
 msgstr "Hoy es %s"
 
-#: common/php/class-module.php:267 modules/calendar/calendar.php:1808
-#: modules/calendar/calendar.php:3567
-#: modules/content-overview/content-overview.php:2994
+#: common/php/class-module.php:332 modules/calendar/calendar.php:1745
+#: modules/calendar/calendar.php:3504
+#: modules/content-board/content-board.php:2677
+#: modules/content-overview/content-overview.php:3029
 msgid "Trash"
 msgstr "Papelera"
 
@@ -2943,7 +3113,8 @@ msgid "Undefined error found"
 msgstr "Se ha encontrado un error indefinido"
 
 #: modules/calendar/calendar.php:1435
-#: modules/content-overview/content-overview.php:893
+#: modules/content-board/content-board.php:874
+#: modules/content-overview/content-overview.php:895
 msgid "Undo"
 msgstr "Deshacer"
 
@@ -2951,17 +3122,17 @@ msgstr "Deshacer"
 msgid "Unpublished Content"
 msgstr "Contenido sin publicar"
 
-#: modules/calendar/calendar.php:762 modules/calendar/calendar.php:3773
+#: modules/calendar/calendar.php:762 modules/calendar/calendar.php:3710
 msgid "Untitled"
 msgstr "Sin título"
 
 #: modules/editorial-metadata/editorial-metadata.php:452
-msgid "Update Editorial Metadata"
-msgstr "Actualizar metadatos editoriales"
+msgid "Update Editorial Fields"
+msgstr "Actualizar campos editoriales"
 
 #: modules/editorial-metadata/editorial-metadata.php:2171
-msgid "Update Metadata Term"
-msgstr "Actualizar términos de metadatos"
+msgid "Update Editorial fields term"
+msgstr "Actualizar término de campos editoriales"
 
 #: modules/dashboard/widgets/dashboard-notepad.php:168
 msgid "Update Note"
@@ -2988,7 +3159,7 @@ msgstr ""
 "Actualizar la fecha de publicación dinámicamente no funciona para el "
 "contenido publicado. Por favor <a href='%s'>edita la publicación</a> ."
 
-#: includes.php:159 lib/Legacy/Util.php:213
+#: includes.php:161 lib/Legacy/Util.php:213
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
@@ -3017,7 +3188,7 @@ msgstr "Usuario haciendo cambios o comentarios"
 msgid "User role"
 msgstr "Perfil de usuario"
 
-#: modules/editorial-comments/editorial-comments.php:1270
+#: modules/editorial-comments/editorial-comments.php:1272
 msgid "User Url"
 msgstr "URL del usuario"
 
@@ -3026,11 +3197,11 @@ msgstr "URL del usuario"
 msgid "User: %s (%d)"
 msgstr "Usuario: %s (%d)"
 
-#: modules/editorial-comments/editorial-comments.php:1265
+#: modules/editorial-comments/editorial-comments.php:1267
 msgid "Username"
 msgstr "Nombre del usuario"
 
-#: common/php/class-module.php:686
+#: common/php/class-module.php:751
 #: lib/Notifications/Workflow/Step/Receiver/User.php:26
 msgid "Users"
 msgstr "Usuarios"
@@ -3039,13 +3210,15 @@ msgstr "Usuarios"
 msgid "Users who selected \"Notify me\" for the content"
 msgstr "Usuarios que seleccionaron «Avísame» para el contenido"
 
-#: modules/calendar/calendar.php:1832 modules/calendar/calendar.php:3574
-#: modules/content-overview/content-overview.php:3010
+#: modules/calendar/calendar.php:1769 modules/calendar/calendar.php:3511
+#: modules/content-board/content-board.php:2693
+#: modules/content-overview/content-overview.php:3045
 msgid "View"
 msgstr "Ver"
 
-#: modules/calendar/calendar.php:1826
-#: modules/content-overview/content-overview.php:3004
+#: modules/calendar/calendar.php:1763
+#: modules/content-board/content-board.php:2687
+#: modules/content-overview/content-overview.php:3039
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Ver &#8220;%s&#8221;"
@@ -3055,7 +3228,7 @@ msgstr "Ver &#8220;%s&#8221;"
 msgid "View &#8220;%s&#8221; on Google Maps"
 msgstr "Ver &#8220;%s&#8221; en Google Maps"
 
-#: modules/calendar/calendar.php:4032
+#: modules/calendar/calendar.php:3969
 msgid "View all categories"
 msgstr "Ver todas las categorías"
 
@@ -3087,7 +3260,7 @@ msgstr "Ver: %s"
 msgid "Viewable"
 msgstr "Visible"
 
-#: publishpress.php:1363
+#: publishpress.php:1376
 msgid "Warning"
 msgstr "Advertencia"
 
@@ -3184,7 +3357,7 @@ msgstr ""
 "Puedes agregar información dinámica al texto del asunto o del cuerpo con los "
 "siguientes shortcodes:"
 
-#: modules/editorial-comments/editorial-comments.php:532
+#: modules/editorial-comments/editorial-comments.php:534
 msgid ""
 "You can add editorial comments to a post once you've saved it for the first "
 "time."
@@ -3197,25 +3370,33 @@ msgstr ""
 msgid "You can see all editorial comments on this %s here: "
 msgstr "Puedes ver todos los comentarios editoriales en esta %s aquí: "
 
-#: modules/content-overview/content-overview.php:1149
-#: modules/content-overview/content-overview.php:1209
-#| msgid "No editorial metadata found."
-msgid "You do not have any editorial metadata enabled"
-msgstr "No hay metadatos editoriales activados"
+#: modules/content-board/content-board.php:1123
+#: modules/content-board/content-board.php:1183
+#: modules/content-overview/content-overview.php:1150
+#: modules/content-overview/content-overview.php:1210
+msgid "You do not have any editorial fields enabled"
+msgstr "No hay campos editoriales activados"
 
-#: modules/content-overview/content-overview.php:1156
-#: modules/content-overview/content-overview.php:1216
+#: modules/content-board/content-board.php:1130
+#: modules/content-board/content-board.php:1190
+#: modules/content-overview/content-overview.php:1157
+#: modules/content-overview/content-overview.php:1217
 msgid "You do not have any public taxonomies"
 msgstr "No hay ninguna taxonomía pública"
 
-#: publishpress.php:670
+#: publishpress.php:671
 msgid "You do not have necessary permissions to complete this action."
 msgstr "No tienes los permisos necesarios para completar esta acción."
 
-#: modules/content-overview/content-overview.php:1009
+#: modules/content-board/content-board.php:990
+#: modules/content-overview/content-overview.php:1011
 #, php-format
 msgid "You do not have permission to add new %s"
 msgstr "Lo siento, no tienes permisos para añadir nuevo %s"
+
+#: modules/content-board/content-board.php:1521
+msgid "You do not have permission to edit selected post."
+msgstr "Lo siento, no tienes permisos para editar la entrada seleccionada."
 
 #: lib/Notifications/Table/Notifications.php:235
 msgid "You don't have any notifications"
@@ -3229,6 +3410,32 @@ msgid ""
 msgstr ""
 "Estás usando PublishPress Planner Free. La versión Pro tiene más "
 "características y soporte. %sPasar a Pro%s"
+
+#~ msgid "Add New Metadata Term"
+#~ msgstr "Añadir nuevo término de metadatos"
+
+#~ msgid "Manage Filters"
+#~ msgstr "Gestionar filtros"
+
+#~ msgid "Metadata"
+#~ msgstr "Metadatos"
+
+#~ msgid "Metadata order updated."
+#~ msgstr "Orden de los metadatos actualizado."
+
+#~ msgid "Metadata Type"
+#~ msgstr "Tipo de metadatos"
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Metadata"
+#~ msgstr "Metadatos"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Metadata"
+#~ msgstr "Metadatos"
+
+#~ msgid "Update Metadata Term"
+#~ msgstr "Actualizar términos de metadatos"
 
 #~ msgid "Click to toggle"
 #~ msgstr "Haz clic para activar"
@@ -3353,9 +3560,6 @@ msgstr ""
 #~ msgid "Edit Statuses"
 #~ msgstr "Editar estados"
 
-#~ msgid "Error updating post status."
-#~ msgstr "Error al actualizar el estado de la publicación."
-
 #~ msgid "Error while updating the status"
 #~ msgstr "Error al actualizar el estado"
 
@@ -3370,9 +3574,6 @@ msgstr ""
 
 #~ msgid "No custom statuses found."
 #~ msgstr "No se encontraron estados personalizados."
-
-#~ msgid "Options"
-#~ msgstr "Opciones"
 
 #~ msgid "Pending review"
 #~ msgstr "Pendiente de revisión"
@@ -3439,9 +3640,6 @@ msgstr ""
 #~ msgid "Status name is restricted. Please choose another name."
 #~ msgstr ""
 #~ "El nombre del estado está restringido. Por favor, elige otro nombre."
-
-#~ msgid "Status order updated."
-#~ msgstr "Orden de los estados actualizado."
 
 #~ msgid "Statuses"
 #~ msgstr "Estados"

@@ -3,7 +3,7 @@
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
- * Version: 4.2.0
+ * Version: 4.2.1
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -172,7 +172,7 @@ add_action('plugins_loaded', function () {
 
                 add_filter('debug_information', [$this, 'filterDebugInformation']);
 
-                add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities']);
+                add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities'], 11);
             }
 
             /**
@@ -189,6 +189,7 @@ add_action('plugins_loaded', function () {
                 $genericCaps = [
                     'pp_view_calendar',
                     'pp_view_content_overview',
+                    'pp_view_content_board',
                     'edit_post_subscriptions',
                     'pp_set_notification_channel',
                     'pp_delete_editorial_comment',
@@ -1196,12 +1197,15 @@ add_action('plugins_loaded', function () {
             {
 
                 $caps = [
+                    'pp_view_content_board',
+                    'pp_view_calendar',
+                    'pp_view_content_overview',
                     'pp_edit_editorial_metadata',
                     'pp_view_editorial_metadata',
                     'pp_delete_editorial_comment',
                     'pp_delete_others_editorial_comment',
                     'pp_edit_editorial_comment',
-                    'pp_edit_others_editorial_comment',
+                    'pp_edit_others_editorial_comment'
                 ];
                 
                 $pluginCaps['PublishPress Planner'] = $caps;

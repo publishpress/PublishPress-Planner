@@ -78,6 +78,7 @@ if (! class_exists('PP_Async_Notifications')) {
                     'enabled' => 'on',
                 ],
                 'options_page' => false,
+                'autoload' => true,
             ];
 
             // Apply a filter to the default options
