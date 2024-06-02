@@ -76,7 +76,7 @@ if (! class_exists('Editorial_Metadata_Input_User_Handler')) {
          */
         protected static function getOptionShowAll()
         {
-            return esc_html('-- Select a user --', 'publishpress');
+            return esc_html__('-- Select a user --', 'publishpress');
         }
 
         /**
