@@ -206,6 +206,8 @@ class Util
                         <li><?php echo esc_html__('Slack integration for notifications', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Send reminder notifications', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Use post meta in notifications', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Modals so you can edit posts without changing screen', 'publishpress'); ?></li>
+                        <li><?php echo esc_html__('Integration with SEO plugins', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Remove PublishPress ads and branding', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Fast, professional support', 'publishpress'); ?></li>
                     </ul>
