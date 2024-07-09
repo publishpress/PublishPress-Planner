@@ -30,6 +30,7 @@
 
 use PublishPress\Core\Ajax;
 use PublishPress\Core\Error;
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -69,13 +70,6 @@ class PP_Content_Board extends PP_Module
      * @var [type]
      */
     public $module;
-
-    /**
-     * [$no_matching_posts description]
-     *
-     * @var boolean
-     */
-    public $no_matching_posts = true;
 
     /**
      * @var array
@@ -205,6 +199,16 @@ class PP_Content_Board extends PP_Module
         // Load necessary scripts and stylesheets
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
+        // Content Board body class
+        add_filter('admin_body_class', [$this, 'add_admin_body_class']);
+    }
+
+    public function add_admin_body_class($classes) {
+        global $pagenow;
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-board') {
+            $classes .= ' pp-content-board-page';
+        }
+        return $classes;
     }
 
     private function getViewCapability()
@@ -328,7 +332,8 @@ class PP_Content_Board extends PP_Module
      * @since 0.7
      */
     public function print_configure_view()
-    { ?>
+    { 
+    ?>
         <form class="basic-settings"
               action="<?php
               echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
@@ -605,6 +610,9 @@ class PP_Content_Board extends PP_Module
             </div>
         </div>
         <br clear="all">
+        <div id="pp-content-board-general-modal" style="display: none;">
+            <div id="pp-content-board-general-modal-container" class="pp-content-board-general-modal-container"></div>
+        </div>
         <?php
 
         $publishpress->settings->print_default_footer($publishpress->modules->content_board);
@@ -2564,10 +2572,8 @@ class PP_Content_Board extends PP_Module
 
         $posts = $this->getPostsForPostType($postType, $this->user_filters);
 
-        if (! empty($posts)) {
-            // Don't display the message for $no_matching_posts
-            $this->no_matching_posts = false;
-        } ?>
+        $localized_post_data = [];
+        ?>
 
         <div class="postbox-1<?php
         echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
@@ -2657,7 +2663,7 @@ class PP_Content_Board extends PP_Module
                     <div class="board-title" style="border-top-color: '. esc_attr($post_status_options['color']). '">
                         <div class="board-title-content">
                             <span class="status-title-count" style="color: '. esc_attr($post_status_options['color']). '">
-                            0 &nbsp; <span class="dashicons '. esc_attr($post_status_options['icon']). '"></span>
+                            <span class="status-post-total">0 &nbsp;</span> <span class="dashicons '. esc_attr($post_status_options['icon']). '"></span>
                             '. $output_markup .'
                                
                             </span>
@@ -2684,7 +2690,7 @@ class PP_Content_Board extends PP_Module
                         <div class="board-title" style="border-top-color: '. esc_attr($post_status_options["color"]) .'">
                                 <div class="board-title-content">
                                     <span class="status-title-count" style="color: '. esc_attr($post_status_options["color"]) .'">
-                                    '. esc_html(count($status_posts)) .' &nbsp; <span class="dashicons '. esc_attr($post_status_options["icon"]) .'"></span>
+                                    <span class="status-post-total">'. esc_html(count($status_posts)) .' &nbsp;</span> <span class="dashicons '. esc_attr($post_status_options["icon"]) .'"></span>
                                         '. $output_markup .'
                                     </span>
                                     <span class="title-text">
@@ -2700,14 +2706,22 @@ class PP_Content_Board extends PP_Module
 
                                 $post_type_object = get_post_type_object($status_post->post_type);
                                 $can_edit_post = current_user_can($post_type_object->cap->edit_post, $status_post->ID);
+                                $post_date = get_the_time(get_option("date_format"), $status_post->ID) . " " . get_the_time(get_option("time_format"), $status_post->ID);
+
+                                $post_title = _draft_or_post_title($status_post->ID);
+
+                                if (Util::isPlannersProActive()) {
+                                    $localized_post_data = $this->localize_post_data($localized_post_data, $status_post, $can_edit_post);
+                                }
+
                                 $dragable_class = ($can_edit_post) ? 'dragable' : 'no-drag'; 
-                                $statuses_content_markup .= '<div class="content-item '. esc_attr($dragable_class) .'" data-post_id="'. esc_attr($status_post->ID) .'">
+
+                                $statuses_content_markup .= '<div class="content-item  content-item-'. esc_attr($status_post->ID) .' '. esc_attr($dragable_class) .'" data-post_id="'. esc_attr($status_post->ID) .'">
                                     <div class="content-item-post">
                                         <div class="post-date">
-                                            '. esc_html(get_the_time(get_option("date_format"), $status_post->ID) . " " . get_the_time(get_option("time_format"), $status_post->ID)) .'
+                                            '. esc_html($post_date) .'
                                         </div>
-                                        <div class="post-title">';
-                                                $post_title = _draft_or_post_title($status_post->ID);
+                                        <div class="post-title post-'. esc_attr($status_post->ID) .'">';
 
                                                 if ($can_edit_post) {
                                                     $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="'. esc_attr($post_title) .'">'. esc_html(
@@ -2844,7 +2858,147 @@ class PP_Content_Board extends PP_Module
             </div>
         </div>
         <?php
+        
+        if (Util::isPlannersProActive()) {
+            
+            $localized_post_data['post_date_label']     = esc_html__('Post Date', 'publishpress');
+            $localized_post_data['edit_label']          = esc_html__('Edit', 'publishpress');
+            $localized_post_data['delete_label']        = esc_html__('Trash', 'publishpress');
+            $localized_post_data['preview_label']       = esc_html__('Preview', 'publishpress');
+            $localized_post_data['view_label']          = esc_html__('View', 'publishpress');
+            $localized_post_data['prev_label']          = esc_html__('Previous Post', 'publishpress');
+            $localized_post_data['next_label']          = esc_html__('Next Post', 'publishpress');
+            $localized_post_data['post_status_label']   = esc_html__('Post Status', 'publishpress');
+            $localized_post_data['update_label']        = esc_html__('Save Changes', 'publishpress');
+            $localized_post_data['empty_term']          = esc_html__('Taxonomy not set.', 'publishpress');
+            $localized_post_data['date_format']         = pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format'));
+            $localized_post_data['week_first_day']      = esc_js(get_option('start_of_week'));
+            $localized_post_data['nonce']               = wp_create_nonce('content_board_action_nonce');
+
+            wp_localize_script(
+                'publishpress-content_board',
+                'PPContentBoardPosts',
+                $localized_post_data
+            );
+        }
+
         // phpcs:enable
+    }
+
+    public function localize_post_data($localized_post_data, $status_post, $can_edit_post) {
+
+        // add taxonomies
+        $taxonomies = get_object_taxonomies($status_post->post_type, 'object');
+        foreach ($taxonomies as $taxonomy => $tax_object ) {
+            if (!empty($tax_object->public) 
+                && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                $terms = get_the_terms($status_post->ID, $taxonomy);
+                //add post content to localized data
+                $localized_post_data['taxonomies'][$status_post->ID][$taxonomy] = [
+                    'post_id'          => $status_post->ID,
+                    'taxonomy'         => $taxonomy,
+                    'taxonomy_label'   => $tax_object->label,
+                    'taxonomy_placeholder' => sprintf(esc_attr__('Select %s', 'publishpress'), esc_html($tax_object->label)),
+                    'terms'            => (!empty($terms) && !is_wp_error($terms)) ? $terms : []
+                ];
+            }
+        }
+
+        $post_title = _draft_or_post_title($status_post->ID);
+
+        //add post content to localized data
+        $localized_post_data['posts'][] = [
+            'post_id'          => $status_post->ID,
+            'post_title'       => $post_title,
+            'raw_title'        => $status_post->post_title,
+            'can_edit_post'    => $can_edit_post ? 1 : 0,
+            'date_markup'      => $can_edit_post ? self::get_date_markup($status_post) : get_the_time(get_option("date_format"), $status_post->ID) . " " . get_the_time(get_option("time_format"), $status_post->ID),
+            'author_markup'    => self::get_author_markup($status_post, $can_edit_post),
+            'status_options'   => $this->getUserAuthorizedPostStatusOptions($status_post->post_type),
+            'post_content'     => apply_filters('the_content', $status_post->post_content)
+        ];
+
+        return $localized_post_data;
+    }
+
+    public static function get_date_markup($post) {
+        $date_name = 'content_board_post_date';
+        $date_markup =
+        sprintf(
+            '<input
+                type="text"
+                id="%s"
+                name="%1$s"
+                value="%2$s"
+                class="date-time-pick"
+                data-alt-field="%1$s_hidden"
+                data-alt-format="%3$s"
+                placeholder="%4$s"
+                autocomplete="off"
+            />',
+            esc_attr($date_name),
+            esc_attr(date_i18n('F j, Y H:i', strtotime($post->post_date))),
+            esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d H:i:s')),
+            ''
+        );
+        $date_markup .= sprintf(
+            '<input
+                type="hidden"
+                class="%s_hidden"
+                name="%s_hidden"
+                value="%s"
+            />',
+            esc_attr($date_name),
+            esc_attr($date_name),
+            esc_attr(date_i18n('Y-m-d H:i:s', strtotime($post->post_date)))
+        );
+
+        return $date_markup;
+    }
+
+    public static function get_author_markup($post, $can_edit_post) {
+
+        if ($can_edit_post) {
+            ob_start();
+            $authorId = (int) $post->post_author;
+            if (function_exists('get_post_authors')) {
+                $authors = get_post_authors($post);
+                $multiple = 'multiple';
+            } else {
+                $authors = [$authorId];
+                $multiple = '';
+            }
+            ?>
+            <select class="pp-modal-form-author" <?php echo esc_attr($multiple); ?>>
+                <?php
+                if (! empty($authors)) {
+                    foreach ($authors as $author) {
+                        $author = is_object($author) ? $author : get_user_by('id', $author);
+                        $option = '';
+
+                        if (! empty($author)) {
+                            $option = '<option value="' . esc_attr($author->ID) . '" selected="selected">' . esc_html(
+                                    $author->display_name
+                                ) . '</option>';
+                        }
+
+                        $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                        echo $option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    }
+                }
+                ?>
+            </select>
+            <?php
+            return ob_get_clean();
+        } else {
+            $post_author = get_userdata($post->post_author);
+            $author_name = is_object($post_author) ? $post_author->display_name : '';
+            $author_name = apply_filters('the_author', $author_name);
+    
+            $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
+            return $author_name;
+        }
     }
 
     /**
@@ -3177,7 +3331,7 @@ class PP_Content_Board extends PP_Module
                 $author_name = is_object($post_author) ? $post_author->display_name : '';
                 $author_name = apply_filters('the_author', $author_name);
 
-                $author_name = apply_filters('publishpress_content_board_author_column', $author_name, $post);
+                $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
 
                 return $author_name;
                 break;
@@ -3283,38 +3437,30 @@ class PP_Content_Board extends PP_Module
             $ajax->sendJson($results);
         }
 
-        global $wpdb;
-
         $cacheKey = 'search_authors_result_' . md5($queryText);
         $cacheGroup = 'content_board';
 
         $queryResult = wp_cache_get($cacheKey, $cacheGroup);
 
         if (false === $queryResult) {
-            // phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $queryResult = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
-                FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
-                WHERE u.display_name LIKE %s
-                ORDER BY 2
-                LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
-            // phpcs:enable
+            $user_args = [
+                'number'     => apply_filters('pp_planner_author_result_limit', 20),
+                'capability' => 'edit_posts',
+            ];
+            if (!empty($queryText)) {
+                $user_args['search'] = sanitize_text_field('*' . $queryText . '*');
+            }
+            $users   = get_users($user_args);
+            $queryResult = [];
+            foreach ($users as $user) {
+                $queryResult[] = [
+                    'id'   => (isset($_GET['field']) && sanitize_key($_GET['field']) === 'slug') ? $user->user_nicename : $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
-        
-        foreach ($queryResult as $key => $author) {
-            if (!user_can($author->id, 'edit_posts')) {
-                unset($queryResult[$key]);
-            }
-        }
-        $queryResult = array_values($queryResult);//re-order the key
 
         $ajax->sendJson($queryResult);
     }

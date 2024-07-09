@@ -443,6 +443,23 @@ jQuery(document).ready(function ($) {
                 } else {
                     senderUi.find('.sortable-placeholder').hide();
                 }
+
+                // update count
+                var old_status = senderUi.closest('.status-content').attr('data-slug');
+                var new_status = receivedItem.closest('.status-content').attr('data-slug');
+                var old_status_count = senderUi.closest('.status-content').attr('data-counts');
+                var new_status_count = receivedItem.closest('.status-content').attr('data-counts');
+
+                var updated_old_count = Number(old_status_count) - 1;
+                var updated_new_count = Number(new_status_count) + 1;
+ 
+                // update old counts
+                $('.content-board-table-wrap .statuses-contents .status-content.status-' + old_status).attr('data-counts', updated_old_count);
+                $('.content-board-table-wrap .statuses-contents .status-content.status-' + old_status + ' .status-post-total').html(updated_old_count + ' &nbsp;');
+                // update new counts
+                $('.content-board-table-wrap .statuses-contents .status-content.status-' + new_status).attr('data-counts', updated_new_count);
+                $('.content-board-table-wrap .statuses-contents .status-content.status-' + new_status + ' .status-post-total').html(updated_new_count + ' &nbsp;');
+
                 // update post status
                 var post_id = receivedItem.attr('data-post_id');
                 var post_status = receivedItem.closest('.status-content.board-main-content').attr('data-slug');
