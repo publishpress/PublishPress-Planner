@@ -252,7 +252,7 @@ if (! class_exists('Editorial_Metadata_Input_Select_Handler')) {
             $option_labels     = isset($select_options['labels']) ? $select_options['labels'] : false;
 
             $default_option_label = sprintf(
-                esc_html('-- Select %s --', 'publishpress'),
+                esc_html__('-- Select %s --', 'publishpress'),
                 esc_attr($input_label)
             );
 
