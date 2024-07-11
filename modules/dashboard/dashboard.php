@@ -53,7 +53,7 @@ if (! class_exists('PP_Dashboard')) {
             // Register the module with PublishPress
             $this->module_url = $this->get_module_url(__FILE__);
             $args = [
-                'title' => __('Dashboard', 'publishpress'),
+                'title' => __('Dashboard Widgets', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -61,14 +61,14 @@ if (! class_exists('PP_Dashboard')) {
                 'slug' => 'dashboard',
                 'post_type_support' => 'pp_dashboard',
                 'default_options' => [
-                    'enabled' => 'on',
+                    'enabled' => 'off',
                     'post_status_widget' => 'on',
                     'my_posts_widget' => 'on',
                     'notepad_widget' => 'on',
                 ],
                 'configure_page_cb' => 'print_configure_view',
                 'configure_link_text' => __('Widget Options', 'publishpress'),
-                'autoload' => true,
+                'autoload' => false,
             ];
             $this->module = PublishPress()->register_module('dashboard', $args);
         }
