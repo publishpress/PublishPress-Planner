@@ -449,6 +449,7 @@ if (! class_exists('PP_Settings')) {
 
 
             $all_modules = (array)$publishpress->modules;
+
             foreach ($all_modules as $mod_name => $mod_data) {
                 // Set first module as default module
                 if (empty($default_module) && !empty($mod_data->options_page) && $mod_data->options->enabled === 'on') {
@@ -456,8 +457,16 @@ if (! class_exists('PP_Settings')) {
                 }
 
                 //force notification tab if dependent tab is enabled
-                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
-                    $all_modules['notifications']->options->enabled = 'on';
+                if (isset($mod_data->notification_options)) {
+                    if ($all_modules['notifications']->options->enabled === 'on') {
+                        $all_modules['improved_notifications']->options->enabled = 'on';
+                        $all_modules['async_notifications']->options->enabled = 'on';
+                        $all_modules['notifications']->options->enabled = 'on';
+                    } else {
+                        $all_modules['improved_notifications']->options->enabled = 'off';
+                        $all_modules['async_notifications']->options->enabled = 'off';
+                        $all_modules['notifications']->options->enabled = 'off';
+                    }
                     break;
                 }
             }
