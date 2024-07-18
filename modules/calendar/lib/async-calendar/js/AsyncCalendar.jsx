@@ -11,25 +11,9 @@ const $ = jQuery;
 export default function AsyncCalendar(props) {
     const theme = (props.theme || 'light');
 
-
-    let statusValue   = (props.requestFilter.post_status) ? props.requestFilter.post_status : '';
-    let typesValue    = (props.requestFilter.post_type) ? props.requestFilter.post_type : '';
     let weeksValue    = (props.requestFilter.weeks) ? props.requestFilter.weeks : props.numberOfWeeksToDisplay;
 
-    let categoryValue   = '';
-    if (props.requestFilter.category && props.requestFilter.category.value) {
-        categoryValue   = props.requestFilter.category.value;
-    }
-
-    let postTagValue   = '';
-    if (props.requestFilter.post_tag && props.requestFilter.post_tag.value) {
-        postTagValue   = props.requestFilter.post_tag.value;
-    }
-
-    let authorValue   = '';
-    if (props.requestFilter.post_author && props.requestFilter.post_author.value) {
-        authorValue = props.requestFilter.post_author.value;
-    }
+    let calendarFiltersValue  = (props.requestFilter) ? props.requestFilter : {};
 
     const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay, props.weekStartsOnSunday));
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(weeksValue);
@@ -37,18 +21,15 @@ export default function AsyncCalendar(props) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isDragging, setIsDragging] = React.useState(false);
     const [message, setMessage] = React.useState();
-    const [filterStatus, setFilterStatus] = React.useState(statusValue);
-    const [filterCategory, setFilterCategory] = React.useState(categoryValue);
-    const [filterTag, setFilterTag] = React.useState(postTagValue);
-    const [filterAuthor, setFilterAuthor] = React.useState(authorValue);
-    const [filterPostType, setFilterPostType] = React.useState(typesValue);
     const [filterWeeks, setFilterWeeks] = React.useState(weeksValue);
+    const [searchText, setSearchText] = React.useState('');
     const [openedItemId, setOpenedItemId] = React.useState();
     const [openedItemData, setOpenedItemData] = React.useState([]);
     const [openedItemRefreshCount, setOpenedItemRefreshCount] = React.useState(0);
     const [refreshCount, setRefreshCount] = React.useState(0);
     const [hoveredDate, setHoveredDate] = React.useState();
     const [formDate, setFormDate] = React.useState();
+    const [calendarFilter, setCalendarFilter] = React.useState(calendarFiltersValue);
 
     const DRAG_AND_DROP_HOVERING_CLASS = 'publishpress-calendar-day-hover';
 
@@ -59,10 +40,92 @@ export default function AsyncCalendar(props) {
 
         return props.ajaxUrl + '?action=' + action + '&nonce=' + props.nonce + query;
     }
+    
+    const onFilterSelectChange = (event) => {
+        let selectElement = event.target;
+        let selectName = selectElement.name;
+        let selectValue = selectElement.value;
+        let elementModal = selectElement.closest('.content-calendar-modal');
+        let previousElement = elementModal.previousElementSibling;
+        if (!selectValue || selectValue == '') {
+            previousElement.classList.remove('active-filter');
+            previousElement.innerHTML = previousElement.getAttribute('data-label');
+        } else {
+            let selectedOptionText = selectElement.selectedOptions[0].text;
+            previousElement.classList.add('active-filter');
+            previousElement.innerHTML = previousElement.getAttribute('data-label') + ': ' + selectedOptionText;
+            elementModal.style.display = 'none';
+        }
+        onFilterEventCallback(selectName, selectValue);
+    }
+
+    const onMeModeClick = (event) => { 
+        let new_value = '';
+        if (event.target.classList.contains('active-filter')) {
+            new_value = 0;
+            event.target.classList.remove('active-filter');
+        } else {
+            new_value = 1;
+            event.target.classList.add('active-filter');
+        }
+
+        onFilterEventCallback('me_mode', new_value);
+
+        document.querySelector('#filter_author').value = '';
+        document.querySelector('#pp-content-filters #content_calendar_me_mode').value = new_value;
+    };
+    
+    const onSearchClick = (event) => {
+        let selectElement = event.target;
+        let elementParent = selectElement.closest('.search-bar');
+        let value = elementParent.querySelector('#co-searchbox-search-input').value;
+        setSearchText(value);
+    }
+
+    const onFilterApplyClick = (event) => {
+        event.preventDefault();
+    
+        let elementModal = event.target.closest('.content-calendar-modal');
+        let previousElement = elementModal.previousElementSibling;
+        let inputs = elementModal.querySelectorAll('input:not([type="submit"]), select, textarea');
+        let all_inputs = [];
+        let selected_values = '';
+        inputs.forEach(input => {
+            let inputName = input.name;
+            let inputValue = input.value;
+
+            if (input.type === 'checkbox') {
+                inputValue = input.checked ? '1' : '';
+                selected_values += inputValue;
+            } else if (input.type === 'select-one') {
+                selected_values += ' : ' + input.selectedOptions[0].text;
+            } else if (input.type !== 'hidden' && inputValue && inputValue !== '') {
+                selected_values += ' : ' + inputValue;
+            }
+            all_inputs.push(inputName);
+    
+            onFilterEventCallback(inputName, inputValue);
+        });
+
+        if (!selected_values || selected_values == '') {
+            previousElement.classList.remove('active-filter');
+            previousElement.innerHTML = previousElement.getAttribute('data-label');
+        } else {
+            previousElement.classList.add('active-filter');
+            previousElement.innerHTML = previousElement.getAttribute('data-label') + selected_values;
+        }
+    
+        elementModal.style.display = 'none';
+    };
+    
 
     const addEventListeners = () => {
         document.addEventListener('keydown', onDocumentKeyDown);
         $(document).on('publishpress_calendar:close_popup', onCloseItemPopup);
+        $(document).on('change', '#pp-content-filters select:not(.non-trigger-select)', onFilterSelectChange);
+        $(document).on('click', '.metadata-item-filter .filter-apply input[type=submit]', onFilterApplyClick);
+        $(document).on('click', '.pp-content-calendar-manage .search-bar input[type=submit]', onSearchClick);
+        $(document).on('click', '.pp-content-calendar-manage .me-mode-action', onMeModeClick);
     }
 
     const removeEventListeners = () => {
@@ -90,28 +153,15 @@ export default function AsyncCalendar(props) {
 
         let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay);
 
-        if (filterStatus) {
-            dataUrl += '&post_status=' + filterStatus;
+        if (calendarFilter && Object.keys(calendarFilter).length > 0) {
+            let calendarFilterParams = new URLSearchParams(calendarFilter);
+            dataUrl += '&' + calendarFilterParams.toString();
         }
 
-        if (filterCategory) {
-            dataUrl += '&category=' + filterCategory;
-        }
-
-        if (filterTag) {
-            dataUrl += '&post_tag=' + filterTag;
-        }
-
-        if (filterAuthor) {
-            dataUrl += '&post_author=' + filterAuthor;
-        }
-
-        if (filterPostType) {
-            dataUrl += '&post_type=' + filterPostType;
-        }
-
-        if (filterWeeks) {
-            dataUrl += '&weeks=' + filterWeeks;
+        if (searchText) {
+            dataUrl += '&s=' + searchText;
+        } else {
+            dataUrl += '&s=';
         }
 
         fetch(dataUrl)
@@ -190,6 +240,9 @@ export default function AsyncCalendar(props) {
     };
 
     const moveCalendarItemToANewDate = (itemDate, itemIndex, newYear, newMonth, newDay) => {
+        if (!itemsByDate[itemDate]) {
+            return;
+        }
         let item = itemsByDate[itemDate][itemIndex];
 
         setIsLoading(true);
@@ -341,25 +394,10 @@ export default function AsyncCalendar(props) {
     }
 
     const onFilterEventCallback = (filterName, value) => {
-        if ('status' === filterName) {
-            setFilterStatus(value);
-        }
-
-        if ('category' === filterName) {
-            setFilterCategory(value);
-        }
-
-        if ('tag' === filterName) {
-            setFilterTag(value);
-        }
-
-        if ('author' === filterName) {
-            setFilterAuthor(value);
-        }
-
-        if ('postType' === filterName) {
-            setFilterPostType(value);
-        }
+        setCalendarFilter(prevCalendarFilter => ({
+            ...prevCalendarFilter,
+            [filterName]: value
+        }));
 
         if ('weeks' === filterName) {
             value = parseInt(value);
@@ -474,11 +512,8 @@ export default function AsyncCalendar(props) {
                 firstDateToDisplay,
                 numberOfWeeksToDisplay,
                 filterWeeks,
-                filterAuthor,
-                filterTag,
-                filterCategory,
-                filterStatus,
-                filterPostType,
+                searchText,
+                calendarFilter,
                 refreshCount
             ]
         );
@@ -490,11 +525,8 @@ export default function AsyncCalendar(props) {
             firstDateToDisplay,
             numberOfWeeksToDisplay,
             filterWeeks,
-            filterAuthor,
-            filterTag,
-            filterCategory,
-            filterStatus,
-            filterPostType,
+            searchText,
+            calendarFilter,
             refreshCount
         ]
     );
@@ -517,16 +549,6 @@ export default function AsyncCalendar(props) {
 
     return (
         <div className={componentClassName.join(' ')}>
-            <FilterBar
-                statuses={props.statuses}
-                postTypes={props.postTypes}
-                numberOfWeeksToDisplay={numberOfWeeksToDisplay}
-                ajaxUrl={props.ajaxUrl}
-                nonce={props.nonce}
-                onChange={onFilterEventCallback}
-                requestFilter={props.requestFilter}
-                strings={props.strings}/>
-
             <NavigationBar
                 refreshOnClickCallback={handleRefreshOnClick}
                 backPageOnClickCallback={handleBackPageOnClick}

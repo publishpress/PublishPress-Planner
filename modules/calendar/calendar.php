@@ -91,6 +91,8 @@ if (! class_exists('PP_Calendar')) {
          * @var [type]
          */
         public $module;
+        
+        public $module_url;
 
         /**
          * [$start_date description]
@@ -157,6 +159,42 @@ if (! class_exists('PP_Calendar')) {
          * @var \PublishPress\Utility\Date
          */
         private $dateUtil;
+    
+        /**
+         * @var array
+         */
+        public $filters;
+    
+        /**
+         * @var array
+         */
+        public $form_filters = [];
+    
+        /**
+         * @var array
+         */
+        public $form_filter_list = [];
+    
+        /**
+         * [$user_filters description]
+         *
+         * @var [type]
+         */
+        public $user_filters;
+    
+        /**
+         * Custom methods
+         *
+         * @var array
+         */
+        private $terms_options = [];
+    
+        /**
+         * [$content_calendar_datas description]
+         *
+         * @var [type]
+         */
+        public $content_calendar_datas;
 
         /**
          * Construct the PP_Calendar class
@@ -176,15 +214,16 @@ if (! class_exists('PP_Calendar')) {
                 'post_type_support' => 'pp_calendar',
                 'default_options' => [
                     'enabled' => 'on',
-                    'post_types' => [
-                        'post' => 'on',
-                        'page' => 'off',
-                    ],                    'ics_subscription' => 'on',
+                    'post_types' => $this->pre_select_all_post_types(),
+                    'ics_subscription' => 'on',
                     'ics_subscription_public_visibility' => 'off',
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
                     'show_calendar_posts_full_title' => 'off',
+                    // Leave default as non array to confirm if user save settings or not
+                    'content_calendar_filters' => '',
+                    'content_calendar_custom_filters' => '',
                 ],
                 'messages' => [
                     'post-date-updated' => __('Post date updated.', 'publishpress'),
@@ -648,65 +687,9 @@ if (! class_exists('PP_Calendar')) {
                     /*
                      * Filters
                      */
-                    $userFilters            = $this->get_filters();
-                    $calendar_request_args  = [];
-                    $calendar_request_filter = [];
-
-                    if (isset($userFilters['post_status'])) {
-                        $postStatus = sanitize_text_field($userFilters['post_status']);
-
-                        if (! empty($postStatus)) {
-                            $calendar_request_args['post_status'] = $postStatus;
-                            $calendar_request_filter['post_status'] = $postStatus;
-                        }
-                    }
-
-                    if (isset($userFilters['cat']) && !empty($userFilters['cat'])) {
-                        $category     = (int) $userFilters['cat'];
-                        $categoryData = get_term_by('ID', $category, 'category');
-
-                        if (isset($categoryData->slug)) {
-                            $calendar_request_args = $this->addTaxQueryToArgs('category', $categoryData->slug, $calendar_request_args);
-                            $calendar_request_filter['category'] = ['value' => $categoryData->slug, 'text' => $categoryData->name];
-                        }
-                    }
-
-                    if (isset($userFilters['tag']) && !empty($userFilters['tag'])) {
-                        $postTag = (int) $userFilters['tag'];
-                        $tagData = get_term_by('ID', $postTag, 'post_tag');
-
-                        if (isset($tagData->slug)) {
-                            $calendar_request_args = $this->addTaxQueryToArgs('post_tag', $tagData->slug, $calendar_request_args);
-                            $calendar_request_filter['post_tag'] = ['value' => $tagData->slug, 'text' => $tagData->name];
-                        }
-                    }
-
-                    if (isset($userFilters['author']) && !empty($userFilters['author'])) {
-                        $postAuthor = (int)$userFilters['author'];
-                        $authorData = get_user_by('ID', $postAuthor);
-
-                        if (isset($authorData->ID)) {
-                            $calendar_request_args['author'] = $authorData->ID;
-                            $calendar_request_filter['post_author'] = ['value' => $authorData->ID, 'text' => $authorData->display_name];
-                        }
-                    }
-
-                    if (isset($userFilters['cpt'])) {
-                        $postType     = sanitize_key($userFilters['cpt']);
-
-                        if (!empty($postType)) {
-                            $calendar_request_args['post_type'] = $postType;
-                            $calendar_request_filter['post_type'] = $postType;
-                        }
-                    }
-
-                    if (isset($userFilters['weeks'])) {
-                        $weeks = sanitize_key($userFilters['weeks']);
-
-                        if (! empty($weeks)) {
-                            $calendar_request_filter['weeks'] = $weeks;
-                        }
-                    }
+                    $userFilters             = $this->get_filters();
+                    $calendar_request_args   = $userFilters;
+                    $calendar_request_filter = $userFilters;
 
                     $maxVisibleItemsOption = isset($this->module->options->max_visible_posts_per_date) && ! empty($this->default_max_visible_posts_per_date) ?
                         (int)$this->module->options->max_visible_posts_per_date : $this->default_max_visible_posts_per_date;
@@ -1203,6 +1186,7 @@ if (! class_exists('PP_Calendar')) {
                 'tag' => '',
                 'author' => '',
                 'start_date' => date('Y-m-d', current_time('timestamp')),
+                'me_mode' => '',
             ];
             $old_filters = array_merge($default_filters, (array)$old_filters);
 
@@ -1225,6 +1209,10 @@ if (! class_exists('PP_Calendar')) {
 
             // Set the start date as the beginning of the week, according to blog settings
             $filters['start_date'] = $this->get_beginning_of_week($filters['start_date']);
+
+            if (!empty($filters['me_mode'])) {
+                $filters['author'] = $current_user->ID;
+            }
 
             $filters = apply_filters('pp_calendar_filter_values', $filters, $old_filters);
 
@@ -1274,6 +1262,920 @@ if (! class_exists('PP_Calendar')) {
             return $return;
         }
 
+        public function content_calendar_filters()
+        {
+            $select_filter_names = [];
+    
+            $editorial_metadata = $this->terms_options;
+    
+            foreach ($this->filters as $filter_key => $filter_label) {
+                if (array_key_exists($filter_key, $editorial_metadata) && $editorial_metadata[$filter_key]['type'] === 'date') {
+                    $select_filter_names[$filter_key . '_start']        = $filter_key . '_start';
+                    $select_filter_names[$filter_key . '_end']          = $filter_key . '_end';
+                    $select_filter_names[$filter_key . '_start_hidden'] = $filter_key . '_start_hidden';
+                    $select_filter_names[$filter_key . '_end_hidden']   = $filter_key . '_end_hidden';
+                }
+                $select_filter_names[$filter_key] = $filter_key;
+            }
+    
+            return apply_filters('PP_Content_Calendar_filter_names', $select_filter_names);
+        }
+
+        public function content_calendar_filter_options($select_id, $select_name, $filters)
+        {
+            
+            if (array_key_exists($select_id, $this->terms_options)) {
+                $select_id = 'metadata_key';
+            }
+    
+            if (array_key_exists($select_id, $this->content_calendar_datas['taxonomies']) && taxonomy_exists($select_id)) {
+                $select_id = 'taxonomy';
+            }
+    
+            $filter_label   = '';
+            $selected_value = '';
+    
+            ob_start();
+    
+            switch ($select_id) {
+                case 'post_status':
+                    $post_statuses = $this->get_post_statuses();
+                    $filter_label   = esc_html__('Post Status', 'publishpress');
+                    ?>
+                    <select id="post_status" name="post_status"><!-- Status selectors -->
+                        <option value=""><?php
+                            _e('All statuses', 'publishpress'); ?></option>
+                        <?php
+                        foreach ($post_statuses as $post_status) {
+                            if ($post_status->slug == $filters['post_status']) {
+                                $selected_value = $post_status->label;
+                            }
+                            echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
+                                    $post_status->slug,
+                                    $filters['post_status']
+                                ) . ">" . esc_html($post_status->label) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+    
+                case 'taxonomy':
+                    $taxonomySlug = isset($filters[$select_name]) ? sanitize_key($filters[$select_name]) : '';
+                    $taxonomy = get_taxonomy($select_name);
+                    $filter_label   = esc_html($taxonomy->label);
+                    ?>
+                    <select 
+                        class="filter_taxonomy" 
+                        id="<?php echo esc_attr('filter_taxonomy_' . $select_name); ?>" 
+                        data-taxonomy="<?php echo esc_attr($select_name); ?>" 
+                        name="<?php echo esc_attr($select_name); ?>"
+                        data-placeholder="<?php printf(esc_attr__('All %s', 'publishpress'), esc_html($taxonomy->label)); ?>"
+                        >
+                        <option value="">
+                            <?php echo sprintf(esc_html__('All %s', 'publishpress'), esc_html($taxonomy->label)); ?>
+                        </option>
+                        <?php
+                        if ($taxonomySlug) {
+                            $term = get_term_by('slug', $taxonomySlug, $select_name);
+                            if (is_object($term) && isset($term->name)) {
+        
+                                $selected_value = $term->name;
+        
+                                echo "<option value='" . esc_attr($taxonomySlug) . "' selected='selected'>" . esc_html(
+                                        $term->name
+                                    ) . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+    
+                case 'author':
+                    $authorId = isset($filters['author']) ? (int)$filters['author'] : 0;
+                    $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
+                    $filter_label   = esc_html__('Author', 'publishpress');
+                    ?>
+                    <select id="filter_author" name="author" data-placeholder="<?php esc_attr_e('All authors', 'publishpress'); ?>">
+                        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <option value="" <?php echo $selectedOptionAll; ?>>
+                            <?php esc_html_e('All authors', 'publishpress'); ?>
+                        </option>
+                        <?php
+                        if (! empty($authorId)) {
+                            $author = get_user_by('id', $authorId);
+                            $option = '';
+    
+                            if (! empty($author)) {
+                                $selected_value = $author->display_name;
+                                $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html(
+                                        $author->display_name
+                                    ) . '</option>';
+                            }
+    
+                            $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+    
+                            echo $option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+    
+                case 'post_type':
+                case 'cpt':
+                    $selectedPostType = isset($filters['cpt']) ? sanitize_text_field($filters['cpt']) : '';
+                    $filter_label   = esc_html__('Post Type', 'publishpress');
+                    ?>
+                    <select id="post_type" name="cpt">
+                        <option value=""><?php
+                            _e('All post types', 'publishpress'); ?></option>
+                        <?php
+                        $postTypes = $this->get_selected_post_types();
+                        foreach ($postTypes as $postType) {
+                            $postTypeObject = get_post_type_object($postType);
+                            if ($selectedPostType == $postType) {
+                                $selected_value = $postTypeObject->label;
+                            }
+                            echo '<option value="' . esc_attr($postType) . '" ' . selected(
+                                    $selectedPostType,
+                                    $postType
+                                ) . '>' . esc_html($postTypeObject->label) . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+    
+                    case 'search_box':
+                        ?>
+                        <input type="hidden" id="<?php echo esc_attr($select_id . '-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
+                        <?php
+                        break;
+    
+                case 'metadata_key':
+                    $metadata_value = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
+                    $metadata_term  = $this->terms_options[$select_name];
+    
+                    $metadata_type  = $metadata_term['type'];
+                    $selected_value = $metadata_value;
+                    $filter_label   = $metadata_term['name'];
+                    
+                    ?>
+                    <div class="metadata-item-filter">
+                        <div class="filter-title">
+                            <?php echo esc_html($metadata_term['name']); ?>
+                        </div>
+                        <div class="filter-content">
+                        <?php
+                        if (in_array($metadata_type, ['paragraph', 'location', 'text', 'number'])) { 
+                            ?>
+                            <input 
+                                type="text" 
+                                id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                                name="<?php echo esc_attr($select_name); ?>" 
+                                value="<?php echo esc_attr($metadata_value); ?>" 
+                                placeholder=""
+                                />
+                            <div class="filter-apply">
+                                <?php submit_button(esc_html__('Apply', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                            </div>
+                        <?php
+                        } elseif (in_array($metadata_type, ['select'])) {
+                            ?>
+                            <?php if (!empty($metadata_term['select_options']) && is_array($metadata_term['select_options']) && !empty($metadata_term['select_options']['values'])) : 
+                                $option_values     = $metadata_term['select_options']['values'];
+                                $option_labels     = $metadata_term['select_options']['labels'];
+                                ?>
+                            <select 
+                                id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                                name="<?php echo esc_attr($select_name); ?>">
+                                <option value="">
+                                    <?php esc_html_e('Select option...', 'publishpress'); ?>
+                                </option>
+                                <?php
+                                foreach ($option_values as $index => $value) {
+                                    echo '<option value="' . esc_attr($value) . '" '. selected($metadata_value, $value, false) .'>' . esc_html($option_labels[$index]) . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <?php else : ?>
+                            <input 
+                                type="text" 
+                                id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                                name="<?php echo esc_attr($select_name); ?>" 
+                                value="<?php echo esc_attr($metadata_value); ?>" 
+                                placeholder=""
+                                />
+                            <?php endif; ?>
+                        <?php
+                        } elseif ($metadata_type === 'date') { ?>
+                            <?php
+                            $metadata_start_value           = isset($filters[$select_name . '_start']) ? sanitize_text_field($filters[$select_name . '_start']) : '';
+                            $metadata_end_value             = isset($filters[$select_name . '_end']) ? sanitize_text_field($filters[$select_name . '_end']) : '';
+    
+                            $metadata_start_value_hidden    = isset($filters[$select_name . '_start_hidden']) ? sanitize_text_field($filters[$select_name . '_start_hidden']) : '';
+                            $metadata_end_value_hidden      = isset($filters[$select_name . '_end_hidden']) ? sanitize_text_field($filters[$select_name . '_end_hidden']) : '';
+    
+                            $metadata_start_name            = $select_name . '_start';
+                            $metadata_end_name              = $select_name . '_end';
+    
+                            $selected_value = '';
+                            if (!empty($metadata_start_value)) {
+                                $selected_value .= $metadata_start_value;
+                            }
+                            if (!empty($metadata_start_value) && !empty($metadata_end_value)) {
+                                $selected_value .= ' ' . esc_html__('to', 'publishpress') . ' ';
+                            }
+                            if (!empty($metadata_end_value)) {
+                                $selected_value .= $metadata_end_value;
+                            }
+                            ?>
+                            <?php 
+                            printf(
+                                '<input
+                                    type="text"
+                                    id="%s"
+                                    name="%1$s"
+                                    value="%2$s"
+                                    class="date-time-pick"
+                                    data-alt-field="%1$s_hidden"
+                                    data-alt-format="%3$s"
+                                    placeholder="%4$s"
+                                    autocomplete="off"
+                                />',
+                                esc_attr($metadata_start_name),
+                                esc_attr($metadata_start_value),
+                                esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                                ''
+                            );
+                            printf(
+                                '<input
+                                    type="hidden"
+                                    name="%s_hidden"
+                                    value="%s"
+                                />',
+                                esc_attr($metadata_start_name),
+                                esc_attr($metadata_start_value_hidden)
+                            ); 
+                            ?>
+                            <div class="input-divider"><?php echo esc_html__('to', 'publishpress'); ?></div>
+                            <?php 
+                            printf(
+                                '<input
+                                    type="text"
+                                    id="%s"
+                                    name="%1$s"
+                                    value="%2$s"
+                                    class="date-time-pick"
+                                    data-alt-field="%1$s_hidden"
+                                    data-alt-format="%3$s"
+                                    placeholder="%4$s"
+                                    autocomplete="off"
+                                />',
+                                esc_attr($metadata_end_name),
+                                esc_attr($metadata_end_value),
+                                esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d')),
+                                ''
+                            );
+                            printf(
+                                '<input
+                                    type="hidden"
+                                    name="%s_hidden"
+                                    value="%s"
+                                />',
+                                esc_attr($metadata_end_name),
+                                esc_attr($metadata_end_value_hidden)
+                            ); 
+                            ?>
+                            <div class="filter-apply">
+                                <?php submit_button(esc_html__('Apply', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                            </div>
+                        <?php
+                        } elseif ($metadata_type === 'user') { 
+                            if (!empty($metadata_value)) {
+                                $user_info = get_user_by('id', $metadata_value);
+                                if (! empty($user_info)) {
+                                    $selected_value = $user_info->display_name;
+                                }
+                            }
+                            $user_dropdown_args = [
+                                'show_option_all' => $metadata_term['name'],
+                                'name' => $select_name,
+                                'selected' => $metadata_value,
+                                'class' => 'pp-custom-select2'
+                            ];
+                            $user_dropdown_args = apply_filters('pp_editorial_metadata_user_dropdown_args', $user_dropdown_args);
+                                wp_dropdown_users($user_dropdown_args);
+                        } elseif ($metadata_type === 'checkbox') { 
+                            if ($metadata_value == '1') {
+                                $selected_value = esc_html__('Checked', 'publishpress');
+                            } else {
+                                $selected_value = '';
+                            }
+                            ?>
+                            <input 
+                                type="hidden" 
+                                name="<?php echo esc_attr($select_name); ?>" 
+                                value="0"
+                                />
+                            <input 
+                                type="checkbox" 
+                                id="<?php echo esc_attr('metadata_key_' . $select_name); ?>" 
+                                name="<?php echo esc_attr($select_name); ?>" 
+                                value="1"
+                                <?php checked($metadata_value, 1); ?>
+                                />
+                            <div class="filter-apply">
+                                <?php submit_button(esc_html__('Apply', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                            </div>
+                        <?php
+                        }
+                    echo '</div></div>';
+                    break;
+    
+                default:
+                    if (array_key_exists($select_name, $this->form_filter_list)) {
+                        $selected_value_meta = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
+                        $filter_label   = $this->filters[$select_name];
+                        $selected_value = $selected_value_meta;
+    
+                        if (strpos($select_name, "ppch_co_checklist_") === 0) {
+                            ?>
+                            <select id="filter_<?php echo esc_attr($select_name); ?>" name="<?php echo esc_attr($select_name); ?>">
+                                <option value=""><?php
+                                    _e('All status', 'publishpress'); ?></option>
+                                <?php
+                                $all_options = [
+                                    'passed' => __('Passed', 'publishpress'),
+                                    'failed' => __('Failed', 'publishpress')
+                                ];
+                                foreach ($all_options as $option_key => $option_label) {
+                                    if ($selected_value_meta == $option_key) {
+                                        $selected_value = $option_label;
+                                    }
+                                    echo '<option value="' . esc_attr($option_key) . '" ' . selected(
+                                            $selected_value_meta,
+                                            $option_key
+                                        ) . '>' . esc_html($option_label) . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <?php
+                        } else {
+                            
+                            $operator_value = isset($filters[$select_name . '_operator']) ? sanitize_text_field($filters[$select_name . '_operator']) : '';
+    
+                            if (empty($operator_value)) {
+                                $operator_value = 'equals';
+                            }
+    
+                            if (in_array($select_name, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score'])) {
+                                $input_type = 'number';
+                            } else {
+                                $input_type = 'text';
+                            }
+    
+                            ?>
+                            <div class="metadata-item-filter custom-filter">
+                                <div class="filter-title">
+                                    <?php echo esc_html($filter_label); ?>
+                                </div>
+                                <div class="filter-content">
+                                <select class="non-trigger-select" id="filter_<?php echo esc_attr($select_name); ?>_operator" name="<?php echo esc_attr($select_name); ?>_operator">
+                                <?php
+                                $all_options = $this->meta_query_operator_label();
+                                foreach ($all_options as $option_key => $option_label) {
+                                    if (
+                                        ($operator_value == $option_key && !empty($selected_value))
+                                        || ($operator_value == $option_key && $selected_value == '0')
+                                        || ($operator_value == $option_key && 'not_exists' === $option_key)
+                                    ) {
+                                        $selected_value = $option_label . $selected_value;
+                                    }
+                                    echo '<option value="' . esc_attr($option_key) . '" ' . selected(
+                                            $operator_value,
+                                            $option_key
+                                        ) . '>' . esc_html($option_label) . '</option>';
+                                }
+                                ?>
+                                </select>
+                                <input 
+                                type="<?php echo esc_attr($input_type); ?>" 
+                                id="<?php echo esc_attr('custom_metadata_key_' . $select_name); ?>" 
+                                name="<?php echo esc_attr($select_name); ?>" 
+                                value="<?php echo esc_attr($selected_value_meta); ?>" 
+                                placeholder=""
+                                />
+                                <div class="filter-apply">
+                                    <?php submit_button(esc_html__('Apply', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                                </div>
+    
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        do_action('PP_Content_Calendar_filter_display', $select_id, $select_name, $filters);
+                    }
+                    break;
+            }
+            
+            return ['selected_value' => $selected_value, 'filter_label' => $filter_label, 'html' => ob_get_clean()];
+        }
+
+        private function meta_query_operator_label($operator = false) {
+            $operators = [
+                'equals'                    => 'Equals (=)',
+                'not_equals'                => 'Does not equal (!=)',
+                'greater_than'              => 'Greater than (>)',
+                'greater_than_or_equals'    => 'Greater than or equals (>=)',
+                'less_than'                 => 'Less than (<)', 
+                'less_than_or_equals'       => 'Less than or equals (<=)', 
+                'like'                      => 'Like/Contains',
+                'not_like'                  => 'Not Like',
+                'not_exists'                => 'Not Exists/Empty',
+            ];
+    
+            if ($operator) {
+                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
+            } else {
+                $return = $operators;
+            }
+    
+            return $return;
+        }
+    
+        private function meta_query_operator_symbol($operator = false) {
+            $operators = [
+                'equals'                    => '=',
+                'not_equals'                => '!=',
+                'greater_than'              => '>',
+                'greater_than_or_equals'    => '>=',
+                'less_than'                 => '<', 
+                'less_than_or_equals'       => '<=', 
+                'like'                      => 'LIKE',
+                'not_like'                  => 'NOT LIKE',
+                'not_exists'                => 'NOT EXISTS',
+            ];
+    
+            if ($operator) {
+                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
+            } else {
+                $return = $operators;
+            }
+    
+            return $return;
+        }
+
+        /**
+         * Return calendar filters
+         * @return string
+         */
+        public function get_calendar_filters() {
+            ob_start();
+            ?>
+            <div class="pp-content-calendar-manage">
+                <div class="left-items">
+                        <?php
+                            $modal_id = 0;
+                            $me_mode = (int) $this->user_filters['me_mode'];
+                            $active_me_mode = !empty($me_mode) ? 'active-filter' : '';
+                        ?>
+                    <div class="item action me-mode-action <?php echo esc_attr($active_me_mode); ?>"
+                        data-label="<?php esc_html_e('Me Mode', 'publishpress'); ?>">
+                        <span class="dashicons dashicons-admin-users"></span> <?php esc_html_e('Me Mode', 'publishpress'); ?>
+                    </div>
+                    <?php $modal_id++; ?>
+                    <div class="item action co-filter" data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>">
+                        <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Customize Filters', 'publishpress'); ?>
+                    </div>
+                    <div id="content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-calendar-modal" style="display: none;">
+                        <div class="content-calendar-modal-content">
+                            <span class="close">&times;</span>
+                            <?php echo $this->content_calendar_customize_filter_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-items">
+                    <div class="item">
+                        <div class="search-bar">
+                            <input type="search" id="co-searchbox-search-input" name="s" value="<?php _admin_search_query(); ?>" placeholder="<?php esc_attr_e('Search box', 'publishpress'); ?>" />
+                            <?php submit_button(esc_html__('Search', 'publishpress'), '', '', false, ['id' => 'co-searchbox-search-submit']); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <form method="GET" id="pp-content-filters" class="pp-content-filters">
+                <input type="hidden" name="page" value="pp-content-calendar"/>
+                <input type="hidden" name="me_mode" id="content_calendar_me_mode" value="<?php echo esc_attr($me_mode); ?>" />
+                <div class="pp-content-calendar-filters">
+                    <?php
+                    $filter_weeks = isset($this->user_filters['weeks']) ? (int)$this->user_filters['weeks'] : self::DEFAULT_NUM_WEEKS;
+                    $modal_id++;
+                    ?>
+                    <button data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter active-filter"
+                    data-label="<?php esc_html_e('Period', 'publishpress'); ?>">
+                        <?php esc_html_e('Period', 'publishpress'); ?>: <?php echo sprintf(esc_html__('%1s weeks', 'publishpress'), $filter_weeks); ?>
+                    </button>
+                    <div id="content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="content-calendar-modal" style="display: none;">
+                        <div class="content-calendar-modal-content">
+                            <span class="close">&times;</span>
+                            <div>
+                                <select name="weeks" id="weeks" class="calendar-weeks-filter">
+                                    <?php 
+                                        for ($i = 1; $i <= 12; $i++) {
+                                            $selected = ($i == $filter_weeks) ? ' selected' : '';
+                                            $week_text = sprintf(_n('%d week', '%d weeks', $i, 'publishpress'), $i);
+                                            echo '<option value="' . $i . '"' . $selected . '>' . $week_text . '</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                    
+                    foreach ($this->content_calendar_filters() as $select_id => $select_name) {
+                        $modal_id++;
+                        $filter_data = $this->content_calendar_filter_options($select_id, $select_name, $this->user_filters);
+                        $active_class = !empty($filter_data['selected_value']) ? 'active-filter' : '';
+                        $button_label = $filter_data['filter_label'];
+                        $button_label .= !empty($filter_data['selected_value']) ? ': ' . $filter_data['selected_value'] : '';
+                        ?>
+                        <?php if (!empty($button_label)) : ?>
+                            <button 
+                                data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>"
+                                data-label="<?php echo esc_attr($filter_data['filter_label']); ?>"
+                                class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"><?php echo esc_html($button_label); ?></button>
+                            <div id="content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="content-calendar-modal" style="display: none;">
+                                <div class="content-calendar-modal-content">
+                                    <span class="close">&times;</span>
+                                    <div><?php echo $filter_data['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+                                </div>
+                            </div>
+                        <?php elseif (!empty($filter_data['html'])) : ?>
+                            <?php echo $filter_data['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        <?php endif; ?>
+                        <?php
+                    } 
+                    ?>
+                    <button class="clear-filter">
+                        <span class="dashicons dashicons-dismiss"></span> <?php esc_html_e('Reset Filters', 'publishpress'); ?>
+                        <input style="display: none;" type="submit" id="post-query-clear" value="<?php echo esc_attr(__('Reset', 'publishpress')); ?>" class="button-secondary button"/>
+                    </button>
+                </div>
+            </form>
+                
+            <form method="GET" id="pp-content-filters-hidden">
+                <input type="hidden" name="page" value="pp-calendar"/>
+                <input type="hidden" name="me_mode" value=""/>
+                <input type="hidden" name="weeks" value="<?php echo esc_attr(self::DEFAULT_NUM_WEEKS); ?>"/>
+                   
+                <?php
+                foreach ($this->content_calendar_filters() as $select_id => $select_name) {
+                    echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
+                } ?>
+            </form>
+            <?php
+            return ob_get_clean();
+        }
+
+        /**
+         * Update content calendar form action
+         *
+         * @return void
+         */
+        public function update_content_calendar_form_action() {
+            global $publishpress;
+    
+            if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'filter_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_form_nonce')) {
+                // Content calendar filter form
+                $content_calendar_filters = !empty($_POST['content_calendar_filters']) ? array_map('sanitize_text_field', $_POST['content_calendar_filters']) : [];
+                $content_calendar_filters_order = !empty($_POST['content_calendar_filters_order']) ? array_map('sanitize_text_field', $_POST['content_calendar_filters_order']) : [];
+                $content_calendar_custom_filters = !empty($_POST['content_calendar_custom_filters']) ? map_deep($_POST['content_calendar_custom_filters'], 'sanitize_text_field') : [];
+    
+                // make sure enabled filters are saved in organized order
+                $content_calendar_filters = array_intersect($content_calendar_filters_order, $content_calendar_filters);
+    
+                $publishpress->update_module_option($this->module->name, 'content_calendar_filters', $content_calendar_filters);
+                $publishpress->update_module_option($this->module->name, 'content_calendar_custom_filters', $content_calendar_custom_filters);
+                
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+            }
+        }
+
+        /**
+         * Retrieve wordpress registered taxonomy
+         * 
+         * Private taxonomy are excluded
+         */
+        public function get_all_taxonomies()
+        {
+    
+            //category and post tag are not included in public taxonomy
+            $category   = get_taxonomies(['name' => 'category'], 'objects');
+            $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
+    
+            $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
+    
+            $taxonomies = array_merge($category, $post_tag, $public);
+        
+            return $taxonomies;
+        }
+
+        /**
+         * Get content calendar data that's required on the 
+         * content calendar page
+         *
+         * @return array
+         */
+        public function get_content_calendar_datas() {
+            global $wpdb;
+    
+            if (is_array($this->content_calendar_datas)) {
+                return $this->content_calendar_datas;
+            }
+            
+            $datas = [];
+    
+            // add all meta keys
+            $datas['meta_keys'] = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 ORDER BY meta_key ASC");
+    
+            // add editorial fields
+            if (class_exists('PP_Editorial_Metadata')) {
+                $additional_terms = get_terms(
+                    [
+                        'taxonomy' => PP_Editorial_Metadata::metadata_taxonomy,
+                        'orderby' => 'name',
+                        'order' => 'asc',
+                        'hide_empty' => 0,
+                        'parent' => 0,
+                        'fields' => 'all',
+                    ]
+                );
+    
+                $metadatas = [];
+                foreach ($additional_terms as $term) {
+                    if (! is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                        continue;
+                    }
+                    $metadatas[$term->slug] = $term->name;
+    
+                    $term_options = $this->get_unencoded_description($term->description);
+                    $term_options['name'] = $term->name;
+                    $term_options['slug'] = $term->slug;
+                    $this->terms_options[$term->slug] = $term_options;
+                }
+    
+                $datas['editorial_metadata'] = $metadatas;
+            }
+    
+            // add taxononomies
+            $taxonomies = $this->get_all_taxonomies();
+            $all_taxonomies = [];
+            foreach ($taxonomies as $taxonomy) {
+                if (in_array($taxonomy->name, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                    continue;
+                }
+                $all_taxonomies[$taxonomy->name] = $taxonomy->label;// . ' (' . $taxonomy->name . ')';
+            }
+            $datas['taxonomies'] = $all_taxonomies;
+    
+            // Add content calendar filters content
+            $content_calendar_filters = $this->module->options->content_calendar_filters;
+            $content_calendar_custom_filters = $this->module->options->content_calendar_custom_filters;
+    
+            $datas['content_calendar_filters'] = is_array($content_calendar_filters) ? $content_calendar_filters : [
+                'post_status' => esc_html__('Status', 'publishpress'),
+                'author' => esc_html__('Author', 'publishpress'), 
+                'cpt' => esc_html__('Post Type', 'publishpress')
+            ];
+            $datas['content_calendar_custom_filters'] = is_array($content_calendar_custom_filters) ? $content_calendar_custom_filters : [];
+    
+            /**
+             * @param array $datas
+             *
+             * @return $datas
+             */
+            $datas = apply_filters('publishpress_content_calendar_datas', $datas);
+    
+            $this->content_calendar_datas = $datas;
+    
+            return $datas;
+        }
+    
+        
+        /**
+         * Get content calendar form filters
+         * 
+         * @return array
+         */
+        public function get_content_calendar_form_filters() {
+    
+            if (!empty($this->form_filters)) {
+                return $this->form_filters;
+            }
+    
+            $content_calendar_datas   = $this->content_calendar_datas;
+    
+            $filters = [];
+            // custom filters
+            $filters['custom'] = [
+                'title'     => esc_html__('Custom filters', 'publishpress'),
+                'message'   => esc_html__('Click the "Add New" button to create new filters.', 'publishpress'),
+                'filters'   => $content_calendar_datas['content_calendar_custom_filters']
+            ];
+    
+            // default filters
+            $filters['default'] = [
+                'title'     => esc_html__('Inbuilt filters', 'publishpress'),
+                'filters'   => [
+                    'post_status' => esc_html__('Post Status', 'publishpress'),
+                    'author' => esc_html__('Author', 'publishpress'),
+                    'cpt' => esc_html__('Post Type', 'publishpress')
+                ]
+            ];
+            
+            // editorial fields filters
+            if (isset($content_calendar_datas['editorial_metadata'])) {
+                $filters['editorial_metadata'] = [
+                    'title'     => esc_html__('Editorial Fields', 'publishpress'),
+                    'message'   => esc_html__('You do not have any editorial fields enabled', 'publishpress'),
+                    'filters'   => $content_calendar_datas['editorial_metadata']
+                ];
+            }
+    
+            $filters['taxonomies'] = [
+                'title'     => esc_html__('Taxonomies', 'publishpress'),
+                'message'   => esc_html__('You do not have any public taxonomies', 'publishpress'),
+                'filters'   => $content_calendar_datas['taxonomies']
+            ];
+    
+            /**
+            * @param array $filters
+            * @param array $content_calendar_datas
+            *
+            * @return $filters
+            */
+            $filters = apply_filters('publishpress_content_calendar_form_filters', $filters, $content_calendar_datas);
+    
+            $this->form_filters = $filters;
+    
+            return $filters;
+        }
+    
+        
+        public function content_calendar_customize_filter_form() {
+            
+            ob_start();
+    
+            $content_calendar_datas   = $this->content_calendar_datas;
+            $enabled_filters          = array_keys($content_calendar_datas['content_calendar_filters']);
+            $filters                  = $this->form_filters;
+            $meta_keys                = $content_calendar_datas['meta_keys'];
+    
+            $all_filters              = [];
+            ?>
+            <form method="POST" class="pp-content-calendar-customize-form filters" id="pp-content-calendar-filter-form" data-form="filters">
+                <input type="hidden" name="co_form_action" value="filter_form"/>
+                <input type="hidden" name="_nonce" value="<?php echo esc_attr(wp_create_nonce('content_calendar_filter_form_nonce')); ?>"/>
+                <div class="co-customize-tabs">
+                    <div class="customize-tab enable-tab cc-active-tab" data-tab="enable-content"><?php esc_html_e('Enable Filters', 'publishpress'); ?></div>
+                    <div class="customize-tab reorder-tab" data-tab="reorder-content"> <?php esc_html_e('Reorder Filters', 'publishpress'); ?> </div>
+                </div>
+                <div class="co-cc-content">
+                    <div class="customize-content enable-content">
+                        <div class="fixed-header">
+                            <p class="description"><?php esc_html_e('Enable or Disable Content calendar filter.', 'publishpress'); ?></p>
+                        </div>
+                        <div class="scrollable-content">
+                            <?php 
+                            $filter_index = 0;
+                            foreach ($filters as $filter_group => $filter_datas) : 
+                            $filter_index++;
+                            ?>
+                                <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>">
+                                    <div class="title-text"><?php echo esc_html($filter_datas['title']); ?></div>
+                                    <?php if ($filter_group === 'custom') : ?>
+                                        <div class="title-action new-item">
+                                            <span class="dashicons dashicons-plus-alt"></span> <?php esc_html_e('Add New', 'publishpress'); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <?php if ($filter_group === 'custom') : ?>
+                                    <div class="entry-item enable-item form-item" style="display: none;">
+                                        <div class="new-fields">
+                                            <div class="field">
+                                                <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Filter Title', 'publishpress'); ?>" />
+                                            </div>
+                                            <div class="field">
+                                            <select class="new-item-metakey">
+                                                <option value=""><?php esc_html_e('Select Metakey', 'publishpress'); ?></option>
+                                                <?php foreach ($meta_keys as $meta_key) : ?>
+                                                    <option value="<?php echo esc_attr($meta_key); ?>"><?php echo esc_html($meta_key); ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="new-submit">
+                                            <?php esc_html_e('Add Filter', 'publishpress'); ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (empty($filter_datas['filters'])) : ?>
+                                    <div class="item-group-empty <?php echo esc_attr($filter_group); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
+                                <?php else : ?>
+                                    <?php foreach ($filter_datas['filters'] as $filter_name => $filter_label) : 
+                                        $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
+                                        $input_name   = (in_array($filter_name, $enabled_filters)) ? 'content_calendar_filters['. $filter_name .']' : '';
+    
+                                        $all_filters[$filter_name] = [
+                                            'filter_label' => $filter_label,
+                                            'filter_group' => $filter_group
+                                        ];
+                                        ?>
+                                        <div class="entry-item enable-item <?php echo esc_attr($active_class); ?> customize-item-<?php echo esc_attr($filter_name); ?> <?php echo esc_attr($filter_group); ?>" data-name="<?php echo esc_attr($filter_name); ?>">
+                                            <input class="customize-item-input" type="hidden" name="<?php echo esc_attr($input_name); ?>" value="<?php echo esc_attr($filter_label); ?>" />
+                                            <?php if ($filter_group === 'custom') : ?>
+                                                <input type="hidden" name="content_calendar_custom_filters[<?php echo esc_attr($filter_name); ?>]" value="<?php echo esc_attr($filter_label); ?>" />
+                                            <?php endif; ?>
+                                            <div class="items-list-item-check checked">
+                                                <svg><use xlink:href="<?php echo esc_url($this->module_url . 'lib/content-calendar-icon.svg#svg-sprite-cu2-check-2-fill'); ?>"></use></svg>
+                                            </div>
+                                            <div class="items-list-item-check unchecked">
+                                                <svg><use xlink:href="<?php echo esc_url($this->module_url . 'lib/content-calendar-icon.svg#svg-sprite-x'); ?>"></use></svg>
+                                            </div>
+                                            <div class="items-list-item-name">
+                                                <div class="items-list-item-name-text"><?php echo esc_html($filter_label); ?> <?php if ($filter_group === 'custom') : ?><span class="customize-item-info">(<?php echo esc_html($filter_name); ?>)</span><?php endif; ?></div>
+                                            </div>
+                                            <?php if ($filter_group === 'custom') : ?>
+                                                <div class="delete-content-calendar-item" data-meta="<?php echo esc_html($filter_name); ?>">
+                                                    <svg><use xlink:href="<?php echo esc_url($this->module_url . 'lib/content-calendar-icon.svg#svg-sprite-cu2-menu-trash'); ?>"></use></svg>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="customize-content reorder-content" style="display: none;">
+                        <div class="fixed-header">
+                            <p class="description"><?php esc_html_e('Drag to change enabled filters order.', 'publishpress'); ?></p>
+                        </div>
+                        <div class="scrollable-content">
+                            <?php 
+                            // loop enabled filter first so they can stay as ordered
+                            $added_filters = [];
+                            foreach ($enabled_filters as $enabled_filter) {
+                                $filter_name    = $enabled_filter;
+                                if (!isset($all_filters[$filter_name])) {
+                                    continue;
+                                }
+                                $filter_details = $all_filters[$filter_name];
+                                $filter_label = $filter_details['filter_label'];
+                                $filter_group = $filter_details['filter_group'];
+                                $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
+                                $input_name   = (in_array($filter_name, $enabled_filters)) ? '' : ''; ?>
+                                <div class="entry-item reorder-item <?php echo esc_attr($active_class); ?> customize-item-<?php echo esc_attr($filter_name); ?>  <?php echo esc_attr($filter_group); ?>" data-name="<?php echo esc_attr($filter_name); ?>">
+                                    <input class="customize-item-input" type="hidden" name="content_calendar_filters_order[<?php echo esc_attr($filter_name); ?>]" value="<?php echo esc_attr($filter_label); ?>" />
+                                    <?php echo esc_html($filter_label); ?>
+                                </div>
+                                <?php
+                                $added_filters[] = $filter_name;
+                            }
+                            foreach ($all_filters as $filter_name => $filter_details) :
+                                if (!in_array($filter_name, $added_filters)) :
+                                    $filter_label = $filter_details['filter_label'];
+                                    $filter_group = $filter_details['filter_group'];
+    
+                                    $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
+                                    $input_name   = (in_array($filter_name, $enabled_filters)) ? '' : ''; ?>
+                                    <div class="entry-item reorder-item <?php echo esc_attr($active_class); ?> customize-item-<?php echo esc_attr($filter_name); ?>  <?php echo esc_attr($filter_group); ?>" data-name="<?php echo esc_attr($filter_name); ?>">
+                                        <input class="customize-item-input" type="hidden" name="content_calendar_filters_order[<?php echo esc_attr($filter_name); ?>]" value="<?php echo esc_attr($filter_label); ?>" />
+                                        <?php echo esc_html($filter_label); ?>
+                                    </div>
+                                <?php $added_filters[] = $filter_name; 
+                                endif;
+                            endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="fixed-footer">
+                        <div class="save-cc-changes save-customize-item-form">
+                            <?php esc_html_e('Apply Changes', 'publishpress'); ?>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <?php
+            return ob_get_clean();
+            
+        }
+
         /**
          * Renders the admin page
          */
@@ -1282,16 +2184,31 @@ if (! class_exists('PP_Calendar')) {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
             global $publishpress;
 
-            $supported_post_types = $this->get_post_types_for_module($this->module);
+            // update content calendar form action
+            $this->update_content_calendar_form_action();
+
+            // Get content calendar data
+            $this->content_calendar_datas = $this->get_content_calendar_datas();
+            
+            $filters = $this->content_calendar_datas['content_calendar_filters'];
+            /**
+             * @param array $filters
+             *
+             * @return array
+             */
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+    
+            $this->form_filters = $this->get_content_calendar_form_filters();
+            $this->form_filter_list = array_merge(...array_values(array_column($this->form_filters, 'filters')));
 
             // Get filters either from $_GET or from user settings
-            $filters = $this->get_filters();
+            $this->user_filters = $this->get_filters();
 
             // Total number of weeks to display on the calendar. Run it through a filter in case we want to override the
             // user's standard
-            $this->total_weeks = empty($filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $filters['weeks'];
+            $this->total_weeks = empty($this->user_filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $this->user_filters['weeks'];
 
-            $this->start_date = $filters['start_date'];
+            $this->start_date = $this->user_filters['start_date'];
 
             // Get the custom description for this page
             $description = '';
@@ -1466,6 +2383,10 @@ if (! class_exists('PP_Calendar')) {
                     echo '</p></div>';
                 } ?>
 
+                <div class="publishpress-calendar-filter-bar">
+                    <?php echo $this->get_calendar_filters(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                </div>
+
                 <div id="publishpress-calendar-wrap" class="publishpress-calendar-wrap">
                     <div class="publishpress-calendar-loader">
                         <div class="publishpress-calendar-loader-message">
@@ -1494,7 +2415,19 @@ if (! class_exists('PP_Calendar')) {
                 </div>
             </div>
 
+            <div id="pp-content-calendar-general-modal" style="display: none;">
+                <div id="pp-content-calendar-general-modal-container" class="pp-content-calendar-general-modal-container"></div>
+            </div>
             <?php
+           wp_localize_script(
+                'publishpress-calendar-js',
+                'PPContentCalendar',
+                [
+                    'nonce' => wp_create_nonce('publishpress-calendar-get-data'),
+                    'moduleUrl' => $this->module_url,
+                ]
+            );
+
             $publishpress->settings->print_default_footer($publishpress->modules->calendar);
             // phpcs:enable
         }
@@ -2137,8 +3070,6 @@ if (! class_exists('PP_Calendar')) {
             $supported_post_types = $this->get_post_types_for_module($this->module);
             $defaults = [
                 'post_status' => null,
-                'cat' => null,
-                'tag' => null,
                 'author' => null,
                 'post_type' => $supported_post_types,
                 'posts_per_page' => -1,
@@ -2147,6 +3078,197 @@ if (! class_exists('PP_Calendar')) {
 
             $args = array_merge($defaults, $args);
 
+            if (isset($args['s']) && ! empty($args['s'])) {
+                $args['s'] = sanitize_text_field($args['s']);
+            }
+
+            $current_user_id = get_current_user_id();
+
+            $this->user_filters = $this->get_filters();
+
+            // Get content calendar data
+            $this->content_calendar_datas = $this->get_content_calendar_datas();
+            
+            $filters = $this->content_calendar_datas['content_calendar_filters'];
+            /**
+             * @param array $filters
+             *
+             * @return array
+             */
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+
+            $enabled_filters = array_keys($this->filters);
+            $editorial_metadata = $this->terms_options;
+
+            if (!empty($args['cpt'])) {
+                $args['post_type'] = $args['cpt'];
+            }
+            
+
+            if (empty($args['post_type']) || ! in_array($args['post_type'], $supported_post_types)) {
+                $args['post_type'] = $supported_post_types;
+            }
+
+            //remove inactive builtin filter
+            if (!in_array('cpt', $enabled_filters)) {
+                // show all post type
+                $args['post_type'] = $supported_post_types;
+            }
+    
+            if (!in_array('author', $enabled_filters)) {
+                unset($args['author']);
+            }
+
+            $meta_query = $tax_query = ['relation' => 'AND'];
+            $metadata_filter = $taxonomy_filter = false;
+            $checklists_filters = [];
+            
+            // apply enabled filter
+            foreach ($enabled_filters as $enabled_filter) {
+                if (array_key_exists($enabled_filter, $editorial_metadata)) {
+                    //metadata field filter
+                    $meta_key = $enabled_filter;
+                    $metadata_term = $editorial_metadata[$meta_key];
+                    unset($args[$enabled_filter]);
+                    if ($metadata_term['type'] === 'date') {
+                        $date_type_metaquery = [];
+                        
+                        if (! empty($this->user_filters[$meta_key . '_start'])) {
+                            $date_type_metaquery[] = strtotime($this->user_filters[$meta_key . '_start_hidden']);
+                        }
+                        if (! empty($this->user_filters[$meta_key . '_end'])) {
+                            $date_type_metaquery[] = strtotime($this->user_filters[$meta_key . '_end_hidden']);
+                        }
+                        if (count($date_type_metaquery) === 2) {
+                            $metadata_filter = true;
+                            $compare        = 'BETWEEN';
+                            $meta_value     = $date_type_metaquery;
+                        } elseif (count($date_type_metaquery) === 1) {
+                            $metadata_filter = true;
+                            $compare        = '=';
+                            $meta_value     = $date_type_metaquery[0];
+                        }
+                        
+                        if (!empty($date_type_metaquery)) {
+                            $metadata_filter = true;
+                            $meta_query[] = array(
+                                'key' => '_pp_editorial_meta_' . $metadata_term['type'] . '_' . $metadata_term['slug'],
+                                'value' => $meta_value,
+                                'compare' => $compare
+                            );
+                        }
+                    
+                    } elseif (! empty($this->user_filters[$meta_key])) {
+                        if ($metadata_term['type'] === 'date') {
+                            continue;
+                        } else {
+                            $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
+                        }
+        
+                         $compare = '=';
+                        if ($metadata_term['type'] === 'paragraph'
+                            || ($metadata_term['type'] === 'select' && isset($metadata_term->select_type) && $metadata_term['select_type'] === 'multiple')
+                        ) {
+                            $compare = 'LIKE';
+                        }
+                        $metadata_filter = true;
+                        $meta_query[] = array(
+                            'key' => '_pp_editorial_meta_' . $metadata_term['type'] . '_' . $metadata_term['slug'],
+                            'value' => $meta_value,
+                            'compare' => $compare
+                        );
+                    }
+    
+                } elseif(
+                    in_array($enabled_filter, $this->content_calendar_datas['meta_keys']) 
+                    && (
+                        isset($this->user_filters[$enabled_filter])
+                        && 
+                            (
+                                !empty($this->user_filters[$enabled_filter]) 
+                                || $this->user_filters[$enabled_filter] == '0'
+                                || (
+                                    !empty($this->user_filters[$enabled_filter . '_operator'])
+                                    && $this->user_filters[$enabled_filter . '_operator'] === 'not_exists'
+                                    )
+                            )
+                        )
+                    ) {
+                    // metakey filter
+                    unset($args[$enabled_filter]);
+                    $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
+                    $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
+                    $compare = $this->meta_query_operator_symbol($meta_operator);
+                    
+                    $metadata_filter = true;
+    
+                    if ($meta_operator == 'not_exists') {
+                        $meta_query[] = array(
+                            'relation' => 'OR',
+                            array(
+                                'key' => $enabled_filter,
+                                'compare' => 'NOT EXISTS'
+                            ),
+                            array(
+                                'key' => $enabled_filter,
+                                'value' => '',
+                                'compare' => '='
+                            )
+                        );
+                    } else {
+                        $meta_query[] = array(
+                            'key' => $enabled_filter,
+                            'value' => $meta_value,
+                            'compare' => $compare
+                        );
+                    }
+                } elseif (in_array($enabled_filter, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score']) && !empty($this->user_filters[$enabled_filter]) && array_key_exists($enabled_filter, $this->form_filter_list) && class_exists('WPSEO_Meta')) {
+                    // yoast seo filter
+                    unset($args[$enabled_filter]);
+                    $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
+                    $meta_key = str_replace('ppch_co_yoast_seo_', '', $enabled_filter);
+                    $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
+                    $compare = $this->meta_query_operator_symbol($meta_operator);
+                    $metadata_filter = true;
+                    $meta_query[] = array(
+                        'key' => $meta_key,
+                        'value' => $meta_value,
+                        'compare' => $compare
+                    );
+                    
+                } elseif(array_key_exists($enabled_filter, $this->content_calendar_datas['taxonomies']) && !empty($this->user_filters[$enabled_filter])) {
+                    //taxonomy filter
+                    unset($args[$enabled_filter]);
+                    $tax_value = sanitize_text_field($this->user_filters[$enabled_filter]);
+                    $taxonomy_filter = true;
+                    $tax_query[] = array(
+                          'taxonomy' => $enabled_filter,
+                          'field'     => 'slug',
+                          'terms'    => [$tax_value],
+                          'include_children' => true,
+                          'operator' => 'IN',
+                    );
+                } elseif(!empty($this->user_filters[$enabled_filter]) && strpos($enabled_filter, "ppch_co_checklist_") === 0 && array_key_exists($enabled_filter, $this->form_filter_list)) {
+                    // checklists filter
+                    /**
+                     * TODO: Implement metaquery filter when checklists started storing checklists status in meta_key
+                     */
+                    unset($args[$enabled_filter]);
+                    $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
+                    $meta_key = str_replace('ppch_co_checklist_', '', $enabled_filter);
+                    $checklists_filters[$meta_key] = $meta_value;
+                }
+    
+            }
+            
+            if ($metadata_filter) {
+                $args['meta_query'] = $meta_query;
+            }
+    
+            if ($taxonomy_filter) {
+                $args['tax_query'] = $tax_query;
+            }
+            
             // Unpublished as a status is just an array of everything but 'publish'
             if ($args['post_status'] == 'unpublish') {
                 $args['post_status'] = '';
@@ -2160,25 +3282,21 @@ if (! class_exists('PP_Calendar')) {
                     $args['post_status'] .= ', future';
                 }
             }
-            // The WP functions for printing the category and author assign a value of 0 to the default
-            // options, but passing this to the query is bad (trashed and auto-draft posts appear!), so
-            // unset those arguments.
-            if ($args['cat'] === '0') {
+            // unset legacy options
+            if (isset($args['cat'])) {
                 unset($args['cat']);
             }
-            if ($args['tag'] === '0') {
-                unset($args['tag']);
-            } else {
-                $args['tag_id'] = $args['tag'];
+            if (isset($args['tag'])) {
                 unset($args['tag']);
             }
 
-            if ($args['author'] === '0') {
+            if (!empty($args['me_mode']) && !empty($current_user_id)) {
+                $args['author'] = $current_user_id;
+            }
+
+            // Filter by post_author if it's set
+            if (isset($args['author']) && empty($args['author'])) {
                 unset($args['author']);
-            }
-
-            if (empty($args['post_type']) || ! in_array($args['post_type'], $supported_post_types)) {
-                $args['post_type'] = $supported_post_types;
             }
 
             // Filter for an end user to implement any of their own query args
@@ -2187,15 +3305,39 @@ if (! class_exists('PP_Calendar')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-
+write_log($args);
             $post_results = new WP_Query($args);
 
             $posts = [];
             while ($post_results->have_posts()) {
                 $post_results->the_post();
                 global $post;
-                $key_date = date('Y-m-d', strtotime($post->post_date));
-                $posts[$key_date][] = $post;
+
+                $add_post = true;
+
+                if (!empty($checklists_filters)) {
+                    $post_checklists = apply_filters('publishpress_checklists_requirement_list', [], $post);
+                    foreach ($checklists_filters as $checklists_filter_name => $checklists_filter_check) {
+                        if (!array_key_exists($checklists_filter_name, $post_checklists)) {
+                            // post that doesn't have this requirement shouldn't show?
+                            $add_post = false;
+                        } elseif ($checklists_filter_check == 'passed' && empty($post_checklists[$checklists_filter_name]['status'])) {
+                            // filter posts that failed when condition is passed
+                            $add_post = false;
+                        } elseif ($checklists_filter_check == 'failed' && !empty($post_checklists[$checklists_filter_name]['status'])) {
+                            // filter out post that passed when condition is failed
+                            $add_post = false;
+                        }
+                    }
+                }
+    
+                if ($add_post) {
+                    /**
+                     * TODO: Should we require posts like x2 if results is empty due to $add_post been false for all?
+                    */
+                    $key_date = date('Y-m-d', strtotime($post->post_date));
+                    $posts[$key_date][] = $post;
+                }
             }
 
             if (isset($this->module->options->sort_by)) {
@@ -3259,7 +4401,6 @@ if (! class_exists('PP_Calendar')) {
             $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
             $endingDate = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
 
-            $args          = [];
             $request_filter = [
                 'weeks' => self::DEFAULT_NUM_WEEKS,
                 'post_status' => '',
@@ -3270,67 +4411,16 @@ if (! class_exists('PP_Calendar')) {
                 'start_date' => date('Y-m-d', current_time('timestamp')),
             ];
 
+            $clean_args = map_deep($_GET, 'sanitize_text_field');
+
+            $request_filter = array_merge($request_filter, $clean_args);
             /*
              * Filters
              */
-            if (isset($_GET['post_status'])) {
-                $postStatus = sanitize_text_field($_GET['post_status']);
-
-                if (! empty($postStatus)) {
-                    $args['post_status'] = $postStatus;
-                    $request_filter['post_status'] = $postStatus;
-                }
-            }
-
-            if (isset($_GET['category'])) {
-                $category = sanitize_key($_GET['category']);
-
-                if (! empty($category)) {
-                    $categoryData = get_term_by('slug', $category, 'category');
-                    $args = $this->addTaxQueryToArgs('category', $category, $args);
-                    $request_filter['cat'] = isset($categoryData->term_id) ? $categoryData->term_id : '';
-                }
-            }
-
-            if (isset($_GET['post_tag'])) {
-                $postTag = sanitize_key($_GET['post_tag']);
-
-                if (! empty($postTag)) {
-                    $tag = get_term_by('slug', $postTag, 'post_tag');
-                    $args = $this->addTaxQueryToArgs('post_tag', $postTag, $args);
-                    $request_filter['tag'] = isset($tag->term_id) ? $tag->term_id : '';
-                }
-            }
-
-            if (isset($_GET['post_author'])) {
-                $postAuthor = (int)$_GET['post_author'];
-
-                if (! empty($postAuthor)) {
-                    $args['author'] = $postAuthor;
-                    $request_filter['author'] = $postAuthor;
-                }
-            }
-
-            if (isset($_GET['post_type'])) {
-                $postType = sanitize_key($_GET['post_type']);
-
-                if (! empty($postType)) {
-                    $args['post_type'] = $postType;
-                    $request_filter['cpt'] = $postType;
-                }
-            }
-
-            if (isset($_GET['weeks'])) {
-                $weeks = sanitize_key($_GET['weeks']);
-
-                if (! empty($weeks)) {
-                    $request_filter['weeks'] = $weeks;
-                }
-            }
             $request_filter['start_date'] = $beginningDate;
 
             //update filters
-            $this->update_user_filters($request_filter);
+            $args = $this->update_user_filters($request_filter);
 
             wp_send_json(
                 $this->getCalendarData($beginningDate, $endingDate, $args),
@@ -3351,6 +4441,17 @@ if (! class_exists('PP_Calendar')) {
             $filters        = [];
             $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
 
+            // Get content calendar data
+            $this->content_calendar_datas = $this->get_content_calendar_datas();
+            
+            $filters = $this->content_calendar_datas['content_calendar_filters'];
+            /**
+             * @param array $filters
+             *
+             * @return array
+             */
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+
             $default_filters = [
                 'weeks'       => self::DEFAULT_NUM_WEEKS,
                 'post_status' => '',
@@ -3362,8 +4463,15 @@ if (! class_exists('PP_Calendar')) {
             ];
             $old_filters = array_merge($default_filters, (array)$old_filters);
 
+            $this->filters = array_merge([
+                'weeks'         => __('Weeks', 'publishpress'),
+                'start_date'    => __('Start Date', 'publishpress'),
+                'me_mode'       => __('Me Mode', 'publishpress'),
+                's'             =>  __('Search', 'publishpress'),
+            ], $this->filters);
+
             // Sanitize and validate any newly added filters
-            foreach ($old_filters as $key => $old_value) {
+           /* foreach ($old_filters as $key => $old_value) {
                 if (isset($request_filter[$key]) && false !== ($new_value = $this->sanitize_filter(
                         $key,
                         sanitize_text_field($request_filter[$key])
@@ -3372,7 +4480,45 @@ if (! class_exists('PP_Calendar')) {
                 } else {
                     $filters[$key] = $old_value;
                 }
+            }*/
+
+            
+
+        $editorial_metadata = $this->terms_options;
+
+        foreach ($this->filters as $filter_key => $filter_label) {
+            if (array_key_exists($filter_key, $editorial_metadata)) {
+                //add metadata to filter
+                $meta_term = $editorial_metadata[$filter_key];
+                $meta_term_type = $meta_term['type'];
+                if ($meta_term_type === 'checkbox') {
+                    if (! isset($_GET[$filter_key])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                        $check_value = null;
+                    } else {
+                        $check_value = absint($this->filter_get_param($filter_key, $request_filter));
+                    }
+                    $filters[$filter_key] = $check_value;
+                } elseif ($meta_term_type === 'date') {
+                    $filters[$filter_key]                   = $this->filter_get_param_text($filter_key, $request_filter);
+                    $filters[$filter_key . '_start']        = $this->filter_get_param_text($filter_key . '_start', $request_filter);
+                    $filters[$filter_key . '_end']          = $this->filter_get_param_text($filter_key . '_end', $request_filter);
+                    $filters[$filter_key . '_start_hidden'] = $this->filter_get_param_text($filter_key . '_start_hidden', $request_filter);
+                    $filters[$filter_key . '_end_hidden']   = $this->filter_get_param_text($filter_key . '_end_hidden', $request_filter);
+                }  elseif ($meta_term_type === 'user') {
+                    if (empty($filters['me_mode'])) {
+                        $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                    }
+                } else {
+                    $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                }
+            } else {
+                // other filters
+                $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                if (in_array($filter_key, $this->content_calendar_datas['meta_keys']) || in_array($filter_key, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score'])) {
+                    $filters[$filter_key . '_operator'] = $this->filter_get_param_text($filter_key . '_operator', $request_filter);
+                }
             }
+        }
 
             // Fix start_date, if no specific date was set
             if (! isset($request_filter['start_date'])) {
@@ -3852,8 +4998,6 @@ if (! class_exists('PP_Calendar')) {
             $post_query_args = [
                 'post_status' => null,
                 'post_type' => null,
-                'cat' => null,
-                'tag' => null,
                 'author' => null,
                 'date_query' => [
                     'column' => 'post_date',
@@ -3895,6 +5039,55 @@ if (! class_exists('PP_Calendar')) {
             }
 
             return $data;
+        }
+
+        /**
+         *
+         * @param string $param The parameter to look for in $_GET
+         *
+         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
+         *                      or a sanitized version of the parameter from $_GET if set and not empty
+         */
+        public function filter_get_param($param, $request_filter = false)
+        {
+            if (!$request_filter) {
+                $request_filter = $_GET;
+            }
+
+            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
+            if (! isset($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                return null;
+            } elseif (empty($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                return '';
+            }
+    
+            return sanitize_key($request_filter[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        }
+    
+        /**
+         * This function is an alternative to filter_get_param() that's stripping out date characters
+         * 
+         * @param string $param The parameter to look for in $_GET
+         *
+         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
+         *                      or a sanitized version of the parameter from $_GET if set and not empty
+         */
+        public function filter_get_param_text($param, $request_filter = false)
+        {
+            if (!$request_filter) {
+                $request_filter = $_GET;
+            }
+
+            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
+            if (! isset($request_filter[$param])) {
+                return null;
+            } elseif ($request_filter[$param] == '0') {
+                return 0;
+            } elseif (empty($request_filter[$param])) {
+                return '';
+            }
+    
+            return sanitize_text_field($request_filter[$param]);
         }
 
         /**
@@ -3946,7 +5139,7 @@ if (! class_exists('PP_Calendar')) {
                     return empty($weeks) ? self::DEFAULT_NUM_WEEKS : $weeks;
                     break;
                 default:
-                    return false;
+                    return sanitize_text_field($dirty_value);
                     break;
             }
         }

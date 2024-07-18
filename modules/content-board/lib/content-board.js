@@ -183,7 +183,7 @@ jQuery(document).ready(function ($) {
       $('#pp-content-filters-hidden').submit();
     });
   
-    //populate hidden dearch input and trigger filter to search
+    //populate hidden search input and trigger filter to search
     $('#co-searchbox-search-submit').on('click', function (e) {
       e.preventDefault();
       $('#search_box-search-input').val($('#co-searchbox-search-input').val())
