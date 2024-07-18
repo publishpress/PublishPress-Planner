@@ -94,7 +94,7 @@ class PP_Content_Board extends PP_Module
     /**
      * @var array
      */
-    public $form_column_lists = [];
+    public $form_column_list = [];
 
     /**
      * @var array
