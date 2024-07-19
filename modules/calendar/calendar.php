@@ -3305,7 +3305,7 @@ if (! class_exists('PP_Calendar')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-write_log($args);
+
             $post_results = new WP_Query($args);
 
             $posts = [];
