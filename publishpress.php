@@ -1205,7 +1205,10 @@ add_action('plugins_loaded', function () {
                     'pp_delete_editorial_comment',
                     'pp_delete_others_editorial_comment',
                     'pp_edit_editorial_comment',
-                    'pp_edit_others_editorial_comment'
+                    'pp_edit_others_editorial_comment',
+                    'delete_pp_notif_workflow',
+                    'edit_pp_notif_workflow',
+                    'read_pp_notif_workflow',
                 ];
                 
                 $pluginCaps['PublishPress Planner'] = $caps;
