@@ -238,14 +238,14 @@ if (!class_exists('PP_Module')) {
                 $color = $term->color;
             } else {
                 $default_status_colors = [
-                    'pitch' => '#cc0000',
-                    'assigned' => '#00bcc5',
-                    'in-progress' => '#ccc500',
-                    'draft' => '#f91d84',
-                    'pending' => '#d87200',
-                    'private' => '#000000',
-                    'future' => '#655997',
-                    'publish' => '#655997',
+                    'pitch' => '#887618',
+                    'assigned' => '#009ba0',
+                    'in-progress' => '#8c5400',
+                    'draft' => '#767676',
+                    'pending' => '#b95c00',
+                    'private' => '#b40000',
+                    'future' => '#8440f0',
+                    'publish' => '#207720',
                 ];
 
                 if (isset($default_status_colors[$post_status])) {

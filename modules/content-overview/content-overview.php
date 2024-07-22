@@ -3165,30 +3165,24 @@ class PP_Content_Overview extends PP_Module
         $queryResult = wp_cache_get($cacheKey, $cacheGroup);
 
         if (false === $queryResult) {
-            // phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $queryResult = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
-                FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
-                WHERE u.display_name LIKE %s
-                ORDER BY 2
-                LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
-            // phpcs:enable
+            $user_args = [
+                'number'     => apply_filters('pp_planner_author_result_limit', 20),
+                'capability' => 'edit_posts',
+            ];
+            if (!empty($queryText)) {
+                $user_args['search'] = sanitize_text_field('*' . $queryText . '*');
+            }
+            $users   = get_users($user_args);
+            $queryResult = [];
+            foreach ($users as $user) {
+                $queryResult[] = [
+                    'id'   => (isset($_GET['field']) && sanitize_key($_GET['field']) === 'slug') ? $user->user_nicename : $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
-        
-        foreach ($queryResult as $key => $author) {
-            if (!user_can($author->id, 'edit_posts')) {
-                unset($queryResult[$key]);
-            }
-        }
-        $queryResult = array_values($queryResult);//re-order the key
 
         $ajax->sendJson($queryResult);
     }

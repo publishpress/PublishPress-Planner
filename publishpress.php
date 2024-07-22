@@ -3,7 +3,7 @@
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
- * Version: 4.2.1
+ * Version: 4.3.0
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -173,6 +173,8 @@ add_action('plugins_loaded', function () {
                 add_filter('debug_information', [$this, 'filterDebugInformation']);
 
                 add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities'], 11);
+                // Redirect on plugin activation
+                add_action('admin_init', [$this, 'redirect_on_activate'], 2000);
             }
 
             /**
@@ -1205,7 +1207,10 @@ add_action('plugins_loaded', function () {
                     'pp_delete_editorial_comment',
                     'pp_delete_others_editorial_comment',
                     'pp_edit_editorial_comment',
-                    'pp_edit_others_editorial_comment'
+                    'pp_edit_others_editorial_comment',
+                    'delete_pp_notif_workflow',
+                    'edit_pp_notif_workflow',
+                    'read_pp_notif_workflow',
                 ];
                 
                 $pluginCaps['PublishPress Planner'] = $caps;
@@ -1288,6 +1293,20 @@ add_action('plugins_loaded', function () {
                         'position'    => 3,
                     ],
                 ];
+            }     
+
+            /**
+            * Redirect user on plugin activation
+            *
+            * @return void
+            */
+            public function redirect_on_activate()
+            {
+                if (get_option('pp_planner_activated')) {
+                    delete_option('pp_planner_activated');
+                    wp_safe_redirect(admin_url("admin.php?page=pp-calendar"));
+                    exit;
+                }
             }
 
         }
@@ -1366,7 +1385,8 @@ add_action('plugins_loaded', function () {
     if (! defined('PUBLISHPRESS_HOOKS_REGISTERED')) {
         PublishPress();
         add_action('init', 'publishPressRegisterImprovedNotificationsPostTypes');
-        register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
+        // currently not working inside plugins_loaded
+       // register_activation_hook(__FILE__, ['publishpress', 'activation_hook']);
         define('PUBLISHPRESS_HOOKS_REGISTERED', 1);
     } else {
         $message = __('PublishPress Planner tried to load multiple times. Please, deactivate and remove other instances of PublishPress, specially if you are using PublishPress Pro.', 'publishpress');
@@ -1389,3 +1409,10 @@ add_action('plugins_loaded', function () {
     }
     do_action('publishpress_planner_loaded');
 }, -10);
+
+register_activation_hook(
+    __FILE__,
+    function () {
+        update_option('pp_planner_activated', true);
+    }
+);
