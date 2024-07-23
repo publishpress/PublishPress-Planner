@@ -18,25 +18,15 @@ $rating_stars_markup = "
     <nav>
         <ul>
             <li>
-                <a href="//publishpress.com" target="_blank" rel="noopener noreferrer" title="About <?php echo esc_attr($context['plugin_name']); ?>"><?php echo esc_html(__('About', 'publishpress')); ?></a>
+                <a href="//publishpress.com/planner" target="_blank" rel="noopener noreferrer" title="About <?php echo esc_attr($context['plugin_name']); ?>"><?php echo esc_html(__('About', 'publishpress')); ?></a>
             </li>
             <li>
-                <a href="//publishpress.com/documentation/" target="_blank" rel="noopener noreferrer"
+                <a href="//publishpress.com/knowledge-base/" target="_blank" rel="noopener noreferrer"
                    title="<?php echo esc_attr($context['plugin_name']); ?> Documentation"><?php echo esc_html(__('Documentation', 'publishpress')); ?></a>
             </li>
             <li>
-                <a href="//publishpress.com/contact" target="_blank" rel="noopener noreferrer"
+                <a href="//publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                    title="Contact the PublishPress team"><?php echo esc_html(__('Contact', 'publishpress')); ?></a>
-            </li>
-            <li>
-                <a href="//twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
-                    <span class="dashicons dashicons-twitter"></span>
-                </a>
-            </li>
-            <li>
-                <a href="//facebook.com/publishpress" target="_blank" rel="noopener noreferrer">
-                    <span class="dashicons dashicons-facebook"></span>
-                </a>
             </li>
         </ul>
     </nav>
