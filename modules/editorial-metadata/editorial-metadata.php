@@ -203,6 +203,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function install()
         {
+            global $publishpress;
+            
             // Our default editorial fieldss
             $default_metadata = [
                 [
@@ -230,6 +232,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
             }
 
             $this->setDefaultCapabilities();
+
+            $publishpress->update_module_option($this->module->name, 'enabled', 'off');
         }
 
         /**
