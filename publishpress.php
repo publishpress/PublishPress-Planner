@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
- * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+ * Description: PublishPress Planner helps you plan and publish content inside WordPress. Features include a content calendar, kanban board, and notifications.
  * Version: 4.3.0
  * Author: PublishPress
  * Author URI: https://publishpress.com
