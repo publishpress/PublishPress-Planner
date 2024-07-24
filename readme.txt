@@ -128,7 +128,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [4.3.1] - 24 July 2024 =
 
 * Fixed : Calendar not loading older post on navigation, #1707
-* Update : Disable Editorial Comments and Fields for new sites, #1600
 * Update : Add "Private" status in Content Board, #1671
 * Update : Add Scheduled status option to Content Calendar, Overview and Board status filter, #1644
 * Update : Update plugin description, #1612
