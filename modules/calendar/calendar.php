@@ -1175,6 +1175,11 @@ if (! class_exists('PP_Calendar')) {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
 
             $current_user = wp_get_current_user();
+
+            if (!empty($_REQUEST['reset_user_filter'])) {
+                $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', []);
+            }
+
             $filters = [];
             $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
 
@@ -1838,6 +1843,7 @@ if (! class_exists('PP_Calendar')) {
                 foreach ($this->content_calendar_filters() as $select_id => $select_name) {
                     echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                 } ?>
+                <input type="hidden" name="reset_user_filter" value="1"/>
             </form>
             <?php
             return ob_get_clean();
