@@ -1197,10 +1197,7 @@ if (! class_exists('PP_Calendar')) {
 
             // Sanitize and validate any newly added filters
             foreach ($old_filters as $key => $old_value) {
-                if (isset($_GET[$key]) && false !== ($new_value = $this->sanitize_filter(
-                        $key,
-                        sanitize_text_field($_GET[$key])
-                    ))) {
+                if (isset($_GET[$key]) && false !== ($new_value = sanitize_text_field($_GET[$key]))) {
                     $filters[$key] = $new_value;
                 } else {
                     $filters[$key] = $old_value;
