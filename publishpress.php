@@ -1292,6 +1292,13 @@ add_action('plugins_loaded', function () {
                         'slug'        => 'publish',
                         'position'    => 3,
                     ],
+                    (object)[
+                        'label'        => __('Scheduled'),
+                        'description' => '',
+                        'name'        => 'future',
+                        'slug'        => 'future',
+                        'position'    => 4,
+                    ],
                 ];
             }     
 
