@@ -203,28 +203,24 @@ jQuery(document).ready(function ($) {
         var modalDisplay = $(modalID).css('display');
         var isCustomModal = $(modalID).hasClass('customize-customize-item-modal');
         var isPostModal = $(modalID).hasClass('new-post-modal');
-        
-        $('.content-board-modal').hide();
 
-        if (modalDisplay !== 'block') {
-            if (isCustomModal) {
-                var adminBarHeight = $('#wpadminbar').outerHeight() || 0;
-                var buttonHeight = $(this).outerHeight();
-                var windowHeight = $(window).height();
-                var maxModalHeight = windowHeight - $(this).position().top - buttonHeight - adminBarHeight + 50;
+        $('.content-board-modal').hide();
+        if (isCustomModal) {
+            var adminBarHeight = $('#wpadminbar').outerHeight() || 0;
+            var buttonHeight = $(this).outerHeight();
+            var windowHeight = $(window).height();
+            var maxModalHeight = windowHeight - $(this).position().top - buttonHeight - adminBarHeight + 50;
+            $(modalID).css({
+                top: $('.pp-version-notice-bold-purple').length > 0 ? -32 : 0,
+                left: isPostModal ? $(this).position().left - $(modalID).outerWidth() - 5 : $(this).position().left + $(this).outerWidth() + 5,
+                //'max-height': maxModalHeight
+            }).show();
     
-                $(modalID).css({
-                    top: $('.pp-version-notice-bold-purple').length > 0 ? -32 : 0,
-                    left: isPostModal ? $(this).position().left - $(modalID).outerWidth() - 5 : $(this).position().left + $(this).outerWidth() + 5,
-                    //'max-height': maxModalHeight
-                }).show();
-    
-            } else {
-                $(modalID).css({
-                    top: $(this).position().top + 28, 
-                    left: $(this).position().left
-                }).show();
-            }
+        } else {
+            $(modalID).css({
+                top: $(this).position().top + 28, 
+                left: $(this).position().left
+            }).show();
         }
     });
 
