@@ -151,12 +151,14 @@ export default function AsyncCalendar(props) {
         setIsLoading(true);
         setMessage(props.strings.loading);
 
-        let dataUrl = getUrl(props.actionGetData, '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay);
+        let dataUrl = getUrl(props.actionGetData, '');
 
         if (calendarFilter && Object.keys(calendarFilter).length > 0) {
             let calendarFilterParams = new URLSearchParams(calendarFilter);
             dataUrl += '&' + calendarFilterParams.toString();
         }
+
+        dataUrl += '&start_date=' + getDateAsStringInWpFormat(getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday)) + '&number_of_weeks=' + numberOfWeeksToDisplay;
 
         if (searchText) {
             dataUrl += '&s=' + searchText;

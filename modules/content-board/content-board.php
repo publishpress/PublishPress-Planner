@@ -2593,6 +2593,16 @@ class PP_Content_Board extends PP_Module
                             'position'      => count($post_statuses) + 1
                         ];
                     }
+                    if (!in_array('private', $post_statuses_slugs)) {
+                        // Add Private status
+                        $post_statuses[] = (object) [
+                            'label'         => __('Private', 'publishpress'),
+                            'description'   => '',
+                            'name'          => 'private',
+                            'slug'          => 'private',
+                            'position'      => count($post_statuses) + 1
+                        ];
+                    }
 
                     // Group posts by status
                     $grouped_posts = array_reduce($posts, function($result, $post) {
