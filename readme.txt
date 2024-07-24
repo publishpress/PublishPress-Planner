@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.6
-Stable tag: 4.3.0
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,17 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.3.1] - 24 July 2024 =
+
+* Fixed : Calendar not loading older post on navigation, #1707
+* Update : Disable Editorial Comments and Fields for new sites, #1600
+* Update : Add "Private" status in Content Board, #1671
+* Update : Add Scheduled status option to Content Calendar, Overview and Board status filter, #1644
+* Update : Update plugin description, #1612
+* Update : Update plugin footer, #1656
+* Update : Update Content Board status update notification styles, #1633
+* Update : Planner v.4.3.0_Translation Updates-ES-FR-IT, #1708
 
 = [4.3.0] - 22 July 2024 =
 
