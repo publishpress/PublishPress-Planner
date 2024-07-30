@@ -233,7 +233,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $this->setDefaultCapabilities();
 
-            //$publishpress->update_module_option($this->module->name, 'enabled', 'off');
+            $publishpress->update_module_option($this->module->name, 'enabled', 'off');
         }
 
         /**
