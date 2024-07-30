@@ -1172,54 +1172,128 @@ if (! class_exists('PP_Calendar')) {
          */
         public function get_filters()
         {
-            // phpcs:disable WordPress.Security.NonceVerification.Recommended
+            return $this->update_user_filters();
+        }
 
-            $current_user = wp_get_current_user();
-            $filters = [];
-            $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
-
-            $default_filters = [
-                'weeks' => self::DEFAULT_NUM_WEEKS,
-                'post_status' => '',
-                'cpt' => '',
-                'cat' => '',
-                'tag' => '',
-                'author' => '',
-                'start_date' => date('Y-m-d', current_time('timestamp')),
-                'me_mode' => '',
+        /**
+         * Update the current user's filters for calendar display with the filters in $_GET($request_filter). The filters
+         * in $_GET($request_filter) take precedence over the current users filters if they exist.
+         * @param array $request_filter
+         *
+         * @return array $filters updated filter
+         */
+        public function update_user_filters($request_filter = [])
+        {
+            $user_filters = [
+                'weeks'         => '',
+                'start_date'    => '',
+                'me_mode'       => '',
+                's'             => '',
+                'post_status'   => '',
             ];
-            $old_filters = array_merge($default_filters, (array)$old_filters);
 
-            // Sanitize and validate any newly added filters
-            foreach ($old_filters as $key => $old_value) {
-                if (isset($_GET[$key]) && false !== ($new_value = $this->sanitize_filter(
-                        $key,
-                        sanitize_text_field($_GET[$key])
-                    ))) {
-                    $filters[$key] = $new_value;
+            if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'reset_filter' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_rest_nonce')) {
+                $user_filters['weeks'] = self::DEFAULT_NUM_WEEKS;
+                $user_filters['start_date'] = date('Y-m-d', current_time('timestamp'));
+                return $user_filters;
+            }
+
+            $current_user  = wp_get_current_user();
+
+            if (empty($request_filter)) {
+                $request_filter = $_GET;
+            }
+
+            // Get content calendar data
+            $this->content_calendar_datas = $this->get_content_calendar_datas();
+            
+            $filters = $this->content_calendar_datas['content_calendar_filters'];
+
+            /**
+             * @param array $filters
+             *
+             * @return array
+             */
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+
+            $this->filters = array_merge([
+                'weeks'         => __('Weeks', 'publishpress'),
+                'start_date'    => __('Start Date', 'publishpress'),
+                'me_mode'       => __('Me Mode', 'publishpress'),
+                's'             =>  __('Search', 'publishpress'),
+            ], $this->filters);
+            
+
+            $editorial_metadata = $this->terms_options;
+
+            foreach ($this->filters as $filter_key => $filter_label) {
+                if (array_key_exists($filter_key, $editorial_metadata)) {
+                    //add metadata to filter
+                    $meta_term = $editorial_metadata[$filter_key];
+                    $meta_term_type = $meta_term['type'];
+                    if ($meta_term_type === 'checkbox') {
+                        if (! isset($request_filter[$filter_key])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                            $check_value = null;
+                        } else {
+                            $check_value = absint($this->filter_get_param($filter_key, $request_filter));
+                        }
+                        $user_filters[$filter_key] = $check_value;
+                    } elseif ($meta_term_type === 'date') {
+                        $user_filters[$filter_key]                   = $this->filter_get_param_text($filter_key, $request_filter);
+                        $user_filters[$filter_key . '_start']        = $this->filter_get_param_text($filter_key . '_start', $request_filter);
+                        $user_filters[$filter_key . '_end']          = $this->filter_get_param_text($filter_key . '_end', $request_filter);
+                        $user_filters[$filter_key . '_start_hidden'] = $this->filter_get_param_text($filter_key . '_start_hidden', $request_filter);
+                        $user_filters[$filter_key . '_end_hidden']   = $this->filter_get_param_text($filter_key . '_end_hidden', $request_filter);
+                    }  elseif ($meta_term_type === 'user') {
+                        if (empty($user_filters['me_mode'])) {
+                            $user_filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                        }
+                    } else {
+                        $user_filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                    }
                 } else {
-                    $filters[$key] = $old_value;
+                    // other filters
+                    $user_filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
+                    if (in_array($filter_key, $this->content_calendar_datas['meta_keys']) || in_array($filter_key, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score'])) {
+                        $user_filters[$filter_key . '_operator'] = $this->filter_get_param_text($filter_key . '_operator', $request_filter);
+                    }
                 }
             }
 
+            $current_user_filters = [];
+            $current_user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
+
+            // If any of the $_GET vars are missing, then use the current user filter
+            foreach ($user_filters as $key => $value) {
+                if (is_null($value) && $value !== '0' && ! empty($current_user_filters[$key]) && ! is_null($current_user_filters[$key])) {
+                    $user_filters[$key] = $current_user_filters[$key];
+                } elseif (is_null($value) && $value !== '0' ) {
+                    $user_filters[$key] = '';
+                }
+            }
+
+            // Fix week, if no specific week was set
+            if (empty($user_filters['weeks'])) {
+                $user_filters['weeks'] = self::DEFAULT_NUM_WEEKS;
+            }
+
             // Fix start_date, if no specific date was set
-            if (! isset($_GET['start_date'])) {
-                $filters['start_date'] = $default_filters['start_date'];
+            if (empty($user_filters['start_date'])) {
+                $user_filters['start_date'] = date('Y-m-d', current_time('timestamp'));
             }
 
             // Set the start date as the beginning of the week, according to blog settings
-            $filters['start_date'] = $this->get_beginning_of_week($filters['start_date']);
+            $user_filters['start_date'] = $this->get_beginning_of_week($user_filters['start_date']);
 
-            if (!empty($filters['me_mode'])) {
-                $filters['author'] = $current_user->ID;
+            if (!empty($user_filters['me_mode'])) {
+                $user_filters['author'] = $current_user->ID;
             }
 
-            $filters = apply_filters('pp_calendar_filter_values', $filters, $old_filters);
+            $user_filters = apply_filters('pp_content_calendar_filter_values', $user_filters, $current_user_filters);
 
-            $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $filters);
+            $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
 
-            return $filters;
-            // phpcs:enable
+            return $user_filters;
         }
 
         /**
@@ -1829,15 +1903,9 @@ if (! class_exists('PP_Calendar')) {
                 </div>
             </form>
                 
-            <form method="GET" id="pp-content-filters-hidden">
-                <input type="hidden" name="page" value="pp-calendar"/>
-                <input type="hidden" name="me_mode" value=""/>
-                <input type="hidden" name="weeks" value="<?php echo esc_attr(self::DEFAULT_NUM_WEEKS); ?>"/>
-                   
-                <?php
-                foreach ($this->content_calendar_filters() as $select_id => $select_name) {
-                    echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
-                } ?>
+            <form method="POST" id="pp-content-filters-hidden">
+                <input type="hidden" name="co_form_action" value="reset_filter"/>
+                <input type="hidden" name="_nonce" value="<?php echo esc_attr(wp_create_nonce('content_calendar_filter_rest_nonce')); ?>"/>
             </form>
             <?php
             return ob_get_clean();
@@ -1865,6 +1933,11 @@ if (! class_exists('PP_Calendar')) {
                 
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+            } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'reset_filter' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_rest_nonce')) {
+                // Content calendar filter reset
+                $this->update_user_meta(get_current_user_id(), self::USERMETA_KEY_PREFIX . 'filters', []);
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo pp_planner_admin_notice(esc_html__('Filter reset successfully.', 'publishpress'));
             }
         }
 
@@ -2208,7 +2281,7 @@ if (! class_exists('PP_Calendar')) {
             // user's standard
             $this->total_weeks = empty($this->user_filters['weeks']) ? self::DEFAULT_NUM_WEEKS : $this->user_filters['weeks'];
 
-            $this->start_date = $this->user_filters['start_date'];
+            $this->start_date = empty($this->user_filters['start_date']) ? date('Y-m-d', current_time('timestamp')) :  $this->user_filters['start_date'];
 
             // Get the custom description for this page
             $description = '';
@@ -4401,138 +4474,13 @@ if (! class_exists('PP_Calendar')) {
             $beginningDate = $this->get_beginning_of_week(sanitize_text_field($_GET['start_date']));
             $endingDate = $this->get_ending_of_week($beginningDate, 'Y-m-d', (int)$_GET['number_of_weeks']);
 
-            $request_filter = [
-                'weeks' => self::DEFAULT_NUM_WEEKS,
-                'post_status' => '',
-                'cpt' => '',
-                'cat' => '',
-                'tag' => '',
-                'author' => '',
-                'start_date' => date('Y-m-d', current_time('timestamp')),
-            ];
-
-            $clean_args = map_deep($_GET, 'sanitize_text_field');
-
-            $request_filter = array_merge($request_filter, $clean_args);
-            /*
-             * Filters
-             */
-            $request_filter['start_date'] = $beginningDate;
-
-            //update filters
-            $args = $this->update_user_filters($request_filter);
+            //get and update filters
+            $args = $this->get_filters();
 
             wp_send_json(
                 $this->getCalendarData($beginningDate, $endingDate, $args),
                 200
             );
-        }
-
-        /**
-         * Update the current user's filters for calendar display with the filters in $_GET($request_filter). The filters
-         * in $_GET($request_filter) take precedence over the current users filters if they exist.
-         * @param array $request_filter
-         *
-         * @return array $filters updated filter
-         */
-        public function update_user_filters($request_filter)
-        {
-            $current_user  = wp_get_current_user();
-            $filters        = [];
-            $old_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
-
-            // Get content calendar data
-            $this->content_calendar_datas = $this->get_content_calendar_datas();
-            
-            $filters = $this->content_calendar_datas['content_calendar_filters'];
-            /**
-             * @param array $filters
-             *
-             * @return array
-             */
-            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
-
-            $default_filters = [
-                'weeks'       => self::DEFAULT_NUM_WEEKS,
-                'post_status' => '',
-                'cpt'         => '',
-                'cat'         => '',
-                'tag'         => '',
-                'author'      => '',
-                'start_date'  => date('Y-m-d', current_time('timestamp')),
-            ];
-            $old_filters = array_merge($default_filters, (array)$old_filters);
-
-            $this->filters = array_merge([
-                'weeks'         => __('Weeks', 'publishpress'),
-                'start_date'    => __('Start Date', 'publishpress'),
-                'me_mode'       => __('Me Mode', 'publishpress'),
-                's'             =>  __('Search', 'publishpress'),
-            ], $this->filters);
-
-            // Sanitize and validate any newly added filters
-           /* foreach ($old_filters as $key => $old_value) {
-                if (isset($request_filter[$key]) && false !== ($new_value = $this->sanitize_filter(
-                        $key,
-                        sanitize_text_field($request_filter[$key])
-                    ))) {
-                    $filters[$key] = $new_value;
-                } else {
-                    $filters[$key] = $old_value;
-                }
-            }*/
-
-            
-
-        $editorial_metadata = $this->terms_options;
-
-        foreach ($this->filters as $filter_key => $filter_label) {
-            if (array_key_exists($filter_key, $editorial_metadata)) {
-                //add metadata to filter
-                $meta_term = $editorial_metadata[$filter_key];
-                $meta_term_type = $meta_term['type'];
-                if ($meta_term_type === 'checkbox') {
-                    if (! isset($_GET[$filter_key])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                        $check_value = null;
-                    } else {
-                        $check_value = absint($this->filter_get_param($filter_key, $request_filter));
-                    }
-                    $filters[$filter_key] = $check_value;
-                } elseif ($meta_term_type === 'date') {
-                    $filters[$filter_key]                   = $this->filter_get_param_text($filter_key, $request_filter);
-                    $filters[$filter_key . '_start']        = $this->filter_get_param_text($filter_key . '_start', $request_filter);
-                    $filters[$filter_key . '_end']          = $this->filter_get_param_text($filter_key . '_end', $request_filter);
-                    $filters[$filter_key . '_start_hidden'] = $this->filter_get_param_text($filter_key . '_start_hidden', $request_filter);
-                    $filters[$filter_key . '_end_hidden']   = $this->filter_get_param_text($filter_key . '_end_hidden', $request_filter);
-                }  elseif ($meta_term_type === 'user') {
-                    if (empty($filters['me_mode'])) {
-                        $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
-                    }
-                } else {
-                    $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
-                }
-            } else {
-                // other filters
-                $filters[$filter_key] = $this->filter_get_param_text($filter_key, $request_filter);
-                if (in_array($filter_key, $this->content_calendar_datas['meta_keys']) || in_array($filter_key, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score'])) {
-                    $filters[$filter_key . '_operator'] = $this->filter_get_param_text($filter_key . '_operator', $request_filter);
-                }
-            }
-        }
-
-            // Fix start_date, if no specific date was set
-            if (! isset($request_filter['start_date'])) {
-                $filters['start_date'] = $default_filters['start_date'];
-            }
-
-            // Set the start date as the beginning of the week, according to blog settings
-            $filters['start_date'] = $this->get_beginning_of_week($filters['start_date']);
-
-            $filters = apply_filters('pp_calendar_filter_values', $filters, $old_filters);
-
-            $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $filters);
-
-            return $filters;
         }
 
         private function getPostTypeName($postType)

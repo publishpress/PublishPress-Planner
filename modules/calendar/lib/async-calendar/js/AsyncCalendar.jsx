@@ -154,6 +154,12 @@ export default function AsyncCalendar(props) {
         let dataUrl = getUrl(props.actionGetData, '');
 
         if (calendarFilter && Object.keys(calendarFilter).length > 0) {
+            if (calendarFilter.hasOwnProperty('start_date')) {
+                delete calendarFilter.start_date;
+            }
+            if (calendarFilter.hasOwnProperty('number_of_weeks')) {
+                delete calendarFilter.number_of_weeks;
+            }
             let calendarFilterParams = new URLSearchParams(calendarFilter);
             dataUrl += '&' + calendarFilterParams.toString();
         }
