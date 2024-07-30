@@ -1197,11 +1197,12 @@ add_action('plugins_loaded', function () {
              */
             public function filterCapabilities($pluginCaps)
             {
-
                 $caps = [
                     'pp_view_content_board',
                     'pp_view_calendar',
                     'pp_view_content_overview',
+                    'pp_set_notification_channel',
+                    'edit_post_subscriptions',
                     'pp_edit_editorial_metadata',
                     'pp_view_editorial_metadata',
                     'pp_delete_editorial_comment',
@@ -1420,6 +1421,50 @@ add_action('plugins_loaded', function () {
 register_activation_hook(
     __FILE__,
     function () {
+        global $wp_roles;
+        
+        $genericCaps = [
+            'pp_view_calendar',
+            'pp_view_content_overview',
+            'pp_view_content_board',
+            'edit_post_subscriptions',
+            'pp_set_notification_channel',
+            'pp_delete_editorial_comment',
+            'pp_delete_others_editorial_comment',
+            'pp_edit_editorial_comment',
+            'pp_edit_others_editorial_comment',
+        ];
+
+        $roles = [
+            'administrator' => $genericCaps,
+            'editor' => $genericCaps,
+            'author' => $genericCaps,
+            'contributor' => $genericCaps,
+        ];
+
+        foreach ($roles as $role => $caps) {
+            if ($wp_roles->is_role($role)) {
+                $role = get_role($role);
+                foreach ($caps as $cap) {
+                    $role->add_cap($cap);
+                }
+            }
+        }
+
+        // Additional capabilities
+        $roles = [
+            'administrator' => [apply_filters('pp_manage_roles_cap', 'pp_manage_roles')],
+        ];
+
+        foreach ($roles as $role => $caps) {
+            if ($wp_roles->is_role($role)) {
+                $role = get_role($role);
+                foreach ($caps as $cap) {
+                    $role->add_cap($cap);
+                }
+            }
+        }
+        
         update_option('pp_planner_activated', true);
     }
 );
