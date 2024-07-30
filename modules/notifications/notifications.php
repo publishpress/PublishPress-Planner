@@ -594,6 +594,7 @@ if (! class_exists('PP_Notifications')) {
             }
 
             $role_post_types = $this->get_post_types_for_module($this->module);
+
             foreach ($role_post_types as $post_type) {
                 add_meta_box(
                     'publishpress-notifications',
@@ -627,45 +628,46 @@ if (! class_exists('PP_Notifications')) {
 
             $postType = get_post_type_object($post->post_type);
 
+            $notify_me_style = empty($followersWorkflows) ? 'display: none;' : '';
             ?>
             <div id="pp_post_notify_box">
                 <a name="subscriptions"></a>
-
-                <p>
-                    <?php
-                    esc_html_e(
-                        'Enter any users, roles, or email address that should receive notifications from workflows.',
-                        'publishpress'
-                    ); ?><?php
-                    if (! empty($followersWorkflows)) : ?>&sup1;<?php
-                    endif; ?>
-                </p>
-
-                <div id="pp_post_notify_users_box">
-                    <?php
-                    $users_to_notify = $this->get_users_to_notify($post->ID, 'id');
-                    $roles_to_notify = $this->get_roles_to_notify($post->ID, 'slugs');
-                    $emails_to_notify = $this->get_emails_to_notify($post->ID);
-
-                    $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
-
-                    $select_form_args = [
-                        'list_class' => 'pp_post_notify_list',
-                    ];
-                    $this->users_select_form($selected, $select_form_args); ?>
-
-                </div>
-
-                <?php
-                if (empty($followersWorkflows)) : ?>
-                    <p class="no-workflows"><?php
-                        echo esc_html__(
-                            'This won\'t have any effect unless you have at least one workflow targeting the "Notify me" box.',
+                <div style="<?php echo esc_attr($notify_me_style); ?>">
+                    <p>
+                        <?php
+                        esc_html_e(
+                            'Enter any users, roles, or email address that should receive notifications from workflows.',
                             'publishpress'
-                        ); ?></p>
-                <?php
-                endif; ?>
-                <hr>
+                        ); ?><?php
+                        if (! empty($followersWorkflows)) : ?>&sup1;<?php
+                        endif; ?>
+                    </p>
+
+                    <div id="pp_post_notify_users_box">
+                        <?php
+                        $users_to_notify = $this->get_users_to_notify($post->ID, 'id');
+                        $roles_to_notify = $this->get_roles_to_notify($post->ID, 'slugs');
+                        $emails_to_notify = $this->get_emails_to_notify($post->ID);
+
+                        $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
+
+                        $select_form_args = [
+                            'list_class' => 'pp_post_notify_list',
+                        ];
+                        $this->users_select_form($selected, $select_form_args); ?>
+
+                    </div>
+
+                    <?php
+                    if (empty($followersWorkflows)) : ?>
+                        <p class="no-workflows"><?php
+                            echo esc_html__(
+                                'This won\'t have any effect unless you have at least one workflow targeting the "Users who selected "Notify me" for the content" option.',
+                                'publishpress'
+                            ); ?></p>
+                    <?php
+                    endif; ?>
+                </div>
 
                 <?php
                 if (current_user_can('edit_pp_notif_workflows')) : ?>
