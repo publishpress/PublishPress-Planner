@@ -1464,7 +1464,7 @@ register_activation_hook(
                 }
             }
         }
-        
+
         update_option('pp_planner_activated', true);
     }
 );
