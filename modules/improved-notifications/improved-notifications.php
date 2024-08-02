@@ -177,19 +177,6 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
-         * Load default editorial fields the first time the module is loaded
-         *
-         * @since 0.7
-         */
-        public function install()
-        {
-            if (false === $this->has_default_workflows()) {
-                $this->create_default_workflow_post_save();
-                $this->create_default_workflow_editorial_comment();
-            }
-        }
-
-        /**
          * Methods called after all modules where loaded and initialized,
          * to make sure all hooks are set before we start some specific features.
          */
@@ -248,7 +235,83 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_post_save()
+        protected function create_default_workflow_post_update()
+        {
+            $view = $this->get_service('view');
+
+            // Post Save
+            $workflow = [
+                'post_status' => 'publish',
+                'post_title' => __('Existing Post is updated', 'publishpress'),
+                'post_type' => 'psppnotif_workflow',
+                'meta_input' => [
+                    static::META_KEY_IS_DEFAULT_WORKFLOW => '1',
+                    Post_Update::META_KEY_SELECTED => '1',
+                    Content_Main::META_KEY_SUBJECT => '&quot;[psppno_post title]&quot; was updated',
+                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_post_update'),
+                    Receiver_Site_Admin::META_KEY => 1,
+                    Post_Type_Filter::META_KEY_POST_TYPE => 'post',
+                    Post_Type::META_KEY_SELECTED => 1,
+                ],
+            ];
+
+            $post_id = wp_insert_post($workflow);
+
+            if (is_int($post_id) && ! empty($post_id)) {
+                // Get post statuses
+                $statuses = $this->get_post_statuses();
+                // Add each status to the "From" and "To" filter
+                foreach ($statuses as $status) {
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_TO, $status->slug, false);
+                }
+            }
+        }
+
+        /**
+         * Create default notification workflows based on current notification settings
+         */
+        protected function create_default_workflow_new_draft_created()
+        {
+            $view = $this->get_service('view');
+
+            $statuses = [
+                (object)[
+                'slug' => 'auto-draft',
+                ]
+            ];
+
+            // Post Save
+            $workflow = [
+                'post_status' => 'publish',
+                'post_title' => __('New Post is created in Draft status', 'publishpress'),
+                'post_type' => 'psppnotif_workflow',
+                'meta_input' => [
+                    static::META_KEY_IS_DEFAULT_WORKFLOW => '1',
+                    Post_StatusTransition::META_KEY_SELECTED => '1',
+                    Filter_Post_Status::META_KEY_POST_STATUS_TO => 'draft',
+                    Content_Main::META_KEY_SUBJECT => '&quot;[psppno_post title]&quot; created in draft',
+                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_new_draft_created'),
+                    Receiver_Site_Admin::META_KEY => 1,
+                    Post_Type_Filter::META_KEY_POST_TYPE => 'post',
+                    Post_Type::META_KEY_SELECTED => 1,
+                ],
+            ];
+
+            $post_id = wp_insert_post($workflow);
+
+            if (is_int($post_id) && ! empty($post_id)) {
+                // Add each status to the "From" filter, except the "publish" state
+                foreach ($statuses as $status) {
+                    add_post_meta($post_id, Filter_Post_Status::META_KEY_POST_STATUS_FROM, $status->slug, false);
+                }
+            }
+        }
+
+        /**
+         * Create default notification workflows based on current notification settings
+         */
+        protected function create_default_workflow_post_published()
         {
             $view = $this->get_service('view');
 
@@ -267,22 +330,23 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'slug' => 'auto-draft',
             ];
 
-            // Post Save
+            // Post Published
             $workflow = [
                 'post_status' => 'publish',
-                'post_title' => __('Notify when content is published', 'publishpress'),
+                'post_title' => __('New Post is Published', 'publishpress'),
                 'post_type' => 'psppnotif_workflow',
                 'meta_input' => [
                     static::META_KEY_IS_DEFAULT_WORKFLOW => '1',
                     Post_StatusTransition::META_KEY_SELECTED => '1',
                     Filter_Post_Status::META_KEY_POST_STATUS_TO => 'publish',
                     Content_Main::META_KEY_SUBJECT => '&quot;[psppno_post title]&quot; was published',
-                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_post_save'),
+                    Content_Main::META_KEY_BODY => $view->render('workflow_default_content_post_published'),
                     Receiver_Site_Admin::META_KEY => 1,
                     Post_Type_Filter::META_KEY_POST_TYPE => 'post',
                     Post_Type::META_KEY_SELECTED => 1,
                 ],
             ];
+            
 
             $post_id = wp_insert_post($workflow);
 
@@ -444,6 +508,20 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
+         * Load default editorial fields the first time the module is loaded
+         *
+         * @since 0.7
+         */
+        public function install()
+        {
+            if (false === $this->has_default_workflows()) {
+                $this->create_default_workflow_post_update();
+                $this->create_default_workflow_new_draft_created();
+                $this->create_default_workflow_post_published();
+            }
+        }
+
+        /**
          * Upgrade our data in case we need to
          *
          * @since 0.7
@@ -487,6 +565,11 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             if (version_compare($previous_version, '1.10', '<=')) {
                 $this->migrate_legacy_metadata_for_role();
+            }
+
+            if (version_compare($previous_version, '4.3.1', '<=')) {
+                $this->create_default_workflow_post_update();
+                $this->create_default_workflow_new_draft_created();
             }
         }
 
