@@ -15,8 +15,8 @@ export default function Item(props) {
         return getHourStringOnFormat(timestampDate, props.timeFormat || DEFAULT_TIME_FORMAT);
     }
 
-    const getClassName = () => {
-        let className = 'publishpress-calendar-item';
+    const getClassName = (itemID) => {
+        let className = 'publishpress-calendar-item post-' + itemID;
 
         if (props.isPopupOpened) {
             className += ' publishpress-calendar-item-opened-popup';
@@ -55,7 +55,7 @@ export default function Item(props) {
     return (
         <li
             ref={calendarItem}
-            className={getClassName()}
+            className={getClassName(props.id)}
             style={{backgroundColor: props.color}}
             data-index={props.index}
             data-id={props.id}
@@ -63,7 +63,7 @@ export default function Item(props) {
             onClick={dispatchClickEvent}>
 
             {iconElement}{timeElement}
-            <span dangerouslySetInnerHTML={{__html: label}}></span>
+            <span className="publishpress-calendar-item-title" dangerouslySetInnerHTML={{__html: label}}></span>
             {props.isPopupOpened &&
             <ItemPopup target={calendarItem}
                        id={props.id}

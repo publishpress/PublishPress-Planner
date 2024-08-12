@@ -28,6 +28,7 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 if (! class_exists('PP_Calendar')) {
@@ -321,6 +322,7 @@ if (! class_exists('PP_Calendar')) {
                 add_filter('pp_calendar_after_form_submission_sanitize_content', [$this, 'sanitize_text_input'], 10, 1);
                 add_filter('pp_calendar_after_form_submission_sanitize_author', [$this, 'sanitize_author_input'], 10, 1);
                 add_filter('pp_calendar_after_form_submission_validate_author', [$this, 'validateAuthorForPost'], 10, 1);
+                add_filter('admin_body_class', [$this, 'add_admin_body_class']);
             }
 
             // Clear li cache for a post when post cache is cleared
@@ -328,6 +330,14 @@ if (! class_exists('PP_Calendar')) {
 
             // Cache WordPress default date/time formats.
             $this->default_date_time_format = get_option('date_format') . ' ' . get_option('time_format');
+        }
+
+        public function add_admin_body_class($classes) {
+            global $pagenow;
+            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === self::MENU_SLUG) {
+                $classes .= ' pp-content-calendar-page';
+            }
+            return $classes;
         }
 
         /**
@@ -747,6 +757,7 @@ if (! class_exists('PP_Calendar')) {
                             'publishpress_calendar_allow_multiple_authors',
                             false
                         ),
+                        'proActive' => Util::isPlannersProActive(),
                         'strings' => [
                             'loading' => esc_js(__('Loading...', 'publishpress')),
                             'loadingItem' => esc_js(__('Loading item...', 'publishpress')),
@@ -791,6 +802,19 @@ if (! class_exists('PP_Calendar')) {
                             'xWeeks' => esc_js(__('%d weeks', 'publishpress')),
                             'today' => esc_js(__('Today', 'publishpress')),
                             'noTerms' => esc_js(__('No terms', 'publishpress')),
+                            'post_date_label'    => esc_html__('Post Date', 'publishpress'),
+                            'edit_label'         => esc_html__('Edit', 'publishpress'),
+                            'delete_label'       => esc_html__('Trash', 'publishpress'),
+                            'preview_label'      => esc_html__('Preview', 'publishpress'),
+                            'view_label'         => esc_html__('View', 'publishpress'),
+                            'prev_label'         => esc_html__('Previous Post', 'publishpress'),
+                            'next_label'         => esc_html__('Next Post', 'publishpress'),
+                            'post_status_label'  => esc_html__('Post Status', 'publishpress'),
+                            'update_label'       => esc_html__('Save Changes', 'publishpress'),
+                            'empty_term'         => esc_html__('Taxonomy not set.', 'publishpress'),
+                            'post_author'        => esc_html__('Author', 'publishpress'),
+                            'date_format'        => pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format')),
+                            'week_first_day'     => esc_js(get_option('start_of_week')),
                         ]
                     ];
                     wp_localize_script('publishpress-async-calendar-js', 'publishpressCalendarParams', $params);
@@ -1759,50 +1783,6 @@ if (! class_exists('PP_Calendar')) {
             return ['selected_value' => $selected_value, 'filter_label' => $filter_label, 'html' => ob_get_clean()];
         }
 
-        private function meta_query_operator_label($operator = false) {
-            $operators = [
-                'equals'                    => 'Equals (=)',
-                'not_equals'                => 'Does not equal (!=)',
-                'greater_than'              => 'Greater than (>)',
-                'greater_than_or_equals'    => 'Greater than or equals (>=)',
-                'less_than'                 => 'Less than (<)', 
-                'less_than_or_equals'       => 'Less than or equals (<=)', 
-                'like'                      => 'Like/Contains',
-                'not_like'                  => 'Not Like',
-                'not_exists'                => 'Not Exists/Empty',
-            ];
-    
-            if ($operator) {
-                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
-            } else {
-                $return = $operators;
-            }
-    
-            return $return;
-        }
-    
-        private function meta_query_operator_symbol($operator = false) {
-            $operators = [
-                'equals'                    => '=',
-                'not_equals'                => '!=',
-                'greater_than'              => '>',
-                'greater_than_or_equals'    => '>=',
-                'less_than'                 => '<', 
-                'less_than_or_equals'       => '<=', 
-                'like'                      => 'LIKE',
-                'not_like'                  => 'NOT LIKE',
-                'not_exists'                => 'NOT EXISTS',
-            ];
-    
-            if ($operator) {
-                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
-            } else {
-                $return = $operators;
-            }
-    
-            return $return;
-        }
-
         /**
          * Return calendar filters
          * @return string
@@ -1939,25 +1919,6 @@ if (! class_exists('PP_Calendar')) {
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Filter reset successfully.', 'publishpress'));
             }
-        }
-
-        /**
-         * Retrieve wordpress registered taxonomy
-         * 
-         * Private taxonomy are excluded
-         */
-        public function get_all_taxonomies()
-        {
-    
-            //category and post tag are not included in public taxonomy
-            $category   = get_taxonomies(['name' => 'category'], 'objects');
-            $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
-    
-            $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
-    
-            $taxonomies = array_merge($category, $post_tag, $public);
-        
-            return $taxonomies;
         }
 
         /**
@@ -4379,16 +4340,29 @@ if (! class_exists('PP_Calendar')) {
         {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
             $postTypeObject = $this->getPostTypeObject($post->post_type);
+            $canEdit = current_user_can($postTypeObject->cap->edit_post, $post->ID);
 
-            return [
+            $data = [
                 'label' => esc_html($post->post_title),
                 'id' => (int)$post->ID,
                 'timestamp' => esc_attr($post->post_date),
                 'icon' => esc_attr($postTypeOptions['icon']),
                 'color' => esc_attr($postTypeOptions['color']),
                 'showTime' => (bool)$this->showPostsPublishTime($post->post_status),
-                'canEdit' => current_user_can($postTypeObject->cap->edit_post, $post->ID),
+                'canEdit' => $canEdit,
             ];
+
+            if (Util::isPlannersProActive()) {
+                $modal_data = $this->localize_post_data([], $post, $canEdit);
+
+                $data['calendar_post_data'] = !empty($modal_data['posts'][0]) ? $modal_data['posts'][0] : [];
+                $data['calendar_taxonomies_data'] = !empty($modal_data['taxonomies'][$post->ID]) ? $modal_data['taxonomies'][$post->ID] : [];
+            } else {
+                $data['calendar_post_data'] = [];
+                $data['calendar_taxonomies_data'] = [];
+            }
+
+            return $data;
         }
 
         public function moveCalendarItemToNewDate()
@@ -4987,55 +4961,6 @@ if (! class_exists('PP_Calendar')) {
             }
 
             return $data;
-        }
-
-        /**
-         *
-         * @param string $param The parameter to look for in $_GET
-         *
-         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-         *                      or a sanitized version of the parameter from $_GET if set and not empty
-         */
-        public function filter_get_param($param, $request_filter = false)
-        {
-            if (!$request_filter) {
-                $request_filter = $_GET;
-            }
-
-            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-            if (! isset($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                return null;
-            } elseif (empty($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-                return '';
-            }
-    
-            return sanitize_key($request_filter[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        }
-    
-        /**
-         * This function is an alternative to filter_get_param() that's stripping out date characters
-         * 
-         * @param string $param The parameter to look for in $_GET
-         *
-         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-         *                      or a sanitized version of the parameter from $_GET if set and not empty
-         */
-        public function filter_get_param_text($param, $request_filter = false)
-        {
-            if (!$request_filter) {
-                $request_filter = $_GET;
-            }
-
-            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-            if (! isset($request_filter[$param])) {
-                return null;
-            } elseif ($request_filter[$param] == '0') {
-                return 0;
-            } elseif (empty($request_filter[$param])) {
-                return '';
-            }
-    
-            return sanitize_text_field($request_filter[$param]);
         }
 
         /**
