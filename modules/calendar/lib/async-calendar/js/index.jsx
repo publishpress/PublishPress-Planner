@@ -1,10 +1,12 @@
 import AsyncCalendar from "./AsyncCalendar";
-import { getDateWithNoTimezoneOffset, getDateInstanceFromString } from "./Functions";
+import { getDateWithNoTimezoneOffset, getDateInstanceFromString, addCalendarPosts } from "./Functions";
 import { createRoot } from "&wp.element";
 import { render } from "&ReactDOM";
 
 jQuery(() => {
     const container = document.getElementById('publishpress-calendar-wrap');
+
+    publishpressCalendarParams.PostData = addCalendarPosts([], publishpressCalendarParams.items);
 
     const component = (
         <AsyncCalendar
