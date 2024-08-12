@@ -457,14 +457,18 @@ if (! class_exists('PP_Settings')) {
                 }
 
                 //force notification tab if dependent tab is enabled
+                if ($mod_data->slug == 'async-notifications' && $mod_data->options->enabled === 'on') {
+                    $all_modules['notifications']->options->enabled = 'on';
+                }
+
                 if (isset($mod_data->notification_options)) {
                     if ($all_modules['notifications']->options->enabled === 'on') {
                         $all_modules['improved_notifications']->options->enabled = 'on';
-                        $all_modules['async_notifications']->options->enabled = 'on';
+                        //$all_modules['async_notifications']->options->enabled = 'on';
                         $all_modules['notifications']->options->enabled = 'on';
                     } else {
                         $all_modules['improved_notifications']->options->enabled = 'off';
-                        $all_modules['async_notifications']->options->enabled = 'off';
+                        //$all_modules['async_notifications']->options->enabled = 'off';
                         $all_modules['notifications']->options->enabled = 'off';
                     }
                     break;
