@@ -2,7 +2,7 @@ import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import MessageBar from "./MessageBar";
 import DayCell from "./DayCell";
-import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat, getDateInstanceFromString} from "./Functions";
+import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat, getDateInstanceFromString, addCalendarPosts, openPostModal, adjustTextareaHeight, updateModalPost} from "./Functions";
 import FilterBar from "./FilterBar";
 import ItemFormPopup from "./ItemFormPopup";
 
@@ -58,6 +58,13 @@ export default function AsyncCalendar(props) {
         }
         onFilterEventCallback(selectName, selectValue);
     }
+
+    const onModalNavClick = (event) => { 
+        event.preventDefault();
+        let openedItemId = event.currentTarget.getAttribute('data-post_id');
+
+        openPostModal(openedItemId);
+    };
 
     const onMeModeClick = (event) => { 
         let new_value = '';
@@ -126,6 +133,11 @@ export default function AsyncCalendar(props) {
         $(document).on('click', '.metadata-item-filter .filter-apply input[type=submit]', onFilterApplyClick);
         $(document).on('click', '.pp-content-calendar-manage .search-bar input[type=submit]', onSearchClick);
         $(document).on('click', '.pp-content-calendar-manage .me-mode-action', onMeModeClick);
+        $(document).on('click', '.pp-popup-modal-header .modal-nav-prev, .pp-popup-modal-header .modal-nav-next', onModalNavClick);
+        $(document).on('input', '.pp-content-calendar-general-modal-container .modal-post-title .title-area', adjustTextareaHeight);
+        $(document).on('click', '.pp-content-calendar-general-modal-container .modal-content-right .save-post-changes:not(.disabled)', function(e) {
+            updateModalPost(e, jQuery(this), handleRefreshOnClick);
+        });
     }
 
     const removeEventListeners = () => {
@@ -154,6 +166,12 @@ export default function AsyncCalendar(props) {
         let dataUrl = getUrl(props.actionGetData, '');
 
         if (calendarFilter && Object.keys(calendarFilter).length > 0) {
+            if (calendarFilter.hasOwnProperty('start_date')) {
+                delete calendarFilter.start_date;
+            }
+            if (calendarFilter.hasOwnProperty('number_of_weeks')) {
+                delete calendarFilter.number_of_weeks;
+            }
             let calendarFilterParams = new URLSearchParams(calendarFilter);
             dataUrl += '&' + calendarFilterParams.toString();
         }
@@ -169,6 +187,7 @@ export default function AsyncCalendar(props) {
         fetch(dataUrl)
             .then(response => response.json())
             .then((fetchedData) => {
+                publishpressCalendarParams.PostData = addCalendarPosts(publishpressCalendarParams.PostData, fetchedData);
                 setItemsByDate(fetchedData);
                 setIsLoading(false);
                 setMessage(null);
@@ -186,19 +205,23 @@ export default function AsyncCalendar(props) {
         if (!openedItemId) {
             return;
         }
+        
+        if (publishpressCalendarParams.proActive) {
+            openPostModal(openedItemId);
+        } else {
+            setIsLoading(true);
+            setMessage(props.strings.loadingItem);
 
-        setIsLoading(true);
-        setMessage(props.strings.loadingItem);
+            const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + openedItemId;
+            fetch(dataUrl)
+                .then(response => response.json())
+                .then((data) => {
+                    setIsLoading(false);
+                    setMessage(null);
 
-        const dataUrl = props.ajaxUrl + '?action=' + 'publishpress_calendar_get_post_data' + '&nonce=' + props.nonce + '&id=' + openedItemId;
-        fetch(dataUrl)
-            .then(response => response.json())
-            .then((data) => {
-                setIsLoading(false);
-                setMessage(null);
-
-                setOpenedItemData(data);
+                    setOpenedItemData(data);
             });
+        }
     }
 
     const addOffsetInWeeksToFirstDateToDisplay = (offsetInWeeks) => {
@@ -208,7 +231,7 @@ export default function AsyncCalendar(props) {
     const handleRefreshOnClick = (e) => {
         e.preventDefault();
 
-        setRefreshCount(refreshCount + 1);
+        setRefreshCount(prevCount => prevCount + 1);
     };
 
     const handleBackPageOnClick = (e) => {
@@ -424,6 +447,10 @@ export default function AsyncCalendar(props) {
         setHoveredDate(null);
         setFormDate(null);
         setOpenedItemId(id);
+        
+        if (publishpressCalendarParams.proActive) {
+            openPostModal(id);
+        }
     }
 
     const onPopupItemActionClick = (action, id, result) => {

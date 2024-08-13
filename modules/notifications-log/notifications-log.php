@@ -112,7 +112,7 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
-                add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
+                //add_action('publishpress_notif_post_metabox', [$this, 'postNotificationMetaBox']);
                 add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
                 add_filter('set-screen-option', [$this, 'tableSetOptions'], 10, 3);

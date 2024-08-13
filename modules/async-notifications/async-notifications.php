@@ -78,7 +78,6 @@ if (! class_exists('PP_Async_Notifications')) {
                     'enabled' => 'on',
                 ],
                 'options_page' => false,
-                'autoload' => true,
             ];
 
             // Apply a filter to the default options
@@ -132,9 +131,17 @@ if (! class_exists('PP_Async_Notifications')) {
          */
         public function send_notification($params)
         {
+            if (!is_array($params)) {
+                return;
+            }
+            
             // Work the notification
             $workflow = Workflow::load_by_id((int)$params['workflow_id']);
             $workflow->event_args = $params['event_args'];
+
+            if (!apply_filters('publishpress_notifications_send_notification', true, $workflow)) {
+                return;
+            }
 
             do_action('publishpress_notifications_send_notifications_action', $workflow, true);
 
@@ -194,6 +201,10 @@ if (! class_exists('PP_Async_Notifications')) {
 
         public function schedule_notifications($workflow)
         {
+            if (!apply_filters('publishpress_notifications_schedule_notification', true, $workflow)) {
+                return;
+            }
+
             $scheduler = $this->get_service('notification_scheduler');
 
             $scheduler->scheduleNotification($workflow->workflow_post->ID, $workflow->event_args);

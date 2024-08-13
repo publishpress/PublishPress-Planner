@@ -908,5 +908,274 @@ if (!class_exists('PP_Module')) {
 
             return $postStatuses;
         }
+
+        /**
+         * Retrieve wordpress registered taxonomy
+         * 
+         * Private taxonomy are excluded
+         *
+         * @since 3.7.0
+         */
+        public function get_all_taxonomies()
+        {
+    
+            //category and post tag are not included in public taxonomy
+            $category   = get_taxonomies(['name' => 'category'], 'objects');
+            $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
+    
+            $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
+    
+            $taxonomies = array_merge($category, $post_tag, $public);
+        
+            return $taxonomies;
+        }
+
+        /**
+         *
+         * @param string $param The parameter to look for in $_GET
+         *
+         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
+         *                      or a sanitized version of the parameter from $_GET if set and not empty
+         */
+        public function filter_get_param($param, $request_filter = false)
+        {
+            if (!$request_filter) {
+                $request_filter = $_GET;
+            }
+
+            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
+            if (! isset($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                return null;
+            } elseif (empty($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                return '';
+            }
+    
+            return sanitize_key($request_filter[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        }
+    
+        /**
+         * This function is an alternative to filter_get_param() that's stripping out date characters
+         * 
+         * @param string $param The parameter to look for in $_GET
+         *
+         * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
+         *                      or a sanitized version of the parameter from $_GET if set and not empty
+         */
+        public function filter_get_param_text($param, $request_filter = false)
+        {
+            if (!$request_filter) {
+                $request_filter = $_GET;
+            }
+
+            // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
+            if (! isset($request_filter[$param])) {
+                return null;
+            } elseif ($request_filter[$param] == '0') {
+                return 0;
+            } elseif (empty($request_filter[$param])) {
+                return '';
+            }
+    
+            return sanitize_text_field($request_filter[$param]);
+        }
+
+        public function meta_query_operator_label($operator = false) {
+            $operators = [
+                'equals'                    => 'Equals (=)',
+                'not_equals'                => 'Does not equal (!=)',
+                'greater_than'              => 'Greater than (>)',
+                'greater_than_or_equals'    => 'Greater than or equals (>=)',
+                'less_than'                 => 'Less than (<)', 
+                'less_than_or_equals'       => 'Less than or equals (<=)', 
+                'like'                      => 'Like/Contains',
+                'not_like'                  => 'Not Like',
+                'not_exists'                => 'Not Exists/Empty',
+            ];
+    
+            if ($operator) {
+                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
+            } else {
+                $return = $operators;
+            }
+    
+            return $return;
+        }
+    
+        public function meta_query_operator_symbol($operator = false) {
+            $operators = [
+                'equals'                    => '=',
+                'not_equals'                => '!=',
+                'greater_than'              => '>',
+                'greater_than_or_equals'    => '>=',
+                'less_than'                 => '<', 
+                'less_than_or_equals'       => '<=', 
+                'like'                      => 'LIKE',
+                'not_like'                  => 'NOT LIKE',
+                'not_exists'                => 'NOT EXISTS',
+            ];
+    
+            if ($operator) {
+                $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
+            } else {
+                $return = $operators;
+            }
+    
+            return $return;
+        }
+
+        public function localize_post_data($localized_post_data, $post, $can_edit_post) {
+            global $publishpress;
+
+            // add taxonomies
+            $taxonomies = get_object_taxonomies($post->post_type, 'object');
+            foreach ($taxonomies as $taxonomy => $tax_object ) {
+                if (!empty($tax_object->public) 
+                    && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                    $terms = get_the_terms($post->ID, $taxonomy);
+                    //add post content to localized data
+                    $localized_post_data['taxonomies'][$post->ID][$taxonomy] = [
+                        'post_id'          => $post->ID,
+                        'taxonomy'         => $taxonomy,
+                        'taxonomy_label'   => $tax_object->label,
+                        'taxonomy_placeholder' => sprintf(esc_attr__('Select %s', 'publishpress'), esc_html($tax_object->label)),
+                        'terms'            => (!empty($terms) && !is_wp_error($terms)) ? $terms : []
+                    ];
+                }
+            }
+
+            $post_title = _draft_or_post_title($post->ID);
+
+            //add post content to localized data
+            $localized_post_data['posts'][] = [
+                'post_id'          => $post->ID,
+                'post_title'       => $post_title,
+                'raw_title'        => $post->post_title,
+                'post_status'      => $post->post_status,
+                'status_label'     => $this->get_post_status_friendly_name($post->post_status),
+                'can_edit_post'    => $can_edit_post ? 1 : 0,
+                'date_markup'      => $can_edit_post ? $this->get_date_markup($post) : get_the_time(get_option("date_format"), $post->ID) . " " . get_the_time(get_option("time_format"), $post->ID),
+                'action_links'     => $this->get_post_action_links($post, $can_edit_post),
+                'author_markup'    => $this->get_author_markup($post, $can_edit_post),
+                'status_options'   => $this->getUserAuthorizedPostStatusOptions($post->post_type),
+                'post_content'     => apply_filters('the_content', $post->post_content)
+            ];
+
+            return $localized_post_data;
+        }
+
+        public function get_date_markup($post) {
+            $date_name = 'content_board_post_date';
+            $date_markup =
+            sprintf(
+                '<input
+                    type="text"
+                    id="%s"
+                    name="%1$s"
+                    value="%2$s"
+                    class="date-time-pick"
+                    data-alt-field="%1$s_hidden"
+                    data-alt-format="%3$s"
+                    placeholder="%4$s"
+                    autocomplete="off"
+                />',
+                esc_attr($date_name),
+                esc_attr(date_i18n('F j, Y H:i', strtotime($post->post_date))),
+                esc_attr(pp_convert_date_format_to_jqueryui_datepicker('Y-m-d H:i:s')),
+                ''
+            );
+            $date_markup .= sprintf(
+                '<input
+                    type="hidden"
+                    class="%s_hidden"
+                    name="%s_hidden"
+                    value="%s"
+                />',
+                esc_attr($date_name),
+                esc_attr($date_name),
+                esc_attr(date_i18n('Y-m-d H:i:s', strtotime($post->post_date)))
+            );
+
+            return $date_markup;
+        }
+
+        public function get_post_action_links($post, $can_edit_post) {
+
+            $post_type_object = get_post_type_object($post->post_type);
+
+            $item_actions = [
+                'edit' => '',
+                'trash' => '',
+                'view' => '',
+                'previewpost' => '',
+            ];
+
+            if ($can_edit_post) {
+                $item_actions["edit"] = esc_url(get_edit_post_link($post->ID));
+            }
+
+            if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $post->ID)) {
+                $item_actions["trash"] = esc_url(get_delete_post_link($post->ID));
+            }
+
+            if (in_array($post->post_status, ["publish"])) {
+                $item_actions["view"] = esc_url(get_permalink($post->ID));
+            } elseif ($can_edit_post) {
+                $item_actions["previewpost"] = esc_url(
+                    apply_filters(
+                        "preview_post_link",
+                        add_query_arg("preview", "true", get_permalink($post->ID)),
+                        $post
+                    )
+                );
+            }
+
+            return $item_actions;
+        }
+
+        public function get_author_markup($post, $can_edit_post) {
+
+            if ($can_edit_post) {
+                ob_start();
+                $authorId = (int) $post->post_author;
+                if (function_exists('get_post_authors')) {
+                    $authors = get_post_authors($post);
+                    $multiple = 'multiple';
+                } else {
+                    $authors = [$authorId];
+                    $multiple = '';
+                }
+                ?>
+                <select class="pp-modal-form-author" <?php echo esc_attr($multiple); ?>>
+                    <?php
+                    if (! empty($authors)) {
+                        foreach ($authors as $author) {
+                            $author = is_object($author) ? $author : get_user_by('id', $author);
+                            $option = '';
+
+                            if (! empty($author)) {
+                                $option = '<option value="' . esc_attr($author->ID) . '" selected="selected">' . esc_html(
+                                        $author->display_name
+                                    ) . '</option>';
+                            }
+
+                            $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
+
+                            echo $option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                        }
+                    }
+                    ?>
+                </select>
+                <?php
+                return ob_get_clean();
+            } else {
+                $post_author = get_userdata($post->post_author);
+                $author_name = is_object($post_author) ? $post_author->display_name : '';
+                $author_name = apply_filters('the_author', $author_name);
+        
+                $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
+                return $author_name;
+            }
+        }
+
     }
 }

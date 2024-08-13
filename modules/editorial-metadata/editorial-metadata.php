@@ -233,7 +233,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $this->setDefaultCapabilities();
 
-            //$publishpress->update_module_option($this->module->name, 'enabled', 'off');
+            $publishpress->update_module_option($this->module->name, 'enabled', 'off');
         }
 
         /**
@@ -380,7 +380,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $terms = $this->get_editorial_metadata_terms();
                 $viewable_terms = [];
                 foreach ($terms as $term) {
-                    if ($term->viewable) {
+                    if (!empty($term->post_types_column) && in_array($current_post_type, $term->post_types_column)) {
                         $viewable_terms[] = $term;
                     }
                 }
@@ -740,6 +740,12 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function get_editorial_metadata_terms($filter_args = [])
         {
+
+            if (empty($filter_args['viewable'])) {
+                // viewable has been removed, use post type instead
+                unset($filter_args['viewable']);
+            }
+
             // Try to fetch from internal object cache
             $arg_hash = md5(serialize($filter_args));
             if (isset($this->editorial_metadata_terms_cache[$arg_hash])) {
@@ -762,7 +768,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $unencoded_description = $this->get_unencoded_description($term->description);
                 $defaults = [
                     'description' => '',
-                    'viewable' => false,
                     'position' => false,
                     'show_in_calendar_form' => false,
                 ];
@@ -843,7 +848,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $screen = get_current_screen();
             if ($screen) {
                 add_filter("manage_{$screen->id}_sortable_columns", [$this, 'filter_manage_posts_sortable_columns']);
-                $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
+                $terms = $this->get_editorial_metadata_terms();
                 foreach ($terms as $term) {
                     if (isset($term->post_types_column) && is_array($term->post_types_column) && in_array($post_type, $term->post_types_column)) {
                         // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
@@ -866,7 +871,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function filter_manage_posts_sortable_columns($sortable_columns)
         {
-            $terms = $this->get_editorial_metadata_terms(['viewable' => true, 'type' => 'date']);
+            $terms = $this->get_editorial_metadata_terms(['type' => 'date']);
             foreach ($terms as $term) {
                 // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
                 $key = $this->module->slug . '-' . $term->slug;
@@ -934,7 +939,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 return $data;
             }
 
-            $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
+            $terms = $this->get_editorial_metadata_terms();
 
             $post_type = $post->post_type;
             foreach ($terms as $term) {
@@ -976,7 +981,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
          */
         public function filter_story_budget_term_columns($term_columns)
         {
-            $terms = $this->get_editorial_metadata_terms(['viewable' => true]);
+            $terms = $this->get_editorial_metadata_terms();
             foreach ($terms as $term) {
                 // Prefixing slug with module slug because it isn't stored prefixed and we want to avoid collisions
                 $key = $this->module->slug . '-' . $term->slug;
@@ -1063,7 +1068,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'select_type' => isset($old_term->select_type) ? $old_term->select_type : '',
                     'select_default' => isset($old_term->select_default) ? $old_term->select_default : '',
                     'select_options' => isset($old_term->select_options) ? $old_term->select_options : '',
-                    'viewable' => $old_term->viewable,
                     'post_types' => isset($old_term->post_types) ? $old_term->post_types : '',
                     'show_in_calendar_form' => isset($old_term->show_in_calendar_form) ? $old_term->show_in_calendar_form : false,
                     'post_types_column' => isset($old_term->post_types_column) ? $old_term->post_types_column : '',
@@ -1080,7 +1084,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_type' => $new_args['select_type'],
                 'select_default' => $new_args['select_default'],
                 'select_options' => $new_args['select_options'],
-                'viewable' => $new_args['viewable'],
                 'show_in_calendar_form' => $new_args['show_in_calendar_form'],
                 'post_types' => $new_args['post_types'],
                 'post_types_column' => $new_args['post_types_column'],
@@ -1118,7 +1121,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_type' => '',
                 'select_default' => '',
                 'select_options' => '',
-                'viewable' => false,
                 'show_in_calendar_form' => false,
                 'post_types' => [],
                 'post_types_column' => [],
@@ -1136,7 +1138,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_type' => $args['select_type'],
                 'select_default' => $args['select_default'],
                 'select_options' => $args['select_options'],
-                'viewable' => $args['viewable'],
                 'show_in_calendar_form' => $args['show_in_calendar_form'],
                 'post_types' => $args['post_types'],
                 'post_types_column' => $args['post_types_column'],
@@ -1195,8 +1196,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             // Add other things we may need depending on the action
             switch ($args['action']) {
-                case 'make-viewable':
-                case 'make-hidden':
                 case 'delete-term':
                     $args['nonce'] = wp_create_nonce($args['action']);
                     break;
@@ -1325,11 +1324,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (empty($_POST['metadata_type']) || ! isset($metadata_types[$_POST['metadata_type']])) {
                 $_REQUEST['form-errors']['type'] = esc_html__('Please select a valid metadata type.', 'publishpress');
             }
-            // Metadata viewable needs to be a valid Yes or No
-            $term_viewable = false;
-            if (isset($_POST['metadata_viewable']) && $_POST['metadata_viewable'] == 'yes') {
-                $term_viewable = true;
-            }
             
             // Metadata show_in_calendar_form needs to be a valid Yes or No
             $term_show_in_calendar_form = false;
@@ -1353,7 +1347,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_type' => $term_select_type,
                 'select_default' => $term_select_default,
                 'select_options' => $term_select_options,
-                'viewable' => $term_viewable,
                 'show_in_calendar_form' => $term_show_in_calendar_form,
                 'post_types' => $term_post_types,
                 'post_types_column' => $term_post_types_column,
@@ -1480,11 +1473,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                     'publishpress'
                 );
             }
-            // Make sure the viewable state is valid
-            $new_viewable = false;
-            if (isset($_POST['viewable']) && $_POST['viewable'] == 'yes') {
-                $new_viewable = true;
-            }
 
             // Make sure the show_in_calendar_form state is valid
             $new_show_in_calendar_form = false;
@@ -1509,7 +1497,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 'select_type' => $term_select_type,
                 'select_default' => $term_select_default,
                 'select_options' => $term_select_options,
-                'viewable' => $new_viewable,
                 'show_in_calendar_form' => $new_show_in_calendar_form,
                 'post_types' => $term_post_types,
                 'post_types_column' => $term_post_types_column,
@@ -1556,11 +1543,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $term_id = (int)$_GET['term-id'];
             $args = [];
-            if ($_GET['action'] == 'make-viewable') {
-                $args['viewable'] = true;
-            } elseif ($_GET['action'] == 'make-hidden') {
-                $args['viewable'] = false;
-            }
 
             $return = $this->update_editorial_metadata_term($term_id, $args);
 
@@ -1847,12 +1829,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $description = (isset($_POST['description'])) ? stripslashes(
                     sanitize_textarea_field($_POST['description'])
                 ) : $term->description;
-                if ($term->viewable) {
-                    $viewable = 'yes';
-                } else {
-                    $viewable = 'no';
-                }
-                $viewable = (isset($_POST['viewable'])) ? sanitize_key(stripslashes($_POST['viewable'])) : $viewable; 
 
                 if ($term->show_in_calendar_form) {
                     $show_in_calendar_form = 'yes';
@@ -2070,30 +2046,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
                         </td>
                     </tr>
 
-                        <tr class='form-field checkbox-row'>
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('Viewable', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                $metadata_viewable_options = [
-                                    'no' => esc_html__('No', 'publishpress'),
-                                    'yes' => esc_html__('Yes', 'publishpress'),
-                                ]; ?>
-                                <?php
-                                echo '<input id="viewable" name="viewable"';
-                                checked($viewable, 'yes', true);
-                                echo ' type="checkbox" value="yes" />';
-                                ?>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'viewable',
-                                    esc_html__(
-                                        'If enabled, this field can be seen on the Content Calendar screens.',
-                                        'publishpress'
-                                    )
-                                ); ?>
-                            </td>
-                        </tr>
                         <tr class='form-field checkbox-row'>
                             <th scope='row' ; valign='top'><?php
                                 esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></th>
@@ -2405,34 +2357,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                                             </div>
                                         </div>
                                     </div>
-                                        
-                                    <div class='form-field form-required checkbox-row'>
-                                        <label for='metadata_viewable'><?php
-                                            esc_html_e('Viewable', 'publishpress'); ?></label>
-                                        <?php
-                                        $metadata_viewable_options = [
-                                            'no' => esc_html__('No', 'publishpress'),
-                                            'yes' => esc_html__('Yes', 'publishpress'),
-                                        ];
-                                        $current_metadata_viewable = (isset($_POST['metadata_viewable']) && in_array(
-                                                $_POST['metadata_viewable'],
-                                                array_keys($metadata_viewable_options)
-                                            )) ? sanitize_key($_POST['metadata_viewable']) : 'no'; ?>
-                                        
-                                        <?php
-                                        echo '<input id="metadata_viewable" name="metadata_viewable"';
-                                        checked($current_metadata_viewable, 'yes', true);
-                                        echo ' type="checkbox" value="yes" />';
-                                        ?>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'viewable',
-                                            esc_html__(
-                                                'If enabled, this field can be seen on the Content Calendar screens.',
-                                                'publishpress'
-                                            )
-                                        ); ?>
-                                    </div>
+                               
                                     <div class='form-field form-required checkbox-row'>
                                         <label for='show_in_calendar_form'><?php
                                             esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></label>
@@ -2628,8 +2553,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
             'name' => esc_html__('Name', 'publishpress'),
             'post_types' => esc_html__('Post Types', 'publishpress'),
             'type' => esc_html__('Field Type', 'publishpress'),
-            'description' => esc_html__('Description', 'publishpress'),
-            'viewable' => esc_html__('Viewable', 'publishpress')
+            'description' => esc_html__('Description', 'publishpress')
         ];
 
         return $columns;
@@ -2687,12 +2611,6 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
                 } else {
                     return '-';
                 }
-            case 'viewable':
-                if ($item->viewable) {
-                    return esc_html__('Yes', 'publishpress');
-                } else {
-                    return esc_html__('No', 'publishpress');
-                }
                 break;
             default:
                 break;
@@ -2747,25 +2665,7 @@ class PP_Editorial_Metadata_List_Table extends WP_List_Table
 
         $actions = [];
         $actions['edit'] = "<a href='$item_edit_link'>" . esc_html__('Edit', 'publishpress') . "</a>";
-        if ($item->viewable) {
-            $actions['change-visibility make-hidden'] = '<a title="' . esc_attr(
-                    esc_html__('Hidden field can only be viewed on the edit post view.', 'publishpress')
-                ) . '" href="' . esc_url(
-                    $publishpress->editorial_metadata->get_link(['action' => 'make-hidden', 'term-id' => $item->term_id]
-                    )
-                ) . '">' . esc_html__('Make Hidden', 'publishpress') . '</a>';
-        } else {
-            $actions['change-visibility make-viewable'] = '<a title="' . esc_attr(
-                    esc_html__(
-                        'If enabled, this field can be seen on the Content Calendar screens.',
-                        'publishpress'
-                    )
-                ) . '" href="' . esc_url(
-                    $publishpress->editorial_metadata->get_link(
-                        ['action' => 'make-viewable', 'term-id' => $item->term_id]
-                    )
-                ) . '">' . esc_html__('Make Viewable', 'publishpress') . '</a>';
-        }
+
         $actions['delete delete-status'] = "<a href='$item_delete_link'>" . esc_html__('Delete', 'publishpress') . "</a>";
 
         $out .= $this->row_actions($actions, false);

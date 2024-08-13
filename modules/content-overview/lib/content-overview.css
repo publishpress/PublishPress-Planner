@@ -868,6 +868,30 @@ header h2 a.change-date-cancel {
     margin-top: 40px;
 }
 
+.pp-floating-status {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+    margin-bottom: 10px;
+    transition: all 0.5s ease-out;
+    z-index: 9999999999999;
+    -webkit-backdrop-filter:blur(16px) saturate(180%);
+    backdrop-filter:blur(16px) saturate(180%);
+    background:#000000d9;
+    border-radius:2px;
+    box-shadow:0 .7px 1px #0000001a,0 1.2px 1.7px -.2px #0000001a,0 2.3px 3.3px -.5px #0000001a;
+    box-sizing:border-box;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+    font-size:13px;
+    padding:12px 20px;
+}
+@media (max-width: 782px) {
+    .pp-floating-status {
+        left: 60px;
+    }
+}
+
 @keyframes dropdownMenuAnimation {
     0% {
         transform: scale(.95);

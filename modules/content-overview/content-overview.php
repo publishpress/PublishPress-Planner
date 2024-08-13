@@ -30,6 +30,7 @@
 
 use PublishPress\Core\Ajax;
 use PublishPress\Core\Error;
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -208,6 +209,16 @@ class PP_Content_Overview extends PP_Module
         // Load necessary scripts and stylesheets
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
+        // Content Board body class
+        add_filter('admin_body_class', [$this, 'add_admin_body_class']);
+    }
+
+    public function add_admin_body_class($classes) {
+        global $pagenow;
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+            $classes .= ' pp-content-overview-page';
+        }
+        return $classes;
     }
 
     private function getViewCapability()
@@ -254,27 +265,6 @@ class PP_Content_Overview extends PP_Module
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
         );
-    }
-
-    /**
-     * Retrieve wordpress registered taxonomy
-     * 
-     * Private taxonomy are excluded
-     *
-     * @since 3.7.0
-     */
-    public function get_all_taxonomies()
-    {
-
-        //category and post tag are not included in public taxonomy
-        $category   = get_taxonomies(['name' => 'category'], 'objects');
-        $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
-
-        $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
-
-        $taxonomies = array_merge($category, $post_tag, $public);
-    
-        return $taxonomies;
     }
 
     /**
@@ -766,47 +756,6 @@ class PP_Content_Overview extends PP_Module
         }
  
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
-    }
-
-    /**
-     *
-     * @param string $param The parameter to look for in $_GET
-     *
-     * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-     *                      or a sanitized version of the parameter from $_GET if set and not empty
-     */
-    public function filter_get_param($param)
-    {
-        // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (! isset($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            return null;
-        } elseif (empty($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            return '';
-        }
-
-        return sanitize_key($_GET[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-    }
-
-    /**
-     * This function is an alternative to filter_get_param() that's stripping out date characters
-     * 
-     * @param string $param The parameter to look for in $_GET
-     *
-     * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-     *                      or a sanitized version of the parameter from $_GET if set and not empty
-     */
-    public function filter_get_param_text($param)
-    {
-        // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (! isset($_GET[$param])) {
-            return null;
-        } elseif ($_GET[$param] == '0') {
-            return 0;
-        } elseif (empty($_GET[$param])) {
-            return '';
-        }
-
-        return sanitize_text_field($_GET[$param]);
     }
     
     /**
@@ -2034,50 +1983,6 @@ class PP_Content_Overview extends PP_Module
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
 
-    private function meta_query_operator_label($operator = false) {
-        $operators = [
-            'equals'                    => 'Equals (=)',
-            'not_equals'                => 'Does not equal (!=)',
-            'greater_than'              => 'Greater than (>)',
-            'greater_than_or_equals'    => 'Greater than or equals (>=)',
-            'less_than'                 => 'Less than (<)', 
-            'less_than_or_equals'       => 'Less than or equals (<=)', 
-            'like'                      => 'Like/Contains',
-            'not_like'                  => 'Not Like',
-            'not_exists'                => 'Not Exists/Empty',
-        ];
-
-        if ($operator) {
-            $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
-        } else {
-            $return = $operators;
-        }
-
-        return $return;
-    }
-
-    private function meta_query_operator_symbol($operator = false) {
-        $operators = [
-            'equals'                    => '=',
-            'not_equals'                => '!=',
-            'greater_than'              => '>',
-            'greater_than_or_equals'    => '>=',
-            'less_than'                 => '<', 
-            'less_than_or_equals'       => '<=', 
-            'like'                      => 'LIKE',
-            'not_like'                  => 'NOT LIKE',
-            'not_exists'                => 'NOT EXISTS',
-        ];
-
-        if ($operator) {
-            $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
-        } else {
-            $return = $operators;
-        }
-
-        return $return;
-    }
-
     public function content_overview_filter_options($select_id, $select_name, $filters)
     {
         
@@ -2495,6 +2400,7 @@ class PP_Content_Overview extends PP_Module
         $this->user_filters['order'] = $order;
         $this->user_filters['s']     = $search;
 
+        $localized_post_data = [];
         $posts = $this->getPostsForPostType($postType, $this->user_filters);
         $sortableColumns = $this->getSortableColumns();
 
@@ -2562,6 +2468,11 @@ class PP_Content_Overview extends PP_Module
                         <tbody>
                         <?php
                         foreach ($posts as $post) {
+                            if (Util::isPlannersProActive()) {
+                                $post_type_object = get_post_type_object($post->post_type);
+                                $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
+                                $localized_post_data = $this->localize_post_data($localized_post_data, $post, $can_edit_post);
+                            }
                             $this->print_post($post);
                         } ?>
                         </tbody>
@@ -2591,7 +2502,35 @@ class PP_Content_Overview extends PP_Module
             </div>
             </div>
         </div>
+        <div id="pp-content-overview-general-modal" style="display: none;">
+            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container"></div>
+        </div>
         <?php
+        
+        if (Util::isPlannersProActive()) {
+            
+            $localized_post_data['post_author_label']   = esc_html__('Author', 'publishpress');
+            $localized_post_data['post_date_label']     = esc_html__('Post Date', 'publishpress');
+            $localized_post_data['edit_label']          = esc_html__('Edit', 'publishpress');
+            $localized_post_data['delete_label']        = esc_html__('Trash', 'publishpress');
+            $localized_post_data['preview_label']       = esc_html__('Preview', 'publishpress');
+            $localized_post_data['view_label']          = esc_html__('View', 'publishpress');
+            $localized_post_data['prev_label']          = esc_html__('Previous Post', 'publishpress');
+            $localized_post_data['next_label']          = esc_html__('Next Post', 'publishpress');
+            $localized_post_data['post_status_label']   = esc_html__('Post Status', 'publishpress');
+            $localized_post_data['update_label']        = esc_html__('Save Changes', 'publishpress');
+            $localized_post_data['empty_term']          = esc_html__('Taxonomy not set.', 'publishpress');
+            $localized_post_data['date_format']         = pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format'));
+            $localized_post_data['week_first_day']      = esc_js(get_option('start_of_week'));
+            $localized_post_data['nonce']               = wp_create_nonce('content_overview_action_nonce');
+
+            wp_localize_script(
+                'publishpress-content_overview',
+                'PPContentOverviewPosts',
+                $localized_post_data
+            );
+        }
+
         // phpcs:enable
     }
 
@@ -2865,14 +2804,13 @@ class PP_Content_Overview extends PP_Module
     public function print_post($post)
     {
         ?>
-        <tr id='post-<?php
-        echo esc_attr($post->ID); ?>' valign="top">
+        <tr id="post-<?php echo esc_attr($post->ID); ?>" data-post_id="<?php echo esc_attr($post->ID); ?>" valign="top">
             <?php
             foreach ((array)$this->columns as $key => $name) {
                 if (!array_key_exists($key, $this->form_column_list) && $key !== 'post_title') {
                     continue;
                 }
-                echo '<td><div class="column-content">';
+                echo '<td><div class="column-content column-content-'. esc_attr($key) .'">';
                 if (method_exists($this, 'column_' . $key)) {
                     $method = 'column_' . $key;
                     echo $this->$method($post); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -3035,11 +2973,11 @@ class PP_Content_Overview extends PP_Module
         $post_type_object = get_post_type_object($post->post_type);
         $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
-            $output = '<strong class="title-column"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
+            $output = '<strong class="title-column post-title"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
                     $post_title
                 ) . '</a></strong>';
         } else {
-            $output = '<strong>' . esc_html($post_title) . '</strong>';
+            $output = '<strong class="post-title">' . esc_html($post_title) . '</strong>';
         }
 
         // Edit or Trash or View
