@@ -215,7 +215,10 @@ if (! class_exists('PP_Calendar')) {
                 'post_type_support' => 'pp_calendar',
                 'default_options' => [
                     'enabled' => 'on',
-                    'post_types' => $this->pre_select_all_post_types(),
+                    'post_types' => [
+                        'post' => 'on',
+                        'page' => 'off',
+                    ],
                     'ics_subscription' => 'on',
                     'ics_subscription_public_visibility' => 'off',
                     'ics_secret_key' => wp_generate_password(),
