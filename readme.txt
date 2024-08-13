@@ -125,7 +125,7 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [4.4.0] - 12 Aug 2024 =
+= [4.4.0] - 13 Aug 2024 =
 
 * Added : Add modal to Content Calendar and Content Overview screens, #1687
 * Remove : Remove "Make Viewable" in Editorial Fields, #1636
