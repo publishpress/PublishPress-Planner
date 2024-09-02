@@ -434,6 +434,13 @@ class PP_Content_Board extends PP_Module
             wp_enqueue_script('jquery-ui-sortable');
             
             wp_enqueue_script(
+                'publishpress-admin',
+                PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
+
+            wp_enqueue_script(
                 'publishpress-content_board',
                 $this->module_url . 'lib/content-board.js',
                 ['jquery', 'publishpress-date_picker', 'publishpress-select2', 'jquery-ui-sortable'],
@@ -625,6 +632,7 @@ class PP_Content_Board extends PP_Module
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'me_mode' => $this->filter_get_param('me_mode'),
+            'show_revision' => $this->filter_get_param('show_revision'),
         ];
 
         $editorial_metadata = $this->terms_options;
@@ -1887,6 +1895,7 @@ class PP_Content_Board extends PP_Module
                 <div class="item action me-mode-action <?php echo esc_attr($active_me_mode); ?>">
                     <span class="dashicons dashicons-admin-users"></span> <?php esc_html_e('Me Mode', 'publishpress'); ?>
                 </div>
+                <?php do_action('pp_content_board_filter_after_me_mode', $this->user_filters); ?>
                 <div class="item action co-filter" data-target="#content_board_modal_<?php echo esc_attr($modal_id); ?>">
                     <span class="dashicons dashicons-editor-table"></span> <?php esc_html_e('Customize Card Data', 'publishpress'); ?>
                 </div>
@@ -1937,6 +1946,7 @@ class PP_Content_Board extends PP_Module
         <div class="clear"></div>
         <form method="GET" id="pp-content-filters">
             <input type="hidden" name="page" value="pp-content-board"/>
+            <?php do_action('pp_content_board_filter_hidden_fields', $this->user_filters); ?>
             <input type="hidden" name="me_mode" id="content_board_me_mode" value="<?php echo esc_attr($me_mode); ?>" />
             <div class="pp-content-board-filters">
                 <?php
@@ -1992,6 +2002,7 @@ class PP_Content_Board extends PP_Module
                 <input type="hidden" name="cat" value=""/>
                 <input type="hidden" name="author" value=""/>
                 <input type="hidden" name="me_mode" value=""/>
+                <?php do_action('pp_content_board_filter_reset_hidden_fields', $this->user_filters); ?>
                 <input type="hidden" name="orderby" value="<?php
                     echo (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ?
                         esc_attr(sanitize_key($_GET['orderby'])) : 'post_date'; ?>"/>
@@ -2612,7 +2623,9 @@ class PP_Content_Board extends PP_Module
                                 $can_edit_post = current_user_can($post_type_object->cap->edit_post, $status_post->ID);
                                 $post_date = get_the_time(get_option("date_format"), $status_post->ID) . " " . get_the_time(get_option("time_format"), $status_post->ID);
 
-                                $post_title = _draft_or_post_title($status_post->ID);
+                                $post_title     = _draft_or_post_title($status_post->ID);
+                                $filtered_title = apply_filters('pp_content_board_post_title_html', $post_title, $status_post);
+                                $status_post->filtered_title = $filtered_title;
 
                                 if (Util::isPlannersProActive()) {
                                     $localized_post_data = $this->localize_post_data($localized_post_data, $status_post, $can_edit_post);
@@ -2628,11 +2641,9 @@ class PP_Content_Board extends PP_Module
                                         <div class="post-title post-'. esc_attr($status_post->ID) .'">';
 
                                                 if ($can_edit_post) {
-                                                    $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="'. esc_attr($post_title) .'">'. esc_html(
-                                                            $post_title
-                                                        ) . '</a></strong>';
+                                                    $title_output = '<strong class="post-title-text"><a href="'. esc_url(get_edit_post_link($status_post->ID)) . '" title="'. esc_attr($post_title) .'">'. $filtered_title . '</a></strong>';
                                                 } else {
-                                                    $title_output = '<strong class="post-title-text" title="'. esc_attr($post_title) .'">'. esc_html($post_title) . '</strong>';
+                                                    $title_output = '<strong class="post-title-text" title="'. esc_attr($post_title) .'">'. $filtered_title . '</strong>';
                                                 }
                                                 $statuses_content_markup .= $title_output;
                                             $statuses_content_markup .= '</div>';
@@ -2998,7 +3009,8 @@ class PP_Content_Board extends PP_Module
         }
 
         // Filter for an end user to implement any of their own query args
-        $args = apply_filters('PP_Content_Board_posts_query_args', $args);
+        $context = 'default';
+        $args = apply_filters('PP_Content_Board_posts_query_args', $args, $context, $enabled_filters, $this->user_filters);
 
         add_filter('posts_where', [$this, 'posts_where_range']);
         $term_posts_query_results = new WP_Query($args);

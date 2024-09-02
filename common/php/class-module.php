@@ -1050,6 +1050,7 @@ if (!class_exists('PP_Module')) {
                 'post_id'          => $post->ID,
                 'post_title'       => $post_title,
                 'raw_title'        => $post->post_title,
+                'filtered_title'   => isset($post->filtered_title) ? $post->filtered_title : $post->post_title,
                 'post_status'      => $post->post_status,
                 'status_label'     => $this->get_post_status_friendly_name($post->post_status),
                 'can_edit_post'    => $can_edit_post ? 1 : 0,
