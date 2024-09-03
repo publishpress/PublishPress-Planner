@@ -2106,8 +2106,9 @@ if (! class_exists('PP_Calendar')) {
                             $filter_index = 0;
                             foreach ($filters as $filter_group => $filter_datas) : 
                             $filter_index++;
+                            $hidden_style = empty($filter_datas['filters']) ? 'display: none;' : '';
                             ?>
-                                <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>">
+                                <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>">
                                     <div class="title-text"><?php echo esc_html($filter_datas['title']); ?></div>
                                     <?php if ($filter_group === 'custom') : ?>
                                         <div class="title-action new-item">
@@ -2136,7 +2137,7 @@ if (! class_exists('PP_Calendar')) {
                                     </div>
                                 <?php endif; ?>
                                 <?php if (empty($filter_datas['filters'])) : ?>
-                                    <div class="item-group-empty <?php echo esc_attr($filter_group); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
+                                    <div class="item-group-empty <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
                                 <?php else : ?>
                                     <?php foreach ($filter_datas['filters'] as $filter_name => $filter_label) : 
                                         $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
