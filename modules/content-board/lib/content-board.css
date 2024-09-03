@@ -238,6 +238,10 @@
     -webkit-line-clamp: 1;
 }
 
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title .post-title-text .pp-title-tooltip {
+    color: #b95c00;
+}
+
 .content-board-table-wrap .board-content .content-item .content-item-post .post-meta {
     display: flex;
     justify-content: space-between;
@@ -393,7 +397,6 @@
     text-overflow: ellipsis;
     text-overflow: ellipsis;
     max-width: 150px;
-    display: inline-block;
     vertical-align: middle;
     max-height: 1.5rem;
     border: 1px solid rgb(204, 201, 250);
