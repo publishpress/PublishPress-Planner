@@ -41,6 +41,38 @@
     font-style: normal;
 }
 
+.pp-title-tooltip {
+    cursor: help;
+    position: relative;
+}
+
+.pp-title-tooltip-text {
+    display: none;
+    position: absolute;
+    background-color: #3c434a;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0px 4px 8px rgb(255, 255, 255);
+}
+
+.pp-title-tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+    box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
 [class^="pp-icon-"]:before,
 [class*=" pp-icon-"]:before {
     font-family: "publishpress" !important;
