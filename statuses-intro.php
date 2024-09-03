@@ -125,41 +125,6 @@ if (is_admin()) {
                                     }
                                 );
                             }
-
-                            add_action(
-                                'all_admin_notices',
-                                function() {
-                                    global $current_user;
-
-                                    $statuses_info = publishpress_statuses_info();
-
-                                    $settings_url = (current_user_can('manage_options')) ? admin_url('admin.php?page=pp-modules-settings') : '#';
-
-                                    echo "<div id='message' class='error pp-admin-notice'>";
-
-                                    if (!empty($statuses_info['statuses_installed'])) {
-                                        printf(
-                                            esc_html__('Custom statuses are disabled until you activate the %1$sPublishPress Statuses%2$s plugin. See %3$sPlanner > Settings%4$s for details.', 'publishpress'),
-                                            '<a href="' . esc_url($statuses_info['info_url']) . '">',
-                                            '</a>',
-                                            '<a href="' . esc_url($settings_url) . '">',
-                                            '</a>'
-                                        );
-                                    } else {
-                                        printf(
-                                            esc_html__('Custom statuses are disabled until you install the %1$sPublishPress Statuses%2$s plugin. See %3$sPlanner > Settings%4$s for details.', 'publishpress'),
-                                            '<a href="' . esc_url($statuses_info['info_url']) . '" class="thickbox">',
-                                            '</a>',
-                                            '<a href="' . esc_url($settings_url) . '">',
-                                            '</a>'
-                                        );
-                                    }
-
-                                    echo '</div>';
-
-                                    update_user_option($current_user->ID, 'publishpress_planner_statuses_notice_done', true);
-                                }
-                            );
                         }
                     }
                 }
