@@ -761,32 +761,34 @@ if (! class_exists('PP_Editorial_Metadata')) {
             $ordered_terms = [];
             $hold_to_end = [];
             // Order the terms
-            foreach ($terms as $key => $term) {
-                // Unencode and set all of our pseudo term meta because we need the position and viewable if they exists
-                // First do an array_merge() on the term object to make sure the keys exist, then array_merge()
-                // any values that may already exist
-                $unencoded_description = $this->get_unencoded_description($term->description);
-                $defaults = [
-                    'description' => '',
-                    'position' => false,
-                    'show_in_calendar_form' => false,
-                ];
-                $term = array_merge($defaults, (array)$term);
-                if (is_array($unencoded_description)) {
-                    $term = array_merge($term, $unencoded_description);
-                }
-                $term = (object)$term;
-                // We used to store the description field in a funny way
-                if (isset($term->desc)) {
-                    $term->description = $term->desc;
-                    unset($term->desc);
-                }
-                // Only add the term to the ordered array if it has a set position and doesn't conflict with another key
-                // Otherwise, hold it for later
-                if ($term->position && ! array_key_exists($term->position, $ordered_terms)) {
-                    $ordered_terms[(int)$term->position] = $term;
-                } else {
-                    $hold_to_end[] = $term;
+            if (!is_wp_error($terms)) {
+                foreach ($terms as $key => $term) {
+                    // Unencode and set all of our pseudo term meta because we need the position and viewable if they exists
+                    // First do an array_merge() on the term object to make sure the keys exist, then array_merge()
+                    // any values that may already exist
+                    $unencoded_description = $this->get_unencoded_description($term->description);
+                    $defaults = [
+                        'description' => '',
+                        'position' => false,
+                        'show_in_calendar_form' => false,
+                    ];
+                    $term = array_merge($defaults, (array)$term);
+                    if (is_array($unencoded_description)) {
+                        $term = array_merge($term, $unencoded_description);
+                    }
+                    $term = (object)$term;
+                    // We used to store the description field in a funny way
+                    if (isset($term->desc)) {
+                        $term->description = $term->desc;
+                        unset($term->desc);
+                    }
+                    // Only add the term to the ordered array if it has a set position and doesn't conflict with another key
+                    // Otherwise, hold it for later
+                    if ($term->position && ! array_key_exists($term->position, $ordered_terms)) {
+                        $ordered_terms[(int)$term->position] = $term;
+                    } else {
+                        $hold_to_end[] = $term;
+                    }
                 }
             }
             // Sort the items numerically by key

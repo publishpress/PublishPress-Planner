@@ -320,13 +320,13 @@ export function openPostModal(post_id) {
 
         if (previous_post.post_id != post.post_id) {
             popup_header += '<div class="pp-modal-navigation-prev">';
-            popup_header += '<a title="' + publishpressCalendarParams.strings.prev_label + '" href="#" class="modal-nav-prev" data-post_id="' + previous_post.post_id + '"><span class="dashicons dashicons-arrow-left-alt"></span> ' + previous_post.post_title + '</a>';
+            popup_header += '<a title="' + publishpressCalendarParams.strings.prev_label + '" href="#" class="modal-nav-prev" data-post_id="' + previous_post.post_id + '"><span class="dashicons dashicons-arrow-left-alt"></span> ' + previous_post.filtered_title + '</a>';
             popup_header += '</div>';
         }
 
         if (next_post.post_id != post.post_id) {
             popup_header += '<div class="pp-modal-navigation-next">';
-            popup_header += '<a title="' + publishpressCalendarParams.strings.next_label + '" href="#" class="modal-nav-next" data-post_id="' + next_post.post_id + '">' + next_post.post_title + ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
+            popup_header += '<a title="' + publishpressCalendarParams.strings.next_label + '" href="#" class="modal-nav-next" data-post_id="' + next_post.post_id + '">' + next_post.filtered_title + ' <span class="dashicons dashicons-arrow-right-alt"></span></a>';
             popup_header += '</div>';
         }
 
@@ -536,6 +536,37 @@ export function init_date_time_picker() {
         self.datetimepicker(options);
     });
 }
+    
+export function initToolTips() {
+    jQuery('.pp-title-tooltip').each(function() {
+        var $this = jQuery(this);
+        var titleText = $this.attr('title');
+
+        if (titleText && titleText !== '') {
+            $this.removeAttr('title');
+
+            var $tooltip = jQuery('<div class="pp-title-tooltip-text"></div>').text(titleText);
+            jQuery('body').append($tooltip);
+
+            $this.hover(function() {
+                $tooltip.show();
+
+                // Adjust the tooltip position to account for the arrow
+                var tooltipTop = $this.offset().top - $tooltip.outerHeight() - 10; // Position 10px above the element
+                var tooltipLeft = $this.offset().left + ($this.outerWidth() / 2) - ($tooltip.outerWidth() / 2);
+
+                $tooltip.css({
+                    top: tooltipTop + 'px',
+                    left: tooltipLeft + 'px',
+                    position: 'absolute'
+                });
+            }, function() {
+                $tooltip.hide();
+            });
+        }
+    });
+}
+
 
 export function getOptions (self, custom_options) {
   var default_options = {

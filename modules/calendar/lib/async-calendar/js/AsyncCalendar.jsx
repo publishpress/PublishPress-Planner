@@ -2,7 +2,7 @@ import NavigationBar from "./NavigationBar";
 import WeekDays from "./WeekDays";
 import MessageBar from "./MessageBar";
 import DayCell from "./DayCell";
-import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat, getDateInstanceFromString, addCalendarPosts, openPostModal, adjustTextareaHeight, updateModalPost} from "./Functions";
+import {calculateWeeksInMilliseconds, getBeginDateOfWeekByDate, getDateAsStringInWpFormat, getDateInstanceFromString, addCalendarPosts, openPostModal, adjustTextareaHeight, updateModalPost, initToolTips} from "./Functions";
 import FilterBar from "./FilterBar";
 import ItemFormPopup from "./ItemFormPopup";
 
@@ -81,6 +81,23 @@ export default function AsyncCalendar(props) {
         document.querySelector('#filter_author').value = '';
         document.querySelector('#pp-content-filters #content_calendar_me_mode').value = new_value;
     };
+
+    const onShowRevisionClick = (event) => { 
+        event.preventDefault();
+        let new_value = '';
+        
+        if (event.target.classList.contains('active-filter')) {
+            new_value = 0;
+            event.target.classList.remove('active-filter');
+        } else {
+            new_value = 1;
+            event.target.classList.add('active-filter');
+        }
+
+        onFilterEventCallback('show_revision', new_value);
+
+        document.querySelector('#pp-content-filters #pp_show_revision_input').value = new_value;
+    };
     
     const onSearchClick = (event) => {
         let selectElement = event.target;
@@ -133,6 +150,7 @@ export default function AsyncCalendar(props) {
         $(document).on('click', '.metadata-item-filter .filter-apply input[type=submit]', onFilterApplyClick);
         $(document).on('click', '.pp-content-calendar-manage .search-bar input[type=submit]', onSearchClick);
         $(document).on('click', '.pp-content-calendar-manage .me-mode-action', onMeModeClick);
+        $(document).on('click', '.pp-content-calendar-manage .pp-show-revision-btn', onShowRevisionClick);
         $(document).on('click', '.pp-popup-modal-header .modal-nav-prev, .pp-popup-modal-header .modal-nav-next', onModalNavClick);
         $(document).on('input', '.pp-content-calendar-general-modal-container .modal-post-title .title-area', adjustTextareaHeight);
         $(document).on('click', '.pp-content-calendar-general-modal-container .modal-content-right .save-post-changes:not(.disabled)', function(e) {
@@ -193,6 +211,7 @@ export default function AsyncCalendar(props) {
                 setMessage(null);
 
                 resetCSSClasses();
+                initToolTips();
             });
     };
 
