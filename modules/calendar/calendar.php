@@ -1219,6 +1219,12 @@ if (! class_exists('PP_Calendar')) {
          */
         public function update_user_filters($request_filter = [])
         {
+            global $pp_calendar_user_filters;
+
+            if (is_array($pp_calendar_user_filters)) {
+                return $pp_calendar_user_filters;
+            }
+
             $user_filters = [
                 'weeks'         => '',
                 'start_date'    => '',
@@ -1329,6 +1335,8 @@ if (! class_exists('PP_Calendar')) {
             $user_filters = apply_filters('pp_content_calendar_filter_values', $user_filters, $current_user_filters);
 
             $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+
+            $pp_calendar_user_filters = $user_filters;
 
             return $user_filters;
         }
