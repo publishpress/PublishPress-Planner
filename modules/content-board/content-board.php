@@ -626,6 +626,12 @@ class PP_Content_Board extends PP_Module
      */
     public function update_user_filters()
     {
+        global $pp_content_board_user_filters;
+
+        if (is_array($pp_content_board_user_filters)) {
+            return $pp_content_board_user_filters;
+        }
+
         $current_user = wp_get_current_user();
 
         $user_filters = [
@@ -696,6 +702,8 @@ class PP_Content_Board extends PP_Module
         $user_filters = apply_filters('PP_Content_Board_filter_values', $user_filters, $current_user_filters);
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+
+        $pp_content_board_user_filters = $user_filters;
 
         return $user_filters;
     }
@@ -3200,6 +3208,12 @@ class PP_Content_Board extends PP_Module
      */
     public function get_user_filters()
     {
+        global $pp_content_board_user_filters;
+
+        if (is_array($pp_content_board_user_filters)) {
+            return $pp_content_board_user_filters;
+        }
+        
         $current_user = wp_get_current_user();
         $user_filters = [];
         $user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
