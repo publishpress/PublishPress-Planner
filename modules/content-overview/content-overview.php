@@ -2564,6 +2564,9 @@ class PP_Content_Overview extends PP_Module
             'post_title',
             'post_date',
             'post_modified',
+            'post_type',
+            'post_status',
+            'post_author',
         ];
 
         return apply_filters('publishpress_content_overview_sortable_columns', $sortableColumns);
