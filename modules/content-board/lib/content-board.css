@@ -436,9 +436,14 @@
     padding-bottom: 5px;
 }
 
+.content-board-form-table .misc-pub-section {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .content-board-form-table input[type="text"], 
 .content-board-form-table textarea, 
-.content-board-form-table select {
+.content-board-form-table select:not(#mm) {
     width: 250px;
 }
 

@@ -944,6 +944,31 @@ class PP_Content_Overview extends PP_Module
                     'post_status' => $status
                 ];
 
+                // set post date
+                if ( ! empty( $_POST['mm'] ) ) {
+                    $aa = sanitize_text_field($_POST['aa']);
+                    $mm = sanitize_text_field($_POST['mm']);
+                    $jj = sanitize_text_field($_POST['jj']);
+                    $hh = sanitize_text_field($_POST['hh']);
+                    $mn = sanitize_text_field($_POST['mn']);
+                    $ss = sanitize_text_field($_POST['ss']);
+                    $aa = ( $aa <= 0 ) ? gmdate( 'Y' ) : $aa;
+                    $mm = ( $mm <= 0 ) ? gmdate( 'n' ) : $mm;
+                    $jj = ( $jj > 31 ) ? 31 : $jj;
+                    $jj = ( $jj <= 0 ) ? gmdate( 'j' ) : $jj;
+                    $hh = ( $hh > 23 ) ? $hh - 24 : $hh;
+                    $mn = ( $mn > 59 ) ? $mn - 60 : $mn;
+                    $ss = ( $ss > 59 ) ? $ss - 60 : $ss;
+            
+                    
+                    $post_date = sprintf( '%04d-%02d-%02d %02d:%02d:%02d', $aa, $mm, $jj, $hh, $mn, $ss );
+                    $valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
+                    if ($valid_date ) {
+                        $postArgs['post_date'] = $post_date;
+                        $postArgs['post_date_gmt'] = get_gmt_from_date( $post_date );
+                    }
+                }
+
                 $postId = wp_insert_post($postArgs);
 
                 if ($postId) {
@@ -1709,6 +1734,12 @@ class PP_Content_Overview extends PP_Module
                 'value' => 'draft',
                 'type' => 'status',
                 'options' => $this->getUserAuthorizedPostStatusOptions($postType)
+            ],
+            'pdate' => [
+                'label' => __('Publish Date', 'publishpress'),
+                'value' => 'immediately',
+                'type' => 'pdate',
+                'html' => $this->get_publish_date_markup()
             ]
         ];
 
