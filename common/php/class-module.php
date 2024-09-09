@@ -1178,5 +1178,101 @@ if (!class_exists('PP_Module')) {
             }
         }
 
+        public function get_publish_date_markup() {
+            ob_start();
+            ?>
+			<div class="misc-pub-section curtime misc-pub-curtime">
+				<fieldset id="timestampdiv">
+					<?php $this->touch_time(); ?>
+				</fieldset>
+			</div>
+            <?php
+            $publish_date_markup = ob_get_clean();
+            return $publish_date_markup;
+        }
+
+        public function touch_time( $tab_index = 0, $multi = 0 ) {
+            global $wp_locale;
+        
+            $tab_index_attribute = '';
+            if ( (int) $tab_index > 0 ) {
+                $tab_index_attribute = " tabindex=\"$tab_index\"";
+            }
+        
+            $jj        = current_time( 'd' );
+            $mm        = current_time( 'm' );
+            $aa        = current_time( 'Y' );
+            $hh        = current_time( 'H' );
+            $mn        = current_time( 'i' );
+            $ss        = current_time( 's' );
+        
+            $cur_jj = current_time( 'd' );
+            $cur_mm = current_time( 'm' );
+            $cur_aa = current_time( 'Y' );
+            $cur_hh = current_time( 'H' );
+            $cur_mn = current_time( 'i' );
+        
+            $month = '<label><span class="screen-reader-text">' .
+                /* translators: Hidden accessibility text. */
+                __( 'Month' ) .
+            '</span><select class="form-required" ' . ( $multi ? '' : 'id="mm" ' ) . 'name="mm"' . $tab_index_attribute . ">\n";
+            for ( $i = 1; $i < 13; $i = $i + 1 ) {
+                $monthnum  = zeroise( $i, 2 );
+                $monthtext = $wp_locale->get_month_abbrev( $wp_locale->get_month( $i ) );
+                $month    .= "\t\t\t" . '<option value="' . $monthnum . '" data-text="' . $monthtext . '" ' . selected( $monthnum, $mm, false ) . '>';
+                /* translators: 1: Month number (01, 02, etc.), 2: Month abbreviation. */
+                $month .= sprintf( __( '%1$s-%2$s' ), $monthnum, $monthtext ) . "</option>\n";
+            }
+            $month .= '</select></label>';
+        
+            $day = '<label><span class="screen-reader-text">' .
+                /* translators: Hidden accessibility text. */
+                __( 'Day' ) .
+            '</span><input type="text" ' . ( $multi ? '' : 'id="jj" ' ) . 'name="jj" value="' . $jj . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
+            $year = '<label><span class="screen-reader-text">' .
+                /* translators: Hidden accessibility text. */
+                __( 'Year' ) .
+            '</span><input type="text" ' . ( $multi ? '' : 'id="aa" ' ) . 'name="aa" value="' . $aa . '" size="4" maxlength="4"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
+            $hour = '<label><span class="screen-reader-text">' .
+                /* translators: Hidden accessibility text. */
+                __( 'Hour' ) .
+            '</span><input type="text" ' . ( $multi ? '' : 'id="hh" ' ) . 'name="hh" value="' . $hh . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
+            $minute = '<label><span class="screen-reader-text">' .
+                /* translators: Hidden accessibility text. */
+                __( 'Minute' ) .
+            '</span><input type="text" ' . ( $multi ? '' : 'id="mn" ' ) . 'name="mn" value="' . $mn . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
+        
+            echo '<div class="timestamp-wrap">';
+            /* translators: 1: Month, 2: Day, 3: Year, 4: Hour, 5: Minute. */
+            printf( __( '%1$s %2$s, %3$s at %4$s:%5$s' ), $month, $day, $year, $hour, $minute );
+        
+            echo '</div><input type="hidden" id="ss" name="ss" value="' . $ss . '" />';
+        
+            if ( $multi ) {
+                return;
+            }
+        
+            echo "\n\n";
+        
+            $map = array(
+                'mm' => array( $mm, $cur_mm ),
+                'jj' => array( $jj, $cur_jj ),
+                'aa' => array( $aa, $cur_aa ),
+                'hh' => array( $hh, $cur_hh ),
+                'mn' => array( $mn, $cur_mn ),
+            );
+        
+            foreach ( $map as $timeunit => $value ) {
+                list( $unit, $curr ) = $value;
+        
+                echo '<input type="hidden" id="hidden_' . $timeunit . '" name="hidden_' . $timeunit . '" value="' . $unit . '" />' . "\n";
+                $cur_timeunit = 'cur_' . $timeunit;
+                echo '<input type="hidden" id="' . $cur_timeunit . '" name="' . $cur_timeunit . '" value="' . $curr . '" />' . "\n";
+            }
+            ?>
+            <?php
+        }
+        
+
     }
 }

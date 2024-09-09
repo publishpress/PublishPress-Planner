@@ -161,9 +161,14 @@ table.content-overview thead td {
     padding-bottom: 5px;
 }
 
+.content-overview-form-table .misc-pub-section {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .content-overview-form-table input[type="text"], 
 .content-overview-form-table textarea, 
-.content-overview-form-table select {
+.content-overview-form-table select:not(#mm) {
     width: 250px;
 }
 
