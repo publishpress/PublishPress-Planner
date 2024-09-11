@@ -76,6 +76,7 @@ class Email extends Base implements Channel_Interface
 
         // Send the emails
         $emailAddress = $this->get_receiver_email($receiverData['receiver']);
+
         $action       = 'transition_post_status' === $workflow->event_args['event'] ? 'status-change' : 'comment';
 
         $subject = html_entity_decode($content['subject']);
