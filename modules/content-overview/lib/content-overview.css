@@ -122,7 +122,6 @@ table.content-overview thead td {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;
-    display: inline-block;
     vertical-align: middle;
     max-height: 1.5rem;
     border: 1px solid rgb(204, 201, 250);
@@ -162,9 +161,14 @@ table.content-overview thead td {
     padding-bottom: 5px;
 }
 
+.content-overview-form-table .misc-pub-section {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .content-overview-form-table input[type="text"], 
 .content-overview-form-table textarea, 
-.content-overview-form-table select {
+.content-overview-form-table select:not(#mm) {
     width: 250px;
 }
 
@@ -582,6 +586,10 @@ table.content-overview tbody th .column-content {
     text-overflow: ellipsis;
     max-height: 60px;
     max-width: 300px;
+}
+
+table.content-overview tbody td .column-content  .pp-title-tooltip {
+    color: #b95c00;
 }
 
 table.content-overview tbody td .column-content .expanded {

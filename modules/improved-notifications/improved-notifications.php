@@ -36,6 +36,7 @@ use PublishPress\Notifications\Workflow\Step\Content\Main as Content_Main;
 use PublishPress\Notifications\Workflow\Step\Event\Editorial_Comment as Event_Editorial_Comment;
 use PublishPress\Notifications\Workflow\Step\Event\Filter\Post_Status as Filter_Post_Status;
 use PublishPress\Notifications\Workflow\Step\Event\Post_StatusTransition;
+use PublishPress\Notifications\Workflow\Step\Event\Post_TaxonomyUpdate;
 use PublishPress\Notifications\Workflow\Step\Event\Post_Update;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Filter\Post_Type as Post_Type_Filter;
 use PublishPress\Notifications\Workflow\Step\Event_Content\Post_Type;
@@ -162,6 +163,9 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             // Add action to intercep new editorial comments
             add_action('pp_post_insert_editorial_comment', [$this, 'action_editorial_comment'], 999, 3);
+
+            // Add action to intercep taxonomy term update
+            add_action('set_object_terms', [$this, 'action_post_taxonomy_update'], 999, 4);
 
 
             add_filter(
@@ -690,18 +694,37 @@ if (! class_exists('PP_Improved_Notifications')) {
         }
 
         /**
-         * @param $post_type
+         * Action called on taxonomy term update. Used to trigger the
+         * controller of workflows to filter and execute them.
          *
-         * @return bool
+         * @param int $object_id
+         * @param array $terms An array of object term IDs or slugs.
+         * @param array $tt_ids An array of term taxonomy IDs.
+         * @param string $taxonomy Taxonomy slug.
+         * @return void
+         *
          * @throws Exception
          */
-        private function is_supported_post_type($post_type)
+        public function action_post_taxonomy_update($object_id, $terms, $tt_ids, $taxonomy)
         {
-            $publishpress = $this->get_service('publishpress');
+            // Go ahead and do the action to run workflows
+            $post = get_post($object_id);
 
-            $supportedPostTypes = $publishpress->improved_notifications->get_all_post_types();
+            if (!is_object($post) || !isset($post->post_type) || ! $this->is_supported_post_type($post->post_type)) {
+                return;
+            }
 
-            return array_key_exists($post_type, $supportedPostTypes);
+            $params = [
+                'event' => Post_TaxonomyUpdate::EVENT_NAME,
+                'user_id' => get_current_user_id(),
+                'params' => [
+                    'post_id'   => (int)$post->ID,
+                    'terms'     => $terms,
+                    'taxonomy'  => $taxonomy,
+                ],
+            ];
+
+            do_action('publishpress_notifications_trigger_workflows', $params);
         }
 
         /**
@@ -731,6 +754,21 @@ if (! class_exists('PP_Improved_Notifications')) {
             ];
 
             do_action('publishpress_notifications_trigger_workflows', $params);
+        }
+
+        /**
+         * @param $post_type
+         *
+         * @return bool
+         * @throws Exception
+         */
+        private function is_supported_post_type($post_type)
+        {
+            $publishpress = $this->get_service('publishpress');
+
+            $supportedPostTypes = $publishpress->improved_notifications->get_all_post_types();
+
+            return array_key_exists($post_type, $supportedPostTypes);
         }
 
         /**
@@ -1176,6 +1214,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 $query = new WP_Query($query_args);
 
                 $this->workflows[$hash] = $query->posts;
+
             }
 
             return $this->workflows[$hash];

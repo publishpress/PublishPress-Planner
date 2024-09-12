@@ -238,6 +238,10 @@
     -webkit-line-clamp: 1;
 }
 
+.content-board-table-wrap .board-content .content-item .content-item-post .post-title .post-title-text .pp-title-tooltip {
+    color: #b95c00;
+}
+
 .content-board-table-wrap .board-content .content-item .content-item-post .post-meta {
     display: flex;
     justify-content: space-between;
@@ -393,7 +397,6 @@
     text-overflow: ellipsis;
     text-overflow: ellipsis;
     max-width: 150px;
-    display: inline-block;
     vertical-align: middle;
     max-height: 1.5rem;
     border: 1px solid rgb(204, 201, 250);
@@ -433,9 +436,14 @@
     padding-bottom: 5px;
 }
 
+.content-board-form-table .misc-pub-section {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .content-board-form-table input[type="text"], 
 .content-board-form-table textarea, 
-.content-board-form-table select {
+.content-board-form-table select:not(#mm) {
     width: 250px;
 }
 

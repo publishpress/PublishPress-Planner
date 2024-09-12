@@ -623,6 +623,14 @@ if (! class_exists('PP_Calendar')) {
                     PUBLISHPRESS_VERSION,
                     true
                 );
+            
+                wp_enqueue_script(
+                    'publishpress-admin',
+                    PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+                
                 wp_enqueue_script(
                     'publishpress-calendar-js',
                     $this->module_url . 'lib/calendar.js',
@@ -1211,10 +1219,17 @@ if (! class_exists('PP_Calendar')) {
          */
         public function update_user_filters($request_filter = [])
         {
+            global $pp_calendar_user_filters;
+
+            if (is_array($pp_calendar_user_filters)) {
+                return $pp_calendar_user_filters;
+            }
+
             $user_filters = [
                 'weeks'         => '',
                 'start_date'    => '',
                 'me_mode'       => '',
+                'show_revision'       => '',
                 's'             => '',
                 'post_status'   => '',
             ];
@@ -1247,6 +1262,7 @@ if (! class_exists('PP_Calendar')) {
                 'weeks'         => __('Weeks', 'publishpress'),
                 'start_date'    => __('Start Date', 'publishpress'),
                 'me_mode'       => __('Me Mode', 'publishpress'),
+                'show_revision' => __('Show Revision', 'publishpress'),
                 's'             =>  __('Search', 'publishpress'),
             ], $this->filters);
             
@@ -1319,6 +1335,8 @@ if (! class_exists('PP_Calendar')) {
             $user_filters = apply_filters('pp_content_calendar_filter_values', $user_filters, $current_user_filters);
 
             $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+
+            $pp_calendar_user_filters = $user_filters;
 
             return $user_filters;
         }
@@ -1804,6 +1822,7 @@ if (! class_exists('PP_Calendar')) {
                         data-label="<?php esc_html_e('Me Mode', 'publishpress'); ?>">
                         <span class="dashicons dashicons-admin-users"></span> <?php esc_html_e('Me Mode', 'publishpress'); ?>
                     </div>
+                    <?php do_action('pp_content_calendar_filter_after_me_mode', $this->user_filters); ?>
                     <?php $modal_id++; ?>
                     <div class="item action co-filter" data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>">
                         <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Customize Filters', 'publishpress'); ?>
@@ -1828,6 +1847,7 @@ if (! class_exists('PP_Calendar')) {
             <form method="GET" id="pp-content-filters" class="pp-content-filters">
                 <input type="hidden" name="page" value="pp-content-calendar"/>
                 <input type="hidden" name="me_mode" id="content_calendar_me_mode" value="<?php echo esc_attr($me_mode); ?>" />
+                <?php do_action('pp_content_calendar_filter_hidden_fields', $this->user_filters); ?>
                 <div class="pp-content-calendar-filters">
                     <?php
                     $filter_weeks = isset($this->user_filters['weeks']) ? (int)$this->user_filters['weeks'] : self::DEFAULT_NUM_WEEKS;
@@ -2094,8 +2114,9 @@ if (! class_exists('PP_Calendar')) {
                             $filter_index = 0;
                             foreach ($filters as $filter_group => $filter_datas) : 
                             $filter_index++;
+                            $hidden_style = empty($filter_datas['filters']) ? 'display: none;' : '';
                             ?>
-                                <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>">
+                                <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>">
                                     <div class="title-text"><?php echo esc_html($filter_datas['title']); ?></div>
                                     <?php if ($filter_group === 'custom') : ?>
                                         <div class="title-action new-item">
@@ -2124,7 +2145,7 @@ if (! class_exists('PP_Calendar')) {
                                     </div>
                                 <?php endif; ?>
                                 <?php if (empty($filter_datas['filters'])) : ?>
-                                    <div class="item-group-empty <?php echo esc_attr($filter_group); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
+                                    <div class="item-group-empty <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
                                 <?php else : ?>
                                     <?php foreach ($filter_datas['filters'] as $filter_name => $filter_label) : 
                                         $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
@@ -3337,12 +3358,11 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Filter for an end user to implement any of their own query args
-            $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
+            $args = apply_filters('pp_calendar_posts_query_args', $args, $context, $enabled_filters, $this->user_filters);
 
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-
             $post_results = new WP_Query($args);
 
             $posts = [];
@@ -4341,12 +4361,17 @@ if (! class_exists('PP_Calendar')) {
 
         private function extractPostDataForTheCalendar($post)
         {
+            
+
+            $filtered_title = apply_filters('pp_calendar_post_title_html', $post->post_title, $post);
+            $post->filtered_title = $filtered_title;
+
             $postTypeOptions = $this->get_post_status_options($post->post_status);
             $postTypeObject = $this->getPostTypeObject($post->post_type);
             $canEdit = current_user_can($postTypeObject->cap->edit_post, $post->ID);
 
             $data = [
-                'label' => esc_html($post->post_title),
+                'label' => $filtered_title,
                 'id' => (int)$post->ID,
                 'timestamp' => esc_attr($post->post_date),
                 'icon' => esc_attr($postTypeOptions['icon']),

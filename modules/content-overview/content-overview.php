@@ -454,6 +454,14 @@ class PP_Content_Overview extends PP_Module
         if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
             $this->enqueue_datepicker_resources();
+            
+            wp_enqueue_script(
+                'publishpress-admin',
+                PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
+
             wp_enqueue_script(
                 'publishpress-content_overview',
                 $this->module_url . 'lib/content-overview.js',
@@ -637,12 +645,19 @@ class PP_Content_Overview extends PP_Module
      */
     public function update_user_filters()
     {
+        global $pp_content_overview_user_filters;
+
+        if (is_array($pp_content_overview_user_filters)) {
+            return $pp_content_overview_user_filters;
+        }
+
         $current_user = wp_get_current_user();
 
         $user_filters = [
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'me_mode' => $this->filter_get_param('me_mode'),
+            'show_revision' => $this->filter_get_param('show_revision'),
         ];
 
         $editorial_metadata = $this->terms_options;
@@ -706,6 +721,8 @@ class PP_Content_Overview extends PP_Module
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
+
+        $pp_content_overview_user_filters = $user_filters;
 
         return $user_filters;
     }
@@ -926,6 +943,31 @@ class PP_Content_Overview extends PP_Module
                     'post_type' => $postType,
                     'post_status' => $status
                 ];
+
+                // set post date
+                if ( ! empty( $_POST['mm'] ) ) {
+                    $aa = sanitize_text_field($_POST['aa']);
+                    $mm = sanitize_text_field($_POST['mm']);
+                    $jj = sanitize_text_field($_POST['jj']);
+                    $hh = sanitize_text_field($_POST['hh']);
+                    $mn = sanitize_text_field($_POST['mn']);
+                    $ss = sanitize_text_field($_POST['ss']);
+                    $aa = ( $aa <= 0 ) ? gmdate( 'Y' ) : $aa;
+                    $mm = ( $mm <= 0 ) ? gmdate( 'n' ) : $mm;
+                    $jj = ( $jj > 31 ) ? 31 : $jj;
+                    $jj = ( $jj <= 0 ) ? gmdate( 'j' ) : $jj;
+                    $hh = ( $hh > 23 ) ? $hh - 24 : $hh;
+                    $mn = ( $mn > 59 ) ? $mn - 60 : $mn;
+                    $ss = ( $ss > 59 ) ? $ss - 60 : $ss;
+            
+                    
+                    $post_date = sprintf( '%04d-%02d-%02d %02d:%02d:%02d', $aa, $mm, $jj, $hh, $mn, $ss );
+                    $valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
+                    if ($valid_date ) {
+                        $postArgs['post_date'] = $post_date;
+                        $postArgs['post_date_gmt'] = get_gmt_from_date( $post_date );
+                    }
+                }
 
                 $postId = wp_insert_post($postArgs);
 
@@ -1218,8 +1260,9 @@ class PP_Content_Overview extends PP_Module
                         $column_index = 0;
                         foreach ($columns as $column_group => $column_datas) : 
                         $column_index++;
+                        $hidden_style = empty($column_datas['columns']) ? 'display: none;' : '';
                         ?>
-                            <div class="customize-group-title title-index-<?php echo esc_attr($column_index); ?> <?php echo esc_attr($column_group); ?>">
+                            <div class="customize-group-title title-index-<?php echo esc_attr($column_index); ?> <?php echo esc_attr($column_group); ?>" style="<?php echo esc_attr($hidden_style); ?>">
                                 <div class="title-text"><?php echo esc_html($column_datas['title']); ?></div>
                                 <?php if ($column_group === 'custom') : ?>
                                     <div class="title-action new-item">
@@ -1248,7 +1291,7 @@ class PP_Content_Overview extends PP_Module
                                 </div>
                             <?php endif; ?>
                             <?php if (empty($column_datas['columns'])) : ?>
-                                <div class="item-group-empty <?php echo esc_attr($column_group); ?>"><?php echo esc_html($column_datas['message']); ?></div>
+                                <div class="item-group-empty <?php echo esc_attr($column_group); ?>" style="<?php echo esc_attr($hidden_style); ?>"><?php echo esc_html($column_datas['message']); ?></div>
                             <?php else : ?>
                                 <?php foreach ($column_datas['columns'] as $column_name => $column_label) : 
                                     $active_class = (in_array($column_name, $enabled_columns)) ? 'active-item' : '';
@@ -1366,8 +1409,9 @@ class PP_Content_Overview extends PP_Module
                         $filter_index = 0;
                         foreach ($filters as $filter_group => $filter_datas) : 
                         $filter_index++;
+                        $hidden_style = empty($filter_datas['filters']) ? 'display: none;' : '';
                         ?>
-                            <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>">
+                            <div class="customize-group-title title-index-<?php echo esc_attr($filter_index); ?> <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>">
                                 <div class="title-text"><?php echo esc_html($filter_datas['title']); ?></div>
                                 <?php if ($filter_group === 'custom') : ?>
                                     <div class="title-action new-item">
@@ -1396,7 +1440,7 @@ class PP_Content_Overview extends PP_Module
                                 </div>
                             <?php endif; ?>
                             <?php if (empty($filter_datas['filters'])) : ?>
-                                <div class="item-group-empty <?php echo esc_attr($filter_group); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
+                                <div class="item-group-empty <?php echo esc_attr($filter_group); ?>" style="<?php echo esc_attr($hidden_style); ?>"><?php echo esc_html($filter_datas['message']); ?></div>
                             <?php else : ?>
                                 <?php foreach ($filter_datas['filters'] as $filter_name => $filter_label) : 
                                     $active_class = (in_array($filter_name, $enabled_filters)) ? 'active-item' : '';
@@ -1690,6 +1734,12 @@ class PP_Content_Overview extends PP_Module
                 'value' => 'draft',
                 'type' => 'status',
                 'options' => $this->getUserAuthorizedPostStatusOptions($postType)
+            ],
+            'pdate' => [
+                'label' => __('Publish Date', 'publishpress'),
+                'value' => 'immediately',
+                'type' => 'pdate',
+                'html' => $this->get_publish_date_markup()
             ]
         ];
 
@@ -1823,6 +1873,7 @@ class PP_Content_Overview extends PP_Module
                 <div class="item action me-mode-action <?php echo esc_attr($active_me_mode); ?>">
                     <span class="dashicons dashicons-admin-users"></span> <?php esc_html_e('Me Mode', 'publishpress'); ?>
                 </div>
+                <?php do_action('pp_content_overview_filter_after_me_mode', $this->user_filters); ?>
                 <div class="item action co-filter" data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>">
                     <span class="dashicons dashicons-editor-table"></span> <?php esc_html_e('Customize Columns', 'publishpress'); ?>
                 </div>
@@ -1874,6 +1925,7 @@ class PP_Content_Overview extends PP_Module
         <form method="GET" id="pp-content-filters">
             <input type="hidden" name="page" value="pp-content-overview"/>
             <input type="hidden" name="me_mode" id="content_overview_me_mode" value="<?php echo esc_attr($me_mode); ?>" />
+            <?php do_action('pp_content_overview_filter_hidden_fields', $this->user_filters); ?>
             <div class="pp-content-overview-filters">
                 <?php
                 $filtered_start_date = $this->user_filters['start_date'];
@@ -1928,6 +1980,7 @@ class PP_Content_Overview extends PP_Module
                 <input type="hidden" name="cat" value=""/>
                 <input type="hidden" name="author" value=""/>
                 <input type="hidden" name="me_mode" value=""/>
+                <?php do_action('pp_content_overview_filter_reset_hidden_fields', $this->user_filters); ?>
                 <input type="hidden" name="orderby" value="<?php
                     echo (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ?
                         esc_attr(sanitize_key($_GET['orderby'])) : 'post_date'; ?>"/>
@@ -2468,6 +2521,8 @@ class PP_Content_Overview extends PP_Module
                         <tbody>
                         <?php
                         foreach ($posts as $post) {
+                            $filtered_title = apply_filters('pp_calendar_post_title_html', $post->post_title, $post);
+                            $post->filtered_title = $filtered_title;
                             if (Util::isPlannersProActive()) {
                                 $post_type_object = get_post_type_object($post->post_type);
                                 $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
@@ -2540,6 +2595,9 @@ class PP_Content_Overview extends PP_Module
             'post_title',
             'post_date',
             'post_modified',
+            'post_type',
+            'post_status',
+            'post_author',
         ];
 
         return apply_filters('publishpress_content_overview_sortable_columns', $sortableColumns);
@@ -2754,7 +2812,8 @@ class PP_Content_Overview extends PP_Module
         }
 
         // Filter for an end user to implement any of their own query args
-        $args = apply_filters('PP_Content_Overview_posts_query_args', $args);
+        $context = 'default';
+        $args = apply_filters('PP_Content_Overview_posts_query_args', $args, $context, $enabled_filters, $this->user_filters);
 
         add_filter('posts_where', [$this, 'posts_where_range']);
         $term_posts_query_results = new WP_Query($args);
@@ -2969,15 +3028,14 @@ class PP_Content_Overview extends PP_Module
     public function column_post_title($post)
     {
         $post_title = _draft_or_post_title($post->ID);
+        $filtered_title = apply_filters('pp_content_overview_post_title_html', $post_title, $post);
 
         $post_type_object = get_post_type_object($post->post_type);
         $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
-            $output = '<strong class="title-column post-title"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
-                    $post_title
-                ) . '</a></strong>';
+            $output = '<strong class="title-column post-title"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . $filtered_title . '</a></strong>';
         } else {
-            $output = '<strong class="post-title">' . esc_html($post_title) . '</strong>';
+            $output = '<strong class="post-title">' . $filtered_title . '</strong>';
         }
 
         // Edit or Trash or View
@@ -3056,6 +3114,12 @@ class PP_Content_Overview extends PP_Module
      */
     public function get_user_filters()
     {
+        global $pp_content_overview_user_filters;
+
+        if (is_array($pp_content_overview_user_filters)) {
+            return $pp_content_overview_user_filters;
+        }
+
         $current_user = wp_get_current_user();
         $user_filters = [];
         $user_filters = $this->get_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', true);
