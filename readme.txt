@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.6
-Stable tag: 4.4.0
+Stable tag: 4.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,18 +46,6 @@ The Content Board screen is a kanban board that you can use to organize your con
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
 [Click here to read about the Content Notifications](https://publishpress.com/knowledge-base/notifications/).
-
-## Editorial Comments ##
-
-A very important feature in PublishPress Planner is commenting. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
-
-[Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
-
-## Editorial Fields ##
-
-Editorial Fields enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
-
-[Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
 ## Slack Notifications ##
 
@@ -120,10 +108,35 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 [Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
+= Are Editorial Comments Available in Planer? = 
+
+Yes, one feature in PublishPress Planner is editorial comments. This is a legacy feature but still available to be enabled via the "Settings" screen. You can leave comments under each post you write. This is a private conversation between writers and editors and allows you to discuss what needs to be changed before publication.
+
+[Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
+
+= Are Editorial Fields Available in Planer? = 
+
+Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields enable you to keep track of important requirements for your content. This is a legacy feature but still available to be enabled via the "Settings" screen.  This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
+
+[Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
+
 == Changelog ==
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.5.0] - 09 Sep 2024 =
+
+* Feature : Allow users to show Revisions in the Calendar, Overview and Board page, #1734
+* Added : Add "When Taxonomy is updated" to notifications options, #1759
+* Added : Allow users to chose the publish date in the "New Post" box, #1743
+* Update : Make default headings sortable in Content Overview, #1744
+* Fixed : Prevent duplicate call for filters on page load, #1754
+* Added : Add "Months" in Notification Published trigger unit, #1584
+* Update : Remove the "Editorial Fields" from the filters if empty, #1741
+* Fixed : 8.2 issue from Siteground, #1739
+* Removed : Remove the statuses message, #1740
+* Update : Planner v.4. 4.0 Translation Updates-ES-FR-IT, #1737
 
 = [4.4.0] - 13 Aug 2024 =
 
