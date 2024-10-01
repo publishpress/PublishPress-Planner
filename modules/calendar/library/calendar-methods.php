@@ -37,6 +37,8 @@ if (! class_exists('PP_Calendar_Methods')) {
         
         public $module_url;
 
+        private $create_post_cap;
+
         /**
          * Total number of posts to be shown per square before 'more' link
          *
@@ -53,6 +55,8 @@ if (! class_exists('PP_Calendar_Methods')) {
         {
             $this->module_url = $args['module_url'];
             $this->module = $args['module'];
+            // Define the create-post capability
+            $this->create_post_cap = apply_filters('pp_calendar_create_post_cap', 'edit_posts');
         }
 
         /**
@@ -1562,6 +1566,190 @@ if (! class_exists('PP_Calendar_Methods')) {
             }
 
             return $posts;
+        }
+
+        /**
+         * @throws Exception
+         */
+        public function createItem()
+        {
+            if (! wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'publishpress-calendar-get-data')) {
+                $this->print_ajax_response('error', $this->module->messages['nonce-failed']);
+            }
+
+            // Check that the user has the right capabilities to add posts to the calendar (defaults to 'edit_posts')
+            if (! current_user_can($this->create_post_cap)) {
+                $this->print_ajax_response('error', $this->module->messages['invalid-permissions']);
+            }
+
+            $postType = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : null;
+            $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : null;
+            $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : null;
+            $title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+            // Sanitized by the wp_filter_post_kses function.
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $content = isset($_POST['content']) ? wp_filter_post_kses($_POST['content']) : '';
+            $time = isset($_POST['time']) ? sanitize_text_field($_POST['time']) : '';
+            $authors = isset($_POST['authors']) ? explode(',', sanitize_text_field($_POST['authors'])) : [];
+            $categories = isset($_POST['categories']) ? explode(',', sanitize_text_field($_POST['categories'])) : [];
+            $tags = isset($_POST['tags']) ? explode(',', sanitize_text_field($_POST['tags'])) : [];
+
+            if (empty($date)) {
+                $this->print_ajax_response('error', __('No date supplied.', 'publishpress'));
+            }
+
+            // Post type has to be visible on the calendar to create a placeholder
+            if (empty($postType)) {
+                $postType = 'post';
+            }
+
+            if (! in_array($postType, $this->get_post_types_for_module($this->module))) {
+                $this->print_ajax_response(
+                    'error',
+                    __('The selected post type is not enabled for the calendar.', 'publishpress')
+                );
+            }
+
+            $title = apply_filters('pp_calendar_after_form_submission_sanitize_title', $title);
+            if (empty($title)) {
+                $title = __('Untitled', 'publishpress');
+            }
+
+            $content = apply_filters('pp_calendar_after_form_submission_sanitize_content', $content);
+            if (empty($content)) {
+                $content = '';
+            }
+
+            $authors = apply_filters('pp_calendar_after_form_submission_sanitize_author', $authors);
+            try {
+                $authors = apply_filters('pp_calendar_after_form_submission_validate_author', $authors);
+            } catch (Exception $e) {
+                $this->print_ajax_response('error', $e->getMessage());
+            }
+
+            if (empty($authors)) {
+                $authors = apply_filters('publishpress_calendar_default_author', get_current_user_id());
+            }
+
+            if (! is_array($authors)) {
+                $authors = [$authors];
+            }
+
+            if (! $this->isPostStatusValid($status)) {
+                $this->print_ajax_response('error', __('Invalid Status supplied.', 'publishpress'));
+            }
+
+            $categories = array_map('sanitize_text_field', $categories);
+            $tags = array_map('sanitize_text_field', $tags);
+
+            $dateTimestamp = strtotime($date);
+
+            if (empty($time)) {
+                $time = $this->module->options->default_publish_time;
+            }
+
+            if (! empty($time)) {
+                $date = sprintf(
+                    '%s %s',
+                    $date,
+                    ((function_exists('mb_strlen') ? mb_strlen($time) : strlen($time)) === 5)
+                        ? "{$time}:" . date('s', $dateTimestamp)
+                        : date('H:i:s', $dateTimestamp)
+                );
+            }
+
+            $dateTimeInstance = new DateTime($date);
+            if (! $dateTimeInstance) {
+                $this->print_ajax_response('error', __('Invalid Publish Date supplied.', 'publishpress'));
+            }
+            unset($dateTimeInstance);
+
+            // Set new post parameters
+            $postPlaceholder = [
+                'post_author' => $authors[0],
+                'post_title' => $title,
+                'post_content' => $content,
+                'post_type' => $postType,
+                'post_status' => $status,
+                'post_date' => $date,
+                'post_modified' => current_time('mysql'),
+                'post_modified_gmt' => current_time('mysql', 1),
+            ];
+
+            /*
+             * By default, adding a post to the calendar will set the timestamp.
+             * If the user don't desires that to be the behavior, they can set the result of this filter to 'false'
+             * With how WordPress works internally, setting 'post_date_gmt' will set the timestamp.
+             * But check the Custom Status module and the hook to "wp_insert_post_data". It will reset the date if not
+             * publishing or scheduling.
+             */
+
+            if (apply_filters('pp_calendar_allow_ajax_to_set_timestamp', true)) {
+                $postPlaceholder['post_date_gmt'] = get_gmt_from_date($date);
+            }
+
+            // Create the post
+            add_filter('wp_insert_post_data', ['PP_Calendar_Utilities', 'alter_post_modification_time'], 99, 2);
+            $postId = wp_insert_post($postPlaceholder);
+            remove_filter('wp_insert_post_data', ['PP_Calendar_Utilities', 'alter_post_modification_time'], 99);
+
+            do_action('publishpress_calendar_after_create_post', $postId, $authors);
+
+            if ($postId) {
+                if (! empty($categories)) {
+                    $categoriesIdList = [];
+                    foreach ($categories as $categorySlug) {
+                        $category = get_term_by('slug', $categorySlug, 'category');
+
+                        if (! $category || is_wp_error($category)) {
+                            $category = wp_create_category($categorySlug);
+                            $category = get_term($category);
+                        }
+
+                        if (! is_wp_error($category)) {
+                            $categoriesIdList[] = $category->term_id;
+                        }
+                    }
+
+                    wp_set_post_terms($postId, $categoriesIdList, 'category');
+                }
+
+                if (! empty($tags)) {
+                    foreach ($tags as $tagSlug) {
+                        $tag = get_term_by('slug', $tagSlug, 'post_tag');
+
+                        if (! $tag || is_wp_error($tag)) {
+                            wp_create_tag($tagSlug);
+                        }
+                    }
+
+                    wp_set_post_terms($postId, $tags);
+                }
+
+                // announce success and send back the html to inject
+                $this->print_ajax_response(
+                    'success',
+                    __('Post created successfully', 'publishpress'),
+                    [
+                        'postId' => $postId,
+                        'link' => htmlspecialchars_decode(get_edit_post_link($postId)),
+                    ]
+                );
+            } else {
+                $this->print_ajax_response('error', __('Post could not be created', 'publishpress'));
+            }
+        }
+
+        private function isPostStatusValid($subject)
+        {
+            foreach ($this->get_post_statuses() as $post_status) {
+                $is_status_valid = $subject === $post_status->slug;
+                if ($is_status_valid) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }
