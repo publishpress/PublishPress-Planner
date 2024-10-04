@@ -344,7 +344,8 @@ if (! class_exists('PP_Board_Methods')) {
                     'PPContentBoard',
                     [
                         'nonce' => wp_create_nonce('content_board_action_nonce'),
-                        'moduleUrl' => $this->module_url
+                        'moduleUrl' => $this->module_url,
+                        'publishpressUrl' => PUBLISHPRESS_URL,
                     ]
                 );
             }

@@ -199,7 +199,7 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                             $column_index = 0;
                             foreach ($columns as $column_group => $column_datas) : 
                             $column_index++;
-                            $hidden_style = empty($column_datas['columns']) ? 'display: none;' : '';
+                            $hidden_style = empty($column_datas['columns']) && $column_group !== 'custom' ? 'display: none;' : '';
                             ?>
                                 <div class="customize-group-title title-index-<?php echo esc_attr($column_index); ?> <?php echo esc_attr($column_group); ?>" style="<?php echo esc_attr($hidden_style); ?>">
                                     <div class="title-text"><?php echo esc_html($column_datas['title']); ?></div>
@@ -216,11 +216,8 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                                                 <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Column Title', 'publishpress'); ?>" />
                                             </div>
                                             <div class="field">
-                                            <select class="new-item-metakey">
-                                                <option value=""><?php esc_html_e('Select Metakey', 'publishpress'); ?></option>
-                                                <?php foreach ($meta_keys as $meta_key) : ?>
-                                                    <option value="<?php echo esc_attr($meta_key); ?>"><?php echo esc_html($meta_key); ?></option>
-                                                <?php endforeach; ?>
+                                            <select class="new-item-metakey" data-nonce="<?php echo esc_attr(wp_create_nonce('publishpress-content-get-data')); ?>">
+                                                <option value=""><?php esc_html_e('Search Metakey', 'publishpress'); ?></option>
                                             </select>
                                             </div>
                                         </div>
@@ -365,11 +362,8 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                                                 <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Filter Title', 'publishpress'); ?>" />
                                             </div>
                                             <div class="field">
-                                            <select class="new-item-metakey">
+                                            <select class="new-item-metakey" data-nonce="<?php echo esc_attr(wp_create_nonce('publishpress-content-get-data')); ?>">
                                                 <option value=""><?php esc_html_e('Select Metakey', 'publishpress'); ?></option>
-                                                <?php foreach ($meta_keys as $meta_key) : ?>
-                                                    <option value="<?php echo esc_attr($meta_key); ?>"><?php echo esc_html($meta_key); ?></option>
-                                                <?php endforeach; ?>
                                             </select>
                                             </div>
                                         </div>
