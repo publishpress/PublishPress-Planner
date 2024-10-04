@@ -493,7 +493,8 @@ class PP_Content_Overview extends PP_Module
                 'PPContentOverview',
                 [
                     'nonce' => wp_create_nonce('content_overview_filter_nonce'),
-                    'moduleUrl' => $this->module_url
+                    'moduleUrl' => $this->module_url,
+                    'publishpressUrl' => PUBLISHPRESS_URL,
                 ]
             );
         }
@@ -961,7 +962,7 @@ class PP_Content_Overview extends PP_Module
         $datas = [];
 
         // add all meta keys
-        $datas['meta_keys'] = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 ORDER BY meta_key ASC");
+        $datas['meta_keys'] = [];
 
         // add editorial fields
         if (class_exists('PP_Editorial_Metadata')) {

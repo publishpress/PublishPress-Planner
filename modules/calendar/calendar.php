@@ -978,7 +978,7 @@ if (! class_exists('PP_Calendar')) {
             $datas = [];
     
             // add all meta keys
-            $datas['meta_keys'] = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 ORDER BY meta_key ASC");
+            $datas['meta_keys'] = [];
     
             // add editorial fields
             if (class_exists('PP_Editorial_Metadata')) {
@@ -1352,6 +1352,7 @@ if (! class_exists('PP_Calendar')) {
                 [
                     'nonce' => wp_create_nonce('publishpress-calendar-get-data'),
                     'moduleUrl' => $this->module_url,
+                    'publishpressUrl' => PUBLISHPRESS_URL,
                 ]
             );
 

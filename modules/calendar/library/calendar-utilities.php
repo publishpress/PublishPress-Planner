@@ -583,11 +583,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
                                                 <input class="new-item-title" type="text" placeholder="<?php esc_attr_e('Filter Title', 'publishpress'); ?>" />
                                             </div>
                                             <div class="field">
-                                            <select class="new-item-metakey">
-                                                <option value=""><?php esc_html_e('Select Metakey', 'publishpress'); ?></option>
-                                                <?php foreach ($meta_keys as $meta_key) : ?>
-                                                    <option value="<?php echo esc_attr($meta_key); ?>"><?php echo esc_html($meta_key); ?></option>
-                                                <?php endforeach; ?>
+                                            <select class="new-item-metakey" data-nonce="<?php echo esc_attr(wp_create_nonce('publishpress-content-get-data')); ?>">
+                                                <option value=""><?php esc_html_e('Search Metakey', 'publishpress'); ?></option>
                                             </select>
                                             </div>
                                         </div>
