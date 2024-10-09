@@ -661,7 +661,7 @@ class PP_Content_Overview extends PP_Module
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'me_mode' => $this->filter_get_param('me_mode'),
-            'show_revision' => $this->filter_get_param('show_revision'),
+            'hide_revision' => $this->filter_get_param('hide_revision'),
         ];
 
         $editorial_metadata = $this->terms_options;
