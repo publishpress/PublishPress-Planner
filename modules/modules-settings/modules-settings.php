@@ -157,6 +157,10 @@ if (! class_exists('PP_Modules_Settings')) {
                 $enabledFeatures = [];
             }
 
+            if (isset($enabledFeatures['notifications']) && $enabledFeatures['notifications'] == 'on') {
+                $enabledFeatures['improved-notifications'] = 'on';
+            }
+
             // Run through all the modules updating their statuses
             foreach ($publishpress->modules as $mod_data) {
                 if ($mod_data->autoload
@@ -222,7 +226,7 @@ if (! class_exists('PP_Modules_Settings')) {
                                 foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
 
                                     <?php
-                                    if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
+                                    if ($mod_data->autoload || $mod_data->slug === $this->module->slug || !empty($mod_data->skip_settings)) {
                                         continue;
                                     } ?>
 
