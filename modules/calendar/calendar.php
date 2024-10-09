@@ -728,7 +728,7 @@ if (! class_exists('PP_Calendar')) {
                 'weeks'         => '',
                 'start_date'    => '',
                 'me_mode'       => '',
-                'show_revision'       => '',
+                'hide_revision' => '',
                 's'             => '',
                 'post_status'   => '',
             ];
@@ -761,7 +761,7 @@ if (! class_exists('PP_Calendar')) {
                 'weeks'         => __('Weeks', 'publishpress'),
                 'start_date'    => __('Start Date', 'publishpress'),
                 'me_mode'       => __('Me Mode', 'publishpress'),
-                'show_revision' => __('Show Revision', 'publishpress'),
+                'hide_revision' => __('Show Revision', 'publishpress'),
                 's'             =>  __('Search', 'publishpress'),
             ], $this->filters);
             
