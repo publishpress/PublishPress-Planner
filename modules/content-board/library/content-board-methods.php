@@ -18,7 +18,7 @@ if (! class_exists('PP_Board_Methods')) {
          * @var [type]
          */
         public $module;
-        
+
         public $module_url;
 
         /**
@@ -34,11 +34,11 @@ if (! class_exists('PP_Board_Methods')) {
 
         public function updatePostStatus() {
             global $publishpress;
-    
+
             $response['status']  = 'error';
             $response['content'] = esc_html__('An error occured', 'publishpress');
-    
-    
+
+
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_action_nonce')) {
                 $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
             } elseif (empty($_POST['post_id']) || empty($_POST['post_status'])) {
@@ -82,31 +82,31 @@ if (! class_exists('PP_Board_Methods')) {
                                 'period' => $schedule_period
                             ];
                             $publishpress->update_module_option($this->module->name, 'content_board_scheduled_date', $content_board_scheduled_date);
-                    
+
                             $future_date = date('Y-m-d H:i:s', $timestamp);
-    
+
                             $post_args['post_date'] = $future_date;
                             $post_args['post_date_gmt'] = get_gmt_from_date($future_date);
                         }
-    
+
                         wp_update_post($post_args);
-    
+
                         $response['status']  = 'success';
                         $response['content'] = esc_html__('Changes saved!', 'publishpress');
                     }
                 }
-    
+
             }
-            
+
             wp_send_json($response);
         }
         public function updateSchedulePeriod() {
             global $publishpress;
-    
+
             $response['status']  = 'error';
             $response['content'] = esc_html__('An error occured', 'publishpress');
-    
-    
+
+
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_board_action_nonce')) {
                 $response['content'] = esc_html__('Error validating nonce. Please reload this page and try again.', 'publishpress');
             } elseif (empty($_POST['schedule_number']) || empty($_POST['schedule_period'])) {
@@ -122,7 +122,7 @@ if (! class_exists('PP_Board_Methods')) {
                 $response['status']  = 'success';
                 $response['content'] = esc_html__('Changes saved!', 'publishpress');
             }
-            
+
             wp_send_json($response);
         }
 
@@ -133,19 +133,19 @@ if (! class_exists('PP_Board_Methods')) {
          */
         public function update_content_board_form_action() {
             global $publishpress;
-    
+
             if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'column_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_column_form_nonce')) {
                 // Content Board column form
                 $content_board_columns = !empty($_POST['content_board_columns']) ? array_map('sanitize_text_field', $_POST['content_board_columns']) : [];
                 $content_board_columns_order = !empty($_POST['content_board_columns_order']) ? array_map('sanitize_text_field', $_POST['content_board_columns_order']) : [];
                 $content_board_custom_columns = !empty($_POST['content_board_custom_columns']) ? map_deep($_POST['content_board_custom_columns'], 'sanitize_text_field') : [];
-    
+
                 // make sure enabled columns are saved in organized order
                 $content_board_columns = array_intersect($content_board_columns_order, $content_board_columns);
-    
+
                 $publishpress->update_module_option($this->module->name, 'content_board_columns', $content_board_columns);
                 $publishpress->update_module_option($this->module->name, 'content_board_custom_columns', $content_board_custom_columns);
-                
+
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Card Data updated successfully.', 'publishpress'));
             } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'filter_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_filter_form_nonce')) {
@@ -153,13 +153,13 @@ if (! class_exists('PP_Board_Methods')) {
                 $content_board_filters = !empty($_POST['content_board_filters']) ? array_map('sanitize_text_field', $_POST['content_board_filters']) : [];
                 $content_board_filters_order = !empty($_POST['content_board_filters_order']) ? array_map('sanitize_text_field', $_POST['content_board_filters_order']) : [];
                 $content_board_custom_filters = !empty($_POST['content_board_custom_filters']) ? map_deep($_POST['content_board_custom_filters'], 'sanitize_text_field') : [];
-    
+
                 // make sure enabled filters are saved in organized order
                 $content_board_filters = array_intersect($content_board_filters_order, $content_board_filters);
-    
+
                 $publishpress->update_module_option($this->module->name, 'content_board_filters', $content_board_filters);
                 $publishpress->update_module_option($this->module->name, 'content_board_custom_filters', $content_board_custom_filters);
-                
+
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
             } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'settings_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_settings_form_nonce')) {
@@ -167,7 +167,7 @@ if (! class_exists('PP_Board_Methods')) {
                 $posts_per_page = !empty($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : 200;
 
                 $publishpress->update_module_option($this->module->name, 'posts_per_page', $posts_per_page);
-                
+
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Settings updated successfully.', 'publishpress'));
             } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && !empty($_POST['ptype']) && $_POST['co_form_action'] == 'post_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_post_form_nonce')) {
@@ -182,7 +182,7 @@ if (! class_exists('PP_Board_Methods')) {
                     $authors = isset($_POST['authors']) ? (int) $_POST['authors'] : get_current_user_id();
                     $categories = isset($_POST['category']) ? array_map('sanitize_text_field', $_POST['category']) : [];
                     $tags = isset($_POST['post_tag']) ? array_map('sanitize_text_field', $_POST['post_tag']) : [];
-    
+
                     $postArgs = [
                         'post_author' => $authors,
                         'post_title' => $title,
@@ -190,7 +190,7 @@ if (! class_exists('PP_Board_Methods')) {
                         'post_type' => $postType,
                         'post_status' => $status
                     ];
-    
+
                     // set post date
                     if ( ! empty( $_POST['mm'] ) ) {
                         $aa = sanitize_text_field($_POST['aa']);
@@ -206,8 +206,8 @@ if (! class_exists('PP_Board_Methods')) {
                         $hh = ( $hh > 23 ) ? $hh - 24 : $hh;
                         $mn = ( $mn > 59 ) ? $mn - 60 : $mn;
                         $ss = ( $ss > 59 ) ? $ss - 60 : $ss;
-                
-                        
+
+
                         $post_date = sprintf( '%04d-%02d-%02d %02d:%02d:%02d', $aa, $mm, $jj, $hh, $mn, $ss );
                         $valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
                         if ($valid_date ) {
@@ -215,31 +215,31 @@ if (! class_exists('PP_Board_Methods')) {
                             $postArgs['post_date_gmt'] = get_gmt_from_date( $post_date );
                         }
                     }
-    
+
                     $postId = wp_insert_post($postArgs);
-    
+
                     if ($postId) {
                         if (! empty($categories)) {
                             $categoriesIdList = [];
                             foreach ($categories as $categorySlug) {
                                 $category = get_term_by('slug', $categorySlug, 'category');
-        
+
                                 if (! $category || is_wp_error($category)) {
                                     $category = wp_create_category($categorySlug);
                                     $category = get_term($category);
                                 }
-        
+
                                 if (! is_wp_error($category)) {
                                     $categoriesIdList[] = $category->term_id;
                                 }
                             }
                             wp_set_post_terms($postId, $categoriesIdList, 'category');
                         }
-        
+
                         if (! empty($tags)) {
                             foreach ($tags as $tagSlug) {
                                 $tag = get_term_by('slug', $tagSlug, 'post_tag');
-        
+
                                 if (! $tag || is_wp_error($tag)) {
                                     wp_create_tag($tagSlug);
                                 }
@@ -252,13 +252,13 @@ if (! class_exists('PP_Board_Methods')) {
                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         echo pp_planner_admin_notice(sprintf(esc_html__('%s could not be created', 'publishpress'), esc_html($postTypeObject->labels->singular_name)), false);
                     }
-    
+
                 } else {
                     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo pp_planner_admin_notice(sprintf(esc_html__('You do not have permission to add new %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)), false);
                 }
             }
-    
+
         }
 
         /**
@@ -281,31 +281,31 @@ if (! class_exists('PP_Board_Methods')) {
             ) {
                 return;
             }
-     
+
             if (! wp_verify_nonce(sanitize_key($_REQUEST['nonce']), 'change-date')) {
                 return;
             }
-     
+
             $current_user = wp_get_current_user();
             $user_filters = $this->get_user_meta(
                 $current_user->ID,
                 self::USERMETA_KEY_PREFIX . 'filters',
                 true
             );
-     
+
             $use_today_as_start_date = (bool)$_REQUEST['pp-content-board-range-use-today'];
-     
+
             $date_format = 'Y-m-d';
             $user_filters['start_date'] = $use_today_as_start_date
                 ? date($date_format, strtotime('-5 weeks'))
                 : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-board-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-     
+
             $user_filters['end_date'] = $_REQUEST['pp-content-board-end-date_hidden'];
-     
+
             if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
                 $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 weeks'));
             }
-     
+
             $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
         }
 
@@ -317,21 +317,21 @@ if (! class_exists('PP_Board_Methods')) {
         public function enqueue_admin_scripts()
         {
             global $pagenow;
-    
+
             // Only load content board styles on the content board page
             if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-board') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-    
+
                 $this->enqueue_datepicker_resources();
-    
+
                 wp_enqueue_script('jquery-ui-sortable');
-                
+
                 wp_enqueue_script(
                     'publishpress-admin',
                     PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-    
+
                 wp_enqueue_script(
                     'publishpress-content_board',
                     $this->module_url . 'lib/content-board.js',
@@ -339,22 +339,29 @@ if (! class_exists('PP_Board_Methods')) {
                     PUBLISHPRESS_VERSION,
                     true
                 );
-    
+
                 wp_enqueue_script(
-                    'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    'publishpress-select2-utils',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-    
-    
+
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_VERSION
+                );
+
+
                 wp_enqueue_script(
                     'publishpress-floating-scroll',
                     PUBLISHPRESS_URL . 'common/libs/floating-scroll/js/jquery.floatingscroll.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-    
+
                 wp_localize_script(
                     'publishpress-content_board',
                     'PPContentBoard',
@@ -366,14 +373,14 @@ if (! class_exists('PP_Board_Methods')) {
                 );
             }
         }
-    
+
         /**
          * Enqueue a screen and print stylesheet for the content board.
          */
         public function action_enqueue_admin_styles()
         {
             global $pagenow;
-    
+
             // Only load calendar styles on the calendar page
             if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-board') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_enqueue_style(
@@ -397,7 +404,7 @@ if (! class_exists('PP_Board_Methods')) {
                     PUBLISHPRESS_VERSION,
                     'print'
                 );
-    
+
                 wp_enqueue_style(
                     'publishpress-select2',
                     PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
@@ -405,7 +412,7 @@ if (! class_exists('PP_Board_Methods')) {
                     PUBLISHPRESS_VERSION,
                     'screen'
                 );
-    
+
                 wp_enqueue_style(
                     'publishpress-floating-scroll',
                     PUBLISHPRESS_URL . 'common/libs/floating-scroll/css/jquery.floatingscroll.css',

@@ -12,7 +12,7 @@ if (! class_exists('PP_Calendar_Methods')) {
          * at least one post type
          */
         const TRANSIENT_SHOW_ONE_POST_TYPE_WARNING = 'show_one_post_type_warning';
-        
+
         /**
          * Time 12h-format without leading zeroes.
          */
@@ -34,7 +34,7 @@ if (! class_exists('PP_Calendar_Methods')) {
          * @var [type]
          */
         public $module;
-        
+
         public $module_url;
 
         private $create_post_cap;
@@ -147,7 +147,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 $this->module->options_group_name . '_general'
             );
         }
-        
+
 
         /**
          * Choose the post types that should be displayed on the calendar
@@ -965,14 +965,14 @@ if (! class_exists('PP_Calendar_Methods')) {
                     PUBLISHPRESS_VERSION,
                     true
                 );
-            
+
                 wp_enqueue_script(
                     'publishpress-admin',
                     PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-                
+
                 wp_enqueue_script(
                     'publishpress-calendar-js',
                     $this->module_url . 'lib/calendar.js',
@@ -982,13 +982,20 @@ if (! class_exists('PP_Calendar_Methods')) {
                 );
 
                 wp_enqueue_script(
-                    'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    'publishpress-select2-utils',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
 
-                    
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_VERSION
+                );
+
+
 
                     if (! isset($wp_scripts->queue['react'])) {
                         wp_enqueue_script(
@@ -1305,12 +1312,12 @@ if (! class_exists('PP_Calendar_Methods')) {
             }
 
             $current_user_id = get_current_user_id();
-            
+
             $user_filters = $method_args['userFilters'];
 
             // Get content calendar data
             $content_calendar_datas = $method_args['content_calendar_datas'];
-            
+
             $filters = $content_calendar_datas['content_calendar_filters'];
             /**
              * @param array $filters
@@ -1325,7 +1332,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             if (!empty($args['cpt'])) {
                 $args['post_type'] = $args['cpt'];
             }
-            
+
 
             if (empty($args['post_type']) || ! in_array($args['post_type'], $supported_post_types)) {
                 $args['post_type'] = $supported_post_types;
@@ -1336,7 +1343,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 // show all post type
                 $args['post_type'] = $supported_post_types;
             }
-    
+
             if (!in_array('author', $enabled_filters)) {
                 unset($args['author']);
             }
@@ -1344,7 +1351,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             $meta_query = $tax_query = ['relation' => 'AND'];
             $metadata_filter = $taxonomy_filter = false;
             $checklists_filters = [];
-            
+
             // apply enabled filter
             foreach ($enabled_filters as $enabled_filter) {
                 if (array_key_exists($enabled_filter, $editorial_metadata)) {
@@ -1354,7 +1361,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                     unset($args[$enabled_filter]);
                     if ($metadata_term['type'] === 'date') {
                         $date_type_metaquery = [];
-                        
+
                         if (! empty($user_filters[$meta_key . '_start'])) {
                             $date_type_metaquery[] = strtotime($user_filters[$meta_key . '_start_hidden']);
                         }
@@ -1370,7 +1377,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                             $compare        = '=';
                             $meta_value     = $date_type_metaquery[0];
                         }
-                        
+
                         if (!empty($date_type_metaquery)) {
                             $metadata_filter = true;
                             $meta_query[] = array(
@@ -1379,14 +1386,14 @@ if (! class_exists('PP_Calendar_Methods')) {
                                 'compare' => $compare
                             );
                         }
-                    
+
                     } elseif (! empty($user_filters[$meta_key])) {
                         if ($metadata_term['type'] === 'date') {
                             continue;
                         } else {
                             $meta_value = sanitize_text_field($user_filters[$meta_key]);
                         }
-        
+
                          $compare = '=';
                         if ($metadata_term['type'] === 'paragraph'
                             || ($metadata_term['type'] === 'select' && isset($metadata_term->select_type) && $metadata_term['select_type'] === 'multiple')
@@ -1400,14 +1407,14 @@ if (! class_exists('PP_Calendar_Methods')) {
                             'compare' => $compare
                         );
                     }
-    
+
                 } elseif(
-                    in_array($enabled_filter, $content_calendar_datas['meta_keys']) 
+                    in_array($enabled_filter, $content_calendar_datas['meta_keys'])
                     && (
                         isset($user_filters[$enabled_filter])
-                        && 
+                        &&
                             (
-                                !empty($user_filters[$enabled_filter]) 
+                                !empty($user_filters[$enabled_filter])
                                 || $user_filters[$enabled_filter] == '0'
                                 || (
                                     !empty($user_filters[$enabled_filter . '_operator'])
@@ -1421,9 +1428,9 @@ if (! class_exists('PP_Calendar_Methods')) {
                     $meta_value = sanitize_text_field($user_filters[$enabled_filter]);
                     $meta_operator = !empty($user_filters[$enabled_filter . '_operator']) ? $user_filters[$enabled_filter . '_operator'] : 'equals';
                     $compare = $method_args['operator_labels'];
-                    
+
                     $metadata_filter = true;
-    
+
                     if ($meta_operator == 'not_exists') {
                         $meta_query[] = array(
                             'relation' => 'OR',
@@ -1457,7 +1464,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                         'value' => $meta_value,
                         'compare' => $compare
                     );
-                    
+
                 } elseif(array_key_exists($enabled_filter, $content_calendar_datas['taxonomies']) && !empty($user_filters[$enabled_filter])) {
                     //taxonomy filter
                     unset($args[$enabled_filter]);
@@ -1480,17 +1487,17 @@ if (! class_exists('PP_Calendar_Methods')) {
                     $meta_key = str_replace('ppch_co_checklist_', '', $enabled_filter);
                     $checklists_filters[$meta_key] = $meta_value;
                 }
-    
+
             }
-            
+
             if ($metadata_filter) {
                 $args['meta_query'] = $meta_query;
             }
-    
+
             if ($taxonomy_filter) {
                 $args['tax_query'] = $tax_query;
             }
-            
+
             // Unpublished as a status is just an array of everything but 'publish'
             if ($args['post_status'] == 'unpublish') {
                 $args['post_status'] = '';
@@ -1551,7 +1558,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                         }
                     }
                 }
-    
+
                 if ($add_post) {
                     /**
                      * TODO: Should we require posts like x2 if results is empty due to $add_post been false for all?
