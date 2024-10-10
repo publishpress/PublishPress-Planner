@@ -1029,6 +1029,17 @@ class PP_Content_Board extends PP_Module
                         $result[$status][] = $post;
                         return $result;
                     }, []);
+
+                $allowed_post_statuses = [];
+                foreach ((array)$postType as $single_post_type) {
+                    $allowed_post_statuses = array_merge($allowed_post_statuses, array_column( $this->getUserAuthorizedPostStatusOptions($single_post_type), 'value'));
+                }
+                if (in_array('publish', $allowed_post_statuses)) {
+                    $allowed_post_statuses[] = 'future';
+                    $allowed_post_statuses[] = 'private';
+                }
+                $allowed_post_statuses = array_unique($allowed_post_statuses);
+
                 ?>
                 <div class="statuses-contents">
                 <?php 
@@ -1037,6 +1048,14 @@ class PP_Content_Board extends PP_Module
                 foreach ($post_statuses as $post_status_object) :
                     if (!empty($post_status_object->alternate)) {
                         continue;
+                    }
+
+                    if (in_array($post_status_object->slug, $allowed_post_statuses)) {
+                        $board_class = 'can_move_to';
+                        $empty_card_message = esc_html__("Move posts here to change their status", "publishpress");
+                    } else {
+                        $board_class = 'can_not_move_to';
+                        $empty_card_message = esc_html__("You do not have permission to move post to this status", "publishpress");
                     }
 
                     $post_status_options = $this->get_post_status_options($post_status_object->slug); 
@@ -1103,11 +1122,11 @@ class PP_Content_Board extends PP_Module
                         </div>
                     </div>';
                     $statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug). '" data-slug="'. esc_attr($post_status_object->slug). '" data-counts="0">
-                        <div class="board-content">';
+                        <div class="board-content '. $board_class .'">';
                         // show empty card placeholder
                         $statuses_content_markup .= '
                                     <div class="content-item empty-card sortable-placeholder">
-                                        <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Move posts here to change their status", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                        <div class="card-message-wrapper"><div class="drag-message"><p>'. $empty_card_message .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                     </div>';
                         $statuses_content_markup .= '</div>
                     </div>';
@@ -1130,7 +1149,7 @@ class PP_Content_Board extends PP_Module
                         </div>';
 
                         $statuses_content_markup .= '<div class="status-content board-main-content status-'. esc_attr($post_status_object->slug) .'" data-slug="'. esc_attr($post_status_object->slug) .'" data-counts="'. esc_attr(count($status_posts)) .'">
-                            <div class="board-content">';
+                            <div class="board-content '. $board_class .'">';
                             foreach ($status_posts as $status_post) :
 
                                 $post_type_object = get_post_type_object($status_post->post_type);
@@ -1249,7 +1268,7 @@ class PP_Content_Board extends PP_Module
                                 // show empty card placeholder
                                 $statuses_content_markup .= '
                                             <div class="content-item empty-card sortable-placeholder" style="display: none;">
-                                                <div class="card-message-wrapper"><div class="drag-message"><p>'. esc_html__("Move posts here to change their status", "publishpress") .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
+                                                <div class="card-message-wrapper"><div class="drag-message"><p>'. $empty_card_message .'</p></div> <div class="drag-permission-message">'. esc_html__("Only editable posts will be moveable.", "publishpress") .'</div> </div>
                                             </div>';
                             $statuses_content_markup .= '</div>
                             </div>';

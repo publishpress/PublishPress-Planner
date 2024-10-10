@@ -32,9 +32,9 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    if ($('.content-board-table-wrap .board-content .content-item'.length > 0)) {
+    if ($('.content-board-table-wrap .board-content.can_move_to .content-item'.length > 0)) {
         // make content dragable
-        sortedPostCardsList($(".content-board-table-wrap .board-content"));
+        sortedPostCardsList($(".content-board-table-wrap .board-content.can_move_to"));
         // update empty card height
         var card_selector = $('.content-board-table-wrap .board-content .content-item:not(.empty-card)');
         var card_height = card_selector.height();
@@ -442,7 +442,7 @@ jQuery(document).ready(function ($) {
     function sortedPostCardsList(selector) {
     
         selector.sortable({
-            connectWith: ".content-board-table-wrap .board-content",
+            connectWith: ".content-board-table-wrap .board-content.can_move_to",
             items: "> .content-item:not(.no-drag)",
             placeholder: "sortable-placeholder",
             receive: function (event, ui) {
