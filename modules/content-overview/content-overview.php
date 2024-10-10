@@ -77,6 +77,7 @@ class PP_Content_Overview extends PP_Module
      * @var [type]
      */
     public $module;
+    public $module_url;
 
     /**
      * [$no_matching_posts description]
@@ -137,6 +138,13 @@ class PP_Content_Overview extends PP_Module
     public $content_overview_datas;
 
     /**
+     * Content calendar methods
+     *
+     * @var [type]
+     */
+    private $content_overview_methods;
+
+    /**
      * Register the module with PublishPress but don't do anything else
      */
     public function __construct()
@@ -174,6 +182,14 @@ class PP_Content_Overview extends PP_Module
         ];
 
         $this->module = PublishPress()->register_module('content_overview', $args);
+
+        // Load utilities files.
+        $this->load_utilities_files();
+
+        $this->content_overview_methods = new PP_Overview_Methods([
+            'module' => $this->module,
+            'module_url' => $this->module_url
+        ]);
     }
 
     /**
@@ -191,39 +207,28 @@ class PP_Content_Overview extends PP_Module
             return;
         }
 
-        // Load utilities files.
-        $this->load_utilities_files();
-
         // Filter to allow users to pick a taxonomy other than 'category' for sorting their posts
         $this->taxonomy_used = apply_filters('PP_Content_Overview_taxonomy_used', $this->taxonomy_used);
 
         add_action('admin_init', [$this, 'handle_form_date_range_change']);
 
         // Register our settings
-        add_action('admin_init', [$this, 'register_settings']);
+        add_action('admin_init', [$this->content_overview_methods, 'register_settings']);
 
         add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'sendJsonSearchAuthors']);
         add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'sendJsonSearchCategories']);
         add_action('wp_ajax_publishpress_content_overview_get_form_fields', [$this, 'getFormFieldAjaxHandler']);
 
         // Menu
-        add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
+        add_filter('publishpress_admin_menu_slug', [$this->content_overview_methods, 'filter_admin_menu_slug'], 20);
         add_action('publishpress_admin_menu_page', [$this, 'action_admin_menu_page'], 20);
         add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 20);
 
         // Load necessary scripts and stylesheets
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
+        add_action('admin_enqueue_scripts', [$this->content_overview_methods, 'enqueue_admin_scripts']);
+        add_action('admin_enqueue_scripts', [$this->content_overview_methods, 'action_enqueue_admin_styles']);
         // Content Board body class
-        add_filter('admin_body_class', [$this, 'add_admin_body_class']);
-    }
-
-    public function add_admin_body_class($classes) {
-        global $pagenow;
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
-            $classes .= ' pp-content-overview-page';
-        }
-        return $classes;
+        add_filter('admin_body_class', [$this->content_overview_methods, 'add_admin_body_class']);
     }
 
     private function getViewCapability()
@@ -245,42 +250,6 @@ class PP_Content_Overview extends PP_Module
         if (! $role->has_cap($view_content_overview_cap)) {
             $role->add_cap($view_content_overview_cap);
         }
-    }
-
-    /**
-     * Register settings for notifications so we can partially use the Settings API
-     * (We use the Settings API for form generation, but not saving)
-     *
-     * @since 0.7
-     * @uses  add_settings_section(), add_settings_field()
-     */
-    public function register_settings()
-    {
-        add_settings_section(
-            $this->module->options_group_name . '_general',
-            false,
-            '__return_false',
-            $this->module->options_group_name
-        );
-
-        add_settings_field(
-            'post_types',
-            esc_html__('Post types to show:', 'publishpress'),
-            [$this, 'settings_post_types_option'],
-            $this->module->options_group_name,
-            $this->module->options_group_name . '_general'
-        );
-    }
-
-    /**
-     * Choose the post types for editorial fields
-     *
-     * @since 0.7
-     */
-    public function settings_post_types_option()
-    {
-        global $publishpress;
-        $publishpress->settings->helper_option_custom_post_type($this->module);
     }
 
     /**
@@ -393,22 +362,6 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Filters the menu slug.
-     *
-     * @param $menu_slug
-     *
-     * @return string
-     */
-    public function filter_admin_menu_slug($menu_slug)
-    {
-        if (empty($menu_slug) && $this->module_enabled('content_overview')) {
-            $menu_slug = self::MENU_SLUG;
-        }
-
-        return $menu_slug;
-    }
-
-    /**
      * Creates the admin menu if there is no menu set.
      */
     public function action_admin_menu_page()
@@ -444,118 +397,6 @@ class PP_Content_Overview extends PP_Module
             [$this, 'render_admin_page'],
             20
         );
-    }
-
-    /**
-     * Enqueue necessary admin scripts only on the content overview page.
-     *
-     * @uses enqueue_admin_script()
-     */
-    public function enqueue_admin_scripts()
-    {
-        global $pagenow;
-
-        // Only load content overview styles on the content overview page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-            $this->enqueue_datepicker_resources();
-
-            wp_enqueue_script(
-                'publishpress-admin',
-                PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
-
-            wp_enqueue_script(
-                'publishpress-content_overview',
-                $this->module_url . 'lib/content-overview.js',
-                ['jquery', 'publishpress-date_picker', 'publishpress-select2', 'jquery-ui-sortable'],
-                PUBLISHPRESS_VERSION,
-                true
-            );
-
-                wp_enqueue_script(
-                    'publishpress-select2-utils',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
-
-                wp_enqueue_script(
-                    'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery', 'publishpress-select2-utils'],
-                    PUBLISHPRESS_VERSION
-                );
-
-
-            wp_enqueue_script(
-                'publishpress-floating-scroll',
-                PUBLISHPRESS_URL . 'common/libs/floating-scroll/js/jquery.floatingscroll.min.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
-
-            wp_localize_script(
-                'publishpress-content_overview',
-                'PPContentOverview',
-                [
-                    'nonce' => wp_create_nonce('content_overview_filter_nonce'),
-                    'moduleUrl' => $this->module_url,
-                    'publishpressUrl' => PUBLISHPRESS_URL,
-                ]
-            );
-        }
-    }
-
-    /**
-     * Enqueue a screen and print stylesheet for the content overview.
-     */
-    public function action_enqueue_admin_styles()
-    {
-        global $pagenow;
-
-        // Only load calendar styles on the calendar page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            wp_enqueue_style(
-                'pp-admin-css',
-                PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                ['publishpress-select2'],
-                PUBLISHPRESS_VERSION,
-                'screen'
-            );
-            wp_enqueue_style(
-                'publishpress-content_overview-styles',
-                $this->module_url . 'lib/content-overview.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'screen'
-            );
-            wp_enqueue_style(
-                'publishpress-content_overview-print-styles',
-                $this->module_url . 'lib/content-overview-print.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'print'
-            );
-
-            wp_enqueue_style(
-                'publishpress-select2',
-                PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'screen'
-            );
-
-            wp_enqueue_style(
-                'publishpress-floating-scroll',
-                PUBLISHPRESS_URL . 'common/libs/floating-scroll/css/jquery.floatingscroll.css',
-                false,
-                PUBLISHPRESS_VERSION,
-                'screen'
-            );
-        }
     }
 
     /**
@@ -612,7 +453,7 @@ class PP_Content_Overview extends PP_Module
 
         <div class="wrap" id="pp-content-overview-wrap">
             <?php
-            $this->print_messages(); ?>
+            $this->content_overview_methods->print_messages(); ?>
             <?php
             $this->table_navigation(); ?>
 
@@ -786,46 +627,6 @@ class PP_Content_Overview extends PP_Module
         }
 
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
-    }
-
-    /**
-     * Print any messages that should appear based on the action performed
-     */
-    public function print_messages()
-    {
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
-            echo '<div id="trashed-message" class="updated"><p>';
-
-            // Following mostly stolen from edit.php
-            if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                $count = (int)$_GET['trashed'];
-
-                echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
-                $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
-                echo ' <a href="' . esc_url(
-                        wp_nonce_url(
-                            "edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
-                            "bulk-posts"
-                        )
-                    ) . '">' . esc_html__('Undo', 'publishpress') . '</a><br />';
-                unset($_GET['trashed']);
-            }
-
-            if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                $count = (int)$_GET['untrashed'];
-
-                echo esc_html(_n(
-                    'Item restored from the Trash.',
-                    '%d items restored from the Trash.',
-                    $count
-                ));
-                unset($_GET['undeleted']);
-            }
-
-            echo '</p></div>';
-        }
-        // phpcs:enable
     }
 
     /**
@@ -1226,6 +1027,7 @@ class PP_Content_Overview extends PP_Module
      */
     private function load_utilities_files() {
         require_once dirname(__FILE__) . "/library/content-overview-utilities.php";
+        require_once dirname(__FILE__) . "/library/content-overview-methods.php";
     }
 
     /**
@@ -1259,7 +1061,7 @@ class PP_Content_Overview extends PP_Module
             $args['post_form']  = PP_Content_Overview_Utilities::content_overview_get_post_form($args);
         }
 
-        PP_Content_Overview_Utilities::table_navigation($args);
+        $this->content_overview_methods::table_navigation($args);
     }
 
     public function content_overview_filters()

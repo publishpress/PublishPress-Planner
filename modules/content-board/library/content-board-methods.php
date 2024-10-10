@@ -423,6 +423,42 @@ if (! class_exists('PP_Board_Methods')) {
             }
         }
 
+        /**
+         * Register settings for notifications so we can partially use the Settings API
+         * (We use the Settings API for form generation, but not saving)
+         *
+         * @since 0.7
+         * @uses  add_settings_section(), add_settings_field()
+         */
+        public function register_settings()
+        {
+            add_settings_section(
+                $this->module->options_group_name . '_general',
+                false,
+                '__return_false',
+                $this->module->options_group_name
+            );
+    
+            add_settings_field(
+                'post_types',
+                esc_html__('Post types to show:', 'publishpress'),
+                [$this, 'settings_post_types_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+        }
+
+        /**
+         * Choose the post types for editorial fields
+         *
+         * @since 0.7
+         */
+        public function settings_post_types_option()
+        {
+            global $publishpress;
+            $publishpress->settings->helper_option_custom_post_type($this->module);
+        }
+
     }
 
 }

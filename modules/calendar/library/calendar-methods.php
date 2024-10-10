@@ -996,7 +996,6 @@ if (! class_exists('PP_Calendar_Methods')) {
                 );
 
 
-
                     if (! isset($wp_scripts->queue['react'])) {
                         wp_enqueue_script(
                             'react',
