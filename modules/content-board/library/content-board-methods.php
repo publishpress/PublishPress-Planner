@@ -162,6 +162,14 @@ if (! class_exists('PP_Board_Methods')) {
                 
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+            } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'settings_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_settings_form_nonce')) {
+                // Content Board filter form
+                $posts_per_page = !empty($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : 200;
+
+                $publishpress->update_module_option($this->module->name, 'posts_per_page', $posts_per_page);
+                
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo pp_planner_admin_notice(esc_html__('Settings updated successfully.', 'publishpress'));
             } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && !empty($_POST['ptype']) && $_POST['co_form_action'] == 'post_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_board_post_form_nonce')) {
                 $postType = sanitize_text_field($_POST['ptype']);
                 $postTypeObject = get_post_type_object($postType);

@@ -158,6 +158,8 @@ class PP_Content_Board extends PP_Module
                     'period' => 'weeks'
                 ],
 
+                'posts_per_page' => 200,
+
                 'post_types' => [
                     'post' => 'on',
                     'page' => 'off',
@@ -939,6 +941,7 @@ class PP_Content_Board extends PP_Module
         $args['form_filter_list']           = $this->form_filter_list;
         $args['all_filters']                = $this->filters;
         $args['terms_options']              = $this->terms_options;
+        $args['posts_per_page']             = $this->module->options->posts_per_page;
         $args['operator_labels']            = $this->meta_query_operator_label();
         $args['post_statuses']              = $this->get_post_statuses();
         $args['post_status_options']        = '';
@@ -1346,7 +1349,7 @@ class PP_Content_Board extends PP_Module
         $defaults = [
             'post_status' => null,
             'author' => null,
-            'posts_per_page' => (int)apply_filters('PP_Content_Board_max_query', 200),
+            'posts_per_page' => $this->module->options->posts_per_page,
         ];
 
         $args = array_merge($defaults, $args);
