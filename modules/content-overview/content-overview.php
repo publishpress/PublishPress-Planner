@@ -190,7 +190,7 @@ class PP_Content_Overview extends PP_Module
         if (! $this->currentUserCanViewContentOverview()) {
             return;
         }
-        
+
         // Load utilities files.
         $this->load_utilities_files();
 
@@ -459,7 +459,7 @@ class PP_Content_Overview extends PP_Module
         if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
             $this->enqueue_datepicker_resources();
-            
+
             wp_enqueue_script(
                 'publishpress-admin',
                 PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
@@ -475,12 +475,19 @@ class PP_Content_Overview extends PP_Module
                 true
             );
 
-            wp_enqueue_script(
-                'publishpress-select2',
-                PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
+                wp_enqueue_script(
+                    'publishpress-select2-utils',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_VERSION
+                );
 
 
             wp_enqueue_script(
@@ -577,7 +584,7 @@ class PP_Content_Overview extends PP_Module
          */
         $this->columns = apply_filters('publishpress_content_overview_columns', $columns);
 
-        
+
         $filters = $this->content_overview_datas['content_overview_filters'];
         /**
          * @param array $columns
@@ -591,7 +598,7 @@ class PP_Content_Overview extends PP_Module
 
         $this->form_filters = $this->get_content_overview_form_filters();
         $this->form_filter_list = array_merge(...array_values(array_column($this->form_filters, 'filters')));
-        
+
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
 
@@ -602,7 +609,7 @@ class PP_Content_Overview extends PP_Module
             ''
         );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
-                    
+
         <div class="wrap" id="pp-content-overview-wrap">
             <?php
             $this->print_messages(); ?>
@@ -753,31 +760,31 @@ class PP_Content_Overview extends PP_Module
         ) {
             return;
         }
- 
+
         if (! wp_verify_nonce(sanitize_key($_REQUEST['nonce']), 'change-date')) {
             return;
         }
- 
+
         $current_user = wp_get_current_user();
         $user_filters = $this->get_user_meta(
             $current_user->ID,
             self::USERMETA_KEY_PREFIX . 'filters',
             true
         );
- 
+
         $use_today_as_start_date = (bool)$_REQUEST['pp-content-overview-range-use-today'];
- 
+
         $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
             ? date($date_format, strtotime('-5 weeks'))
             : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
- 
+
         $user_filters['end_date'] = $_REQUEST['pp-content-overview-end-date_hidden'];
- 
+
         if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
             $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 weeks'));
         }
- 
+
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
     }
 
@@ -840,7 +847,7 @@ class PP_Content_Overview extends PP_Module
 
             $publishpress->update_module_option($this->module->name, 'content_overview_columns', $content_overview_columns);
             $publishpress->update_module_option($this->module->name, 'content_overview_custom_columns', $content_overview_custom_columns);
-            
+
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo pp_planner_admin_notice(esc_html__('Column updated successfully.', 'publishpress'));
         } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'filter_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_filter_form_nonce')) {
@@ -854,7 +861,7 @@ class PP_Content_Overview extends PP_Module
 
             $publishpress->update_module_option($this->module->name, 'content_overview_filters', $content_overview_filters);
             $publishpress->update_module_option($this->module->name, 'content_overview_custom_filters', $content_overview_custom_filters);
-            
+
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
         } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'settings_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_settings_form_nonce')) {
@@ -862,7 +869,7 @@ class PP_Content_Overview extends PP_Module
             $posts_per_page = !empty($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : 200;
 
             $publishpress->update_module_option($this->module->name, 'posts_per_page', $posts_per_page);
-            
+
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo pp_planner_admin_notice(esc_html__('Settings updated successfully.', 'publishpress'));
         } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && !empty($_POST['ptype']) && $_POST['co_form_action'] == 'post_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_post_form_nonce')) {
@@ -901,8 +908,8 @@ class PP_Content_Overview extends PP_Module
                     $hh = ( $hh > 23 ) ? $hh - 24 : $hh;
                     $mn = ( $mn > 59 ) ? $mn - 60 : $mn;
                     $ss = ( $ss > 59 ) ? $ss - 60 : $ss;
-            
-                    
+
+
                     $post_date = sprintf( '%04d-%02d-%02d %02d:%02d:%02d', $aa, $mm, $jj, $hh, $mn, $ss );
                     $valid_date = wp_checkdate( $mm, $jj, $aa, $post_date );
                     if ($valid_date ) {
@@ -918,23 +925,23 @@ class PP_Content_Overview extends PP_Module
                         $categoriesIdList = [];
                         foreach ($categories as $categorySlug) {
                             $category = get_term_by('slug', $categorySlug, 'category');
-    
+
                             if (! $category || is_wp_error($category)) {
                                 $category = wp_create_category($categorySlug);
                                 $category = get_term($category);
                             }
-    
+
                             if (! is_wp_error($category)) {
                                 $categoriesIdList[] = $category->term_id;
                             }
                         }
                         wp_set_post_terms($postId, $categoriesIdList, 'category');
                     }
-    
+
                     if (! empty($tags)) {
                         foreach ($tags as $tagSlug) {
                             $tag = get_term_by('slug', $tagSlug, 'post_tag');
-    
+
                             if (! $tag || is_wp_error($tag)) {
                                 wp_create_tag($tagSlug);
                             }
@@ -957,7 +964,7 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Get content overview data that's required on the 
+     * Get content overview data that's required on the
      * content overview page
      *
      * @return array
@@ -968,7 +975,7 @@ class PP_Content_Overview extends PP_Module
         if (is_array($this->content_overview_datas)) {
             return $this->content_overview_datas;
         }
-        
+
         $datas = [];
 
         // add all meta keys
@@ -1018,7 +1025,7 @@ class PP_Content_Overview extends PP_Module
         $content_overview_columns = $this->module->options->content_overview_columns;
         $content_overview_custom_columns = $this->module->options->content_overview_custom_columns;
 
-        $datas['content_overview_columns'] = is_array($content_overview_columns) ? $content_overview_columns : 
+        $datas['content_overview_columns'] = is_array($content_overview_columns) ? $content_overview_columns :
         [
             'post_status' => esc_html__('Status', 'publishpress'),
             'post_type' => esc_html__('Post Type', 'publishpress'),
@@ -1026,7 +1033,7 @@ class PP_Content_Overview extends PP_Module
             'post_date' => esc_html__('Post Date', 'publishpress'),
             'post_modified' => esc_html__('Last Modified', 'publishpress'),
         ];
-        
+
         $datas['content_overview_custom_columns'] = is_array($content_overview_custom_columns) ? $content_overview_custom_columns : [];
 
         // Add content overview filters content
@@ -1035,7 +1042,7 @@ class PP_Content_Overview extends PP_Module
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
             'post_status' => esc_html__('Status', 'publishpress'),
-            'author' => esc_html__('Author', 'publishpress'), 
+            'author' => esc_html__('Author', 'publishpress'),
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
         $datas['content_overview_custom_filters'] = is_array($content_overview_custom_filters) ? $content_overview_custom_filters : [];
@@ -1054,7 +1061,7 @@ class PP_Content_Overview extends PP_Module
 
     /**
      * Get content overview form columns
-     * 
+     *
      * @return array
      */
     public function get_content_overview_form_columns() {
@@ -1113,10 +1120,10 @@ class PP_Content_Overview extends PP_Module
         return $columns;
     }
 
-    
+
     /**
      * Get content overview form filters
-     * 
+     *
      * @return array
      */
     public function get_content_overview_form_filters() {
@@ -1144,7 +1151,7 @@ class PP_Content_Overview extends PP_Module
                 'ptype' => esc_html__('Post Type', 'publishpress')
             ]
         ];
-        
+
         // editorial fields filters
         if (isset($content_overview_datas['editorial_metadata'])) {
             $filters['editorial_metadata'] = [
@@ -1192,7 +1199,7 @@ class PP_Content_Overview extends PP_Module
             $response['status']  = 'success';
             $response['content'] = PP_Content_Overview_Utilities::content_overview_get_post_form($form_args);
         }
-        
+
         wp_send_json($response);
     }
 
@@ -1208,13 +1215,13 @@ class PP_Content_Overview extends PP_Module
                 $editable_post_types[$postTypeObject->name] = $postTypeObject->labels->singular_name;
             }
         }
-            
+
         return $editable_post_types;
     }
 
     /**
      * Load utilities files
-     * 
+     *
      * @return void
      */
     private function load_utilities_files() {
@@ -1398,9 +1405,9 @@ class PP_Content_Overview extends PP_Module
             <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container"></div>
         </div>
         <?php
-        
+
         if (Util::isPlannersProActive()) {
-            
+
             $localized_post_data['post_author_label']   = esc_html__('Author', 'publishpress');
             $localized_post_data['post_date_label']     = esc_html__('Post Date', 'publishpress');
             $localized_post_data['edit_label']          = esc_html__('Edit', 'publishpress');
@@ -1506,14 +1513,14 @@ class PP_Content_Overview extends PP_Module
                             'compare' => $compare
                         );
                     }
-                
+
                 } elseif (! empty($this->user_filters[$meta_key])) {
                     if ($metadata_term['type'] === 'date') {
                         continue;
                     } else {
                         $meta_value = sanitize_text_field($this->user_filters[$meta_key]);
                     }
-    
+
                      $compare = '=';
                     if ($metadata_term['type'] === 'paragraph'
                         || ($metadata_term['type'] === 'select' && isset($metadata_term->select_type) && $metadata_term['select_type'] === 'multiple')
@@ -1529,12 +1536,12 @@ class PP_Content_Overview extends PP_Module
                 }
 
             } elseif(
-                in_array($enabled_filter, $this->content_overview_datas['meta_keys']) 
+                in_array($enabled_filter, $this->content_overview_datas['meta_keys'])
                 && (
                     isset($this->user_filters[$enabled_filter])
-                    && 
+                    &&
                         (
-                            !empty($this->user_filters[$enabled_filter]) 
+                            !empty($this->user_filters[$enabled_filter])
                             || $this->user_filters[$enabled_filter] == '0'
                             || (
                                 !empty($this->user_filters[$enabled_filter . '_operator'])
@@ -1548,7 +1555,7 @@ class PP_Content_Overview extends PP_Module
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
                 $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
                 $compare = $this->meta_query_operator_symbol($meta_operator);
-                
+
                 $metadata_filter = true;
 
                 if ($meta_operator == 'not_exists') {
@@ -1584,7 +1591,7 @@ class PP_Content_Overview extends PP_Module
                     'value' => $meta_value,
                     'compare' => $compare
                 );
-                
+
             } elseif(array_key_exists($enabled_filter, $this->content_overview_datas['taxonomies']) && !empty($this->user_filters[$enabled_filter])) {
                 //taxonomy filter
                 unset($args[$enabled_filter]);
@@ -1817,7 +1824,7 @@ class PP_Content_Overview extends PP_Module
             default:
                 break;
         }
-        
+
         $meta_options = isset($this->terms_options[$column_name])
             ? $this->terms_options[$column_name]
             : null;
@@ -2043,7 +2050,7 @@ class PP_Content_Overview extends PP_Module
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
         $taxonomy  = (isset($_GET['taxonomy']) && !empty(trim($_GET['taxonomy']))) ? sanitize_text_field($_GET['taxonomy']) : 'category';
-        
+
         global $wpdb;
 
         $cacheKey = 'search_categories_result_' . md5($queryText);
