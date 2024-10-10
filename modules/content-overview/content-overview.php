@@ -159,6 +159,8 @@ class PP_Content_Overview extends PP_Module
                 'content_overview_filters' => '',
                 'content_overview_custom_filters' => '',
 
+                'posts_per_page' => 200,
+
                 'post_types' => [
                     'post' => 'on',
                     'page' => 'off',
@@ -855,6 +857,14 @@ class PP_Content_Overview extends PP_Module
             
             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+        } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'settings_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_settings_form_nonce')) {
+            // Content Board filter form
+            $posts_per_page = !empty($_POST['posts_per_page']) ? (int) $_POST['posts_per_page'] : 200;
+
+            $publishpress->update_module_option($this->module->name, 'posts_per_page', $posts_per_page);
+            
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo pp_planner_admin_notice(esc_html__('Settings updated successfully.', 'publishpress'));
         } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && !empty($_POST['ptype']) && $_POST['co_form_action'] == 'post_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_overview_post_form_nonce')) {
             $postType = sanitize_text_field($_POST['ptype']);
             $postTypeObject = get_post_type_object($postType);
@@ -1229,6 +1239,7 @@ class PP_Content_Overview extends PP_Module
         $args['form_filter_list']           = $this->form_filter_list;
         $args['all_filters']                = $this->filters;
         $args['terms_options']              = $this->terms_options;
+        $args['posts_per_page']             = $this->module->options->posts_per_page;
         $args['operator_labels']            = $this->meta_query_operator_label();
         $args['post_statuses']              = $this->get_post_statuses();
         $args['post_status_options']        = '';
@@ -1442,7 +1453,7 @@ class PP_Content_Overview extends PP_Module
         $defaults = [
             'post_status' => null,
             'author' => null,
-            'posts_per_page' => (int)apply_filters('PP_Content_Overview_max_query', 200),
+            'posts_per_page' => $this->module->options->posts_per_page,
         ];
 
         $args = array_merge($defaults, $args);

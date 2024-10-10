@@ -15,6 +15,7 @@ if (! class_exists('PP_Content_Board_Utilities')) {
             $editable_post_types    = $args['editable_post_types'];
             $user_filters           = $args['user_filters'];
             $board_filters          = $args['board_filters'];
+            $posts_per_page         = $args['posts_per_page'];
             ?>
             <div class="pp-content-board-manage">
                 <div class="left-items">
@@ -48,6 +49,32 @@ if (! class_exists('PP_Content_Board_Utilities')) {
                     </div>
                     <div class="item action" id="print_link">
                         <span class="dashicons dashicons-printer"></span> <?php esc_html_e('Print', 'publishpress'); ?>
+                    </div>
+                    <?php $modal_id++; ?>
+                    <div data-target="#content_board_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter item action active-filter">
+                        <span class="dashicons dashicons-admin-generic"></span>
+                    </div>
+                    <div id="content_board_modal_<?php echo esc_attr($modal_id); ?>" class="content-board-modal" style="display: none;">
+                        <div class="content-board-modal-content">
+                            <span class="close">&times;</span>
+                            <div>
+                                <div class="metadata-item-filter custom-filter">
+                                    <div class="filter-title">
+                                        <?php esc_html_e('Maximum Post Results', 'publishpress'); ?>
+                                    </div>
+                                    <div class="filter-content">
+                                        <form method="POST">
+                                            <input type="hidden" name="co_form_action" value="settings_form"/>
+                                            <input type="hidden" name="_nonce" value="<?php echo esc_attr(wp_create_nonce('content_board_settings_form_nonce')); ?>"/>
+                                            <input required type="number" step="1" min="1" max="999" id="pp_posts_per_page" name="posts_per_page" value="<?php echo esc_attr($posts_per_page); ?>">
+                                            <div class="filter-apply">
+                                                <input type="submit" id="filter-submit" class="button button-primary" value="<?php esc_attr_e('Apply Changes', 'publishpress'); ?>">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="right-items">
