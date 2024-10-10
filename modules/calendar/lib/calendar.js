@@ -22,6 +22,28 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.co-cc-content .entry-item.form-item .new-fields .field .new-item-metakey').pp_select2({
+        allowClear: true,
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 0,
+            data: function (params) {
+                return {
+                    action: 'publishpress_content_search_meta_keys',
+                    nonce: $(this).attr('data-nonce'),
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: false
+        }
+    });
+
     $('#pp-content-filters select.filter_taxonomy').pp_select2({
         allowClear: true,
         ajax: {
@@ -166,10 +188,10 @@ jQuery(document).ready(function ($) {
         new_entry += '<div class="entry-item enable-item active-item customize-item-' + entryMetaKey + ' custom" data-name="' + entryMetaKey + '">';
         new_entry += '<input class="customize-item-input" type="hidden" name="content_calendar_' + customizeForm + '[' + entryMetaKey + ']" value="' + entryTitle + '" />';
         new_entry += '<input type="hidden" name="content_calendar_custom_' + customizeForm + '[' + entryMetaKey + ']" value="' + entryTitle + '" />';
-        new_entry += '<div class="items-list-item-check checked"><svg><use xlink:href="' + PPContentCalendar.moduleUrl + 'lib/content-calendar-icon.svg#svg-sprite-cu2-check-2-fill"></use></svg></div>';
-        new_entry += '<div class="items-list-item-check unchecked"><svg><use xlink:href="' + PPContentCalendar.moduleUrl + 'lib/content-calendar-icon.svg#svg-sprite-x"></use></svg></div>';
+        new_entry += '<div class="items-list-item-check checked"><svg><use xlink:href="' + PPContentCalendar.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-cu2-check-2-fill"></use></svg></div>';
+        new_entry += '<div class="items-list-item-check unchecked"><svg><use xlink:href="' + PPContentCalendar.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-x"></use></svg></div>';
         new_entry += '<div class="items-list-item-name"><div class="items-list-item-name-text">' + entryTitle + ' <span class="customize-item-info">(' + entryMetaKey + ')</span></div></div>';
-        new_entry += '<div class="delete-content-calendar-item" data-meta="' + entryMetaKey + '"><svg><use xlink:href="' + PPContentCalendar.moduleUrl + 'lib/content-calendar-icon.svg#svg-sprite-cu2-menu-trash"></use></svg></div>';
+        new_entry += '<div class="delete-content-calendar-item" data-meta="' + entryMetaKey + '"><svg><use xlink:href="' + PPContentCalendar.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-cu2-menu-trash"></use></svg></div>';
         new_entry += '</div>';
         $(formClass + ' .co-cc-content .entry-item.form-item').after(new_entry);
 

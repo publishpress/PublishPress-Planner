@@ -29,7 +29,6 @@
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
-use PublishPress\Legacy\Util;
 
 if (! class_exists('PP_Editorial_Metadata')) {
     /**
@@ -144,6 +143,8 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             // Load the chain of input-type handlers.
             $this->load_input_handlers();
+            // Load utilities files.
+            $this->load_utilities_files();
 
             if (is_admin()) {
                 // Anything that needs to happen in the admin
@@ -547,7 +548,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (! count($terms)) {
                 $message = esc_html__('No editorial fields available.');
                 if (current_user_can('manage_options')) {
-                    $message .= sprintf(' <a href="%s">Add fields to get started</a>.', esc_url($this->get_link()));
+                    $message .= sprintf(' <a href="%s">Add fields to get started</a>.', esc_url(PP_Editorial_Metadata_Utilities::get_link()));
                 } else {
                     $message .= esc_html__(
                         ' Encourage your site administrator to configure your editorial workflow by adding editorial fields.'
@@ -601,7 +602,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             if ($this->checkEditCapability()) {
                 // Make the metabox title include a link to edit the Editorial Fields terms. Logic similar to how Core dashboard widgets work.
-                echo '<span class="postbox-title-action"><a href="' . esc_url($this->get_link()) . '">' . esc_html__(
+                echo '<span class="postbox-title-action"><a href="' . esc_url(PP_Editorial_Metadata_Utilities::get_link()) . '">' . esc_html__(
                         'Configure'
                     ) . '</a></span>';
             }
@@ -1179,35 +1180,6 @@ if (! class_exists('PP_Editorial_Metadata')) {
         }
 
         /**
-         * Generate a link to one of the editorial fields actions
-         *
-         * @param array $args (optional) Action and any query args to add to the URL
-         *
-         * @return string $link Direct link to complete the action
-         * @since 0.7
-         *
-         */
-        public function get_link($args = [])
-        {
-            if (! isset($args['action'])) {
-                $args['action'] = '';
-            }
-            if (! isset($args['page'])) {
-                $args['page'] = self::MENU_SLUG;
-            }
-
-            // Add other things we may need depending on the action
-            switch ($args['action']) {
-                case 'delete-term':
-                    $args['nonce'] = wp_create_nonce($args['action']);
-                    break;
-                default:
-                    break;
-            }
-            return add_query_arg($args, get_admin_url(null, 'admin.php'));
-        }
-
-        /**
          * Handles a request to add a new piece of editorial fields
          */
         public function handle_add_editorial_metadata()
@@ -1359,7 +1331,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error adding term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-added']);
+            $redirect_url = PP_Editorial_Metadata_Utilities::get_link(['message' => 'term-added']);
             wp_redirect($redirect_url);
 
             exit;
@@ -1509,7 +1481,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-updated']);
+            $redirect_url = PP_Editorial_Metadata_Utilities::get_link(['message' => 'term-updated']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1552,7 +1524,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error updating term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-visibility-changed']);
+            $redirect_url = PP_Editorial_Metadata_Utilities::get_link(['message' => 'term-visibility-changed']);
 
             wp_redirect($redirect_url);
             exit;
@@ -1618,7 +1590,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 wp_die(esc_html__('Error deleting term.', 'publishpress'));
             }
 
-            $redirect_url = $this->get_link(['message' => 'term-deleted']);
+            $redirect_url = PP_Editorial_Metadata_Utilities::get_link(['message' => 'term-deleted']);
             wp_redirect($redirect_url);
             exit;
         }
@@ -1766,692 +1738,30 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function render_admin_page()
         {
             $publishpress = $this->get_service('publishpress');
-            $editorial_metadata = $publishpress->modules->editorial_metadata;
-            if (! isset($_GET['action']) || !in_array($_GET['action'], ['edit-term', 'add-new'])) {
-                $editorial_metadata->title = $editorial_metadata->title . ' <a href="'. esc_url(esc_url($this->get_link(['action' => 'add-new']))) .'" class="page-title-action">'. esc_html__('Add New', 'publishpress') .'</a>';
-            }
-            $publishpress->settings->print_default_header($editorial_metadata);
-            $wp_list_table = new PP_Editorial_Metadata_List_Table();
-            $wp_list_table->prepare_items();
 
-            $showOptionsTab = (! isset($_GET['action']) || $_GET['action'] != 'add-new') && (! isset($_REQUEST['form-errors']) || empty($_REQUEST['form-errors']));
-   
-            if (! isset($_GET['action']) || (isset($_GET['action']) && !in_array($_GET['action'], ['edit-term', 'add-new']))): ?>
-                <div class="pp-editorial-metadata-wrap">
-                    <div class='col-wrap'>
-                        <div class="pp-columns-wrapper<?php echo (!Util::isPlannersProActive()) ? ' pp-enable-sidebar' : '' ?>">
-                            <div class="pp-column-left">
-                                <form id='posts-filter' action='' method='post'>
-                                    <?php
-                                    $wp_list_table->display(); ?>
-                                    <?php
-                                    wp_nonce_field('editorial-metadata-sortable', 'editorial-metadata-sortable'); ?>
-                                </form>
-                            </div><!-- .pp-column-left -->
-                            <?php if (!Util::isPlannersProActive()) { ?>
-                                <div class="pp-column-right">
-                                    <?php Util::pp_pro_sidebar(); ?>
-                                </div><!-- .pp-column-right -->
-                            <?php } ?>
-                        </div><!-- .pp-columns-wrapper -->
-                    </div>
-                </div>
-            <?php
-            endif; ?>
+            $args = [];
+            $args['publishpress']           = $publishpress;
+            $args['edited_term']            = false;
+            $args['module']                 = $this->module;
+            $args['metadata_types']         = $this->get_supported_metadata_types();
+            $args['valid_post_types']       = $this->get_all_post_types();
+            $args['metadata_user_roles']    = $this->get_supported_metadata_user_roles();
 
-            <?php
-            if (isset($_GET['action'], $_GET['term-id']) && $_GET['action'] == 'edit-term'): ?>
-                <?php
-                /** Full page width view for editing a given editorial fields term **/ ?>
-                <?php
-                // Check whether the term exists
+            if (isset($_GET['action'], $_GET['term-id']) && $_GET['action'] == 'edit-term') {
                 $term_id = (int)$_GET['term-id'];
-                $term = $this->get_editorial_metadata_term_by('id', $term_id);
-                if (! $term) {
-                    echo '<div class="error"><p>' . $this->module->messages['term-missing'] . '</p></div>';
-                    return;
-                }
-                $metadata_types = $this->get_supported_metadata_types();
-                $type = $term->type;
-                $term_user_role = isset($term->user_role) ? (array)$term->user_role : [];
-                $term_select_type = isset($term->select_type) ? $term->select_type : '';
-                $term_select_default = isset($term->select_default) ? $term->select_default : '';
-                $term_select_options = isset($term->select_options) ? $term->select_options : '';
-                $term_post_types= isset($term->post_types) ? $term->post_types : [];
-                $term_post_types_column = isset($term->post_types_column) ? $term->post_types_column : [];
-                $edit_term_link = $this->get_link(['action' => 'edit-term', 'term-id' => $term->term_id]);
+                $args['edited_term'] = $this->get_editorial_metadata_term_by('id', $term_id);
+            }
+            PP_Editorial_Metadata_Utilities::render_admin_page($args);
+        }
 
-                $term_select_type = (isset($_POST['metadata_select_type'])) ? sanitize_key($_POST['metadata_select_type']) : $term_select_type;
-                $term_select_default  = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : $term_select_default;
-                $term_select_options = (isset($_POST['metadata_select_options']) && is_array($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : $term_select_options; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) ? array_map('sanitize_key', $_POST['post_types']) : $term_post_types;
-                $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) ? array_map('sanitize_key', $_POST['post_types_column']) : $term_post_types_column;
-
-                $name = (isset($_POST['name'])) ? stripslashes(sanitize_text_field($_POST['name'])) : $term->name;
-                $description = (isset($_POST['description'])) ? stripslashes(
-                    sanitize_textarea_field($_POST['description'])
-                ) : $term->description;
-
-                if ($term->show_in_calendar_form) {
-                    $show_in_calendar_form = 'yes';
-                } else {
-                    $show_in_calendar_form = 'no';
-                }
-                $show_in_calendar_form = (isset($_POST['show_in_calendar_form'])) ? stripslashes($_POST['show_in_calendar_form']) : $show_in_calendar_form;
-
-                $valid_post_types = $this->get_all_post_types($this->module);
-                ?>
-
-                <form method='post' action="<?php
-                echo esc_url($edit_term_link); ?>">
-                    <input type='hidden' name='action' value='editedtag'/>
-                    <input type='hidden' name='tag_id' value="<?php
-                    echo esc_attr($term->term_id); ?>"/>
-                    <input type='hidden' name='taxonomy' value="<?php
-                    echo esc_attr(self::metadata_taxonomy) ?>"/>
-                    <?php
-                    wp_original_referer_field();
-                    wp_nonce_field('editorial-metadata-edit-nonce'); ?>
-                    <table class='form-table'>
-                        <tr class='form-field form-required'>
-                            <th scope='row' valign='top'><label for='name'><?php
-                                    esc_html_e('Name'); ?></label></th>
-                            <td><input name='name' id='name' type='text' value="<?php
-                                echo esc_attr($name); ?>" size='40' aria-required='true'/>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'name',
-                                    esc_html__('The name is for labeling the editorial fields.', 'publishpress')
-                                ); ?>
-                        </tr>
-                        <tr class='form-field'>
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('Slug', 'publishpress'); ?></th>
-                            <td>
-                                <input type='text' disabled='disabled' value="<?php
-                                echo esc_attr($term->slug); ?>"/>
-                                <p class='description'><?php
-                                    esc_html_e(
-                                        'The slug cannot be changed once the term has been created.',
-                                        'publishpress'
-                                    ); ?></p>
-                            </td>
-                        </tr>
-                        <tr class='form-field'>
-                            <th scope='row' valign='top'><label for='description'><?php
-                                    esc_html_e('Description', 'publishpress'); ?></label></th>
-                            <td>
-                                <textarea name='description' id='description' rows='5' cols='50'
-                                          style='width: 97%;'><?php
-                                    echo esc_html($description); ?></textarea>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'description',
-                                    esc_html__(
-                                        'The description can be used to communicate with your team about what the field is for.',
-                                        'publishpress'
-                                    )
-                                ); ?>
-                            </td>
-                        </tr>
-                        <tr class='form-field'>
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('Type', 'publishpress'); ?></th>
-                            <td>
-                                <input type='text' disabled='disabled' value="<?php
-                                echo esc_attr($metadata_types[$type]); ?>"/>
-                                <p class='description'><?php
-                                    esc_html_e('The field type cannot be changed once created.', 'publishpress'); ?></p>
-                            </td>
-                        </tr>
-                        <tr class='form-field pp-editorial-optional-field pp-editorial-user-field pp-select2-field' 
-                            style="<?php echo ($type === 'user' ? '' : 'display:none'); ?>">
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('User role', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                    $metadata_user_roles = $this->get_supported_metadata_user_roles();
-                                    $current_metadata_user_role = $term_user_role; ?>
-                                    <select id="metadata_user_role"
-                                        class="pp_editorial_meta_multi_select2" 
-                                        name="metadata_user_role[]"
-                                        data-placeholder="<?php echo esc_attr__('Select roles...', 'publishpress'); ?>"
-                                        multiple="multiple">
-                                        <?php
-                                        foreach ($metadata_user_roles as $metadata_user_role => $metadata_user_role_name) : ?>
-                                            <option value="<?php
-                                            echo esc_attr($metadata_user_role); ?>" <?php
-                                            selected(in_array($metadata_user_role, $current_metadata_user_role), true); ?>><?php
-                                                echo esc_html($metadata_user_role_name); ?></option>
-                                        <?php
-                                        endforeach; ?>
-                                    </select>
-                                <p class='description'><?php
-                                    esc_html_e('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress'); ?></p>
-                            </td>
-                        </tr>
-
-                        <tr class='form-field pp-editorial-optional-field pp-editorial-select-field' style="<?php echo ($type === 'select' ? '' : 'display:none'); ?>">
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('Select Type', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                $metadata_select_types = [
-                                    ''         => esc_html__('Single Select', 'publishpress'),
-                                    'multiple' => esc_html__('Multiple Select', 'publishpress'),
-                                ];
-                                $current_metadata_select_type = $term_select_type; ?>
-                                <select id="metadata_select_type"
-                                    name="metadata_select_type">
-                                    <?php
-                                    foreach ($metadata_select_types as $metadata_select_type => $metadata_select_type_name) : ?>
-                                        <option value="<?php
-                                            echo esc_attr($metadata_select_type); ?>" <?php
-                                            selected($metadata_select_type, $current_metadata_select_type); ?>><?php
-                                            echo esc_html($metadata_select_type_name); ?></option>
-                                    <?php
-                                    endforeach; ?>
-                                </select>
-                                <p class='description'><?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'select_type',
-                                    esc_html__('Indicate the select type.', 'publishpress')
-                                ); ?></p>
-                            </td>
-                        </tr>
-
-                        <tr class='form-field pp-editorial-optional-field pp-editorial-select-field' style="<?php echo ($type === 'select' ? '' : 'display:none'); ?>">
-                            <th scope='row' valign='top'><?php
-                                esc_html_e('Dropdown Option', 'publishpress'); ?></th>
-                            <td>
-                            <p class='description'><?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'select_options',
-                                    esc_html__('Enter the dropdown option value and label. You can move options to change their order.', 'publishpress')
-                                ); ?></p>
-                                <?php
-                                $current_metadata_select_options = $term_select_options;
-                                ?>
-                                <div class="postbox">
-                                    <div class="inside">
-                                        <div class="pp-select-options-wrap">
-                                            <?php
-                                            if (!empty($current_metadata_select_options)) {
-                                            $option_values     = $current_metadata_select_options['values'];
-                                            $option_labels     = $current_metadata_select_options['labels'];
-                                            $default_dropdown  = $term_select_default;
-                                            foreach ($option_values as $index => $value) {
-                                                ?>
-                                                <div class="pp-select-options-box">
-                                                    <span class="pp-option-icon move"></span>
-                                                    <input class="entry-field value-field"
-                                                        autocomplete="off"
-                                                        type="text" 
-                                                        name="metadata_select_options[values][]" 
-                                                        value="<?php echo esc_attr($value); ?>"
-                                                        placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
-                                                    />
-                                                    <input class="entry-field label-field" 
-                                                        autocomplete="off"
-                                                        type="text" name="metadata_select_options[labels][]" 
-                                                        value="<?php echo esc_attr($option_labels[$index]); ?>"
-                                                        placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
-                                                    />
-                                                    <label class="select_dropdown_default_label">
-                                                        <input type="radio"
-                                                            class="select_dropdown_default"
-                                                            name="select_dropdown_default" 
-                                                            value="<?php echo (int)$index; ?>"
-                                                            <?php checked($default_dropdown, $index); ?>
-                                                        />
-                                                            <?php esc_html_e('Default option', 'publishpress'); ?>
-                                                    </label>
-                                                    <div class="delete-button" style="<?php echo ($index === 0 ? 'display:none' : ''); ?>">
-                                                        <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
-                                                    </div>
-                                                </div>
-                                            <?php
-                                            }
-                                        } else { ?>
-                                            <div class="pp-select-options-box">
-                                                <span class="pp-option-icon move"></span>
-                                                <input class="entry-field value-field" 
-                                                    autocomplete="off"
-                                                    type="text" 
-                                                    name="metadata_select_options[values][]" 
-                                                    value=""
-                                                    placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
-                                                />
-                                                <input class="entry-field label-field" 
-                                                    autocomplete="off"
-                                                    type="text" name="metadata_select_options[labels][]" 
-                                                    value=""
-                                                    placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
-                                                />
-                                                <label class="select_dropdown_default_label">
-                                                    <input type="radio"
-                                                        class="select_dropdown_default"
-                                                        name="select_dropdown_default" 
-                                                        value="0"
-                                                    />
-                                                        <?php esc_html_e('Default option', 'publishpress'); ?>
-                                                </label>
-                                                <div class="delete-button" style="display:none;">
-                                                    <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <p class="pp-add-new-paragraph"><a class="pp-add-new-option" href="#"><?php esc_html_e('Add Another Option', 'publishpress'); ?></a></p>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                        <tr class='form-field checkbox-row'>
-                            <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                $show_in_calendar_form_options = [
-                                    'no' => esc_html__('No', 'publishpress'),
-                                    'yes' => esc_html__('Yes', 'publishpress'),
-                                ]; ?>
-                                <?php
-                                echo '<input id="show_in_calendar_form" name="show_in_calendar_form"';
-                                checked($show_in_calendar_form, 'yes', true);
-                                echo ' type="checkbox" value="yes" />';
-                                ?>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'show_in_calendar_form',
-                                    esc_html__(
-                                        'If enabled, this field will be available when adding new posts on the Content Calendar and Overview screen.',
-                                        'publishpress'
-                                    )
-                                ); ?>
-                            </td>
-                        </tr>
-                        <tr class='form-field pp-select2-field'>
-                            <th scope='row' ; valign='top'><?php
-                                esc_html_e('Add to post types', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'post_types',
-                                    esc_html__(
-                                        'This field will be available for these post types.',
-                                        'publishpress'
-                                    )
-                                ); ?>
-                                <?php
-                                foreach ($valid_post_types as $post_type => $post_types_name) : ?>
-                                    <?php
-                                    echo '<label for="post_types-' . esc_attr($post_type) . '" class="post-type-label">';
-                                    echo '<input id="post_types-' . esc_attr($post_type) . '" name="post_types[]"';
-                                    checked(in_array($post_type, $term_post_types), true);
-                                    echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
-                                    echo '<br />';
-                                    ?>
-                                <?php endforeach; ?>
-                            </td>
-                        </tr>
-                        <tr class='form-field pp-select2-field'>
-                            <th scope='row' ; valign='top'><?php
-                                esc_html_e('Show on Post Types screen', 'publishpress'); ?></th>
-                            <td>
-                                <?php
-                                $publishpress->settings->helper_print_error_or_description(
-                                    'post_types_column',
-                                    esc_html__(
-                                        'This field will be viewable on the overview screens for these post types.',
-                                        'publishpress'
-                                    )
-                                ); ?>
-                                <?php
-                                foreach ($valid_post_types as $post_type => $post_types_name) : ?>
-                                    <?php
-                                    echo '<label for="post_types_column-' . esc_attr($post_type) . '" class="post-type-label">';
-                                    echo '<input id="post_types_column-' . esc_attr($post_type) . '" name="post_types_column[]"';
-                                    checked(in_array($post_type, $term_post_types_column), true);
-                                    echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
-                                    echo '<br />';
-                                    ?>
-                                <?php endforeach; ?>
-                            </td>
-                        </tr>
-                        <input type='hidden' ; name="<?php
-                        echo esc_attr(self::metadata_taxonomy); ?>'_type" ; value="<?php
-                        echo esc_attr($type); ?>"/>
-                    </table>
-                    <p class='submit'>
-                        <?php
-                        submit_button(esc_html__('Update Editorial fields term', 'publishpress'), 'primary', 'submit', false); ?>
-                        <a class='cancel-settings-link' href="<?php
-                        echo esc_url($this->get_link()); ?>"><?php
-                            esc_html_e('Cancel', 'publishpress'); ?></a>
-                    </p>
-                </form>
-
-            <?php
-            else: ?>
-                <div>
-                    <div class='col-wrap'>
-                        <div class='form-wrap'>
-                            <?php
-                            if (! $showOptionsTab): ?>
-                                <?php
-                                /** Custom form for adding a new Editorial Fields term **/ ?>
-                                <form class='add:the-list:' action="<?php
-                                echo esc_url($this->get_link(['action' => 'add-new'])); ?>" method='post' id='addmetadata'
-                                      name='addmetadata'>
-                                    <div class='form-field form-required'>
-                                        <label for='metadata_name'><?php
-                                            esc_html_e('Name', 'publishpress'); ?></label>
-                                        <input type="text" aria-required='true' size='20' maxlength='200'
-                                               id='metadata_name' name='metadata_name' value="<?php
-                                        if (! empty($_POST['metadata_name'])) {
-                                            echo esc_attr(stripslashes(sanitize_textarea_field($_POST['metadata_name'])));
-                                        } ?>"/>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'name',
-                                            esc_html__('The name is for labeling the editorial fields.', 'publishpress')
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field form-required'>
-                                        <label for='metadata_slug'><?php
-                                            esc_html_e('Slug', 'publishpress'); ?></label>
-                                        <input type="text" aria-required='true' size='20' maxlength='200'
-                                               id='metadata_slug' name='metadata_slug' value="<?php
-                                        if (! empty($_POST['metadata_slug'])) {
-                                            echo esc_attr(sanitize_key($_POST['metadata_slug']));
-                                        } ?>"/>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'slug',
-                                            esc_html__(
-                                                'The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.',
-                                                'publishpress'
-                                            )
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field'>
-                                        <label for='metadata_description'><?php
-                                            esc_html_e('Description', 'publishpress'); ?></label>
-                                        <textarea cols="40" rows='5' id='metadata_description'
-                                                  name='metadata_description'><?php
-                                            if (! empty($_POST['metadata_description'])) {
-                                                echo esc_html(stripslashes(sanitize_textarea_field($_POST['metadata_description'])));
-                                            } ?></textarea>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'description',
-                                            esc_html__(
-                                                'The description can be used to communicate with your team about what the metadata is for.',
-                                                'publishpress'
-                                            )
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field form-required'>
-                                        <label for='metadata_type'><?php
-                                            esc_html_e('Type', 'publishpress'); ?></label>
-                                        <?php
-                                        $metadata_types = $this->get_supported_metadata_types();
-                                        // Select the previously selected metadata type if a valid one exists
-                                        $current_metadata_type = (isset($_POST['metadata_type']) && in_array(
-                                                $_POST['metadata_type'],
-                                                array_keys($metadata_types)
-                                            )) ? sanitize_key($_POST['metadata_type']) : false; ?>
-                                        <select id="metadata_type" name='metadata_type'>
-                                            <?php
-                                            foreach ($metadata_types as $metadata_type => $metadata_type_name) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($metadata_type); ?>" <?php
-                                                selected($metadata_type, $current_metadata_type); ?>><?php
-                                                    echo esc_html($metadata_type_name); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'type',
-                                            esc_html__('Indicate the type of editorial fields.', 'publishpress')
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field pp-editorial-optional-field pp-editorial-user-field pp-select2-field' style="display:none;">
-                                        <label for='metadata_user_role'><?php
-                                            esc_html_e('User role', 'publishpress'); ?></label>
-                                        <?php
-                                        $metadata_user_roles = $this->get_supported_metadata_user_roles();
-                                        $current_metadata_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
-                                            ? array_map('sanitize_key', $_POST['metadata_user_role']) : []; ?>
-                                        <select id="metadata_user_role"
-                                            class="pp_editorial_meta_multi_select2" 
-                                            name="metadata_user_role[]"
-                                            data-placeholder="<?php echo esc_attr__('Select roles...', 'publishpress'); ?>"
-                                            multiple="multiple">
-                                            <?php
-                                            foreach ($metadata_user_roles as $metadata_user_role => $metadata_user_role_name) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($metadata_user_role); ?>" <?php
-                                                selected(in_array($metadata_user_role, $current_metadata_user_role), true); ?>><?php
-                                                    echo esc_html($metadata_user_role_name); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'user_role',
-                                            esc_html__('Filter the list of users in the editorial meta to users in the selected roles.', 'publishpress')
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field pp-editorial-optional-field pp-editorial-select-field' style="display:none;">
-                                        <label for='metadata_select_type'><?php
-                                            esc_html_e('Select Type', 'publishpress'); ?></label>
-                                        <?php
-                                        $metadata_select_types = [
-                                            ''         => esc_html__('Single Select', 'publishpress'),
-                                            'multiple' => esc_html__('Multiple Select', 'publishpress'),
-                                        ];
-                                        $current_metadata_select_type = (isset($_POST['metadata_select_type']) && in_array(
-                                            $_POST['metadata_select_type'],
-                                            array_keys($metadata_select_types)
-                                        )) ? sanitize_key($_POST['metadata_select_type']) : false; ?>
-                                        <select id="metadata_select_type"
-                                            name="metadata_select_type">
-                                            <?php
-                                            foreach ($metadata_select_types as $metadata_select_type => $metadata_select_type_name) : ?>
-                                                <option value="<?php
-                                                echo esc_attr($metadata_select_type); ?>" <?php
-                                                selected($metadata_select_type, $current_metadata_select_type); ?>><?php
-                                                    echo esc_html($metadata_select_type_name); ?></option>
-                                            <?php
-                                            endforeach; ?>
-                                        </select>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'select_type',
-                                            esc_html__('Indicate the select type.', 'publishpress')
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field pp-editorial-optional-field pp-editorial-select-field' style="display:none;">
-                                        <label for='metadata_select_options'><?php
-                                            esc_html_e('Dropdown Option', 'publishpress'); ?></label><?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'select_options',
-                                            esc_html__('Enter the dropdown option value and label. You can move options to change their order.', 'publishpress')
-                                        ); ?>
-                                        <?php
-                                        $current_metadata_select_options = (isset($_POST['metadata_select_options']) && is_array($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                                        ?>
-                                        <div class="postbox">
-                                            <div class="inside">
-                                                <div class="pp-select-options-wrap">
-                                                    <?php
-                                                    if (!empty($current_metadata_select_options)) {
-                                                        $option_values     = $current_metadata_select_options['values'];
-                                                        $option_labels     = $current_metadata_select_options['labels'];
-                                                        $default_dropdown  = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
-                                                        foreach ($option_values as $index => $value) {
-                                                            ?>
-                                                            <div class="pp-select-options-box">
-                                                                <span class="pp-option-icon move"></span>
-                                                                <input class="entry-field value-field"
-                                                                    autocomplete="off"
-                                                                    type="text" 
-                                                                    name="metadata_select_options[values][]" 
-                                                                    value="<?php echo esc_attr($value); ?>"
-                                                                    placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
-                                                                />
-                                                                <input class="entry-field label-field" 
-                                                                    autocomplete="off"
-                                                                    type="text" name="metadata_select_options[labels][]" 
-                                                                    value="<?php echo esc_attr($option_labels[$index]); ?>"
-                                                                    placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
-                                                                />
-                                                                <label class="select_dropdown_default_label">
-                                                                    <input type="radio"
-                                                                        class="select_dropdown_default"
-                                                                        name="select_dropdown_default" 
-                                                                        value="<?php echo (int)$index; ?>"
-                                                                        <?php checked($default_dropdown, $index); ?>
-                                                                    />
-                                                                        <?php esc_html_e('Default option', 'publishpress'); ?>
-                                                                </label>
-                                                                <div class="delete-button" style="<?php echo ($index === 0 ? 'display:none' : ''); ?>">
-                                                                    <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
-                                                                </div>
-                                                            </div>
-                                                        <?php
-                                                        }
-                                                    } else { ?>
-                                                        <div class="pp-select-options-box">
-                                                            <span class="pp-option-icon move"></span>
-                                                            <input class="entry-field value-field" 
-                                                                autocomplete="off"
-                                                                type="text" 
-                                                                name="metadata_select_options[values][]" 
-                                                                value=""
-                                                                placeholder="<?php esc_html_e('Meta Value', 'publishpress'); ?>"
-                                                            />
-                                                            <input class="entry-field label-field" 
-                                                                autocomplete="off"
-                                                                type="text" name="metadata_select_options[labels][]" 
-                                                                value=""
-                                                                placeholder="<?php esc_html_e('Display Label', 'publishpress'); ?>"
-                                                            />
-                                                            <label class="select_dropdown_default_label">
-                                                                <input type="radio"
-                                                                    class="select_dropdown_default"
-                                                                    name="select_dropdown_default" 
-                                                                    value="0"
-                                                                />
-                                                                    <?php esc_html_e('Default option', 'publishpress'); ?>
-                                                            </label>
-                                                            <div class="delete-button" style="display:none;">
-                                                                <a href="#" class="delete"><?php esc_html_e('Delete', 'publishpress'); ?></a>
-                                                            </div>
-                                                        </div>
-                                                    <?php } ?>
-                                                </div>
-                                                <p class="pp-add-new-paragraph"><a class="pp-add-new-option" href="#"><?php esc_html_e('Add Another Option', 'publishpress'); ?></a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                               
-                                    <div class='form-field form-required checkbox-row'>
-                                        <label for='show_in_calendar_form'><?php
-                                            esc_html_e('Show on Content Calendar and Overview form', 'publishpress'); ?></label>
-                                        <?php
-                                        $show_in_calendar_form_options = [
-                                            'no' => esc_html__('No', 'publishpress'),
-                                            'yes' => esc_html__('Yes', 'publishpress'),
-                                        ];
-                                        $current_show_in_calendar_form = (isset($_POST['show_in_calendar_form']) && in_array(
-                                                $_POST['show_in_calendar_form'],
-                                                array_keys($show_in_calendar_form_options)
-                                            )) ? $_POST['show_in_calendar_form'] : 'no'; ?>
-                                        <?php
-                                        echo '<input id="show_in_calendar_form" name="show_in_calendar_form"';
-                                        checked($current_show_in_calendar_form, 'yes', true);
-                                        echo ' type="checkbox" value="yes" />';
-                                        ?>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'show_in_calendar_form',
-                                            esc_html__(
-                                                'If enabled, this field will be available when adding new posts on the Content Calendar and Overview screen.',
-                                                'publishpress'
-                                            )
-                                        ); ?>
-                                    </div>
-                                    <div class='form-field'">
-                                        <label for='post_types'><?php
-                                            esc_html_e('Add to post types', 'publishpress'); ?></label>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'post_types',
-                                            esc_html__('This field will be available for these post types.', 'publishpress')
-                                        ); ?>
-                                        <?php
-                                        $valid_post_types = $this->get_all_post_types($this->module);
-                                        $current_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
-                                            ? array_map('sanitize_key', $_POST['post_types']) : ['post']; ?>
-                                            <?php
-                                            foreach ($valid_post_types as $post_type => $post_types_name) : ?>
-                                                <?php
-                                                echo '<label for="post_types-' . esc_attr($post_type) . '" class="post-type-label">';
-                                                echo '<input id="post_types-' . esc_attr($post_type) . '" name="post_types[]"';
-                                                checked(in_array($post_type, $current_post_types), true);
-                                                echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
-                                                echo '<br />';
-                                                ?>
-                                            <?php endforeach; ?>
-                                    </div>
-                                    <div class='form-field pp-select2-field'">
-                                        <label for='post_types_column'><?php
-                                            esc_html_e('Show on Post Types screen', 'publishpress'); ?></label>
-                                        <?php
-                                        $publishpress->settings->helper_print_error_or_description(
-                                            'post_types_column',
-                                            esc_html__('This field will be viewable on the overview screens for these post types.', 'publishpress')
-                                        ); ?>
-                                        <?php
-                                        $current_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
-                                            ? array_map('sanitize_key', $_POST['post_types_column']) : ['post']; ?>
-                                            <?php
-                                            foreach ($valid_post_types as $post_type => $post_types_name) : ?>
-                                                <?php
-                                                echo '<label for="post_types_column-' . esc_attr($post_type) . '" class="post-type-label">';
-                                                echo '<input id="post_types_column-' . esc_attr($post_type) . '" name="post_types_column[]"';
-                                                checked(in_array($post_type, $current_post_types_column), true);
-                                                echo ' type="checkbox" value="'. esc_attr($post_type) .'" />&nbsp;&nbsp;&nbsp;' . esc_html($post_types_name) . '</label>';
-                                                echo '<br />';
-                                                ?>
-                                            <?php endforeach; ?>
-                                    </div>
-                                    <?php
-                                    wp_nonce_field('edit-publishpress-settings'); ?>
-
-                                    <input type='hidden' id='form-action' name='form-action' value='add-term'/>
-                                    <p class='submit'><?php
-                                        submit_button(
-                                            esc_html__('Add New Editorial fields term', 'publishpress'),
-                                            'primary',
-                                            'submit',
-                                            false
-                                        ); ?>&nbsp;</p>
-                                </form>
-                            <?php
-                            endif; ?>
-                        </div>
-                    </div>
-                </div>
-
-            <?php
-            endif;
-            $publishpress->settings->print_default_footer($publishpress->modules->editorial_metadata);
+        /**
+         * Load utilities files
+         * 
+         * @return void
+         */
+        private function load_utilities_files() {
+            require_once dirname(__FILE__) . "/library/editorial-metadata-list-table.php";
+            require_once dirname(__FILE__) . "/library/editorial-metadata-utilities.php";
         }
 
         /**
@@ -2506,172 +1816,5 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 );
             }
         }
-    }
-}
-
-/**
- * Management interface for Editorial Fields. Extends WP_List_Table class
- */
-class PP_Editorial_Metadata_List_Table extends WP_List_Table
-{
-    public $callback_args;
-    public $taxonomy;
-    public $tax;
-
-    /**
-     * Construct the class
-     */
-    public function __construct()
-    {
-        global $publishpress;
-
-        $this->taxonomy = PP_Editorial_Metadata::metadata_taxonomy;
-
-        $this->tax = get_taxonomy($this->taxonomy);
-
-        $columns = $this->get_columns();
-        $hidden = [
-            'position',
-        ];
-        $sortable = [];
-
-        $this->_column_headers = [$columns, $hidden, $sortable];
-
-        parent::__construct([
-            'plural' => 'metadata',
-            'singular' => 'metadata',
-        ]);
-    }
-
-    /**
-     * Register the columns to appear in the table
-     *
-     * @since 0.7
-     */
-    public function get_columns()
-    {
-        $columns = [
-            'position' => esc_html__('Position', 'publishpress'),
-            'name' => esc_html__('Name', 'publishpress'),
-            'post_types' => esc_html__('Post Types', 'publishpress'),
-            'type' => esc_html__('Field Type', 'publishpress'),
-            'description' => esc_html__('Description', 'publishpress')
-        ];
-
-        return $columns;
-    }
-
-    /**
-     * Prepare a single row of Editorial Fields
-     *
-     * @param object $term The current term we're displaying
-     * @param int $level Level is always zero because it isn't a parent-child tax
-     *
-     * @since 0.7
-     *
-     */
-    public function single_row($term, $level = 0)
-    {
-        static $alternate_class = '';
-        $alternate_class = ($alternate_class == '' ? ' alternate' : '');
-        $row_class = ' class="term-static' . $alternate_class . '"';
-
-        echo '<tr id="term-' . esc_attr($term->term_id) . '"' . $row_class . '>';
-        echo $this->single_row_columns($term);
-        echo '</tr>';
-    }
-
-    /**
-     * Handle the column output when there's no method for it
-     *
-     * @param object $item Editorial Fields term as an object
-     * @param string $column_name How the column was registered at birth
-     *
-     * @since 0.7
-     *
-     */
-    public function column_default($item, $column_name)
-    {
-        global $publishpress;
-
-        switch ($column_name) {
-            case 'position':
-            case 'type':
-            case 'description':
-                return esc_html($item->$column_name);
-            case 'post_types':
-                $post_types = (isset($item->post_types) && !empty(($item->post_types))) ? (array) $item->post_types : [];
-                if (!empty($post_types)) {
-                    $valid_post_types = $publishpress->editorial_metadata->get_all_post_types($publishpress->editorial_metadata->module);
-                    $post_type_names = [];
-                    foreach ($valid_post_types as $post_type => $post_types_name) {
-                        if (in_array($post_type, $post_types)) {
-                            $post_type_names[] = $post_types_name;
-                        }
-                    }
-                    return join(', ', $post_type_names);
-                } else {
-                    return '-';
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Prepare the items to be displayed on the list table
-     *
-     * @since 0.7
-     */
-    public function prepare_items()
-    {
-        global $publishpress;
-        $this->items = $publishpress->editorial_metadata->get_editorial_metadata_terms();
-
-        $this->set_pagination_args([
-            'total_items' => count($this->items),
-            'per_page' => count($this->items),
-        ]);
-    }
-
-    /**
-     * Message to be displayed when there is no editorial fields
-     *
-     * @since 0.7
-     */
-    public function no_items()
-    {
-        esc_html_e('No editorial fields found.', 'publishpress');
-    }
-
-    /**
-     * Column for displaying the term's name and associated actions
-     *
-     * @param object $item Editorial Fields term as an object
-     *
-     * @since 0.7
-     *
-     */
-    public function column_name($item)
-    {
-        global $publishpress;
-        $item_edit_link = esc_url(
-            $publishpress->editorial_metadata->get_link(['action' => 'edit-term', 'term-id' => $item->term_id])
-        );
-        $item_delete_link = esc_url(
-            $publishpress->editorial_metadata->get_link(['action' => 'delete-term', 'term-id' => $item->term_id])
-        );
-
-        $out = '<strong><a class="row-title" href="' . $item_edit_link . '">' . esc_html($item->name) . '</a></strong>';
-
-        $actions = [];
-        $actions['edit'] = "<a href='$item_edit_link'>" . esc_html__('Edit', 'publishpress') . "</a>";
-
-        $actions['delete delete-status'] = "<a href='$item_delete_link'>" . esc_html__('Delete', 'publishpress') . "</a>";
-
-        $out .= $this->row_actions($actions, false);
-
-        return $out;
     }
 }

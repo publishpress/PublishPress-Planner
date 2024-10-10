@@ -166,12 +166,19 @@ if (! class_exists('PP_Editorial_Comments')) {
                 return false;
             }
 
-            wp_enqueue_script(
-                'publishpress-select2',
-                PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                ['jquery'],
-                PUBLISHPRESS_VERSION
-            );
+                wp_enqueue_script(
+                    'publishpress-select2-utils',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
+                    'publishpress-select2',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
+                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_VERSION
+                );
 
             wp_enqueue_script(
                 'publishpress-editorial-comments',
@@ -223,14 +230,14 @@ if (! class_exists('PP_Editorial_Comments')) {
             </script>
             <?php
         }
-    
+
         /**
          * Add necessary things to the admin menu
          */
         public function action_admin_submenu()
         {
             $publishpress = $this->get_service('publishpress');
-    
+
             // Main Menu
             $hook = add_submenu_page(
                 $publishpress->get_menu_slug(),
@@ -272,7 +279,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             <div class="wrap">
                 <div class="pp-columns-wrapper<?php echo (!Util::isPlannersProActive()) ? ' pp-enable-sidebar' : '' ?>">
                     <div class="pp-column-left">
-                        <?php 
+                        <?php
                         if (isset($_REQUEST['s']) && $search_str = esc_attr(wp_unslash(sanitize_text_field($_REQUEST['s'])))) {
                             /* translators: %s: search keywords */
                             printf(' <span class="description">' . esc_html__('Search results for &#8220;%s&#8221;', 'publishpress') . '</span>', esc_html($search_str));
@@ -283,7 +290,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                         $page = '';
                         if (isset($_REQUEST['page'])) {
                             $page = sanitize_text_field($_REQUEST['page']);
-                        } 
+                        }
                         ?>
                         <form class="search-form wp-clearfix" method="get">
                                 <input type="hidden" name="page" value="<?php
@@ -410,10 +417,10 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             $userSql = "SELECT DISTINCT u.ID, u.display_name
             FROM {$wpdb->users} AS u
-            INNER JOIN {$wpdb->comments} AS c 
+            INNER JOIN {$wpdb->comments} AS c
             ON u.ID = c.user_id
             WHERE c.comment_type = %s";
-            
+
             if (!empty($queryText)) {
                 $userSql .= $wpdb->prepare(
                     " AND (user_login LIKE %s
@@ -439,7 +446,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                     'text' => $user->display_name,
                 ];
             }
-    
+
             $output['results'] = $results;
             $ajax->sendJson($output);
         }
@@ -707,12 +714,12 @@ if (! class_exists('PP_Editorial_Comments')) {
                     <div class="comment-files">
                         <?php if (is_array($comment_files)) : ?>
                             <?php foreach ($comment_files as $comment_file_id) : ?>
-                                <?php 
+                                <?php
                                 $media_file = wp_get_attachment_url($comment_file_id);
                                 if (!is_wp_error($media_file) && !empty($media_file)) {
                                     $file_name = explode('/', $media_file);
                                     ?>
-                                    <div class="editorial-single-file" data-file_id="<?php echo esc_attr($comment_file_id); ?>"> 
+                                    <div class="editorial-single-file" data-file_id="<?php echo esc_attr($comment_file_id); ?>">
                                         &dash;
                                         <a href="<?php echo esc_url($media_file); ?>" target="blank">
                                             <?php echo esc_html(end($file_name)); ?>
@@ -1178,7 +1185,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 if ($deleted) {
                     do_action('pp_post_delete_editorial_comment', $comment_id);
                 }
-                
+
                 add_action('admin_notices', function () {
                     echo '<div class="notice updated"><p>' . esc_html__(
                         'Comment deleted successfully.',

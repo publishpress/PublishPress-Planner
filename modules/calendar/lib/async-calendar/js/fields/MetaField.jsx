@@ -1,4 +1,3 @@
-import DOMPurify from 'dompurify';
 const $ = jQuery;
 
 export default function MetaField(props) {
@@ -48,7 +47,7 @@ export default function MetaField(props) {
         
         return (
             <div
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.html) }}>
+                dangerouslySetInnerHTML={{ __html: props.html }}>
             </div>
         )
     }
