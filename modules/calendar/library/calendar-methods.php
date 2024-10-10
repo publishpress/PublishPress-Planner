@@ -1014,16 +1014,6 @@ if (! class_exists('PP_Calendar_Methods')) {
                     }
 
                     wp_enqueue_script(
-                        'jquery-inputmask',
-                        PUBLISHPRESS_URL . 'common/js/jquery.inputmask.min.js',
-                        [
-                            'jquery',
-                        ],
-                        PUBLISHPRESS_VERSION,
-                        true
-                    );
-
-                    wp_enqueue_script(
                         'date_i18n',
                         PUBLISHPRESS_URL . 'common/js/date-i18n.js',
                         [],
@@ -1043,7 +1033,6 @@ if (! class_exists('PP_Calendar_Methods')) {
                             'jquery-ui-sortable',
                             'jquery-ui-draggable',
                             'jquery-ui-droppable',
-                            'jquery-inputmask',
                             'wp-i18n',
                             'wp-element',
                             'date_i18n',
