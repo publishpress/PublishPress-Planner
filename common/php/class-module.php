@@ -871,6 +871,16 @@ if (!class_exists('PP_Module')) {
 
         public function getUserAuthorizedPostStatusOptions($postType)
         {
+            global $pp_post_type_status_options;
+
+            if (!is_array($pp_post_type_status_options)) {
+                $pp_post_type_status_options = [];
+            }
+
+            if (isset($pp_post_type_status_options[$postType])) {
+                return $pp_post_type_status_options[$postType];
+            }
+
             $postStatuses = $this->getPostStatusOptions();
 
             foreach ($postStatuses as $index => $status) {
@@ -882,6 +892,8 @@ if (!class_exists('PP_Module')) {
                     }
                 }
             }
+
+            $pp_post_type_status_options[$postType] = $postStatuses;
 
             return $postStatuses;
         }

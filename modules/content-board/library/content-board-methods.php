@@ -52,9 +52,17 @@ if (! class_exists('PP_Board_Methods')) {
                 if (!is_object($post_data) || !isset($post_data->post_type)) {
                     $response['content'] = esc_html__('Error fetching post data.', 'publishpress');
                 } else {
+                    $user_post_status = array_column( $this->getUserAuthorizedPostStatusOptions($post_data->post_type), 'value');
+                    if (in_array('publish', $user_post_status)) {
+                        $user_post_status[] = 'future';
+                        $user_post_status[] = 'private';
+                    }
+
                     $post_type_object = get_post_type_object($post_data->post_type);
                     if (empty($post_type_object->cap->edit_posts) || !current_user_can($post_type_object->cap->edit_posts)) {
                         $response['content'] = esc_html__('You do not have permission to edit selected post.', 'publishpress');
+                    } elseif (!in_array($post_status, $user_post_status)) {
+                        $response['content'] = esc_html__('You do not have permission to move post to selected post status.', 'publishpress');
                     } else {
                         $post_args = [
                             'ID' => $post_id,
