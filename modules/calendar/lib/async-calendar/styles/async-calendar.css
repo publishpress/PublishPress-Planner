@@ -208,6 +208,15 @@
     margin-right: 4px;
 }
 
+.publishpress-calendar-popup-links a.button-primary.calendar-create-btn {
+  background-color: #655997;
+}
+
+.publishpress-calendar-popup-links a.button-secondary.calendar-edit-btn {
+  border-color: #655997;
+  color: #655997;
+}
+
 .publishpress-calendar-popup-form {
     position: absolute;
     padding-bottom: 48px;
@@ -264,7 +273,6 @@
 }
 
 .publishpress-calendar-popup-form .publishpress-calendar-popup-links-hr {
-    position: absolute;
     bottom: 28px;
     width: 96%;
 }

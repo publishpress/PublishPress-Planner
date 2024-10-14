@@ -282,7 +282,7 @@ if (! class_exists('PP_Overview_Methods')) {
                         <span class="dashicons dashicons-printer"></span> <?php esc_html_e('Print', 'publishpress'); ?>
                     </div>
                     <?php $modal_id++; ?>
-                    <div data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter item action active-filter">
+                    <div data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter item action">
                         <span class="dashicons dashicons-admin-generic"></span>
                     </div>
                     <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="content-overview-modal" style="display: none;">
@@ -291,7 +291,7 @@ if (! class_exists('PP_Overview_Methods')) {
                             <div>
                                 <div class="metadata-item-filter custom-filter">
                                     <div class="filter-title">
-                                        <?php esc_html_e('Maximum Post Results', 'publishpress'); ?>
+                                        <?php esc_html_e('Maximum number of posts to display', 'publishpress'); ?>
                                     </div>
                                     <div class="filter-content">
                                         <form method="POST">
