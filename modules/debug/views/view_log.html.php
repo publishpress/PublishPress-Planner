@@ -16,15 +16,10 @@
 <hr>
 
 <div id="upstream-debug-log">
-    <h2><?php echo $context['label']['log_file']; ?></h2>
-
-    <?php if (! $context['is_log_found']) : ?>
-        <p><?php echo esc_html($context['message']['log_not_found']); ?></p>
-
-        <p><?php echo esc_html($context['message']['contact_support_tip']);?> <a href="mailto:<?php echo esc_attr($context['contact_email']); ?>"><?php echo esc_html($context['contact_email']); ?></a></p>
-    <?php endif; ?>
 
     <?php if ($context['is_log_found']) : ?>
+        <h2><?php echo $context['label']['log_file']; ?></h2>
+        
         <h3><?php echo esc_html($context['label']['file_info']); ?></h3>
         <table id="upstream-debug-log-info">
             <tr>
