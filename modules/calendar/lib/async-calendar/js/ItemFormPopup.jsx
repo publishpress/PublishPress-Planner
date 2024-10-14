@@ -366,12 +366,14 @@ export default function ItemFormPopup(props) {
         const formLinks = [
             {
                 'id': 'create',
+                'className': 'button-primary calendar-create-btn',
                 'label': props.strings.save,
                 'labelLoading': props.strings.saving,
                 'action': 'publishpress_calendar_create_item'
             },
             {
                 'id': 'edit',
+                'className': 'button-secondary calendar-edit-btn',
                 'label': props.strings.saveAndEdit,
                 'labelLoading': props.strings.saving,
                 'action': 'publishpress_calendar_create_item'
@@ -393,7 +395,7 @@ export default function ItemFormPopup(props) {
             } else {
                 links.push(getPostLinksElement(linkData, handleLinkOnClick));
             }
-            links.push(<span key={`link-separator-${links.length}`}>|</span>);
+            links.push(<span key={`link-separator-${links.length}`}></span>);
         }
 
         links.pop();
