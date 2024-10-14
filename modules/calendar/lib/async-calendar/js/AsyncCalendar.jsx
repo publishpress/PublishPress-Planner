@@ -87,16 +87,16 @@ export default function AsyncCalendar(props) {
         let new_value = '';
         
         if (event.target.classList.contains('active-filter')) {
-            new_value = 0;
+            new_value = 1;
             event.target.classList.remove('active-filter');
         } else {
-            new_value = 1;
+            new_value = 0;
             event.target.classList.add('active-filter');
         }
 
-        onFilterEventCallback('show_revision', new_value);
+        onFilterEventCallback('hide_revision', new_value);
 
-        document.querySelector('#pp-content-filters #pp_show_revision_input').value = new_value;
+        document.querySelector('#pp-content-filters #pp_hide_revision_input').value = new_value;
     };
     
     const onSearchClick = (event) => {

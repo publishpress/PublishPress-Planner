@@ -196,7 +196,7 @@ if (!class_exists('PP_Module')) {
             return $publishpress->getPostStatuses();
         }
 
-        
+
 
         /**
          * Returns the CSS class name and color for the given custom status.
@@ -503,11 +503,11 @@ if (!class_exists('PP_Module')) {
         protected function is_whitelisted_functional_view($module_name = null)
         {
             $whitelisted_pages = ['pp-calendar', 'pp-content-overview', 'pp-content-board', 'pp-notif-log', 'pp-modules-settings'];
-            
+
             if (isset($_GET['page']) &&  in_array($_GET['page'], $whitelisted_pages)) {
                 return true;
             }
-            
+
             return false;
         }
 
@@ -871,6 +871,16 @@ if (!class_exists('PP_Module')) {
 
         public function getUserAuthorizedPostStatusOptions($postType)
         {
+            global $pp_post_type_status_options;
+
+            if (!is_array($pp_post_type_status_options)) {
+                $pp_post_type_status_options = [];
+            }
+
+            if (isset($pp_post_type_status_options[$postType])) {
+                return $pp_post_type_status_options[$postType];
+            }
+
             $postStatuses = $this->getPostStatusOptions();
 
             foreach ($postStatuses as $index => $status) {
@@ -882,6 +892,8 @@ if (!class_exists('PP_Module')) {
                     }
                 }
             }
+
+            $pp_post_type_status_options[$postType] = $postStatuses;
 
             return $postStatuses;
         }
@@ -911,22 +923,22 @@ if (!class_exists('PP_Module')) {
 
         /**
          * Retrieve wordpress registered taxonomy
-         * 
+         *
          * Private taxonomy are excluded
          *
          * @since 3.7.0
          */
         public function get_all_taxonomies()
         {
-    
+
             //category and post tag are not included in public taxonomy
             $category   = get_taxonomies(['name' => 'category'], 'objects');
             $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
-    
+
             $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
-    
+
             $taxonomies = array_merge($category, $post_tag, $public);
-        
+
             return $taxonomies;
         }
 
@@ -949,13 +961,13 @@ if (!class_exists('PP_Module')) {
             } elseif (empty($request_filter[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 return '';
             }
-    
+
             return sanitize_key($request_filter[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         }
-    
+
         /**
          * This function is an alternative to filter_get_param() that's stripping out date characters
-         * 
+         *
          * @param string $param The parameter to look for in $_GET
          *
          * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
@@ -975,7 +987,7 @@ if (!class_exists('PP_Module')) {
             } elseif (empty($request_filter[$param])) {
                 return '';
             }
-    
+
             return sanitize_text_field($request_filter[$param]);
         }
 
@@ -985,41 +997,46 @@ if (!class_exists('PP_Module')) {
                 'not_equals'                => 'Does not equal (!=)',
                 'greater_than'              => 'Greater than (>)',
                 'greater_than_or_equals'    => 'Greater than or equals (>=)',
-                'less_than'                 => 'Less than (<)', 
-                'less_than_or_equals'       => 'Less than or equals (<=)', 
+                'less_than'                 => 'Less than (<)',
+                'less_than_or_equals'       => 'Less than or equals (<=)',
                 'like'                      => 'Like/Contains',
                 'not_like'                  => 'Not Like',
                 'not_exists'                => 'Not Exists/Empty',
             ];
-    
+
             if ($operator) {
                 $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
             } else {
                 $return = $operators;
             }
-    
+
             return $return;
         }
-    
+
         public function meta_query_operator_symbol($operator = false) {
+
+            return self::meta_query_operator_symbol($operator = false);
+        }
+
+        public static function static_meta_query_operator_symbol($operator = false) {
             $operators = [
                 'equals'                    => '=',
                 'not_equals'                => '!=',
                 'greater_than'              => '>',
                 'greater_than_or_equals'    => '>=',
-                'less_than'                 => '<', 
-                'less_than_or_equals'       => '<=', 
+                'less_than'                 => '<',
+                'less_than_or_equals'       => '<=',
                 'like'                      => 'LIKE',
                 'not_like'                  => 'NOT LIKE',
                 'not_exists'                => 'NOT EXISTS',
             ];
-    
+
             if ($operator) {
                 $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
             } else {
                 $return = $operators;
             }
-    
+
             return $return;
         }
 
@@ -1029,7 +1046,7 @@ if (!class_exists('PP_Module')) {
             // add taxonomies
             $taxonomies = get_object_taxonomies($post->post_type, 'object');
             foreach ($taxonomies as $taxonomy => $tax_object ) {
-                if (!empty($tax_object->public) 
+                if (!empty($tax_object->public)
                     && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
                     $terms = get_the_terms($post->ID, $taxonomy);
                     //add post content to localized data
@@ -1172,7 +1189,7 @@ if (!class_exists('PP_Module')) {
                 $post_author = get_userdata($post->post_author);
                 $author_name = is_object($post_author) ? $post_author->display_name : '';
                 $author_name = apply_filters('the_author', $author_name);
-        
+
                 $author_name = apply_filters('publishpress_content_overview_author_column', $author_name, $post);
                 return $author_name;
             }
@@ -1193,25 +1210,25 @@ if (!class_exists('PP_Module')) {
 
         public function touch_time( $tab_index = 0, $multi = 0 ) {
             global $wp_locale;
-        
+
             $tab_index_attribute = '';
             if ( (int) $tab_index > 0 ) {
                 $tab_index_attribute = " tabindex=\"$tab_index\"";
             }
-        
+
             $jj        = current_time( 'd' );
             $mm        = current_time( 'm' );
             $aa        = current_time( 'Y' );
             $hh        = current_time( 'H' );
             $mn        = current_time( 'i' );
             $ss        = current_time( 's' );
-        
+
             $cur_jj = current_time( 'd' );
             $cur_mm = current_time( 'm' );
             $cur_aa = current_time( 'Y' );
             $cur_hh = current_time( 'H' );
             $cur_mn = current_time( 'i' );
-        
+
             $month = '<label><span class="screen-reader-text">' .
                 /* translators: Hidden accessibility text. */
                 __( 'Month' ) .
@@ -1224,7 +1241,7 @@ if (!class_exists('PP_Module')) {
                 $month .= sprintf( __( '%1$s-%2$s' ), $monthnum, $monthtext ) . "</option>\n";
             }
             $month .= '</select></label>';
-        
+
             $day = '<label><span class="screen-reader-text">' .
                 /* translators: Hidden accessibility text. */
                 __( 'Day' ) .
@@ -1241,19 +1258,19 @@ if (!class_exists('PP_Module')) {
                 /* translators: Hidden accessibility text. */
                 __( 'Minute' ) .
             '</span><input type="text" ' . ( $multi ? '' : 'id="mn" ' ) . 'name="mn" value="' . $mn . '" size="2" maxlength="2"' . $tab_index_attribute . ' autocomplete="off" class="form-required" /></label>';
-        
+
             echo '<div class="timestamp-wrap">';
             /* translators: 1: Month, 2: Day, 3: Year, 4: Hour, 5: Minute. */
             printf( __( '%1$s %2$s, %3$s at %4$s:%5$s' ), $month, $day, $year, $hour, $minute );
-        
+
             echo '</div><input type="hidden" id="ss" name="ss" value="' . $ss . '" />';
-        
+
             if ( $multi ) {
                 return;
             }
-        
+
             echo "\n\n";
-        
+
             $map = array(
                 'mm' => array( $mm, $cur_mm ),
                 'jj' => array( $jj, $cur_jj ),
@@ -1261,10 +1278,10 @@ if (!class_exists('PP_Module')) {
                 'hh' => array( $hh, $cur_hh ),
                 'mn' => array( $mn, $cur_mn ),
             );
-        
+
             foreach ( $map as $timeunit => $value ) {
                 list( $unit, $curr ) = $value;
-        
+
                 echo '<input type="hidden" id="hidden_' . $timeunit . '" name="hidden_' . $timeunit . '" value="' . $unit . '" />' . "\n";
                 $cur_timeunit = 'cur_' . $timeunit;
                 echo '<input type="hidden" id="' . $cur_timeunit . '" name="' . $cur_timeunit . '" value="' . $curr . '" />' . "\n";
@@ -1272,7 +1289,7 @@ if (!class_exists('PP_Module')) {
             ?>
             <?php
         }
-        
+
 
     }
 }

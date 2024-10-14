@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.6
-Stable tag: 4.5.0
+Stable tag: 4.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,18 @@ Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields e
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.5.1] - 14 Oct 2024 =
+
+* Update : Add settings to control the maximum number of posts on Content Overview and Board page, #1772
+* Update : Prevent Content Board posts from been moved to status user doesn't have capability to create post in, #1777
+* Fixed : Notification Threshold and Channel settings Missing, #1771
+* Update : Enable Revisions automatically, #1766
+* Update : Optimize meta keys on Content Calendar, Board, and Overview by moving search to ajax, #1768
+* Update : Optimize plugin select2 script
+* Update : Remove jquery.inputmask.js and replace with custom function 
+* Update : Update Calendar "Save" and "Save and Edit" to new button style, #1790
+* Update : Planner v.4.5.0 Translation Updates-ES-FR-IT, #1764
 
 = [4.5.0] - 09 Sep 2024 =
 

@@ -32,9 +32,9 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    if ($('.content-board-table-wrap .board-content .content-item'.length > 0)) {
+    if ($('.content-board-table-wrap .board-content.can_move_to .content-item'.length > 0)) {
         // make content dragable
-        sortedPostCardsList($(".content-board-table-wrap .board-content"));
+        sortedPostCardsList($(".content-board-table-wrap .board-content.can_move_to"));
         // update empty card height
         var card_selector = $('.content-board-table-wrap .board-content .content-item:not(.empty-card)');
         var card_height = card_selector.height();
@@ -128,6 +128,29 @@ jQuery(document).ready(function ($) {
         use_today_as_start_date_input.val(1);
     });
 
+
+    $('.co-cc-content .entry-item.form-item .new-fields .field .new-item-metakey').pp_select2({
+        allowClear: true,
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 0,
+            data: function (params) {
+                return {
+                    action: 'publishpress_content_search_meta_keys',
+                    nonce: $(this).attr('data-nonce'),
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: false
+        }
+    });
+    
     $('#pp-content-filters select#filter_author').pp_select2({
         allowClear: true,
         ajax: {
@@ -326,10 +349,10 @@ jQuery(document).ready(function ($) {
         new_entry += '<div class="entry-item enable-item active-item customize-item-' + entryMetaKey + ' custom" data-name="' + entryMetaKey + '">';
         new_entry += '<input class="customize-item-input" type="hidden" name="content_board_' + customizeForm + '[' + entryMetaKey + ']" value="' + entryTitle + '" />';
         new_entry += '<input type="hidden" name="content_board_custom_' + customizeForm + '[' + entryMetaKey + ']" value="' + entryTitle + '" />';
-        new_entry += '<div class="items-list-item-check checked"><svg><use xlink:href="' + PPContentBoard.moduleUrl + 'lib/content-board-icon.svg#svg-sprite-cu2-check-2-fill"></use></svg></div>';
-        new_entry += '<div class="items-list-item-check unchecked"><svg><use xlink:href="' + PPContentBoard.moduleUrl + 'lib/content-board-icon.svg#svg-sprite-x"></use></svg></div>';
+        new_entry += '<div class="items-list-item-check checked"><svg><use xlink:href="' + PPContentBoard.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-cu2-check-2-fill"></use></svg></div>';
+        new_entry += '<div class="items-list-item-check unchecked"><svg><use xlink:href="' + PPContentBoard.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-x"></use></svg></div>';
         new_entry += '<div class="items-list-item-name"><div class="items-list-item-name-text">' + entryTitle + ' <span class="customize-item-info">(' + entryMetaKey + ')</span></div></div>';
-        new_entry += '<div class="delete-content-board-item" data-meta="' + entryMetaKey + '"><svg><use xlink:href="' + PPContentBoard.moduleUrl + 'lib/content-board-icon.svg#svg-sprite-cu2-menu-trash"></use></svg></div>';
+        new_entry += '<div class="delete-content-board-item" data-meta="' + entryMetaKey + '"><svg><use xlink:href="' + PPContentBoard.publishpressUrl + 'common/icons/content-icon.svg#svg-sprite-cu2-menu-trash"></use></svg></div>';
         new_entry += '</div>';
         $(formClass + ' .co-cc-content .entry-item.form-item').after(new_entry);
 
@@ -419,7 +442,7 @@ jQuery(document).ready(function ($) {
     function sortedPostCardsList(selector) {
     
         selector.sortable({
-            connectWith: ".content-board-table-wrap .board-content",
+            connectWith: ".content-board-table-wrap .board-content.can_move_to",
             items: "> .content-item:not(.no-drag)",
             placeholder: "sortable-placeholder",
             receive: function (event, ui) {

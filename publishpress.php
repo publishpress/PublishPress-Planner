@@ -3,7 +3,7 @@
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content inside WordPress. Features include a content calendar, kanban board, and notifications.
- * Version: 4.5.0
+ * Version: 4.5.1
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -175,6 +175,8 @@ add_action('plugins_loaded', function () {
                 add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities'], 11);
                 // Redirect on plugin activation
                 add_action('admin_init', [$this, 'redirect_on_activate'], 2000);
+                // Add meta keys search
+                add_action('wp_ajax_publishpress_content_search_meta_keys', [$this, 'searchMetaKeys']);
             }
 
             /**
@@ -1316,6 +1318,47 @@ add_action('plugins_loaded', function () {
                     exit;
                 }
             }
+
+            /**
+             * Meta keys search ajax callback
+             *
+             * @return void
+             */
+            public function searchMetaKeys()
+            {
+                global $wpdb;
+
+                header('Content-type: application/json;');
+
+                if (empty($_GET['nonce']) || ! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-content-get-data')) {
+                    wp_send_json([]);
+                }
+
+                $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
+
+                // If queryText is not empty, add a WHERE clause to filter meta_key
+                $whereClause = '';
+                if (!empty($queryText)) {
+                    $like = '%' . $wpdb->esc_like($queryText) . '%';
+                    $whereClause = $wpdb->prepare("AND meta_key LIKE %s", $like);
+                }
+
+                // Updated query with conditional search
+                $queryResults = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 $whereClause ORDER BY meta_key ASC LIMIT 20");
+
+                $results = [];
+                if (!empty($queryResults)) {
+                    foreach ($queryResults as $queryResult) {
+                        $results[] = [
+                            'id' => $queryResult,
+                            'text' => $queryResult,
+                        ];
+                    }
+                }
+
+                wp_send_json($results);
+            }
+
 
         }
     }

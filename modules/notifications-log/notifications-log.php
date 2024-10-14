@@ -178,9 +178,16 @@ if (! class_exists('PP_Notifications_Log')) {
                 );
 
                 wp_enqueue_script(
+                    'publishpress-select2-utils',
+                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
+                    ['jquery'],
+                    PUBLISHPRESS_VERSION
+                );
+
+                wp_enqueue_script(
                     'publishpress-select2',
                     PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery'],
+                    ['jquery', 'publishpress-select2-utils'],
                     PUBLISHPRESS_VERSION
                 );
 
@@ -323,7 +330,7 @@ if (! class_exists('PP_Notifications_Log')) {
         {
             if (isset($params['log_id'])) {
                 $comment = get_comment($params['log_id']);
-                
+
                 if ($comment instanceof WP_Comment) {
                     $log = new NotificationsLogModel($comment);
 
