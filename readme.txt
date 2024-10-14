@@ -125,7 +125,7 @@ Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields e
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [4.5.1] - 10 Oct 2024 =
+= [4.5.1] - 14 Oct 2024 =
 
 * Update : Add settings to control the maximum number of posts on Content Overview and Board page, #1772
 * Update : Prevent Content Board posts from been moved to status user doesn't have capability to create post in, #1777
@@ -134,6 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Update : Optimize meta keys on Content Calendar, Board, and Overview by moving search to ajax, #1768
 * Update : Optimize plugin select2 script
 * Update : Remove jquery.inputmask.js and replace with custom function 
+* Update : Update Calendar "Save" and "Save and Edit" to new button style, #1790
 * Update : Planner v.4.5.0 Translation Updates-ES-FR-IT, #1764
 
 = [4.5.0] - 09 Sep 2024 =
