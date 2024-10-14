@@ -143,12 +143,12 @@ if (! class_exists('PP_Notifications')) {
                     add_filter('pp_story_budget_item_actions', [$this, 'filter_post_row_actions'], 10, 2);
                 }
 
-                add_filter(
+                /*add_filter(
                     'publishpress_calendar_get_post_data',
                     [$this, 'filterCalendarGetPostData'],
                     10,
                     2
-                );
+                );*/
 
                 // Ajax for saving notification updates
                 add_action('wp_ajax_pp_notifications_user_post_subscription', [$this, 'handle_user_post_subscription']);
