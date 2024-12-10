@@ -47,7 +47,7 @@ class Post_Status extends Base implements Filter_Interface
      */
     protected function get_options($group)
     {
-        $statuses = $this->get_post_statuses();
+        $statuses = apply_filters('publishpress_notification_statuses', $this->get_post_statuses(), $group);
         $metadata = (array)$this->get_metadata('');
         $options  = [];
 
