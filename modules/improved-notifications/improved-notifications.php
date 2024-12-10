@@ -625,11 +625,13 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $oldStatus = 'new';
             if (is_object($postBefore)) {
-                $oldStatus = $postBefore->post_status;
+                $oldStatus = apply_filters('publishpress_notifications_status', $postBefore->post_status, $postBefore);
             }
 
+            $newStatus = apply_filters('publishpress_notifications_status', $post->post_status, $post);
+
             // Ignores if it is saved with the same status, avoiding multiple notifications on some situations.
-            if ($oldStatus === $post->post_status) {
+            if ($oldStatus === $newStatus) {
                 return;
             }
 
@@ -639,7 +641,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
-                    'new_status' => $post->post_status,
+                    'new_status' => $newStatus,
                     'old_status' => $oldStatus,
                 ],
             ];
@@ -677,8 +679,10 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $oldStatus = 'new';
             if (is_object($postBefore)) {
-                $oldStatus = $postBefore->post_status;
+                $oldStatus = apply_filters('publishpress_notifications_status', $postBefore->post_status, $postBefore);
             }
+
+            $newStatus = apply_filters('publishpress_notifications_status', $post->post_status, $post);
 
             // Go ahead and do the action to run workflows
             $params = [
@@ -686,7 +690,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
-                    'new_status' => $post->post_status,
+                    'new_status' => $newStatus,
                     'old_status' => $oldStatus,
                 ],
             ];

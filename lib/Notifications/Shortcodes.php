@@ -438,9 +438,11 @@ class Shortcodes
 
             case 'old_status':
             case 'new_status':
+                $status_name = apply_filters('publishpress_notifications_status', $this->event_args['params'][$field], $post);
+
                 $status = $publishpress->getPostStatusBy(
                     'slug',
-                    $this->event_args['params'][$field]
+                    $status_name
                 );
 
                 if (empty($status) || 'WP_Error' === get_class($status)) {

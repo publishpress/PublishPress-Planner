@@ -781,17 +781,19 @@ if (! class_exists('PP_Notifications')) {
         {
             $workflows_controller = $this->get_service('workflows_controller');
 
+            $post_status = apply_filters('publishpress_notifications_status', $post->post_status, $post);
+
             $args = [
                 'event' => '',
                 'params' => [
                     'post_id' => $post->ID,
-                    'new_status' => $post->post_status,
-                    'old_status' => $post->post_status,
+                    'new_status' => $post_status,
+                    'old_status' => $post_status,
                     'ignore_event' => true,
                 ],
             ];
 
-            return $workflows_controller->get_filtered_workflows($args);
+            return apply_filters('publishpress_post_notification_get_workflows', $workflows_controller->get_filtered_workflows($args), $post);
         }
 
         public function action_save_post($postId)
@@ -1904,9 +1906,12 @@ if (! class_exists('PP_Notifications')) {
 
         public function send_notification_status_update($args)
         {
-            $new_status = $args['new_status'];
-            $old_status = $args['old_status'];
             $post = $args['post'];
+            $new_status = apply_filters('publishpress_notifications_status', $args['new_status'], $post);
+            $old_status = apply_filters('publishpress_notifications_status', $args['old_status'], $post);
+
+            // Get current user
+            $current_user = wp_get_current_user();
 
             // Get current user
             $current_user = wp_get_current_user();
