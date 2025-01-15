@@ -193,7 +193,7 @@ if (!class_exists('PP_Module')) {
         {
             global $publishpress;
 
-            return $publishpress->getPostStatuses();
+            return apply_filters('publishpress_calendar_post_statuses', $publishpress->getPostStatuses());
         }
 
 
