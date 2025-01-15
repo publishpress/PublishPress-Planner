@@ -319,7 +319,7 @@ class NotificationsLogModel
     {
         $workflow = get_post($this->workflowId);
 
-        return $workflow->post_title;
+        return (!empty($workflow) && !empty($workflow->post_title)) ? $workflow->post_title : '';
     }
 
     private function getPostTitle()
