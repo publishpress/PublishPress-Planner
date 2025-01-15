@@ -26,6 +26,12 @@ namespace PublishPress\NotificationsLog;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 use WP_List_Table;
 
+global $title;
+
+if (!isset($title)) {
+    $title = '';
+}
+
 if (! class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
