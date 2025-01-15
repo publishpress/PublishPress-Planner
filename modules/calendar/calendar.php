@@ -964,7 +964,7 @@ if (! class_exists('PP_Calendar')) {
             $taxonomies = $this->get_all_taxonomies();
             $all_taxonomies = [];
             foreach ($taxonomies as $taxonomy) {
-                if (in_array($taxonomy->name, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                if (in_array($taxonomy->name, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp', 'pp_revision_status'])) {
                     continue;
                 }
                 $all_taxonomies[$taxonomy->name] = $taxonomy->label;// . ' (' . $taxonomy->name . ')';
