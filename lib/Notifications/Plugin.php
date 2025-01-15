@@ -34,6 +34,8 @@ class Plugin
             add_filter('posts_clauses_request', [$this, 'fltSuppressInactiveNotifications'], 50, 2);
             add_filter('wp_count_posts', [$this, 'fltSuppressInactivePostCounts'], 50, 2);
         }
+
+        add_filter('views_edit-psppnotif_workflow', [$this, 'fltRemoveWorkflowsMineLink']);
     }
 
     public function add_load_edit_hooks()
@@ -131,6 +133,12 @@ class Plugin
         return $counts;
     }
 
+    function fltRemoveWorkflowsMineLink($view_links) {
+        unset($view_links['mine']);
+
+        return $view_links;
+    }
+    
     /**
      * Customize the post messages for the notification workflows when the
      * content is saved.
