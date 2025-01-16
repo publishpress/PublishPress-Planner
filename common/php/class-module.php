@@ -193,7 +193,7 @@ if (!class_exists('PP_Module')) {
         {
             global $publishpress;
 
-            return $publishpress->getPostStatuses();
+            return apply_filters('publishpress_calendar_post_statuses', $publishpress->getPostStatuses());
         }
 
 
@@ -895,7 +895,7 @@ if (!class_exists('PP_Module')) {
 
             $pp_post_type_status_options[$postType] = $postStatuses;
 
-            return $postStatuses;
+            return apply_filters('publishpress_user_post_status_options', $postStatuses);
         }
 
         public function getPostStatusOptions()
@@ -918,7 +918,7 @@ if (!class_exists('PP_Module')) {
                 ];
             }
 
-            return $postStatuses;
+            return apply_filters('publishpress_post_status_options', $postStatuses);
         }
 
         /**
