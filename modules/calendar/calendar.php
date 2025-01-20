@@ -1356,7 +1356,7 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Filter for an end user to implement any of their own query args
-            $args = apply_filters('pp_calendar_posts_query_args', $args, $context);
+            $args = apply_filters('pp_calendar_posts_query_args', $args, $context, $this->filters, $this->user_filters);
 
             add_filter('posts_where', [$this, 'posts_where_week_range']);
             $post_results = new WP_Query($args);
