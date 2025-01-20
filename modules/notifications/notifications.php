@@ -644,10 +644,10 @@ if (! class_exists('PP_Notifications')) {
                     <p>
                         <?php
                         esc_html_e(
-                            'Enter any users, roles, or email address that should receive notifications from workflows.',
+                            'Enter users, roles, or email addresses that should receive notifications for this post.',
                             'publishpress'
                         ); ?><?php
-                        if (! empty($followersWorkflows)) : ?>&sup1;<?php
+                        if (! empty($followersWorkflows)) : ?><a class="notification-followers" href="javascript:void(0);" title="<?php _e('Show active notifications', 'publishpress');?>">&sup1;</a><?php
                         endif; ?>
                     </p>
 
@@ -666,6 +666,22 @@ if (! class_exists('PP_Notifications')) {
 
                     </div>
 
+                    <style>
+                        a.notification-followers, a.notification-followers:active, a.notification-followers:visited, a.notification-followers:link {
+                            text-decoration: none;
+                        }
+                    </style>
+
+                    <script type="text/javascript">
+                    /* <![CDATA[ */
+                    jQuery(document).ready(function ($) {           
+                        $('#pp_post_notify_box a.notification-followers').on('click', function() {
+                            $('div.pp_post_notify_workflows').show();
+                        });
+                    });
+                    /* ]]> */
+                    </script>
+
                     <?php
                     if (empty($followersWorkflows)) : ?>
                         <p class="no-workflows"><?php
@@ -679,7 +695,7 @@ if (! class_exists('PP_Notifications')) {
 
                 <?php
                 if (current_user_can('edit_pp_notif_workflows')) : ?>
-                    <div class="pp_post_notify_workflows">
+                    <div class="pp_post_notify_workflows" style="display: none">
                         <?php
                         if (! empty($activeWorkflows)) : ?>
                             <h3><?php
@@ -708,6 +724,12 @@ if (! class_exists('PP_Notifications')) {
                                 <?php
                                 endforeach; ?>
                             </ul>
+                            
+                            <?php if (!empty($followersWorkflows)):?>
+                            <p>
+                                &sup1; = <?php _e('Workflow has users enrolled', 'publishpress');?>
+                            </p>
+                            <?php endif;?>
                         <?php
                         else: ?>
                             <p class="no-workflows"><?php
