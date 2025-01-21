@@ -4,6 +4,8 @@
  */
 
 if (! class_exists('PP_Calendar_Methods')) {
+    
+    #[\AllowDynamicProperties]
     class PP_Calendar_Methods extends PP_Module
     {
 
@@ -38,6 +40,11 @@ if (! class_exists('PP_Calendar_Methods')) {
         public $module_url;
 
         private $create_post_cap;
+
+        /**
+         * @var array
+         */
+        private $postTypeObjectCache = [];
 
         /**
          * Total number of posts to be shown per square before 'more' link

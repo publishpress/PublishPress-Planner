@@ -29,6 +29,13 @@ class Plugin
 
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
+
+        if (is_admin()) {
+            add_filter('posts_clauses_request', [$this, 'fltSuppressInactiveNotifications'], 50, 2);
+            add_filter('wp_count_posts', [$this, 'fltSuppressInactivePostCounts'], 50, 2);
+        }
+
+        add_filter('views_edit-psppnotif_workflow', [$this, 'fltRemoveWorkflowsMineLink']);
     }
 
     public function add_load_edit_hooks()
@@ -77,6 +84,61 @@ class Plugin
         $this->$method_name($post_id);
     }
 
+    function fltSuppressInactiveNotifications($clauses, $_wp_query = false, $args = [])
+    {
+        global $wpdb, $pagenow, $typenow;
+
+        if (!empty($pagenow) && ('edit.php' == $pagenow) && !empty($typenow) && ('psppnotif_workflow' == $typenow)) {
+            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION')) {
+                $clauses['where'] .= " AND $wpdb->posts.post_name NOT IN ('revision-scheduled-publication', 'scheduled-revision-is-published', 'revision-scheduled', 'revision-is-scheduled', 'revision-declined', 'revision-deferred-or-rejected', 'revision-submission', 'revision-is-submitted', 'new-revision', 'new-revision-created', 'revision-status-changed', 'revision-is-applied', 'revision-is-published')";
+            }
+            
+            if (!defined('PUBLISHPRESS_STATUSES_PRO_VERSION') && !defined('PUBLISHPRESS_RETAIN_DEFAULT_STATUS_CHANGED_WORKFLOW')) {
+                $clauses['where'] .= " AND $wpdb->posts.post_name NOT IN ('post-status-changed', 'post-deferred-or-rejected', 'post-declined')";
+            }
+        }
+
+        return $clauses;
+    }
+
+    function fltSuppressInactivePostCounts($counts, $type, $perm = '') {
+        global $wpdb, $pagenow;
+
+        if (
+            ('psppnotif_workflow' == $type) && !empty($pagenow) && ('edit.php' == $pagenow)
+            && (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') || !defined('PUBLISHPRESS_STATUSES_PRO_VERSION'))
+        ) {
+            $query = "SELECT post_status, COUNT(*) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s";
+
+            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION')) {
+                $query .= " AND $wpdb->posts.post_name NOT IN ('revision-scheduled-publication', 'scheduled-revision-is-published', 'revision-scheduled', 'revision-is-scheduled', 'revision-declined', 'revision-deferred-or-rejected', 'revision-submission', 'revision-is-submitted', 'new-revision', 'new-revision-created', 'revision-status-changed', 'revision-is-applied', 'revision-is-published')";
+            }
+            
+            if (!defined('PUBLISHPRESS_STATUSES_PRO_VERSION') && !defined('PUBLISHPRESS_RETAIN_DEFAULT_STATUS_CHANGED_WORKFLOW')) {
+                $query .= " AND $wpdb->posts.post_name NOT IN ('post-status-changed', 'post-deferred-or-rejected', 'post-declined')";
+            }
+
+            $query .= ' GROUP BY post_status';
+        
+            $results = (array) $wpdb->get_results( $wpdb->prepare( $query, $type ), ARRAY_A );
+            $counts  = array_fill_keys( get_post_stati(), 0 );
+        
+            foreach ( $results as $row ) {
+                $counts[ $row['post_status'] ] = $row['num_posts'];
+            }
+        
+            $counts = (object) $counts;
+        }
+    
+        return $counts;
+    }
+
+    function fltRemoveWorkflowsMineLink($view_links) {
+        unset($view_links['mine']);
+
+        return $view_links;
+    }
+    
     /**
      * Customize the post messages for the notification workflows when the
      * content is saved.

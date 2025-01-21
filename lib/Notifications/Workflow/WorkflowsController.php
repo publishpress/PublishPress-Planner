@@ -51,7 +51,7 @@ class WorkflowsController
             $query = $this->get_workflows_filter_query($params);
 
             if (!empty($query->posts)) {
-                foreach ($query->posts as $workflowPost) {
+                foreach (apply_filters('publishpress_post_notification_trigger_workflows', $query->posts) as $workflowPost) {
                     $workflow = new Workflow($workflowPost);
                     $workflow->run($params);
                 }

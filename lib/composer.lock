@@ -79,36 +79,36 @@
             },
             "type": "library",
             "extra": {
-                "generator": {
-                    "lib-class-test": "class_exists('PublishPress\\Pimple\\Container')",
-                    "action-initialize-priority": "-185",
-                    "action-register-priority": "-200"
-                },
                 "strauss": {
-                    "target_directory": "lib",
-                    "namespace_prefix": "PublishPress\\",
-                    "classmap_prefix": "PublishPress_",
-                    "constant_prefix": "PUBLISHPRESS_",
-                    "include_author": "true",
-                    "classmap_output": "true",
                     "packages": [
                         "pimple/pimple",
                         "psr/container"
                     ],
-                    "override_autoload": [],
+                    "include_author": "true",
+                    "classmap_output": "true",
+                    "classmap_prefix": "PublishPress_",
+                    "constant_prefix": "PUBLISHPRESS_",
+                    "namespace_prefix": "PublishPress\\",
+                    "target_directory": "lib",
                     "exclude_from_copy": {
                         "packages": [],
                         "namespaces": [],
                         "file_patterns": []
                     },
+                    "override_autoload": [],
+                    "delete_vendor_files": true,
                     "exclude_from_prefix": {
                         "packages": [],
                         "namespaces": [],
                         "file_patterns": []
                     },
-                    "namespace_replacement_patterns": [],
                     "delete_vendor_packages": true,
-                    "delete_vendor_files": true
+                    "namespace_replacement_patterns": []
+                },
+                "generator": {
+                    "lib-class-test": "class_exists('PublishPress\\Pimple\\Container')",
+                    "action-register-priority": "-200",
+                    "action-initialize-priority": "-185"
                 }
             },
             "autoload": {
@@ -176,35 +176,35 @@
             },
             "type": "library",
             "extra": {
-                "generator": {
-                    "lib-class-test": "interface_exists('PublishPress\\Psr\\Container\\ContainerInterface')",
-                    "action-initialize-priority": "-190",
-                    "action-register-priority": "-200"
-                },
                 "strauss": {
-                    "target_directory": "lib",
-                    "namespace_prefix": "PublishPress\\",
-                    "classmap_prefix": "PublishPress_",
-                    "constant_prefix": "PUBLISHPRESS_",
-                    "include_author": "true",
-                    "classmap_output": "true",
                     "packages": [
                         "psr/container"
                     ],
-                    "override_autoload": [],
+                    "include_author": "true",
+                    "classmap_output": "true",
+                    "classmap_prefix": "PublishPress_",
+                    "constant_prefix": "PUBLISHPRESS_",
+                    "namespace_prefix": "PublishPress\\",
+                    "target_directory": "lib",
                     "exclude_from_copy": {
                         "packages": [],
                         "namespaces": [],
                         "file_patterns": []
                     },
+                    "override_autoload": [],
+                    "delete_vendor_files": true,
                     "exclude_from_prefix": {
                         "packages": [],
                         "namespaces": [],
                         "file_patterns": []
                     },
-                    "namespace_replacement_patterns": [],
                     "delete_vendor_packages": true,
-                    "delete_vendor_files": true
+                    "namespace_replacement_patterns": []
+                },
+                "generator": {
+                    "lib-class-test": "interface_exists('PublishPress\\Psr\\Container\\ContainerInterface')",
+                    "action-register-priority": "-200",
+                    "action-initialize-priority": "-190"
                 }
             },
             "autoload": {
@@ -345,10 +345,10 @@
             "type": "library",
             "extra": {
                 "generator": {
-                    "lib-class-test": "class_exists('PublishPress\\WordpressVersionNotices\\ServicesProvider')",
                     "src-dir": "src",
-                    "action-initialize-priority": "-150",
-                    "action-register-priority": "-190"
+                    "lib-class-test": "class_exists('PublishPress\\WordpressVersionNotices\\ServicesProvider')",
+                    "action-register-priority": "-190",
+                    "action-initialize-priority": "-150"
                 }
             },
             "autoload": {
