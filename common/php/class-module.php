@@ -1078,11 +1078,12 @@ if (!class_exists('PP_Module')) {
                 'filtered_title'   => isset($post->filtered_title) ? $post->filtered_title : $post->post_title,
                 'post_status'      => (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post->ID)) ? $post->post_mime_type : $post->post_status,
                 'status_label'     => $this->get_post_status_friendly_name($post->post_status),
+                'status_options'   => $this->getUserAuthorizedPostStatusOptions($post->post_type, $post),
+                'status_field_label'   => (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post->ID)) ? esc_html__('Revision Status', 'publishpress') : esc_html__('Post Status', 'publishpress'),
                 'can_edit_post'    => $can_edit_post ? 1 : 0,
                 'date_markup'      => $can_edit_post ? $this->get_date_markup($post) : get_the_time(get_option("date_format"), $post->ID) . " " . get_the_time(get_option("time_format"), $post->ID),
                 'action_links'     => $this->get_post_action_links($post, $can_edit_post),
                 'author_markup'    => $this->get_author_markup($post, $can_edit_post),
-                'status_options'   => $this->getUserAuthorizedPostStatusOptions($post->post_type, $post),
                 'post_content'     => apply_filters('the_content', $post->post_content)
             ];
 

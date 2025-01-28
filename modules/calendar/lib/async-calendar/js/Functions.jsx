@@ -375,7 +375,7 @@ export function openPostModal(post_id) {
         // add post author meta
         popup_content += '<div class="modal-taxonomy-info post-author"><span class="info-item">' + publishpressCalendarParams.strings.post_author + '</span><span class="info-item">' + post.author_markup + '</span></div>';
         // add post status meta
-        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + publishpressCalendarParams.strings.post_status_label + '</span>';
+        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + post.status_field_label + '</span>';
         popup_content += '<span class="info-item">';
         if (can_edit_post) {
             popup_content += '<select class="pp-modal-form-post-status">';
