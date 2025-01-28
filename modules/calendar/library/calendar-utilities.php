@@ -25,6 +25,28 @@ if (! class_exists('PP_Calendar_Utilities')) {
             $all_filters                = $args['all_filters'];
             $operator_labels            = $args['operator_labels'];
             
+            switch ($select_id) {
+                case 'post_status':
+                case 'revision_status':
+                    if (function_exists('rvy_revision_statuses')) {
+                        if (class_exists('PublishPress_Statuses') && defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) {
+                            $revision_statuses = \PublishPress_Statuses::instance()->getPostStatuses(['for_revision' => true], 'object');
+                        } else {
+                            $revision_statuses = rvy_revision_statuses(['output' => 'object']);
+                        }
+                    } else {
+                        $revision_statuses = [];
+                    }
+
+                    if ($revision_statuses) {
+                        foreach ($post_statuses as $k => $status_obj) {
+                            if (in_array($status_obj->slug, array_keys($revision_statuses))) {
+                                unset($post_statuses[$k]);
+                            }
+                        }
+                    }
+            }
+
             if (array_key_exists($select_id, $terms_options)) {
                 $select_id = 'metadata_key';
             }
@@ -45,7 +67,20 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     <select id="post_status" name="post_status"><!-- Status selectors -->
                         <option value=""><?php
                             _e('All statuses', 'publishpress'); ?></option>
-                        <?php
+                        
+                        <?php if (!empty($revision_statuses)) {
+                            $hide_all_label = __('(Hide all)', 'publishpress');
+
+                            if ('_' == $filters['post_status']) {
+                                $selected_value = $hide_all_label;
+                            }
+
+                            echo "<option value='_' " . selected(
+                                        '_',
+                                        $filters['post_status']
+                                    ) . ">" . $hide_all_label . "</option>";
+                        }
+                        
                         foreach ($post_statuses as $post_status) {
                             if ($post_status->slug == $filters['post_status']) {
                                 $selected_value = $post_status->label;
@@ -53,6 +88,27 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                     $post_status->slug,
                                     $filters['post_status']
+                                ) . ">" . esc_html($post_status->label) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+    
+                case 'revision_status':
+                    $filter_label   = esc_html__('Revision Status', 'publishpress');
+                    ?>
+                    <select id="revision_status" name="revision_status"><!-- Status selectors -->
+                        <option value=""><?php
+                            _e('All statuses', 'publishpress'); ?></option>
+                        <?php
+                        foreach ($revision_statuses as $post_status) {
+                            if ($post_status->name == $filters['post_status']) {
+                                $selected_value = $post_status->label;
+                            }
+                            echo "<option value='" . esc_attr($post_status->name) . "' " . selected(
+                                    $post_status->name,
+                                    $filters['revision_status']
                                 ) . ">" . esc_html($post_status->label) . "</option>";
                         }
                         ?>
@@ -497,6 +553,27 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     </div>
                     <?php 
                     
+                    // force Revision Status selector to display right after Post Status
+                    if (isset($calendar_filters['revision_status'])) {
+                        $revision_status_filter = $calendar_filters['revision_status'];
+
+                        $_calendar_filters = [];
+
+                        foreach ($calendar_filters as $select_id => $filter) {
+                            if ('revision_status' == $select_id) {
+                                continue;
+                            }
+
+                            $_calendar_filters[$select_id] = $filter;
+
+                            if ('post_status' == $select_id) {
+                                $_calendar_filters['revision_status'] = $revision_status_filter;
+                            }
+                        }
+
+                        $calendar_filters = $_calendar_filters;
+                    }
+
                     foreach ($calendar_filters as $select_id => $select_name) {
                         $modal_id++;
                         $args['select_id']      = $select_id;
@@ -510,7 +587,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             <button 
                                 data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>"
                                 data-label="<?php echo esc_attr($filter_data['filter_label']); ?>"
-                                class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"><?php echo esc_html($button_label); ?></button>
+                                class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"
+                                <?php if ('revision_status' == $select_id && !empty($user_filters['hide_revision'])) echo ' style="display: none;"';?>><?php echo esc_html($button_label); ?></button>
                             <div id="content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="content-calendar-modal" style="display: none;">
                                 <div class="content-calendar-modal-content">
                                     <span class="close">&times;</span>

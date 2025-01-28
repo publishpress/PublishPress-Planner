@@ -781,6 +781,12 @@ if (! class_exists('PP_Calendar_Methods')) {
                     'type' => 'status',
                     'options' => $post_status_options
                 ],
+                'revision_status' => [
+                    'label' => __('Revision Status', 'publishpress'),
+                    'value' => 'draft',
+                    'type' => 'status',
+                    'options' => $post_status_options
+                ],
                 'time' => [
                     'label' => __('Publish Time', 'publishpress'),
                     'value' => null,
@@ -1254,7 +1260,14 @@ if (! class_exists('PP_Calendar_Methods')) {
             $filtered_title = apply_filters('pp_calendar_post_title_html', $post->post_title, $post);
             $post->filtered_title = $filtered_title;
 
-            $postTypeOptions = $this->get_post_status_options($post->post_status);
+            if (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post)) {
+                $_post_status = $post->post_mime_type;
+            } else {
+                $_post_status = $post->post_status;
+            }
+
+            $postTypeOptions = $this->get_post_status_options($_post_status);
+            
             $postTypeObject = $this->getPostTypeObject($post->post_type);
             $canEdit = current_user_can($postTypeObject->cap->edit_post, $post->ID);
 

@@ -681,6 +681,28 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
             $all_filters                = $args['all_filters'];
             $operator_labels            = $args['operator_labels'];
             
+            switch ($select_id) {
+                case 'post_status':
+                case 'revision_status':
+                    if (function_exists('rvy_revision_statuses')) {
+                        if (class_exists('PublishPress_Statuses') && defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) {
+                            $revision_statuses = \PublishPress_Statuses::instance()->getPostStatuses(['for_revision' => true], 'object');
+                        } else {
+                            $revision_statuses = rvy_revision_statuses(['output' => 'object']);
+                        }
+                    } else {
+                        $revision_statuses = [];
+                    }
+
+                    if ($revision_statuses) {
+                        foreach ($post_statuses as $k => $status_obj) {
+                            if (in_array($status_obj->slug, array_keys($revision_statuses))) {
+                                unset($post_statuses[$k]);
+                            }
+                        }
+                    }
+            }
+
             if (array_key_exists($select_id, $terms_options)) {
                 $select_id = 'metadata_key';
             }
@@ -709,6 +731,32 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                     $post_status->slug,
                                     $filters['post_status']
+                                ) . ">" . esc_html($post_status->label) . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <?php
+                    break;
+
+                case 'revision_status':
+                    $filter_label   = esc_html__('Revision Status', 'publishpress');
+                    ?>
+                    <select id="revision_status" name="revision_status"><!-- Status selectors -->
+                        <option value=""><?php
+                            _e('All statuses', 'publishpress'); ?></option>
+                        <option value="all"><?php
+                            _e('(reset)', 'publishpress'); ?></option>
+                        <?php
+                        $filter_value = (!empty($_REQUEST['revision_status'])) ? sanitize_key($_REQUEST['revision_status']) : '';
+
+                        foreach ($revision_statuses as $post_status) {
+                            //if ($post_status->name == $filters['revision_status']) {
+                            if ($post_status->name == $filter_value) {
+                                $selected_value = $post_status->label;
+                            }
+                            echo "<option value='" . esc_attr($post_status->name) . "' " . selected(
+                                    $post_status->name,
+                                    $filters['revision_status']
                                 ) . ">" . esc_html($post_status->label) . "</option>";
                         }
                         ?>

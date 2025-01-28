@@ -1250,6 +1250,10 @@ add_action('plugins_loaded', function () {
 
                 if (!empty($status)) {
                     return array_shift($status);
+                } else {
+                    if ($status = get_post_status_object($value)) {
+                        return $status;
+                    }
                 }
 
                 return false;
