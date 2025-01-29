@@ -127,6 +127,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [4.6.1] - 29 Jan 2025 =
 
+* Compat : PublishPress Revisions: corrected Revision Status display and selection in Calendar, Overview, Content Board (requires Revisions 3.6),#1809
+* Compat : Revisions Pro 3.6.0: Revision Notifications, #1809
+* Compat : PublishPress Statuses Pro: custom Revision Statuses in Calendar, Overview, Content Board #1809
 * Update : Add settings to have Today in the top row in Calendar, #1827
 * Fixed : Extra notifications breaks the "Editorial Notifications" area on the Profile page, #1819
 * Update : Planner v.4.6.0 Translation Updates-ES-FR-IT, #1826
