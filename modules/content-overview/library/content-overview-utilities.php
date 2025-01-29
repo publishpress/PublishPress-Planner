@@ -705,7 +705,20 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                     <select id="post_status" name="post_status"><!-- Status selectors -->
                         <option value=""><?php
                             _e('All statuses', 'publishpress'); ?></option>
-                        <?php
+                        
+                        <?php if (!empty($revision_statuses)) {
+                            $hide_all_label = __('(Hide all)', 'publishpress');
+
+                            if ('_' == $filters['post_status']) {
+                                $selected_value = $hide_all_label;
+                            }
+
+                            echo "<option value='_' " . selected(
+                                        '_',
+                                        $filters['post_status']
+                                    ) . ">" . $hide_all_label . "</option>";
+                        }
+ 
                         foreach ($post_statuses as $post_status) {
                             if ($post_status->slug == $filters['post_status']) {
                                 $selected_value = $post_status->label;
