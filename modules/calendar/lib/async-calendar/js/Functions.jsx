@@ -38,26 +38,17 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, weekStartsOnSun
  *      2012/1/1   is Sunday in week 52 of 2011
  */
 export function getWeekNumberByDate(theDate, weekStartsOnSunday = true) {
-
-    // Copy date so don't modify original
-    let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate(), theDate.getHours(), theDate.getMinutes(), theDate.getSeconds(), theDate.getMilliseconds());
+    
+    let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate());
 
     let dayOfWeek = theDateCopy.getDay();
-
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    theDateCopy.setDate(theDateCopy.getDate() + 4 - (theDateCopy.getDay() || 7));
-
-    // Get first day of year
     let yearStart = new Date(theDateCopy.getFullYear(), 0, 1);
-    // Calculate full weeks to nearest Thursday
-    let weekNo = Math.round((((theDateCopy - yearStart) / 86400000) + 1) / 7);
 
-    if (weekStartsOnSunday && dayOfWeek === 0) {
-        weekNo++;
-    }
+    let startOffset = weekStartsOnSunday ? yearStart.getDay() : (yearStart.getDay() || 7) - 1;
 
-    // Return array of year and week number
+    let daysSinceYearStart = (theDateCopy - yearStart) / 86400000;
+    let weekNo = Math.floor((daysSinceYearStart + startOffset) / 7) + 1;
+
     return [theDateCopy.getFullYear(), weekNo];
 }
 

@@ -232,6 +232,7 @@ if (! class_exists('PP_Calendar')) {
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
                     'show_calendar_posts_full_title' => 'off',
+                    'calendar_today_in_first_row' => 'on',
                     // Leave default as non array to confirm if user save settings or not
                     'content_calendar_filters' => '',
                     'content_calendar_custom_filters' => '',
@@ -1473,6 +1474,12 @@ if (! class_exists('PP_Calendar')) {
                 $options['show_calendar_posts_full_title'] = 'on';
             } else {
                 $options['show_calendar_posts_full_title'] = 'off';
+            }
+
+            if (isset($new_options['calendar_today_in_first_row'])) {
+                $options['calendar_today_in_first_row'] = 'on';
+            } else {
+                $options['calendar_today_in_first_row'] = 'off';
             }
 
             if (isset($new_options['ics_subscription_public_visibility'])) {
