@@ -1270,7 +1270,16 @@ add_action('plugins_loaded', function () {
 
             public function getCustomStatuses() {
                 if (class_exists('PublishPress_Statuses')) {
-                    return \PublishPress_Statuses::getCustomStatuses([], 'object');
+                    $customStatuses = \PublishPress_Statuses::getCustomStatuses(['for_revision' => false], 'object');
+    
+                    if (defined('PUBLISHPRESS_REVISIONS_VERSION') || defined('PUBLISHPRESS_REVISIONS_PRO_VERSION')) {
+                        $customStatuses = array_merge(
+                            $customStatuses,
+                            \PublishPress_Statuses::getCustomStatuses(['for_revision' => true], 'object')
+                        );
+                    }
+
+                    return $customStatuses;
                 } else {
                     return [];
                 }

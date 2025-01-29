@@ -199,7 +199,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 $statuses = [];
 
                 foreach ($customStatuses as $status) {
-                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status];
+                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status, 'for_revision' => !empty($status->for_revision)];
                 }
             }
 
@@ -241,7 +241,14 @@ if (! class_exists('PP_Calendar_Methods')) {
                 foreach ($statuses as $status => $arr_status) {
                     $id = esc_attr($status) . '-display-publish-time';
 
-                    echo '<div><label for="' . $id . '">';
+                    if ($arr_status['for_revision'] && empty($in_revisions_section)) {
+                        $style = 'margin-top: 30px;';
+                        $in_revisions_section = true;
+                    } else {
+                        $style = '';
+                    }
+
+                    echo '<div style="' . esc_attr($style) . '"><label for="' . $id . '">';
                     echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
 
                     if (isset($this->module->options->show_posts_publish_time[$status])) {
