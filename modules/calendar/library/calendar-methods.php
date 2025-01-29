@@ -229,9 +229,10 @@ if (! class_exists('PP_Calendar_Methods')) {
                     . esc_html($title)
                     . '</span>'
                     . '</label>';
-
-                    echo '</div>';
                 }
+
+                $show_statuses_prompt = true;
+
             } else {
                 echo '<style>div.pp-calendar-settings div {padding: 4px 0 8px 0;} div.pp-calendar-settings a {vertical-align: bottom}</style>';
 
@@ -281,8 +282,56 @@ if (! class_exists('PP_Calendar_Methods')) {
                     echo '</div>';
                 }
 
-                echo '</div>';
+                $show_statuses_pro_revisions_prompt = true;
             }
+
+           if (defined('PUBLISHPRESS_REVISIONS_VERSION') && defined('PUBLISHPRESS_PRO_VERSION') && version_compare(PUBLISHPRESS_REVISIONS_VERSION, '3.6.0-rc', '<')) :
+                ?>
+                <div id="pp-revisions-plugin-prompt" class="activating pp-plugin-prompt">
+                <?php
+                $msg = (defined('PUBLISHPRESS_REVISIONS_PRO_VERSION'))
+                ? esc_html__('For Revisions integration on the Content Calendar, Overview and Content Board, please update %sPublishPress Revisions Pro%s.', 'publishpress')
+                : esc_html__('For Revisions integration on the Content Calendar, Overview and Content Board, please update %sPublishPress Revisions%s.', 'publishpress');
+
+                printf(
+                    $msg,
+                    '<a href="' . esc_url(self_admin_url('plugins.php')) . '" target="_blank">',
+                    '</a>'
+                );
+                ?>
+                </div>
+            <?php endif;
+
+            if (!empty($show_statuses_prompt)) {
+                if (!defined('PUBLISHPRESS_STATUSES_VERSION')) :
+                    ?>
+                    <div id="pp-statuses-plugin-prompt" class="activating pp-plugin-prompt">
+                    <?php
+                    printf(
+                        esc_html__('To refine your workflow with custom Post Statuses, install the %sPublishPress Statuses%s plugin.', 'publishpress'),
+                        '<a href="' . esc_url(self_admin_url('plugin-install.php?s=publishpress-statuses&tab=search&type=term')) . '" target="_blank">',
+                        '</a>'
+                    );
+                    ?>
+                    </div>
+                <?php endif;
+
+            } elseif (!empty($show_statuses_pro_revisions_prompt)) {
+                if (defined('PUBLISHPRESS_REVISIONS_VERSION') && defined('PUBLISHPRESS_STATUSES_VERSION') && !defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) :
+                    ?>
+                    <div id="pp-statuses-pro-plugin-prompt" class="activating pp-plugin-prompt">
+                    <?php
+                    printf(
+                        esc_html__('For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s.', 'publishpress'),
+                        '<a href="https://publishpress.com/statuses/" target="_blank">',
+                        '</a>'
+                    );
+                    ?>
+                    </div>
+                <?php endif;
+            }
+
+            echo '</div>';
         }
 
         private function getCalendarTimeFormat()

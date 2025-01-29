@@ -185,6 +185,21 @@ Status color box */
     margin: 0 2px !important;
 }
 
+div.pp-plugin-prompt {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px !important;
+    margin: 0 10px 10px 0;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #ffffe0;
+    border-color: #e6db55;
+}
+
 .pp-advertisement-right-sidebar .upgrade-btn a {
     background: #FCB223;
     color: #000 !important;
