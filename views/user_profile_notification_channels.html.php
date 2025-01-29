@@ -15,7 +15,14 @@
                     <th class="psppno_workflow_column_header psppno_channels"><?php echo esc_html__('Channels', 'publishpress'); ?></th>
                     <th class="psppno_workflow_column_header psppno_options"></th>
                 </tr>
-                <?php foreach ($context['workflows'] as $workflow) : ?>
+                <?php 
+                foreach ($context['channels'] as $channel) {                    
+                    if (isset($channel->options) && ! empty($channel->options)) {
+                        $any_options = true;
+                    }
+                }
+                
+                foreach ($context['workflows'] as $workflow) : ?>
                     <tr class="psppno_workflow_<?php echo esc_attr($workflow->ID); ?>">
                         <td class="psppno_workflow_title"><?php echo esc_html($workflow->post_title); ?></td>
                         <td class="psppno_workflow_channel">
@@ -39,6 +46,7 @@
                                 </div>
                             <?php endforeach; ?>
                         </td>
+                        <?php if (!empty($any_options)): ?>
                         <td class="psppno_workflow_channel_options">
                             <?php foreach ($context['channels'] as $channel) : ?>
                                 <?php if (isset($channel->options) && ! empty($channel->options)) : ?>
@@ -59,6 +67,7 @@
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </td>
+                        <?php endif;?>
                     </tr>
                 <?php endforeach; ?>
             </table>
