@@ -91,6 +91,14 @@ if (! class_exists('PP_Calendar_Methods')) {
             );
 
             add_settings_field(
+                'calendar_today_in_first_row',
+                __('Show today\'s date in the first row', 'publishpress'),
+                [$this, 'settings_calendar_today_in_first_row_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
                 'ics_subscription',
                 __('Enable subscriptions in iCal or Google Calendar', 'publishpress'),
                 [$this, 'settings_ics_subscription_option'],
@@ -490,6 +498,19 @@ if (! class_exists('PP_Calendar_Methods')) {
                 '<input type="checkbox" name="%s" value="on" %s>',
                 esc_attr($this->module->options_group_name) . '[show_calendar_posts_full_title]',
                 'on' === $this->module->options->show_calendar_posts_full_title ? 'checked' : ''
+            );
+
+            echo '</div>';
+        }
+
+        public function settings_calendar_today_in_first_row_option()
+        {
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[calendar_today_in_first_row]',
+                'on' === $this->module->options->calendar_today_in_first_row ? 'checked' : ''
             );
 
             echo '</div>';
@@ -1143,6 +1164,11 @@ if (! class_exists('PP_Calendar_Methods')) {
 
                     $firstDateToDisplay = (isset($calendar_request_filter['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                             sanitize_text_field($calendar_request_filter['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
+                    
+                    if (isset($this->module->options->calendar_today_in_first_row) && 'on' === $this->module->options->calendar_today_in_first_row) {
+                        $firstDateToDisplay = $calendar_request_filter['start_date'] = date('Y-m-d', current_time('timestamp'));
+                    }
+
                     $firstDateToDisplay = PP_Calendar_Utilities::get_beginning_of_week($firstDateToDisplay);
                     $endDate = PP_Calendar_Utilities::get_ending_of_week(
                         $firstDateToDisplay,

@@ -15,7 +15,7 @@ export default function AsyncCalendar(props) {
 
     let calendarFiltersValue  = (props.requestFilter) ? props.requestFilter : {};
 
-    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(getBeginDateOfWeekByDate(props.firstDateToDisplay, props.weekStartsOnSunday));
+    const [firstDateToDisplay, setFirstDateToDisplay] = React.useState(props.firstDateToDisplay);
     const [numberOfWeeksToDisplay, setNumberOfWeeksToDisplay] = React.useState(weeksValue);
     const [itemsByDate, setItemsByDate] = React.useState(props.items);
     const [isLoading, setIsLoading] = React.useState(false);
