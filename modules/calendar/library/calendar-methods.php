@@ -188,11 +188,7 @@ if (! class_exists('PP_Calendar_Methods')) {
 
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $customStatuses = \PublishPress_Statuses::getCustomStatuses(['for_revision' => false], 'object');
-
-            $revisionStatuses = (defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) 
-            ? \PublishPress_Statuses::getCustomStatuses(['for_revision' => true], 'object') 
-            : [];
+            $customStatuses = $publishpress->getCustomStatuses();
 
             if (empty($customStatuses)) {
                 $statuses = [
@@ -203,11 +199,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 $statuses = [];
 
                 foreach ($customStatuses as $status) {
-                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status, 'for_revision' => false];
-                }
-
-                foreach ($revisionStatuses as $status) {
-                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status, 'for_revision' => true];
+                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status];
                 }
             }
 
@@ -249,14 +241,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 foreach ($statuses as $status => $arr_status) {
                     $id = esc_attr($status) . '-display-publish-time';
 
-                    if ($arr_status['for_revision'] && empty($in_revisions_section)) {
-                        $style = 'margin-top: 30px;';
-                        $in_revisions_section = true;
-                    } else {
-                        $style = '';
-                    }
-
-                    echo '<div style="' . esc_attr($style) . '"><label for="' . $id . '">';
+                    echo '<div><label for="' . $id . '">';
                     echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
 
                     if (isset($this->module->options->show_posts_publish_time[$status])) {
