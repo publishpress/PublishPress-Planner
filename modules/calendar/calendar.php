@@ -698,6 +698,7 @@ if (! class_exists('PP_Calendar')) {
                 'hide_revision' => '',
                 's'             => '',
                 'post_status'   => '',
+                'revision_status' => '',
             ];
 
             if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'reset_filter' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_rest_nonce')) {

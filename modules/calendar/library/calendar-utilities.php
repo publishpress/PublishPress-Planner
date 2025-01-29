@@ -519,7 +519,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                         </div>
                     </div>
                     <?php 
-                    
+
                     $calendar_filters = apply_filters('publishpress_calendar_get_filters', $calendar_filters, $args);
 
                     foreach ($calendar_filters as $select_id => $select_name) {
@@ -735,6 +735,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
             $select_filter_names = [];
 
             $select_filter_names['post_status'] = 'post_status';
+            $select_filter_names['revision_status'] = 'revision_status';
             $select_filter_names['cat'] = 'cat';
             $select_filter_names['tag'] = 'tag';
             $select_filter_names['author'] = 'author';
@@ -1186,6 +1187,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                 'title'     => esc_html__('Inbuilt filters', 'publishpress'),
                 'filters'   => [
                     'post_status' => esc_html__('Post Status', 'publishpress'),
+                    'revision_status' => esc_html__('Revision Status', 'publishpress'),
                     'author' => esc_html__('Author', 'publishpress'),
                     'cpt' => esc_html__('Post Type', 'publishpress')
                 ]

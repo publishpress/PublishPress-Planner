@@ -511,6 +511,7 @@ class PP_Content_Overview extends PP_Module
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'me_mode' => $this->filter_get_param('me_mode'),
+            'revision_status' => $this->filter_get_param('revision_status'),
             'hide_revision' => $this->filter_get_param('hide_revision'),
         ];
 
@@ -949,6 +950,7 @@ class PP_Content_Overview extends PP_Module
             'title'     => esc_html__('Inbuilt filters', 'publishpress'),
             'filters'   => [
                 'post_status' => esc_html__('Post Status', 'publishpress'),
+                'revision_status' => esc_html__('Revision Status', 'publishpress'),
                 'author' => esc_html__('Author', 'publishpress'),
                 'ptype' => esc_html__('Post Type', 'publishpress')
             ]
