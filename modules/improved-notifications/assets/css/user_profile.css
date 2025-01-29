@@ -30,3 +30,15 @@
 .psppno_workflows td {
     border-bottom: 1px solid #ccc;
 }
+
+ .psppno_workflows th {
+    text-align: center;
+ }
+
+.psppno_workflows td.psppno_workflow_title {
+    white-space: nowrap;
+}
+
+.psppno_workflows div.psppno_workflow_channel_field {
+    padding-left: 20px;
+}
