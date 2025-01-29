@@ -245,6 +245,15 @@
     flex: 1;
 }
 
+.publishpress-calendar-popup-form table {
+    width: 480px;
+}
+
+.publishpress-calendar-popup-form > table > tbody > tr > td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .metadata-item-filter .filter-title {
     font-weight: 500;
     font-size: 1rem;

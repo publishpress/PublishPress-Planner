@@ -245,6 +245,24 @@ table.content-overview thead td {
     padding: 0 10px;
 }
 
+#pp-content-overview-post-form div.form-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#pp-content-overview-post-form .scrollable-content {
+    display: contents;
+}
+
+#pp-content-overview-wrap .new-post .content-overview-form-table td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#pp-content-overview-wrap .new-post .content-overview-form-table th {
+    padding-right: 10px;
+}
+
 .content-overview-modal {
     display: none;
     position: absolute;

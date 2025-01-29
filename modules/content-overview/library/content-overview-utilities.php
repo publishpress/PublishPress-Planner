@@ -339,7 +339,7 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                                                         ?>
                                                         <select id="form_post_status" name="<?php echo esc_attr($field_key); ?>">
                                                             <?php
-                                                            foreach ($field_options['options'] as $post_status) {
+                                                            foreach (apply_filters('publishpress_content_overview_new_post_statuses', $field_options['options'], $args) as $post_status) {
                                                                 echo "<option value='" . esc_attr($post_status['value']) . "' " . selected(
                                                                         $post_status['value'],
                                                                         $field_options['value']
@@ -670,6 +670,8 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
 
         public static function content_overview_filter_options($args)
         {
+            $args = apply_filters('publishpress_content_overview_filter_options_args', $args);
+
             $select_id                  = $args['select_id'];
             $select_name                = $args['select_name'];
             $filters                    = $args['user_filters'];
@@ -681,6 +683,8 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
             $all_filters                = $args['all_filters'];
             $operator_labels            = $args['operator_labels'];
             
+            $revision_statuses          = (!empty($args['revision_statuses'])) ? $args['revision_statuses'] : [];
+
             if (array_key_exists($select_id, $terms_options)) {
                 $select_id = 'metadata_key';
             }
@@ -701,7 +705,20 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                     <select id="post_status" name="post_status"><!-- Status selectors -->
                         <option value=""><?php
                             _e('All statuses', 'publishpress'); ?></option>
-                        <?php
+                        
+                        <?php if (!empty($revision_statuses)) {
+                            $hide_all_label = __('(Hide all)', 'publishpress');
+
+                            if ('_' == $filters['post_status']) {
+                                $selected_value = $hide_all_label;
+                            }
+
+                            echo "<option value='_' " . selected(
+                                        '_',
+                                        $filters['post_status']
+                                    ) . ">" . $hide_all_label . "</option>";
+                        }
+ 
                         foreach ($post_statuses as $post_status) {
                             if ($post_status->slug == $filters['post_status']) {
                                 $selected_value = $post_status->label;
@@ -988,7 +1005,13 @@ if (! class_exists('PP_Content_Overview_Utilities')) {
                     break;
     
                 default:
-                    if (array_key_exists($select_name, $form_filter_list)) {
+                    if ($filter_vars = apply_filters('publishpress_content_overview_custom_filter', false, $select_id, $args)) {
+                        $filter_vars = (array) $filter_vars;
+
+                        $filter_label = (isset($filter_vars['filter_label'])) ? $filter_vars['filter_label'] : '';
+                        $selected_value = (isset($filter_vars['selected_value'])) ? $filter_vars['selected_value'] : '';
+
+                    } elseif (array_key_exists($select_name, $form_filter_list)) {
                         $selected_value_meta = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
                         $filter_label   = $all_filters[$select_name];
                         $selected_value = $selected_value_meta;

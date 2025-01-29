@@ -138,7 +138,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#pp-content-filters select#post_status').pp_select2();
+    $('#pp-content-filters select#post_status').pp_select2({width: '190px'});
+    $('#pp-content-filters select#revision_status').pp_select2({width: "190px"});
     $('#pp-content-filters select#filter_post_type').pp_select2();
     $('#pp-content-filters select.pp-custom-select2').pp_select2();
 

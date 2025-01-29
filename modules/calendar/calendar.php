@@ -232,6 +232,7 @@ if (! class_exists('PP_Calendar')) {
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
                     'show_calendar_posts_full_title' => 'off',
+                    'calendar_today_in_first_row' => 'on',
                     // Leave default as non array to confirm if user save settings or not
                     'content_calendar_filters' => '',
                     'content_calendar_custom_filters' => '',
@@ -698,6 +699,7 @@ if (! class_exists('PP_Calendar')) {
                 'hide_revision' => '',
                 's'             => '',
                 'post_status'   => '',
+                'revision_status' => '',
             ];
 
             if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'reset_filter' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_rest_nonce')) {
@@ -722,7 +724,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return array
              */
-            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters, 'update_user_filters');
 
             $this->filters = array_merge([
                 'weeks'         => __('Weeks', 'publishpress'),
@@ -732,7 +734,6 @@ if (! class_exists('PP_Calendar')) {
                 's'             =>  __('Search', 'publishpress'),
             ], $this->filters);
             
-
             $editorial_metadata = $this->terms_options;
 
             foreach ($this->filters as $filter_key => $filter_label) {
@@ -980,6 +981,7 @@ if (! class_exists('PP_Calendar')) {
                 'author' => esc_html__('Author', 'publishpress'), 
                 'cpt' => esc_html__('Post Type', 'publishpress')
             ];
+
             $datas['content_calendar_custom_filters'] = is_array($content_calendar_custom_filters) ? $content_calendar_custom_filters : [];
     
             /**
@@ -987,7 +989,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return $datas
              */
-            $datas = apply_filters('publishpress_content_calendar_datas', $datas);
+            $datas = apply_filters('publishpress_content_calendar_datas', $datas, compact('content_calendar_filters', 'content_calendar_custom_filters'));
     
             $this->content_calendar_datas = $datas;
     
@@ -1038,7 +1040,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return array
              */
-            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters, 'render_admin_page');
     
             $this->form_filters = $this->get_content_calendar_form_filters();
             $this->form_filter_list = array_merge(...array_values(array_column($this->form_filters, 'filters')));
@@ -1474,6 +1476,12 @@ if (! class_exists('PP_Calendar')) {
                 $options['show_calendar_posts_full_title'] = 'off';
             }
 
+            if (isset($new_options['calendar_today_in_first_row'])) {
+                $options['calendar_today_in_first_row'] = 'on';
+            } else {
+                $options['calendar_today_in_first_row'] = 'off';
+            }
+
             if (isset($new_options['ics_subscription_public_visibility'])) {
                 $options['ics_subscription_public_visibility'] = 'on';
             } else {
@@ -1562,7 +1570,7 @@ if (! class_exists('PP_Calendar')) {
 
             //get and update filters
             $args = $this->get_filters();
-            
+
             $method_args                        = [];
             $method_args['content_calendar_datas'] = $this->get_content_calendar_datas();
             $method_args['userFilters']         = $args;

@@ -1012,7 +1012,7 @@ if (! class_exists('PP_Content_Board_Utilities')) {
                                                         ?>
                                                         <select id="form_post_status" name="<?php echo esc_attr($field_key); ?>">
                                                             <?php
-                                                            foreach ($field_options['options'] as $post_status) {
+                                                            foreach (apply_filters('publishpress_content_board_new_post_statuses', $field_options['options'], $args) as $post_status) {
                                                                 echo "<option value='" . esc_attr($post_status['value']) . "' " . selected(
                                                                         $post_status['value'],
                                                                         $field_options['value']

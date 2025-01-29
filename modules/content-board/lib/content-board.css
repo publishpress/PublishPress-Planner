@@ -520,6 +520,24 @@
     padding: 0 10px;
 }
 
+#pp-content-board-post-form div.form-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#pp-content-board-post-form .scrollable-content {
+    display: contents;
+}
+
+#pp-content-board-wrap .new-post .content-board-form-table td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#pp-content-board-wrap .new-post .content-board-form-table th {
+    padding-right: 10px;
+}
+
 .content-board-modal {
     display: none;
     position: absolute;

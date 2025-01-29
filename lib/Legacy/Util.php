@@ -203,6 +203,7 @@ class Util
                     <p><?php echo esc_html__('Enhance the power of PublishPress Planner with the Pro version:', 'publishpress'); ?>
                     </p>
                     <ul>
+                        <li><?php echo esc_html__('PublishPress Revisions integration', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Slack integration for notifications', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Send reminder notifications', 'publishpress'); ?></li>
                         <li><?php echo esc_html__('Use post meta in notifications', 'publishpress'); ?></li>

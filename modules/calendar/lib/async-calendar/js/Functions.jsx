@@ -38,26 +38,17 @@ export function getBeginDateOfWeekByWeekNumber(weekNumber, year, weekStartsOnSun
  *      2012/1/1   is Sunday in week 52 of 2011
  */
 export function getWeekNumberByDate(theDate, weekStartsOnSunday = true) {
-
-    // Copy date so don't modify original
-    let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate(), theDate.getHours(), theDate.getMinutes(), theDate.getSeconds(), theDate.getMilliseconds());
+    
+    let theDateCopy = new Date(theDate.getFullYear(), theDate.getMonth(), theDate.getDate());
 
     let dayOfWeek = theDateCopy.getDay();
-
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    theDateCopy.setDate(theDateCopy.getDate() + 4 - (theDateCopy.getDay() || 7));
-
-    // Get first day of year
     let yearStart = new Date(theDateCopy.getFullYear(), 0, 1);
-    // Calculate full weeks to nearest Thursday
-    let weekNo = Math.round((((theDateCopy - yearStart) / 86400000) + 1) / 7);
 
-    if (weekStartsOnSunday && dayOfWeek === 0) {
-        weekNo++;
-    }
+    let startOffset = weekStartsOnSunday ? yearStart.getDay() : (yearStart.getDay() || 7) - 1;
 
-    // Return array of year and week number
+    let daysSinceYearStart = (theDateCopy - yearStart) / 86400000;
+    let weekNo = Math.floor((daysSinceYearStart + startOffset) / 7) + 1;
+
     return [theDateCopy.getFullYear(), weekNo];
 }
 
@@ -316,6 +307,8 @@ export function openPostModal(post_id) {
 
     var can_edit_post = Number(post.can_edit_post) > 0;
 
+    var target_post = jQuery('.publishpress-calendar .publishpress-calendar-item.post-' + post_id);
+
     // build header
     var popup_header = '<div class="pp-popup-modal-header">';
 
@@ -324,6 +317,10 @@ export function openPostModal(post_id) {
             popup_header += '<a title="' + publishpressCalendarParams.strings.prev_label + '" href="#" class="modal-nav-prev" data-post_id="' + previous_post.post_id + '"><span class="dashicons dashicons-arrow-left-alt"></span> ' + previous_post.filtered_title + '</a>';
             popup_header += '</div>';
         }
+
+        popup_header += '<div class="pp-modal-navigation-current">';
+        popup_header += '<span class="modal-nav-current" style="color:' + target_post.css('background-color') + '"> ' + post.filtered_title + '</span>';
+        popup_header += '</div>';
 
         if (next_post.post_id != post.post_id) {
             popup_header += '<div class="pp-modal-navigation-next">';
@@ -375,7 +372,7 @@ export function openPostModal(post_id) {
         // add post author meta
         popup_content += '<div class="modal-taxonomy-info post-author"><span class="info-item">' + publishpressCalendarParams.strings.post_author + '</span><span class="info-item">' + post.author_markup + '</span></div>';
         // add post status meta
-        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + publishpressCalendarParams.strings.post_status_label + '</span>';
+        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + post.status_field_label + '</span>';
         popup_content += '<span class="info-item">';
         if (can_edit_post) {
             popup_content += '<select class="pp-modal-form-post-status">';

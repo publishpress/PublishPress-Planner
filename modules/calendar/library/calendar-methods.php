@@ -91,6 +91,14 @@ if (! class_exists('PP_Calendar_Methods')) {
             );
 
             add_settings_field(
+                'calendar_today_in_first_row',
+                __('Show today\'s date in the first row', 'publishpress'),
+                [$this, 'settings_calendar_today_in_first_row_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
                 'ics_subscription',
                 __('Enable subscriptions in iCal or Google Calendar', 'publishpress'),
                 [$this, 'settings_ics_subscription_option'],
@@ -199,7 +207,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                 $statuses = [];
 
                 foreach ($customStatuses as $status) {
-                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status];
+                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status, 'for_revision' => !empty($status->for_revision)];
                 }
             }
 
@@ -229,9 +237,10 @@ if (! class_exists('PP_Calendar_Methods')) {
                     . esc_html($title)
                     . '</span>'
                     . '</label>';
-
-                    echo '</div>';
                 }
+
+                $show_statuses_prompt = true;
+
             } else {
                 echo '<style>div.pp-calendar-settings div {padding: 4px 0 8px 0;} div.pp-calendar-settings a {vertical-align: bottom}</style>';
 
@@ -240,7 +249,14 @@ if (! class_exists('PP_Calendar_Methods')) {
                 foreach ($statuses as $status => $arr_status) {
                     $id = esc_attr($status) . '-display-publish-time';
 
-                    echo '<div><label for="' . $id . '">';
+                    if ($arr_status['for_revision'] && empty($in_revisions_section)) {
+                        $style = 'margin-top: 30px;';
+                        $in_revisions_section = true;
+                    } else {
+                        $style = '';
+                    }
+
+                    echo '<div style="' . esc_attr($style) . '"><label for="' . $id . '">';
                     echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
 
                     if (isset($this->module->options->show_posts_publish_time[$status])) {
@@ -281,8 +297,56 @@ if (! class_exists('PP_Calendar_Methods')) {
                     echo '</div>';
                 }
 
-                echo '</div>';
+                $show_statuses_pro_revisions_prompt = true;
             }
+
+           if (defined('PUBLISHPRESS_REVISIONS_VERSION') && defined('PUBLISHPRESS_PRO_VERSION') && version_compare(PUBLISHPRESS_REVISIONS_VERSION, '3.6.0-rc', '<')) :
+                ?>
+                <div id="pp-revisions-plugin-prompt" class="activating pp-plugin-prompt">
+                <?php
+                $msg = (defined('PUBLISHPRESS_REVISIONS_PRO_VERSION'))
+                ? esc_html__('For Revisions integration on the Content Calendar, Overview and Content Board, please update %sPublishPress Revisions Pro%s.', 'publishpress')
+                : esc_html__('For Revisions integration on the Content Calendar, Overview and Content Board, please update %sPublishPress Revisions%s.', 'publishpress');
+
+                printf(
+                    $msg,
+                    '<a href="' . esc_url(self_admin_url('plugins.php')) . '" target="_blank">',
+                    '</a>'
+                );
+                ?>
+                </div>
+            <?php endif;
+
+            if (!empty($show_statuses_prompt)) {
+                if (!defined('PUBLISHPRESS_STATUSES_VERSION')) :
+                    ?>
+                    <div id="pp-statuses-plugin-prompt" class="activating pp-plugin-prompt">
+                    <?php
+                    printf(
+                        esc_html__('To refine your workflow with custom Post Statuses, install the %sPublishPress Statuses%s plugin.', 'publishpress'),
+                        '<a href="' . esc_url(self_admin_url('plugin-install.php?s=publishpress-statuses&tab=search&type=term')) . '" target="_blank">',
+                        '</a>'
+                    );
+                    ?>
+                    </div>
+                <?php endif;
+
+            } elseif (!empty($show_statuses_pro_revisions_prompt)) {
+                if (defined('PUBLISHPRESS_REVISIONS_VERSION') && defined('PUBLISHPRESS_STATUSES_VERSION') && !defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) :
+                    ?>
+                    <div id="pp-statuses-pro-plugin-prompt" class="activating pp-plugin-prompt">
+                    <?php
+                    printf(
+                        esc_html__('For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s.', 'publishpress'),
+                        '<a href="https://publishpress.com/statuses/" target="_blank">',
+                        '</a>'
+                    );
+                    ?>
+                    </div>
+                <?php endif;
+            }
+
+            echo '</div>';
         }
 
         private function getCalendarTimeFormat()
@@ -434,6 +498,19 @@ if (! class_exists('PP_Calendar_Methods')) {
                 '<input type="checkbox" name="%s" value="on" %s>',
                 esc_attr($this->module->options_group_name) . '[show_calendar_posts_full_title]',
                 'on' === $this->module->options->show_calendar_posts_full_title ? 'checked' : ''
+            );
+
+            echo '</div>';
+        }
+
+        public function settings_calendar_today_in_first_row_option()
+        {
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[calendar_today_in_first_row]',
+                'on' === $this->module->options->calendar_today_in_first_row ? 'checked' : ''
             );
 
             echo '</div>';
@@ -769,25 +846,29 @@ if (! class_exists('PP_Calendar_Methods')) {
                 wp_send_json([], 404);
             }
 
-            $fields = [
-                'title' => [
-                    'label' => __('Title', 'publishpress'),
-                    'value' => null,
-                    'type' => 'text',
-                ],
-                'status' => [
-                    'label' => __('Post Status', 'publishpress'),
-                    'value' => 'draft',
-                    'type' => 'status',
-                    'options' => $post_status_options
-                ],
-                'time' => [
-                    'label' => __('Publish Time', 'publishpress'),
-                    'value' => null,
-                    'type' => 'time',
-                    'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
-                ]
-            ];
+            $fields = apply_filters(
+                'publishpress_calendar_post_type_fields', 
+                [
+                    'title' => [
+                        'label' => __('Title', 'publishpress'),
+                        'value' => null,
+                        'type' => 'text',
+                    ],
+                    'status' => [
+                        'label' => __('Post Status', 'publishpress'),
+                        'value' => 'draft',
+                        'type' => 'status',
+                        'options' => $post_status_options
+                    ],
+                    'time' => [
+                        'label' => __('Publish Time', 'publishpress'),
+                        'value' => null,
+                        'type' => 'time',
+                        'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
+                    ]
+                ], 
+                $post_status_options
+            );
 
             if (current_user_can($postTypeObject->cap->edit_others_posts)) {
                 $fields['authors'] = [
@@ -1083,6 +1164,11 @@ if (! class_exists('PP_Calendar_Methods')) {
 
                     $firstDateToDisplay = (isset($calendar_request_filter['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                             sanitize_text_field($calendar_request_filter['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
+                    
+                    if (isset($this->module->options->calendar_today_in_first_row) && 'on' === $this->module->options->calendar_today_in_first_row) {
+                        $firstDateToDisplay = $calendar_request_filter['start_date'] = date('Y-m-d', current_time('timestamp'));
+                    }
+
                     $firstDateToDisplay = PP_Calendar_Utilities::get_beginning_of_week($firstDateToDisplay);
                     $endDate = PP_Calendar_Utilities::get_ending_of_week(
                         $firstDateToDisplay,
@@ -1254,7 +1340,14 @@ if (! class_exists('PP_Calendar_Methods')) {
             $filtered_title = apply_filters('pp_calendar_post_title_html', $post->post_title, $post);
             $post->filtered_title = $filtered_title;
 
-            $postTypeOptions = $this->get_post_status_options($post->post_status);
+            if (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post)) {
+                $_post_status = $post->post_mime_type;
+            } else {
+                $_post_status = $post->post_status;
+            }
+
+            $postTypeOptions = $this->get_post_status_options($_post_status);
+            
             $postTypeObject = $this->getPostTypeObject($post->post_type);
             $canEdit = current_user_can($postTypeObject->cap->edit_post, $post->ID);
 
@@ -1319,7 +1412,7 @@ if (! class_exists('PP_Calendar_Methods')) {
              *
              * @return array
              */
-            $filters = apply_filters('publishpress_content_calendar_filters', $filters);
+            $filters = apply_filters('publishpress_content_calendar_filters', $filters, 'get_calendar_data');
 
             $enabled_filters = array_keys($filters);
             $editorial_metadata = $method_args['terms_options'];
@@ -1529,6 +1622,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
+
             $post_results = new WP_Query($args);
 
             $posts = [];

@@ -196,8 +196,6 @@ if (!class_exists('PP_Module')) {
             return apply_filters('publishpress_calendar_post_statuses', $publishpress->getPostStatuses());
         }
 
-
-
         /**
          * Returns the CSS class name and color for the given custom status.
          * It reutrns an array with the following keys:
@@ -246,6 +244,10 @@ if (!class_exists('PP_Module')) {
                     'private' => '#b40000',
                     'future' => '#8440f0',
                     'publish' => '#207720',
+
+                    'draft-revision' => '#767676',
+                    'pending-revision' => '#b95c00',
+                    'future-revision' => '#8440f0',
                 ];
 
                 if (isset($default_status_colors[$post_status])) {
@@ -317,9 +319,11 @@ if (!class_exists('PP_Module')) {
          * @since 0.7
          *
          */
-        public function get_post_status_friendly_name($status)
+        public function get_post_status_friendly_name($status, $post = false)
         {
             global $publishpress;
+
+            $status = ($post && function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post)) ? $post->post_mime_type : $status;
 
             $status_friendly_name = '';
 
@@ -869,7 +873,7 @@ if (!class_exists('PP_Module')) {
                 && $publishpress->{$module_slug}->module->options->enabled === 'on';
         }
 
-        public function getUserAuthorizedPostStatusOptions($postType)
+        public function getUserAuthorizedPostStatusOptions($postType, $post = false)
         {
             global $pp_post_type_status_options;
 
@@ -878,10 +882,10 @@ if (!class_exists('PP_Module')) {
             }
 
             if (isset($pp_post_type_status_options[$postType])) {
-                return $pp_post_type_status_options[$postType];
+                return apply_filters('publishpress_user_post_status_options', $pp_post_type_status_options[$postType], $postType, $post);
             }
 
-            $postStatuses = $this->getPostStatusOptions();
+            $postStatuses = $this->getPostStatusOptions($postType, $post);
 
             foreach ($postStatuses as $index => $status) {
                 // Filter publishing posts if the post type is set
@@ -895,15 +899,19 @@ if (!class_exists('PP_Module')) {
 
             $pp_post_type_status_options[$postType] = $postStatuses;
 
-            return apply_filters('publishpress_user_post_status_options', $postStatuses);
+            return apply_filters('publishpress_user_post_status_options', $postStatuses, $postType, $post);
         }
 
-        public function getPostStatusOptions()
+        public function getPostStatusOptions($postType = '', $post = false)
         {
-            $postStatuses = [];
-            $post_statuses_terms       = get_terms('post_status', ['hide_empty' => false]);
-            $post_statuses_terms_slugs = (!is_wp_error($post_statuses_terms)) ? array_column($post_statuses_terms, 'slug') : [];
-            foreach ($this->get_post_statuses() as $status) {
+            if (!$defined_statuses = apply_filters('publishpress_defined_post_statuses', [], $postType, $post)) {
+                $postStatuses = [];
+                $post_statuses_terms       = get_terms('post_status', ['hide_empty' => false]);
+                $post_statuses_terms_slugs = (!is_wp_error($post_statuses_terms)) ? array_column($post_statuses_terms, 'slug') : [];
+                $defined_statuses = $this->get_post_statuses();
+            }
+            
+            foreach ($defined_statuses as $status) {
                 //add support for capabilities custom statuses
                 if (defined('PUBLISHPRESS_CAPS_PRO_VERSION')
                     && !empty(get_option('cme_custom_status_control'))
@@ -918,7 +926,7 @@ if (!class_exists('PP_Module')) {
                 ];
             }
 
-            return apply_filters('publishpress_post_status_options', $postStatuses);
+            return apply_filters('publishpress_post_status_options', $postStatuses, $postType, $post);
         }
 
         /**
@@ -1047,7 +1055,7 @@ if (!class_exists('PP_Module')) {
             $taxonomies = get_object_taxonomies($post->post_type, 'object');
             foreach ($taxonomies as $taxonomy => $tax_object ) {
                 if (!empty($tax_object->public)
-                    && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                    && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp', 'pp_revision_status'])) {
                     $terms = get_the_terms($post->ID, $taxonomy);
                     //add post content to localized data
                     $localized_post_data['taxonomies'][$post->ID][$taxonomy] = [
@@ -1068,13 +1076,14 @@ if (!class_exists('PP_Module')) {
                 'post_title'       => $post_title,
                 'raw_title'        => $post->post_title,
                 'filtered_title'   => isset($post->filtered_title) ? $post->filtered_title : $post->post_title,
-                'post_status'      => $post->post_status,
+                'post_status'      => (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post->ID)) ? $post->post_mime_type : $post->post_status,
                 'status_label'     => $this->get_post_status_friendly_name($post->post_status),
+                'status_options'   => $this->getUserAuthorizedPostStatusOptions($post->post_type, $post),
+                'status_field_label'   => (function_exists('rvy_in_revision_workflow') && rvy_in_revision_workflow($post->ID)) ? esc_html__('Revision Status', 'publishpress') : esc_html__('Post Status', 'publishpress'),
                 'can_edit_post'    => $can_edit_post ? 1 : 0,
                 'date_markup'      => $can_edit_post ? $this->get_date_markup($post) : get_the_time(get_option("date_format"), $post->ID) . " " . get_the_time(get_option("time_format"), $post->ID),
                 'action_links'     => $this->get_post_action_links($post, $can_edit_post),
                 'author_markup'    => $this->get_author_markup($post, $can_edit_post),
-                'status_options'   => $this->getUserAuthorizedPostStatusOptions($post->post_type),
                 'post_content'     => apply_filters('the_content', $post->post_content)
             ];
 
@@ -1147,7 +1156,7 @@ if (!class_exists('PP_Module')) {
                 );
             }
 
-            return $item_actions;
+            return apply_filters('publishpress_item_action_links', $item_actions, $post, $can_edit_post);
         }
 
         public function get_author_markup($post, $can_edit_post) {
