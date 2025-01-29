@@ -135,7 +135,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Update : Planner v.4.6.0 Translation Updates-ES-FR-IT, #1826
 * Update : Brazil Translation Update,  #1810
 
-= [4.6.0] - 28 Jan 2025 =
+= [4.6.0] - 21 Jan 2025 =
 
 * Compat : Revisions Pro 3.6.0: Revision Notifications, #1809
 * Compat : PublishPress Statuses Pro: custom Revision Statuses in Calendar, Content Overview, Content Board #1809
