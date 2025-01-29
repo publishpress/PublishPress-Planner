@@ -52,7 +52,7 @@ if (! class_exists('PP_Board_Methods')) {
                 if (!is_object($post_data) || !isset($post_data->post_type)) {
                     $response['content'] = esc_html__('Error fetching post data.', 'publishpress');
                 } else {
-                    $user_post_status = array_column( $this->getUserAuthorizedPostStatusOptions($post_data->post_type), 'value');
+                    $user_post_status = array_column( $this->getUserAuthorizedPostStatusOptions($post_data->post_type, $post_id), 'value');
                     if (in_array('publish', $user_post_status)) {
                         $user_post_status[] = 'future';
                         $user_post_status[] = 'private';

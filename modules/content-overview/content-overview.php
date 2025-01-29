@@ -511,6 +511,7 @@ class PP_Content_Overview extends PP_Module
             'start_date' => $this->filter_get_param('start_date'),
             'end_date' => $this->filter_get_param('end_date'),
             'me_mode' => $this->filter_get_param('me_mode'),
+            'revision_status' => $this->filter_get_param('revision_status'),
             'hide_revision' => $this->filter_get_param('hide_revision'),
         ];
 
@@ -829,6 +830,7 @@ class PP_Content_Overview extends PP_Module
         $datas['content_overview_columns'] = is_array($content_overview_columns) ? $content_overview_columns :
         [
             'post_status' => esc_html__('Status', 'publishpress'),
+            'revision_status' => esc_html__('Revision Status', 'publishpress'),
             'post_type' => esc_html__('Post Type', 'publishpress'),
             'post_author' => esc_html__('Author', 'publishpress'),
             'post_date' => esc_html__('Post Date', 'publishpress'),
@@ -843,9 +845,11 @@ class PP_Content_Overview extends PP_Module
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
             'post_status' => esc_html__('Status', 'publishpress'),
+            'revision_status' => esc_html__('Revision Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'),
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
+
         $datas['content_overview_custom_filters'] = is_array($content_overview_custom_filters) ? $content_overview_custom_filters : [];
 
         /**
@@ -948,6 +952,7 @@ class PP_Content_Overview extends PP_Module
             'title'     => esc_html__('Inbuilt filters', 'publishpress'),
             'filters'   => [
                 'post_status' => esc_html__('Post Status', 'publishpress'),
+                'revision_status' => esc_html__('Revision Status', 'publishpress'),
                 'author' => esc_html__('Author', 'publishpress'),
                 'ptype' => esc_html__('Post Type', 'publishpress')
             ]
@@ -1557,6 +1562,7 @@ class PP_Content_Overview extends PP_Module
          *
          * @return string
          */
+
         $column_value = apply_filters('publishpress_content_overview_column_value', $column_name, $post, $this->module_url);
 
         $content_overview_datas = $this->get_content_overview_datas();
@@ -1594,7 +1600,7 @@ class PP_Content_Overview extends PP_Module
 
         switch ($column_name) {
             case 'post_status':
-                $status_name = $this->get_post_status_friendly_name($post->post_status);
+                $status_name = $this->get_post_status_friendly_name($post->post_status, $post);
 
                 return $status_name;
                 break;

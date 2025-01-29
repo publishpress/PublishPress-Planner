@@ -14,6 +14,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
 
         public static function content_calendar_filter_options($args)
         {
+            $args = apply_filters('publishpress_calendar_filter_options_args', $args);
+
             $select_id                  = $args['select_id'];
             $select_name                = $args['select_name'];
             $filters                    = $args['user_filters'];
@@ -24,7 +26,9 @@ if (! class_exists('PP_Calendar_Utilities')) {
             $form_filter_list           = $args['form_filter_list'];
             $all_filters                = $args['all_filters'];
             $operator_labels            = $args['operator_labels'];
-            
+
+            $revision_statuses          = (!empty($args['revision_statuses'])) ? $args['revision_statuses'] : [];
+
             if (array_key_exists($select_id, $terms_options)) {
                 $select_id = 'metadata_key';
             }
@@ -45,7 +49,20 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     <select id="post_status" name="post_status"><!-- Status selectors -->
                         <option value=""><?php
                             _e('All statuses', 'publishpress'); ?></option>
-                        <?php
+                        
+                        <?php if (!empty($revision_statuses)) {
+                            $hide_all_label = __('(Hide all)', 'publishpress');
+
+                            if ('_' == $filters['post_status']) {
+                                $selected_value = $hide_all_label;
+                            }
+
+                            echo "<option value='_' " . selected(
+                                        '_',
+                                        $filters['post_status']
+                                    ) . ">" . $hide_all_label . "</option>";
+                        }
+                        
                         foreach ($post_statuses as $post_status) {
                             if ($post_status->slug == $filters['post_status']) {
                                 $selected_value = $post_status->label;
@@ -335,7 +352,13 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     break;
     
                 default:
-                    if (array_key_exists($select_name, $form_filter_list)) {
+                    if ($filter_vars = apply_filters('publishpress_calendar_custom_filter', false, $select_id, $args)) {
+                        $filter_vars = (array) $filter_vars;
+
+                        $filter_label = (isset($filter_vars['filter_label'])) ? $filter_vars['filter_label'] : '';
+                        $selected_value = (isset($filter_vars['selected_value'])) ? $filter_vars['selected_value'] : '';
+
+                    } elseif (array_key_exists($select_name, $form_filter_list)) {
                         $selected_value_meta = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
                         $filter_label   = $all_filters[$select_name];
                         $selected_value = $selected_value_meta;
@@ -496,7 +519,9 @@ if (! class_exists('PP_Calendar_Utilities')) {
                         </div>
                     </div>
                     <?php 
-                    
+
+                    $calendar_filters = apply_filters('publishpress_calendar_get_filters', $calendar_filters, $args);
+
                     foreach ($calendar_filters as $select_id => $select_name) {
                         $modal_id++;
                         $args['select_id']      = $select_id;
@@ -510,7 +535,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             <button 
                                 data-target="#content_calendar_modal_<?php echo esc_attr($modal_id); ?>"
                                 data-label="<?php echo esc_attr($filter_data['filter_label']); ?>"
-                                class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"><?php echo esc_html($button_label); ?></button>
+                                class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"
+                                <?php if ('revision_status' == $select_id && !empty($user_filters['hide_revision'])) echo ' style="display: none;"';?>><?php echo esc_html($button_label); ?></button>
                             <div id="content_calendar_modal_<?php echo esc_attr($modal_id); ?>" class="content-calendar-modal" style="display: none;">
                                 <div class="content-calendar-modal-content">
                                     <span class="close">&times;</span>
@@ -709,6 +735,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
             $select_filter_names = [];
 
             $select_filter_names['post_status'] = 'post_status';
+            $select_filter_names['revision_status'] = 'revision_status';
             $select_filter_names['cat'] = 'cat';
             $select_filter_names['tag'] = 'tag';
             $select_filter_names['author'] = 'author';
@@ -1160,6 +1187,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                 'title'     => esc_html__('Inbuilt filters', 'publishpress'),
                 'filters'   => [
                     'post_status' => esc_html__('Post Status', 'publishpress'),
+                    'revision_status' => esc_html__('Revision Status', 'publishpress'),
                     'author' => esc_html__('Author', 'publishpress'),
                     'cpt' => esc_html__('Post Type', 'publishpress')
                 ]

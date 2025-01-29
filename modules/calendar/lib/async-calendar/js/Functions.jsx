@@ -316,6 +316,8 @@ export function openPostModal(post_id) {
 
     var can_edit_post = Number(post.can_edit_post) > 0;
 
+    var target_post = jQuery('.publishpress-calendar .publishpress-calendar-item.post-' + post_id);
+
     // build header
     var popup_header = '<div class="pp-popup-modal-header">';
 
@@ -324,6 +326,10 @@ export function openPostModal(post_id) {
             popup_header += '<a title="' + publishpressCalendarParams.strings.prev_label + '" href="#" class="modal-nav-prev" data-post_id="' + previous_post.post_id + '"><span class="dashicons dashicons-arrow-left-alt"></span> ' + previous_post.filtered_title + '</a>';
             popup_header += '</div>';
         }
+
+        popup_header += '<div class="pp-modal-navigation-current">';
+        popup_header += '<span class="modal-nav-current" style="color:' + target_post.css('background-color') + '"> ' + post.filtered_title + '</span>';
+        popup_header += '</div>';
 
         if (next_post.post_id != post.post_id) {
             popup_header += '<div class="pp-modal-navigation-next">';
@@ -375,7 +381,7 @@ export function openPostModal(post_id) {
         // add post author meta
         popup_content += '<div class="modal-taxonomy-info post-author"><span class="info-item">' + publishpressCalendarParams.strings.post_author + '</span><span class="info-item">' + post.author_markup + '</span></div>';
         // add post status meta
-        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + publishpressCalendarParams.strings.post_status_label + '</span>';
+        popup_content += '<div class="modal-taxonomy-info post-modified"><span class="info-item">' + post.status_field_label + '</span>';
         popup_content += '<span class="info-item">';
         if (can_edit_post) {
             popup_content += '<select class="pp-modal-form-post-status">';

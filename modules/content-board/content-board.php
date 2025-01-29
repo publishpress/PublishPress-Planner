@@ -437,6 +437,10 @@ class PP_Content_Board extends PP_Module
          */
         $this->filters = apply_filters('publishpress_content_board_filters', $filters);
 
+		// @todo: see if this can be removed
+        global $pp_post_type_status_options;
+        $pp_post_type_status_options= [];
+
         $this->form_columns = $this->get_content_board_form_columns();
         $this->form_column_list = array_merge(...array_values(array_column($this->form_columns, 'columns')));
 

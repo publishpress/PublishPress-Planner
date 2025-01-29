@@ -68,10 +68,14 @@ jQuery(document).ready(function ($) {
     });
 
     $('#pp-content-filters select.calendar-weeks-filter').pp_select2();
-    $('#pp-content-filters select#post_status').pp_select2();
+    $('#pp-content-filters select#post_status').pp_select2({width: "190px"});
+    $('#pp-content-filters select#revision_status').pp_select2({width: "190px"});
     $('#pp-content-filters select#post_type').pp_select2();
     $('#pp-content-filters select.pp-custom-select2').pp_select2();
     
+    $(document).on('click', 'div.pp-show-revision-btn', function(e) {
+        $('div.pp-content-calendar-filters button.revision_status').toggle(!$(this).hasClass('active-filter'));
+    });
 
     $(document).on('click', '.pp-content-calendar-filters .co-filter, .pp-content-calendar-manage .co-filter, .board-title-content .co-filter', function (e) {
         e.preventDefault();
