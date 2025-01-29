@@ -1156,7 +1156,7 @@ if (!class_exists('PP_Module')) {
                 );
             }
 
-            return $item_actions;
+            return apply_filters('publishpress_item_action_links', $item_actions, $post, $can_edit_post);
         }
 
         public function get_author_markup($post, $can_edit_post) {

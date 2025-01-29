@@ -574,13 +574,6 @@ class PP_Content_Overview extends PP_Module
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
 
-        if (isset($user_filters['post_status'])) {
-            $user_filters['revision_status'] = $user_filters['post_status'];
-            $user_filters['revision_status'] = __('Revision Status', 'publishpress');
-        } else {
-            unset($user_filters['revision_status']);
-        }
-
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
 
         $pp_content_overview_user_filters = $user_filters;
@@ -850,28 +843,9 @@ class PP_Content_Overview extends PP_Module
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
             'post_status' => esc_html__('Status', 'publishpress'),
-            'revision_status' => esc_html__('Revision Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'),
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
-
-        if (isset($datas['content_overview_filters']['post_status'])) {
-            $datas['content_overview_filters']['revision_status'] = esc_html__('Revision Status', 'publishpress');
-        }
-        
-        if (isset($content_overview_custom_filters['post_status'])) {
-            $content_overview_custom_filters['revision_status'] = esc_html__('Revision Status', 'publishpress');
-        }
-
-        if (!function_exists('rvy_in_revision_workflow')) {
-            if (isset($datas['content_overview_filters']) && is_array($datas['content_overview_filters'])) {
-                unset($datas['content_overview_filters']['revision_status']);
-            }
-
-            if (is_array($content_overview_custom_filters)) {
-                unset($content_overview_custom_filters['revision_status']);
-            }
-        }
 
         $datas['content_overview_custom_filters'] = is_array($content_overview_custom_filters) ? $content_overview_custom_filters : [];
 

@@ -14,6 +14,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
 
         public static function content_calendar_filter_options($args)
         {
+            $args = apply_filters('publishpress_calendar_filter_options_args', $args);
+
             $select_id                  = $args['select_id'];
             $select_name                = $args['select_name'];
             $filters                    = $args['user_filters'];
@@ -24,28 +26,8 @@ if (! class_exists('PP_Calendar_Utilities')) {
             $form_filter_list           = $args['form_filter_list'];
             $all_filters                = $args['all_filters'];
             $operator_labels            = $args['operator_labels'];
-            
-            switch ($select_id) {
-                case 'post_status':
-                case 'revision_status':
-                    if (function_exists('rvy_revision_statuses')) {
-                        if (class_exists('PublishPress_Statuses') && defined('PUBLISHPRESS_STATUSES_PRO_VERSION')) {
-                            $revision_statuses = \PublishPress_Statuses::instance()->getPostStatuses(['for_revision' => true], 'object');
-                        } else {
-                            $revision_statuses = rvy_revision_statuses(['output' => 'object']);
-                        }
-                    } else {
-                        $revision_statuses = [];
-                    }
 
-                    if ($revision_statuses) {
-                        foreach ($post_statuses as $k => $status_obj) {
-                            if (in_array($status_obj->slug, array_keys($revision_statuses))) {
-                                unset($post_statuses[$k]);
-                            }
-                        }
-                    }
-            }
+            $revision_statuses          = (!empty($args['revision_statuses'])) ? $args['revision_statuses'] : [];
 
             if (array_key_exists($select_id, $terms_options)) {
                 $select_id = 'metadata_key';
@@ -88,27 +70,6 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                     $post_status->slug,
                                     $filters['post_status']
-                                ) . ">" . esc_html($post_status->label) . "</option>";
-                        }
-                        ?>
-                    </select>
-                    <?php
-                    break;
-    
-                case 'revision_status':
-                    $filter_label   = esc_html__('Revision Status', 'publishpress');
-                    ?>
-                    <select id="revision_status" name="revision_status"><!-- Status selectors -->
-                        <option value=""><?php
-                            _e('All statuses', 'publishpress'); ?></option>
-                        <?php
-                        foreach ($revision_statuses as $post_status) {
-                            if ($post_status->name == $filters['post_status']) {
-                                $selected_value = $post_status->label;
-                            }
-                            echo "<option value='" . esc_attr($post_status->name) . "' " . selected(
-                                    $post_status->name,
-                                    $filters['revision_status']
                                 ) . ">" . esc_html($post_status->label) . "</option>";
                         }
                         ?>
@@ -391,7 +352,13 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     break;
     
                 default:
-                    if (array_key_exists($select_name, $form_filter_list)) {
+                    if ($filter_vars = apply_filters('publishpress_calendar_custom_filter', false, $select_id, $args)) {
+                        $filter_vars = (array) $filter_vars;
+
+                        $filter_label = (isset($filter_vars['filter_label'])) ? $filter_vars['filter_label'] : '';
+                        $selected_value = (isset($filter_vars['selected_value'])) ? $filter_vars['selected_value'] : '';
+
+                    } elseif (array_key_exists($select_name, $form_filter_list)) {
                         $selected_value_meta = isset($filters[$select_name]) ? sanitize_text_field($filters[$select_name]) : '';
                         $filter_label   = $all_filters[$select_name];
                         $selected_value = $selected_value_meta;
@@ -553,26 +520,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                     </div>
                     <?php 
                     
-                    // force Revision Status selector to display right after Post Status
-                    if (isset($calendar_filters['revision_status'])) {
-                        $revision_status_filter = $calendar_filters['revision_status'];
-
-                        $_calendar_filters = [];
-
-                        foreach ($calendar_filters as $select_id => $filter) {
-                            if ('revision_status' == $select_id) {
-                                continue;
-                            }
-
-                            $_calendar_filters[$select_id] = $filter;
-
-                            if ('post_status' == $select_id) {
-                                $_calendar_filters['revision_status'] = $revision_status_filter;
-                            }
-                        }
-
-                        $calendar_filters = $_calendar_filters;
-                    }
+                    $calendar_filters = apply_filters('publishpress_calendar_get_filters', $calendar_filters, $args);
 
                     foreach ($calendar_filters as $select_id => $select_name) {
                         $modal_id++;

@@ -769,31 +769,29 @@ if (! class_exists('PP_Calendar_Methods')) {
                 wp_send_json([], 404);
             }
 
-            $fields = [
-                'title' => [
-                    'label' => __('Title', 'publishpress'),
-                    'value' => null,
-                    'type' => 'text',
-                ],
-                'status' => [
-                    'label' => __('Post Status', 'publishpress'),
-                    'value' => 'draft',
-                    'type' => 'status',
-                    'options' => $post_status_options
-                ],
-                'revision_status' => [
-                    'label' => __('Revision Status', 'publishpress'),
-                    'value' => 'draft',
-                    'type' => 'status',
-                    'options' => $post_status_options
-                ],
-                'time' => [
-                    'label' => __('Publish Time', 'publishpress'),
-                    'value' => null,
-                    'type' => 'time',
-                    'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
-                ]
-            ];
+            $fields = apply_filters(
+                'publishpress_calendar_post_type_fields', 
+                [
+                    'title' => [
+                        'label' => __('Title', 'publishpress'),
+                        'value' => null,
+                        'type' => 'text',
+                    ],
+                    'status' => [
+                        'label' => __('Post Status', 'publishpress'),
+                        'value' => 'draft',
+                        'type' => 'status',
+                        'options' => $post_status_options
+                    ],
+                    'time' => [
+                        'label' => __('Publish Time', 'publishpress'),
+                        'value' => null,
+                        'type' => 'time',
+                        'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
+                    ]
+                ], 
+                $post_status_options
+            );
 
             if (current_user_can($postTypeObject->cap->edit_others_posts)) {
                 $fields['authors'] = [
@@ -1332,7 +1330,7 @@ if (! class_exists('PP_Calendar_Methods')) {
              *
              * @return array
              */
-            $filters = apply_filters('publishpress_content_calendar_filters', $filters);
+            $filters = apply_filters('publishpress_content_calendar_filters', $filters, 'get_calendar_data');
 
             $enabled_filters = array_keys($filters);
             $editorial_metadata = $method_args['terms_options'];
@@ -1542,6 +1540,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
+
             $post_results = new WP_Query($args);
 
             $posts = [];

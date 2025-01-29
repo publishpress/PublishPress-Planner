@@ -722,14 +722,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return array
              */
-            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
-
-            if (isset($this->filters['post_status'])) {
-                $this->filters['revision_status'] = $this->filters['post_status'];
-                $this->filters['revision_status'] = __('Revision Status', 'publishpress');
-            } else {
-                unset($this->filters['revision_status']);
-            }
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters, 'update_user_filters');
 
             $this->filters = array_merge([
                 'weeks'         => __('Weeks', 'publishpress'),
@@ -983,23 +976,9 @@ if (! class_exists('PP_Calendar')) {
     
             $datas['content_calendar_filters'] = is_array($content_calendar_filters) ? $content_calendar_filters : [
                 'post_status' => esc_html__('Status', 'publishpress'),
-                'revision_status' => esc_html__('Revision Status', 'publishpress'),
                 'author' => esc_html__('Author', 'publishpress'), 
                 'cpt' => esc_html__('Post Type', 'publishpress')
             ];
-
-            if (isset($datas['content_calendar_filters']['post_status'])) {
-                $datas['content_calendar_filters']['revision_status'] = esc_html__('Revision Status', 'publishpress');
-            }
-            
-            if (isset($content_calendar_custom_filters['post_status'])) {
-                $content_calendar_custom_filters['revision_status'] = esc_html__('Revision Status', 'publishpress');
-            }
-
-            if (!function_exists('rvy_in_revision_workflow')) {
-                unset($datas['content_calendar_filters']['revision_status']);
-                unset($content_calendar_custom_filters['revision_status']);
-            }
 
             $datas['content_calendar_custom_filters'] = is_array($content_calendar_custom_filters) ? $content_calendar_custom_filters : [];
     
@@ -1008,7 +987,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return $datas
              */
-            $datas = apply_filters('publishpress_content_calendar_datas', $datas);
+            $datas = apply_filters('publishpress_content_calendar_datas', $datas, compact('content_calendar_filters', 'content_calendar_custom_filters'));
     
             $this->content_calendar_datas = $datas;
     
@@ -1059,7 +1038,7 @@ if (! class_exists('PP_Calendar')) {
              *
              * @return array
              */
-            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters);
+            $this->filters = apply_filters('publishpress_content_calendar_filters', $filters, 'render_admin_page');
     
             $this->form_filters = $this->get_content_calendar_form_filters();
             $this->form_filter_list = array_merge(...array_values(array_column($this->form_filters, 'filters')));
