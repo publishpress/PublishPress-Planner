@@ -830,6 +830,7 @@ class PP_Content_Overview extends PP_Module
         $datas['content_overview_columns'] = is_array($content_overview_columns) ? $content_overview_columns :
         [
             'post_status' => esc_html__('Status', 'publishpress'),
+            'revision_status' => esc_html__('Revision Status', 'publishpress'),
             'post_type' => esc_html__('Post Type', 'publishpress'),
             'post_author' => esc_html__('Author', 'publishpress'),
             'post_date' => esc_html__('Post Date', 'publishpress'),
@@ -844,6 +845,7 @@ class PP_Content_Overview extends PP_Module
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
             'post_status' => esc_html__('Status', 'publishpress'),
+            'revision_status' => esc_html__('Revision Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'),
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
