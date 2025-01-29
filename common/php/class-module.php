@@ -1055,7 +1055,7 @@ if (!class_exists('PP_Module')) {
             $taxonomies = get_object_taxonomies($post->post_type, 'object');
             foreach ($taxonomies as $taxonomy => $tax_object ) {
                 if (!empty($tax_object->public)
-                    && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
+                    && !in_array($taxonomy, ['author', 'post_format', 'post_status', 'post_status_core_wp_pp', 'post_visibility_pp', 'pp_revision_status'])) {
                     $terms = get_the_terms($post->ID, $taxonomy);
                     //add post content to localized data
                     $localized_post_data['taxonomies'][$post->ID][$taxonomy] = [
