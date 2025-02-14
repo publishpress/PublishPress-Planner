@@ -48,6 +48,7 @@
         setupFieldFilters('event_taxonomy_update');
         setupFieldFilters('user');
         setupFieldFilters('role');
+        setupFieldFilters('group');
 
         function getEditor() {
             var editor = tinymce.activeEditor;
