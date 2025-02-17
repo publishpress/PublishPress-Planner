@@ -98,7 +98,7 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                                     'group'    => self::META_VALUE,
                                     'subgroup' => sprintf(
                                         __('role:%s', 'publishpress'),
-                                        $role
+                                        ' ' . $role
                                     )
                                 ];
                             }
