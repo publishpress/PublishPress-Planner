@@ -68,6 +68,10 @@ class Group extends Simple_Checkbox implements Receiver_Interface
             $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['include_metagroups' => false]);
         }
 
+        if (empty($groups)) {
+            return [];
+        }
+
         $selected_groups = (array)$this->get_metadata(static::META_LIST_KEY);
         if (empty($selected_groups)) {
             $selected_groups = [];
