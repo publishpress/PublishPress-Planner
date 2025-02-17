@@ -62,17 +62,20 @@ class Group extends Simple_Checkbox implements Receiver_Interface
      */
     public function filter_workflow_metabox_context($template_context)
     {
-        // Get Roles
-        $groups = get_editable_roles();
+        $groups = [];
+
+        if (class_exists('PublishPress\Permissions\API')) {
+            $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['include_metagroups' => false]);
+        }
 
         $selected_groups = (array)$this->get_metadata(static::META_LIST_KEY);
         if (empty($selected_groups)) {
             $selected_groups = [];
         }
-        foreach ($groups as $group => &$data) {
-            $data = (object)$group;
-            if (in_array($group, $selected_groups)) {
-                $data->selected = true;
+        
+        foreach (array_keys($groups) as $group_id) {
+            if (in_array($group_id, $selected_groups)) {
+                $groups[$group_id]->selected = true;
             }
         }
 
@@ -130,24 +133,17 @@ class Group extends Simple_Checkbox implements Receiver_Interface
     {
         $users = [];
 
-        if (!empty($groups)) {
-            foreach ((array)$groups as $role_name) {
-                $role_users = get_users(
-                    [
-                        'role' => $role_name,
-                    ]
-                );
-
-                if (!empty($role_users)) {
-                    foreach ($role_users as $user) {
-                        $users[] = [
-                            'receiver' => $user->ID,
-                            'group'    => self::META_VALUE,
-                            'subgroup' => sprintf(
-                                __('role:%s', 'publishpress'),
-                                $role_name
-                            )
-                        ];
+        if (!empty($groups) && class_exists('PublishPress\Permissions\API')) {
+            foreach ((array)$groups as $group_id) {
+                if ($group_users = \PublishPress\Permissions\API::getGroupMembers($group_id, 'pp_group')) {
+                    if ($group = \PublishPress\Permissions\API::getGroup($group_id)) {
+                        foreach ($group_users as $user) {
+                            $users[] = [
+                                'receiver' => $user->ID,
+                                'group'    => self::META_VALUE,
+                                'subgroup' => "{$group_id}: $group->name"
+                            ];
+                        }
                     }
                 }
             }

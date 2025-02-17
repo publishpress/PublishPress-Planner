@@ -205,17 +205,6 @@
                 }
             }
 
-            // Check if any role was selected (if checked)
-            if ($('#publishpress_notif_group:checked').length > 0) {
-                if ($('#publishpress_notif_groups').val() == null) {
-                    set_validation_status('receiver', false);
-
-                    messages.push(workflowFormData.messages['selectAGroup']);
-                } else {
-                    set_validation_status('receiver', true);
-                }
-            }
-
             // Check the Content section
             if ($('#publishpress_notification_content_main_subject').val().trim() == ''
                 || getEditorContent() === '') {
