@@ -143,10 +143,7 @@ class Role extends Simple_Checkbox implements Receiver_Interface
                         $users[] = [
                             'receiver' => $user->ID,
                             'group'    => self::META_VALUE,
-                            'subgroup' => sprintf(
-                                __('role:%s', 'publishpress'),
-                                $role_name
-                            )
+                            'subgroup' => $role_name
                         ];
                     }
                 }
