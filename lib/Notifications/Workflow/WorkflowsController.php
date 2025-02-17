@@ -156,8 +156,14 @@ class WorkflowsController
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Author',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Role',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Group',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Follower',
         ];
+
+        if (!defined('PRESSPERMIT_VERSION')) {
+            $classes_receiver = array_diff($classes_receiver, ['\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Group']);
+        }
+
         /**
          * Filters the list of classes to define workflow "who" steps.
          *

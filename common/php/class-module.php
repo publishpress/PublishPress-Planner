@@ -736,6 +736,12 @@ if (!class_exists('PP_Module')) {
              * @param int $post_id
              */
             $roles = apply_filters('publishpress_notification_roles_meta_box', get_editable_roles(), $post_id);
+
+            $groups = [];
+
+            if (class_exists('PublishPress\Permissions\API')) {
+                $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['include_metagroups' => false]);
+            }
             ?>
 
             <?php if (!empty($users) || !empty($roles) || !empty($emails)) : ?>
@@ -748,6 +754,17 @@ if (!class_exists('PP_Module')) {
                                     'Role',
                                     'publishpress'
                                 ); ?>: <?php echo $data['name']; ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endif; ?>
+                <?php if (!empty($groups)) : ?>
+                    <optgroup label="<?php echo esc_attr__('Groups', 'publishpress'); ?>">
+                        <?php foreach ($groups as $group_id => $group) : ?>
+                            <?php $attrSelected = (in_array("group-$group_id", $selected)) ? 'selected="selected"' : ''; ?>
+                            <option value="group-<?php echo esc_attr($group_id); ?>" <?php echo $attrSelected; ?>><?php echo __(
+                                    'Group',
+                                    'publishpress'
+                                ); ?>: <?php echo $group->name; ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 <?php endif; ?>

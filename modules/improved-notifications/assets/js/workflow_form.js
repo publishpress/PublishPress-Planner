@@ -48,6 +48,7 @@
         setupFieldFilters('event_taxonomy_update');
         setupFieldFilters('user');
         setupFieldFilters('role');
+        setupFieldFilters('group');
 
         function getEditor() {
             var editor = tinymce.activeEditor;
@@ -203,7 +204,6 @@
                     set_validation_status('receiver', true);
                 }
             }
-
 
             // Check the Content section
             if ($('#publishpress_notification_content_main_subject').val().trim() == ''

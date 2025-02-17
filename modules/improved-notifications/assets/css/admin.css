@@ -111,7 +111,9 @@
 }
 
 #psppno-workflow-metabox-section-receiver .publishpress_notif_user_list,
-#psppno-workflow-metabox-section-receiver .publishpress_notif_role_list {
+#psppno-workflow-metabox-section-receiver .publishpress_notif_role_list,
+#psppno-workflow-metabox-section-receiver .publishpress_notif_group_list
+{
     margin-bottom: 9px;
 }
 
