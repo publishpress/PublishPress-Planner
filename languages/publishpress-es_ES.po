@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Planner: Organize and Schedule "
 "Your WordPress Content - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2025-01-21 10:31+0000\n"
-"PO-Revision-Date: 2025-01-22 12:22+0100\n"
+"POT-Creation-Date: 2025-01-29 19:29+0000\n"
+"PO-Revision-Date: 2025-01-30 18:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Spain)\n"
 "Language: es_ES\n"
@@ -84,7 +84,7 @@ msgstr "%1$s en %2$s"
 msgid "%1$s last updated on %2$s"
 msgstr "%1$s actualizado por última vez el %2$s"
 
-#: modules/calendar/library/calendar-utilities.php:480
+#: modules/calendar/library/calendar-utilities.php:503
 #, php-format
 msgid "%1s weeks"
 msgstr "%1s semanas"
@@ -101,22 +101,22 @@ msgid_plural "%d Users"
 msgstr[0] "%d usuario"
 msgstr[1] "%d usuarios"
 
-#: modules/calendar/library/calendar-methods.php:1148
-#: modules/calendar/library/calendar-utilities.php:490
+#: modules/calendar/library/calendar-methods.php:1241
+#: modules/calendar/library/calendar-utilities.php:513
 msgid "%d week"
 msgstr "%d semana"
 
-#: modules/calendar/library/calendar-methods.php:1149
+#: modules/calendar/library/calendar-methods.php:1242
 msgid "%d weeks"
 msgstr "%d semanas"
 
-#: modules/content-overview/content-overview.php:756
+#: modules/content-overview/content-overview.php:757
 #: modules/content-board/library/content-board-methods.php:253
 #, php-format
 msgid "%s could not be created"
 msgstr "%s no pudo ser creada"
 
-#: modules/content-overview/content-overview.php:753
+#: modules/content-overview/content-overview.php:754
 #: modules/content-board/library/content-board-methods.php:250
 #, php-format
 msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
@@ -129,6 +129,11 @@ msgid "%s notification found."
 msgid_plural "%s notifications found."
 msgstr[0] "%s aviso encontrado."
 msgstr[1] "%s avisos encontrados."
+
+#: modules/calendar/library/calendar-utilities.php:54
+#: modules/content-overview/library/content-overview-utilities.php:710
+msgid "(Hide all)"
+msgstr "(Ocultar todo)"
 
 #: common/php/util.php:46
 msgid "(no title)"
@@ -147,7 +152,7 @@ msgstr "-- Selecciona %s --"
 msgid "-- Select a user --"
 msgstr "-- Selecciona un usuario --"
 
-#: modules/calendar/calendar.php:264
+#: modules/calendar/calendar.php:265
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://"
 "publishpress.com/features/calendar/\">Calendar Documentation</a></p><p><a "
@@ -251,7 +256,7 @@ msgstr ""
 "activados, los avisos se pueden enviar cuando una publicación cambia de "
 "estado o un editor o escritor deja un comentario editorial.</p>"
 
-#: modules/calendar/calendar.php:259
+#: modules/calendar/calendar.php:260
 msgid ""
 "<p>The calendar is a convenient week-by-week or month-by-month view into "
 "your content. Quickly see which stories are on track to being published on "
@@ -368,7 +373,7 @@ msgstr "Añadir columna"
 msgid "Add Comment"
 msgstr "Añadir comentario"
 
-#: modules/calendar/library/calendar-methods.php:1120
+#: modules/calendar/library/calendar-methods.php:1213
 #, php-format
 msgid "Add content for %s"
 msgstr "Añadir contenido para %s"
@@ -379,13 +384,13 @@ msgstr "Añadir contenido para %s"
 msgid "Add editorial comment: %s"
 msgstr "Añadir comentario editorial: %s"
 
-#: modules/calendar/library/calendar-utilities.php:592
+#: modules/calendar/library/calendar-utilities.php:618
 #: modules/content-board/library/content-board-utilities.php:399
 #: modules/content-overview/library/content-overview-utilities.php:207
 msgid "Add Filter"
 msgstr "Añadir filtro"
 
-#: modules/calendar/library/calendar-utilities.php:575
+#: modules/calendar/library/calendar-utilities.php:601
 #: modules/content-board/library/content-board-utilities.php:236
 #: modules/content-board/library/content-board-utilities.php:253
 #: modules/content-board/library/content-board-utilities.php:382
@@ -409,7 +414,7 @@ msgstr "Añadir nuevos campos editoriales"
 msgid "Add New Editorial fields term"
 msgstr "Añadir nuevo término de campos editoriales"
 
-#: publishpress.php:1397
+#: publishpress.php:1410
 msgid "Add New Notification"
 msgstr "Añadir nuevo aviso"
 
@@ -450,12 +455,12 @@ msgstr "Avisos avanzados"
 msgid "All"
 msgstr "Todo"
 
-#: modules/calendar/library/calendar-utilities.php:73
-#: modules/calendar/library/calendar-utilities.php:76
+#: modules/calendar/library/calendar-utilities.php:90
+#: modules/calendar/library/calendar-utilities.php:93
 #: modules/content-board/library/content-board-utilities.php:624
 #: modules/content-board/library/content-board-utilities.php:627
-#: modules/content-overview/library/content-overview-utilities.php:729
-#: modules/content-overview/library/content-overview-utilities.php:732
+#: modules/content-overview/library/content-overview-utilities.php:746
+#: modules/content-overview/library/content-overview-utilities.php:749
 #, php-format
 msgid "All %s"
 msgstr "Todas %s"
@@ -464,17 +469,17 @@ msgstr "Todas %s"
 msgid "All Actions"
 msgstr "Todas las acciones"
 
-#: modules/calendar/library/calendar-methods.php:1146
-#: modules/calendar/library/calendar-utilities.php:100
-#: modules/calendar/library/calendar-utilities.php:103
+#: modules/calendar/library/calendar-methods.php:1239
+#: modules/calendar/library/calendar-utilities.php:117
+#: modules/calendar/library/calendar-utilities.php:120
 #: modules/content-board/library/content-board-utilities.php:649
 #: modules/content-board/library/content-board-utilities.php:652
-#: modules/content-overview/library/content-overview-utilities.php:754
-#: modules/content-overview/library/content-overview-utilities.php:757
+#: modules/content-overview/library/content-overview-utilities.php:771
+#: modules/content-overview/library/content-overview-utilities.php:774
 msgid "All authors"
 msgstr "Todos los autores"
 
-#: modules/calendar/library/calendar-methods.php:1144
+#: modules/calendar/library/calendar-methods.php:1237
 msgid "All categories"
 msgstr "Todas las categorías"
 
@@ -511,9 +516,9 @@ msgstr "Todos los avisos de usuarios"
 msgid "All options value and labels are required."
 msgstr "Todas las opciones de valor y las etiquetas son obligatorios."
 
-#: modules/calendar/library/calendar-utilities.php:133
+#: modules/calendar/library/calendar-utilities.php:150
 #: modules/content-board/library/content-board-utilities.php:681
-#: modules/content-overview/library/content-overview-utilities.php:786
+#: modules/content-overview/library/content-overview-utilities.php:803
 msgid "All post types"
 msgstr "Todos los tipos de contenido"
 
@@ -523,7 +528,7 @@ msgstr "Todos los tipos de contenido"
 msgid "All Posts"
 msgstr "Todas las entradas"
 
-#: modules/calendar/library/calendar-methods.php:408
+#: modules/calendar/library/calendar-methods.php:479
 msgid "All posts"
 msgstr "Todas las entradas"
 
@@ -531,9 +536,9 @@ msgstr "Todas las entradas"
 msgid "All Receivers"
 msgstr "Todos los destinatarios"
 
-#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:370
 #: modules/content-board/library/content-board-utilities.php:895
-#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1023
 msgid "All status"
 msgstr "Todos los estados"
 
@@ -541,18 +546,18 @@ msgstr "Todos los estados"
 msgid "All Statuses"
 msgstr "Todos los estados"
 
-#: modules/calendar/library/calendar-methods.php:1143
-#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-methods.php:1236
+#: modules/calendar/library/calendar-utilities.php:51
 #: modules/content-board/library/content-board-utilities.php:598
-#: modules/content-overview/library/content-overview-utilities.php:703
+#: modules/content-overview/library/content-overview-utilities.php:707
 msgid "All statuses"
 msgstr "Todos los estados"
 
-#: modules/calendar/library/calendar-methods.php:1145
+#: modules/calendar/library/calendar-methods.php:1238
 msgid "All tags"
 msgstr "Todas las etiquetas"
 
-#: modules/calendar/library/calendar-methods.php:1147
+#: modules/calendar/library/calendar-methods.php:1240
 msgid "All types"
 msgstr "Todos los tipos"
 
@@ -565,7 +570,7 @@ msgstr "Todos los usuarios"
 msgid "All Workflows"
 msgstr "Todos los flujos de trabajo"
 
-#: modules/calendar/library/calendar-methods.php:96
+#: modules/calendar/library/calendar-methods.php:111
 msgid "Allow public access to subscriptions in iCal or Google Calendar"
 msgstr ""
 "Permite el acceso público a las suscripciones en iCal o Google Calendar"
@@ -578,21 +583,21 @@ msgstr "Avisar siempre al autor del contenido:"
 msgid "Always notify users who have edited the content:"
 msgstr "Avisar siempre a los usuarios que han editado el contenido:"
 
-#: modules/calendar/library/calendar-methods.php:144
+#: modules/calendar/library/calendar-methods.php:159
 msgid "Always show complete post titles"
 msgstr "Muestra siempre los títulos completos de las entradas"
 
-#: modules/content-board/content-board.php:843
+#: modules/content-board/content-board.php:847
 #: modules/content-board/library/content-board-methods.php:39
 #: modules/content-board/library/content-board-methods.php:107
 msgid "An error occured"
 msgstr "Ha ocurrido un error"
 
-#: modules/content-board/content-board.php:1055
-#: modules/calendar/library/calendar-utilities.php:181
-#: modules/calendar/library/calendar-utilities.php:292
-#: modules/calendar/library/calendar-utilities.php:330
-#: modules/calendar/library/calendar-utilities.php:410
+#: modules/content-board/content-board.php:1059
+#: modules/calendar/library/calendar-utilities.php:198
+#: modules/calendar/library/calendar-utilities.php:309
+#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:433
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -601,14 +606,14 @@ msgstr "Ha ocurrido un error"
 #: modules/content-board/library/content-board-utilities.php:958
 #: modules/content-overview/library/content-overview-utilities.php:653
 #: modules/content-overview/library/content-overview-utilities.php:663
-#: modules/content-overview/library/content-overview-utilities.php:834
-#: modules/content-overview/library/content-overview-utilities.php:945
-#: modules/content-overview/library/content-overview-utilities.php:983
-#: modules/content-overview/library/content-overview-utilities.php:1063
+#: modules/content-overview/library/content-overview-utilities.php:851
+#: modules/content-overview/library/content-overview-utilities.php:962
+#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1086
 msgid "Apply"
 msgstr "Aplicar"
 
-#: modules/calendar/library/calendar-utilities.php:676
+#: modules/calendar/library/calendar-utilities.php:702
 #: modules/content-board/library/content-board-utilities.php:71
 #: modules/content-board/library/content-board-utilities.php:337
 #: modules/content-board/library/content-board-utilities.php:483
@@ -618,7 +623,7 @@ msgstr "Aplicar"
 msgid "Apply Changes"
 msgstr "Aplicar los cambios"
 
-#: modules/calendar/library/calendar-methods.php:1134
+#: modules/calendar/library/calendar-methods.php:1227
 msgid "Apr"
 msgstr "Abr"
 
@@ -643,7 +648,7 @@ msgstr "Avisos asíncronos"
 msgid "asynchronous"
 msgstr "asíncrono"
 
-#: modules/calendar/library/calendar-methods.php:164
+#: modules/calendar/library/calendar-methods.php:179
 msgid "At least one post type must be selected"
 msgstr "Se debe seleccionar por lo menos un tipo de contenido"
 
@@ -651,29 +656,29 @@ msgstr "Se debe seleccionar por lo menos un tipo de contenido"
 msgid "Attach file"
 msgstr "Adjuntar archivo"
 
-#: modules/calendar/library/calendar-methods.php:1138
+#: modules/calendar/library/calendar-methods.php:1231
 msgid "Aug"
 msgstr "Ago"
 
-#: modules/calendar/calendar.php:980 modules/calendar/calendar.php:1201
-#: modules/content-board/content-board.php:695
-#: modules/content-board/content-board.php:706
-#: modules/content-board/content-board.php:749
-#: modules/content-board/content-board.php:808
-#: modules/content-overview/content-overview.php:833
-#: modules/content-overview/content-overview.php:846
-#: modules/content-overview/content-overview.php:890
-#: modules/content-overview/content-overview.php:951
-#: modules/content-overview/content-overview.php:1213
-#: modules/calendar/library/calendar-methods.php:787
-#: modules/calendar/library/calendar-methods.php:1162
-#: modules/calendar/library/calendar-utilities.php:98
-#: modules/calendar/library/calendar-utilities.php:1048
-#: modules/calendar/library/calendar-utilities.php:1163
+#: modules/calendar/calendar.php:981 modules/calendar/calendar.php:1203
+#: modules/content-board/content-board.php:699
+#: modules/content-board/content-board.php:710
+#: modules/content-board/content-board.php:753
+#: modules/content-board/content-board.php:812
+#: modules/content-overview/content-overview.php:835
+#: modules/content-overview/content-overview.php:849
+#: modules/content-overview/content-overview.php:894
+#: modules/content-overview/content-overview.php:956
+#: modules/content-overview/content-overview.php:1218
+#: modules/calendar/library/calendar-methods.php:875
+#: modules/calendar/library/calendar-methods.php:1255
+#: modules/calendar/library/calendar-utilities.php:115
+#: modules/calendar/library/calendar-utilities.php:1075
+#: modules/calendar/library/calendar-utilities.php:1191
 #: modules/content-board/library/content-board-utilities.php:647
 #: modules/content-board/library/content-board-utilities.php:1180
 #: modules/content-overview/library/content-overview-utilities.php:506
-#: modules/content-overview/library/content-overview-utilities.php:752
+#: modules/content-overview/library/content-overview-utilities.php:769
 #: modules/editorial-comments/library/EditorialCommentsTable.php:228
 msgid "Author"
 msgstr "Autor"
@@ -743,14 +748,14 @@ msgstr "Cancelar"
 msgid "Card Data updated successfully."
 msgstr "Datos de la tarjeta actualizados correctamente."
 
-#: modules/calendar/library/calendar-methods.php:797
+#: modules/calendar/library/calendar-methods.php:885
 #: modules/content-board/library/content-board-utilities.php:1190
 #: modules/content-overview/library/content-overview-utilities.php:516
 #: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
 msgid "Categories"
 msgstr "Categorías"
 
-#: modules/calendar/library/calendar-utilities.php:1053
+#: modules/calendar/library/calendar-utilities.php:1080
 #: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
 msgid "Category"
 msgid_plural "Categories"
@@ -781,9 +786,9 @@ msgstr "¡Haciendo trampas! ¿eh?"
 msgid "Checkbox"
 msgstr "Casilla de verificación"
 
-#: modules/calendar/library/calendar-utilities.php:312
+#: modules/calendar/library/calendar-utilities.php:329
 #: modules/content-board/library/content-board-utilities.php:860
-#: modules/content-overview/library/content-overview-utilities.php:965
+#: modules/content-overview/library/content-overview-utilities.php:982
 msgid "Checked"
 msgstr "Seleccionado"
 
@@ -813,26 +818,26 @@ msgstr "Elige los canales a los que cada flujo de trabajo enviará avisos:"
 msgid "Click here to read more about shortcode options..."
 msgstr "Haz clic aquí para leer más acerca de las opciones de shortcode..."
 
-#: modules/calendar/library/calendar-utilities.php:1293
+#: modules/calendar/library/calendar-utilities.php:1321
 msgid "Click here to subscribe in iCal or Google Calendar"
 msgstr "Haz clic aquí para suscribirte en iCal o Google Calendar"
 
-#: modules/content-board/content-board.php:740
+#: modules/content-board/content-board.php:744
 msgid "Click the \"Add New\" button to create new card data."
 msgstr ""
 "Haz clic en el botón «Añadir nuevo» para crear nuevos datos de tarjeta."
 
-#: modules/content-overview/content-overview.php:880
+#: modules/content-overview/content-overview.php:884
 msgid "Click the \"Add New\" button to create new columns."
 msgstr "Haz clic en el botón «Añadir nuevo» para crear nuevas columnas."
 
-#: modules/content-board/content-board.php:799
-#: modules/content-overview/content-overview.php:942
-#: modules/calendar/library/calendar-utilities.php:1154
+#: modules/content-board/content-board.php:803
+#: modules/content-overview/content-overview.php:946
+#: modules/calendar/library/calendar-utilities.php:1181
 msgid "Click the \"Add New\" button to create new filters."
 msgstr "Haz clic en el botón «Añadir nuevo» para crear nuevos filtros."
 
-#: modules/calendar/library/calendar-methods.php:1111
+#: modules/calendar/library/calendar-methods.php:1204
 msgid "Click to add"
 msgstr "Haz clic para añadir"
 
@@ -855,7 +860,7 @@ msgid "Click to stop being notified on updates for this post"
 msgstr ""
 "Haz clic para dejar de ser avisado sobre actualizaciones de este contenido"
 
-#: modules/calendar/library/calendar-methods.php:1116
+#: modules/calendar/library/calendar-methods.php:1209
 msgid "Close"
 msgstr "Cerrar"
 
@@ -863,7 +868,7 @@ msgstr "Cerrar"
 msgid "Column Title"
 msgstr "Título de la columna"
 
-#: modules/content-overview/content-overview.php:653
+#: modules/content-overview/content-overview.php:654
 msgid "Column updated successfully."
 msgstr "Columna actualizada correctamente."
 
@@ -893,7 +898,7 @@ msgid "Contact"
 msgstr "Contacto"
 
 #: modules/improved-notifications/improved-notifications.php:1098
-#: modules/calendar/library/calendar-methods.php:814
+#: modules/calendar/library/calendar-methods.php:902
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: lib/Notifications/Workflow/Step/Content/Main.php:29
@@ -907,8 +912,8 @@ msgstr "Contenido"
 msgid "Content Board"
 msgstr "Tablón de contenidos"
 
-#: modules/calendar/calendar.php:216 modules/calendar/calendar.php:414
-#: modules/calendar/calendar.php:431 modules/calendar/calendar.php:432
+#: modules/calendar/calendar.php:216 modules/calendar/calendar.php:415
+#: modules/calendar/calendar.php:432 modules/calendar/calendar.php:433
 msgid "Content Calendar"
 msgstr "Calendario de contenidos"
 
@@ -923,7 +928,7 @@ msgstr "Resumen del contenido"
 msgid "Content:"
 msgstr "Contenido:"
 
-#: modules/calendar/library/calendar-utilities.php:1287
+#: modules/calendar/library/calendar-utilities.php:1315
 msgid "Copy to the clipboard"
 msgstr "Copiar al portapapeles"
 
@@ -937,21 +942,21 @@ msgstr "Crear %s"
 msgid "Created on"
 msgstr "Creado el"
 
-#: modules/calendar/library/calendar-utilities.php:1210
+#: modules/calendar/library/calendar-utilities.php:1238
 msgid "Current week"
 msgstr "Semana actual"
 
-#: modules/content-overview/content-overview.php:879
+#: modules/content-overview/content-overview.php:883
 msgid "Custom Columns"
 msgstr "Columnas personalizadas"
 
-#: modules/content-board/content-board.php:798
-#: modules/content-overview/content-overview.php:941
-#: modules/calendar/library/calendar-utilities.php:1153
+#: modules/content-board/content-board.php:802
+#: modules/content-overview/content-overview.php:945
+#: modules/calendar/library/calendar-utilities.php:1180
 msgid "Custom filters"
 msgstr "Filtros personalizados"
 
-#: modules/content-board/content-board.php:739
+#: modules/content-board/content-board.php:743
 msgid "Custom Items"
 msgstr "Elementos personalizados"
 
@@ -963,7 +968,7 @@ msgstr "Personalizar los datos de la tarjeta"
 msgid "Customize Columns"
 msgstr "Personalizar columnas"
 
-#: modules/calendar/library/calendar-utilities.php:450
+#: modules/calendar/library/calendar-utilities.php:473
 #: modules/content-board/library/content-board-utilities.php:42
 #: modules/content-overview/library/content-overview-methods.php:273
 msgid "Customize Filters"
@@ -979,7 +984,7 @@ msgstr "Widgets de escritorio"
 
 #: modules/editorial-metadata/editorial-metadata.php:290
 #: lib/Notifications/Table/Notifications.php:158
-#: modules/calendar/library/calendar-utilities.php:1037
+#: modules/calendar/library/calendar-utilities.php:1064
 #: modules/content-board/library/content-board-utilities.php:116
 #: modules/content-overview/library/content-overview-methods.php:347
 #: modules/notifications-log/library/NotificationsLogTable.php:496
@@ -994,12 +999,12 @@ msgstr "Depuración"
 msgid "Debug data"
 msgstr "Datos de depuración"
 
-#: modules/calendar/library/calendar-methods.php:1142
+#: modules/calendar/library/calendar-methods.php:1235
 msgid "Dec"
 msgstr "Dic"
 
-#: modules/content-board/content-board.php:1045
-#: modules/content-board/content-board.php:1062
+#: modules/content-board/content-board.php:1049
+#: modules/content-board/content-board.php:1066
 msgid "Default Date"
 msgstr "Fecha por defecto"
 
@@ -1014,7 +1019,7 @@ msgstr "Canales de aviso por defecto:"
 msgid "Default option"
 msgstr "Opción por defecto"
 
-#: modules/calendar/library/calendar-methods.php:120
+#: modules/calendar/library/calendar-methods.php:135
 msgid "Default publish time for items created in the calendar"
 msgstr ""
 "Hora de publicación por defecto para elementos creados en el calendario"
@@ -1045,13 +1050,13 @@ msgstr "Borrar archivo"
 msgid "Description"
 msgstr "Descripción"
 
-#: lib/Legacy/Util.php:238
+#: lib/Legacy/Util.php:239
 msgid "Detailed documentation is also available on the plugin website."
 msgstr "También hay disponible documentación detallada en la web del plugin."
 
 #: modules/dashboard/dashboard.php:368 modules/dashboard/dashboard.php:391
 #: modules/dashboard/dashboard.php:425
-#: modules/calendar/library/calendar-methods.php:443
+#: modules/calendar/library/calendar-methods.php:527
 msgid "Disabled"
 msgstr "Desactivado"
 
@@ -1079,11 +1084,11 @@ msgstr "Nombre a mostrar"
 msgid "Documentation"
 msgstr "Documentación"
 
-#: modules/calendar/library/calendar-utilities.php:1280
+#: modules/calendar/library/calendar-utilities.php:1308
 msgid "Download .ics file"
 msgstr "Descargar archivo .ics"
 
-#: common/php/class-module.php:328
+#: common/php/class-module.php:332
 msgid "Draft"
 msgstr "Borrador"
 
@@ -1095,7 +1100,7 @@ msgstr "Arrastra para cambiar el orden de los datos de la tarjeta activada."
 msgid "Drag to change enabled columns order."
 msgstr "Arrastra para cambiar el orden de las columnas activadas."
 
-#: modules/calendar/library/calendar-utilities.php:635
+#: modules/calendar/library/calendar-utilities.php:661
 #: modules/content-board/library/content-board-utilities.php:442
 #: modules/content-overview/library/content-overview-utilities.php:250
 msgid "Drag to change enabled filters order."
@@ -1114,17 +1119,17 @@ msgstr "Selección desplegable"
 msgid "Duplicated notification threshold:"
 msgstr "Umbral para los avisos duplicados:"
 
-#: common/php/class-module.php:761
+#: common/php/class-module.php:765
 msgid "E-mails"
 msgstr "Correos electrónicos"
 
-#: modules/content-board/content-board.php:1174
-#: modules/content-board/content-board.php:1280
-#: modules/content-overview/content-overview.php:1215
-#: modules/content-overview/content-overview.php:1697
+#: modules/content-board/content-board.php:1178
+#: modules/content-board/content-board.php:1284
+#: modules/content-overview/content-overview.php:1220
+#: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:641
-#: modules/calendar/library/calendar-methods.php:1153
-#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-methods.php:1246
+#: modules/calendar/library/calendar-utilities.php:1097
 #: modules/editorial-metadata/library/editorial-metadata-list-table.php:159
 msgid "Edit"
 msgstr "Editar"
@@ -1143,7 +1148,7 @@ msgstr ""
 "usar PublishPress Planner, primero completa la migración de los datos de "
 "Edit Flow y luego desactiva Edit Flow."
 
-#: publishpress.php:1398
+#: publishpress.php:1411
 msgid "Edit Notification"
 msgstr "Editar aviso"
 
@@ -1159,8 +1164,8 @@ msgstr "Editar el aviso de perfil"
 msgid "Edit Notify User"
 msgstr "Editar el aviso de usuario"
 
-#: modules/content-board/content-board.php:1170
-#: modules/content-overview/content-overview.php:1693
+#: modules/content-board/content-board.php:1174
+#: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Editar esta publicación"
@@ -1182,15 +1187,15 @@ msgstr "Comentario editorial"
 msgid "Editorial Comments"
 msgstr "Comentarios editoriales"
 
-#: modules/content-board/content-board.php:756
-#: modules/content-board/content-board.php:816
-#: modules/content-overview/content-overview.php:899
-#: modules/content-overview/content-overview.php:959
+#: modules/content-board/content-board.php:760
+#: modules/content-board/content-board.php:820
+#: modules/content-overview/content-overview.php:903
+#: modules/content-overview/content-overview.php:964
 #: modules/editorial-metadata/editorial-metadata.php:95
 #: modules/editorial-metadata/editorial-metadata.php:511
 #: modules/editorial-metadata/editorial-metadata.php:1719
 #: modules/editorial-metadata/editorial-metadata.php:1720
-#: modules/calendar/library/calendar-utilities.php:1171
+#: modules/calendar/library/calendar-utilities.php:1199
 msgid "Editorial Fields"
 msgstr "Campos editoriales"
 
@@ -1224,11 +1229,11 @@ msgstr "Visibilidad de los campos editoriales cambiada."
 msgid "Editorial Notifications"
 msgstr "Avisos editoriales"
 
-#: modules/calendar/library/calendar-utilities.php:1260
+#: modules/calendar/library/calendar-utilities.php:1288
 msgid "Eight months"
 msgstr "Ocho meses"
 
-#: modules/calendar/library/calendar-utilities.php:1266
+#: modules/calendar/library/calendar-utilities.php:1294
 msgid "Eleven months"
 msgstr "Once meses"
 
@@ -1249,7 +1254,7 @@ msgstr "Correo electrónico de:"
 msgid "Enable Columns"
 msgstr "Activar columnas"
 
-#: modules/calendar/library/calendar-utilities.php:556
+#: modules/calendar/library/calendar-utilities.php:582
 #: modules/content-board/library/content-board-utilities.php:363
 #: modules/content-overview/library/content-overview-utilities.php:171
 msgid "Enable Filters"
@@ -1272,7 +1277,7 @@ msgstr ""
 msgid "Enable or Disable Content Board filter."
 msgstr "Activar o desactivar el filtro «Tablón de contenidos»."
 
-#: modules/calendar/library/calendar-utilities.php:562
+#: modules/calendar/library/calendar-utilities.php:588
 msgid "Enable or Disable Content calendar filter."
 msgstr "Activar o desactivar el filtro «Calendario de contenidos»."
 
@@ -1284,13 +1289,13 @@ msgstr "Activar o desactivar el filtro «Resumen de contenidos»."
 msgid "Enable or Disable Content Overview table column."
 msgstr "Activar o desactivar la columna de la tabla «Resumen de contenidos»."
 
-#: modules/calendar/library/calendar-methods.php:88
+#: modules/calendar/library/calendar-methods.php:103
 msgid "Enable subscriptions in iCal or Google Calendar"
 msgstr "Activa las suscripciones en iCal o Google Calendar"
 
 #: modules/dashboard/dashboard.php:369 modules/dashboard/dashboard.php:392
 #: modules/dashboard/dashboard.php:426
-#: modules/calendar/library/calendar-methods.php:444
+#: modules/calendar/library/calendar-methods.php:528
 msgid "Enabled"
 msgstr "Activado"
 
@@ -1298,7 +1303,7 @@ msgstr "Activado"
 msgid "Enabled features"
 msgstr "Características activadas"
 
-#: modules/calendar/library/calendar-utilities.php:1228
+#: modules/calendar/library/calendar-utilities.php:1256
 msgid "End date"
 msgstr "Fecha de finalización"
 
@@ -1345,8 +1350,8 @@ msgstr "Error al obtener los datos de la entrada."
 msgid "Error updating term."
 msgstr "Error al actualizar el término."
 
-#: modules/content-board/content-board.php:847
-#: modules/content-overview/content-overview.php:990
+#: modules/content-board/content-board.php:851
+#: modules/content-overview/content-overview.php:995
 #: modules/content-board/library/content-board-methods.php:43
 #: modules/content-board/library/content-board-methods.php:111
 msgid "Error validating nonce. Please reload this page and try again."
@@ -1369,15 +1374,15 @@ msgstr "Vista de extracto"
 msgid "Existing Post is updated"
 msgstr "La entrada existente ha sido actualizada"
 
-#: modules/calendar/library/calendar-utilities.php:351
+#: modules/calendar/library/calendar-utilities.php:374
 #: modules/content-board/library/content-board-utilities.php:899
-#: modules/content-overview/library/content-overview-utilities.php:1004
+#: modules/content-overview/library/content-overview-utilities.php:1027
 #: modules/notifications-log/library/NotificationsLogTable.php:277
 #: modules/notifications-log/library/NotificationsLogTable.php:293
 msgid "Failed"
 msgstr "Fallido"
 
-#: lib/Legacy/Util.php:212
+#: lib/Legacy/Util.php:213
 msgid "Fast, professional support"
 msgstr "Soporte rápido y profesional"
 
@@ -1385,7 +1390,7 @@ msgstr "Soporte rápido y profesional"
 msgid "Features"
 msgstr "Características"
 
-#: modules/calendar/library/calendar-methods.php:1132
+#: modules/calendar/library/calendar-methods.php:1225
 msgid "Feb"
 msgstr "Feb"
 
@@ -1401,7 +1406,7 @@ msgstr "campo"
 msgid "Field Type"
 msgstr "Tipo de campo"
 
-#: modules/calendar/library/calendar-methods.php:128
+#: modules/calendar/library/calendar-methods.php:143
 msgid "Field used for sorting the calendar items in a day cell"
 msgstr ""
 "Campo utilizado para clasificar los elementos del calendario en una celda "
@@ -1428,7 +1433,7 @@ msgstr "Filtrar por aviso de perfil"
 msgid "Filter by notify user"
 msgstr "Filtrar por aviso de usuario"
 
-#: modules/calendar/calendar.php:912
+#: modules/calendar/calendar.php:913
 msgid "Filter reset successfully."
 msgstr "Filtro restablecido correctamente."
 
@@ -1445,14 +1450,14 @@ msgstr ""
 "Filtra la lista de usuarios en la meta editorial para los usuarios en los "
 "roles seleccionados."
 
-#: modules/calendar/library/calendar-utilities.php:583
+#: modules/calendar/library/calendar-utilities.php:609
 #: modules/content-board/library/content-board-utilities.php:390
 #: modules/content-overview/library/content-overview-utilities.php:198
 msgid "Filter Title"
 msgstr "Titulo del filtro"
 
-#: modules/calendar/calendar.php:907
-#: modules/content-overview/content-overview.php:667
+#: modules/calendar/calendar.php:908
+#: modules/content-overview/content-overview.php:668
 #: modules/content-board/library/content-board-methods.php:164
 msgid "Filter updated successfully."
 msgstr "Filtro actualizado correctamente."
@@ -1465,13 +1470,39 @@ msgstr "Fecha del primer borrador"
 msgid "First Name"
 msgstr "Nombre"
 
-#: modules/calendar/library/calendar-utilities.php:1254
+#: modules/calendar/library/calendar-utilities.php:1282
 msgid "Five months"
 msgstr "Cinco meses"
 
-#: modules/calendar/library/calendar-utilities.php:1220
+#: modules/calendar/library/calendar-utilities.php:1248
 msgid "Five months ago"
 msgstr "Hace cinco meses"
+
+#: modules/calendar/library/calendar-methods.php:340
+#, php-format
+msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
+msgstr ""
+"Para estados de revisión personalizados, actualiza a %sPublishPress Statuses "
+"Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:308
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions Pro%s."
+msgstr ""
+"Para la integración de revisiones en el calendario de contenidos, el resumen "
+"y el tablero de contenidos, por favor actualiza %sPublishPress Revisions "
+"Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:309
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions%s."
+msgstr ""
+"Para la integración de revisiones en el calendario de contenidos, el resumen "
+"y el tablero de contenidos, por favor actualiza %sPublishPress Revisions%s."
 
 #: modules/improved-notifications/improved-notifications.php:950
 #: modules/notifications-log/library/NotificationsLogTable.php:498
@@ -1482,19 +1513,19 @@ msgstr "¿Para qué contenido?"
 msgid "Format"
 msgstr "Formato"
 
-#: modules/calendar/library/calendar-utilities.php:1252
+#: modules/calendar/library/calendar-utilities.php:1280
 msgid "Four months"
 msgstr "Cuatro meses"
 
-#: modules/calendar/library/calendar-utilities.php:1218
+#: modules/calendar/library/calendar-utilities.php:1246
 msgid "Four months ago"
 msgstr "Hace cuatro meses"
 
-#: modules/calendar/library/calendar-utilities.php:1239
+#: modules/calendar/library/calendar-utilities.php:1267
 msgid "Four weeks"
 msgstr "Cuatro semanas"
 
-#: modules/calendar/library/calendar-methods.php:1129
+#: modules/calendar/library/calendar-methods.php:1222
 msgid "Fri"
 msgstr "Vie"
 
@@ -1506,7 +1537,7 @@ msgstr "Fecha inicial"
 msgid "Help"
 msgstr "Ayuda"
 
-#: modules/calendar/library/calendar-methods.php:1113
+#: modules/calendar/library/calendar-methods.php:1206
 #, php-format
 msgid "Hide the %s last items"
 msgstr "Ocultar los últimos %s elementos"
@@ -1519,7 +1550,7 @@ msgstr "https://publishpress.com"
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
-#: modules/calendar/calendar.php:250
+#: modules/calendar/calendar.php:251
 msgid ""
 "iCal secret key regenerated. Please inform all users they will need to "
 "resubscribe."
@@ -1529,7 +1560,7 @@ msgstr ""
 
 #: lib/Notifications/Table/Notifications.php:159
 #: lib/Notifications/Table/Workflows.php:143
-#: modules/calendar/library/calendar-utilities.php:1032
+#: modules/calendar/library/calendar-utilities.php:1059
 msgid "ID"
 msgstr "ID"
 
@@ -1547,7 +1578,7 @@ msgstr ""
 msgid "If you like %s please leave us a %s rating. Thank you!"
 msgstr "Si te gusta %s por favor déjanos una valoración %s. ¡Gracias!"
 
-#: lib/Legacy/Util.php:227
+#: lib/Legacy/Util.php:228
 msgid "If you need help or have a new feature request, let us know."
 msgstr ""
 "Si necesitas ayuda o tienes una petición de nueva característica, háznoslo "
@@ -1562,17 +1593,17 @@ msgstr ""
 "no dudes en contactar con el equipo de soporte. Envíanos un correo "
 "electrónico:"
 
-#: modules/content-board/content-board.php:746
+#: modules/content-board/content-board.php:750
 msgid "Inbuilt Card Data"
 msgstr "Datos de tarjeta integrados"
 
-#: modules/content-overview/content-overview.php:886
+#: modules/content-overview/content-overview.php:890
 msgid "Inbuilt Columns"
 msgstr "Columnas integradas"
 
-#: modules/content-board/content-board.php:805
-#: modules/content-overview/content-overview.php:948
-#: modules/calendar/library/calendar-utilities.php:1160
+#: modules/content-board/content-board.php:809
+#: modules/content-overview/content-overview.php:952
+#: modules/calendar/library/calendar-utilities.php:1187
 msgid "Inbuilt filters"
 msgstr "Filtros integrados"
 
@@ -1585,7 +1616,7 @@ msgstr "Indica el tipo de selección."
 msgid "Indicate the type of editorial fields."
 msgstr "Indicar el tipo de campos editoriales."
 
-#: modules/calendar/calendar.php:1150
+#: modules/calendar/calendar.php:1152
 msgid "Initializing the calendar. Please wait..."
 msgstr "Iniciando el calendario. Por favor, espera…"
 
@@ -1593,7 +1624,7 @@ msgstr "Iniciando el calendario. Por favor, espera…"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Integración con el plugin The Events Calendar"
 
-#: lib/Legacy/Util.php:210
+#: lib/Legacy/Util.php:211
 msgid "Integration with SEO plugins"
 msgstr "Integración con los plugins para SEO"
 
@@ -1612,26 +1643,26 @@ msgstr "Canal no válido para el aviso"
 msgid "Invalid comment data"
 msgstr "Datos del comentario no válidos"
 
-#: modules/calendar/library/calendar-methods.php:724
+#: modules/calendar/library/calendar-methods.php:808
 msgid "Invalid date"
 msgstr "Fecha no válida"
 
-#: modules/content-board/content-board.php:849
-#: modules/content-overview/content-overview.php:992
+#: modules/content-board/content-board.php:853
+#: modules/content-overview/content-overview.php:997
 #: modules/content-board/library/content-board-methods.php:45
 #: modules/content-board/library/content-board-methods.php:113
 msgid "Invalid form request."
 msgstr "Solicitud de formulario no válida."
 
-#: modules/calendar/library/calendar-methods.php:704
+#: modules/calendar/library/calendar-methods.php:788
 msgid "Invalid input"
 msgstr "Entrada no válida"
 
-#: core/Error.php:80 modules/calendar/library/calendar-methods.php:695
+#: core/Error.php:80 modules/calendar/library/calendar-methods.php:779
 msgid "Invalid nonce"
 msgstr "Nonce no válido"
 
-#: modules/calendar/library/calendar-methods.php:1658
+#: modules/calendar/library/calendar-methods.php:1759
 msgid "Invalid Publish Date supplied."
 msgstr "Fecha de publicación facilitada no válida."
 
@@ -1639,11 +1670,11 @@ msgstr "Fecha de publicación facilitada no válida."
 msgid "Invalid receiver for the notification"
 msgstr "Destinatario no válido para el aviso"
 
-#: modules/calendar/library/calendar-methods.php:1634
+#: modules/calendar/library/calendar-methods.php:1735
 msgid "Invalid Status supplied."
 msgstr "Estado facilitado no válido."
 
-#: modules/calendar/calendar.php:1154
+#: modules/calendar/calendar.php:1156
 msgid ""
 "It seems like it is taking too long. Please, try reloading the page again "
 "and check the browser console looking for errors."
@@ -1651,20 +1682,20 @@ msgstr ""
 "Parece que está tardando demasiado. Por favor, intenta recargar la página de "
 "nuevo y comprueba la consola del navegador en busca de errores."
 
-#: modules/calendar/library/calendar-methods.php:1131
+#: modules/calendar/library/calendar-methods.php:1224
 msgid "Jan"
 msgstr "Ene"
 
-#: modules/calendar/library/calendar-methods.php:1137
+#: modules/calendar/library/calendar-methods.php:1230
 msgid "Jul"
 msgstr "Jul"
 
-#: modules/calendar/library/calendar-methods.php:1136
+#: modules/calendar/library/calendar-methods.php:1229
 msgid "Jun"
 msgstr "Jun"
 
-#: modules/content-overview/content-overview.php:835
-#: modules/content-overview/content-overview.php:892
+#: modules/content-overview/content-overview.php:837
+#: modules/content-overview/content-overview.php:896
 msgid "Last Modified"
 msgstr "Última modificación"
 
@@ -1672,12 +1703,12 @@ msgstr "Última modificación"
 msgid "Last Name"
 msgstr "Apellido"
 
-#: modules/calendar/library/calendar-methods.php:1110
+#: modules/calendar/library/calendar-methods.php:1203
 msgid "Loading item..."
 msgstr "Cargando el elemento…"
 
 #: modules/notifications-log/notifications-log.php:217
-#: modules/calendar/library/calendar-methods.php:1109
+#: modules/calendar/library/calendar-methods.php:1202
 msgid "Loading..."
 msgstr "Cargando…"
 
@@ -1697,11 +1728,11 @@ msgstr "Archivo de registro"
 msgid "Log file not found."
 msgstr "Archivo de registro no encontrado."
 
-#: modules/calendar/library/calendar-methods.php:1133
+#: modules/calendar/library/calendar-methods.php:1226
 msgid "Mar"
 msgstr "Mar"
 
-#: modules/calendar/library/calendar-methods.php:136
+#: modules/calendar/library/calendar-methods.php:151
 msgid "Max visible posts per date"
 msgstr "Máximo de entradas visibles por fecha"
 
@@ -1710,13 +1741,13 @@ msgstr "Máximo de entradas visibles por fecha"
 msgid "Maximum number of posts to display"
 msgstr "Número máximo de entradas a mostrar"
 
-#: modules/calendar/library/calendar-methods.php:1135
+#: modules/calendar/library/calendar-methods.php:1228
 msgid "May"
 msgstr "May"
 
-#: modules/calendar/calendar.php:730
-#: modules/calendar/library/calendar-utilities.php:444
-#: modules/calendar/library/calendar-utilities.php:445
+#: modules/calendar/calendar.php:732
+#: modules/calendar/library/calendar-utilities.php:467
+#: modules/calendar/library/calendar-utilities.php:468
 #: modules/content-board/library/content-board-utilities.php:28
 #: modules/content-overview/library/content-overview-methods.php:259
 msgid "Me Mode"
@@ -1747,7 +1778,7 @@ msgstr ""
 msgid "minutes"
 msgstr "minutos"
 
-#: lib/Legacy/Util.php:209
+#: lib/Legacy/Util.php:210
 msgid "Modals so you can edit posts without changing screen"
 msgstr "Modales para poder editar las entradas sin cambiar de pantalla"
 
@@ -1755,7 +1786,7 @@ msgstr "Modales para poder editar las entradas sin cambiar de pantalla"
 msgid "Modified on"
 msgstr "Modificado el"
 
-#: modules/calendar/library/calendar-methods.php:1125
+#: modules/calendar/library/calendar-methods.php:1218
 msgid "Mon"
 msgstr "Lun"
 
@@ -1771,16 +1802,16 @@ msgstr "Aviso de perfil más usado"
 msgid "Most Used Notify User"
 msgstr "Avisos de usuarios más usados"
 
-#: modules/content-board/content-board.php:1022
+#: modules/content-board/content-board.php:1026
 msgid "Move posts here to change their status"
 msgstr "Mover las entradas aquí para cambiar su estado"
 
-#: modules/content-board/content-board.php:1182
-#: modules/content-overview/content-overview.php:1705
+#: modules/content-board/content-board.php:1186
+#: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Mover este elemento a la papelera"
 
-#: modules/calendar/library/calendar-methods.php:1112
+#: modules/calendar/library/calendar-methods.php:1205
 msgid "Moving the item..."
 msgstr "Moviendo el elemento…"
 
@@ -1830,7 +1861,7 @@ msgstr ""
 "El nombre del slug entra en conflicto con otro término. Por favor, elige "
 "otro diferente."
 
-#: lib/Legacy/Util.php:222
+#: lib/Legacy/Util.php:223
 msgid "Need PublishPress Planner Support?"
 msgstr "¿Necesitas soporte para PublishPress Planner?"
 
@@ -1876,9 +1907,9 @@ msgstr "Nuevo estado de la entrada: %s"
 msgid "New status"
 msgstr "Nuevo estado"
 
-#: modules/content-board/content-board.php:1285
-#: modules/content-overview/content-overview.php:1220
-#: modules/calendar/library/calendar-methods.php:1158
+#: modules/content-board/content-board.php:1289
+#: modules/content-overview/content-overview.php:1225
+#: modules/calendar/library/calendar-methods.php:1251
 msgid "Next Post"
 msgstr "Entrada siguiente"
 
@@ -1886,7 +1917,7 @@ msgstr "Entrada siguiente"
 msgid "Nickname"
 msgstr "Alias"
 
-#: modules/calendar/library/calendar-utilities.php:1262
+#: modules/calendar/library/calendar-utilities.php:1290
 msgid "Nine months"
 msgstr "Nueve meses"
 
@@ -1901,7 +1932,7 @@ msgstr "No"
 msgid "No active notifications found for this %s."
 msgstr "No se ha encontrado ningún aviso activo para esta %s."
 
-#: modules/calendar/library/calendar-methods.php:1593
+#: modules/calendar/library/calendar-methods.php:1694
 msgid "No date supplied."
 msgstr "No se proprocionó fecha."
 
@@ -1913,11 +1944,11 @@ msgstr "Sin comentarios editoriales"
 msgid "No editorial fields found."
 msgstr "No se encontraron campos editoriales."
 
-#: modules/calendar/library/calendar-methods.php:715
+#: modules/calendar/library/calendar-methods.php:799
 msgid "No enough permissions"
 msgstr "No tienes los permisos necesarios"
 
-#: publishpress.php:1402 publishpress.php:1403
+#: publishpress.php:1415 publishpress.php:1416
 msgid "No notification found"
 msgstr "No se ha encontrado ningún aviso"
 
@@ -1940,12 +1971,12 @@ msgstr "No hay avisos de perfiles"
 msgid "No notify users"
 msgstr "No hay avisos de usuarios"
 
-#: modules/content-board/content-board.php:1259
-#: modules/content-overview/content-overview.php:1189
+#: modules/content-board/content-board.php:1263
+#: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "No se han encontrado resultados"
 
-#: modules/calendar/library/calendar-methods.php:1151
+#: modules/calendar/library/calendar-methods.php:1244
 msgid "No terms"
 msgstr "No hay términos"
 
@@ -1971,8 +2002,8 @@ msgstr ""
 "Ha fallado la comprobación del nonce. Por favor, asegúrate de que estás "
 "editando los comentarios editoriales."
 
-#: modules/content-board/content-board.php:1596
-#: modules/content-overview/content-overview.php:1573
+#: modules/content-board/content-board.php:1600
+#: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Ninguno"
 
@@ -1984,7 +2015,7 @@ msgstr "Sin filtrar"
 msgid "Notepad"
 msgstr "Cuaderno de notas"
 
-#: publishpress.php:1396 publishpress.php:1401
+#: publishpress.php:1409 publishpress.php:1414
 #: modules/notifications-log/notifications-log.php:216
 msgid "Notification"
 msgstr "Aviso"
@@ -1993,7 +2024,7 @@ msgstr "Aviso"
 msgid "Notification log not found"
 msgstr "No se ha encontrado el registro de los avisos"
 
-#: publishpress.php:1395 publishpress.php:1400
+#: publishpress.php:1408 publishpress.php:1413
 #: modules/notifications/notifications.php:72
 #: modules/notifications/notifications.php:609
 msgid "Notifications"
@@ -2049,7 +2080,7 @@ msgstr "Aviso de usuario"
 msgid "Notify Users"
 msgstr "Avisos de usuarios"
 
-#: modules/calendar/library/calendar-methods.php:1141
+#: modules/calendar/library/calendar-methods.php:1234
 msgid "Nov"
 msgstr "Nov"
 
@@ -2057,7 +2088,7 @@ msgstr "Nov"
 msgid "Number"
 msgstr "Número"
 
-#: modules/calendar/library/calendar-methods.php:1140
+#: modules/calendar/library/calendar-methods.php:1233
 msgid "Oct"
 msgstr "Oct"
 
@@ -2074,20 +2105,20 @@ msgstr ""
 "En cada shortcode, puedes seleccionar uno o más campos. Si hay más de uno, "
 "se mostrarán separados por «,»."
 
-#: modules/calendar/library/calendar-utilities.php:1245
+#: modules/calendar/library/calendar-utilities.php:1273
 msgid "One month"
 msgstr "Un mes"
 
-#: modules/calendar/library/calendar-utilities.php:1212
+#: modules/calendar/library/calendar-utilities.php:1240
 msgid "One month ago"
 msgstr "Hace un mes"
 
-#: modules/calendar/library/calendar-utilities.php:1233
+#: modules/calendar/library/calendar-utilities.php:1261
 msgid "One week"
 msgstr "Una semana"
 
-#: modules/content-board/content-board.php:1096
-#: modules/content-board/content-board.php:1238
+#: modules/content-board/content-board.php:1100
+#: modules/content-board/content-board.php:1242
 msgid "Only editable posts will be moveable."
 msgstr "Solo las entradas editables serán movibles."
 
@@ -2095,7 +2126,7 @@ msgstr "Solo las entradas editables serán movibles."
 msgid "Options"
 msgstr "Opciones"
 
-#: modules/calendar/calendar.php:258
+#: modules/calendar/calendar.php:259
 #: modules/editorial-comments/editorial-comments.php:82
 #: modules/editorial-metadata/editorial-metadata.php:119
 #: modules/notifications/notifications.php:93
@@ -2134,9 +2165,9 @@ msgstr "Aviso de usuario superior:"
 msgid "Parent Page Authors"
 msgstr "Autores de página superior"
 
-#: modules/calendar/library/calendar-utilities.php:350
+#: modules/calendar/library/calendar-utilities.php:373
 #: modules/content-board/library/content-board-utilities.php:898
-#: modules/content-overview/library/content-overview-utilities.php:1003
+#: modules/content-overview/library/content-overview-utilities.php:1026
 msgid "Passed"
 msgstr "Aprobado"
 
@@ -2144,12 +2175,12 @@ msgstr "Aprobado"
 msgid "Path"
 msgstr "Ruta"
 
-#: common/php/class-module.php:331
+#: common/php/class-module.php:335
 msgid "Pending Review"
 msgstr "Pendiente de revisión"
 
-#: modules/calendar/library/calendar-utilities.php:479
-#: modules/calendar/library/calendar-utilities.php:480
+#: modules/calendar/library/calendar-utilities.php:502
+#: modules/calendar/library/calendar-utilities.php:503
 msgid "Period"
 msgstr "Período"
 
@@ -2193,7 +2224,7 @@ msgstr "Por favor, selecciona un tipo de metadatos válido."
 msgid "Please select at least one event"
 msgstr "Por favor selecciona por lo menos un evento"
 
-#: modules/calendar/library/calendar-methods.php:1123
+#: modules/calendar/library/calendar-methods.php:1216
 #: modules/content-board/library/content-board-utilities.php:1130
 #: modules/content-overview/library/content-overview-utilities.php:456
 msgid "Please, wait! Loading the form fields..."
@@ -2223,23 +2254,23 @@ msgstr "Posición"
 msgid "Post"
 msgstr "Entrada"
 
-#: modules/calendar/library/calendar-methods.php:1734
+#: modules/calendar/library/calendar-methods.php:1835
 msgid "Post could not be created"
 msgstr "La publicación no pudo ser creada"
 
-#: modules/calendar/library/calendar-methods.php:1727
+#: modules/calendar/library/calendar-methods.php:1828
 msgid "Post created successfully"
 msgstr "Entrada creada correctamente"
 
-#: modules/content-board/content-board.php:1279
-#: modules/content-overview/content-overview.php:834
-#: modules/content-overview/content-overview.php:891
-#: modules/content-overview/content-overview.php:1214
-#: modules/calendar/library/calendar-methods.php:1152
+#: modules/content-board/content-board.php:1283
+#: modules/content-overview/content-overview.php:836
+#: modules/content-overview/content-overview.php:895
+#: modules/content-overview/content-overview.php:1219
+#: modules/calendar/library/calendar-methods.php:1245
 msgid "Post Date"
 msgstr "Fecha de publicación"
 
-#: modules/calendar/calendar.php:240
+#: modules/calendar/calendar.php:241
 msgid "Post date updated."
 msgstr "Fecha de publicación actualizada."
 
@@ -2251,28 +2282,28 @@ msgstr "La entrada no existe"
 msgid "Post ID: %d"
 msgstr "ID de la entrada: %d"
 
-#: modules/calendar/library/calendar-methods.php:710
+#: modules/calendar/library/calendar-methods.php:794
 msgid "Post not found"
 msgstr "Entrada no encontrada"
 
-#: modules/content-board/content-board.php:807
-#: modules/content-board/content-board.php:1286
-#: modules/content-overview/content-overview.php:950
-#: modules/content-overview/content-overview.php:1221
-#: modules/calendar/library/calendar-methods.php:353
-#: modules/calendar/library/calendar-methods.php:772
-#: modules/calendar/library/calendar-methods.php:1159
-#: modules/calendar/library/calendar-utilities.php:43
-#: modules/calendar/library/calendar-utilities.php:1043
-#: modules/calendar/library/calendar-utilities.php:1162
+#: common/php/class-module.php:1082 modules/content-board/content-board.php:811
+#: modules/content-board/content-board.php:1290
+#: modules/content-overview/content-overview.php:954
+#: modules/content-overview/content-overview.php:1226
+#: modules/calendar/library/calendar-methods.php:424
+#: modules/calendar/library/calendar-methods.php:858
+#: modules/calendar/library/calendar-methods.php:1252
+#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/library/content-overview-utilities.php:491
-#: modules/content-overview/library/content-overview-utilities.php:699
+#: modules/content-overview/library/content-overview-utilities.php:703
 msgid "Post Status"
 msgstr "Estado de la entrada"
 
-#: modules/calendar/calendar.php:241
+#: modules/calendar/calendar.php:242
 msgid "Post status updated."
 msgstr "Estado de la publicación actualizado."
 
@@ -2280,22 +2311,22 @@ msgstr "Estado de la publicación actualizado."
 msgid "Post Status Widget"
 msgstr "Widget de estado de publicación"
 
-#: modules/calendar/calendar.php:981 modules/calendar/calendar.php:1209
-#: modules/content-board/content-board.php:694
-#: modules/content-board/content-board.php:707
-#: modules/content-board/content-board.php:748
-#: modules/content-board/content-board.php:809
-#: modules/content-overview/content-overview.php:832
-#: modules/content-overview/content-overview.php:847
-#: modules/content-overview/content-overview.php:889
-#: modules/content-overview/content-overview.php:952
-#: modules/calendar/library/calendar-utilities.php:129
-#: modules/calendar/library/calendar-utilities.php:1027
-#: modules/calendar/library/calendar-utilities.php:1164
+#: modules/calendar/calendar.php:982 modules/calendar/calendar.php:1211
+#: modules/content-board/content-board.php:698
+#: modules/content-board/content-board.php:711
+#: modules/content-board/content-board.php:752
+#: modules/content-board/content-board.php:813
+#: modules/content-overview/content-overview.php:834
+#: modules/content-overview/content-overview.php:850
+#: modules/content-overview/content-overview.php:893
+#: modules/content-overview/content-overview.php:957
+#: modules/calendar/library/calendar-utilities.php:146
+#: modules/calendar/library/calendar-utilities.php:1054
+#: modules/calendar/library/calendar-utilities.php:1192
 #: modules/content-board/library/content-board-utilities.php:677
 #: modules/content-board/library/content-board-utilities.php:1153
 #: modules/content-overview/library/content-overview-utilities.php:479
-#: modules/content-overview/library/content-overview-utilities.php:782
+#: modules/content-overview/library/content-overview-utilities.php:799
 msgid "Post Type"
 msgstr "Tipo de contenido"
 
@@ -2303,11 +2334,11 @@ msgstr "Tipo de contenido"
 msgid "Post type"
 msgstr "Tipo de contenido"
 
-#: modules/calendar/library/calendar-methods.php:1121
+#: modules/calendar/library/calendar-methods.php:1214
 msgid "Post type not found"
 msgstr "No se ha encontrado el tipo de contenido"
 
-#: modules/calendar/library/calendar-methods.php:1122
+#: modules/calendar/library/calendar-methods.php:1215
 msgid "Post type:"
 msgstr "Tipo de contenido:"
 
@@ -2321,7 +2352,7 @@ msgstr "Tipo de contenido: %s"
 msgid "Post Types"
 msgstr "Tipos de contenido"
 
-#: modules/calendar/library/calendar-methods.php:80
+#: modules/calendar/library/calendar-methods.php:87
 msgid "Post types to show"
 msgstr "Tipos de contenidos a mostrar"
 
@@ -2334,28 +2365,28 @@ msgstr "Tipos de contenido a mostrar:"
 msgid "Posts at a Glance"
 msgstr "Publicaciones de un vistazo"
 
-#: modules/calendar/library/calendar-methods.php:112
+#: modules/calendar/library/calendar-methods.php:127
 msgid "Posts publish time format"
 msgstr "Formato de hora de las entradas publicadas"
 
-#: modules/content-board/content-board.php:1215
-#: modules/content-board/content-board.php:1282
-#: modules/content-overview/content-overview.php:1217
-#: modules/content-overview/content-overview.php:1738
-#: modules/calendar/library/calendar-methods.php:1155
-#: modules/calendar/library/calendar-utilities.php:1087
+#: modules/content-board/content-board.php:1219
+#: modules/content-board/content-board.php:1286
+#: modules/content-overview/content-overview.php:1222
+#: modules/content-overview/content-overview.php:1744
+#: modules/calendar/library/calendar-methods.php:1248
+#: modules/calendar/library/calendar-utilities.php:1114
 msgid "Preview"
 msgstr "Vista previa"
 
-#: modules/content-board/content-board.php:1212
-#: modules/content-overview/content-overview.php:1735
+#: modules/content-board/content-board.php:1216
+#: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Vista previa &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1284
-#: modules/content-overview/content-overview.php:1219
-#: modules/calendar/library/calendar-methods.php:1157
+#: modules/content-board/content-board.php:1288
+#: modules/content-overview/content-overview.php:1224
+#: modules/calendar/library/calendar-methods.php:1250
 msgid "Previous Post"
 msgstr "Entrada anterior"
 
@@ -2368,7 +2399,7 @@ msgstr "Estado anterior"
 msgid "Print"
 msgstr "Imprimir"
 
-#: common/php/class-module.php:330 modules/content-board/content-board.php:985
+#: common/php/class-module.php:334 modules/content-board/content-board.php:989
 msgid "Private"
 msgstr "Privado"
 
@@ -2377,21 +2408,21 @@ msgstr "Privado"
 msgid "Publish Date"
 msgstr "Fecha de publicación"
 
-#: modules/calendar/library/calendar-methods.php:778
+#: modules/calendar/library/calendar-methods.php:864
 msgid "Publish Time"
 msgstr "Hora de publicación"
 
-#: common/php/class-module.php:327 modules/calendar/calendar.php:1222
+#: common/php/class-module.php:331 modules/calendar/calendar.php:1224
 msgid "Published"
 msgstr "Publicado"
 
-#: modules/calendar/library/calendar-methods.php:352
+#: modules/calendar/library/calendar-methods.php:423
 msgid "Publishing Time"
 msgstr "Hora de la publicación"
 
 #. Author of the plugin
 #: modules/settings/settings.php:61
-#: modules/calendar/library/calendar-utilities.php:1199
+#: modules/calendar/library/calendar-utilities.php:1227
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -2413,7 +2444,7 @@ msgstr ""
 "WordPress. Entre sus características se incluyen un calendario de "
 "contenidos, un tablero Kanban y avisos."
 
-#: publishpress.php:1443
+#: publishpress.php:1456
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -2423,6 +2454,10 @@ msgstr ""
 "remove other instances of PublishPress, specially if you are using "
 "PublishPress Pro."
 
+#: lib/Legacy/Util.php:206
+msgid "PublishPress Revisions integration"
+msgstr "Integración de PublishPress Revisions"
+
 #: modules/settings/settings.php:141
 msgid "PublishPress Settings"
 msgstr "Ajustes de PublishPress"
@@ -2431,7 +2466,7 @@ msgstr "Ajustes de PublishPress"
 msgid "Receiver"
 msgstr "Destinatario"
 
-#: modules/calendar/library/calendar-methods.php:462
+#: modules/calendar/library/calendar-methods.php:546
 msgid "Regenerate calendar feed secret"
 msgstr "Regenerar clave secreta del feed del calendario"
 
@@ -2444,7 +2479,7 @@ msgstr "Registrar los campos editoriales para estos tipos de entrada:"
 msgid "Remove"
 msgstr "Eliminar"
 
-#: lib/Legacy/Util.php:211
+#: lib/Legacy/Util.php:212
 msgid "Remove PublishPress ads and branding"
 msgstr "Eliminar los anuncios y la marca de PublishPress"
 
@@ -2456,7 +2491,7 @@ msgstr "Reordenar"
 msgid "Reorder Columns"
 msgstr "Reordenar columnas"
 
-#: modules/calendar/library/calendar-utilities.php:557
+#: modules/calendar/library/calendar-utilities.php:583
 #: modules/content-board/library/content-board-utilities.php:364
 #: modules/content-overview/library/content-overview-utilities.php:172
 msgid "Reorder Filters"
@@ -2475,7 +2510,7 @@ msgstr "Responder a este comentario"
 msgid "Reply: %s"
 msgstr "Responder a: %s"
 
-#: lib/Legacy/Util.php:229
+#: lib/Legacy/Util.php:230
 msgid "Request Support"
 msgstr "Solicitar soporte"
 
@@ -2484,7 +2519,7 @@ msgstr "Solicitar soporte"
 msgid "Reschedule"
 msgstr "Reprogramar"
 
-#: modules/calendar/library/calendar-utilities.php:528
+#: modules/calendar/library/calendar-utilities.php:554
 #: modules/content-board/library/content-board-utilities.php:153
 #: modules/content-board/library/content-board-utilities.php:551
 #: modules/content-overview/library/content-overview-methods.php:384
@@ -2492,7 +2527,7 @@ msgstr "Reprogramar"
 msgid "Reset"
 msgstr "Restablecer"
 
-#: modules/calendar/library/calendar-utilities.php:527
+#: modules/calendar/library/calendar-utilities.php:553
 #: modules/content-board/library/content-board-utilities.php:152
 #: modules/content-overview/library/content-overview-methods.php:383
 msgid "Reset Filters"
@@ -2502,7 +2537,15 @@ msgstr "Restablecer filtros"
 msgid "Reviews"
 msgstr "Reseñas"
 
-#: common/php/class-module.php:743
+#: common/php/class-module.php:1082
+#: modules/content-overview/content-overview.php:833
+#: modules/content-overview/content-overview.php:848
+#: modules/content-overview/content-overview.php:955
+#: modules/calendar/library/calendar-utilities.php:1190
+msgid "Revision Status"
+msgstr "Estado de revisión"
+
+#: common/php/class-module.php:747
 msgid "Role"
 msgstr "Perfil"
 
@@ -2512,35 +2555,35 @@ msgstr "Perfil"
 msgid "role:%s"
 msgstr "perfil: %s"
 
-#: common/php/class-module.php:740
+#: common/php/class-module.php:744
 #: lib/Notifications/Workflow/Step/Receiver/Role.php:31
 msgid "Roles"
 msgstr "Perfiles"
 
-#: modules/calendar/library/calendar-methods.php:1130
+#: modules/calendar/library/calendar-methods.php:1223
 msgid "Sat"
 msgstr "Sáb"
 
-#: modules/calendar/library/calendar-methods.php:1117
+#: modules/calendar/library/calendar-methods.php:1210
 msgid "Save"
 msgstr "Guardar"
 
-#: modules/calendar/library/calendar-methods.php:1119
+#: modules/calendar/library/calendar-methods.php:1212
 msgid "Save and edit"
 msgstr "Guardar y editar"
 
-#: modules/content-board/content-board.php:1287
-#: modules/content-overview/content-overview.php:1222
-#: modules/calendar/library/calendar-methods.php:1160
+#: modules/content-board/content-board.php:1291
+#: modules/content-overview/content-overview.php:1227
+#: modules/calendar/library/calendar-methods.php:1253
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#: modules/calendar/library/calendar-methods.php:1118
+#: modules/calendar/library/calendar-methods.php:1211
 msgid "Saving..."
 msgstr "Guardando..."
 
-#: common/php/class-module.php:329 modules/calendar/calendar.php:1217
-#: modules/content-board/content-board.php:975
+#: common/php/class-module.php:333 modules/calendar/calendar.php:1219
+#: modules/content-board/content-board.php:979
 #: modules/notifications-log/library/NotificationsLogTable.php:529
 msgid "Scheduled"
 msgstr "Programado"
@@ -2549,19 +2592,19 @@ msgstr "Programado"
 msgid "Scheduled for %d receivers. Click here to display them."
 msgstr "Programado para %d destinatarios. Haz clic aquí para mostrarlos."
 
-#: modules/calendar/calendar.php:732
-#: modules/calendar/library/calendar-utilities.php:463
+#: modules/calendar/calendar.php:734
+#: modules/calendar/library/calendar-utilities.php:486
 #: modules/content-board/library/content-board-utilities.php:98
 #: modules/content-overview/library/content-overview-methods.php:329
 msgid "Search"
 msgstr "Buscar"
 
-#: modules/calendar/library/calendar-utilities.php:152
-#: modules/calendar/library/calendar-utilities.php:462
+#: modules/calendar/library/calendar-utilities.php:169
+#: modules/calendar/library/calendar-utilities.php:485
 #: modules/content-board/library/content-board-utilities.php:97
 #: modules/content-board/library/content-board-utilities.php:700
 #: modules/content-overview/library/content-overview-methods.php:328
-#: modules/content-overview/library/content-overview-utilities.php:805
+#: modules/content-overview/library/content-overview-utilities.php:822
 msgid "Search box"
 msgstr "Caja de búsqueda"
 
@@ -2573,13 +2616,13 @@ msgstr "Buscar comentarios"
 msgid "Search Editorial Fields"
 msgstr "Buscar campos editoriales"
 
-#: modules/calendar/library/calendar-utilities.php:587
+#: modules/calendar/library/calendar-utilities.php:613
 #: modules/content-board/library/content-board-utilities.php:248
 #: modules/content-overview/library/content-overview-utilities.php:56
 msgid "Search Metakey"
 msgstr "Buscar clave meta"
 
-#: publishpress.php:1399
+#: publishpress.php:1412
 msgid "Search Notifications"
 msgstr "Buscar avisos"
 
@@ -2601,7 +2644,7 @@ msgstr "Buscar avisos de usuarios"
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Resultados de la búsqueda de «%s»"
 
-#: common/php/class-module.php:1057
+#: common/php/class-module.php:1065
 #, php-format
 msgid "Select %s"
 msgstr "Seleccionar %s"
@@ -2615,9 +2658,9 @@ msgstr "Selecciona al menos una opción para cada sección."
 msgid "Select Metakey"
 msgstr "Seleccionar Metakey"
 
-#: modules/calendar/library/calendar-utilities.php:194
+#: modules/calendar/library/calendar-utilities.php:211
 #: modules/content-board/library/content-board-utilities.php:742
-#: modules/content-overview/library/content-overview-utilities.php:847
+#: modules/content-overview/library/content-overview-utilities.php:864
 msgid "Select option..."
 msgstr "Seleccionar option…"
 
@@ -2631,7 +2674,7 @@ msgstr "Seleccionar perfiles…"
 msgid "Select Type"
 msgstr "Seleccionar el tipo"
 
-#: lib/Legacy/Util.php:207
+#: lib/Legacy/Util.php:208
 msgid "Send reminder notifications"
 msgstr "Enviar avisos de recordatorio"
 
@@ -2639,7 +2682,7 @@ msgstr "Enviar avisos de recordatorio"
 msgid "Sent"
 msgstr "Enviado"
 
-#: modules/calendar/library/calendar-methods.php:1139
+#: modules/calendar/library/calendar-methods.php:1232
 msgid "Sep"
 msgstr "Sep"
 
@@ -2663,12 +2706,12 @@ msgstr "Ajustes"
 msgid "settings"
 msgstr "ajustes"
 
-#: modules/content-overview/content-overview.php:675
+#: modules/content-overview/content-overview.php:676
 #: modules/content-board/library/content-board-methods.php:172
 msgid "Settings updated successfully."
 msgstr "Los ajustes han sido guardado correctamente."
 
-#: modules/calendar/library/calendar-utilities.php:1258
+#: modules/calendar/library/calendar-utilities.php:1286
 msgid "Seven months"
 msgstr "Siete meses"
 
@@ -2676,7 +2719,7 @@ msgstr "Siete meses"
 msgid "shortcode"
 msgstr "shortcode"
 
-#: modules/calendar/library/calendar-methods.php:1114
+#: modules/calendar/library/calendar-methods.php:1207
 #, php-format
 msgid "Show %s more"
 msgstr "Mostrar %s más"
@@ -2701,7 +2744,7 @@ msgstr ""
 msgid "Show on Post Types screen"
 msgstr "Mostrar en la pantalla «Tipos de contenido»"
 
-#: modules/calendar/calendar.php:731
+#: modules/calendar/calendar.php:733
 msgid "Show Revision"
 msgstr "Mostrar la revisión"
 
@@ -2711,6 +2754,10 @@ msgid ""
 msgstr ""
 "Mostrar los enlaces «Avísame» y «Deja de avisarme» para estos tipos de "
 "contenidos:"
+
+#: modules/calendar/library/calendar-methods.php:95
+msgid "Show today's date in the first row"
+msgstr "Mostrar la fecha de hoy en la primera fila"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:233
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:545
@@ -2722,11 +2769,11 @@ msgstr "Selección individual"
 msgid "Site Administrator"
 msgstr "Administrador del sitio"
 
-#: modules/calendar/library/calendar-utilities.php:1256
+#: modules/calendar/library/calendar-utilities.php:1284
 msgid "Six months"
 msgstr "Seis meses"
 
-#: modules/calendar/library/calendar-utilities.php:1222
+#: modules/calendar/library/calendar-utilities.php:1250
 msgid "Six months ago"
 msgstr "Hace seis meses"
 
@@ -2747,7 +2794,7 @@ msgstr "Omitir el aviso para el usuario que ha desencadenado la acción"
 msgid "Skipped"
 msgstr "Omitido"
 
-#: lib/Legacy/Util.php:206
+#: lib/Legacy/Util.php:207
 msgid "Slack integration for notifications"
 msgstr "Integración de Slack para avisos"
 
@@ -2809,19 +2856,19 @@ msgstr ""
 "Lo siento, pero no tienes los privilegios para editar este comentario "
 "editorial. Por favor, habla con tu administrador."
 
-#: modules/calendar/calendar.php:729
+#: modules/calendar/calendar.php:731
 msgid "Start Date"
 msgstr "Fecha de inicio"
 
-#: modules/calendar/library/calendar-utilities.php:1206
+#: modules/calendar/library/calendar-utilities.php:1234
 msgid "Start date"
 msgstr "Fecha de inicio"
 
-#: modules/calendar/calendar.php:979
-#: modules/content-board/content-board.php:705
-#: modules/content-overview/content-overview.php:831
-#: modules/content-overview/content-overview.php:845
-#: modules/content-overview/content-overview.php:888
+#: modules/calendar/calendar.php:980
+#: modules/content-board/content-board.php:709
+#: modules/content-overview/content-overview.php:832
+#: modules/content-overview/content-overview.php:847
+#: modules/content-overview/content-overview.php:892
 #: modules/notifications-log/library/NotificationsLogTable.php:500
 msgid "Status"
 msgstr "Estado"
@@ -2832,7 +2879,7 @@ msgstr "Estado"
 msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
 msgstr "El estado se cambió de %1$s #%2$s «%3$s» por %4$s %5$s"
 
-#: modules/calendar/library/calendar-methods.php:104
+#: modules/calendar/library/calendar-methods.php:119
 msgid "Statuses to display publish time"
 msgstr "Estados para mostrar la hora de publicación"
 
@@ -2858,7 +2905,7 @@ msgstr "Enviar"
 msgid "Submitted on"
 msgstr "Enviado el"
 
-#: modules/calendar/library/calendar-utilities.php:1201
+#: modules/calendar/library/calendar-utilities.php:1229
 msgid "Subscribe in iCal or Google Calendar"
 msgstr "Suscríbete en iCal o Google Calendar"
 
@@ -2866,7 +2913,7 @@ msgstr "Suscríbete en iCal o Google Calendar"
 msgid "Success"
 msgstr "Correcto"
 
-#: modules/calendar/library/calendar-methods.php:1124
+#: modules/calendar/library/calendar-methods.php:1217
 msgid "Sun"
 msgstr "Dom"
 
@@ -2874,23 +2921,23 @@ msgstr "Dom"
 msgid "synchronous"
 msgstr "síncrono"
 
-#: modules/calendar/library/calendar-utilities.php:1058
+#: modules/calendar/library/calendar-utilities.php:1085
 msgid "Tag"
 msgid_plural "Tags"
 msgstr[0] "Etiqueta"
 msgstr[1] "Etiquetas"
 
-#: modules/calendar/library/calendar-methods.php:806
+#: modules/calendar/library/calendar-methods.php:894
 #: modules/content-board/library/content-board-utilities.php:1199
 #: modules/content-overview/library/content-overview-utilities.php:525
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: modules/content-board/content-board.php:763
-#: modules/content-board/content-board.php:823
-#: modules/content-overview/content-overview.php:906
-#: modules/content-overview/content-overview.php:966
-#: modules/calendar/library/calendar-utilities.php:1178
+#: modules/content-board/content-board.php:767
+#: modules/content-board/content-board.php:827
+#: modules/content-overview/content-overview.php:910
+#: modules/content-overview/content-overview.php:971
+#: modules/calendar/library/calendar-utilities.php:1206
 #: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
 msgid "Taxonomies"
 msgstr "Taxonomías"
@@ -2904,9 +2951,9 @@ msgctxt "taxonomy general name"
 msgid "Editorial Field"
 msgstr "Campo editorial"
 
-#: modules/content-board/content-board.php:1288
-#: modules/content-overview/content-overview.php:1223
-#: modules/calendar/library/calendar-methods.php:1161
+#: modules/content-board/content-board.php:1292
+#: modules/content-overview/content-overview.php:1228
+#: modules/calendar/library/calendar-methods.php:1254
 msgid "Taxonomy not set."
 msgstr "La taxonomía no está establecida."
 
@@ -2915,7 +2962,7 @@ msgctxt "taxonomy singular name"
 msgid "Editorial Field"
 msgstr "Campo editorial"
 
-#: modules/calendar/library/calendar-utilities.php:1264
+#: modules/calendar/library/calendar-utilities.php:1292
 msgid "Ten months"
 msgstr "Diez meses"
 
@@ -2986,11 +3033,11 @@ msgstr ""
 msgid "The parent log was deleted or probably rescheduled"
 msgstr "El registro superior ha sido borrado o probablemente reprogramado"
 
-#: modules/calendar/library/calendar-methods.php:1604
+#: modules/calendar/library/calendar-methods.php:1705
 msgid "The selected post type is not enabled for the calendar."
 msgstr "El tipo de contenido seleccionado no está activado para el calendario."
 
-#: modules/calendar/calendar.php:1792
+#: modules/calendar/calendar.php:1800
 msgid ""
 "The selected user doesn't have enough permissions to be set as the post "
 "author."
@@ -3002,8 +3049,8 @@ msgstr ""
 msgid "The slug cannot be changed once the term has been created."
 msgstr "El slug no puede cambiarse una vez el término ha sido creado."
 
-#: modules/content-board/content-board.php:1264
-#: modules/content-overview/content-overview.php:1194
+#: modules/content-board/content-board.php:1268
+#: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "No hay entradas en el rango o filtro especificado."
 
@@ -3021,7 +3068,7 @@ msgstr ""
 "Hubo un problema de algún tipo. Inténtalo de nuevo o contacta a tu "
 "administrador."
 
-#: modules/calendar/calendar.php:242
+#: modules/calendar/calendar.php:243
 msgid "There was an error updating the post. Please try again."
 msgstr "Hubo un error al actualizar la publicación. Inténtalo de nuevo."
 
@@ -3063,7 +3110,7 @@ msgstr ""
 "Esta es una vista previa del mensaje programado. Todavía se puede cambiar el "
 "contenido hasta que se envíe el aviso."
 
-#: modules/content-board/content-board.php:1052
+#: modules/content-board/content-board.php:1056
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -3100,19 +3147,19 @@ msgstr ""
 "dirigido a la opción «Usuarios que seleccionaron “Avisarme” para el "
 "contenido»."
 
-#: modules/calendar/library/calendar-utilities.php:1250
+#: modules/calendar/library/calendar-utilities.php:1278
 msgid "Three months"
 msgstr "Tres meses"
 
-#: modules/calendar/library/calendar-utilities.php:1216
+#: modules/calendar/library/calendar-utilities.php:1244
 msgid "Three months ago"
 msgstr "Hace tres meses"
 
-#: modules/calendar/library/calendar-utilities.php:1237
+#: modules/calendar/library/calendar-utilities.php:1265
 msgid "Three weeks"
 msgstr "Tres semanas"
 
-#: modules/calendar/library/calendar-methods.php:1128
+#: modules/calendar/library/calendar-methods.php:1221
 msgid "Thu"
 msgstr "Jue"
 
@@ -3120,7 +3167,7 @@ msgstr "Jue"
 #: modules/content-overview/content-overview.php:418
 #: lib/Notifications/Table/Notifications.php:156
 #: lib/Notifications/Table/Workflows.php:142
-#: modules/calendar/library/calendar-methods.php:767
+#: modules/calendar/library/calendar-methods.php:853
 #: modules/content-board/library/content-board-utilities.php:244
 #: modules/content-board/library/content-board-utilities.php:1159
 #: modules/content-overview/library/content-overview-utilities.php:485
@@ -3132,14 +3179,14 @@ msgstr "Título"
 msgid "Title: %s"
 msgstr "Título: %s"
 
-#: modules/calendar/library/calendar-utilities.php:228
-#: modules/calendar/library/calendar-utilities.php:262
+#: modules/calendar/library/calendar-utilities.php:245
+#: modules/calendar/library/calendar-utilities.php:279
 #: modules/content-board/library/content-board-utilities.php:112
 #: modules/content-board/library/content-board-utilities.php:776
 #: modules/content-board/library/content-board-utilities.php:810
 #: modules/content-overview/library/content-overview-methods.php:343
-#: modules/content-overview/library/content-overview-utilities.php:881
-#: modules/content-overview/library/content-overview-utilities.php:915
+#: modules/content-overview/library/content-overview-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:932
 msgid "to"
 msgstr "a"
 
@@ -3147,36 +3194,45 @@ msgstr "a"
 msgid "To date"
 msgstr "Fecha final"
 
-#: modules/calendar/library/calendar-methods.php:1150
+#: modules/calendar/library/calendar-methods.php:326
+#, php-format
+msgid ""
+"To refine your workflow with custom Post Statuses, install the "
+"%sPublishPress Statuses%s plugin."
+msgstr ""
+"Para refinar tu flujo de trabajo con estados personalizados de entradas, "
+"instala el plugin %sPublishPress Statuses%s."
+
+#: modules/calendar/library/calendar-methods.php:1243
 msgid "Today"
 msgstr "Hoy"
 
-#: common/php/class-module.php:332 modules/content-board/content-board.php:1186
-#: modules/content-board/content-board.php:1281
-#: modules/content-overview/content-overview.php:1216
-#: modules/content-overview/content-overview.php:1709
-#: modules/calendar/library/calendar-methods.php:1154
-#: modules/calendar/library/calendar-utilities.php:1077
+#: common/php/class-module.php:336 modules/content-board/content-board.php:1190
+#: modules/content-board/content-board.php:1285
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1715
+#: modules/calendar/library/calendar-methods.php:1247
+#: modules/calendar/library/calendar-utilities.php:1104
 msgid "Trash"
 msgstr "Papelera"
 
-#: modules/calendar/library/calendar-methods.php:1126
+#: modules/calendar/library/calendar-methods.php:1219
 msgid "Tue"
 msgstr "Mar"
 
-#: modules/calendar/library/calendar-utilities.php:1268
+#: modules/calendar/library/calendar-utilities.php:1296
 msgid "Twelve months"
 msgstr "Doce meses"
 
-#: modules/calendar/library/calendar-utilities.php:1248
+#: modules/calendar/library/calendar-utilities.php:1276
 msgid "Two months"
 msgstr "Dos meses"
 
-#: modules/calendar/library/calendar-utilities.php:1214
+#: modules/calendar/library/calendar-utilities.php:1242
 msgid "Two months ago"
 msgstr "Hace dos meses"
 
-#: modules/calendar/library/calendar-utilities.php:1235
+#: modules/calendar/library/calendar-utilities.php:1263
 msgid "Two weeks"
 msgstr "Dos semanas"
 
@@ -3189,8 +3245,8 @@ msgstr "Tipo"
 msgid "Undefined error found"
 msgstr "Se ha encontrado un error indefinido"
 
-#: modules/calendar/calendar.php:1109
-#: modules/content-board/content-board.php:610
+#: modules/calendar/calendar.php:1111
+#: modules/content-board/content-board.php:614
 #: modules/content-overview/library/content-overview-methods.php:221
 msgid "Undo"
 msgstr "Deshacer"
@@ -3199,8 +3255,8 @@ msgstr "Deshacer"
 msgid "Unpublished Content"
 msgstr "Contenido sin publicar"
 
-#: modules/calendar/library/calendar-methods.php:1115
-#: modules/calendar/library/calendar-methods.php:1610
+#: modules/calendar/library/calendar-methods.php:1208
+#: modules/calendar/library/calendar-methods.php:1711
 msgid "Untitled"
 msgstr "Sin título"
 
@@ -3228,7 +3284,7 @@ msgstr "Actualizar el aviso de perfil"
 msgid "Update Notify User"
 msgstr "Actualizar el aviso de usuario"
 
-#: modules/calendar/calendar.php:246
+#: modules/calendar/calendar.php:247
 #, php-format
 msgid ""
 "Updating the post date dynamically doesn't work for published content. "
@@ -3237,7 +3293,7 @@ msgstr ""
 "Actualizar la fecha de publicación dinámicamente no funciona para el "
 "contenido publicado. Por favor <a href='%s'>edita la publicación</a> ."
 
-#: includes.php:161 lib/Legacy/Util.php:215
+#: includes.php:161 lib/Legacy/Util.php:216
 msgid "Upgrade to Pro"
 msgstr "Actualizar a Pro"
 
@@ -3245,7 +3301,7 @@ msgstr "Actualizar a Pro"
 msgid "Upgrade to PublishPress Planner Pro"
 msgstr "Actualiza a PublishPress Planner Pro"
 
-#: lib/Legacy/Util.php:208
+#: lib/Legacy/Util.php:209
 msgid "Use post meta in notifications"
 msgstr "Utiliza los metadatos de la entrada en los avisos"
 
@@ -3279,7 +3335,7 @@ msgstr "Usuario: %s (%d)"
 msgid "Username"
 msgstr "Nombre del usuario"
 
-#: common/php/class-module.php:751
+#: common/php/class-module.php:755
 #: lib/Notifications/Workflow/Step/Receiver/User.php:26
 msgid "Users"
 msgstr "Usuarios"
@@ -3288,17 +3344,17 @@ msgstr "Usuarios"
 msgid "Users who selected \"Notify me\" for the content"
 msgstr "Usuarios que seleccionaron «Avísame» para el contenido"
 
-#: modules/content-board/content-board.php:1202
-#: modules/content-board/content-board.php:1283
-#: modules/content-overview/content-overview.php:1218
-#: modules/content-overview/content-overview.php:1725
-#: modules/calendar/library/calendar-methods.php:1156
-#: modules/calendar/library/calendar-utilities.php:1084
+#: modules/content-board/content-board.php:1206
+#: modules/content-board/content-board.php:1287
+#: modules/content-overview/content-overview.php:1223
+#: modules/content-overview/content-overview.php:1731
+#: modules/calendar/library/calendar-methods.php:1249
+#: modules/calendar/library/calendar-utilities.php:1111
 msgid "View"
 msgstr "Ver"
 
-#: modules/content-board/content-board.php:1196
-#: modules/content-overview/content-overview.php:1719
+#: modules/content-board/content-board.php:1200
+#: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Ver &#8220;%s&#8221;"
@@ -3308,7 +3364,7 @@ msgstr "Ver &#8220;%s&#8221;"
 msgid "View &#8220;%s&#8221; on Google Maps"
 msgstr "Ver &#8220;%s&#8221; en Google Maps"
 
-#: lib/Legacy/Util.php:240
+#: lib/Legacy/Util.php:241
 msgid "View Knowledge Base"
 msgstr "Ver la base de conocimiento"
 
@@ -3330,15 +3386,15 @@ msgstr "Ver el aviso de usuario"
 msgid "View: %s"
 msgstr "Ver: %s"
 
-#: publishpress.php:1451
+#: publishpress.php:1464
 msgid "Warning"
 msgstr "Advertencia"
 
-#: modules/calendar/library/calendar-methods.php:1127
+#: modules/calendar/library/calendar-methods.php:1220
 msgid "Wed"
 msgstr "Mié"
 
-#: modules/calendar/calendar.php:728
+#: modules/calendar/calendar.php:730
 msgid "Weeks"
 msgstr "Semanas"
 
@@ -3449,19 +3505,19 @@ msgstr ""
 msgid "You can see all editorial comments on this %s here: "
 msgstr "Puedes ver todos los comentarios editoriales en esta %s aquí: "
 
-#: modules/content-board/content-board.php:757
-#: modules/content-board/content-board.php:817
-#: modules/content-overview/content-overview.php:900
-#: modules/content-overview/content-overview.php:960
-#: modules/calendar/library/calendar-utilities.php:1172
+#: modules/content-board/content-board.php:761
+#: modules/content-board/content-board.php:821
+#: modules/content-overview/content-overview.php:904
+#: modules/content-overview/content-overview.php:965
+#: modules/calendar/library/calendar-utilities.php:1200
 msgid "You do not have any editorial fields enabled"
 msgstr "No hay campos editoriales activados"
 
-#: modules/content-board/content-board.php:764
-#: modules/content-board/content-board.php:824
-#: modules/content-overview/content-overview.php:907
-#: modules/content-overview/content-overview.php:967
-#: modules/calendar/library/calendar-utilities.php:1179
+#: modules/content-board/content-board.php:768
+#: modules/content-board/content-board.php:828
+#: modules/content-overview/content-overview.php:911
+#: modules/content-overview/content-overview.php:972
+#: modules/calendar/library/calendar-utilities.php:1207
 msgid "You do not have any public taxonomies"
 msgstr "No hay ninguna taxonomía pública"
 
@@ -3469,7 +3525,7 @@ msgstr "No hay ninguna taxonomía pública"
 msgid "You do not have necessary permissions to complete this action."
 msgstr "No tienes los permisos necesarios para completar esta acción."
 
-#: modules/content-overview/content-overview.php:761
+#: modules/content-overview/content-overview.php:762
 #: modules/content-board/library/content-board-methods.php:258
 #, php-format
 msgid "You do not have permission to add new %s"
@@ -3485,7 +3541,7 @@ msgstr ""
 "Lo siento, no tienes permisos para mover la entrada al estado de entrada "
 "seleccionado."
 
-#: modules/content-board/content-board.php:1025
+#: modules/content-board/content-board.php:1029
 msgid "You do not have permission to move post to this status"
 msgstr "Lo siento, no tienes permisos para mover la entrada a este estado"
 
@@ -3595,22 +3651,6 @@ msgstr ""
 
 #~ msgid "Basic Notifications"
 #~ msgstr "Avisos básicos"
-
-#, php-format
-#~ msgid ""
-#~ "For custom post statuses, activate the %1$sPublishPress Statuses%2$s "
-#~ "plugin. %3$sLearn more...%4$s"
-#~ msgstr ""
-#~ "Para estados de entrada personalizados, activa el plugin %1$sPublishPress "
-#~ "Statuses%2$s. %3$sMás información...%4$s"
-
-#, php-format
-#~ msgid ""
-#~ "For custom post statuses, install the %1$sPublishPress Statuses%2$s "
-#~ "plugin. %3$sLearn more...%4$s"
-#~ msgstr ""
-#~ "Para estados de entrada personalizados, instala el plugin "
-#~ "%1$sPublishPress Statuses%2$s. %3$sMás información...%4$s"
 
 #~ msgid "Schedule Date"
 #~ msgstr "Fecha de programación"
