@@ -54,6 +54,9 @@ if (! class_exists('PP_Notifications')) {
         // Taxonomy name used to store roles which will be notified for changes in the posts.
         public $notify_role_taxonomy = 'pp_notify_role';
 
+        // Taxonomy name used to store groups which will be notified for changes in the posts.
+        public $notify_group_taxonomy = 'pp_notify_group';
+
         // Taxonomy name used to store emails which will be notified for changes in the posts.
         public $notify_email_taxonomy = 'pp_notify_email';
 
@@ -362,6 +365,23 @@ if (! class_exists('PP_Notifications')) {
                 )
             );
 
+            if (defined('PRESSPERMIT_VERSION')) {
+                register_taxonomy(
+                    $this->notify_group_taxonomy,
+                    $supported_post_types,
+                    wp_parse_args(
+                        [
+                            'label' => __('Notification Group', 'publishpress'),
+                            'labels' => [
+                                'name' => __('Notification Groups', 'publishpress'),
+                                'singular_name' => __('Notification Group', 'publishpress'),
+                            ],
+                        ],
+                        $args
+                    )
+                );
+            }
+
             register_taxonomy(
                 $this->notify_email_taxonomy,
                 $supported_post_types,
@@ -655,9 +675,10 @@ if (! class_exists('PP_Notifications')) {
                         <?php
                         $users_to_notify = $this->get_users_to_notify($post->ID, 'id');
                         $roles_to_notify = $this->get_roles_to_notify($post->ID, 'slugs');
+                        $groups_to_notify = $this->get_groups_to_notify($post->ID, 'slugs');
                         $emails_to_notify = $this->get_emails_to_notify($post->ID);
 
-                        $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
+                        $selected = array_merge($users_to_notify, $roles_to_notify, $groups_to_notify, $emails_to_notify);
 
                         $select_form_args = [
                             'list_class' => 'pp_post_notify_list',
@@ -848,6 +869,18 @@ if (! class_exists('PP_Notifications')) {
             }
             wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
 
+            if (defined('PRESSPERMIT_VERSION')) {
+                // Remove current groups
+                $terms = get_the_terms($postId, $this->notify_group_taxonomy);
+                $groups = [];
+                if (! empty($terms)) {
+                    foreach ($terms as $term) {
+                        $groups[] = $term->term_id;
+                    }
+                }
+                wp_remove_object_terms($postId, $groups, $this->notify_group_taxonomy);
+            }
+
             // Remove current emails
             $terms = get_the_terms($postId, $this->notify_email_taxonomy);
             $emails = [];
@@ -878,6 +911,9 @@ if (! class_exists('PP_Notifications')) {
                         // Is an email address?
                         if (strpos($id, '@') > 0) {
                             $this->post_set_emails_to_notify($postId, $id, true);
+                        
+                        } elseif (0 === strpos($id, 'group-')) {
+                            $this->post_set_groups_to_notify($postId, $id, true);
                         } else {
                             // Role name
                             $this->post_set_roles_to_notify($postId, $id, true);
@@ -1349,6 +1385,57 @@ if (! class_exists('PP_Notifications')) {
         }
 
         /**
+         * Set a group or groups to be notified for a post
+         *
+         * @param int|object $post Post object or ID
+         * @param string|array $groups Group or groups to subscribe to post updates
+         * @param bool $append Whether groups should be added to pp_notify_role list or replace existing list
+         *
+         * @return true|WP_Error     $response  True on success, WP_Error on failure
+         */
+        private function post_set_groups_to_notify($post, $groups, $append = true)
+        {
+            $post = get_post($post);
+            if (! $post) {
+                return new WP_Error('missing-post', $this->module->messages['missing-post']);
+            }
+
+            if (!class_exists('PublishPress\Permissions\API')) {
+                return;
+            }
+
+            if (! is_array($groups)) {
+                $groups = [$groups];
+            }
+
+            $role_terms = [];
+
+            foreach ($groups as $group_id) {
+                if (0 === strpos($group_id, 'group-')) {
+                    $group_id = str_replace('group-', '', $group_id);
+                }
+
+                if ($group = \PublishPress\Permissions\API::getGroup($group_id)) {
+                    // Add user as a term if they don't exist
+                    $slug = 'group-' . $group_id;
+                    $term = $this->add_term_if_not_exists($group->name, $this->notify_group_taxonomy, compact('slug'));
+
+                    if (! is_wp_error($term)) {
+                        $role_terms[] = $slug;
+                    }
+                }
+            }
+
+            $set = wp_set_object_terms($post->ID, $role_terms, $this->notify_group_taxonomy, $append);
+
+            if (is_wp_error($set)) {
+                return $set;
+            } else {
+                return true;
+            }
+        }
+
+        /**
          * Set a non-user or non-users to be notified for a post
          *
          * @param int|object $post Post object or ID
@@ -1487,10 +1574,12 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return WP_error if insert fails, true otherwise
          */
-        private function add_term_if_not_exists($term, $taxonomy)
+        private function add_term_if_not_exists($term, $taxonomy, $args = [])
         {
             if (! term_exists($term, $taxonomy)) {
-                $args = ['slug' => sanitize_title($term)];
+                if (empty($args)) {
+                    $args = ['slug' => sanitize_title($term)];
+                }
 
                 return wp_insert_term($term, $taxonomy, $args);
             }
@@ -1609,6 +1698,32 @@ if (! class_exists('PP_Notifications')) {
             }
 
             return $roles;
+        }
+
+        /**
+         * Gets a list of the groups that should be notified for the specified post
+         *
+         * @param int $post_id
+         * @param string $return
+         *
+         * @return array $groups All of the role slugs
+         */
+        public function get_groups_to_notify($post_id, $return = 'all')
+        {
+            // Workaround for the fact that get_object_terms doesn't return just slugs
+            $fields = ($return == 'slugs') ? 'all' : $return;
+
+            $group_terms = wp_get_object_terms($post_id, $this->notify_group_taxonomy, compact('fields'));
+
+            if (!is_array($group_terms)) {
+                $group_terms = [];	
+            } else {
+                if ('slugs' == $return) {
+                    $group_terms = array_column($group_terms, 'slug');
+                }
+            }
+	
+            return $group_terms;
         }
 
         /**
