@@ -330,7 +330,7 @@ export function openPostModal(post_id) {
 
         // add post edit link meta
         if (action_links.edit !== '') {
-            popup_header += '<div class="meta post-edit"><span class="meta-title"><span><a target="_blank" href="' + action_links.edit + '">' + publishpressCalendarParams.strings.edit_label + '</a></span></span></div>';
+            popup_header += '<div class="meta post-edit"><span class="meta-title"><span><a href="' + action_links.edit + '">' + publishpressCalendarParams.strings.edit_label + '</a></span></span></div>';
         }
         // add post trash meta
         if (action_links.trash !== '') {
@@ -338,9 +338,9 @@ export function openPostModal(post_id) {
         }
         // add post view/preview meta
         if (action_links.previewpost !== '') {
-            popup_header += '<div class="meta post-preview"><span class="meta-title"><span><a target="_blank" href="' + action_links.previewpost + '">' + publishpressCalendarParams.strings.preview_label + '</a></span></span></div>';
+            popup_header += '<div class="meta post-preview"><span class="meta-title"><span><a href="' + action_links.previewpost + '">' + publishpressCalendarParams.strings.preview_label + '</a></span></span></div>';
         } else if (action_links.view !== '') {
-            popup_header += '<div class="meta post-view"><span class="meta-title"><span><a target="_blank" href="' + action_links.view + '">' + publishpressCalendarParams.strings.view_label + '</a></span></span></div>';
+            popup_header += '<div class="meta post-view"><span class="meta-title"><span><a href="' + action_links.view + '">' + publishpressCalendarParams.strings.view_label + '</a></span></span></div>';
         }
 
         popup_header += '</div>';
