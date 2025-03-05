@@ -503,7 +503,7 @@ if (! class_exists('PP_Notifications')) {
                 return $actions;
             }
 
-            if (! current_user_can($this->edit_post_subscriptions_cap) || ! current_user_can(
+            if (! current_user_can($this->edit_post_subscriptions_cap) && ! current_user_can(
                     'edit_post',
                     $post->ID
                 )) {
