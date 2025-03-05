@@ -32,6 +32,9 @@ use Exception;
  */
 class NotificationsLogHandler
 {
+
+    const NOTIFICATION_LOG_LIMIT = 1000;
+
     /**
      * Register the notification log for the post.
      *
@@ -101,6 +104,15 @@ class NotificationsLogHandler
         wp_cache_set('last_changed', $last_changed, 'comment');
 
         do_action('publishpress_notifications_log_registered', $logId, $commentData);
+
+        // check if log count exceed limit, if so, delete earliest 10 logs
+        if ($this->getNotificationLogEntries(null, null, null, true) > self::NOTIFICATION_LOG_LIMIT) {
+            $earliest_ten = $this->getNotificationLogEntries(null, 'comment_date', 'ASC', false, [], 10);
+            foreach ($earliest_ten as $logComment) {
+                $log = new NotificationsLogModel($logComment);
+                $log->delete();
+            }
+        }
 
         return $logId;
     }
