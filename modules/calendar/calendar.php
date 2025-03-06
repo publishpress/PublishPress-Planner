@@ -969,7 +969,7 @@ if (! class_exists('PP_Calendar')) {
             }
     
             // add taxononomies
-            $taxonomies = $this->get_all_taxonomies();
+            $taxonomies = $this->get_post_types_taxonomies($this->get_selected_post_types());
             $all_taxonomies = [];
             foreach ($taxonomies as $taxonomy) {
                 if (in_array($taxonomy->name, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp', 'pp_revision_status'])) {

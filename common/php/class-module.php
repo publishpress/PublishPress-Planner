@@ -968,6 +968,33 @@ if (!class_exists('PP_Module')) {
         }
 
         /**
+         * Retrieve post types taxonomies
+         *
+         * @param array $post_types
+         *
+         * @return array
+         */
+        public function get_post_types_taxonomies($post_types)
+        {
+            $taxonomies = array_map(
+                function ( $post_type ) {
+                    return get_object_taxonomies( $post_type, 'objects' );
+                },
+                $post_types
+            );
+            
+            // Make sure there's no duplicate
+            $taxonomies = call_user_func_array( 'array_merge', $taxonomies );
+
+            // Keep only those where show_ui is not empty.
+            $taxonomies = array_filter( $taxonomies, function( $taxonomy ) {
+                return ! empty( $taxonomy->show_ui );
+            });
+            
+            return $taxonomies;
+        }
+
+        /**
          *
          * @param string $param The parameter to look for in $_GET
          *
