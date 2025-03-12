@@ -65,7 +65,53 @@ class Group extends Simple_Checkbox implements Receiver_Interface
         $groups = [];
 
         if (class_exists('PublishPress\Permissions\API')) {
-            $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['include_metagroups' => false]);
+            global $post;
+
+            if (defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') && get_option('rvy_use_publishpress_notifications')) {
+                $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['skip_meta_types' => ['wp_role']]);
+
+                foreach ($groups as $k => $group) {
+                    if (empty($group->metagroup_id)) {
+                        continue;
+                    }
+                    
+                    switch ($group->metagroup_id) {
+                        case 'rvy_scheduled_rev_notice':
+                            // Don't offer Scheduled Change Notifications metagroup for standard Planner notifications, or for Revisions notifications related to creation, submission and moderation 
+                            $excludes = ['new-revision-created', 'revision-is-submitted', 'revision-status-changed', 'revision-is-scheduled', 'revision-deferred-or-rejected', 'revision-is-applied', 
+                            'new-post-is-created-in-draft-status', 'new-post-is-published', 'notify-when-content-is-published', 'existing-post-is-updated', 'notify-on-editorial-comments'];
+
+                            foreach ($excludes as $exclude_notif) {
+                                if (0 === strpos($post->post_name, $exclude_notif)) {
+                                    unset($groups[$k]);
+                                    continue 3;
+                                }
+                            }
+
+                            break;
+
+                        case 'rvy_pending_rev_notice':
+                            // Don't offer Change Request Notifications metagroup for standard Planner notifications, or for Revisions notifications related to publication 
+                            $excludes = ['scheduled-revision-is-published', 'revision-is-published',
+                            'new-post-is-created-in-draft-status', 'new-post-is-published', 'notify-when-content-is-published', 'existing-post-is-updated', 'notify-on-editorial-comments'];
+
+                            foreach ($excludes as $exclude_notif) {
+                                if (0 === strpos($post->post_name, $exclude_notif)) {
+                                    unset($groups[$k]);
+                                    continue 3;
+                                }
+                            }
+
+                            break;
+                    }
+
+                    if (class_exists('PublishPress\Permissions\DB\Groups') && method_exists('PublishPress\Permissions\DB\Groups', 'getMetagroupName')) {
+                        $groups[$k]->name = \PublishPress\Permissions\DB\Groups::getMetagroupName($group->metagroup_type, $group->metagroup_id);
+                    }
+                }
+            } else {
+                $groups = \PublishPress\Permissions\API::getGroups('pp_group', ['include_metagroups' => false]);
+            }
         }
 
         if (empty($groups)) {
