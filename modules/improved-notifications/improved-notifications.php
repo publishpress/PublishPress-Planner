@@ -614,7 +614,7 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function action_transition_post_status($postId, $post, $update, $postBefore)
         {
-            if (! $this->is_supported_post_type($post->post_type)) {
+            if (! $this->is_supported_post_type($post->post_type) || !apply_filters('publishpress_notifications_do_transition_post_status', true, $post)) {
                 return;
             }
 
