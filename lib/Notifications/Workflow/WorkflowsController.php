@@ -154,6 +154,7 @@ class WorkflowsController
         $classes_receiver = [
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Site_Admin',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Author',
+            '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\RevisionAuthor',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\User',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Role',
             '\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Group',
@@ -162,6 +163,10 @@ class WorkflowsController
 
         if (!defined('PRESSPERMIT_VERSION')) {
             $classes_receiver = array_diff($classes_receiver, ['\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\Group']);
+        }
+
+        if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') || version_compare(PUBLISHPRESS_REVISIONS_PRO_VERSION, '3.6.3-rc3', '<')) {
+            $classes_receiver = array_diff($classes_receiver, ['\\PublishPress\\Notifications\\Workflow\\Step\\Receiver\\RevisionAuthor']);
         }
 
         /**
