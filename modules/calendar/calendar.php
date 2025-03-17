@@ -504,7 +504,11 @@ if (! class_exists('PP_Calendar')) {
             global $pagenow;
 
             // Only load calendar scripts on the calendar page
-            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') { // 
+            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-calendar') {
+                
+                // update content calendar form action early
+                $this->update_content_calendar_form_action(false);
+
                 $this->enqueue_datepicker_resources();
 
                 $method_args                        = [];
@@ -889,7 +893,7 @@ if (! class_exists('PP_Calendar')) {
          *
          * @return void
          */
-        public function update_content_calendar_form_action() {
+        public function update_content_calendar_form_action($show_notice = true) {
             global $publishpress;
     
             if (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'filter_form' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_form_nonce')) {
@@ -903,14 +907,17 @@ if (! class_exists('PP_Calendar')) {
     
                 $publishpress->update_module_option($this->module->name, 'content_calendar_filters', $content_calendar_filters);
                 $publishpress->update_module_option($this->module->name, 'content_calendar_custom_filters', $content_calendar_custom_filters);
-                
-                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+                if ($show_notice) {
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo pp_planner_admin_notice(esc_html__('Filter updated successfully.', 'publishpress'));
+                }
             } elseif (!empty($_POST['co_form_action']) && !empty($_POST['_nonce']) && $_POST['co_form_action'] == 'reset_filter' && wp_verify_nonce(sanitize_key($_POST['_nonce']), 'content_calendar_filter_rest_nonce')) {
                 // Content calendar filter reset
                 $this->update_user_meta(get_current_user_id(), self::USERMETA_KEY_PREFIX . 'filters', []);
-                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                echo pp_planner_admin_notice(esc_html__('Filter reset successfully.', 'publishpress'));
+                if ($show_notice) {
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo pp_planner_admin_notice(esc_html__('Filter reset successfully.', 'publishpress'));
+                }
             }
         }
 
@@ -962,7 +969,7 @@ if (! class_exists('PP_Calendar')) {
             }
     
             // add taxononomies
-            $taxonomies = $this->get_all_taxonomies();
+            $taxonomies = $this->get_post_types_taxonomies($this->get_selected_post_types());
             $all_taxonomies = [];
             foreach ($taxonomies as $taxonomy) {
                 if (in_array($taxonomy->name, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp', 'pp_revision_status'])) {

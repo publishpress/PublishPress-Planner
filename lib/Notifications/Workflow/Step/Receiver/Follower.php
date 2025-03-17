@@ -73,6 +73,8 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                             $users[] = $item;
                         } elseif (strpos($item, '@') > 0) {
                             $emails[] = $item;
+                        } elseif (0 === strpos($item, 'group-')) {
+                            $groups[] = $item;
                         } else {
                             $roles[] = $item;
                         }
@@ -83,6 +85,12 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                 $roles  = $publishpress->notifications->get_roles_to_notify($post_id, 'slugs');
                 $users  = $publishpress->notifications->get_users_to_notify($post_id, 'id');
                 $emails = $publishpress->notifications->get_emails_to_notify($post_id);
+
+                if (defined('PRESSPERMIT_VERSION')) {
+                    $groups = $publishpress->notifications->get_groups_to_notify($post_id, 'slugs');
+                } else {
+                    $groups = [];
+                }
             }
 
             // Extract users from roles.
@@ -98,7 +106,32 @@ class Follower extends Simple_Checkbox implements Receiver_Interface
                                     'group'    => self::META_VALUE,
                                     'subgroup' => sprintf(
                                         __('role:%s', 'publishpress'),
-                                        $role
+                                        ' ' . $role
+                                    )
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Extract users from groups.
+            if (!empty($groups) && class_exists('PublishPress\Permissions\API')) {
+                foreach ((array)$groups as $group_term_slug) {
+                    if (0 === strpos($group_term_slug, 'group-')) {
+                        $group_id = str_replace('group-', '', $group_term_slug);
+                    }
+
+                    if ($group = \PublishPress\Permissions\API::getGroup($group_id)) {
+                        if ($group_users = \PublishPress\Permissions\API::getGroupMembers($group_id, 'pp_group')) {
+                            foreach ($group_users as $user) {
+                                $followers[] = [
+                                    'receiver' => $user->ID,
+                                    'group'    => self::META_VALUE,
+                                    'subgroup' => sprintf(
+                                        __('group %d: %s', 'publishpress'),
+                                        $group_id,
+                                        $group->name
                                     )
                                 ];
                             }

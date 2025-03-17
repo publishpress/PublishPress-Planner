@@ -54,6 +54,9 @@ if (! class_exists('PP_Notifications')) {
         // Taxonomy name used to store roles which will be notified for changes in the posts.
         public $notify_role_taxonomy = 'pp_notify_role';
 
+        // Taxonomy name used to store groups which will be notified for changes in the posts.
+        public $notify_group_taxonomy = 'pp_notify_group';
+
         // Taxonomy name used to store emails which will be notified for changes in the posts.
         public $notify_email_taxonomy = 'pp_notify_email';
 
@@ -301,26 +304,6 @@ if (! class_exists('PP_Notifications')) {
                         'labels' => [
                             'name' => __('Notify Users', 'publishpress'),
                             'singular_name' => __('Notify User', 'publishpress'),
-                            'search_items' => __('Search Notify Users', 'publishpress'),
-                            'popular_items' => __('Popular Notify Users', 'publishpress'),
-                            'all_items' => __('All Notify Users', 'publishpress'),
-                            'parent_item' => __('Parent Notify User', 'publishpress'),
-                            'parent_item_colon' => __('Parent Notify User:', 'publishpress'),
-                            'edit_item' => __('Edit Notify User', 'publishpress'),
-                            'view_item' => __('View Notify User', 'publishpress'),
-                            'update_item' => __('Update Notify User', 'publishpress'),
-                            'add_new_item' => __('Add New Notify User', 'publishpress'),
-                            'new_item_name' => __('New Notify User', 'publishpress'),
-                            'separate_items_with_commas' => __('Separate notify users with commas', 'publishpress'),
-                            'add_or_remove_items' => __('Add or remove notify users', 'publishpress'),
-                            'choose_from_most_used' => __('Choose from the most used notify users', 'publishpress'),
-                            'not_found' => __('No notify users', 'publishpress'),
-                            'no_terms' => __('No notify users', 'publishpress'),
-                            'filter_by_item' => __('Filter by notify user', 'publishpress'),
-                            'items_list_navigation' => __('Notify User', 'publishpress'),
-                            'items_list' => __('Notify User', 'publishpress'),
-                            'most_used' => __('Most Used Notify User', 'publishpress'),
-                            'back_to_items' => __('Back to notify users', 'publishpress'),
                         ],
                     ],
                     $args
@@ -336,31 +319,28 @@ if (! class_exists('PP_Notifications')) {
                         'labels' => [
                             'name' => __('Notify Roles', 'publishpress'),
                             'singular_name' => __('Notify Role', 'publishpress'),
-                            'search_items' => __('Search Notify Roles', 'publishpress'),
-                            'popular_items' => __('Popular Notify Roles', 'publishpress'),
-                            'all_items' => __('All Notify Roles', 'publishpress'),
-                            'parent_item' => __('Parent Notify Role', 'publishpress'),
-                            'parent_item_colon' => __('Parent Notify Role:', 'publishpress'),
-                            'edit_item' => __('Edit Notify Role', 'publishpress'),
-                            'view_item' => __('View Notify Role', 'publishpress'),
-                            'update_item' => __('Update Notify Role', 'publishpress'),
-                            'add_new_item' => __('Add New Notify Role', 'publishpress'),
-                            'new_item_name' => __('New Notify Role', 'publishpress'),
-                            'separate_items_with_commas' => __('Separate notify roles with commas', 'publishpress'),
-                            'add_or_remove_items' => __('Add or remove notify roles', 'publishpress'),
-                            'choose_from_most_used' => __('Choose from the most used notify roles', 'publishpress'),
-                            'not_found' => __('No notify roles', 'publishpress'),
-                            'no_terms' => __('No notify roles', 'publishpress'),
-                            'filter_by_item' => __('Filter by notify role', 'publishpress'),
-                            'items_list_navigation' => __('Notify Role', 'publishpress'),
-                            'items_list' => __('Notify Role', 'publishpress'),
-                            'most_used' => __('Most Used Notify Role', 'publishpress'),
-                            'back_to_items' => __('Back to notify roles', 'publishpress'),
                         ],
                     ],
                     $args
                 )
             );
+
+            if (defined('PRESSPERMIT_VERSION')) {
+                register_taxonomy(
+                    $this->notify_group_taxonomy,
+                    $supported_post_types,
+                    wp_parse_args(
+                        [
+                            'label' => __('Notification Group', 'publishpress'),
+                            'labels' => [
+                                'name' => __('Notification Groups', 'publishpress'),
+                                'singular_name' => __('Notification Group', 'publishpress'),
+                            ],
+                        ],
+                        $args
+                    )
+                );
+            }
 
             register_taxonomy(
                 $this->notify_email_taxonomy,
@@ -371,26 +351,6 @@ if (! class_exists('PP_Notifications')) {
                         'labels' => [
                             'name' => __('Notify Emails', 'publishpress'),
                             'singular_name' => __('Notify Email', 'publishpress'),
-                            'search_items' => __('Search Notify Emails', 'publishpress'),
-                            'popular_items' => __('Popular Notify Emails', 'publishpress'),
-                            'all_items' => __('All Notify Emails', 'publishpress'),
-                            'parent_item' => __('Parent Notify Email', 'publishpress'),
-                            'parent_item_colon' => __('Parent Notify Email:', 'publishpress'),
-                            'edit_item' => __('Edit Notify Email', 'publishpress'),
-                            'view_item' => __('View Notify Email', 'publishpress'),
-                            'update_item' => __('Update Notify Email', 'publishpress'),
-                            'add_new_item' => __('Add New Notify Email', 'publishpress'),
-                            'new_item_name' => __('New Notify Email', 'publishpress'),
-                            'separate_items_with_commas' => __('Separate notify emails with commas', 'publishpress'),
-                            'add_or_remove_items' => __('Add or remove notify emails', 'publishpress'),
-                            'choose_from_most_used' => __('Choose from the most used notify emails', 'publishpress'),
-                            'not_found' => __('No notify emails', 'publishpress'),
-                            'no_terms' => __('No notify emails', 'publishpress'),
-                            'filter_by_item' => __('Filter by notify email', 'publishpress'),
-                            'items_list_navigation' => __('Notify Email', 'publishpress'),
-                            'items_list' => __('Notify Email', 'publishpress'),
-                            'most_used' => __('Most Used Notify Email', 'publishpress'),
-                            'back_to_items' => __('Back to notify emails', 'publishpress'),
                         ],
                     ],
                     $args
@@ -543,7 +503,7 @@ if (! class_exists('PP_Notifications')) {
                 return $actions;
             }
 
-            if (! current_user_can($this->edit_post_subscriptions_cap) || ! current_user_can(
+            if (! current_user_can($this->edit_post_subscriptions_cap) && ! current_user_can(
                     'edit_post',
                     $post->ID
                 )) {
@@ -655,9 +615,10 @@ if (! class_exists('PP_Notifications')) {
                         <?php
                         $users_to_notify = $this->get_users_to_notify($post->ID, 'id');
                         $roles_to_notify = $this->get_roles_to_notify($post->ID, 'slugs');
+                        $groups_to_notify = $this->get_groups_to_notify($post->ID, 'slugs');
                         $emails_to_notify = $this->get_emails_to_notify($post->ID);
 
-                        $selected = array_merge($users_to_notify, $roles_to_notify, $emails_to_notify);
+                        $selected = array_merge($users_to_notify, $roles_to_notify, $groups_to_notify, $emails_to_notify);
 
                         $select_form_args = [
                             'list_class' => 'pp_post_notify_list',
@@ -848,6 +809,18 @@ if (! class_exists('PP_Notifications')) {
             }
             wp_remove_object_terms($postId, $roles, $this->notify_role_taxonomy);
 
+            if (defined('PRESSPERMIT_VERSION')) {
+                // Remove current groups
+                $terms = get_the_terms($postId, $this->notify_group_taxonomy);
+                $groups = [];
+                if (! empty($terms)) {
+                    foreach ($terms as $term) {
+                        $groups[] = $term->term_id;
+                    }
+                }
+                wp_remove_object_terms($postId, $groups, $this->notify_group_taxonomy);
+            }
+
             // Remove current emails
             $terms = get_the_terms($postId, $this->notify_email_taxonomy);
             $emails = [];
@@ -878,6 +851,9 @@ if (! class_exists('PP_Notifications')) {
                         // Is an email address?
                         if (strpos($id, '@') > 0) {
                             $this->post_set_emails_to_notify($postId, $id, true);
+                        
+                        } elseif (0 === strpos($id, 'group-')) {
+                            $this->post_set_groups_to_notify($postId, $id, true);
                         } else {
                             // Role name
                             $this->post_set_roles_to_notify($postId, $id, true);
@@ -1349,6 +1325,57 @@ if (! class_exists('PP_Notifications')) {
         }
 
         /**
+         * Set a group or groups to be notified for a post
+         *
+         * @param int|object $post Post object or ID
+         * @param string|array $groups Group or groups to subscribe to post updates
+         * @param bool $append Whether groups should be added to pp_notify_role list or replace existing list
+         *
+         * @return true|WP_Error     $response  True on success, WP_Error on failure
+         */
+        private function post_set_groups_to_notify($post, $groups, $append = true)
+        {
+            $post = get_post($post);
+            if (! $post) {
+                return new WP_Error('missing-post', $this->module->messages['missing-post']);
+            }
+
+            if (!class_exists('PublishPress\Permissions\API')) {
+                return;
+            }
+
+            if (! is_array($groups)) {
+                $groups = [$groups];
+            }
+
+            $role_terms = [];
+
+            foreach ($groups as $group_id) {
+                if (0 === strpos($group_id, 'group-')) {
+                    $group_id = str_replace('group-', '', $group_id);
+                }
+
+                if ($group = \PublishPress\Permissions\API::getGroup($group_id)) {
+                    // Add user as a term if they don't exist
+                    $slug = 'group-' . $group_id;
+                    $term = $this->add_term_if_not_exists($group->name, $this->notify_group_taxonomy, compact('slug'));
+
+                    if (! is_wp_error($term)) {
+                        $role_terms[] = $slug;
+                    }
+                }
+            }
+
+            $set = wp_set_object_terms($post->ID, $role_terms, $this->notify_group_taxonomy, $append);
+
+            if (is_wp_error($set)) {
+                return $set;
+            } else {
+                return true;
+            }
+        }
+
+        /**
          * Set a non-user or non-users to be notified for a post
          *
          * @param int|object $post Post object or ID
@@ -1487,10 +1514,12 @@ if (! class_exists('PP_Notifications')) {
          *
          * @return WP_error if insert fails, true otherwise
          */
-        private function add_term_if_not_exists($term, $taxonomy)
+        private function add_term_if_not_exists($term, $taxonomy, $args = [])
         {
             if (! term_exists($term, $taxonomy)) {
-                $args = ['slug' => sanitize_title($term)];
+                if (empty($args)) {
+                    $args = ['slug' => sanitize_title($term)];
+                }
 
                 return wp_insert_term($term, $taxonomy, $args);
             }
@@ -1609,6 +1638,32 @@ if (! class_exists('PP_Notifications')) {
             }
 
             return $roles;
+        }
+
+        /**
+         * Gets a list of the groups that should be notified for the specified post
+         *
+         * @param int $post_id
+         * @param string $return
+         *
+         * @return array $groups All of the role slugs
+         */
+        public function get_groups_to_notify($post_id, $return = 'all')
+        {
+            // Workaround for the fact that get_object_terms doesn't return just slugs
+            $fields = ($return == 'slugs') ? 'all' : $return;
+
+            $group_terms = wp_get_object_terms($post_id, $this->notify_group_taxonomy, compact('fields'));
+
+            if (!is_array($group_terms)) {
+                $group_terms = [];	
+            } else {
+                if ('slugs' == $return) {
+                    $group_terms = array_column($group_terms, 'slug');
+                }
+            }
+	
+            return $group_terms;
         }
 
         /**

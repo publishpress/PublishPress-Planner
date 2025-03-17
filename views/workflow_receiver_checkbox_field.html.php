@@ -1,3 +1,4 @@
+<?php if (!empty($context['name'])):?>
 <div>
     <input
             type="checkbox"
@@ -8,3 +9,4 @@
 
     <label for="<?php echo esc_attr($context['id']); ?>"><?php echo esc_html($context['label']); ?></label>
 </div>
+<?php endif;?>
