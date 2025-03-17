@@ -82,6 +82,10 @@ if (! class_exists('PP_Modules_Settings')) {
         {
             global $pagenow;
 
+            if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-modules-settings') {
+                $this->enqueue_datepicker_resources();
+            }
+
             wp_enqueue_style(
                 'publishpress-modules-css',
                 $this->module_url . 'lib/modules-settings.css',
