@@ -212,6 +212,10 @@ class Email extends Base implements Channel_Interface
      */
     private function getEmailErrorHash($receiver, $subject, $body)
     {
+        $receiver = is_array($receiver) ? json_encode($receiver) : (string) $receiver;
+        $subject  = is_array($subject) ? json_encode($subject) : (string) $subject;
+        $body     = is_array($body) ? json_encode($body) : (string) $body;
+
         return md5(sprintf('%s:%s:%s', $receiver, $subject, $body));
     }
 
