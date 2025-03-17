@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.7
-Stable tag: 4.6.1
+Stable tag: 4.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,7 +63,7 @@ This PublishPress Planner Pro feature allows you to send notifications either be
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you'll get access to these Pro plugins:
+Join PublishPress and you'll get access to these ten Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
@@ -74,6 +74,7 @@ Join PublishPress and you'll get access to these Pro plugins:
 * [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
 * [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series.
+* [PublishPress Statuses Pro](https://publishpress.com/series) enables you to create additional publishing steps for your posts.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
@@ -124,6 +125,21 @@ Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields e
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.7.0] - 17 Mar 2025 =
+
+* Compat : Notification Groups: support Revisions metagroups where appropriate, #1852
+* Compat : Revisions Pro: Support Revision Author as a Notifications receiver, #1854
+* Compat : Revisions Pro: Support Permissions metagroups as a receiver where appropriate, #1855
+* Compat : Notifications: Support Permission Groups as a Receiver, #1839
+* Fixed : Problem with Async Notification not going, #1842
+* Fixed : Allow "Notify Me" with edit_post_subscription capability only, #1807
+* Fixed : Calendar filter changes only reflect after refreshing page, #1841
+* Update : Notifications: Streamline translation, log captioning, #1840
+* Update : Limit Notification Log to 1,000 maximum removing old notifications for new entry, #1837
+* Update : Open Modal Edit Link in the same tab, #1799
+* Update : Translation pt_BR, #1836
+* Update : Planner v.4.6.1 Translation Updates-ES-FR-IT, #1835
 
 = [4.6.1] - 29 Jan 2025 =
 
