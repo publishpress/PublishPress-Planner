@@ -80,6 +80,13 @@ if (! class_exists('PP_Improved_Notifications')) {
         protected $published_workflows;
 
         /**
+         * Default workflows which are currently stored
+         *
+         * @var array
+         */
+        protected $stored_defaults;
+
+        /**
          * Construct the Notifications class
          */
         public function __construct()
@@ -237,11 +244,81 @@ if (! class_exists('PP_Improved_Notifications')) {
             do_settings_sections($this->module->options_group_name);
         }
 
+        public function get_default_workflow_storage() {
+            global $wpdb;
+
+            $query_args = [
+                'post_type' => 'psppnotif_workflow',
+                'meta_query' => [
+                    [
+                        'key' => '_psppno_is_default_workflow',
+                        'value' => '1',
+                    ]
+                ],
+            ];
+
+            $stored_defaults = [];
+
+            $query = new \WP_Query($query_args);
+
+            foreach ($query->posts as $row) {
+                if ('trash' != $row->post_status) {
+                    $stored_defaults[$row->post_name] = $row->ID;
+                }
+            }
+
+            return $stored_defaults;
+        }
+
+        protected function notification_workflow_exists($workflow_name, $args = []) {
+            if (!empty($args['force_refresh']) || !isset($this->stored_defaults)) {
+                $this->stored_defaults = $this->get_default_workflow_storage();
+            }
+
+            if (empty($this->stored_defaults) || !is_array($this->stored_defaults)) {
+                return false;
+            }
+
+            $exists = false;
+
+            foreach ($this->stored_defaults as $post_name => $post_id) {
+                if ($post_name == $workflow_name) {
+                    $exists = true;
+                    break;
+
+                } else {
+                    if (!empty($args['check_default_workflow_name'])) {
+                        $default_workflow_name = get_post_meta($post_id, '_psp_default_workflow_name', true);
+                    } else {
+                        $default_workflow_name = '';
+                    }
+
+                    if ($default_workflow_name && is_string($default_workflow_name)) {
+                        if ($args['check_default_workflow_name'] == $default_workflow_name) {
+                            $exists = true;
+                            break;
+                        }
+
+                    // Match based on substring only if we don't have default name stored to postmeta
+                    } elseif (0 === strpos($post_name, $workflow_name)) {
+                        $exists = true;
+                        break;
+                    }
+                }
+            }
+
+            return $exists;
+        }
+
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_post_update()
+        public function create_default_workflow_post_update()
         {
+            if ($this->notification_workflow_exists('existing-post-is-updated')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             // Post Save
@@ -276,8 +353,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_new_draft_created()
+        public function create_default_workflow_new_draft_created()
         {
+            if ($this->notification_workflow_exists('new-post-is-created-in-draft-status')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             $statuses = [
@@ -316,8 +397,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_post_published()
+        public function create_default_workflow_post_published()
         {
+            if ($this->notification_workflow_exists('new-post-is-published')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             // Get post statuses
@@ -366,8 +451,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflow for the editorial comments
          */
-        protected function create_default_workflow_editorial_comment()
+        public function create_default_workflow_editorial_comment()
         {
+            if ($this->notification_workflow_exists('notify-on-editorial-comments')) {
+                return;
+            }
+            
             $view = $this->get_service('view');
 
             // Post Save
@@ -509,7 +598,34 @@ if (! class_exists('PP_Improved_Notifications')) {
                 return false;
             }
 
-            return $query->the_post();
+            // Ignore PublishPress Revisions Pro / Statuses Pro default Notification Workflows, which previously used meta_key '_psppno_is_default_workflow'
+            $revisions_defaults = [
+                'new-revision-created',
+                'revision-is-submitted',
+                'revision-is-scheduled',
+                'revision-is-published',
+                'revision-is-applied',
+                'scheduled-revision-is-published',
+                'revision-status-changed',
+                'post-status-change',
+                'post-declined',
+                'revision-deferred-or-rejected',
+            ];
+
+            $any_planner_defaults = false;
+
+            foreach ($query->posts as $k => $post) {
+                foreach ($revisions_defaults as $default_post_name) {
+                    if (0 === strpos($post->post_name, $default_post_name)) {
+                        continue 2;
+                    }
+                }
+
+                $any_planner_defaults = true;
+                break;
+            }
+
+            return $any_planner_defaults;
         }
 
         /**
