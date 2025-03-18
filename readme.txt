@@ -126,6 +126,10 @@ Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields e
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [4.7.1] - 18 Mar 2025 =
+
+* Compat : Revisions Pro: Support restoration of default Notification Workflows if they were not created due to Revisions Pro Notification Workflows being created first
+
 = [4.7.0] - 17 Mar 2025 =
 
 * Compat : Notification Groups: support Revisions metagroups where appropriate, #1852
