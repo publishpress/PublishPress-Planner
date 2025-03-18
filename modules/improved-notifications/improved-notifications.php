@@ -80,6 +80,13 @@ if (! class_exists('PP_Improved_Notifications')) {
         protected $published_workflows;
 
         /**
+         * Default workflows which are currently stored
+         *
+         * @var array
+         */
+        protected $stored_defaults;
+
+        /**
          * Construct the Notifications class
          */
         public function __construct()
@@ -179,6 +186,17 @@ if (! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
+
+            // Revisions Pro 3.6.1 to 3.6.3 may delete Planner's default notifications under some plugin activation & deactivation sequences
+            if (defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') && version_compare(PUBLISHPRESS_REVISIONS_PRO_VERSION, '3.6.4-beta', '<')) {
+                add_filter(
+                    'pre_option_revisionary_pro_flush_notifications',
+                    function ($option_val, $option_name, $default_val) {
+                        return false;
+                    },
+                    10, 3
+                );
+            }
         }
 
         /**
@@ -237,11 +255,77 @@ if (! class_exists('PP_Improved_Notifications')) {
             do_settings_sections($this->module->options_group_name);
         }
 
+        public function get_default_workflow_storage() {
+            global $wpdb;
+
+            $query_args = [
+                'post_type' => 'psppnotif_workflow',
+                'meta_query' => [
+                    [
+                        'key' => '_psppno_is_default_workflow',
+                        'value' => '1',
+                    ]
+                ],
+            ];
+
+            $stored_defaults = [];
+
+            $query = new \WP_Query($query_args);
+
+            foreach ($query->posts as $row) {
+                if ('trash' != $row->post_status) {
+                    $stored_defaults[$row->post_name] = $row->ID;
+                }
+            }
+
+            return $stored_defaults;
+        }
+
+        protected function notification_workflow_exists($workflow_name, $args = []) {
+            if (!empty($args['force_refresh']) || !isset($this->stored_defaults)) {
+                $this->stored_defaults = $this->get_default_workflow_storage();
+            }
+
+            if (empty($this->stored_defaults) || !is_array($this->stored_defaults)) {
+                return false;
+            }
+
+            $exists = false;
+
+            foreach ($this->stored_defaults as $post_name => $post_id) {
+                if ($post_name == $workflow_name) {
+                    $exists = true;
+                    break;
+
+                } else {
+                    $default_workflow_name = get_post_meta($post_id, '_psp_default_workflow_name', true);
+
+                    if ($default_workflow_name && is_string($default_workflow_name)) {
+                        if ($workflow_name == $default_workflow_name) {
+                            $exists = true;
+                            break;
+                        }
+
+                    // Match based on substring only if we don't have default name stored to postmeta
+                    } elseif (0 === strpos($post_name, $workflow_name)) {
+                        $exists = true;
+                        break;
+                    }
+                }
+            }
+
+            return $exists;
+        }
+
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_post_update()
+        public function create_default_workflow_post_update()
         {
+            if ($this->notification_workflow_exists('existing-post-is-updated')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             // Post Save
@@ -276,8 +360,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_new_draft_created()
+        public function create_default_workflow_new_draft_created()
         {
+            if ($this->notification_workflow_exists('new-post-is-created-in-draft-status')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             $statuses = [
@@ -316,8 +404,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflows based on current notification settings
          */
-        protected function create_default_workflow_post_published()
+        public function create_default_workflow_post_published()
         {
+            if ($this->notification_workflow_exists('new-post-is-published')) {
+                return;
+            }
+
             $view = $this->get_service('view');
 
             // Get post statuses
@@ -366,8 +458,12 @@ if (! class_exists('PP_Improved_Notifications')) {
         /**
          * Create default notification workflow for the editorial comments
          */
-        protected function create_default_workflow_editorial_comment()
+        public function create_default_workflow_editorial_comment()
         {
+            if ($this->notification_workflow_exists('notify-on-editorial-comments')) {
+                return;
+            }
+            
             $view = $this->get_service('view');
 
             // Post Save
