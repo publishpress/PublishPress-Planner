@@ -598,7 +598,34 @@ if (! class_exists('PP_Improved_Notifications')) {
                 return false;
             }
 
-            return $query->the_post();
+            // Ignore PublishPress Revisions Pro / Statuses Pro default Notification Workflows, which previously used meta_key '_psppno_is_default_workflow'
+            $revisions_defaults = [
+                'new-revision-created',
+                'revision-is-submitted',
+                'revision-is-scheduled',
+                'revision-is-published',
+                'revision-is-applied',
+                'scheduled-revision-is-published',
+                'revision-status-changed',
+                'post-status-change',
+                'post-declined',
+                'revision-deferred-or-rejected',
+            ];
+
+            $any_planner_defaults = false;
+
+            foreach ($query->posts as $k => $post) {
+                foreach ($revisions_defaults as $default_post_name) {
+                    if (0 === strpos($post->post_name, $default_post_name)) {
+                        continue 2;
+                    }
+                }
+
+                $any_planner_defaults = true;
+                break;
+            }
+
+            return $any_planner_defaults;
         }
 
         /**
