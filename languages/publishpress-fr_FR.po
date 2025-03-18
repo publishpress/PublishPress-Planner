@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress: Editorial Calendar, Workflow, "
 "Comments, Notifications and Statuses - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2025-01-29 19:29+0000\n"
-"PO-Revision-Date: 2025-01-30 19:10+0100\n"
+"POT-Creation-Date: 2025-03-13 09:56+0000\n"
+"PO-Revision-Date: 2025-03-18 12:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: French (France)\n"
 "Language: fr_FR\n"
@@ -29,31 +29,31 @@ msgid "\"Notify me\""
 msgstr "« Me notifier »"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:1988
+#: modules/notifications/notifications.php:2043
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
 msgstr "%1$s #%2$s « %3$s » a été mis à la corbeille par %4$s %5$s"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:2035
+#: modules/notifications/notifications.php:2090
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
 msgstr "%1$s #%2$s « %3$s » a été publié par %4$s %5$s"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:2005
+#: modules/notifications/notifications.php:2060
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
 msgstr "%1$s #%2$s « %3$s » a été restauré de la corbeille par %4$s %5$s"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:2052
+#: modules/notifications/notifications.php:2107
 #, php-format
 msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
 msgstr "%1$s #%2$s « %3$s » a été dépublié par %4$s %5$s"
 
 #. 1: comment author, 2: author email, 3: date, 4: time
-#: modules/notifications/notifications.php:2151
+#: modules/notifications/notifications.php:2206
 #, php-format
 msgid "%1$s (%2$s ) said on %3$s at %4$s:"
 msgstr "%1$s (%2$s) a dit le %3$s à %4$s :"
@@ -66,13 +66,13 @@ msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
 msgstr " %1$s <div class=\"input-divider\">à</div> %2$s"
 
 #. 1: old status, 2: new status
-#: modules/notifications/notifications.php:2093
+#: modules/notifications/notifications.php:2148
 #, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
 #. 1: Comment date, 2: Comment time.
-#: modules/notifications/notifications.php:1926
+#: modules/notifications/notifications.php:1981
 #: modules/editorial-comments/library/EditorialCommentsTable.php:336
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:201
 #, php-format
@@ -187,7 +187,7 @@ msgstr ""
 "éditoriaux</a></p><p><a href=\"https://github.com/ostraining/"
 "PublishPress\">PublishPress sur Github</a></p>"
 
-#: modules/notifications/notifications.php:99
+#: modules/notifications/notifications.php:102
 msgid ""
 "<p><strong>For more information:</strong></p><p><a href=\"https://"
 "publishpress.com/features/notifications/\">Notifications Documentation</a></"
@@ -242,7 +242,7 @@ msgstr ""
 "qu’il apparaisse au reste de votre équipe. Gardez-le caché pour limiter les "
 "informations entre le rédacteur/rédactrice et son éditeur/éditrice.</p>"
 
-#: modules/notifications/notifications.php:94
+#: modules/notifications/notifications.php:97
 msgid ""
 "<p>Notifications ensure you keep up to date with progress your most "
 "important content. Users can be subscribed to notifications on a post one by "
@@ -269,66 +269,66 @@ msgstr ""
 "bonne voie pour être publiées à temps, et celles qui nécessitent un effort "
 "supplémentaire.</p>"
 
-#: modules/notifications/notifications.php:2101
+#: modules/notifications/notifications.php:2156
 #, php-format
 msgid "== %s Details =="
 msgstr "== %s Détails =="
 
-#: modules/notifications/notifications.php:2120
-#: modules/notifications/notifications.php:2173
+#: modules/notifications/notifications.php:2175
+#: modules/notifications/notifications.php:2228
 msgid "== Actions =="
 msgstr "== Actions =="
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:2028
+#: modules/notifications/notifications.php:2083
 #, php-format
 msgid "[%1$s] %2$s Published: \"%3$s\""
 msgstr "[%1$s] %2$s publié : « %3$s »"
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:1998
+#: modules/notifications/notifications.php:2053
 #, php-format
 msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
 msgstr "[%1$s] %2$s Restauré de la corbeille : « %3$s »"
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:2062
+#: modules/notifications/notifications.php:2117
 #, php-format
 msgid "[%1$s] %2$s Status Changed for \"%3$s\""
 msgstr "[%1$s] %2$s état modifié pour « %3$s »"
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:1981
+#: modules/notifications/notifications.php:2036
 #, php-format
 msgid "[%1$s] %2$s Trashed: \"%3$s\""
 msgstr "[%1$s] %2$s mis à la corbeille : « %3$s »"
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:2045
+#: modules/notifications/notifications.php:2100
 #, php-format
 msgid "[%1$s] %2$s Unpublished: \"%3$s\""
 msgstr "[%1$s] %2$s non publié : « %3$s »"
 
 #. 1: site name, 2: post type, 3. post title
-#: modules/notifications/notifications.php:1964
+#: modules/notifications/notifications.php:2019
 #, php-format
 msgid "[%1$s] New %2$s Created: \"%3$s\""
 msgstr "[%1$s] Nouveau %2$s créé : « %3$s »"
 
 #. 1: blog name, 2: post title
-#: modules/notifications/notifications.php:2137
+#: modules/notifications/notifications.php:2192
 #, php-format
 msgid "[%1$s] New Editorial Comment: \"%2$s\""
 msgstr "[%1$s] Nouveau commentaire éditorial : « %2$s »"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:1971
+#: modules/notifications/notifications.php:2026
 #, php-format
 msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
 msgstr "Un nouveau %1$s (#%2$s \"%3$s\") a été créé par %4$s %5$s"
 
 #. 1: post id, 2: post title, 3. post type
-#: modules/notifications/notifications.php:2144
+#: modules/notifications/notifications.php:2199
 #, php-format
 msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
 msgstr "Un nouveau commentaire éditorial a été ajouté à %3$s #%1$s « %2$s »"
@@ -345,11 +345,11 @@ msgstr "Accès refusé"
 msgid "Action nonce not found."
 msgstr "Nonce d’action non trouvé."
 
-#: modules/notifications/notifications.php:702
+#: modules/notifications/notifications.php:663
 msgid "Active Notifications"
 msgstr "Notifications actives"
 
-#: modules/notifications/notifications.php:1819
+#: modules/notifications/notifications.php:1874
 msgid ""
 "Add a list of taxonomy-slugs separated by comma that should not be loaded by "
 "the Taxonomy content filter when adding a new Notification Workflow."
@@ -381,8 +381,8 @@ msgstr "Ajouter un commentaire"
 msgid "Add content for %s"
 msgstr "Ajouter le contenu pour %s"
 
-#: modules/notifications/notifications.php:2122
-#: modules/notifications/notifications.php:2179
+#: modules/notifications/notifications.php:2177
+#: modules/notifications/notifications.php:2234
 #, php-format
 msgid "Add editorial comment: %s"
 msgstr "Ajouter un commentaire éditorial : %s"
@@ -420,30 +420,6 @@ msgstr "Ajouter un nouveau terme de champs éditoriaux"
 #: publishpress.php:1410
 msgid "Add New Notification"
 msgstr "Ajouter une nouvelle notification"
-
-#: modules/notifications/notifications.php:382
-msgid "Add New Notify Email"
-msgstr "Ajoutez un nouveau e-mail de notification"
-
-#: modules/notifications/notifications.php:347
-msgid "Add New Notify Role"
-msgstr "Ajouter une nouvelle notification de rôle"
-
-#: modules/notifications/notifications.php:312
-msgid "Add New Notify User"
-msgstr "Ajouter un nouveau compte de notification"
-
-#: modules/notifications/notifications.php:385
-msgid "Add or remove notify emails"
-msgstr "Ajoutez ou retirez les e-mails de notification"
-
-#: modules/notifications/notifications.php:350
-msgid "Add or remove notify roles"
-msgstr "Ajouter ou supprimer des notifications de rôles"
-
-#: modules/notifications/notifications.php:315
-msgid "Add or remove notify users"
-msgstr "Ajouter ou supprimer des utilisateurs/utilisatrices de notification"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
@@ -501,18 +477,6 @@ msgstr "Tous les champs éditoriaux"
 #: modules/notifications-log/library/NotificationsLogTable.php:590
 msgid "All events"
 msgstr "Tous les évènements"
-
-#: modules/notifications/notifications.php:376
-msgid "All Notify Emails"
-msgstr "Tous les e-mails de notification"
-
-#: modules/notifications/notifications.php:341
-msgid "All Notify Roles"
-msgstr "Toutes les notifications des rôles"
-
-#: modules/notifications/notifications.php:306
-msgid "All Notify Users"
-msgstr "Tous les comptes de notification"
 
 #: modules/editorial-metadata/editorial-metadata.php:1243
 #: modules/editorial-metadata/editorial-metadata.php:1400
@@ -577,11 +541,11 @@ msgstr "Tous les flux de travail"
 msgid "Allow public access to subscriptions in iCal or Google Calendar"
 msgstr "Autoriser l’accès public aux abonnements à iCal ou Calendrier Google"
 
-#: modules/notifications/notifications.php:1683
+#: modules/notifications/notifications.php:1738
 msgid "Always notify the author of the content:"
 msgstr "Prévenez toujours l’auteur/autrice du contenu :"
 
-#: modules/notifications/notifications.php:1691
+#: modules/notifications/notifications.php:1746
 msgid "Always notify users who have edited the content:"
 msgstr ""
 "Prévenez toujours les utilisateurs/utilisatrices qui ont modifié le contenu :"
@@ -663,7 +627,7 @@ msgstr "Attacher un fichier"
 msgid "Aug"
 msgstr "Aoû"
 
-#: modules/calendar/calendar.php:981 modules/calendar/calendar.php:1203
+#: modules/calendar/calendar.php:988 modules/calendar/calendar.php:1210
 #: modules/content-board/content-board.php:699
 #: modules/content-board/content-board.php:710
 #: modules/content-board/content-board.php:753
@@ -687,7 +651,7 @@ msgid "Author"
 msgstr "Auteur/autrice"
 
 #. 1: author name, 2: author email
-#: modules/notifications/notifications.php:2106
+#: modules/notifications/notifications.php:2161
 #, php-format
 msgid "Author: %1$s (%2$s )"
 msgstr "Auteur/Autrice : %1$s (%2$s)"
@@ -712,19 +676,7 @@ msgstr "Brouillon automatique"
 msgid "Available fields"
 msgstr "Available fields"
 
-#: modules/notifications/notifications.php:393
-msgid "Back to notify emails"
-msgstr "Retour à les e-mails de notification"
-
-#: modules/notifications/notifications.php:358
-msgid "Back to notify roles"
-msgstr "Retour à la notification des rôles"
-
-#: modules/notifications/notifications.php:323
-msgid "Back to notify users"
-msgstr "Retour aux utilisateurs/utilisatrices à prévenir"
-
-#: modules/notifications/notifications.php:1699
+#: modules/notifications/notifications.php:1754
 msgid "Blacklisted taxonomies for Notifications"
 msgstr "Taxonomies en liste noire pour les notifications"
 
@@ -795,20 +747,6 @@ msgstr "Case à cocher"
 msgid "Checked"
 msgstr "Sélectionné"
 
-#: modules/notifications/notifications.php:386
-msgid "Choose from the most used notify emails"
-msgstr "Choisissez parmi les e-mails de notification les plus utilisés"
-
-#: modules/notifications/notifications.php:351
-msgid "Choose from the most used notify roles"
-msgstr "Choisissez parmi les notifications des rôles les plus utilisés"
-
-#: modules/notifications/notifications.php:316
-msgid "Choose from the most used notify users"
-msgstr ""
-"Choisissez parmi les utilisateurs/utilisatrices de notification les plus "
-"utilisés"
-
 #: modules/editorial-comments/editorial-comments.php:78
 msgid "Choose Post Types"
 msgstr "Choisissez les types de publication"
@@ -855,13 +793,13 @@ msgstr ""
 "Cliquez pour supprimer le fichier journal. Faites attention, cette opération "
 "est irréversible. "
 
-#: modules/notifications/notifications.php:581
-#: modules/notifications/notifications.php:977
+#: modules/notifications/notifications.php:541
+#: modules/notifications/notifications.php:953
 msgid "Click to start being notified on updates for this post"
 msgstr "Cliquez pour être informé des mises à jour de ce contenu"
 
-#: modules/notifications/notifications.php:577
-#: modules/notifications/notifications.php:971
+#: modules/notifications/notifications.php:537
+#: modules/notifications/notifications.php:947
 msgid "Click to stop being notified on updates for this post"
 msgstr "Cliquez pour ne plus être informé des mises à jour de ce contenu"
 
@@ -1126,7 +1064,7 @@ msgstr "Sélection par liste déroulante"
 msgid "Duplicated notification threshold:"
 msgstr "Seuil de notification dupliquée :"
 
-#: common/php/class-module.php:765
+#: common/php/class-module.php:782
 msgid "E-mails"
 msgstr "E-mails"
 
@@ -1159,26 +1097,14 @@ msgstr ""
 msgid "Edit Notification"
 msgstr "Modifier la notification"
 
-#: modules/notifications/notifications.php:379
-msgid "Edit Notify Email"
-msgstr "Modifier l’e-mail de notification"
-
-#: modules/notifications/notifications.php:344
-msgid "Edit Notify Role"
-msgstr "Modifier la notification de rôle"
-
-#: modules/notifications/notifications.php:309
-msgid "Edit Notify User"
-msgstr "Modifier utilisateur/utilisatrice de notification"
-
 #: modules/content-board/content-board.php:1174
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Editer cette fiche entreprise"
 
-#: modules/notifications/notifications.php:2125
-#: modules/notifications/notifications.php:2182
+#: modules/notifications/notifications.php:2180
+#: modules/notifications/notifications.php:2237
 #, php-format
 msgid "Edit: %s"
 msgstr "Modifier : %s"
@@ -1253,7 +1179,7 @@ msgstr "E-mail"
 msgid "email"
 msgstr "e-mail"
 
-#: modules/notifications/notifications.php:1675
+#: modules/notifications/notifications.php:1730
 msgid "Email from:"
 msgstr "E-mail de l’expéditeur :"
 
@@ -1328,7 +1254,7 @@ msgstr ""
 "Enter the dropdown option value and label. You can move options to change "
 "their order."
 
-#: modules/notifications/notifications.php:646
+#: modules/notifications/notifications.php:606
 msgid ""
 "Enter users, roles, or email addresses that should receive notifications for "
 "this post."
@@ -1430,19 +1356,7 @@ msgstr "Info Fichier"
 msgid "Filter"
 msgstr "Filtrer"
 
-#: modules/notifications/notifications.php:389
-msgid "Filter by notify email"
-msgstr "Filtrer pour e-mail de notification"
-
-#: modules/notifications/notifications.php:354
-msgid "Filter by notify role"
-msgstr "Filtrer par notification de rôle"
-
-#: modules/notifications/notifications.php:319
-msgid "Filter by notify user"
-msgstr "Filtrer par utilisateur/utilisatrice de notification"
-
-#: modules/calendar/calendar.php:913
+#: modules/calendar/calendar.php:919
 msgid "Filter reset successfully."
 msgstr "Le filtre a bien été réinitialisé."
 
@@ -1465,7 +1379,7 @@ msgstr ""
 msgid "Filter Title"
 msgstr "Titre du filtre"
 
-#: modules/calendar/calendar.php:908
+#: modules/calendar/calendar.php:912
 #: modules/content-overview/content-overview.php:668
 #: modules/content-board/library/content-board-methods.php:164
 msgid "Filter updated successfully."
@@ -1542,6 +1456,14 @@ msgstr "Ven"
 #: modules/notifications-log/library/NotificationsLogTable.php:626
 msgid "From date"
 msgstr "À partir du"
+
+#: common/php/class-module.php:764
+msgid "Group"
+msgstr "Groupe"
+
+#: common/php/class-module.php:761
+msgid "Groups"
+msgstr "Groupes"
 
 #: modules/improved-notifications/improved-notifications.php:920
 msgid "Help"
@@ -1627,7 +1549,7 @@ msgstr "Indiquez le type de sélection."
 msgid "Indicate the type of editorial fields."
 msgstr "Indiquer le type de champs éditoriaux."
 
-#: modules/calendar/calendar.php:1152
+#: modules/calendar/calendar.php:1159
 msgid "Initializing the calendar. Please wait..."
 msgstr "Initialisation du calendrier. Veuillez patienter…"
 
@@ -1685,7 +1607,7 @@ msgstr "Destinataire invalide pour la notification"
 msgid "Invalid Status supplied."
 msgstr "État invalide fourni."
 
-#: modules/calendar/calendar.php:1156
+#: modules/calendar/calendar.php:1163
 msgid ""
 "It seems like it is taking too long. Please, try reloading the page again "
 "and check the browser console looking for errors."
@@ -1756,7 +1678,7 @@ msgstr "Nombre maximum de publications à afficher"
 msgid "May"
 msgstr "Mai"
 
-#: modules/calendar/calendar.php:732
+#: modules/calendar/calendar.php:736
 #: modules/calendar/library/calendar-utilities.php:467
 #: modules/calendar/library/calendar-utilities.php:468
 #: modules/content-board/library/content-board-utilities.php:28
@@ -1802,18 +1724,6 @@ msgstr "Modifié le"
 #: modules/calendar/library/calendar-methods.php:1218
 msgid "Mon"
 msgstr "Lun"
-
-#: modules/notifications/notifications.php:392
-msgid "Most Used Notify Email"
-msgstr "E-mail de notification le plus utilisé"
-
-#: modules/notifications/notifications.php:357
-msgid "Most Used Notify Role"
-msgstr "Notification de rôle la plus utilisée"
-
-#: modules/notifications/notifications.php:322
-msgid "Most Used Notify User"
-msgstr "Utilisateur/utilisatrice de notification le plus utilisé"
 
 #: modules/content-board/content-board.php:1026
 msgid "Move posts here to change their status"
@@ -1883,18 +1793,6 @@ msgstr "Nouveau"
 msgid "New Editorial Fields"
 msgstr "Nouveaux champs éditoriaux"
 
-#: modules/notifications/notifications.php:383
-msgid "New Notify Email"
-msgstr "Nouveau e-mail de notification"
-
-#: modules/notifications/notifications.php:348
-msgid "New Notify Role"
-msgstr "Nouvelle notification de rôle"
-
-#: modules/notifications/notifications.php:313
-msgid "New Notify User"
-msgstr "Nouveau compte de notification"
-
 #: modules/content-board/library/content-board-utilities.php:84
 #: modules/content-overview/library/content-overview-methods.php:315
 msgid "New Post"
@@ -1937,7 +1835,7 @@ msgstr "Neuf mois"
 msgid "No"
 msgstr "Non"
 
-#: modules/notifications/notifications.php:737
+#: modules/notifications/notifications.php:698
 #, php-format
 msgid "No active notifications found for this %s."
 msgstr "Aucune notification active n’a été trouvée pour ce %s."
@@ -1965,21 +1863,6 @@ msgstr "Aucune notification trouvée"
 #: modules/notifications-log/notifications-log.php:291
 msgid "No notifications found."
 msgstr "Aucune notification trouvée."
-
-#: modules/notifications/notifications.php:387
-#: modules/notifications/notifications.php:388
-msgid "No notify emails"
-msgstr "Aucun e-mail de notification"
-
-#: modules/notifications/notifications.php:352
-#: modules/notifications/notifications.php:353
-msgid "No notify roles"
-msgstr "Aucune notification des rôles"
-
-#: modules/notifications/notifications.php:317
-#: modules/notifications/notifications.php:318
-msgid "No notify users"
-msgstr "Aucun utilisateurs/utilisatrices de notification"
 
 #: modules/content-board/content-board.php:1263
 #: modules/content-overview/content-overview.php:1194
@@ -2030,13 +1913,22 @@ msgstr "Bloc-notes"
 msgid "Notification"
 msgstr "Notification"
 
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+msgid "Notification Group"
+msgstr "Groupe de notifications"
+
+#: modules/notifications/notifications.php:336
+msgid "Notification Groups"
+msgstr "Groupes de notifications"
+
 #: modules/notifications-log/library/ModuleErrors.php:56
 msgid "Notification log not found"
 msgstr "Journal de notification non trouvé"
 
 #: publishpress.php:1408 publishpress.php:1413
-#: modules/notifications/notifications.php:72
-#: modules/notifications/notifications.php:609
+#: modules/notifications/notifications.php:75
+#: modules/notifications/notifications.php:569
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -2048,19 +1940,17 @@ msgstr "Notifications"
 msgid "Notifications Log"
 msgstr "Journal des notifications"
 
-#: modules/notifications/notifications.php:370
-#: modules/notifications/notifications.php:373
-#: modules/notifications/notifications.php:390
-#: modules/notifications/notifications.php:391
+#: modules/notifications/notifications.php:350
+#: modules/notifications/notifications.php:353
 msgid "Notify Email"
 msgstr "E-mail de notification"
 
-#: modules/notifications/notifications.php:372
+#: modules/notifications/notifications.php:352
 msgid "Notify Emails"
 msgstr "E-mails de notification"
 
-#: modules/notifications/notifications.php:582
-#: modules/notifications/notifications.php:976
+#: modules/notifications/notifications.php:542
+#: modules/notifications/notifications.php:952
 msgid "Notify me"
 msgstr "Notifiez-moi"
 
@@ -2068,25 +1958,21 @@ msgstr "Notifiez-moi"
 msgid "Notify on editorial comments"
 msgstr "Notifier des commentaires éditoriaux"
 
-#: modules/notifications/notifications.php:335
-#: modules/notifications/notifications.php:338
-#: modules/notifications/notifications.php:355
-#: modules/notifications/notifications.php:356
+#: modules/notifications/notifications.php:318
+#: modules/notifications/notifications.php:321
 msgid "Notify Role"
 msgstr "Notification de rôle"
 
-#: modules/notifications/notifications.php:337
+#: modules/notifications/notifications.php:320
 msgid "Notify Roles"
 msgstr "Notifications des rôles"
 
-#: modules/notifications/notifications.php:300
 #: modules/notifications/notifications.php:303
-#: modules/notifications/notifications.php:320
-#: modules/notifications/notifications.php:321
+#: modules/notifications/notifications.php:306
 msgid "Notify User"
 msgstr "Utilisateur/utilisatrice de notification"
 
-#: modules/notifications/notifications.php:302
+#: modules/notifications/notifications.php:305
 msgid "Notify Users"
 msgstr "Utilisateurs/utilisatrices de notification"
 
@@ -2139,37 +2025,13 @@ msgstr "Options"
 #: modules/calendar/calendar.php:259
 #: modules/editorial-comments/editorial-comments.php:82
 #: modules/editorial-metadata/editorial-metadata.php:119
-#: modules/notifications/notifications.php:93
+#: modules/notifications/notifications.php:96
 msgid "Overview"
 msgstr "Aperçu"
 
 #: modules/editorial-metadata/editorial-metadata.php:293
 msgid "Paragraph"
 msgstr "Paragraphe"
-
-#: modules/notifications/notifications.php:377
-msgid "Parent Notify Email"
-msgstr "E-mail de notification parent"
-
-#: modules/notifications/notifications.php:378
-msgid "Parent Notify Email:"
-msgstr "E-mail de notification parent :"
-
-#: modules/notifications/notifications.php:342
-msgid "Parent Notify Role"
-msgstr "Notification de rôle parent"
-
-#: modules/notifications/notifications.php:343
-msgid "Parent Notify Role:"
-msgstr "Notification de rôle parent :"
-
-#: modules/notifications/notifications.php:307
-msgid "Parent Notify User"
-msgstr "Utilisateur/utilisatrice de notification parent"
-
-#: modules/notifications/notifications.php:308
-msgid "Parent Notify User:"
-msgstr "Utilisateur/utilisatrice de notification parent :"
 
 #: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:106
 msgid "Parent Page Authors"
@@ -2242,18 +2104,6 @@ msgstr "S’il vous plaît, attendez ! Chargement des champs du formulaire…"
 msgid "Popular Editorial Fields"
 msgstr "Champs éditoriaux populaires"
 
-#: modules/notifications/notifications.php:375
-msgid "Popular Notify Emails"
-msgstr "E-mails de notification populaires"
-
-#: modules/notifications/notifications.php:340
-msgid "Popular Notify Roles"
-msgstr "Les notifications des rôles populaires"
-
-#: modules/notifications/notifications.php:305
-msgid "Popular Notify Users"
-msgstr "Utilisateurs/utilisatrices de notification les plus populaires"
-
 #: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
 msgid "Position"
 msgstr "Position"
@@ -2294,7 +2144,7 @@ msgstr "ID de la publication : %d"
 msgid "Post not found"
 msgstr "Publication non trouvée"
 
-#: common/php/class-module.php:1082 modules/content-board/content-board.php:811
+#: common/php/class-module.php:1126 modules/content-board/content-board.php:811
 #: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:954
 #: modules/content-overview/content-overview.php:1226
@@ -2319,7 +2169,7 @@ msgstr "L’état de la publication mis à jour."
 msgid "Post Status Widget"
 msgstr "Widget de l’état de la publication"
 
-#: modules/calendar/calendar.php:982 modules/calendar/calendar.php:1211
+#: modules/calendar/calendar.php:989 modules/calendar/calendar.php:1218
 #: modules/content-board/content-board.php:698
 #: modules/content-board/content-board.php:711
 #: modules/content-board/content-board.php:752
@@ -2420,7 +2270,7 @@ msgstr "Date de publication"
 msgid "Publish Time"
 msgstr "Heure de publication"
 
-#: common/php/class-module.php:331 modules/calendar/calendar.php:1224
+#: common/php/class-module.php:331 modules/calendar/calendar.php:1231
 msgid "Published"
 msgstr "Publié"
 
@@ -2513,7 +2363,7 @@ msgstr "Répondre"
 msgid "Reply to this comment"
 msgstr "Répondre à ce commentaire"
 
-#: modules/notifications/notifications.php:2175
+#: modules/notifications/notifications.php:2230
 #, php-format
 msgid "Reply: %s"
 msgstr "Réponse : %s"
@@ -2545,7 +2395,7 @@ msgstr "Réinitialiser les filtres"
 msgid "Reviews"
 msgstr "Avis"
 
-#: common/php/class-module.php:1082
+#: common/php/class-module.php:1126
 #: modules/content-overview/content-overview.php:833
 #: modules/content-overview/content-overview.php:848
 #: modules/content-overview/content-overview.php:955
@@ -2553,7 +2403,7 @@ msgstr "Avis"
 msgid "Revision Status"
 msgstr "État de la révision"
 
-#: common/php/class-module.php:747
+#: common/php/class-module.php:753
 msgid "Role"
 msgstr "Rôle"
 
@@ -2563,7 +2413,7 @@ msgstr "Rôle"
 msgid "role:%s"
 msgstr "rôle : %s"
 
-#: common/php/class-module.php:744
+#: common/php/class-module.php:750
 #: lib/Notifications/Workflow/Step/Receiver/Role.php:31
 msgid "Roles"
 msgstr "Rôles"
@@ -2590,7 +2440,7 @@ msgstr "Enregistrer les modifications"
 msgid "Saving..."
 msgstr "Enregistrement…"
 
-#: common/php/class-module.php:333 modules/calendar/calendar.php:1219
+#: common/php/class-module.php:333 modules/calendar/calendar.php:1226
 #: modules/content-board/content-board.php:979
 #: modules/notifications-log/library/NotificationsLogTable.php:529
 msgid "Scheduled"
@@ -2600,7 +2450,7 @@ msgstr "Planifié"
 msgid "Scheduled for %d receivers. Click here to display them."
 msgstr "Planifié pour %d destinataires. Cliquez ici pour les afficher."
 
-#: modules/calendar/calendar.php:734
+#: modules/calendar/calendar.php:738
 #: modules/calendar/library/calendar-utilities.php:486
 #: modules/content-board/library/content-board-utilities.php:98
 #: modules/content-overview/library/content-overview-methods.php:329
@@ -2634,25 +2484,13 @@ msgstr "Rechercher clé de méta"
 msgid "Search Notifications"
 msgstr "Rechercher des notifications"
 
-#: modules/notifications/notifications.php:374
-msgid "Search Notify Emails"
-msgstr "Rechercher des e-mails de notification"
-
-#: modules/notifications/notifications.php:339
-msgid "Search Notify Roles"
-msgstr "Rechercher les notifications des rôles"
-
-#: modules/notifications/notifications.php:304
-msgid "Search Notify Users"
-msgstr "Rechercher utilisateurs/utilisatrices de notification"
-
 #. %s: search keywords
 #: modules/editorial-comments/editorial-comments.php:285
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Résultats de recherche pour « %s »"
 
-#: common/php/class-module.php:1065
+#: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
 msgstr "Sélectionner %s"
@@ -2694,19 +2532,6 @@ msgstr "Envoyé"
 msgid "Sep"
 msgstr "Sep"
 
-#: modules/notifications/notifications.php:384
-msgid "Separate notify emails with commas"
-msgstr "Séparez les e-mails de notification par des virgules"
-
-#: modules/notifications/notifications.php:349
-msgid "Separate notify roles with commas"
-msgstr "Séparez les notifications des rôles par des virgules"
-
-#: modules/notifications/notifications.php:314
-msgid "Separate notify users with commas"
-msgstr ""
-"Separez les utilisateurs/utilisatrices de notification par des virgules"
-
 #: modules/settings/settings.php:142
 msgid "Settings"
 msgstr "Réglages"
@@ -2733,7 +2558,7 @@ msgstr "code court"
 msgid "Show %s more"
 msgstr "Afficher %s de plus"
 
-#: modules/notifications/notifications.php:650
+#: modules/notifications/notifications.php:610
 msgid "Show active notifications"
 msgstr "Afficher les notifications actives"
 
@@ -2754,11 +2579,11 @@ msgstr ""
 msgid "Show on Post Types screen"
 msgstr "Afficher dans l’écran « Types de publication »"
 
-#: modules/calendar/calendar.php:733
+#: modules/calendar/calendar.php:737
 msgid "Show Revision"
 msgstr "Afficher la révision"
 
-#: modules/notifications/notifications.php:1667
+#: modules/notifications/notifications.php:1722
 msgid ""
 "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
 msgstr ""
@@ -2819,7 +2644,7 @@ msgstr "Identifiant"
 msgid "Slug already in use. Please choose another."
 msgstr "Slug déjà utilisé. Veuillez en choisir un autre."
 
-#: modules/notifications/notifications.php:1813
+#: modules/notifications/notifications.php:1868
 msgid "slug1,slug2"
 msgstr "slug1,slug2"
 
@@ -2868,7 +2693,7 @@ msgstr ""
 "Désolé, vous n’avez pas les privilèges pour modifier ce commentaire "
 "éditorial. Veuillez en parler à votre administrateur/administratrice."
 
-#: modules/calendar/calendar.php:731
+#: modules/calendar/calendar.php:735
 msgid "Start Date"
 msgstr "Date de début"
 
@@ -2876,7 +2701,7 @@ msgstr "Date de début"
 msgid "Start date"
 msgstr "Date de début"
 
-#: modules/calendar/calendar.php:980
+#: modules/calendar/calendar.php:987
 #: modules/content-board/content-board.php:709
 #: modules/content-overview/content-overview.php:832
 #: modules/content-overview/content-overview.php:847
@@ -2886,7 +2711,7 @@ msgid "Status"
 msgstr "Statut"
 
 #. 1: post type, 2: post id, 3. post title, 4. user name, 5. user email
-#: modules/notifications/notifications.php:2069
+#: modules/notifications/notifications.php:2124
 #, php-format
 msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
 msgstr "L’état a été changé pour %1$s #%2$s « %3$s » par %4$s %5$s"
@@ -2895,8 +2720,8 @@ msgstr "L’état a été changé pour %1$s #%2$s « %3$s » par %4$s %5$s"
 msgid "Statuses to display publish time"
 msgstr "États à afficher l’heure de publication"
 
-#: modules/notifications/notifications.php:578
-#: modules/notifications/notifications.php:970
+#: modules/notifications/notifications.php:538
+#: modules/notifications/notifications.php:946
 msgid "Stop notifying me"
 msgstr "Arrêtez de me notifier"
 
@@ -3050,7 +2875,7 @@ msgid "The selected post type is not enabled for the calendar."
 msgstr ""
 "Le type de publication sélectionné n’est pas activé pour le calendrier."
 
-#: modules/calendar/calendar.php:1800
+#: modules/calendar/calendar.php:1807
 msgid ""
 "The selected user doesn't have enough permissions to be set as the post "
 "author."
@@ -3087,7 +2912,7 @@ msgstr ""
 "réessayer."
 
 #. 1: date, 2: time, 3: timezone
-#: modules/notifications/notifications.php:2080
+#: modules/notifications/notifications.php:2135
 #, php-format
 msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Cette action a été effectuée le %1$s à %2$s %3$s"
@@ -3098,7 +2923,7 @@ msgstr "Cette action a été effectuée le %1$s à %2$s %3$s"
 msgid "This editorial fields type is not yet supported."
 msgstr "Ce type de champs éditoriaux n’est pas encore pris en charge."
 
-#: modules/notifications/notifications.php:1090
+#: modules/notifications/notifications.php:1066
 #, php-format
 msgid "This email was sent %s."
 msgstr "Cet e-mail à été envoyé %s."
@@ -3152,7 +2977,7 @@ msgstr ""
 "des événements identiques ou similaires. Définissez un nombre plus élevé si "
 "vous recevez des e-mails en double."
 
-#: modules/notifications/notifications.php:688
+#: modules/notifications/notifications.php:649
 msgid ""
 "This won't have any effect unless you have at least one workflow targeting "
 "the \"Users who selected \"Notify me\" for the content\" option."
@@ -3188,7 +3013,7 @@ msgstr "Jeu"
 msgid "Title"
 msgstr "Titre"
 
-#: modules/notifications/notifications.php:2102
+#: modules/notifications/notifications.php:2157
 #, php-format
 msgid "Title: %s"
 msgstr "Titre : %s"
@@ -3259,7 +3084,7 @@ msgstr "Type"
 msgid "Undefined error found"
 msgstr "Erreur indéfinie trouvée"
 
-#: modules/calendar/calendar.php:1111
+#: modules/calendar/calendar.php:1118
 #: modules/content-board/content-board.php:614
 #: modules/content-overview/library/content-overview-methods.php:221
 msgid "Undo"
@@ -3285,18 +3110,6 @@ msgstr "Mise à jour du terme des champs éditoriaux"
 #: modules/dashboard/widgets/dashboard-notepad.php:168
 msgid "Update Note"
 msgstr "Modification de la note"
-
-#: modules/notifications/notifications.php:381
-msgid "Update Notify Email"
-msgstr "Mettre à jour l’e-mail de notification"
-
-#: modules/notifications/notifications.php:346
-msgid "Update Notify Role"
-msgstr "Mettre à jour la notification de rôle"
-
-#: modules/notifications/notifications.php:311
-msgid "Update Notify User"
-msgstr "Mettre à jour utilisateur/utilisatrice de notification"
 
 #: modules/calendar/calendar.php:247
 #, php-format
@@ -3350,7 +3163,7 @@ msgstr "Compte : %s (%d)"
 msgid "Username"
 msgstr "Identifiant"
 
-#: common/php/class-module.php:755
+#: common/php/class-module.php:772
 #: lib/Notifications/Workflow/Step/Receiver/User.php:26
 msgid "Users"
 msgstr "Comptes"
@@ -3385,20 +3198,8 @@ msgstr "Voir &#8220;%s&#8221; sur Google Maps"
 msgid "View Knowledge Base"
 msgstr "Voir la base de connaissances"
 
-#: modules/notifications/notifications.php:380
-msgid "View Notify Email"
-msgstr "Voir l’e-mail de notification"
-
-#: modules/notifications/notifications.php:345
-msgid "View Notify Role"
-msgstr "Voir la notification de rôle"
-
-#: modules/notifications/notifications.php:310
-msgid "View Notify User"
-msgstr "Voir utilisateur/utilisatrice de notification"
-
-#: modules/notifications/notifications.php:2126
-#: modules/notifications/notifications.php:2183
+#: modules/notifications/notifications.php:2181
+#: modules/notifications/notifications.php:2238
 #, php-format
 msgid "View: %s"
 msgstr "Voir : %s"
@@ -3411,7 +3212,7 @@ msgstr "Avertissement"
 msgid "Wed"
 msgstr "Mer"
 
-#: modules/calendar/calendar.php:730
+#: modules/calendar/calendar.php:734
 msgid "Weeks"
 msgstr "Semaines"
 
@@ -3463,7 +3264,7 @@ msgstr "Qui doit être prévenu ?"
 msgid "Widget Options"
 msgstr "Options de Widget"
 
-#: modules/notifications/notifications.php:1955
+#: modules/notifications/notifications.php:2010
 msgid "WordPress Scheduler"
 msgstr "Planificateur WordPress"
 
@@ -3471,7 +3272,7 @@ msgstr "Planificateur WordPress"
 msgid "Workflow"
 msgstr "Flux de travail"
 
-#: modules/notifications/notifications.php:730
+#: modules/notifications/notifications.php:691
 msgid "Workflow has users enrolled"
 msgstr "Le flux de travail a des utilisateurs/utilisatrices inscrits"
 
@@ -3496,7 +3297,7 @@ msgstr "Flux de travail"
 msgid "Yes"
 msgstr "Oui"
 
-#: modules/notifications/notifications.php:1085
+#: modules/notifications/notifications.php:1061
 #, php-format
 msgid "You are receiving this email because you are subscribed to \"%s\"."
 msgstr "Vous recevez cet e-mail parce que vous êtes abonné à « %s »."
@@ -3517,7 +3318,7 @@ msgstr ""
 "Vous pouvez ajouter des commentaires éditoriaux à une publication une fois "
 "que vous l’avez enregistrée pour la première fois."
 
-#: modules/notifications/notifications.php:2186
+#: modules/notifications/notifications.php:2241
 #, php-format
 msgid "You can see all editorial comments on this %s here: "
 msgstr "Vous pouvez voir ici tous les commentaires éditoriaux sur cette %s : "
@@ -3575,6 +3376,162 @@ msgstr ""
 "Vous utilisez la version gratuite de PublishPress Planner. La version Pro "
 "offre plus de fonctionnalités et de pris en charge. %sPasser à la version "
 "Pro%s"
+
+#~ msgid "Add New Notify Email"
+#~ msgstr "Ajoutez un nouveau e-mail de notification"
+
+#~ msgid "Add New Notify Role"
+#~ msgstr "Ajouter une nouvelle notification de rôle"
+
+#~ msgid "Add New Notify User"
+#~ msgstr "Ajouter un nouveau compte de notification"
+
+#~ msgid "Add or remove notify emails"
+#~ msgstr "Ajoutez ou retirez les e-mails de notification"
+
+#~ msgid "Add or remove notify roles"
+#~ msgstr "Ajouter ou supprimer des notifications de rôles"
+
+#~ msgid "Add or remove notify users"
+#~ msgstr "Ajouter ou supprimer des utilisateurs/utilisatrices de notification"
+
+#~ msgid "All Notify Emails"
+#~ msgstr "Tous les e-mails de notification"
+
+#~ msgid "All Notify Roles"
+#~ msgstr "Toutes les notifications des rôles"
+
+#~ msgid "All Notify Users"
+#~ msgstr "Tous les comptes de notification"
+
+#~ msgid "Back to notify emails"
+#~ msgstr "Retour à les e-mails de notification"
+
+#~ msgid "Back to notify roles"
+#~ msgstr "Retour à la notification des rôles"
+
+#~ msgid "Back to notify users"
+#~ msgstr "Retour aux utilisateurs/utilisatrices à prévenir"
+
+#~ msgid "Choose from the most used notify emails"
+#~ msgstr "Choisissez parmi les e-mails de notification les plus utilisés"
+
+#~ msgid "Choose from the most used notify roles"
+#~ msgstr "Choisissez parmi les notifications des rôles les plus utilisés"
+
+#~ msgid "Choose from the most used notify users"
+#~ msgstr ""
+#~ "Choisissez parmi les utilisateurs/utilisatrices de notification les plus "
+#~ "utilisés"
+
+#~ msgid "Edit Notify Email"
+#~ msgstr "Modifier l’e-mail de notification"
+
+#~ msgid "Edit Notify Role"
+#~ msgstr "Modifier la notification de rôle"
+
+#~ msgid "Edit Notify User"
+#~ msgstr "Modifier utilisateur/utilisatrice de notification"
+
+#~ msgid "Filter by notify email"
+#~ msgstr "Filtrer pour e-mail de notification"
+
+#~ msgid "Filter by notify role"
+#~ msgstr "Filtrer par notification de rôle"
+
+#~ msgid "Filter by notify user"
+#~ msgstr "Filtrer par utilisateur/utilisatrice de notification"
+
+#~ msgid "Most Used Notify Email"
+#~ msgstr "E-mail de notification le plus utilisé"
+
+#~ msgid "Most Used Notify Role"
+#~ msgstr "Notification de rôle la plus utilisée"
+
+#~ msgid "Most Used Notify User"
+#~ msgstr "Utilisateur/utilisatrice de notification le plus utilisé"
+
+#~ msgid "New Notify Email"
+#~ msgstr "Nouveau e-mail de notification"
+
+#~ msgid "New Notify Role"
+#~ msgstr "Nouvelle notification de rôle"
+
+#~ msgid "New Notify User"
+#~ msgstr "Nouveau compte de notification"
+
+#~ msgid "No notify emails"
+#~ msgstr "Aucun e-mail de notification"
+
+#~ msgid "No notify roles"
+#~ msgstr "Aucune notification des rôles"
+
+#~ msgid "No notify users"
+#~ msgstr "Aucun utilisateurs/utilisatrices de notification"
+
+#~ msgid "Parent Notify Email"
+#~ msgstr "E-mail de notification parent"
+
+#~ msgid "Parent Notify Email:"
+#~ msgstr "E-mail de notification parent :"
+
+#~ msgid "Parent Notify Role"
+#~ msgstr "Notification de rôle parent"
+
+#~ msgid "Parent Notify Role:"
+#~ msgstr "Notification de rôle parent :"
+
+#~ msgid "Parent Notify User"
+#~ msgstr "Utilisateur/utilisatrice de notification parent"
+
+#~ msgid "Parent Notify User:"
+#~ msgstr "Utilisateur/utilisatrice de notification parent :"
+
+#~ msgid "Popular Notify Emails"
+#~ msgstr "E-mails de notification populaires"
+
+#~ msgid "Popular Notify Roles"
+#~ msgstr "Les notifications des rôles populaires"
+
+#~ msgid "Popular Notify Users"
+#~ msgstr "Utilisateurs/utilisatrices de notification les plus populaires"
+
+#~ msgid "Search Notify Emails"
+#~ msgstr "Rechercher des e-mails de notification"
+
+#~ msgid "Search Notify Roles"
+#~ msgstr "Rechercher les notifications des rôles"
+
+#~ msgid "Search Notify Users"
+#~ msgstr "Rechercher utilisateurs/utilisatrices de notification"
+
+#~ msgid "Separate notify emails with commas"
+#~ msgstr "Séparez les e-mails de notification par des virgules"
+
+#~ msgid "Separate notify roles with commas"
+#~ msgstr "Séparez les notifications des rôles par des virgules"
+
+#~ msgid "Separate notify users with commas"
+#~ msgstr ""
+#~ "Separez les utilisateurs/utilisatrices de notification par des virgules"
+
+#~ msgid "Update Notify Email"
+#~ msgstr "Mettre à jour l’e-mail de notification"
+
+#~ msgid "Update Notify Role"
+#~ msgstr "Mettre à jour la notification de rôle"
+
+#~ msgid "Update Notify User"
+#~ msgstr "Mettre à jour utilisateur/utilisatrice de notification"
+
+#~ msgid "View Notify Email"
+#~ msgstr "Voir l’e-mail de notification"
+
+#~ msgid "View Notify Role"
+#~ msgstr "Voir la notification de rôle"
+
+#~ msgid "View Notify User"
+#~ msgstr "Voir utilisateur/utilisatrice de notification"
 
 #, php-format
 #~ msgid "%s week"
