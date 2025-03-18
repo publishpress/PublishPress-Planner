@@ -186,17 +186,6 @@ if (! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
-
-            // Revisions Pro 3.6.1 to 3.6.3 may delete Planner's default notifications under some plugin activation & deactivation sequences
-            if (defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') && version_compare(PUBLISHPRESS_REVISIONS_PRO_VERSION, '3.6.4-beta', '<')) {
-                add_filter(
-                    'pre_option_revisionary_pro_flush_notifications',
-                    function ($option_val, $option_name, $default_val) {
-                        return false;
-                    },
-                    10, 3
-                );
-            }
         }
 
         /**
