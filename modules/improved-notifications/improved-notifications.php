@@ -287,10 +287,14 @@ if (! class_exists('PP_Improved_Notifications')) {
                     break;
 
                 } else {
-                    $default_workflow_name = get_post_meta($post_id, '_psp_default_workflow_name', true);
+                    if (!empty($args['check_default_workflow_name'])) {
+                        $default_workflow_name = get_post_meta($post_id, '_psp_default_workflow_name', true);
+                    } else {
+                        $default_workflow_name = '';
+                    }
 
                     if ($default_workflow_name && is_string($default_workflow_name)) {
-                        if ($workflow_name == $default_workflow_name) {
+                        if ($args['check_default_workflow_name'] == $default_workflow_name) {
                             $exists = true;
                             break;
                         }
