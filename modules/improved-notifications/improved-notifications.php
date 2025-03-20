@@ -186,6 +186,42 @@ if (! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
+            // Preventing sending async notification if event args is invalid
+            add_filter('publishpress_notifications_stop_sync_notifications', [$this, 'should_stop_notification'], 10,2);
+            // Prevent notification schedule if even args is not array
+            add_filter('publishpress_notifications_schedule_notification', [$this, 'should_schedule_notification'], 10,2);
+        }
+
+        /**
+         * Preventing sending async notification if event args is invalid
+         * @param bool $stop
+         * @param array $workflow
+         * 
+         * @return bool
+         */
+        public function should_stop_notification($stop, $workflow) {
+            if (!is_object($workflow) || empty($workflow->event_args) || !is_array($workflow->event_args)) {
+                $stop = true;
+                return $stop;
+            }
+            
+            return $stop;
+        }
+        
+        /**
+         * Prevent notification schedule if even args is not array
+         * @param bool $schedule
+         * @param array $workflow
+         * 
+         * @return bool
+         */
+        public function should_schedule_notification($schedule, $workflow) {
+            if (!is_object($workflow) || empty($workflow->event_args) || !is_array($workflow->event_args)) {
+                $schedule = false;
+                return $schedule;
+            }
+            
+            return $schedule;
         }
 
         /**
