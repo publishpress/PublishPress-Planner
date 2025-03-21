@@ -106,7 +106,6 @@ class WorkflowsController
         $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $params);
 
         if (empty($query_args['meta_query']) || isset($query_args['needs_event_filter'])) {
-            // return empty post if meta query is empty. TODO: Confirm if this doesn't affect any filters incase of not depending on meta query 
             return (object) ['posts' => []];
         }
 
