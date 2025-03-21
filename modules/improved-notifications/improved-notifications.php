@@ -790,6 +790,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $params = [
                 'event' => Post_StatusTransition::EVENT_NAME,
+                'event_key' => Post_StatusTransition::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
@@ -839,6 +840,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $params = [
                 'event' => Post_Update::EVENT_NAME,
+                'event_key' => Post_Update::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
@@ -873,6 +875,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $params = [
                 'event' => Post_TaxonomyUpdate::EVENT_NAME,
+                'event_key' => Post_TaxonomyUpdate::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id'   => (int)$post->ID,
@@ -903,6 +906,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $params = [
                 'event' => 'editorial_comment',
+                'event_key' => '_psppno_evtedcomment',
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$post->ID,

@@ -52,8 +52,11 @@ class WorkflowsController
 
             if (!empty($query->posts)) {
                 foreach (apply_filters('publishpress_post_notification_trigger_workflows', $query->posts) as $workflowPost) {
-                    $workflow = new Workflow($workflowPost);
-                    $workflow->run($params);
+                    // Run the workflow only if retrieved post has postmeta matching the current event. Note that each event has a different postmeta key.
+                    if (!empty($params['event_key']) && get_post_meta($workflowPost->ID, $params['event_key'], true)) {
+                        $workflow = new Workflow($workflowPost);
+                        $workflow->run($params);
+                    }
                 }
             }
         } catch (\Exception $e) {
