@@ -62,6 +62,10 @@ class Post_Update extends Base
             foreach ($filters as $filter) {
                 $query_args = $filter->get_run_workflow_query_args($query_args, $event_args);
             }
+            // unset needs_event_filter since atleast this event already filter the query
+            if (isset($query_args['needs_event_filter'])) {
+                unset($query_args['needs_event_filter']);
+            }
         }
 
         return $query_args;

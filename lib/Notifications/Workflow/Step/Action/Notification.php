@@ -31,8 +31,9 @@ class Notification
     {
         /**
          * @param bool $stop
+         * @param array $workflow
          */
-        if (apply_filters('publishpress_notifications_stop_sync_notifications', false)) {
+        if (apply_filters('publishpress_notifications_stop_sync_notifications', false, $workflow)) {
             return;
         }
 
