@@ -4,7 +4,7 @@
  */
 
 if (! class_exists('PP_Calendar_Methods')) {
-    
+
     #[\AllowDynamicProperties]
     class PP_Calendar_Methods extends PP_Module
     {
@@ -672,7 +672,7 @@ if (! class_exists('PP_Calendar_Methods')) {
 
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2-full.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'screen'
@@ -847,7 +847,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             }
 
             $fields = apply_filters(
-                'publishpress_calendar_post_type_fields', 
+                'publishpress_calendar_post_type_fields',
                 [
                     'title' => [
                         'label' => __('Title', 'publishpress'),
@@ -866,7 +866,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                         'type' => 'time',
                         'placeholder' => isset($this->module->options->default_publish_time) ? $this->module->options->default_publish_time : null,
                     ]
-                ], 
+                ],
                 $post_status_options
             );
 
@@ -1070,16 +1070,9 @@ if (! class_exists('PP_Calendar_Methods')) {
                 );
 
                 wp_enqueue_script(
-                    'publishpress-select2-utils',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
-
-                wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2-full.min.js',
+                    ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
 
@@ -1164,7 +1157,7 @@ if (! class_exists('PP_Calendar_Methods')) {
 
                     $firstDateToDisplay = (isset($calendar_request_filter['start_date']) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                             sanitize_text_field($calendar_request_filter['start_date']) : date('Y-m-d')) . ' 00:00:00'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.DateTime.RestrictedFunctions.date_date
-                    
+
                     if (isset($this->module->options->calendar_today_in_first_row) && 'on' === $this->module->options->calendar_today_in_first_row) {
                         $firstDateToDisplay = $calendar_request_filter['start_date'] = date('Y-m-d', current_time('timestamp'));
                     }
@@ -1347,7 +1340,7 @@ if (! class_exists('PP_Calendar_Methods')) {
             }
 
             $postTypeOptions = $this->get_post_status_options($_post_status);
-            
+
             $postTypeObject = $this->getPostTypeObject($post->post_type);
             $canEdit = current_user_can($postTypeObject->cap->edit_post, $post->ID);
 

@@ -42,19 +42,19 @@ if (! class_exists('PP_Overview_Methods')) {
         public function enqueue_admin_scripts()
         {
             global $pagenow;
-    
+
             // Only load content overview styles on the content overview page
             if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-    
+
                 $this->enqueue_datepicker_resources();
-    
+
                 wp_enqueue_script(
                     'publishpress-admin',
                     PUBLISHPRESS_URL . 'common/js/publishpress-admin.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-    
+
                 wp_enqueue_script(
                     'publishpress-content_overview',
                     $this->module_url . 'lib/content-overview.js',
@@ -62,29 +62,22 @@ if (! class_exists('PP_Overview_Methods')) {
                     PUBLISHPRESS_VERSION,
                     true
                 );
-    
+
                     wp_enqueue_script(
-                        'publishpress-select2-utils',
-                        PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
+                        'publishpress-select2',
+                        PUBLISHPRESS_URL . 'common/libs/select2/js/select2-full.min.js',
                         ['jquery'],
                         PUBLISHPRESS_VERSION
                     );
-    
-                    wp_enqueue_script(
-                        'publishpress-select2',
-                        PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                        ['jquery', 'publishpress-select2-utils'],
-                        PUBLISHPRESS_VERSION
-                    );
-    
-    
+
+
                 wp_enqueue_script(
                     'publishpress-floating-scroll',
                     PUBLISHPRESS_URL . 'common/libs/floating-scroll/js/jquery.floatingscroll.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
-    
+
                 wp_localize_script(
                     'publishpress-content_overview',
                     'PPContentOverview',
@@ -96,14 +89,14 @@ if (! class_exists('PP_Overview_Methods')) {
                 );
             }
         }
-    
+
         /**
          * Enqueue a screen and print stylesheet for the content overview.
          */
         public function action_enqueue_admin_styles()
         {
             global $pagenow;
-    
+
             // Only load calendar styles on the calendar page
             if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 wp_enqueue_style(
@@ -127,15 +120,15 @@ if (! class_exists('PP_Overview_Methods')) {
                     PUBLISHPRESS_VERSION,
                     'print'
                 );
-    
+
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2-full.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'screen'
                 );
-    
+
                 wp_enqueue_style(
                     'publishpress-floating-scroll',
                     PUBLISHPRESS_URL . 'common/libs/floating-scroll/css/jquery.floatingscroll.css',
@@ -161,7 +154,7 @@ if (! class_exists('PP_Overview_Methods')) {
                 '__return_false',
                 $this->module->options_group_name
             );
-    
+
             add_settings_field(
                 'post_types',
                 esc_html__('Post types to show:', 'publishpress'),
@@ -194,7 +187,7 @@ if (! class_exists('PP_Overview_Methods')) {
             if (empty($menu_slug) && $this->module_enabled('content_overview')) {
                 $menu_slug = 'pp-content-overview';
             }
-    
+
             return $menu_slug;
         }
 
@@ -206,11 +199,11 @@ if (! class_exists('PP_Overview_Methods')) {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
             if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
                 echo '<div id="trashed-message" class="updated"><p>';
-    
+
                 // Following mostly stolen from edit.php
                 if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
                     $count = (int)$_GET['trashed'];
-    
+
                     echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
                     $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                     echo ' <a href="' . esc_url(
@@ -221,10 +214,10 @@ if (! class_exists('PP_Overview_Methods')) {
                         ) . '">' . esc_html__('Undo', 'publishpress') . '</a><br />';
                     unset($_GET['trashed']);
                 }
-    
+
                 if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
                     $count = (int)$_GET['untrashed'];
-    
+
                     echo esc_html(_n(
                         'Item restored from the Trash.',
                         '%d items restored from the Trash.',
@@ -232,7 +225,7 @@ if (! class_exists('PP_Overview_Methods')) {
                     ));
                     unset($_GET['undeleted']);
                 }
-    
+
                 echo '</p></div>';
             }
             // phpcs:enable
@@ -352,8 +345,8 @@ if (! class_exists('PP_Overview_Methods')) {
                             <div><?php echo PP_Content_Overview_Utilities::content_overview_time_range($args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
                         </div>
                     </div>
-                    <?php 
-                    
+                    <?php
+
                     foreach ($overview_filters as $select_id => $select_name) {
                         $modal_id++;
                         $args['select_id']      = $select_id;
@@ -364,8 +357,8 @@ if (! class_exists('PP_Overview_Methods')) {
                         $button_label .= !empty($filter_data['selected_value']) ? ': ' . $filter_data['selected_value'] : '';
                         ?>
                         <?php if (!empty($button_label)) : ?>
-                            <button 
-                                data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>" 
+                            <button
+                                data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>"
                                 class="co-filter <?php echo esc_attr($active_class); ?> <?php echo esc_attr($select_id); ?> me-mode-status-<?php echo esc_attr($me_mode); ?>"><?php echo esc_html($button_label); ?></button>
                             <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="content-overview-modal" style="display: none;">
                                 <div class="content-overview-modal-content">
@@ -377,7 +370,7 @@ if (! class_exists('PP_Overview_Methods')) {
                             <?php echo $filter_data['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                         <?php endif; ?>
                         <?php
-                    } 
+                    }
                     ?>
                     <button class="clear-filter">
                         <span class="dashicons dashicons-dismiss"></span> <?php esc_html_e('Reset Filters', 'publishpress'); ?>
@@ -385,7 +378,7 @@ if (! class_exists('PP_Overview_Methods')) {
                     </button>
                 </div>
             </form>
-                
+
             <form method="GET" id="pp-content-filters-hidden">
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <input type="hidden" name="post_status" value=""/>
@@ -402,25 +395,25 @@ if (! class_exists('PP_Overview_Methods')) {
                     foreach ($overview_filters as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
-                    <?php 
+                    <?php
                     $date_format = 'Y-m-d';
                     $reset_start_date = date($date_format, strtotime('-5 weeks'));
                     $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +10 weeks'));
-    
+
                     $filtered_start_date = $reset_start_date;
                     $filtered_start_date_timestamp = strtotime($filtered_start_date);
-                
+
                     $filtered_end_date = $reset_end_date;
                     $filtered_end_date_timestamp = strtotime($filtered_end_date);
-    
+
                     $start_date_value = '<input type="hidden" name="pp-content-overview-start-date" value="' . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
                     $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
-                
+
                     $end_date_value = '<input type="hidden" name="pp-content-overview-end-date" value="' . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
                     $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
-    
+
                     $nonce = wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
-    
+
                     echo $start_date_value . $end_date_value . $nonce;
                     ?>
                     <input type="hidden" name="pp-content-overview-range-use-today" value="1"/>
