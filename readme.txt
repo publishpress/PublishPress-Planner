@@ -130,6 +130,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Fixed : Duplicate copies of default Notification Workflows were created under some conditions
 * Fixed : Notifications were sent without specified event name / content type under some conditions
+* Fixed : Avoid security advisory false alarm due to DOMPurify library being referenced as a dependency (though not actually used)
 
 = [4.7.1] - 18 Mar 2025 =
 
