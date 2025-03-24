@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 const $ = jQuery;
 
 export default function MetaField(props) {
@@ -44,10 +45,12 @@ export default function MetaField(props) {
               altFormat: self.attr('data-alt-format'),
             });
           }
+
+        const sanitizedHTML = DOMPurify.sanitize(props.html);
         
         return (
             <div
-                dangerouslySetInnerHTML={{ __html: props.html }}>
+                dangerouslySetInnerHTML={{ __html: sanitizedHTML }}>
             </div>
         )
     }
