@@ -151,6 +151,14 @@ class Workflow
                 } else {
                     // Check if it is an explicit email address.
                     if (isset($receiverData['channel'])) {
+                        // Doesn't send the notification for the same user that triggered it if the option to skip is set.
+                        if ($optionSkipUser && isset($receiverData['receiver'])) {
+                            $user_id = email_exists($receiverData['receiver']);
+                            if ($user_id == $this->event_args['user_id']) {
+                                continue;
+                            }
+                        }
+
                         if (!isset($filtered_receivers[$receiverData['channel']])) {
                             $filtered_receivers[$receiverData['channel']] = [];
                         }
@@ -226,6 +234,13 @@ class Workflow
                     // Add to the group's list.
                     $filtered_receivers[$receiverData['group']][] = $receiverData;
                 } else {
+                    // Doesn't send the notification for the same user that triggered it if the option to skip is set.
+                    if ($optionSkipUser && isset($receiverData['receiver'])) {
+                        $user_id = email_exists($receiverData['receiver']);
+                        if ($user_id == $this->event_args['user_id']) {
+                            continue;
+                        }
+                    }
                     if (!isset($filtered_receivers[$receiverData['group']])) {
                         $filtered_receivers[$receiverData['group']] = [];
                     }
