@@ -205,7 +205,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function install()
         {
             global $publishpress;
-            
+
             // Our default editorial fieldss
             $default_metadata = [
                 [
@@ -342,17 +342,17 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
                 wp_enqueue_style(
                     'publishpress-select2-css',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.1.0-rc.0/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2-full.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
                 );
 
                 wp_enqueue_script('jquery-ui-sortable');
-    
+
                 wp_enqueue_script(
                     'publishpress-editorial-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.1.0-rc.0/js/select2.min.js',
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2-full.min.js',
                     ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
@@ -1216,13 +1216,13 @@ if (! class_exists('PP_Editorial_Metadata')) {
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $term_description = trim(stripslashes(wp_filter_post_kses($_POST['metadata_description'])));
             $term_type = sanitize_key($_POST['metadata_type']);
-            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
+            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role']))
                 ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
             $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
             $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
-            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
+            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types']))
                 ? array_map('sanitize_key', $_POST['post_types']) : [];
-            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
+            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column']))
                 ? array_map('sanitize_key', $_POST['post_types_column']) : [];
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
@@ -1298,7 +1298,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
             if (empty($_POST['metadata_type']) || ! isset($metadata_types[$_POST['metadata_type']])) {
                 $_REQUEST['form-errors']['type'] = esc_html__('Please select a valid metadata type.', 'publishpress');
             }
-            
+
             // Metadata show_in_calendar_form needs to be a valid Yes or No
             $term_show_in_calendar_form = false;
             if (isset($_POST['show_in_calendar_form']) && $_POST['show_in_calendar_form'] == 'yes') {
@@ -1377,9 +1377,9 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             $term_select_type    = (isset($_POST['metadata_select_type'])) ? sanitize_text_field($_POST['metadata_select_type']) : '';
             $term_select_default = (isset($_POST['select_dropdown_default'])) ? sanitize_text_field($_POST['select_dropdown_default']) : '';
-            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types'])) 
+            $term_post_types = (isset($_POST['post_types']) && is_array($_POST['post_types']))
                 ? array_map('sanitize_key', $_POST['post_types']) : [];
-            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column'])) 
+            $term_post_types_column = (isset($_POST['post_types_column']) && is_array($_POST['post_types_column']))
                 ? array_map('sanitize_key', $_POST['post_types_column']) : [];
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $metadata_select_options = (isset($_POST['metadata_select_options'])) ? $_POST['metadata_select_options'] : '';
@@ -1454,7 +1454,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
                 $new_show_in_calendar_form = true;
             }
 
-            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role'])) 
+            $term_user_role = (isset($_POST['metadata_user_role']) && is_array($_POST['metadata_user_role']))
                 ? array_map('sanitize_key', $_POST['metadata_user_role']) : [];
 
             // Kick out if there are any errors
@@ -1607,7 +1607,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
             foreach ($editorial_metadata_terms as $editorial_metadata_term) {
                 $this->update_editorial_metadata_term(
-                    $editorial_metadata_term->term_id, 
+                    $editorial_metadata_term->term_id,
                     [
                         'post_types'        => $supported_post_types,
                         'post_types_column' => $supported_post_types
@@ -1712,7 +1712,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
         public function action_admin_submenu()
         {
             $publishpress = $this->get_service('publishpress');
-    
+
             // Main Menu
             add_submenu_page(
                 $publishpress->get_menu_slug(),
@@ -1756,7 +1756,7 @@ if (! class_exists('PP_Editorial_Metadata')) {
 
         /**
          * Load utilities files
-         * 
+         *
          * @return void
          */
         private function load_utilities_files() {
