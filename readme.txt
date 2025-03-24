@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.7
-Stable tag: 4.7.1
+Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,9 +128,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 = [4.7.2] =
 
-* Fixed : Duplicate copies of default Notification Workflows were created under some conditions
-* Fixed : Notifications were sent without specified event name / content type under some conditions
-* Fixed : Avoid security advisory false alarm due to DOMPurify library being referenced as a dependency (though not actually used)
+* Fixed : Duplicate copies of default Notification Workflows were created under some conditions, #1873
+* Fixed : Notifications were sent without specified event name / content type under some conditions, #1874
+* Fixed : Trash duplicate Notification Workflows, #1808
+* Fixed : Notification Skip current user work working, #1871
+* Update : Update select2 and DOMPurify library, #1872
+
 
 = [4.7.1] - 18 Mar 2025 =
 
