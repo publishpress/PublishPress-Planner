@@ -46,7 +46,7 @@ export default function MetaField(props) {
             });
           }
 
-        const sanitizedHTML = useMemo(() => DOMPurify.sanitize(props.html), [props.html]);
+        const sanitizedHTML = DOMPurify.sanitize(props.html);
         
         return (
             <div

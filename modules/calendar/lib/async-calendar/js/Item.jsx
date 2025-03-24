@@ -54,7 +54,7 @@ export default function Item(props) {
 
     const label = props.label || DEFAULT_LABEL;
 
-    const sanitizedLabel = useMemo(() => DOMPurify.sanitize(label), [label]);
+    const sanitizedLabel = DOMPurify.sanitize(label);
 
     return (
         <li

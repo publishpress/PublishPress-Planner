@@ -173,7 +173,7 @@ export default function ItemPopup(props) {
         return links;
     }
 
-    const sanitizedTitle = useMemo(() => DOMPurify.sanitize(props.title), [props.title]);
+    const sanitizedTitle = DOMPurify.sanitize(props.title);
 
     return (
         <div className="publishpress-calendar-popup" style={{top: positionTop, left: positionLeft}}>
