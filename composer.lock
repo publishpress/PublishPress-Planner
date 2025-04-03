@@ -995,6 +995,7 @@
                 "issues": "https://github.com/Codeception/phpunit-wrapper/issues",
                 "source": "https://github.com/Codeception/phpunit-wrapper/tree/8.1.6"
             },
+            "abandoned": true,
             "time": "2022-05-23T06:22:33+00:00"
         },
         {

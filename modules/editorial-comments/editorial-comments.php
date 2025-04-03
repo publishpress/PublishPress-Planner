@@ -166,19 +166,13 @@ if (! class_exists('PP_Editorial_Comments')) {
                 return false;
             }
 
-                wp_enqueue_script(
-                    'publishpress-select2-utils',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
 
-                wp_enqueue_script(
-                    'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery', 'publishpress-select2-utils'],
-                    PUBLISHPRESS_VERSION
-                );
+            wp_enqueue_script(
+                'publishpress-select2',
+                plugins_url('common/libs/select2/js/select2-full.min.js', PUBLISHPRESS_FILE_PATH),
+                ['jquery'],
+                PUBLISHPRESS_VERSION
+            );
 
             wp_enqueue_script(
                 'publishpress-editorial-comments',
@@ -197,17 +191,10 @@ if (! class_exists('PP_Editorial_Comments')) {
 
             wp_enqueue_style(
                 'publishpress-select2-css',
-                plugins_url('common/libs/select2-v4.0.13.1/css/select2.min.css', PUBLISHPRESS_FILE_PATH),
+                plugins_url('common/libs/select2/css/select2-full.min.css', PUBLISHPRESS_FILE_PATH),
                 false,
                 PUBLISHPRESS_VERSION,
                 'all'
-            );
-
-            wp_enqueue_script(
-                'publishpress-select2',
-                plugins_url('common/libs/select2-v4.0.13.1/js/select2.full.min.js', PUBLISHPRESS_FILE_PATH),
-                ['jquery'],
-                PUBLISHPRESS_VERSION
             );
 
             wp_localize_script(
@@ -632,7 +619,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
                 if (
-                    ($user->user_nicename == $theComment->comment_author && current_user_can(
+                    ($user->ID == $theComment->user_id && current_user_can(
                             'pp_edit_editorial_comment'
                         )
                         || current_user_can('pp_edit_others_editorial_comment')
@@ -645,7 +632,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 }
 
                 if (
-                    ($user->ID === $theComment->comment_author && current_user_can('pp_delete_editorial_comment')
+                    ($user->ID == $theComment->user_id && current_user_can('pp_delete_editorial_comment')
                         || current_user_can('pp_delete_others_editorial_comment')
                     )
                 ) {
@@ -929,7 +916,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             $theComment = get_comment($comment_id);
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_edit_editorial_comment'
                     ))
                 && ! current_user_can('pp_edit_others_editorial_comment')
@@ -1059,7 +1046,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             }
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_delete_editorial_comment'
                     ))
                 && ! current_user_can('pp_delete_others_editorial_comment')
@@ -1163,7 +1150,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_delete_editorial_comment'
                     ))
                 && ! current_user_can('pp_delete_others_editorial_comment')

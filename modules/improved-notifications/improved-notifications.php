@@ -186,6 +186,42 @@ if (! class_exists('PP_Improved_Notifications')) {
             add_action('pp_init', [$this, 'action_after_init']);
 
             add_filter('psppno_default_channel', [$this, 'filter_default_channel'], 10, 2);
+            // Preventing sending async notification if event args is invalid
+            add_filter('publishpress_notifications_stop_sync_notifications', [$this, 'should_stop_notification'], 10,2);
+            // Prevent notification schedule if even args is not array
+            add_filter('publishpress_notifications_schedule_notification', [$this, 'should_schedule_notification'], 10,2);
+        }
+
+        /**
+         * Preventing sending async notification if event args is invalid
+         * @param bool $stop
+         * @param array $workflow
+         * 
+         * @return bool
+         */
+        public function should_stop_notification($stop, $workflow) {
+            if (!is_object($workflow) || empty($workflow->event_args) || !is_array($workflow->event_args)) {
+                $stop = true;
+                return $stop;
+            }
+            
+            return $stop;
+        }
+        
+        /**
+         * Prevent notification schedule if even args is not array
+         * @param bool $schedule
+         * @param array $workflow
+         * 
+         * @return bool
+         */
+        public function should_schedule_notification($schedule, $workflow) {
+            if (!is_object($workflow) || empty($workflow->event_args) || !is_array($workflow->event_args)) {
+                $schedule = false;
+                return $schedule;
+            }
+            
+            return $schedule;
         }
 
         /**
@@ -488,6 +524,66 @@ if (! class_exists('PP_Improved_Notifications')) {
             }
         }
 
+        /**
+         * If any duplicate default notification workflows were erroneously created, move them to the trash.
+         * 
+         * This is called on version update from 4.7.1 or earlier due to the potential for duplication which was corrected in version 4.7.2
+         */
+        private function handle_duplicate_default_workflows() {
+            global $wpdb;
+
+            $trash_post_ids = [];
+
+            $default_workflows = ['existing-post-is-updated', 'new-post-is-created-in-draft-status', 'new-post-is-published', 'notify-on-editorial-comments'];
+
+            foreach ($default_workflows as $default_workflow_name) {
+                // If duplicates exist, they will have the standard post_name numerically suffixed with "-#"
+                // It is also possible that after duplication, the original workflow was manually deleted. In that case, subsequent duplicates will use the original post_name, then the next available "-#" suffix.
+                // The decision was made to keep the oldest existing default workflow, even if it has a suffixed post_name. If this is not the copy the user wants deactivated, they can restore it from Trash.
+                
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                $posts = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT ID, post_name FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish' AND (post_name = %s OR post_name LIKE '$default_workflow_name-%') ORDER BY ID ASC",    //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                        'psppnotif_workflow',
+                        $default_workflow_name
+                    )
+                );
+
+                // Query results are ordered by ID ascending, and we are keeping the first-created instance of each default Notification Workflow.
+                $first_pass = true;
+
+                foreach ($posts as $row) {
+                    if (strlen($row->post_name) > $default_workflow_name) {
+                        // Since the DB query's LIKE clause is not a regular expression ensuring numeric-only matches, disregard false matches now.
+                        $str_suffix = substr($post->post_name, strlen($default_workflow_name) + 1);
+
+                        if (!is_numeric($str_suffix)) {
+                            continue;
+                        }
+                    }
+                    
+                    if ($first_pass) {
+                        $first_pass = false;
+                        continue;
+                    }
+
+                    $trash_post_ids []= $row->ID;
+                }
+            }
+
+            if ($trash_post_ids) {
+                $id_in_csv = implode("','", array_map('intval', $trash_post_ids));
+
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                $wpdb->query("UPDATE $wpdb->posts SET post_status = 'trash' WHERE $wpdb->posts.post_type = 'psppnotif_workflow' AND $wpdb->posts.ID IN ('$id_in_csv')");    //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+                foreach ($trash_post_ids as $post_id) {
+                    clean_post_cache($post_id);
+                }
+            }
+        }
+
         public function filterSupportedModulesPostTypesArgs($args, $module)
         {
             if (isset($module->slug) && $module->slug === 'notifications') {
@@ -649,6 +745,10 @@ if (! class_exists('PP_Improved_Notifications')) {
          */
         public function upgrade($previous_version)
         {
+            if (version_compare($previous_version, '4.7.2-beta4', '<') && !defined('PUBLISHPRESS_NO_DUPLICATE_WORKFLOW_HANDLING')) {
+                $this->handle_duplicate_default_workflows();
+            }
+
             if (version_compare($previous_version, '1.8.1', '<=')) {
                 // Upgrade settings _psppno_touser/_psppno_togroup to _psppno_touserlist/_psppno_togrouplist
                 $workflows = $this->get_workflows();
@@ -754,6 +854,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $params = [
                 'event' => Post_StatusTransition::EVENT_NAME,
+                'event_key' => Post_StatusTransition::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
@@ -803,6 +904,7 @@ if (! class_exists('PP_Improved_Notifications')) {
             // Go ahead and do the action to run workflows
             $params = [
                 'event' => Post_Update::EVENT_NAME,
+                'event_key' => Post_Update::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$postId,
@@ -837,6 +939,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $params = [
                 'event' => Post_TaxonomyUpdate::EVENT_NAME,
+                'event_key' => Post_TaxonomyUpdate::META_KEY_SELECTED,
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id'   => (int)$post->ID,
@@ -867,6 +970,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             $params = [
                 'event' => 'editorial_comment',
+                'event_key' => '_psppno_evtedcomment',
                 'user_id' => get_current_user_id(),
                 'params' => [
                     'post_id' => (int)$post->ID,

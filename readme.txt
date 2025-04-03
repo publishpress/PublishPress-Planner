@@ -6,7 +6,7 @@ Tags: editorial calendar, marketing calendar, kanban board, content overview, ma
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.7
-Stable tag: 4.7.1
+Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,15 @@ Yes, one feature in PublishPress Planner is editorial fields. Editorial Fields e
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.7.2] - 3 Apr 2025 =
+
+* Fixed : Duplicate copies of default Notification Workflows were created under some conditions, #1873
+* Fixed : Notifications were sent without specified event name / content type under some conditions, #1874
+* Fixed : If Revisions Pro is deactivated, some of its Notifications are still sent #1882
+* Fixed : Trash duplicate Notification Workflows, #1808
+* Fixed : Notification Skip current user not working, #1871
+* Update : Update select2 and DOMPurify library, #1872
 
 = [4.7.1] - 18 Mar 2025 =
 

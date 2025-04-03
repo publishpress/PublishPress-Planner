@@ -52,8 +52,11 @@ class WorkflowsController
 
             if (!empty($query->posts)) {
                 foreach (apply_filters('publishpress_post_notification_trigger_workflows', $query->posts) as $workflowPost) {
-                    $workflow = new Workflow($workflowPost);
-                    $workflow->run($params);
+                    // Run the workflow only if retrieved post has postmeta matching the current event. Note that each event has a different postmeta key.
+                    if (!empty($params['event_key']) && get_post_meta($workflowPost->ID, $params['event_key'], true)) {
+                        $workflow = new Workflow($workflowPost);
+                        $workflow->run($params);
+                    }
                 }
             }
         } catch (\Exception $e) {
@@ -90,6 +93,7 @@ class WorkflowsController
             'no_found_rows' => true,
             'cache_results' => true,
             'meta_query'    => [],
+            'needs_event_filter' => true,
         ];
 
         /**
@@ -100,6 +104,10 @@ class WorkflowsController
          * @param array $params
          */
         $query_args = apply_filters('publishpress_notifications_running_workflow_meta_query', $query_args, $params);
+
+        if (empty($query_args['meta_query']) || isset($query_args['needs_event_filter'])) {
+            return (object) ['posts' => []];
+        }
 
         return new WP_Query($query_args);
     }

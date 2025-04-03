@@ -341,16 +341,9 @@ if (! class_exists('PP_Board_Methods')) {
                 );
 
                 wp_enqueue_script(
-                    'publishpress-select2-utils',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
-
-                wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2-full.min.js',
+                    ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
 
@@ -407,7 +400,7 @@ if (! class_exists('PP_Board_Methods')) {
 
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2-full.min.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'screen'
@@ -438,7 +431,7 @@ if (! class_exists('PP_Board_Methods')) {
                 '__return_false',
                 $this->module->options_group_name
             );
-    
+
             add_settings_field(
                 'post_types',
                 esc_html__('Post types to show:', 'publishpress'),

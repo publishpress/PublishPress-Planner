@@ -12,6 +12,8 @@ import TextField from "./fields/TextField";
 import UserField from "./fields/UserField";
 import NumberField from "./fields/NumberField";
 import TimeField from "./fields/TimeField";
+import DOMPurify from "dompurify";
+
 
 const $ = jQuery;
 
@@ -171,13 +173,15 @@ export default function ItemPopup(props) {
         return links;
     }
 
+    const sanitizedTitle = DOMPurify.sanitize(props.title);
+
     return (
         <div className="publishpress-calendar-popup" style={{top: positionTop, left: positionLeft}}>
             <div className="publishpress-calendar-popup-title" style={{backgroundColor: props.color}}>
                 {props.icon &&
                 <span className={'dashicons ' + props.icon + ' publishpress-calendar-icon'}/>
                 }
-                <span dangerouslySetInnerHTML={{__html: props.title}}></span>
+                <span dangerouslySetInnerHTML={{__html: sanitizedTitle}}></span>
 
                 <span className={'dashicons dashicons-no publishpress-calendar-popup-close'}
                       title={props.strings.close} onClick={closePopup}/>

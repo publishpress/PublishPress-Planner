@@ -1,5 +1,7 @@
 import {getHourStringOnFormat, getDateInstanceFromString} from './Functions';
 import ItemPopup from './ItemPopup';
+import DOMPurify from "dompurify";
+
 
 const $ = jQuery;
 
@@ -52,6 +54,8 @@ export default function Item(props) {
 
     const label = props.label || DEFAULT_LABEL;
 
+    const sanitizedLabel = DOMPurify.sanitize(label);
+
     return (
         <li
             ref={calendarItem}
@@ -63,7 +67,7 @@ export default function Item(props) {
             onClick={dispatchClickEvent}>
 
             {iconElement}{timeElement}
-            <span className="publishpress-calendar-item-title" dangerouslySetInnerHTML={{__html: label}}></span>
+            <span className="publishpress-calendar-item-title" dangerouslySetInnerHTML={{__html: sanitizedLabel}}></span>
             {props.isPopupOpened &&
             <ItemPopup target={calendarItem}
                        id={props.id}

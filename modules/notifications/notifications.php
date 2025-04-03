@@ -370,16 +370,9 @@ if (! class_exists('PP_Notifications')) {
             if ($this->is_whitelisted_functional_view()) {
 
                 wp_enqueue_script(
-                    'publishpress-select2-utils',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2-utils.min.js',
-                    ['jquery'],
-                    PUBLISHPRESS_VERSION
-                );
-
-                wp_enqueue_script(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/js/select2.min.js',
-                    ['jquery', 'publishpress-select2-utils'],
+                    PUBLISHPRESS_URL . 'common/libs/select2/js/select2-full.min.js',
+                    ['jquery'],
                     PUBLISHPRESS_VERSION
                 );
 
@@ -437,7 +430,7 @@ if (! class_exists('PP_Notifications')) {
 
                 wp_enqueue_style(
                     'publishpress-select2',
-                    PUBLISHPRESS_URL . 'common/libs/select2-v4.0.13.1/css/select2.min.css',
+                    PUBLISHPRESS_URL . 'common/libs/select2/css/select2-full.min.css',
                     false,
                     PUBLISHPRESS_VERSION
                 );
@@ -635,7 +628,7 @@ if (! class_exists('PP_Notifications')) {
 
                     <script type="text/javascript">
                     /* <![CDATA[ */
-                    jQuery(document).ready(function ($) {           
+                    jQuery(document).ready(function ($) {
                         $('#pp_post_notify_box a.notification-followers').on('click', function() {
                             $('div.pp_post_notify_workflows').show();
                         });
@@ -685,7 +678,7 @@ if (! class_exists('PP_Notifications')) {
                                 <?php
                                 endforeach; ?>
                             </ul>
-                            
+
                             <?php if (!empty($followersWorkflows)):?>
                             <p>
                                 &sup1; = <?php _e('Workflow has users enrolled', 'publishpress');?>
@@ -851,7 +844,7 @@ if (! class_exists('PP_Notifications')) {
                         // Is an email address?
                         if (strpos($id, '@') > 0) {
                             $this->post_set_emails_to_notify($postId, $id, true);
-                        
+
                         } elseif (0 === strpos($id, 'group-')) {
                             $this->post_set_groups_to_notify($postId, $id, true);
                         } else {
@@ -1656,13 +1649,13 @@ if (! class_exists('PP_Notifications')) {
             $group_terms = wp_get_object_terms($post_id, $this->notify_group_taxonomy, compact('fields'));
 
             if (!is_array($group_terms)) {
-                $group_terms = [];	
+                $group_terms = [];
             } else {
                 if ('slugs' == $return) {
                     $group_terms = array_column($group_terms, 'slug');
                 }
             }
-	
+
             return $group_terms;
         }
 
