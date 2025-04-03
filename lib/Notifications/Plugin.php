@@ -30,8 +30,9 @@ class Plugin
         add_filter('post_updated_messages', [$this, 'filter_post_updated_messages']);
         add_filter('bulk_post_updated_messages', [$this, 'filter_bulk_post_updated_messages'], 10, 2);
 
+        add_filter('posts_clauses_request', [$this, 'fltSuppressInactiveNotifications'], 50, 2);
+
         if (is_admin()) {
-            add_filter('posts_clauses_request', [$this, 'fltSuppressInactiveNotifications'], 50, 2);
             add_filter('wp_count_posts', [$this, 'fltSuppressInactivePostCounts'], 50, 2);
         }
 
@@ -84,17 +85,62 @@ class Plugin
         $this->$method_name($post_id);
     }
 
+    private function suppressInactiveNotifications($where, $inactive_default_names) {
+        global $wpdb;
+
+        $post_name_csv = implode("','", array_map('sanitize_key', $inactive_default_names));
+
+        $where .= " AND $wpdb->posts.post_name NOT IN ('" . $post_name_csv . "')";                                  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+        //phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        foreach ($inactive_default_names as $default_name) {  // note: $wpdb->prepare() breaks wildcards in LIKE statements
+            $where .= " AND $wpdb->posts.post_name NOT LIKE '" . sanitize_key($default_name) . "-%'";               // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        }
+
+        return $where;
+    }
+
+    private function suppressInactiveRevisionsNotifications($where) {
+        return $this->suppressInactiveNotifications(
+            $where,
+            [
+                'revision-scheduled-publication', 
+                'scheduled-revision-is-published', 
+                'revision-scheduled', 
+                'revision-is-scheduled', 
+                'revision-declined', 
+                'revision-deferred-or-rejected', 
+                'revision-submission', 
+                'revision-is-submitted', 
+                'new-revision', 
+                'new-revision-created', 
+                'revision-status-changed', 
+                'revision-is-applied', 
+                'revision-is-published'
+            ]
+        );
+    }
+
+    private function suppressInactiveStatusesNotifications($where) {
+        return $this->suppressInactiveNotifications(
+            $where,
+            [
+                'post-status-changed', 
+                'post-deferred-or-rejected', 
+                'post-declined'
+            ]
+        );                       
+    }
+
     function fltSuppressInactiveNotifications($clauses, $_wp_query = false, $args = [])
     {
-        global $wpdb, $pagenow, $typenow;
-
-        if (!empty($pagenow) && ('edit.php' == $pagenow) && !empty($typenow) && ('psppnotif_workflow' == $typenow)) {
-            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION')) {
-                $clauses['where'] .= " AND $wpdb->posts.post_name NOT IN ('revision-scheduled-publication', 'scheduled-revision-is-published', 'revision-scheduled', 'revision-is-scheduled', 'revision-declined', 'revision-deferred-or-rejected', 'revision-submission', 'revision-is-submitted', 'new-revision', 'new-revision-created', 'revision-status-changed', 'revision-is-applied', 'revision-is-published')";
+        if (!empty($_wp_query) && !empty($_wp_query->query_vars) && !empty($_wp_query->query_vars['post_type']) && ('psppnotif_workflow' == $_wp_query->query_vars['post_type'])) {
+            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') && !defined('PUBLISHPRESS_INCLUDE_REVISION_NOTIFICATIONS')) {
+                $clauses['where'] = $this->suppressInactiveRevisionsNotifications($clauses['where']);
             }
             
             if (!defined('PUBLISHPRESS_STATUSES_PRO_VERSION') && !defined('PUBLISHPRESS_RETAIN_DEFAULT_STATUS_CHANGED_WORKFLOW')) {
-                $clauses['where'] .= " AND $wpdb->posts.post_name NOT IN ('post-status-changed', 'post-deferred-or-rejected', 'post-declined')";
+                $clauses['where'] = $this->suppressInactiveStatusesNotifications($clauses['where']);
             }
         }
 
@@ -110,12 +156,12 @@ class Plugin
         ) {
             $query = "SELECT post_status, COUNT(*) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s";
 
-            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION')) {
-                $query .= " AND $wpdb->posts.post_name NOT IN ('revision-scheduled-publication', 'scheduled-revision-is-published', 'revision-scheduled', 'revision-is-scheduled', 'revision-declined', 'revision-deferred-or-rejected', 'revision-submission', 'revision-is-submitted', 'new-revision', 'new-revision-created', 'revision-status-changed', 'revision-is-applied', 'revision-is-published')";
+            if (!defined('PUBLISHPRESS_REVISIONS_PRO_VERSION') && !defined('PUBLISHPRESS_INCLUDE_REVISION_NOTIFICATIONS')) {
+                $query = $this->suppressInactiveRevisionsNotifications($query);
             }
             
             if (!defined('PUBLISHPRESS_STATUSES_PRO_VERSION') && !defined('PUBLISHPRESS_RETAIN_DEFAULT_STATUS_CHANGED_WORKFLOW')) {
-                $query .= " AND $wpdb->posts.post_name NOT IN ('post-status-changed', 'post-deferred-or-rejected', 'post-declined')";
+                $query = $this->suppressInactiveStatusesNotifications($query);
             }
 
             $query .= ' GROUP BY post_status';
