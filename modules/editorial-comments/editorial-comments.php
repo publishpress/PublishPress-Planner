@@ -619,7 +619,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                     ) . '" href="#">' . esc_html__('Reply', 'publishpress') . '</a>';
 
                 if (
-                    ($user->user_nicename == $theComment->comment_author && current_user_can(
+                    ($user->ID == $theComment->user_id && current_user_can(
                             'pp_edit_editorial_comment'
                         )
                         || current_user_can('pp_edit_others_editorial_comment')
@@ -632,7 +632,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 }
 
                 if (
-                    ($user->ID === $theComment->comment_author && current_user_can('pp_delete_editorial_comment')
+                    ($user->ID == $theComment->user_id && current_user_can('pp_delete_editorial_comment')
                         || current_user_can('pp_delete_others_editorial_comment')
                     )
                 ) {
@@ -916,7 +916,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             $theComment = get_comment($comment_id);
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_edit_editorial_comment'
                     ))
                 && ! current_user_can('pp_edit_others_editorial_comment')
@@ -1046,7 +1046,7 @@ if (! class_exists('PP_Editorial_Comments')) {
             }
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_delete_editorial_comment'
                     ))
                 && ! current_user_can('pp_delete_others_editorial_comment')
@@ -1150,7 +1150,7 @@ if (! class_exists('PP_Editorial_Comments')) {
 
 
             if (
-                ! ($current_user->user_nicename == $theComment->comment_author && current_user_can(
+                ! ($current_user->ID == $theComment->user_id && current_user_can(
                         'pp_delete_editorial_comment'
                     ))
                 && ! current_user_can('pp_delete_others_editorial_comment')
