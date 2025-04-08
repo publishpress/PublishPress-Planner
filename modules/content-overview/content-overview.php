@@ -1209,7 +1209,7 @@ class PP_Content_Overview extends PP_Module
             </div>
         </div>
         <div id="pp-content-overview-general-modal" style="display: none;">
-            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container"></div>
+            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container publishpress-quick-modal"></div>
         </div>
         <?php
 
