@@ -480,7 +480,7 @@ class PP_Content_Board extends PP_Module
         </div>
         <br clear="all">
         <div id="pp-content-board-general-modal" style="display: none;">
-            <div id="pp-content-board-general-modal-container" class="pp-content-board-general-modal-container"></div>
+            <div id="pp-content-board-general-modal-container" class="pp-content-board-general-modal-container publishpress-quick-modal"></div>
         </div>
         <?php
 

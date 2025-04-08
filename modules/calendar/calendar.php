@@ -1170,7 +1170,7 @@ if (! class_exists('PP_Calendar')) {
             </div>
 
             <div id="pp-content-calendar-general-modal" style="display: none;">
-                <div id="pp-content-calendar-general-modal-container" class="pp-content-calendar-general-modal-container"></div>
+                <div id="pp-content-calendar-general-modal-container" class="pp-content-calendar-general-modal-container publishpress-quick-modal"></div>
             </div>
             <?php
            wp_localize_script(
