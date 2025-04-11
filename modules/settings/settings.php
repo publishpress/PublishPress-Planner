@@ -520,7 +520,12 @@ if (! class_exists('PP_Settings')) {
             $configure_callback    = $requested_module->configure_page_cb;
             $requested_module_name = $requested_module->name;
 
-            $publishpress->$requested_module_name->$configure_callback();
+            $requested_module = $publishpress->$requested_module_name;
+
+            if (is_object($requested_module) && is_string($configure_callback) && method_exists($requested_module, $configure_callback)) {
+                $requested_module->$configure_callback();
+            }
+
             $module_output = ob_get_clean();
 
             echo $this->view->render(
