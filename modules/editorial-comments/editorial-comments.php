@@ -680,13 +680,15 @@ if (! class_exists('PP_Editorial_Comments')) {
                             comment_author_email_link($theComment->comment_author); ?></span>
                         <span class="meta">
                             <?php
-                            esc_html_e(
-                                sprintf(
-                                    __('said on %1$s at %2$s', 'publishpress'),
-                                    get_comment_date(get_option('date_format')),
-                                    get_comment_time()
-                                )
-                            ); ?>
+                            printf(
+                                esc_html__(
+                                    'said on %1$s at %2$s',
+                                    'publishpress'
+                                ),
+                                get_comment_date(get_option('date_format')),
+                                get_comment_time()
+                            );
+                            ?>
                         </span>
                     </h5>
 
