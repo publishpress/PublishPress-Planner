@@ -1256,7 +1256,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             echo esc_html__('End date', 'publishpress'); ?></h4>
                         <select id="publishpress-end-date">
                             <optgroup label="<?php
-                            echo esc_attr__('Weeks'); ?>">
+                            echo esc_attr__('Weeks', 'publishpress'); ?>">
                                 <option value="w1"><?php
                                     echo esc_html__('One week', 'publishpress'); ?></option>
                                 <option value="w2"><?php
@@ -1268,7 +1268,7 @@ if (! class_exists('PP_Calendar_Utilities')) {
                             </optgroup>
 
                             <optgroup label="<?php
-                            echo esc_attr__('Months'); ?>">
+                            echo esc_attr__('Months', 'publishpress'); ?>">
                                 <option value="m1"><?php
                                     echo esc_html__('One month', 'publishpress'); ?></option>
                                 <option value="m2"
