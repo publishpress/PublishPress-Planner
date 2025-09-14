@@ -206,16 +206,16 @@ class Plugin
         /* translators: Publish box date format, see https://secure.php.net/date */
         $scheduled_date = date_i18n(__('M j, Y @ H:i'), strtotime($post->post_date));
 
-        $messages['post'][1]  = __('Notification workflow updated.', 'pulishpress');
-        $messages['post'][4]  = __('Notification workflow updated.', 'pulishpress');
-        $messages['post'][6]  = __('Notification workflow published.', 'pulishpress');
-        $messages['post'][7]  = __('Notification workflow saved.', 'pulishpress');
-        $messages['post'][8]  = __('Notification workflow submitted.', 'pulishpress');
+        $messages['post'][1]  = __('Notification workflow updated.', 'publishpress');
+        $messages['post'][4]  = __('Notification workflow updated.', 'publishpress');
+        $messages['post'][6]  = __('Notification workflow published.', 'publishpress');
+        $messages['post'][7]  = __('Notification workflow saved.', 'publishpress');
+        $messages['post'][8]  = __('Notification workflow submitted.', 'publishpress');
         $messages['post'][9]  = sprintf(
-            __('Notification workflow scheduled for: %s.'),
+            __('Notification workflow scheduled for: %s.', 'publishpress'),
             '<strong>' . $scheduled_date . '</strong>'
         );
-        $messages['post'][10] = __('Notification workflow draft updated.', 'pulishpress');
+        $messages['post'][10] = __('Notification workflow draft updated.', 'publishpress');
 
         return $messages;
     }
@@ -240,30 +240,36 @@ class Plugin
         $bulk_messages['post']['updated']   = _n(
             '%s notification workflow updated.',
             '%s notification workflows updated.',
-            $bulk_counts['updated']
+            $bulk_counts['updated'],
+            'publishpress'
         );
         $bulk_messages['post']['locked']    = (1 == $bulk_counts['locked']) ? __(
-            '1 notification workflow not updated, somebody is editing it.'
+            '1 notification workflow not updated, somebody is editing it.',
+            'publishpress'
         ) :
             _n(
                 '%s notification workflow not updated, somebody is editing it.',
                 '%s notification workflows not updated, somebody is editing them.',
-                $bulk_counts['locked']
+                $bulk_counts['locked'],
+                'publishpress'
             );
         $bulk_messages['post']['deleted']   = _n(
             '%s notification workflow permanently deleted.',
             '%s notification workflows permanently deleted.',
-            $bulk_counts['deleted']
+            $bulk_counts['deleted'],
+            'publishpress'
         );
         $bulk_messages['post']['trashed']   = _n(
             '%s notification workflow moved to the Trash.',
             '%s notification workflows moved to the Trash.',
-            $bulk_counts['trashed']
+            $bulk_counts['trashed'],
+            'publishpress'
         );
         $bulk_messages['post']['untrashed'] = _n(
             '%s notification workflow restored from the Trash.',
             '%s notification workflows restored from the Trash.',
-            $bulk_counts['untrashed']
+            $bulk_counts['untrashed'],
+            'publishpress'
         );
 
         return $bulk_messages;
