@@ -998,7 +998,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                     return esc_html__('Published');
                 }
 
-                return esc_html__('Publish on');
+                return esc_html__('Publish on', 'publishpress');
             }
 
             return $status;
