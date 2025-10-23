@@ -25,3 +25,5 @@
 - /vendor/psr/container/.gitignore
 - .rsync-filters-pre-build
 - .rsync-filters-pro-build
+- .env.example
+- .env

@@ -311,16 +311,16 @@
         },
         {
             "name": "publishpress/wordpress-version-notices",
-            "version": "2.1.3",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-wordpress-version-notices.git",
-                "reference": "8e54558d2427a0f93174ccbc1d02c1ba7e2abc8d"
+                "reference": "caf37ca4705f89b882c1e53d9e592939568df944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-wordpress-version-notices/zipball/8e54558d2427a0f93174ccbc1d02c1ba7e2abc8d",
-                "reference": "8e54558d2427a0f93174ccbc1d02c1ba7e2abc8d",
+                "url": "https://api.github.com/repos/publishpress/library-wordpress-version-notices/zipball/caf37ca4705f89b882c1e53d9e592939568df944",
+                "reference": "caf37ca4705f89b882c1e53d9e592939568df944",
                 "shasum": ""
             },
             "require": {
@@ -371,9 +371,9 @@
             "description": "Library for displaying version notices for Pro plugins in WordPress.",
             "support": {
                 "issues": "https://github.com/publishpress/library-wordpress-version-notices/issues",
-                "source": "https://github.com/publishpress/library-wordpress-version-notices/tree/2.1.3"
+                "source": "https://github.com/publishpress/library-wordpress-version-notices/tree/2.1.5"
             },
-            "time": "2023-10-11T15:04:44+00:00"
+            "time": "2025-07-23T03:00:53+00:00"
         },
         {
             "name": "sabre/vobject",
@@ -450,12 +450,12 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.2.5"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

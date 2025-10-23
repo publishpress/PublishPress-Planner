@@ -39,10 +39,10 @@
     }
   },
   "scripts": {
-    "build": "ppbuild build",
-    "build:dir": "ppbuild build-dir",
-    "build:clean": "ppbuild clean",
-    "get-version": "ppbuild version",
+    "build": "pbuild build",
+    "build:dir": "pbuild build-dir",
+    "build:clean": "pbuild clean",
+    "get-version": "pbuild version",
     "check:longpath": "longpath .",
     "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
     "pre-update-cmd": "composer update --working-dir=./lib",
