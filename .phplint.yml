@@ -6,7 +6,6 @@ path:
   - views
   - lib
 jobs: 10
-cache: dist/phplint.cache
 extensions:
   - php
 exclude:

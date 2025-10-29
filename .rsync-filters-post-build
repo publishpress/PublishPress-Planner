@@ -27,3 +27,6 @@
 - .rsync-filters-pro-build
 - .env.example
 - .env
+- version.txt
+- .phplint-cache
+
