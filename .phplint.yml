@@ -1,10 +1,20 @@
-path: ./
+path:
+  - .
+  - core
+  - common
+  - modules
+  - views
+  - lib
 jobs: 10
 cache: dist/phplint.cache
 extensions:
   - php
 exclude:
   - vendor
+  - lib/vendor
   - assets_wp
-  - bin
+  - dist
+  - languages
+  - .github
+  - tests
 warning: false
