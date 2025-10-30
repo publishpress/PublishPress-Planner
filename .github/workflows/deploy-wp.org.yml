@@ -41,6 +41,11 @@ jobs:
         run: |
           cp $GITHUB_WORKSPACE/.env.example $GITHUB_WORKSPACE/.env
 
+      - name: Fix permissions
+        run: |
+          chmod +x $GITHUB_WORKSPACE/dev-workspace/run
+          chmod +x $GITHUB_WORKSPACE/dev-workspace/scripts/*.sh
+
       - name: Prepare composer
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
