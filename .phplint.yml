@@ -11,7 +11,7 @@ extensions:
 exclude:
   - vendor
   - lib/vendor
-  - assets_wp
+  - .wordpress-org
   - dist
   - languages
   - .github

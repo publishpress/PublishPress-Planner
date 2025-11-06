@@ -27,7 +27,6 @@
 .travis.yml
 .vscode
 .wordpress-org
-/assets_wp
 /dev-workspace
 /dist
 /version.txt
@@ -40,7 +39,6 @@ README.md
 RoboFile.php
 Thumbs.db
 /assets/jsx
-/assets_wp
 bin
 bin
 build.xml
