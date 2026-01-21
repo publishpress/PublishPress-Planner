@@ -5,10 +5,9 @@ services:
     # Terminal
     ##############################################################################
     terminal:
-        build: ./terminal/
+        image: ${TERMINAL_IMAGE_NAME}
         profiles: ["term"]
         container_name: ${CONTAINER_NAME}-env-terminal
-        image: ${TERMINAL_IMAGE_NAME}
         command: ["zsh"]
         stdin_open: true
         tty: true

@@ -17,4 +17,5 @@ push:
 	bash ./scripts/build-push-image.sh "$${TERMINAL_IMAGE_NAME}" ./docker/terminal "$$@"
 
 update:
+	rm -f ./.cache/.last_image_update_check
 	bash ./scripts/services-pull-images.sh "$$@"
