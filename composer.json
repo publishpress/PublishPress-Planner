@@ -39,9 +39,9 @@
     }
   },
   "scripts": {
-    "build": "pbuild build",
-    "build:dir": "pbuild build-dir",
-    "build:clean": "pbuild clean",
+    "build": "build zip",
+    "build:dir": "build dir",
+    "build:clean": "build clean",
     "info:versions": "bash ./dev-workspace/scripts/dependency-versions.sh",
     "check:longpath": "longpath .",
     "check:lint": "phplint",
