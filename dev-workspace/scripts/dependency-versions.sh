@@ -6,9 +6,33 @@ echo "Node Version: " $(node -v)
 echo "NPM Version: " $(npm -v)
 echo "Yarn Version: " $(yarn -v)
 echo "WP-CLI Version: " $(wp --version --allow-root)
-echo "Codeception Version: " $(vendor/bin/codecept --version)
-echo "PHP CodeSniffer Version: " $(phpcs --version)
-echo "PHP Mess Detector Version: " $(phpmd --version)
-echo "PHP Lint Version: " $(phplint --version)
-echo "PHPStan Version: " $(phpstan --version)
-echo "Builder Version:" "$(pbuild version | grep -o 'PUBLISHPRESS PLUGIN BUILDER - v[0-9]\+\.[0-9]\+\.[0-9]\+')"
+
+if [ -f "vendor/bin/codecept" ]; then
+    echo "Codeception Version: " $(vendor/bin/codecept --version)
+else
+    echo "Codeception Version: " "not installed"
+fi
+
+if [ -f "vendor/bin/phpcs" ]; then
+    echo "PHP CodeSniffer Version: " $(vendor/bin/phpcs --version)
+else
+    echo "PHP CodeSniffer Version: " "not installed"
+fi
+
+if [ -f "vendor/bin/phpmd" ]; then
+    echo "PHP Mess Detector Version: " $(vendor/bin/phpmd --version)
+else
+    echo "PHP Mess Detector Version: " "not installed"
+fi
+
+if [ -f "vendor/bin/phplint" ]; then
+    echo "PHP Lint Version: " $(vendor/bin/phplint --version)
+else
+    echo "PHP Lint Version: " "not installed"
+fi
+
+if [ -f "vendor/bin/phpstan" ]; then
+    echo "PHPStan Version: " $(vendor/bin/phpstan --version)
+else
+    echo "PHPStan Version: " "not installed"
+fi
