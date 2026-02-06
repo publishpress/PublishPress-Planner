@@ -196,7 +196,7 @@ if (! class_exists('PP_Calendar_Methods')) {
 
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $customStatuses = $publishpress->getCustomStatuses();
+            $customStatuses = $publishpress->getPostStatuses();
 
             if (empty($customStatuses)) {
                 $statuses = [
