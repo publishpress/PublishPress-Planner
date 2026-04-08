@@ -401,7 +401,7 @@ if (! class_exists('PP_Settings')) {
             }
 
             if (!current_user_can('manage_options') || !wp_verify_nonce(sanitize_key($_POST['_wpnonce']), 'edit-publishpress-settings')) {
-                wp_die(__('Cheatin&#8217; uh?'));
+                wp_die(__('Cheatin&#8217; uh?', 'publishpress'));
             }
 
             global $publishpress;
