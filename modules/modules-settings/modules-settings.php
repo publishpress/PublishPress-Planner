@@ -218,13 +218,13 @@ if (! class_exists('PP_Modules_Settings')) {
 
                 <div id="modules-wrapper">
                     <p><?php
-                        echo esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
+                        esc_html_e('Feel free to select only the features you need.', 'publishpress'); ?></p>
 
                     <table class="form-table">
                         <tbody>
                         <tr>
                             <th scope="row"><?php
-                                echo esc_html_e('Enabled features', 'publishpress'); ?></th>
+                                esc_html_e('Enabled features', 'publishpress'); ?></th>
                             <td>
                                 <?php
                                 foreach ($publishpress->modules as $mod_name => $mod_data) : ?>
