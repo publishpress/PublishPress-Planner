@@ -106,8 +106,8 @@ if (! class_exists('Editorial_Metadata_Input_Checkbox_Handler')) {
                 printf(
                     '<span class="pp_editorial_metadata_value">%s</span>',
                     (empty($value)
-                        ? esc_html__('No', 'publishpress-editorial-metadata')
-                        : esc_html__('Yes', 'publishpress-editorial-metadata')
+                        ? esc_html__('No', 'publishpress')
+                        : esc_html__('Yes', 'publishpress')
                     )
                 );
             } else {
