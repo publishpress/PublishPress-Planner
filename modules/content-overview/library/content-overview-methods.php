@@ -204,7 +204,7 @@ if (! class_exists('PP_Overview_Methods')) {
                 if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
                     $count = (int)$_GET['trashed'];
 
-                    echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
+                    echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count, 'publishpress'));
                     $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                     echo ' <a href="' . esc_url(
                             wp_nonce_url(
@@ -221,7 +221,8 @@ if (! class_exists('PP_Overview_Methods')) {
                     echo esc_html(_n(
                         'Item restored from the Trash.',
                         '%d items restored from the Trash.',
-                        $count
+                        $count,
+                        'publishpress'
                     ));
                     unset($_GET['undeleted']);
                 }
