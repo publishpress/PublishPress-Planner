@@ -291,7 +291,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                             )
                         );
 
-                        echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                        echo ' <a href="' . $item_edit_link . '">' . __('edit', 'publishpress') . '</a>';
                     }
 
                     echo '</div>';
@@ -998,7 +998,7 @@ if (! class_exists('PP_Calendar_Methods')) {
                     return esc_html__('Published');
                 }
 
-                return esc_html__('Publish on');
+                return esc_html__('Publish on', 'publishpress');
             }
 
             return $status;
