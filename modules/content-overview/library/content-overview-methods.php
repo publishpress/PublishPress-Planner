@@ -334,7 +334,7 @@ if (! class_exists('PP_Overview_Methods')) {
                     <?php
                     $filtered_start_date = $user_filters['start_date'];
                     $filtered_end_date = $user_filters['end_date'];
-                    $selected_date = ': ' . date("F j, Y", strtotime($filtered_start_date)) . ' '. esc_html__('to', 'publishpress').' ' . date("F j, Y", strtotime($filtered_end_date));
+                    $selected_date = ': ' . date_i18n("F j, Y", strtotime($filtered_start_date)) . ' '. esc_html__('to', 'publishpress').' ' . date_i18n("F j, Y", strtotime($filtered_end_date));
                     $modal_id++;
                     ?>
                     <button data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter active-filter">
