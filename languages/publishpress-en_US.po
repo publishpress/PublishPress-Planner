@@ -15,13 +15,6 @@ msgstr ""
 "X-Domain: publishpress\n"
 
 #. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
-#. Plugin Name of the plugin
 #: publishpress.php
 #: modules/settings/settings.php:266
 msgid "PublishPress Planner"
