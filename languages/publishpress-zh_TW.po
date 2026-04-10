@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the PublishPress Planner plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Planner 4.7.3-beta3\n"
+"Project-Id-Version: PublishPress Planner 4.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
