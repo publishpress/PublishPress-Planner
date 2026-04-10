@@ -3272,7 +3272,7 @@ msgstr "%s 編集"
 
 #: modules/notifications/notifications.php:2174
 #: modules/notifications/notifications.php:2231
-#, fuzzy, php-format
+#, php-format
 msgid "View: %s"
 msgstr "View: %s"
 
@@ -3438,7 +3438,7 @@ msgstr "によって"
 
 #: modules/content-board/library/content-board-utilities.php:538
 #: modules/content-overview/library/content-overview-utilities.php:643
-#, fuzzy, php-format
+#, php-format
 msgctxt "%1$s = start date, %2$s = end date"
 msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
 msgstr " %1$s <div class=\"input-divider\">to</div> %2$s"

@@ -3328,7 +3328,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Ta akcja została podjęta w %1$s o %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 

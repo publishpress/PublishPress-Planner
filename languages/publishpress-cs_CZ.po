@@ -505,7 +505,7 @@ msgid "Users who selected \"Notify me\" for the content"
 msgstr "Uživatelé, kteří zvolili \"Upozornit mě\" na obsah"
 
 #: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
-#, fuzzy, php-format
+#, php-format
 msgid "role:%s"
 msgstr "role:%s"
 
@@ -3318,7 +3318,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Tato akce byla provedena dne %1$s v %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 

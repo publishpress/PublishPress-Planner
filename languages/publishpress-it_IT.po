@@ -67,7 +67,7 @@ msgstr " %1$s <div class=\"input-divider\">a</div> %2$s"
 
 #. 1: old status, 2: new status
 #: modules/notifications/notifications.php:2148
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -1461,7 +1461,7 @@ msgid "Help"
 msgstr "Aiuto"
 
 #: modules/calendar/library/calendar-methods.php:1206
-#, fuzzy, php-format
+#, php-format
 msgid "Hide the %s last items"
 msgstr "Nascondi gli ultimi %s elementi"
 
@@ -3257,7 +3257,7 @@ msgid "Workflow Settings"
 msgstr "Impostazioni del workflow"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:116
-#, fuzzy, php-format
+#, php-format
 msgid "Workflow: %s"
 msgstr "Workflow: %s"
 

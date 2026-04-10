@@ -2928,7 +2928,7 @@ msgid "Post ID: %d"
 msgstr "Gönderi ID: %d"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:163
-#, fuzzy, php-format
+#, php-format
 msgid "Blog ID: %d"
 msgstr "Blog ID: %d"
 
@@ -3311,7 +3311,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Bu işlem %2$s %3$s de %1$s adresinde gerçekleştirilmiştir"
 
 #: modules/notifications/notifications.php:2141
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3519,7 +3519,7 @@ msgstr "tarafından"
 
 #: modules/content-board/library/content-board-utilities.php:538
 #: modules/content-overview/library/content-overview-utilities.php:643
-#, fuzzy, php-format
+#, php-format
 msgctxt "%1$s = start date, %2$s = end date"
 msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
 msgstr " %1$s <div class=\"input-divider\">to</div> %2$s"

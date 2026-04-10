@@ -2919,7 +2919,7 @@ msgid "The parent log was deleted or probably rescheduled"
 msgstr "Het bovenliggende logboek is verwijderd of waarschijnlijk opnieuw ingepland"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:116
-#, fuzzy, php-format
+#, php-format
 msgid "Workflow: %s"
 msgstr "Workflow: %s"
 
@@ -3323,12 +3323,12 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Deze actie werd uitgevoerd op %1$s om %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
 #: modules/notifications/notifications.php:2149
-#, fuzzy, php-format
+#, php-format
 msgid "== %s Details =="
 msgstr "== %s Details =="
 

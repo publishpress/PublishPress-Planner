@@ -3296,7 +3296,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Tindakan ini diambil pada %1$s di %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, fuzzy, php-format
+#, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3328,7 +3328,7 @@ msgstr "Tambahkan komentar editorial: %s"
 
 #: modules/notifications/notifications.php:2173
 #: modules/notifications/notifications.php:2230
-#, fuzzy, php-format
+#, php-format
 msgid "Edit: %s"
 msgstr "Edit: %s"
 

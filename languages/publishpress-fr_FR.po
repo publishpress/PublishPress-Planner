@@ -1470,7 +1470,7 @@ msgid "Help"
 msgstr "Aide"
 
 #: modules/calendar/library/calendar-methods.php:1206
-#, fuzzy, php-format
+#, php-format
 msgid "Hide the %s last items"
 msgstr "Masquer les %s derniers éléments"
 
