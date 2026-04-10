@@ -21,7 +21,7 @@ To release the Pro plugin please make sure to check all the checkboxes below.
 - [ ] Lock versions if needed (use exact version numbers)
 - [ ] Document dependency changes in changelog
 - [ ] Review Dependabot warnings/PRs, fix real issues
-- [ ] Update the reference for the `publishpress/<plugin-repo>` package in the `lib/composer.json` file to use the recently released version tag (e.g., `4.7.0`) instead of a branch reference. This ensures the Pro plugin uses the stable release of the Free plugin.
+- [ ] Update the reference for the `publishpress/publishpress-planner` package in the `lib/composer.json` file to use the recently released version tag (e.g., `4.7.0`) instead of a branch reference. This ensures the Pro plugin uses the stable release of the Free plugin.
 
 **Code Quality**
 - [ ] Build JS files: `composer build:js` (if applicable)
@@ -57,6 +57,6 @@ translation management service.
 
 ### Post-release
 
-- [ ] Monitor [GitHubions](https://github.com/publishpress/<plugin-repo>-pro/actions)
+- [ ] Monitor [GitHub Actions](https://github.com/publishpress/publishpress-planner-pro/actions)
 - [ ] Monitor the Slack channel #package-server
 - [ ] Test update on staging site
