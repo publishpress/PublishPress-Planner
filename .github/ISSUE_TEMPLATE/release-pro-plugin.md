@@ -17,18 +17,27 @@ To release the Pro plugin please make sure to check all the checkboxes below.
 
 **Dependencies**
 - [ ] Run `composer update --no-dev --dry-run` to check for updates
-- [ ] If updating dependencies: `composer update the/lib:version-constraint`
+- [ ] If updating dependencies: `compospdate the/lib:version-constraint`
 - [ ] Lock versions if needed (use exact version numbers)
 - [ ] Document dependency changes in changelog
 - [ ] Review Dependabot warnings/PRs, fix real issues
+- [ ] Update the reference for the `publishpress/<plugin-repo>` package in the `lib/composer.json` file to use the recently released version tag (e.g., `4.7.0`) instead of a branch reference. This ensures the Pro plugin uses the stable release of the Free plugin.
 
 **Code Quality**
 - [ ] Build JS files: `composer build:js` (if applicable)
-- [ ] Run PHPCS: `composer check:phpcs`
+- [ ] Run `composer check` to run check the code and make sure no warnings or errors.
+- [ ] Run `composer test Unit` to run the Unit tests and verify all tests pass successfully.
+- [ ] Run `composer test Integration` to run Integration tests and verify all tests pass successfully.
 
 **Localization**
-- [ ] Update `.pot` file
-- [ ] Add to CHANGELOG.md
+- [ ] Run `composer translate` to regenerate AI-assisted translations.
+- [ ] Make sure to commit all i18n/translation updates together.
+- [ ] Open a GitHub issue titled `Translation Update for Release v<version>`, and assign it to `@wocmultimedia` (lead translator for ES, FR, IT).
+- [ ] Pause the release and wait for `@wocmultimedia` to review and confirm or close the translation issue.
+- [ ] After approval, run `composer translate:download` to fetch updated translations from the
+translation management service.
+- [ ] Run `composer translate:compile` to generate all language files (MO, JSON, PHP)
+- [ ] Add a summary of these changes in `CHANGELOG.md`.
 
 **Version & Documentation**
 - [ ] Update CHANGELOG.md with user-friendly descriptions
@@ -48,6 +57,6 @@ To release the Pro plugin please make sure to check all the checkboxes below.
 
 ### Post-release
 
-- [ ] Monitor [GitHub Actions](https://github.com/publishpress/publishpress-future-pro/actions)
+- [ ] Monitor [GitHubions](https://github.com/publishpress/<plugin-repo>-pro/actions)
 - [ ] Monitor the Slack channel #package-server
 - [ ] Test update on staging site
