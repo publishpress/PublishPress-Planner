@@ -1,0 +1,3419 @@
+# Copyright (C) 2026 PublishPress
+# This file is distributed under the same license as the PublishPress Planner plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Planner 4.7.3-beta3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
+"PO-Revision-Date: 2026-04-10 02:27+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: publishpress\n"
+"Language: ko_KR\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: publishpress.php
+#: modules/settings/settings.php:266
+#. Plugin Name of the plugin
+msgid "PublishPress Planner"
+msgstr "퍼블리시프레스 플래너"
+
+#: publishpress.php, fuzzy
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#: publishpress.php
+#. Description of the plugin
+msgid ""
+"PublishPress Planner helps you plan and publish content inside WordPress. "
+"Features include a content calendar, kanban board, and notifications."
+msgstr ""
+"PublishPress Planner는 WordPress 내에서 콘텐츠를 계획하고 게시하는 데 도움을 줍니다. 기능으로는 콘텐츠 "
+"캘린더, 칸반 보드 및 알림이 포함됩니다."
+
+#: publishpress.php
+#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/settings/settings.php:61
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "퍼블리시프레스"
+
+#: publishpress.php, fuzzy
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+#: common/php/class-module.php:331
+#: modules/calendar/calendar.php:1233
+msgid "Published"
+msgstr "발행됨"
+
+#: common/php/class-module.php:332
+msgid "Draft"
+msgstr "초안"
+
+#: common/php/class-module.php:333
+#: modules/calendar/calendar.php:1228
+#: modules/content-board/content-board.php:979
+#: modules/notifications-log/library/NotificationsLogTable.php:529
+msgid "Scheduled"
+msgstr "예정됨"
+
+#: common/php/class-module.php:334
+#: modules/content-board/content-board.php:989
+msgid "Private"
+msgstr "비공개"
+
+#: common/php/class-module.php:335
+msgid "Pending Review"
+msgstr "검토 대기 중"
+
+#: common/php/class-module.php:336
+#: modules/calendar/library/calendar-methods.php:1240
+#: modules/calendar/library/calendar-utilities.php:1104
+#: modules/content-board/content-board.php:1190
+#: modules/content-board/content-board.php:1285
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1715
+msgid "Trash"
+msgstr "휴지통"
+
+#: common/php/class-module.php:750
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:31
+msgid "Roles"
+msgstr "역할"
+
+#: common/php/class-module.php:753
+msgid "Role"
+msgstr "역할"
+
+#: common/php/class-module.php:761
+msgid "Groups"
+msgstr "그룹"
+
+#: common/php/class-module.php:764
+msgid "Group"
+msgstr "그룹"
+
+#: common/php/class-module.php:772
+#: lib/Notifications/Workflow/Step/Receiver/User.php:26
+msgid "Users"
+msgstr "사용자"
+
+#: common/php/class-module.php:782
+msgid "E-mails"
+msgstr "이메일"
+
+#: common/php/class-module.php:1109
+#, php-format
+msgid "Select %s"
+msgstr "%s 선택"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-utilities.php:1190
+#: modules/content-overview/content-overview.php:833
+#: modules/content-overview/content-overview.php:848
+#: modules/content-overview/content-overview.php:955
+msgid "Revision Status"
+msgstr "수정 상태"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-methods.php:424
+#: modules/calendar/library/calendar-methods.php:858
+#: modules/calendar/library/calendar-methods.php:1245
+#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-utilities.php:1189
+#: modules/content-board/content-board.php:811
+#: modules/content-board/content-board.php:1290
+#: modules/content-board/library/content-board-utilities.php:594
+#: modules/content-board/library/content-board-utilities.php:1165
+#: modules/content-overview/content-overview.php:954
+#: modules/content-overview/content-overview.php:1226
+#: modules/content-overview/library/content-overview-utilities.php:491
+#: modules/content-overview/library/content-overview-utilities.php:703
+msgid "Post Status"
+msgstr "게시물 상태"
+
+#: common/php/util.php:46
+msgid "(no title)"
+msgstr "(제목 없음)"
+
+#: core/Error.php:79
+msgid "Undefined error found"
+msgstr "정의되지 않은 오류 발견"
+
+#: core/Error.php:80
+#: modules/calendar/library/calendar-methods.php:779
+msgid "Invalid nonce"
+msgstr "유효하지 않은 nonce"
+
+#: core/Error.php:81
+msgid "Access denied"
+msgstr "접근 거부됨"
+
+#: includes.php:127
+#, php-format
+msgid ""
+"You're using PublishPress Planner Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"당신은 PublishPress Planner 무료 버전을 사용하고 있습니다. Pro 버전은 더 많은 기능과 지원을 제공합니다. "
+"%sPro로 업그레이드%s"
+
+#: includes.php:161
+#: lib/Legacy/Util.php:216
+msgid "Upgrade to Pro"
+msgstr "Pro로 업그레이드"
+
+#: lib/Legacy/Util.php:198
+msgid "Upgrade to PublishPress Planner Pro"
+msgstr "PublishPress Planner Pro로 업그레이드"
+
+#: lib/Legacy/Util.php:203
+msgid "Enhance the power of PublishPress Planner with the Pro version:"
+msgstr "Pro 버전으로 PublishPress Planner의 기능을 향상시키세요:"
+
+#: lib/Legacy/Util.php:206
+msgid "PublishPress Revisions integration"
+msgstr "PublishPress Revisions 통합"
+
+#: lib/Legacy/Util.php:207
+msgid "Slack integration for notifications"
+msgstr "알림을 위한 Slack 통합"
+
+#: lib/Legacy/Util.php:208
+msgid "Send reminder notifications"
+msgstr "알림 리마인더 전송"
+
+#: lib/Legacy/Util.php:209
+msgid "Use post meta in notifications"
+msgstr "알림에서 게시물 메타 사용"
+
+#: lib/Legacy/Util.php:210
+msgid "Modals so you can edit posts without changing screen"
+msgstr "화면을 변경하지 않고 게시물을 편집할 수 있는 모달"
+
+#: lib/Legacy/Util.php:211
+msgid "Integration with SEO plugins"
+msgstr "SEO 플러그인과의 통합"
+
+#: lib/Legacy/Util.php:212
+msgid "Remove PublishPress ads and branding"
+msgstr "PublishPress 광고 및 브랜딩 제거"
+
+#: lib/Legacy/Util.php:213
+msgid "Fast, professional support"
+msgstr "빠르고 전문적인 지원"
+
+#: lib/Legacy/Util.php:223
+msgid "Need PublishPress Planner Support?"
+msgstr "PublishPress Planner 지원이 필요하신가요?"
+
+#: lib/Legacy/Util.php:228
+msgid "If you need help or have a new feature request, let us know."
+msgstr "도움이 필요하거나 새로운 기능 요청이 있으시면 알려주세요."
+
+#: lib/Legacy/Util.php:230
+msgid "Request Support"
+msgstr "지원 요청"
+
+#: lib/Legacy/Util.php:239
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "자세한 문서는 플러그인 웹사이트에서도 확인할 수 있습니다."
+
+#: lib/Legacy/Util.php:241
+msgid "View Knowledge Base"
+msgstr "지식 기반 보기"
+
+#: lib/Notifications/Plugin.php:65
+#: modules/improved-notifications/improved-notifications.php:1160
+#: modules/notifications-log/library/NotificationsLogTable.php:497
+msgid "When to notify?"
+msgstr "언제를 알릴까요?"
+
+#: lib/Notifications/Plugin.php:66
+msgid "Filter the content?"
+msgstr "내용 필터링?"
+
+#: lib/Notifications/Plugin.php:67
+#: modules/improved-notifications/improved-notifications.php:1180
+#: modules/notifications-log/library/NotificationsLogTable.php:499
+msgid "Who to notify?"
+msgstr "누구에게 알릴까요?"
+
+#: lib/Notifications/Plugin.php:209
+#: lib/Notifications/Plugin.php:210
+msgid "Notification workflow updated."
+msgstr "알림 워크플로우가 업데이트되었습니다."
+
+#: lib/Notifications/Plugin.php:211
+msgid "Notification workflow published."
+msgstr "알림 워크플로우가 게시되었습니다."
+
+#: lib/Notifications/Plugin.php:212
+msgid "Notification workflow saved."
+msgstr "알림 워크플로우가 저장되었습니다."
+
+#: lib/Notifications/Plugin.php:213
+msgid "Notification workflow submitted."
+msgstr "알림 워크플로우가 제출되었습니다."
+
+#: lib/Notifications/Plugin.php:215
+#, php-format
+msgid "Notification workflow scheduled for: %s."
+msgstr "알림 워크플로우가 예약되었습니다: %s."
+
+#: lib/Notifications/Plugin.php:218
+msgid "Notification workflow draft updated."
+msgstr "알림 워크플로우 초안이 업데이트되었습니다."
+
+#: lib/Notifications/Plugin.php:240
+#, php-format
+msgid "%s notification workflow updated."
+msgid_plural "%s notification workflows updated."
+msgstr[0] "%s 알림 워크플로우가 업데이트되었습니다."
+
+#: lib/Notifications/Plugin.php:246
+msgid "1 notification workflow not updated, somebody is editing it."
+msgstr "1개의 알림 워크플로우가 업데이트되지 않았습니다. 누군가가 편집 중입니다."
+
+#: lib/Notifications/Plugin.php:250
+#, php-format
+msgid "%s notification workflow not updated, somebody is editing it."
+msgid_plural "%s notification workflows not updated, somebody is editing them."
+msgstr[0] "%s 알림 워크플로우가 업데이트되지 않았습니다. 누군가가 편집 중입니다."
+
+#: lib/Notifications/Plugin.php:256
+#, php-format
+msgid "%s notification workflow permanently deleted."
+msgid_plural "%s notification workflows permanently deleted."
+msgstr[0] "%s 알림 워크플로우가 영구 삭제되었습니다."
+
+#: lib/Notifications/Plugin.php:262
+#, php-format
+msgid "%s notification workflow moved to the Trash."
+msgid_plural "%s notification workflows moved to the Trash."
+msgstr[0] "%s 알림 워크플로우가 휴지통으로 이동되었습니다."
+
+#: lib/Notifications/Plugin.php:268
+#, php-format
+msgid "%s notification workflow restored from the Trash."
+msgid_plural "%s notification workflows restored from the Trash."
+msgstr[0] "%s 알림 워크플로우가 휴지통에서 복원되었습니다."
+
+#: lib/Notifications/Plugin.php:302
+msgid "Please select at least one event"
+msgstr "최소한 하나의 이벤트를 선택하세요"
+
+#: lib/Notifications/Plugin.php:335
+msgid "Not filtered"
+msgstr "필터링되지 않음"
+
+#: lib/Notifications/Table/Base.php:183
+msgid "Excerpt View"
+msgstr "발췌 보기"
+
+#: lib/Notifications/Table/Notifications.php:156
+#: lib/Notifications/Table/Workflows.php:142
+#: modules/calendar/library/calendar-methods.php:853
+#: modules/content-board/content-board.php:421
+#: modules/content-board/library/content-board-utilities.php:244
+#: modules/content-board/library/content-board-utilities.php:1159
+#: modules/content-overview/content-overview.php:418
+#: modules/content-overview/library/content-overview-utilities.php:485
+msgid "Title"
+msgstr "제목"
+
+#: lib/Notifications/Table/Notifications.php:157
+msgid "Message"
+msgstr "메시지"
+
+#: lib/Notifications/Table/Notifications.php:158
+#: modules/calendar/library/calendar-utilities.php:1064
+#: modules/content-board/library/content-board-utilities.php:116
+#: modules/content-overview/library/content-overview-methods.php:341
+#: modules/editorial-metadata/editorial-metadata.php:290
+#: modules/notifications-log/library/NotificationsLogTable.php:496
+msgid "Date"
+msgstr "날짜"
+
+#: lib/Notifications/Table/Notifications.php:159
+#: lib/Notifications/Table/Workflows.php:143
+#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
+msgid "ID"
+msgstr "ID"
+
+#: lib/Notifications/Table/Notifications.php:235
+msgid "You don't have any notifications"
+msgstr "알림이 없습니다"
+
+#: lib/Notifications/Table/Workflows.php:217
+msgid "No workflows found."
+msgstr "워크플로우를 찾을 수 없습니다."
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:26
+msgid "Skip current user"
+msgstr "현재 사용자 건너뛰기"
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:31
+msgid "Skip notifications for the user who triggered the action"
+msgstr "작업을 트리거한 사용자의 알림 건너뛰기"
+
+#: lib/Notifications/Workflow/Step/Channel/Email.php:31
+#: modules/editorial-comments/editorial-comments.php:1267
+msgid "Email"
+msgstr "이메일"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:29
+#: modules/calendar/library/calendar-methods.php:902
+#: modules/content-board/library/content-board-utilities.php:1207
+#: modules/content-overview/library/content-overview-utilities.php:533
+#: modules/improved-notifications/improved-notifications.php:1318
+msgid "Content"
+msgstr "내용"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:53
+msgid "Subject"
+msgstr "제목"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:54
+msgid "Body"
+msgstr "본문"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
+msgid "When an editorial comment is added"
+msgstr "편집 코멘트가 추가될 때"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:96
+#, php-format
+msgid "Comment: %s (%d)"
+msgstr "코멘트: %s (%d)"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
+msgid "When the status is changed"
+msgstr "상태가 변경될 때"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
+msgid "Previous status"
+msgstr "이전 상태"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
+msgid "New status"
+msgstr "새로운 상태"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
+msgid "- any status -"
+msgstr "- 모든 상태 -"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
+msgid "New"
+msgstr "새로 만들기"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
+msgid "Auto-draft"
+msgstr "자동 초안"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
+#: modules/calendar/library/calendar-utilities.php:1206
+#: modules/content-board/content-board.php:767
+#: modules/content-board/content-board.php:827
+#: modules/content-overview/content-overview.php:910
+#: modules/content-overview/content-overview.php:971
+msgid "Taxonomies"
+msgstr "분류"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
+msgid "When the content is moved to a new status"
+msgstr "콘텐츠가 새 상태로 이동될 때"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
+#, php-format
+msgid "Old post status: %s"
+msgstr "이전 게시물 상태: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:122
+#, php-format
+msgid "New post status: %s"
+msgstr "새 게시물 상태: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_TaxonomyUpdate.php:28
+msgid "When taxonomy is updated"
+msgstr "분류가 업데이트될 때"
+
+#: lib/Notifications/Workflow/Step/Event/Post_Update.php:26
+msgid "When the content is updated"
+msgstr "콘텐츠가 업데이트될 때"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
+#: modules/calendar/library/calendar-utilities.php:1080
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "카테고리"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
+#: modules/calendar/library/calendar-methods.php:885
+#: modules/content-board/library/content-board-utilities.php:1190
+#: modules/content-overview/library/content-overview-utilities.php:516
+msgid "Categories"
+msgstr "카테고리"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:46
+msgid "Post Types"
+msgstr "게시물 유형"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
+msgid "Terms"
+msgstr "용어"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
+msgid "Post type"
+msgstr "게시물 유형"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24
+msgid "Taxonomy"
+msgstr "분류"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:26
+msgid "Authors of the content"
+msgstr "콘텐츠의 저자들"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:92
+msgid "Authors"
+msgstr "저자"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:30
+msgid "Users who selected \"Notify me\" for the content"
+msgstr "콘텐츠에 대해 \"알림 받기\"를 선택한 사용자들"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
+#, php-format
+msgid "role:%s"
+msgstr "역할: %s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:132
+#, php-format
+msgid "group %d: %s"
+msgstr "그룹 %d: %s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:153
+msgid "user"
+msgstr "사용자"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:168
+msgid "email"
+msgstr "이메일"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:210
+msgid "\"Notify me\""
+msgstr "\"알림 받기\""
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:31
+msgid "Permission Groups"
+msgstr "권한 그룹"
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:222
+#, php-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d 그룹"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:26
+msgid "Authors of the parent page"
+msgstr "상위 페이지의 작성자"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:106
+msgid "Parent Page Authors"
+msgstr "상위 페이지 작성자"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:39
+msgid "Author of the revision"
+msgstr "수정의 작성자"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:105
+msgid "Revision Author"
+msgstr "수정 작성자"
+
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:173
+#, php-format
+msgid "%d Role"
+msgid_plural "%d Roles"
+msgstr[0] "%d 역할"
+
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
+msgid "Site Administrator"
+msgstr "사이트 관리자"
+
+#: lib/Notifications/Workflow/Step/Receiver/User.php:152
+#, php-format
+msgid "%d User"
+msgid_plural "%d Users"
+msgstr[0] "%d 사용자"
+
+#: modules/async-notifications/async-notifications.php:71
+msgid "Async Notifications"
+msgstr "비동기 알림"
+
+#: modules/async-notifications/async-notifications.php:180
+#, php-format
+msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
+msgstr "이벤트: %s, 워크플로 ID: %s, 게시물 ID: %s, 사용자 ID: %s"
+
+#: modules/calendar/calendar.php:216
+#: modules/calendar/calendar.php:415
+#: modules/calendar/calendar.php:432
+#: modules/calendar/calendar.php:433
+msgid "Content Calendar"
+msgstr "콘텐츠 캘린더"
+
+#: modules/calendar/calendar.php:241
+msgid "Post date updated."
+msgstr "게시물 날짜가 업데이트되었습니다."
+
+#: modules/calendar/calendar.php:242
+msgid "Post status updated."
+msgstr "게시물 상태가 업데이트되었습니다."
+
+#: modules/calendar/calendar.php:243
+msgid "There was an error updating the post. Please try again."
+msgstr "게시물을 업데이트하는 중 오류가 발생했습니다. 다시 시도해주세요."
+
+#: modules/calendar/calendar.php:247
+#, php-format
+msgid ""
+"Updating the post date dynamically doesn't work for published content. "
+"Please <a href='%s'>edit the post</a>."
+msgstr "게시된 콘텐츠에 대해 포스트 날짜를 동적으로 업데이트하는 것은 작동하지 않습니다. <a href='%s'>포스트를 편집</a>해 주세요."
+
+#: modules/calendar/calendar.php:251
+msgid ""
+"iCal secret key regenerated. Please inform all users they will need to "
+"resubscribe."
+msgstr "iCal 비밀키가 재생성되었습니다. 모든 사용자에게 재구독이 필요하다고 알려주세요."
+
+#: modules/calendar/calendar.php:259
+#: modules/editorial-comments/editorial-comments.php:82
+#: modules/editorial-metadata/editorial-metadata.php:119
+#: modules/notifications/notifications.php:96
+msgid "Overview"
+msgstr "개요"
+
+#: modules/calendar/calendar.php:260
+msgid ""
+"<p>The calendar is a convenient week-by-week or month-by-month view into "
+"your content. Quickly see which stories are on track to being published on "
+"time, and which will need extra effort.</p>"
+msgstr ""
+"<p>캘린더는 콘텐츠를 주별 또는 월별로 편리하게 볼 수 있는 방법입니다. 어떤 이야기가 제시간에 게시될 예정인지, 어떤 이야기가 추가 "
+"노력이 필요한지 빠르게 확인하세요.</p>"
+
+#: modules/calendar/calendar.php:265
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Calendar "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>자세한 정보:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">캘린더 문서</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">Github의 "
+"PublishPress</a></p>"
+
+#: modules/calendar/calendar.php:734
+#: modules/calendar/library/calendar-utilities.php:1259
+msgid "Weeks"
+msgstr "주"
+
+#: modules/calendar/calendar.php:735
+msgid "Start Date"
+msgstr "시작 날짜"
+
+#: modules/calendar/calendar.php:736
+#: modules/calendar/library/calendar-utilities.php:467
+#: modules/calendar/library/calendar-utilities.php:468
+#: modules/content-board/library/content-board-utilities.php:28
+#: modules/content-overview/library/content-overview-methods.php:253
+msgid "Me Mode"
+msgstr "내 모드"
+
+#: modules/calendar/calendar.php:737
+msgid "Show Revision"
+msgstr "수정 내용 보기"
+
+#: modules/calendar/calendar.php:738
+#: modules/calendar/library/calendar-utilities.php:486
+#: modules/content-board/library/content-board-utilities.php:98
+#: modules/content-overview/library/content-overview-methods.php:323
+msgid "Search"
+msgstr "검색"
+
+#: modules/calendar/calendar.php:912
+#: modules/content-board/library/content-board-methods.php:164
+#: modules/content-overview/content-overview.php:668
+msgid "Filter updated successfully."
+msgstr "필터가 성공적으로 업데이트되었습니다."
+
+#: modules/calendar/calendar.php:919
+msgid "Filter reset successfully."
+msgstr "필터가 성공적으로 초기화되었습니다."
+
+#: modules/calendar/calendar.php:987
+#: modules/content-board/content-board.php:709
+#: modules/content-overview/content-overview.php:832
+#: modules/content-overview/content-overview.php:847
+#: modules/content-overview/content-overview.php:892
+#: modules/notifications-log/library/NotificationsLogTable.php:500
+msgid "Status"
+msgstr "상태"
+
+#: modules/calendar/calendar.php:988
+#: modules/calendar/calendar.php:1212
+#: modules/calendar/library/calendar-methods.php:875
+#: modules/calendar/library/calendar-methods.php:1248
+#: modules/calendar/library/calendar-utilities.php:115
+#: modules/calendar/library/calendar-utilities.php:1075
+#: modules/calendar/library/calendar-utilities.php:1191
+#: modules/content-board/content-board.php:699
+#: modules/content-board/content-board.php:710
+#: modules/content-board/content-board.php:753
+#: modules/content-board/content-board.php:812
+#: modules/content-board/library/content-board-utilities.php:647
+#: modules/content-board/library/content-board-utilities.php:1180
+#: modules/content-overview/content-overview.php:835
+#: modules/content-overview/content-overview.php:849
+#: modules/content-overview/content-overview.php:894
+#: modules/content-overview/content-overview.php:956
+#: modules/content-overview/content-overview.php:1218
+#: modules/content-overview/library/content-overview-utilities.php:506
+#: modules/content-overview/library/content-overview-utilities.php:769
+#: modules/editorial-comments/library/EditorialCommentsTable.php:228
+msgid "Author"
+msgid_plural "Authors"
+msgstr[0] "작성자"
+
+#: modules/calendar/calendar.php:989
+#: modules/calendar/calendar.php:1220
+#: modules/calendar/library/calendar-utilities.php:146
+#: modules/calendar/library/calendar-utilities.php:1054
+#: modules/calendar/library/calendar-utilities.php:1192
+#: modules/content-board/content-board.php:698
+#: modules/content-board/content-board.php:711
+#: modules/content-board/content-board.php:752
+#: modules/content-board/content-board.php:813
+#: modules/content-board/library/content-board-utilities.php:677
+#: modules/content-board/library/content-board-utilities.php:1153
+#: modules/content-overview/content-overview.php:834
+#: modules/content-overview/content-overview.php:850
+#: modules/content-overview/content-overview.php:893
+#: modules/content-overview/content-overview.php:957
+#: modules/content-overview/library/content-overview-utilities.php:479
+#: modules/content-overview/library/content-overview-utilities.php:799
+msgid "Post Type"
+msgstr "게시물 유형"
+
+#: modules/calendar/calendar.php:1103
+msgid "Post moved to the trash."
+msgid_plural "%d posts moved to the trash."
+msgstr[0] "휴지통으로 이동된 게시물입니다."
+
+#: modules/calendar/calendar.php:1119
+#: modules/content-board/content-board.php:614
+#: modules/content-overview/library/content-overview-methods.php:214
+msgid "Undo"
+msgstr "실행 취소"
+
+#: modules/calendar/calendar.php:1129
+msgid "Post restored from the Trash."
+msgid_plural "%d posts restored from the Trash."
+msgstr[0] "휴지통에서 복원된 게시물입니다."
+
+#: modules/calendar/calendar.php:1161
+msgid "Initializing the calendar. Please wait..."
+msgstr "캘린더 초기화 중입니다. 잠시 기다려 주세요..."
+
+#: modules/calendar/calendar.php:1165
+msgid ""
+"It seems like it is taking too long. Please, try reloading the page again "
+"and check the browser console looking for errors."
+msgstr "너무 오래 걸리는 것 같습니다. 페이지를 다시 로드하고 오류를 확인하려면 브라우저 콘솔을 확인해 주세요."
+
+#: modules/calendar/calendar.php:1809
+msgid ""
+"The selected user doesn't have enough permissions to be set as the post "
+"author."
+msgstr "선택한 사용자는 포스트 작성자로 설정할 수 있는 충분한 권한이 없습니다."
+
+#: modules/calendar/library/calendar-methods.php:87
+msgid "Post types to show"
+msgstr "표시할 게시물 유형"
+
+#: modules/calendar/library/calendar-methods.php:95
+msgid "Show today's date in the first row"
+msgstr "첫 번째 행에 오늘 날짜 표시"
+
+#: modules/calendar/library/calendar-methods.php:103
+msgid "Enable subscriptions in iCal or Google Calendar"
+msgstr "iCal 또는 구글 캘린더에서 구독 활성화"
+
+#: modules/calendar/library/calendar-methods.php:111
+msgid "Allow public access to subscriptions in iCal or Google Calendar"
+msgstr "iCal 또는 구글 캘린더에서 구독에 대한 공개 액세스 허용"
+
+#: modules/calendar/library/calendar-methods.php:119
+msgid "Statuses to display publish time"
+msgstr "게시 시간 표시할 상태"
+
+#: modules/calendar/library/calendar-methods.php:127
+msgid "Posts publish time format"
+msgstr "게시물 발행 시간 형식"
+
+#: modules/calendar/library/calendar-methods.php:135
+msgid "Default publish time for items created in the calendar"
+msgstr "달력에서 생성된 항목의 기본 발행 시간"
+
+#: modules/calendar/library/calendar-methods.php:143
+msgid "Field used for sorting the calendar items in a day cell"
+msgstr "일 셀에서 달력 항목을 정렬하는 데 사용되는 필드"
+
+#: modules/calendar/library/calendar-methods.php:151
+msgid "Max visible posts per date"
+msgstr "날짜당 최대 표시 게시물 수"
+
+#: modules/calendar/library/calendar-methods.php:159
+msgid "Always show complete post titles"
+msgstr "게시물 제목을 항상 전체로 표시"
+
+#: modules/calendar/library/calendar-methods.php:179
+msgid "At least one post type must be selected"
+msgstr "최소한 하나의 게시물 유형을 선택해야 합니다"
+
+#: modules/calendar/library/calendar-methods.php:294
+msgid "edit"
+msgstr "편집"
+
+#: modules/calendar/library/calendar-methods.php:308
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions Pro%s."
+msgstr "콘텐츠 캘린더, 개요 및 콘텐츠 보드의 리비전 통합을 위해 %sPublishPress Revisions Pro%s를 업데이트하세요."
+
+#: modules/calendar/library/calendar-methods.php:309
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions%s."
+msgstr "콘텐츠 캘린더, 개요 및 콘텐츠 보드의 리비전 통합을 위해 %sPublishPress Revisions%s를 업데이트하세요."
+
+#: modules/calendar/library/calendar-methods.php:326
+#, php-format
+msgid ""
+"To refine your workflow with custom Post Statuses, install the "
+"%sPublishPress Statuses%s plugin."
+msgstr "사용자 정의 포스트 상태로 작업 흐름을 개선하려면 %sPublishPress Statuses%s 플러그인을 설치하세요."
+
+#: modules/calendar/library/calendar-methods.php:340
+#, php-format
+msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
+msgstr "사용자 정의 개정 상태를 위해 %sPublishPress Statuses Pro%s로 업그레이드하십시오."
+
+#: modules/calendar/library/calendar-methods.php:423
+msgid "Publishing Time"
+msgstr "발행 시간"
+
+#: modules/calendar/library/calendar-methods.php:479
+msgid "All posts"
+msgstr "모든 게시물"
+
+#: modules/calendar/library/calendar-methods.php:527
+#: modules/dashboard/dashboard.php:368
+#: modules/dashboard/dashboard.php:391
+#: modules/dashboard/dashboard.php:425
+msgid "Disabled"
+msgstr "비활성화됨"
+
+#: modules/calendar/library/calendar-methods.php:528
+#: modules/dashboard/dashboard.php:369
+#: modules/dashboard/dashboard.php:392
+#: modules/dashboard/dashboard.php:426
+msgid "Enabled"
+msgstr "활성화됨"
+
+#: modules/calendar/library/calendar-methods.php:546
+msgid "Regenerate calendar feed secret"
+msgstr "캘린더 피드 비밀 재생성"
+
+#: modules/calendar/library/calendar-methods.php:788
+msgid "Invalid input"
+msgstr "유효하지 않은 입력"
+
+#: modules/calendar/library/calendar-methods.php:794
+msgid "Post not found"
+msgstr "게시물을 찾을 수 없습니다"
+
+#: modules/calendar/library/calendar-methods.php:799
+msgid "No enough permissions"
+msgstr "권한이 충분하지 않습니다"
+
+#: modules/calendar/library/calendar-methods.php:808
+msgid "Invalid date"
+msgstr "유효하지 않은 날짜"
+
+#: modules/calendar/library/calendar-methods.php:864
+msgid "Publish Time"
+msgstr "게시 시간"
+
+#: modules/calendar/library/calendar-methods.php:894
+#: modules/content-board/library/content-board-utilities.php:1199
+#: modules/content-overview/library/content-overview-utilities.php:525
+msgid "Tags"
+msgstr "태그"
+
+#: modules/calendar/library/calendar-methods.php:1001
+msgid "Publish on"
+msgstr "게시 일자"
+
+#: modules/calendar/library/calendar-methods.php:1195
+#: modules/notifications-log/notifications-log.php:210
+msgid "Loading..."
+msgstr "로딩 중..."
+
+#: modules/calendar/library/calendar-methods.php:1196
+msgid "Loading item..."
+msgstr "항목 로딩 중..."
+
+#: modules/calendar/library/calendar-methods.php:1197
+msgid "Click to add"
+msgstr "추가하려면 클릭하세요"
+
+#: modules/calendar/library/calendar-methods.php:1198
+msgid "Moving the item..."
+msgstr "항목 이동 중..."
+
+#: modules/calendar/library/calendar-methods.php:1199
+#, php-format
+msgid "Hide the %s last items"
+msgstr "%s개의 마지막 항목 숨기기"
+
+#: modules/calendar/library/calendar-methods.php:1200
+#, php-format
+msgid "Show %s more"
+msgstr "%s개 더 보기"
+
+#: modules/calendar/library/calendar-methods.php:1201
+#: modules/calendar/library/calendar-methods.php:1704
+msgid "Untitled"
+msgstr "제목 없음"
+
+#: modules/calendar/library/calendar-methods.php:1202
+msgid "Close"
+msgstr "닫기"
+
+#: modules/calendar/library/calendar-methods.php:1203
+#: modules/editorial-comments/lib/editorial-comments.js:349
+msgid "Save"
+msgstr "저장"
+
+#: modules/calendar/library/calendar-methods.php:1204
+msgid "Saving..."
+msgstr "저장 중..."
+
+#: modules/calendar/library/calendar-methods.php:1205
+msgid "Save and edit"
+msgstr "저장하고 편집"
+
+#: modules/calendar/library/calendar-methods.php:1206
+#, php-format
+msgid "Add content for %s"
+msgstr "%s에 대한 콘텐츠 추가"
+
+#: modules/calendar/library/calendar-methods.php:1207
+msgid "Post type not found"
+msgstr "게시 유형을 찾을 수 없습니다"
+
+#: modules/calendar/library/calendar-methods.php:1208
+msgid "Post type:"
+msgstr "게시 유형:"
+
+#: modules/calendar/library/calendar-methods.php:1209
+#: modules/content-board/library/content-board-utilities.php:1130
+#: modules/content-overview/library/content-overview-utilities.php:456
+msgid "Please, wait! Loading the form fields..."
+msgstr "잠시만 기다려 주십시오! 양식 필드를 로딩 중..."
+
+#: modules/calendar/library/calendar-methods.php:1210
+msgid "Sun"
+msgstr "일"
+
+#: modules/calendar/library/calendar-methods.php:1211
+msgid "Mon"
+msgstr "월"
+
+#: modules/calendar/library/calendar-methods.php:1212
+msgid "Tue"
+msgstr "화"
+
+#: modules/calendar/library/calendar-methods.php:1213
+msgid "Wed"
+msgstr "수"
+
+#: modules/calendar/library/calendar-methods.php:1214
+msgid "Thu"
+msgstr "목"
+
+#: modules/calendar/library/calendar-methods.php:1215
+msgid "Fri"
+msgstr "금"
+
+#: modules/calendar/library/calendar-methods.php:1216
+msgid "Sat"
+msgstr "토"
+
+#: modules/calendar/library/calendar-methods.php:1217
+msgid "Jan"
+msgstr "1월"
+
+#: modules/calendar/library/calendar-methods.php:1218
+msgid "Feb"
+msgstr "2월"
+
+#: modules/calendar/library/calendar-methods.php:1219
+msgid "Mar"
+msgstr "3월"
+
+#: modules/calendar/library/calendar-methods.php:1220
+msgid "Apr"
+msgstr "4월"
+
+#: modules/calendar/library/calendar-methods.php:1221
+msgid "May"
+msgstr "5월"
+
+#: modules/calendar/library/calendar-methods.php:1222
+msgid "Jun"
+msgstr "6월"
+
+#: modules/calendar/library/calendar-methods.php:1223
+msgid "Jul"
+msgstr "7월"
+
+#: modules/calendar/library/calendar-methods.php:1224
+msgid "Aug"
+msgstr "8월"
+
+#: modules/calendar/library/calendar-methods.php:1225
+msgid "Sep"
+msgstr "9월"
+
+#: modules/calendar/library/calendar-methods.php:1226
+msgid "Oct"
+msgstr "10월"
+
+#: modules/calendar/library/calendar-methods.php:1227
+msgid "Nov"
+msgstr "11월"
+
+#: modules/calendar/library/calendar-methods.php:1228
+msgid "Dec"
+msgstr "12월"
+
+#: modules/calendar/library/calendar-methods.php:1229
+#: modules/calendar/library/calendar-utilities.php:51
+#: modules/content-board/library/content-board-utilities.php:598
+#: modules/content-overview/library/content-overview-utilities.php:707
+msgid "All statuses"
+msgstr "모든 상태"
+
+#: modules/calendar/library/calendar-methods.php:1230
+msgid "All categories"
+msgstr "모든 카테고리"
+
+#: modules/calendar/library/calendar-methods.php:1231
+msgid "All tags"
+msgstr "모든 태그"
+
+#: modules/calendar/library/calendar-methods.php:1232
+#: modules/calendar/library/calendar-utilities.php:117
+#: modules/calendar/library/calendar-utilities.php:120
+#: modules/content-board/library/content-board-utilities.php:649
+#: modules/content-board/library/content-board-utilities.php:652
+#: modules/content-overview/library/content-overview-utilities.php:771
+#: modules/content-overview/library/content-overview-utilities.php:774
+msgid "All authors"
+msgstr "모든 저자"
+
+#: modules/calendar/library/calendar-methods.php:1233
+msgid "All types"
+msgstr "모든 유형"
+
+#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-utilities.php:513
+#, php-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d 주"
+
+#: modules/calendar/library/calendar-methods.php:1235
+#, php-format
+msgid "%d weeks"
+msgstr "%d 주"
+
+#: modules/calendar/library/calendar-methods.php:1236
+msgid "Today"
+msgstr "오늘"
+
+#: modules/calendar/library/calendar-methods.php:1237
+msgid "No terms"
+msgstr "용어 없음"
+
+#: modules/calendar/library/calendar-methods.php:1238
+#: modules/content-board/content-board.php:1283
+#: modules/content-overview/content-overview.php:836
+#: modules/content-overview/content-overview.php:895
+#: modules/content-overview/content-overview.php:1219
+msgid "Post Date"
+msgstr "게시 날짜"
+
+#: modules/calendar/library/calendar-methods.php:1239
+#: modules/calendar/library/calendar-utilities.php:1097
+#: modules/content-board/content-board.php:1178
+#: modules/content-board/content-board.php:1284
+#: modules/content-overview/content-overview.php:1220
+#: modules/content-overview/content-overview.php:1703
+#: modules/editorial-comments/editorial-comments.php:628
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:159
+msgid "Edit"
+msgstr "편집"
+
+#: modules/calendar/library/calendar-methods.php:1241
+#: modules/calendar/library/calendar-utilities.php:1114
+#: modules/content-board/content-board.php:1219
+#: modules/content-board/content-board.php:1286
+#: modules/content-overview/content-overview.php:1222
+#: modules/content-overview/content-overview.php:1744
+msgid "Preview"
+msgstr "미리보기"
+
+#: modules/calendar/library/calendar-methods.php:1242
+#: modules/calendar/library/calendar-utilities.php:1111
+#: modules/content-board/content-board.php:1206
+#: modules/content-board/content-board.php:1287
+#: modules/content-overview/content-overview.php:1223
+#: modules/content-overview/content-overview.php:1731
+msgid "View"
+msgstr "보기"
+
+#: modules/calendar/library/calendar-methods.php:1243
+#: modules/content-board/content-board.php:1288
+#: modules/content-overview/content-overview.php:1224
+msgid "Previous Post"
+msgstr "이전 게시물"
+
+#: modules/calendar/library/calendar-methods.php:1244
+#: modules/content-board/content-board.php:1289
+#: modules/content-overview/content-overview.php:1225
+msgid "Next Post"
+msgstr "다음 게시물"
+
+#: modules/calendar/library/calendar-methods.php:1246
+#: modules/content-board/content-board.php:1291
+#: modules/content-overview/content-overview.php:1227
+msgid "Save Changes"
+msgstr "변경 사항 저장"
+
+#: modules/calendar/library/calendar-methods.php:1247
+#: modules/content-board/content-board.php:1292
+#: modules/content-overview/content-overview.php:1228
+msgid "Taxonomy not set."
+msgstr "분류가 설정되지 않았습니다."
+
+#: modules/calendar/library/calendar-methods.php:1687
+msgid "No date supplied."
+msgstr "제공된 날짜가 없습니다."
+
+#: modules/calendar/library/calendar-methods.php:1698
+msgid "The selected post type is not enabled for the calendar."
+msgstr "선택한 게시물 유형이 캘린더에 대해 활성화되지 않았습니다."
+
+#: modules/calendar/library/calendar-methods.php:1728
+msgid "Invalid Status supplied."
+msgstr "유효하지 않은 상태가 제공되었습니다."
+
+#: modules/calendar/library/calendar-methods.php:1752
+msgid "Invalid Publish Date supplied."
+msgstr "유효하지 않은 게시 날짜가 제공되었습니다."
+
+#: modules/calendar/library/calendar-methods.php:1821
+msgid "Post created successfully"
+msgstr "게시물이 성공적으로 생성되었습니다"
+
+#: modules/calendar/library/calendar-methods.php:1828
+msgid "Post could not be created"
+msgstr "게시물을 생성할 수 없습니다"
+
+#: modules/calendar/library/calendar-utilities.php:54
+#: modules/content-overview/library/content-overview-utilities.php:710
+msgid "(Hide all)"
+msgstr "(모두 숨기기)"
+
+#: modules/calendar/library/calendar-utilities.php:90
+#: modules/calendar/library/calendar-utilities.php:93
+#: modules/content-board/library/content-board-utilities.php:624
+#: modules/content-board/library/content-board-utilities.php:627
+#: modules/content-overview/library/content-overview-utilities.php:746
+#: modules/content-overview/library/content-overview-utilities.php:749
+#, php-format
+msgid "All %s"
+msgstr "모든 %s"
+
+#: modules/calendar/library/calendar-utilities.php:150
+#: modules/content-board/library/content-board-utilities.php:681
+#: modules/content-overview/library/content-overview-utilities.php:803
+msgid "All post types"
+msgstr "모든 게시물 유형"
+
+#: modules/calendar/library/calendar-utilities.php:169
+#: modules/calendar/library/calendar-utilities.php:485
+#: modules/content-board/library/content-board-utilities.php:97
+#: modules/content-board/library/content-board-utilities.php:700
+#: modules/content-overview/library/content-overview-methods.php:322
+#: modules/content-overview/library/content-overview-utilities.php:822
+msgid "Search box"
+msgstr "검색 상자"
+
+#: modules/calendar/library/calendar-utilities.php:198
+#: modules/calendar/library/calendar-utilities.php:309
+#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:433
+#: modules/content-board/content-board.php:1059
+#: modules/content-board/library/content-board-utilities.php:548
+#: modules/content-board/library/content-board-utilities.php:558
+#: modules/content-board/library/content-board-utilities.php:729
+#: modules/content-board/library/content-board-utilities.php:840
+#: modules/content-board/library/content-board-utilities.php:878
+#: modules/content-board/library/content-board-utilities.php:958
+#: modules/content-overview/library/content-overview-utilities.php:653
+#: modules/content-overview/library/content-overview-utilities.php:663
+#: modules/content-overview/library/content-overview-utilities.php:851
+#: modules/content-overview/library/content-overview-utilities.php:962
+#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1086
+msgid "Apply"
+msgstr "적용"
+
+#: modules/calendar/library/calendar-utilities.php:211
+#: modules/content-board/library/content-board-utilities.php:742
+#: modules/content-overview/library/content-overview-utilities.php:864
+msgid "Select option..."
+msgstr "옵션 선택..."
+
+#: modules/calendar/library/calendar-utilities.php:245
+#: modules/calendar/library/calendar-utilities.php:279
+#: modules/content-board/library/content-board-utilities.php:112
+#: modules/content-board/library/content-board-utilities.php:776
+#: modules/content-board/library/content-board-utilities.php:810
+#: modules/content-overview/library/content-overview-methods.php:337
+#: modules/content-overview/library/content-overview-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:932
+msgid "to"
+msgstr "부터"
+
+#: modules/calendar/library/calendar-utilities.php:329
+#: modules/content-board/library/content-board-utilities.php:860
+#: modules/content-overview/library/content-overview-utilities.php:982
+msgid "Checked"
+msgstr "체크됨"
+
+#: modules/calendar/library/calendar-utilities.php:370
+#: modules/content-board/library/content-board-utilities.php:895
+#: modules/content-overview/library/content-overview-utilities.php:1023
+msgid "All status"
+msgstr "모든 상태"
+
+#: modules/calendar/library/calendar-utilities.php:373
+#: modules/content-board/library/content-board-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:1026
+msgid "Passed"
+msgstr "통과"
+
+#: modules/calendar/library/calendar-utilities.php:374
+#: modules/content-board/library/content-board-utilities.php:899
+#: modules/content-overview/library/content-overview-utilities.php:1027
+#: modules/notifications-log/library/NotificationsLogTable.php:277
+#: modules/notifications-log/library/NotificationsLogTable.php:293
+msgid "Failed"
+msgstr "실패"
+
+#: modules/calendar/library/calendar-utilities.php:473
+#: modules/content-board/library/content-board-utilities.php:42
+#: modules/content-overview/library/content-overview-methods.php:267
+msgid "Customize Filters"
+msgstr "필터 사용자 정의"
+
+#: modules/calendar/library/calendar-utilities.php:502
+#: modules/calendar/library/calendar-utilities.php:503
+msgid "Period"
+msgstr "기간"
+
+#: modules/calendar/library/calendar-utilities.php:503
+#, php-format
+msgid "%1s weeks"
+msgstr "%1s 주"
+
+#: modules/calendar/library/calendar-utilities.php:553
+#: modules/content-board/library/content-board-utilities.php:152
+#: modules/content-overview/library/content-overview-methods.php:377
+msgid "Reset Filters"
+msgstr "필터 초기화"
+
+#: modules/calendar/library/calendar-utilities.php:554
+#: modules/content-board/library/content-board-utilities.php:153
+#: modules/content-board/library/content-board-utilities.php:551
+#: modules/content-overview/library/content-overview-methods.php:378
+#: modules/content-overview/library/content-overview-utilities.php:656
+msgid "Reset"
+msgstr "초기화"
+
+#: modules/calendar/library/calendar-utilities.php:582
+#: modules/content-board/library/content-board-utilities.php:363
+#: modules/content-overview/library/content-overview-utilities.php:171
+msgid "Enable Filters"
+msgstr "필터 활성화"
+
+#: modules/calendar/library/calendar-utilities.php:583
+#: modules/content-board/library/content-board-utilities.php:364
+#: modules/content-overview/library/content-overview-utilities.php:172
+msgid "Reorder Filters"
+msgstr "필터 재정렬"
+
+#: modules/calendar/library/calendar-utilities.php:588
+msgid "Enable or Disable Content calendar filter."
+msgstr "콘텐츠 캘린더 필터를 활성화하거나 비활성화합니다."
+
+#: modules/calendar/library/calendar-utilities.php:601
+#: modules/content-board/library/content-board-utilities.php:236
+#: modules/content-board/library/content-board-utilities.php:253
+#: modules/content-board/library/content-board-utilities.php:382
+#: modules/content-overview/library/content-overview-utilities.php:44
+#: modules/content-overview/library/content-overview-utilities.php:190
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:68
+msgid "Add New"
+msgstr "새로 추가"
+
+#: modules/calendar/library/calendar-utilities.php:609
+#: modules/content-board/library/content-board-utilities.php:390
+#: modules/content-overview/library/content-overview-utilities.php:198
+msgid "Filter Title"
+msgstr "필터 제목"
+
+#: modules/calendar/library/calendar-utilities.php:613
+#: modules/content-board/library/content-board-utilities.php:248
+#: modules/content-overview/library/content-overview-utilities.php:56
+msgid "Search Metakey"
+msgstr "검색 메타키"
+
+#: modules/calendar/library/calendar-utilities.php:618
+#: modules/content-board/library/content-board-utilities.php:399
+#: modules/content-overview/library/content-overview-utilities.php:207
+msgid "Add Filter"
+msgstr "필터 추가"
+
+#: modules/calendar/library/calendar-utilities.php:661
+#: modules/content-board/library/content-board-utilities.php:442
+#: modules/content-overview/library/content-overview-utilities.php:250
+msgid "Drag to change enabled filters order."
+msgstr "드래그하여 활성화된 필터 순서를 변경하십시오."
+
+#: modules/calendar/library/calendar-utilities.php:702
+#: modules/content-board/library/content-board-utilities.php:71
+#: modules/content-board/library/content-board-utilities.php:337
+#: modules/content-board/library/content-board-utilities.php:483
+#: modules/content-overview/library/content-overview-methods.php:296
+#: modules/content-overview/library/content-overview-utilities.php:145
+#: modules/content-overview/library/content-overview-utilities.php:291
+msgid "Apply Changes"
+msgstr "변경 사항 적용"
+
+#: modules/calendar/library/calendar-utilities.php:1085
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] "태그"
+
+#: modules/calendar/library/calendar-utilities.php:1180
+#: modules/content-board/content-board.php:802
+#: modules/content-overview/content-overview.php:945
+msgid "Custom filters"
+msgstr "사용자 정의 필터"
+
+#: modules/calendar/library/calendar-utilities.php:1181
+#: modules/content-board/content-board.php:803
+#: modules/content-overview/content-overview.php:946
+msgid "Click the \"Add New\" button to create new filters."
+msgstr "새 필터를 만들려면 \"새로 추가\" 버튼을 클릭하십시오."
+
+#: modules/calendar/library/calendar-utilities.php:1187
+#: modules/content-board/content-board.php:809
+#: modules/content-overview/content-overview.php:952
+msgid "Inbuilt filters"
+msgstr "내장 필터"
+
+#: modules/calendar/library/calendar-utilities.php:1199
+#: modules/content-board/content-board.php:760
+#: modules/content-board/content-board.php:820
+#: modules/content-overview/content-overview.php:903
+#: modules/content-overview/content-overview.php:964
+#: modules/editorial-metadata/editorial-metadata.php:95
+#: modules/editorial-metadata/editorial-metadata.php:511
+#: modules/editorial-metadata/editorial-metadata.php:1720
+#: modules/editorial-metadata/editorial-metadata.php:1721
+msgid "Editorial Fields"
+msgstr "편집 필드"
+
+#: modules/calendar/library/calendar-utilities.php:1200
+#: modules/content-board/content-board.php:761
+#: modules/content-board/content-board.php:821
+#: modules/content-overview/content-overview.php:904
+#: modules/content-overview/content-overview.php:965
+msgid "You do not have any editorial fields enabled"
+msgstr "활성화된 편집 필드가 없습니다"
+
+#: modules/calendar/library/calendar-utilities.php:1207
+#: modules/content-board/content-board.php:768
+#: modules/content-board/content-board.php:828
+#: modules/content-overview/content-overview.php:911
+#: modules/content-overview/content-overview.php:972
+msgid "You do not have any public taxonomies"
+msgstr "공개 분류가 없습니다"
+
+#: modules/calendar/library/calendar-utilities.php:1229
+msgid "Subscribe in iCal or Google Calendar"
+msgstr "iCal 또는 Google 캘린더에서 구독하기"
+
+#: modules/calendar/library/calendar-utilities.php:1234
+msgid "Start date"
+msgstr "시작 날짜"
+
+#: modules/calendar/library/calendar-utilities.php:1238
+msgid "Current week"
+msgstr "현재 주"
+
+#: modules/calendar/library/calendar-utilities.php:1240
+msgid "One month ago"
+msgstr "한 달 전"
+
+#: modules/calendar/library/calendar-utilities.php:1242
+msgid "Two months ago"
+msgstr "두 달 전"
+
+#: modules/calendar/library/calendar-utilities.php:1244
+msgid "Three months ago"
+msgstr "세 달 전"
+
+#: modules/calendar/library/calendar-utilities.php:1246
+msgid "Four months ago"
+msgstr "네 달 전"
+
+#: modules/calendar/library/calendar-utilities.php:1248
+msgid "Five months ago"
+msgstr "다섯 달 전"
+
+#: modules/calendar/library/calendar-utilities.php:1250
+msgid "Six months ago"
+msgstr "6개월 전"
+
+#: modules/calendar/library/calendar-utilities.php:1256
+msgid "End date"
+msgstr "종료일"
+
+#: modules/calendar/library/calendar-utilities.php:1261
+msgid "One week"
+msgstr "1주"
+
+#: modules/calendar/library/calendar-utilities.php:1263
+msgid "Two weeks"
+msgstr "2주"
+
+#: modules/calendar/library/calendar-utilities.php:1265
+msgid "Three weeks"
+msgstr "3주"
+
+#: modules/calendar/library/calendar-utilities.php:1267
+msgid "Four weeks"
+msgstr "4주"
+
+#: modules/calendar/library/calendar-utilities.php:1271
+msgid "Months"
+msgstr "개월"
+
+#: modules/calendar/library/calendar-utilities.php:1273
+msgid "One month"
+msgstr "1개월"
+
+#: modules/calendar/library/calendar-utilities.php:1276
+msgid "Two months"
+msgstr "2개월"
+
+#: modules/calendar/library/calendar-utilities.php:1278
+msgid "Three months"
+msgstr "3개월"
+
+#: modules/calendar/library/calendar-utilities.php:1280
+msgid "Four months"
+msgstr "4개월"
+
+#: modules/calendar/library/calendar-utilities.php:1282
+msgid "Five months"
+msgstr "5개월"
+
+#: modules/calendar/library/calendar-utilities.php:1284
+msgid "Six months"
+msgstr "6개월"
+
+#: modules/calendar/library/calendar-utilities.php:1286
+msgid "Seven months"
+msgstr "7개월"
+
+#: modules/calendar/library/calendar-utilities.php:1288
+msgid "Eight months"
+msgstr "8개월"
+
+#: modules/calendar/library/calendar-utilities.php:1290
+msgid "Nine months"
+msgstr "9개월"
+
+#: modules/calendar/library/calendar-utilities.php:1292
+msgid "Ten months"
+msgstr "10개월"
+
+#: modules/calendar/library/calendar-utilities.php:1294
+msgid "Eleven months"
+msgstr "11개월"
+
+#: modules/calendar/library/calendar-utilities.php:1296
+msgid "Twelve months"
+msgstr "12개월"
+
+#: modules/calendar/library/calendar-utilities.php:1308
+msgid "Download .ics file"
+msgstr ".ics 파일 다운로드"
+
+#: modules/calendar/library/calendar-utilities.php:1315
+msgid "Copy to the clipboard"
+msgstr "클립보드에 복사"
+
+#: modules/calendar/library/calendar-utilities.php:1321
+msgid "Click here to subscribe in iCal or Google Calendar"
+msgstr "iCal 또는 Google 캘린더에 구독하려면 여기 클릭하세요"
+
+#: modules/content-board/content-board.php:142
+#: modules/content-board/content-board.php:379
+#: modules/content-board/content-board.php:396
+#: modules/content-board/content-board.php:397
+msgid "Content Board"
+msgstr "컨텐츠 보드"
+
+#: modules/content-board/content-board.php:743
+msgid "Custom Items"
+msgstr "사용자 정의 항목"
+
+#: modules/content-board/content-board.php:744
+msgid "Click the \"Add New\" button to create new card data."
+msgstr "새 카드 데이터를 만들려면 \"새로 추가\" 버튼을 클릭하세요."
+
+#: modules/content-board/content-board.php:750
+msgid "Inbuilt Card Data"
+msgstr "내장 카드 데이터"
+
+#: modules/content-board/content-board.php:847
+#: modules/content-board/library/content-board-methods.php:39
+#: modules/content-board/library/content-board-methods.php:107
+#: modules/content-overview/content-overview.php:991
+msgid "An error occured"
+msgstr "오류가 발생했습니다"
+
+#: modules/content-board/content-board.php:851
+#: modules/content-board/library/content-board-methods.php:43
+#: modules/content-board/library/content-board-methods.php:111
+#: modules/content-overview/content-overview.php:995
+msgid "Error validating nonce. Please reload this page and try again."
+msgstr "nonce 유효성 검사 중 오류가 발생했습니다. 이 페이지를 새로 고치고 다시 시도하세요."
+
+#: modules/content-board/content-board.php:853
+#: modules/content-board/library/content-board-methods.php:45
+#: modules/content-board/library/content-board-methods.php:113
+#: modules/content-overview/content-overview.php:997
+msgid "Invalid form request."
+msgstr "유효하지 않은 양식 요청입니다."
+
+#: modules/content-board/content-board.php:1026
+msgid "Move posts here to change their status"
+msgstr "게시물을 여기로 이동하여 상태를 변경하세요"
+
+#: modules/content-board/content-board.php:1029
+msgid "You do not have permission to move post to this status"
+msgstr "이 상태로 게시물을 이동할 수 있는 권한이 없습니다"
+
+#: modules/content-board/content-board.php:1049
+#: modules/content-board/content-board.php:1066
+msgid "Default Date"
+msgstr "기본 날짜"
+
+#: modules/content-board/content-board.php:1056
+msgid ""
+"This is the default publish date from today for posts moving to the "
+"Scheduled status."
+msgstr "이것은 예약 상태로 이동하는 게시물의 기본 게시 날짜입니다."
+
+#: modules/content-board/content-board.php:1100
+#: modules/content-board/content-board.php:1242
+msgid "Only editable posts will be moveable."
+msgstr "편집 가능한 게시물만 이동할 수 있습니다."
+
+#: modules/content-board/content-board.php:1174
+#: modules/content-overview/content-overview.php:1699
+#: modules/dashboard/dashboard.php:299
+msgid "Edit this post"
+msgstr "이 게시물 수정"
+
+#: modules/content-board/content-board.php:1186
+#: modules/content-overview/content-overview.php:1711
+msgid "Move this item to the Trash"
+msgstr "이 항목을 휴지통으로 이동"
+
+#: modules/content-board/content-board.php:1200
+#: modules/content-overview/content-overview.php:1725
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr "보기 &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1216
+#: modules/content-overview/content-overview.php:1741
+#, php-format
+msgid "Preview &#8220;%s&#8221;"
+msgstr "미리 보기 &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1263
+#: modules/content-overview/content-overview.php:1194
+msgid "No results found"
+msgstr "결과를 찾을 수 없습니다"
+
+#: modules/content-board/content-board.php:1268
+#: modules/content-overview/content-overview.php:1199
+msgid "There are no posts in the range or filter specified."
+msgstr "지정된 범위 또는 필터에 게시물이 없습니다."
+
+#: modules/content-board/content-board.php:1600
+#: modules/content-overview/content-overview.php:1579
+msgid "None"
+msgstr "없음"
+
+#: modules/content-board/library/content-board-methods.php:53
+msgid "Error fetching post data."
+msgstr "게시물 데이터를 가져오는 중 오류가 발생했습니다."
+
+#: modules/content-board/library/content-board-methods.php:63
+msgid "You do not have permission to edit selected post."
+msgstr "선택한 게시물을 편집할 권한이 없습니다."
+
+#: modules/content-board/library/content-board-methods.php:65
+msgid "You do not have permission to move post to selected post status."
+msgstr "선택한 게시물 상태로 게시물을 이동할 권한이 없습니다."
+
+#: modules/content-board/library/content-board-methods.php:95
+#: modules/content-board/library/content-board-methods.php:123
+msgid "Changes saved!"
+msgstr "변경 사항이 저장되었습니다!"
+
+#: modules/content-board/library/content-board-methods.php:150
+msgid "Card Data updated successfully."
+msgstr "카드 데이터가 성공적으로 업데이트되었습니다."
+
+#: modules/content-board/library/content-board-methods.php:172
+#: modules/content-overview/content-overview.php:676
+msgid "Settings updated successfully."
+msgstr "설정이 성공적으로 업데이트되었습니다."
+
+#: modules/content-board/library/content-board-methods.php:250
+#: modules/content-overview/content-overview.php:754
+#, php-format
+msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
+msgstr "%s가 성공적으로 생성되었습니다. <a href=\"%s\" target=\"_blank\">%s 편집</a>"
+
+#: modules/content-board/library/content-board-methods.php:253
+#: modules/content-overview/content-overview.php:757
+#, php-format
+msgid "%s could not be created"
+msgstr "%s를 생성할 수 없습니다"
+
+#: modules/content-board/library/content-board-methods.php:258
+#: modules/content-overview/content-overview.php:762
+#, php-format
+msgid "You do not have permission to add new %s"
+msgstr "새로운 %s를 추가할 권한이 없습니다"
+
+#: modules/content-board/library/content-board-methods.php:437
+#: modules/content-overview/library/content-overview-methods.php:160
+msgid "Post types to show:"
+msgstr "표시할 게시물 유형:"
+
+#: modules/content-board/library/content-board-utilities.php:32
+msgid "Customize Card Data"
+msgstr "카드 데이터 사용자 정의"
+
+#: modules/content-board/library/content-board-utilities.php:51
+#: modules/content-overview/library/content-overview-methods.php:276
+msgid "Print"
+msgstr "인쇄"
+
+#: modules/content-board/library/content-board-utilities.php:63
+#: modules/content-overview/library/content-overview-methods.php:288
+msgid "Maximum number of posts to display"
+msgstr "표시할 최대 게시물 수"
+
+#: modules/content-board/library/content-board-utilities.php:84
+#: modules/content-overview/library/content-overview-methods.php:309
+msgid "New Post"
+msgstr "새 게시물"
+
+#: modules/content-board/library/content-board-utilities.php:217
+msgid "Enable or Disable"
+msgstr "사용 또는 사용 중지"
+
+#: modules/content-board/library/content-board-utilities.php:218
+msgid "Reorder"
+msgstr "재정렬"
+
+#: modules/content-board/library/content-board-utilities.php:223
+msgid "Enable or Disable Content Board Card Data."
+msgstr "콘텐츠 보드 카드 데이터의 사용 또는 사용 중지."
+
+#: modules/content-board/library/content-board-utilities.php:296
+msgid "Drag to change enabled card data order."
+msgstr "드래그하여 활성화된 카드 데이터의 순서를 변경합니다."
+
+#: modules/content-board/library/content-board-utilities.php:369
+msgid "Enable or Disable Content Board filter."
+msgstr "콘텐츠 보드 필터의 사용 또는 사용 중지."
+
+#: modules/content-board/library/content-board-utilities.php:394
+#: modules/content-overview/library/content-overview-utilities.php:202
+msgid "Select Metakey"
+msgstr "메타키 선택"
+
+#: modules/content-board/library/content-board-utilities.php:509
+#: modules/content-overview/library/content-overview-utilities.php:614
+msgid "Show content from"
+msgstr "다음에서 콘텐츠 표시"
+
+#: modules/content-board/library/content-board-utilities.php:554
+#: modules/content-overview/library/content-overview-utilities.php:659
+#: modules/editorial-comments/editorial-comments.php:574
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:425
+#: modules/editorial-comments/lib/editorial-comments.js:350
+msgid "Cancel"
+msgstr "취소"
+
+#: modules/content-board/library/content-board-utilities.php:555
+#: modules/content-overview/library/content-overview-utilities.php:660
+msgid "Change"
+msgstr "변경"
+
+#: modules/content-board/library/content-board-utilities.php:987
+#: modules/content-overview/library/content-overview-utilities.php:314
+#, php-format
+msgid "Add New %s"
+msgstr "새로운 %s 추가"
+
+#: modules/content-board/library/content-board-utilities.php:1121
+#: modules/content-overview/library/content-overview-utilities.php:447
+#, php-format
+msgid "Create %s"
+msgstr "%s 생성"
+
+#: modules/content-board/library/content-board-utilities.php:1123
+#: modules/content-overview/library/content-overview-utilities.php:449
+msgid "Submit"
+msgstr "제출"
+
+#: modules/content-board/library/content-board-utilities.php:1171
+#: modules/content-overview/library/content-overview-utilities.php:497
+msgid "Publish Date"
+msgstr "게시 날짜"
+
+#: modules/content-overview/content-overview.php:156
+#: modules/content-overview/content-overview.php:376
+#: modules/content-overview/content-overview.php:393
+#: modules/content-overview/content-overview.php:394
+msgid "Content Overview"
+msgstr "콘텐츠 개요"
+
+#: modules/content-overview/content-overview.php:654
+msgid "Column updated successfully."
+msgstr "열이 성공적으로 업데이트되었습니다."
+
+#: modules/content-overview/content-overview.php:837
+#: modules/content-overview/content-overview.php:896
+msgid "Last Modified"
+msgstr "마지막 수정"
+
+#: modules/content-overview/content-overview.php:883
+msgid "Custom Columns"
+msgstr "사용자 정의 열"
+
+#: modules/content-overview/content-overview.php:884
+msgid "Click the \"Add New\" button to create new columns."
+msgstr "\"새로운 추가\" 버튼을 클릭하여 새 열을 생성하세요."
+
+#: modules/content-overview/content-overview.php:890
+msgid "Inbuilt Columns"
+msgstr "기본 열"
+
+#: modules/content-overview/library/content-overview-methods.php:207
+msgid "Item moved to the trash."
+msgid_plural "%d items moved to the trash."
+msgstr[0] "항목이 휴지통으로 이동했습니다."
+
+#: modules/content-overview/library/content-overview-methods.php:221
+msgid "Item restored from the Trash."
+msgid_plural "%d items restored from the Trash."
+msgstr[0] "항목이 휴지통에서 복원되었습니다."
+
+#: modules/content-overview/library/content-overview-methods.php:257
+msgid "Customize Columns"
+msgstr "열 사용자 정의"
+
+#: modules/content-overview/library/content-overview-utilities.php:25
+msgid "Enable Columns"
+msgstr "열 사용 설정"
+
+#: modules/content-overview/library/content-overview-utilities.php:26
+msgid "Reorder Columns"
+msgstr "열 재정렬"
+
+#: modules/content-overview/library/content-overview-utilities.php:31
+msgid "Enable or Disable Content Overview table column."
+msgstr "콘텐츠 개요 테이블 열을 활성화하거나 비활성화합니다."
+
+#: modules/content-overview/library/content-overview-utilities.php:52
+msgid "Column Title"
+msgstr "열 제목"
+
+#: modules/content-overview/library/content-overview-utilities.php:61
+msgid "Add Column"
+msgstr "열 추가"
+
+#: modules/content-overview/library/content-overview-utilities.php:104
+msgid "Drag to change enabled columns order."
+msgstr "드래그하여 활성화된 열 순서를 변경하십시오."
+
+#: modules/content-overview/library/content-overview-utilities.php:177
+msgid "Enable or Disable Content Overview filter."
+msgstr "내용 개요 필터를 활성화하거나 비활성화합니다."
+
+#: modules/dashboard/dashboard.php:56
+msgid "Dashboard Widgets"
+msgstr "대시보드 위젯"
+
+#: modules/dashboard/dashboard.php:70
+msgid "Widget Options"
+msgstr "위젯 옵션"
+
+#: modules/dashboard/dashboard.php:165
+msgid "Unpublished Content"
+msgstr "미게시 콘텐츠"
+
+#: modules/dashboard/dashboard.php:174
+#: modules/dashboard/dashboard.php:353
+msgid "Notepad"
+msgstr "메모장"
+
+#: modules/dashboard/dashboard.php:183
+#: modules/dashboard/dashboard.php:346
+msgid "My Content Notifications"
+msgstr "내 콘텐츠 알림"
+
+#: modules/dashboard/dashboard.php:211
+msgid "Posts at a Glance"
+msgstr "게시물 요약"
+
+#: modules/dashboard/dashboard.php:305
+msgid "This post was last updated on "
+msgstr "이 게시물은 마지막으로 업데이트된 날짜입니다. "
+
+#: modules/dashboard/dashboard.php:316
+msgid "Sorry! You're not subscribed to any posts!"
+msgstr "죄송합니다! 게시물에 구독하지 않았습니다!"
+
+#: modules/dashboard/dashboard.php:339
+msgid "Post Status Widget"
+msgstr "게시물 상태 위젯"
+
+#: modules/dashboard/dashboard.php:410
+msgid "The notifications module will need to be enabled for this widget to display."
+msgstr "이 위젯을 표시하려면 알림 모듈을 활성화해야 합니다."
+
+#: modules/dashboard/widgets/dashboard-notepad.php:50
+msgid "Dashboard Note"
+msgstr "대시보드 메모"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:140
+#, php-format
+msgid "%1$s last updated on %2$s"
+msgstr "%1$s 마지막 업데이트: %2$s"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:168
+msgid "Update Note"
+msgstr "메모 업데이트"
+
+#: modules/debug/debug.php:68
+msgid "Debug"
+msgstr "디버그"
+
+#: modules/debug/debug.php:228
+#: modules/debug/debug.php:291
+msgid "PublishPress Debug Log"
+msgstr "PublishPress 디버그 로그"
+
+#: modules/debug/debug.php:242
+#: modules/debug/debug.php:243
+msgid "Debug Log"
+msgstr "디버그 로그"
+
+#: modules/debug/debug.php:292
+msgid "File info"
+msgstr "파일 정보"
+
+#: modules/debug/debug.php:293
+msgid "Path"
+msgstr "경로"
+
+#: modules/debug/debug.php:294
+msgid "Log content"
+msgstr "로그 내용"
+
+#: modules/debug/debug.php:295
+msgid "Size"
+msgstr "크기"
+
+#: modules/debug/debug.php:296
+msgid "Created on"
+msgstr "생성일"
+
+#: modules/debug/debug.php:297
+msgid "Modified on"
+msgstr "수정일"
+
+#: modules/debug/debug.php:298
+msgid "Delete file"
+msgstr "파일 삭제"
+
+#: modules/debug/debug.php:299
+msgid "Debug data"
+msgstr "디버그 데이터"
+
+#: modules/debug/debug.php:300
+msgid "Log File"
+msgstr "로그 파일"
+
+#: modules/debug/debug.php:303
+msgid "Log file not found."
+msgstr "로그 파일을 찾을 수 없습니다."
+
+#: modules/debug/debug.php:304
+msgid ""
+"If you see any error or look for information regarding PublishPress, please "
+"don't hesitate to contact the support team. E-mail us:"
+msgstr "오류가 발생하거나 PublishPress에 대한 정보가 필요하면 주저하지 말고 지원팀에 문의해 주세요. 이메일을 보내주세요:"
+
+#: modules/debug/debug.php:308
+msgid "Click to delete the log file. Be careful, this operation can not be undone. "
+msgstr "로그 파일을 삭제하려면 클릭하세요. 이 작업은 실행 취소할 수 없습니다."
+
+#: modules/debug/debug.php:358
+msgid "Action nonce not found."
+msgstr "액션 논스가 없습니다."
+
+#: modules/debug/debug.php:365
+msgid "Invalid action nonce."
+msgstr "유효하지 않은 액션 논스입니다."
+
+#: modules/editorial-comments/editorial-comments.php:63
+#: modules/editorial-comments/editorial-comments.php:231
+#: modules/editorial-comments/editorial-comments.php:232
+#: modules/editorial-comments/editorial-comments.php:453
+msgid "Editorial Comments"
+msgstr "편집 코멘트"
+
+#: modules/editorial-comments/editorial-comments.php:78
+msgid "Choose Post Types"
+msgstr "포스트 유형 선택"
+
+#: modules/editorial-comments/editorial-comments.php:83
+msgid ""
+"<p>Editorial comments help you cut down on email overload and keep the "
+"conversation close to where it matters: your content. Threaded commenting "
+"in the admin, similar to what you find at the end of a blog post, allows "
+"writers and editors to privately leave feedback and discuss what needs to "
+"be changed before publication.</p><p>Anyone with access to view the story "
+"in progress will also have the ability to comment on it. If you have "
+"notifications enabled, those following the post will receive an email every "
+"time a comment is left.</p>"
+msgstr ""
+"<p>편집 댓글은 이메일 과부하를 줄이고 대화를 중요한 곳인 콘텐츠에 가깝게 유지하는 데 도움을 줍니다. 블로그 게시물 끝에서 볼 수 "
+"있는 것과 유사한 관리자에서의 스레드 댓글 기능을 통해 작가와 편집자는 피드백을 비공식적으로 남기고 게시 전에 변경해야 할 사항을 "
+"논의할 수 있습니다.</p><p>진행 중인 스토리를 볼 수 있는 모든 사용자는 해당 스토리에 댓글을 달 수 있는 권한도 가집니다. "
+"알림이 활성화되어 있는 경우, 게시물을 따르는 사람들은 댓글이 남길 때마다 이메일을 받게 됩니다.</p>"
+
+#: modules/editorial-comments/editorial-comments.php:88
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">Editorial "
+"Comments Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>자세한 정보:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">편집 댓글 "
+"문서</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">Github의 "
+"PublishPress</a></p>"
+
+#: modules/editorial-comments/editorial-comments.php:205
+#: modules/editorial-comments/editorial-comments.php:717
+msgid "Remove"
+msgstr "제거"
+
+#: modules/editorial-comments/editorial-comments.php:206
+#: modules/editorial-comments/library/EditorialCommentsTable.php:181
+#: modules/notifications-log/notifications-log.php:204
+msgid "All Posts"
+msgstr "모든 포스트"
+
+#: modules/editorial-comments/editorial-comments.php:207
+#: modules/editorial-comments/library/EditorialCommentsTable.php:196
+msgid "All Users"
+msgstr "모든 사용자"
+
+#: modules/editorial-comments/editorial-comments.php:272
+#. translators: %s: search keywords
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "“%s”에 대한 검색 결과"
+
+#: modules/editorial-comments/editorial-comments.php:285
+msgid "Search Comments"
+msgstr "댓글 검색"
+
+#: modules/editorial-comments/editorial-comments.php:528
+msgid ""
+"You can add editorial comments to a post once you've saved it for the first "
+"time."
+msgstr "게시물을 처음 저장한 후에 편집 댓글을 추가할 수 있습니다."
+
+#: modules/editorial-comments/editorial-comments.php:548
+#: modules/editorial-comments/editorial-comments.php:552
+msgid "Add an editorial comment"
+msgstr "편집 댓글 추가"
+
+#: modules/editorial-comments/editorial-comments.php:558
+msgid "Attach file"
+msgstr "파일 첨부"
+
+#: modules/editorial-comments/editorial-comments.php:570
+msgid "Add Comment"
+msgstr "댓글 추가"
+
+#: modules/editorial-comments/editorial-comments.php:616
+msgid "Reply to this comment"
+msgstr "이 댓글에 답변하기"
+
+#: modules/editorial-comments/editorial-comments.php:619
+msgid "Reply"
+msgstr "답변"
+
+#: modules/editorial-comments/editorial-comments.php:639
+#: modules/editorial-comments/library/EditorialCommentsTable.php:434
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:161
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:303
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:333
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:614
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:644
+#: modules/notifications-log/library/NotificationsLogTable.php:376
+#: modules/notifications-log/library/NotificationsLogTable.php:407
+msgid "Delete"
+msgstr "삭제"
+
+#: modules/editorial-comments/editorial-comments.php:684
+#, php-format
+msgid "said on %1$s at %2$s"
+msgstr "%1$s에서 %2$s에 말했다"
+
+#: modules/editorial-comments/editorial-comments.php:745
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be adding editorial "
+"comments."
+msgstr "Nonce 검사에 실패했습니다. 편집 댓글을 추가할 수 있는지 확인해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:753
+#: modules/editorial-comments/editorial-comments.php:894
+#: modules/editorial-comments/editorial-comments.php:1026
+#: modules/editorial-comments/editorial-comments.php:1142
+msgid "Invalid comment data"
+msgstr "잘못된 댓글 데이터"
+
+#: modules/editorial-comments/editorial-comments.php:766
+msgid ""
+"Sorry, you don't have the privileges to add editorial comments. Please talk "
+"to your Administrator."
+msgstr "죄송하지만 편집 댓글을 추가할 권한이 없습니다. 관리자와 이야기해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:776
+#: modules/editorial-comments/editorial-comments.php:940
+msgid "Please enter a comment."
+msgstr "댓글을 입력해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:863
+#: modules/editorial-comments/editorial-comments.php:993
+#: modules/editorial-comments/editorial-comments.php:1103
+#: modules/editorial-comments/editorial-comments.php:1187
+msgid "There was a problem of some sort. Try again or contact your administrator."
+msgstr "어떤 문제이 발생했습니다. 다시 시도하거나 관리자에게 문의해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:883
+#: modules/editorial-comments/editorial-comments.php:1015
+#: modules/editorial-comments/editorial-comments.php:1132
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be editing editorial "
+"comments."
+msgstr "Nonce 검사에 실패했습니다. 편집 댓글을 수정할 수 있는지 확인해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:909
+#: modules/editorial-comments/editorial-comments.php:1041
+msgid ""
+"Sorry, you don't have the privileges to edit editorial comments. Please "
+"talk to your Administrator."
+msgstr "죄송하지만 편집 댓글을 수정할 권한이 없습니다. 관리자와 이야기해 주세요."
+
+#: modules/editorial-comments/editorial-comments.php:927
+msgid ""
+"Sorry, you don't have the privileges to edit this editorial comment. Please "
+"talk to your Administrator."
+msgstr "죄송합니다. 이 편집 댓글을 수정할 권한이 없습니다. 관리자에게 문의하십시오."
+
+#: modules/editorial-comments/editorial-comments.php:1057
+#: modules/editorial-comments/editorial-comments.php:1161
+msgid ""
+"Sorry, you don't have the privileges to delete this editorial comment. "
+"Please talk to your Administrator."
+msgstr "죄송합니다. 이 편집 댓글을 삭제할 권한이 없습니다. 관리자에게 문의하십시오."
+
+#: modules/editorial-comments/editorial-comments.php:1078
+msgid "Sorry, you can't delete this editorial comment because it has some replies."
+msgstr "죄송하지만 이 편집 코멘트는 답글이 있어 삭제할 수 없습니다."
+
+#: modules/editorial-comments/editorial-comments.php:1179
+msgid "Comment deleted successfully."
+msgstr "코멘트가 성공적으로 삭제되었습니다."
+
+#: modules/editorial-comments/editorial-comments.php:1230
+msgid "Enable for these post types:"
+msgstr "다음 게시물 유형에 대해 활성화:"
+
+#: modules/editorial-comments/editorial-comments.php:1237
+msgid "Comment author name field:"
+msgstr "코멘트 작성자 이름 필드:"
+
+#: modules/editorial-comments/editorial-comments.php:1262
+msgid "Nickname"
+msgstr "닉네임"
+
+#: modules/editorial-comments/editorial-comments.php:1263
+msgid "Username"
+msgstr "사용자 이름"
+
+#: modules/editorial-comments/editorial-comments.php:1264
+msgid "Display Name"
+msgstr "표시 이름"
+
+#: modules/editorial-comments/editorial-comments.php:1265
+msgid "First Name"
+msgstr "이름"
+
+#: modules/editorial-comments/editorial-comments.php:1266
+msgid "Last Name"
+msgstr "성"
+
+#: modules/editorial-comments/editorial-comments.php:1268
+msgid "User Url"
+msgstr "사용자 URL"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:158
+msgid "No editorial comments."
+msgstr "편집 코멘트가 없습니다."
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:210
+#: modules/notifications-log/library/NotificationsLogTable.php:646
+msgid "Filter"
+msgstr "필터"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:229
+msgid "Comment"
+msgstr "코멘트"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:231
+msgid "Post"
+msgstr "게시물"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:233
+msgid "Submitted on"
+msgstr "제출일"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:336
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:201
+#: modules/notifications/notifications.php:1974
+#. translators: 1: Comment date, 2: Comment time.
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s에 %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:109
+msgid "Editorial fields term added."
+msgstr "편집 필드 항목이 추가되었습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+msgid "Editorial fields term updated."
+msgstr "편집 필드 항목이 업데이트되었습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid "Editorial fields term doesn't exist."
+msgstr "편집 필드 항목이 존재하지 않습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:112
+msgid "Editorial fields term deleted."
+msgstr "편집 필드 항목이 삭제되었습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:113
+msgid "Editorial fields order updated."
+msgstr "편집 필드 순서가 업데이트되었습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:114
+msgid "Editorial fields visibility changed."
+msgstr "편집 필드 가시성이 변경되었습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:120
+msgid ""
+"<p>Keep track of important details about your content with editorial "
+"fields. This feature allows you to create as many date, text, number, etc. "
+"fields as you like, and then use them to store information like contact "
+"details or the location of an interview.</p><p>Once you’ve set your fields "
+"up, editorial fields integrates with both the calendar and the content "
+"overview. Make an editorial fields item visible to have it appear to the "
+"rest of your team. Keep it hidden to restrict the information between the "
+"writer and their editor.</p>"
+msgstr ""
+"<p>편집 필드를 사용하여 콘텐츠에 대한 중요한 세부정보를 추적하십시오. 이 기능을 사용하면 원하는 만큼의 날짜, 텍스트, 숫자 등 "
+"필드를 생성하고, 이를 사용하여 연락처 정보나 인터뷰 위치와 같은 정보를 저장할 수 있습니다.</p><p>필드를 설정한 후에는 편집 "
+"필드가 캘린더 및 콘텐츠 개요와 통합됩니다. 편집 필드 항목을 표시 가능하게 설정하면 팀의 나머지 구성원에게 나타납니다. 작성자와 "
+"편집자 간의 정보를 제한하려면 숨겨 두십시오.</p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:125
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">Editorial "
+"Fields Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>자세한 정보:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">편집 필드 "
+"문서</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">Github의 "
+"PublishPress</a></p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:212
+msgid "First Draft Date"
+msgstr "초안 날짜"
+
+#: modules/editorial-metadata/editorial-metadata.php:215
+msgid "When the first draft needs to be ready."
+msgstr "첫 번째 초안이 준비되어야 하는 시기."
+
+#: modules/editorial-metadata/editorial-metadata.php:220
+msgid "Assignment"
+msgstr "과제"
+
+#: modules/editorial-metadata/editorial-metadata.php:223
+msgid "What the post needs to cover."
+msgstr "게시물이 다뤄야 할 내용."
+
+#: modules/editorial-metadata/editorial-metadata.php:288
+msgid "Checkbox"
+msgstr "체크박스"
+
+#: modules/editorial-metadata/editorial-metadata.php:289
+msgid "Dropdown Select"
+msgstr "드롭다운 선택"
+
+#: modules/editorial-metadata/editorial-metadata.php:291
+msgid "Location"
+msgstr "위치"
+
+#: modules/editorial-metadata/editorial-metadata.php:292
+msgid "Number"
+msgstr "번호"
+
+#: modules/editorial-metadata/editorial-metadata.php:293
+msgid "Paragraph"
+msgstr "단락"
+
+#: modules/editorial-metadata/editorial-metadata.php:294
+msgid "Text"
+msgstr "텍스트"
+
+#: modules/editorial-metadata/editorial-metadata.php:295
+msgid "User"
+msgstr "사용자"
+
+#: modules/editorial-metadata/editorial-metadata.php:372
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will "
+"remain but will not be visible unless this term is re-added."
+msgstr "이 용어를 삭제하시겠습니까? 이 용어에 대한 모든 메타데이터는 남아 있지만, 이 용어가 다시 추가되지 않는 한 표시되지 않습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:453
+msgid "Search Editorial Fields"
+msgstr "편집 필드 검색"
+
+#: modules/editorial-metadata/editorial-metadata.php:454
+msgid "Popular Editorial Fields"
+msgstr "인기 편집 필드"
+
+#: modules/editorial-metadata/editorial-metadata.php:455
+msgid "All Editorial Fields"
+msgstr "모든 편집 필드"
+
+#: modules/editorial-metadata/editorial-metadata.php:456
+msgid "Edit Editorial Fields"
+msgstr "편집 필드 편집"
+
+#: modules/editorial-metadata/editorial-metadata.php:457
+msgid "Update Editorial Fields"
+msgstr "편집 필드 업데이트"
+
+#: modules/editorial-metadata/editorial-metadata.php:458
+msgid "Add New Editorial Fields"
+msgstr "새 편집 필드 추가"
+
+#: modules/editorial-metadata/editorial-metadata.php:459
+msgid "New Editorial Fields"
+msgstr "새 편집 필드"
+
+#: modules/editorial-metadata/editorial-metadata.php:549
+msgid "No editorial fields available."
+msgstr "사용 가능한 편집 필드가 없습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:551
+#, php-format
+msgid " <a href=\"%s\">Add fields to get started</a>."
+msgstr " <a href=\"%s\">시작하려면 필드를 추가하세요</a>."
+
+#: modules/editorial-metadata/editorial-metadata.php:553
+msgid ""
+" Encourage your site administrator to configure your editorial workflow by "
+"adding editorial fields."
+msgstr "사이트 관리자가 편집 필드를 추가하여 편집 워크플로를 구성하도록 권장하십시오."
+
+#: modules/editorial-metadata/editorial-metadata.php:1244
+#: modules/editorial-metadata/editorial-metadata.php:1401
+msgid "All options value and labels are required."
+msgstr "모든 옵션의 값과 레이블은 필수입니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:1253
+msgid "Please enter a name for the editorial fields."
+msgstr "편집 필드 이름을 입력하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1260
+msgid "Please enter a slug for the editorial fields."
+msgstr "편집 필드 슬러그를 입력하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1266
+msgid "Name conflicts with existing term. Please choose another."
+msgstr "이름이 기존 용어와 충돌합니다. 다른 이름을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1273
+#: modules/editorial-metadata/editorial-metadata.php:1433
+msgid "Name already in use. Please choose another."
+msgstr "이름이 이미 사용 중입니다. 다른 이름을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1277
+msgid "Slug already in use. Please choose another."
+msgstr "슬러그가 이미 사용 중입니다. 다른 이름을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1283
+#: modules/editorial-metadata/editorial-metadata.php:1290
+#: modules/editorial-metadata/editorial-metadata.php:1446
+msgid "Name cannot exceed 200 characters. Please try a shorter name."
+msgstr "이름은 200자를 초과할 수 없습니다. 더 짧은 이름을 시도하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1300
+msgid "Please select a valid metadata type."
+msgstr "유효한 메타데이터 유형을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1332
+msgid "Error adding term."
+msgstr "용어 추가 중 오류가 발생했습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:1410
+msgid "Please enter a name for the editorial fields"
+msgstr "편집 필드 이름을 입력하세요"
+
+#: modules/editorial-metadata/editorial-metadata.php:1415
+msgid "Please enter a valid, non-numeric name for the editorial fields."
+msgstr "편집 필드에 대해 유효하고 비숫자인 이름을 입력하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1424
+msgid "Metadata name conflicts with existing term. Please choose another."
+msgstr "메타데이터 이름이 기존 용어와 충돌합니다. 다른 이름을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1438
+msgid "Name conflicts with slug for another term. Please choose something else."
+msgstr "이름이 다른 용어의 슬러그와 충돌합니다. 다른 것을 선택하세요."
+
+#: modules/editorial-metadata/editorial-metadata.php:1482
+#: modules/editorial-metadata/editorial-metadata.php:1525
+msgid "Error updating term."
+msgstr "용어 업데이트 중 오류가 발생했습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:1550
+msgid "Terms not set."
+msgstr "용어가 설정되지 않았습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:1591
+msgid "Error deleting term."
+msgstr "용어 삭제 중 오류가 발생했습니다."
+
+#: modules/editorial-metadata/editorial-metadata.php:1638
+msgid "Register editorial fields for these post types:"
+msgstr "이 게시물 유형에 대한 편집 필드를 등록하십시오:"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:109
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
+msgid "No"
+msgstr "아니요"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:110
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:142
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:351
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:660
+msgid "Yes"
+msgstr "예"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:127
+msgid "This editorial fields type is not yet supported."
+msgstr "이 편집 필드 유형은 아직 지원되지 않습니다."
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:223
+msgid "Not set"
+msgstr "설정되지 않음"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:82
+#, php-format
+msgid "View &#8220;%s&#8221; on Google Maps"
+msgstr "Google 지도에서 &#8220;%s&#8221; 보기"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-select-handler.php:255
+#, php-format
+msgid "-- Select %s --"
+msgstr "-- %s 선택 --"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-user-handler.php:79
+msgid "-- Select a user --"
+msgstr "-- 사용자 선택 --"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
+msgid "Position"
+msgstr "직위"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:45
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:443
+msgid "Name"
+msgstr "이름"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:47
+msgid "Field Type"
+msgstr "필드 유형"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:48
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:176
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474
+msgid "Description"
+msgstr "설명"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:135
+msgid "No editorial fields found."
+msgstr "편집 필드가 발견되지 않았습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:158
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:452
+msgid "The name is for labeling the editorial fields."
+msgstr "이 이름은 편집 필드를 레이블 지정하는 데 사용됩니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457
+msgid "Slug"
+msgstr "슬러그"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:168
+msgid "The slug cannot be changed once the term has been created."
+msgstr "용어가 생성된 후 슬러그는 변경할 수 없습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:184
+msgid ""
+"The description can be used to communicate with your team about what the "
+"field is for."
+msgstr "설명은 팀과 이 필드의 용도에 대해 소통하는 데 사용할 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
+msgid "Type"
+msgstr "유형"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:198
+msgid "The field type cannot be changed once created."
+msgstr "생성된 후에는 필드 유형을 변경할 수 없습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:204
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:516
+msgid "User role"
+msgstr "사용자 역할"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:211
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:523
+msgid "Select roles..."
+msgstr "역할 선택..."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:223
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:537
+msgid ""
+"Filter the list of users in the editorial meta to users in the selected "
+"roles."
+msgstr "편집 메타에서 목록을 필터링하여 선택된 역할의 사용자만 표시합니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:229
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:542
+msgid "Select Type"
+msgstr "유형 선택"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:233
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:545
+msgid "Single Select"
+msgstr "단일 선택"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:234
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:546
+msgid "Multiple Select"
+msgstr "다중 선택"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:251
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:566
+msgid "Indicate the select type."
+msgstr "선택 유형을 표시하십시오."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:258
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:571
+msgid "Dropdown Option"
+msgstr "드롭다운 옵션"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:263
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:574
+msgid ""
+"Enter the dropdown option value and label. You can move options to change "
+"their order."
+msgstr "드롭다운 옵션 값과 레이블을 입력하십시오. 옵션을 이동하여 순서를 변경할 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:285
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:316
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:596
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:627
+msgid "Meta Value"
+msgstr "메타 값"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:291
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:322
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:602
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:633
+msgid "Display Label"
+msgstr "표시 레이블"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:300
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:330
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:611
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:641
+msgid "Default option"
+msgstr "기본 옵션"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:338
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:649
+msgid "Add Another Option"
+msgstr "다른 옵션 추가"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:346
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:656
+msgid "Show on Content Calendar and Overview form"
+msgstr "콘텐츠 캘린더 및 개요 양식에 표시"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:361
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:674
+msgid ""
+"If enabled, this field will be available when adding new posts on the "
+"Content Calendar and Overview screen."
+msgstr "활성화된 경우, 이 필드는 콘텐츠 캘린더 및 개요 화면에서 새 게시물을 추가할 때 사용할 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
+msgid "Add to post types"
+msgstr "게시물 유형에 추가"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:375
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:686
+msgid "This field will be available for these post types."
+msgstr "이 필드는 이러한 게시물 유형에 사용할 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:394
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:704
+msgid "Show on Post Types screen"
+msgstr "게시물 유형 화면에 표시"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:399
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:708
+msgid "This field will be viewable on the overview screens for these post types."
+msgstr "이 필드는 이러한 게시물 유형의 개요 화면에서 볼 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:422
+msgid "Update Editorial fields term"
+msgstr "편집 필드 용어 업데이트"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:466
+msgid ""
+"The \"slug\" is the URL-friendly version of the name. It is usually all "
+"lowercase and contains only letters, numbers, and hyphens."
+msgstr "“슬러그”는 이름의 URL 친화적인 버전입니다. 일반적으로 모두 소문자로 작성되며, 글자, 숫자 및 하이픈만 포함됩니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:483
+msgid ""
+"The description can be used to communicate with your team about what the "
+"metadata is for."
+msgstr "설명은 메타데이터의 용도에 대해 팀과 소통하는 데 사용할 수 있습니다."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:511
+msgid "Indicate the type of editorial fields."
+msgstr "편집 필드의 유형을 지정하세요."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:730
+msgid "Add New Editorial fields term"
+msgstr "새 편집 필드 용어 추가"
+
+#: modules/efmigration/efmigration.php:288
+msgid ""
+"Edit Flow should not be used alongside PublishPress Planner. If you want to "
+"use PublishPress Planner, please complete Edit Flow data migration and then "
+"deactivate Edit Flow."
+msgstr ""
+"Edit Flow는 PublishPress Planner와 함께 사용하지 않아야 합니다. PublishPress Planner를 "
+"사용하려면 Edit Flow 데이터 마이그레이션을 완료한 후 Edit Flow를 비활성화하십시오."
+
+#: modules/improved-notifications/improved-notifications.php:102
+msgid "Advanced Notifications"
+msgstr "고급 알림"
+
+#: modules/improved-notifications/improved-notifications.php:257
+msgid "Duplicated notification threshold:"
+msgstr "중복 알림 임계값:"
+
+#: modules/improved-notifications/improved-notifications.php:265
+msgid "Default notification channels:"
+msgstr "기본 알림 채널:"
+
+#: modules/improved-notifications/improved-notifications.php:363
+msgid "Existing Post is updated"
+msgstr "기존 게시물이 업데이트됨"
+
+#: modules/improved-notifications/improved-notifications.php:409
+msgid "New Post is created in Draft status"
+msgstr "새 게시물이 초안 상태로 생성됨"
+
+#: modules/improved-notifications/improved-notifications.php:462
+msgid "New Post is Published"
+msgstr "새 게시물이 발행됨"
+
+#: modules/improved-notifications/improved-notifications.php:501
+msgid "Notify on editorial comments"
+msgstr "편집 댓글에 대한 알림"
+
+#: modules/improved-notifications/improved-notifications.php:606
+msgid "minutes"
+msgstr "분"
+
+#: modules/improved-notifications/improved-notifications.php:610
+msgid ""
+"This will prevent too many notifications being sent for the same or similar "
+"events. Set this to a higher number if you are receiving duplicate emails."
+msgstr "이는 동일하거나 유사한 이벤트에 대한 너무 많은 알림이 전송되는 것을 방지합니다. 중복 이메일을 받는 경우 더 높은 숫자로 설정하십시오."
+
+#: modules/improved-notifications/improved-notifications.php:656
+#: modules/improved-notifications/improved-notifications.php:1495
+#: views/user_profile_notification_channels.html.php:1
+msgid "Editorial Notifications"
+msgstr "편집 알림"
+
+#: modules/improved-notifications/improved-notifications.php:657
+#: modules/improved-notifications/improved-notifications.php:1496
+#: views/user_profile_notification_channels.html.php:6
+msgid "Choose the channels where each workflow will send notifications to:"
+msgstr "각 워크플로가 알림을 보낼 채널을 선택하세요:"
+
+#: modules/improved-notifications/improved-notifications.php:661
+#: modules/improved-notifications/improved-notifications.php:1483
+#: modules/improved-notifications/improved-notifications.php:1500
+msgid "Muted"
+msgstr "음소거됨"
+
+#: modules/improved-notifications/improved-notifications.php:662
+#: modules/improved-notifications/improved-notifications.php:1501
+#: views/user_profile_notification_channels.html.php:14
+msgid "Workflows"
+msgstr "워크플로"
+
+#: modules/improved-notifications/improved-notifications.php:663
+#: modules/improved-notifications/improved-notifications.php:1502
+#: views/user_profile_notification_channels.html.php:15
+msgid "Channels"
+msgstr "채널"
+
+#: modules/improved-notifications/improved-notifications.php:1088
+#: modules/notifications-log/notifications-log.php:75
+#: modules/notifications-log/notifications-log.php:263
+#: modules/notifications-log/notifications-log.php:489
+#: modules/notifications-log/notifications-log.php:490
+msgid "Notifications Log"
+msgstr "알림 로그"
+
+#: modules/improved-notifications/improved-notifications.php:1122
+msgid "Workflow Settings"
+msgstr "워크플로우 설정"
+
+#: modules/improved-notifications/improved-notifications.php:1131
+msgid "Options"
+msgstr "옵션"
+
+#: modules/improved-notifications/improved-notifications.php:1140
+msgid "Help"
+msgstr "도움말"
+
+#: modules/improved-notifications/improved-notifications.php:1170
+#: modules/notifications-log/library/NotificationsLogTable.php:498
+msgid "For which content?"
+msgstr "어떤 콘텐츠에 대해?"
+
+#: modules/improved-notifications/improved-notifications.php:1190
+msgid "What to say?"
+msgstr "무엇을 말할까요?"
+
+#: modules/improved-notifications/improved-notifications.php:1310
+msgid "Select at least one option for each section."
+msgstr "각 섹션에 대해 최소한 하나의 옵션을 선택하세요."
+
+#: modules/improved-notifications/improved-notifications.php:1314
+msgid ""
+"You can add dynamic information to the Subject or Body text using the "
+"following shortcodes:"
+msgstr "다음 단축 코드를 사용하여 제목 또는 본문 텍스트에 동적 정보를 추가할 수 있습니다:"
+
+#: modules/improved-notifications/improved-notifications.php:1319
+msgid "Editorial Comment"
+msgstr "편집자 의견"
+
+#: modules/improved-notifications/improved-notifications.php:1320
+msgid "User making changes or comments"
+msgstr "변경 또는 의견을 남긴 사용자"
+
+#: modules/improved-notifications/improved-notifications.php:1321
+msgid "Workflow"
+msgstr "워크플로우"
+
+#: modules/improved-notifications/improved-notifications.php:1322
+msgid "Format"
+msgstr "형식"
+
+#: modules/improved-notifications/improved-notifications.php:1323
+msgid "Receiver"
+msgstr "수신자"
+
+#: modules/improved-notifications/improved-notifications.php:1324
+msgid "shortcode"
+msgstr "단축코드"
+
+#: modules/improved-notifications/improved-notifications.php:1325
+msgid "field"
+msgstr "필드"
+
+#: modules/improved-notifications/improved-notifications.php:1326
+msgid ""
+"On each shortcode, you can select one or more fields. If more than one, "
+"they will be displayed separated by \", \"."
+msgstr "각 단축 코드에서 하나 이상의 필드를 선택할 수 있습니다. 둘 이상의 경우 “, ”로 구분되어 표시됩니다."
+
+#: modules/improved-notifications/improved-notifications.php:1330
+msgid "Available fields"
+msgstr "사용 가능한 필드"
+
+#: modules/improved-notifications/improved-notifications.php:1331
+msgid "Meta fields"
+msgstr "메타 필드"
+
+#: modules/improved-notifications/improved-notifications.php:1332
+msgid "Click here to read more about shortcode options..."
+msgstr "단축코드 옵션에 대한 자세한 내용을 보려면 여기를 클릭하세요..."
+
+#: modules/modules-settings/modules-settings.php:50
+msgid "Features"
+msgstr "기능"
+
+#: modules/modules-settings/modules-settings.php:221
+msgid "Feel free to select only the features you need."
+msgstr "필요한 기능만 선택하세요."
+
+#: modules/modules-settings/modules-settings.php:227
+msgid "Enabled features"
+msgstr "활성화된 기능"
+
+#: modules/notifications-log/library/ModuleErrors.php:54
+msgid "Invalid receiver for the notification"
+msgstr "알림의 잘못된 수신자"
+
+#: modules/notifications-log/library/ModuleErrors.php:55
+msgid "Invalid channel for the notification"
+msgstr "알림의 잘못된 채널"
+
+#: modules/notifications-log/library/ModuleErrors.php:56
+msgid "Notification log not found"
+msgstr "알림 로그를 찾을 수 없습니다."
+
+#: modules/notifications-log/library/NotificationsLogModel.php:264
+msgid "The parent log was deleted or probably rescheduled"
+msgstr "부모 로그가 삭제되었거나 아마도 재예약되었습니다."
+
+#: modules/notifications-log/library/NotificationsLogTable.php:116
+#, php-format
+msgid "Workflow: %s"
+msgstr "워크플로우: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:128
+#, php-format
+msgid "User: %s (%d)"
+msgstr "사용자: %s (%d)"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:157
+#, php-format
+msgid "Post type: %s"
+msgstr "게시물 유형: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:160
+#, php-format
+msgid "Post ID: %d"
+msgstr "게시물 ID: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:163
+#, php-format
+msgid "Blog ID: %d"
+msgstr "블로그 ID: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:233
+#, php-format
+msgid "Scheduled for %d receivers. Click here to display them."
+msgstr "%d명의 수신자를 위해 예약되었습니다. 여기를 클릭하여 표시합니다."
+
+#: modules/notifications-log/library/NotificationsLogTable.php:261
+msgid " Scheduled, but late"
+msgstr " 예약됨, 하지만 지연됨"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:263
+msgid " Scheduled"
+msgstr " 예약됨"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:282
+#: modules/notifications-log/library/NotificationsLogTable.php:533
+msgid "Error"
+msgstr "오류"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:283
+msgid "The notification was set as \"Scheduled\" but the cron task is not found"
+msgstr "알림이 \"예약됨\"으로 설정되었지만 cron 작업을 찾을 수 없습니다."
+
+#: modules/notifications-log/library/NotificationsLogTable.php:288
+msgid "Sent"
+msgstr "전송됨"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:291
+#: modules/notifications-log/library/NotificationsLogTable.php:525
+msgid "Skipped"
+msgstr "건너뜀"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "asynchronous"
+msgstr "비동기"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "synchronous"
+msgstr "동기"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:361
+#: modules/notifications-log/library/NotificationsLogTable.php:406
+msgid "Reschedule"
+msgstr "일정 변경"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:383
+msgid "Blog: "
+msgstr "블로그: "
+
+#: modules/notifications-log/library/NotificationsLogTable.php:408
+msgid "Delete All"
+msgstr "모두 삭제"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:517
+msgid "All"
+msgstr "모두"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:521
+msgid "Success"
+msgstr "성공"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:590
+msgid "All events"
+msgstr "모든 이벤트"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:607
+msgid "All channels"
+msgstr "모든 채널"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:626
+msgid "From date"
+msgstr "시작 날짜"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:632
+msgid "To date"
+msgstr "종료 날짜"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:640
+msgid "All Receivers"
+msgstr "모든 수신자"
+
+#: modules/notifications-log/notifications-log.php:205
+msgid "All Workflows"
+msgstr "모든 워크플로우"
+
+#: modules/notifications-log/notifications-log.php:206
+msgid "All Actions"
+msgstr "모든 작업"
+
+#: modules/notifications-log/notifications-log.php:207
+msgid "All Channels"
+msgstr "모든 채널"
+
+#: modules/notifications-log/notifications-log.php:208
+msgid "All Statuses"
+msgstr "모든 상태"
+
+#: modules/notifications-log/notifications-log.php:209
+#: publishpress.php:1409
+#: publishpress.php:1414
+msgid "Notification"
+msgstr "알림"
+
+#: modules/notifications-log/notifications-log.php:272
+#, php-format
+msgid "%s notification found."
+msgid_plural "%s notifications found."
+msgstr[0] "%s개의 알림이 발견되었습니다."
+
+#: modules/notifications-log/notifications-log.php:284
+msgid "No notifications found."
+msgstr "발견된 알림이 없습니다."
+
+#: modules/notifications-log/notifications-log.php:442
+#, php-format
+msgid ""
+"This notification is very similar to another one sent less than %d minutes "
+"ago for the same receiver"
+msgstr "이 알림은 동일한 수신자에게 %d 분 이내에 전송된 다른 알림과 매우 유사합니다."
+
+#: modules/notifications-log/notifications-log.php:817
+msgid "Subject:"
+msgstr "제목:"
+
+#: modules/notifications-log/notifications-log.php:825
+msgid "Content:"
+msgstr "내용:"
+
+#: modules/notifications-log/notifications-log.php:835
+msgid ""
+"This is a preview of the scheduled message. The content can still change "
+"until the notification is sent."
+msgstr "이것은 예약된 메시지의 미리보기입니다. 알림이 전송될 때까지 내용이 변경될 수 있습니다."
+
+#: modules/notifications/notifications.php:75
+#: modules/notifications/notifications.php:562
+#: publishpress.php:1408
+#: publishpress.php:1413
+msgid "Notifications"
+msgstr "알림"
+
+#: modules/notifications/notifications.php:97
+msgid ""
+"<p>Notifications ensure you keep up to date with progress your most "
+"important content. Users can be subscribed to notifications on a post one "
+"by one or by selecting roles.</p><p>When enabled, notifications can be sent "
+"when a post changes status or an editorial comment is left by a writer or "
+"an editor.</p>"
+msgstr ""
+"<p>알림은 가장 중요한 콘텐츠의 진행 상황을 최신 상태로 유지하도록 보장합니다. 사용자는 게시물에 대해 개별적으로 알림을 구독하거나 "
+"역할을 선택하여 구독할 수 있습니다.</p><p>활성화된 경우, 게시물의 상태가 변경되거나 작성자 또는 편집자가 편집 댓글을 남길 때 "
+"알림이 전송될 수 있습니다.</p>"
+
+#: modules/notifications/notifications.php:102
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Notifications "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>자세한 정보:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">알림 "
+"문서</a></p><p><a href=\"https://github.com/ostraining/PublishPress\">Github의 "
+"PublishPress</a></p>"
+
+#: modules/notifications/notifications.php:303
+#: modules/notifications/notifications.php:306
+msgid "Notify User"
+msgstr "사용자 알림"
+
+#: modules/notifications/notifications.php:305
+msgid "Notify Users"
+msgstr "사용자 알림"
+
+#: modules/notifications/notifications.php:318
+#: modules/notifications/notifications.php:321
+msgid "Notify Role"
+msgstr "역할 알림"
+
+#: modules/notifications/notifications.php:320
+msgid "Notify Roles"
+msgstr "역할 알림"
+
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+msgid "Notification Group"
+msgstr "알림 그룹"
+
+#: modules/notifications/notifications.php:336
+msgid "Notification Groups"
+msgstr "알림 그룹"
+
+#: modules/notifications/notifications.php:350
+#: modules/notifications/notifications.php:353
+msgid "Notify Email"
+msgstr "이메일 알림"
+
+#: modules/notifications/notifications.php:352
+msgid "Notify Emails"
+msgstr "이메일 알림"
+
+#: modules/notifications/notifications.php:530
+#: modules/notifications/notifications.php:940
+msgid "Click to stop being notified on updates for this post"
+msgstr "이 게시물의 업데이트 알림을 중지하려면 클릭하세요"
+
+#: modules/notifications/notifications.php:531
+#: modules/notifications/notifications.php:939
+msgid "Stop notifying me"
+msgstr "알림 중지"
+
+#: modules/notifications/notifications.php:534
+#: modules/notifications/notifications.php:946
+msgid "Click to start being notified on updates for this post"
+msgstr "이 게시물의 업데이트 알림을 시작하려면 클릭하세요"
+
+#: modules/notifications/notifications.php:535
+#: modules/notifications/notifications.php:945
+msgid "Notify me"
+msgstr "나에게 알림"
+
+#: modules/notifications/notifications.php:599
+msgid ""
+"Enter users, roles, or email addresses that should receive notifications "
+"for this post."
+msgstr "이 게시물에 대한 알림을 받을 사용자, 역할 또는 이메일 주소를 입력하세요."
+
+#: modules/notifications/notifications.php:603
+msgid "Show active notifications"
+msgstr "활성 알림 표시"
+
+#: modules/notifications/notifications.php:642
+msgid ""
+"This won't have any effect unless you have at least one workflow targeting "
+"the \"Users who selected \"Notify me\" for the content\" option."
+msgstr "“콘텐츠에 대해 '알림 받기'를 선택한 사용자” 옵션을 목표로 하는 워크플로우가 최소한 하나 없이는 아무 효과가 없습니다."
+
+#: modules/notifications/notifications.php:656
+msgid "Active Notifications"
+msgstr "활성 알림"
+
+#: modules/notifications/notifications.php:684
+msgid "Workflow has users enrolled"
+msgstr "워크플로우에 사용자가 등록되었습니다"
+
+#: modules/notifications/notifications.php:691
+#, php-format
+msgid "No active notifications found for this %s."
+msgstr "이 %s에 대한 활성 알림이 없습니다."
+
+#: modules/notifications/notifications.php:1054
+#, php-format
+msgid "You are receiving this email because you are subscribed to \"%s\"."
+msgstr "당신은 \"%s\"에 구독되어 있기 때문에 이 이메일을 받고 있습니다."
+
+#: modules/notifications/notifications.php:1059
+#, php-format
+msgid "This email was sent %s."
+msgstr "이 이메일은 %s에 발송되었습니다."
+
+#: modules/notifications/notifications.php:1715
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+msgstr "다음 게시물 유형에 대해 \"알림 받기\" 및 \"알림 중지하기\" 링크를 표시합니다:"
+
+#: modules/notifications/notifications.php:1723
+msgid "Email from:"
+msgstr "보낸 이메일:"
+
+#: modules/notifications/notifications.php:1731
+msgid "Always notify the author of the content:"
+msgstr "콘텐츠의 작성자에게 항상 알림:"
+
+#: modules/notifications/notifications.php:1739
+msgid "Always notify users who have edited the content:"
+msgstr "콘텐츠를 수정한 사용자에게 항상 알림:"
+
+#: modules/notifications/notifications.php:1747
+msgid "Blacklisted taxonomies for Notifications"
+msgstr "알림용 블랙리스트 분류"
+
+#: modules/notifications/notifications.php:1861, fuzzy
+msgid "slug1,slug2"
+msgstr "slug1,slug2"
+
+#: modules/notifications/notifications.php:1867
+msgid ""
+"Add a list of taxonomy-slugs separated by comma that should not be loaded "
+"by the Taxonomy content filter when adding a new Notification Workflow."
+msgstr ""
+"새 알림 워크플로우를 추가할 때 세금 콘텐츠 필터에 의해 로드되지 않아야 하는 taxonomy-slug 목록을 쉼표로 구분하여 "
+"추가하세요."
+
+#: modules/notifications/notifications.php:2003
+msgid "WordPress Scheduler"
+msgstr "워드프레스 스케줄러"
+
+#: modules/notifications/notifications.php:2012
+#, php-format
+msgid "[%1$s] New %2$s Created: \"%3$s\""
+msgstr "[%1$s] 새 %2$s 생성: \"%3$s\""
+
+#: modules/notifications/notifications.php:2019
+#, php-format
+msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+msgstr "새 %1$s (#%2$s \"%3$s\" )가 %4$s %5$s에 의해 생성되었습니다"
+
+#: modules/notifications/notifications.php:2029
+#, php-format
+msgid "[%1$s] %2$s Trashed: \"%3$s\""
+msgstr "[%1$s] %2$s 휴지통으로 이동됨: \"%3$s\""
+
+#: modules/notifications/notifications.php:2036
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\"가 %4$s %5$s에 의해 휴지통으로 이동되었습니다"
+
+#: modules/notifications/notifications.php:2046
+#, php-format
+msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+msgstr "[%1$s] %2$s 복원됨 (휴지통에서): \"%3$s\""
+
+#: modules/notifications/notifications.php:2053
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\"가 %4$s %5$s에 의해 휴지통에서 복원되었습니다"
+
+#: modules/notifications/notifications.php:2076
+#, php-format
+msgid "[%1$s] %2$s Published: \"%3$s\""
+msgstr "[%1$s] %2$s 발행됨: \"%3$s\""
+
+#: modules/notifications/notifications.php:2083
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\"가 %4$s %5$s에 의해 발행되었습니다"
+
+#: modules/notifications/notifications.php:2093
+#, php-format
+msgid "[%1$s] %2$s Unpublished: \"%3$s\""
+msgstr "[%1$s] %2$s 미게시: \"%3$s\""
+
+#: modules/notifications/notifications.php:2100
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\"가 %4$s %5$s에 의해 미게시되었습니다"
+
+#: modules/notifications/notifications.php:2110
+#, php-format
+msgid "[%1$s] %2$s Status Changed for \"%3$s\""
+msgstr "[%1$s] %2$s 상태가 \"%3$s\"에 대해 변경되었습니다"
+
+#: modules/notifications/notifications.php:2117
+#, php-format
+msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\"의 상태가 %4$s %5$s에 의해 변경되었습니다"
+
+#: modules/notifications/notifications.php:2128
+#, php-format
+msgid "This action was taken on %1$s at %2$s %3$s"
+msgstr "이 작업은 %1$s에서 %2$s %3$s에 수행되었습니다"
+
+#: modules/notifications/notifications.php:2141
+#, fuzzy, php-format
+msgid "%1$s => %2$s"
+msgstr "%1$s => %2$s"
+
+#: modules/notifications/notifications.php:2149
+#, php-format
+msgid "== %s Details =="
+msgstr "== %s 세부정보 =="
+
+#: modules/notifications/notifications.php:2150
+#, php-format
+msgid "Title: %s"
+msgstr "제목: %s"
+
+#: modules/notifications/notifications.php:2154
+#, php-format
+msgid "Author: %1$s (%2$s )"
+msgstr "저자: %1$s (%2$s )"
+
+#: modules/notifications/notifications.php:2168
+#: modules/notifications/notifications.php:2221
+msgid "== Actions =="
+msgstr "== 작업 =="
+
+#: modules/notifications/notifications.php:2170
+#: modules/notifications/notifications.php:2227
+#, php-format
+msgid "Add editorial comment: %s"
+msgstr "편집자 의견 추가: %s"
+
+#: modules/notifications/notifications.php:2173
+#: modules/notifications/notifications.php:2230
+#, php-format
+msgid "Edit: %s"
+msgstr "편집: %s"
+
+#: modules/notifications/notifications.php:2174
+#: modules/notifications/notifications.php:2231
+#, php-format
+msgid "View: %s"
+msgstr "보기: %s"
+
+#: modules/notifications/notifications.php:2185
+#, php-format
+msgid "[%1$s] New Editorial Comment: \"%2$s\""
+msgstr "[%1$s] 새 편집자 의견: \"%2$s\""
+
+#: modules/notifications/notifications.php:2192
+#, php-format
+msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
+msgstr "%3$s #%1$s \"%2$s\"에 새 편집자 의견이 추가되었습니다"
+
+#: modules/notifications/notifications.php:2199
+#, php-format
+msgid "%1$s (%2$s ) said on %3$s at %4$s:"
+msgstr "%1$s (%2$s )가 %3$s %4$s에 다음과 같이 말했습니다:"
+
+#: modules/notifications/notifications.php:2223
+#, php-format
+msgid "Reply: %s"
+msgstr "답글: %s"
+
+#: modules/notifications/notifications.php:2234
+#, php-format
+msgid "You can see all editorial comments on this %s here: "
+msgstr "이 %s에 대한 모든 편집자 의견을 여기에서 확인할 수 있습니다: "
+
+#: modules/reviews/reviews.php:66
+msgid "Reviews"
+msgstr "리뷰"
+
+#: modules/settings/settings.php:124
+msgid "settings"
+msgstr "설정"
+
+#: modules/settings/settings.php:141
+msgid "PublishPress Settings"
+msgstr "PublishPress 설정"
+
+#: modules/settings/settings.php:142
+msgid "Settings"
+msgstr "설정"
+
+#: modules/settings/settings.php:269
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "%s를 좋아하신다면 %s 평가를 남겨주세요. 감사합니다!"
+
+#: modules/settings/settings.php:289
+msgid "There are no PublishPress modules registered"
+msgstr "등록된 PublishPress 모듈이 없습니다"
+
+#: modules/settings/settings.php:380
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr "add_post_type_support('%1$s', '%2$s')가 로드된 파일에 포함되어 있기 때문에 비활성화되었습니다."
+
+#: modules/settings/settings.php:404
+#: publishpress.php:675
+msgid "Cheatin&#8217; uh?"
+msgstr "속임수인가요&#8217;?"
+
+#: modules/settings/views/footer-base.html.php:21
+msgid "About"
+msgstr "정보"
+
+#: modules/settings/views/footer-base.html.php:25
+msgid "Documentation"
+msgstr "문서"
+
+#: modules/settings/views/footer-base.html.php:29
+msgid "Contact"
+msgstr "연락처"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
+msgid "The Events Calendar Integration"
+msgstr "이벤트 캘린더 통합"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:53
+msgid "Integrate with the The Events Calendar plugin"
+msgstr "이벤트 캘린더 플러그인과 통합"
+
+#: publishpress.php:590
+msgid "Planner"
+msgstr "플래너"
+
+#: publishpress.php:671
+msgid "Configure"
+msgstr "설정"
+
+#: publishpress.php:674
+msgid "Please correct your form errors below and try again."
+msgstr "아래의 폼 오류를 수정한 후 다시 시도해 주세요."
+
+#: publishpress.php:676
+msgid "You do not have necessary permissions to complete this action."
+msgstr "이 작업을 완료할 수 있는 필요한 권한이 없습니다."
+
+#: publishpress.php:680
+msgid "Post does not exist"
+msgstr "게시물이 존재하지 않습니다"
+
+#: publishpress.php:1410
+msgid "Add New Notification"
+msgstr "새 알림 추가"
+
+#: publishpress.php:1411
+msgid "Edit Notification"
+msgstr "알림 편집"
+
+#: publishpress.php:1412
+msgid "Search Notifications"
+msgstr "알림 검색"
+
+#: publishpress.php:1415
+#: publishpress.php:1416
+msgid "No notification found"
+msgstr "알림이 발견되지 않았습니다"
+
+#: publishpress.php:1456
+msgid ""
+"PublishPress Planner tried to load multiple times. Please, deactivate and "
+"remove other instances of PublishPress, specially if you are using "
+"PublishPress Pro."
+msgstr ""
+"PublishPress Planner가 여러 번 로드하려고 했습니다. 다른 PublishPress 인스턴스를 비활성화하고 제거하세요, "
+"특히 PublishPress Pro를 사용 중인 경우에는 더욱 그렇습니다."
+
+#: publishpress.php:1464
+msgid "Warning"
+msgstr "경고"
+
+#: modules/editorial-comments/lib/editorial-comments.js:203
+#: modules/editorial-comments/lib/editorial-comments.js:371
+msgid "Please enter a comment"
+msgstr "댓글을 입력해 주십시오"
+
+#: modules/editorial-comments/lib/editorial-comments.js:377
+msgid "Sending content..."
+msgstr "내용 전송 중..."
+
+#: modules/editorial-comments/lib/editorial-comments.js:434
+msgid ""
+"This comment can't be deleted because it has one or more replies. Before "
+"deleting it make sure to delete all the replies first."
+msgstr "이 댓글은 하나 이상의 답글이 있기 때문에 삭제할 수 없습니다. 삭제하기 전에 모든 답글을 먼저 삭제하세요."
+
+#: modules/editorial-comments/lib/editorial-comments.js:438
+msgid "Are you sure you want to delete this comment?"
+msgstr "이 댓글을 삭제하시겠습니까?"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "for"
+msgstr "대상"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "by"
+msgstr "작성자"
+
+#: modules/content-board/library/content-board-utilities.php:538
+#: modules/content-overview/library/content-overview-utilities.php:643
+#, php-format
+msgctxt "%1$s = start date, %2$s = end date"
+msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
+msgstr "%1$s <div class=\"input-divider\">에</div> %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:451
+msgctxt "taxonomy general name"
+msgid "Editorial Field"
+msgstr "편집 필드"
+
+#: modules/editorial-metadata/editorial-metadata.php:452
+msgctxt "taxonomy singular name"
+msgid "Editorial Field"
+msgstr "편집 필드"
