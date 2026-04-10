@@ -17,7 +17,7 @@ To release the Pro plugin please make sure to check all the checkboxes below.
 
 **Dependencies**
 - [ ] Run `composer update --no-dev --dry-run` to check for updates
-- [ ] If updating dependencies: `compospdate the/lib:version-constraint`
+- [ ] If updating dependencies: `composer update the/lib:version-constraint`
 - [ ] Lock versions if needed (use exact version numbers)
 - [ ] Document dependency changes in changelog
 - [ ] Review Dependabot warnings/PRs, fix real issues
