@@ -86,6 +86,10 @@ if (! class_exists('PP_Modules_Settings')) {
                 $this->enqueue_datepicker_resources();
             }
 
+            $is_publishpress_page = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), ['pp-calendar', 'pp-content-overview', 'pp-content-board', 'pp-notif-log', 'pp-manage-roles', 'pp-modules-settings']);
+
+            if (!$is_publishpress_page) return;
+
             wp_enqueue_style(
                 'publishpress-modules-css',
                 $this->module_url . 'lib/modules-settings.css',
