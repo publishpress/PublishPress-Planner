@@ -57,6 +57,6 @@ translation management service.
 
 ### Post-release
 
-- [ ] Monitor [GitHub Actions](https://github.com/publishpress/<plugin-repo>/actions)
-- [ ] Verify [WordPress.org plugin page](https://wordpress.org/plugins/<plugin-slug>/)
+- [ ] Monitor [GitHub Actions](https://github.com/publishpress/publishpress-planner/actions)
+- [ ] Verify [WordPress.org plugin page](https://wordpress.org/plugins/publishpress/)
 - [ ] Test update on staging site
