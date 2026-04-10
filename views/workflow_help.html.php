@@ -1,5 +1,5 @@
 <p><?php echo esc_html($context['labels']['validation_help']); ?></p>
-<h3>Content</h3>
+<h3><?php echo esc_html__('Content', 'publishpress'); ?></h3>
 <p><?php echo esc_html($context['labels']['pre_text']); ?></p>
 
 <h4><?php echo esc_html($context['labels']['content']); ?></h4>
