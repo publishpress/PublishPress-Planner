@@ -83,6 +83,21 @@ if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
     require_once $autoloadFilePath;
 }
 
+add_filter(
+    'all_plugins',
+    function ($plugins) {
+        global $pagenow;
+        if (isset($pagenow) && 'plugins.php' === $pagenow) {
+            $plugin_basename = plugin_basename(__FILE__);
+            if (isset($plugins[$plugin_basename])) {
+                $plugins[$plugin_basename]['Name']  = 'PublishPress Planner Free';
+                $plugins[$plugin_basename]['Title'] = 'PublishPress Planner Free';
+            }
+        }
+        return $plugins;
+    }
+);
+
 add_action('plugins_loaded', function () {
 
     require_once 'includes.php';
