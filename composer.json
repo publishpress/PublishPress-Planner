@@ -1,5 +1,5 @@
 {
-  "name": "publishpress/publishpress",
+  "name": "publishpress/publishpress-planner",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "description": "WordPress plugin to accelerate your publishing workflow.",
@@ -31,12 +31,15 @@
     "mustache/mustache": "2.14.1",
     "squizlabs/php_codesniffer": "3.*",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-    "phpcompatibility/php-compatibility": "*"
+    "phpcompatibility/php-compatibility": "*",
+    "publishpress/translations": "^1.0.0",
+    "szepeviktor/phpstan-wordpress": "^2.0"
   },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+    },
+    "process-timeout": 7200
   },
   "scripts": {
     "build": "build zip",
@@ -45,6 +48,8 @@
     "info:versions": "bash ./dev-workspace/scripts/dependency-versions.sh",
     "check:longpath": "longpath .",
     "check:lint": "phplint",
+    "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
+    "gen:pot": "wp i18n make-pot . languages/publishpress.pot --domain=publishpress --exclude=dev-workspace,.wordpress-org,.github,dist,tests,vendor, --allow-root",
     "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
     "pre-update-cmd": "composer update --working-dir=./lib",
     "pre-install-cmd": "composer install --working-dir=./lib",
@@ -53,7 +58,15 @@
     ],
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ]
+    ],
+    "translate": "vendor/bin/publishpress-translate",
+    "translate:dry-run": "vendor/bin/publishpress-translate --dry-run",
+    "translate:download": "vendor/bin/publishpress-translate --download",
+    "translate:upload": "vendor/bin/publishpress-translate --upload",
+    "translate:custom": "vendor/bin/publishpress-translate --languages",
+    "translate:force": "vendor/bin/publishpress-translate --force",
+    "translate:force-custom": "vendor/bin/publishpress-translate --force --languages",
+    "translate:repair-plurals": "php vendor/bin/publishpress-translate --repair-plurals"
   },
   "extra": {
     "plugin-name": "publishpress-planner",

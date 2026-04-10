@@ -587,7 +587,7 @@ msgstr "Applica"
 msgid "Apply Changes"
 msgstr "Applica modifiche"
 
-#: modules/calendar/library/calendar-methods.php:1227
+#: modules/calendar/library/calendar-methods.php:1227, fuzzy
 msgid "Apr"
 msgstr "Apr"
 
@@ -681,7 +681,7 @@ msgstr "Tassonomie nella blacklist delle notifiche"
 msgid "Blog ID: %d"
 msgstr "ID Blog: %d"
 
-#: modules/notifications-log/library/NotificationsLogTable.php:383
+#: modules/notifications-log/library/NotificationsLogTable.php:383, fuzzy
 msgid "Blog: "
 msgstr "Blog: "
 
@@ -734,7 +734,7 @@ msgstr "Canali"
 msgid "Cheatin&#8217; uh?"
 msgstr "Si tenta di fare i furbi, eh?"
 
-#: modules/editorial-metadata/editorial-metadata.php:288
+#: modules/editorial-metadata/editorial-metadata.php:288, fuzzy
 msgid "Checkbox"
 msgstr "Checkbox"
 
@@ -932,7 +932,7 @@ msgstr "Widget in bacheca"
 msgid "Date"
 msgstr "Data"
 
-#: modules/debug/debug.php:68
+#: modules/debug/debug.php:68, fuzzy
 msgid "Debug"
 msgstr "Debug"
 
@@ -1168,11 +1168,11 @@ msgid "Eleven months"
 msgstr "Undici mesi"
 
 #: modules/editorial-comments/editorial-comments.php:1278
-#: lib/Notifications/Workflow/Step/Channel/Email.php:31
+#: lib/Notifications/Workflow/Step/Channel/Email.php:31, fuzzy
 msgid "Email"
 msgstr "Email"
 
-#: lib/Notifications/Workflow/Step/Receiver/Follower.php:135
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:135, fuzzy
 msgid "email"
 msgstr "email"
 
@@ -1316,7 +1316,7 @@ msgstr "Supporto veloce e professionale"
 msgid "Features"
 msgstr "Funzionalità"
 
-#: modules/calendar/library/calendar-methods.php:1225
+#: modules/calendar/library/calendar-methods.php:1225, fuzzy
 msgid "Feb"
 msgstr "Feb"
 
@@ -1483,7 +1483,7 @@ msgstr ""
 
 #: lib/Notifications/Table/Notifications.php:159
 #: lib/Notifications/Table/Workflows.php:143
-#: modules/calendar/library/calendar-utilities.php:1059
+#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
 msgid "ID"
 msgstr "ID"
 
@@ -1651,7 +1651,7 @@ msgstr "File di registro"
 msgid "Log file not found."
 msgstr "File di registro non trovato."
 
-#: modules/calendar/library/calendar-methods.php:1226
+#: modules/calendar/library/calendar-methods.php:1226, fuzzy
 msgid "Mar"
 msgstr "Mar"
 
@@ -1672,7 +1672,7 @@ msgstr "Mag"
 #: modules/calendar/library/calendar-utilities.php:467
 #: modules/calendar/library/calendar-utilities.php:468
 #: modules/content-board/library/content-board-utilities.php:28
-#: modules/content-overview/library/content-overview-methods.php:259
+#: modules/content-overview/library/content-overview-methods.php:259, fuzzy
 msgid "Me Mode"
 msgstr "Me Mode"
 
@@ -1819,7 +1819,7 @@ msgstr "Nove mesi"
 
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659, fuzzy
 msgid "No"
 msgstr "No"
 
@@ -1963,7 +1963,7 @@ msgstr "Utente di notifica"
 msgid "Notify Users"
 msgstr "Utenti di notifica"
 
-#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-methods.php:1234, fuzzy
 msgid "Nov"
 msgstr "Nov"
 
@@ -2043,7 +2043,7 @@ msgstr "In attesa di revisione"
 msgid "Period"
 msgstr "Periodo"
 
-#: publishpress.php:590
+#: publishpress.php:590, fuzzy
 msgid "Planner"
 msgstr "Planner"
 
@@ -2266,7 +2266,7 @@ msgstr "Tempo di pubblicazione"
 
 #. Author of the plugin
 #: modules/settings/settings.php:61
-#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/calendar/library/calendar-utilities.php:1227, fuzzy
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -2275,7 +2275,7 @@ msgid "PublishPress Debug Log"
 msgstr "Registro di debug di PublishPress"
 
 #. Name of the plugin
-#: modules/settings/settings.php:266
+#: modules/settings/settings.php:266, fuzzy
 msgid "PublishPress Planner"
 msgstr "PublishPress Planner"
 
@@ -2535,7 +2535,7 @@ msgstr "Le impostazioni sono state aggiornate correttamente."
 msgid "Seven months"
 msgstr "Sette mesi"
 
-#: modules/improved-notifications/improved-notifications.php:1104
+#: modules/improved-notifications/improved-notifications.php:1104, fuzzy
 msgid "shortcode"
 msgstr "shortcode"
 
@@ -2617,7 +2617,7 @@ msgid "Slack integration for notifications"
 msgstr "Integrazioni con Slack per le notifiche"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457, fuzzy
 msgid "Slug"
 msgstr "Slug"
 
@@ -2625,7 +2625,7 @@ msgstr "Slug"
 msgid "Slug already in use. Please choose another."
 msgstr "Questo slug già esiste. Scegli un altro nome."
 
-#: modules/notifications/notifications.php:1868
+#: modules/notifications/notifications.php:1868, fuzzy
 msgid "slug1,slug2"
 msgstr "slug1,slug2"
 
@@ -3244,7 +3244,7 @@ msgstr "Opzioni del widget"
 msgid "WordPress Scheduler"
 msgstr "Programmazione di WordPress"
 
-#: modules/improved-notifications/improved-notifications.php:1101
+#: modules/improved-notifications/improved-notifications.php:1101, fuzzy
 msgid "Workflow"
 msgstr "Workflow"
 

@@ -1,0 +1,3555 @@
+# Copyright (C) 2026 PublishPress
+# This file is distributed under the same license as the PublishPress Planner plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Planner 4.7.3-beta3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
+"PO-Revision-Date: 2026-04-10 02:25+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: publishpress\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: publishpress.php
+#: modules/settings/settings.php:266, fuzzy
+#. Plugin Name of the plugin
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
+#: publishpress.php, fuzzy
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#: publishpress.php
+#. Description of the plugin
+msgid ""
+"PublishPress Planner helps you plan and publish content inside WordPress. "
+"Features include a content calendar, kanban board, and notifications."
+msgstr ""
+"PublishPress Planner auttaa sinua suunnittelemaan ja julkaisemaan sisältöä "
+"WordPressissä. Ominaisuuksiin kuuluu sisällön kalenteri, kanban-taulu ja "
+"ilmoitukset."
+
+#: publishpress.php
+#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/settings/settings.php:61, fuzzy
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#: publishpress.php, fuzzy
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+#: common/php/class-module.php:331
+#: modules/calendar/calendar.php:1233
+msgid "Published"
+msgstr "Julkaistu"
+
+#: common/php/class-module.php:332
+msgid "Draft"
+msgstr "Luonnos"
+
+#: common/php/class-module.php:333
+#: modules/calendar/calendar.php:1228
+#: modules/content-board/content-board.php:979
+#: modules/notifications-log/library/NotificationsLogTable.php:529
+msgid "Scheduled"
+msgstr "Aikataulutettu"
+
+#: common/php/class-module.php:334
+#: modules/content-board/content-board.php:989
+msgid "Private"
+msgstr "Yksityinen"
+
+#: common/php/class-module.php:335
+msgid "Pending Review"
+msgstr "Odottaa tarkistusta"
+
+#: common/php/class-module.php:336
+#: modules/calendar/library/calendar-methods.php:1240
+#: modules/calendar/library/calendar-utilities.php:1104
+#: modules/content-board/content-board.php:1190
+#: modules/content-board/content-board.php:1285
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1715
+msgid "Trash"
+msgstr "Roskakori"
+
+#: common/php/class-module.php:750
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:31
+msgid "Roles"
+msgstr "Roolit"
+
+#: common/php/class-module.php:753
+msgid "Role"
+msgstr "Rooli"
+
+#: common/php/class-module.php:761
+msgid "Groups"
+msgstr "Ryhmät"
+
+#: common/php/class-module.php:764
+msgid "Group"
+msgstr "Ryhmä"
+
+#: common/php/class-module.php:772
+#: lib/Notifications/Workflow/Step/Receiver/User.php:26
+msgid "Users"
+msgstr "Käyttäjät"
+
+#: common/php/class-module.php:782
+msgid "E-mails"
+msgstr "Sähköpostit"
+
+#: common/php/class-module.php:1109
+#, php-format
+msgid "Select %s"
+msgstr "Valitse %s"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-utilities.php:1190
+#: modules/content-overview/content-overview.php:833
+#: modules/content-overview/content-overview.php:848
+#: modules/content-overview/content-overview.php:955
+msgid "Revision Status"
+msgstr "Muutosstatus"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-methods.php:424
+#: modules/calendar/library/calendar-methods.php:858
+#: modules/calendar/library/calendar-methods.php:1245
+#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-utilities.php:1189
+#: modules/content-board/content-board.php:811
+#: modules/content-board/content-board.php:1290
+#: modules/content-board/library/content-board-utilities.php:594
+#: modules/content-board/library/content-board-utilities.php:1165
+#: modules/content-overview/content-overview.php:954
+#: modules/content-overview/content-overview.php:1226
+#: modules/content-overview/library/content-overview-utilities.php:491
+#: modules/content-overview/library/content-overview-utilities.php:703
+msgid "Post Status"
+msgstr "Julkaisustatus"
+
+#: common/php/util.php:46
+msgid "(no title)"
+msgstr "(ei otsikko)"
+
+#: core/Error.php:79
+msgid "Undefined error found"
+msgstr "Määrittämätön virhe löytyi"
+
+#: core/Error.php:80
+#: modules/calendar/library/calendar-methods.php:779
+msgid "Invalid nonce"
+msgstr "Virheellinen nonce"
+
+#: core/Error.php:81
+msgid "Access denied"
+msgstr "Pääsy kielletty"
+
+#: includes.php:127
+#, php-format
+msgid ""
+"You're using PublishPress Planner Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Käytät PublishPress Planner Free -versiota. Pro-versiossa on enemmän "
+"ominaisuuksia ja tukea. %sPäivitä Pro:hon%s"
+
+#: includes.php:161
+#: lib/Legacy/Util.php:216
+msgid "Upgrade to Pro"
+msgstr "Päivitä Pro:oon"
+
+#: lib/Legacy/Util.php:198
+msgid "Upgrade to PublishPress Planner Pro"
+msgstr "Päivitä PublishPress Planner Pro:oon"
+
+#: lib/Legacy/Util.php:203
+msgid "Enhance the power of PublishPress Planner with the Pro version:"
+msgstr "Vahvista PublishPress Plannerin tehoa Pro-versiolla:"
+
+#: lib/Legacy/Util.php:206
+msgid "PublishPress Revisions integration"
+msgstr "PublishPress Revizyonien integraatio"
+
+#: lib/Legacy/Util.php:207
+msgid "Slack integration for notifications"
+msgstr "Slack-integraatio ilmoituksia varten"
+
+#: lib/Legacy/Util.php:208
+msgid "Send reminder notifications"
+msgstr "Lähetä muistutusilmoituksia"
+
+#: lib/Legacy/Util.php:209
+msgid "Use post meta in notifications"
+msgstr "Käytä viestin meta-arvoja ilmoituksissa"
+
+#: lib/Legacy/Util.php:210
+msgid "Modals so you can edit posts without changing screen"
+msgstr "Modaalit, jotta voit muokata viestejä ilman näytön vaihtamista"
+
+#: lib/Legacy/Util.php:211
+msgid "Integration with SEO plugins"
+msgstr "Integraatio SEO-lisäosien kanssa"
+
+#: lib/Legacy/Util.php:212
+msgid "Remove PublishPress ads and branding"
+msgstr "Poista PublishPressin mainokset ja brändäys"
+
+#: lib/Legacy/Util.php:213
+msgid "Fast, professional support"
+msgstr "Nopea, ammattimainen tuki"
+
+#: lib/Legacy/Util.php:223
+msgid "Need PublishPress Planner Support?"
+msgstr "Tarvitsetko PublishPress Planner -tukea?"
+
+#: lib/Legacy/Util.php:228
+msgid "If you need help or have a new feature request, let us know."
+msgstr "Jos tarvitset apua tai sinulla on uusi ominaisuuspyyntö, ilmoita meille."
+
+#: lib/Legacy/Util.php:230
+msgid "Request Support"
+msgstr "Pyydä tukea"
+
+#: lib/Legacy/Util.php:239
+msgid "Detailed documentation is also available on the plugin website."
+msgstr ""
+"Yksityiskohtainen dokumentaatio on myös saatavilla lisäosan "
+"verkkosivustolla."
+
+#: lib/Legacy/Util.php:241
+msgid "View Knowledge Base"
+msgstr "Näytä tietopankki"
+
+#: lib/Notifications/Plugin.php:65
+#: modules/improved-notifications/improved-notifications.php:1160
+#: modules/notifications-log/library/NotificationsLogTable.php:497
+msgid "When to notify?"
+msgstr "Milloin ilmoittaa?"
+
+#: lib/Notifications/Plugin.php:66
+msgid "Filter the content?"
+msgstr "Suodata sisältö?"
+
+#: lib/Notifications/Plugin.php:67
+#: modules/improved-notifications/improved-notifications.php:1180
+#: modules/notifications-log/library/NotificationsLogTable.php:499
+msgid "Who to notify?"
+msgstr "Kenelle ilmoittaa?"
+
+#: lib/Notifications/Plugin.php:209
+#: lib/Notifications/Plugin.php:210
+msgid "Notification workflow updated."
+msgstr "Ilmoitusprosessi päivitetty."
+
+#: lib/Notifications/Plugin.php:211
+msgid "Notification workflow published."
+msgstr "Ilmoitusprosessi julkaistu."
+
+#: lib/Notifications/Plugin.php:212
+msgid "Notification workflow saved."
+msgstr "Ilmoitusprosessi tallennettu."
+
+#: lib/Notifications/Plugin.php:213
+msgid "Notification workflow submitted."
+msgstr "Ilmoitusprosessi lähetetty."
+
+#: lib/Notifications/Plugin.php:215
+#, php-format
+msgid "Notification workflow scheduled for: %s."
+msgstr "Ilmoitusprosessi aikataulutettu: %s."
+
+#: lib/Notifications/Plugin.php:218
+msgid "Notification workflow draft updated."
+msgstr "Ilmoitusprosessin luonnos päivitetty."
+
+#: lib/Notifications/Plugin.php:240
+#, php-format
+msgid "%s notification workflow updated."
+msgid_plural "%s notification workflows updated."
+msgstr[0] "%s ilmoitusprosessi päivitetty.|%s ilmoitusprosessia päivitetty."
+msgstr[1] "%s ilmoitusprosessia päivitetty.|%s ilmoitusprosesseja päivitetty."
+
+#: lib/Notifications/Plugin.php:246
+msgid "1 notification workflow not updated, somebody is editing it."
+msgstr "1 ilmoitusprosessi ei ole päivitetty, joku muokkaa sitä."
+
+#: lib/Notifications/Plugin.php:250
+#, php-format
+msgid "%s notification workflow not updated, somebody is editing it."
+msgid_plural "%s notification workflows not updated, somebody is editing them."
+msgstr[0] ""
+"%s ilmoitusprosessi ei ole päivitetty, joku muokkaa sitä.|%s "
+"ilmoitusprosesseja ei ole päivitetty, joku muokkaa niitä."
+msgstr[1] ""
+"%s ilmoitusprosessi ei ole päivitetty, joku muokkaa sitä.|%s "
+"ilmoitusprosesseja ei ole päivitetty, joku muokkaa niitä."
+
+#: lib/Notifications/Plugin.php:256
+#, php-format
+msgid "%s notification workflow permanently deleted."
+msgid_plural "%s notification workflows permanently deleted."
+msgstr[0] ""
+"%s ilmoitusprosessi poistettu pysyvästi.|%s ilmoitusprosesseja poistettu "
+"pysyvästi."
+msgstr[1] ""
+"%s ilmoitusprosessi poistettu pysyvästi.|%s ilmoitusprosesseja poistettu "
+"pysyvästi."
+
+#: lib/Notifications/Plugin.php:262
+#, php-format
+msgid "%s notification workflow moved to the Trash."
+msgid_plural "%s notification workflows moved to the Trash."
+msgstr[0] ""
+"%s ilmoitusprosessi siirretty roskakoriin.|%s ilmoitusprosesseja siirretty "
+"roskakoriin."
+msgstr[1] ""
+"%s ilmoitusprosessi siirretty roskakoriin.|%s ilmoitusprosesseja siirretty "
+"roskakoriin."
+
+#: lib/Notifications/Plugin.php:268
+#, php-format
+msgid "%s notification workflow restored from the Trash."
+msgid_plural "%s notification workflows restored from the Trash."
+msgstr[0] ""
+"%s ilmoitusprosessi palautettu roskakorista.|%s ilmoitusprosesseja "
+"palautettu roskakorista."
+msgstr[1] ""
+"%s ilmoitusprosessi palautettu roskakorista.|%s ilmoitusprosesseja "
+"palautettu roskakorista."
+
+#: lib/Notifications/Plugin.php:302
+msgid "Please select at least one event"
+msgstr "Valitse vähintään yksi tapahtuma"
+
+#: lib/Notifications/Plugin.php:335
+msgid "Not filtered"
+msgstr "Ei suodatettu"
+
+#: lib/Notifications/Table/Base.php:183
+msgid "Excerpt View"
+msgstr "Ote-näkymä"
+
+#: lib/Notifications/Table/Notifications.php:156
+#: lib/Notifications/Table/Workflows.php:142
+#: modules/calendar/library/calendar-methods.php:853
+#: modules/content-board/content-board.php:421
+#: modules/content-board/library/content-board-utilities.php:244
+#: modules/content-board/library/content-board-utilities.php:1159
+#: modules/content-overview/content-overview.php:418
+#: modules/content-overview/library/content-overview-utilities.php:485
+msgid "Title"
+msgstr "Otsikko"
+
+#: lib/Notifications/Table/Notifications.php:157
+msgid "Message"
+msgstr "Viesti"
+
+#: lib/Notifications/Table/Notifications.php:158
+#: modules/calendar/library/calendar-utilities.php:1064
+#: modules/content-board/library/content-board-utilities.php:116
+#: modules/content-overview/library/content-overview-methods.php:341
+#: modules/editorial-metadata/editorial-metadata.php:290
+#: modules/notifications-log/library/NotificationsLogTable.php:496
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: lib/Notifications/Table/Notifications.php:159
+#: lib/Notifications/Table/Workflows.php:143
+#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
+msgid "ID"
+msgstr "ID"
+
+#: lib/Notifications/Table/Notifications.php:235
+msgid "You don't have any notifications"
+msgstr "Sinulla ei ole ilmoituksia"
+
+#: lib/Notifications/Table/Workflows.php:217
+msgid "No workflows found."
+msgstr "Ei työnkulkuja löydetty."
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:26
+msgid "Skip current user"
+msgstr "Ohita nykyinen käyttäjä"
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:31
+msgid "Skip notifications for the user who triggered the action"
+msgstr "Ohita ilmoitukset käyttäjälle, joka suoritti toiminnon"
+
+#: lib/Notifications/Workflow/Step/Channel/Email.php:31
+#: modules/editorial-comments/editorial-comments.php:1267
+msgid "Email"
+msgstr "Sähköposti"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:29
+#: modules/calendar/library/calendar-methods.php:902
+#: modules/content-board/library/content-board-utilities.php:1207
+#: modules/content-overview/library/content-overview-utilities.php:533
+#: modules/improved-notifications/improved-notifications.php:1318
+msgid "Content"
+msgstr "Sisältö"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:53
+msgid "Subject"
+msgstr "Aihe"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:54
+msgid "Body"
+msgstr "Sisältö"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
+msgid "When an editorial comment is added"
+msgstr "Kun toimituksellinen kommentti lisätään"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:96
+#, php-format
+msgid "Comment: %s (%d)"
+msgstr "Kommentti: %s (%d)"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
+msgid "When the status is changed"
+msgstr "Kun tila muuttuu"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
+msgid "Previous status"
+msgstr "Edellinen tila"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
+msgid "New status"
+msgstr "Uusi tila"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
+msgid "- any status -"
+msgstr "- mikä tahansa tila -"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
+msgid "New"
+msgstr "Uusi"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
+msgid "Auto-draft"
+msgstr "Auto-kynä"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
+#: modules/calendar/library/calendar-utilities.php:1206
+#: modules/content-board/content-board.php:767
+#: modules/content-board/content-board.php:827
+#: modules/content-overview/content-overview.php:910
+#: modules/content-overview/content-overview.php:971
+msgid "Taxonomies"
+msgstr "Taksonomiat"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
+msgid "When the content is moved to a new status"
+msgstr "Kun sisältö siirretään uuteen tilaan"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
+#, php-format
+msgid "Old post status: %s"
+msgstr "Vanha julkaisun tila: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:122
+#, php-format
+msgid "New post status: %s"
+msgstr "Uusi julkaisun tila: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_TaxonomyUpdate.php:28
+msgid "When taxonomy is updated"
+msgstr "Kun taksonomiaa päivitetään"
+
+#: lib/Notifications/Workflow/Step/Event/Post_Update.php:26
+msgid "When the content is updated"
+msgstr "Kun sisältöä päivitetään"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
+#: modules/calendar/library/calendar-utilities.php:1080
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Kategoria"
+msgstr[1] "Kategoriat"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
+#: modules/calendar/library/calendar-methods.php:885
+#: modules/content-board/library/content-board-utilities.php:1190
+#: modules/content-overview/library/content-overview-utilities.php:516
+msgid "Categories"
+msgstr "Kategoriat"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:46
+msgid "Post Types"
+msgstr "Julkaisutyypit"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
+msgid "Terms"
+msgstr "Termit"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
+msgid "Post type"
+msgstr "Julkaisutyyppi"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24
+msgid "Taxonomy"
+msgstr "Taksonomia"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:26
+msgid "Authors of the content"
+msgstr "Sisällön kirjoittajat"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:92
+msgid "Authors"
+msgstr "Kirjoittajat"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:30
+msgid "Users who selected \"Notify me\" for the content"
+msgstr "Käyttäjät, jotka valitsivat \"Ilmoita minulle\" sisällölle"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
+#, php-format
+msgid "role:%s"
+msgstr "rooli:%s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:132
+#, php-format
+msgid "group %d: %s"
+msgstr "ryhmä %d: %s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:153
+msgid "user"
+msgstr "käyttäjä"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:168
+msgid "email"
+msgstr "sähköposti"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:210
+msgid "\"Notify me\""
+msgstr "\"Ilmoita minulle\""
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:31
+msgid "Permission Groups"
+msgstr "Käyttöoikeusryhmät"
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:222
+#, php-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d Ryhmä"
+msgstr[1] "%d Ryhmää"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:26
+msgid "Authors of the parent page"
+msgstr "Vanhemman sivun tekijät"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:106
+msgid "Parent Page Authors"
+msgstr "Vanhemman Sivun Tekijät"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:39
+msgid "Author of the revision"
+msgstr "Muokkauksen tekijä"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:105
+msgid "Revision Author"
+msgstr "Muokkauksen Tekijä"
+
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:173
+#, php-format
+msgid "%d Role"
+msgid_plural "%d Roles"
+msgstr[0] "%d Rooli"
+msgstr[1] "%d Rooleja"
+
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
+msgid "Site Administrator"
+msgstr "Sivuston ylläpitäjä"
+
+#: lib/Notifications/Workflow/Step/Receiver/User.php:152
+#, php-format
+msgid "%d User"
+msgid_plural "%d Users"
+msgstr[0] "%d Käyttäjä"
+msgstr[1] "%d Käyttäjää"
+
+#: modules/async-notifications/async-notifications.php:71
+msgid "Async Notifications"
+msgstr "Asynkroniset ilmoitukset"
+
+#: modules/async-notifications/async-notifications.php:180
+#, php-format
+msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
+msgstr "Tapahtuma: %s, Työnkulun ID: %s, Julkaisun ID: %s, Käyttäjän ID: %s"
+
+#: modules/calendar/calendar.php:216
+#: modules/calendar/calendar.php:415
+#: modules/calendar/calendar.php:432
+#: modules/calendar/calendar.php:433
+msgid "Content Calendar"
+msgstr "Sisältökalenteri"
+
+#: modules/calendar/calendar.php:241
+msgid "Post date updated."
+msgstr "Julkaisupäivämäärä päivitetty."
+
+#: modules/calendar/calendar.php:242
+msgid "Post status updated."
+msgstr "Julkaisun tila päivitetty."
+
+#: modules/calendar/calendar.php:243
+msgid "There was an error updating the post. Please try again."
+msgstr "Julkaisun päivittämisessä tapahtui virhe. Yritä uudelleen."
+
+#: modules/calendar/calendar.php:247
+#, php-format
+msgid ""
+"Updating the post date dynamically doesn't work for published content. "
+"Please <a href='%s'>edit the post</a>."
+msgstr ""
+"Julkaisupäivämäärän päivittäminen dynaamisesti ei toimi julkaistulle "
+"sisällölle. Ole hyvä ja <a href='%s'>muokkaa artikkelia</a>."
+
+#: modules/calendar/calendar.php:251
+msgid ""
+"iCal secret key regenerated. Please inform all users they will need to "
+"resubscribe."
+msgstr ""
+"iCal-salaisavain on luotu uudelleen. Ilmoita kaikille käyttäjille, että "
+"heidän on tilattava uudelleen."
+
+#: modules/calendar/calendar.php:259
+#: modules/editorial-comments/editorial-comments.php:82
+#: modules/editorial-metadata/editorial-metadata.php:119
+#: modules/notifications/notifications.php:96
+msgid "Overview"
+msgstr "Yhteenveto"
+
+#: modules/calendar/calendar.php:260
+msgid ""
+"<p>The calendar is a convenient week-by-week or month-by-month view into "
+"your content. Quickly see which stories are on track to being published on "
+"time, and which will need extra effort.</p>"
+msgstr ""
+"<p>Kalenteri on kätevä viikko- tai kuukausinäkymä sisältöösi. Näet "
+"nopeasti, mitkä tarinat ovat aikataulussa julkaistavaksi ajallaan ja mitkä "
+"vaativat lisätyötä.</p>"
+
+#: modules/calendar/calendar.php:265
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Calendar "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Lisätietoja:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Kalenterin "
+"dokumentaatio</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"GitHubissa</a></p>"
+
+#: modules/calendar/calendar.php:734
+#: modules/calendar/library/calendar-utilities.php:1259
+msgid "Weeks"
+msgstr "Viikot"
+
+#: modules/calendar/calendar.php:735
+msgid "Start Date"
+msgstr "Alkuperäinen päivämäärä"
+
+#: modules/calendar/calendar.php:736
+#: modules/calendar/library/calendar-utilities.php:467
+#: modules/calendar/library/calendar-utilities.php:468
+#: modules/content-board/library/content-board-utilities.php:28
+#: modules/content-overview/library/content-overview-methods.php:253
+msgid "Me Mode"
+msgstr "Minä-tila"
+
+#: modules/calendar/calendar.php:737
+msgid "Show Revision"
+msgstr "Näytä muutos"
+
+#: modules/calendar/calendar.php:738
+#: modules/calendar/library/calendar-utilities.php:486
+#: modules/content-board/library/content-board-utilities.php:98
+#: modules/content-overview/library/content-overview-methods.php:323
+msgid "Search"
+msgstr "Haku"
+
+#: modules/calendar/calendar.php:912
+#: modules/content-board/library/content-board-methods.php:164
+#: modules/content-overview/content-overview.php:668
+msgid "Filter updated successfully."
+msgstr "Suodatin päivitettiin onnistuneesti."
+
+#: modules/calendar/calendar.php:919
+msgid "Filter reset successfully."
+msgstr "Suodatin palautettiin onnistuneesti."
+
+#: modules/calendar/calendar.php:987
+#: modules/content-board/content-board.php:709
+#: modules/content-overview/content-overview.php:832
+#: modules/content-overview/content-overview.php:847
+#: modules/content-overview/content-overview.php:892
+#: modules/notifications-log/library/NotificationsLogTable.php:500
+msgid "Status"
+msgstr "Tila"
+
+#: modules/calendar/calendar.php:988
+#: modules/calendar/calendar.php:1212
+#: modules/calendar/library/calendar-methods.php:875
+#: modules/calendar/library/calendar-methods.php:1248
+#: modules/calendar/library/calendar-utilities.php:115
+#: modules/calendar/library/calendar-utilities.php:1075
+#: modules/calendar/library/calendar-utilities.php:1191
+#: modules/content-board/content-board.php:699
+#: modules/content-board/content-board.php:710
+#: modules/content-board/content-board.php:753
+#: modules/content-board/content-board.php:812
+#: modules/content-board/library/content-board-utilities.php:647
+#: modules/content-board/library/content-board-utilities.php:1180
+#: modules/content-overview/content-overview.php:835
+#: modules/content-overview/content-overview.php:849
+#: modules/content-overview/content-overview.php:894
+#: modules/content-overview/content-overview.php:956
+#: modules/content-overview/content-overview.php:1218
+#: modules/content-overview/library/content-overview-utilities.php:506
+#: modules/content-overview/library/content-overview-utilities.php:769
+#: modules/editorial-comments/library/EditorialCommentsTable.php:228
+msgid "Author"
+msgid_plural "Authors"
+msgstr[0] "Kirjoittaja"
+msgstr[1] "Kirjoittajat"
+
+#: modules/calendar/calendar.php:989
+#: modules/calendar/calendar.php:1220
+#: modules/calendar/library/calendar-utilities.php:146
+#: modules/calendar/library/calendar-utilities.php:1054
+#: modules/calendar/library/calendar-utilities.php:1192
+#: modules/content-board/content-board.php:698
+#: modules/content-board/content-board.php:711
+#: modules/content-board/content-board.php:752
+#: modules/content-board/content-board.php:813
+#: modules/content-board/library/content-board-utilities.php:677
+#: modules/content-board/library/content-board-utilities.php:1153
+#: modules/content-overview/content-overview.php:834
+#: modules/content-overview/content-overview.php:850
+#: modules/content-overview/content-overview.php:893
+#: modules/content-overview/content-overview.php:957
+#: modules/content-overview/library/content-overview-utilities.php:479
+#: modules/content-overview/library/content-overview-utilities.php:799
+msgid "Post Type"
+msgstr "Julkaisun tyyppi"
+
+#: modules/calendar/calendar.php:1103
+msgid "Post moved to the trash."
+msgid_plural "%d posts moved to the trash."
+msgstr[0] "Julkaisu siirretty roskakoriin."
+msgstr[1] "%d julkaisua siirretty roskakoriin."
+
+#: modules/calendar/calendar.php:1119
+#: modules/content-board/content-board.php:614
+#: modules/content-overview/library/content-overview-methods.php:214
+msgid "Undo"
+msgstr "Kumoa"
+
+#: modules/calendar/calendar.php:1129
+msgid "Post restored from the Trash."
+msgid_plural "%d posts restored from the Trash."
+msgstr[0] "Julkaisu palautettu roskakorista."
+msgstr[1] "%d julkaisua palautettu roskakorista."
+
+#: modules/calendar/calendar.php:1161
+msgid "Initializing the calendar. Please wait..."
+msgstr "Kalenteria alustetaan. Ole hyvä ja odota..."
+
+#: modules/calendar/calendar.php:1165
+msgid ""
+"It seems like it is taking too long. Please, try reloading the page again "
+"and check the browser console looking for errors."
+msgstr ""
+"Näyttää siltä, että se kestää liian kauan. Ole hyvä ja yritä ladata sivu "
+"uudelleen ja tarkista selaimen konsoli virheiden varalta."
+
+#: modules/calendar/calendar.php:1809
+msgid ""
+"The selected user doesn't have enough permissions to be set as the post "
+"author."
+msgstr ""
+"Valitulla käyttäjällä ei ole tarpeeksi oikeuksia, jotta hänet voitaisiin "
+"asettaa artikkelin kirjoittajaksi."
+
+#: modules/calendar/library/calendar-methods.php:87
+msgid "Post types to show"
+msgstr "Näytettävät julkaisutyypit"
+
+#: modules/calendar/library/calendar-methods.php:95
+msgid "Show today's date in the first row"
+msgstr "Näytä tämän päivän päivämäärä ensimmäisessä rivissä"
+
+#: modules/calendar/library/calendar-methods.php:103
+msgid "Enable subscriptions in iCal or Google Calendar"
+msgstr "Ota tilaukset käyttöön iCal:ssa tai Google Kalenterissa"
+
+#: modules/calendar/library/calendar-methods.php:111
+msgid "Allow public access to subscriptions in iCal or Google Calendar"
+msgstr "Salli julkinen pääsy tilauksiin iCal:ssa tai Google Kalenterissa"
+
+#: modules/calendar/library/calendar-methods.php:119
+msgid "Statuses to display publish time"
+msgstr "Statukset julkaisuajan näyttämiseksi"
+
+#: modules/calendar/library/calendar-methods.php:127
+msgid "Posts publish time format"
+msgstr "Julkaisuaikamuoto"
+
+#: modules/calendar/library/calendar-methods.php:135
+msgid "Default publish time for items created in the calendar"
+msgstr "Oletusjulkaisuaika kalenterissa luoduille kohteille"
+
+#: modules/calendar/library/calendar-methods.php:143
+msgid "Field used for sorting the calendar items in a day cell"
+msgstr "Kenttä, jota käytetään kalenterikohteiden lajitteluun päiväruudussa"
+
+#: modules/calendar/library/calendar-methods.php:151
+msgid "Max visible posts per date"
+msgstr "Maksimimäärä näkyviä julkaisuja päivämäärittäin"
+
+#: modules/calendar/library/calendar-methods.php:159
+msgid "Always show complete post titles"
+msgstr "Näytä aina täydelliset julkaisun otsikot"
+
+#: modules/calendar/library/calendar-methods.php:179
+msgid "At least one post type must be selected"
+msgstr "Vähintään yksi julkaisutyyppi on valittava"
+
+#: modules/calendar/library/calendar-methods.php:294
+msgid "edit"
+msgstr "muokkaa"
+
+#: modules/calendar/library/calendar-methods.php:308
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions Pro%s."
+msgstr ""
+"Sisältökalenterin, yleiskatsauksen ja sisältötaulun Revision-integraatiota "
+"varten päivitä %sPublishPress Revisions Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:309
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions%s."
+msgstr ""
+"Sisältökalenterin, yleiskatsauksen ja sisältötaulun Revision-integraatiota "
+"varten päivitä %sPublishPress Revisions%s."
+
+#: modules/calendar/library/calendar-methods.php:326
+#, php-format
+msgid ""
+"To refine your workflow with custom Post Statuses, install the "
+"%sPublishPress Statuses%s plugin."
+msgstr ""
+"Työskentelytapasi hienosäätämiseksi mukautetuilla postitustiloilla asenna "
+"%sPublishPress Statuses%s -laajennus."
+
+#: modules/calendar/library/calendar-methods.php:340
+#, php-format
+msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
+msgstr ""
+"Mukautettuihin Revisioiden Statuksiin päivittääksesi, päivitä "
+"%sPublishPress Statuses Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:423
+msgid "Publishing Time"
+msgstr "Julkaisuaika"
+
+#: modules/calendar/library/calendar-methods.php:479
+msgid "All posts"
+msgstr "Kaikki julkaisut"
+
+#: modules/calendar/library/calendar-methods.php:527
+#: modules/dashboard/dashboard.php:368
+#: modules/dashboard/dashboard.php:391
+#: modules/dashboard/dashboard.php:425
+msgid "Disabled"
+msgstr "Pois käytöstä"
+
+#: modules/calendar/library/calendar-methods.php:528
+#: modules/dashboard/dashboard.php:369
+#: modules/dashboard/dashboard.php:392
+#: modules/dashboard/dashboard.php:426
+msgid "Enabled"
+msgstr "Käytössä"
+
+#: modules/calendar/library/calendar-methods.php:546
+msgid "Regenerate calendar feed secret"
+msgstr "Generoi kalenterin syötteen salaisuus uudelleen"
+
+#: modules/calendar/library/calendar-methods.php:788
+msgid "Invalid input"
+msgstr "Virheellinen syöte"
+
+#: modules/calendar/library/calendar-methods.php:794
+msgid "Post not found"
+msgstr "Julkaisua ei löytynyt"
+
+#: modules/calendar/library/calendar-methods.php:799
+msgid "No enough permissions"
+msgstr "Ei tarpeeksi oikeuksia"
+
+#: modules/calendar/library/calendar-methods.php:808
+msgid "Invalid date"
+msgstr "Virheellinen päivämäärä"
+
+#: modules/calendar/library/calendar-methods.php:864
+msgid "Publish Time"
+msgstr "Julkaisuaika"
+
+#: modules/calendar/library/calendar-methods.php:894
+#: modules/content-board/library/content-board-utilities.php:1199
+#: modules/content-overview/library/content-overview-utilities.php:525
+msgid "Tags"
+msgstr "Tunnisteet"
+
+#: modules/calendar/library/calendar-methods.php:1001
+msgid "Publish on"
+msgstr "Julkaise"
+
+#: modules/calendar/library/calendar-methods.php:1195
+#: modules/notifications-log/notifications-log.php:210
+msgid "Loading..."
+msgstr "Ladataan..."
+
+#: modules/calendar/library/calendar-methods.php:1196
+msgid "Loading item..."
+msgstr "Ladataan kohdetta..."
+
+#: modules/calendar/library/calendar-methods.php:1197
+msgid "Click to add"
+msgstr "Napsauta lisätäksesi"
+
+#: modules/calendar/library/calendar-methods.php:1198
+msgid "Moving the item..."
+msgstr "Siirretään kohdetta..."
+
+#: modules/calendar/library/calendar-methods.php:1199
+#, php-format
+msgid "Hide the %s last items"
+msgstr "Piilota %s viimeistä kohdetta"
+
+#: modules/calendar/library/calendar-methods.php:1200
+#, php-format
+msgid "Show %s more"
+msgstr "Näytä %s lisää"
+
+#: modules/calendar/library/calendar-methods.php:1201
+#: modules/calendar/library/calendar-methods.php:1704
+msgid "Untitled"
+msgstr "Ilman otsikkoa"
+
+#: modules/calendar/library/calendar-methods.php:1202
+msgid "Close"
+msgstr "Sulje"
+
+#: modules/calendar/library/calendar-methods.php:1203
+#: modules/editorial-comments/lib/editorial-comments.js:349
+msgid "Save"
+msgstr "Tallenna"
+
+#: modules/calendar/library/calendar-methods.php:1204
+msgid "Saving..."
+msgstr "Tallentaa..."
+
+#: modules/calendar/library/calendar-methods.php:1205
+msgid "Save and edit"
+msgstr "Tallenna ja muokkaa"
+
+#: modules/calendar/library/calendar-methods.php:1206
+#, php-format
+msgid "Add content for %s"
+msgstr "Lisää sisältöä %s varten"
+
+#: modules/calendar/library/calendar-methods.php:1207
+msgid "Post type not found"
+msgstr "Julkaisutyyppejä ei löytynyt"
+
+#: modules/calendar/library/calendar-methods.php:1208
+msgid "Post type:"
+msgstr "Julkaisutyyppi:"
+
+#: modules/calendar/library/calendar-methods.php:1209
+#: modules/content-board/library/content-board-utilities.php:1130
+#: modules/content-overview/library/content-overview-utilities.php:456
+msgid "Please, wait! Loading the form fields..."
+msgstr "Ole hyvä ja odota! Ladataan lomakekenttiä..."
+
+#: modules/calendar/library/calendar-methods.php:1210
+msgid "Sun"
+msgstr "Aurinko"
+
+#: modules/calendar/library/calendar-methods.php:1211
+msgid "Mon"
+msgstr "Maanantai"
+
+#: modules/calendar/library/calendar-methods.php:1212
+msgid "Tue"
+msgstr "Tiistai"
+
+#: modules/calendar/library/calendar-methods.php:1213
+msgid "Wed"
+msgstr "Keskiviikko"
+
+#: modules/calendar/library/calendar-methods.php:1214
+msgid "Thu"
+msgstr "Torstai"
+
+#: modules/calendar/library/calendar-methods.php:1215
+msgid "Fri"
+msgstr "Perjantai"
+
+#: modules/calendar/library/calendar-methods.php:1216
+msgid "Sat"
+msgstr "Lauantai"
+
+#: modules/calendar/library/calendar-methods.php:1217
+msgid "Jan"
+msgstr "Tammikuu"
+
+#: modules/calendar/library/calendar-methods.php:1218
+msgid "Feb"
+msgstr "Helmikuu"
+
+#: modules/calendar/library/calendar-methods.php:1219
+msgid "Mar"
+msgstr "Maaliskuu"
+
+#: modules/calendar/library/calendar-methods.php:1220
+msgid "Apr"
+msgstr "Huhtikuu"
+
+#: modules/calendar/library/calendar-methods.php:1221
+msgid "May"
+msgstr "Toukokuu"
+
+#: modules/calendar/library/calendar-methods.php:1222
+msgid "Jun"
+msgstr "Kesäkuu"
+
+#: modules/calendar/library/calendar-methods.php:1223
+msgid "Jul"
+msgstr "Heinäkuu"
+
+#: modules/calendar/library/calendar-methods.php:1224
+msgid "Aug"
+msgstr "Elokuu"
+
+#: modules/calendar/library/calendar-methods.php:1225
+msgid "Sep"
+msgstr "Syyskuu"
+
+#: modules/calendar/library/calendar-methods.php:1226
+msgid "Oct"
+msgstr "Lokakuu"
+
+#: modules/calendar/library/calendar-methods.php:1227
+msgid "Nov"
+msgstr "Marraskuu"
+
+#: modules/calendar/library/calendar-methods.php:1228
+msgid "Dec"
+msgstr "Joulukuu"
+
+#: modules/calendar/library/calendar-methods.php:1229
+#: modules/calendar/library/calendar-utilities.php:51
+#: modules/content-board/library/content-board-utilities.php:598
+#: modules/content-overview/library/content-overview-utilities.php:707
+msgid "All statuses"
+msgstr "Kaikki tilat"
+
+#: modules/calendar/library/calendar-methods.php:1230
+msgid "All categories"
+msgstr "Kaikki kategoriat"
+
+#: modules/calendar/library/calendar-methods.php:1231
+msgid "All tags"
+msgstr "Kaikki tunnisteet"
+
+#: modules/calendar/library/calendar-methods.php:1232
+#: modules/calendar/library/calendar-utilities.php:117
+#: modules/calendar/library/calendar-utilities.php:120
+#: modules/content-board/library/content-board-utilities.php:649
+#: modules/content-board/library/content-board-utilities.php:652
+#: modules/content-overview/library/content-overview-utilities.php:771
+#: modules/content-overview/library/content-overview-utilities.php:774
+msgid "All authors"
+msgstr "Kaikki kirjoittajat"
+
+#: modules/calendar/library/calendar-methods.php:1233
+msgid "All types"
+msgstr "Kaikki tyypit"
+
+#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-utilities.php:513
+#, php-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d viikko"
+msgstr[1] "%d viikkoa"
+
+#: modules/calendar/library/calendar-methods.php:1235
+#, php-format
+msgid "%d weeks"
+msgstr "%d viikkoa"
+
+#: modules/calendar/library/calendar-methods.php:1236
+msgid "Today"
+msgstr "Tänään"
+
+#: modules/calendar/library/calendar-methods.php:1237
+msgid "No terms"
+msgstr "Ei termejä"
+
+#: modules/calendar/library/calendar-methods.php:1238
+#: modules/content-board/content-board.php:1283
+#: modules/content-overview/content-overview.php:836
+#: modules/content-overview/content-overview.php:895
+#: modules/content-overview/content-overview.php:1219
+msgid "Post Date"
+msgstr "Julkaisupäivämäärä"
+
+#: modules/calendar/library/calendar-methods.php:1239
+#: modules/calendar/library/calendar-utilities.php:1097
+#: modules/content-board/content-board.php:1178
+#: modules/content-board/content-board.php:1284
+#: modules/content-overview/content-overview.php:1220
+#: modules/content-overview/content-overview.php:1703
+#: modules/editorial-comments/editorial-comments.php:628
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:159
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: modules/calendar/library/calendar-methods.php:1241
+#: modules/calendar/library/calendar-utilities.php:1114
+#: modules/content-board/content-board.php:1219
+#: modules/content-board/content-board.php:1286
+#: modules/content-overview/content-overview.php:1222
+#: modules/content-overview/content-overview.php:1744
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: modules/calendar/library/calendar-methods.php:1242
+#: modules/calendar/library/calendar-utilities.php:1111
+#: modules/content-board/content-board.php:1206
+#: modules/content-board/content-board.php:1287
+#: modules/content-overview/content-overview.php:1223
+#: modules/content-overview/content-overview.php:1731
+msgid "View"
+msgstr "Näytä"
+
+#: modules/calendar/library/calendar-methods.php:1243
+#: modules/content-board/content-board.php:1288
+#: modules/content-overview/content-overview.php:1224
+msgid "Previous Post"
+msgstr "Edellinen julkaisu"
+
+#: modules/calendar/library/calendar-methods.php:1244
+#: modules/content-board/content-board.php:1289
+#: modules/content-overview/content-overview.php:1225
+msgid "Next Post"
+msgstr "Seuraava julkaisu"
+
+#: modules/calendar/library/calendar-methods.php:1246
+#: modules/content-board/content-board.php:1291
+#: modules/content-overview/content-overview.php:1227
+msgid "Save Changes"
+msgstr "Tallenna muutokset"
+
+#: modules/calendar/library/calendar-methods.php:1247
+#: modules/content-board/content-board.php:1292
+#: modules/content-overview/content-overview.php:1228
+msgid "Taxonomy not set."
+msgstr "Taksonomiaa ei ole asetettu."
+
+#: modules/calendar/library/calendar-methods.php:1687
+msgid "No date supplied."
+msgstr "Päivämäärää ei ole annettu."
+
+#: modules/calendar/library/calendar-methods.php:1698
+msgid "The selected post type is not enabled for the calendar."
+msgstr "Valittua julkaisutyyppiä ei ole otettu käyttöön kalenterissa."
+
+#: modules/calendar/library/calendar-methods.php:1728
+msgid "Invalid Status supplied."
+msgstr "Virheellinen tila annettu."
+
+#: modules/calendar/library/calendar-methods.php:1752
+msgid "Invalid Publish Date supplied."
+msgstr "Virheellinen julkaisutiedot annettu."
+
+#: modules/calendar/library/calendar-methods.php:1821
+msgid "Post created successfully"
+msgstr "Julkaisu luotiin onnistuneesti"
+
+#: modules/calendar/library/calendar-methods.php:1828
+msgid "Post could not be created"
+msgstr "Julkaisua ei voitu luoda"
+
+#: modules/calendar/library/calendar-utilities.php:54
+#: modules/content-overview/library/content-overview-utilities.php:710
+msgid "(Hide all)"
+msgstr "(Piilota kaikki)"
+
+#: modules/calendar/library/calendar-utilities.php:90
+#: modules/calendar/library/calendar-utilities.php:93
+#: modules/content-board/library/content-board-utilities.php:624
+#: modules/content-board/library/content-board-utilities.php:627
+#: modules/content-overview/library/content-overview-utilities.php:746
+#: modules/content-overview/library/content-overview-utilities.php:749
+#, php-format
+msgid "All %s"
+msgstr "Kaikki %s"
+
+#: modules/calendar/library/calendar-utilities.php:150
+#: modules/content-board/library/content-board-utilities.php:681
+#: modules/content-overview/library/content-overview-utilities.php:803
+msgid "All post types"
+msgstr "Kaikki postityypit"
+
+#: modules/calendar/library/calendar-utilities.php:169
+#: modules/calendar/library/calendar-utilities.php:485
+#: modules/content-board/library/content-board-utilities.php:97
+#: modules/content-board/library/content-board-utilities.php:700
+#: modules/content-overview/library/content-overview-methods.php:322
+#: modules/content-overview/library/content-overview-utilities.php:822
+msgid "Search box"
+msgstr "Hakukenttä"
+
+#: modules/calendar/library/calendar-utilities.php:198
+#: modules/calendar/library/calendar-utilities.php:309
+#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:433
+#: modules/content-board/content-board.php:1059
+#: modules/content-board/library/content-board-utilities.php:548
+#: modules/content-board/library/content-board-utilities.php:558
+#: modules/content-board/library/content-board-utilities.php:729
+#: modules/content-board/library/content-board-utilities.php:840
+#: modules/content-board/library/content-board-utilities.php:878
+#: modules/content-board/library/content-board-utilities.php:958
+#: modules/content-overview/library/content-overview-utilities.php:653
+#: modules/content-overview/library/content-overview-utilities.php:663
+#: modules/content-overview/library/content-overview-utilities.php:851
+#: modules/content-overview/library/content-overview-utilities.php:962
+#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1086
+msgid "Apply"
+msgstr "Käytä"
+
+#: modules/calendar/library/calendar-utilities.php:211
+#: modules/content-board/library/content-board-utilities.php:742
+#: modules/content-overview/library/content-overview-utilities.php:864
+msgid "Select option..."
+msgstr "Valitse vaihtoehto..."
+
+#: modules/calendar/library/calendar-utilities.php:245
+#: modules/calendar/library/calendar-utilities.php:279
+#: modules/content-board/library/content-board-utilities.php:112
+#: modules/content-board/library/content-board-utilities.php:776
+#: modules/content-board/library/content-board-utilities.php:810
+#: modules/content-overview/library/content-overview-methods.php:337
+#: modules/content-overview/library/content-overview-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:932
+msgid "to"
+msgstr "kohteeseen"
+
+#: modules/calendar/library/calendar-utilities.php:329
+#: modules/content-board/library/content-board-utilities.php:860
+#: modules/content-overview/library/content-overview-utilities.php:982
+msgid "Checked"
+msgstr "Valittu"
+
+#: modules/calendar/library/calendar-utilities.php:370
+#: modules/content-board/library/content-board-utilities.php:895
+#: modules/content-overview/library/content-overview-utilities.php:1023
+msgid "All status"
+msgstr "Kaikki tilat"
+
+#: modules/calendar/library/calendar-utilities.php:373
+#: modules/content-board/library/content-board-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:1026
+msgid "Passed"
+msgstr "Hyväksytty"
+
+#: modules/calendar/library/calendar-utilities.php:374
+#: modules/content-board/library/content-board-utilities.php:899
+#: modules/content-overview/library/content-overview-utilities.php:1027
+#: modules/notifications-log/library/NotificationsLogTable.php:277
+#: modules/notifications-log/library/NotificationsLogTable.php:293
+msgid "Failed"
+msgstr "Epäonnistunut"
+
+#: modules/calendar/library/calendar-utilities.php:473
+#: modules/content-board/library/content-board-utilities.php:42
+#: modules/content-overview/library/content-overview-methods.php:267
+msgid "Customize Filters"
+msgstr "Mukauta suodattimia"
+
+#: modules/calendar/library/calendar-utilities.php:502
+#: modules/calendar/library/calendar-utilities.php:503
+msgid "Period"
+msgstr "Jakso"
+
+#: modules/calendar/library/calendar-utilities.php:503
+#, php-format
+msgid "%1s weeks"
+msgstr "%1s viikkoa"
+
+#: modules/calendar/library/calendar-utilities.php:553
+#: modules/content-board/library/content-board-utilities.php:152
+#: modules/content-overview/library/content-overview-methods.php:377
+msgid "Reset Filters"
+msgstr "Nollaa suodattimet"
+
+#: modules/calendar/library/calendar-utilities.php:554
+#: modules/content-board/library/content-board-utilities.php:153
+#: modules/content-board/library/content-board-utilities.php:551
+#: modules/content-overview/library/content-overview-methods.php:378
+#: modules/content-overview/library/content-overview-utilities.php:656
+msgid "Reset"
+msgstr "Nollaa"
+
+#: modules/calendar/library/calendar-utilities.php:582
+#: modules/content-board/library/content-board-utilities.php:363
+#: modules/content-overview/library/content-overview-utilities.php:171
+msgid "Enable Filters"
+msgstr "Ota suodattimet käyttöön"
+
+#: modules/calendar/library/calendar-utilities.php:583
+#: modules/content-board/library/content-board-utilities.php:364
+#: modules/content-overview/library/content-overview-utilities.php:172
+msgid "Reorder Filters"
+msgstr "Järjestä suodattimet uudelleen"
+
+#: modules/calendar/library/calendar-utilities.php:588
+msgid "Enable or Disable Content calendar filter."
+msgstr "Ota käyttöön tai poista käytöstä sisällön kalenterisuodatin."
+
+#: modules/calendar/library/calendar-utilities.php:601
+#: modules/content-board/library/content-board-utilities.php:236
+#: modules/content-board/library/content-board-utilities.php:253
+#: modules/content-board/library/content-board-utilities.php:382
+#: modules/content-overview/library/content-overview-utilities.php:44
+#: modules/content-overview/library/content-overview-utilities.php:190
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:68
+msgid "Add New"
+msgstr "Lisää uusi"
+
+#: modules/calendar/library/calendar-utilities.php:609
+#: modules/content-board/library/content-board-utilities.php:390
+#: modules/content-overview/library/content-overview-utilities.php:198
+msgid "Filter Title"
+msgstr "Suodattimen otsikko"
+
+#: modules/calendar/library/calendar-utilities.php:613
+#: modules/content-board/library/content-board-utilities.php:248
+#: modules/content-overview/library/content-overview-utilities.php:56
+msgid "Search Metakey"
+msgstr "Haku Metaväliavain"
+
+#: modules/calendar/library/calendar-utilities.php:618
+#: modules/content-board/library/content-board-utilities.php:399
+#: modules/content-overview/library/content-overview-utilities.php:207
+msgid "Add Filter"
+msgstr "Lisää suodatin"
+
+#: modules/calendar/library/calendar-utilities.php:661
+#: modules/content-board/library/content-board-utilities.php:442
+#: modules/content-overview/library/content-overview-utilities.php:250
+msgid "Drag to change enabled filters order."
+msgstr "Vedä muuttaaksesi aktiivisten suodattimien järjestystä."
+
+#: modules/calendar/library/calendar-utilities.php:702
+#: modules/content-board/library/content-board-utilities.php:71
+#: modules/content-board/library/content-board-utilities.php:337
+#: modules/content-board/library/content-board-utilities.php:483
+#: modules/content-overview/library/content-overview-methods.php:296
+#: modules/content-overview/library/content-overview-utilities.php:145
+#: modules/content-overview/library/content-overview-utilities.php:291
+msgid "Apply Changes"
+msgstr "Käytä muutoksia"
+
+#: modules/calendar/library/calendar-utilities.php:1085
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] "Tagi"
+msgstr[1] "Tagit"
+
+#: modules/calendar/library/calendar-utilities.php:1180
+#: modules/content-board/content-board.php:802
+#: modules/content-overview/content-overview.php:945
+msgid "Custom filters"
+msgstr "Mukautetut suodattimet"
+
+#: modules/calendar/library/calendar-utilities.php:1181
+#: modules/content-board/content-board.php:803
+#: modules/content-overview/content-overview.php:946
+msgid "Click the \"Add New\" button to create new filters."
+msgstr "Napsauta \"Lisää uusi\" -painiketta luodaksesi uusia suodattimia."
+
+#: modules/calendar/library/calendar-utilities.php:1187
+#: modules/content-board/content-board.php:809
+#: modules/content-overview/content-overview.php:952
+msgid "Inbuilt filters"
+msgstr "Sisäänrakennetut suodattimet"
+
+#: modules/calendar/library/calendar-utilities.php:1199
+#: modules/content-board/content-board.php:760
+#: modules/content-board/content-board.php:820
+#: modules/content-overview/content-overview.php:903
+#: modules/content-overview/content-overview.php:964
+#: modules/editorial-metadata/editorial-metadata.php:95
+#: modules/editorial-metadata/editorial-metadata.php:511
+#: modules/editorial-metadata/editorial-metadata.php:1720
+#: modules/editorial-metadata/editorial-metadata.php:1721
+msgid "Editorial Fields"
+msgstr "Toimitukselliset kentät"
+
+#: modules/calendar/library/calendar-utilities.php:1200
+#: modules/content-board/content-board.php:761
+#: modules/content-board/content-board.php:821
+#: modules/content-overview/content-overview.php:904
+#: modules/content-overview/content-overview.php:965
+msgid "You do not have any editorial fields enabled"
+msgstr "Sinulla ei ole käytössä mitään toimituksellisia kenttiä"
+
+#: modules/calendar/library/calendar-utilities.php:1207
+#: modules/content-board/content-board.php:768
+#: modules/content-board/content-board.php:828
+#: modules/content-overview/content-overview.php:911
+#: modules/content-overview/content-overview.php:972
+msgid "You do not have any public taxonomies"
+msgstr "Sinulla ei ole julkisia taksonomioita"
+
+#: modules/calendar/library/calendar-utilities.php:1229
+msgid "Subscribe in iCal or Google Calendar"
+msgstr "Tilaa iCal- tai Google Kalenteriin"
+
+#: modules/calendar/library/calendar-utilities.php:1234
+msgid "Start date"
+msgstr "Aloituspäivämäärä"
+
+#: modules/calendar/library/calendar-utilities.php:1238
+msgid "Current week"
+msgstr "Nykyinen viikko"
+
+#: modules/calendar/library/calendar-utilities.php:1240
+msgid "One month ago"
+msgstr "Yksi kuukausi sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1242
+msgid "Two months ago"
+msgstr "Kaksi kuukautta sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1244
+msgid "Three months ago"
+msgstr "Kolme kuukautta sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1246
+msgid "Four months ago"
+msgstr "Neljä kuukautta sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1248
+msgid "Five months ago"
+msgstr "Viisi kuukautta sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1250
+msgid "Six months ago"
+msgstr "Kuusi kuukautta sitten"
+
+#: modules/calendar/library/calendar-utilities.php:1256
+msgid "End date"
+msgstr "Lopetuspäivä"
+
+#: modules/calendar/library/calendar-utilities.php:1261
+msgid "One week"
+msgstr "Viikko"
+
+#: modules/calendar/library/calendar-utilities.php:1263
+msgid "Two weeks"
+msgstr "Kaksi viikkoa"
+
+#: modules/calendar/library/calendar-utilities.php:1265
+msgid "Three weeks"
+msgstr "Kolme viikkoa"
+
+#: modules/calendar/library/calendar-utilities.php:1267
+msgid "Four weeks"
+msgstr "Neljä viikkoa"
+
+#: modules/calendar/library/calendar-utilities.php:1271
+msgid "Months"
+msgstr "Kuukaudet"
+
+#: modules/calendar/library/calendar-utilities.php:1273
+msgid "One month"
+msgstr "Yksi kuukausi"
+
+#: modules/calendar/library/calendar-utilities.php:1276
+msgid "Two months"
+msgstr "Kaksi kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1278
+msgid "Three months"
+msgstr "Kolme kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1280
+msgid "Four months"
+msgstr "Neljä kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1282
+msgid "Five months"
+msgstr "Viisi kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1284
+msgid "Six months"
+msgstr "Kuusi kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1286
+msgid "Seven months"
+msgstr "Seitsemän kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1288
+msgid "Eight months"
+msgstr "Kahdeksan kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1290
+msgid "Nine months"
+msgstr "Yhdeksän kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1292
+msgid "Ten months"
+msgstr "Kymmenen kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1294
+msgid "Eleven months"
+msgstr "Yksitoista kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1296
+msgid "Twelve months"
+msgstr "Kaksitoista kuukautta"
+
+#: modules/calendar/library/calendar-utilities.php:1308
+msgid "Download .ics file"
+msgstr "Lataa .ics-tiedosto"
+
+#: modules/calendar/library/calendar-utilities.php:1315
+msgid "Copy to the clipboard"
+msgstr "Kopioi leikepöydälle"
+
+#: modules/calendar/library/calendar-utilities.php:1321
+msgid "Click here to subscribe in iCal or Google Calendar"
+msgstr "Napsauta tästä tilataksesi iCal- tai Google-kalenterissa"
+
+#: modules/content-board/content-board.php:142
+#: modules/content-board/content-board.php:379
+#: modules/content-board/content-board.php:396
+#: modules/content-board/content-board.php:397
+msgid "Content Board"
+msgstr "Sisältötaulu"
+
+#: modules/content-board/content-board.php:743
+msgid "Custom Items"
+msgstr "Mukautetut kohteet"
+
+#: modules/content-board/content-board.php:744
+msgid "Click the \"Add New\" button to create new card data."
+msgstr "Napsauta \"Lisää uusi\" -painiketta luodaksesi uusia korttitietoja."
+
+#: modules/content-board/content-board.php:750
+msgid "Inbuilt Card Data"
+msgstr "Sisäänrakennetut korttitiedot"
+
+#: modules/content-board/content-board.php:847
+#: modules/content-board/library/content-board-methods.php:39
+#: modules/content-board/library/content-board-methods.php:107
+#: modules/content-overview/content-overview.php:991
+msgid "An error occured"
+msgstr "Tapahtui virhe"
+
+#: modules/content-board/content-board.php:851
+#: modules/content-board/library/content-board-methods.php:43
+#: modules/content-board/library/content-board-methods.php:111
+#: modules/content-overview/content-overview.php:995
+msgid "Error validating nonce. Please reload this page and try again."
+msgstr "Virhe vahvistettaessa noncea. Lataa tämä sivu uudelleen ja yritä uudelleen."
+
+#: modules/content-board/content-board.php:853
+#: modules/content-board/library/content-board-methods.php:45
+#: modules/content-board/library/content-board-methods.php:113
+#: modules/content-overview/content-overview.php:997
+msgid "Invalid form request."
+msgstr "Virheellinen lomakepyyntö."
+
+#: modules/content-board/content-board.php:1026
+msgid "Move posts here to change their status"
+msgstr "Siirrä viestit tänne muuttaaksesi niiden tilaa"
+
+#: modules/content-board/content-board.php:1029
+msgid "You do not have permission to move post to this status"
+msgstr "Sinulla ei ole lupaa siirtää viestiä tähän tilaan"
+
+#: modules/content-board/content-board.php:1049
+#: modules/content-board/content-board.php:1066
+msgid "Default Date"
+msgstr "Oletuspäivämäärä"
+
+#: modules/content-board/content-board.php:1056
+msgid ""
+"This is the default publish date from today for posts moving to the "
+"Scheduled status."
+msgstr ""
+"Tämä on oletusjulkaisupäivämäärä tänään julkaistaville artikkeleille, jotka "
+"siirtyvät aikataulutetuksi tilaksi."
+
+#: modules/content-board/content-board.php:1100
+#: modules/content-board/content-board.php:1242
+msgid "Only editable posts will be moveable."
+msgstr "Vain muokattavat viestit voidaan siirtää."
+
+#: modules/content-board/content-board.php:1174
+#: modules/content-overview/content-overview.php:1699
+#: modules/dashboard/dashboard.php:299
+msgid "Edit this post"
+msgstr "Muokkaa tätä viestiä"
+
+#: modules/content-board/content-board.php:1186
+#: modules/content-overview/content-overview.php:1711
+msgid "Move this item to the Trash"
+msgstr "Siirrä tämä kohde roskakoriin"
+
+#: modules/content-board/content-board.php:1200
+#: modules/content-overview/content-overview.php:1725
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr "Näytä &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1216
+#: modules/content-overview/content-overview.php:1741
+#, php-format
+msgid "Preview &#8220;%s&#8221;"
+msgstr "Esikatselu &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1263
+#: modules/content-overview/content-overview.php:1194
+msgid "No results found"
+msgstr "Ei tuloksia löytynyt"
+
+#: modules/content-board/content-board.php:1268
+#: modules/content-overview/content-overview.php:1199
+msgid "There are no posts in the range or filter specified."
+msgstr "Määrätyllä alueella tai suodattimella ei ole viestejä."
+
+#: modules/content-board/content-board.php:1600
+#: modules/content-overview/content-overview.php:1579
+msgid "None"
+msgstr "Ei mitään"
+
+#: modules/content-board/library/content-board-methods.php:53
+msgid "Error fetching post data."
+msgstr "Virhe noudettaessa viestin tietoja."
+
+#: modules/content-board/library/content-board-methods.php:63
+msgid "You do not have permission to edit selected post."
+msgstr "Sinulla ei ole oikeuksia muokata valittua viestiä."
+
+#: modules/content-board/library/content-board-methods.php:65
+msgid "You do not have permission to move post to selected post status."
+msgstr "Sinulla ei ole oikeuksia siirtää viestiä valittuun viestin tilaan."
+
+#: modules/content-board/library/content-board-methods.php:95
+#: modules/content-board/library/content-board-methods.php:123
+msgid "Changes saved!"
+msgstr "Muutokset tallennettu!"
+
+#: modules/content-board/library/content-board-methods.php:150
+msgid "Card Data updated successfully."
+msgstr "Korttitiedot päivitetty onnistuneesti."
+
+#: modules/content-board/library/content-board-methods.php:172
+#: modules/content-overview/content-overview.php:676
+msgid "Settings updated successfully."
+msgstr "Asetukset päivitetty onnistuneesti."
+
+#: modules/content-board/library/content-board-methods.php:250
+#: modules/content-overview/content-overview.php:754
+#, php-format
+msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
+msgstr "%s luotiin onnistuneesti. <a href=\"%s\" target=\"_blank\">Muokkaa %s</a>"
+
+#: modules/content-board/library/content-board-methods.php:253
+#: modules/content-overview/content-overview.php:757
+#, php-format
+msgid "%s could not be created"
+msgstr "%s ei voitu luoda"
+
+#: modules/content-board/library/content-board-methods.php:258
+#: modules/content-overview/content-overview.php:762
+#, php-format
+msgid "You do not have permission to add new %s"
+msgstr "Sinulla ei ole oikeuksia lisätä uutta %s"
+
+#: modules/content-board/library/content-board-methods.php:437
+#: modules/content-overview/library/content-overview-methods.php:160
+msgid "Post types to show:"
+msgstr "Näytettävät viestityypit:"
+
+#: modules/content-board/library/content-board-utilities.php:32
+msgid "Customize Card Data"
+msgstr "Mukauta korttitietoja"
+
+#: modules/content-board/library/content-board-utilities.php:51
+#: modules/content-overview/library/content-overview-methods.php:276
+msgid "Print"
+msgstr "Tulosta"
+
+#: modules/content-board/library/content-board-utilities.php:63
+#: modules/content-overview/library/content-overview-methods.php:288
+msgid "Maximum number of posts to display"
+msgstr "Suurin määrä näytettäviä viestejä"
+
+#: modules/content-board/library/content-board-utilities.php:84
+#: modules/content-overview/library/content-overview-methods.php:309
+msgid "New Post"
+msgstr "Uusi viesti"
+
+#: modules/content-board/library/content-board-utilities.php:217
+msgid "Enable or Disable"
+msgstr "Ota käyttöön tai poista käytöstä"
+
+#: modules/content-board/library/content-board-utilities.php:218
+msgid "Reorder"
+msgstr "Järjestä uudelleen"
+
+#: modules/content-board/library/content-board-utilities.php:223
+msgid "Enable or Disable Content Board Card Data."
+msgstr "Ota käyttöön tai poista käytöstä sisältötaulun korttitiedot."
+
+#: modules/content-board/library/content-board-utilities.php:296
+msgid "Drag to change enabled card data order."
+msgstr "Vedä vaihtaaksesi käytössä olevien korttitietojen järjestystä."
+
+#: modules/content-board/library/content-board-utilities.php:369
+msgid "Enable or Disable Content Board filter."
+msgstr "Ota käyttöön tai poista käytöstä sisältötaulun suodatin."
+
+#: modules/content-board/library/content-board-utilities.php:394
+#: modules/content-overview/library/content-overview-utilities.php:202
+msgid "Select Metakey"
+msgstr "Valitse Metakey"
+
+#: modules/content-board/library/content-board-utilities.php:509
+#: modules/content-overview/library/content-overview-utilities.php:614
+msgid "Show content from"
+msgstr "Näytä sisältö osoitteesta"
+
+#: modules/content-board/library/content-board-utilities.php:554
+#: modules/content-overview/library/content-overview-utilities.php:659
+#: modules/editorial-comments/editorial-comments.php:574
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:425
+#: modules/editorial-comments/lib/editorial-comments.js:350
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: modules/content-board/library/content-board-utilities.php:555
+#: modules/content-overview/library/content-overview-utilities.php:660
+msgid "Change"
+msgstr "Vaihda"
+
+#: modules/content-board/library/content-board-utilities.php:987
+#: modules/content-overview/library/content-overview-utilities.php:314
+#, php-format
+msgid "Add New %s"
+msgstr "Lisää uusi %s"
+
+#: modules/content-board/library/content-board-utilities.php:1121
+#: modules/content-overview/library/content-overview-utilities.php:447
+#, php-format
+msgid "Create %s"
+msgstr "Luo %s"
+
+#: modules/content-board/library/content-board-utilities.php:1123
+#: modules/content-overview/library/content-overview-utilities.php:449
+msgid "Submit"
+msgstr "Lähetä"
+
+#: modules/content-board/library/content-board-utilities.php:1171
+#: modules/content-overview/library/content-overview-utilities.php:497
+msgid "Publish Date"
+msgstr "Julkaisupäivämäärä"
+
+#: modules/content-overview/content-overview.php:156
+#: modules/content-overview/content-overview.php:376
+#: modules/content-overview/content-overview.php:393
+#: modules/content-overview/content-overview.php:394
+msgid "Content Overview"
+msgstr "Sisältöyhteenveto"
+
+#: modules/content-overview/content-overview.php:654
+msgid "Column updated successfully."
+msgstr "Sarake päivitettiin onnistuneesti."
+
+#: modules/content-overview/content-overview.php:837
+#: modules/content-overview/content-overview.php:896
+msgid "Last Modified"
+msgstr "Viimeksi muokattu"
+
+#: modules/content-overview/content-overview.php:883
+msgid "Custom Columns"
+msgstr "Mukautetut sarakkeet"
+
+#: modules/content-overview/content-overview.php:884
+msgid "Click the \"Add New\" button to create new columns."
+msgstr "Napsauta \"Lisää uusi\" -painiketta luodaksesi uusia sarakkeita."
+
+#: modules/content-overview/content-overview.php:890
+msgid "Inbuilt Columns"
+msgstr "Sisäänrakennetut sarakkeet"
+
+#: modules/content-overview/library/content-overview-methods.php:207
+msgid "Item moved to the trash."
+msgid_plural "%d items moved to the trash."
+msgstr[0] "Esine siirretty roskakoriin."
+msgstr[1] "%d esinettä siirretty roskakoriin."
+
+#: modules/content-overview/library/content-overview-methods.php:221
+msgid "Item restored from the Trash."
+msgid_plural "%d items restored from the Trash."
+msgstr[0] "Esine palautettu roskakorista."
+msgstr[1] "%d esinettä palautettu roskakorista."
+
+#: modules/content-overview/library/content-overview-methods.php:257
+msgid "Customize Columns"
+msgstr "Mukauta sarakkeita"
+
+#: modules/content-overview/library/content-overview-utilities.php:25
+msgid "Enable Columns"
+msgstr "Ota sarakkeet käyttöön"
+
+#: modules/content-overview/library/content-overview-utilities.php:26
+msgid "Reorder Columns"
+msgstr "Järjestä sarakkeet uudelleen"
+
+#: modules/content-overview/library/content-overview-utilities.php:31
+msgid "Enable or Disable Content Overview table column."
+msgstr "Ota käyttöön tai poista käytöstä sisältöyhteenveto-taulukon sarake."
+
+#: modules/content-overview/library/content-overview-utilities.php:52
+msgid "Column Title"
+msgstr "Sarakeotsikko"
+
+#: modules/content-overview/library/content-overview-utilities.php:61
+msgid "Add Column"
+msgstr "Lisää sarake"
+
+#: modules/content-overview/library/content-overview-utilities.php:104
+msgid "Drag to change enabled columns order."
+msgstr "Vedä muuttaaksesi käytettävissä olevien sarakkeiden järjestystä."
+
+#: modules/content-overview/library/content-overview-utilities.php:177
+msgid "Enable or Disable Content Overview filter."
+msgstr "Ota käyttöön tai poista käytöstä sisällön yleiskatsauksen suodatin."
+
+#: modules/dashboard/dashboard.php:56
+msgid "Dashboard Widgets"
+msgstr "Ohjauspaneelin widgetit"
+
+#: modules/dashboard/dashboard.php:70
+msgid "Widget Options"
+msgstr "Widgetin asetukset"
+
+#: modules/dashboard/dashboard.php:165
+msgid "Unpublished Content"
+msgstr "Julkaisematon sisältö"
+
+#: modules/dashboard/dashboard.php:174
+#: modules/dashboard/dashboard.php:353
+msgid "Notepad"
+msgstr "Muistikirja"
+
+#: modules/dashboard/dashboard.php:183
+#: modules/dashboard/dashboard.php:346
+msgid "My Content Notifications"
+msgstr "Omat sisältöilmoitukset"
+
+#: modules/dashboard/dashboard.php:211
+msgid "Posts at a Glance"
+msgstr "Viestit yhdellä silmäyksellä"
+
+#: modules/dashboard/dashboard.php:305
+msgid "This post was last updated on "
+msgstr "Tätä viestiä on viimeksi päivitetty "
+
+#: modules/dashboard/dashboard.php:316
+msgid "Sorry! You're not subscribed to any posts!"
+msgstr "Anteeksi! Et ole tilannut yhtään viestiä!"
+
+#: modules/dashboard/dashboard.php:339
+msgid "Post Status Widget"
+msgstr "Viestin tila -widget"
+
+#: modules/dashboard/dashboard.php:410
+msgid "The notifications module will need to be enabled for this widget to display."
+msgstr "Ilmoitusten moduuli on otettava käyttöön, jotta tämä widget näkyy."
+
+#: modules/dashboard/widgets/dashboard-notepad.php:50
+msgid "Dashboard Note"
+msgstr "Ohjauspaneelin muistiinpano"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:140
+#, php-format
+msgid "%1$s last updated on %2$s"
+msgstr "%1$s viimeksi päivitetty %2$s"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:168
+msgid "Update Note"
+msgstr "Päivitys muistiinpano"
+
+#: modules/debug/debug.php:68
+msgid "Debug"
+msgstr "Virheenkorjaus"
+
+#: modules/debug/debug.php:228
+#: modules/debug/debug.php:291
+msgid "PublishPress Debug Log"
+msgstr "PublishPressin virheenkorjauslokit"
+
+#: modules/debug/debug.php:242
+#: modules/debug/debug.php:243
+msgid "Debug Log"
+msgstr "Virheenkorjauslokit"
+
+#: modules/debug/debug.php:292
+msgid "File info"
+msgstr "Tiedoston tiedot"
+
+#: modules/debug/debug.php:293
+msgid "Path"
+msgstr "Polku"
+
+#: modules/debug/debug.php:294
+msgid "Log content"
+msgstr "Lokisisältö"
+
+#: modules/debug/debug.php:295
+msgid "Size"
+msgstr "Koko"
+
+#: modules/debug/debug.php:296
+msgid "Created on"
+msgstr "Luotu"
+
+#: modules/debug/debug.php:297
+msgid "Modified on"
+msgstr "Muokattu"
+
+#: modules/debug/debug.php:298
+msgid "Delete file"
+msgstr "Poista tiedosto"
+
+#: modules/debug/debug.php:299
+msgid "Debug data"
+msgstr "Vianetsintätiedot"
+
+#: modules/debug/debug.php:300
+msgid "Log File"
+msgstr "Lokitiedosto"
+
+#: modules/debug/debug.php:303
+msgid "Log file not found."
+msgstr "Lokitiedostoa ei löytynyt."
+
+#: modules/debug/debug.php:304
+msgid ""
+"If you see any error or look for information regarding PublishPress, please "
+"don't hesitate to contact the support team. E-mail us:"
+msgstr ""
+"Jos näet virheen tai etsit tietoa PublishPressista, älä epäröi ottaa "
+"yhteyttä tukitiimiin. Lähetä meille sähköpostia:"
+
+#: modules/debug/debug.php:308
+msgid "Click to delete the log file. Be careful, this operation can not be undone. "
+msgstr ""
+"Napsauta poistaaksesi lokitiedoston. Ole varovainen, tätä toimintoa ei voi "
+"peruuttaa. "
+
+#: modules/debug/debug.php:358
+msgid "Action nonce not found."
+msgstr "Toimintakoodi ei löytynyt."
+
+#: modules/debug/debug.php:365
+msgid "Invalid action nonce."
+msgstr "Virheellinen toimintakoodi."
+
+#: modules/editorial-comments/editorial-comments.php:63
+#: modules/editorial-comments/editorial-comments.php:231
+#: modules/editorial-comments/editorial-comments.php:232
+#: modules/editorial-comments/editorial-comments.php:453
+msgid "Editorial Comments"
+msgstr "Toimitukselliset kommentit"
+
+#: modules/editorial-comments/editorial-comments.php:78
+msgid "Choose Post Types"
+msgstr "Valitse julkaisutyypit"
+
+#: modules/editorial-comments/editorial-comments.php:83
+msgid ""
+"<p>Editorial comments help you cut down on email overload and keep the "
+"conversation close to where it matters: your content. Threaded commenting "
+"in the admin, similar to what you find at the end of a blog post, allows "
+"writers and editors to privately leave feedback and discuss what needs to "
+"be changed before publication.</p><p>Anyone with access to view the story "
+"in progress will also have the ability to comment on it. If you have "
+"notifications enabled, those following the post will receive an email every "
+"time a comment is left.</p>"
+msgstr ""
+"<p>Toimitukselliset kommentit auttavat sinua vähentämään "
+"sähköpostikuormitusta ja pitämään keskustelun lähellä sitä, mikä on "
+"tärkeää: sisältöäsi. Ketjuttaen kommentointi hallinnassa, kuten "
+"blogikirjoituksen lopussa, sallii kirjoittajien ja toimittajien jättää "
+"yksityisiä palautteita ja keskustella siitä, mitä on muutettava ennen "
+"julkaisua.</p><p>Kaikilla, joilla on pääsy nähdä kesken oleva tarina, on "
+"myös mahdollisuus kommentoida sitä. Jos sinulla on ilmoitukset käytössä, "
+"artikkelia seuraavat saavat sähköpostin aina, kun kommentti jätetään.</p>"
+
+#: modules/editorial-comments/editorial-comments.php:88
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">Editorial "
+"Comments Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Lisätietoja:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\""
+">Toimituksellisten kommenttien dokumentaatio</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"GitHubissa</a></p>"
+
+#: modules/editorial-comments/editorial-comments.php:205
+#: modules/editorial-comments/editorial-comments.php:717
+msgid "Remove"
+msgstr "Poista"
+
+#: modules/editorial-comments/editorial-comments.php:206
+#: modules/editorial-comments/library/EditorialCommentsTable.php:181
+#: modules/notifications-log/notifications-log.php:204
+msgid "All Posts"
+msgstr "Kaikki julkaisut"
+
+#: modules/editorial-comments/editorial-comments.php:207
+#: modules/editorial-comments/library/EditorialCommentsTable.php:196
+msgid "All Users"
+msgstr "Kaikki käyttäjät"
+
+#: modules/editorial-comments/editorial-comments.php:272
+#. translators: %s: search keywords
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Hakutulokset &#8220;%s&#8221; varten"
+
+#: modules/editorial-comments/editorial-comments.php:285
+msgid "Search Comments"
+msgstr "Hae kommentteja"
+
+#: modules/editorial-comments/editorial-comments.php:528
+msgid ""
+"You can add editorial comments to a post once you've saved it for the first "
+"time."
+msgstr ""
+"Voit lisätä toimituksellisia kommentteja artikkeliin, kun olet tallentanut "
+"sen ensimmäistä kertaa."
+
+#: modules/editorial-comments/editorial-comments.php:548
+#: modules/editorial-comments/editorial-comments.php:552
+msgid "Add an editorial comment"
+msgstr "Lisää toimituksellinen kommentti"
+
+#: modules/editorial-comments/editorial-comments.php:558
+msgid "Attach file"
+msgstr "Liitä tiedosto"
+
+#: modules/editorial-comments/editorial-comments.php:570
+msgid "Add Comment"
+msgstr "Lisää kommentti"
+
+#: modules/editorial-comments/editorial-comments.php:616
+msgid "Reply to this comment"
+msgstr "Vastaa tähän kommenttiin"
+
+#: modules/editorial-comments/editorial-comments.php:619
+msgid "Reply"
+msgstr "Vastaa"
+
+#: modules/editorial-comments/editorial-comments.php:639
+#: modules/editorial-comments/library/EditorialCommentsTable.php:434
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:161
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:303
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:333
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:614
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:644
+#: modules/notifications-log/library/NotificationsLogTable.php:376
+#: modules/notifications-log/library/NotificationsLogTable.php:407
+msgid "Delete"
+msgstr "Poista"
+
+#: modules/editorial-comments/editorial-comments.php:684
+#, php-format
+msgid "said on %1$s at %2$s"
+msgstr "sanoi %1$s klo %2$s"
+
+#: modules/editorial-comments/editorial-comments.php:745
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be adding editorial "
+"comments."
+msgstr ""
+"Nonce-tarkistus epäonnistui. Varmista, että olet oikeutettu lisäämään "
+"toimituksellisia kommentteja."
+
+#: modules/editorial-comments/editorial-comments.php:753
+#: modules/editorial-comments/editorial-comments.php:894
+#: modules/editorial-comments/editorial-comments.php:1026
+#: modules/editorial-comments/editorial-comments.php:1142
+msgid "Invalid comment data"
+msgstr "Virheelliset kommenttidatat"
+
+#: modules/editorial-comments/editorial-comments.php:766
+msgid ""
+"Sorry, you don't have the privileges to add editorial comments. Please talk "
+"to your Administrator."
+msgstr ""
+"Anteeksi, sinulla ei ole oikeuksia lisätä toimituksellisia kommentteja. Ole "
+"hyvä ja keskustele järjestelmänvalvojan kanssa."
+
+#: modules/editorial-comments/editorial-comments.php:776
+#: modules/editorial-comments/editorial-comments.php:940
+msgid "Please enter a comment."
+msgstr "Ole hyvä ja syötä kommentti."
+
+#: modules/editorial-comments/editorial-comments.php:863
+#: modules/editorial-comments/editorial-comments.php:993
+#: modules/editorial-comments/editorial-comments.php:1103
+#: modules/editorial-comments/editorial-comments.php:1187
+msgid "There was a problem of some sort. Try again or contact your administrator."
+msgstr ""
+"Jossain tapahtui ongelma. Yritä uudelleen tai ota yhteyttä "
+"järjestelmänvalvojaan."
+
+#: modules/editorial-comments/editorial-comments.php:883
+#: modules/editorial-comments/editorial-comments.php:1015
+#: modules/editorial-comments/editorial-comments.php:1132
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be editing editorial "
+"comments."
+msgstr ""
+"Nonce-tarkistus epäonnistui. Varmista, että olet oikeutettu muokkaamaan "
+"toimituksellisia kommentteja."
+
+#: modules/editorial-comments/editorial-comments.php:909
+#: modules/editorial-comments/editorial-comments.php:1041
+msgid ""
+"Sorry, you don't have the privileges to edit editorial comments. Please "
+"talk to your Administrator."
+msgstr ""
+"Anteeksi, sinulla ei ole oikeuksia muokata toimituksellisia kommentteja. "
+"Ole hyvä ja keskustele järjestelmänvalvojan kanssa."
+
+#: modules/editorial-comments/editorial-comments.php:927
+msgid ""
+"Sorry, you don't have the privileges to edit this editorial comment. Please "
+"talk to your Administrator."
+msgstr ""
+"Anteeksi, sinulla ei ole oikeuksia muokata tätä toimituksellista "
+"kommenttia. Ole hyvä ja keskustele asiasta järjestelmänvalvojasi kanssa."
+
+#: modules/editorial-comments/editorial-comments.php:1057
+#: modules/editorial-comments/editorial-comments.php:1161
+msgid ""
+"Sorry, you don't have the privileges to delete this editorial comment. "
+"Please talk to your Administrator."
+msgstr ""
+"Anteeksi, sinulla ei ole oikeuksia poistaa tätä toimituksellista "
+"kommenttia. Ole hyvä ja keskustele asiasta järjestelmänvalvojasi kanssa."
+
+#: modules/editorial-comments/editorial-comments.php:1078
+msgid "Sorry, you can't delete this editorial comment because it has some replies."
+msgstr ""
+"Anteeksi, et voi poistaa tätä toimituksellista kommenttia, koska sillä on "
+"joitain vastauksia."
+
+#: modules/editorial-comments/editorial-comments.php:1179
+msgid "Comment deleted successfully."
+msgstr "Kommentti poistettu onnistuneesti."
+
+#: modules/editorial-comments/editorial-comments.php:1230
+msgid "Enable for these post types:"
+msgstr "Ota käyttöön näille postityypeille:"
+
+#: modules/editorial-comments/editorial-comments.php:1237
+msgid "Comment author name field:"
+msgstr "Kommentin kirjoittajan nimen kenttä:"
+
+#: modules/editorial-comments/editorial-comments.php:1262
+msgid "Nickname"
+msgstr "Lempinimi"
+
+#: modules/editorial-comments/editorial-comments.php:1263
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+#: modules/editorial-comments/editorial-comments.php:1264
+msgid "Display Name"
+msgstr "Näyttönimi"
+
+#: modules/editorial-comments/editorial-comments.php:1265
+msgid "First Name"
+msgstr "Etunimi"
+
+#: modules/editorial-comments/editorial-comments.php:1266
+msgid "Last Name"
+msgstr "Sukunimi"
+
+#: modules/editorial-comments/editorial-comments.php:1268
+msgid "User Url"
+msgstr "Käyttäjä URL"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:158
+msgid "No editorial comments."
+msgstr "Ei toimituksellisia kommentteja."
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:210
+#: modules/notifications-log/library/NotificationsLogTable.php:646
+msgid "Filter"
+msgstr "Suodata"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:229
+msgid "Comment"
+msgstr "Kommentti"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:231
+msgid "Post"
+msgstr "Postaus"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:233
+msgid "Submitted on"
+msgstr "Lähetetty"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:336
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:201
+#: modules/notifications/notifications.php:1974
+#. translators: 1: Comment date, 2: Comment time.
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s klo %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:109
+msgid "Editorial fields term added."
+msgstr "Toimitukselliset kenttätermityö lisätty."
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+msgid "Editorial fields term updated."
+msgstr "Toimitukselliset kenttätermityö päivitetty."
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid "Editorial fields term doesn't exist."
+msgstr "Toimituksellista kenttätermityötä ei ole olemassa."
+
+#: modules/editorial-metadata/editorial-metadata.php:112
+msgid "Editorial fields term deleted."
+msgstr "Toimituksellinen kenttätermityö poistettu."
+
+#: modules/editorial-metadata/editorial-metadata.php:113
+msgid "Editorial fields order updated."
+msgstr "Toimituskenttäjärjestys päivitetty."
+
+#: modules/editorial-metadata/editorial-metadata.php:114
+msgid "Editorial fields visibility changed."
+msgstr "Toimituskenttien näkyvyys muutettu."
+
+#: modules/editorial-metadata/editorial-metadata.php:120
+msgid ""
+"<p>Keep track of important details about your content with editorial "
+"fields. This feature allows you to create as many date, text, number, etc. "
+"fields as you like, and then use them to store information like contact "
+"details or the location of an interview.</p><p>Once you’ve set your fields "
+"up, editorial fields integrates with both the calendar and the content "
+"overview. Make an editorial fields item visible to have it appear to the "
+"rest of your team. Keep it hidden to restrict the information between the "
+"writer and their editor.</p>"
+msgstr ""
+"<p>Pidä kirjaa tärkeistä yksityiskohdista sisällöstäsi toimituksellisten "
+"kenttien avulla. Tämä ominaisuus mahdollistaa niin monen päivämäärä-, "
+"teksti-, numero- ym. kentän luomisen kuin haluat, ja voit käyttää niitä "
+"tallentaaksesi tietoja, kuten yhteystietoja tai haastattelun "
+"sijaintia.</p><p>Kun olet määrittänyt kenttäsi, toimitukselliset kentät "
+"integroituvat sekä kalenteriin että sisällön yleiskatsaukseen. Tee "
+"toimituksellinen kenttä näkyväksi, jotta se ilmestyy muiden tiimisi "
+"jäsenten nähtäväksi. Pidä se piilossa rajoittaaksesi tietoja kirjoittajan "
+"ja heidän toimittajansa välillä.</p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:125
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">Editorial "
+"Fields Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Lisätietoja:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\""
+">Toimituksellisten kenttien dokumentaatio</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"Githubissa</a></p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:212
+msgid "First Draft Date"
+msgstr "Ensimmäisen luonnoksen päivämäärä"
+
+#: modules/editorial-metadata/editorial-metadata.php:215
+msgid "When the first draft needs to be ready."
+msgstr "Milloin ensimmäisen luonnoksen pitää olla valmis."
+
+#: modules/editorial-metadata/editorial-metadata.php:220
+msgid "Assignment"
+msgstr "Tehtävä"
+
+#: modules/editorial-metadata/editorial-metadata.php:223
+msgid "What the post needs to cover."
+msgstr "Mitä julkaisun tulee käsitellä."
+
+#: modules/editorial-metadata/editorial-metadata.php:288
+msgid "Checkbox"
+msgstr "Valintaruutu"
+
+#: modules/editorial-metadata/editorial-metadata.php:289
+msgid "Dropdown Select"
+msgstr "Pudotusvalikko"
+
+#: modules/editorial-metadata/editorial-metadata.php:291
+msgid "Location"
+msgstr "Sijainti"
+
+#: modules/editorial-metadata/editorial-metadata.php:292
+msgid "Number"
+msgstr "Numero"
+
+#: modules/editorial-metadata/editorial-metadata.php:293
+msgid "Paragraph"
+msgstr "Kappale"
+
+#: modules/editorial-metadata/editorial-metadata.php:294
+msgid "Text"
+msgstr "Teksti"
+
+#: modules/editorial-metadata/editorial-metadata.php:295
+msgid "User"
+msgstr "Käyttäjä"
+
+#: modules/editorial-metadata/editorial-metadata.php:372
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will "
+"remain but will not be visible unless this term is re-added."
+msgstr ""
+"Oletko varma, että haluat poistaa tämän termin? Kaikki tämän termin "
+"metadata pysyy, mutta se ei ole näkyvissä, ellei tätä termiä lisätä "
+"takaisin."
+
+#: modules/editorial-metadata/editorial-metadata.php:453
+msgid "Search Editorial Fields"
+msgstr "Etsi toimituskenttiä"
+
+#: modules/editorial-metadata/editorial-metadata.php:454
+msgid "Popular Editorial Fields"
+msgstr "Suositut toimituskentät"
+
+#: modules/editorial-metadata/editorial-metadata.php:455
+msgid "All Editorial Fields"
+msgstr "Kaikki toimituskentät"
+
+#: modules/editorial-metadata/editorial-metadata.php:456
+msgid "Edit Editorial Fields"
+msgstr "Muokkaa toimituskenttiä"
+
+#: modules/editorial-metadata/editorial-metadata.php:457
+msgid "Update Editorial Fields"
+msgstr "Päivitä toimitukselliset kentät"
+
+#: modules/editorial-metadata/editorial-metadata.php:458
+msgid "Add New Editorial Fields"
+msgstr "Lisää uusia toimituksellisia kenttiä"
+
+#: modules/editorial-metadata/editorial-metadata.php:459
+msgid "New Editorial Fields"
+msgstr "Uudet toimitukselliset kentät"
+
+#: modules/editorial-metadata/editorial-metadata.php:549
+msgid "No editorial fields available."
+msgstr "Toimituksellisia kenttiä ei ole saatavilla."
+
+#: modules/editorial-metadata/editorial-metadata.php:551
+#, php-format
+msgid " <a href=\"%s\">Add fields to get started</a>."
+msgstr " <a href=\"%s\">Lisää kenttiä aloittaaksesi</a>."
+
+#: modules/editorial-metadata/editorial-metadata.php:553
+msgid ""
+" Encourage your site administrator to configure your editorial workflow by "
+"adding editorial fields."
+msgstr ""
+"Kannusta sivustosi ylläpitäjää määrittämään toimituksellinen työnkulku "
+"lisäämällä toimituksellisia kenttiä."
+
+#: modules/editorial-metadata/editorial-metadata.php:1244
+#: modules/editorial-metadata/editorial-metadata.php:1401
+msgid "All options value and labels are required."
+msgstr "Kaikki vaihtoehtojen arvot ja nimilaput ovat pakollisia."
+
+#: modules/editorial-metadata/editorial-metadata.php:1253
+msgid "Please enter a name for the editorial fields."
+msgstr "Ole hyvä ja kirjoita nimi toimituksellisille kentille."
+
+#: modules/editorial-metadata/editorial-metadata.php:1260
+msgid "Please enter a slug for the editorial fields."
+msgstr "Ole hyvä ja kirjoita slug toimituksellisille kentille."
+
+#: modules/editorial-metadata/editorial-metadata.php:1266
+msgid "Name conflicts with existing term. Please choose another."
+msgstr "Nimi on ristiriidassa olemassa olevan termin kanssa. Valitse toinen."
+
+#: modules/editorial-metadata/editorial-metadata.php:1273
+#: modules/editorial-metadata/editorial-metadata.php:1433
+msgid "Name already in use. Please choose another."
+msgstr "Nimi on jo käytössä. Valitse toinen."
+
+#: modules/editorial-metadata/editorial-metadata.php:1277
+msgid "Slug already in use. Please choose another."
+msgstr "Slug on jo käytössä. Valitse toinen."
+
+#: modules/editorial-metadata/editorial-metadata.php:1283
+#: modules/editorial-metadata/editorial-metadata.php:1290
+#: modules/editorial-metadata/editorial-metadata.php:1446
+msgid "Name cannot exceed 200 characters. Please try a shorter name."
+msgstr "Nimi ei voi ylittää 200 merkkiä. Yritä lyhyempää nimeä."
+
+#: modules/editorial-metadata/editorial-metadata.php:1300
+msgid "Please select a valid metadata type."
+msgstr "Ole hyvä ja valitse voimassa oleva metadatatyyppi."
+
+#: modules/editorial-metadata/editorial-metadata.php:1332
+msgid "Error adding term."
+msgstr "Virhe termin lisäämisessä."
+
+#: modules/editorial-metadata/editorial-metadata.php:1410
+msgid "Please enter a name for the editorial fields"
+msgstr "Ole hyvä ja kirjoita nimi toimituksellisille kentille"
+
+#: modules/editorial-metadata/editorial-metadata.php:1415
+msgid "Please enter a valid, non-numeric name for the editorial fields."
+msgstr ""
+"Ole hyvä ja kirjoita voimassa oleva, ei-numeroarvoinen nimi "
+"toimituksellisille kentille."
+
+#: modules/editorial-metadata/editorial-metadata.php:1424
+msgid "Metadata name conflicts with existing term. Please choose another."
+msgstr ""
+"Metadatan nimi on ristiriidassa olemassa olevan termin kanssa. Valitse "
+"toinen."
+
+#: modules/editorial-metadata/editorial-metadata.php:1438
+msgid "Name conflicts with slug for another term. Please choose something else."
+msgstr "Nimi on ristiriidassa toisen termin slugin kanssa. Valitse jokin muu."
+
+#: modules/editorial-metadata/editorial-metadata.php:1482
+#: modules/editorial-metadata/editorial-metadata.php:1525
+msgid "Error updating term."
+msgstr "Virhe termin päivittämisessä."
+
+#: modules/editorial-metadata/editorial-metadata.php:1550
+msgid "Terms not set."
+msgstr "Ehtoja ei ole asetettu."
+
+#: modules/editorial-metadata/editorial-metadata.php:1591
+msgid "Error deleting term."
+msgstr "Virhe ehtoa poistettaessa."
+
+#: modules/editorial-metadata/editorial-metadata.php:1638
+msgid "Register editorial fields for these post types:"
+msgstr "Rekisteröi toimitukselliset kenttätyypit näille postityypeille:"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:109
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
+msgid "No"
+msgstr "Ei"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:110
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:142
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:351
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:660
+msgid "Yes"
+msgstr "Kyllä"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:127
+msgid "This editorial fields type is not yet supported."
+msgstr "Tätä toimituksellista kenttätyyppiä ei tueta vielä."
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:223
+msgid "Not set"
+msgstr "Ei asetettu"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:82
+#, php-format
+msgid "View &#8220;%s&#8221; on Google Maps"
+msgstr "Näytä &#8220;%s&#8221; Google Mapsissa"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-select-handler.php:255
+#, php-format
+msgid "-- Select %s --"
+msgstr "-- Valitse %s --"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-user-handler.php:79
+msgid "-- Select a user --"
+msgstr "-- Valitse käyttäjä --"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
+msgid "Position"
+msgstr "Sijainti"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:45
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:443
+msgid "Name"
+msgstr "Nimi"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:47
+msgid "Field Type"
+msgstr "Kenttätyyppi"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:48
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:176
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474
+msgid "Description"
+msgstr "Kuvaus"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:135
+msgid "No editorial fields found."
+msgstr "Toimituksellisia kenttiä ei löytynyt."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:158
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:452
+msgid "The name is for labeling the editorial fields."
+msgstr "Nimi on tarkoitettu toimituksellisten kenttien merkitsemiseen."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457, fuzzy
+msgid "Slug"
+msgstr "Slug"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:168
+msgid "The slug cannot be changed once the term has been created."
+msgstr "Slugia ei voida muuttaa, kun termi on luotu."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:184
+msgid ""
+"The description can be used to communicate with your team about what the "
+"field is for."
+msgstr ""
+"Kuvausta voidaan käyttää kommunikoimaan tiimisi kanssa siitä, mihin kenttä "
+"on tarkoitettu."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
+msgid "Type"
+msgstr "Tyyppi"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:198
+msgid "The field type cannot be changed once created."
+msgstr "Kenttätyyppiä ei voida muuttaa sen luomisen jälkeen."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:204
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:516
+msgid "User role"
+msgstr "Käyttäjärooli"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:211
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:523
+msgid "Select roles..."
+msgstr "Valitse roolit..."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:223
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:537
+msgid ""
+"Filter the list of users in the editorial meta to users in the selected "
+"roles."
+msgstr "Suodata toimituksellisen metan käyttäjien lista valittuihin rooleihin."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:229
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:542
+msgid "Select Type"
+msgstr "Valitse Tyyppi"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:233
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:545
+msgid "Single Select"
+msgstr "Yksittäinen valinta"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:234
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:546
+msgid "Multiple Select"
+msgstr "Monivalinta"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:251
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:566
+msgid "Indicate the select type."
+msgstr "Ilmoita valintatyyppi."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:258
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:571
+msgid "Dropdown Option"
+msgstr "Pudotusvalinta"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:263
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:574
+msgid ""
+"Enter the dropdown option value and label. You can move options to change "
+"their order."
+msgstr ""
+"Syötä avattavan valikon vaihtoehdon arvo ja etiketti. Voit siirtää "
+"vaihtoehtoja muuttaaksesi niiden järjestystä."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:285
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:316
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:596
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:627
+msgid "Meta Value"
+msgstr "Meta-arvo"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:291
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:322
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:602
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:633
+msgid "Display Label"
+msgstr "Näyttöetiketti"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:300
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:330
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:611
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:641
+msgid "Default option"
+msgstr "Oletusvaihtoehto"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:338
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:649
+msgid "Add Another Option"
+msgstr "Lisää toinen vaihtoehto"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:346
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:656
+msgid "Show on Content Calendar and Overview form"
+msgstr "Näytä sisällön kalenterissa ja yleiskatsauksen lomakkeessa"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:361
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:674
+msgid ""
+"If enabled, this field will be available when adding new posts on the "
+"Content Calendar and Overview screen."
+msgstr ""
+"Jos se on käytössä, tämä kenttä on saatavilla, kun lisätään uusia viestejä "
+"Sisältökalenterissa ja Yleiskatsaus-näytöllä."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
+msgid "Add to post types"
+msgstr "Lisää julkaisutyyppiin"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:375
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:686
+msgid "This field will be available for these post types."
+msgstr "Tämä kenttä on saatavilla näille julkaisutyyppille."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:394
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:704
+msgid "Show on Post Types screen"
+msgstr "Näytä julkaisutyyppien näytöllä"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:399
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:708
+msgid "This field will be viewable on the overview screens for these post types."
+msgstr "Tämä kenttä näkyy yleiskatsauksen näytöillä näille julkaisutyyppille."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:422
+msgid "Update Editorial fields term"
+msgstr "Päivitä toimituksellisten kenttien termi"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:466
+msgid ""
+"The \"slug\" is the URL-friendly version of the name. It is usually all "
+"lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
+"\"Slug\" on nimen URL-ystävällinen versio. Se on yleensä pienillä "
+"kirjaimilla ja sisältää vain kirjaimia, numeroita ja viivoja."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:483
+msgid ""
+"The description can be used to communicate with your team about what the "
+"metadata is for."
+msgstr ""
+"Kuvausta voidaan käyttää kommunikoimaan tiimisi kanssa siitä, mihin "
+"metadata on tarkoitettu."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:511
+msgid "Indicate the type of editorial fields."
+msgstr "Ilmoita toimituksellisten kenttien tyyppi."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:730
+msgid "Add New Editorial fields term"
+msgstr "Lisää uusi toimituksellisten kenttien termi"
+
+#: modules/efmigration/efmigration.php:288
+msgid ""
+"Edit Flow should not be used alongside PublishPress Planner. If you want to "
+"use PublishPress Planner, please complete Edit Flow data migration and then "
+"deactivate Edit Flow."
+msgstr ""
+"Edit Flow'ta ei tule käyttää yhdessä PublishPress Plannerin kanssa. Jos "
+"haluat käyttää PublishPress Planneria, suorita ensin Edit Flow -datan "
+"siirto ja poista sitten Edit Flow käytöstä."
+
+#: modules/improved-notifications/improved-notifications.php:102
+msgid "Advanced Notifications"
+msgstr "Edistyneet ilmoitukset"
+
+#: modules/improved-notifications/improved-notifications.php:257
+msgid "Duplicated notification threshold:"
+msgstr "Kopioitujen ilmoitusten kynnys:"
+
+#: modules/improved-notifications/improved-notifications.php:265
+msgid "Default notification channels:"
+msgstr "Oletusilmoituskanavat:"
+
+#: modules/improved-notifications/improved-notifications.php:363
+msgid "Existing Post is updated"
+msgstr "Olemassa oleva viesti on päivitetty"
+
+#: modules/improved-notifications/improved-notifications.php:409
+msgid "New Post is created in Draft status"
+msgstr "Uusi viesti on luotu luonnostilaiseen"
+
+#: modules/improved-notifications/improved-notifications.php:462
+msgid "New Post is Published"
+msgstr "Uusi viesti on julkaistu"
+
+#: modules/improved-notifications/improved-notifications.php:501
+msgid "Notify on editorial comments"
+msgstr "Ilmoita toimituksellisista kommenteista"
+
+#: modules/improved-notifications/improved-notifications.php:606
+msgid "minutes"
+msgstr "minuuttia"
+
+#: modules/improved-notifications/improved-notifications.php:610
+msgid ""
+"This will prevent too many notifications being sent for the same or similar "
+"events. Set this to a higher number if you are receiving duplicate emails."
+msgstr ""
+"Tämä estää liian monien ilmoitusten lähettämisen samoista tai "
+"samankaltaisista tapahtumista. Aseta tämä suuremmaksi, jos saat "
+"kaksoiskappaleita sähköpostitse."
+
+#: modules/improved-notifications/improved-notifications.php:656
+#: modules/improved-notifications/improved-notifications.php:1495
+#: views/user_profile_notification_channels.html.php:1
+msgid "Editorial Notifications"
+msgstr "Toimitukselliset ilmoitukset"
+
+#: modules/improved-notifications/improved-notifications.php:657
+#: modules/improved-notifications/improved-notifications.php:1496
+#: views/user_profile_notification_channels.html.php:6
+msgid "Choose the channels where each workflow will send notifications to:"
+msgstr "Valitse kanavat, joihin jokainen työnkulku lähettää ilmoituksia:"
+
+#: modules/improved-notifications/improved-notifications.php:661
+#: modules/improved-notifications/improved-notifications.php:1483
+#: modules/improved-notifications/improved-notifications.php:1500
+msgid "Muted"
+msgstr "Mykistetty"
+
+#: modules/improved-notifications/improved-notifications.php:662
+#: modules/improved-notifications/improved-notifications.php:1501
+#: views/user_profile_notification_channels.html.php:14
+msgid "Workflows"
+msgstr "Työnkulut"
+
+#: modules/improved-notifications/improved-notifications.php:663
+#: modules/improved-notifications/improved-notifications.php:1502
+#: views/user_profile_notification_channels.html.php:15
+msgid "Channels"
+msgstr "Kanavat"
+
+#: modules/improved-notifications/improved-notifications.php:1088
+#: modules/notifications-log/notifications-log.php:75
+#: modules/notifications-log/notifications-log.php:263
+#: modules/notifications-log/notifications-log.php:489
+#: modules/notifications-log/notifications-log.php:490
+msgid "Notifications Log"
+msgstr "Ilmoitusten loki"
+
+#: modules/improved-notifications/improved-notifications.php:1122
+msgid "Workflow Settings"
+msgstr "Työnkulun asetukset"
+
+#: modules/improved-notifications/improved-notifications.php:1131
+msgid "Options"
+msgstr "Asetukset"
+
+#: modules/improved-notifications/improved-notifications.php:1140
+msgid "Help"
+msgstr "Ohje"
+
+#: modules/improved-notifications/improved-notifications.php:1170
+#: modules/notifications-log/library/NotificationsLogTable.php:498
+msgid "For which content?"
+msgstr "Mille sisällölle?"
+
+#: modules/improved-notifications/improved-notifications.php:1190
+msgid "What to say?"
+msgstr "Mitä sanoa?"
+
+#: modules/improved-notifications/improved-notifications.php:1310
+msgid "Select at least one option for each section."
+msgstr "Valitse vähintään yksi vaihtoehto jokaiselle osastolle."
+
+#: modules/improved-notifications/improved-notifications.php:1314
+msgid ""
+"You can add dynamic information to the Subject or Body text using the "
+"following shortcodes:"
+msgstr ""
+"Voit lisätä dynaamista tietoa Aihe- tai Viestitekstiin käyttämällä "
+"seuraavia lyhytkoodeja:"
+
+#: modules/improved-notifications/improved-notifications.php:1319
+msgid "Editorial Comment"
+msgstr "Toimittajan kommentti"
+
+#: modules/improved-notifications/improved-notifications.php:1320
+msgid "User making changes or comments"
+msgstr "Käyttäjä, joka tekee muutoksia tai kommentteja"
+
+#: modules/improved-notifications/improved-notifications.php:1321
+msgid "Workflow"
+msgstr "Työnkulku"
+
+#: modules/improved-notifications/improved-notifications.php:1322
+msgid "Format"
+msgstr "Muoto"
+
+#: modules/improved-notifications/improved-notifications.php:1323
+msgid "Receiver"
+msgstr "Vastaanottaja"
+
+#: modules/improved-notifications/improved-notifications.php:1324
+msgid "shortcode"
+msgstr "lyhytkoodi"
+
+#: modules/improved-notifications/improved-notifications.php:1325
+msgid "field"
+msgstr "kenttä"
+
+#: modules/improved-notifications/improved-notifications.php:1326
+msgid ""
+"On each shortcode, you can select one or more fields. If more than one, "
+"they will be displayed separated by \", \"."
+msgstr ""
+"Jokaisessa lyhytkoodissa voit valita yhden tai useamman kentän. Jos kenttiä "
+"on useita, ne näytetään erottamalla \", \"."
+
+#: modules/improved-notifications/improved-notifications.php:1330
+msgid "Available fields"
+msgstr "Saatavilla olevat kentät"
+
+#: modules/improved-notifications/improved-notifications.php:1331
+msgid "Meta fields"
+msgstr "Meta-kentät"
+
+#: modules/improved-notifications/improved-notifications.php:1332
+msgid "Click here to read more about shortcode options..."
+msgstr "Napsauta täällä lukeaksesi lisää lyhytkoodivaihtoehdoista..."
+
+#: modules/modules-settings/modules-settings.php:50
+msgid "Features"
+msgstr "Ominaisuudet"
+
+#: modules/modules-settings/modules-settings.php:221
+msgid "Feel free to select only the features you need."
+msgstr "Valitse vapaasti vain ne ominaisuudet, joita tarvitset."
+
+#: modules/modules-settings/modules-settings.php:227
+msgid "Enabled features"
+msgstr "Olemassa olevat ominaisuudet"
+
+#: modules/notifications-log/library/ModuleErrors.php:54
+msgid "Invalid receiver for the notification"
+msgstr "Virheellinen vastaanottaja ilmoitukselle"
+
+#: modules/notifications-log/library/ModuleErrors.php:55
+msgid "Invalid channel for the notification"
+msgstr "Virheellinen kanava ilmoitukselle"
+
+#: modules/notifications-log/library/ModuleErrors.php:56
+msgid "Notification log not found"
+msgstr "Ilmoituslokia ei löytynyt"
+
+#: modules/notifications-log/library/NotificationsLogModel.php:264
+msgid "The parent log was deleted or probably rescheduled"
+msgstr "Ylälokki on poistettu tai todennäköisesti aikataulutettu uudelleen"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:116
+#, php-format
+msgid "Workflow: %s"
+msgstr "Työprosessi: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:128
+#, php-format
+msgid "User: %s (%d)"
+msgstr "Käyttäjä: %s (%d)"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:157
+#, php-format
+msgid "Post type: %s"
+msgstr "Julkaisutyypi: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:160
+#, php-format
+msgid "Post ID: %d"
+msgstr "Julkaisun ID: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:163
+#, php-format
+msgid "Blog ID: %d"
+msgstr "Blogi ID: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:233
+#, php-format
+msgid "Scheduled for %d receivers. Click here to display them."
+msgstr "Aikataulutettu %d vastaanottajalle. Klikkaa täällä näyttämään ne."
+
+#: modules/notifications-log/library/NotificationsLogTable.php:261
+msgid " Scheduled, but late"
+msgstr " Aikataulutettu, mutta myöhässä"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:263
+msgid " Scheduled"
+msgstr " Aikataulutettu"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:282
+#: modules/notifications-log/library/NotificationsLogTable.php:533
+msgid "Error"
+msgstr "Virhe"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:283
+msgid "The notification was set as \"Scheduled\" but the cron task is not found"
+msgstr "Ilmoitus asetettiin \"Aikataulutetuksi\" mutta cron-tehtävää ei löytynyt"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:288
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:291
+#: modules/notifications-log/library/NotificationsLogTable.php:525
+msgid "Skipped"
+msgstr "Ohitettu"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "asynchronous"
+msgstr "asynkroninen"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "synchronous"
+msgstr "synkroninen"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:361
+#: modules/notifications-log/library/NotificationsLogTable.php:406
+msgid "Reschedule"
+msgstr "Aikatauluta uudelleen"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:383
+msgid "Blog: "
+msgstr "Blogi: "
+
+#: modules/notifications-log/library/NotificationsLogTable.php:408
+msgid "Delete All"
+msgstr "Poista kaikki"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:517
+msgid "All"
+msgstr "Kaikki"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:521
+msgid "Success"
+msgstr "Onnistui"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:590
+msgid "All events"
+msgstr "Kaikki tapahtumat"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:607
+msgid "All channels"
+msgstr "Kaikki kanavat"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:626
+msgid "From date"
+msgstr "Alkaen päivä"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:632
+msgid "To date"
+msgstr "Päivään asti"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:640
+msgid "All Receivers"
+msgstr "Kaikki vastaanottajat"
+
+#: modules/notifications-log/notifications-log.php:205
+msgid "All Workflows"
+msgstr "Kaikki työnkulut"
+
+#: modules/notifications-log/notifications-log.php:206
+msgid "All Actions"
+msgstr "Kaikki toiminnot"
+
+#: modules/notifications-log/notifications-log.php:207
+msgid "All Channels"
+msgstr "Kaikki kanavat"
+
+#: modules/notifications-log/notifications-log.php:208
+msgid "All Statuses"
+msgstr "Kaikki tilat"
+
+#: modules/notifications-log/notifications-log.php:209
+#: publishpress.php:1409
+#: publishpress.php:1414
+msgid "Notification"
+msgstr "Ilmoitus"
+
+#: modules/notifications-log/notifications-log.php:272
+#, php-format
+msgid "%s notification found."
+msgid_plural "%s notifications found."
+msgstr[0] "%s ilmoitus löydetty.|%s ilmoitusta löydetty."
+msgstr[1] "%s ilmoitusta löydetty.|%s ilmoitusta löydetty."
+
+#: modules/notifications-log/notifications-log.php:284
+msgid "No notifications found."
+msgstr "Ei ilmoituksia löytynyt."
+
+#: modules/notifications-log/notifications-log.php:442
+#, php-format
+msgid ""
+"This notification is very similar to another one sent less than %d minutes "
+"ago for the same receiver"
+msgstr ""
+"Tämä ilmoitus on hyvin samanlainen kuin toinen, joka lähetettiin vähemmän "
+"kuin %d minuuttia sitten samalle vastaanottajalle"
+
+#: modules/notifications-log/notifications-log.php:817
+msgid "Subject:"
+msgstr "Aihe:"
+
+#: modules/notifications-log/notifications-log.php:825
+msgid "Content:"
+msgstr "Sisältö:"
+
+#: modules/notifications-log/notifications-log.php:835
+msgid ""
+"This is a preview of the scheduled message. The content can still change "
+"until the notification is sent."
+msgstr ""
+"Tämä on esikatselu aikataulutetusta viestistä. Sisältö voi vielä muuttua, "
+"kunnes ilmoitus lähetetään."
+
+#: modules/notifications/notifications.php:75
+#: modules/notifications/notifications.php:562
+#: publishpress.php:1408
+#: publishpress.php:1413
+msgid "Notifications"
+msgstr "Ilmoitukset"
+
+#: modules/notifications/notifications.php:97
+msgid ""
+"<p>Notifications ensure you keep up to date with progress your most "
+"important content. Users can be subscribed to notifications on a post one "
+"by one or by selecting roles.</p><p>When enabled, notifications can be sent "
+"when a post changes status or an editorial comment is left by a writer or "
+"an editor.</p>"
+msgstr ""
+"<p>Ilmoitukset varmistavat, että pysyt ajan tasalla tärkeimmän sisältösi "
+"edistymisestä. Käyttäjät voivat tilata ilmoituksia viestistä yksi "
+"kerrallaan tai valitsemalla roolit.</p><p>Kun se on käytössä, ilmoituksia "
+"voidaan lähettää, kun viestin tila muuttuu tai toimituksellinen kommentti "
+"jätetään kirjoittajan tai toimittajan toimesta.</p>"
+
+#: modules/notifications/notifications.php:102
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Notifications "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Lisätietoja:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Ilmoitusten "
+"dokumentaatio</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress "
+"Githubissa</a></p>"
+
+#: modules/notifications/notifications.php:303
+#: modules/notifications/notifications.php:306
+msgid "Notify User"
+msgstr "Ilmoita käyttäjälle"
+
+#: modules/notifications/notifications.php:305
+msgid "Notify Users"
+msgstr "Ilmoita käyttäjille"
+
+#: modules/notifications/notifications.php:318
+#: modules/notifications/notifications.php:321
+msgid "Notify Role"
+msgstr "Ilmoita roolille"
+
+#: modules/notifications/notifications.php:320
+msgid "Notify Roles"
+msgstr "Ilmoita rooleille"
+
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+msgid "Notification Group"
+msgstr "Ilmoitusryhmä"
+
+#: modules/notifications/notifications.php:336
+msgid "Notification Groups"
+msgstr "Ilmoitusryhmät"
+
+#: modules/notifications/notifications.php:350
+#: modules/notifications/notifications.php:353
+msgid "Notify Email"
+msgstr "Ilmoita sähköpostille"
+
+#: modules/notifications/notifications.php:352
+msgid "Notify Emails"
+msgstr "Ilmoita sähköposteille"
+
+#: modules/notifications/notifications.php:530
+#: modules/notifications/notifications.php:940
+msgid "Click to stop being notified on updates for this post"
+msgstr "Napsauta lopettaaksesi ilmoitukset tämän julkaisun päivityksistä"
+
+#: modules/notifications/notifications.php:531
+#: modules/notifications/notifications.php:939
+msgid "Stop notifying me"
+msgstr "Lopeta ilmoittaminen minulle"
+
+#: modules/notifications/notifications.php:534
+#: modules/notifications/notifications.php:946
+msgid "Click to start being notified on updates for this post"
+msgstr "Napsauta aloittaaksesi ilmoitukset tämän julkaisun päivityksistä"
+
+#: modules/notifications/notifications.php:535
+#: modules/notifications/notifications.php:945
+msgid "Notify me"
+msgstr "Ilmoita minulle"
+
+#: modules/notifications/notifications.php:599
+msgid ""
+"Enter users, roles, or email addresses that should receive notifications "
+"for this post."
+msgstr ""
+"Syötä käyttäjät, roolit tai sähköpostiosoitteet, jotka saavat ilmoituksia "
+"tästä viestistä."
+
+#: modules/notifications/notifications.php:603
+msgid "Show active notifications"
+msgstr "Näytä aktiiviset ilmoitukset"
+
+#: modules/notifications/notifications.php:642
+msgid ""
+"This won't have any effect unless you have at least one workflow targeting "
+"the \"Users who selected \"Notify me\" for the content\" option."
+msgstr ""
+"Tällä ei ole vaikutusta, ellei sinulla ole vähintään yhtä työnkulkua, joka "
+"kohdistaa sisällön \"Käyttäjät, jotka valitsivat \"Ilmoita minulle\"\" "
+"vaihtoehtoon."
+
+#: modules/notifications/notifications.php:656
+msgid "Active Notifications"
+msgstr "Aktiiviset ilmoitukset"
+
+#: modules/notifications/notifications.php:684
+msgid "Workflow has users enrolled"
+msgstr "Työprosessi on käyttäjiä rekisteröitynä"
+
+#: modules/notifications/notifications.php:691
+#, php-format
+msgid "No active notifications found for this %s."
+msgstr "Ei aktiivisia ilmoituksia löytynyt tälle %s."
+
+#: modules/notifications/notifications.php:1054
+#, php-format
+msgid "You are receiving this email because you are subscribed to \"%s\"."
+msgstr "Saat tämän sähköpostin, koska olet tilannut \"%s\"."
+
+#: modules/notifications/notifications.php:1059
+#, php-format
+msgid "This email was sent %s."
+msgstr "Tämä sähköposti lähetettiin %s."
+
+#: modules/notifications/notifications.php:1715
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+msgstr ""
+"Näytä \"Ilmoita minulle\" ja \"Lopeta ilmoittaminen minulle\" -linkit "
+"näille postityypeille:"
+
+#: modules/notifications/notifications.php:1723
+msgid "Email from:"
+msgstr "Sähköposti osoitteesta:"
+
+#: modules/notifications/notifications.php:1731
+msgid "Always notify the author of the content:"
+msgstr "Ilmoita aina sisällön kirjoittajalle:"
+
+#: modules/notifications/notifications.php:1739
+msgid "Always notify users who have edited the content:"
+msgstr "Ilmoita aina käyttäjille, jotka ovat muokanneet sisältöä:"
+
+#: modules/notifications/notifications.php:1747
+msgid "Blacklisted taxonomies for Notifications"
+msgstr "Mustalla listalla olevat taksonomiat ilmoituksille"
+
+#: modules/notifications/notifications.php:1861, fuzzy
+msgid "slug1,slug2"
+msgstr "slug1,slug2"
+
+#: modules/notifications/notifications.php:1867
+msgid ""
+"Add a list of taxonomy-slugs separated by comma that should not be loaded "
+"by the Taxonomy content filter when adding a new Notification Workflow."
+msgstr ""
+"Lisää luettelo taksonomian slugeista, jotka on erotettu pilkuilla, joita ei "
+"pitäisi ladata taksonomian sisältösuodattimella, kun lisätään uusi Ilmoitus "
+"työnkulku."
+
+#: modules/notifications/notifications.php:2003
+msgid "WordPress Scheduler"
+msgstr "WordPressin aikatauluttaja"
+
+#: modules/notifications/notifications.php:2012
+#, php-format
+msgid "[%1$s] New %2$s Created: \"%3$s\""
+msgstr "[%1$s] Uusi %2$s luotu: \"%3$s\""
+
+#: modules/notifications/notifications.php:2019
+#, php-format
+msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+msgstr "Uusi %1$s (#%2$s \"%3$s\" ) luotiin käyttäjän %4$s toimesta %5$s"
+
+#: modules/notifications/notifications.php:2029
+#, php-format
+msgid "[%1$s] %2$s Trashed: \"%3$s\""
+msgstr "[%1$s] %2$s poistettu roskakoriin: \"%3$s\""
+
+#: modules/notifications/notifications.php:2036
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" siirrettiin roskakoriin käyttäjän %4$s toimesta %5$s"
+
+#: modules/notifications/notifications.php:2046
+#, php-format
+msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+msgstr "[%1$s] %2$s palautettu (roskakorista): \"%3$s\""
+
+#: modules/notifications/notifications.php:2053
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" palautettiin roskakorista käyttäjän %4$s toimesta %5$s"
+
+#: modules/notifications/notifications.php:2076
+#, php-format
+msgid "[%1$s] %2$s Published: \"%3$s\""
+msgstr "[%1$s] %2$s julkaistu: \"%3$s\""
+
+#: modules/notifications/notifications.php:2083
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" julkaisi käyttäjä %4$s %5$s"
+
+#: modules/notifications/notifications.php:2093
+#, php-format
+msgid "[%1$s] %2$s Unpublished: \"%3$s\""
+msgstr "[%1$s] %2$s Julkaisematon: \"%3$s\""
+
+#: modules/notifications/notifications.php:2100
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" julkaistiin uudelleen %4$s %5$s"
+
+#: modules/notifications/notifications.php:2110
+#, php-format
+msgid "[%1$s] %2$s Status Changed for \"%3$s\""
+msgstr "[%1$s] %2$s Tila muutettu \"%3$s\":ksi"
+
+#: modules/notifications/notifications.php:2117
+#, php-format
+msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
+msgstr "Tilaa muutettiin %1$s #%2$s \"%3$s\" %4$s %5$s toimesta"
+
+#: modules/notifications/notifications.php:2128
+#, php-format
+msgid "This action was taken on %1$s at %2$s %3$s"
+msgstr "Tämä toiminto suoritettiin %1$s klo %2$s %3$s"
+
+#: modules/notifications/notifications.php:2141
+#, php-format
+msgid "%1$s => %2$s"
+msgstr "%1$s => %2$s"
+
+#: modules/notifications/notifications.php:2149
+#, php-format
+msgid "== %s Details =="
+msgstr "== %s Tiedot =="
+
+#: modules/notifications/notifications.php:2150
+#, php-format
+msgid "Title: %s"
+msgstr "Otsikko: %s"
+
+#: modules/notifications/notifications.php:2154
+#, php-format
+msgid "Author: %1$s (%2$s )"
+msgstr "Kirjoittaja: %1$s (%2$s )"
+
+#: modules/notifications/notifications.php:2168
+#: modules/notifications/notifications.php:2221
+msgid "== Actions =="
+msgstr "== Toiminnot =="
+
+#: modules/notifications/notifications.php:2170
+#: modules/notifications/notifications.php:2227
+#, php-format
+msgid "Add editorial comment: %s"
+msgstr "Lisää toimituksellinen kommentti: %s"
+
+#: modules/notifications/notifications.php:2173
+#: modules/notifications/notifications.php:2230
+#, php-format
+msgid "Edit: %s"
+msgstr "Muokkaa: %s"
+
+#: modules/notifications/notifications.php:2174
+#: modules/notifications/notifications.php:2231
+#, php-format
+msgid "View: %s"
+msgstr "Näytä: %s"
+
+#: modules/notifications/notifications.php:2185
+#, php-format
+msgid "[%1$s] New Editorial Comment: \"%2$s\""
+msgstr "[%1$s] Uusi toimituksellinen kommentti: \"%2$s\""
+
+#: modules/notifications/notifications.php:2192
+#, php-format
+msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
+msgstr "Uusi toimituksellinen kommentti lisättiin %3$s #%1$s \"%2$s\":lle"
+
+#: modules/notifications/notifications.php:2199
+#, php-format
+msgid "%1$s (%2$s ) said on %3$s at %4$s:"
+msgstr "%1$s (%2$s ) sanoi %3$s klo %4$s:"
+
+#: modules/notifications/notifications.php:2223
+#, php-format
+msgid "Reply: %s"
+msgstr "Vastaus: %s"
+
+#: modules/notifications/notifications.php:2234
+#, php-format
+msgid "You can see all editorial comments on this %s here: "
+msgstr "Voit nähdä kaikki toimitukselliset kommentit tästä %s täällä: "
+
+#: modules/reviews/reviews.php:66
+msgid "Reviews"
+msgstr "Arvostelut"
+
+#: modules/settings/settings.php:124
+msgid "settings"
+msgstr "asetukset"
+
+#: modules/settings/settings.php:141
+msgid "PublishPress Settings"
+msgstr "PublishPress Asetukset"
+
+#: modules/settings/settings.php:142
+msgid "Settings"
+msgstr "Asetukset"
+
+#: modules/settings/settings.php:269
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "Jos pidät %s:stä, jätä meille %s-arvio. Kiitos!"
+
+#: modules/settings/settings.php:289
+msgid "There are no PublishPress modules registered"
+msgstr "Ei ole rekisteröityjä PublishPress-moduuleja"
+
+#: modules/settings/settings.php:380
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"Poistettu käytöstä, koska add_post_type_support('%1$s', '%2$s') on mukana "
+"ladatussa tiedostossa."
+
+#: modules/settings/settings.php:404
+#: publishpress.php:675
+msgid "Cheatin&#8217; uh?"
+msgstr "Petätkö uh?"
+
+#: modules/settings/views/footer-base.html.php:21
+msgid "About"
+msgstr "Tietoja"
+
+#: modules/settings/views/footer-base.html.php:25
+msgid "Documentation"
+msgstr "Dokumentaatio"
+
+#: modules/settings/views/footer-base.html.php:29
+msgid "Contact"
+msgstr "Ota yhteyttä"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
+msgid "The Events Calendar Integration"
+msgstr "Tapahtumakalenterin integraatio"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:53
+msgid "Integrate with the The Events Calendar plugin"
+msgstr "Integroi Tapahtumakalenteri-laajennuksen kanssa"
+
+#: publishpress.php:590
+msgid "Planner"
+msgstr "Suunnittelija"
+
+#: publishpress.php:671
+msgid "Configure"
+msgstr "Määritä"
+
+#: publishpress.php:674
+msgid "Please correct your form errors below and try again."
+msgstr "Korjaa alla olevat lomakevirheet ja yritä uudelleen."
+
+#: publishpress.php:676
+msgid "You do not have necessary permissions to complete this action."
+msgstr "Sinulla ei ole tarvittavia käyttöoikeuksia tämän toiminnon suorittamiseen."
+
+#: publishpress.php:680
+msgid "Post does not exist"
+msgstr "Viesti ei olemassa"
+
+#: publishpress.php:1410
+msgid "Add New Notification"
+msgstr "Lisää uusi ilmoitus"
+
+#: publishpress.php:1411
+msgid "Edit Notification"
+msgstr "Muokkaa ilmoitusta"
+
+#: publishpress.php:1412
+msgid "Search Notifications"
+msgstr "Hae ilmoituksia"
+
+#: publishpress.php:1415
+#: publishpress.php:1416
+msgid "No notification found"
+msgstr "Ilmoitusta ei löytynyt"
+
+#: publishpress.php:1456
+msgid ""
+"PublishPress Planner tried to load multiple times. Please, deactivate and "
+"remove other instances of PublishPress, specially if you are using "
+"PublishPress Pro."
+msgstr ""
+"PublishPress Planner yritti ladata useita kertoja. Poista käytöstä ja "
+"poista muut PublishPress-instanssit, erityisesti jos käytät PublishPress "
+"Pro:ta."
+
+#: publishpress.php:1464
+msgid "Warning"
+msgstr "Varoitus"
+
+#: modules/editorial-comments/lib/editorial-comments.js:203
+#: modules/editorial-comments/lib/editorial-comments.js:371
+msgid "Please enter a comment"
+msgstr "Ole hyvä ja syötä kommentti"
+
+#: modules/editorial-comments/lib/editorial-comments.js:377
+msgid "Sending content..."
+msgstr "Sisältöä lähetetään..."
+
+#: modules/editorial-comments/lib/editorial-comments.js:434
+msgid ""
+"This comment can't be deleted because it has one or more replies. Before "
+"deleting it make sure to delete all the replies first."
+msgstr ""
+"Tätä kommenttia ei voi poistaa, koska sillä on yksi tai useampi vastaus. "
+"Varmista, että poistat kaikki vastaukset ensin ennen kuin poistat sen."
+
+#: modules/editorial-comments/lib/editorial-comments.js:438
+msgid "Are you sure you want to delete this comment?"
+msgstr "Oletko varma, että haluat poistaa tämän kommentin?"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "for"
+msgstr "käyttäjältä"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "by"
+msgstr "tekijältä"
+
+#: modules/content-board/library/content-board-utilities.php:538
+#: modules/content-overview/library/content-overview-utilities.php:643
+#, php-format
+msgctxt "%1$s = start date, %2$s = end date"
+msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
+msgstr " %1$s <div class=\"input-divider\">to</div> %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:451
+msgctxt "taxonomy general name"
+msgid "Editorial Field"
+msgstr "Toimituksellinen kenttä"
+
+#: modules/editorial-metadata/editorial-metadata.php:452
+msgctxt "taxonomy singular name"
+msgid "Editorial Field"
+msgstr "Toimittajakenttä"

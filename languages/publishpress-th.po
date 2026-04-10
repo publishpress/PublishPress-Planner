@@ -1,0 +1,3492 @@
+# Copyright (C) 2026 PublishPress
+# This file is distributed under the same license as the PublishPress Planner plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Planner 4.7.3-beta3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
+"PO-Revision-Date: 2026-04-10 02:42+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: publishpress\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: publishpress.php
+#: modules/settings/settings.php:266, fuzzy
+#. Plugin Name of the plugin
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
+#: publishpress.php, fuzzy
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#: publishpress.php
+#. Description of the plugin
+msgid ""
+"PublishPress Planner helps you plan and publish content inside WordPress. "
+"Features include a content calendar, kanban board, and notifications."
+msgstr ""
+"PublishPress Planner ช่วยให้คุณวางแผนและเผยแพร่เนื้อหาภายใน WordPress "
+"ฟีเจอร์ประกอบด้วยปฏิทินเนื้อหา, กระดานคานบาน และการแจ้งเตือน."
+
+#: publishpress.php
+#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/settings/settings.php:61, fuzzy
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#: publishpress.php, fuzzy
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+#: common/php/class-module.php:331
+#: modules/calendar/calendar.php:1233
+msgid "Published"
+msgstr "เผยแพร่แล้ว"
+
+#: common/php/class-module.php:332
+msgid "Draft"
+msgstr "ร่าง"
+
+#: common/php/class-module.php:333
+#: modules/calendar/calendar.php:1228
+#: modules/content-board/content-board.php:979
+#: modules/notifications-log/library/NotificationsLogTable.php:529
+msgid "Scheduled"
+msgstr "กำหนดเวลา"
+
+#: common/php/class-module.php:334
+#: modules/content-board/content-board.php:989
+msgid "Private"
+msgstr "ส่วนตัว"
+
+#: common/php/class-module.php:335
+msgid "Pending Review"
+msgstr "รอการตรวจสอบ"
+
+#: common/php/class-module.php:336
+#: modules/calendar/library/calendar-methods.php:1240
+#: modules/calendar/library/calendar-utilities.php:1104
+#: modules/content-board/content-board.php:1190
+#: modules/content-board/content-board.php:1285
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1715
+msgid "Trash"
+msgstr "ถังขยะ"
+
+#: common/php/class-module.php:750
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:31
+msgid "Roles"
+msgstr "บทบาท"
+
+#: common/php/class-module.php:753
+msgid "Role"
+msgstr "บทบาท"
+
+#: common/php/class-module.php:761
+msgid "Groups"
+msgstr "กลุ่ม"
+
+#: common/php/class-module.php:764
+msgid "Group"
+msgstr "กลุ่ม"
+
+#: common/php/class-module.php:772
+#: lib/Notifications/Workflow/Step/Receiver/User.php:26
+msgid "Users"
+msgstr "ผู้ใช้"
+
+#: common/php/class-module.php:782
+msgid "E-mails"
+msgstr "อีเมล"
+
+#: common/php/class-module.php:1109
+#, php-format
+msgid "Select %s"
+msgstr "เลือก %s"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-utilities.php:1190
+#: modules/content-overview/content-overview.php:833
+#: modules/content-overview/content-overview.php:848
+#: modules/content-overview/content-overview.php:955
+msgid "Revision Status"
+msgstr "สถานะการแก้ไข"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-methods.php:424
+#: modules/calendar/library/calendar-methods.php:858
+#: modules/calendar/library/calendar-methods.php:1245
+#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-utilities.php:1189
+#: modules/content-board/content-board.php:811
+#: modules/content-board/content-board.php:1290
+#: modules/content-board/library/content-board-utilities.php:594
+#: modules/content-board/library/content-board-utilities.php:1165
+#: modules/content-overview/content-overview.php:954
+#: modules/content-overview/content-overview.php:1226
+#: modules/content-overview/library/content-overview-utilities.php:491
+#: modules/content-overview/library/content-overview-utilities.php:703
+msgid "Post Status"
+msgstr "สถานะโพสต์"
+
+#: common/php/util.php:46
+msgid "(no title)"
+msgstr "(ไม่มีชื่อ)"
+
+#: core/Error.php:79
+msgid "Undefined error found"
+msgstr "พบข้อผิดพลาดที่ไม่ได้กำหนด"
+
+#: core/Error.php:80
+#: modules/calendar/library/calendar-methods.php:779
+msgid "Invalid nonce"
+msgstr "nonce ไม่ถูกต้อง"
+
+#: core/Error.php:81
+msgid "Access denied"
+msgstr "การเข้าถึงถูกปฏิเสธ"
+
+#: includes.php:127
+#, php-format
+msgid ""
+"You're using PublishPress Planner Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"คุณกำลังใช้ PublishPress Planner ฟรี รุ่น Pro "
+"มีฟีเจอร์และการสนับสนุนเพิ่มเติม %sอัปเกรดเป็น Pro%s"
+
+#: includes.php:161
+#: lib/Legacy/Util.php:216
+msgid "Upgrade to Pro"
+msgstr "อัปเกรดเป็น Pro"
+
+#: lib/Legacy/Util.php:198
+msgid "Upgrade to PublishPress Planner Pro"
+msgstr "อัปเกรดเป็น PublishPress Planner Pro"
+
+#: lib/Legacy/Util.php:203
+msgid "Enhance the power of PublishPress Planner with the Pro version:"
+msgstr "เสริมพลังให้กับ PublishPress Planner ด้วยรุ่น Pro:"
+
+#: lib/Legacy/Util.php:206
+msgid "PublishPress Revisions integration"
+msgstr "การรวมเข้ากับ PublishPress Revisions"
+
+#: lib/Legacy/Util.php:207
+msgid "Slack integration for notifications"
+msgstr "การรวมเข้ากับ Slack สำหรับการแจ้งเตือน"
+
+#: lib/Legacy/Util.php:208
+msgid "Send reminder notifications"
+msgstr "ส่งการแจ้งเตือนเตือนความจำ"
+
+#: lib/Legacy/Util.php:209
+msgid "Use post meta in notifications"
+msgstr "ใช้ post meta ในการแจ้งเตือน"
+
+#: lib/Legacy/Util.php:210
+msgid "Modals so you can edit posts without changing screen"
+msgstr "โมดอลเพื่อให้คุณสามารถแก้ไขโพสต์ได้โดยไม่ต้องเปลี่ยนหน้าจอ"
+
+#: lib/Legacy/Util.php:211
+msgid "Integration with SEO plugins"
+msgstr "การรวมเข้ากับปลั๊กอิน SEO"
+
+#: lib/Legacy/Util.php:212
+msgid "Remove PublishPress ads and branding"
+msgstr "ลบโฆษณาและแบรนด์ของ PublishPress"
+
+#: lib/Legacy/Util.php:213
+msgid "Fast, professional support"
+msgstr "การสนับสนุนที่รวดเร็วและเป็นมืออาชีพ"
+
+#: lib/Legacy/Util.php:223
+msgid "Need PublishPress Planner Support?"
+msgstr "ต้องการการสนับสนุนจาก PublishPress Planner หรือไม่?"
+
+#: lib/Legacy/Util.php:228
+msgid "If you need help or have a new feature request, let us know."
+msgstr "หากคุณต้องการความช่วยเหลือหรือมีคำขอฟีเจอร์ใหม่ แจ้งให้เราทราบ"
+
+#: lib/Legacy/Util.php:230
+msgid "Request Support"
+msgstr "ขอรับการสนับสนุน"
+
+#: lib/Legacy/Util.php:239
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "มีเอกสารรายละเอียดเพิ่มเติมที่เว็บไซต์ปลั๊กอินด้วย"
+
+#: lib/Legacy/Util.php:241
+msgid "View Knowledge Base"
+msgstr "ดูฐานความรู้"
+
+#: lib/Notifications/Plugin.php:65
+#: modules/improved-notifications/improved-notifications.php:1160
+#: modules/notifications-log/library/NotificationsLogTable.php:497
+msgid "When to notify?"
+msgstr "เมื่อไรที่จะแจ้งเตือน?"
+
+#: lib/Notifications/Plugin.php:66
+msgid "Filter the content?"
+msgstr "กรองเนื้อหา?"
+
+#: lib/Notifications/Plugin.php:67
+#: modules/improved-notifications/improved-notifications.php:1180
+#: modules/notifications-log/library/NotificationsLogTable.php:499
+msgid "Who to notify?"
+msgstr "ใครที่จะแจ้งเตือน?"
+
+#: lib/Notifications/Plugin.php:209
+#: lib/Notifications/Plugin.php:210
+msgid "Notification workflow updated."
+msgstr "การทำงานของการแจ้งเตือนได้รับการอัปเดต."
+
+#: lib/Notifications/Plugin.php:211
+msgid "Notification workflow published."
+msgstr "การทำงานของการแจ้งเตือนถูกเผยแพร่."
+
+#: lib/Notifications/Plugin.php:212
+msgid "Notification workflow saved."
+msgstr "การทำงานของการแจ้งเตือนถูกบันทึก."
+
+#: lib/Notifications/Plugin.php:213
+msgid "Notification workflow submitted."
+msgstr "การทำงานของการแจ้งเตือนถูกส่ง."
+
+#: lib/Notifications/Plugin.php:215
+#, php-format
+msgid "Notification workflow scheduled for: %s."
+msgstr "การทำงานของการแจ้งเตือนถูกกำหนดเวลาไว้สำหรับ: %s."
+
+#: lib/Notifications/Plugin.php:218
+msgid "Notification workflow draft updated."
+msgstr "ร่างการทำงานของการแจ้งเตือนได้รับการอัปเดต."
+
+#: lib/Notifications/Plugin.php:240
+#, php-format
+msgid "%s notification workflow updated."
+msgid_plural "%s notification workflows updated."
+msgstr[0] "%s การทำงานของการแจ้งเตือนได้รับการอัปเดต."
+
+#: lib/Notifications/Plugin.php:246
+msgid "1 notification workflow not updated, somebody is editing it."
+msgstr "1 การทำงานของการแจ้งเตือนไม่ได้รับการอัปเดต, มีคนกำลังแก้ไขอยู่."
+
+#: lib/Notifications/Plugin.php:250
+#, php-format
+msgid "%s notification workflow not updated, somebody is editing it."
+msgid_plural "%s notification workflows not updated, somebody is editing them."
+msgstr[0] "%s การทำงานของการแจ้งเตือนไม่ได้รับการอัปเดต, มีคนกำลังแก้ไขอยู่."
+
+#: lib/Notifications/Plugin.php:256
+#, php-format
+msgid "%s notification workflow permanently deleted."
+msgid_plural "%s notification workflows permanently deleted."
+msgstr[0] "%s การทำงานของการแจ้งเตือนถูกลบอย่างถาวร."
+
+#: lib/Notifications/Plugin.php:262
+#, php-format
+msgid "%s notification workflow moved to the Trash."
+msgid_plural "%s notification workflows moved to the Trash."
+msgstr[0] "%s การทำงานของการแจ้งเตือนถูกย้ายไปที่ถังขยะ."
+
+#: lib/Notifications/Plugin.php:268
+#, php-format
+msgid "%s notification workflow restored from the Trash."
+msgid_plural "%s notification workflows restored from the Trash."
+msgstr[0] "%s การทำงานของการแจ้งเตือนถูกกู้คืนจากถังขยะ."
+
+#: lib/Notifications/Plugin.php:302
+msgid "Please select at least one event"
+msgstr "กรุณาเลือกเหตุการณ์อย่างน้อยหนึ่งรายการ"
+
+#: lib/Notifications/Plugin.php:335
+msgid "Not filtered"
+msgstr "ไม่ได้กรอง"
+
+#: lib/Notifications/Table/Base.php:183
+msgid "Excerpt View"
+msgstr "ดูตัวอย่าง"
+
+#: lib/Notifications/Table/Notifications.php:156
+#: lib/Notifications/Table/Workflows.php:142
+#: modules/calendar/library/calendar-methods.php:853
+#: modules/content-board/content-board.php:421
+#: modules/content-board/library/content-board-utilities.php:244
+#: modules/content-board/library/content-board-utilities.php:1159
+#: modules/content-overview/content-overview.php:418
+#: modules/content-overview/library/content-overview-utilities.php:485
+msgid "Title"
+msgstr "ชื่อเรื่อง"
+
+#: lib/Notifications/Table/Notifications.php:157
+msgid "Message"
+msgstr "ข้อความ"
+
+#: lib/Notifications/Table/Notifications.php:158
+#: modules/calendar/library/calendar-utilities.php:1064
+#: modules/content-board/library/content-board-utilities.php:116
+#: modules/content-overview/library/content-overview-methods.php:341
+#: modules/editorial-metadata/editorial-metadata.php:290
+#: modules/notifications-log/library/NotificationsLogTable.php:496
+msgid "Date"
+msgstr "วันที่"
+
+#: lib/Notifications/Table/Notifications.php:159
+#: lib/Notifications/Table/Workflows.php:143
+#: modules/calendar/library/calendar-utilities.php:1059
+msgid "ID"
+msgstr "รหัส"
+
+#: lib/Notifications/Table/Notifications.php:235
+msgid "You don't have any notifications"
+msgstr "คุณไม่มีการแจ้งเตือนใด ๆ"
+
+#: lib/Notifications/Table/Workflows.php:217
+msgid "No workflows found."
+msgstr "ไม่พบกระบวนการทำงาน"
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:26
+msgid "Skip current user"
+msgstr "ข้ามผู้ใช้ปัจจุบัน"
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:31
+msgid "Skip notifications for the user who triggered the action"
+msgstr "ข้ามการแจ้งเตือนสำหรับผู้ใช้ที่กระตุ้นการกระทำ"
+
+#: lib/Notifications/Workflow/Step/Channel/Email.php:31
+#: modules/editorial-comments/editorial-comments.php:1267
+msgid "Email"
+msgstr "อีเมล"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:29
+#: modules/calendar/library/calendar-methods.php:902
+#: modules/content-board/library/content-board-utilities.php:1207
+#: modules/content-overview/library/content-overview-utilities.php:533
+#: modules/improved-notifications/improved-notifications.php:1318
+msgid "Content"
+msgstr "เนื้อหา"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:53
+msgid "Subject"
+msgstr "หัวข้อ"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:54
+msgid "Body"
+msgstr "เนื้อความ"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
+msgid "When an editorial comment is added"
+msgstr "เมื่อมีการเพิ่มความคิดเห็นทางบรรณาธิการ"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:96
+#, php-format
+msgid "Comment: %s (%d)"
+msgstr "ความคิดเห็น: %s (%d)"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
+msgid "When the status is changed"
+msgstr "เมื่อสถานะถูกเปลี่ยน"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
+msgid "Previous status"
+msgstr "สถานะก่อนหน้า"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
+msgid "New status"
+msgstr "สถานะใหม่"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
+msgid "- any status -"
+msgstr "- สถานะใด ๆ -"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
+msgid "New"
+msgstr "ใหม่"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
+msgid "Auto-draft"
+msgstr "ร่างอัตโนมัติ"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
+#: modules/calendar/library/calendar-utilities.php:1206
+#: modules/content-board/content-board.php:767
+#: modules/content-board/content-board.php:827
+#: modules/content-overview/content-overview.php:910
+#: modules/content-overview/content-overview.php:971
+msgid "Taxonomies"
+msgstr "หมวดหมู่"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
+msgid "When the content is moved to a new status"
+msgstr "เมื่อเนื้อหาถูกย้ายไปยังสถานะใหม่"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
+#, php-format
+msgid "Old post status: %s"
+msgstr "สถานะโพสต์เก่า: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:122
+#, php-format
+msgid "New post status: %s"
+msgstr "สถานะโพสต์ใหม่: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_TaxonomyUpdate.php:28
+msgid "When taxonomy is updated"
+msgstr "เมื่อหมวดหมู่ได้รับการอัปเดต"
+
+#: lib/Notifications/Workflow/Step/Event/Post_Update.php:26
+msgid "When the content is updated"
+msgstr "เมื่อเนื้อหาได้รับการอัปเดต"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
+#: modules/calendar/library/calendar-utilities.php:1080
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "หมวดหมู่"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
+#: modules/calendar/library/calendar-methods.php:885
+#: modules/content-board/library/content-board-utilities.php:1190
+#: modules/content-overview/library/content-overview-utilities.php:516
+msgid "Categories"
+msgstr "หมวดหมู่"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:46
+msgid "Post Types"
+msgstr "ประเภทโพสต์"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
+msgid "Terms"
+msgstr "คำศัพท์"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
+msgid "Post type"
+msgstr "ประเภทโพสต์"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24
+msgid "Taxonomy"
+msgstr "หมวดหมู่"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:26
+msgid "Authors of the content"
+msgstr "ผู้เขียนของเนื้อหา"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:92
+msgid "Authors"
+msgstr "ผู้เขียน"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:30
+msgid "Users who selected \"Notify me\" for the content"
+msgstr "ผู้ใช้ที่เลือก \"แจ้งให้ฉันทราบ\" สำหรับเนื้อหา"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
+#, php-format
+msgid "role:%s"
+msgstr "บทบาท:%s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:132
+#, php-format
+msgid "group %d: %s"
+msgstr "กลุ่ม %d: %s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:153
+msgid "user"
+msgstr "ผู้ใช้"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:168
+msgid "email"
+msgstr "อีเมล"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:210
+msgid "\"Notify me\""
+msgstr "\"แจ้งให้ฉันทราบ\""
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:31
+msgid "Permission Groups"
+msgstr "กลุ่มสิทธิ์"
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:222
+#, php-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d กลุ่ม"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:26
+msgid "Authors of the parent page"
+msgstr "ผู้เขียนของหน้าแม่"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:106
+msgid "Parent Page Authors"
+msgstr "ผู้เขียนหน้าแม่"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:39
+msgid "Author of the revision"
+msgstr "ผู้เขียนการแก้ไข"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:105
+msgid "Revision Author"
+msgstr "ผู้เขียนการแก้ไข"
+
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:173
+#, php-format
+msgid "%d Role"
+msgid_plural "%d Roles"
+msgstr[0] "%d บทบาท"
+
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
+msgid "Site Administrator"
+msgstr "ผู้ดูแลระบบเว็บไซต์"
+
+#: lib/Notifications/Workflow/Step/Receiver/User.php:152
+#, php-format
+msgid "%d User"
+msgid_plural "%d Users"
+msgstr[0] "%d ผู้ใช้"
+
+#: modules/async-notifications/async-notifications.php:71
+msgid "Async Notifications"
+msgstr "การแจ้งเตือนแบบ Asynchronous"
+
+#: modules/async-notifications/async-notifications.php:180
+#, php-format
+msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
+msgstr "เหตุการณ์: %s, ID ของ Workflow: %s, ID โพสต์: %s, ID ผู้ใช้: %s"
+
+#: modules/calendar/calendar.php:216
+#: modules/calendar/calendar.php:415
+#: modules/calendar/calendar.php:432
+#: modules/calendar/calendar.php:433
+msgid "Content Calendar"
+msgstr "ปฏิทินเนื้อหา"
+
+#: modules/calendar/calendar.php:241
+msgid "Post date updated."
+msgstr "วันที่โพสต์ได้รับการอัปเดตแล้ว."
+
+#: modules/calendar/calendar.php:242
+msgid "Post status updated."
+msgstr "สถานะโพสต์ได้รับการอัปเดตแล้ว."
+
+#: modules/calendar/calendar.php:243
+msgid "There was an error updating the post. Please try again."
+msgstr "เกิดข้อผิดพลาดในการอัปเดตโพสต์ กรุณาลองอีกครั้ง."
+
+#: modules/calendar/calendar.php:247
+#, php-format
+msgid ""
+"Updating the post date dynamically doesn't work for published content. "
+"Please <a href='%s'>edit the post</a>."
+msgstr ""
+"การอัปเดตวันที่โพสต์แบบไดนามิกไม่ได้ผลสำหรับเนื้อหาที่เผยแพร่ กรุณา <a "
+"href='%s'>แก้ไขโพสต์</a>."
+
+#: modules/calendar/calendar.php:251
+msgid ""
+"iCal secret key regenerated. Please inform all users they will need to "
+"resubscribe."
+msgstr ""
+"กุญแจลับ iCal ได้รับการสร้างใหม่ "
+"กรุณาแจ้งผู้ใช้ทั้งหมดว่าพวกเขาจะต้องสมัครสมาชิกใหม่."
+
+#: modules/calendar/calendar.php:259
+#: modules/editorial-comments/editorial-comments.php:82
+#: modules/editorial-metadata/editorial-metadata.php:119
+#: modules/notifications/notifications.php:96
+msgid "Overview"
+msgstr "ภาพรวม"
+
+#: modules/calendar/calendar.php:260
+msgid ""
+"<p>The calendar is a convenient week-by-week or month-by-month view into "
+"your content. Quickly see which stories are on track to being published on "
+"time, and which will need extra effort.</p>"
+msgstr ""
+"<p>ปฏิทินเป็นมุมมองที่สะดวกสบายแบบสัปดาห์ต่อสัปดาห์หรือเดือนต่อเดือนในเนื้อห"
+"าของคุณ ดูได้อย่างรวดเร็วว่าเรื่องไหนกำลังจะถูกเผยแพร่ตรงเวลา "
+"และเรื่องไหนต้องใช้ความพยายามเพิ่มเติม.</p>"
+
+#: modules/calendar/calendar.php:265
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Calendar "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>สำหรับข้อมูลเพิ่มเติม:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">เอกสารปฏิทิน</a></"
+"p><p><a href=\"https://github.com/ostraining/PublishPress\">PublishPress บน "
+"Github</a></p>"
+
+#: modules/calendar/calendar.php:734
+#: modules/calendar/library/calendar-utilities.php:1259
+msgid "Weeks"
+msgstr "สัปดาห์"
+
+#: modules/calendar/calendar.php:735
+msgid "Start Date"
+msgstr "วันที่เริ่มต้น"
+
+#: modules/calendar/calendar.php:736
+#: modules/calendar/library/calendar-utilities.php:467
+#: modules/calendar/library/calendar-utilities.php:468
+#: modules/content-board/library/content-board-utilities.php:28
+#: modules/content-overview/library/content-overview-methods.php:253
+msgid "Me Mode"
+msgstr "โหมดฉัน"
+
+#: modules/calendar/calendar.php:737
+msgid "Show Revision"
+msgstr "แสดงการแก้ไข"
+
+#: modules/calendar/calendar.php:738
+#: modules/calendar/library/calendar-utilities.php:486
+#: modules/content-board/library/content-board-utilities.php:98
+#: modules/content-overview/library/content-overview-methods.php:323
+msgid "Search"
+msgstr "ค้นหา"
+
+#: modules/calendar/calendar.php:912
+#: modules/content-board/library/content-board-methods.php:164
+#: modules/content-overview/content-overview.php:668
+msgid "Filter updated successfully."
+msgstr "กรองอัปเดตเรียบร้อยแล้ว."
+
+#: modules/calendar/calendar.php:919
+msgid "Filter reset successfully."
+msgstr "รีเซ็ตการกรองเรียบร้อยแล้ว."
+
+#: modules/calendar/calendar.php:987
+#: modules/content-board/content-board.php:709
+#: modules/content-overview/content-overview.php:832
+#: modules/content-overview/content-overview.php:847
+#: modules/content-overview/content-overview.php:892
+#: modules/notifications-log/library/NotificationsLogTable.php:500
+msgid "Status"
+msgstr "สถานะ"
+
+#: modules/calendar/calendar.php:988
+#: modules/calendar/calendar.php:1212
+#: modules/calendar/library/calendar-methods.php:875
+#: modules/calendar/library/calendar-methods.php:1248
+#: modules/calendar/library/calendar-utilities.php:115
+#: modules/calendar/library/calendar-utilities.php:1075
+#: modules/calendar/library/calendar-utilities.php:1191
+#: modules/content-board/content-board.php:699
+#: modules/content-board/content-board.php:710
+#: modules/content-board/content-board.php:753
+#: modules/content-board/content-board.php:812
+#: modules/content-board/library/content-board-utilities.php:647
+#: modules/content-board/library/content-board-utilities.php:1180
+#: modules/content-overview/content-overview.php:835
+#: modules/content-overview/content-overview.php:849
+#: modules/content-overview/content-overview.php:894
+#: modules/content-overview/content-overview.php:956
+#: modules/content-overview/content-overview.php:1218
+#: modules/content-overview/library/content-overview-utilities.php:506
+#: modules/content-overview/library/content-overview-utilities.php:769
+#: modules/editorial-comments/library/EditorialCommentsTable.php:228
+msgid "Author"
+msgid_plural "Authors"
+msgstr[0] "ผู้เขียน"
+
+#: modules/calendar/calendar.php:989
+#: modules/calendar/calendar.php:1220
+#: modules/calendar/library/calendar-utilities.php:146
+#: modules/calendar/library/calendar-utilities.php:1054
+#: modules/calendar/library/calendar-utilities.php:1192
+#: modules/content-board/content-board.php:698
+#: modules/content-board/content-board.php:711
+#: modules/content-board/content-board.php:752
+#: modules/content-board/content-board.php:813
+#: modules/content-board/library/content-board-utilities.php:677
+#: modules/content-board/library/content-board-utilities.php:1153
+#: modules/content-overview/content-overview.php:834
+#: modules/content-overview/content-overview.php:850
+#: modules/content-overview/content-overview.php:893
+#: modules/content-overview/content-overview.php:957
+#: modules/content-overview/library/content-overview-utilities.php:479
+#: modules/content-overview/library/content-overview-utilities.php:799
+msgid "Post Type"
+msgstr "ประเภทโพสต์"
+
+#: modules/calendar/calendar.php:1103
+msgid "Post moved to the trash."
+msgid_plural "%d posts moved to the trash."
+msgstr[0] "โพสต์ถูกย้ายไปที่ถังขยะ."
+
+#: modules/calendar/calendar.php:1119
+#: modules/content-board/content-board.php:614
+#: modules/content-overview/library/content-overview-methods.php:214
+msgid "Undo"
+msgstr "ย้อนกลับ"
+
+#: modules/calendar/calendar.php:1129
+msgid "Post restored from the Trash."
+msgid_plural "%d posts restored from the Trash."
+msgstr[0] "โพสต์ถูกกู้คืนจากถังขยะ."
+
+#: modules/calendar/calendar.php:1161
+msgid "Initializing the calendar. Please wait..."
+msgstr "กำลังเริ่มต้นปฏิทิน โปรดรอสักครู่..."
+
+#: modules/calendar/calendar.php:1165
+msgid ""
+"It seems like it is taking too long. Please, try reloading the page again "
+"and check the browser console looking for errors."
+msgstr ""
+"ดูเหมือนว่ามันใช้เวลานานเกินไป "
+"กรุณาลองโหลดหน้าใหม่อีกครั้งและตรวจสอบคอนโซลเบราว์เซอร์เพื่อหาข้อผิดพลาด."
+
+#: modules/calendar/calendar.php:1809
+msgid ""
+"The selected user doesn't have enough permissions to be set as the post "
+"author."
+msgstr "ผู้ใช้ที่เลือกไม่มีสิทธิ์เพียงพอที่จะตั้งเป็นผู้เขียนโพสต์."
+
+#: modules/calendar/library/calendar-methods.php:87
+msgid "Post types to show"
+msgstr "ประเภทโพสต์ที่จะแสดง"
+
+#: modules/calendar/library/calendar-methods.php:95
+msgid "Show today's date in the first row"
+msgstr "แสดงวันที่ของวันนี้ในแถวแรก"
+
+#: modules/calendar/library/calendar-methods.php:103
+msgid "Enable subscriptions in iCal or Google Calendar"
+msgstr "เปิดใช้งานการสมัครสมาชิกใน iCal หรือ Google Calendar"
+
+#: modules/calendar/library/calendar-methods.php:111
+msgid "Allow public access to subscriptions in iCal or Google Calendar"
+msgstr "อนุญาตการเข้าถึงสาธารณะไปยังการสมัครสมาชิกใน iCal หรือ Google Calendar"
+
+#: modules/calendar/library/calendar-methods.php:119
+msgid "Statuses to display publish time"
+msgstr "สถานะที่จะแสดงเวลาการเผยแพร่"
+
+#: modules/calendar/library/calendar-methods.php:127
+msgid "Posts publish time format"
+msgstr "รูปแบบเวลาการเผยแพร่โพสต์"
+
+#: modules/calendar/library/calendar-methods.php:135
+msgid "Default publish time for items created in the calendar"
+msgstr "เวลาการเผยแพร่เริ่มต้นสำหรับรายการที่สร้างในปฏิทิน"
+
+#: modules/calendar/library/calendar-methods.php:143
+msgid "Field used for sorting the calendar items in a day cell"
+msgstr "ฟิลด์ที่ใช้สำหรับจัดเรียงรายการปฏิทินในเซลล์วัน"
+
+#: modules/calendar/library/calendar-methods.php:151
+msgid "Max visible posts per date"
+msgstr "โพสต์สูงสุดที่แสดงต่อวัน"
+
+#: modules/calendar/library/calendar-methods.php:159
+msgid "Always show complete post titles"
+msgstr "แสดงชื่อโพสต์ทั้งหมดเสมอ"
+
+#: modules/calendar/library/calendar-methods.php:179
+msgid "At least one post type must be selected"
+msgstr "ต้องเลือกประเภทโพสต์อย่างน้อยหนึ่งประเภท"
+
+#: modules/calendar/library/calendar-methods.php:294
+msgid "edit"
+msgstr "แก้ไข"
+
+#: modules/calendar/library/calendar-methods.php:308
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions Pro%s."
+msgstr ""
+"สำหรับการรวม Revisions บนปฏิทินเนื้อหา, ภาพรวม และกระดานเนื้อหา กรุณาอัปเดต "
+"%sPublishPress Revisions Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:309
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions%s."
+msgstr ""
+"สำหรับการรวม Revisions บนปฏิทินเนื้อหา, ภาพรวม และกระดานเนื้อหา กรุณาอัปเดต "
+"%sPublishPress Revisions%s."
+
+#: modules/calendar/library/calendar-methods.php:326
+#, php-format
+msgid ""
+"To refine your workflow with custom Post Statuses, install the "
+"%sPublishPress Statuses%s plugin."
+msgstr ""
+"ในการปรับปรุงการทำงานของคุณด้วยสถานะโพสต์ที่กำหนดเอง ติดตั้งปลั๊กอิน "
+"%sPublishPress Statuses%s."
+
+#: modules/calendar/library/calendar-methods.php:340
+#, php-format
+msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
+msgstr "สำหรับสถานะการแก้ไขที่กำหนดเอง ให้อัปเกรดเป็น %sPublishPress Statuses Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:423
+msgid "Publishing Time"
+msgstr "เวลาการเผยแพร่"
+
+#: modules/calendar/library/calendar-methods.php:479
+msgid "All posts"
+msgstr "โพสต์ทั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:527
+#: modules/dashboard/dashboard.php:368
+#: modules/dashboard/dashboard.php:391
+#: modules/dashboard/dashboard.php:425
+msgid "Disabled"
+msgstr "ปิดใช้งาน"
+
+#: modules/calendar/library/calendar-methods.php:528
+#: modules/dashboard/dashboard.php:369
+#: modules/dashboard/dashboard.php:392
+#: modules/dashboard/dashboard.php:426
+msgid "Enabled"
+msgstr "เปิดใช้งาน"
+
+#: modules/calendar/library/calendar-methods.php:546
+msgid "Regenerate calendar feed secret"
+msgstr "สร้างรหัสลับฟีดปฏิทินใหม่"
+
+#: modules/calendar/library/calendar-methods.php:788
+msgid "Invalid input"
+msgstr "การป้อนข้อมูลไม่ถูกต้อง"
+
+#: modules/calendar/library/calendar-methods.php:794
+msgid "Post not found"
+msgstr "ไม่พบโพสต์"
+
+#: modules/calendar/library/calendar-methods.php:799
+msgid "No enough permissions"
+msgstr "ไม่มีสิทธิ์เพียงพอ"
+
+#: modules/calendar/library/calendar-methods.php:808
+msgid "Invalid date"
+msgstr "วันที่ไม่ถูกต้อง"
+
+#: modules/calendar/library/calendar-methods.php:864
+msgid "Publish Time"
+msgstr "เวลาที่เผยแพร่"
+
+#: modules/calendar/library/calendar-methods.php:894
+#: modules/content-board/library/content-board-utilities.php:1199
+#: modules/content-overview/library/content-overview-utilities.php:525
+msgid "Tags"
+msgstr "แท็ก"
+
+#: modules/calendar/library/calendar-methods.php:1001
+msgid "Publish on"
+msgstr "เผยแพร่เมื่อ"
+
+#: modules/calendar/library/calendar-methods.php:1195
+#: modules/notifications-log/notifications-log.php:210
+msgid "Loading..."
+msgstr "กำลังโหลด..."
+
+#: modules/calendar/library/calendar-methods.php:1196
+msgid "Loading item..."
+msgstr "กำลังโหลดรายการ..."
+
+#: modules/calendar/library/calendar-methods.php:1197
+msgid "Click to add"
+msgstr "คลิกเพื่อเพิ่ม"
+
+#: modules/calendar/library/calendar-methods.php:1198
+msgid "Moving the item..."
+msgstr "กำลังย้ายรายการ..."
+
+#: modules/calendar/library/calendar-methods.php:1199
+#, php-format
+msgid "Hide the %s last items"
+msgstr "ซ่อน %s รายการล่าสุด"
+
+#: modules/calendar/library/calendar-methods.php:1200
+#, php-format
+msgid "Show %s more"
+msgstr "แสดง %s เพิ่มเติม"
+
+#: modules/calendar/library/calendar-methods.php:1201
+#: modules/calendar/library/calendar-methods.php:1704
+msgid "Untitled"
+msgstr "ไม่มีชื่อ"
+
+#: modules/calendar/library/calendar-methods.php:1202
+msgid "Close"
+msgstr "ปิด"
+
+#: modules/calendar/library/calendar-methods.php:1203
+#: modules/editorial-comments/lib/editorial-comments.js:349
+msgid "Save"
+msgstr "บันทึก"
+
+#: modules/calendar/library/calendar-methods.php:1204
+msgid "Saving..."
+msgstr "กำลังบันทึก..."
+
+#: modules/calendar/library/calendar-methods.php:1205
+msgid "Save and edit"
+msgstr "บันทึกและแก้ไข"
+
+#: modules/calendar/library/calendar-methods.php:1206
+#, php-format
+msgid "Add content for %s"
+msgstr "เพิ่มเนื้อหาสำหรับ %s"
+
+#: modules/calendar/library/calendar-methods.php:1207
+msgid "Post type not found"
+msgstr "ไม่พบประเภทโพสต์"
+
+#: modules/calendar/library/calendar-methods.php:1208
+msgid "Post type:"
+msgstr "ประเภทโพสต์:"
+
+#: modules/calendar/library/calendar-methods.php:1209
+#: modules/content-board/library/content-board-utilities.php:1130
+#: modules/content-overview/library/content-overview-utilities.php:456
+msgid "Please, wait! Loading the form fields..."
+msgstr "โปรดรอสักครู่! กำลังโหลดฟิลด์แบบฟอร์ม..."
+
+#: modules/calendar/library/calendar-methods.php:1210
+msgid "Sun"
+msgstr "อาทิตย์"
+
+#: modules/calendar/library/calendar-methods.php:1211
+msgid "Mon"
+msgstr "จันทร์"
+
+#: modules/calendar/library/calendar-methods.php:1212
+msgid "Tue"
+msgstr "อังคาร"
+
+#: modules/calendar/library/calendar-methods.php:1213
+msgid "Wed"
+msgstr "พุธ"
+
+#: modules/calendar/library/calendar-methods.php:1214
+msgid "Thu"
+msgstr "พฤหัสบดี"
+
+#: modules/calendar/library/calendar-methods.php:1215
+msgid "Fri"
+msgstr "ศุกร์"
+
+#: modules/calendar/library/calendar-methods.php:1216
+msgid "Sat"
+msgstr "เสาร์"
+
+#: modules/calendar/library/calendar-methods.php:1217
+msgid "Jan"
+msgstr "มกราคม"
+
+#: modules/calendar/library/calendar-methods.php:1218
+msgid "Feb"
+msgstr "กุมภาพันธ์"
+
+#: modules/calendar/library/calendar-methods.php:1219
+msgid "Mar"
+msgstr "มีนาคม"
+
+#: modules/calendar/library/calendar-methods.php:1220
+msgid "Apr"
+msgstr "เมษายน"
+
+#: modules/calendar/library/calendar-methods.php:1221
+msgid "May"
+msgstr "พฤษภาคม"
+
+#: modules/calendar/library/calendar-methods.php:1222
+msgid "Jun"
+msgstr "มิถุนายน"
+
+#: modules/calendar/library/calendar-methods.php:1223
+msgid "Jul"
+msgstr "กรกฎาคม"
+
+#: modules/calendar/library/calendar-methods.php:1224
+msgid "Aug"
+msgstr "สิงหาคม"
+
+#: modules/calendar/library/calendar-methods.php:1225
+msgid "Sep"
+msgstr "กันยายน"
+
+#: modules/calendar/library/calendar-methods.php:1226
+msgid "Oct"
+msgstr "ตุลาคม"
+
+#: modules/calendar/library/calendar-methods.php:1227
+msgid "Nov"
+msgstr "พฤศจิกายน"
+
+#: modules/calendar/library/calendar-methods.php:1228
+msgid "Dec"
+msgstr "ธันวาคม"
+
+#: modules/calendar/library/calendar-methods.php:1229
+#: modules/calendar/library/calendar-utilities.php:51
+#: modules/content-board/library/content-board-utilities.php:598
+#: modules/content-overview/library/content-overview-utilities.php:707
+msgid "All statuses"
+msgstr "สถานะทั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:1230
+msgid "All categories"
+msgstr "หมวดหมู่ทั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:1231
+msgid "All tags"
+msgstr "แท็กทั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:1232
+#: modules/calendar/library/calendar-utilities.php:117
+#: modules/calendar/library/calendar-utilities.php:120
+#: modules/content-board/library/content-board-utilities.php:649
+#: modules/content-board/library/content-board-utilities.php:652
+#: modules/content-overview/library/content-overview-utilities.php:771
+#: modules/content-overview/library/content-overview-utilities.php:774
+msgid "All authors"
+msgstr "ผู้เขียนทั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:1233
+msgid "All types"
+msgstr "ประเภททั้งหมด"
+
+#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-utilities.php:513
+#, php-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d สัปดาห์"
+
+#: modules/calendar/library/calendar-methods.php:1235
+#, php-format
+msgid "%d weeks"
+msgstr "%d สัปดาห์"
+
+#: modules/calendar/library/calendar-methods.php:1236
+msgid "Today"
+msgstr "วันนี้"
+
+#: modules/calendar/library/calendar-methods.php:1237
+msgid "No terms"
+msgstr "ไม่มีเงื่อนไข"
+
+#: modules/calendar/library/calendar-methods.php:1238
+#: modules/content-board/content-board.php:1283
+#: modules/content-overview/content-overview.php:836
+#: modules/content-overview/content-overview.php:895
+#: modules/content-overview/content-overview.php:1219
+msgid "Post Date"
+msgstr "วันที่โพสต์"
+
+#: modules/calendar/library/calendar-methods.php:1239
+#: modules/calendar/library/calendar-utilities.php:1097
+#: modules/content-board/content-board.php:1178
+#: modules/content-board/content-board.php:1284
+#: modules/content-overview/content-overview.php:1220
+#: modules/content-overview/content-overview.php:1703
+#: modules/editorial-comments/editorial-comments.php:628
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:159
+msgid "Edit"
+msgstr "แก้ไข"
+
+#: modules/calendar/library/calendar-methods.php:1241
+#: modules/calendar/library/calendar-utilities.php:1114
+#: modules/content-board/content-board.php:1219
+#: modules/content-board/content-board.php:1286
+#: modules/content-overview/content-overview.php:1222
+#: modules/content-overview/content-overview.php:1744
+msgid "Preview"
+msgstr "ดูตัวอย่าง"
+
+#: modules/calendar/library/calendar-methods.php:1242
+#: modules/calendar/library/calendar-utilities.php:1111
+#: modules/content-board/content-board.php:1206
+#: modules/content-board/content-board.php:1287
+#: modules/content-overview/content-overview.php:1223
+#: modules/content-overview/content-overview.php:1731
+msgid "View"
+msgstr "ดู"
+
+#: modules/calendar/library/calendar-methods.php:1243
+#: modules/content-board/content-board.php:1288
+#: modules/content-overview/content-overview.php:1224
+msgid "Previous Post"
+msgstr "โพสต์ก่อนหน้า"
+
+#: modules/calendar/library/calendar-methods.php:1244
+#: modules/content-board/content-board.php:1289
+#: modules/content-overview/content-overview.php:1225
+msgid "Next Post"
+msgstr "โพสต์ถัดไป"
+
+#: modules/calendar/library/calendar-methods.php:1246
+#: modules/content-board/content-board.php:1291
+#: modules/content-overview/content-overview.php:1227
+msgid "Save Changes"
+msgstr "บันทึกการเปลี่ยนแปลง"
+
+#: modules/calendar/library/calendar-methods.php:1247
+#: modules/content-board/content-board.php:1292
+#: modules/content-overview/content-overview.php:1228
+msgid "Taxonomy not set."
+msgstr "ประเภทภาษีไม่ได้ตั้งค่า."
+
+#: modules/calendar/library/calendar-methods.php:1687
+msgid "No date supplied."
+msgstr "ไม่มีวันที่ระบุ."
+
+#: modules/calendar/library/calendar-methods.php:1698
+msgid "The selected post type is not enabled for the calendar."
+msgstr "ประเภทโพสต์ที่เลือกไม่ได้เปิดใช้งานสำหรับปฏิทิน."
+
+#: modules/calendar/library/calendar-methods.php:1728
+msgid "Invalid Status supplied."
+msgstr "สถานะที่ระบุไม่ถูกต้อง."
+
+#: modules/calendar/library/calendar-methods.php:1752
+msgid "Invalid Publish Date supplied."
+msgstr "วันที่เผยแพร่ที่ระบุไม่ถูกต้อง."
+
+#: modules/calendar/library/calendar-methods.php:1821
+msgid "Post created successfully"
+msgstr "โพสต์ถูกสร้างสำเร็จ"
+
+#: modules/calendar/library/calendar-methods.php:1828
+msgid "Post could not be created"
+msgstr "ไม่สามารถสร้างโพสต์ได้"
+
+#: modules/calendar/library/calendar-utilities.php:54
+#: modules/content-overview/library/content-overview-utilities.php:710
+msgid "(Hide all)"
+msgstr "(ซ่อนทั้งหมด)"
+
+#: modules/calendar/library/calendar-utilities.php:90
+#: modules/calendar/library/calendar-utilities.php:93
+#: modules/content-board/library/content-board-utilities.php:624
+#: modules/content-board/library/content-board-utilities.php:627
+#: modules/content-overview/library/content-overview-utilities.php:746
+#: modules/content-overview/library/content-overview-utilities.php:749
+#, php-format
+msgid "All %s"
+msgstr "ทั้งหมด %s"
+
+#: modules/calendar/library/calendar-utilities.php:150
+#: modules/content-board/library/content-board-utilities.php:681
+#: modules/content-overview/library/content-overview-utilities.php:803
+msgid "All post types"
+msgstr "ประเภทโพสต์ทั้งหมด"
+
+#: modules/calendar/library/calendar-utilities.php:169
+#: modules/calendar/library/calendar-utilities.php:485
+#: modules/content-board/library/content-board-utilities.php:97
+#: modules/content-board/library/content-board-utilities.php:700
+#: modules/content-overview/library/content-overview-methods.php:322
+#: modules/content-overview/library/content-overview-utilities.php:822
+msgid "Search box"
+msgstr "กล่องค้นหา"
+
+#: modules/calendar/library/calendar-utilities.php:198
+#: modules/calendar/library/calendar-utilities.php:309
+#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:433
+#: modules/content-board/content-board.php:1059
+#: modules/content-board/library/content-board-utilities.php:548
+#: modules/content-board/library/content-board-utilities.php:558
+#: modules/content-board/library/content-board-utilities.php:729
+#: modules/content-board/library/content-board-utilities.php:840
+#: modules/content-board/library/content-board-utilities.php:878
+#: modules/content-board/library/content-board-utilities.php:958
+#: modules/content-overview/library/content-overview-utilities.php:653
+#: modules/content-overview/library/content-overview-utilities.php:663
+#: modules/content-overview/library/content-overview-utilities.php:851
+#: modules/content-overview/library/content-overview-utilities.php:962
+#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1086
+msgid "Apply"
+msgstr "ใช้"
+
+#: modules/calendar/library/calendar-utilities.php:211
+#: modules/content-board/library/content-board-utilities.php:742
+#: modules/content-overview/library/content-overview-utilities.php:864
+msgid "Select option..."
+msgstr "เลือกตัวเลือก..."
+
+#: modules/calendar/library/calendar-utilities.php:245
+#: modules/calendar/library/calendar-utilities.php:279
+#: modules/content-board/library/content-board-utilities.php:112
+#: modules/content-board/library/content-board-utilities.php:776
+#: modules/content-board/library/content-board-utilities.php:810
+#: modules/content-overview/library/content-overview-methods.php:337
+#: modules/content-overview/library/content-overview-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:932
+msgid "to"
+msgstr "ถึง"
+
+#: modules/calendar/library/calendar-utilities.php:329
+#: modules/content-board/library/content-board-utilities.php:860
+#: modules/content-overview/library/content-overview-utilities.php:982
+msgid "Checked"
+msgstr "ตรวจสอบแล้ว"
+
+#: modules/calendar/library/calendar-utilities.php:370
+#: modules/content-board/library/content-board-utilities.php:895
+#: modules/content-overview/library/content-overview-utilities.php:1023
+msgid "All status"
+msgstr "สถานะทั้งหมด"
+
+#: modules/calendar/library/calendar-utilities.php:373
+#: modules/content-board/library/content-board-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:1026
+msgid "Passed"
+msgstr "ผ่าน"
+
+#: modules/calendar/library/calendar-utilities.php:374
+#: modules/content-board/library/content-board-utilities.php:899
+#: modules/content-overview/library/content-overview-utilities.php:1027
+#: modules/notifications-log/library/NotificationsLogTable.php:277
+#: modules/notifications-log/library/NotificationsLogTable.php:293
+msgid "Failed"
+msgstr "ล้มเหลว"
+
+#: modules/calendar/library/calendar-utilities.php:473
+#: modules/content-board/library/content-board-utilities.php:42
+#: modules/content-overview/library/content-overview-methods.php:267
+msgid "Customize Filters"
+msgstr "ปรับแต่งตัวกรอง"
+
+#: modules/calendar/library/calendar-utilities.php:502
+#: modules/calendar/library/calendar-utilities.php:503
+msgid "Period"
+msgstr "ช่วงเวลา"
+
+#: modules/calendar/library/calendar-utilities.php:503
+#, php-format
+msgid "%1s weeks"
+msgstr "%1s สัปดาห์"
+
+#: modules/calendar/library/calendar-utilities.php:553
+#: modules/content-board/library/content-board-utilities.php:152
+#: modules/content-overview/library/content-overview-methods.php:377
+msgid "Reset Filters"
+msgstr "รีเซ็ตตัวกรอง"
+
+#: modules/calendar/library/calendar-utilities.php:554
+#: modules/content-board/library/content-board-utilities.php:153
+#: modules/content-board/library/content-board-utilities.php:551
+#: modules/content-overview/library/content-overview-methods.php:378
+#: modules/content-overview/library/content-overview-utilities.php:656
+msgid "Reset"
+msgstr "รีเซ็ต"
+
+#: modules/calendar/library/calendar-utilities.php:582
+#: modules/content-board/library/content-board-utilities.php:363
+#: modules/content-overview/library/content-overview-utilities.php:171
+msgid "Enable Filters"
+msgstr "เปิดใช้งานตัวกรอง"
+
+#: modules/calendar/library/calendar-utilities.php:583
+#: modules/content-board/library/content-board-utilities.php:364
+#: modules/content-overview/library/content-overview-utilities.php:172
+msgid "Reorder Filters"
+msgstr "จัดเรียงตัวกรองใหม่"
+
+#: modules/calendar/library/calendar-utilities.php:588
+msgid "Enable or Disable Content calendar filter."
+msgstr "เปิดหรือปิดการใช้งานตัวกรองปฏิทินเนื้อหา"
+
+#: modules/calendar/library/calendar-utilities.php:601
+#: modules/content-board/library/content-board-utilities.php:236
+#: modules/content-board/library/content-board-utilities.php:253
+#: modules/content-board/library/content-board-utilities.php:382
+#: modules/content-overview/library/content-overview-utilities.php:44
+#: modules/content-overview/library/content-overview-utilities.php:190
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:68
+msgid "Add New"
+msgstr "เพิ่มใหม่"
+
+#: modules/calendar/library/calendar-utilities.php:609
+#: modules/content-board/library/content-board-utilities.php:390
+#: modules/content-overview/library/content-overview-utilities.php:198
+msgid "Filter Title"
+msgstr "ชื่อฟิลเตอร์"
+
+#: modules/calendar/library/calendar-utilities.php:613
+#: modules/content-board/library/content-board-utilities.php:248
+#: modules/content-overview/library/content-overview-utilities.php:56
+msgid "Search Metakey"
+msgstr "ค้นหาเมตาคีย์"
+
+#: modules/calendar/library/calendar-utilities.php:618
+#: modules/content-board/library/content-board-utilities.php:399
+#: modules/content-overview/library/content-overview-utilities.php:207
+msgid "Add Filter"
+msgstr "เพิ่มฟิลเตอร์"
+
+#: modules/calendar/library/calendar-utilities.php:661
+#: modules/content-board/library/content-board-utilities.php:442
+#: modules/content-overview/library/content-overview-utilities.php:250
+msgid "Drag to change enabled filters order."
+msgstr "ลากเพื่อเปลี่ยนลำดับฟิลเตอร์ที่เปิดใช้งาน"
+
+#: modules/calendar/library/calendar-utilities.php:702
+#: modules/content-board/library/content-board-utilities.php:71
+#: modules/content-board/library/content-board-utilities.php:337
+#: modules/content-board/library/content-board-utilities.php:483
+#: modules/content-overview/library/content-overview-methods.php:296
+#: modules/content-overview/library/content-overview-utilities.php:145
+#: modules/content-overview/library/content-overview-utilities.php:291
+msgid "Apply Changes"
+msgstr "ใช้การเปลี่ยนแปลง"
+
+#: modules/calendar/library/calendar-utilities.php:1085
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] "แท็ก"
+
+#: modules/calendar/library/calendar-utilities.php:1180
+#: modules/content-board/content-board.php:802
+#: modules/content-overview/content-overview.php:945
+msgid "Custom filters"
+msgstr "ฟิลเตอร์ที่กำหนดเอง"
+
+#: modules/calendar/library/calendar-utilities.php:1181
+#: modules/content-board/content-board.php:803
+#: modules/content-overview/content-overview.php:946
+msgid "Click the \"Add New\" button to create new filters."
+msgstr "คลิกที่ปุ่ม \"เพิ่มใหม่\" เพื่อสร้างฟิลเตอร์ใหม่"
+
+#: modules/calendar/library/calendar-utilities.php:1187
+#: modules/content-board/content-board.php:809
+#: modules/content-overview/content-overview.php:952
+msgid "Inbuilt filters"
+msgstr "ฟิลเตอร์ที่มีในตัว"
+
+#: modules/calendar/library/calendar-utilities.php:1199
+#: modules/content-board/content-board.php:760
+#: modules/content-board/content-board.php:820
+#: modules/content-overview/content-overview.php:903
+#: modules/content-overview/content-overview.php:964
+#: modules/editorial-metadata/editorial-metadata.php:95
+#: modules/editorial-metadata/editorial-metadata.php:511
+#: modules/editorial-metadata/editorial-metadata.php:1720
+#: modules/editorial-metadata/editorial-metadata.php:1721
+msgid "Editorial Fields"
+msgstr "ฟิลด์บรรณาธิการ"
+
+#: modules/calendar/library/calendar-utilities.php:1200
+#: modules/content-board/content-board.php:761
+#: modules/content-board/content-board.php:821
+#: modules/content-overview/content-overview.php:904
+#: modules/content-overview/content-overview.php:965
+msgid "You do not have any editorial fields enabled"
+msgstr "คุณยังไม่มีฟิลด์บรรณาธิการที่เปิดใช้งาน"
+
+#: modules/calendar/library/calendar-utilities.php:1207
+#: modules/content-board/content-board.php:768
+#: modules/content-board/content-board.php:828
+#: modules/content-overview/content-overview.php:911
+#: modules/content-overview/content-overview.php:972
+msgid "You do not have any public taxonomies"
+msgstr "คุณยังไม่มีหมวดหมู่สาธารณะ"
+
+#: modules/calendar/library/calendar-utilities.php:1229
+msgid "Subscribe in iCal or Google Calendar"
+msgstr "สมัครรับข้อมูลใน iCal หรือ Google Calendar"
+
+#: modules/calendar/library/calendar-utilities.php:1234
+msgid "Start date"
+msgstr "วันที่เริ่มต้น"
+
+#: modules/calendar/library/calendar-utilities.php:1238
+msgid "Current week"
+msgstr "สัปดาห์ปัจจุบัน"
+
+#: modules/calendar/library/calendar-utilities.php:1240
+msgid "One month ago"
+msgstr "หนึ่งเดือนที่ผ่านมา"
+
+#: modules/calendar/library/calendar-utilities.php:1242
+msgid "Two months ago"
+msgstr "สองเดือนที่ผ่านมา"
+
+#: modules/calendar/library/calendar-utilities.php:1244
+msgid "Three months ago"
+msgstr "สามเดือนที่ผ่านมา"
+
+#: modules/calendar/library/calendar-utilities.php:1246
+msgid "Four months ago"
+msgstr "สี่เดือนที่ผ่านมา"
+
+#: modules/calendar/library/calendar-utilities.php:1248
+msgid "Five months ago"
+msgstr "ห้าเดือนที่ผ่านมา"
+
+#: modules/calendar/library/calendar-utilities.php:1250
+msgid "Six months ago"
+msgstr "หกเดือนที่แล้ว"
+
+#: modules/calendar/library/calendar-utilities.php:1256
+msgid "End date"
+msgstr "วันที่สิ้นสุด"
+
+#: modules/calendar/library/calendar-utilities.php:1261
+msgid "One week"
+msgstr "หนึ่งสัปดาห์"
+
+#: modules/calendar/library/calendar-utilities.php:1263
+msgid "Two weeks"
+msgstr "สองสัปดาห์"
+
+#: modules/calendar/library/calendar-utilities.php:1265
+msgid "Three weeks"
+msgstr "สามสัปดาห์"
+
+#: modules/calendar/library/calendar-utilities.php:1267
+msgid "Four weeks"
+msgstr "สี่สัปดาห์"
+
+#: modules/calendar/library/calendar-utilities.php:1271
+msgid "Months"
+msgstr "เดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1273
+msgid "One month"
+msgstr "หนึ่งเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1276
+msgid "Two months"
+msgstr "สองเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1278
+msgid "Three months"
+msgstr "สามเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1280
+msgid "Four months"
+msgstr "สี่เดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1282
+msgid "Five months"
+msgstr "ห้าเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1284
+msgid "Six months"
+msgstr "หกเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1286
+msgid "Seven months"
+msgstr "เจ็ดเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1288
+msgid "Eight months"
+msgstr "แปดเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1290
+msgid "Nine months"
+msgstr "เก้าเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1292
+msgid "Ten months"
+msgstr "สิบเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1294
+msgid "Eleven months"
+msgstr "สิบเอ็ดเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1296
+msgid "Twelve months"
+msgstr "สิบสองเดือน"
+
+#: modules/calendar/library/calendar-utilities.php:1308
+msgid "Download .ics file"
+msgstr "ดาวน์โหลดไฟล์ .ics"
+
+#: modules/calendar/library/calendar-utilities.php:1315
+msgid "Copy to the clipboard"
+msgstr "คัดลอกไปยังคลิปบอร์ด"
+
+#: modules/calendar/library/calendar-utilities.php:1321
+msgid "Click here to subscribe in iCal or Google Calendar"
+msgstr "คลิกที่นี่เพื่อติดตามใน iCal หรือ Google Calendar"
+
+#: modules/content-board/content-board.php:142
+#: modules/content-board/content-board.php:379
+#: modules/content-board/content-board.php:396
+#: modules/content-board/content-board.php:397
+msgid "Content Board"
+msgstr "บอร์ดเนื้อหา"
+
+#: modules/content-board/content-board.php:743
+msgid "Custom Items"
+msgstr "รายการที่กำหนดเอง"
+
+#: modules/content-board/content-board.php:744
+msgid "Click the \"Add New\" button to create new card data."
+msgstr "คลิกที่ปุ่ม \"เพิ่มใหม่\" เพื่อสร้างข้อมูลการ์ดใหม่."
+
+#: modules/content-board/content-board.php:750
+msgid "Inbuilt Card Data"
+msgstr "ข้อมูลการ์ดในตัว"
+
+#: modules/content-board/content-board.php:847
+#: modules/content-board/library/content-board-methods.php:39
+#: modules/content-board/library/content-board-methods.php:107
+#: modules/content-overview/content-overview.php:991
+msgid "An error occured"
+msgstr "เกิดข้อผิดพลาด"
+
+#: modules/content-board/content-board.php:851
+#: modules/content-board/library/content-board-methods.php:43
+#: modules/content-board/library/content-board-methods.php:111
+#: modules/content-overview/content-overview.php:995
+msgid "Error validating nonce. Please reload this page and try again."
+msgstr "เกิดข้อผิดพลาดในการตรวจสอบ nonce โปรดโหลดหน้านี้ใหม่และลองอีกครั้ง."
+
+#: modules/content-board/content-board.php:853
+#: modules/content-board/library/content-board-methods.php:45
+#: modules/content-board/library/content-board-methods.php:113
+#: modules/content-overview/content-overview.php:997
+msgid "Invalid form request."
+msgstr "คำขอแบบฟอร์มไม่ถูกต้อง."
+
+#: modules/content-board/content-board.php:1026
+msgid "Move posts here to change their status"
+msgstr "ย้ายโพสต์มาที่นี่เพื่อเปลี่ยนสถานะของพวกเขา"
+
+#: modules/content-board/content-board.php:1029
+msgid "You do not have permission to move post to this status"
+msgstr "คุณไม่มีสิทธิ์ในการย้ายโพสต์ไปยังสถานะนี้"
+
+#: modules/content-board/content-board.php:1049
+#: modules/content-board/content-board.php:1066
+msgid "Default Date"
+msgstr "วันที่เริ่มต้น"
+
+#: modules/content-board/content-board.php:1056
+msgid ""
+"This is the default publish date from today for posts moving to the "
+"Scheduled status."
+msgstr "นี่คือวันที่เผยแพร่มาตรฐานจากวันนี้สำหรับโพสต์ที่ย้ายไปยังสถานะที่กำหนดเวลา."
+
+#: modules/content-board/content-board.php:1100
+#: modules/content-board/content-board.php:1242
+msgid "Only editable posts will be moveable."
+msgstr "โพสต์ที่สามารถแก้ไขได้เท่านั้นที่จะสามารถย้ายได้."
+
+#: modules/content-board/content-board.php:1174
+#: modules/content-overview/content-overview.php:1699
+#: modules/dashboard/dashboard.php:299
+msgid "Edit this post"
+msgstr "แก้ไขโพสต์นี้"
+
+#: modules/content-board/content-board.php:1186
+#: modules/content-overview/content-overview.php:1711
+msgid "Move this item to the Trash"
+msgstr "ย้ายรายการนี้ไปยังถังขยะ"
+
+#: modules/content-board/content-board.php:1200
+#: modules/content-overview/content-overview.php:1725
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr "ดู &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1216
+#: modules/content-overview/content-overview.php:1741
+#, php-format
+msgid "Preview &#8220;%s&#8221;"
+msgstr "ดูตัวอย่าง &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1263
+#: modules/content-overview/content-overview.php:1194
+msgid "No results found"
+msgstr "ไม่พบผลลัพธ์"
+
+#: modules/content-board/content-board.php:1268
+#: modules/content-overview/content-overview.php:1199
+msgid "There are no posts in the range or filter specified."
+msgstr "ไม่มีโพสต์ในช่วงหรือฟิลเตอร์ที่กำหนด."
+
+#: modules/content-board/content-board.php:1600
+#: modules/content-overview/content-overview.php:1579
+msgid "None"
+msgstr "ไม่มี"
+
+#: modules/content-board/library/content-board-methods.php:53
+msgid "Error fetching post data."
+msgstr "เกิดข้อผิดพลาดในการดึงข้อมูลโพสต์."
+
+#: modules/content-board/library/content-board-methods.php:63
+msgid "You do not have permission to edit selected post."
+msgstr "คุณไม่มีสิทธิ์แก้ไขโพสต์ที่เลือก."
+
+#: modules/content-board/library/content-board-methods.php:65
+msgid "You do not have permission to move post to selected post status."
+msgstr "คุณไม่มีสิทธิ์ย้ายโพสต์ไปยังสถานะโพสต์ที่เลือก."
+
+#: modules/content-board/library/content-board-methods.php:95
+#: modules/content-board/library/content-board-methods.php:123
+msgid "Changes saved!"
+msgstr "บันทึกการเปลี่ยนแปลงเรียบร้อยแล้ว!"
+
+#: modules/content-board/library/content-board-methods.php:150
+msgid "Card Data updated successfully."
+msgstr "อัปเดตข้อมูลการ์ดเรียบร้อยแล้ว."
+
+#: modules/content-board/library/content-board-methods.php:172
+#: modules/content-overview/content-overview.php:676
+msgid "Settings updated successfully."
+msgstr "อัปเดตการตั้งค่าเรียบร้อยแล้ว."
+
+#: modules/content-board/library/content-board-methods.php:250
+#: modules/content-overview/content-overview.php:754
+#, php-format
+msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
+msgstr "%s สร้างเรียบร้อยแล้ว. <a href=\"%s\" target=\"_blank\">แก้ไข %s</a>"
+
+#: modules/content-board/library/content-board-methods.php:253
+#: modules/content-overview/content-overview.php:757
+#, php-format
+msgid "%s could not be created"
+msgstr "%s ไม่สามารถสร้างได้"
+
+#: modules/content-board/library/content-board-methods.php:258
+#: modules/content-overview/content-overview.php:762
+#, php-format
+msgid "You do not have permission to add new %s"
+msgstr "คุณไม่มีสิทธิ์เพิ่ม %s ใหม่"
+
+#: modules/content-board/library/content-board-methods.php:437
+#: modules/content-overview/library/content-overview-methods.php:160
+msgid "Post types to show:"
+msgstr "ประเภทโพสต์ที่จะแสดง:"
+
+#: modules/content-board/library/content-board-utilities.php:32
+msgid "Customize Card Data"
+msgstr "ปรับแต่งข้อมูลการ์ด"
+
+#: modules/content-board/library/content-board-utilities.php:51
+#: modules/content-overview/library/content-overview-methods.php:276
+msgid "Print"
+msgstr "พิมพ์"
+
+#: modules/content-board/library/content-board-utilities.php:63
+#: modules/content-overview/library/content-overview-methods.php:288
+msgid "Maximum number of posts to display"
+msgstr "จำนวนสูงสุดของโพสต์ที่จะแสดง"
+
+#: modules/content-board/library/content-board-utilities.php:84
+#: modules/content-overview/library/content-overview-methods.php:309
+msgid "New Post"
+msgstr "โพสต์ใหม่"
+
+#: modules/content-board/library/content-board-utilities.php:217
+msgid "Enable or Disable"
+msgstr "เปิดหรือปิดใช้งาน"
+
+#: modules/content-board/library/content-board-utilities.php:218
+msgid "Reorder"
+msgstr "จัดเรียงใหม่"
+
+#: modules/content-board/library/content-board-utilities.php:223
+msgid "Enable or Disable Content Board Card Data."
+msgstr "เปิดหรือปิดใช้งานข้อมูลการ์ดบอร์ดเนื้อหา."
+
+#: modules/content-board/library/content-board-utilities.php:296
+msgid "Drag to change enabled card data order."
+msgstr "ลากเพื่อเปลี่ยนลำดับข้อมูลการ์ดที่เปิดใช้งาน."
+
+#: modules/content-board/library/content-board-utilities.php:369
+msgid "Enable or Disable Content Board filter."
+msgstr "เปิดหรือปิดใช้งานตัวกรองบอร์ดเนื้อหา."
+
+#: modules/content-board/library/content-board-utilities.php:394
+#: modules/content-overview/library/content-overview-utilities.php:202
+msgid "Select Metakey"
+msgstr "เลือกเมตาคีย์"
+
+#: modules/content-board/library/content-board-utilities.php:509
+#: modules/content-overview/library/content-overview-utilities.php:614
+msgid "Show content from"
+msgstr "แสดงเนื้อหาจาก"
+
+#: modules/content-board/library/content-board-utilities.php:554
+#: modules/content-overview/library/content-overview-utilities.php:659
+#: modules/editorial-comments/editorial-comments.php:574
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:425
+#: modules/editorial-comments/lib/editorial-comments.js:350
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+#: modules/content-board/library/content-board-utilities.php:555
+#: modules/content-overview/library/content-overview-utilities.php:660
+msgid "Change"
+msgstr "เปลี่ยน"
+
+#: modules/content-board/library/content-board-utilities.php:987
+#: modules/content-overview/library/content-overview-utilities.php:314
+#, php-format
+msgid "Add New %s"
+msgstr "เพิ่มใหม่ %s"
+
+#: modules/content-board/library/content-board-utilities.php:1121
+#: modules/content-overview/library/content-overview-utilities.php:447
+#, php-format
+msgid "Create %s"
+msgstr "สร้าง %s"
+
+#: modules/content-board/library/content-board-utilities.php:1123
+#: modules/content-overview/library/content-overview-utilities.php:449
+msgid "Submit"
+msgstr "ส่ง"
+
+#: modules/content-board/library/content-board-utilities.php:1171
+#: modules/content-overview/library/content-overview-utilities.php:497
+msgid "Publish Date"
+msgstr "วันที่เผยแพร่"
+
+#: modules/content-overview/content-overview.php:156
+#: modules/content-overview/content-overview.php:376
+#: modules/content-overview/content-overview.php:393
+#: modules/content-overview/content-overview.php:394
+msgid "Content Overview"
+msgstr "ภาพรวมเนื้อหา"
+
+#: modules/content-overview/content-overview.php:654
+msgid "Column updated successfully."
+msgstr "อัปเดตคอลัมน์เรียบร้อยแล้ว."
+
+#: modules/content-overview/content-overview.php:837
+#: modules/content-overview/content-overview.php:896
+msgid "Last Modified"
+msgstr "แก้ไขล่าสุด"
+
+#: modules/content-overview/content-overview.php:883
+msgid "Custom Columns"
+msgstr "คอลัมน์ที่กำหนดเอง"
+
+#: modules/content-overview/content-overview.php:884
+msgid "Click the \"Add New\" button to create new columns."
+msgstr "คลิกปุ่ม \"เพิ่มใหม่\" เพื่อสร้างคอลัมน์ใหม่."
+
+#: modules/content-overview/content-overview.php:890
+msgid "Inbuilt Columns"
+msgstr "คอลัมน์ในตัว"
+
+#: modules/content-overview/library/content-overview-methods.php:207
+msgid "Item moved to the trash."
+msgid_plural "%d items moved to the trash."
+msgstr[0] "ย้ายรายการไปที่ถังขยะ."
+
+#: modules/content-overview/library/content-overview-methods.php:221
+msgid "Item restored from the Trash."
+msgid_plural "%d items restored from the Trash."
+msgstr[0] "กู้คืนรายการจากถังขยะ."
+
+#: modules/content-overview/library/content-overview-methods.php:257
+msgid "Customize Columns"
+msgstr "ปรับแต่งคอลัมน์"
+
+#: modules/content-overview/library/content-overview-utilities.php:25
+msgid "Enable Columns"
+msgstr "เปิดใช้งานคอลัมน์"
+
+#: modules/content-overview/library/content-overview-utilities.php:26
+msgid "Reorder Columns"
+msgstr "จัดเรียงคอลัมน์ใหม่"
+
+#: modules/content-overview/library/content-overview-utilities.php:31
+msgid "Enable or Disable Content Overview table column."
+msgstr "เปิดหรือปิดใช้งานคอลัมน์ตารางภาพรวมเนื้อหา."
+
+#: modules/content-overview/library/content-overview-utilities.php:52
+msgid "Column Title"
+msgstr "ชื่อคอลัมน์"
+
+#: modules/content-overview/library/content-overview-utilities.php:61
+msgid "Add Column"
+msgstr "เพิ่มคอลัมน์"
+
+#: modules/content-overview/library/content-overview-utilities.php:104
+msgid "Drag to change enabled columns order."
+msgstr "ลากเพื่อเปลี่ยนลำดับคอลัมน์ที่เปิดใช้งาน"
+
+#: modules/content-overview/library/content-overview-utilities.php:177
+msgid "Enable or Disable Content Overview filter."
+msgstr "เปิดหรือปิดฟิลเตอร์ภาพรวมเนื้อหา"
+
+#: modules/dashboard/dashboard.php:56
+msgid "Dashboard Widgets"
+msgstr "วิดเจ็ตแดชบอร์ด"
+
+#: modules/dashboard/dashboard.php:70
+msgid "Widget Options"
+msgstr "ตัวเลือกวิดเจ็ต"
+
+#: modules/dashboard/dashboard.php:165
+msgid "Unpublished Content"
+msgstr "เนื้อหาที่ยังไม่เผยแพร่"
+
+#: modules/dashboard/dashboard.php:174
+#: modules/dashboard/dashboard.php:353
+msgid "Notepad"
+msgstr "สมุดบันทึก"
+
+#: modules/dashboard/dashboard.php:183
+#: modules/dashboard/dashboard.php:346
+msgid "My Content Notifications"
+msgstr "การแจ้งเตือนเนื้อหาของฉัน"
+
+#: modules/dashboard/dashboard.php:211
+msgid "Posts at a Glance"
+msgstr "โพสต์โดยสังเขป"
+
+#: modules/dashboard/dashboard.php:305
+msgid "This post was last updated on "
+msgstr "โพสต์นี้ได้รับการปรับปรุงครั้งล่าสุดเมื่อ "
+
+#: modules/dashboard/dashboard.php:316
+msgid "Sorry! You're not subscribed to any posts!"
+msgstr "ขอโทษ! คุณไม่ได้สมัครรับข้อมูลโพสต์ใด ๆ!"
+
+#: modules/dashboard/dashboard.php:339
+msgid "Post Status Widget"
+msgstr "วิดเจ็ตสถานะโพสต์"
+
+#: modules/dashboard/dashboard.php:410
+msgid "The notifications module will need to be enabled for this widget to display."
+msgstr "โมดูลการแจ้งเตือนจะต้องเปิดใช้งานเพื่อให้วิดเจ็ตนี้แสดงผล"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:50
+msgid "Dashboard Note"
+msgstr "หมายเหตุแดชบอร์ด"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:140
+#, php-format
+msgid "%1$s last updated on %2$s"
+msgstr "%1$s ปรับปรุงล่าสุดเมื่อ %2$s"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:168
+msgid "Update Note"
+msgstr "ปรับปรุงหมายเหตุ"
+
+#: modules/debug/debug.php:68
+msgid "Debug"
+msgstr "ดีบัก"
+
+#: modules/debug/debug.php:228
+#: modules/debug/debug.php:291
+msgid "PublishPress Debug Log"
+msgstr "บันทึกการดีบักของ PublishPress"
+
+#: modules/debug/debug.php:242
+#: modules/debug/debug.php:243
+msgid "Debug Log"
+msgstr "บันทึกการดีบัก"
+
+#: modules/debug/debug.php:292
+msgid "File info"
+msgstr "ข้อมูลไฟล์"
+
+#: modules/debug/debug.php:293
+msgid "Path"
+msgstr "เส้นทาง"
+
+#: modules/debug/debug.php:294
+msgid "Log content"
+msgstr "เนื้อหาบันทึก"
+
+#: modules/debug/debug.php:295
+msgid "Size"
+msgstr "ขนาด"
+
+#: modules/debug/debug.php:296
+msgid "Created on"
+msgstr "สร้างเมื่อ"
+
+#: modules/debug/debug.php:297
+msgid "Modified on"
+msgstr "แก้ไขเมื่อ"
+
+#: modules/debug/debug.php:298
+msgid "Delete file"
+msgstr "ลบไฟล์"
+
+#: modules/debug/debug.php:299
+msgid "Debug data"
+msgstr "ข้อมูลการดีบัก"
+
+#: modules/debug/debug.php:300
+msgid "Log File"
+msgstr "ไฟล์บันทึก"
+
+#: modules/debug/debug.php:303
+msgid "Log file not found."
+msgstr "ไม่พบไฟล์บันทึก."
+
+#: modules/debug/debug.php:304
+msgid ""
+"If you see any error or look for information regarding PublishPress, please "
+"don't hesitate to contact the support team. E-mail us:"
+msgstr ""
+"หากคุณเห็นข้อผิดพลาดใด ๆ หรือมองหาข้อมูลเกี่ยวกับ PublishPress "
+"กรุณาอย่าลังเลที่จะติดต่อทีมสนับสนุน อีเมลถึงเรา:"
+
+#: modules/debug/debug.php:308
+msgid "Click to delete the log file. Be careful, this operation can not be undone. "
+msgstr "คลิกเพื่อลบไฟล์บันทึก ระวัง การดำเนินการนี้ไม่สามารถย้อนกลับได้."
+
+#: modules/debug/debug.php:358
+msgid "Action nonce not found."
+msgstr "ไม่พบ nonce ของการดำเนินการ."
+
+#: modules/debug/debug.php:365
+msgid "Invalid action nonce."
+msgstr "nonce ของการดำเนินการไม่ถูกต้อง."
+
+#: modules/editorial-comments/editorial-comments.php:63
+#: modules/editorial-comments/editorial-comments.php:231
+#: modules/editorial-comments/editorial-comments.php:232
+#: modules/editorial-comments/editorial-comments.php:453
+msgid "Editorial Comments"
+msgstr "ความคิดเห็นทางบรรณาธิการ"
+
+#: modules/editorial-comments/editorial-comments.php:78
+msgid "Choose Post Types"
+msgstr "เลือกประเภทโพสต์"
+
+#: modules/editorial-comments/editorial-comments.php:83
+msgid ""
+"<p>Editorial comments help you cut down on email overload and keep the "
+"conversation close to where it matters: your content. Threaded commenting "
+"in the admin, similar to what you find at the end of a blog post, allows "
+"writers and editors to privately leave feedback and discuss what needs to "
+"be changed before publication.</p><p>Anyone with access to view the story "
+"in progress will also have the ability to comment on it. If you have "
+"notifications enabled, those following the post will receive an email every "
+"time a comment is left.</p>"
+msgstr ""
+"<p>ความคิดเห็นบรรณาธิการช่วยให้คุณลดภาระอีเมลและทำให้การสนทนาอยู่ใกล้กับสิ่ง"
+"ที่สำคัญ: เนื้อหาของคุณ การแสดงความคิดเห็นแบบเธรดในแอดมิน "
+"ที่คล้ายกับสิ่งที่คุณพบที่ส่วนท้ายของโพสต์บล็อก "
+"จะช่วยให้ผู้เขียนและบรรณาธิการสามารถให้ข้อเสนอแนะแบบส่วนตัวและหารือเกี่ยวกับ"
+"สิ่งที่ต้องเปลี่ยนแปลงก่อนการเผยแพร่.</"
+"p><p>ใครก็ตามที่มีสิทธิ์เข้าถึงเรื่องราวที่กำลังดำเนินการจะมีความสามารถในการ"
+"แสดงความคิดเห็นเกี่ยวกับเรื่องนั้นด้วย หากคุณเปิดการแจ้งเตือน "
+"ผู้ที่ติดตามโพสต์จะได้รับอีเมลทุกครั้งที่มีการแสดงความคิดเห็น.</p>"
+
+#: modules/editorial-comments/editorial-comments.php:88
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">Editorial "
+"Comments Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>สำหรับข้อมูลเพิ่มเติม:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\""
+">เอกสารความคิดเห็นบรรณาธิการ</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress บน "
+"Github</a></p>"
+
+#: modules/editorial-comments/editorial-comments.php:205
+#: modules/editorial-comments/editorial-comments.php:717
+msgid "Remove"
+msgstr "ลบ"
+
+#: modules/editorial-comments/editorial-comments.php:206
+#: modules/editorial-comments/library/EditorialCommentsTable.php:181
+#: modules/notifications-log/notifications-log.php:204
+msgid "All Posts"
+msgstr "โพสต์ทั้งหมด"
+
+#: modules/editorial-comments/editorial-comments.php:207
+#: modules/editorial-comments/library/EditorialCommentsTable.php:196
+msgid "All Users"
+msgstr "ผู้ใช้ทั้งหมด"
+
+#: modules/editorial-comments/editorial-comments.php:272
+#. translators: %s: search keywords
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "ผลการค้นหาสำหรับ &#8220;%s&#8221;"
+
+#: modules/editorial-comments/editorial-comments.php:285
+msgid "Search Comments"
+msgstr "ค้นความคิดเห็น"
+
+#: modules/editorial-comments/editorial-comments.php:528
+msgid ""
+"You can add editorial comments to a post once you've saved it for the first "
+"time."
+msgstr "คุณสามารถเพิ่มความคิดเห็นบรรณาธิการลงในโพสต์ได้เมื่อคุณบันทึกเป็นครั้งแรก."
+
+#: modules/editorial-comments/editorial-comments.php:548
+#: modules/editorial-comments/editorial-comments.php:552
+msgid "Add an editorial comment"
+msgstr "เพิ่มความคิดเห็นทางบรรณาธิการ"
+
+#: modules/editorial-comments/editorial-comments.php:558
+msgid "Attach file"
+msgstr "แนบไฟล์"
+
+#: modules/editorial-comments/editorial-comments.php:570
+msgid "Add Comment"
+msgstr "เพิ่มความคิดเห็น"
+
+#: modules/editorial-comments/editorial-comments.php:616
+msgid "Reply to this comment"
+msgstr "ตอบกลับความคิดเห็นนี้"
+
+#: modules/editorial-comments/editorial-comments.php:619
+msgid "Reply"
+msgstr "ตอบกลับ"
+
+#: modules/editorial-comments/editorial-comments.php:639
+#: modules/editorial-comments/library/EditorialCommentsTable.php:434
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:161
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:303
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:333
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:614
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:644
+#: modules/notifications-log/library/NotificationsLogTable.php:376
+#: modules/notifications-log/library/NotificationsLogTable.php:407
+msgid "Delete"
+msgstr "ลบ"
+
+#: modules/editorial-comments/editorial-comments.php:684
+#, php-format
+msgid "said on %1$s at %2$s"
+msgstr "กล่าวเมื่อ %1$s ที่ %2$s"
+
+#: modules/editorial-comments/editorial-comments.php:745
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be adding editorial "
+"comments."
+msgstr ""
+"การตรวจสอบ nonce ล้มเหลว "
+"กรุณาให้แน่ใจว่าคุณมีสิทธิ์เพิ่มความคิดเห็นบรรณาธิการ."
+
+#: modules/editorial-comments/editorial-comments.php:753
+#: modules/editorial-comments/editorial-comments.php:894
+#: modules/editorial-comments/editorial-comments.php:1026
+#: modules/editorial-comments/editorial-comments.php:1142
+msgid "Invalid comment data"
+msgstr "ข้อมูลความคิดเห็นไม่ถูกต้อง"
+
+#: modules/editorial-comments/editorial-comments.php:766
+msgid ""
+"Sorry, you don't have the privileges to add editorial comments. Please talk "
+"to your Administrator."
+msgstr ""
+"ขอโทษครับ คุณไม่มีสิทธิ์ในการเพิ่มความคิดเห็นบรรณาธิการ "
+"กรุณาพูดคุยกับผู้ดูแลระบบของคุณ."
+
+#: modules/editorial-comments/editorial-comments.php:776
+#: modules/editorial-comments/editorial-comments.php:940
+msgid "Please enter a comment."
+msgstr "กรุณาใส่ความคิดเห็น"
+
+#: modules/editorial-comments/editorial-comments.php:863
+#: modules/editorial-comments/editorial-comments.php:993
+#: modules/editorial-comments/editorial-comments.php:1103
+#: modules/editorial-comments/editorial-comments.php:1187
+msgid "There was a problem of some sort. Try again or contact your administrator."
+msgstr "มีปัญหาบางประการ กรุณาลองอีกครั้งหรือ ติดต่อผู้ดูแลระบบของคุณ"
+
+#: modules/editorial-comments/editorial-comments.php:883
+#: modules/editorial-comments/editorial-comments.php:1015
+#: modules/editorial-comments/editorial-comments.php:1132
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be editing editorial "
+"comments."
+msgstr ""
+"การตรวจสอบ nonce ล้มเหลว "
+"กรุณาให้แน่ใจว่าคุณมีสิทธิ์แก้ไขความคิดเห็นบรรณาธิการ."
+
+#: modules/editorial-comments/editorial-comments.php:909
+#: modules/editorial-comments/editorial-comments.php:1041
+msgid ""
+"Sorry, you don't have the privileges to edit editorial comments. Please "
+"talk to your Administrator."
+msgstr ""
+"ขอโทษครับ คุณไม่มีสิทธิ์ในการแก้ไขความคิดเห็นบรรณาธิการ "
+"กรุณาพูดคุยกับผู้ดูแลระบบของคุณ."
+
+#: modules/editorial-comments/editorial-comments.php:927
+msgid ""
+"Sorry, you don't have the privileges to edit this editorial comment. Please "
+"talk to your Administrator."
+msgstr ""
+"ขอโทษครับ/ค่ะ คุณไม่มีสิทธิ์ในการแก้ไขความคิดเห็นบรรณาธิการนี้ "
+"กรุณาพูดคุยกับผู้ดูแลระบบของคุณ。"
+
+#: modules/editorial-comments/editorial-comments.php:1057
+#: modules/editorial-comments/editorial-comments.php:1161
+msgid ""
+"Sorry, you don't have the privileges to delete this editorial comment. "
+"Please talk to your Administrator."
+msgstr ""
+"ขอโทษครับ/ค่ะ คุณไม่มีสิทธิ์ในการลบความคิดเห็นบรรณาธิการนี้ "
+"กรุณาพูดคุยกับผู้ดูแลระบบของคุณ。"
+
+#: modules/editorial-comments/editorial-comments.php:1078
+msgid "Sorry, you can't delete this editorial comment because it has some replies."
+msgstr "ขอโทษครับ/ค่ะ คุณไม่สามารถลบความคิดเห็นนี้ได้เพราะมีการตอบกลับบางอย่าง"
+
+#: modules/editorial-comments/editorial-comments.php:1179
+msgid "Comment deleted successfully."
+msgstr "ลบความคิดเห็นเรียบร้อยแล้ว"
+
+#: modules/editorial-comments/editorial-comments.php:1230
+msgid "Enable for these post types:"
+msgstr "เปิดใช้งานสำหรับประเภทโพสต์เหล่านี้:"
+
+#: modules/editorial-comments/editorial-comments.php:1237
+msgid "Comment author name field:"
+msgstr "ช่องชื่อผู้เขียนความคิดเห็น:"
+
+#: modules/editorial-comments/editorial-comments.php:1262
+msgid "Nickname"
+msgstr "ชื่อเล่น"
+
+#: modules/editorial-comments/editorial-comments.php:1263
+msgid "Username"
+msgstr "ชื่อผู้ใช้"
+
+#: modules/editorial-comments/editorial-comments.php:1264
+msgid "Display Name"
+msgstr "ชื่อที่แสดง"
+
+#: modules/editorial-comments/editorial-comments.php:1265
+msgid "First Name"
+msgstr "ชื่อจริง"
+
+#: modules/editorial-comments/editorial-comments.php:1266
+msgid "Last Name"
+msgstr "นามสกุล"
+
+#: modules/editorial-comments/editorial-comments.php:1268
+msgid "User Url"
+msgstr "URL ของผู้ใช้"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:158
+msgid "No editorial comments."
+msgstr "ไม่มีความคิดเห็นบรรณาธิการ"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:210
+#: modules/notifications-log/library/NotificationsLogTable.php:646
+msgid "Filter"
+msgstr "กรอง"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:229
+msgid "Comment"
+msgstr "ความคิดเห็น"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:231
+msgid "Post"
+msgstr "โพสต์"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:233
+msgid "Submitted on"
+msgstr "ส่งเมื่อ"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:336
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:201
+#: modules/notifications/notifications.php:1974
+#. translators: 1: Comment date, 2: Comment time.
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s ที่ %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:109
+msgid "Editorial fields term added."
+msgstr "เพิ่มเงื่อนไขฟิลด์บรรณาธิการแล้ว"
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+msgid "Editorial fields term updated."
+msgstr "อัปเดตเงื่อนไขฟิลด์บรรณาธิการแล้ว"
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid "Editorial fields term doesn't exist."
+msgstr "เงื่อนไขฟิลด์บรรณาธิการไม่มีอยู่"
+
+#: modules/editorial-metadata/editorial-metadata.php:112
+msgid "Editorial fields term deleted."
+msgstr "ลบเงื่อนไขฟิลด์บรรณาธิการแล้ว"
+
+#: modules/editorial-metadata/editorial-metadata.php:113
+msgid "Editorial fields order updated."
+msgstr "อัปเดตลำดับฟิลด์บรรณาธิการ."
+
+#: modules/editorial-metadata/editorial-metadata.php:114
+msgid "Editorial fields visibility changed."
+msgstr "การมองเห็นฟิลด์บรรณาธิการเปลี่ยนแปลงแล้ว."
+
+#: modules/editorial-metadata/editorial-metadata.php:120
+msgid ""
+"<p>Keep track of important details about your content with editorial "
+"fields. This feature allows you to create as many date, text, number, etc. "
+"fields as you like, and then use them to store information like contact "
+"details or the location of an interview.</p><p>Once you’ve set your fields "
+"up, editorial fields integrates with both the calendar and the content "
+"overview. Make an editorial fields item visible to have it appear to the "
+"rest of your team. Keep it hidden to restrict the information between the "
+"writer and their editor.</p>"
+msgstr ""
+"<p>ติดตามรายละเอียดที่สำคัญเกี่ยวกับเนื้อหาของคุณด้วยฟิลด์บรรณาธิการ "
+"ฟีเจอร์นี้ช่วยให้คุณสร้างฟิลด์วันที่ ข้อความ หมายเลข ฯลฯ "
+"ได้มากเท่าที่คุณต้องการ จากนั้นใช้เพื่อเก็บข้อมูล เช่น "
+"รายละเอียดการติดต่อหรือสถานที่สัมภาษณ์</"
+"p><p>เมื่อคุณตั้งค่าฟิลด์ของคุณเรียบร้อยแล้ว "
+"ฟิลด์บรรณาธิการจะรวมเข้ากับปฏิทินและภาพรวมเนื้อหา "
+"ทำให้ฟิลด์บรรณาธิการปรากฏให้ทีมของคุณเห็น "
+"หรือเก็บเป็นความลับเพื่อจำกัดข้อมูลระหว่างผู้เขียนและบรรณาธิการของพวกเขา</p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:125
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">Editorial "
+"Fields Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>สำหรับข้อมูลเพิ่มเติม:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\""
+">เอกสารฟิลด์บรรณาธิการ</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress บน "
+"Github</a></p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:212
+msgid "First Draft Date"
+msgstr "วันที่ร่างแรก"
+
+#: modules/editorial-metadata/editorial-metadata.php:215
+msgid "When the first draft needs to be ready."
+msgstr "เมื่อร่างแรกต้องพร้อม."
+
+#: modules/editorial-metadata/editorial-metadata.php:220
+msgid "Assignment"
+msgstr "การมอบหมาย"
+
+#: modules/editorial-metadata/editorial-metadata.php:223
+msgid "What the post needs to cover."
+msgstr "สิ่งที่โพสต์ต้องครอบคลุม."
+
+#: modules/editorial-metadata/editorial-metadata.php:288
+msgid "Checkbox"
+msgstr "กล่องกาเครื่องหมาย"
+
+#: modules/editorial-metadata/editorial-metadata.php:289
+msgid "Dropdown Select"
+msgstr "เลือกแบบดรอปดาวน์"
+
+#: modules/editorial-metadata/editorial-metadata.php:291
+msgid "Location"
+msgstr "สถานที่"
+
+#: modules/editorial-metadata/editorial-metadata.php:292
+msgid "Number"
+msgstr "หมายเลข"
+
+#: modules/editorial-metadata/editorial-metadata.php:293
+msgid "Paragraph"
+msgstr "ย่อหน้า"
+
+#: modules/editorial-metadata/editorial-metadata.php:294
+msgid "Text"
+msgstr "ข้อความ"
+
+#: modules/editorial-metadata/editorial-metadata.php:295
+msgid "User"
+msgstr "ผู้ใช้"
+
+#: modules/editorial-metadata/editorial-metadata.php:372
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will "
+"remain but will not be visible unless this term is re-added."
+msgstr ""
+"คุณแน่ใจหรือไม่ว่าต้องการลบคำนี้? เมทาดาตาสำหรับคำนี้จะยังคงอยู่ "
+"แต่จะไม่สามารถมองเห็นได้ เว้นแต่คำนี้จะถูกเพิ่มกลับเข้ามาอีกครั้ง。"
+
+#: modules/editorial-metadata/editorial-metadata.php:453
+msgid "Search Editorial Fields"
+msgstr "ค้นหาฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:454
+msgid "Popular Editorial Fields"
+msgstr "ฟิลด์บรรณาธิการยอดนิยม"
+
+#: modules/editorial-metadata/editorial-metadata.php:455
+msgid "All Editorial Fields"
+msgstr "ฟิลด์บรรณาธิการทั้งหมด"
+
+#: modules/editorial-metadata/editorial-metadata.php:456
+msgid "Edit Editorial Fields"
+msgstr "แก้ไขฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:457
+msgid "Update Editorial Fields"
+msgstr "อัปเดตฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:458
+msgid "Add New Editorial Fields"
+msgstr "เพิ่มฟิลด์บรรณาธิการใหม่"
+
+#: modules/editorial-metadata/editorial-metadata.php:459
+msgid "New Editorial Fields"
+msgstr "ฟิลด์บรรณาธิการใหม่"
+
+#: modules/editorial-metadata/editorial-metadata.php:549
+msgid "No editorial fields available."
+msgstr "ไม่มีฟิลด์บรรณาธิการที่มีให้ใช้งาน"
+
+#: modules/editorial-metadata/editorial-metadata.php:551
+#, php-format
+msgid " <a href=\"%s\">Add fields to get started</a>."
+msgstr " <a href=\"%s\">เพิ่มฟิลด์เพื่อเริ่มต้น</a>."
+
+#: modules/editorial-metadata/editorial-metadata.php:553
+msgid ""
+" Encourage your site administrator to configure your editorial workflow by "
+"adding editorial fields."
+msgstr ""
+"กระตุ้นผู้ดูแลเว็บไซต์ของคุณให้กำหนดค่าเวิร์กโฟลว์บรรณาธิการของคุณโดยการเพิ่"
+"มฟิลด์บรรณาธิการ。"
+
+#: modules/editorial-metadata/editorial-metadata.php:1244
+#: modules/editorial-metadata/editorial-metadata.php:1401
+msgid "All options value and labels are required."
+msgstr "ค่าตัวเลือกและป้ายทั้งหมดจำเป็นต้องมี"
+
+#: modules/editorial-metadata/editorial-metadata.php:1253
+msgid "Please enter a name for the editorial fields."
+msgstr "กรุณาใส่ชื่อสำหรับฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1260
+msgid "Please enter a slug for the editorial fields."
+msgstr "กรุณาใส่ slug สำหรับฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1266
+msgid "Name conflicts with existing term. Please choose another."
+msgstr "ชื่อซ้ำกับคำที่มีอยู่แล้ว กรุณาเลือกชื่ออื่น"
+
+#: modules/editorial-metadata/editorial-metadata.php:1273
+#: modules/editorial-metadata/editorial-metadata.php:1433
+msgid "Name already in use. Please choose another."
+msgstr "ชื่อถูกใช้งานอยู่แล้ว กรุณาเลือกชื่ออื่น"
+
+#: modules/editorial-metadata/editorial-metadata.php:1277
+msgid "Slug already in use. Please choose another."
+msgstr "Slug ถูกใช้งานอยู่แล้ว กรุณาเลือกชื่ออื่น"
+
+#: modules/editorial-metadata/editorial-metadata.php:1283
+#: modules/editorial-metadata/editorial-metadata.php:1290
+#: modules/editorial-metadata/editorial-metadata.php:1446
+msgid "Name cannot exceed 200 characters. Please try a shorter name."
+msgstr "ชื่อไม่สามารถยาวเกิน 200 ตัวอักษร กรุณาลองใช้ชื่อที่สั้นกว่า"
+
+#: modules/editorial-metadata/editorial-metadata.php:1300
+msgid "Please select a valid metadata type."
+msgstr "กรุณาเลือกประเภทเมตาดาต้าที่ถูกต้อง"
+
+#: modules/editorial-metadata/editorial-metadata.php:1332
+msgid "Error adding term."
+msgstr "เกิดข้อผิดพลาดในการเพิ่มคำ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1410
+msgid "Please enter a name for the editorial fields"
+msgstr "กรุณาใส่ชื่อสำหรับฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1415
+msgid "Please enter a valid, non-numeric name for the editorial fields."
+msgstr "กรุณาใส่ชื่อที่ถูกต้องและไม่ใช่ตัวเลขสำหรับฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1424
+msgid "Metadata name conflicts with existing term. Please choose another."
+msgstr "ชื่อเมตาดาต้าซ้ำกับคำที่มีอยู่แล้ว กรุณาเลือกชื่ออื่น"
+
+#: modules/editorial-metadata/editorial-metadata.php:1438
+msgid "Name conflicts with slug for another term. Please choose something else."
+msgstr "ชื่อซ้ำกับ slug ของคำอื่น กรุณาเลือกชื่ออื่น"
+
+#: modules/editorial-metadata/editorial-metadata.php:1482
+#: modules/editorial-metadata/editorial-metadata.php:1525
+msgid "Error updating term."
+msgstr "เกิดข้อผิดพลาดในการอัปเดตคำ"
+
+#: modules/editorial-metadata/editorial-metadata.php:1550
+msgid "Terms not set."
+msgstr "ยังไม่มีการตั้งค่าข้อกำหนด."
+
+#: modules/editorial-metadata/editorial-metadata.php:1591
+msgid "Error deleting term."
+msgstr "เกิดข้อผิดพลาดในการลบข้อกำหนด."
+
+#: modules/editorial-metadata/editorial-metadata.php:1638
+msgid "Register editorial fields for these post types:"
+msgstr "ลงทะเบียนฟิลด์บรรณาธิการสำหรับประเภทโพสต์เหล่านี้:"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:109
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
+msgid "No"
+msgstr "ไม่"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:110
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:142
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:351
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:660
+msgid "Yes"
+msgstr "ใช่"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:127
+msgid "This editorial fields type is not yet supported."
+msgstr "ประเภทฟิลด์บรรณาธิการนี้ยังไม่ได้รับการสนับสนุน."
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:223
+msgid "Not set"
+msgstr "ยังไม่ได้ตั้งค่า"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:82
+#, php-format
+msgid "View &#8220;%s&#8221; on Google Maps"
+msgstr "ดู &#8220;%s&#8221; บน Google Maps"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-select-handler.php:255
+#, php-format
+msgid "-- Select %s --"
+msgstr "-- เลือก %s --"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-user-handler.php:79
+msgid "-- Select a user --"
+msgstr "-- เลือกผู้ใช้ --"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
+msgid "Position"
+msgstr "ตำแหน่ง"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:45
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:443
+msgid "Name"
+msgstr "ชื่อ"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:47
+msgid "Field Type"
+msgstr "ประเภทฟิลด์"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:48
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:176
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474
+msgid "Description"
+msgstr "คำอธิบาย"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:135
+msgid "No editorial fields found."
+msgstr "ไม่พบฟิลด์บรรณาธิการ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:158
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:452
+msgid "The name is for labeling the editorial fields."
+msgstr "ชื่อใช้สำหรับการติดป้ายฟิลด์บรรณาธิการ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457
+msgid "Slug"
+msgstr "สลัก"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:168
+msgid "The slug cannot be changed once the term has been created."
+msgstr "สลักไม่สามารถเปลี่ยนแปลงได้เมื่อข้อกำหนดถูกสร้างขึ้นแล้ว."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:184
+msgid ""
+"The description can be used to communicate with your team about what the "
+"field is for."
+msgstr "คำอธิบายสามารถใช้สื่อสารกับทีมของคุณเกี่ยวกับฟิลด์นี้ได้ว่าเพื่ออะไร。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
+msgid "Type"
+msgstr "ประเภท"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:198
+msgid "The field type cannot be changed once created."
+msgstr "ประเภทฟิลด์ไม่สามารถเปลี่ยนแปลงได้เมื่อสร้างขึ้นแล้ว."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:204
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:516
+msgid "User role"
+msgstr "บทบาทผู้ใช้"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:211
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:523
+msgid "Select roles..."
+msgstr "เลือกบทบาท..."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:223
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:537
+msgid ""
+"Filter the list of users in the editorial meta to users in the selected "
+"roles."
+msgstr "กรองรายชื่อผู้ใช้ในเมตาบรรณาธิการให้แสดงเฉพาะผู้ใช้ในบทบาทที่เลือก。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:229
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:542
+msgid "Select Type"
+msgstr "เลือกประเภท"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:233
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:545
+msgid "Single Select"
+msgstr "เลือกเดี่ยว"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:234
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:546
+msgid "Multiple Select"
+msgstr "เลือกหลายรายการ"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:251
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:566
+msgid "Indicate the select type."
+msgstr "ระบุประเภทการเลือก."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:258
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:571
+msgid "Dropdown Option"
+msgstr "ตัวเลือกแบบเลื่อนลง"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:263
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:574
+msgid ""
+"Enter the dropdown option value and label. You can move options to change "
+"their order."
+msgstr ""
+"กรอกค่าตัวเลือกในเมนูแบบเลื่อนและป้ายชื่อ "
+"คุณสามารถย้ายตัวเลือกเพื่อเปลี่ยนลำดับของพวกเขาได้。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:285
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:316
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:596
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:627
+msgid "Meta Value"
+msgstr "ค่าเมตา"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:291
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:322
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:602
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:633
+msgid "Display Label"
+msgstr "ป้ายชื่อที่แสดง"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:300
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:330
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:611
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:641
+msgid "Default option"
+msgstr "ตัวเลือกเริ่มต้น"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:338
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:649
+msgid "Add Another Option"
+msgstr "เพิ่มตัวเลือกอื่น"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:346
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:656
+msgid "Show on Content Calendar and Overview form"
+msgstr "แสดงในปฏิทินเนื้อหาและแบบฟอร์มภาพรวม"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:361
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:674
+msgid ""
+"If enabled, this field will be available when adding new posts on the "
+"Content Calendar and Overview screen."
+msgstr ""
+"หากเปิดใช้งาน "
+"ฟิลด์นี้จะพร้อมใช้งานเมื่อเพิ่มโพสต์ใหม่ในหน้าปฏิทินเนื้อหาและภาพรวม。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
+msgid "Add to post types"
+msgstr "เพิ่มไปยังประเภทโพสต์"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:375
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:686
+msgid "This field will be available for these post types."
+msgstr "ฟิลด์นี้จะพร้อมใช้งานสำหรับประเภทโพสต์เหล่านี้."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:394
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:704
+msgid "Show on Post Types screen"
+msgstr "แสดงในหน้าประเภทโพสต์"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:399
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:708
+msgid "This field will be viewable on the overview screens for these post types."
+msgstr "ฟิลด์นี้จะสามารถดูได้ในหน้าภาพรวมสำหรับประเภทโพสต์เหล่านี้."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:422
+msgid "Update Editorial fields term"
+msgstr "อัปเดตคำศัพท์ฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:466
+msgid ""
+"The \"slug\" is the URL-friendly version of the name. It is usually all "
+"lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
+"“slug” คือเวอร์ชันที่เป็นมิตรกับ URL ของชื่อ "
+"มันมักจะเป็นตัวพิมพ์เล็กทั้งหมดและประกอบด้วยตัวอักษร ตัวเลข "
+"และขีดกลางเท่านั้น。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:483
+msgid ""
+"The description can be used to communicate with your team about what the "
+"metadata is for."
+msgstr "คำอธิบายสามารถใช้สื่อสารกับทีมของคุณเกี่ยวกับเมทาดาตานี้ว่าเพื่ออะไร。"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:511
+msgid "Indicate the type of editorial fields."
+msgstr "ระบุประเภทของฟิลด์บรรณาธิการ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:730
+msgid "Add New Editorial fields term"
+msgstr "เพิ่มคำศัพท์ฟิลด์บรรณาธิการใหม่"
+
+#: modules/efmigration/efmigration.php:288
+msgid ""
+"Edit Flow should not be used alongside PublishPress Planner. If you want to "
+"use PublishPress Planner, please complete Edit Flow data migration and then "
+"deactivate Edit Flow."
+msgstr ""
+"Edit Flow ไม่ควรใช้ร่วมกับ PublishPress Planner หากคุณต้องการใช้ "
+"PublishPress Planner กรุณาเสร็จสิ้นการย้ายข้อมูล Edit Flow "
+"และจากนั้นปิดการใช้งาน Edit Flow。"
+
+#: modules/improved-notifications/improved-notifications.php:102
+msgid "Advanced Notifications"
+msgstr "การแจ้งเตือนขั้นสูง"
+
+#: modules/improved-notifications/improved-notifications.php:257
+msgid "Duplicated notification threshold:"
+msgstr "เกณฑ์การแจ้งเตือนที่ซ้ำกัน:"
+
+#: modules/improved-notifications/improved-notifications.php:265
+msgid "Default notification channels:"
+msgstr "ช่องทางการแจ้งเตือนเริ่มต้น:"
+
+#: modules/improved-notifications/improved-notifications.php:363
+msgid "Existing Post is updated"
+msgstr "โพสต์ที่มีอยู่ได้รับการอัปเดต"
+
+#: modules/improved-notifications/improved-notifications.php:409
+msgid "New Post is created in Draft status"
+msgstr "โพสต์ใหม่ถูกสร้างขึ้นในสถานะร่าง"
+
+#: modules/improved-notifications/improved-notifications.php:462
+msgid "New Post is Published"
+msgstr "โพสต์ใหม่ถูกเผยแพร่"
+
+#: modules/improved-notifications/improved-notifications.php:501
+msgid "Notify on editorial comments"
+msgstr "แจ้งเตือนเกี่ยวกับความคิดเห็นบรรณาธิการ"
+
+#: modules/improved-notifications/improved-notifications.php:606
+msgid "minutes"
+msgstr "นาที"
+
+#: modules/improved-notifications/improved-notifications.php:610
+msgid ""
+"This will prevent too many notifications being sent for the same or similar "
+"events. Set this to a higher number if you are receiving duplicate emails."
+msgstr ""
+"นี่จะป้องกันไม่ให้มีการส่งการแจ้งเตือนมากเกินไปสำหรับเหตุการณ์เดียวกันหรือเห"
+"ตุการณ์ที่คล้ายกัน ตั้งค่านี้ให้สูงขึ้นหากคุณได้รับอีเมลซ้ำ。"
+
+#: modules/improved-notifications/improved-notifications.php:656
+#: modules/improved-notifications/improved-notifications.php:1495
+#: views/user_profile_notification_channels.html.php:1
+msgid "Editorial Notifications"
+msgstr "การแจ้งเตือนบรรณาธิการ"
+
+#: modules/improved-notifications/improved-notifications.php:657
+#: modules/improved-notifications/improved-notifications.php:1496
+#: views/user_profile_notification_channels.html.php:6
+msgid "Choose the channels where each workflow will send notifications to:"
+msgstr "เลือกช่องทางที่แต่ละเวิร์กโฟลว์จะส่งการแจ้งเตือนไปยัง:"
+
+#: modules/improved-notifications/improved-notifications.php:661
+#: modules/improved-notifications/improved-notifications.php:1483
+#: modules/improved-notifications/improved-notifications.php:1500
+msgid "Muted"
+msgstr "ปิดเสียง"
+
+#: modules/improved-notifications/improved-notifications.php:662
+#: modules/improved-notifications/improved-notifications.php:1501
+#: views/user_profile_notification_channels.html.php:14
+msgid "Workflows"
+msgstr "เวิร์กโฟลว์"
+
+#: modules/improved-notifications/improved-notifications.php:663
+#: modules/improved-notifications/improved-notifications.php:1502
+#: views/user_profile_notification_channels.html.php:15
+msgid "Channels"
+msgstr "ช่องทาง"
+
+#: modules/improved-notifications/improved-notifications.php:1088
+#: modules/notifications-log/notifications-log.php:75
+#: modules/notifications-log/notifications-log.php:263
+#: modules/notifications-log/notifications-log.php:489
+#: modules/notifications-log/notifications-log.php:490
+msgid "Notifications Log"
+msgstr "บันทึกการแจ้งเตือน"
+
+#: modules/improved-notifications/improved-notifications.php:1122
+msgid "Workflow Settings"
+msgstr "การตั้งค่าการทำงาน"
+
+#: modules/improved-notifications/improved-notifications.php:1131
+msgid "Options"
+msgstr "ตัวเลือก"
+
+#: modules/improved-notifications/improved-notifications.php:1140
+msgid "Help"
+msgstr "ช่วยเหลือ"
+
+#: modules/improved-notifications/improved-notifications.php:1170
+#: modules/notifications-log/library/NotificationsLogTable.php:498
+msgid "For which content?"
+msgstr "สำหรับเนื้อหาใด?"
+
+#: modules/improved-notifications/improved-notifications.php:1190
+msgid "What to say?"
+msgstr "จะพูดว่าอะไร?"
+
+#: modules/improved-notifications/improved-notifications.php:1310
+msgid "Select at least one option for each section."
+msgstr "กรุณาเลือกตัวเลือกอย่างน้อยหนึ่งตัวสำหรับแต่ละหมวดหมู่."
+
+#: modules/improved-notifications/improved-notifications.php:1314
+msgid ""
+"You can add dynamic information to the Subject or Body text using the "
+"following shortcodes:"
+msgstr ""
+"คุณสามารถเพิ่มข้อมูลที่เปลี่ยนแปลงได้ในหัวเรื่องหรือข้อความเนื้อหาด้วยการใช้"
+"รหัสสั้นต่อไปนี้:"
+
+#: modules/improved-notifications/improved-notifications.php:1319
+msgid "Editorial Comment"
+msgstr "ความคิดเห็นบรรณาธิการ"
+
+#: modules/improved-notifications/improved-notifications.php:1320
+msgid "User making changes or comments"
+msgstr "ผู้ใช้ที่ทำการเปลี่ยนแปลงหรือแสดงความคิดเห็น"
+
+#: modules/improved-notifications/improved-notifications.php:1321
+msgid "Workflow"
+msgstr "การทำงาน"
+
+#: modules/improved-notifications/improved-notifications.php:1322
+msgid "Format"
+msgstr "รูปแบบ"
+
+#: modules/improved-notifications/improved-notifications.php:1323
+msgid "Receiver"
+msgstr "ผู้รับ"
+
+#: modules/improved-notifications/improved-notifications.php:1324
+msgid "shortcode"
+msgstr "รหัสสั้น"
+
+#: modules/improved-notifications/improved-notifications.php:1325
+msgid "field"
+msgstr "ฟิลด์"
+
+#: modules/improved-notifications/improved-notifications.php:1326
+msgid ""
+"On each shortcode, you can select one or more fields. If more than one, "
+"they will be displayed separated by \", \"."
+msgstr ""
+"ในแต่ละรหัสสั้น คุณสามารถเลือกฟิลด์หนึ่งหรือหลายฟิลด์ หากมีมากกว่าหนึ่ง "
+"จะถูกแสดงแยกด้วย \", \"。"
+
+#: modules/improved-notifications/improved-notifications.php:1330
+msgid "Available fields"
+msgstr "ฟิลด์ที่มีอยู่"
+
+#: modules/improved-notifications/improved-notifications.php:1331
+msgid "Meta fields"
+msgstr "ฟิลด์เมตา"
+
+#: modules/improved-notifications/improved-notifications.php:1332
+msgid "Click here to read more about shortcode options..."
+msgstr "คลิกที่นี่เพื่ออ่านเพิ่มเติมเกี่ยวกับตัวเลือกของรหัสสั้น..."
+
+#: modules/modules-settings/modules-settings.php:50
+msgid "Features"
+msgstr "ฟีเจอร์"
+
+#: modules/modules-settings/modules-settings.php:221
+msgid "Feel free to select only the features you need."
+msgstr "เลือกเฉพาะฟีเจอร์ที่คุณต้องการได้ตามสบาย"
+
+#: modules/modules-settings/modules-settings.php:227
+msgid "Enabled features"
+msgstr "ฟีเจอร์ที่เปิดใช้งาน"
+
+#: modules/notifications-log/library/ModuleErrors.php:54
+msgid "Invalid receiver for the notification"
+msgstr "ผู้รับที่ไม่ถูกต้องสำหรับการแจ้งเตือน"
+
+#: modules/notifications-log/library/ModuleErrors.php:55
+msgid "Invalid channel for the notification"
+msgstr "ช่องทางที่ไม่ถูกต้องสำหรับการแจ้งเตือน"
+
+#: modules/notifications-log/library/ModuleErrors.php:56
+msgid "Notification log not found"
+msgstr "ไม่พบบันทึกการแจ้งเตือน"
+
+#: modules/notifications-log/library/NotificationsLogModel.php:264
+msgid "The parent log was deleted or probably rescheduled"
+msgstr "บันทึกหลักถูกลบหรืออาจถูกเปลี่ยนกำหนดการ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:116
+#, php-format
+msgid "Workflow: %s"
+msgstr "กระบวนการทำงาน: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:128
+#, php-format
+msgid "User: %s (%d)"
+msgstr "ผู้ใช้: %s (%d)"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:157
+#, php-format
+msgid "Post type: %s"
+msgstr "ประเภทโพสต์: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:160
+#, php-format
+msgid "Post ID: %d"
+msgstr "หมายเลขโพสต์: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:163
+#, php-format
+msgid "Blog ID: %d"
+msgstr "หมายเลขบล็อก: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:233
+#, php-format
+msgid "Scheduled for %d receivers. Click here to display them."
+msgstr "กำหนดให้ %d ผู้รับ คลิกที่นี่เพื่อแสดงพวกเขา"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:261
+msgid " Scheduled, but late"
+msgstr "กำหนดเวลาแล้ว แต่ล่าช้า"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:263
+msgid " Scheduled"
+msgstr "กำหนดเวลา"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:282
+#: modules/notifications-log/library/NotificationsLogTable.php:533
+msgid "Error"
+msgstr "ข้อผิดพลาด"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:283
+msgid "The notification was set as \"Scheduled\" but the cron task is not found"
+msgstr "การแจ้งเตือนถูกตั้งเป็น \"กำหนดเวลา\" แต่ไม่พบงาน cron"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:288
+msgid "Sent"
+msgstr "ส่งแล้ว"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:291
+#: modules/notifications-log/library/NotificationsLogTable.php:525
+msgid "Skipped"
+msgstr "ข้าม"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "asynchronous"
+msgstr "ไม่ซิงโครนัส"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304
+msgid "synchronous"
+msgstr "ซิงโครนัส"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:361
+#: modules/notifications-log/library/NotificationsLogTable.php:406
+msgid "Reschedule"
+msgstr "กำหนดการใหม่"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:383
+msgid "Blog: "
+msgstr "บล็อก: "
+
+#: modules/notifications-log/library/NotificationsLogTable.php:408
+msgid "Delete All"
+msgstr "ลบทั้งหมด"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:517
+msgid "All"
+msgstr "ทั้งหมด"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:521
+msgid "Success"
+msgstr "สำเร็จ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:590
+msgid "All events"
+msgstr "เหตุการณ์ทั้งหมด"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:607
+msgid "All channels"
+msgstr "ช่องทั้งหมด"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:626
+msgid "From date"
+msgstr "จากวันที่"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:632
+msgid "To date"
+msgstr "ถึงวันที่"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:640
+msgid "All Receivers"
+msgstr "ผู้รับทั้งหมด"
+
+#: modules/notifications-log/notifications-log.php:205
+msgid "All Workflows"
+msgstr "กระบวนการทั้งหมด"
+
+#: modules/notifications-log/notifications-log.php:206
+msgid "All Actions"
+msgstr "การกระทำทั้งหมด"
+
+#: modules/notifications-log/notifications-log.php:207
+msgid "All Channels"
+msgstr "ช่องทั้งหมด"
+
+#: modules/notifications-log/notifications-log.php:208
+msgid "All Statuses"
+msgstr "สถานะทั้งหมด"
+
+#: modules/notifications-log/notifications-log.php:209
+#: publishpress.php:1409
+#: publishpress.php:1414
+msgid "Notification"
+msgstr "การแจ้งเตือน"
+
+#: modules/notifications-log/notifications-log.php:272
+#, php-format
+msgid "%s notification found."
+msgid_plural "%s notifications found."
+msgstr[0] "%s การแจ้งเตือนที่พบ."
+
+#: modules/notifications-log/notifications-log.php:284
+msgid "No notifications found."
+msgstr "ไม่พบการแจ้งเตือน."
+
+#: modules/notifications-log/notifications-log.php:442
+#, php-format
+msgid ""
+"This notification is very similar to another one sent less than %d minutes "
+"ago for the same receiver"
+msgstr ""
+"การแจ้งเตือนนี้มีความคล้ายคลึงกับการแจ้งเตือนอื่นที่ส่งไปเมื่อไม่ถึง %d "
+"นาทีที่แล้วสำหรับผู้รับเดียวกัน"
+
+#: modules/notifications-log/notifications-log.php:817
+msgid "Subject:"
+msgstr "หัวข้อ:"
+
+#: modules/notifications-log/notifications-log.php:825
+msgid "Content:"
+msgstr "เนื้อหา:"
+
+#: modules/notifications-log/notifications-log.php:835
+msgid ""
+"This is a preview of the scheduled message. The content can still change "
+"until the notification is sent."
+msgstr ""
+"นี่คือการแสดงตัวอย่างของข้อความที่กำหนดเวลา "
+"เนื้อหายังสามารถเปลี่ยนแปลงได้จนกว่าจะมีการส่งการแจ้งเตือน。"
+
+#: modules/notifications/notifications.php:75
+#: modules/notifications/notifications.php:562
+#: publishpress.php:1408
+#: publishpress.php:1413
+msgid "Notifications"
+msgstr "การแจ้งเตือน"
+
+#: modules/notifications/notifications.php:97
+msgid ""
+"<p>Notifications ensure you keep up to date with progress your most "
+"important content. Users can be subscribed to notifications on a post one "
+"by one or by selecting roles.</p><p>When enabled, notifications can be sent "
+"when a post changes status or an editorial comment is left by a writer or "
+"an editor.</p>"
+msgstr ""
+"<p>การแจ้งเตือนช่วยให้คุณติดตามความก้าวหน้าของเนื้อหาที่สำคัญที่สุดของคุณ "
+"ผู้ใช้สามารถสมัครรับการแจ้งเตือนในโพสต์ทีละคนหรือโดยการเลือกบทบาท</"
+"p><p>เมื่อเปิดใช้งาน "
+"การแจ้งเตือนสามารถถูกส่งเมื่อโพสต์เปลี่ยนสถานะหรือความคิดเห็นบรรณาธิการถูกทิ"
+"้งโดยผู้เขียนหรือบรรณาธิการ</p>"
+
+#: modules/notifications/notifications.php:102
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Notifications "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>สำหรับข้อมูลเพิ่มเติม:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\""
+">เอกสารการแจ้งเตือน</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress บน "
+"Github</a></p>"
+
+#: modules/notifications/notifications.php:303
+#: modules/notifications/notifications.php:306
+msgid "Notify User"
+msgstr "แจ้งผู้ใช้"
+
+#: modules/notifications/notifications.php:305
+msgid "Notify Users"
+msgstr "แจ้งผู้ใช้"
+
+#: modules/notifications/notifications.php:318
+#: modules/notifications/notifications.php:321
+msgid "Notify Role"
+msgstr "แจ้งบทบาท"
+
+#: modules/notifications/notifications.php:320
+msgid "Notify Roles"
+msgstr "แจ้งบทบาท"
+
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+msgid "Notification Group"
+msgstr "กลุ่มการแจ้งเตือน"
+
+#: modules/notifications/notifications.php:336
+msgid "Notification Groups"
+msgstr "กลุ่มการแจ้งเตือน"
+
+#: modules/notifications/notifications.php:350
+#: modules/notifications/notifications.php:353
+msgid "Notify Email"
+msgstr "แจ้งอีเมล"
+
+#: modules/notifications/notifications.php:352
+msgid "Notify Emails"
+msgstr "แจ้งอีเมล"
+
+#: modules/notifications/notifications.php:530
+#: modules/notifications/notifications.php:940
+msgid "Click to stop being notified on updates for this post"
+msgstr "คลิกเพื่อหยุดรับการแจ้งเตือนเกี่ยวกับการอัปเดตสำหรับโพสต์นี้"
+
+#: modules/notifications/notifications.php:531
+#: modules/notifications/notifications.php:939
+msgid "Stop notifying me"
+msgstr "หยุดแจ้งเตือนฉัน"
+
+#: modules/notifications/notifications.php:534
+#: modules/notifications/notifications.php:946
+msgid "Click to start being notified on updates for this post"
+msgstr "คลิกเพื่อเริ่มรับการแจ้งเตือนเกี่ยวกับการอัปเดตสำหรับโพสต์นี้"
+
+#: modules/notifications/notifications.php:535
+#: modules/notifications/notifications.php:945
+msgid "Notify me"
+msgstr "แจ้งฉัน"
+
+#: modules/notifications/notifications.php:599
+msgid ""
+"Enter users, roles, or email addresses that should receive notifications "
+"for this post."
+msgstr "กรอกผู้ใช้ บทบาท หรือที่อยู่อีเมลที่ควรได้รับการแจ้งเตือนสำหรับโพสต์นี้."
+
+#: modules/notifications/notifications.php:603
+msgid "Show active notifications"
+msgstr "แสดงการแจ้งเตือนที่ใช้งานอยู่"
+
+#: modules/notifications/notifications.php:642
+msgid ""
+"This won't have any effect unless you have at least one workflow targeting "
+"the \"Users who selected \"Notify me\" for the content\" option."
+msgstr ""
+"สิ่งนี้จะไม่มีผลใด ๆ "
+"เว้นแต่คุณจะมีเวิร์กโฟลว์อย่างน้อยหนึ่งรายการที่มุ่งเป้าไปที่ตัวเลือก "
+"\"ผู้ใช้ที่เลือก \"แจ้งให้ฉันทราบ\" สำหรับเนื้อหา\"."
+
+#: modules/notifications/notifications.php:656
+msgid "Active Notifications"
+msgstr "การแจ้งเตือนที่ใช้งานอยู่"
+
+#: modules/notifications/notifications.php:684
+msgid "Workflow has users enrolled"
+msgstr "Workflow มีผู้ใช้ที่ลงทะเบียน"
+
+#: modules/notifications/notifications.php:691
+#, php-format
+msgid "No active notifications found for this %s."
+msgstr "ไม่พบการแจ้งเตือนที่ใช้งานอยู่สำหรับ %s."
+
+#: modules/notifications/notifications.php:1054
+#, php-format
+msgid "You are receiving this email because you are subscribed to \"%s\"."
+msgstr "คุณได้รับอีเมลนี้เพราะคุณได้สมัครรับข้อมูล \"%s\"."
+
+#: modules/notifications/notifications.php:1059
+#, php-format
+msgid "This email was sent %s."
+msgstr "อีเมลนี้ถูกส่งเมื่อ %s."
+
+#: modules/notifications/notifications.php:1715
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+msgstr ""
+"แสดงลิงก์ \"แจ้งเตือนฉัน\" และ \"หยุดแจ้งเตือนฉัน\" "
+"สำหรับประเภทโพสต์เหล่านี้:"
+
+#: modules/notifications/notifications.php:1723
+msgid "Email from:"
+msgstr "อีเมลจาก:"
+
+#: modules/notifications/notifications.php:1731
+msgid "Always notify the author of the content:"
+msgstr "แจ้งเตือนผู้เขียนของเนื้อหาเสมอ:"
+
+#: modules/notifications/notifications.php:1739
+msgid "Always notify users who have edited the content:"
+msgstr "แจ้งเตือนผู้ใช้ที่แก้ไขเนื้อหาเสมอ:"
+
+#: modules/notifications/notifications.php:1747
+msgid "Blacklisted taxonomies for Notifications"
+msgstr "ภาษีที่ถูกบล็อกสำหรับการแจ้งเตือน"
+
+#: modules/notifications/notifications.php:1861, fuzzy
+msgid "slug1,slug2"
+msgstr "slug1,slug2"
+
+#: modules/notifications/notifications.php:1867
+msgid ""
+"Add a list of taxonomy-slugs separated by comma that should not be loaded "
+"by the Taxonomy content filter when adding a new Notification Workflow."
+msgstr ""
+"เพิ่มรายการของ taxonomy-slugs "
+"ที่คั่นด้วยเครื่องหมายจุลภาคซึ่งไม่ควรโหลดโดยตัวกรองเนื้อหา Taxonomy "
+"เมื่อเพิ่มเวิร์กโฟลว์การแจ้งเตือนใหม่."
+
+#: modules/notifications/notifications.php:2003, fuzzy
+msgid "WordPress Scheduler"
+msgstr "WordPress Scheduler"
+
+#: modules/notifications/notifications.php:2012
+#, php-format
+msgid "[%1$s] New %2$s Created: \"%3$s\""
+msgstr "[%1$s] สร้าง %2$s ใหม่: \"%3$s\""
+
+#: modules/notifications/notifications.php:2019
+#, php-format
+msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+msgstr "%1$s ใหม่ (#%2$s \"%3$s\" ) ถูกสร้างโดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2029
+#, php-format
+msgid "[%1$s] %2$s Trashed: \"%3$s\""
+msgstr "[%1$s] ทิ้ง %2$s: \"%3$s\""
+
+#: modules/notifications/notifications.php:2036
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ถูกย้ายไปยังถังขยะโดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2046
+#, php-format
+msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+msgstr "[%1$s] กู้คืน %2$s (จากถังขยะ): \"%3$s\""
+
+#: modules/notifications/notifications.php:2053
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ถูกกู้คืนจากถังขยะโดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2076
+#, php-format
+msgid "[%1$s] %2$s Published: \"%3$s\""
+msgstr "[%1$s] เผยแพร่ %2$s: \"%3$s\""
+
+#: modules/notifications/notifications.php:2083
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ถูกเผยแพร่โดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2093
+#, php-format
+msgid "[%1$s] %2$s Unpublished: \"%3$s\""
+msgstr "[%1$s] %2$s ยังไม่เผยแพร่: \"%3$s\""
+
+#: modules/notifications/notifications.php:2100
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ถูกยกเลิกการเผยแพร่โดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2110
+#, php-format
+msgid "[%1$s] %2$s Status Changed for \"%3$s\""
+msgstr "[%1$s] %2$s สถานะเปลี่ยนแปลงสำหรับ \"%3$s\""
+
+#: modules/notifications/notifications.php:2117
+#, php-format
+msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
+msgstr "สถานะถูกเปลี่ยนแปลงสำหรับ %1$s #%2$s \"%3$s\" โดย %4$s %5$s"
+
+#: modules/notifications/notifications.php:2128
+#, php-format
+msgid "This action was taken on %1$s at %2$s %3$s"
+msgstr "การดำเนินการนี้เกิดขึ้นเมื่อ %1$s เวลา %2$s %3$s"
+
+#: modules/notifications/notifications.php:2141
+#, php-format
+msgid "%1$s => %2$s"
+msgstr "%1$s => %2$s"
+
+#: modules/notifications/notifications.php:2149
+#, php-format
+msgid "== %s Details =="
+msgstr "== รายละเอียด %s =="
+
+#: modules/notifications/notifications.php:2150
+#, php-format
+msgid "Title: %s"
+msgstr "ชื่อเรื่อง: %s"
+
+#: modules/notifications/notifications.php:2154
+#, php-format
+msgid "Author: %1$s (%2$s )"
+msgstr "ผู้เขียน: %1$s (%2$s )"
+
+#: modules/notifications/notifications.php:2168
+#: modules/notifications/notifications.php:2221
+msgid "== Actions =="
+msgstr "== การดำเนินการ =="
+
+#: modules/notifications/notifications.php:2170
+#: modules/notifications/notifications.php:2227
+#, php-format
+msgid "Add editorial comment: %s"
+msgstr "เพิ่มความคิดเห็นบรรณาธิการ: %s"
+
+#: modules/notifications/notifications.php:2173
+#: modules/notifications/notifications.php:2230
+#, php-format
+msgid "Edit: %s"
+msgstr "แก้ไข: %s"
+
+#: modules/notifications/notifications.php:2174
+#: modules/notifications/notifications.php:2231
+#, php-format
+msgid "View: %s"
+msgstr "ดู: %s"
+
+#: modules/notifications/notifications.php:2185
+#, php-format
+msgid "[%1$s] New Editorial Comment: \"%2$s\""
+msgstr "[%1$s] ความคิดเห็นบรรณาธิการใหม่: \"%2$s\""
+
+#: modules/notifications/notifications.php:2192
+#, php-format
+msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
+msgstr "ความคิดเห็นบรรณาธิการใหม่ถูกเพิ่มไปยัง %3$s #%1$s \"%2$s\""
+
+#: modules/notifications/notifications.php:2199
+#, php-format
+msgid "%1$s (%2$s ) said on %3$s at %4$s:"
+msgstr "%1$s (%2$s ) กล่าวว่าเมื่อ %3$s เวลา %4$s:"
+
+#: modules/notifications/notifications.php:2223
+#, php-format
+msgid "Reply: %s"
+msgstr "ตอบกลับ: %s"
+
+#: modules/notifications/notifications.php:2234
+#, php-format
+msgid "You can see all editorial comments on this %s here: "
+msgstr "คุณสามารถดูความคิดเห็นบรรณาธิการทั้งหมดใน %s ที่นี่: "
+
+#: modules/reviews/reviews.php:66
+msgid "Reviews"
+msgstr "บทวิจารณ์"
+
+#: modules/settings/settings.php:124
+msgid "settings"
+msgstr "การตั้งค่า"
+
+#: modules/settings/settings.php:141
+msgid "PublishPress Settings"
+msgstr "การตั้งค่า PublishPress"
+
+#: modules/settings/settings.php:142
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#: modules/settings/settings.php:269
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "ถ้าคุณชอบ %s กรุณาทิ้งคะแนน %s ให้กับเรา ขอบคุณ!"
+
+#: modules/settings/settings.php:289
+msgid "There are no PublishPress modules registered"
+msgstr "ไม่มีโมดูล PublishPress ที่ลงทะเบียน"
+
+#: modules/settings/settings.php:380
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"ถูกปิดใช้งานเนื่องจาก add_post_type_support('%1$s', '%2$s') "
+"รวมอยู่ในไฟล์ที่โหลดแล้ว."
+
+#: modules/settings/settings.php:404
+#: publishpress.php:675
+msgid "Cheatin&#8217; uh?"
+msgstr "โกงกันอยู่หรือ?"
+
+#: modules/settings/views/footer-base.html.php:21
+msgid "About"
+msgstr "เกี่ยวกับ"
+
+#: modules/settings/views/footer-base.html.php:25
+msgid "Documentation"
+msgstr "เอกสาร"
+
+#: modules/settings/views/footer-base.html.php:29
+msgid "Contact"
+msgstr "ติดต่อ"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
+msgid "The Events Calendar Integration"
+msgstr "การรวมปฏิทินกิจกรรม"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:53
+msgid "Integrate with the The Events Calendar plugin"
+msgstr "รวมกับปลั๊กอินปฏิทินกิจกรรม"
+
+#: publishpress.php:590
+msgid "Planner"
+msgstr "ผู้วางแผน"
+
+#: publishpress.php:671
+msgid "Configure"
+msgstr "กำหนดค่า"
+
+#: publishpress.php:674
+msgid "Please correct your form errors below and try again."
+msgstr "กรุณาแก้ไขข้อผิดพลาดในแบบฟอร์มของคุณด้านล่างและลองอีกครั้ง"
+
+#: publishpress.php:676
+msgid "You do not have necessary permissions to complete this action."
+msgstr "คุณไม่มีสิทธิ์ที่จำเป็นในการทำกิจกรรมนี้"
+
+#: publishpress.php:680
+msgid "Post does not exist"
+msgstr "โพสต์ไม่อยู่"
+
+#: publishpress.php:1410
+msgid "Add New Notification"
+msgstr "เพิ่มการแจ้งเตือนใหม่"
+
+#: publishpress.php:1411
+msgid "Edit Notification"
+msgstr "แก้ไขการแจ้งเตือน"
+
+#: publishpress.php:1412
+msgid "Search Notifications"
+msgstr "ค้นหาการแจ้งเตือน"
+
+#: publishpress.php:1415
+#: publishpress.php:1416
+msgid "No notification found"
+msgstr "ไม่พบการแจ้งเตือน"
+
+#: publishpress.php:1456
+msgid ""
+"PublishPress Planner tried to load multiple times. Please, deactivate and "
+"remove other instances of PublishPress, specially if you are using "
+"PublishPress Pro."
+msgstr ""
+"PublishPress Planner พยายามโหลดหลายครั้ง "
+"กรุณาปิดการใช้งานและลบการติดตั้งอื่น ๆ ของ PublishPress "
+"โดยเฉพาะหากคุณกำลังใช้ PublishPress Pro."
+
+#: publishpress.php:1464
+msgid "Warning"
+msgstr "คำเตือน"
+
+#: modules/editorial-comments/lib/editorial-comments.js:203
+#: modules/editorial-comments/lib/editorial-comments.js:371
+msgid "Please enter a comment"
+msgstr "โปรดป้อนความคิดเห็น"
+
+#: modules/editorial-comments/lib/editorial-comments.js:377
+msgid "Sending content..."
+msgstr "กำลังส่งเนื้อหา..."
+
+#: modules/editorial-comments/lib/editorial-comments.js:434
+msgid ""
+"This comment can't be deleted because it has one or more replies. Before "
+"deleting it make sure to delete all the replies first."
+msgstr ""
+"ไม่สามารถลบความคิดเห็นนี้ได้เพราะมีการตอบกลับหนึ่งรายการหรือมากกว่า "
+"ก่อนที่จะลบให้แน่ใจว่าลบการตอบกลับทั้งหมดก่อน."
+
+#: modules/editorial-comments/lib/editorial-comments.js:438
+msgid "Are you sure you want to delete this comment?"
+msgstr "คุณแน่ใจหรือว่าต้องการลบความคิดเห็นนี้?"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "for"
+msgstr "สำหรับ"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "by"
+msgstr "โดย"
+
+#: modules/content-board/library/content-board-utilities.php:538
+#: modules/content-overview/library/content-overview-utilities.php:643
+#, php-format
+msgctxt "%1$s = start date, %2$s = end date"
+msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
+msgstr " %1$s <div class=\"input-divider\">ถึง</div> %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:451
+msgctxt "taxonomy general name"
+msgid "Editorial Field"
+msgstr "ฟิลด์บรรณาธิการ"
+
+#: modules/editorial-metadata/editorial-metadata.php:452
+msgctxt "taxonomy singular name"
+msgid "Editorial Field"
+msgstr "สนามบรรณาธิการ"

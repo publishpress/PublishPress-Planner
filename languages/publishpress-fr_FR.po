@@ -672,7 +672,7 @@ msgstr "Auteurs/autrices de la page parente"
 msgid "Auto-draft"
 msgstr "Brouillon automatique"
 
-#: modules/improved-notifications/improved-notifications.php:1110
+#: modules/improved-notifications/improved-notifications.php:1110, fuzzy
 msgid "Available fields"
 msgstr "Available fields"
 
@@ -836,7 +836,7 @@ msgstr "Commentaire : %s (%d)"
 msgid "Configure"
 msgstr "Configurer"
 
-#: modules/settings/views/footer-base.html.php:29
+#: modules/settings/views/footer-base.html.php:29, fuzzy
 msgid "Contact"
 msgstr "Contact"
 
@@ -930,7 +930,7 @@ msgstr "Widgets du tableau de bord"
 #: modules/calendar/library/calendar-utilities.php:1064
 #: modules/content-board/library/content-board-utilities.php:116
 #: modules/content-overview/library/content-overview-methods.php:347
-#: modules/notifications-log/library/NotificationsLogTable.php:496
+#: modules/notifications-log/library/NotificationsLogTable.php:496, fuzzy
 msgid "Date"
 msgstr "Date"
 
@@ -989,7 +989,7 @@ msgstr "Supprimer le fichier"
 
 #: modules/editorial-metadata/library/editorial-metadata-list-table.php:48
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:176
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474, fuzzy
 msgid "Description"
 msgstr "Description"
 
@@ -1025,7 +1025,7 @@ msgstr "Afficher le libellé"
 msgid "Display Name"
 msgstr "Nom à afficher publiquement"
 
-#: modules/settings/views/footer-base.html.php:25
+#: modules/settings/views/footer-base.html.php:25, fuzzy
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -1064,7 +1064,7 @@ msgstr "Sélection par liste déroulante"
 msgid "Duplicated notification threshold:"
 msgstr "Seuil de notification dupliquée :"
 
-#: common/php/class-module.php:782
+#: common/php/class-module.php:782, fuzzy
 msgid "E-mails"
 msgstr "E-mails"
 
@@ -1433,7 +1433,7 @@ msgstr ""
 msgid "For which content?"
 msgstr "Pour quel contenu ?"
 
-#: modules/improved-notifications/improved-notifications.php:1102
+#: modules/improved-notifications/improved-notifications.php:1102, fuzzy
 msgid "Format"
 msgstr "Format"
 
@@ -1492,7 +1492,7 @@ msgstr ""
 
 #: lib/Notifications/Table/Notifications.php:159
 #: lib/Notifications/Table/Workflows.php:143
-#: modules/calendar/library/calendar-utilities.php:1059
+#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
 msgid "ID"
 msgstr "ID"
 
@@ -1615,7 +1615,7 @@ msgstr ""
 "Il semble que cela prenne trop de temps. Essayez de recharger la page et "
 "vérifiez la console du navigateur à la recherche d’erreurs."
 
-#: modules/calendar/library/calendar-methods.php:1224
+#: modules/calendar/library/calendar-methods.php:1224, fuzzy
 msgid "Jan"
 msgstr "Jan"
 
@@ -1661,7 +1661,7 @@ msgstr "Fichier journal"
 msgid "Log file not found."
 msgstr "Fichier journal non trouvé."
 
-#: modules/calendar/library/calendar-methods.php:1226
+#: modules/calendar/library/calendar-methods.php:1226, fuzzy
 msgid "Mar"
 msgstr "Mar"
 
@@ -1686,7 +1686,7 @@ msgstr "Mai"
 msgid "Me Mode"
 msgstr "Mode Me"
 
-#: lib/Notifications/Table/Notifications.php:157
+#: lib/Notifications/Table/Notifications.php:157, fuzzy
 msgid "Message"
 msgstr "Message"
 
@@ -1707,7 +1707,7 @@ msgstr ""
 "Le nom des métadonnées entre en conflit avec un terme existant. Veuillez en "
 "choisir un autre."
 
-#: modules/improved-notifications/improved-notifications.php:421
+#: modules/improved-notifications/improved-notifications.php:421, fuzzy
 msgid "minutes"
 msgstr "minutes"
 
@@ -1909,7 +1909,7 @@ msgid "Notepad"
 msgstr "Bloc-notes"
 
 #: publishpress.php:1409 publishpress.php:1414
-#: modules/notifications-log/notifications-log.php:216
+#: modules/notifications-log/notifications-log.php:216, fuzzy
 msgid "Notification"
 msgstr "Notification"
 
@@ -1928,7 +1928,7 @@ msgstr "Journal de notification non trouvé"
 
 #: publishpress.php:1408 publishpress.php:1413
 #: modules/notifications/notifications.php:75
-#: modules/notifications/notifications.php:569
+#: modules/notifications/notifications.php:569, fuzzy
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -1976,7 +1976,7 @@ msgstr "Utilisateur/utilisatrice de notification"
 msgid "Notify Users"
 msgstr "Utilisateurs/utilisatrices de notification"
 
-#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-methods.php:1234, fuzzy
 msgid "Nov"
 msgstr "Nov"
 
@@ -1984,7 +1984,7 @@ msgstr "Nov"
 msgid "Number"
 msgstr "Nombre"
 
-#: modules/calendar/library/calendar-methods.php:1233
+#: modules/calendar/library/calendar-methods.php:1233, fuzzy
 msgid "Oct"
 msgstr "Oct"
 
@@ -2018,7 +2018,7 @@ msgstr "Une Semaine"
 msgid "Only editable posts will be moveable."
 msgstr "Uniquement les publications modifiables peuvent être déplacées."
 
-#: modules/improved-notifications/improved-notifications.php:911
+#: modules/improved-notifications/improved-notifications.php:911, fuzzy
 msgid "Options"
 msgstr "Options"
 
@@ -2104,7 +2104,7 @@ msgstr "S’il vous plaît, attendez ! Chargement des champs du formulaire…"
 msgid "Popular Editorial Fields"
 msgstr "Champs éditoriaux populaires"
 
-#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44, fuzzy
 msgid "Position"
 msgstr "Position"
 
@@ -2280,7 +2280,7 @@ msgstr "Heure de la publication"
 
 #. Author of the plugin
 #: modules/settings/settings.php:61
-#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/calendar/library/calendar-utilities.php:1227, fuzzy
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -2289,7 +2289,7 @@ msgid "PublishPress Debug Log"
 msgstr "Journal de débogage PublishPress"
 
 #. Name of the plugin
-#: modules/settings/settings.php:266
+#: modules/settings/settings.php:266, fuzzy
 msgid "PublishPress Planner"
 msgstr "PublishPress Planner"
 
@@ -2528,7 +2528,7 @@ msgstr "Envoyer des notifications de rappel"
 msgid "Sent"
 msgstr "Envoyé"
 
-#: modules/calendar/library/calendar-methods.php:1232
+#: modules/calendar/library/calendar-methods.php:1232, fuzzy
 msgid "Sep"
 msgstr "Sep"
 
@@ -2644,7 +2644,7 @@ msgstr "Identifiant"
 msgid "Slug already in use. Please choose another."
 msgstr "Slug déjà utilisé. Veuillez en choisir un autre."
 
-#: modules/notifications/notifications.php:1868
+#: modules/notifications/notifications.php:1868, fuzzy
 msgid "slug1,slug2"
 msgstr "slug1,slug2"
 
@@ -2775,7 +2775,7 @@ msgstr "Étiquettes"
 #: modules/content-overview/content-overview.php:910
 #: modules/content-overview/content-overview.php:971
 #: modules/calendar/library/calendar-utilities.php:1206
-#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
+#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34, fuzzy
 msgid "Taxonomies"
 msgstr "Taxonomies"
 
@@ -3076,7 +3076,7 @@ msgid "Two weeks"
 msgstr "Deux semaines"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491, fuzzy
 msgid "Type"
 msgstr "Type"
 
