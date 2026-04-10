@@ -681,7 +681,7 @@ msgstr "Taxonomías en la lista negra de avisos"
 msgid "Blog ID: %d"
 msgstr "ID del blog: %d"
 
-#: modules/notifications-log/library/NotificationsLogTable.php:383, fuzzy
+#: modules/notifications-log/library/NotificationsLogTable.php:383
 msgid "Blog: "
 msgstr "Blog: "
 
@@ -1257,7 +1257,7 @@ msgstr ""
 "deberían recibir avisos de esta entrada."
 
 #: modules/notifications-log/library/NotificationsLogTable.php:282
-#: modules/notifications-log/library/NotificationsLogTable.php:533, fuzzy
+#: modules/notifications-log/library/NotificationsLogTable.php:533
 msgid "Error"
 msgstr "Error"
 
@@ -1318,7 +1318,7 @@ msgstr "Soporte rápido y profesional"
 msgid "Features"
 msgstr "Características"
 
-#: modules/calendar/library/calendar-methods.php:1225, fuzzy
+#: modules/calendar/library/calendar-methods.php:1225
 msgid "Feb"
 msgstr "Feb"
 
@@ -1484,7 +1484,7 @@ msgstr ""
 
 #: lib/Notifications/Table/Notifications.php:159
 #: lib/Notifications/Table/Workflows.php:143
-#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
+#: modules/calendar/library/calendar-utilities.php:1059
 msgid "ID"
 msgstr "ID"
 
@@ -1610,11 +1610,11 @@ msgstr ""
 msgid "Jan"
 msgstr "Ene"
 
-#: modules/calendar/library/calendar-methods.php:1230, fuzzy
+#: modules/calendar/library/calendar-methods.php:1230
 msgid "Jul"
 msgstr "Jul"
 
-#: modules/calendar/library/calendar-methods.php:1229, fuzzy
+#: modules/calendar/library/calendar-methods.php:1229
 msgid "Jun"
 msgstr "Jun"
 
@@ -1652,7 +1652,7 @@ msgstr "Archivo de registro"
 msgid "Log file not found."
 msgstr "Archivo de registro no encontrado."
 
-#: modules/calendar/library/calendar-methods.php:1226, fuzzy
+#: modules/calendar/library/calendar-methods.php:1226
 msgid "Mar"
 msgstr "Mar"
 
@@ -1665,7 +1665,7 @@ msgstr "Máximo de entradas visibles por fecha"
 msgid "Maximum number of posts to display"
 msgstr "Número máximo de entradas a mostrar"
 
-#: modules/calendar/library/calendar-methods.php:1228, fuzzy
+#: modules/calendar/library/calendar-methods.php:1228
 msgid "May"
 msgstr "May"
 
@@ -1823,7 +1823,7 @@ msgstr "Nueve meses"
 
 #: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659, fuzzy
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
 msgid "No"
 msgstr "No"
 
@@ -1968,7 +1968,7 @@ msgstr "Aviso de usuario"
 msgid "Notify Users"
 msgstr "Avisos de usuarios"
 
-#: modules/calendar/library/calendar-methods.php:1234, fuzzy
+#: modules/calendar/library/calendar-methods.php:1234
 msgid "Nov"
 msgstr "Nov"
 
@@ -1976,7 +1976,7 @@ msgstr "Nov"
 msgid "Number"
 msgstr "Número"
 
-#: modules/calendar/library/calendar-methods.php:1233, fuzzy
+#: modules/calendar/library/calendar-methods.php:1233
 msgid "Oct"
 msgstr "Oct"
 
@@ -2274,7 +2274,7 @@ msgstr "Hora de la publicación"
 
 #. Author of the plugin
 #: modules/settings/settings.php:61
-#: modules/calendar/library/calendar-utilities.php:1227, fuzzy
+#: modules/calendar/library/calendar-utilities.php:1227
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -2283,7 +2283,7 @@ msgid "PublishPress Debug Log"
 msgstr "Registro de depuración de PublishPress"
 
 #. Name of the plugin
-#: modules/settings/settings.php:266, fuzzy
+#: modules/settings/settings.php:266
 msgid "PublishPress Planner"
 msgstr "PublishPress Planner"
 
@@ -2522,7 +2522,7 @@ msgstr "Enviar avisos de recordatorio"
 msgid "Sent"
 msgstr "Enviado"
 
-#: modules/calendar/library/calendar-methods.php:1232, fuzzy
+#: modules/calendar/library/calendar-methods.php:1232
 msgid "Sep"
 msgstr "Sep"
 
@@ -2543,7 +2543,7 @@ msgstr "Los ajustes han sido guardado correctamente."
 msgid "Seven months"
 msgstr "Siete meses"
 
-#: modules/improved-notifications/improved-notifications.php:1104, fuzzy
+#: modules/improved-notifications/improved-notifications.php:1104
 msgid "shortcode"
 msgstr "shortcode"
 
@@ -2627,7 +2627,7 @@ msgid "Slack integration for notifications"
 msgstr "Integración de Slack para avisos"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457, fuzzy
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457
 msgid "Slug"
 msgstr "Slug"
 
@@ -2635,7 +2635,7 @@ msgstr "Slug"
 msgid "Slug already in use. Please choose another."
 msgstr "El slug ya está en uso. Por favor, selecciona otro."
 
-#: modules/notifications/notifications.php:1868, fuzzy
+#: modules/notifications/notifications.php:1868
 msgid "slug1,slug2"
 msgstr "slug1,slug2"
 

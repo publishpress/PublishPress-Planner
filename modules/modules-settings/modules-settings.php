@@ -86,7 +86,18 @@ if (! class_exists('PP_Modules_Settings')) {
                 $this->enqueue_datepicker_resources();
             }
 
-            $is_publishpress_page = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), ['pp-calendar', 'pp-content-overview', 'pp-content-board', 'pp-notif-log', 'pp-manage-roles', 'pp-modules-settings']);
+            $publishpress_pages = [
+                'pp-calendar',
+                'pp-content-overview',
+                'pp-content-board',
+                'pp-notif-log',
+                'pp-manage-roles',
+                'pp-modules-settings',
+            ];
+
+            $is_pp_page_param      = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), $publishpress_pages);
+            $is_pp_post_type_param = isset($_GET['post_type']) && sanitize_key($_GET['post_type']) === 'psppnotif_workflow';
+            $is_publishpress_page  = $is_pp_page_param || $is_pp_post_type_param;
 
             if (!$is_publishpress_page) return;
 
