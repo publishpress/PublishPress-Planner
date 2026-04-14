@@ -9,10 +9,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
-"PO-Revision-Date: 2026-04-10 02:48+0000\n"
+"POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
+"PO-Revision-Date: 2026-04-14 18:37+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
+">= 2 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
 "Language: lt_LT\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
 
@@ -76,8 +77,8 @@ msgstr "Laukiama peržiūros"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -109,6 +110,43 @@ msgstr "Vartotojai"
 msgid "E-mails"
 msgstr "El. paštai"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Lygu (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Nelygu (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Didesnis nei (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Didesnis arba lygus (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Mažesnis nei (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Mažesnis arba lygus (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Kaip/Turi"
+
+#: common/php/class-module.php:1055
+#, fuzzy
+msgid "Not Like"
+msgstr "Nustatyta nėra"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Nėra/tuščias"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -130,7 +168,7 @@ msgstr "Peržiūros būsena"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -387,6 +425,7 @@ msgstr "El. paštas"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "Turinys"
 
@@ -655,6 +694,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:734
 #: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
 msgid "Weeks"
 msgstr "Savaitės"
 
@@ -1121,7 +1161,7 @@ msgid "No terms"
 msgstr "Nėra terminų"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1130,8 +1170,8 @@ msgstr "Įrašo data"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1141,8 +1181,8 @@ msgstr "Redaguoti"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1150,33 +1190,33 @@ msgstr "Peržiūrėti"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "Rodyti"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "Ankstesnis įrašas"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "Kitas įrašas"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "Išsaugoti pakeitimus"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "Taksonomija nenustatyta."
@@ -1239,7 +1279,7 @@ msgstr "Paieškos laukelis"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1498,6 +1538,7 @@ msgid "Four weeks"
 msgstr "Keturių savaičių"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "Mėnesiai"
 
@@ -1611,12 +1652,20 @@ msgstr "Perkelkite įrašus čia, kad pakeistumėte jų statusą"
 msgid "You do not have permission to move post to this status"
 msgstr "Jūs neturite leidimo perkelti įrašą į šį statusą"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Dienos"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Metai"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "Numatytoji data"
 
-#: modules/content-board/content-board.php:1056
+#: modules/content-board/content-board.php:1061
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -1624,45 +1673,45 @@ msgstr ""
 "Tai yra numatytoji paskelbimo data šiandienai, skirta įrašams, kurie "
 "pereina į Planuotą statusą."
 
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
 msgid "Only editable posts will be moveable."
 msgstr "Perkeliami bus tik redaguojami įrašai."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Redaguoti šį įrašą"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Perkelti šį elementą į šiukšlyną"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Peržiūrėti &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Peržiūra &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "Rezultatų nerasta"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "Nėra įrašų nurodytame intervale ar filtre."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Nėra"
@@ -2906,11 +2955,11 @@ msgstr "Paspauskite čia, kad sužinotumėte daugiau apie trumpinių parinktis..
 msgid "Features"
 msgstr "Funkcijos"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "Pasirinkite tik tas funkcijas, kurių jums reikia."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr "Įjungtos funkcijos"
 
@@ -3052,8 +3101,8 @@ msgid "All Statuses"
 msgstr "Visi statusai"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1409
-#: publishpress.php:1414
+#: publishpress.php:1439
+#: publishpress.php:1444
 msgid "Notification"
 msgstr "Pranešimas"
 
@@ -3096,8 +3145,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1408
-#: publishpress.php:1413
+#: publishpress.php:1438
+#: publishpress.php:1443
 msgid "Notifications"
 msgstr "Pranešimai"
 
@@ -3334,7 +3383,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Ši veika buvo atlikta %1$s %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3436,7 +3485,7 @@ msgstr ""
 "failą."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:675
+#: publishpress.php:690
 msgid "Cheatin&#8217; uh?"
 msgstr "Apgaudinėjate, ar ne?"
 
@@ -3460,44 +3509,44 @@ msgstr "Įvykių kalendoriaus integracija"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Integruokite su Įvykių kalendoriaus papildiniu"
 
-#: publishpress.php:590
+#: publishpress.php:605
 msgid "Planner"
 msgstr "Planavimo priemonė"
 
-#: publishpress.php:671
+#: publishpress.php:686
 msgid "Configure"
 msgstr "Konfigūruoti"
 
-#: publishpress.php:674
+#: publishpress.php:689
 msgid "Please correct your form errors below and try again."
 msgstr "Prašome ištaisyti savo formos klaidas žemiau ir bandykite dar kartą."
 
-#: publishpress.php:676
+#: publishpress.php:691
 msgid "You do not have necessary permissions to complete this action."
 msgstr "Neturite reikalingų teisių užbaigti šią veiklą."
 
-#: publishpress.php:680
+#: publishpress.php:695
 msgid "Post does not exist"
 msgstr "Įrašas neegzistuoja"
 
-#: publishpress.php:1410
+#: publishpress.php:1440
 msgid "Add New Notification"
 msgstr "Pridėti naują pranešimą"
 
-#: publishpress.php:1411
+#: publishpress.php:1441
 msgid "Edit Notification"
 msgstr "Redaguoti pranešimą"
 
-#: publishpress.php:1412
+#: publishpress.php:1442
 msgid "Search Notifications"
 msgstr "Ieškoti pranešimų"
 
-#: publishpress.php:1415
-#: publishpress.php:1416
+#: publishpress.php:1445
+#: publishpress.php:1446
 msgid "No notification found"
 msgstr "Pranešimų nerasta"
 
-#: publishpress.php:1456
+#: publishpress.php:1486
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3507,7 +3556,7 @@ msgstr ""
 "pašalinti kitas PublishPress instancijas, ypač jei naudojate PublishPress "
 "Pro."
 
-#: publishpress.php:1464
+#: publishpress.php:1494
 msgid "Warning"
 msgstr "Įspėjimas"
 

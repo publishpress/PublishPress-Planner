@@ -3,16 +3,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/PublishPress\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-05-14 13:02-0300\n"
-"PO-Revision-Date: 2026-04-10 02:24+0000\n"
+"POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
+"PO-Revision-Date: 2026-04-14 18:37+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: publishpress\n"
+">= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
 
@@ -77,8 +78,8 @@ msgstr "На рассмотрении"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -110,6 +111,43 @@ msgstr "Пользователи"
 msgid "E-mails"
 msgstr "Электронные письма"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Равно (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Не равно (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Больше чем (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Больше или равно (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Меньше чем (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Меньше или равно (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Как/Содержит"
+
+#: common/php/class-module.php:1055
+#, fuzzy
+msgid "Not Like"
+msgstr "Не установлено"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Не существует/Пусто"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -131,7 +169,7 @@ msgstr "Статус ревизии"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -388,6 +426,7 @@ msgstr "Электронная почта"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "Содержимое"
 
@@ -656,6 +695,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:734
 #: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
 msgid "Weeks"
 msgstr "Недели"
 
@@ -1122,7 +1162,7 @@ msgid "No terms"
 msgstr "Нет терминов"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1131,8 +1171,8 @@ msgstr "Дата поста"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1142,8 +1182,8 @@ msgstr "Редактировать"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1151,33 +1191,33 @@ msgstr "Предварительный просмотр"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "Просмотр"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "Предыдущий пост"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "Следующий пост"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "Таксономия не установлена."
@@ -1240,7 +1280,7 @@ msgstr "Поисковая строка"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1499,6 +1539,7 @@ msgid "Four weeks"
 msgstr "Четыре недели"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "Месяцы"
 
@@ -1612,12 +1653,20 @@ msgstr "Переместите посты сюда, чтобы изменить 
 msgid "You do not have permission to move post to this status"
 msgstr "У вас нет разрешения на перемещение поста в этот статус"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Дни"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Годы"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "Дата по умолчанию"
 
-#: modules/content-board/content-board.php:1056
+#: modules/content-board/content-board.php:1061
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -1625,45 +1674,45 @@ msgstr ""
 "Это дата публикации по умолчанию на сегодня для постов, переходящих в "
 "статус Запланировано."
 
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
 msgid "Only editable posts will be moveable."
 msgstr "Только редактируемые посты могут быть перемещены."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Редактировать этот пост"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Переместить этот элемент в Корзину"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Просмотреть &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Предварительный просмотр &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "Результатов не найдено"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "Нет постов в указанном диапазоне или фильтре."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Нет"
@@ -2910,11 +2959,11 @@ msgstr "Нажмите здесь, чтобы узнать больше о па�
 msgid "Features"
 msgstr "Возможности"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "Не стесняйтесь выбирать только те функции, которые вам нужны."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr "Включенные функции"
 
@@ -3058,8 +3107,8 @@ msgid "All Statuses"
 msgstr "Все статусы"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1409
-#: publishpress.php:1414
+#: publishpress.php:1439
+#: publishpress.php:1444
 msgid "Notification"
 msgstr "Уведомление"
 
@@ -3102,8 +3151,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1408
-#: publishpress.php:1413
+#: publishpress.php:1438
+#: publishpress.php:1443
 msgid "Notifications"
 msgstr "Уведомления"
 
@@ -3340,7 +3389,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Это действие было выполнено %1$s в %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3442,7 +3491,7 @@ msgstr ""
 "загруженный файл."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:675
+#: publishpress.php:690
 msgid "Cheatin&#8217; uh?"
 msgstr "Жульничаете, а?"
 
@@ -3466,44 +3515,44 @@ msgstr "Интеграция с The Events Calendar"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Интегрируйтесь с плагином The Events Calendar"
 
-#: publishpress.php:590
+#: publishpress.php:605
 msgid "Planner"
 msgstr "Планировщик"
 
-#: publishpress.php:671
+#: publishpress.php:686
 msgid "Configure"
 msgstr "Настроить"
 
-#: publishpress.php:674
+#: publishpress.php:689
 msgid "Please correct your form errors below and try again."
 msgstr "Пожалуйста, исправьте ошибки в вашей форме ниже и попробуйте снова."
 
-#: publishpress.php:676
+#: publishpress.php:691
 msgid "You do not have necessary permissions to complete this action."
 msgstr "У вас нет необходимых прав для выполнения этого действия."
 
-#: publishpress.php:680
+#: publishpress.php:695
 msgid "Post does not exist"
 msgstr "Запись не существует"
 
-#: publishpress.php:1410
+#: publishpress.php:1440
 msgid "Add New Notification"
 msgstr "Добавить новое уведомление"
 
-#: publishpress.php:1411
+#: publishpress.php:1441
 msgid "Edit Notification"
 msgstr "Редактировать уведомление"
 
-#: publishpress.php:1412
+#: publishpress.php:1442
 msgid "Search Notifications"
 msgstr "Поиск уведомлений"
 
-#: publishpress.php:1415
-#: publishpress.php:1416
+#: publishpress.php:1445
+#: publishpress.php:1446
 msgid "No notification found"
 msgstr "Уведомление не найдено"
 
-#: publishpress.php:1456
+#: publishpress.php:1486
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3513,7 +3562,7 @@ msgstr ""
 "деактивируйте и удалите другие экземпляры PublishPress, особенно если вы "
 "используете PublishPress Pro."
 
-#: publishpress.php:1464
+#: publishpress.php:1494
 msgid "Warning"
 msgstr "Предупреждение"
 
