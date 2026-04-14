@@ -20,7 +20,7 @@ msgstr ""
 #: modules/settings/settings.php:266
 #. Plugin Name of the plugin
 msgid "PublishPress Planner"
-msgstr "퍼블리시프레스 플래너"
+msgstr "PublishPress Planner"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -33,8 +33,8 @@ msgid ""
 "PublishPress Planner helps you plan and publish content inside WordPress. "
 "Features include a content calendar, kanban board, and notifications."
 msgstr ""
-"PublishPress Planner는 WordPress 내에서 콘텐츠를 계획하고 게시하는 데 도움을 줍니다. 기능으로는 콘텐츠 "
-"캘린더, 칸반 보드 및 알림이 포함됩니다."
+"퍼블리시프레스 플래너는 워드프레스 내에서 콘텐츠를 계획하고 게시하는 데 도움을 줍니다. 기능으로는 콘텐츠 달력, 칸반 보드 및 알림이 "
+"포함됩니다."
 
 #: publishpress.php
 #: modules/calendar/library/calendar-utilities.php:1227
