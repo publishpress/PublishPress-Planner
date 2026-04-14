@@ -10,9 +10,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
-"PO-Revision-Date: 2026-04-10 02:39+0000\n"
+"PO-Revision-Date: 2026-04-14 18:35+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
+"% 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 ? 4 : 5);\n"
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=(n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n % 100 >= 3 && n % 100 <= 10 ? 3 : n % 100 >= 11 ? 4 : 5);\n"
 
@@ -27,19 +28,8 @@ msgstr "نظام تخطيط PublishPress"
 msgid "https://publishpress.com/"
 msgstr "https://publishpress.com/"
 
-#: publishpress.php
+#: publishpress.php, fuzzy
 #. Description of the plugin
-msgid ""
-"PublishPress Planner helps you plan and publish content inside WordPress. "
-"Features include a content calendar, kanban board, and notifications."
-msgstr ""
-"يساعدك PublishPress Planner في تخطيط ونشر المحتوى داخل WordPress. تشمل "
-"الميزات تقويم المحتوى، لوحة كانبان، وإشعارات."
-
-#: publishpress.php
-#: modules/calendar/library/calendar-utilities.php:1227
-#: modules/settings/settings.php:61, fuzzy
-#. Author of the plugin
 msgid "PublishPress"
 msgstr "PublishPress"
 
@@ -76,8 +66,8 @@ msgstr "بانتظار المراجعة"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -109,6 +99,42 @@ msgstr "المستخدمون"
 msgid "E-mails"
 msgstr "البريد الإلكتروني"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "يساوي (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "لا يساوي (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "أكبر من (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "أكبر من أو يساوي (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "أقل من (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "أقل من أو يساوي (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "مثل/يتضمن"
+
+#: common/php/class-module.php:1055
+msgid "Not Like"
+msgstr "ليس مثل"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "غير موجود/فارغ"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -130,7 +156,7 @@ msgstr "حالة المراجعة"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -159,15 +185,6 @@ msgstr "تم رفض الوصول"
 
 #: includes.php:127
 #, php-format
-msgid ""
-"You're using PublishPress Planner Free. The Pro version has more features "
-"and support. %sUpgrade to Pro%s"
-msgstr ""
-"أنت تستخدم PublishPress Planner المجاني. النسخة الاحترافية تحتوي على ميزات "
-"ودعم إضافي. %sترقية إلى النسخة الاحترافية%s"
-
-#: includes.php:161
-#: lib/Legacy/Util.php:216
 msgid "Upgrade to Pro"
 msgstr "ترقية إلى النسخة الاحترافية"
 
@@ -400,6 +417,7 @@ msgstr "البريد الإلكتروني"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "المحتوى"
 
@@ -632,53 +650,10 @@ msgstr "حدث خطأ أثناء تحديث المقال. يرجى المحاو�
 
 #: modules/calendar/calendar.php:247
 #, php-format
-msgid ""
-"Updating the post date dynamically doesn't work for published content. "
-"Please <a href='%s'>edit the post</a>."
-msgstr ""
-"تحديث تاريخ المنشور ديناميكياً لا يعمل مع المحتوى المنشور. يرجى <a "
-"href='%s'>تعديل المنشور</a>."
-
-#: modules/calendar/calendar.php:251
-msgid ""
-"iCal secret key regenerated. Please inform all users they will need to "
-"resubscribe."
-msgstr ""
-"تم إعادة توليد مفتاح سري iCal. يرجى إبلاغ جميع المستخدمين أنه سيتعين عليهم "
-"إعادة الاشتراك."
-
-#: modules/calendar/calendar.php:259
-#: modules/editorial-comments/editorial-comments.php:82
-#: modules/editorial-metadata/editorial-metadata.php:119
-#: modules/notifications/notifications.php:96
 msgid "Overview"
 msgstr "نظرة عامة"
 
 #: modules/calendar/calendar.php:260
-msgid ""
-"<p>The calendar is a convenient week-by-week or month-by-month view into "
-"your content. Quickly see which stories are on track to being published on "
-"time, and which will need extra effort.</p>"
-msgstr ""
-"<p>التقويم هو عرض مريح للأسبوع أو الشهر لمحتواك. يمكنك بسرعة رؤية القصص "
-"التي تسير نحو النشر في الوقت المحدد، وأي منها يحتاج إلى جهد إضافي.</p>"
-
-#: modules/calendar/calendar.php:265
-msgid ""
-"<p><strong>For more information:</strong></p><p><a "
-"href=\"https://publishpress.com/features/calendar/\">Calendar "
-"Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
-"Github</a></p>"
-msgstr ""
-"<p><strong>لمزيد من المعلومات:</strong></p><p><a "
-"href=\"https://publishpress.com/features/calendar/\">وثائق "
-"التقويم</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress على "
-"GitHub</a></p>"
-
-#: modules/calendar/calendar.php:734
-#: modules/calendar/library/calendar-utilities.php:1259
 msgid "Weeks"
 msgstr "أسابيع"
 
@@ -805,20 +780,6 @@ msgid "Initializing the calendar. Please wait..."
 msgstr "جارٍ تهيئة التقويم. يرجى الانتظار..."
 
 #: modules/calendar/calendar.php:1165
-msgid ""
-"It seems like it is taking too long. Please, try reloading the page again "
-"and check the browser console looking for errors."
-msgstr ""
-"يبدو أن الأمر يستغرق وقتاً طويلاً. يرجى، حاول إعادة تحميل الصفحة مرة أخرى "
-"وتحقق من وحدة التحكم في المتصفح بحثاً عن الأخطاء."
-
-#: modules/calendar/calendar.php:1809
-msgid ""
-"The selected user doesn't have enough permissions to be set as the post "
-"author."
-msgstr "المستخدم المحدد ليس لديه الأذونات الكافية ليتم تعيينه ككاتب المنشور."
-
-#: modules/calendar/library/calendar-methods.php:87
 msgid "Post types to show"
 msgstr "أنواع المنشورات للعرض"
 
@@ -867,33 +828,6 @@ msgid "edit"
 msgstr "تعديل"
 
 #: modules/calendar/library/calendar-methods.php:308
-#, php-format
-msgid ""
-"For Revisions integration on the Content Calendar, Overview and Content "
-"Board, please update %sPublishPress Revisions Pro%s."
-msgstr ""
-"لدمج التعديلات في تقويم المحتوى، العرض ولوحة المحتوى، يرجى تحديث "
-"%sPublishPress Revisions Pro%s."
-
-#: modules/calendar/library/calendar-methods.php:309
-#, php-format
-msgid ""
-"For Revisions integration on the Content Calendar, Overview and Content "
-"Board, please update %sPublishPress Revisions%s."
-msgstr ""
-"لدمج التعديلات في تقويم المحتوى، العرض ولوحة المحتوى، يرجى تحديث "
-"%sPublishPress Revisions%s."
-
-#: modules/calendar/library/calendar-methods.php:326
-#, php-format
-msgid ""
-"To refine your workflow with custom Post Statuses, install the "
-"%sPublishPress Statuses%s plugin."
-msgstr ""
-"لتحسين سير العمل الخاص بك مع حالات المنشور المخصصة، قم بتثبيت المكون "
-"الإضافي %sPublishPress Statuses%s."
-
-#: modules/calendar/library/calendar-methods.php:340
 #, php-format
 msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
 msgstr ""
@@ -1155,7 +1089,7 @@ msgid "No terms"
 msgstr "لا توجد مصطلحات"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1164,8 +1098,8 @@ msgstr "تاريخ المنشور"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1175,8 +1109,8 @@ msgstr "تعديل"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1184,33 +1118,33 @@ msgstr "معاينة"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "عرض"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "المنشور السابق"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "المنشور التالي"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "حفظ التغييرات"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "لم يتم تعيين التصنيف."
@@ -1273,7 +1207,7 @@ msgstr "صندوق البحث"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1535,6 +1469,7 @@ msgid "Four weeks"
 msgstr "أربعة أسابيع"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "أشهر"
 
@@ -1646,58 +1581,57 @@ msgstr "قم بنقل المنشورات إلى هنا لتغيير حالتها
 msgid "You do not have permission to move post to this status"
 msgstr "ليس لديك إذن لنقل المنشور إلى هذه الحالة"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "أيام"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "سنوات"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "تاريخ افتراضي"
 
-#: modules/content-board/content-board.php:1056
-msgid ""
-"This is the default publish date from today for posts moving to the "
-"Scheduled status."
-msgstr ""
-"هذا هو تاريخ النشر الافتراضي من اليوم للمنشورات التي تنتقل إلى حالة "
-"المجدولة."
-
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1061
 msgid "Only editable posts will be moveable."
 msgstr "فقط المنشورات القابلة للتعديل ستكون قابلة للنقل."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "تعديل هذا المنشور"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "نقل هذه العنصر إلى سلة المهملات"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "عرض &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "معاينة &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "لم يتم العثور على نتائج"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "لا توجد منشورات في النطاق أو الفلتر المحدد."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "لا شيء"
@@ -2025,14 +1959,6 @@ msgid "Log file not found."
 msgstr "لم يتم العثور على ملف السجل."
 
 #: modules/debug/debug.php:304
-msgid ""
-"If you see any error or look for information regarding PublishPress, please "
-"don't hesitate to contact the support team. E-mail us:"
-msgstr ""
-"إذا رأيت أي خطأ أو كنت تبحث عن معلومات بخصوص PublishPress، لا تتردد في "
-"الاتصال بفريق الدعم. أرسل لنا عبر البريد الإلكتروني:"
-
-#: modules/debug/debug.php:308
 msgid "Click to delete the log file. Be careful, this operation can not be undone. "
 msgstr "انقر لحذف ملف السجل. كن حذرًا، هذه العملية لا يمكن التراجع عنها. "
 
@@ -2056,40 +1982,6 @@ msgid "Choose Post Types"
 msgstr "اختر أنواع المشاركات"
 
 #: modules/editorial-comments/editorial-comments.php:83
-msgid ""
-"<p>Editorial comments help you cut down on email overload and keep the "
-"conversation close to where it matters: your content. Threaded commenting "
-"in the admin, similar to what you find at the end of a blog post, allows "
-"writers and editors to privately leave feedback and discuss what needs to "
-"be changed before publication.</p><p>Anyone with access to view the story "
-"in progress will also have the ability to comment on it. If you have "
-"notifications enabled, those following the post will receive an email every "
-"time a comment is left.</p>"
-msgstr ""
-"<p>تعليقات التحرير تساعدك على تقليل ضغط البريد الإلكتروني والحفاظ على "
-"المحادثة قريبة من المكان الذي يهم: محتواك. يسمح التعليق المتسلسل في "
-"الإدارة، مشابه لما تجده في نهاية منشور المدونة، للكتاب والمحررين بمغادرة "
-"ملاحظات خاصة ومناقشة ما يحتاج إلى تغييرات قبل النشر.</p><p>أي شخص لديه حق "
-"الوصول لرؤية القصة قيد التقدم سيكون لديه أيضاً القدرة على التعليق عليها. "
-"إذا كانت لديك الإشعارات مفعلة، سيتلقى المتابعون للمنشور بريدًا إلكترونيًا "
-"في كل مرة يتم فيها ترك تعليق.</p>"
-
-#: modules/editorial-comments/editorial-comments.php:88
-msgid ""
-"<p><strong>For more information:</strong></p><p><a "
-"href=\"https://publishpress.com/features/editorial-comments/\">Editorial "
-"Comments Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
-"Github</a></p>"
-msgstr ""
-"<p><strong>لمزيد من المعلومات:</strong></p><p><a "
-"href=\"https://publishpress.com/features/editorial-comments/\">وثائق "
-"تعليقات التحرير</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress على "
-"GitHub</a></p>"
-
-#: modules/editorial-comments/editorial-comments.php:205
-#: modules/editorial-comments/editorial-comments.php:717
 msgid "Remove"
 msgstr "إزالة"
 
@@ -2115,13 +2007,6 @@ msgid "Search Comments"
 msgstr "البحث عن التعليقات"
 
 #: modules/editorial-comments/editorial-comments.php:528
-msgid ""
-"You can add editorial comments to a post once you've saved it for the first "
-"time."
-msgstr "يمكنك إضافة تعليقات تحريرية إلى منشور بمجرد أن تقوم بحفظه لأول مرة."
-
-#: modules/editorial-comments/editorial-comments.php:548
-#: modules/editorial-comments/editorial-comments.php:552
 msgid "Add an editorial comment"
 msgstr "أضف تعليقًا تحريرياً"
 
@@ -2159,28 +2044,10 @@ msgid "said on %1$s at %2$s"
 msgstr "قال في %1$s في %2$s"
 
 #: modules/editorial-comments/editorial-comments.php:745
-msgid ""
-"Nonce check failed. Please ensure you're supposed to be adding editorial "
-"comments."
-msgstr "فشل التحقق من nonce. يرجى التأكد أنك يجب أن تضيف تعليقات تحريرية."
-
-#: modules/editorial-comments/editorial-comments.php:753
-#: modules/editorial-comments/editorial-comments.php:894
-#: modules/editorial-comments/editorial-comments.php:1026
-#: modules/editorial-comments/editorial-comments.php:1142
 msgid "Invalid comment data"
 msgstr "بيانات التعليق غير صالحة"
 
 #: modules/editorial-comments/editorial-comments.php:766
-msgid ""
-"Sorry, you don't have the privileges to add editorial comments. Please talk "
-"to your Administrator."
-msgstr ""
-"عذرًا، ليس لديك الصلاحيات لإضافة تعليقات تحريرية. يرجى التحدث إلى المسؤول "
-"الخاص بك."
-
-#: modules/editorial-comments/editorial-comments.php:776
-#: modules/editorial-comments/editorial-comments.php:940
 msgid "Please enter a comment."
 msgstr "يرجى إدخال تعليق."
 
@@ -2194,38 +2061,6 @@ msgstr "كانت هناك مشكلة من نوع ما. حاول مرة أخرى 
 #: modules/editorial-comments/editorial-comments.php:883
 #: modules/editorial-comments/editorial-comments.php:1015
 #: modules/editorial-comments/editorial-comments.php:1132
-msgid ""
-"Nonce check failed. Please ensure you're supposed to be editing editorial "
-"comments."
-msgstr "فشل التحقق من nonce. يرجى التأكد أنك يجب أن تعدل التعليقات التحريرية."
-
-#: modules/editorial-comments/editorial-comments.php:909
-#: modules/editorial-comments/editorial-comments.php:1041
-msgid ""
-"Sorry, you don't have the privileges to edit editorial comments. Please "
-"talk to your Administrator."
-msgstr ""
-"عذرًا، ليس لديك الصلاحيات لتعديل التعليقات التحريرية. يرجى التحدث إلى "
-"المسؤول الخاص بك."
-
-#: modules/editorial-comments/editorial-comments.php:927
-msgid ""
-"Sorry, you don't have the privileges to edit this editorial comment. Please "
-"talk to your Administrator."
-msgstr ""
-"عذراً، لا تملك الصلاحيات لتعديل هذا التعليق التحريري. يرجى التحدث إلى "
-"المسؤول لديك."
-
-#: modules/editorial-comments/editorial-comments.php:1057
-#: modules/editorial-comments/editorial-comments.php:1161
-msgid ""
-"Sorry, you don't have the privileges to delete this editorial comment. "
-"Please talk to your Administrator."
-msgstr ""
-"عذراً، لا تملك الصلاحيات لحذف هذا التعليق التحريري. يرجى التحدث إلى المسؤول "
-"لديك."
-
-#: modules/editorial-comments/editorial-comments.php:1078
 msgid "Sorry, you can't delete this editorial comment because it has some replies."
 msgstr "عذراً، لا يمكنك حذف هذا التعليق التحريري لأنه يحتوي على بعض الردود."
 
@@ -2319,38 +2154,6 @@ msgid "Editorial fields visibility changed."
 msgstr "تم تغيير رؤية الحقول التحريرية."
 
 #: modules/editorial-metadata/editorial-metadata.php:120
-msgid ""
-"<p>Keep track of important details about your content with editorial "
-"fields. This feature allows you to create as many date, text, number, etc. "
-"fields as you like, and then use them to store information like contact "
-"details or the location of an interview.</p><p>Once you’ve set your fields "
-"up, editorial fields integrates with both the calendar and the content "
-"overview. Make an editorial fields item visible to have it appear to the "
-"rest of your team. Keep it hidden to restrict the information between the "
-"writer and their editor.</p>"
-msgstr ""
-"<p>تتبع التفاصيل المهمة حول محتواك باستخدام الحقول التحريرية. تتيح لك هذه "
-"الميزة إنشاء عدد غير محدود من الحقول مثل التاريخ والنص والرقم، ثم استخدامها "
-"لتخزين معلومات مثل تفاصيل الاتصال أو موقع المقابلة.</p><p>بمجرد إعداد "
-"الحقول الخاصة بك، تتكامل الحقول التحريرية مع كل من التقويم ونظرة عامة على "
-"المحتوى. اجعل عنصر الحقول التحريرية مرئيًا ليظهر لبقية فريقك. احتفظ به "
-"مخفيًا لتقييد المعلومات بين الكاتب ومدير التحرير.</p>"
-
-#: modules/editorial-metadata/editorial-metadata.php:125
-msgid ""
-"<p><strong>For more information:</strong></p><p><a "
-"href=\"https://publishpress.com/features/editorial-metadata/\">Editorial "
-"Fields Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
-"Github</a></p>"
-msgstr ""
-"<p><strong>لمزيد من المعلومات:</strong></p><p><a "
-"href=\"https://publishpress.com/features/editorial-metadata/\">وثائق الحقول "
-"التحريرية</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress على "
-"Github</a></p>"
-
-#: modules/editorial-metadata/editorial-metadata.php:212
 msgid "First Draft Date"
 msgstr "تاريخ المسودة الأولى"
 
@@ -2395,14 +2198,6 @@ msgid "User"
 msgstr "مستخدم"
 
 #: modules/editorial-metadata/editorial-metadata.php:372
-msgid ""
-"Are you sure you want to delete this term? Any metadata for this term will "
-"remain but will not be visible unless this term is re-added."
-msgstr ""
-"هل أنت متأكد أنك تريد حذف هذا المصطلح؟ ستظل أي بيانات وصفية لهذا المصطلح "
-"موجودة ولكن لن تكون مرئية ما لم يتم إعادة إضافة هذا المصطلح."
-
-#: modules/editorial-metadata/editorial-metadata.php:453
 msgid "Search Editorial Fields"
 msgstr "بحث في الحقول التحريرية"
 
@@ -2440,15 +2235,6 @@ msgid " <a href=\"%s\">Add fields to get started</a>."
 msgstr " <a href=\"%s\">أضف حقولًا للبدء</a>."
 
 #: modules/editorial-metadata/editorial-metadata.php:553
-msgid ""
-" Encourage your site administrator to configure your editorial workflow by "
-"adding editorial fields."
-msgstr ""
-"شجع مسؤول موقعك على تكوين سير العمل التحريري الخاص بك عن طريق إضافة الحقول "
-"التحريرية."
-
-#: modules/editorial-metadata/editorial-metadata.php:1244
-#: modules/editorial-metadata/editorial-metadata.php:1401
 msgid "All options value and labels are required."
 msgstr "تعتبر جميع قيم الخيارات والتسميات مطلوبة."
 
@@ -2596,13 +2382,6 @@ msgid "The slug cannot be changed once the term has been created."
 msgstr "لا يمكن تغيير الرابط الدائم بمجرد إنشاء الشرط."
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:184
-msgid ""
-"The description can be used to communicate with your team about what the "
-"field is for."
-msgstr "يمكن استخدام الوصف للتواصل مع فريقك حول ما هو الغرض من الحقل."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
 msgid "Type"
 msgstr "النوع"
 
@@ -2622,15 +2401,6 @@ msgstr "اختر الأدوار..."
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:223
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:537
-msgid ""
-"Filter the list of users in the editorial meta to users in the selected "
-"roles."
-msgstr ""
-"قم بتصفية قائمة المستخدمين في البيانات الوصفية التحريرية للمستخدمين في "
-"الأدوار المحددة."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:229
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:542
 msgid "Select Type"
 msgstr "اختر النوع"
 
@@ -2656,15 +2426,6 @@ msgstr "خيار منسدلة"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:263
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:574
-msgid ""
-"Enter the dropdown option value and label. You can move options to change "
-"their order."
-msgstr "أدخل قيمة وخيار التسمية للقائمة المنسدلة. يمكنك نقل الخيارات لتغيير ترتيبها."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:285
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:316
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:596
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:627
 msgid "Meta Value"
 msgstr "قيمة البيانات الوصفية"
 
@@ -2694,15 +2455,6 @@ msgstr "عرض في تقويم المحتوى ونموذج النظرة العا
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:361
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:674
-msgid ""
-"If enabled, this field will be available when adding new posts on the "
-"Content Calendar and Overview screen."
-msgstr ""
-"إذا تم تمكينه، سيكون هذا الحقل متاحًا عند إضافة منشورات جديدة على شاشة "
-"التقويم والمحتوى."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
 msgid "Add to post types"
 msgstr "إضافة إلى أنواع المنشورات"
 
@@ -2726,20 +2478,6 @@ msgid "Update Editorial fields term"
 msgstr "تحديث مصطلحات الحقول التحريرية"
 
 #: modules/editorial-metadata/library/editorial-metadata-utilities.php:466
-msgid ""
-"The \"slug\" is the URL-friendly version of the name. It is usually all "
-"lowercase and contains only letters, numbers, and hyphens."
-msgstr ""
-"“الرمز” هو النسخة الصديقة لـ URL للاسم. عادةً ما يكون بأحرف صغيرة فقط "
-"ويحتوي على أحرف وأرقام وشرطات."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:483
-msgid ""
-"The description can be used to communicate with your team about what the "
-"metadata is for."
-msgstr "يمكن استخدام الوصف للتواصل مع فريقك حول ما هي البيانات الوصفية."
-
-#: modules/editorial-metadata/library/editorial-metadata-utilities.php:511
 msgid "Indicate the type of editorial fields."
 msgstr "حدد نوع الحقول التحريرية."
 
@@ -2748,16 +2486,6 @@ msgid "Add New Editorial fields term"
 msgstr "إضافة مصطلح جديد للحقول التحريرية"
 
 #: modules/efmigration/efmigration.php:288
-msgid ""
-"Edit Flow should not be used alongside PublishPress Planner. If you want to "
-"use PublishPress Planner, please complete Edit Flow data migration and then "
-"deactivate Edit Flow."
-msgstr ""
-"لا ينبغي استخدام Edit Flow جنبًا إلى جنب مع PublishPress Planner. إذا كنت "
-"تريد استخدام PublishPress Planner، يرجى إكمال ترحيل بيانات Edit Flow ثم "
-"تعطيل Edit Flow."
-
-#: modules/improved-notifications/improved-notifications.php:102
 msgid "Advanced Notifications"
 msgstr "إشعارات متقدمة"
 
@@ -2790,16 +2518,6 @@ msgid "minutes"
 msgstr "دقائق"
 
 #: modules/improved-notifications/improved-notifications.php:610
-msgid ""
-"This will prevent too many notifications being sent for the same or similar "
-"events. Set this to a higher number if you are receiving duplicate emails."
-msgstr ""
-"سيمنع هذا إرسال الكثير من الإشعارات لنفس الأحداث أو الأحداث المشابهة. قم "
-"بضبط هذا على رقم أعلى إذا كنت تتلقى رسائل بريد إلكتروني مكررة."
-
-#: modules/improved-notifications/improved-notifications.php:656
-#: modules/improved-notifications/improved-notifications.php:1495
-#: views/user_profile_notification_channels.html.php:1
 msgid "Editorial Notifications"
 msgstr "إشعارات تحريرية"
 
@@ -2861,14 +2579,6 @@ msgid "Select at least one option for each section."
 msgstr "يرجى اختيار خيار واحد على الأقل لكل قسم."
 
 #: modules/improved-notifications/improved-notifications.php:1314
-msgid ""
-"You can add dynamic information to the Subject or Body text using the "
-"following shortcodes:"
-msgstr ""
-"يمكنك إضافة معلومات ديناميكية إلى النص في الموضوع أو النص في الجسم باستخدام "
-"الرموز القصيرة التالية:"
-
-#: modules/improved-notifications/improved-notifications.php:1319
 msgid "Editorial Comment"
 msgstr "تعليق تحريرى"
 
@@ -2897,14 +2607,6 @@ msgid "field"
 msgstr "حقل"
 
 #: modules/improved-notifications/improved-notifications.php:1326
-msgid ""
-"On each shortcode, you can select one or more fields. If more than one, "
-"they will be displayed separated by \", \"."
-msgstr ""
-"في كل رمز قصير، يمكنك اختيار حقل واحد أو أكثر. إذا كان هناك أكثر من واحد، "
-"سيتم عرضها مفصولة بـ “، “."
-
-#: modules/improved-notifications/improved-notifications.php:1330
 msgid "Available fields"
 msgstr "الحقول المتاحة"
 
@@ -2920,11 +2622,11 @@ msgstr "انقر هنا لقراءة المزيد حول خيارات الرمو
 msgid "Features"
 msgstr "الميزات"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "لا تتردد في اختيار الميزات التي تحتاجها فقط."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr "الميزات المفعلة"
 
@@ -3066,8 +2768,8 @@ msgid "All Statuses"
 msgstr "جميع الحالات"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1409
-#: publishpress.php:1414
+#: publishpress.php:1439
+#: publishpress.php:1444
 msgid "Notification"
 msgstr "إشعار"
 
@@ -3088,12 +2790,6 @@ msgstr "لم يتم العثور على إشعارات."
 
 #: modules/notifications-log/notifications-log.php:442
 #, php-format
-msgid ""
-"This notification is very similar to another one sent less than %d minutes "
-"ago for the same receiver"
-msgstr "هذا الإشعار مشابه جدًا لإشعار آخر تم إرساله قبل أقل من %d دقيقة لنفس المستلم"
-
-#: modules/notifications-log/notifications-log.php:817
 msgid "Subject:"
 msgstr "الموضوع:"
 
@@ -3102,47 +2798,10 @@ msgid "Content:"
 msgstr "المحتوى:"
 
 #: modules/notifications-log/notifications-log.php:835
-msgid ""
-"This is a preview of the scheduled message. The content can still change "
-"until the notification is sent."
-msgstr "هذه معاينة للرسالة المجدولة. يمكن أن يتغير المحتوى حتى يتم إرسال الإشعار."
-
-#: modules/notifications/notifications.php:75
-#: modules/notifications/notifications.php:562
-#: publishpress.php:1408
-#: publishpress.php:1413
 msgid "Notifications"
 msgstr "الإشعارات"
 
 #: modules/notifications/notifications.php:97
-msgid ""
-"<p>Notifications ensure you keep up to date with progress your most "
-"important content. Users can be subscribed to notifications on a post one "
-"by one or by selecting roles.</p><p>When enabled, notifications can be sent "
-"when a post changes status or an editorial comment is left by a writer or "
-"an editor.</p>"
-msgstr ""
-"<p>تضمن الإشعارات أن تظل على اطلاع بتقدم أهم محتوياتك. يمكن أن يشترك "
-"المستخدمون في الإشعارات على منشور واحد تلو الآخر أو من خلال تحديد "
-"الأدوار.</p><p>عند تمكينها، يمكن إرسال الإشعارات عندما يتغير حالة منشور أو "
-"يتم ترك تعليق تحريري بواسطة كاتب أو محرر.</p>"
-
-#: modules/notifications/notifications.php:102
-msgid ""
-"<p><strong>For more information:</strong></p><p><a "
-"href=\"https://publishpress.com/features/notifications/\">Notifications "
-"Documentation</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
-"Github</a></p>"
-msgstr ""
-"<p><strong>لمزيد من المعلومات:</strong></p><p><a "
-"href=\"https://publishpress.com/features/notifications/\">وثائق "
-"الإشعارات</a></p><p><a "
-"href=\"https://github.com/ostraining/PublishPress\">PublishPress على "
-"Github</a></p>"
-
-#: modules/notifications/notifications.php:303
-#: modules/notifications/notifications.php:306
 msgid "Notify User"
 msgstr "إخطار المستخدم"
 
@@ -3198,26 +2857,10 @@ msgid "Notify me"
 msgstr "أخطاري"
 
 #: modules/notifications/notifications.php:599
-msgid ""
-"Enter users, roles, or email addresses that should receive notifications "
-"for this post."
-msgstr ""
-"أدخل المستخدمين أو الأدوار أو عناوين البريد الإلكتروني التي يجب أن تتلقى "
-"إشعارات لهذه المشاركة."
-
-#: modules/notifications/notifications.php:603
 msgid "Show active notifications"
 msgstr "عرض الإشعارات النشطة"
 
 #: modules/notifications/notifications.php:642
-msgid ""
-"This won't have any effect unless you have at least one workflow targeting "
-"the \"Users who selected \"Notify me\" for the content\" option."
-msgstr ""
-"لن يكون لهذا أي تأثير ما لم يكن لديك على الأقل سير عمل واحد يستهدف خيار "
-"\"المستخدمون الذين اختاروا \"إعلامي\" للمحتوى\"."
-
-#: modules/notifications/notifications.php:656
 msgid "Active Notifications"
 msgstr "الإشعارات النشطة"
 
@@ -3265,14 +2908,6 @@ msgid "slug1,slug2"
 msgstr "slug1,slug2"
 
 #: modules/notifications/notifications.php:1867
-msgid ""
-"Add a list of taxonomy-slugs separated by comma that should not be loaded "
-"by the Taxonomy content filter when adding a new Notification Workflow."
-msgstr ""
-"أضف قائمة من سلاسل تصنيف مفصولة بفواصل والتي يجب عدم تحميلها بواسطة فلتر "
-"محتوى التصنيف عند إضافة سير عمل إشعار جديد."
-
-#: modules/notifications/notifications.php:2003
 msgid "WordPress Scheduler"
 msgstr "جدول أعمال ووردبريس"
 
@@ -3342,7 +2977,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "تم اتخاذ هذا الإجراء في %1$s في %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3436,13 +3071,6 @@ msgstr "لا توجد وحدات PublishPress مسجلة"
 
 #: modules/settings/settings.php:380
 #, php-format
-msgid ""
-"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
-"loaded file."
-msgstr "معطل لأن add_post_type_support('%1$s', '%2$s') مضمن في ملف تم تحميله."
-
-#: modules/settings/settings.php:404
-#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "غشّ، أليس كذلك؟"
 
@@ -3466,53 +3094,44 @@ msgstr "تكامل تقويم الأحداث"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "التكامل مع ملحق تقويم الأحداث"
 
-#: publishpress.php:590
+#: publishpress.php:605
 msgid "Planner"
 msgstr "المنظم"
 
-#: publishpress.php:671
+#: publishpress.php:686
 msgid "Configure"
 msgstr "تكوين"
 
-#: publishpress.php:674
+#: publishpress.php:689
 msgid "Please correct your form errors below and try again."
 msgstr "يرجى تصحيح أخطاء النموذج أدناه وحاول مرة أخرى."
 
-#: publishpress.php:676
+#: publishpress.php:691
 msgid "You do not have necessary permissions to complete this action."
 msgstr "ليس لديك الأذونات اللازمة لإكمال هذا الإجراء."
 
-#: publishpress.php:680
+#: publishpress.php:695
 msgid "Post does not exist"
 msgstr "المشاركة غير موجودة"
 
-#: publishpress.php:1410
+#: publishpress.php:1440
 msgid "Add New Notification"
 msgstr "إضافة إشعار جديد"
 
-#: publishpress.php:1411
+#: publishpress.php:1441
 msgid "Edit Notification"
 msgstr "تحرير الإشعار"
 
-#: publishpress.php:1412
+#: publishpress.php:1442
 msgid "Search Notifications"
 msgstr "بحث عن الإشعارات"
 
-#: publishpress.php:1415
-#: publishpress.php:1416
+#: publishpress.php:1445
+#: publishpress.php:1446
 msgid "No notification found"
 msgstr "لم يتم العثور على إشعار"
 
-#: publishpress.php:1456
-msgid ""
-"PublishPress Planner tried to load multiple times. Please, deactivate and "
-"remove other instances of PublishPress, specially if you are using "
-"PublishPress Pro."
-msgstr ""
-"حاول PublishPress Planner التحميل عدة مرات. يرجى تعطيل وإزالة نسخ أخرى من "
-"PublishPress، خاصة إذا كنت تستخدم PublishPress Pro."
-
-#: publishpress.php:1464
+#: publishpress.php:1486
 msgid "Warning"
 msgstr "تحذير"
 
@@ -3526,14 +3145,6 @@ msgid "Sending content..."
 msgstr "جاري إرسال المحتوى..."
 
 #: modules/editorial-comments/lib/editorial-comments.js:434
-msgid ""
-"This comment can't be deleted because it has one or more replies. Before "
-"deleting it make sure to delete all the replies first."
-msgstr ""
-"لا يمكن حذف هذا التعليق لأنه يحتوي على ردود واحدة أو أكثر. قبل حذفه، تأكد "
-"من حذف جميع الردود أولاً."
-
-#: modules/editorial-comments/lib/editorial-comments.js:438
 msgid "Are you sure you want to delete this comment?"
 msgstr "هل أنت متأكد أنك تريد حذف هذا التعليق؟"
 
@@ -3559,5 +3170,3 @@ msgstr "مجال التحرير"
 
 #: modules/editorial-metadata/editorial-metadata.php:452
 msgctxt "taxonomy singular name"
-msgid "Editorial Field"
-msgstr "الحقل التحريري"
