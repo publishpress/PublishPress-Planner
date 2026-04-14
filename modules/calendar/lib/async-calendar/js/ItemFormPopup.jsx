@@ -479,10 +479,6 @@ export default function ItemFormPopup(props) {
                 </div>
                 <hr/>
                 <table>
-                    <colgroup>
-                        <col style={{ width: '20%' }}/>
-                        <col style={{ width: '80%' }}/>
-                    </colgroup>
                     <tbody>
                     {props.postTypes.length > 1 &&
                     <tr>
