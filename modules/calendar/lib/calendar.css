@@ -100,7 +100,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 150px;
     display: inline-block;
     vertical-align: middle;
     max-height: 1.5rem;
