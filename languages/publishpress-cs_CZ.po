@@ -1,8 +1,8 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Planner 4.7.3-beta3\n"
+"Project-Id-Version: PublishPress Planner 4.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
-"PO-Revision-Date: 2026-04-10 02:31+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : (n >= 2 && n <= 4) ? 1 : 2;\n"
 
-#: publishpress.php
-#: modules/settings/settings.php:266, fuzzy
+#: publishpress.php, fuzzy
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -76,8 +75,8 @@ msgstr "Čeká na recenzi"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -109,6 +108,42 @@ msgstr "Uživatelé"
 msgid "E-mails"
 msgstr "E-maily"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Rovná se (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Nerovná se (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Větší než (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Větší nebo rovno (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Menší než (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Menší nebo rovno (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Podobné/Obsahuje"
+
+#: common/php/class-module.php:1055
+msgid "Not Like"
+msgstr "Není podobné"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Neexistuje/Prázdné"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -130,7 +165,7 @@ msgstr "Stav revize"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -385,6 +420,7 @@ msgstr "E-mail"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "Obsah"
 
@@ -505,7 +541,7 @@ msgid "Users who selected \"Notify me\" for the content"
 msgstr "Uživatelé, kteří zvolili \"Upozornit mě\" na obsah"
 
 #: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
-#, php-format
+#, fuzzy, php-format
 msgid "role:%s"
 msgstr "role:%s"
 
@@ -653,6 +689,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:734
 #: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
 msgid "Weeks"
 msgstr "Týdny"
 
@@ -1117,7 +1154,7 @@ msgid "No terms"
 msgstr "Žádné termíny"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1126,8 +1163,8 @@ msgstr "Datum příspěvku"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1137,8 +1174,8 @@ msgstr "Upravit"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1146,33 +1183,33 @@ msgstr "Náhled"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "Zobrazit"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "Předchozí příspěvek"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "Další příspěvek"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "Uložit změny"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "Taxonomie není nastavena."
@@ -1235,7 +1272,7 @@ msgstr "Vyhledávací pole"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1494,6 +1531,7 @@ msgid "Four weeks"
 msgstr "Čtyři týdny"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "Měsíce"
 
@@ -1607,12 +1645,20 @@ msgstr "Přesuňte příspěvky sem pro změnu jejich stavu"
 msgid "You do not have permission to move post to this status"
 msgstr "Nemáte oprávnění přesunout příspěvek do tohoto stavu"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Dny"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Roky"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "Výchozí datum"
 
-#: modules/content-board/content-board.php:1056
+#: modules/content-board/content-board.php:1061
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -1620,45 +1666,45 @@ msgstr ""
 "Toto je výchozí datum publikování od dneška pro příspěvky přecházející do "
 "stavu Naplánováno."
 
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
 msgid "Only editable posts will be moveable."
 msgstr "Přesunout lze pouze editovatelné příspěvky."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Upravit tento příspěvek"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Přesunout tuto položku do Koše"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Zobrazit &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Náhled &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "Žádné výsledky nebyly nalezeny"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "V určeném rozsahu nebo filtru nejsou žádné příspěvky."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Žádný"
@@ -2891,11 +2937,11 @@ msgstr "Klikněte sem pro více informací o možnostech zkratek..."
 msgid "Features"
 msgstr "Funkce"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "Neváhejte si vybrat pouze funkce, které potřebujete."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr "Povolené funkce"
 
@@ -3037,8 +3083,8 @@ msgid "All Statuses"
 msgstr "Všechny stavy"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1409
-#: publishpress.php:1414
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Oznámení"
 
@@ -3081,8 +3127,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1408
-#: publishpress.php:1413
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Oznámení"
 
@@ -3318,7 +3364,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Tato akce byla provedena dne %1$s v %2$s %3$s"
 
 #: modules/notifications/notifications.php:2141
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3401,6 +3447,10 @@ msgstr "Nastavení PublishPress"
 msgid "Settings"
 msgstr "Nastavení"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3464,24 +3514,24 @@ msgstr "Nemáte potřebná oprávnění k dokončení této akce."
 msgid "Post does not exist"
 msgstr "Příspěvek neexistuje"
 
-#: publishpress.php:1410
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Přidat nové oznámení"
 
-#: publishpress.php:1411
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Upravit oznámení"
 
-#: publishpress.php:1412
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Hledat oznámení"
 
-#: publishpress.php:1415
-#: publishpress.php:1416
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Žádné oznámení nenalezeno"
 
-#: publishpress.php:1456
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3491,7 +3541,7 @@ msgstr ""
 "prosím další instance PublishPress, zejména pokud používáte PublishPress "
 "Pro."
 
-#: publishpress.php:1464
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Upozornění"
 

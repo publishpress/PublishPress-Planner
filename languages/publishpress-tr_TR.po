@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.0.2\n"
@@ -9,18 +9,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-23 11:07+0000\n"
-"PO-Revision-Date: 2026-04-10 02:29+0000\n"
+"POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: Poedit 3.4.2\n"
 "X-Domain: publishpress\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planlayıcı Pro"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -77,8 +76,8 @@ msgstr "Bekleyen yorum"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -110,6 +109,43 @@ msgstr "Kullanıcılar"
 msgid "E-mails"
 msgstr "E-postalar"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Eşittir (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Eşit değildir (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Büyüktür (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Büyük veya eşittir (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Küçüktür (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Küçük veya eşittir (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Gibi/İçerir"
+
+#: common/php/class-module.php:1055
+#, fuzzy
+msgid "Not Like"
+msgstr "Ayarlanmadı"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Yoktur/Boş"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -131,7 +167,7 @@ msgstr "Revizyon Durumu"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -383,6 +419,7 @@ msgstr "E-posta"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "İçerik"
 
@@ -647,6 +684,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:734
 #: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
 msgid "Weeks"
 msgstr "Haftalar"
 
@@ -1105,7 +1143,7 @@ msgid "No terms"
 msgstr "Şart yok"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1114,8 +1152,8 @@ msgstr "Yazı Tarihi"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1125,8 +1163,8 @@ msgstr "Düzenle"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1134,33 +1172,33 @@ msgstr "Önizleme"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "Göster"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "Önceki Yazı"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "Sonraki Yazı"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "Taksonomi ayarlanmamış."
@@ -1223,7 +1261,7 @@ msgstr "Arama kutusu"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1481,6 +1519,7 @@ msgid "Four weeks"
 msgstr "Dört hafta"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "Aylar"
 
@@ -1594,12 +1633,20 @@ msgstr "Gönderileri buraya taşıyarak durumlarını değiştirin"
 msgid "You do not have permission to move post to this status"
 msgstr "Bu duruma gönderi taşımak için izniniz yok"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Gün"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Yıl"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "Varsayılan Tarih"
 
-#: modules/content-board/content-board.php:1056
+#: modules/content-board/content-board.php:1061
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -1607,45 +1654,45 @@ msgstr ""
 "Bu, Planlı duruma geçecek gönderiler için bugünkü varsayılan yayın "
 "tarihidir."
 
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
 msgid "Only editable posts will be moveable."
 msgstr "Sadece düzenlenebilir gönderiler taşınabilir."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Bu gönderiyi düzenle"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Bu öğeyi Çöp Kutusuna taşı"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr " &#8220;%s&#8221; Göster"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Önizleme &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "Belirtilen aralıkta veya filtrede hiç gönderi yok."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Hiçbiri"
@@ -2883,11 +2930,11 @@ msgstr ""
 msgid "Features"
 msgstr "Özellikler"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "Yalnızca ihtiyacınız olan özellikleri seçmekten çekinmeyin, rahat olun."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr " Özellikler etkilendirilmiş"
 
@@ -2928,7 +2975,7 @@ msgid "Post ID: %d"
 msgstr "Gönderi ID: %d"
 
 #: modules/notifications-log/library/NotificationsLogTable.php:163
-#, php-format
+#, fuzzy, php-format
 msgid "Blog ID: %d"
 msgstr "Blog ID: %d"
 
@@ -3031,8 +3078,8 @@ msgid "All Statuses"
 msgstr "Tüm Durumlar"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1409
-#: publishpress.php:1414
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Bildirim"
 
@@ -3074,8 +3121,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1408
-#: publishpress.php:1413
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Bildirimler"
 
@@ -3311,7 +3358,7 @@ msgid "This action was taken on %1$s at %2$s %3$s"
 msgstr "Bu işlem %2$s %3$s de %1$s adresinde gerçekleştirilmiştir"
 
 #: modules/notifications/notifications.php:2141
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s => %2$s"
 msgstr "%1$s => %2$s"
 
@@ -3394,6 +3441,10 @@ msgstr "PublishPress Ayarları"
 msgid "Settings"
 msgstr "Ayarlar"
 
+#: modules/settings/settings.php:266
+msgid "PublishPress Planner"
+msgstr "PublishPress Planlayıcı Pro"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3457,24 +3508,24 @@ msgstr "Bu eylemi tamamlamak için gerekli izinlere sahip değilsiniz."
 msgid "Post does not exist"
 msgstr "Yazı mevcut değil"
 
-#: publishpress.php:1410
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Yeni Bildirim Ekle"
 
-#: publishpress.php:1411
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Bildirimi Düzenle"
 
-#: publishpress.php:1412
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Bildirimlerde Ara"
 
-#: publishpress.php:1415
-#: publishpress.php:1416
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Bildirim bulunamadı"
 
-#: publishpress.php:1456
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3484,7 +3535,7 @@ msgstr ""
 "PublishPress örneklerini devre dışı bırakın ve kaldırın, özellikle "
 "PublishPress Pro kullanıyorsanız."
 
-#: publishpress.php:1464
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Uyarı"
 
@@ -3519,7 +3570,7 @@ msgstr "tarafından"
 
 #: modules/content-board/library/content-board-utilities.php:538
 #: modules/content-overview/library/content-overview-utilities.php:643
-#, php-format
+#, fuzzy, php-format
 msgctxt "%1$s = start date, %2$s = end date"
 msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
 msgstr " %1$s <div class=\"input-divider\">to</div> %2$s"

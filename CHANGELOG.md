@@ -1,6 +1,30 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+[4.8.0] - 13 Apr, 2025
+
+- Added: Expanded language support with improved translation system integration (up to 34 languages). #1974
+- Added: Support for LANG_LOCALES configuration in translation settings. #1978
+- Changed: French, Spanish, and Italian translations. #1981
+- Changed: Improved translation coverage by adding and fixing text domains across multiple components.
+- Changed: Plugin name now includes “Free” label in the Plugins screen. #1975
+- Changed: PublishPress plugins list in readme.txt. #1973
+- Changed: Refactored and simplified Composer build scripts for better maintainability. #1979
+- Changed: Improved dependency version checks for development tools.
+- Changed: Development environment and CI/CD workflows for better reliability and automation.
+- Changed: Webpack, lodash, dompurify, minimatch, picomatch, and other dependencies for security and compatibility.
+- Fixed: Fatal error caused by invalid method calls in settings under certain conditions. #1916
+- Fixed: Async notification function now fails gracefully when called without required arguments. #1905
+- Fixed: Editorial comment translation not working correctly. #1918
+- Fixed: Duplicate HTTP protocol issue in permalinks. #1952
+- Fixed: Missing scheduled and published statuses in “Display Publish Time” when Statuses plugin is active.
+- Fixed: Missing publish time settings display in some configurations. #1954
+- Fixed: Modal dropdowns not working properly in Calendar and other screens. #1891
+- Fixed: Prevent “Save Changes” button from showing when user does not have permission. #1894
+- Fixed: Plugin CSS now loads only on its own admin pages, improving performance. #1980
+- Fixed: Better handling of status retrieval when integrated with the Statuses plugin.
+- Fixed: General code quality, formatting, and maintainability across multiple modules.
+
 [4.7.2] - 3 Apr, 2025
 
 - Fixed: Duplicate copies of default Notification Workflows were created under some conditions, #1873

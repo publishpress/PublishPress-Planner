@@ -48,6 +48,7 @@
     "info:versions": "bash ./dev-workspace/scripts/dependency-versions.sh",
     "check:longpath": "longpath .",
     "check:lint": "phplint",
+    "check:phpcs": "phpcs",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
     "gen:pot": "wp i18n make-pot . languages/publishpress.pot --domain=publishpress --exclude=dev-workspace,.wordpress-org,.github,dist,tests,vendor, --allow-root",
     "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",

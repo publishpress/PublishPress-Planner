@@ -22,6 +22,7 @@ builder.yml.dist
 !tests/_support/.gitkeep
 tests/_support/*
 .php_cs.cache
+.phplint-cache
 .sass-cache/*
 /codeception.yml
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: PublishPress Planner
+ * Plugin Name: PublishPress Planner Free
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content inside WordPress. Features include a content calendar, kanban board, and notifications.
- * Version: 4.7.3-beta3
+ * Version: 4.8.0
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -82,21 +82,6 @@ if (! class_exists('ComposerAutoloaderInitPublishPressPlanner')
 ) {
     require_once $autoloadFilePath;
 }
-
-add_filter(
-    'all_plugins',
-    function ($plugins) {
-        global $pagenow;
-        if (isset($pagenow) && 'plugins.php' === $pagenow) {
-            $plugin_basename = plugin_basename(__FILE__);
-            if (isset($plugins[$plugin_basename])) {
-                $plugins[$plugin_basename]['Name']  = 'PublishPress Planner Free';
-                $plugins[$plugin_basename]['Title'] = 'PublishPress Planner Free';
-            }
-        }
-        return $plugins;
-    }
-);
 
 add_action('plugins_loaded', function () {
 
@@ -785,6 +770,7 @@ add_action('plugins_loaded', function () {
              */
             public function register_scripts_and_styles()
             {
+                global $pagenow, $typenow;
                 $publishpress_pages = [
                     'pp-calendar',
                     'pp-content-overview',
@@ -796,7 +782,8 @@ add_action('plugins_loaded', function () {
 
                 $is_pp_page_param      = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), $publishpress_pages);
                 $is_pp_post_type_param = isset($_GET['post_type']) && sanitize_key($_GET['post_type']) === 'psppnotif_workflow';
-                $is_publishpress_page  = $is_pp_page_param || $is_pp_post_type_param;
+                $is_pp_edit_page_param = isset($_GET['post']) && (isset($pagenow) && $pagenow === 'post.php') && (isset($typenow) && $typenow === 'psppnotif_workflow');
+                $is_publishpress_page  = $is_pp_page_param || $is_pp_post_type_param || $is_pp_edit_page_param;
 
                 wp_register_style(
                     'jquery-listfilterizer',
