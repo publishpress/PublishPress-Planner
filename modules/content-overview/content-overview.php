@@ -988,7 +988,7 @@ class PP_Content_Overview extends PP_Module
 
     public function getFormFieldAjaxHandler() {
         $response['status']  = 'error';
-        $response['content'] = esc_html__('An error occured', 'publishpress-authors');
+        $response['content'] = esc_html__('An error occured', 'publishpress');
 
 
         if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_key($_POST['nonce']), 'content_overview_filter_nonce')) {
@@ -1209,7 +1209,7 @@ class PP_Content_Overview extends PP_Module
             </div>
         </div>
         <div id="pp-content-overview-general-modal" style="display: none;">
-            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container"></div>
+            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container publishpress-quick-modal"></div>
         </div>
         <?php
 

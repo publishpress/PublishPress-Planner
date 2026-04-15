@@ -239,8 +239,8 @@ if (! class_exists('PP_Debug')) {
             // Admin menu.
             add_submenu_page(
                 $publishpress->get_menu_slug(),
-                esc_html__('Debug Log'),
-                esc_html__('Debug Log'),
+                esc_html__('Debug Log', 'publishpress'),
+                esc_html__('Debug Log', 'publishpress'),
                 self::REQUIRED_CAPABILITY,
                 'publishpress_debug_log',
                 [$this, 'view_log_page']

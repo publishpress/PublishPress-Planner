@@ -401,7 +401,7 @@ if (! class_exists('PP_Settings')) {
             }
 
             if (!current_user_can('manage_options') || !wp_verify_nonce(sanitize_key($_POST['_wpnonce']), 'edit-publishpress-settings')) {
-                wp_die(__('Cheatin&#8217; uh?'));
+                wp_die(__('Cheatin&#8217; uh?', 'publishpress'));
             }
 
             global $publishpress;
@@ -464,26 +464,30 @@ if (! class_exists('PP_Settings')) {
                 if (isset($mod_data->notification_options)) {
                     if ($all_modules['notifications']->options->enabled === 'on') {
                         $all_modules['improved_notifications']->options->enabled = 'on';
-                        //$all_modules['async_notifications']->options->enabled = 'on';
                         $all_modules['notifications']->options->enabled = 'on';
                     } else {
                         $all_modules['improved_notifications']->options->enabled = 'off';
-                        //$all_modules['async_notifications']->options->enabled = 'off';
                         $all_modules['notifications']->options->enabled = 'off';
                     }
                     break;
                 }
             }
 
-            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
+            if (empty($default_module)) {
+                $default_module = 'pp-modules-settings-settings';
+            }
+
+            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module'])
+                ? sanitize_text_field($_GET['settings_module'])
+                : $default_module;
 
             // Custom Statuses are no longer defined by a Planner module
-            if ('pp-custom-status-settings' == $module_settings_slug) {
+            if ('pp-custom-status-settings' === $module_settings_slug) {
                 $module_settings_slug = $default_module;
             }
 
-            $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
-            $display_text         = '';
+            $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
+            $display_text     = '';
 
             // If there's been a message, let's display it
             if (isset($_GET['message'])) {
@@ -495,6 +499,7 @@ if (! class_exists('PP_Settings')) {
             } else {
                 $message = false;
             }
+
             if ($message && isset($requested_module->messages[$message])) {
                 $display_text .= '<div class="is-dismissible notice notice-info"><p>' . esc_html($requested_module->messages[$message]) . '</p></div>';
             }
@@ -509,6 +514,7 @@ if (! class_exists('PP_Settings')) {
             } else {
                 $error = false;
             }
+
             if ($error && isset($requested_module->messages[$error])) {
                 $display_text .= '<div class="is-dismissible notice notice-error"><p>' . esc_html($requested_module->messages[$error]) . '</p></div>';
             }
@@ -517,10 +523,32 @@ if (! class_exists('PP_Settings')) {
 
             // Get module output
             ob_start();
-            $configure_callback    = $requested_module->configure_page_cb;
-            $requested_module_name = $requested_module->name;
 
-            $publishpress->$requested_module_name->$configure_callback();
+            $requested_module_name = !empty($requested_module->name)
+                ? $requested_module->name
+                : null;
+
+            if (empty($requested_module_name)) {
+                $requested_module = $publishpress->get_module_by('settings_slug', $module_settings_slug);
+                $requested_module_name = $requested_module->name ?? '';
+            }
+
+            $requested_module_obj = isset($publishpress->$requested_module_name)
+                ? $publishpress->$requested_module_name
+                : null;
+
+            $configure_callback = $requested_module->configure_page_cb ?? null;
+
+            if (is_callable($configure_callback)) {
+                call_user_func($configure_callback);
+            } elseif (
+                is_object($requested_module_obj) &&
+                is_string($configure_callback) &&
+                method_exists($requested_module_obj, $configure_callback)
+            ) {
+                $requested_module_obj->{$configure_callback}();
+            }
+
             $module_output = ob_get_clean();
 
             echo $this->view->render(
@@ -541,5 +569,6 @@ if (! class_exists('PP_Settings')) {
 
             $this->print_default_footer($requested_module);
         }
+
     }
 }

@@ -55,9 +55,15 @@ class InstanceChecker
         }
     }
 
+    /**
+     * Get the version of the library.
+     *
+     * @return string
+     * @deprecated 1.1.0 Will be removed in the next major version.
+     */
     public function getVersion()
     {
-        return '2.0.0';
+        return '1.1.0';
     }
 
     public function init()

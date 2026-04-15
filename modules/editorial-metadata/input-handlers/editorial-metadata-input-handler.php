@@ -220,7 +220,7 @@ if (! class_exists('Editorial_Metadata_Input_Handler')) {
         protected static function renderValuePlaceholder()
         {
             echo '<span class="pp_editorial_metadata_not_set">';
-            esc_html_e('Not set', 'default');
+            esc_html_e('Not set', 'publishpress');
             echo '</span>';
         }
     }

@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: PublishPress Planner
+ * Plugin Name: PublishPress Planner Free
  * Plugin URI: https://publishpress.com/
  * Description: PublishPress Planner helps you plan and publish content inside WordPress. Features include a content calendar, kanban board, and notifications.
- * Version: 4.7.2
+ * Version: 4.8.0
  * Author: PublishPress
  * Author URI: https://publishpress.com
  * Text Domain: publishpress
@@ -770,6 +770,21 @@ add_action('plugins_loaded', function () {
              */
             public function register_scripts_and_styles()
             {
+                global $pagenow, $typenow;
+                $publishpress_pages = [
+                    'pp-calendar',
+                    'pp-content-overview',
+                    'pp-content-board',
+                    'pp-notif-log',
+                    'pp-manage-roles',
+                    'pp-modules-settings',
+                ];
+
+                $is_pp_page_param      = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), $publishpress_pages);
+                $is_pp_post_type_param = isset($_GET['post_type']) && sanitize_key($_GET['post_type']) === 'psppnotif_workflow';
+                $is_pp_edit_page_param = isset($_GET['post']) && (isset($pagenow) && $pagenow === 'post.php') && (isset($typenow) && $typenow === 'psppnotif_workflow');
+                $is_publishpress_page  = $is_pp_page_param || $is_pp_post_type_param || $is_pp_edit_page_param;
+
                 wp_register_style(
                     'jquery-listfilterizer',
                     PUBLISHPRESS_URL . 'common/css/jquery.listfilterizer.css',
@@ -778,21 +793,23 @@ add_action('plugins_loaded', function () {
                     'all'
                 );
 
-                wp_enqueue_style(
-                    'pressshack-admin-css',
-                    PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
-                    [],
-                    PUBLISHPRESS_VERSION,
-                    'all'
-                );
+                if ($is_publishpress_page) {
+                    wp_enqueue_style(
+                        'pressshack-admin-css',
+                        PUBLISHPRESS_URL . 'common/css/pressshack-admin.css',
+                        [],
+                        PUBLISHPRESS_VERSION,
+                        'all'
+                    );
 
-                wp_enqueue_style(
-                    'pp-admin-css',
-                    PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
-                    ['pressshack-admin-css'],
-                    PUBLISHPRESS_VERSION,
-                    'all'
-                );
+                    wp_enqueue_style(
+                        'pp-admin-css',
+                        PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
+                        ['pressshack-admin-css'],
+                        PUBLISHPRESS_VERSION,
+                        'all'
+                    );
+                }
 
                 wp_register_script(
                     'jquery-listfilterizer',

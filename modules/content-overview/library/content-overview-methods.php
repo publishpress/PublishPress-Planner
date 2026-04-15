@@ -204,7 +204,7 @@ if (! class_exists('PP_Overview_Methods')) {
                 if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
                     $count = (int)$_GET['trashed'];
 
-                    echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
+                    echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count, 'publishpress'));
                     $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                     echo ' <a href="' . esc_url(
                             wp_nonce_url(
@@ -221,7 +221,8 @@ if (! class_exists('PP_Overview_Methods')) {
                     echo esc_html(_n(
                         'Item restored from the Trash.',
                         '%d items restored from the Trash.',
-                        $count
+                        $count,
+                        'publishpress'
                     ));
                     unset($_GET['undeleted']);
                 }
@@ -333,7 +334,7 @@ if (! class_exists('PP_Overview_Methods')) {
                     <?php
                     $filtered_start_date = $user_filters['start_date'];
                     $filtered_end_date = $user_filters['end_date'];
-                    $selected_date = ': ' . date("F j, Y", strtotime($filtered_start_date)) . ' '. esc_html__('to', 'publishpress').' ' . date("F j, Y", strtotime($filtered_end_date));
+                    $selected_date = ': ' . date_i18n("F j, Y", strtotime($filtered_start_date)) . ' '. esc_html__('to', 'publishpress').' ' . date_i18n("F j, Y", strtotime($filtered_end_date));
                     $modal_id++;
                     ?>
                     <button data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="co-filter active-filter">

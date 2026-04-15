@@ -1,19 +1,22 @@
-name: devworkspace_planner_free
+name: ${CONTAINER_NAME}
+
 services:
+    ##############################################################################
+    # Terminal
+    ##############################################################################
     terminal:
-        build: ./
-        image: publishpress/dev-workspace-terminal:planner-free-2
+        image: ${TERMINAL_IMAGE_NAME}
+        profiles: ["term"]
+        container_name: ${CONTAINER_NAME}-env-terminal
         command: ["zsh"]
         stdin_open: true
         tty: true
         working_dir: "/project"
         volumes:
             - ../../:/project
-            - ../cache/.zsh_history:/root/.zsh_history
-            - ../cache/.bash_history:/root/.bash_history
-            - ../cache/.npm/_cacache:/root/.npm/_cacache
-            - ../cache/.npm/_logs:/root/.npm/_logs
-            - ../cache/.oh-my-zsh/log:/root/.oh-my-zsh/log
-            - ../cache/.composer/cache:/root/.composer/cache
-            - ../cache/.composer/auth.json:/root/.composer/auth.json
-            - /var/run/docker.sock:/var/run/docker.sock
+            - ../.cache/terminal/.zsh_history:/root/.zsh_history
+            - ../.cache/terminal/.bash_history:/root/.bash_history
+            - ../.cache/terminal/.npm/_cacache:/root/.npm/_cacache
+            - ../.cache/terminal/.npm/_logs:/root/.npm/_logs
+            - ../.cache/terminal/.composer/cache:/root/.composer/cache
+            - ../.cache/terminal/.composer/auth.json:/root/.composer/auth.json

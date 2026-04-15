@@ -84,6 +84,9 @@ class Email extends Base implements Channel_Interface
         $body = wpautop($content['body']);
         $body = apply_filters('publishpress_notifications_the_content', $body);
         $body = str_replace(']]>', ']]&gt;', $body);
+        
+        // Fix double http:// or https:// in URLs (e.g., href="http://http://example.com")
+        $body = preg_replace('#(https?://)+(https?://)#i', '$2', $body);
 
         $attachments = [];
         if ($action === 'comment' 

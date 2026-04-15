@@ -1,49 +1,12 @@
 #!/usr/bin/env bash
 
-# Make sure we are inside dev-workspace subdirectory. If not, enter it.
-if [[ ! "$PWD" =~ dev-workspace$ ]]; then
-    cd dev-workspace
+# If not in the `dev-workspace` directory, change to it
+if [[ ! $(pwd) =~ .*dev-workspace$ ]]; then
+  cd dev-workspace
 fi
 
-# Create empty cache files if not exists.
-[[ -d cache/.npm/_cacache ]] || mkdir -p cache/.npm/_cacache
-[[ -d cache/.npm/_logs ]] || mkdir -p cache/.npm/_logs
-[[ -d cache/.composer/cache ]] || mkdir -p cache/.composer/cache
-[[ -d cache/.oh-my-zsh/log ]] || mkdir -p cache/.oh-my-zsh/log
-[[ -f cache/.zsh_history ]] || touch cache/.zsh_history
-[[ -f cache/.bash_history ]] || touch cache/.bash_history
-[[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
+set -a
+source ../.env
+set +a
 
-is_online() {
-    echo -e "GET http://google.com HTTP/1.0\n\n" | nc google.com 80 > /dev/null 2>&1
-
-    if [ $? -eq 0 ]; then
-        echo 1
-    else
-        echo 0
-    fi
-}
-
-pull_image() {
-    docker compose -f docker/compose.yaml pull
-}
-
-run_terminal_service() {
-    docker compose -f docker/compose.yaml run --rm terminal "$@"
-}
-
-if [ "$(is_online)" -eq 1 ]; then
-    # Check and update the image if needed, but do not display anything if there is any argument passed.
-    if [[ $# -eq 0 ]]; then
-        echo "Checking if the image is up to date..."
-        pull_image
-    else
-        pull_image > /dev/null 2>&1
-    fi
-else
-    if [[ $# -eq 0 ]]; then
-        echo "Offline mode detected, ignoring image update."
-    fi
-fi
-
-run_terminal_service "$@"
+bash ./scripts/terminal-service-run.sh "$@"

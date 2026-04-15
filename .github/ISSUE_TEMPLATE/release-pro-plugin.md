@@ -1,38 +1,62 @@
 ---
-name: Release the Pro Version (Team Only)
-about: Default checklist for the plugin's release process.
-title: Release PublishPress Planner Pro v[VERSION]
+name: Release the Pro version (team only)
+about: Describes default checklist for releasing the Pro plugin;
+title: Release Pro v[VERSION]
 labels: release
 assignees: ''
+type: task
 ---
 
-To release the Pro plugin, ensure you complete all the tasks below.
+To release the Pro plugin please make sure to check all the checkboxes below.
 
 ### Pre-release Checklist
-- [ ] Create a release branch named `release-<version>` from the development branch.
-- [ ] Review and merge all relevant Pull Requests into the release branch.
-- [ ] Start a dev-workspace session.
-- [ ] Verify the correct version of the free plugin is referenced in the `lib/composer.json` file. Prefer stable versions.
-- [ ] Execute `composer update` to update the root and lib vendors.
-- [ ] Review the updated packages and mention any production library updates in the changelog.
-- [ ] Check if all dependencies are synced from Free into the Pro plugin with `composer check:deps`. If required, merge dependencies using `composer fix:deps` and run `composer update` again.
-- [ ] Check if the free plugin uses Composer's autoload and copy the autoload definition from the free plugin to the pro plugin refactoring the relative paths, on `/lib/composer.json`. Execute `composer dumpautoload` to update the autoload files. Commit the changes.
-- [ ] Inspect GitHub's Dependabot warnings or Pull Requests for relevant issues. Resolve any false positives first, then fix and commit the remaining issues.
-- [ ] If necessary, build JS files for production using `composer build:js` and commit the changes.
-- [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
-- [ ] Update the `.pot` file executing `composer gen:pot` and include a note in the changelog.
-- [ ] Especially for minor and patch releases, maintain backward compatibility for changes like renamed or moved classes, namespaces, functions, etc. Include deprecation comments and mention this in the changelog. Major releases may remove deprecated code, but always note this in the changelog.
-- [ ] Revise the changelog to include all changes with user-friendly descriptions and ensure the release date is accurate.
-  -- [ ] Update the version number in the main plugin file and `readme.txt`, adhering to specifications from our [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
-- [ ] Confirm there are no uncommitted changes.
-- [ ] Build the zip package with `composer build`, creating a new package in the `./dist` directory.
-- [ ] Distribute the new package to the team for testing.
 
-### Release Checklist
-- [ ] Create and merge a Pull Request for the release branch into the `main` branch.
-- [ ] Merge the `main` branch into the `development` branch.
-- [ ] Establish the GitHub release on the `main` branch with the correct tag.
+**Branch Setup**
+- [ ] Create release branch `release-<version>` from development branch
+- [ ] Merge hotfixes/features into release branch (direct merge or PR)
 
-#### PublishPress.com Deployment
-- [ ] Update the EDD registry on the Downloads menu, uploading the new package.
-- [ ] Perform a final test by updating the plugin on a staging site.
+**Dependencies**
+- [ ] Run `composer update --no-dev --dry-run` to check for updates
+- [ ] If updating dependencies: `composer update the/lib:version-constraint`
+- [ ] Lock versions if needed (use exact version numbers)
+- [ ] Document dependency changes in changelog
+- [ ] Review Dependabot warnings/PRs, fix real issues
+- [ ] Update the reference for the `publishpress/publishpress-planner` package in the `lib/composer.json` file to use the recently released version tag (e.g., `4.7.0`) instead of a branch reference. This ensures the Pro plugin uses the stable release of the Free plugin.
+
+**Code Quality**
+- [ ] Build JS files: `composer build:js` (if applicable)
+- [ ] Run `composer check` to run check the code and make sure no warnings or errors.
+- [ ] Run `composer test Unit` to run the Unit tests and verify all tests pass successfully.
+- [ ] Run `composer test Integration` to run Integration tests and verify all tests pass successfully.
+
+**Localization**
+- [ ] Run `composer translate` to regenerate AI-assisted translations.
+- [ ] Make sure to commit all i18n/translation updates together.
+- [ ] Open a GitHub issue titled `Translation Update for Release v<version>`, and assign it to `@wocmultimedia` (lead translator for ES, FR, IT).
+- [ ] Pause the release and wait for `@wocmultimedia` to review and confirm or close the translation issue.
+- [ ] After approval, run `composer translate:download` to fetch updated translations from the
+translation management service.
+- [ ] Run `composer translate:compile` to generate all language files (MO, JSON, PHP)
+- [ ] Add a summary of these changes in `CHANGELOG.md`.
+
+**Version & Documentation**
+- [ ] Update CHANGELOG.md with user-friendly descriptions
+- [ ] Verify release date in CHANGELOG.md
+- [ ] Update version in main plugin file and `readme.txt`
+- [ ] Commit all changes to release branch
+
+**Build & Test**
+- [ ] Build package: `composer build` (creates `./dist` package)
+- [ ] Send package to team for testing
+
+### Release
+
+- [ ] PR and merge `release-<version>` → `master`
+- [ ] Merge `master` → `development`
+- [ ] Create GitHub release (tag from `master` branch)
+
+### Post-release
+
+- [ ] Monitor [GitHub Actions](https://github.com/publishpress/publishpress-planner-pro/actions)
+- [ ] Monitor the Slack channel #package-server
+- [ ] Test update on staging site

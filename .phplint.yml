@@ -1,10 +1,19 @@
-path: ./
+path:
+  - .
+  - core
+  - common
+  - modules
+  - views
+  - lib
 jobs: 10
-cache: dist/phplint.cache
 extensions:
   - php
 exclude:
   - vendor
-  - assets_wp
-  - bin
+  - lib/vendor
+  - .wordpress-org
+  - dist
+  - languages
+  - .github
+  - tests
 warning: false

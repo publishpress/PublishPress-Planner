@@ -129,12 +129,12 @@ if (! class_exists('PP_Async_Notifications')) {
         /**
          * @param array $params
          */
-        public function send_notification($params)
+        public function send_notification($params = [])
         {
-            if (!is_array($params)) {
+            if (empty($params) || ! is_array($params) || ! isset($params['workflow_id'])) {
                 return;
             }
-            
+
             // Work the notification
             $workflow = Workflow::load_by_id((int)$params['workflow_id']);
             $workflow->event_args = $params['event_args'];

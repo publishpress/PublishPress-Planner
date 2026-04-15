@@ -1045,15 +1045,15 @@ if (!class_exists('PP_Module')) {
 
         public function meta_query_operator_label($operator = false) {
             $operators = [
-                'equals'                    => 'Equals (=)',
-                'not_equals'                => 'Does not equal (!=)',
-                'greater_than'              => 'Greater than (>)',
-                'greater_than_or_equals'    => 'Greater than or equals (>=)',
-                'less_than'                 => 'Less than (<)',
-                'less_than_or_equals'       => 'Less than or equals (<=)',
-                'like'                      => 'Like/Contains',
-                'not_like'                  => 'Not Like',
-                'not_exists'                => 'Not Exists/Empty',
+                'equals'                    => __('Equals (=)', 'publishpress'),
+                'not_equals'                => __('Does not equal (!=)', 'publishpress'),
+                'greater_than'              => __('Greater than (>)', 'publishpress'),
+                'greater_than_or_equals'    => __('Greater than or equals (>=)', 'publishpress'),
+                'less_than'                 => __('Less than (<)', 'publishpress'),
+                'less_than_or_equals'       => __('Less than or equals (<=)', 'publishpress'),
+                'like'                      => __('Like/Contains', 'publishpress'),
+                'not_like'                  => __('Not Like', 'publishpress'),
+                'not_exists'                => __('Not Exists/Empty', 'publishpress'),
             ];
 
             if ($operator) {

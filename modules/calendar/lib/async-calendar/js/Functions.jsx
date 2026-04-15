@@ -423,7 +423,9 @@ export function openPostModal(post_id) {
         popup_content += '</div>';
 
         popup_content += '<div class="fixed-footer">';
-        popup_content += '<div class="save-post-changes" data-post_id="' + post.post_id + '"><span class="spinner is-active"></span> ' + publishpressCalendarParams.strings.update_label + '</div>'
+        if (can_edit_post) {
+            popup_content += '<div class="save-post-changes" data-post_id="' + post.post_id + '"><span class="spinner is-active"></span> ' + publishpressCalendarParams.strings.update_label + '</div>';
+        }
         popup_content += '</div>';
 
         popup_content += '</div>';

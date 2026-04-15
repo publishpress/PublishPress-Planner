@@ -480,7 +480,7 @@ class PP_Content_Board extends PP_Module
         </div>
         <br clear="all">
         <div id="pp-content-board-general-modal" style="display: none;">
-            <div id="pp-content-board-general-modal-container" class="pp-content-board-general-modal-container"></div>
+            <div id="pp-content-board-general-modal-container" class="pp-content-board-general-modal-container publishpress-quick-modal"></div>
         </div>
         <?php
 
@@ -1038,10 +1038,15 @@ class PP_Content_Board extends PP_Module
                         }
                         $number_select .= '<select>';
 
-                        $period_options = ['days', 'weeks', 'months', 'years'];
+                        $period_options = [
+                            'days'   => esc_html__('Days', 'publishpress'),
+                            'weeks'  => esc_html__('Weeks', 'publishpress'),
+                            'months' => esc_html__('Months', 'publishpress'),
+                            'years'  => esc_html__('Years', 'publishpress'),
+                        ];
                         $period_select = '<select class="schedule-content-period">';
-                        foreach ($period_options as $period_option) {
-                            $period_select .= '<option value="'. $period_option .'" '. selected($period_option, $content_board_scheduled_date['period'], false).'>'. ucfirst($period_option) .'</option>';
+                        foreach ($period_options as $period_option => $period_label) {
+                            $period_select .= '<option value="'. $period_option .'" '. selected($period_option, $content_board_scheduled_date['period'], false).'>'. $period_label .'</option>';
                         }
                         $period_select .= '<select>';
 

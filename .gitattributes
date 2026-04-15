@@ -13,6 +13,7 @@
 .babelrc export-ignore
 .distignore export-ignore
 .editorconfig export-ignore
+.env.example export-ignore
 .git export-ignore
 .gitattributes export-ignore
 .github export-ignore
@@ -24,7 +25,7 @@
 .rsync-filters-pre-build export-ignore
 .travis.yml export-ignore
 .vscode export-ignore
-/assets_wp export-ignore
+/.wordpress-org export-ignore
 /dev-workspace export-ignore
 /dist export-ignore
 /screenshot-*.png export-ignore

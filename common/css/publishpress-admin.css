@@ -41,6 +41,12 @@
     font-style: normal;
 }
 
+.pp-content-overview-page .pp_select2-container,
+.pp-content-board-page .pp_select2-container,
+.pp-content-calendar-page .pp_select2-container {
+    z-index: 100051;
+}
+
 .pp-title-tooltip {
     cursor: help;
     position: relative;

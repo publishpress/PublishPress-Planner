@@ -3,11 +3,11 @@
 
 /*****************************************************************
  * This file is generated on composer update command by
- * a custom script. 
- * 
+ * a custom script.
+ *
  * Do not edit it manually!
  ****************************************************************/
- 
+
 namespace PublishPress\WordpressVersionNotices;
 
 if (! class_exists('PublishPress\\WordpressVersionNotices\\Versions')) {

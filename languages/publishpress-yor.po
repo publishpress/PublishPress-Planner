@@ -1,0 +1,3541 @@
+# Copyright (C) 2026 PublishPress
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Planner 4.8.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: publishpress\n"
+"Language: yor\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: publishpress.php, fuzzy
+#. Plugin Name of the plugin
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
+
+#: publishpress.php, fuzzy
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#: publishpress.php
+#. Description of the plugin
+msgid ""
+"PublishPress Planner helps you plan and publish content inside WordPress. "
+"Features include a content calendar, kanban board, and notifications."
+msgstr ""
+"PublishPress Planner n ṣe iranlọwọ fun ọ lati gbero ati tẹjade akoonu inu "
+"WordPress. Awọn ẹya ara ẹrọ pẹlu kalẹnda akoonu, igbimọ kanban, ati awọn "
+"ikilọ."
+
+#: publishpress.php
+#: modules/calendar/library/calendar-utilities.php:1227
+#: modules/settings/settings.php:61, fuzzy
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#: publishpress.php, fuzzy
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+#: common/php/class-module.php:331
+#: modules/calendar/calendar.php:1233
+msgid "Published"
+msgstr "Ti tẹjade"
+
+#: common/php/class-module.php:332
+msgid "Draft"
+msgstr "Iwe afọwọkọ"
+
+#: common/php/class-module.php:333
+#: modules/calendar/calendar.php:1228
+#: modules/content-board/content-board.php:979
+#: modules/notifications-log/library/NotificationsLogTable.php:529
+msgid "Scheduled"
+msgstr "Ti ṣeto"
+
+#: common/php/class-module.php:334
+#: modules/content-board/content-board.php:989
+msgid "Private"
+msgstr "Pilẹ"
+
+#: common/php/class-module.php:335
+msgid "Pending Review"
+msgstr "N duro de Atunwo"
+
+#: common/php/class-module.php:336
+#: modules/calendar/library/calendar-methods.php:1240
+#: modules/calendar/library/calendar-utilities.php:1104
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
+#: modules/content-overview/content-overview.php:1221
+#: modules/content-overview/content-overview.php:1715
+msgid "Trash"
+msgstr "Ẹgbé"
+
+#: common/php/class-module.php:750
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:31
+msgid "Roles"
+msgstr "Iṣẹ"
+
+#: common/php/class-module.php:753
+msgid "Role"
+msgstr "Iṣẹ"
+
+#: common/php/class-module.php:761
+msgid "Groups"
+msgstr "Ẹgbẹ"
+
+#: common/php/class-module.php:764
+msgid "Group"
+msgstr "Ẹgbẹ"
+
+#: common/php/class-module.php:772
+#: lib/Notifications/Workflow/Step/Receiver/User.php:26
+msgid "Users"
+msgstr "Awọn olumulo"
+
+#: common/php/class-module.php:782
+msgid "E-mails"
+msgstr "Awọn imeeli"
+
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Dọla (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Kii ṣe dọla (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Tobi ju (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Tobi ju tabi dọla (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Kekere ju (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Kekere ju tabi dọla (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Bẹẹni/Contains"
+
+#: common/php/class-module.php:1055
+#, fuzzy
+msgid "Not Like"
+msgstr "Ko ti ṣeto"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Ko si/Ofin"
+
+#: common/php/class-module.php:1109
+#, php-format
+msgid "Select %s"
+msgstr "Yan %s"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-utilities.php:1190
+#: modules/content-overview/content-overview.php:833
+#: modules/content-overview/content-overview.php:848
+#: modules/content-overview/content-overview.php:955
+msgid "Revision Status"
+msgstr "Ipo Atunṣe"
+
+#: common/php/class-module.php:1126
+#: modules/calendar/library/calendar-methods.php:424
+#: modules/calendar/library/calendar-methods.php:858
+#: modules/calendar/library/calendar-methods.php:1245
+#: modules/calendar/library/calendar-utilities.php:47
+#: modules/calendar/library/calendar-utilities.php:1070
+#: modules/calendar/library/calendar-utilities.php:1189
+#: modules/content-board/content-board.php:811
+#: modules/content-board/content-board.php:1295
+#: modules/content-board/library/content-board-utilities.php:594
+#: modules/content-board/library/content-board-utilities.php:1165
+#: modules/content-overview/content-overview.php:954
+#: modules/content-overview/content-overview.php:1226
+#: modules/content-overview/library/content-overview-utilities.php:491
+#: modules/content-overview/library/content-overview-utilities.php:703
+msgid "Post Status"
+msgstr "Ipo Ifiweranṣẹ"
+
+#: common/php/util.php:46
+msgid "(no title)"
+msgstr "(ko si akọle)"
+
+#: core/Error.php:79
+msgid "Undefined error found"
+msgstr "Aṣiṣe ti a ko ṣe afihan"
+
+#: core/Error.php:80
+#: modules/calendar/library/calendar-methods.php:779
+msgid "Invalid nonce"
+msgstr "Nonce ti ko tọ"
+
+#: core/Error.php:81
+msgid "Access denied"
+msgstr "Iwọle ti kọ"
+
+#: includes.php:127
+#, php-format
+msgid ""
+"You're using PublishPress Planner Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"O n lo PublishPress Planner Free. Ẹya Pro ni diẹ ẹ sii awọn ẹya ara ẹrọ ati "
+"atilẹyin. %sTẹsiwaju si Pro%s"
+
+#: includes.php:161
+#: lib/Legacy/Util.php:216
+msgid "Upgrade to Pro"
+msgstr "Ṣe igbesoke si Pro"
+
+#: lib/Legacy/Util.php:198
+msgid "Upgrade to PublishPress Planner Pro"
+msgstr "Ṣe igbesoke si PublishPress Planner Pro"
+
+#: lib/Legacy/Util.php:203
+msgid "Enhance the power of PublishPress Planner with the Pro version:"
+msgstr "Mu agbara PublishPress Planner pọ pẹlu ẹda Pro:"
+
+#: lib/Legacy/Util.php:206
+msgid "PublishPress Revisions integration"
+msgstr "Isopọ PublishPress Revisions"
+
+#: lib/Legacy/Util.php:207
+msgid "Slack integration for notifications"
+msgstr "Isopọ Slack fun awọn akiyesi"
+
+#: lib/Legacy/Util.php:208
+msgid "Send reminder notifications"
+msgstr "Ran awọn akiyesi iranti"
+
+#: lib/Legacy/Util.php:209
+msgid "Use post meta in notifications"
+msgstr "Lo meta ifiweranṣẹ ninu awọn akiyesi"
+
+#: lib/Legacy/Util.php:210
+msgid "Modals so you can edit posts without changing screen"
+msgstr "Modals ki o le ṣe atunṣe awọn ifiweranṣẹ laisi yiyipada iboju"
+
+#: lib/Legacy/Util.php:211
+msgid "Integration with SEO plugins"
+msgstr "Isopọ pẹlu awọn ẹya SEO"
+
+#: lib/Legacy/Util.php:212
+msgid "Remove PublishPress ads and branding"
+msgstr "Yọ awọn ipolowo ati aami PublishPress"
+
+#: lib/Legacy/Util.php:213
+msgid "Fast, professional support"
+msgstr "Atilẹyin iyara, ọjọgbọn"
+
+#: lib/Legacy/Util.php:223
+msgid "Need PublishPress Planner Support?"
+msgstr "Nilo Atilẹyin PublishPress Planner?"
+
+#: lib/Legacy/Util.php:228
+msgid "If you need help or have a new feature request, let us know."
+msgstr "Ti o ba nilo iranlọwọ tabi ni ibeere ẹya tuntun, jẹ ki a mọ."
+
+#: lib/Legacy/Util.php:230
+msgid "Request Support"
+msgstr "Beere Atilẹyin"
+
+#: lib/Legacy/Util.php:239
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "Iwe-kikọ alaye wa ni oju opo wẹẹbu afikun naa."
+
+#: lib/Legacy/Util.php:241
+msgid "View Knowledge Base"
+msgstr "Wo Ibi Ẹkọ"
+
+#: lib/Notifications/Plugin.php:65
+#: modules/improved-notifications/improved-notifications.php:1160
+#: modules/notifications-log/library/NotificationsLogTable.php:497
+msgid "When to notify?"
+msgstr "Nigbawo ni lati kede?"
+
+#: lib/Notifications/Plugin.php:66
+msgid "Filter the content?"
+msgstr "Ṣe àlẹmọ akoonu?"
+
+#: lib/Notifications/Plugin.php:67
+#: modules/improved-notifications/improved-notifications.php:1180
+#: modules/notifications-log/library/NotificationsLogTable.php:499
+msgid "Who to notify?"
+msgstr "Tani lati kede?"
+
+#: lib/Notifications/Plugin.php:209
+#: lib/Notifications/Plugin.php:210
+msgid "Notification workflow updated."
+msgstr "Ilana ikilọ ti ni imudojuiwọn."
+
+#: lib/Notifications/Plugin.php:211
+msgid "Notification workflow published."
+msgstr "Ilana ikilọ ti wa ni tẹjade."
+
+#: lib/Notifications/Plugin.php:212
+msgid "Notification workflow saved."
+msgstr "Ilana ikilọ ti wa ni fipamọ."
+
+#: lib/Notifications/Plugin.php:213
+msgid "Notification workflow submitted."
+msgstr "Ilana ikilọ ti wa ni fi ranṣẹ."
+
+#: lib/Notifications/Plugin.php:215
+#, php-format
+msgid "Notification workflow scheduled for: %s."
+msgstr "Ilana ikilọ ti wa ni eto fun: %s."
+
+#: lib/Notifications/Plugin.php:218
+msgid "Notification workflow draft updated."
+msgstr "Ilana ikilọ draff ti ni imudojuiwọn."
+
+#: lib/Notifications/Plugin.php:240
+#, php-format
+msgid "%s notification workflow updated."
+msgid_plural "%s notification workflows updated."
+msgstr[0] "%s ilana ikilọ ti ni imudojuiwọn."
+
+#: lib/Notifications/Plugin.php:246
+msgid "1 notification workflow not updated, somebody is editing it."
+msgstr "1 ilana ikilọ ko ti ni imudojuiwọn, ẹnikan n ṣatunkọ rẹ."
+
+#: lib/Notifications/Plugin.php:250
+#, php-format
+msgid "%s notification workflow not updated, somebody is editing it."
+msgid_plural "%s notification workflows not updated, somebody is editing them."
+msgstr[0] "%s ilana ikilọ ko ti ni imudojuiwọn, ẹnikan n ṣatunkọ rẹ."
+
+#: lib/Notifications/Plugin.php:256
+#, php-format
+msgid "%s notification workflow permanently deleted."
+msgid_plural "%s notification workflows permanently deleted."
+msgstr[0] "%s ilana ikilọ ti paarẹ lailai."
+
+#: lib/Notifications/Plugin.php:262
+#, php-format
+msgid "%s notification workflow moved to the Trash."
+msgid_plural "%s notification workflows moved to the Trash."
+msgstr[0] "%s ilana ikilọ ti gbe si Ikọ̀."
+
+#: lib/Notifications/Plugin.php:268
+#, php-format
+msgid "%s notification workflow restored from the Trash."
+msgid_plural "%s notification workflows restored from the Trash."
+msgstr[0] "%s ilana ikilọ ti tun wa lati Ikọ̀."
+
+#: lib/Notifications/Plugin.php:302
+msgid "Please select at least one event"
+msgstr "Jọwọ yan o kere ju iṣẹlẹ kan"
+
+#: lib/Notifications/Plugin.php:335
+msgid "Not filtered"
+msgstr "Ko si àlẹmọ"
+
+#: lib/Notifications/Table/Base.php:183
+msgid "Excerpt View"
+msgstr "Wo Àkọsílẹ"
+
+#: lib/Notifications/Table/Notifications.php:156
+#: lib/Notifications/Table/Workflows.php:142
+#: modules/calendar/library/calendar-methods.php:853
+#: modules/content-board/content-board.php:421
+#: modules/content-board/library/content-board-utilities.php:244
+#: modules/content-board/library/content-board-utilities.php:1159
+#: modules/content-overview/content-overview.php:418
+#: modules/content-overview/library/content-overview-utilities.php:485
+msgid "Title"
+msgstr "Orukọ"
+
+#: lib/Notifications/Table/Notifications.php:157
+msgid "Message"
+msgstr "Ifiranṣẹ"
+
+#: lib/Notifications/Table/Notifications.php:158
+#: modules/calendar/library/calendar-utilities.php:1064
+#: modules/content-board/library/content-board-utilities.php:116
+#: modules/content-overview/library/content-overview-methods.php:341
+#: modules/editorial-metadata/editorial-metadata.php:290
+#: modules/notifications-log/library/NotificationsLogTable.php:496
+msgid "Date"
+msgstr "Ọjọ"
+
+#: lib/Notifications/Table/Notifications.php:159
+#: lib/Notifications/Table/Workflows.php:143
+#: modules/calendar/library/calendar-utilities.php:1059, fuzzy
+msgid "ID"
+msgstr "ID"
+
+#: lib/Notifications/Table/Notifications.php:235
+msgid "You don't have any notifications"
+msgstr "Iwọ ko ni awọn ìkìlọ̀ kankan"
+
+#: lib/Notifications/Table/Workflows.php:217
+msgid "No workflows found."
+msgstr "Ko si awọn iṣẹ ti a ri."
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:26
+msgid "Skip current user"
+msgstr "Foju kọ olumulo lọwọlọwọ"
+
+#: lib/Notifications/Workflow/Option/SkipUser.php:31
+msgid "Skip notifications for the user who triggered the action"
+msgstr "Foju kọ awọn ìkìlọ̀ fun olumulo ti o fa iṣe naa"
+
+#: lib/Notifications/Workflow/Step/Channel/Email.php:31
+#: modules/editorial-comments/editorial-comments.php:1267
+msgid "Email"
+msgstr "Imeeli"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:29
+#: modules/calendar/library/calendar-methods.php:902
+#: modules/content-board/library/content-board-utilities.php:1207
+#: modules/content-overview/library/content-overview-utilities.php:533
+#: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
+msgid "Content"
+msgstr "Akopọ"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:53
+msgid "Subject"
+msgstr "Kókó"
+
+#: lib/Notifications/Workflow/Step/Content/Main.php:54
+msgid "Body"
+msgstr "Ara"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:24
+msgid "When an editorial comment is added"
+msgstr "Nigbati a ba fi akọsilẹ ẹdá kun"
+
+#: lib/Notifications/Workflow/Step/Event/Editorial_Comment.php:96
+#, php-format
+msgid "Comment: %s (%d)"
+msgstr "Akọsilẹ: %s (%d)"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:34
+msgid "When the status is changed"
+msgstr "Nigbati ipo ba yipada"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:35
+msgid "Previous status"
+msgstr "Ipo ti tẹlẹ"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:36
+msgid "New status"
+msgstr "Ipo tuntun"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:37
+msgid "- any status -"
+msgstr "- eyikeyi ipo -"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:59
+msgid "New"
+msgstr "Tuntun"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Post_Status.php:64
+msgid "Auto-draft"
+msgstr "Akọkọ-iyaworan"
+
+#: lib/Notifications/Workflow/Step/Event/Filter/Taxonomies.php:34
+#: modules/calendar/library/calendar-utilities.php:1206
+#: modules/content-board/content-board.php:767
+#: modules/content-board/content-board.php:827
+#: modules/content-overview/content-overview.php:910
+#: modules/content-overview/content-overview.php:971, fuzzy
+msgid "Taxonomies"
+msgstr "Taxonomies"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:28
+msgid "When the content is moved to a new status"
+msgstr "Nigbati akoonu ba ti gbe si ipo tuntun"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:118
+#, php-format
+msgid "Old post status: %s"
+msgstr "Ipo ifiweranṣẹ atijọ: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_StatusTransition.php:122
+#, php-format
+msgid "New post status: %s"
+msgstr "Ipo ifiweranṣẹ tuntun: %s"
+
+#: lib/Notifications/Workflow/Step/Event/Post_TaxonomyUpdate.php:28
+msgid "When taxonomy is updated"
+msgstr "Nigbati taxonomy ba ti ni imudojuiwọn"
+
+#: lib/Notifications/Workflow/Step/Event/Post_Update.php:26
+msgid "When the content is updated"
+msgstr "Nigbati akoonu ba ti ni imudojuiwọn"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Category.php:24
+#: modules/calendar/library/calendar-utilities.php:1080
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Kategori"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Category.php:34
+#: modules/calendar/library/calendar-methods.php:885
+#: modules/content-board/library/content-board-utilities.php:1190
+#: modules/content-overview/library/content-overview-utilities.php:516
+msgid "Categories"
+msgstr "Kategori"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Post_Type.php:34
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:46
+msgid "Post Types"
+msgstr "Iru Ifiweranṣẹ"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Filter/Term.php:33
+msgid "Terms"
+msgstr "Awọn ọrọ"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Post_Type.php:24
+msgid "Post type"
+msgstr "Iru ifiweranṣẹ"
+
+#: lib/Notifications/Workflow/Step/Event_Content/Taxonomy.php:24, fuzzy
+msgid "Taxonomy"
+msgstr "Taxonomy"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:26
+msgid "Authors of the content"
+msgstr "Awọn onkọwe ti akoonu"
+
+#: lib/Notifications/Workflow/Step/Receiver/Author.php:92
+msgid "Authors"
+msgstr "Awọn onkọwe"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:30
+msgid "Users who selected \"Notify me\" for the content"
+msgstr "Awọn olumulo ti o yan \"Ṣe akiyesi mi\" fun akoonu naa"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:108
+#, php-format
+msgid "role:%s"
+msgstr "ipa:%s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:132
+#, php-format
+msgid "group %d: %s"
+msgstr " ẹgbẹ %d: %s"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:153
+msgid "user"
+msgstr "olumulo"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:168
+msgid "email"
+msgstr "imeeli"
+
+#: lib/Notifications/Workflow/Step/Receiver/Follower.php:210
+msgid "\"Notify me\""
+msgstr "\"Ṣe akiyesi mi\""
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:31
+msgid "Permission Groups"
+msgstr "Awọn ẹgbẹ Igbanilaaye"
+
+#: lib/Notifications/Workflow/Step/Receiver/Group.php:222
+#, php-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d Ẹgbẹ"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:26
+msgid "Authors of the parent page"
+msgstr "Awon onkowe ti oju-iwe obi"
+
+#: lib/Notifications/Workflow/Step/Receiver/ParentAuthor.php:106
+msgid "Parent Page Authors"
+msgstr "Awon onkowe Oju-iwe Obi"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:39
+msgid "Author of the revision"
+msgstr "Onkowe ti atunṣe"
+
+#: lib/Notifications/Workflow/Step/Receiver/RevisionAuthor.php:105
+msgid "Revision Author"
+msgstr "Onkowe Atunṣe"
+
+#: lib/Notifications/Workflow/Step/Receiver/Role.php:173
+#, php-format
+msgid "%d Role"
+msgid_plural "%d Roles"
+msgstr[0] "%d Iṣẹ"
+
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:24
+#: lib/Notifications/Workflow/Step/Receiver/Site_Admin.php:73
+msgid "Site Administrator"
+msgstr "Alakoso Aaye"
+
+#: lib/Notifications/Workflow/Step/Receiver/User.php:152
+#, php-format
+msgid "%d User"
+msgid_plural "%d Users"
+msgstr[0] "%d Olumulo"
+
+#: modules/async-notifications/async-notifications.php:71
+msgid "Async Notifications"
+msgstr "Awọn Ifitonileti Async"
+
+#: modules/async-notifications/async-notifications.php:180
+#, php-format
+msgid "Event: %s, Workflow ID: %s, Post ID: %s, User ID: %s"
+msgstr "Iṣẹlẹ: %s, ID Ilana: %s, ID Ifiweranṣẹ: %s, ID Olumulo: %s"
+
+#: modules/calendar/calendar.php:216
+#: modules/calendar/calendar.php:415
+#: modules/calendar/calendar.php:432
+#: modules/calendar/calendar.php:433
+msgid "Content Calendar"
+msgstr "Kalendaru Akọkọ"
+
+#: modules/calendar/calendar.php:241
+msgid "Post date updated."
+msgstr "Oju-iwe ifiweranṣẹ ti ni imudojuiwọn."
+
+#: modules/calendar/calendar.php:242
+msgid "Post status updated."
+msgstr "Ipo ifiweranṣẹ ti ni imudojuiwọn."
+
+#: modules/calendar/calendar.php:243
+msgid "There was an error updating the post. Please try again."
+msgstr "A ni aṣiṣe kan nigba imudojuiwọn ifiweranṣẹ. Jọwọ gbiyanju lẹẹkansii."
+
+#: modules/calendar/calendar.php:247
+#, php-format
+msgid ""
+"Updating the post date dynamically doesn't work for published content. "
+"Please <a href='%s'>edit the post</a>."
+msgstr ""
+"Imudojuiwọn ọjọ ifiweranṣẹ ni irọrun ko ṣiṣẹ fun akoonu ti a tẹjade. Jọwọ "
+"<a href='%s'>ṣe atunṣe ifiweranṣẹ</a>."
+
+#: modules/calendar/calendar.php:251
+msgid ""
+"iCal secret key regenerated. Please inform all users they will need to "
+"resubscribe."
+msgstr ""
+"Bọtini asiri iCal ti tun ṣe. Jọwọ sọ fun gbogbo awọn olumulo pe wọn yoo "
+"nilo lati tun forukọsilẹ."
+
+#: modules/calendar/calendar.php:259
+#: modules/editorial-comments/editorial-comments.php:82
+#: modules/editorial-metadata/editorial-metadata.php:119
+#: modules/notifications/notifications.php:96
+msgid "Overview"
+msgstr "Akopọ"
+
+#: modules/calendar/calendar.php:260
+msgid ""
+"<p>The calendar is a convenient week-by-week or month-by-month view into "
+"your content. Quickly see which stories are on track to being published on "
+"time, and which will need extra effort.</p>"
+msgstr ""
+"<p>Kalẹnda naa jẹ wiwo itẹwọgba ọsẹ-nipasẹ-ọsẹ tabi oṣooṣu-nipasẹ-oṣooṣu "
+"sinu akoonu rẹ. Rọrun lati rii iru awọn itan ti o wa ni ọna lati tẹjade ni "
+"akoko, ati eyi ti yoo nilo igbiyanju afikun.</p>"
+
+#: modules/calendar/calendar.php:265
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Calendar "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Fun alaye diẹ sii:</strong></p><p><a "
+"href=\"https://publishpress.com/features/calendar/\">Iwe Itọsọna "
+"Kalẹnda</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress lori "
+"Github</a></p>"
+
+#: modules/calendar/calendar.php:734
+#: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
+msgid "Weeks"
+msgstr "Awọn Ọsẹ"
+
+#: modules/calendar/calendar.php:735
+msgid "Start Date"
+msgstr "Ọjọ́ ìbẹ̀rẹ̀"
+
+#: modules/calendar/calendar.php:736
+#: modules/calendar/library/calendar-utilities.php:467
+#: modules/calendar/library/calendar-utilities.php:468
+#: modules/content-board/library/content-board-utilities.php:28
+#: modules/content-overview/library/content-overview-methods.php:253
+msgid "Me Mode"
+msgstr "Ẹ̀kọ́ Mẹ́ta"
+
+#: modules/calendar/calendar.php:737
+msgid "Show Revision"
+msgstr "Fihàn Àtúnṣe"
+
+#: modules/calendar/calendar.php:738
+#: modules/calendar/library/calendar-utilities.php:486
+#: modules/content-board/library/content-board-utilities.php:98
+#: modules/content-overview/library/content-overview-methods.php:323
+msgid "Search"
+msgstr "Wá"
+
+#: modules/calendar/calendar.php:912
+#: modules/content-board/library/content-board-methods.php:164
+#: modules/content-overview/content-overview.php:668
+msgid "Filter updated successfully."
+msgstr "Àtúnṣe àlẹ́mọ́ ni a ṣe aṣeyọrí."
+
+#: modules/calendar/calendar.php:919
+msgid "Filter reset successfully."
+msgstr "Àtúnṣe àlẹ́mọ́ ti tunṣe ni a ṣe aṣeyọrí."
+
+#: modules/calendar/calendar.php:987
+#: modules/content-board/content-board.php:709
+#: modules/content-overview/content-overview.php:832
+#: modules/content-overview/content-overview.php:847
+#: modules/content-overview/content-overview.php:892
+#: modules/notifications-log/library/NotificationsLogTable.php:500
+msgid "Status"
+msgstr "Ipo"
+
+#: modules/calendar/calendar.php:988
+#: modules/calendar/calendar.php:1212
+#: modules/calendar/library/calendar-methods.php:875
+#: modules/calendar/library/calendar-methods.php:1248
+#: modules/calendar/library/calendar-utilities.php:115
+#: modules/calendar/library/calendar-utilities.php:1075
+#: modules/calendar/library/calendar-utilities.php:1191
+#: modules/content-board/content-board.php:699
+#: modules/content-board/content-board.php:710
+#: modules/content-board/content-board.php:753
+#: modules/content-board/content-board.php:812
+#: modules/content-board/library/content-board-utilities.php:647
+#: modules/content-board/library/content-board-utilities.php:1180
+#: modules/content-overview/content-overview.php:835
+#: modules/content-overview/content-overview.php:849
+#: modules/content-overview/content-overview.php:894
+#: modules/content-overview/content-overview.php:956
+#: modules/content-overview/content-overview.php:1218
+#: modules/content-overview/library/content-overview-utilities.php:506
+#: modules/content-overview/library/content-overview-utilities.php:769
+#: modules/editorial-comments/library/EditorialCommentsTable.php:228
+msgid "Author"
+msgid_plural "Authors"
+msgstr[0] "Onkọwe"
+
+#: modules/calendar/calendar.php:989
+#: modules/calendar/calendar.php:1220
+#: modules/calendar/library/calendar-utilities.php:146
+#: modules/calendar/library/calendar-utilities.php:1054
+#: modules/calendar/library/calendar-utilities.php:1192
+#: modules/content-board/content-board.php:698
+#: modules/content-board/content-board.php:711
+#: modules/content-board/content-board.php:752
+#: modules/content-board/content-board.php:813
+#: modules/content-board/library/content-board-utilities.php:677
+#: modules/content-board/library/content-board-utilities.php:1153
+#: modules/content-overview/content-overview.php:834
+#: modules/content-overview/content-overview.php:850
+#: modules/content-overview/content-overview.php:893
+#: modules/content-overview/content-overview.php:957
+#: modules/content-overview/library/content-overview-utilities.php:479
+#: modules/content-overview/library/content-overview-utilities.php:799
+msgid "Post Type"
+msgstr "Iru Ifiweranṣẹ"
+
+#: modules/calendar/calendar.php:1103
+msgid "Post moved to the trash."
+msgid_plural "%d posts moved to the trash."
+msgstr[0] "Ifiweranṣẹ ti yọ sí ikọ̀kà."
+
+#: modules/calendar/calendar.php:1119
+#: modules/content-board/content-board.php:614
+#: modules/content-overview/library/content-overview-methods.php:214
+msgid "Undo"
+msgstr "Ṣe àtúnṣe"
+
+#: modules/calendar/calendar.php:1129
+msgid "Post restored from the Trash."
+msgid_plural "%d posts restored from the Trash."
+msgstr[0] "Ifiweranṣẹ ti da pada lati ikọ̀kà."
+
+#: modules/calendar/calendar.php:1161
+msgid "Initializing the calendar. Please wait..."
+msgstr "Nṣiṣẹ́ kalẹ́ndà. Jọwọ duro..."
+
+#: modules/calendar/calendar.php:1165
+msgid ""
+"It seems like it is taking too long. Please, try reloading the page again "
+"and check the browser console looking for errors."
+msgstr ""
+"O dabi pe o n gba akoko pupọ. Jọwọ, gbiyanju tun ṣe oju-iwe naa lẹẹkansi ki "
+"o si ṣayẹwo console aṣawakiri fun awọn aṣiṣe."
+
+#: modules/calendar/calendar.php:1809
+msgid ""
+"The selected user doesn't have enough permissions to be set as the post "
+"author."
+msgstr "Olumulo ti a yan ko ni awọn aṣẹ to lati ṣeto gẹgẹ bi onkọwe ifiweranṣẹ."
+
+#: modules/calendar/library/calendar-methods.php:87
+msgid "Post types to show"
+msgstr "Àwọn iru ifiweranṣẹ láti fihàn"
+
+#: modules/calendar/library/calendar-methods.php:95
+msgid "Show today's date in the first row"
+msgstr "Fihàn ọjọ́ oni ní ìkà àkọ́kọ́"
+
+#: modules/calendar/library/calendar-methods.php:103
+msgid "Enable subscriptions in iCal or Google Calendar"
+msgstr "Mú kí ìforúkọsílẹ̀ ṣiṣẹ́ ní iCal tàbí Google Calendar"
+
+#: modules/calendar/library/calendar-methods.php:111
+msgid "Allow public access to subscriptions in iCal or Google Calendar"
+msgstr "Jẹ́ kí àwọ̀n àkọsílẹ̀ jẹ́ àfihàn àwùjọ ní iCal tàbí Google Calendar"
+
+#: modules/calendar/library/calendar-methods.php:119
+msgid "Statuses to display publish time"
+msgstr "Àwọn ipo lati ṣe àfihàn àkókò ìtẹ̀jáde"
+
+#: modules/calendar/library/calendar-methods.php:127
+msgid "Posts publish time format"
+msgstr "Àkóónú àkókò ìtẹ́jáde àwọn ìwé"
+
+#: modules/calendar/library/calendar-methods.php:135
+msgid "Default publish time for items created in the calendar"
+msgstr "Àkókò ìtẹ́jáde àtọkànwá fún àwọn ohun tó dá àtẹ́jáde sílẹ̀ nínú kalẹ́ńdà"
+
+#: modules/calendar/library/calendar-methods.php:143
+msgid "Field used for sorting the calendar items in a day cell"
+msgstr "Àwọn ààyè tí a lò fún ìṣàkóso àwọn ohun kalẹ́ńdà nínú ẹ̀yà ọjọ́"
+
+#: modules/calendar/library/calendar-methods.php:151
+msgid "Max visible posts per date"
+msgstr "Ìwọn tó pọ̀jù ti àwọn ìwé tó wà lórí ọjọ́ kọọkan"
+
+#: modules/calendar/library/calendar-methods.php:159
+msgid "Always show complete post titles"
+msgstr "Ma fi gbogbo akọle ìwé hàn nígbà gbogbo"
+
+#: modules/calendar/library/calendar-methods.php:179
+msgid "At least one post type must be selected"
+msgstr "Kò yẹ kí a yan irú ìwé kan ṣoṣo"
+
+#: modules/calendar/library/calendar-methods.php:294
+msgid "edit"
+msgstr "ṣatunkọ"
+
+#: modules/calendar/library/calendar-methods.php:308
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions Pro%s."
+msgstr ""
+"Fun iṣọpọ Revisions lori Kalẹnda Akọọlẹ, Akopọ ati Igbimọ Akọọlẹ, jọwọ ṣe "
+"imudojuiwọn %sPublishPress Revisions Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:309
+#, php-format
+msgid ""
+"For Revisions integration on the Content Calendar, Overview and Content "
+"Board, please update %sPublishPress Revisions%s."
+msgstr ""
+"Fun iṣọpọ Revisions lori Kalẹnda Akọọlẹ, Akopọ ati Igbimọ Akọọlẹ, jọwọ ṣe "
+"imudojuiwọn %sPublishPress Revisions%s."
+
+#: modules/calendar/library/calendar-methods.php:326
+#, php-format
+msgid ""
+"To refine your workflow with custom Post Statuses, install the "
+"%sPublishPress Statuses%s plugin."
+msgstr ""
+"Lati ṣe akọsilẹ iṣẹ rẹ pẹlu Awọn ipo Ifiweranṣẹ ti a ṣe adani, fi sori ẹrọ "
+"%sPublishPress Statuses%s plugin."
+
+#: modules/calendar/library/calendar-methods.php:340
+#, php-format
+msgid "For custom Revision Statuses, upgrade to %sPublishPress Statuses Pro%s."
+msgstr "Fún àwọn Ìpò Ìtẹ́jáde àtọkànwá, ṣe àtúnṣe sí %sPublishPress Statuses Pro%s."
+
+#: modules/calendar/library/calendar-methods.php:423
+msgid "Publishing Time"
+msgstr "Àkókò Ìtẹ́jáde"
+
+#: modules/calendar/library/calendar-methods.php:479
+msgid "All posts"
+msgstr "Gbogbo àwọn ìwé"
+
+#: modules/calendar/library/calendar-methods.php:527
+#: modules/dashboard/dashboard.php:368
+#: modules/dashboard/dashboard.php:391
+#: modules/dashboard/dashboard.php:425
+msgid "Disabled"
+msgstr "Dákẹ́"
+
+#: modules/calendar/library/calendar-methods.php:528
+#: modules/dashboard/dashboard.php:369
+#: modules/dashboard/dashboard.php:392
+#: modules/dashboard/dashboard.php:426
+msgid "Enabled"
+msgstr "Mú ṣiṣẹ́"
+
+#: modules/calendar/library/calendar-methods.php:546
+msgid "Regenerate calendar feed secret"
+msgstr "Tun ṣe àfihàn kalẹ́ńdà àkọsílẹ̀"
+
+#: modules/calendar/library/calendar-methods.php:788
+msgid "Invalid input"
+msgstr "Ìfọwọ́sí àìtó"
+
+#: modules/calendar/library/calendar-methods.php:794
+msgid "Post not found"
+msgstr "Ìwé náà kò rí"
+
+#: modules/calendar/library/calendar-methods.php:799
+msgid "No enough permissions"
+msgstr "Kò to ìmúṣẹ́"
+
+#: modules/calendar/library/calendar-methods.php:808
+msgid "Invalid date"
+msgstr "Ọjọ́ àìtó"
+
+#: modules/calendar/library/calendar-methods.php:864
+msgid "Publish Time"
+msgstr "Akoko Itẹjade"
+
+#: modules/calendar/library/calendar-methods.php:894
+#: modules/content-board/library/content-board-utilities.php:1199
+#: modules/content-overview/library/content-overview-utilities.php:525
+msgid "Tags"
+msgstr "Àwọn ami"
+
+#: modules/calendar/library/calendar-methods.php:1001
+msgid "Publish on"
+msgstr "Itẹjade lori"
+
+#: modules/calendar/library/calendar-methods.php:1195
+#: modules/notifications-log/notifications-log.php:210
+msgid "Loading..."
+msgstr "N ṣàn..."
+
+#: modules/calendar/library/calendar-methods.php:1196
+msgid "Loading item..."
+msgstr "N ṣàn ohun..."
+
+#: modules/calendar/library/calendar-methods.php:1197
+msgid "Click to add"
+msgstr "Tẹ lati fi kun"
+
+#: modules/calendar/library/calendar-methods.php:1198
+msgid "Moving the item..."
+msgstr "N gbe ohun naa..."
+
+#: modules/calendar/library/calendar-methods.php:1199
+#, php-format
+msgid "Hide the %s last items"
+msgstr "Tọ́jú %s awọn ohun ti o kẹhin"
+
+#: modules/calendar/library/calendar-methods.php:1200
+#, php-format
+msgid "Show %s more"
+msgstr "Fihan %s siwaju"
+
+#: modules/calendar/library/calendar-methods.php:1201
+#: modules/calendar/library/calendar-methods.php:1704
+msgid "Untitled"
+msgstr "Kò ní akọle"
+
+#: modules/calendar/library/calendar-methods.php:1202
+msgid "Close"
+msgstr "Pa"
+
+#: modules/calendar/library/calendar-methods.php:1203
+#: modules/editorial-comments/lib/editorial-comments.js:349
+msgid "Save"
+msgstr "Fipamọ"
+
+#: modules/calendar/library/calendar-methods.php:1204
+msgid "Saving..."
+msgstr "N fipamọ..."
+
+#: modules/calendar/library/calendar-methods.php:1205
+msgid "Save and edit"
+msgstr "Fipamọ ati ṣatunkọ"
+
+#: modules/calendar/library/calendar-methods.php:1206
+#, php-format
+msgid "Add content for %s"
+msgstr "Fi akoonu kun fun %s"
+
+#: modules/calendar/library/calendar-methods.php:1207
+msgid "Post type not found"
+msgstr "Iru ifiweranṣẹ ko ri"
+
+#: modules/calendar/library/calendar-methods.php:1208
+msgid "Post type:"
+msgstr "Iru ifiweranṣẹ:"
+
+#: modules/calendar/library/calendar-methods.php:1209
+#: modules/content-board/library/content-board-utilities.php:1130
+#: modules/content-overview/library/content-overview-utilities.php:456
+msgid "Please, wait! Loading the form fields..."
+msgstr "Jọwọ, duro! N n ṣàn awọn aaye fọọmu..."
+
+#: modules/calendar/library/calendar-methods.php:1210
+msgid "Sun"
+msgstr "Sọ́ọ̀n"
+
+#: modules/calendar/library/calendar-methods.php:1211
+msgid "Mon"
+msgstr "Mọ́ń"
+
+#: modules/calendar/library/calendar-methods.php:1212, fuzzy
+msgid "Tue"
+msgstr "Tue"
+
+#: modules/calendar/library/calendar-methods.php:1213, fuzzy
+msgid "Wed"
+msgstr "Wed"
+
+#: modules/calendar/library/calendar-methods.php:1214, fuzzy
+msgid "Thu"
+msgstr "Thu"
+
+#: modules/calendar/library/calendar-methods.php:1215, fuzzy
+msgid "Fri"
+msgstr "Fri"
+
+#: modules/calendar/library/calendar-methods.php:1216, fuzzy
+msgid "Sat"
+msgstr "Sat"
+
+#: modules/calendar/library/calendar-methods.php:1217, fuzzy
+msgid "Jan"
+msgstr "Jan"
+
+#: modules/calendar/library/calendar-methods.php:1218, fuzzy
+msgid "Feb"
+msgstr "Feb"
+
+#: modules/calendar/library/calendar-methods.php:1219, fuzzy
+msgid "Mar"
+msgstr "Mar"
+
+#: modules/calendar/library/calendar-methods.php:1220, fuzzy
+msgid "Apr"
+msgstr "Apr"
+
+#: modules/calendar/library/calendar-methods.php:1221, fuzzy
+msgid "May"
+msgstr "May"
+
+#: modules/calendar/library/calendar-methods.php:1222, fuzzy
+msgid "Jun"
+msgstr "Jun"
+
+#: modules/calendar/library/calendar-methods.php:1223, fuzzy
+msgid "Jul"
+msgstr "Jul"
+
+#: modules/calendar/library/calendar-methods.php:1224, fuzzy
+msgid "Aug"
+msgstr "Aug"
+
+#: modules/calendar/library/calendar-methods.php:1225, fuzzy
+msgid "Sep"
+msgstr "Sep"
+
+#: modules/calendar/library/calendar-methods.php:1226, fuzzy
+msgid "Oct"
+msgstr "Oct"
+
+#: modules/calendar/library/calendar-methods.php:1227, fuzzy
+msgid "Nov"
+msgstr "Nov"
+
+#: modules/calendar/library/calendar-methods.php:1228, fuzzy
+msgid "Dec"
+msgstr "Dec"
+
+#: modules/calendar/library/calendar-methods.php:1229
+#: modules/calendar/library/calendar-utilities.php:51
+#: modules/content-board/library/content-board-utilities.php:598
+#: modules/content-overview/library/content-overview-utilities.php:707
+msgid "All statuses"
+msgstr "Gbogbo ipo"
+
+#: modules/calendar/library/calendar-methods.php:1230
+msgid "All categories"
+msgstr "Gbogbo ẹka"
+
+#: modules/calendar/library/calendar-methods.php:1231
+msgid "All tags"
+msgstr "Gbogbo ami"
+
+#: modules/calendar/library/calendar-methods.php:1232
+#: modules/calendar/library/calendar-utilities.php:117
+#: modules/calendar/library/calendar-utilities.php:120
+#: modules/content-board/library/content-board-utilities.php:649
+#: modules/content-board/library/content-board-utilities.php:652
+#: modules/content-overview/library/content-overview-utilities.php:771
+#: modules/content-overview/library/content-overview-utilities.php:774
+msgid "All authors"
+msgstr "Gbogbo awọn onkọwe"
+
+#: modules/calendar/library/calendar-methods.php:1233
+msgid "All types"
+msgstr "Gbogbo awọn iru"
+
+#: modules/calendar/library/calendar-methods.php:1234
+#: modules/calendar/library/calendar-utilities.php:513
+#, php-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d ọsẹ"
+
+#: modules/calendar/library/calendar-methods.php:1235
+#, php-format
+msgid "%d weeks"
+msgstr "%d ọsẹ"
+
+#: modules/calendar/library/calendar-methods.php:1236
+msgid "Today"
+msgstr "Loni"
+
+#: modules/calendar/library/calendar-methods.php:1237
+msgid "No terms"
+msgstr "Ko si awọn ọrọ"
+
+#: modules/calendar/library/calendar-methods.php:1238
+#: modules/content-board/content-board.php:1288
+#: modules/content-overview/content-overview.php:836
+#: modules/content-overview/content-overview.php:895
+#: modules/content-overview/content-overview.php:1219
+msgid "Post Date"
+msgstr "Ọjọ Ifiweranṣẹ"
+
+#: modules/calendar/library/calendar-methods.php:1239
+#: modules/calendar/library/calendar-utilities.php:1097
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
+#: modules/content-overview/content-overview.php:1220
+#: modules/content-overview/content-overview.php:1703
+#: modules/editorial-comments/editorial-comments.php:628
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:159
+msgid "Edit"
+msgstr "Ṣatunkọ"
+
+#: modules/calendar/library/calendar-methods.php:1241
+#: modules/calendar/library/calendar-utilities.php:1114
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
+#: modules/content-overview/content-overview.php:1222
+#: modules/content-overview/content-overview.php:1744
+msgid "Preview"
+msgstr "Atunwo"
+
+#: modules/calendar/library/calendar-methods.php:1242
+#: modules/calendar/library/calendar-utilities.php:1111
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
+#: modules/content-overview/content-overview.php:1223
+#: modules/content-overview/content-overview.php:1731
+msgid "View"
+msgstr "Wo"
+
+#: modules/calendar/library/calendar-methods.php:1243
+#: modules/content-board/content-board.php:1293
+#: modules/content-overview/content-overview.php:1224
+msgid "Previous Post"
+msgstr "Ifiweranṣẹ Tẹlẹ"
+
+#: modules/calendar/library/calendar-methods.php:1244
+#: modules/content-board/content-board.php:1294
+#: modules/content-overview/content-overview.php:1225
+msgid "Next Post"
+msgstr "Ifiweranṣẹ Ti nbọ"
+
+#: modules/calendar/library/calendar-methods.php:1246
+#: modules/content-board/content-board.php:1296
+#: modules/content-overview/content-overview.php:1227
+msgid "Save Changes"
+msgstr "Fipamọ Awọn Ayipada"
+
+#: modules/calendar/library/calendar-methods.php:1247
+#: modules/content-board/content-board.php:1297
+#: modules/content-overview/content-overview.php:1228
+msgid "Taxonomy not set."
+msgstr "Taxonomy ko ti ṣeto."
+
+#: modules/calendar/library/calendar-methods.php:1687
+msgid "No date supplied."
+msgstr "Ko si ọjọ ti a pese."
+
+#: modules/calendar/library/calendar-methods.php:1698
+msgid "The selected post type is not enabled for the calendar."
+msgstr "Iru ifiweranṣẹ ti a yan ko ti ni agbara fun kalẹnda."
+
+#: modules/calendar/library/calendar-methods.php:1728
+msgid "Invalid Status supplied."
+msgstr "Ipo ti ko tọ ti a pese."
+
+#: modules/calendar/library/calendar-methods.php:1752
+msgid "Invalid Publish Date supplied."
+msgstr "Ọjọ Ifiweranṣẹ ti ko tọ ti a pese."
+
+#: modules/calendar/library/calendar-methods.php:1821
+msgid "Post created successfully"
+msgstr "Ifiweranṣẹ ti ṣẹda ni aṣeyọri"
+
+#: modules/calendar/library/calendar-methods.php:1828
+msgid "Post could not be created"
+msgstr "Ifiweranṣẹ ko le ṣẹda"
+
+#: modules/calendar/library/calendar-utilities.php:54
+#: modules/content-overview/library/content-overview-utilities.php:710
+msgid "(Hide all)"
+msgstr "(Pa gbogbo)"
+
+#: modules/calendar/library/calendar-utilities.php:90
+#: modules/calendar/library/calendar-utilities.php:93
+#: modules/content-board/library/content-board-utilities.php:624
+#: modules/content-board/library/content-board-utilities.php:627
+#: modules/content-overview/library/content-overview-utilities.php:746
+#: modules/content-overview/library/content-overview-utilities.php:749
+#, php-format
+msgid "All %s"
+msgstr "Gbogbo %s"
+
+#: modules/calendar/library/calendar-utilities.php:150
+#: modules/content-board/library/content-board-utilities.php:681
+#: modules/content-overview/library/content-overview-utilities.php:803
+msgid "All post types"
+msgstr "Gbogbo iru ifiweranṣẹ"
+
+#: modules/calendar/library/calendar-utilities.php:169
+#: modules/calendar/library/calendar-utilities.php:485
+#: modules/content-board/library/content-board-utilities.php:97
+#: modules/content-board/library/content-board-utilities.php:700
+#: modules/content-overview/library/content-overview-methods.php:322
+#: modules/content-overview/library/content-overview-utilities.php:822
+msgid "Search box"
+msgstr "Apoti ìwádìí"
+
+#: modules/calendar/library/calendar-utilities.php:198
+#: modules/calendar/library/calendar-utilities.php:309
+#: modules/calendar/library/calendar-utilities.php:347
+#: modules/calendar/library/calendar-utilities.php:433
+#: modules/content-board/content-board.php:1064
+#: modules/content-board/library/content-board-utilities.php:548
+#: modules/content-board/library/content-board-utilities.php:558
+#: modules/content-board/library/content-board-utilities.php:729
+#: modules/content-board/library/content-board-utilities.php:840
+#: modules/content-board/library/content-board-utilities.php:878
+#: modules/content-board/library/content-board-utilities.php:958
+#: modules/content-overview/library/content-overview-utilities.php:653
+#: modules/content-overview/library/content-overview-utilities.php:663
+#: modules/content-overview/library/content-overview-utilities.php:851
+#: modules/content-overview/library/content-overview-utilities.php:962
+#: modules/content-overview/library/content-overview-utilities.php:1000
+#: modules/content-overview/library/content-overview-utilities.php:1086
+msgid "Apply"
+msgstr "Lo"
+
+#: modules/calendar/library/calendar-utilities.php:211
+#: modules/content-board/library/content-board-utilities.php:742
+#: modules/content-overview/library/content-overview-utilities.php:864
+msgid "Select option..."
+msgstr "Yan aṣayan..."
+
+#: modules/calendar/library/calendar-utilities.php:245
+#: modules/calendar/library/calendar-utilities.php:279
+#: modules/content-board/library/content-board-utilities.php:112
+#: modules/content-board/library/content-board-utilities.php:776
+#: modules/content-board/library/content-board-utilities.php:810
+#: modules/content-overview/library/content-overview-methods.php:337
+#: modules/content-overview/library/content-overview-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:932
+msgid "to"
+msgstr "si"
+
+#: modules/calendar/library/calendar-utilities.php:329
+#: modules/content-board/library/content-board-utilities.php:860
+#: modules/content-overview/library/content-overview-utilities.php:982
+msgid "Checked"
+msgstr "Ti a ṣayẹwo"
+
+#: modules/calendar/library/calendar-utilities.php:370
+#: modules/content-board/library/content-board-utilities.php:895
+#: modules/content-overview/library/content-overview-utilities.php:1023
+msgid "All status"
+msgstr "Gbogbo ipo"
+
+#: modules/calendar/library/calendar-utilities.php:373
+#: modules/content-board/library/content-board-utilities.php:898
+#: modules/content-overview/library/content-overview-utilities.php:1026
+msgid "Passed"
+msgstr "Ti kọja"
+
+#: modules/calendar/library/calendar-utilities.php:374
+#: modules/content-board/library/content-board-utilities.php:899
+#: modules/content-overview/library/content-overview-utilities.php:1027
+#: modules/notifications-log/library/NotificationsLogTable.php:277
+#: modules/notifications-log/library/NotificationsLogTable.php:293
+msgid "Failed"
+msgstr "Ti kuna"
+
+#: modules/calendar/library/calendar-utilities.php:473
+#: modules/content-board/library/content-board-utilities.php:42
+#: modules/content-overview/library/content-overview-methods.php:267
+msgid "Customize Filters"
+msgstr "Ṣe aṣa Awọn filter"
+
+#: modules/calendar/library/calendar-utilities.php:502
+#: modules/calendar/library/calendar-utilities.php:503
+msgid "Period"
+msgstr "Akoko"
+
+#: modules/calendar/library/calendar-utilities.php:503
+#, php-format
+msgid "%1s weeks"
+msgstr "%1s ọsẹ"
+
+#: modules/calendar/library/calendar-utilities.php:553
+#: modules/content-board/library/content-board-utilities.php:152
+#: modules/content-overview/library/content-overview-methods.php:377
+msgid "Reset Filters"
+msgstr "Tun Awọn filter ṣe"
+
+#: modules/calendar/library/calendar-utilities.php:554
+#: modules/content-board/library/content-board-utilities.php:153
+#: modules/content-board/library/content-board-utilities.php:551
+#: modules/content-overview/library/content-overview-methods.php:378
+#: modules/content-overview/library/content-overview-utilities.php:656
+msgid "Reset"
+msgstr "Tunṣe"
+
+#: modules/calendar/library/calendar-utilities.php:582
+#: modules/content-board/library/content-board-utilities.php:363
+#: modules/content-overview/library/content-overview-utilities.php:171
+msgid "Enable Filters"
+msgstr "Mu Awọn filter ṣiṣẹ"
+
+#: modules/calendar/library/calendar-utilities.php:583
+#: modules/content-board/library/content-board-utilities.php:364
+#: modules/content-overview/library/content-overview-utilities.php:172
+msgid "Reorder Filters"
+msgstr "Tun ṣe atokọ Awọn filter"
+
+#: modules/calendar/library/calendar-utilities.php:588
+msgid "Enable or Disable Content calendar filter."
+msgstr "Mu ṣiṣẹ tabi Pa kalẹnda akoonu filter."
+
+#: modules/calendar/library/calendar-utilities.php:601
+#: modules/content-board/library/content-board-utilities.php:236
+#: modules/content-board/library/content-board-utilities.php:253
+#: modules/content-board/library/content-board-utilities.php:382
+#: modules/content-overview/library/content-overview-utilities.php:44
+#: modules/content-overview/library/content-overview-utilities.php:190
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:68
+msgid "Add New"
+msgstr "Fi Tuntun kun"
+
+#: modules/calendar/library/calendar-utilities.php:609
+#: modules/content-board/library/content-board-utilities.php:390
+#: modules/content-overview/library/content-overview-utilities.php:198
+msgid "Filter Title"
+msgstr "Akọle Àtẹ̀jáde"
+
+#: modules/calendar/library/calendar-utilities.php:613
+#: modules/content-board/library/content-board-utilities.php:248
+#: modules/content-overview/library/content-overview-utilities.php:56
+msgid "Search Metakey"
+msgstr "Wa Metakey"
+
+#: modules/calendar/library/calendar-utilities.php:618
+#: modules/content-board/library/content-board-utilities.php:399
+#: modules/content-overview/library/content-overview-utilities.php:207
+msgid "Add Filter"
+msgstr "Fikun Àtẹ̀jáde"
+
+#: modules/calendar/library/calendar-utilities.php:661
+#: modules/content-board/library/content-board-utilities.php:442
+#: modules/content-overview/library/content-overview-utilities.php:250
+msgid "Drag to change enabled filters order."
+msgstr "Fa lati yipada aṣẹ awọn àtẹ̀jáde ti a mu ṣiṣẹ."
+
+#: modules/calendar/library/calendar-utilities.php:702
+#: modules/content-board/library/content-board-utilities.php:71
+#: modules/content-board/library/content-board-utilities.php:337
+#: modules/content-board/library/content-board-utilities.php:483
+#: modules/content-overview/library/content-overview-methods.php:296
+#: modules/content-overview/library/content-overview-utilities.php:145
+#: modules/content-overview/library/content-overview-utilities.php:291
+msgid "Apply Changes"
+msgstr "Lọ́wọ́ àtúnṣe"
+
+#: modules/calendar/library/calendar-utilities.php:1085
+msgid "Tag"
+msgid_plural "Tags"
+msgstr[0] "标签"
+
+#: modules/calendar/library/calendar-utilities.php:1180
+#: modules/content-board/content-board.php:802
+#: modules/content-overview/content-overview.php:945
+msgid "Custom filters"
+msgstr "Àtẹ̀jáde aṣa"
+
+#: modules/calendar/library/calendar-utilities.php:1181
+#: modules/content-board/content-board.php:803
+#: modules/content-overview/content-overview.php:946
+msgid "Click the \"Add New\" button to create new filters."
+msgstr "Tẹ bọtini \"Fikun Tuntun\" lati ṣẹda awọn àtẹ̀jáde tuntun."
+
+#: modules/calendar/library/calendar-utilities.php:1187
+#: modules/content-board/content-board.php:809
+#: modules/content-overview/content-overview.php:952
+msgid "Inbuilt filters"
+msgstr "Àtẹ̀jáde ti a kọ́ sínú"
+
+#: modules/calendar/library/calendar-utilities.php:1199
+#: modules/content-board/content-board.php:760
+#: modules/content-board/content-board.php:820
+#: modules/content-overview/content-overview.php:903
+#: modules/content-overview/content-overview.php:964
+#: modules/editorial-metadata/editorial-metadata.php:95
+#: modules/editorial-metadata/editorial-metadata.php:511
+#: modules/editorial-metadata/editorial-metadata.php:1720
+#: modules/editorial-metadata/editorial-metadata.php:1721
+msgid "Editorial Fields"
+msgstr "Àwọn Àwọn Ọ̀rọ̀ Ẹlẹ́rọ"
+
+#: modules/calendar/library/calendar-utilities.php:1200
+#: modules/content-board/content-board.php:761
+#: modules/content-board/content-board.php:821
+#: modules/content-overview/content-overview.php:904
+#: modules/content-overview/content-overview.php:965
+msgid "You do not have any editorial fields enabled"
+msgstr "Iwọ kò ní àwọn àwọ̀n àtẹ̀jáde ẹlẹ́rọ kankan ti a mu ṣiṣẹ"
+
+#: modules/calendar/library/calendar-utilities.php:1207
+#: modules/content-board/content-board.php:768
+#: modules/content-board/content-board.php:828
+#: modules/content-overview/content-overview.php:911
+#: modules/content-overview/content-overview.php:972
+msgid "You do not have any public taxonomies"
+msgstr "Iwọ kò ní àwọn taxonomy àjọṣe kankan"
+
+#: modules/calendar/library/calendar-utilities.php:1229
+msgid "Subscribe in iCal or Google Calendar"
+msgstr "Forukọsilẹ ni iCal tabi Google Calendar"
+
+#: modules/calendar/library/calendar-utilities.php:1234
+msgid "Start date"
+msgstr "Ọjọ́ ìbẹ̀rẹ̀"
+
+#: modules/calendar/library/calendar-utilities.php:1238
+msgid "Current week"
+msgstr "Ọsẹ̀ lọwọlọwọ"
+
+#: modules/calendar/library/calendar-utilities.php:1240
+msgid "One month ago"
+msgstr "Ọ̀kan oṣù sẹ́yìn"
+
+#: modules/calendar/library/calendar-utilities.php:1242
+msgid "Two months ago"
+msgstr "Méjì oṣù sẹ́yìn"
+
+#: modules/calendar/library/calendar-utilities.php:1244
+msgid "Three months ago"
+msgstr "Mẹ́ta oṣù sẹ́yìn"
+
+#: modules/calendar/library/calendar-utilities.php:1246
+msgid "Four months ago"
+msgstr "Mẹ́rin oṣù sẹ́yìn"
+
+#: modules/calendar/library/calendar-utilities.php:1248
+msgid "Five months ago"
+msgstr "Mẹ́ta oṣù sẹ́yìn"
+
+#: modules/calendar/library/calendar-utilities.php:1250
+msgid "Six months ago"
+msgstr "Oṣu mẹfa seyin"
+
+#: modules/calendar/library/calendar-utilities.php:1256
+msgid "End date"
+msgstr "Ọjọ ipari"
+
+#: modules/calendar/library/calendar-utilities.php:1261
+msgid "One week"
+msgstr "Ọsẹ kan"
+
+#: modules/calendar/library/calendar-utilities.php:1263
+msgid "Two weeks"
+msgstr "Ọsẹ meji"
+
+#: modules/calendar/library/calendar-utilities.php:1265
+msgid "Three weeks"
+msgstr "Ọsẹ mẹta"
+
+#: modules/calendar/library/calendar-utilities.php:1267
+msgid "Four weeks"
+msgstr "Ọsẹ mẹrin"
+
+#: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
+msgid "Months"
+msgstr "Awọn oṣu"
+
+#: modules/calendar/library/calendar-utilities.php:1273
+msgid "One month"
+msgstr "Oṣu kan"
+
+#: modules/calendar/library/calendar-utilities.php:1276
+msgid "Two months"
+msgstr "Oṣu meji"
+
+#: modules/calendar/library/calendar-utilities.php:1278
+msgid "Three months"
+msgstr "Oṣu mẹta"
+
+#: modules/calendar/library/calendar-utilities.php:1280
+msgid "Four months"
+msgstr "Oṣu mẹrin"
+
+#: modules/calendar/library/calendar-utilities.php:1282
+msgid "Five months"
+msgstr "Oṣu marun"
+
+#: modules/calendar/library/calendar-utilities.php:1284
+msgid "Six months"
+msgstr "Oṣu mẹfa"
+
+#: modules/calendar/library/calendar-utilities.php:1286
+msgid "Seven months"
+msgstr "Oṣu meje"
+
+#: modules/calendar/library/calendar-utilities.php:1288
+msgid "Eight months"
+msgstr "Oṣu mẹjọ"
+
+#: modules/calendar/library/calendar-utilities.php:1290
+msgid "Nine months"
+msgstr "Oṣu mẹsan"
+
+#: modules/calendar/library/calendar-utilities.php:1292
+msgid "Ten months"
+msgstr "Oṣu mẹwa"
+
+#: modules/calendar/library/calendar-utilities.php:1294
+msgid "Eleven months"
+msgstr "Oṣu mẹjọla"
+
+#: modules/calendar/library/calendar-utilities.php:1296
+msgid "Twelve months"
+msgstr "Oṣu mejila"
+
+#: modules/calendar/library/calendar-utilities.php:1308
+msgid "Download .ics file"
+msgstr "Gba faili .ics"
+
+#: modules/calendar/library/calendar-utilities.php:1315
+msgid "Copy to the clipboard"
+msgstr "Daakọ si iboju ifipamọ"
+
+#: modules/calendar/library/calendar-utilities.php:1321
+msgid "Click here to subscribe in iCal or Google Calendar"
+msgstr "Tẹ nibi lati forukọsilẹ ninu iCal tabi Google Calendar"
+
+#: modules/content-board/content-board.php:142
+#: modules/content-board/content-board.php:379
+#: modules/content-board/content-board.php:396
+#: modules/content-board/content-board.php:397
+msgid "Content Board"
+msgstr "Igbimọ Akọkọ"
+
+#: modules/content-board/content-board.php:743
+msgid "Custom Items"
+msgstr "Awọn nkan Aṣ customized"
+
+#: modules/content-board/content-board.php:744
+msgid "Click the \"Add New\" button to create new card data."
+msgstr "Tẹ bọtini \"Fi Tuntun Kun\" lati ṣẹda data kaadi tuntun."
+
+#: modules/content-board/content-board.php:750
+msgid "Inbuilt Card Data"
+msgstr "Data Kaadi Tọju"
+
+#: modules/content-board/content-board.php:847
+#: modules/content-board/library/content-board-methods.php:39
+#: modules/content-board/library/content-board-methods.php:107
+#: modules/content-overview/content-overview.php:991
+msgid "An error occured"
+msgstr "Aṣiṣe kan ṣẹlẹ"
+
+#: modules/content-board/content-board.php:851
+#: modules/content-board/library/content-board-methods.php:43
+#: modules/content-board/library/content-board-methods.php:111
+#: modules/content-overview/content-overview.php:995
+msgid "Error validating nonce. Please reload this page and try again."
+msgstr "Aṣiṣe ni iṣayẹwo nonce. Jọwọ tun gba oju-ewe yii ki o si gbiyanju lẹẹkansi."
+
+#: modules/content-board/content-board.php:853
+#: modules/content-board/library/content-board-methods.php:45
+#: modules/content-board/library/content-board-methods.php:113
+#: modules/content-overview/content-overview.php:997
+msgid "Invalid form request."
+msgstr "Ibeere fọọmu ti ko tọ."
+
+#: modules/content-board/content-board.php:1026
+msgid "Move posts here to change their status"
+msgstr "Gbe awọn ifiweranṣẹ si ibi yii lati yi ipo wọn pada"
+
+#: modules/content-board/content-board.php:1029
+msgid "You do not have permission to move post to this status"
+msgstr "Iwọ ko ni igbanilaaye lati gbe ifiweranṣẹ si ipo yii"
+
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Ọjọ"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Ọdun"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
+msgid "Default Date"
+msgstr "Ọjọ Aiyipada"
+
+#: modules/content-board/content-board.php:1061
+msgid ""
+"This is the default publish date from today for posts moving to the "
+"Scheduled status."
+msgstr ""
+"Eyi ni ọjọ ifiweranṣẹ aiyipada lati oni fun awọn ifiweranṣẹ ti n lọ si ipo "
+"Ti a ṣeto."
+
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
+msgid "Only editable posts will be moveable."
+msgstr "Awọn ifiweranṣẹ ti o le yipada nikan ni yoo ṣee gbe."
+
+#: modules/content-board/content-board.php:1179
+#: modules/content-overview/content-overview.php:1699
+#: modules/dashboard/dashboard.php:299
+msgid "Edit this post"
+msgstr "Ṣatunkọ ifiweranṣẹ yii"
+
+#: modules/content-board/content-board.php:1191
+#: modules/content-overview/content-overview.php:1711
+msgid "Move this item to the Trash"
+msgstr "Gbe nkan yii si Ẹrọ idalẹnu"
+
+#: modules/content-board/content-board.php:1205
+#: modules/content-overview/content-overview.php:1725
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr "Wo &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1221
+#: modules/content-overview/content-overview.php:1741
+#, php-format
+msgid "Preview &#8220;%s&#8221;"
+msgstr "Igbasilẹ &#8220;%s&#8221;"
+
+#: modules/content-board/content-board.php:1268
+#: modules/content-overview/content-overview.php:1194
+msgid "No results found"
+msgstr "Ko si awọn abajade ti a ri"
+
+#: modules/content-board/content-board.php:1273
+#: modules/content-overview/content-overview.php:1199
+msgid "There are no posts in the range or filter specified."
+msgstr "Ko si awọn ifiweranṣẹ ninu ibiti tabi àlẹmọ ti a sọ."
+
+#: modules/content-board/content-board.php:1605
+#: modules/content-overview/content-overview.php:1579
+msgid "None"
+msgstr "Kò sí"
+
+#: modules/content-board/library/content-board-methods.php:53
+msgid "Error fetching post data."
+msgstr "Aṣiṣe ni gbigba data ifiweranṣẹ."
+
+#: modules/content-board/library/content-board-methods.php:63
+msgid "You do not have permission to edit selected post."
+msgstr "Iwọ kò ni aṣẹ lati ṣatunkọ ifiweranṣẹ ti a yan."
+
+#: modules/content-board/library/content-board-methods.php:65
+msgid "You do not have permission to move post to selected post status."
+msgstr "Iwọ kò ni aṣẹ lati gbe ifiweranṣẹ si ipo ifiweranṣẹ ti a yan."
+
+#: modules/content-board/library/content-board-methods.php:95
+#: modules/content-board/library/content-board-methods.php:123
+msgid "Changes saved!"
+msgstr "Àwọn ayipada ti fipamọ!"
+
+#: modules/content-board/library/content-board-methods.php:150
+msgid "Card Data updated successfully."
+msgstr "Data kaadi ti ṣe imudojuiwọn ni aṣeyọri."
+
+#: modules/content-board/library/content-board-methods.php:172
+#: modules/content-overview/content-overview.php:676
+msgid "Settings updated successfully."
+msgstr "Awọn eto ti ṣe imudojuiwọn ni aṣeyọri."
+
+#: modules/content-board/library/content-board-methods.php:250
+#: modules/content-overview/content-overview.php:754
+#, php-format
+msgid "%s created successfully. <a href=\"%s\" target=\"_blank\">Edit %s</a>"
+msgstr "%s ti ṣẹda ni aṣeyọri. <a href=\"%s\" target=\"_blank\">Ṣatunkọ %s</a>"
+
+#: modules/content-board/library/content-board-methods.php:253
+#: modules/content-overview/content-overview.php:757
+#, php-format
+msgid "%s could not be created"
+msgstr "%s kò le ṣẹda"
+
+#: modules/content-board/library/content-board-methods.php:258
+#: modules/content-overview/content-overview.php:762
+#, php-format
+msgid "You do not have permission to add new %s"
+msgstr "Iwọ kò ni aṣẹ lati fi %s tuntun kun"
+
+#: modules/content-board/library/content-board-methods.php:437
+#: modules/content-overview/library/content-overview-methods.php:160
+msgid "Post types to show:"
+msgstr "Awọn iru ifiweranṣẹ lati fi hàn:"
+
+#: modules/content-board/library/content-board-utilities.php:32
+msgid "Customize Card Data"
+msgstr "Ṣatunkọ Data Kaadi"
+
+#: modules/content-board/library/content-board-utilities.php:51
+#: modules/content-overview/library/content-overview-methods.php:276
+msgid "Print"
+msgstr "Tẹjade"
+
+#: modules/content-board/library/content-board-utilities.php:63
+#: modules/content-overview/library/content-overview-methods.php:288
+msgid "Maximum number of posts to display"
+msgstr "Iye to pọ ju ti awọn ifiweranṣẹ lọ lati fi hàn"
+
+#: modules/content-board/library/content-board-utilities.php:84
+#: modules/content-overview/library/content-overview-methods.php:309
+msgid "New Post"
+msgstr "Ifiweranṣẹ Tuntun"
+
+#: modules/content-board/library/content-board-utilities.php:217
+msgid "Enable or Disable"
+msgstr "Mú ṣiṣẹ tabi Dènà"
+
+#: modules/content-board/library/content-board-utilities.php:218
+msgid "Reorder"
+msgstr "Tunṣẹ"
+
+#: modules/content-board/library/content-board-utilities.php:223
+msgid "Enable or Disable Content Board Card Data."
+msgstr "Mú ṣiṣẹ tabi Dènà Data Kaadi Iboju Akọkọ."
+
+#: modules/content-board/library/content-board-utilities.php:296
+msgid "Drag to change enabled card data order."
+msgstr "Fa lati yi aṣẹ data kaadi ti a mu ṣiṣẹ pada."
+
+#: modules/content-board/library/content-board-utilities.php:369
+msgid "Enable or Disable Content Board filter."
+msgstr "Mú ṣiṣẹ tabi Dènà àlẹmọ Iboju Akọkọ."
+
+#: modules/content-board/library/content-board-utilities.php:394
+#: modules/content-overview/library/content-overview-utilities.php:202
+msgid "Select Metakey"
+msgstr "Yan Metakey"
+
+#: modules/content-board/library/content-board-utilities.php:509
+#: modules/content-overview/library/content-overview-utilities.php:614
+msgid "Show content from"
+msgstr "Fi akoonu han lati"
+
+#: modules/content-board/library/content-board-utilities.php:554
+#: modules/content-overview/library/content-overview-utilities.php:659
+#: modules/editorial-comments/editorial-comments.php:574
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:425
+#: modules/editorial-comments/lib/editorial-comments.js:350
+msgid "Cancel"
+msgstr "Fagilee"
+
+#: modules/content-board/library/content-board-utilities.php:555
+#: modules/content-overview/library/content-overview-utilities.php:660
+msgid "Change"
+msgstr "Yipada"
+
+#: modules/content-board/library/content-board-utilities.php:987
+#: modules/content-overview/library/content-overview-utilities.php:314
+#, php-format
+msgid "Add New %s"
+msgstr "Fi %s Tuntun Kun"
+
+#: modules/content-board/library/content-board-utilities.php:1121
+#: modules/content-overview/library/content-overview-utilities.php:447
+#, php-format
+msgid "Create %s"
+msgstr "Ṣẹda %s"
+
+#: modules/content-board/library/content-board-utilities.php:1123
+#: modules/content-overview/library/content-overview-utilities.php:449
+msgid "Submit"
+msgstr "Fikun"
+
+#: modules/content-board/library/content-board-utilities.php:1171
+#: modules/content-overview/library/content-overview-utilities.php:497
+msgid "Publish Date"
+msgstr "Ọjọ Ifiweranṣẹ"
+
+#: modules/content-overview/content-overview.php:156
+#: modules/content-overview/content-overview.php:376
+#: modules/content-overview/content-overview.php:393
+#: modules/content-overview/content-overview.php:394
+msgid "Content Overview"
+msgstr "Akopọ Akọnu"
+
+#: modules/content-overview/content-overview.php:654
+msgid "Column updated successfully."
+msgstr "Ọwọn ti ni imudojuiwọn ni aṣeyọri."
+
+#: modules/content-overview/content-overview.php:837
+#: modules/content-overview/content-overview.php:896
+msgid "Last Modified"
+msgstr "Ikẹhin ti yipada"
+
+#: modules/content-overview/content-overview.php:883
+msgid "Custom Columns"
+msgstr "Ọwọn Aṣ customized"
+
+#: modules/content-overview/content-overview.php:884
+msgid "Click the \"Add New\" button to create new columns."
+msgstr "Tẹ bọtini \"Fi Tuntun Kun\" lati ṣẹda awọn ọwọn tuntun."
+
+#: modules/content-overview/content-overview.php:890
+msgid "Inbuilt Columns"
+msgstr "Ọwọn Ti a kọkọ"
+
+#: modules/content-overview/library/content-overview-methods.php:207
+msgid "Item moved to the trash."
+msgid_plural "%d items moved to the trash."
+msgstr[0] "Ìtòlẹ́sẹẹsẹ ti a gbe lọ si ikọ̀."
+
+#: modules/content-overview/library/content-overview-methods.php:221
+msgid "Item restored from the Trash."
+msgid_plural "%d items restored from the Trash."
+msgstr[0] "Ìtòlẹ́sẹẹsẹ ti a mu padà lati ikọ̀."
+
+#: modules/content-overview/library/content-overview-methods.php:257
+msgid "Customize Columns"
+msgstr "Ṣatunkọ Awọn ọwọn"
+
+#: modules/content-overview/library/content-overview-utilities.php:25
+msgid "Enable Columns"
+msgstr "Mu awọn ọwọn ṣiṣẹ"
+
+#: modules/content-overview/library/content-overview-utilities.php:26
+msgid "Reorder Columns"
+msgstr "Tunṣe awọn ọwọn"
+
+#: modules/content-overview/library/content-overview-utilities.php:31
+msgid "Enable or Disable Content Overview table column."
+msgstr "Mu ṣiṣẹ tabi Paṣẹ tabili akopọ akoonu."
+
+#: modules/content-overview/library/content-overview-utilities.php:52
+msgid "Column Title"
+msgstr " akọle ọwọn"
+
+#: modules/content-overview/library/content-overview-utilities.php:61
+msgid "Add Column"
+msgstr " fi ọwọn kun"
+
+#: modules/content-overview/library/content-overview-utilities.php:104
+msgid "Drag to change enabled columns order."
+msgstr " fa lati yi aṣẹ awọn ọwọn ti a ti muu ṣiṣẹ pada."
+
+#: modules/content-overview/library/content-overview-utilities.php:177
+msgid "Enable or Disable Content Overview filter."
+msgstr " Muu ṣiṣẹ tabi Dena àlẹmọ Akọsilẹ akoonu."
+
+#: modules/dashboard/dashboard.php:56
+msgid "Dashboard Widgets"
+msgstr " Awọn ohun elo Dasibodu"
+
+#: modules/dashboard/dashboard.php:70
+msgid "Widget Options"
+msgstr " Awọn aṣayan ohun elo"
+
+#: modules/dashboard/dashboard.php:165
+msgid "Unpublished Content"
+msgstr " Akọsilẹ ti a ko tẹjade"
+
+#: modules/dashboard/dashboard.php:174
+#: modules/dashboard/dashboard.php:353
+msgid "Notepad"
+msgstr " Kọmputa"
+
+#: modules/dashboard/dashboard.php:183
+#: modules/dashboard/dashboard.php:346
+msgid "My Content Notifications"
+msgstr " Awọn iwifunni akoonu mi"
+
+#: modules/dashboard/dashboard.php:211
+msgid "Posts at a Glance"
+msgstr " Awọn ifiweranṣẹ ni irisi"
+
+#: modules/dashboard/dashboard.php:305
+msgid "This post was last updated on "
+msgstr " Ifiweranṣẹ yii ni a ṣe imudojuiwọn ni "
+
+#: modules/dashboard/dashboard.php:316
+msgid "Sorry! You're not subscribed to any posts!"
+msgstr " E ma binu! Iwọ ko ti forukọsilẹ si eyikeyi ifiweranṣẹ!"
+
+#: modules/dashboard/dashboard.php:339
+msgid "Post Status Widget"
+msgstr " Ipo ohun elo ifiweranṣẹ"
+
+#: modules/dashboard/dashboard.php:410
+msgid "The notifications module will need to be enabled for this widget to display."
+msgstr " A nilo lati muu module iwifunni ṣiṣẹ ki ohun elo yii le han."
+
+#: modules/dashboard/widgets/dashboard-notepad.php:50
+msgid "Dashboard Note"
+msgstr " Ifiranṣẹ Dasibodu"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:140
+#, php-format
+msgid "%1$s last updated on %2$s"
+msgstr "%1$s ti ṣe imudojuiwọn ni %2$s"
+
+#: modules/dashboard/widgets/dashboard-notepad.php:168
+msgid "Update Note"
+msgstr " Imudojuiwọn Ifiranṣẹ"
+
+#: modules/debug/debug.php:68
+msgid "Debug"
+msgstr " Ṣayẹwo aṣiṣe"
+
+#: modules/debug/debug.php:228
+#: modules/debug/debug.php:291
+msgid "PublishPress Debug Log"
+msgstr " Ifiweranṣẹ Iṣayẹwo PublishPress"
+
+#: modules/debug/debug.php:242
+#: modules/debug/debug.php:243
+msgid "Debug Log"
+msgstr " Iwe afọwọkọ iṣayẹwo"
+
+#: modules/debug/debug.php:292
+msgid "File info"
+msgstr "Alaye faili"
+
+#: modules/debug/debug.php:293
+msgid "Path"
+msgstr "Ọna"
+
+#: modules/debug/debug.php:294
+msgid "Log content"
+msgstr "Akopọ log"
+
+#: modules/debug/debug.php:295
+msgid "Size"
+msgstr "Iwọn"
+
+#: modules/debug/debug.php:296
+msgid "Created on"
+msgstr "Ti ṣẹda ni"
+
+#: modules/debug/debug.php:297
+msgid "Modified on"
+msgstr "Ti yipada ni"
+
+#: modules/debug/debug.php:298
+msgid "Delete file"
+msgstr "Pa faili"
+
+#: modules/debug/debug.php:299
+msgid "Debug data"
+msgstr "Data debug"
+
+#: modules/debug/debug.php:300
+msgid "Log File"
+msgstr "Faili Log"
+
+#: modules/debug/debug.php:303
+msgid "Log file not found."
+msgstr "Faili log ko ri."
+
+#: modules/debug/debug.php:304
+msgid ""
+"If you see any error or look for information regarding PublishPress, please "
+"don't hesitate to contact the support team. E-mail us:"
+msgstr ""
+"Ti o ba rii eyikeyi aṣiṣe tabi wa alaye nipa PublishPress, jọwọ ma ṣe "
+"ṣiyemeji lati kan si ẹgbẹ atilẹyin. Fi imeeli ranṣẹ si wa:"
+
+#: modules/debug/debug.php:308
+msgid "Click to delete the log file. Be careful, this operation can not be undone. "
+msgstr "Tẹ lati pa faili log. Ṣọra, iṣẹ yii ko le yipada."
+
+#: modules/debug/debug.php:358
+msgid "Action nonce not found."
+msgstr "Aisi action nonce."
+
+#: modules/debug/debug.php:365
+msgid "Invalid action nonce."
+msgstr "Action nonce ti ko tọ."
+
+#: modules/editorial-comments/editorial-comments.php:63
+#: modules/editorial-comments/editorial-comments.php:231
+#: modules/editorial-comments/editorial-comments.php:232
+#: modules/editorial-comments/editorial-comments.php:453
+msgid "Editorial Comments"
+msgstr "Awọn asọye akọsilẹ"
+
+#: modules/editorial-comments/editorial-comments.php:78
+msgid "Choose Post Types"
+msgstr "Yan Awọn irufẹ Ifiweranṣẹ"
+
+#: modules/editorial-comments/editorial-comments.php:83
+msgid ""
+"<p>Editorial comments help you cut down on email overload and keep the "
+"conversation close to where it matters: your content. Threaded commenting "
+"in the admin, similar to what you find at the end of a blog post, allows "
+"writers and editors to privately leave feedback and discuss what needs to "
+"be changed before publication.</p><p>Anyone with access to view the story "
+"in progress will also have the ability to comment on it. If you have "
+"notifications enabled, those following the post will receive an email every "
+"time a comment is left.</p>"
+msgstr ""
+"<p>Awọn ọrọ-ọrọ ẹlẹrọ n ṣe iranlọwọ fun ọ lati dinku ikọlu imeeli ati ki o "
+"pa ibaraẹnisọrọ sunmọ ibi ti o ṣe pataki: akoonu rẹ. Awọn ọrọ-ọrọ ti a fi "
+"kún ninu iṣakoso, ti o jọra si ohun ti o rii ni ipari ifiweranṣẹ bulọọgi "
+"kan, gba awọn onkọwe ati awọn olootu laaye lati fi esi silẹ ni ikọkọ ki o "
+"si jiroro lori ohun ti o nilo lati yipada ṣaaju itẹjade.</p><p>Ẹnikẹni ti o "
+"ni iraye si lati wo itan ti n lọ yoo tun ni anfani lati sọ asọye lori rẹ. "
+"Ti o ba ni awọn ikilọ ti a mu ṣiṣẹ, awọn ti o tẹle ifiweranṣẹ naa yoo gba "
+"imeeli ni gbogbo igba ti a ba fi asọye silẹ.</p>"
+
+#: modules/editorial-comments/editorial-comments.php:88
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">Editorial "
+"Comments Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Fun alaye diẹ sii:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-comments/\">Iwe Itọsọna "
+"Awọn ọrọ-ọrọ Ẹlẹrọ</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress lori "
+"Github</a></p>"
+
+#: modules/editorial-comments/editorial-comments.php:205
+#: modules/editorial-comments/editorial-comments.php:717
+msgid "Remove"
+msgstr "Yọkuro"
+
+#: modules/editorial-comments/editorial-comments.php:206
+#: modules/editorial-comments/library/EditorialCommentsTable.php:181
+#: modules/notifications-log/notifications-log.php:204
+msgid "All Posts"
+msgstr "Gbogbo Awọn Ifiweranṣẹ"
+
+#: modules/editorial-comments/editorial-comments.php:207
+#: modules/editorial-comments/library/EditorialCommentsTable.php:196
+msgid "All Users"
+msgstr "Gbogbo Awọn olumulo"
+
+#: modules/editorial-comments/editorial-comments.php:272
+#. translators: %s: search keywords
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Abajade wiwa fun &#8220;%s&#8221;"
+
+#: modules/editorial-comments/editorial-comments.php:285
+msgid "Search Comments"
+msgstr "Wa Awọn ikọkọ"
+
+#: modules/editorial-comments/editorial-comments.php:528
+msgid ""
+"You can add editorial comments to a post once you've saved it for the first "
+"time."
+msgstr ""
+"O le ṣafikun awọn ọrọ-ọrọ ẹlẹrọ si ifiweranṣẹ kan ni kete ti o ba ti fipamọ "
+"rẹ fun igba akọkọ."
+
+#: modules/editorial-comments/editorial-comments.php:548
+#: modules/editorial-comments/editorial-comments.php:552
+msgid "Add an editorial comment"
+msgstr "Fi ikọkọ olootu kun"
+
+#: modules/editorial-comments/editorial-comments.php:558
+msgid "Attach file"
+msgstr "So faili pọ"
+
+#: modules/editorial-comments/editorial-comments.php:570
+msgid "Add Comment"
+msgstr "Fi Ikọkọ Kun"
+
+#: modules/editorial-comments/editorial-comments.php:616
+msgid "Reply to this comment"
+msgstr "Fesi si ikọkọ yii"
+
+#: modules/editorial-comments/editorial-comments.php:619
+msgid "Reply"
+msgstr "Fesi"
+
+#: modules/editorial-comments/editorial-comments.php:639
+#: modules/editorial-comments/library/EditorialCommentsTable.php:434
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:161
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:303
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:333
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:614
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:644
+#: modules/notifications-log/library/NotificationsLogTable.php:376
+#: modules/notifications-log/library/NotificationsLogTable.php:407
+msgid "Delete"
+msgstr "Pa"
+
+#: modules/editorial-comments/editorial-comments.php:684
+#, php-format
+msgid "said on %1$s at %2$s"
+msgstr "sọrọ lori %1$s ni %2$s"
+
+#: modules/editorial-comments/editorial-comments.php:745
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be adding editorial "
+"comments."
+msgstr "Ayẹwo nonce kuna. Jọwọ rii daju pe o yẹ ki o n ṣafikun awọn ọrọ-ọrọ ẹlẹrọ."
+
+#: modules/editorial-comments/editorial-comments.php:753
+#: modules/editorial-comments/editorial-comments.php:894
+#: modules/editorial-comments/editorial-comments.php:1026
+#: modules/editorial-comments/editorial-comments.php:1142
+msgid "Invalid comment data"
+msgstr "Data ikọkọ ti ko tọ"
+
+#: modules/editorial-comments/editorial-comments.php:766
+msgid ""
+"Sorry, you don't have the privileges to add editorial comments. Please talk "
+"to your Administrator."
+msgstr ""
+"E ma binu, o ko ni awọn anfani lati ṣafikun awọn ọrọ-ọrọ ẹlẹrọ. Jọwọ sọrọ "
+"pẹlu Alakoso rẹ."
+
+#: modules/editorial-comments/editorial-comments.php:776
+#: modules/editorial-comments/editorial-comments.php:940
+msgid "Please enter a comment."
+msgstr "Jọwọ tẹ ikọkọ kan sii."
+
+#: modules/editorial-comments/editorial-comments.php:863
+#: modules/editorial-comments/editorial-comments.php:993
+#: modules/editorial-comments/editorial-comments.php:1103
+#: modules/editorial-comments/editorial-comments.php:1187
+msgid "There was a problem of some sort. Try again or contact your administrator."
+msgstr "Iṣoro kan wa. Gbiyanju lẹẹkan si tabi kan si alakoso rẹ."
+
+#: modules/editorial-comments/editorial-comments.php:883
+#: modules/editorial-comments/editorial-comments.php:1015
+#: modules/editorial-comments/editorial-comments.php:1132
+msgid ""
+"Nonce check failed. Please ensure you're supposed to be editing editorial "
+"comments."
+msgstr "Ayẹwo nonce kuna. Jọwọ rii daju pe o yẹ ki o n ṣatunkọ awọn ọrọ-ọrọ ẹlẹrọ."
+
+#: modules/editorial-comments/editorial-comments.php:909
+#: modules/editorial-comments/editorial-comments.php:1041
+msgid ""
+"Sorry, you don't have the privileges to edit editorial comments. Please "
+"talk to your Administrator."
+msgstr ""
+"E ma binu, o ko ni awọn anfani lati ṣatunkọ awọn ọrọ-ọrọ ẹlẹrọ. Jọwọ sọrọ "
+"pẹlu Alakoso rẹ."
+
+#: modules/editorial-comments/editorial-comments.php:927
+msgid ""
+"Sorry, you don't have the privileges to edit this editorial comment. Please "
+"talk to your Administrator."
+msgstr ""
+"E ma binu, o ko ni awọn anfani lati ṣe atunṣe ọrọ iroyin yii. Jọwọ ba "
+"Alakoso rẹ sọrọ."
+
+#: modules/editorial-comments/editorial-comments.php:1057
+#: modules/editorial-comments/editorial-comments.php:1161
+msgid ""
+"Sorry, you don't have the privileges to delete this editorial comment. "
+"Please talk to your Administrator."
+msgstr ""
+"E ma binu, o ko ni awọn anfani lati pa ọrọ iroyin yii. Jọwọ ba Alakoso rẹ "
+"sọrọ."
+
+#: modules/editorial-comments/editorial-comments.php:1078
+msgid "Sorry, you can't delete this editorial comment because it has some replies."
+msgstr "E ma binu, o ko le pa asọye olootu yii nitori o ni diẹ ninu awọn idahun."
+
+#: modules/editorial-comments/editorial-comments.php:1179
+msgid "Comment deleted successfully."
+msgstr "Asọye ti paarẹ ni aṣeyọri."
+
+#: modules/editorial-comments/editorial-comments.php:1230
+msgid "Enable for these post types:"
+msgstr "Mú ṣiṣẹ fun awọn iru ifiweranṣẹ wọnyi:"
+
+#: modules/editorial-comments/editorial-comments.php:1237
+msgid "Comment author name field:"
+msgstr "Ìkàwé orukọ onkọwe asọye:"
+
+#: modules/editorial-comments/editorial-comments.php:1262
+msgid "Nickname"
+msgstr "Orukọ ìbáṣepọ"
+
+#: modules/editorial-comments/editorial-comments.php:1263
+msgid "Username"
+msgstr "Orukọ olumulo"
+
+#: modules/editorial-comments/editorial-comments.php:1264
+msgid "Display Name"
+msgstr "Orukọ ifihan"
+
+#: modules/editorial-comments/editorial-comments.php:1265
+msgid "First Name"
+msgstr "Orukọ akọkọ"
+
+#: modules/editorial-comments/editorial-comments.php:1266
+msgid "Last Name"
+msgstr "Orukọ ikẹhin"
+
+#: modules/editorial-comments/editorial-comments.php:1268
+msgid "User Url"
+msgstr "Url olumulo"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:158
+msgid "No editorial comments."
+msgstr "Ko si awọn asọye olootu."
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:210
+#: modules/notifications-log/library/NotificationsLogTable.php:646
+msgid "Filter"
+msgstr "Àlẹmọ"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:229
+msgid "Comment"
+msgstr "Asọye"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:231
+msgid "Post"
+msgstr "Ifiweranṣẹ"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:233
+msgid "Submitted on"
+msgstr "Ti fi silẹ ni"
+
+#: modules/editorial-comments/library/EditorialCommentsTable.php:336
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-date-handler.php:201
+#: modules/notifications/notifications.php:1974
+#. translators: 1: Comment date, 2: Comment time.
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s ni %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:109
+msgid "Editorial fields term added."
+msgstr "Ìpinnu aaye olootu ti ṣafikun."
+
+#: modules/editorial-metadata/editorial-metadata.php:110
+msgid "Editorial fields term updated."
+msgstr "Ìpinnu aaye olootu ti ṣe imudojuiwọn."
+
+#: modules/editorial-metadata/editorial-metadata.php:111
+msgid "Editorial fields term doesn't exist."
+msgstr "Ìpinnu aaye olootu ko si."
+
+#: modules/editorial-metadata/editorial-metadata.php:112
+msgid "Editorial fields term deleted."
+msgstr "Ìpinnu aaye olootu ti paarẹ."
+
+#: modules/editorial-metadata/editorial-metadata.php:113
+msgid "Editorial fields order updated."
+msgstr "Àtúnṣe àṣẹ àwọn àkọsílẹ́ ìtẹ́wọ́gbà."
+
+#: modules/editorial-metadata/editorial-metadata.php:114
+msgid "Editorial fields visibility changed."
+msgstr "Àtúnṣe ìfihàn àwọn àkọsílẹ́ ìtẹ́wọ́gbà."
+
+#: modules/editorial-metadata/editorial-metadata.php:120
+msgid ""
+"<p>Keep track of important details about your content with editorial "
+"fields. This feature allows you to create as many date, text, number, etc. "
+"fields as you like, and then use them to store information like contact "
+"details or the location of an interview.</p><p>Once you’ve set your fields "
+"up, editorial fields integrates with both the calendar and the content "
+"overview. Make an editorial fields item visible to have it appear to the "
+"rest of your team. Keep it hidden to restrict the information between the "
+"writer and their editor.</p>"
+msgstr ""
+"<p>Tọju awọn alaye pataki nipa akoonu rẹ pẹlu awọn aaye iroyin. Ẹya yii gba "
+"ọ laaye lati ṣẹda ọpọlọpọ awọn aaye ọjọ, ọrọ, nọmba, ati bẹbẹ lọ, gẹgẹ bi o "
+"ṣe fẹ, ati lẹhinna lo wọn lati fipamọ alaye bii awọn alaye olubasọrọ tabi "
+"ipo ibere ijomitoro.</p><p>Lẹ́yìn tí o ti ṣètò àwọn àyè rẹ, àwọn àyè iroyin "
+"darapọ mọ mejeeji kalẹnda ati akopọ akoonu. Ṣe ẹya aaye iroyin han lati jẹ "
+"ki o han si awọn ọmọ ẹgbẹ rẹ. Tọju rẹ ni ikoko lati dènà alaye laarin "
+"onkọwe ati olootu wọn.</p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:125
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">Editorial "
+"Fields Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Fun alaye diẹ sii:</strong></p><p><a "
+"href=\"https://publishpress.com/features/editorial-metadata/\">Iwe Itọsọna "
+"Awoṣe Iroyin</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress lori "
+"Github</a></p>"
+
+#: modules/editorial-metadata/editorial-metadata.php:212
+msgid "First Draft Date"
+msgstr "Ọjọ́ Àkọ́kọ́ Ìtẹ́wọ́gbà"
+
+#: modules/editorial-metadata/editorial-metadata.php:215
+msgid "When the first draft needs to be ready."
+msgstr "Nígbà tí àkọ́kọ́ ìtẹ́wọ́gbà bá nílò láti jẹ́ ready."
+
+#: modules/editorial-metadata/editorial-metadata.php:220
+msgid "Assignment"
+msgstr "Àṣẹ"
+
+#: modules/editorial-metadata/editorial-metadata.php:223
+msgid "What the post needs to cover."
+msgstr "Kí ni ìkọ̀wé náà nílò láti bo."
+
+#: modules/editorial-metadata/editorial-metadata.php:288
+msgid "Checkbox"
+msgstr "Àyẹ̀wò"
+
+#: modules/editorial-metadata/editorial-metadata.php:289
+msgid "Dropdown Select"
+msgstr "Yiyan Àkópọ̀"
+
+#: modules/editorial-metadata/editorial-metadata.php:291
+msgid "Location"
+msgstr "Ipo"
+
+#: modules/editorial-metadata/editorial-metadata.php:292
+msgid "Number"
+msgstr "Nọ́mbà"
+
+#: modules/editorial-metadata/editorial-metadata.php:293
+msgid "Paragraph"
+msgstr "Párágrafu"
+
+#: modules/editorial-metadata/editorial-metadata.php:294
+msgid "Text"
+msgstr "Ọrọ"
+
+#: modules/editorial-metadata/editorial-metadata.php:295
+msgid "User"
+msgstr "Olumulo"
+
+#: modules/editorial-metadata/editorial-metadata.php:372
+msgid ""
+"Are you sure you want to delete this term? Any metadata for this term will "
+"remain but will not be visible unless this term is re-added."
+msgstr ""
+"Ṣe o da ọ loju pe o fẹ pa ọrọ yii? Gbogbo metadata fun ọrọ yii yoo wa "
+"ṣugbọn ko ni han ayafi ti a ba tun fi ọrọ yii kun."
+
+#: modules/editorial-metadata/editorial-metadata.php:453
+msgid "Search Editorial Fields"
+msgstr "Wa Àwọn Àkọsílẹ́ Ìtẹ́wọ́gbà"
+
+#: modules/editorial-metadata/editorial-metadata.php:454
+msgid "Popular Editorial Fields"
+msgstr "Àwọn Àkọsílẹ́ Ìtẹ́wọ́gbà tó gbajúmọ̀"
+
+#: modules/editorial-metadata/editorial-metadata.php:455
+msgid "All Editorial Fields"
+msgstr "Gbogbo Àkọsílẹ́ Ìtẹ́wọ́gbà"
+
+#: modules/editorial-metadata/editorial-metadata.php:456
+msgid "Edit Editorial Fields"
+msgstr "Ṣatunkọ Àwọn Àkọsílẹ́ Ìtẹ́wọ́gbà"
+
+#: modules/editorial-metadata/editorial-metadata.php:457
+msgid "Update Editorial Fields"
+msgstr "Ṣe imudojuiwọn awọn aaye atẹjade"
+
+#: modules/editorial-metadata/editorial-metadata.php:458
+msgid "Add New Editorial Fields"
+msgstr "Fi awọn aaye atẹjade tuntun kun"
+
+#: modules/editorial-metadata/editorial-metadata.php:459
+msgid "New Editorial Fields"
+msgstr "Awọn aaye atẹjade tuntun"
+
+#: modules/editorial-metadata/editorial-metadata.php:549
+msgid "No editorial fields available."
+msgstr "Ko si awọn aaye atẹjade ti o wa."
+
+#: modules/editorial-metadata/editorial-metadata.php:551
+#, php-format
+msgid " <a href=\"%s\">Add fields to get started</a>."
+msgstr " <a href=\"%s\">Fi awọn aaye kun lati bẹrẹ</a>."
+
+#: modules/editorial-metadata/editorial-metadata.php:553
+msgid ""
+" Encourage your site administrator to configure your editorial workflow by "
+"adding editorial fields."
+msgstr ""
+"Gba alakoso aaye rẹ niyanju lati tunto ilana iṣẹ iroyin rẹ nipa fifi awọn "
+"aaye iroyin kun."
+
+#: modules/editorial-metadata/editorial-metadata.php:1244
+#: modules/editorial-metadata/editorial-metadata.php:1401
+msgid "All options value and labels are required."
+msgstr "Gbogbo awọn iye aṣayan ati awọn aami jẹ dandan."
+
+#: modules/editorial-metadata/editorial-metadata.php:1253
+msgid "Please enter a name for the editorial fields."
+msgstr "Jọwọ tẹ orukọ kan fun awọn aaye atẹjade."
+
+#: modules/editorial-metadata/editorial-metadata.php:1260
+msgid "Please enter a slug for the editorial fields."
+msgstr "Jọwọ tẹ slug kan fun awọn aaye atẹjade."
+
+#: modules/editorial-metadata/editorial-metadata.php:1266
+msgid "Name conflicts with existing term. Please choose another."
+msgstr "Orukọ naa n ja pẹlu ọrọ to wa tẹlẹ. Jọwọ yan omiran."
+
+#: modules/editorial-metadata/editorial-metadata.php:1273
+#: modules/editorial-metadata/editorial-metadata.php:1433
+msgid "Name already in use. Please choose another."
+msgstr "Orukọ naa ti lo tẹlẹ. Jọwọ yan omiran."
+
+#: modules/editorial-metadata/editorial-metadata.php:1277
+msgid "Slug already in use. Please choose another."
+msgstr "Slug naa ti lo tẹlẹ. Jọwọ yan omiran."
+
+#: modules/editorial-metadata/editorial-metadata.php:1283
+#: modules/editorial-metadata/editorial-metadata.php:1290
+#: modules/editorial-metadata/editorial-metadata.php:1446
+msgid "Name cannot exceed 200 characters. Please try a shorter name."
+msgstr "Orukọ ko le kọja awọn ohun kikọ 200. Jọwọ gbiyanju orukọ ti o kuru diẹ."
+
+#: modules/editorial-metadata/editorial-metadata.php:1300
+msgid "Please select a valid metadata type."
+msgstr "Jọwọ yan iru metadata to wulo."
+
+#: modules/editorial-metadata/editorial-metadata.php:1332
+msgid "Error adding term."
+msgstr "Aṣiṣe ni fifi ọrọ kun."
+
+#: modules/editorial-metadata/editorial-metadata.php:1410
+msgid "Please enter a name for the editorial fields"
+msgstr "Jọwọ tẹ orukọ kan fun awọn aaye atẹjade"
+
+#: modules/editorial-metadata/editorial-metadata.php:1415
+msgid "Please enter a valid, non-numeric name for the editorial fields."
+msgstr "Jọwọ tẹ orukọ to wulo, ti kii ṣe nọmba fun awọn aaye atẹjade."
+
+#: modules/editorial-metadata/editorial-metadata.php:1424
+msgid "Metadata name conflicts with existing term. Please choose another."
+msgstr "Orukọ metadata n ja pẹlu ọrọ to wa tẹlẹ. Jọwọ yan omiran."
+
+#: modules/editorial-metadata/editorial-metadata.php:1438
+msgid "Name conflicts with slug for another term. Please choose something else."
+msgstr "Orukọ naa n ja pẹlu slug fun ọrọ miiran. Jọwọ yan nkan miiran."
+
+#: modules/editorial-metadata/editorial-metadata.php:1482
+#: modules/editorial-metadata/editorial-metadata.php:1525
+msgid "Error updating term."
+msgstr "Aṣiṣe ni imudojuiwọn ọrọ."
+
+#: modules/editorial-metadata/editorial-metadata.php:1550
+msgid "Terms not set."
+msgstr "Awọn ofin ko ti ṣeto."
+
+#: modules/editorial-metadata/editorial-metadata.php:1591
+msgid "Error deleting term."
+msgstr "Aṣiṣe ni piparẹ ofin."
+
+#: modules/editorial-metadata/editorial-metadata.php:1638
+msgid "Register editorial fields for these post types:"
+msgstr "Forukọsilẹ awọn aaye akọwe fun awọn iru ifiweranṣẹ wọnyi:"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:109
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:143
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:350
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:659
+msgid "No"
+msgstr "Rara"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:110
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-checkbox-handler.php:142
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:351
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:660
+msgid "Yes"
+msgstr "Bẹẹni"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:84
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:106
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:127
+msgid "This editorial fields type is not yet supported."
+msgstr "Iru aaye akọwe yii ko ti ni atilẹyin sibẹsibẹ."
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-handler.php:223
+msgid "Not set"
+msgstr "Ko ti ṣeto"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-location-handler.php:82
+#, php-format
+msgid "View &#8220;%s&#8221; on Google Maps"
+msgstr "Wo &#8220;%s&#8221; lori Google Maps"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-select-handler.php:255
+#, php-format
+msgid "-- Select %s --"
+msgstr "-- Yan %s --"
+
+#: modules/editorial-metadata/input-handlers/editorial-metadata-input-user-handler.php:79
+msgid "-- Select a user --"
+msgstr "-- Yan olumulo kan --"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:44
+msgid "Position"
+msgstr "Ipo"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:45
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:443
+msgid "Name"
+msgstr "Orukọ"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:47
+msgid "Field Type"
+msgstr "Iru Aaye"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:48
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:176
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:474
+msgid "Description"
+msgstr "Apejuwe"
+
+#: modules/editorial-metadata/library/editorial-metadata-list-table.php:135
+msgid "No editorial fields found."
+msgstr "Ko si awọn aaye akọwe ti a ri."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:158
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:452
+msgid "The name is for labeling the editorial fields."
+msgstr "Orukọ naa jẹ fun aami awọn aaye akọwe."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:163
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:457, fuzzy
+msgid "Slug"
+msgstr "Slug"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:168
+msgid "The slug cannot be changed once the term has been created."
+msgstr "Slug ko le yipada ni kete ti ofin ti ṣẹda."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:184
+msgid ""
+"The description can be used to communicate with your team about what the "
+"field is for."
+msgstr "Apejuwe le ṣee lo lati ba ẹgbẹ rẹ sọrọ nipa ohun ti aaye naa jẹ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:193
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:491
+msgid "Type"
+msgstr "Iru"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:198
+msgid "The field type cannot be changed once created."
+msgstr "Iru aaye naa ko le yipada lẹ́yìn tí a ti dá a sílẹ̀."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:204
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:516
+msgid "User role"
+msgstr "Iṣẹ́ olumulo"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:211
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:523
+msgid "Select roles..."
+msgstr "Yan awọn iṣẹ́..."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:223
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:537
+msgid ""
+"Filter the list of users in the editorial meta to users in the selected "
+"roles."
+msgstr ""
+"Ṣe àlẹmọ atokọ awọn olumulo ninu metadata iroyin si awọn olumulo ni awọn "
+"ipa ti a yan."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:229
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:542
+msgid "Select Type"
+msgstr "Yan Iru"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:233
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:545
+msgid "Single Select"
+msgstr "Yan Ẹ̀yà Kan"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:234
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:546
+msgid "Multiple Select"
+msgstr "Yan Ọ̀pọ̀ Ẹ̀yà"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:251
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:566
+msgid "Indicate the select type."
+msgstr "Ṣàpèjúwe iru yiyan naa."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:258
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:571
+msgid "Dropdown Option"
+msgstr "Àṣàyàn Apoti"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:263
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:574
+msgid ""
+"Enter the dropdown option value and label. You can move options to change "
+"their order."
+msgstr "Tẹ iye aṣayan dropdown ati akọle. O le gbe awọn aṣayan lati yipada ibẹ wọn."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:285
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:316
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:596
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:627
+msgid "Meta Value"
+msgstr "Iye Meta"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:291
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:322
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:602
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:633
+msgid "Display Label"
+msgstr "Akọle Ifihan"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:300
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:330
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:611
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:641
+msgid "Default option"
+msgstr "Àṣàyàn aiyipada"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:338
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:649
+msgid "Add Another Option"
+msgstr "Fi Àṣàyàn Míràn Kún"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:346
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:656
+msgid "Show on Content Calendar and Overview form"
+msgstr "Fihan lori Kálẹ́ńdà Àkópọ̀ àti fọọmu Àkópọ̀"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:361
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:674
+msgid ""
+"If enabled, this field will be available when adding new posts on the "
+"Content Calendar and Overview screen."
+msgstr ""
+"Ti a ba mu ṣiṣẹ, aaye yii yoo wa nigba fifi awọn ifiweranṣẹ tuntun kun lori "
+"Kalẹnda Akoonu ati iboju Akopọ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:370
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:682
+msgid "Add to post types"
+msgstr "Fi kun awọn iru ifiweranṣẹ"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:375
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:686
+msgid "This field will be available for these post types."
+msgstr "Aaye yii yoo wa fun awọn iru ifiweranṣẹ wọnyi."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:394
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:704
+msgid "Show on Post Types screen"
+msgstr "Fihan lori iboju Awọn Iru Ifiweranṣẹ"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:399
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:708
+msgid "This field will be viewable on the overview screens for these post types."
+msgstr "Aaye yii yoo jẹ kó ye lori awọn iboju àkópọ̀ fun awọn iru ifiweranṣẹ wọnyi."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:422
+msgid "Update Editorial fields term"
+msgstr "Ṣe imudojuiwọn awọn agbegbe akọsilẹ"
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:466
+msgid ""
+"The \"slug\" is the URL-friendly version of the name. It is usually all "
+"lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
+"“Slug” ni ẹya URL-fẹran ti orukọ. O maa n jẹ gbogbo awọn lẹta kekere ati pe "
+"o ni awọn lẹta, nọmba, ati awọn hyphen nikan."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:483
+msgid ""
+"The description can be used to communicate with your team about what the "
+"metadata is for."
+msgstr "Apejuwe le ṣee lo lati ba ẹgbẹ rẹ sọrọ nipa ohun ti metadata jẹ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:511
+msgid "Indicate the type of editorial fields."
+msgstr "Ṣalaye iru awọn agbegbe akọsilẹ."
+
+#: modules/editorial-metadata/library/editorial-metadata-utilities.php:730
+msgid "Add New Editorial fields term"
+msgstr "Fi Term Awọn agbegbe akọsilẹ tuntun kun"
+
+#: modules/efmigration/efmigration.php:288
+msgid ""
+"Edit Flow should not be used alongside PublishPress Planner. If you want to "
+"use PublishPress Planner, please complete Edit Flow data migration and then "
+"deactivate Edit Flow."
+msgstr ""
+"Edit Flow ko yẹ ki o lo ni ẹgbẹ pẹlu PublishPress Planner. Ti o ba fẹ lo "
+"PublishPress Planner, jọwọ pari gbigbe data Edit Flow ki o si pa Edit Flow."
+
+#: modules/improved-notifications/improved-notifications.php:102
+msgid "Advanced Notifications"
+msgstr "Awọn iwifunni ilọsiwaju"
+
+#: modules/improved-notifications/improved-notifications.php:257
+msgid "Duplicated notification threshold:"
+msgstr "Iwọn iwifunni ti a daakọ:"
+
+#: modules/improved-notifications/improved-notifications.php:265
+msgid "Default notification channels:"
+msgstr "Iwọn iwifunni aiyipada:"
+
+#: modules/improved-notifications/improved-notifications.php:363
+msgid "Existing Post is updated"
+msgstr "Ifiweranṣẹ ti o wa ti ni imudojuiwọn"
+
+#: modules/improved-notifications/improved-notifications.php:409
+msgid "New Post is created in Draft status"
+msgstr "Ifiweranṣẹ tuntun ti ṣẹda ni ipo Iwe afọwọkọ"
+
+#: modules/improved-notifications/improved-notifications.php:462
+msgid "New Post is Published"
+msgstr "Ifiweranṣẹ tuntun ti tẹjade"
+
+#: modules/improved-notifications/improved-notifications.php:501
+msgid "Notify on editorial comments"
+msgstr "Ṣe iwifunni lori awọn akọsilẹ akọsilẹ"
+
+#: modules/improved-notifications/improved-notifications.php:606
+msgid "minutes"
+msgstr "iwa"
+
+#: modules/improved-notifications/improved-notifications.php:610
+msgid ""
+"This will prevent too many notifications being sent for the same or similar "
+"events. Set this to a higher number if you are receiving duplicate emails."
+msgstr ""
+"Eyi yoo dènà ọpọlọpọ awọn ìkìlọ ti a fi ranṣẹ fun awọn iṣẹlẹ kanna tabi ti "
+"o jọra. Ṣeto eyi si nọmba ti o ga julọ ti o ba n gba awọn imeeli ẹda."
+
+#: modules/improved-notifications/improved-notifications.php:656
+#: modules/improved-notifications/improved-notifications.php:1495
+#: views/user_profile_notification_channels.html.php:1
+msgid "Editorial Notifications"
+msgstr "Awọn iwifunni akọsilẹ"
+
+#: modules/improved-notifications/improved-notifications.php:657
+#: modules/improved-notifications/improved-notifications.php:1496
+#: views/user_profile_notification_channels.html.php:6
+msgid "Choose the channels where each workflow will send notifications to:"
+msgstr "Yan awọn ikanni nibiti iṣẹ-ṣiṣe kọọkan yoo firanṣẹ awọn iwifunni:"
+
+#: modules/improved-notifications/improved-notifications.php:661
+#: modules/improved-notifications/improved-notifications.php:1483
+#: modules/improved-notifications/improved-notifications.php:1500
+msgid "Muted"
+msgstr "Ti a ti mu"
+
+#: modules/improved-notifications/improved-notifications.php:662
+#: modules/improved-notifications/improved-notifications.php:1501
+#: views/user_profile_notification_channels.html.php:14
+msgid "Workflows"
+msgstr "Awọn iṣẹ-ṣiṣe"
+
+#: modules/improved-notifications/improved-notifications.php:663
+#: modules/improved-notifications/improved-notifications.php:1502
+#: views/user_profile_notification_channels.html.php:15
+msgid "Channels"
+msgstr "Awọn ikanni"
+
+#: modules/improved-notifications/improved-notifications.php:1088
+#: modules/notifications-log/notifications-log.php:75
+#: modules/notifications-log/notifications-log.php:263
+#: modules/notifications-log/notifications-log.php:489
+#: modules/notifications-log/notifications-log.php:490
+msgid "Notifications Log"
+msgstr "Iwe Itan Awọn Ifitonileti"
+
+#: modules/improved-notifications/improved-notifications.php:1122
+msgid "Workflow Settings"
+msgstr "Awọn Eto Ilana Ọna"
+
+#: modules/improved-notifications/improved-notifications.php:1131
+msgid "Options"
+msgstr "Awọn aṣayan"
+
+#: modules/improved-notifications/improved-notifications.php:1140
+msgid "Help"
+msgstr "Iranlọwọ"
+
+#: modules/improved-notifications/improved-notifications.php:1170
+#: modules/notifications-log/library/NotificationsLogTable.php:498
+msgid "For which content?"
+msgstr "Fun iru akoonu wo?"
+
+#: modules/improved-notifications/improved-notifications.php:1190
+msgid "What to say?"
+msgstr "Kini lati sọ?"
+
+#: modules/improved-notifications/improved-notifications.php:1310
+msgid "Select at least one option for each section."
+msgstr "Yan o kere ju aṣayan kan fun apakan kọọkan."
+
+#: modules/improved-notifications/improved-notifications.php:1314
+msgid ""
+"You can add dynamic information to the Subject or Body text using the "
+"following shortcodes:"
+msgstr ""
+"O le fi alaye iyipada kun si akọle tabi ọrọ Ara nipa lilo awọn koodu kukuru "
+"wọnyi:"
+
+#: modules/improved-notifications/improved-notifications.php:1319
+msgid "Editorial Comment"
+msgstr "Iwe Iṣeduro"
+
+#: modules/improved-notifications/improved-notifications.php:1320
+msgid "User making changes or comments"
+msgstr "Olumulo ti n ṣe awọn ayipada tabi awọn akọsilẹ"
+
+#: modules/improved-notifications/improved-notifications.php:1321
+msgid "Workflow"
+msgstr "Ilana Ọna"
+
+#: modules/improved-notifications/improved-notifications.php:1322
+msgid "Format"
+msgstr "Fọọmu"
+
+#: modules/improved-notifications/improved-notifications.php:1323
+msgid "Receiver"
+msgstr "Olugba"
+
+#: modules/improved-notifications/improved-notifications.php:1324
+msgid "shortcode"
+msgstr "koodu kukuru"
+
+#: modules/improved-notifications/improved-notifications.php:1325
+msgid "field"
+msgstr "pẹpẹ"
+
+#: modules/improved-notifications/improved-notifications.php:1326
+msgid ""
+"On each shortcode, you can select one or more fields. If more than one, "
+"they will be displayed separated by \", \"."
+msgstr ""
+"Ninu koodu kukuru kọọkan, o le yan ọkan tabi diẹ ẹ sii awọn aaye. Ti o ba "
+"ju ọkan lọ, wọn yoo han ni pipin nipasẹ “, ”."
+
+#: modules/improved-notifications/improved-notifications.php:1330
+msgid "Available fields"
+msgstr "Awọn pẹpẹ ti o wa"
+
+#: modules/improved-notifications/improved-notifications.php:1331
+msgid "Meta fields"
+msgstr "Awọn pẹpẹ Meta"
+
+#: modules/improved-notifications/improved-notifications.php:1332
+msgid "Click here to read more about shortcode options..."
+msgstr "Tẹ nibi lati ka siwaju nipa awọn aṣayan koodu kukuru..."
+
+#: modules/modules-settings/modules-settings.php:50
+msgid "Features"
+msgstr "Awọn ẹya"
+
+#: modules/modules-settings/modules-settings.php:236
+msgid "Feel free to select only the features you need."
+msgstr "Maṣe ṣiyemeji lati yan awọn ẹya ti o nilo nikan."
+
+#: modules/modules-settings/modules-settings.php:242
+msgid "Enabled features"
+msgstr "Awọn ẹya ti a mu ṣiṣẹ"
+
+#: modules/notifications-log/library/ModuleErrors.php:54
+msgid "Invalid receiver for the notification"
+msgstr "Olugba ti ko tọ fun iwifunni"
+
+#: modules/notifications-log/library/ModuleErrors.php:55
+msgid "Invalid channel for the notification"
+msgstr "Ikanni ti ko tọ fun iwifunni"
+
+#: modules/notifications-log/library/ModuleErrors.php:56
+msgid "Notification log not found"
+msgstr "Iwe itan iwifunni ko ri"
+
+#: modules/notifications-log/library/NotificationsLogModel.php:264
+msgid "The parent log was deleted or probably rescheduled"
+msgstr "Iwe itan obi ti paarẹ tabi boya ti tunto"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:116
+#, php-format
+msgid "Workflow: %s"
+msgstr "Iṣẹ-ṣiṣe: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:128
+#, php-format
+msgid "User: %s (%d)"
+msgstr "Olumulo: %s (%d)"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:157
+#, php-format
+msgid "Post type: %s"
+msgstr "Iru ifiweranṣẹ: %s"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:160
+#, php-format
+msgid "Post ID: %d"
+msgstr "ID ifiweranṣẹ: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:163
+#, php-format
+msgid "Blog ID: %d"
+msgstr "ID bulọọgi: %d"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:233
+#, php-format
+msgid "Scheduled for %d receivers. Click here to display them."
+msgstr "Tito lẹsẹsẹ fun %d awọn olugba. Tẹ nibi lati fi hàn wọn."
+
+#: modules/notifications-log/library/NotificationsLogTable.php:261
+msgid " Scheduled, but late"
+msgstr " Ti ṣeto, ṣugbọn pẹ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:263
+msgid " Scheduled"
+msgstr " Ti ṣeto"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:282
+#: modules/notifications-log/library/NotificationsLogTable.php:533
+msgid "Error"
+msgstr "Aṣiṣe"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:283
+msgid "The notification was set as \"Scheduled\" but the cron task is not found"
+msgstr "Iwifunni ti ṣeto bi \"Ti ṣeto\" ṣugbọn iṣẹ cron ko ri"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:288
+msgid "Sent"
+msgstr "Ti ranṣẹ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:291
+#: modules/notifications-log/library/NotificationsLogTable.php:525
+msgid "Skipped"
+msgstr "Ti fo"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304, fuzzy
+msgid "asynchronous"
+msgstr "asynchronous"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:304, fuzzy
+msgid "synchronous"
+msgstr "synchronous"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:361
+#: modules/notifications-log/library/NotificationsLogTable.php:406
+msgid "Reschedule"
+msgstr "Tun eto"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:383, fuzzy
+msgid "Blog: "
+msgstr "Blog: "
+
+#: modules/notifications-log/library/NotificationsLogTable.php:408
+msgid "Delete All"
+msgstr "Pa Gbogbo"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:517
+msgid "All"
+msgstr "Gbogbo"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:521
+msgid "Success"
+msgstr "Aseyori"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:590
+msgid "All events"
+msgstr "Gbogbo awọn iṣẹlẹ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:607
+msgid "All channels"
+msgstr "Gbogbo awọn ikanni"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:626
+msgid "From date"
+msgstr "Lati ọjọ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:632
+msgid "To date"
+msgstr "Si ọjọ"
+
+#: modules/notifications-log/library/NotificationsLogTable.php:640
+msgid "All Receivers"
+msgstr "Gbogbo awọn Olugba"
+
+#: modules/notifications-log/notifications-log.php:205
+msgid "All Workflows"
+msgstr "Gbogbo awọn Ilana iṣẹ"
+
+#: modules/notifications-log/notifications-log.php:206
+msgid "All Actions"
+msgstr "Gbogbo awọn Iṣe"
+
+#: modules/notifications-log/notifications-log.php:207
+msgid "All Channels"
+msgstr "Gbogbo awọn Ikanni"
+
+#: modules/notifications-log/notifications-log.php:208
+msgid "All Statuses"
+msgstr "Gbogbo awọn Ipo"
+
+#: modules/notifications-log/notifications-log.php:209
+#: publishpress.php:1426
+#: publishpress.php:1431
+msgid "Notification"
+msgstr "Ikilọ"
+
+#: modules/notifications-log/notifications-log.php:272
+#, php-format
+msgid "%s notification found."
+msgid_plural "%s notifications found."
+msgstr[0] "%s ikilọ ti wa."
+
+#: modules/notifications-log/notifications-log.php:284
+msgid "No notifications found."
+msgstr "Ko si awọn ikilọ ti wa."
+
+#: modules/notifications-log/notifications-log.php:442
+#, php-format
+msgid ""
+"This notification is very similar to another one sent less than %d minutes "
+"ago for the same receiver"
+msgstr ""
+"Ìkìlọ yìí dára tó bí ìkìlọ mìíràn tó kó lẹ́sẹ̀kẹsẹ́ ju %d iṣẹ́ju sẹ́yìn lọ "
+"fún olugba kanna"
+
+#: modules/notifications-log/notifications-log.php:817
+msgid "Subject:"
+msgstr "Kókó:"
+
+#: modules/notifications-log/notifications-log.php:825
+msgid "Content:"
+msgstr "Ak conteúdo:"
+
+#: modules/notifications-log/notifications-log.php:835
+msgid ""
+"This is a preview of the scheduled message. The content can still change "
+"until the notification is sent."
+msgstr ""
+"Eyi ni iwoye ti ifiranṣẹ ti a gbero. Akoonu naa le ṣi yipada titi di igba "
+"ti ìkìlọ naa ba firanṣẹ."
+
+#: modules/notifications/notifications.php:75
+#: modules/notifications/notifications.php:562
+#: publishpress.php:1425
+#: publishpress.php:1430
+msgid "Notifications"
+msgstr "Ikilọ"
+
+#: modules/notifications/notifications.php:97
+msgid ""
+"<p>Notifications ensure you keep up to date with progress your most "
+"important content. Users can be subscribed to notifications on a post one "
+"by one or by selecting roles.</p><p>When enabled, notifications can be sent "
+"when a post changes status or an editorial comment is left by a writer or "
+"an editor.</p>"
+msgstr ""
+"<p>Ìkìlọ ṣe idaniloju pe o n tọju imudojuiwọn pẹlu ilọsiwaju akoonu rẹ ti o "
+"ṣe pataki julọ. Awọn olumulo le forukọsilẹ si awọn ìkìlọ lori ifiweranṣẹ "
+"ọkan lẹkan tabi nipa yiyan awọn ipa.</p><p>Nigbati a ba mu ṣiṣẹ, awọn ìkìlọ "
+"le ṣee firanṣẹ nigbati ifiweranṣẹ ba yipada ipo tabi ọrọ iroyin ba wa lati "
+"ọdọ onkọwe tabi olootu.</p>"
+
+#: modules/notifications/notifications.php:102
+msgid ""
+"<p><strong>For more information:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Notifications "
+"Documentation</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress on "
+"Github</a></p>"
+msgstr ""
+"<p><strong>Fun alaye diẹ sii:</strong></p><p><a "
+"href=\"https://publishpress.com/features/notifications/\">Iwe Itọsọna "
+"Ìkìlọ</a></p><p><a "
+"href=\"https://github.com/ostraining/PublishPress\">PublishPress lori "
+"Github</a></p>"
+
+#: modules/notifications/notifications.php:303
+#: modules/notifications/notifications.php:306
+msgid "Notify User"
+msgstr "Kilọ Olumulo"
+
+#: modules/notifications/notifications.php:305
+msgid "Notify Users"
+msgstr "Kilọ Awọn Olumulo"
+
+#: modules/notifications/notifications.php:318
+#: modules/notifications/notifications.php:321
+msgid "Notify Role"
+msgstr "Kilọ Ipa"
+
+#: modules/notifications/notifications.php:320
+msgid "Notify Roles"
+msgstr "Kilọ Awọn Ipa"
+
+#: modules/notifications/notifications.php:334
+#: modules/notifications/notifications.php:337
+msgid "Notification Group"
+msgstr "Ẹgbẹ Ikilọ"
+
+#: modules/notifications/notifications.php:336
+msgid "Notification Groups"
+msgstr "Ẹgbẹ Ikilọ"
+
+#: modules/notifications/notifications.php:350
+#: modules/notifications/notifications.php:353
+msgid "Notify Email"
+msgstr "Kilọ Imeeli"
+
+#: modules/notifications/notifications.php:352
+msgid "Notify Emails"
+msgstr "Kilọ Awọn Imeeli"
+
+#: modules/notifications/notifications.php:530
+#: modules/notifications/notifications.php:940
+msgid "Click to stop being notified on updates for this post"
+msgstr "Tẹ lati da ikilọ duro lori awọn imudojuiwọn fun ifiweranṣẹ yii"
+
+#: modules/notifications/notifications.php:531
+#: modules/notifications/notifications.php:939
+msgid "Stop notifying me"
+msgstr "Dẹrọ ikilọ mi"
+
+#: modules/notifications/notifications.php:534
+#: modules/notifications/notifications.php:946
+msgid "Click to start being notified on updates for this post"
+msgstr "Tẹ lati bẹrẹ gbigba ikilọ lori awọn imudojuiwọn fun ifiweranṣẹ yii"
+
+#: modules/notifications/notifications.php:535
+#: modules/notifications/notifications.php:945
+msgid "Notify me"
+msgstr "Kilọ mi"
+
+#: modules/notifications/notifications.php:599
+msgid ""
+"Enter users, roles, or email addresses that should receive notifications "
+"for this post."
+msgstr ""
+"Tẹ awọn olumulo, awọn ipa, tabi awọn adirẹsi imeeli ti o yẹ ki o gba awọn "
+"iwifunni fun ifiweranṣẹ yii."
+
+#: modules/notifications/notifications.php:603
+msgid "Show active notifications"
+msgstr "Fihan awọn ikilọ to wa"
+
+#: modules/notifications/notifications.php:642
+msgid ""
+"This won't have any effect unless you have at least one workflow targeting "
+"the \"Users who selected \"Notify me\" for the content\" option."
+msgstr ""
+"Eyi kii yoo ni ipa eyikeyi ayafi ti o ba ni o kere ju iṣẹ ọna kan ti o ni "
+"ibi-afẹde \"Awọn olumulo ti o yan \"Jẹ ki n mọ\" fun akoonu\" aṣayan."
+
+#: modules/notifications/notifications.php:656
+msgid "Active Notifications"
+msgstr "Awọn Ikilọ to wa"
+
+#: modules/notifications/notifications.php:684
+msgid "Workflow has users enrolled"
+msgstr "Iṣẹ́ àtúnṣe ni awọn olumulo ti wọlé"
+
+#: modules/notifications/notifications.php:691
+#, php-format
+msgid "No active notifications found for this %s."
+msgstr "Ko si awọn ìkìlọ̀ iṣẹ́ tó n ṣiṣẹ́ fún %s yìí."
+
+#: modules/notifications/notifications.php:1054
+#, php-format
+msgid "You are receiving this email because you are subscribed to \"%s\"."
+msgstr "O n gba imeeli yìí nitori o ti forukọsilẹ si \"%s\"."
+
+#: modules/notifications/notifications.php:1059
+#, php-format
+msgid "This email was sent %s."
+msgstr "Imeeli yìí ni a rán %s."
+
+#: modules/notifications/notifications.php:1715
+msgid "Show the \"Notify me\" and \"Stop notifying me\" links for these post types:"
+msgstr ""
+"Fihan awọn ìjápọ̀ \"Ṣàkíyèsí mí\" àti \"Dákẹ́ àkíyèsí mí\" fún àwọn irú àpo "
+"yìí:"
+
+#: modules/notifications/notifications.php:1723
+msgid "Email from:"
+msgstr "Imeeli láti:"
+
+#: modules/notifications/notifications.php:1731
+msgid "Always notify the author of the content:"
+msgstr "Ṣe àkíyèsí nigbagbogbo fun onkọwe akoonu:"
+
+#: modules/notifications/notifications.php:1739
+msgid "Always notify users who have edited the content:"
+msgstr "Ṣe àkíyèsí nigbagbogbo fun awọn olumulo ti yipada akoonu:"
+
+#: modules/notifications/notifications.php:1747
+msgid "Blacklisted taxonomies for Notifications"
+msgstr "Àwọn taxonomies tí a dènà fún Àkíyèsí"
+
+#: modules/notifications/notifications.php:1861, fuzzy
+msgid "slug1,slug2"
+msgstr "slug1,slug2"
+
+#: modules/notifications/notifications.php:1867
+msgid ""
+"Add a list of taxonomy-slugs separated by comma that should not be loaded "
+"by the Taxonomy content filter when adding a new Notification Workflow."
+msgstr ""
+"Fikun-un akojọ awọn taxonomy-slugs ti o pin nipasẹ koma ti ko yẹ ki o gba "
+"nipasẹ asẹ akoonu Taxonomy nigbati o ba nfi iṣẹ ṣiṣe iwifunni tuntun kun."
+
+#: modules/notifications/notifications.php:2003
+msgid "WordPress Scheduler"
+msgstr "Oníṣe ipò WordPress"
+
+#: modules/notifications/notifications.php:2012
+#, php-format
+msgid "[%1$s] New %2$s Created: \"%3$s\""
+msgstr "[%1$s] Tuntun %2$s ti dá: \"%3$s\""
+
+#: modules/notifications/notifications.php:2019
+#, php-format
+msgid "A new %1$s (#%2$s \"%3$s\" ) was created by %4$s %5$s"
+msgstr "A ṣẹda tuntun %1$s (#%2$s \"%3$s\") nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2029
+#, php-format
+msgid "[%1$s] %2$s Trashed: \"%3$s\""
+msgstr "[%1$s] %2$s ti sọ di àtẹ̀jáde: \"%3$s\""
+
+#: modules/notifications/notifications.php:2036
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was moved to the trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ni a gbe lọ si àtẹ̀jáde nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2046
+#, php-format
+msgid "[%1$s] %2$s Restored (from Trash ): \"%3$s\""
+msgstr "[%1$s] %2$s ti tún pada (lati Àtẹ̀jáde): \"%3$s\""
+
+#: modules/notifications/notifications.php:2053
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was restored from trash by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ni a tún pada lati àtẹ̀jáde nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2076
+#, php-format
+msgid "[%1$s] %2$s Published: \"%3$s\""
+msgstr "[%1$s] %2$s ti tẹ̀jáde: \"%3$s\""
+
+#: modules/notifications/notifications.php:2083
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was published by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ni a tẹ̀jáde nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2093
+#, php-format
+msgid "[%1$s] %2$s Unpublished: \"%3$s\""
+msgstr "[%1$s] %2$s Ti a kò tẹjade: \"%3$s\""
+
+#: modules/notifications/notifications.php:2100
+#, php-format
+msgid "%1$s #%2$s \"%3$s\" was unpublished by %4$s %5$s"
+msgstr "%1$s #%2$s \"%3$s\" ti a kò tẹjade nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2110
+#, php-format
+msgid "[%1$s] %2$s Status Changed for \"%3$s\""
+msgstr "[%1$s] %2$s Ipo ti yipada fun \"%3$s\""
+
+#: modules/notifications/notifications.php:2117
+#, php-format
+msgid "Status was changed for %1$s #%2$s \"%3$s\" by %4$s %5$s"
+msgstr "Ipo ti yipada fun %1$s #%2$s \"%3$s\" nipasẹ %4$s %5$s"
+
+#: modules/notifications/notifications.php:2128
+#, php-format
+msgid "This action was taken on %1$s at %2$s %3$s"
+msgstr "Iṣe yi ni a ṣe lori %1$s ni %2$s %3$s"
+
+#: modules/notifications/notifications.php:2141
+#, fuzzy, php-format
+msgid "%1$s => %2$s"
+msgstr "%1$s => %2$s"
+
+#: modules/notifications/notifications.php:2149
+#, php-format
+msgid "== %s Details =="
+msgstr "== %s Alaye =="
+
+#: modules/notifications/notifications.php:2150
+#, php-format
+msgid "Title: %s"
+msgstr "Ak title: %s"
+
+#: modules/notifications/notifications.php:2154
+#, php-format
+msgid "Author: %1$s (%2$s )"
+msgstr "Onkọwe: %1$s (%2$s )"
+
+#: modules/notifications/notifications.php:2168
+#: modules/notifications/notifications.php:2221
+msgid "== Actions =="
+msgstr "== Iṣe =="
+
+#: modules/notifications/notifications.php:2170
+#: modules/notifications/notifications.php:2227
+#, php-format
+msgid "Add editorial comment: %s"
+msgstr "Fi ọrọ ìtúnṣe kun: %s"
+
+#: modules/notifications/notifications.php:2173
+#: modules/notifications/notifications.php:2230
+#, php-format
+msgid "Edit: %s"
+msgstr "Ṣatunkọ: %s"
+
+#: modules/notifications/notifications.php:2174
+#: modules/notifications/notifications.php:2231
+#, php-format
+msgid "View: %s"
+msgstr "Wo: %s"
+
+#: modules/notifications/notifications.php:2185
+#, php-format
+msgid "[%1$s] New Editorial Comment: \"%2$s\""
+msgstr "[%1$s] Ọrọ ìtúnṣe tuntun: \"%2$s\""
+
+#: modules/notifications/notifications.php:2192
+#, php-format
+msgid "A new editorial comment was added to %3$s #%1$s \"%2$s\""
+msgstr "Ọrọ ìtúnṣe tuntun kan ti fi kun %3$s #%1$s \"%2$s\""
+
+#: modules/notifications/notifications.php:2199
+#, php-format
+msgid "%1$s (%2$s ) said on %3$s at %4$s:"
+msgstr "%1$s (%2$s ) sọ lori %3$s ni %4$s:"
+
+#: modules/notifications/notifications.php:2223
+#, php-format
+msgid "Reply: %s"
+msgstr "Dáhùn: %s"
+
+#: modules/notifications/notifications.php:2234
+#, php-format
+msgid "You can see all editorial comments on this %s here: "
+msgstr "O le wo gbogbo awọn ọrọ ìtúnṣe lori %s yi nibi: "
+
+#: modules/reviews/reviews.php:66
+msgid "Reviews"
+msgstr "Atunwo"
+
+#: modules/settings/settings.php:124
+msgid "settings"
+msgstr "eto"
+
+#: modules/settings/settings.php:141
+msgid "PublishPress Settings"
+msgstr "Iṣeto PublishPress"
+
+#: modules/settings/settings.php:142
+msgid "Settings"
+msgstr "Iṣeto"
+
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
+#: modules/settings/settings.php:269
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "Ti o ba fẹ %s jọwọ fi wa silẹ %s igbasilẹ. O ṣeun!"
+
+#: modules/settings/settings.php:289
+msgid "There are no PublishPress modules registered"
+msgstr "Ko si awọn module PublishPress ti a forukọsilẹ"
+
+#: modules/settings/settings.php:380
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"Ti dènà nitori add_post_type_support('%1$s', '%2$s') ti wa ni akọọlẹ ninu "
+"faili ti a gba."
+
+#: modules/settings/settings.php:404
+#: publishpress.php:675
+msgid "Cheatin&#8217; uh?"
+msgstr "Ṣe o nṣe ẹtan&#8217;?"
+
+#: modules/settings/views/footer-base.html.php:21
+msgid "About"
+msgstr "Nipa"
+
+#: modules/settings/views/footer-base.html.php:25
+msgid "Documentation"
+msgstr "Ijẹrisi"
+
+#: modules/settings/views/footer-base.html.php:29
+msgid "Contact"
+msgstr "Kan si"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:52
+msgid "The Events Calendar Integration"
+msgstr "Iṣọpọ Kalandar Awọn Iṣẹlẹ"
+
+#: modules/theeventscalendar-integration/theeventscalendar-integration.php:53
+msgid "Integrate with the The Events Calendar plugin"
+msgstr "Ṣopọ pẹlu plugin Kalandar Awọn Iṣẹlẹ"
+
+#: publishpress.php:590
+msgid "Planner"
+msgstr "Eto"
+
+#: publishpress.php:671
+msgid "Configure"
+msgstr "Ṣeto"
+
+#: publishpress.php:674
+msgid "Please correct your form errors below and try again."
+msgstr "Jọwọ ṣatunṣe awọn aṣiṣe fọọmu rẹ ni isalẹ ki o gbiyanju lẹẹkansi."
+
+#: publishpress.php:676
+msgid "You do not have necessary permissions to complete this action."
+msgstr "Iwọ ko ni awọn aṣẹ pataki lati pari iṣe yii."
+
+#: publishpress.php:680
+msgid "Post does not exist"
+msgstr "Ifiweranṣẹ ko si"
+
+#: publishpress.php:1427
+msgid "Add New Notification"
+msgstr "Fi Ifojusi Tuntun Kun"
+
+#: publishpress.php:1428
+msgid "Edit Notification"
+msgstr "Ṣatunkọ Ifojusi"
+
+#: publishpress.php:1429
+msgid "Search Notifications"
+msgstr "Wa Awọn Ifojusi"
+
+#: publishpress.php:1432
+#: publishpress.php:1433
+msgid "No notification found"
+msgstr "Ko si ifojusi ti a ri"
+
+#: publishpress.php:1473
+msgid ""
+"PublishPress Planner tried to load multiple times. Please, deactivate and "
+"remove other instances of PublishPress, specially if you are using "
+"PublishPress Pro."
+msgstr ""
+"PublishPress Planner gbiyanju lati gba ọpọlọpọ igba. Jọwọ, pa ati yọ awọn "
+"olumulo miiran ti PublishPress, paapaa ti o ba nlo PublishPress Pro."
+
+#: publishpress.php:1481
+msgid "Warning"
+msgstr "Ikilo"
+
+#: modules/editorial-comments/lib/editorial-comments.js:203
+#: modules/editorial-comments/lib/editorial-comments.js:371
+msgid "Please enter a comment"
+msgstr "Jọwọ tẹ ọrọìwòye kan"
+
+#: modules/editorial-comments/lib/editorial-comments.js:377
+msgid "Sending content..."
+msgstr "N firanṣẹ akoonu..."
+
+#: modules/editorial-comments/lib/editorial-comments.js:434
+msgid ""
+"This comment can't be deleted because it has one or more replies. Before "
+"deleting it make sure to delete all the replies first."
+msgstr ""
+"Ko le pa ọrọ yii nitori o ni ọkan tabi diẹ ẹ sii awọn idahun. Ṣaaju ki o to "
+"pa a, rii daju pe o pa gbogbo awọn idahun akọkọ."
+
+#: modules/editorial-comments/lib/editorial-comments.js:438
+msgid "Are you sure you want to delete this comment?"
+msgstr "Ṣe o dajudaju fẹ pa ọrọìwòye yii?"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "for"
+msgstr "fun"
+
+#: modules/notifications-log/assets/js/admin.js:73
+msgid "by"
+msgstr "lati"
+
+#: modules/content-board/library/content-board-utilities.php:538
+#: modules/content-overview/library/content-overview-utilities.php:643
+#, php-format
+msgctxt "%1$s = start date, %2$s = end date"
+msgid " %1$s <div class=\"input-divider\">to</div> %2$s"
+msgstr " %1$s <div class=\"input-divider\">si</div> %2$s"
+
+#: modules/editorial-metadata/editorial-metadata.php:451
+msgctxt "taxonomy general name"
+msgid "Editorial Field"
+msgstr "Ibi Iwe Iroyin"
+
+#: modules/editorial-metadata/editorial-metadata.php:452
+msgctxt "taxonomy singular name"
+msgid "Editorial Field"
+msgstr "Ibi Iwe iroyin"

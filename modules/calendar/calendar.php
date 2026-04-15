@@ -1103,7 +1103,8 @@ if (! class_exists('PP_Calendar')) {
                             _n(
                                 'Post moved to the trash.',
                                 '%d posts moved to the trash.',
-                                (int)$_GET['trashed']
+                                (int)$_GET['trashed'],
+                                'publishpress'
                             ),
                             number_format_i18n((int)$_GET['trashed'])
                         );
@@ -1128,7 +1129,8 @@ if (! class_exists('PP_Calendar')) {
                             _n(
                                 'Post restored from the Trash.',
                                 '%d posts restored from the Trash.',
-                                (int)$_GET['untrashed']
+                                (int)$_GET['untrashed'],
+                                'publishpress'
                             ),
                             number_format_i18n((int)$_GET['untrashed'])
                         );
@@ -1170,7 +1172,7 @@ if (! class_exists('PP_Calendar')) {
             </div>
 
             <div id="pp-content-calendar-general-modal" style="display: none;">
-                <div id="pp-content-calendar-general-modal-container" class="pp-content-calendar-general-modal-container"></div>
+                <div id="pp-content-calendar-general-modal-container" class="pp-content-calendar-general-modal-container publishpress-quick-modal"></div>
             </div>
             <?php
            wp_localize_script(

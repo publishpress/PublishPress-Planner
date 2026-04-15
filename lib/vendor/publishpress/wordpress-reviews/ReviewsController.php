@@ -71,6 +71,11 @@ class ReviewsController
     private $iconUrl;
 
     /**
+     * @var bool
+     */
+    private static $textDomainLoaded = false;
+
+    /**
      * @param string $pluginSlug
      * @param string $pluginName
      * @param string $iconUrl
@@ -118,10 +123,26 @@ class ReviewsController
     }
 
     /**
+     * Load the text domain for translations.
+     */
+    private function loadTextDomain()
+    {
+        if (self::$textDomainLoaded) {
+            return;
+        }
+
+        $mofile = __DIR__ . '/languages/publishpress-wordpress-reviews-' . determine_locale() . '.mo';
+
+        load_textdomain('publishpress-wordpress-reviews', $mofile);
+        self::$textDomainLoaded = true;
+    }
+
+    /**
      * Initialize the library.
      */
     public function init()
     {
+        $this->loadTextDomain();
         $this->addHooks();
     }
 
@@ -212,19 +233,18 @@ class ReviewsController
      */
     public function ajaxHandler()
     {
-        $args = wp_parse_args(
-            $_REQUEST,
-            [
-                'group' => $this->getTriggerGroup(),
-                'code' => $this->getTriggerCode(),
-                'priority' => $this->getCurrentTrigger('priority'),
-                'reason' => 'maybe_later',
-            ]
-        );
+        $nonce = isset($_REQUEST['nonce']) ? sanitize_key($_REQUEST['nonce']) : '';
 
-        if (! wp_verify_nonce($_REQUEST['nonce'], $this->metaMap['nonce_action'])) {
+        if (! wp_verify_nonce($nonce, $this->metaMap['nonce_action'])) {
             wp_send_json_error();
         }
+
+        $args = [
+            'group' => isset($_REQUEST['group']) ? sanitize_text_field($_REQUEST['group']) : $this->getTriggerGroup(),
+            'code' => isset($_REQUEST['code']) ? sanitize_text_field($_REQUEST['code']) : $this->getTriggerCode(),
+            'priority' => isset($_REQUEST['priority']) ? intval($_REQUEST['priority']) : $this->getCurrentTrigger('priority'),
+            'reason' => isset($_REQUEST['reason']) ? sanitize_key($_REQUEST['reason']) : 'maybe_later',
+        ];
 
         try {
             $userId = get_current_user_id();
@@ -334,7 +354,7 @@ class ReviewsController
         if (! array_key_exists($this->pluginSlug, $triggers)) {
             $timeMessage = __(
                 'Hey, you\'ve been using %1$s for %2$s on your site. We hope the plugin has been useful. Please could you quickly leave a 5-star rating on WordPress.org? It really does help to keep %1$s growing.',
-                $this->pluginSlug
+                'publishpress-wordpress-reviews'
             );
 
             $triggers[$this->pluginSlug] = apply_filters(
@@ -343,7 +363,7 @@ class ReviewsController
                     'time_installed' => [
                         'triggers' => [
                             'one_week' => [
-                                'message' => sprintf($timeMessage, $this->pluginName, __('1 week', $this->pluginSlug)),
+                                'message' => sprintf($timeMessage, $this->pluginName, __('1 week', 'publishpress-wordpress-reviews')),
                                 'conditions' => [
                                     strtotime($this->installationPath() . ' +1 week') < time(),
                                 ],
@@ -351,7 +371,7 @@ class ReviewsController
                                 'priority' => 10,
                             ],
                             'one_month' => [
-                                'message' => sprintf($timeMessage, $this->pluginName, __('1 month', $this->pluginSlug)),
+                                'message' => sprintf($timeMessage, $this->pluginName, __('1 month', 'publishpress-wordpress-reviews')),
                                 'conditions' => [
                                     strtotime($this->installationPath() . ' +1 month') < time(),
                                 ],
@@ -362,7 +382,7 @@ class ReviewsController
                                 'message' => sprintf(
                                     $timeMessage,
                                     $this->pluginName,
-                                    __('3 months', $this->pluginSlug)
+                                    __('3 months', 'publishpress-wordpress-reviews')
                                 ),
                                 'conditions' => [
                                     strtotime($this->installationPath() . ' +3 months') < time(),
@@ -495,30 +515,30 @@ class ReviewsController
             .{$this->pluginSlug}-wp-reviews-notice p {
                 font-size: 15px;
             }
-            
+
             .{$this->pluginSlug}-wp-reviews-notice .button:not(.notice-dismiss) {
                 border-width: 1px;
             }
-            
+
             .{$this->pluginSlug}-wp-reviews-notice .button.button-primary {
                 background-color: #655897;
                 border-color: #3d355c;
                 color: #fff;
             }
-            
+
             .{$this->pluginSlug}-wp-reviews-notice .notice-icon {
                 float: right;
                 height: 110px;
                 margin-top: 10px;
                 margin-left: 10px;
             }
-            
+
             @media (min-width:1000px) {
                 .{$this->pluginSlug}-wp-reviews-notice .notice-icon {
                     height: 90px;
                 }
             }
-            
+
             @media (min-width:1700px) {
                 .{$this->pluginSlug}-wp-reviews-notice .notice-icon {
                     height: 70px;
@@ -616,18 +636,18 @@ class ReviewsController
                    data-reason="am_now"
                 >
                     <strong><?php
-                        $message = __('Click here to add your rating for %s', $this->pluginSlug);
+                        $message = __('Click here to add your rating for %s', 'publishpress-wordpress-reviews');
                         echo sprintf($message, $this->pluginName); ?></strong>
                 </a>
                 <a href="#" class="button <?php
                 echo "$this->pluginSlug-dismiss"; ?>" data-reason="maybe_later">
                     <?php
-                    _e('Maybe later', $this->pluginSlug); ?>
+                    _e('Maybe later', 'publishpress-wordpress-reviews'); ?>
                 </a>
                 <a href="#" class="button <?php
                 echo "$this->pluginSlug-dismiss"; ?>" data-reason="already_did">
                     <?php
-                    _e('I already did', $this->pluginSlug); ?>
+                    _e('I already did', 'publishpress-wordpress-reviews'); ?>
                 </a>
             </p>
         </div>

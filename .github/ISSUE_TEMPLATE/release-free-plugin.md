@@ -1,43 +1,62 @@
 ---
-name: Release the Free Version (Team Only)
-about: Default checklist for the plugin's release process.
-title: Release PublishPress Planner v[VERSION]
+name: Release the Free version (team only)
+about: Describes default checklist for the plugin's release process.
+title: Release v[VERSION]
 labels: release
 assignees: ''
+type: task
 ---
 
-To release the Free plugin, ensure you complete all the tasks below.
+To release the Free plugin please make sure to check all the checkboxes below.
 
 ### Pre-release Checklist
-- [ ] Create a release branch named `release-<version>` from the development branch.
-- [ ] Review and merge all relevant Pull Requests into the release branch.
-- [ ] Start a dev-workspace session.
-- [ ] Execute `composer update` to update the root and lib vendors.
-- [ ] Review the updated packages. Mention any production library updates in the changelog.
-- [ ] Inspect GitHub's Dependabot warnings or Pull Requests for relevant issues. Resolve any false positives first, then fix and commit the remaining issues.
-- [ ] If necessary, build JS files for production using `composer build:js` and commit the changes.
-- [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
-- [ ] Update the `.pot` file executing `composer gen:pot` and include a note in the changelog.
-- [ ] Especially for minor and patch releases, maintain backward compatibility for changes like renamed or moved classes, namespaces, functions, etc. Include deprecation comments and mention this in the changelog. Major releases may remove deprecated code, but always note this in the changelog.
-- [ ] Revise the changelog to include all changes with user-friendly descriptions and ensure the release date is accurate.
-- [ ] Update the version number in the main plugin file and `readme.txt`, adhering to specifications from our [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
-- [ ] Confirm there are no uncommitted changes.
-- [ ] Build the zip package with `composer build`, creating a new package in the `./dist` directory.
-- [ ] Distribute the new package to the team for testing.
 
-### Release Checklist
-- [ ] Create and merge a Pull Request for the release branch into the `main` branch.
-- [ ] Merge the `main` branch into the `development` branch.
-- [ ] Establish the GitHub release on the `main` branch with the correct tag.
+**Branch Setup**
+- [ ] Create release branch `release-<version>` from development branch
+- [ ] Merge hotfixes/features into release branch (direct merge or PR)
 
-#### WP SVN Deployment
-- [ ] Navigate to the local copy of the SVN repo for the plugin.
-- [ ] Update your working copy using `svn update`.
-- [ ] Clear the `trunk` directory with `rm -rf trunk/*`.
-- [ ] Unzip the built package and transfer files to the `trunk` folder.
-- [ ] Remove any extraneous files (if found, create an issue to amend the `.rsync-filter-post-build` file). Keep only files really used on production.
-- [ ] Find new files with `svn status | grep \?` and add them using `svn add <each_file_path>`.
-- [ ] Identify removed files with `svn status | grep !` and delete them using `svn rm <each_file_path>`.
-- [ ] Create the new tag using `svn cp trunk tags/<version>`.
-- [ ] Commit the changes with `svn ci -m 'Releasing <version>'`.
-- [ ] Await WordPress's version number update and perform a final test by updating the plugin on a staging site.
+**Dependencies**
+- [ ] Run `composer update --no-dev --dry-run` to check for updates
+- [ ] If updating dependencies: `composer update the/lib:version-constraint`
+- [ ] Lock versions if needed (use exact version numbers)
+- [ ] Document dependency changes in changelog
+- [ ] Review Dependabot warnings/PRs, fix real issues
+
+**Code Quality**
+- [ ] Build JS files: `composer build:js` (if applicable)
+- [ ] Run `composer check` to run check the code and make sure no warnings or errors.
+- [ ] Run `composer test Unit` to run the Unit tests and verify all tests pass successfully.
+- [ ] Run `composer test Integration` to run Integration tests and verify all tests pass successfully.
+
+**Localization**
+- [ ] Run `composer translate` to regenerate AI-assisted translations.
+- [ ] Make sure to commit all i18n/translation updates together.
+- [ ] Open a GitHub issue titled `Translation Update for Release v<version>`, and assign it to @wocmultimedia (lead translator for ES, FR, IT).
+- [ ] Pause the release and wait for @wocmultimedia to review and confirm or close the translation issue.
+- [ ] After approval, run `composer translate:download` to fetch updated translations from the
+translation management service.
+- [ ] Run `composer translate:compile` to generate all language files (MO, JSON, PHP)
+- [ ] Add a summary of these changes in `CHANGELOG.md`.
+
+**Version & Documentation**
+- [ ] Update CHANGELOG.md with user-friendly descriptions
+- [ ] Verify release date in CHANGELOG.md
+- [ ] Run `composer set:version <version>` to update version numbers in plugin files.
+- [ ] Commit all changes to release branch
+
+**Build & Test**
+- [ ] Build package: `composer build` (creates `./dist` package)
+- [ ] Send package to team for testing
+
+### Release
+
+- [ ] PR and merge `release-<version>` → `master`
+- [ ] Merge `master` → `development`
+- [ ] Create GitHub release (tag from `master` branch)
+  - Triggers automatic SVN deployment
+
+### Post-release
+
+- [ ] Monitor [GitHub Actions](https://github.com/publishpress/publishpress-planner/actions)
+- [ ] Verify [WordPress.org plugin page](https://wordpress.org/plugins/publishpress/)
+- [ ] Test update on staging site
