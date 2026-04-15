@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:37+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: publishpress\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: nl-NL\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266, fuzzy
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3088,8 +3087,8 @@ msgid "All Statuses"
 msgstr "Alle Statussen"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Melding"
 
@@ -3131,8 +3130,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Notificaties"
 
@@ -3454,6 +3453,10 @@ msgstr "PublishPress Instellingen"
 msgid "Settings"
 msgstr "Instellingen"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3473,7 +3476,7 @@ msgstr ""
 "geladen bestand."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "Cheatin&#8217; hè?"
 
@@ -3497,44 +3500,44 @@ msgstr "De Evenementen Kalender Integratie"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Integreren met de De Evenementen Kalender plugin"
 
-#: publishpress.php:605, fuzzy
+#: publishpress.php:590, fuzzy
 msgid "Planner"
 msgstr "Planner"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "Configureren"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "Corrigeer alstublieft uw formulierfouten hieronder en probeer het opnieuw."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "Je hebt niet de benodigde machtigingen om deze actie uit te voeren."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "Bericht bestaat niet"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Nieuwe Notificatie Toevoegen"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Notificatie Bewerken"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Notificaties Zoeken"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Geen notificatie gevonden"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3544,7 +3547,7 @@ msgstr ""
 "en verwijder alstublieft andere instanties van PublishPress, vooral als je "
 "PublishPress Pro gebruikt."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Waarschuwing"
 

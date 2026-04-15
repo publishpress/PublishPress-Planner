@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Plugins - PublishPress Planner: Organize and Schedule "
 "Your WordPress Content - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
-"PO-Revision-Date: 2026-04-11 12:35+0200\n"
+"POT-Creation-Date: 2026-04-15T04:56:25+00:00\n"
+"PO-Revision-Date: 2026-04-15 10:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -17,9 +17,9 @@ msgstr ""
 "X-Generator: Poedit 3.7\n"
 
 #. Plugin Name of the plugin
-#: publishpress.php modules/settings/settings.php:266, fuzzy
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+#: publishpress.php, fuzzy
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #. Plugin URI of the plugin
 #: publishpress.php, fuzzy
@@ -72,8 +72,8 @@ msgstr "In attesa di revisione"
 #: common/php/class-module.php:336
 #: modules/calendar/library/calendar-methods.php:1240
 #: modules/calendar/library/calendar-utilities.php:1104
-#: modules/content-board/content-board.php:1190
-#: modules/content-board/content-board.php:1285
+#: modules/content-board/content-board.php:1195
+#: modules/content-board/content-board.php:1290
 #: modules/content-overview/content-overview.php:1221
 #: modules/content-overview/content-overview.php:1715
 msgid "Trash"
@@ -105,6 +105,42 @@ msgstr "Utenti"
 msgid "E-mails"
 msgstr "Email"
 
+#: common/php/class-module.php:1048
+msgid "Equals (=)"
+msgstr "Uguale (=)"
+
+#: common/php/class-module.php:1049
+msgid "Does not equal (!=)"
+msgstr "Non è uguale (!=)"
+
+#: common/php/class-module.php:1050
+msgid "Greater than (>)"
+msgstr "Maggiore di (>)"
+
+#: common/php/class-module.php:1051
+msgid "Greater than or equals (>=)"
+msgstr "Maggiore o uguale a (>=)"
+
+#: common/php/class-module.php:1052
+msgid "Less than (<)"
+msgstr "Minore di (<)"
+
+#: common/php/class-module.php:1053
+msgid "Less than or equals (<=)"
+msgstr "Minore o uguale a (<=)"
+
+#: common/php/class-module.php:1054
+msgid "Like/Contains"
+msgstr "Simile/contiene"
+
+#: common/php/class-module.php:1055
+msgid "Not Like"
+msgstr "Dissimile"
+
+#: common/php/class-module.php:1056
+msgid "Not Exists/Empty"
+msgstr "Non esiste/vuoto"
+
 #: common/php/class-module.php:1109
 #, php-format
 msgid "Select %s"
@@ -126,7 +162,7 @@ msgstr "Stato della revisione"
 #: modules/calendar/library/calendar-utilities.php:1070
 #: modules/calendar/library/calendar-utilities.php:1189
 #: modules/content-board/content-board.php:811
-#: modules/content-board/content-board.php:1290
+#: modules/content-board/content-board.php:1295
 #: modules/content-board/library/content-board-utilities.php:594
 #: modules/content-board/library/content-board-utilities.php:1165
 #: modules/content-overview/content-overview.php:954
@@ -249,7 +285,6 @@ msgid "Notification workflow updated."
 msgstr "Flusso di lavoro delle notifiche aggiornato."
 
 #: lib/Notifications/Plugin.php:211
-#| msgid "Notification Groups"
 msgid "Notification workflow published."
 msgstr "Flusso di lavoro delle notifiche pubblicato."
 
@@ -267,7 +302,6 @@ msgid "Notification workflow scheduled for: %s."
 msgstr "Flusso di lavoro delle notifiche programmato per: %s."
 
 #: lib/Notifications/Plugin.php:218
-#| msgid "Notification log not found"
 msgid "Notification workflow draft updated."
 msgstr "Bozza del flusso di lavoro delle notifiche aggiornata."
 
@@ -381,6 +415,7 @@ msgstr "Email"
 #: modules/content-board/library/content-board-utilities.php:1207
 #: modules/content-overview/library/content-overview-utilities.php:533
 #: modules/improved-notifications/improved-notifications.php:1318
+#: views/workflow_help.html.php:2
 msgid "Content"
 msgstr "Contenuto"
 
@@ -527,7 +562,6 @@ msgstr "Gruppi di autorizzazioni"
 
 #: lib/Notifications/Workflow/Step/Receiver/Group.php:222
 #, php-format
-#| msgid "Group"
 msgid "%d Group"
 msgid_plural "%d Groups"
 msgstr[0] "%d gruppo"
@@ -644,6 +678,7 @@ msgstr ""
 
 #: modules/calendar/calendar.php:734
 #: modules/calendar/library/calendar-utilities.php:1259
+#: modules/content-board/content-board.php:1043
 msgid "Weeks"
 msgstr "Settimane"
 
@@ -1107,7 +1142,7 @@ msgid "No terms"
 msgstr "Nessun termine"
 
 #: modules/calendar/library/calendar-methods.php:1238
-#: modules/content-board/content-board.php:1283
+#: modules/content-board/content-board.php:1288
 #: modules/content-overview/content-overview.php:836
 #: modules/content-overview/content-overview.php:895
 #: modules/content-overview/content-overview.php:1219
@@ -1116,8 +1151,8 @@ msgstr "Data articolo"
 
 #: modules/calendar/library/calendar-methods.php:1239
 #: modules/calendar/library/calendar-utilities.php:1097
-#: modules/content-board/content-board.php:1178
-#: modules/content-board/content-board.php:1284
+#: modules/content-board/content-board.php:1183
+#: modules/content-board/content-board.php:1289
 #: modules/content-overview/content-overview.php:1220
 #: modules/content-overview/content-overview.php:1703
 #: modules/editorial-comments/editorial-comments.php:628
@@ -1127,8 +1162,8 @@ msgstr "Modifica"
 
 #: modules/calendar/library/calendar-methods.php:1241
 #: modules/calendar/library/calendar-utilities.php:1114
-#: modules/content-board/content-board.php:1219
-#: modules/content-board/content-board.php:1286
+#: modules/content-board/content-board.php:1224
+#: modules/content-board/content-board.php:1291
 #: modules/content-overview/content-overview.php:1222
 #: modules/content-overview/content-overview.php:1744
 msgid "Preview"
@@ -1136,33 +1171,33 @@ msgstr "Anteprima"
 
 #: modules/calendar/library/calendar-methods.php:1242
 #: modules/calendar/library/calendar-utilities.php:1111
-#: modules/content-board/content-board.php:1206
-#: modules/content-board/content-board.php:1287
+#: modules/content-board/content-board.php:1211
+#: modules/content-board/content-board.php:1292
 #: modules/content-overview/content-overview.php:1223
 #: modules/content-overview/content-overview.php:1731
 msgid "View"
 msgstr "Visualizza"
 
 #: modules/calendar/library/calendar-methods.php:1243
-#: modules/content-board/content-board.php:1288
+#: modules/content-board/content-board.php:1293
 #: modules/content-overview/content-overview.php:1224
 msgid "Previous Post"
 msgstr "Articolo precedente"
 
 #: modules/calendar/library/calendar-methods.php:1244
-#: modules/content-board/content-board.php:1289
+#: modules/content-board/content-board.php:1294
 #: modules/content-overview/content-overview.php:1225
 msgid "Next Post"
 msgstr "Articolo successivo"
 
 #: modules/calendar/library/calendar-methods.php:1246
-#: modules/content-board/content-board.php:1291
+#: modules/content-board/content-board.php:1296
 #: modules/content-overview/content-overview.php:1227
 msgid "Save Changes"
 msgstr "Salva modifiche"
 
 #: modules/calendar/library/calendar-methods.php:1247
-#: modules/content-board/content-board.php:1292
+#: modules/content-board/content-board.php:1297
 #: modules/content-overview/content-overview.php:1228
 msgid "Taxonomy not set."
 msgstr "La tassonomia non è stata impostata."
@@ -1225,7 +1260,7 @@ msgstr "Casella di ricerca"
 #: modules/calendar/library/calendar-utilities.php:309
 #: modules/calendar/library/calendar-utilities.php:347
 #: modules/calendar/library/calendar-utilities.php:433
-#: modules/content-board/content-board.php:1059
+#: modules/content-board/content-board.php:1064
 #: modules/content-board/library/content-board-utilities.php:548
 #: modules/content-board/library/content-board-utilities.php:558
 #: modules/content-board/library/content-board-utilities.php:729
@@ -1483,6 +1518,7 @@ msgid "Four weeks"
 msgstr "Quattro settimane"
 
 #: modules/calendar/library/calendar-utilities.php:1271
+#: modules/content-board/content-board.php:1044
 msgid "Months"
 msgstr "Mesi"
 
@@ -1594,12 +1630,20 @@ msgstr "Sposta gli articoli qui per cambiarne lo stato"
 msgid "You do not have permission to move post to this status"
 msgstr "Non hai i permessi necessari per spostare l'articolo a questo stato"
 
-#: modules/content-board/content-board.php:1049
-#: modules/content-board/content-board.php:1066
+#: modules/content-board/content-board.php:1042
+msgid "Days"
+msgstr "Giorni"
+
+#: modules/content-board/content-board.php:1045
+msgid "Years"
+msgstr "Anni"
+
+#: modules/content-board/content-board.php:1054
+#: modules/content-board/content-board.php:1071
 msgid "Default Date"
 msgstr "Data predefinita"
 
-#: modules/content-board/content-board.php:1056
+#: modules/content-board/content-board.php:1061
 msgid ""
 "This is the default publish date from today for posts moving to the "
 "Scheduled status."
@@ -1607,45 +1651,45 @@ msgstr ""
 "Questa è la data predefinita da oggi per gli articoli che vengono spostati "
 "allo stato \"Programmato\"."
 
-#: modules/content-board/content-board.php:1100
-#: modules/content-board/content-board.php:1242
+#: modules/content-board/content-board.php:1105
+#: modules/content-board/content-board.php:1247
 msgid "Only editable posts will be moveable."
 msgstr "Solo gli articoli modificabili saranno spostabili."
 
-#: modules/content-board/content-board.php:1174
+#: modules/content-board/content-board.php:1179
 #: modules/content-overview/content-overview.php:1699
 #: modules/dashboard/dashboard.php:299
 msgid "Edit this post"
 msgstr "Modifica questo articolo"
 
-#: modules/content-board/content-board.php:1186
+#: modules/content-board/content-board.php:1191
 #: modules/content-overview/content-overview.php:1711
 msgid "Move this item to the Trash"
 msgstr "Sposta questo elemento nel cestino"
 
-#: modules/content-board/content-board.php:1200
+#: modules/content-board/content-board.php:1205
 #: modules/content-overview/content-overview.php:1725
 #, php-format
 msgid "View &#8220;%s&#8221;"
 msgstr "Visualizza &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1216
+#: modules/content-board/content-board.php:1221
 #: modules/content-overview/content-overview.php:1741
 #, php-format
 msgid "Preview &#8220;%s&#8221;"
 msgstr "Anteprima &#8220;%s&#8221;"
 
-#: modules/content-board/content-board.php:1263
+#: modules/content-board/content-board.php:1268
 #: modules/content-overview/content-overview.php:1194
 msgid "No results found"
 msgstr "Nessun risultato trovato"
 
-#: modules/content-board/content-board.php:1268
+#: modules/content-board/content-board.php:1273
 #: modules/content-overview/content-overview.php:1199
 msgid "There are no posts in the range or filter specified."
 msgstr "Non sono presenti post nell'intervallo o nel filtro specificato."
 
-#: modules/content-board/content-board.php:1600
+#: modules/content-board/content-board.php:1605
 #: modules/content-overview/content-overview.php:1579
 msgid "None"
 msgstr "Nessuno"
@@ -2910,11 +2954,11 @@ msgstr "Fare clic qui per saperne di più sulle opzioni di shortcode…"
 msgid "Features"
 msgstr "Funzionalità"
 
-#: modules/modules-settings/modules-settings.php:221
+#: modules/modules-settings/modules-settings.php:236
 msgid "Feel free to select only the features you need."
 msgstr "Puoi scegliere liberamente le funzionalità che ti servono."
 
-#: modules/modules-settings/modules-settings.php:227
+#: modules/modules-settings/modules-settings.php:242
 msgid "Enabled features"
 msgstr "Funzionalità abilitate"
 
@@ -3058,8 +3102,8 @@ msgstr "Tutti i canali"
 msgid "All Statuses"
 msgstr "Tutti gli stati"
 
-#: modules/notifications-log/notifications-log.php:209 publishpress.php:1409
-#: publishpress.php:1414
+#: modules/notifications-log/notifications-log.php:209 publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Notifica"
 
@@ -3100,8 +3144,8 @@ msgstr ""
 "essere modificato fino a quando non viene inviata la notifica."
 
 #: modules/notifications/notifications.php:75
-#: modules/notifications/notifications.php:562 publishpress.php:1408
-#: publishpress.php:1413
+#: modules/notifications/notifications.php:562 publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Notifiche"
 
@@ -3424,6 +3468,10 @@ msgstr "Impostazioni di PublishPress"
 msgid "Settings"
 msgstr "Impostazioni"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3486,23 +3534,23 @@ msgstr "Non hai i permessi necessari per completare questa operazione."
 msgid "Post does not exist"
 msgstr "L'articolo non esiste"
 
-#: publishpress.php:1410
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Aggiungi nuova notifica"
 
-#: publishpress.php:1411
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Modifica notifica"
 
-#: publishpress.php:1412
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Cerca notifiche"
 
-#: publishpress.php:1415 publishpress.php:1416
+#: publishpress.php:1432 publishpress.php:1433
 msgid "No notification found"
 msgstr "Nessuna notifica trovata"
 
-#: publishpress.php:1456
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3512,7 +3560,7 @@ msgstr ""
 "rimuovi le altre istanze di PublishPress, in special modo se stai "
 "utilizzando PublishPress Pro."
 
-#: publishpress.php:1464
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Attenzione"
 

@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:37+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: publishpress\n"
 "Language: ja\n"
@@ -23,10 +23,9 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress プランナー"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3016,8 +3015,8 @@ msgid "All Statuses"
 msgstr "ステータス一覧"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "通知"
 
@@ -3054,8 +3053,8 @@ msgstr "これは、スケジュールされたメッセージのプレビュー
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "通知"
 
@@ -3365,6 +3364,10 @@ msgstr "発行プレスの設定"
 msgid "Settings"
 msgstr "設定"
 
+#: modules/settings/settings.php:266
+msgid "PublishPress Planner"
+msgstr "PublishPress プランナー"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3382,7 +3385,7 @@ msgid ""
 msgstr "add_post_type_support('%1$s', '%2$s')が読み込まれたファイルに含まれているため無効です。"
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "不正行為&#8217; ?"
 
@@ -3406,44 +3409,44 @@ msgstr "The Events Calendar統合"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "The Events Calendarプラグインとの統合"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "プランナー"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "定義設定"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "以下のフォームエラーを修正して、やり直してください。"
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "この操作を完了するために必要なアクセス許可がありません。"
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "投稿が存在しません"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "新しい通知の追加"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "通知を編集"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "通知を検索"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "通知が見つかりません"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3453,7 +3456,7 @@ msgstr ""
 "Plannerは複数回読み込もうとしました。他のPublishPressのインスタンスを無効にして削除してください。特にPublishPress "
 "Proを使用している場合は注意してください。"
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "警告"
 

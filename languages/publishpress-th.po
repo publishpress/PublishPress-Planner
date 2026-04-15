@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.8.0\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:38+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Language: th\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: publishpress.php
-#: modules/settings/settings.php:266, fuzzy
+#: publishpress.php, fuzzy
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3038,8 +3037,8 @@ msgid "All Statuses"
 msgstr "สถานะทั้งหมด"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "การแจ้งเตือน"
 
@@ -3080,8 +3079,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "การแจ้งเตือน"
 
@@ -3399,6 +3398,10 @@ msgstr "การตั้งค่า PublishPress"
 msgid "Settings"
 msgstr "การตั้งค่า"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3418,7 +3421,7 @@ msgstr ""
 "รวมอยู่ในไฟล์ที่โหลดแล้ว."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "โกงกันอยู่หรือ?"
 
@@ -3442,44 +3445,44 @@ msgstr "การรวมปฏิทินกิจกรรม"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "รวมกับปลั๊กอินปฏิทินกิจกรรม"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "ผู้วางแผน"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "กำหนดค่า"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "กรุณาแก้ไขข้อผิดพลาดในแบบฟอร์มของคุณด้านล่างและลองอีกครั้ง"
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "คุณไม่มีสิทธิ์ที่จำเป็นในการทำกิจกรรมนี้"
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "โพสต์ไม่อยู่"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "เพิ่มการแจ้งเตือนใหม่"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "แก้ไขการแจ้งเตือน"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "ค้นหาการแจ้งเตือน"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "ไม่พบการแจ้งเตือน"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3489,7 +3492,7 @@ msgstr ""
 "กรุณาปิดการใช้งานและลบการติดตั้งอื่น ๆ ของ PublishPress "
 "โดยเฉพาะหากคุณกำลังใช้ PublishPress Pro."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "คำเตือน"
 

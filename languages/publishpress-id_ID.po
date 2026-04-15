@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.8.0\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:37+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language: id-ID\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266, fuzzy
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3064,8 +3063,8 @@ msgid "All Statuses"
 msgstr "Semua Status"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Notifikasi"
 
@@ -3106,8 +3105,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Pemberitahuan"
 
@@ -3427,6 +3426,10 @@ msgstr "Pengaturan PublishPress"
 msgid "Settings"
 msgstr "Pengaturan"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3446,7 +3449,7 @@ msgstr ""
 "file yang dimuat."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "Cheatin&#8217; ya?"
 
@@ -3470,44 +3473,44 @@ msgstr "Integrasi Kalender Acara"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Integrasikan dengan plugin Kalender Acara"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "Perencana"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "Konfigurasi"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "Silakan perbaiki kesalahan formulir Anda di bawah ini dan coba lagi."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "Anda tidak memiliki izin yang diperlukan untuk menyelesaikan tindakan ini."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "Postingan tidak ada"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Tambahkan Pemberitahuan Baru"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Edit Pemberitahuan"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Cari Pemberitahuan"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Tidak ada pemberitahuan yang ditemukan"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3517,7 +3520,7 @@ msgstr ""
 "hapus instance PublishPress lainnya, terutama jika Anda menggunakan "
 "PublishPress Pro."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Peringatan"
 
