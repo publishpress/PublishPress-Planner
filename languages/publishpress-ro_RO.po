@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.8.0\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:37+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
@@ -18,10 +18,9 @@ msgstr ""
 "Language: ro-RO\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266, fuzzy
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3133,8 +3132,8 @@ msgid "All Statuses"
 msgstr "Toate statusurile"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Notificare"
 
@@ -3177,8 +3176,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Notificări"
 
@@ -3501,6 +3500,10 @@ msgstr "Setări PublishPress"
 msgid "Settings"
 msgstr "Setări"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3520,7 +3523,7 @@ msgstr ""
 "într-un fișier încărcat."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "Trișezi&#8217; uh?"
 
@@ -3544,46 +3547,46 @@ msgstr "Integrarea Calendarului de Evenimente"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Integrează-te cu pluginul Calendarul de Evenimente"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "Planificator"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "Configurează"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr ""
 "Te rog să corectezi erorile din formularul tău mai jos și să încerci din "
 "nou."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "Nu ai permisiunile necesare pentru a finaliza această acțiune."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "Postarea nu există"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Adaugă o notificare nouă"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Editează notificarea"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Caută notificări"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Nicio notificare găsită"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3593,7 +3596,7 @@ msgstr ""
 "dezactivați și eliminați alte instanțe ale PublishPress, mai ales dacă "
 "folosiți PublishPress Pro."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Atenție"
 

@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.8.0\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:37+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planner"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -2983,8 +2982,8 @@ msgid "All Statuses"
 msgstr "모든 상태"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "알림"
 
@@ -3021,8 +3020,8 @@ msgstr "이것은 예약된 메시지의 미리보기입니다. 알림이 전송
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "알림"
 
@@ -3331,6 +3330,10 @@ msgstr "PublishPress 설정"
 msgid "Settings"
 msgstr "설정"
 
+#: modules/settings/settings.php:266, fuzzy
+msgid "PublishPress Planner"
+msgstr "PublishPress Planner"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3348,7 +3351,7 @@ msgid ""
 msgstr "add_post_type_support('%1$s', '%2$s')가 로드된 파일에 포함되어 있기 때문에 비활성화되었습니다."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "속임수인가요&#8217;?"
 
@@ -3372,44 +3375,44 @@ msgstr "이벤트 캘린더 통합"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "이벤트 캘린더 플러그인과 통합"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "플래너"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "설정"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "아래의 폼 오류를 수정한 후 다시 시도해 주세요."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "이 작업을 완료할 수 있는 필요한 권한이 없습니다."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "게시물이 존재하지 않습니다"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "새 알림 추가"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "알림 편집"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "알림 검색"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "알림이 발견되지 않았습니다"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3418,7 +3421,7 @@ msgstr ""
 "PublishPress Planner가 여러 번 로드하려고 했습니다. 다른 PublishPress 인스턴스를 비활성화하고 제거하세요, "
 "특히 PublishPress Pro를 사용 중인 경우에는 더욱 그렇습니다."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "경고"
 

@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.0.2\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-14T18:33:45+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:38+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: Poedit 3.4.2\n"
 "X-Domain: publishpress\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "PublishPress Planlayıcı Pro"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3079,8 +3078,8 @@ msgid "All Statuses"
 msgstr "Tüm Durumlar"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "Bildirim"
 
@@ -3122,8 +3121,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "Bildirimler"
 
@@ -3442,6 +3441,10 @@ msgstr "PublishPress Ayarları"
 msgid "Settings"
 msgstr "Ayarlar"
 
+#: modules/settings/settings.php:266
+msgid "PublishPress Planner"
+msgstr "PublishPress Planlayıcı Pro"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3461,7 +3464,7 @@ msgstr ""
 "devre dışı bırakıldı."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "Hile&#8217; ha?"
 
@@ -3485,44 +3488,44 @@ msgstr "Etkinlik Takvimi Entegrasyonu"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "Events Calendar eklentisi ile entegre edin"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "Planlayıcı"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "Yapılandır"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "Lütfen form hatalarınızı aşağıda düzeltin ve tekrar deneyin."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "Bu eylemi tamamlamak için gerekli izinlere sahip değilsiniz."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "Yazı mevcut değil"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "Yeni Bildirim Ekle"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "Bildirimi Düzenle"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "Bildirimlerde Ara"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "Bildirim bulunamadı"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3532,7 +3535,7 @@ msgstr ""
 "PublishPress örneklerini devre dışı bırakın ve kaldırın, özellikle "
 "PublishPress Pro kullanıyorsanız."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "Uyarı"
 

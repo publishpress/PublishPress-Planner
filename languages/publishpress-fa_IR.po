@@ -1,5 +1,5 @@
 # Copyright (C) 2026 PublishPress
-# This file is distributed under the same license as the PublishPress Planner plugin.
+# This file is distributed under the same license as the PublishPress Planner Free plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Planner 4.8.0\n"
@@ -10,17 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-04-08T16:49:58+00:00\n"
-"PO-Revision-Date: 2026-04-14 18:35+0000\n"
+"PO-Revision-Date: 2026-04-15 14:14+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: publishpress\n"
 "Language: fa_IR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: publishpress.php
-#: modules/settings/settings.php:266
 #. Plugin Name of the plugin
-msgid "PublishPress Planner"
-msgstr "برنامه‌ریز نشرپرس"
+msgid "PublishPress Planner Free"
+msgstr "PublishPress Planner Free"
 
 #: publishpress.php, fuzzy
 #. Plugin URI of the plugin
@@ -3063,8 +3062,8 @@ msgid "All Statuses"
 msgstr "همه وضعیت‌ها"
 
 #: modules/notifications-log/notifications-log.php:209
-#: publishpress.php:1439
-#: publishpress.php:1444
+#: publishpress.php:1426
+#: publishpress.php:1431
 msgid "Notification"
 msgstr "اعلان"
 
@@ -3106,8 +3105,8 @@ msgstr ""
 
 #: modules/notifications/notifications.php:75
 #: modules/notifications/notifications.php:562
-#: publishpress.php:1438
-#: publishpress.php:1443
+#: publishpress.php:1425
+#: publishpress.php:1430
 msgid "Notifications"
 msgstr "اعلان‌ها"
 
@@ -3426,6 +3425,10 @@ msgstr "تنظیمات PublishPress"
 msgid "Settings"
 msgstr "تنظیمات"
 
+#: modules/settings/settings.php:266
+msgid "PublishPress Planner"
+msgstr "برنامه‌ریز نشرپرس"
+
 #: modules/settings/settings.php:269
 #, php-format
 msgid "If you like %s please leave us a %s rating. Thank you!"
@@ -3445,7 +3448,7 @@ msgstr ""
 "بارگذاری شده گنجانده شده است."
 
 #: modules/settings/settings.php:404
-#: publishpress.php:690
+#: publishpress.php:675
 msgid "Cheatin&#8217; uh?"
 msgstr "تقلب می‌کنی، نه؟"
 
@@ -3469,44 +3472,44 @@ msgstr "یکپارچگی تقویم رویدادها"
 msgid "Integrate with the The Events Calendar plugin"
 msgstr "یکپارچه‌سازی با افزونه تقویم رویدادها"
 
-#: publishpress.php:605
+#: publishpress.php:590
 msgid "Planner"
 msgstr "برنامه‌ریز"
 
-#: publishpress.php:686
+#: publishpress.php:671
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: publishpress.php:689
+#: publishpress.php:674
 msgid "Please correct your form errors below and try again."
 msgstr "لطفاً خطاهای فرم خود را در زیر اصلاح کرده و دوباره تلاش کنید."
 
-#: publishpress.php:691
+#: publishpress.php:676
 msgid "You do not have necessary permissions to complete this action."
 msgstr "شما مجوزهای لازم برای انجام این عمل را ندارید."
 
-#: publishpress.php:695
+#: publishpress.php:680
 msgid "Post does not exist"
 msgstr "پست وجود ندارد"
 
-#: publishpress.php:1440
+#: publishpress.php:1427
 msgid "Add New Notification"
 msgstr "افزودن اعلان جدید"
 
-#: publishpress.php:1441
+#: publishpress.php:1428
 msgid "Edit Notification"
 msgstr "ویرایش اعلان"
 
-#: publishpress.php:1442
+#: publishpress.php:1429
 msgid "Search Notifications"
 msgstr "جستجوی اعلان‌ها"
 
-#: publishpress.php:1445
-#: publishpress.php:1446
+#: publishpress.php:1432
+#: publishpress.php:1433
 msgid "No notification found"
 msgstr "هیچ اعلان پیدا نشد"
 
-#: publishpress.php:1486
+#: publishpress.php:1473
 msgid ""
 "PublishPress Planner tried to load multiple times. Please, deactivate and "
 "remove other instances of PublishPress, specially if you are using "
@@ -3516,7 +3519,7 @@ msgstr ""
 "نمونه‌های PublishPress را غیرفعال و حذف کنید، به‌ویژه اگر از PublishPress "
 "Pro استفاده می‌کنید."
 
-#: publishpress.php:1494
+#: publishpress.php:1481
 msgid "Warning"
 msgstr "هشدار"
 
