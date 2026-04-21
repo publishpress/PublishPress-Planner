@@ -50,7 +50,7 @@
     "reqwest": "0.x"
   },
   "devDependencies": {
-    "grunt": "*",
+    "grunt": "^1.6.2",
     "grunt-contrib-stylus": "*",
     "grunt-contrib-watch": "*",
     "grunt-contrib-coffee": "*",
