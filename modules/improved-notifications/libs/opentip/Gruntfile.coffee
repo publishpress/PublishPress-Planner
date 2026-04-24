@@ -25,26 +25,6 @@ module.exports = (grunt) ->
         files:
           "test/test.js": "test/src/*.coffee"
 
-    watch:
-      css:
-        files: "css/stylus/*.styl"
-        tasks: ["css"]
-        options:
-          nospawn: on
-      js:
-        files: "src/*.coffee"
-        tasks: ["js"]
-        options:
-          nospawn: on
-      test:
-        files: [
-          "test/src/*.coffee"
-        ]
-        tasks: ["coffee:test"]
-        options:
-          nospawn: on
-
-
     concat:
       js:
         files:
@@ -82,7 +62,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-stylus"
   grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-clean"
 

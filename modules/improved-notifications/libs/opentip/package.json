@@ -52,7 +52,6 @@
   "devDependencies": {
     "grunt": "^1.6.2",
     "grunt-contrib-stylus": "*",
-    "grunt-contrib-watch": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-uglify": "*",
