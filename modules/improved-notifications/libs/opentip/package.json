@@ -61,8 +61,7 @@
     "mocha": "*",
     "expect.js": "*",
     "mocha-phantomjs": "*",
-    "uglify-js2": "*",
-    "request": "*"
+    "uglify-js2": "*"
   },
   "ender": "noop"
 }
