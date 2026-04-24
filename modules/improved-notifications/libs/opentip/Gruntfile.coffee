@@ -45,26 +45,18 @@ module.exports = (grunt) ->
           nospawn: on
 
 
-    curl:
-      ".tmp-excanvas.js": "https://raw.github.com/enyo/excanvas/master/index.js"
-      ".tmp-classlist.js": "https://raw.github.com/eligrey/classList.js/master/classList.js"
-      ".tmp-addeventlistener.js": "https://gist.github.com/raw/4684216/c58a272ef9d9e0f55ea5e90ac313e3a3b2f2b7b3/eventListener.polyfill.js"
-
-    clean:
-      tmp: ".tmp-*"
-
     concat:
       js:
         files:
           "downloads/opentip-jquery.js": ["lib/opentip.js", "lib/adapter-jquery.js"]
-          "downloads/opentip-jquery-excanvas.js": ["downloads/opentip-jquery.js", ".tmp-excanvas.js"]
+          "downloads/opentip-jquery-excanvas.js": ["downloads/opentip-jquery.js", "lib/tmp-excanvas.js"]
 
           "downloads/opentip-prototype.js": ["lib/opentip.js", "lib/adapter-prototype.js"]
-          "downloads/opentip-prototype-excanvas.js": ["downloads/opentip-prototype.js", ".tmp-excanvas.js"]
+          "downloads/opentip-prototype-excanvas.js": ["downloads/opentip-prototype.js", "lib/tmp-excanvas.js"]
 
-          "downloads/opentip-native.js": ["lib/opentip.js", "lib/adapter-native.js", ".tmp-classlist.js",
-            ".tmp-addeventlistener.js"]
-          "downloads/opentip-native-excanvas.js": ["downloads/opentip-native.js", ".tmp-excanvas.js"]
+          "downloads/opentip-native.js": ["lib/opentip.js", "lib/adapter-native.js", "lib/tmp-classlist.js",
+            "lib/tmp-addeventlistener.js"]
+          "downloads/opentip-native-excanvas.js": ["downloads/opentip-native.js", "lib/tmp-excanvas.js"]
 
 
     uglify:
@@ -93,7 +85,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-clean"
-  grunt.loadNpmTasks "grunt-curl"
 
   # Default tasks
   grunt.registerTask "default", ["downloads"]
@@ -102,4 +93,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask "js", "Compile coffeescript and create all download files", ["coffee"]
 
-  grunt.registerTask "downloads", ["css", "js", "curl", "concat", "clean", "uglify"]
+  grunt.registerTask "downloads", ["css", "js", "concat", "uglify"]

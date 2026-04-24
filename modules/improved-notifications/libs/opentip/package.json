@@ -57,7 +57,6 @@
     "grunt-contrib-concat": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-clean": "*",
-    "grunt-curl": "*",
     "expect.js": "*",
     "uglify-js2": "*"
   },
