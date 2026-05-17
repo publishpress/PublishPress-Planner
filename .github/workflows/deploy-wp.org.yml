@@ -10,7 +10,9 @@ on:
         description: 'Enable "tmate" for debugging'
         required: false
         default: false
-
+permissions:
+  contents: write
+  packages: read
 jobs:
   code-check:
     name: Check the code
