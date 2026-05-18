@@ -293,9 +293,7 @@ editorialCommentReply = {
         jQuery('#pp-comment_loading').hide();
 
         if (r.responseText) {
-            er = r.responseText.replace(/<.[^<>]*?>/g, '');
-
-            jQuery('#pp-replysubmit .error').html(er).show();
+            jQuery('#pp-replysubmit .error').text(r.responseText).show();
         }
     }
 };
