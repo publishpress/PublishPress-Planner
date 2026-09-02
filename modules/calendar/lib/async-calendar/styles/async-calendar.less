@@ -50,6 +50,21 @@
     line-height: 16px;
   }
 
+  .publishpress-calendar-cell-button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+
+  .publishpress-calendar-cell-button:focus-visible,
+  .publishpress-calendar-item:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 1px;
+  }
+
   .publishpress-calendar-today .publishpress-calendar-date {
     border-radius: 50%;
     text-align: center;
@@ -97,6 +112,9 @@
 
   .publishpress-calendar-hide-items,
   .publishpress-calendar-show-more {
+    border: 0;
+    background: transparent;
+    font: inherit;
     padding-left: 3px;
     color: gray;
     font-size: 11px;
@@ -141,6 +159,8 @@
 }
 
 .publishpress-calendar-button {
+  border: 0;
+  cursor: pointer;
   text-decoration: none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
