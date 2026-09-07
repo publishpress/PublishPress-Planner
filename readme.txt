@@ -1,11 +1,11 @@
-=== Editorial Calendar, Marketing Content, Kanban Board - PublishPress Planner ===
+=== PublishPress Planner - Editorial Calendar, Marketing Content, Kanban Board ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
 Tags: editorial calendar, marketing calendar, kanban board, content overview, marketing
 Requires at least: 5.5
 Requires PHP: 7.2.5
-Tested up to: 6.7
+Tested up to: 7.1
 Stable tag: 4.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
