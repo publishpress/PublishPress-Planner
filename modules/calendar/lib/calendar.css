@@ -228,11 +228,14 @@
 }
 
 .content-calendar-modal .close {
+    background: transparent;
+    border: 0;
     cursor: pointer;
     display: flex;
     justify-content: end;
     font-size: large;
     margin-bottom: 5px;
+    padding: 0;
 }
 
 .content-calendar-modal.schedule-date-modal .schedule-date-options {

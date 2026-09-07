@@ -374,7 +374,7 @@ export default function AsyncCalendar(props) {
             return $child;
         }
 
-        if ($child.is('.publishpress-calendar-cell-header, .publishpress-calendar-date, .publishpress-calendar-cell-click-to-add, .publishpress-calendar-month-name')) {
+        if ($child.is('.publishpress-calendar-cell-header, .publishpress-calendar-cell-button, .publishpress-calendar-date, .publishpress-calendar-cell-click-to-add, .publishpress-calendar-month-name')) {
             return $child.parents('td');
         }
 
@@ -496,6 +496,11 @@ export default function AsyncCalendar(props) {
         setOpenedItemId(null);
     }
 
+    const onCreatePost = (date) => {
+        setOpenedItemId(null);
+        setFormDate(date);
+    }
+
     const calendarTableBodyRowsWithCells = () => {
         const numberOfDaysToDisplay = numberOfWeeksToDisplay * 7;
         const firstDate = getBeginDateOfWeekByDate(firstDateToDisplay, props.weekStartsOnSunday);
@@ -532,6 +537,8 @@ export default function AsyncCalendar(props) {
                     ajaxUrl={props.ajaxUrl}
                     onClickItemCallback={onClickItem}
                     onItemActionClickCallback={onPopupItemActionClick}
+                    canCreate={props.userCanAddPosts}
+                    onCreatePostCallback={onCreatePost}
                     strings={props.strings}/>
             );
 
