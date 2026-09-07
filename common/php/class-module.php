@@ -557,18 +557,18 @@ if (!class_exists('PP_Module')) {
         }
 
         /**
-         * Encode all of the given arguments as a serialized array, and then base64_encode
+         * Encode all of the given arguments as JSON.
          * Used to store extra data in a term's description field.
          *
          * @param array $args The arguments to encode
          *
-         * @return string Arguments encoded in base64
+         * @return string Arguments encoded as JSON
          * @since 0.7
          *
          */
         public function get_encoded_description($args = [])
         {
-            return base64_encode(maybe_serialize($args));
+            return wp_json_encode($args);
         }
 
         /**
@@ -583,7 +583,22 @@ if (!class_exists('PP_Module')) {
          */
         public function get_unencoded_description($string_to_unencode)
         {
-            return maybe_unserialize(base64_decode($string_to_unencode));
+            $string_to_unencode = stripslashes(htmlspecialchars_decode($string_to_unencode));
+            $decoded_array      = json_decode($string_to_unencode, true);
+
+            if (is_array($decoded_array)) {
+                return $decoded_array;
+            }
+
+            // Legacy Planner versions stored term descriptions as base64-encoded serialized arrays.
+            $legacy_payload = base64_decode($string_to_unencode, true);
+            if (false === $legacy_payload || ! is_serialized($legacy_payload)) {
+                return $string_to_unencode;
+            }
+
+            $legacy_array = @unserialize($legacy_payload, ['allowed_classes' => false]);
+
+            return is_array($legacy_array) ? $legacy_array : $string_to_unencode;
         }
 
         public function get_path_base()
@@ -845,8 +860,8 @@ if (!class_exists('PP_Module')) {
             $terms = get_terms($taxonomy, $args);
             foreach ($terms as $term) {
                 // If we can detect that this term already follows the new scheme, let's skip it
-                $maybe_serialized = base64_decode($term->description);
-                if (is_serialized($maybe_serialized)) {
+                $maybe_json = json_decode(stripslashes(htmlspecialchars_decode($term->description)), true);
+                if (is_array($maybe_json)) {
                     continue;
                 }
 
