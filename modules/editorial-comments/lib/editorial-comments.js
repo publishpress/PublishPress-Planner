@@ -401,7 +401,7 @@ editorialCommentEdit = {
                 self.close();
             },
             error: function (r) {
-                let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+                let $errorLine = self.$('<div class="pp-error">').text(r.responseText);
                 self.$('#pp-editcontainer').append($errorLine);
                 self.$('#pp-comment_loading').remove();
             }
@@ -459,7 +459,7 @@ editorialCommentDelete = {
                     editorialCommentReply.revert();
                 },
                 error: function (r) {
-                    let $errorLine = self.$('<div class="pp-error">').html(r.responseText);
+                    let $errorLine = self.$('<div class="pp-error">').text(r.responseText);
                     self.$('#pp-editcontainer').append($errorLine);
                     self.$('#pp-comment_loading').remove();
                 }
