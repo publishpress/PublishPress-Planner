@@ -778,6 +778,8 @@ add_action('plugins_loaded', function () {
                     'pp-notif-log',
                     'pp-manage-roles',
                     'pp-modules-settings',
+                    'pp-editorial-comments',
+                    'pp-editorial-metadata',
                 ];
 
                 $is_pp_page_param      = isset($_GET['page']) && in_array(sanitize_key($_GET['page']), $publishpress_pages);
